@@ -385,4 +385,22 @@ TEST_F(ConnectTest, AllUsersSingleton) {
   }
 }
 
+// Verifies that a packaged service receives the requestor of the StartService()
+// via CreateService().
+TEST_F(ConnectTest, PackagedServiceReceivesSourceIdentity) {
+  test::mojom::ConnectTestServicePtr service_a;
+  connector()->BindInterface(kTestAppAName, &service_a);
+  Connector::TestApi test_api(connector());
+  Identity resolved_identity;
+  test_api.SetStartServiceCallback(
+      base::Bind(&StartServiceResponse, nullptr, nullptr, &resolved_identity));
+  base::RunLoop run_loop;
+  std::string unittest_name;
+  service_a->GetRequestor(
+      base::Bind(&ReceiveOneString, &unittest_name, &run_loop));
+  run_loop.Run();
+  EXPECT_EQ("connect_unittests", unittest_name);
+  EXPECT_EQ(resolved_identity.name(), kTestAppAName);
+}
+
 }  // namespace service_manager

@@ -33,6 +33,8 @@ class Target : public service_manager::Service,
   void OnBindInterface(const service_manager::BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override {
+    if (interface_name == ConnectTestService::Name_)
+      requestor_name_ = source_info.identity.name();
     registry_.BindInterface(interface_name, std::move(interface_pipe));
   }
 
@@ -49,6 +51,11 @@ class Target : public service_manager::Service,
     std::move(callback).Run(context()->identity().instance());
   }
 
+  void GetRequestor(GetRequestorCallback callback) override {
+    std::move(callback).Run(requestor_name_);
+  }
+
+  std::string requestor_name_;
   service_manager::BinderRegistry registry_;
   mojo::BindingSet<ConnectTestService> bindings_;
 

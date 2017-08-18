@@ -885,7 +885,7 @@ void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
       Identity factory(entry->parent()->name(), *target_user_id,
                        factory_instance_name);
       CreateServiceWithFactory(factory, target.name(),
-                               mojo::MakeRequest(&service));
+                               mojo::MakeRequest(&service), params->source());
       instance->StartWithService(std::move(service));
     } else {
       base::FilePath package_path = entry->path();
@@ -1096,9 +1096,10 @@ void ServiceManager::AddListener(mojom::ServiceManagerListenerPtr listener) {
 
 void ServiceManager::CreateServiceWithFactory(const Identity& service_factory,
                                               const std::string& name,
-                                              mojom::ServiceRequest request) {
+                                              mojom::ServiceRequest request,
+                                              const Identity& source) {
   mojom::ServiceFactory* factory = GetServiceFactory(service_factory);
-  factory->CreateService(std::move(request), name);
+  factory->CreateService(std::move(request), name, source);
 }
 
 mojom::ServiceFactory* ServiceManager::GetServiceFactory(

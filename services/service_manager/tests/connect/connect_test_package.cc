@@ -51,9 +51,12 @@ class ProvidedService : public Service,
                         public test::mojom::UserIdTest,
                         public base::SimpleThread {
  public:
-  ProvidedService(const std::string& title, mojom::ServiceRequest request)
+  ProvidedService(const std::string& title,
+                  const std::string& requestor_name,
+                  mojom::ServiceRequest request)
       : base::SimpleThread(title),
         title_(title),
+        requestor_name_(requestor_name),
         request_(std::move(request)) {
     Start();
   }
@@ -116,6 +119,10 @@ class ProvidedService : public Service,
     std::move(callback).Run(context()->identity().instance());
   }
 
+  void GetRequestor(GetRequestorCallback callback) override {
+    std::move(callback).Run(requestor_name_);
+  }
+
   // test::mojom::BlockedInterface:
   void GetTitleBlocked(GetTitleBlockedCallback callback) override {
     std::move(callback).Run("Called Blocked Interface!");
@@ -156,6 +163,7 @@ class ProvidedService : public Service,
   }
 
   const std::string title_;
+  const std::string requestor_name_;
   mojom::ServiceRequest request_;
   test::mojom::ExposedInterfacePtr caller_;
   BinderRegistryWithArgs<const BindSourceInfo&> registry_;
@@ -191,6 +199,8 @@ class ConnectTestService : public Service,
   void OnBindInterface(const BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override {
+    if (interface_name == test::mojom::ConnectTestService::Name_)
+      requestor_name_ = source_info.identity.name();
     registry_.BindInterface(interface_name, std::move(interface_pipe));
   }
 
@@ -210,13 +220,14 @@ class ConnectTestService : public Service,
 
   // mojom::ServiceFactory:
   void CreateService(mojom::ServiceRequest request,
-                     const std::string& name) override {
+                     const std::string& name,
+                     const service_manager::Identity& source) override {
     if (name == "connect_test_a") {
-      provided_services_.emplace_back(
-          base::MakeUnique<ProvidedService>("A", std::move(request)));
+      provided_services_.emplace_back(base::MakeUnique<ProvidedService>(
+          "A", source.name(), std::move(request)));
     } else if (name == "connect_test_b") {
-      provided_services_.emplace_back(
-          base::MakeUnique<ProvidedService>("B", std::move(request)));
+      provided_services_.emplace_back(base::MakeUnique<ProvidedService>(
+          "B", source.name(), std::move(request)));
     }
   }
 
@@ -229,11 +240,16 @@ class ConnectTestService : public Service,
     std::move(callback).Run(context()->identity().instance());
   }
 
+  void GetRequestor(GetRequestorCallback callback) override {
+    std::move(callback).Run(requestor_name_);
+  }
+
   void OnConnectionError() {
     if (bindings_.empty() && service_factory_bindings_.empty())
       context()->RequestQuit();
   }
 
+  std::string requestor_name_;
   std::vector<std::unique_ptr<Service>> delegates_;
   mojo::BindingSet<mojom::ServiceFactory> service_factory_bindings_;
   BinderRegistry registry_;
