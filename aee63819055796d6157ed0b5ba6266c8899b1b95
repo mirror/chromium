@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "2dc7b3bf_7aa30147",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator_observer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-18T13:45:35Z",
+      "side": 1,
+      "message": "Coordinators also don\u0027t have consumers. From the outside, the fact that they happen to use view controllers and mediators is an implementation detail. So if some non-coordinator object needs these observer methods, I\u0027d prefer they were expressed more like willStart/didStart, or if that absolutely won\u0027t work, didStart/didFinishStarting. Same for the stop methods below.",
+      "range": {
+        "startLine": 22,
+        "startChar": 8,
+        "endLine": 22,
+        "endChar": 42
+      },
+      "revId": "aee63819055796d6157ed0b5ba6266c8899b1b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61abca69_08eeb9df",
         "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator_observer.h",
         "patchSetId": 2
