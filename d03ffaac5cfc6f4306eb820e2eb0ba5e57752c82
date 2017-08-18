@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bdf9e6ec_8b37528a",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T19:58:13Z",
+      "side": 1,
+      "message": "Ack.\n\nI think this is a discussion that should take place outside of this patch.",
+      "parentUuid": "514fc0b8_8a49eb4e",
+      "revId": "d03ffaac5cfc6f4306eb820e2eb0ba5e57752c82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7093eb70_e5193b8a",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f4ef7b55_e6288d69",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T19:58:13Z",
+      "side": 1,
+      "message": "Done. Good catch.",
+      "parentUuid": "7093eb70_e5193b8a",
+      "revId": "d03ffaac5cfc6f4306eb820e2eb0ba5e57752c82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35d512c5_6e445ce6",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-18T18:41:59Z",
       "side": 1,
       "message": "where is this first initialized?  If there is no row, shouldn\u0027t you insert one with the defaults?",
+      "revId": "d03ffaac5cfc6f4306eb820e2eb0ba5e57752c82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22d3faa2_af743295",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_downloader_quota.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-18T19:58:13Z",
+      "side": 1,
+      "message": "We return straight from here and wait for the caller to insert an updated value. No point to do it twice.",
+      "parentUuid": "35d512c5_6e445ce6",
       "revId": "d03ffaac5cfc6f4306eb820e2eb0ba5e57752c82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
