@@ -256,7 +256,7 @@ void CronetEnvironment::Start() {
                                  base::Unretained(this)));
 }
 
-CronetEnvironment::~CronetEnvironment() {
+void CronetEnvironment::InvalidateOnNetworkThread() {
   // TODO(lilyhoughton) make unregistering of this work.
   // net::HTTPProtocolHandlerDelegate::SetInstance(nullptr);
 
@@ -266,12 +266,26 @@ CronetEnvironment::~CronetEnvironment() {
   // if (ts)
   //  ts->Shutdown();
 
+  if (pref_service_)
+    pref_service_->CommitPendingWrite();
+
+  delete network_cache_thread_.release();
+
   // TODO(lilyhoughton) this should be smarter about making sure there are no
   // pending requests, etc.
+  main_context_ = nullptr;
+  pref_service_ = nullptr;
+  json_pref_store_ = nullptr;
+}
 
+CronetEnvironment::~CronetEnvironment() {
+  PostToNetworkThread(FROM_HERE,
+                      base::Bind(&CronetEnvironment::InvalidateOnNetworkThread,
+                                 base::Unretained(this)));
   if (network_io_thread_) {
-    network_io_thread_->task_runner().get()->DeleteSoon(
-        FROM_HERE, main_context_.release());
+    // Deleting a thread blocks the current thread and waits until all pending
+    // tasks are completed.
+    delete network_io_thread_.release();
   }
 }
 
@@ -339,8 +353,37 @@ void CronetEnvironment::InitializeOnNetworkThread() {
           [NSHTTPCookieStorage sharedHTTPCookieStorage]);
   context_builder.SetCookieAndChannelIdStores(std::move(cookie_store), nullptr);
 
-  std::unique_ptr<net::HttpServerProperties> http_server_properties(
-      new net::HttpServerPropertiesImpl());
+  context_builder.set_enable_brotli(brotli_enabled_);
+
+  // Set up the HttpServerPropertiesManager.
+  InitializeStorageDirectory(cache_path, kPrefsDirectoryName);
+
+  base::FilePath json_pref_path =
+      cache_path.Append(FILE_PATH_LITERAL(kPrefsDirectoryName))
+          .Append(FILE_PATH_LITERAL(kPrefsFileName));
+  json_pref_store_ =
+      new JsonPrefStore(json_pref_path, network_cache_thread_->task_runner(),
+                        std::unique_ptr<PrefFilter>());
+  PrefServiceFactory factory;
+  factory.set_user_prefs(json_pref_store_);
+  scoped_refptr<PrefRegistrySimple> registry(new PrefRegistrySimple());
+
+  registry->RegisterDictionaryPref(kHttpServerPropertiesPref,
+                                   base::MakeUnique<base::DictionaryValue>());
+  if (config->enable_network_quality_estimator) {
+    // Use lossy prefs to limit the overhead of reading/writing the prefs.
+    registry->RegisterDictionaryPref(kNetworkQualitiesPref,
+                                     PrefRegistry::LOSSY_PREF);
+  }
+
+  pref_service_ = factory.Create(registry.get());
+  std::unique_ptr<net::HttpServerPropertiesManager>
+      http_server_properties_manager(new net::HttpServerPropertiesManager(
+          new PrefServiceAdapter(pref_service_.get()),
+          base::ThreadTaskRunnerHandle::Get(),
+          network_io_thread_->task_runner(), net_log_.get()));
+  http_server_properties_manager->InitializeOnNetworkSequence();
+  http_server_properties_manager_ = http_server_properties_manager.get();
 
   for (const auto& quic_hint : quic_hints_) {
     url::CanonHostInfo host_info;
@@ -353,17 +396,16 @@ void CronetEnvironment::InitializeOnNetworkThread() {
 
     net::AlternativeService alternative_service(net::kProtoQUIC, "",
                                                 quic_hint.port());
-
     url::SchemeHostPort quic_hint_server("https", quic_hint.host(),
                                          quic_hint.port());
-    http_server_properties->SetQuicAlternativeService(
+    http_server_properties_manager_->SetQuicAlternativeService(
         quic_hint_server, alternative_service, base::Time::Max(),
         net::QuicVersionVector());
   }
 
-  context_builder.SetHttpServerProperties(std::move(http_server_properties));
+  context_builder.SetHttpServerProperties(
+      std::move(http_server_properties_manager));
 
-  context_builder.set_enable_brotli(brotli_enabled_);
   main_context_ = context_builder.Build();
 
   main_context_->transport_security_state()

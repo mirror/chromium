@@ -17,7 +17,10 @@
 #include "base/threading/thread.h"
 #include "components/cronet/ios/version.h"
 #include "components/cronet/url_request_context_config.h"
+#include "components/prefs/json_pref_store.h"
+#include "components/prefs/pref_service.h"
 #include "net/cert/cert_verifier.h"
+#include "net/http/http_server_properties_manager.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
@@ -147,6 +150,8 @@ class CronetEnvironment {
 
   std::string getDefaultQuicUserAgentId() const;
 
+  void InvalidateOnNetworkThread();
+
   bool http2_enabled_;
   bool quic_enabled_;
   bool brotli_enabled_;
@@ -172,6 +177,10 @@ class CronetEnvironment {
   std::unique_ptr<net::NetLog> net_log_;
   std::unique_ptr<net::FileNetLogObserver> file_net_log_observer_;
   bool enable_pkp_bypass_for_local_trust_anchors_;
+  std::unique_ptr<PrefService> pref_service_;
+  scoped_refptr<JsonPrefStore> json_pref_store_;
+  // Owned by |main_context_|.
+  net::HttpServerPropertiesManager* http_server_properties_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(CronetEnvironment);
 };

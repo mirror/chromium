@@ -54,7 +54,7 @@ NSMutableArray<NSData*>* _responseData;
 }
 
 - (BOOL)waitForDone {
-  int64_t deadline_ns = 20 * NSEC_PER_SEC;
+  int64_t deadline_ns = 200 * NSEC_PER_SEC;
   return dispatch_semaphore_wait(
              _semaphore, dispatch_time(DISPATCH_TIME_NOW, deadline_ns)) == 0;
 }

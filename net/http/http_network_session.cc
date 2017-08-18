@@ -115,7 +115,7 @@ HttpNetworkSession::Params::Params()
       enable_http2_alternative_service(false),
       enable_quic(false),
       quic_max_packet_length(kDefaultMaxPacketSize),
-      quic_max_server_configs_stored_in_properties(0u),
+      quic_max_server_configs_stored_in_properties(10u),
       mark_quic_broken_when_network_blackholes(false),
       retry_without_alt_svc_on_quic_errors(false),
       quic_close_sessions_on_ip_change(false),

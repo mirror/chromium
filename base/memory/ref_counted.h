@@ -163,7 +163,7 @@ class BASE_EXPORT RefCountedThreadSafeBase {
 
   ~RefCountedThreadSafeBase();
 
-// Release and AddRef are suitable for inlining on X86 because they generate
+// Release and ( are suitable for inlining on X86 because they generate
 // very small code sequences. On other platforms (ARM), it causes a size
 // regression and is probably not worth it.
 #if defined(ARCH_CPU_X86_FAMILY)

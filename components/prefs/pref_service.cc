@@ -504,6 +504,8 @@ void PrefService::ReportUserPrefChanged(
 
 void PrefService::SetUserPrefValue(const std::string& path,
                                    std::unique_ptr<base::Value> new_value) {
+  LOG(INFO) << "ZZZ: PrefService::SetUserPrefValue. Path = " << path;
+
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   const Preference* pref = FindPreference(path);

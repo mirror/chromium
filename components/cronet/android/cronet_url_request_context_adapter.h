@@ -34,7 +34,6 @@ class TimeTicks;
 namespace net {
 class HttpServerPropertiesManager;
 class NetLog;
-class NetworkQualitiesPrefsManager;
 class ProxyConfigService;
 class SdchOwner;
 class URLRequestContext;
@@ -43,6 +42,7 @@ class FileNetLogObserver;
 
 namespace cronet {
 class HostCachePersistenceManager;
+class CronetPrefsManager;
 class TestUtil;
 
 struct URLRequestContextConfig;
@@ -212,10 +212,6 @@ class CronetURLRequestContextAdapter
 
   std::unique_ptr<base::DictionaryValue> GetNetLogInfo() const;
 
-  // Initializes Network Quality Estimator (NQE) prefs manager on network
-  // thread.
-  void InitializeNQEPrefsOnNetworkThread() const;
-
   // Network thread is owned by |this|, but is destroyed from java thread.
   base::Thread* network_thread_;
 
@@ -224,13 +220,9 @@ class CronetURLRequestContextAdapter
 
   std::unique_ptr<net::FileNetLogObserver> net_log_file_observer_;
 
-  // |pref_service_| should outlive the HttpServerPropertiesManager owned by
-  // |context_| and the HostCachePersistenceManager.
-  std::unique_ptr<PrefService> pref_service_;
   std::unique_ptr<net::URLRequestContext> context_;
   std::unique_ptr<net::ProxyConfigService> proxy_config_service_;
-  scoped_refptr<JsonPrefStore> json_pref_store_;
-  net::HttpServerPropertiesManager* http_server_properties_manager_;
+  std::unique_ptr<CronetPrefsManager> cronet_prefs_manager_;
 
   // |sdch_owner_| should be destroyed before |json_pref_store_|, because
   // tearing down |sdch_owner_| forces |json_pref_store_| to flush pending
@@ -250,15 +242,6 @@ class CronetURLRequestContextAdapter
 
   // A network quality estimator.
   std::unique_ptr<net::NetworkQualityEstimator> network_quality_estimator_;
-
-  // Manages the writing and reading of the network quality prefs.
-  std::unique_ptr<net::NetworkQualitiesPrefsManager>
-      network_qualities_prefs_manager_;
-
-  // Manages reading and writing the HostCache pref when persistence is enabled.
-  // Must be destroyed before |context_| (because it owns the HostResolverImpl,
-  // which owns the HostCache) and |pref_service_|.
-  std::unique_ptr<HostCachePersistenceManager> host_cache_persistence_manager_;
 
   // Java object that owns this CronetURLRequestContextAdapter.
   base::android::ScopedJavaGlobalRef<jobject> jcronet_url_request_context_;

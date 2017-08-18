@@ -1,0 +1,121 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef COMPONENTS_CRONET_PREF_SERVICE_ADAPTER_H_
+#define COMPONENTS_CRONET_PREF_SERVICE_ADAPTER_H_
+
+#include "components/prefs/pref_change_registrar.h"
+#include "components/prefs/pref_service.h"
+#include "net/http/http_server_properties_manager.h"
+
+namespace {
+// Name of the pref used for HTTP server properties persistence.
+const char kHttpServerPropertiesPref[] = "net.http_server_properties";
+
+// Name of the pref used for NQE persistence.
+const char kNetworkQualitiesPref[] = "net.network_qualities";
+
+// Current version of disk storage.
+const int32_t kStorageVersion = 1;
+// Version number used when the version of disk storage is unknown.
+const uint32_t kStorageVersionUnknown = 0;
+}
+
+namespace cronet {
+
+// Connects the HttpServerPropertiesManager's storage to the prefs.
+class PrefServiceAdapter
+    : public net::HttpServerPropertiesManager::PrefDelegate {
+ public:
+    explicit PrefServiceAdapter(PrefService* pref_service)
+        : pref_service_(pref_service), path_(kHttpServerPropertiesPref) {
+      pref_change_registrar_.Init(pref_service_);
+    }
+
+    ~PrefServiceAdapter() override {}
+
+    // PrefDelegate implementation.
+    bool HasServerProperties() override {
+      return pref_service_->HasPrefPath(path_);
+    }
+    const base::DictionaryValue& GetServerProperties() const override {
+      // Guaranteed not to return null when the pref is registered
+      // (RegisterProfilePrefs was called).
+      return *pref_service_->GetDictionary(path_);
+    }
+    void SetServerProperties(const base::DictionaryValue& value) override {
+      return pref_service_->Set(path_, value);
+    }
+    void StartListeningForUpdates(const base::Closure& callback) override {
+      pref_change_registrar_.Add(path_, callback);
+    }
+    void StopListeningForUpdates() override {
+      pref_change_registrar_.RemoveAll();
+    }
+
+ private:
+    PrefService* pref_service_;
+    const std::string path_;
+    PrefChangeRegistrar pref_change_registrar_;
+
+    DISALLOW_COPY_AND_ASSIGN(PrefServiceAdapter);
+};
+
+
+bool IsCurrentVersion(const base::FilePath& version_filepath) {
+  if (!base::PathExists(version_filepath))
+    return false;
+  base::File version_file(version_filepath,
+      base::File::FLAG_OPEN | base::File::FLAG_READ);
+  uint32_t version = kStorageVersionUnknown;
+  int bytes_read =
+      version_file.Read(0, reinterpret_cast<char*>(&version), sizeof(version));
+  if (bytes_read != sizeof(version)) {
+    DLOG(WARNING) << "Cannot read from version file.";
+    return false;
+  }
+  return version == kStorageVersion;
+}
+
+// TODO(xunjieli): Handle failures.
+void InitializeStorageDirectory(const base::FilePath& dir, const char *prefsDirectoryName) {
+  // Checks version file and clear old storage.
+  base::FilePath version_filepath = dir.Append("version");
+  if (IsCurrentVersion(version_filepath)) {
+    // The version is up to date, so there is nothing to do.
+    return;
+  }
+  // Delete old directory recursively and create a new directory.
+  // base::DeleteFile returns true if the directory does not exist, so it is
+  // fine if there is nothing on disk.
+  if (!(base::DeleteFile(dir, true) && base::CreateDirectory(dir))) {
+    DLOG(WARNING) << "Cannot purge directory.";
+    return;
+  }
+  base::File new_version_file(version_filepath, base::File::FLAG_CREATE_ALWAYS |
+      base::File::FLAG_WRITE);
+
+  if (!new_version_file.IsValid()) {
+    DLOG(WARNING) << "Cannot create a version file.";
+    return;
+  }
+
+  DCHECK(new_version_file.created());
+  uint32_t new_version = kStorageVersion;
+  int bytes_written = new_version_file.Write(
+      0, reinterpret_cast<char*>(&new_version), sizeof(new_version));
+  if (bytes_written != sizeof(new_version)) {
+    DLOG(WARNING) << "Cannot write to version file.";
+    return;
+  }
+  base::FilePath prefs_dir = dir.Append(FILE_PATH_LITERAL(prefsDirectoryName));
+  if (!base::CreateDirectory(prefs_dir)) {
+    DLOG(WARNING) << "Cannot create prefs directory";
+    return;
+  }
+}
+
+};  // namespace cronet
+
+#endif  // COMPONENTS_CRONET_PREF_SERVICE_ADAPTER_H_

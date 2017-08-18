@@ -65,8 +65,11 @@ _cronet_deps = [
 ]
 
 _cronet_sources = [
+  "../cronet_http_server_properties_manager.cc",
   "../histogram_manager.cc",
   "../histogram_manager.h",
+
+  #"../pref_service_adapter.hc",
   "../stale_host_resolver.cc",
   "../stale_host_resolver.h",
   "../url_request_context_config.cc",
