@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f2b393d_2a8ce02d",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T19:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05d85746_a45d2905",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 26
+      },
+      "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9eae3c7f_5b655d94",
         "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_unittest.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10cd7a26_c38b9fc6",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T19:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9eae3c7f_5b655d94",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 53,
+        "endChar": 30
+      },
+      "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "96fec87e_5a560370",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T19:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5238a3f8_6001a2b1",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 26
+      },
+      "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3da34f4_0a530532",
         "filename": "chrome/browser/ui/tab_dialogs.h",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f557feb_1ffe03c8",
+        "filename": "chrome/browser/ui/tab_dialogs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T19:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3da34f4_0a530532",
+      "range": {
+        "startLine": 79,
+        "startChar": 10,
+        "endLine": 79,
+        "endChar": 39
+      },
+      "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "406d46d8_16486915",
+        "filename": "chrome/browser/ui/test_tab_dialogs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T19:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8941cb26_3f941fa1",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 25
+      },
+      "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de13a3fe_a0a9e6eb",
         "filename": "chrome/browser/ui/test_tab_dialogs.h",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a999252e_4c5639f3",
+        "filename": "chrome/browser/ui/test_tab_dialogs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T19:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de13a3fe_a0a9e6eb",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "2d86ce96_3d85e4d9",
+        "filename": "chrome/browser/ui/test_tab_dialogs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T19:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82da72f9_90914b4e",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 45
+      },
+      "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9f7d42e_b7827acb",
         "filename": "chrome/browser/ui/test_tab_dialogs.h",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919aa23f_ffdcce67",
+        "filename": "chrome/browser/ui/test_tab_dialogs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T19:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9f7d42e_b7827acb",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 2
+      },
+      "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -221,6 +413,30 @@
       "side": 1,
       "message": "\u003e It seems to me that if you need the browser this function makes more sense on BrowserWindow. Is there a reason you want to route it through TabDialogs rather than Browser/BrowserWindow?\n\nI think this can be said for most things in TabDialogs except perhaps hung renderers. I\u0027ve been leaning towards TabDialogs for dialogs that are conceptually bound to a WebContents* rather than a BrowserWindow*, which I think is the case here. BrowserView* is just used to find an anchor point (which should even be \"null\" in some cases - e.g. fullscreen, hosted/bookmark apps).\n\nAlso I think BrowserWindow is getting a bit cluttered and there\u0027s more coupling/plumbing required to show dialogs through that interface. (e.g. -hypothetically- if a WebContents wants a way to show a dialog over a packaged app window or a webui dialog, Browser* isn\u0027t the right thing to build the interface on, so we shouldn\u0027t couple dialog APIs to that).\n\n\u003e Also, how do you know you can look up the browser at this point? What if we end up here and web_contents_ isn\u0027t the active tab?\n\n(I think this is a valid point. Although this was just moved from SaveCardBubbleControllerImpl::ShowBubble(), and I don\u0027t think the paths leading up to it have changed. Probably the dialog will appear with the wrong tab showing, but getting into that situation should be hard for a user to achieve).",
       "parentUuid": "fc3d08af_95ae5212",
+      "range": {
+        "startLine": 105,
+        "startChar": 1,
+        "endLine": 105,
+        "endChar": 72
+      },
+      "revId": "5c6c876680b0d5c8ca2853e5f65ad26411e64f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2728fe4_768c97f6",
+        "filename": "chrome/browser/ui/views/tab_dialogs_views.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-18T19:22:00Z",
+      "side": 1,
+      "message": "What should we do if web_contents_ isn\u0027t active? We could suppress the bubble or show it anyway or try raising the web contents. Do any of those seem compellingly better?",
+      "parentUuid": "972aa349_7db4e266",
       "range": {
         "startLine": 105,
         "startChar": 1,
