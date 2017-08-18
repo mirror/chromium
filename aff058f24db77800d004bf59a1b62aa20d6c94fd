@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47d57b16_2eb31f67",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-18T13:12:58Z",
+      "side": 1,
+      "message": "const char* const ? You can spare one static constructor :)",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 17
+      },
+      "revId": "aff058f24db77800d004bf59a1b62aa20d6c94fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43832e94_5dfe08fd",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-18T13:12:58Z",
+      "side": 1,
+      "message": "nit: Subclasses before methods (including constructors).",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 19
+      },
+      "revId": "aff058f24db77800d004bf59a1b62aa20d6c94fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ae8fcb_1b527b9f",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-18T13:12:58Z",
+      "side": 1,
+      "message": "const ref to avoid copies in both cases",
+      "range": {
+        "startLine": 26,
+        "startChar": 20,
+        "endLine": 26,
+        "endChar": 32
+      },
+      "revId": "aff058f24db77800d004bf59a1b62aa20d6c94fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc68625b_2f939daf",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-18T13:12:58Z",
+      "side": 1,
+      "message": "Wasn\u0027t this supposed to be operator\u003c ? The methods does an inequality comparison.\n\nIf not, then please avoid overloading operator(). Its semantics are not clear (what does it mean to call a class)? Use regular methods instead.",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 19
+      },
+      "revId": "aff058f24db77800d004bf59a1b62aa20d6c94fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
