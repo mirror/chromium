@@ -66,6 +66,7 @@ void ExtensionServiceWorkerMessageFilter::OnIncrementServiceWorkerActivity(
 void ExtensionServiceWorkerMessageFilter::OnDecrementServiceWorkerActivity(
     int64_t service_worker_version_id,
     const std::string& request_uuid) {
+  LOG(ERROR) << "IPC filter: OnDecrementServiceWorkerActivity";
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   bool status = service_worker_context_->FinishedExternalRequest(
       service_worker_version_id, request_uuid);
