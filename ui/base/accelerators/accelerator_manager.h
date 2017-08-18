@@ -80,6 +80,9 @@ class UI_BASE_EXPORT AcceleratorManager {
   // Finds the target associated with the specified |accelerator| and returns
   // its accelerator id. Returns |kUnknownAcceleratorId| if no target can handle
   // the |accelerator|.
+  // Note: Some AcceleratorTargets do not support this feature, so there is no
+  // guarantee GetAcceleratorId() returns from the same AcceleratorTarget as
+  // Process() function.
   int GetAcceleratorId(const Accelerator& accelerator) const;
 
   // Whether the given |accelerator| has a priority handler associated with it.
