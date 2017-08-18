@@ -16045,6 +16045,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2066" label="StyleSheetListNonNullAnonymousNamedGetter"/>
   <int value="2067" label="OffMainThreadFetch"/>
   <int value="2068" label="HTMLOptionsCollectionNamedGetterReturnsNodeList"/>
+  <int value="2069" label="PaymentRequestSupportedMethodsArray"/>
 </enum>
 
 <enum name="FeedbackSource">
