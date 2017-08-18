@@ -6,6 +6,7 @@
 #define NGLayoutResult_h
 
 #include "core/CoreExport.h"
+#include "core/layout/ng/geometry/ng_margin_strut.h"
 #include "core/layout/ng/geometry/ng_static_position.h"
 #include "core/layout/ng/ng_block_node.h"
 #include "core/layout/ng/ng_out_of_flow_positioned_descendant.h"
