@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95b19ee2_bcb2dd13",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-18T08:15:14Z",
+      "side": 1,
+      "message": "Nit: I\u0027d drop this last sentence. I don\u0027t think we\u0027re going to keep this flag around much longer, so let\u0027s not make promises we\u0027re not going to keep.",
+      "revId": "38384d34f49bac0f1e967ea2a189e81e3804629e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d801852e_6ec11b56",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-18T08:15:14Z",
+      "side": 1,
+      "message": "Nit: I\u0027d suggest renaming this to something like `CheckCredentialedSubresource()` to align with `CheckContentSecurityPolicy...`",
+      "revId": "38384d34f49bac0f1e967ea2a189e81e3804629e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
