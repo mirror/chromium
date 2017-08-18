@@ -1,0 +1,268 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acdda66e_7c636c6f",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-18T01:54:59Z",
+      "side": 1,
+      "message": "Would this sit well as member function of ImageIndex?",
+      "range": {
+        "startLine": 29,
+        "startChar": 22,
+        "endLine": 29,
+        "endChar": 51
+      },
+      "revId": "1d199301c30957c9dca27be3cd78011d9d0d35b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c17725ea_c2883cc7",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-18T01:54:59Z",
+      "side": 1,
+      "message": "reference type data in |*_image_index|.",
+      "range": {
+        "startLine": 121,
+        "startChar": 26,
+        "endLine": 121,
+        "endChar": 40
+      },
+      "revId": "1d199301c30957c9dca27be3cd78011d9d0d35b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "078cd96b_6c9fcaca",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-18T01:54:59Z",
+      "side": 1,
+      "message": "// Build coarse equivalence map, where references with same types are considered equivalent.",
+      "range": {
+        "startLine": 126,
+        "startChar": 1,
+        "endLine": 126,
+        "endChar": 41
+      },
+      "revId": "1d199301c30957c9dca27be3cd78011d9d0d35b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c85bb8f_e50c4fc6",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-18T01:54:59Z",
+      "side": 1,
+      "message": "// Project \"old\" Labels to \"new\". |new_label_manager| stores all \"new\" targets (for |pool|) that are successfully and exclusively matched to an \"old\" target.",
+      "range": {
+        "startLine": 137,
+        "startChar": 7,
+        "endLine": 137,
+        "endChar": 59
+      },
+      "revId": "1d199301c30957c9dca27be3cd78011d9d0d35b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53bba2a6_46c44b0d",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-18T01:54:59Z",
+      "side": 1,
+      "message": "// Encode matching into |*_image_index|: Matched \"old\" and \"new\" targets are assigned a common index to indicate that they share common semantics.",
+      "revId": "1d199301c30957c9dca27be3cd78011d9d0d35b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dee360e_151fc46c",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-18T01:54:59Z",
+      "side": 1,
+      "message": "// Build refined equivalence map, where references in \"old\" and \"new\" that share common semantics (i.e., their respective targets were matched earlier on) are considered equivalent. Note that a different |min_similarity| is used.",
+      "range": {
+        "startLine": 147,
+        "startChar": 5,
+        "endLine": 147,
+        "endChar": 47
+      },
+      "revId": "1d199301c30957c9dca27be3cd78011d9d0d35b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc507856_5bae5d7b",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-18T01:54:59Z",
+      "side": 1,
+      "message": "each reference location",
+      "range": {
+        "startLine": 232,
+        "startChar": 21,
+        "endLine": 232,
+        "endChar": 40
+      },
+      "revId": "1d199301c30957c9dca27be3cd78011d9d0d35b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3488d9f0_1e86d1dc",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-18T01:54:59Z",
+      "side": 1,
+      "message": "and initializes",
+      "range": {
+        "startLine": 23,
+        "startChar": 25,
+        "endLine": 23,
+        "endChar": 36
+      },
+      "revId": "1d199301c30957c9dca27be3cd78011d9d0d35b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e117d4a0_803fb64c",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-18T01:54:59Z",
+      "side": 1,
+      "message": "Would this sit nicely as a member function of Disassembler?",
+      "range": {
+        "startLine": 25,
+        "startChar": 27,
+        "endLine": 25,
+        "endChar": 41
+      },
+      "revId": "1d199301c30957c9dca27be3cd78011d9d0d35b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f5cdee_c6f4f526",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-18T01:54:59Z",
+      "side": 1,
+      "message": "NIT: The params |*_image_index|:",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 26
+      },
+      "revId": "1d199301c30957c9dca27be3cd78011d9d0d35b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f01971a_f4125f98",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-18T01:54:59Z",
+      "side": 1,
+      "message": "Oops, s/link/links/, and s/guide/guides/.",
+      "range": {
+        "startLine": 46,
+        "startChar": 5,
+        "endLine": 47,
+        "endChar": 39
+      },
+      "revId": "1d199301c30957c9dca27be3cd78011d9d0d35b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda176f1_e0a8fe59",
+        "filename": "chrome/installer/zucchini/zucchini_gen_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-18T01:54:59Z",
+      "side": 1,
+      "message": "If you move MakeImageIndex() into Disassembler, then this can be replaced by using a TestDisassembler, followed by using the actual MakeImageIndex(). Add\n  // TODO(huangs): Update this to use actual Disassembler::MakeImageIndex().\nIf you agree with this.",
+      "revId": "1d199301c30957c9dca27be3cd78011d9d0d35b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
