@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4a0e760_65b0554d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-post-fail-non-cors-safelisted-content-type.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-18T00:31:54Z",
+      "side": 1,
+      "message": "Sounds like a good idea to me! Thanks for the input!",
+      "parentUuid": "9af6f061_c2702b40",
+      "revId": "f7c1b478f0bb7de3f4ccfbdc353fc4b069208d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58ccb7ac_d3d12588",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-options-not-supported.py",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-17T12:07:38Z",
       "side": 1,
       "message": "This is a very good practice to avoid cache-related flakiness. Can you add this header for other server side scripts if they don\u0027t test cache behavior?",
+      "range": {
+        "startLine": 2,
+        "startChar": 26,
+        "endLine": 2,
+        "endChar": 31
+      },
+      "revId": "f7c1b478f0bb7de3f4ccfbdc353fc4b069208d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1afe940e_cebbf791",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-options-not-supported.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-18T00:31:54Z",
+      "side": 1,
+      "message": "I\u0027ll start doing that! Should I open another CL to retroactively apply it to server-side files that have already been ported?",
+      "parentUuid": "58ccb7ac_d3d12588",
       "range": {
         "startLine": 2,
         "startChar": 26,
@@ -56,6 +98,24 @@
       "revId": "f7c1b478f0bb7de3f4ccfbdc353fc4b069208d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59a10c5_bf533922",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-options-not-supported.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-18T00:31:54Z",
+      "side": 1,
+      "message": "Good point, thanks for pointing that out! And yeah, I can definitely do that!",
+      "parentUuid": "2df6c0c2_8e521819",
+      "revId": "f7c1b478f0bb7de3f4ccfbdc353fc4b069208d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
