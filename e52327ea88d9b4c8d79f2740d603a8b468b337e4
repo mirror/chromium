@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aab139d2_0448445b",
+        "filename": "components/browser_watcher/postmortem_report_collector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-18T13:30:58Z",
+      "side": 1,
+      "message": "You have some semantic/data dependencies between report_database and the strings.\nIs it worth asserting that you have the information you need to report, when a database is supplied? Maybe expose a second constructor that make the construction mode explicit, and keep the assert(s) on this one?",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 30
+      },
+      "revId": "e52327ea88d9b4c8d79f2740d603a8b468b337e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ea39aa_ad94c45d",
+        "filename": "components/browser_watcher/postmortem_report_collector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-18T13:30:58Z",
+      "side": 1,
+      "message": "Is it worth elaborating what analysis yields in terms of metrics?",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "e52327ea88d9b4c8d79f2740d603a8b468b337e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eb0610f_406af427",
+        "filename": "components/browser_watcher/postmortem_report_collector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-18T13:30:58Z",
+      "side": 1,
+      "message": "CollectAndMaybeSubmit?",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "e52327ea88d9b4c8d79f2740d603a8b468b337e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
