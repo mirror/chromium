@@ -493,6 +493,8 @@ void WindowSelector::RemoveWindowSelectorItem(WindowSelectorItem* item) {
   for (std::unique_ptr<WindowGrid>& grid : grid_list_) {
     if (grid->Contains(item->GetWindow())) {
       grid->RemoveItem(item);
+      if (grid->empty())
+        OnGridEmpty(grid.get());
       break;
     }
   }
@@ -500,21 +502,22 @@ void WindowSelector::RemoveWindowSelectorItem(WindowSelectorItem* item) {
 
 void WindowSelector::InitiateDrag(WindowSelectorItem* item,
                                   const gfx::Point& location_in_screen) {
-  window_drag_controller_.reset(new OverviewWindowDragController(this));
+  window_drag_controller_ = delegate_->GetOverviewWindowDragController();
   window_drag_controller_->InitiateDrag(item, location_in_screen);
 }
 
 void WindowSelector::Drag(WindowSelectorItem* item,
                           const gfx::Point& location_in_screen) {
-  DCHECK(window_drag_controller_.get());
+  DCHECK(window_drag_controller_);
   DCHECK_EQ(item, window_drag_controller_->item());
   window_drag_controller_->Drag(location_in_screen);
 }
 
 void WindowSelector::CompleteDrag(WindowSelectorItem* item) {
-  DCHECK(window_drag_controller_.get());
+  DCHECK(window_drag_controller_);
   DCHECK_EQ(item, window_drag_controller_->item());
   window_drag_controller_->CompleteDrag();
+  window_drag_controller_ = nullptr;
 }
 
 void WindowSelector::PositionWindows(bool animate) {
