@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc13e84d_e5c6de05",
+        "filename": "chrome/browser/extensions/component_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-18T15:45:36Z",
+      "side": 1,
+      "message": "Do we need to handle the case ARC OptIn, ARC OptOut. In case ARC OptOut, Playstore is not available and user would not have access to search .\n\nFYI IsWebstoreSearchEnabled is bad utility that does not take into the consideration many cases. For example we have ARC builds without Play Store support at all. Next case if user is managed and ARC is forced to off. In many cases we leave user without access to search. I think these cases need to be discussed.",
+      "range": {
+        "startLine": 438,
+        "startChar": 12,
+        "endLine": 438,
+        "endChar": 35
+      },
+      "revId": "732e78d8922f9858061c255f13e1d435c68f775a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
