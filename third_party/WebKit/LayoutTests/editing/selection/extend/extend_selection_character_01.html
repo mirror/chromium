@@ -1,0 +1,170 @@
+<!--
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+-->
+<script src="../../assert_selection.js"></script>
+<script>
+function makeInputText(sample, offset) {
+  return sample.substr(0, offset) + '|' + sample.substring(offset);
+}
+
+function testIt(dir, offset, direction, expectedText) {
+  test(() => assert_selection(
+    `<span dir="${dir}">$makeSample(offset)</span>`,
+    selection => selection.modify('extend', direction, 'character'),
+    `<span dir="${dir}">${expectedText}</span>`),
+    `${dir} ${offset} extend ${direction} character`);
+}
+
+const kSamples = [
+    '\nabc \u05D0\u05D1\u05D2 xyz\n',
+     '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n',
+    '\n\u05D0;\u05D1;\u05D2; \u05D3;\u05D4;\u05D5; \u05D0;\u05D1;\u05D2;\n',
+    '\nabc efd dabeb\n',
+    'Lorem <span style="direction: rtl">ipsum dolor sit</span> amet',
+    'Lorem <span dir="rtl">ipsum dolor sit</span> amet',
+    'Lorem <span style="direction: ltr">ipsum dolor sit</span> amet',
+    'Lorem <span dir="ltr">ipsum dolor sit</span> amet',
+    'Lorem <div  dir="rtl">ipsum dolor sit</div> amett',
+    'Lorem <span style="direction: ltr">ipsum dolor sit</span> amet',
+    'Lorem <span style="direction: ltr">ipsum dolor<div > just a test</div> sit</span> amet',
+    'Lorem <span dir="ltr">ipsum dolor sit</span> amet',
+    'Lorem <div  dir="ltr">ipsum dolor sit</div> amet',
+    '\n Just\n <span>testing \u05E8\u05E7</span>\n \u05D1\u05D5\u05D3\u05E7\n',
+    '\n Just\n <span>testing what</span>\n ever\n',
+    'car means \u05D0;\u05D1;\u05D2;.',
+    '\u202B;car \u05D3;\u05D4;\u05D5; \u05D0;\u05D1;\u05D2;.\u202c;',
+    'they said "\u202B;car \u05D3;\u05D4;\u05D5; \u05D0;\u05D1;\u05D2;\u202c;."',
+    '\u05D6;\u05D7;\u05D8; \u1497;\u1498;\u1499; \u1500;\u1501;\u1502; \'\u202a;they said ' +
+       '"\u202B;car \u05D3;\u05D4;\u05D5; \u05D0;\u05D1;\u05D2;\u202c;"\u202c;\'?',
+    '\u05D0;\u05D1;\u05D2; abc \u05D3;\u05D4;\u05D5;<br />edf \u05D6;\u05D7;\u05D8; abrebg',
+    'abcdefg abcdefg abcdefg a abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg ',
+    ,
+    'abcdefg abcdefg abcdefg a abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg ',
+];
+
+function escape(string) {
+  const results = [];
+  for (const char of string) {
+    const charCode = char.charCodeAt(0);
+    if (charCode === 10) {
+      results.push('\\n');
+      continue;
+    }
+    if (charCode >= 0x20 && charCode <= 0x7E) {
+      results.push(char);
+      continue;
+    }
+    results.push(`\\u${charCode.toString(16).toUpperCase().padStart(4, '0')}`);
+  }
+  return results.join('');
+}
+
+function genMakeSample(sample) {
+  return `
+function makeSample(offset) {
+  const kSample = '${escape(sample)}';
+  return kSample.substr(0, offset) + '|' + kSample.substring(offset);
+}
+`;
+}
+
+function genTestItCall(dir, offset, direction, expectedText) {
+  return `testIt('${dir}', ${offset}, ${direction}, '${escape(expectedText)}');`
+}
+
+function genTestIt(granularity) {
+return `
+function testIt(dir, offset, direction, expectedText) {
+  test(() => assert_selection(
+    \`<span dir="\${dir}">\${makeSample(offset)}</span>\`,
+    selection => selection.modify('extend', direction, 'character'),
+    \`<span dir="\${dir}">\${escape(expectedText)}</span>\`),
+    \`\${dir} \${offset} extend \${direction} ${granularity}\`);
+}
+`;
+}
+
+/**
+ * @return {Array<string>}
+ */
+function getTestItCalls(sampleText, direction, dir, granularity) {
+  const results = [];
+  for (let offset = 0; offset < sampleText.length; ++offset) {
+    const sample = new Sample(makeInputText(sampleText, offset));
+    sample.selection.modify('extend', direction, granularity);
+    const expectedText = sample.serialize(new DOMTreeTraversal());
+    results.push(genTestItCall(dir, offset, direction, expectedText));
+    sample.remove();
+  }
+  return results;
+}
+
+function generate(sample, granularity) {
+  const results = [];
+  results.push(genTestIt(granularity));
+  results.push(genMakeSample(sample));
+  for (const dir of ['ltr', 'rtl']) {
+    for (const direction of ['rigth', 'left', 'forward', 'backward']) {
+      results.push(`// ${dir} ${direction} ${granularity}`);
+      const calls = getTestItCalls(sample, direction, dir, granularity);
+      for (const call of calls)
+        results.push(call);
+      results.push('');
+    }
+  }
+  return results;
+}
+
+window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+
+function generateToFile(input) {
+  const results = generate(input.sample, input.granularity);
+  window.requestFileSystem(PERSISTENT, 1024 * 1024, fs =>
+    fs.root.getFile(`extend_selection_${granularity}_${input.sampleIndex + 1}`,
+        {create: true},
+        fileEntry => fileEntry.createWriter(fileWriter => {
+          fileWriter.write(new Blob(results, {type: 'text/plain'}));
+        })));
+}
+
+function generateToTextarea(input) {
+  const results = generate(input.sample, input.granularity);
+  const textarea = document.createElement('textarea');
+  textarea.value = results.join('\n');
+  textarea.cols = 80;
+  textarea.rows = 25;
+  document.body.appendChild(textarea);
+  document.body.appendChild(document.createElement('br'));
+}
+
+const inputs = (() => {
+  const inputs = [];
+  let sampleIndex = 0;
+  for (const sample of kSamples) {
+    for (const granularity of ['character', 'lineboundary', 'word'])
+      inputs.push({
+        granularity: granularity,
+        sample: sample,
+        sampleIndex: sampleIndex
+      });
+  }
+  return inputs;
+})();
+
+let inputIndex = 0;
+let startTime = Date.now();
+let lastTime = startTime;
+function run() {
+  if (inputIndex == inputs.length)
+    return;
+  document.body.textContent = `${inputIndex + 1}/${inputs.length} ${Date.now() - lastTime}`;
+  // generateToFile(inputs[inputIndex]);
+  generateToTextarea(inputs[inputIndex]);
+  lastTime = Date.now();
+  ++inputIndex,
+  window.setTimeout(run, 0);
+}
+
+window.setTimeout(run, 0);
+</script>
