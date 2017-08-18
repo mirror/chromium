@@ -89,7 +89,10 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
                                mojo::ScopedHandle handle);
 
   void GetOutputFileOnBlockingThread(base::ProcessId pid);
-  void HandleDumpProcessOnIOThread(base::ProcessId pid, base::File file);
+  void HandleDumpProcessOnIOThread(base::ProcessId pid,
+                                   base::FilePath file_path,
+                                   base::File file);
+  void OnProcessDumpComplete(base::FilePath file_path, bool success);
 
   content::NotificationRegistrar registrar_;
   std::unique_ptr<service_manager::Connector> connector_;

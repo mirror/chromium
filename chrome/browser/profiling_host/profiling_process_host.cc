@@ -5,10 +5,13 @@
 #include "chrome/browser/profiling_host/profiling_process_host.h"
 
 #include "base/command_line.h"
+#include "base/files/file_util.h"
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/tracing/crash_service_uploader.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/profiling/constants.mojom.h"
@@ -27,6 +30,20 @@
 #include "mojo/public/cpp/system/platform_handle.h"
 
 namespace profiling {
+
+namespace {
+
+void OnTraceUploadComplete(TraceCrashServiceUploader* uploader,
+                           bool success,
+                           const std::string& feedback) {
+  if (!success) {
+    LOG(ERROR) << "Cannot upload trace file: " << feedback;
+  }
+
+  // TODO(etienneb): Should we signal trace completion to the user.
+}
+
+}  // namespace
 
 ProfilingProcessHost::ProfilingProcessHost() {
   Add(this);
@@ -187,13 +204,40 @@ void ProfilingProcessHost::GetOutputFileOnBlockingThread(base::ProcessId pid) {
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&ProfilingProcessHost::HandleDumpProcessOnIOThread,
-                     base::Unretained(this), pid, std::move(file)));
+                     base::Unretained(this), pid, std::move(output_path),
+                     std::move(file)));
 }
 
 void ProfilingProcessHost::HandleDumpProcessOnIOThread(base::ProcessId pid,
+                                                       base::FilePath file_path,
                                                        base::File file) {
   mojo::ScopedHandle handle = mojo::WrapPlatformFile(file.TakePlatformFile());
-  memlog_->DumpProcess(pid, std::move(handle));
+  memlog_->DumpProcess(
+      pid, std::move(handle),
+      base::BindOnce(&ProfilingProcessHost::OnProcessDumpComplete,
+                     base::Unretained(this), std::move(file_path)));
+}
+
+void ProfilingProcessHost::OnProcessDumpComplete(base::FilePath file_path,
+                                                 bool success) {
+  if (!success) {
+    LOG(ERROR) << "Cannot dump process.";
+    return;
+  }
+
+  std::string file_contents;
+  if (!base::ReadFileToString(file_path, &file_contents)) {
+    LOG(ERROR) << "Cannot read trace file contents.";
+    return;
+  }
+
+  TraceCrashServiceUploader* uploader = new TraceCrashServiceUploader(
+      g_browser_process->system_request_context());
+
+  uploader->DoUpload(file_contents.data(),
+                     content::TraceUploader::UNCOMPRESSED_UPLOAD, nullptr,
+                     content::TraceUploader::UploadProgressCallback(),
+                     base::Bind(&OnTraceUploadComplete, base::Owned(uploader)));
 }
 
 }  // namespace profiling
