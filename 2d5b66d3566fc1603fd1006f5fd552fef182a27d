@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37630836_b80d8f17",
+        "filename": "content/renderer/media/renderer_webmediaplayer_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-18T22:39:17Z",
+      "side": 1,
+      "message": "Explicitly state that this should not call UpdateTask() immediately, since it would cause immediate cleanup.",
+      "range": {
+        "startLine": 170,
+        "startChar": 2,
+        "endLine": 170,
+        "endChar": 22
+      },
+      "revId": "2d5b66d3566fc1603fd1006f5fd552fef182a27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce47e6de_4266ac35",
+        "filename": "content/renderer/media/renderer_webmediaplayer_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-18T22:39:17Z",
+      "side": 1,
+      "message": "Looks line this condition is inverted.",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 40
+      },
+      "revId": "2d5b66d3566fc1603fd1006f5fd552fef182a27d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
