@@ -17,6 +17,7 @@ class NavigationParams {
   NavigationParams(const GURL& url,
                    const content::Referrer& referrer,
                    bool has_user_gesture,
+                   bool was_started_from_context_menu,
                    bool is_post,
                    ui::PageTransition page_transition_type,
                    bool is_redirect,
@@ -30,6 +31,9 @@ class NavigationParams {
   GURL& url() { return url_; }
   const content::Referrer& referrer() const { return referrer_; }
   bool has_user_gesture() const { return has_user_gesture_; }
+  bool was_started_from_context_menu() const {
+    return was_started_from_context_menu_;
+  }
   bool is_post() const { return is_post_; }
   ui::PageTransition transition_type() const { return transition_type_; }
   bool is_redirect() const { return is_redirect_; }
@@ -42,6 +46,7 @@ class NavigationParams {
   GURL url_;
   content::Referrer referrer_;
   bool has_user_gesture_;
+  bool was_started_from_context_menu_;
   bool is_post_;
   ui::PageTransition transition_type_;
   bool is_redirect_;
