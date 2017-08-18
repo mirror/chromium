@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6e3e4dea_7db4df07",
+        "filename": "content/browser/loader/navigation_url_loader_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-18T12:25:01Z",
+      "side": 1,
+      "message": "Why not use base::Optional for ssl_info and fatal? Alternatively, wrap the values in a unique_ptr that is null when not needed.\n\nThe call site in NavigationRequest::OnStartChecksComplete is not cross-thread, as NavigationRequest is a UI thread object. In fact, all calls to NavigationURLloaderDelegate are made from the UI thread. The cross-thread calls in the chain of calls happen in NavigationURLLoaderImplCore: that class whole purpose is to make cross-thread calls.",
+      "parentUuid": "d48814f0_702f8133",
+      "revId": "f80e9581cf0d4d28f47eca27fd50a9369e6e83d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddc1b906_60d82bc0",
         "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
         "patchSetId": 11
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "This would require calculating the `fatal` bool for every failed request, and passing useless ssl_info and `fatal` parameters for failures that are not SSL errors.\n\nIs that preferable?\n\nIf so, is calculating ShouldSSLErrorsBeFatal() here still appropriate?",
       "parentUuid": "ddc1b906_60d82bc0",
+      "revId": "f80e9581cf0d4d28f47eca27fd50a9369e6e83d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335cf2fc_5c17b0c6",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-18T12:25:01Z",
+      "side": 1,
+      "message": "As explained in the other comment, wrap them in a base::Optional or a unique_ptr that will indicate whether they have been set or not. I prefer base::Optional in that case, but am ok with a pointer.\n\nThen the signature of the function should be changed to\nNavigationURLloaderImplCore::NotifyRequestFailed(bool ..., int ..., base::Optional\u003cnet::SSLInfo\u003e ssl_info, base::Optional\u003cbool\u003e fatal). The computation of fatal should be done directly into the NavigationreosurceHandler before calling this function, which is simpler than calling it back from here.",
+      "parentUuid": "21aa6d6d_69521fbb",
       "revId": "f80e9581cf0d4d28f47eca27fd50a9369e6e83d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
