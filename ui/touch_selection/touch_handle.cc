@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "ui/touch_selection/touch_handle.h"
+#include "base/metrics/histogram_macros.h"
 
 #include <algorithm>
 #include <cmath>
@@ -263,7 +264,7 @@ void TouchHandle::UpdateHandleLayout() {
 
   // Update mirror values only when dragging has stopped to prevent unwanted
   // inversion while dragging of handles.
-  if (client_->IsAdaptiveHandleOrientationEnabled() && !is_dragging_) {
+  if (!is_dragging_) {
     gfx::RectF handle_bounds = drawable_->GetVisibleBounds();
     bool mirror_horizontal = false;
     bool mirror_vertical = false;
@@ -277,22 +278,56 @@ void TouchHandle::UpdateHandleLayout() {
     const float top_y_mirrored =
         focus_top_.y() - handle_height + viewport_rect_.y();
 
-    // In case the viewport height is small, like webview, avoid inversion.
-    if (bottom_y_unmirrored > viewport_rect_.bottom() &&
-        top_y_mirrored > viewport_rect_.y()) {
+    const float bottom_y_clipped =
+        std::max(bottom_y_unmirrored - viewport_rect_.bottom(), 0.f);
+    const float top_y_clipped =
+        std::max(viewport_rect_.y() - top_y_mirrored, 0.f);
+
+    UMA_HISTOGRAM_PERCENTAGE(
+        "Event.TouchSelectionHandle.BottomHandleClippingPercentage",
+        (int)(bottom_y_clipped / handle_height) * 100);
+
+    // When the the flipped handle has less clipped, we should flip the handle.
+    if (top_y_clipped < bottom_y_clipped) {
       mirror_vertical = true;
+      UMA_HISTOGRAM_PERCENTAGE(
+          "Event.TouchSelectionHandle.BestVerticalClippingPercentage",
+          (int)(top_y_clipped / handle_height * 100));
+      UMA_HISTOGRAM_PERCENTAGE(
+          "Event.TouchSelectionHandle.FlippingImprovementPercentage",
+          (int)((bottom_y_clipped - top_y_clipped) / handle_height * 100));
+      UMA_HISTOGRAM_BOOLEAN(
+          "Event.TouchSelectionHandle.ShouldFlipHandleVertically", true);
+    } else {
+      UMA_HISTOGRAM_PERCENTAGE(
+          "Event.TouchSelectionHandle.BestVerticalClippingPercentage",
+          (int)(bottom_y_clipped / handle_height * 100));
+      UMA_HISTOGRAM_BOOLEAN(
+          "Event.TouchSelectionHandle.ShouldFlipHandleVertically", false);
     }
 
-    if (orientation_ == TouchHandleOrientation::LEFT &&
-        focus_bottom_.x() - handle_width < viewport_rect_.x()) {
-      mirror_horizontal = true;
-    } else if (orientation_ == TouchHandleOrientation::RIGHT &&
-               focus_bottom_.x() + handle_width > viewport_rect_.right()) {
-      mirror_horizontal = true;
+    if (orientation_ == TouchHandleOrientation::LEFT) {
+      const float left_x_clipped = std::max(
+          viewport_rect_.x() - (focus_bottom_.x() - handle_width), 0.f);
+      UMA_HISTOGRAM_PERCENTAGE(
+          "Event.TouchSelectionHandle.LeftHandleClippingPercentage",
+          (int)(left_x_clipped / handle_height) * 100);
+      if (left_x_clipped > 0)
+        mirror_horizontal = true;
+    } else if (orientation_ == TouchHandleOrientation::RIGHT) {
+      const float right_x_clipped = std::max(
+          (focus_bottom_.x() + handle_width) - viewport_rect_.right(), 0.f);
+      UMA_HISTOGRAM_PERCENTAGE(
+          "Event.TouchSelectionHandle.RightHandleClippingPercentage",
+          (int)(right_x_clipped / handle_height) * 100);
+      if (right_x_clipped > 0)
+        mirror_horizontal = true;
     }
 
-    mirror_horizontal_ = mirror_horizontal;
-    mirror_vertical_ = mirror_vertical;
+    if (client_->IsAdaptiveHandleOrientationEnabled()) {
+      mirror_horizontal_ = mirror_horizontal;
+      mirror_vertical_ = mirror_vertical;
+    }
   }
 
   drawable_->SetOrientation(orientation_, mirror_vertical_, mirror_horizontal_);
