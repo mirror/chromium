@@ -5,7 +5,11 @@
 #ifndef COMPONENTS_CDM_BROWSER_MEDIA_DRM_STORAGE_IMPL_H_
 #define COMPONENTS_CDM_BROWSER_MEDIA_DRM_STORAGE_IMPL_H_
 
+#include <vector>
+
+#include "base/callback.h"
 #include "base/threading/thread_checker.h"
+#include "base/time/time.h"
 #include "base/unguessable_token.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -29,6 +33,20 @@ class MediaDrmStorageImpl final : public media::mojom::MediaDrmStorage,
                                   public content::WebContentsObserver {
  public:
   static void RegisterProfilePrefs(PrefRegistrySimple* registry);
+
+  // Clear licenses if:
+  // 1. The license creation time falls in [|start|, |end|], and
+  // 2. |filter| returns true on the media license's origin.
+  //
+  // Return a list of origin IDs that have no licenses remaining so that the
+  // origin can be unprovisioned.
+  //
+  // TODO(yucliu): Add unit test.
+  static std::vector<base::UnguessableToken> ClearMatchingLicenses(
+      PrefService* pref_service,
+      base::Time start,
+      base::Time end,
+      const base::RepeatingCallback<bool(const GURL&)>& filter);
 
   MediaDrmStorageImpl(content::RenderFrameHost* render_frame_host,
                       PrefService* pref_service,
