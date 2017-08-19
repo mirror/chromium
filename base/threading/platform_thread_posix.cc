@@ -19,6 +19,7 @@
 #include "base/debug/activity_tracker.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
+#include "base/numerics/safe_conversions.h"
 #include "base/threading/platform_thread_internal_posix.h"
 #include "base/threading/thread_id_name_manager.h"
 #include "base/threading/thread_restrictions.h"
@@ -136,24 +137,19 @@ PlatformThreadId PlatformThread::CurrentId() {
   // Pthreads doesn't have the concept of a thread ID, so we have to reach down
   // into the kernel.
 #if defined(OS_MACOSX)
-  return pthread_mach_thread_np(pthread_self());
+  return base::strict_cast<PlatformThreadId>(
+      pthread_mach_thread_np(pthread_self()));
 #elif defined(OS_LINUX)
-  return syscall(__NR_gettid);
+  // |syscall()| returns a |long| but the SYS_gettid value is a |pid_t|.
+  return static_cast<pid_t>(syscall(SYS_gettid));
 #elif defined(OS_ANDROID)
-  return gettid();
+  return base::strict_cast<PlatformThreadId>(gettid());
 #elif defined(OS_FUCHSIA)
   return mx_thread_self();
-#elif defined(OS_SOLARIS) || defined(OS_QNX)
-  return pthread_self();
-#elif defined(OS_NACL) && defined(__GLIBC__)
-  return pthread_self();
-#elif defined(OS_NACL) && !defined(__GLIBC__)
-  // Pointers are 32-bits in NaCl.
-  return reinterpret_cast<int32_t>(pthread_self());
-#elif defined(OS_POSIX) && defined(OS_AIX)
-  return pthread_self();
-#elif defined(OS_POSIX) && !defined(OS_AIX)
-  return reinterpret_cast<int64_t>(pthread_self());
+#else
+  // strict_cast<> here helps catch cases where sizeof(pthread_t) exceeds
+  // sizeof(PlatformThreadId).
+  return base::strict_cast<PlatformThreadId>(pthread_self());
 #endif
 }
 
