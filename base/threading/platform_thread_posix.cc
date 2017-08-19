@@ -136,8 +136,10 @@ PlatformThreadId PlatformThread::CurrentId() {
   // Pthreads doesn't have the concept of a thread ID, so we have to reach down
   // into the kernel.
 #if defined(OS_MACOSX)
+#error "This is Mac"
   return pthread_mach_thread_np(pthread_self());
 #elif defined(OS_LINUX)
+#error "This is Linux"
   return syscall(__NR_gettid);
 #elif defined(OS_ANDROID)
   return gettid();
@@ -151,8 +153,10 @@ PlatformThreadId PlatformThread::CurrentId() {
   // Pointers are 32-bits in NaCl.
   return reinterpret_cast<int32_t>(pthread_self());
 #elif defined(OS_POSIX) && defined(OS_AIX)
+  #error "This is POSIX AIX"
   return pthread_self();
 #elif defined(OS_POSIX) && !defined(OS_AIX)
+  #error "This is POSIX not AIX"
   return reinterpret_cast<int64_t>(pthread_self());
 #endif
 }
