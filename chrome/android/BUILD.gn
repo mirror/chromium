@@ -613,6 +613,7 @@ if (enable_vr) {
       "//components/policy/android:policy_java",
       "//content/public/android:content_java",
       "//content/public/test/android:content_java_test_support",
+      "//net/android:net_java_test_support",
       "//third_party/android_protobuf:protobuf_nano_javalib",
       "//third_party/android_support_test_runner:rules_java",
       "//third_party/android_support_test_runner:runner_java",
