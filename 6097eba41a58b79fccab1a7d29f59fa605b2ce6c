@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bbcf0df2_00bfbcb4",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-19T04:04:53Z",
+      "side": 1,
+      "message": "Good idea. Lets leave for a followup patch though.",
+      "parentUuid": "1b0c0e01_e40b18f2",
+      "revId": "6097eba41a58b79fccab1a7d29f59fa605b2ce6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5233781a_24f57580",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e356a2e3_4c361494",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-19T04:04:53Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "5233781a_24f57580",
+      "revId": "6097eba41a58b79fccab1a7d29f59fa605b2ce6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45d4d112_ad6dd60a",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-16T23:04:43Z",
       "side": 1,
       "message": "nits: Move up to line #667.",
+      "revId": "6097eba41a58b79fccab1a7d29f59fa605b2ce6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b52f8b31_cfbdc222",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-19T04:04:53Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "45d4d112_ad6dd60a",
       "revId": "6097eba41a58b79fccab1a7d29f59fa605b2ce6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
