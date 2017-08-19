@@ -46,6 +46,30 @@
       "revId": "4e5a42c44befc4ec8fca84180e780df5e0557ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1112c89_dad6c796",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-08-19T14:36:10Z",
+      "side": 1,
+      "message": "Ugh, I thought I had a great idea of setting use_custom_libcxx \u003d false explicitly just in our custom toolchain\u0027s toolchain_args, but of course we pass that in as the \"custom_toolchain\" arg, so it gets set as the default toolchain and the toolchain_args are intentionally ignored by gn for the default toolchain :(\n\nhttps://cs.chromium.org/chromium/src/build/config/BUILDCONFIG.gn?q\u003dcustom_toolchain\u0026sq\u003dpackage:chromium\u0026l\u003d266\nhttps://chromium.googlesource.com/chromium/src/+/master/tools/gn/docs/reference.md#functions-and-variables",
+      "parentUuid": "a5701914_06b2e0c1",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 68
+      },
+      "revId": "4e5a42c44befc4ec8fca84180e780df5e0557ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
