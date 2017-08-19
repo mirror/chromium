@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb6d38f2_164fba14",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/OriginVerifierTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-19T00:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e31bf2e_7e78a0c5",
+      "revId": "9f11785d6d0a17f48b6e2d8380baf2f8f9aafb3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9a45416_e477857d",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/OriginVerifierTest.java",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "9f11785d6d0a17f48b6e2d8380baf2f8f9aafb3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966d2ac6_ece812c0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/OriginVerifierTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-19T00:25:07Z",
+      "side": 1,
+      "message": "Done\n\nPlease let me know if I missed any that could be converted to lambda.",
+      "parentUuid": "f9a45416_e477857d",
+      "revId": "9f11785d6d0a17f48b6e2d8380baf2f8f9aafb3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
