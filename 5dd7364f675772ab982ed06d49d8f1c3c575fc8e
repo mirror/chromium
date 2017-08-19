@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e76b4585_a7acf4c0",
+        "filename": "chrome/browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-19T00:32:32Z",
+      "side": 1,
+      "message": "nit: remove blank line",
+      "revId": "5dd7364f675772ab982ed06d49d8f1c3c575fc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
