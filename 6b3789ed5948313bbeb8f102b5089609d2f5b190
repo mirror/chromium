@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5fa4d07f_1a52a469",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-19T00:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56059fbe_96c4f9df",
+      "revId": "6b3789ed5948313bbeb8f102b5089609d2f5b190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1da6ab5a_15d22cd6",
         "filename": "content/utility/utility_service_factory.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "6b3789ed5948313bbeb8f102b5089609d2f5b190",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6d39e5_cfb50d50",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-19T00:27:20Z",
+      "side": 1,
+      "message": "Changed to \"ConnectedToOutputProtection()\", so that using |output_protection_| next makes sense.",
+      "parentUuid": "1da6ab5a_15d22cd6",
+      "revId": "6b3789ed5948313bbeb8f102b5089609d2f5b190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "b758d611_6c733ef9",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-19T00:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af267bcc_b84adbe1",
+      "range": {
+        "startLine": 149,
+        "startChar": 37,
+        "endLine": 149,
+        "endChar": 41
+      },
+      "revId": "6b3789ed5948313bbeb8f102b5089609d2f5b190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e8ae088_d10f56cd",
         "filename": "content/utility/utility_service_factory.cc",
         "patchSetId": 5
@@ -73,6 +133,24 @@
       "revId": "6b3789ed5948313bbeb8f102b5089609d2f5b190",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53cd036_6da6aaa2",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-19T00:27:20Z",
+      "side": 1,
+      "message": "Changed to using is_bound() as the test. I would think that communication failures or the other end going away would cause the connection to no longer be bound.",
+      "parentUuid": "2e8ae088_d10f56cd",
+      "revId": "6b3789ed5948313bbeb8f102b5089609d2f5b190",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
