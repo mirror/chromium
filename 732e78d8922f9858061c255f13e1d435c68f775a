@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8be8a979_38e6adbd",
+        "filename": "chrome/browser/extensions/component_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1238208
+      },
+      "writtenOn": "2017-08-19T01:29:22Z",
+      "side": 1,
+      "message": "Hi, I can give a little background here. \nIn UI review we decided to remove Webstore completely from ChromeOS as its deprecated and we do not want to promote installation of deprecated apps (while admins can still install via policy).\n\nThen we looked at older devices that will never get ARC++ no matter what, and we decided that in those cases we can keep the Webstore available just to give *consumer* users more options. Of course, admins can always decide to do things like disable Webstore/Arc++/etc. That\u0027s up to the admin and it should be that way.\n\nSo the logic we are pursuing is to disable Webstore on all devices that might get ARC++ within the next 8 months.",
+      "parentUuid": "02c12ccd_372f3c6d",
+      "range": {
+        "startLine": 438,
+        "startChar": 12,
+        "endLine": 438,
+        "endChar": 35
+      },
+      "revId": "732e78d8922f9858061c255f13e1d435c68f775a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f3dd907_1d0cea67",
         "filename": "chrome/browser/extensions/external_provider_impl.cc",
         "patchSetId": 3
