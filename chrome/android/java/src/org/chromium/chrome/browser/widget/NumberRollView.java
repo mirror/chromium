@@ -22,6 +22,8 @@ import java.text.NumberFormat;
  * number.
  */
 public class NumberRollView extends FrameLayout {
+    private static final int NUMBER_ROLL_FONT_SIZE_SP = 20;
+
     private TextView mUpNumber;
     private TextView mDownNumber;
     private float mNumber;
@@ -61,6 +63,10 @@ public class NumberRollView extends FrameLayout {
 
         assert mUpNumber != null;
         assert mDownNumber != null;
+        mUpNumber.setTextAppearance(R.style.RobotoMediumStyle);
+        mUpNumber.setTextSize(NUMBER_ROLL_FONT_SIZE_SP);
+        mDownNumber.setTextAppearance(R.style.RobotoMediumStyle);
+        mDownNumber.setTextSize(NUMBER_ROLL_FONT_SIZE_SP);
 
         setNumberRoll(mNumber);
     }
