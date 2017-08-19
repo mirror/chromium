@@ -87,6 +87,7 @@ class CORE_EXPORT CSSPrimitiveValue : public CSSValue {
     kRems,
     kChs,
     kUserUnits,  // The SVG term for unitless lengths
+    kQuarterMillimeters,
     // Angle units
     kDegrees,
     kRadians,
