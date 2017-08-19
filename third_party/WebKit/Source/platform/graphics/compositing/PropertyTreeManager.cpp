@@ -16,7 +16,6 @@
 #include "platform/graphics/paint/GeometryMapper.h"
 #include "platform/graphics/paint/ScrollPaintPropertyNode.h"
 #include "platform/graphics/paint/TransformPaintPropertyNode.h"
-#include "public/platform/WebLayerScrollClient.h"
 #include "third_party/skia/include/effects/SkColorFilterImageFilter.h"
 #include "third_party/skia/include/effects/SkLumaColorFilter.h"
 
@@ -233,7 +232,7 @@ int PropertyTreeManager::EnsureCompositorScrollNode(
   if (it != scroll_node_map_.end())
     return it->value;
 
-  int parent_id = EnsureCompositorScrollNode(scroll_node->Parent());
+  int parent_id = CompositorScrollNode(scroll_node->Parent());
   int id = GetScrollTree().Insert(cc::ScrollNode(), parent_id);
 
   cc::ScrollNode& compositor_node = *GetScrollTree().Node(id);
@@ -287,37 +286,15 @@ void PropertyTreeManager::UpdateScrollAndScrollTranslationNodes(
   compositor_transform_node.local.MakeIdentity();
   compositor_transform_node.scrolls = true;
   GetTransformTree().set_needs_update(true);
-  // TODO(pdr): Because of a layer dependancy, the scroll tree scroll offset is
-  // set in updateLayerScrollMapping but that should occur here.
+  GetScrollTree().SetScrollOffset(compositor_element_id,
+                                  compositor_transform_node.scroll_offset);
 }
 
-void PropertyTreeManager::UpdateLayerScrollMapping(
-    cc::Layer* layer,
-    const TransformPaintPropertyNode* transform) {
-  auto* scroll_node = transform->FindEnclosingScrollNode();
-  int scroll_node_id = EnsureCompositorScrollNode(scroll_node);
-  layer->SetScrollTreeIndex(scroll_node_id);
-  auto& compositor_scroll_node = *GetScrollTree().Node(scroll_node_id);
-
-  if (!transform->ScrollNode())
-    return;
-
-  auto& compositor_transform_node =
-      *GetTransformTree().Node(compositor_scroll_node.transform_id);
-  // TODO(pdr): Set this in updateScrollAndScrollTranslationNodes once the
-  // layer id is no longer needed.
-  GetScrollTree().SetScrollOffset(scroll_node->GetCompositorElementId(),
-                                  compositor_transform_node.scroll_offset);
-
-  // TODO(pdr): This approach of setting a callback on all Layers with a scroll
-  // node is wrong because only the base scrollable layer needs this callback.
-  // This should be fixed as part of correctly creating scrollable layers in
-  // https://crbug.com/738613.
-  if (auto* scroll_client = scroll_node->ScrollClient()) {
-    layer->set_did_scroll_callback(
-        base::Bind(&blink::WebLayerScrollClient::DidScroll,
-                   base::Unretained(scroll_client)));
-  }
+int PropertyTreeManager::CompositorScrollNode(
+    const ScrollPaintPropertyNode* scroll_node) {
+  auto it = scroll_node_map_.find(scroll_node);
+  DCHECK(it != scroll_node_map_.end());
+  return it->value;
 }
 
 void PropertyTreeManager::EmitClipMaskLayer() {
@@ -344,9 +321,14 @@ void PropertyTreeManager::EmitClipMaskLayer() {
   root_layer_->AddChild(mask_layer);
   mask_layer->set_property_tree_sequence_number(sequence_number_);
   mask_layer->SetTransformTreeIndex(EnsureCompositorTransformNode(clip_space));
+  // TODO(pdr): This could be a performance issue because it crawls up the
+  // transform tree for each pending layer. If this is on profiles, we should
+  // cache a lookup of transform node to scroll translation transform node.
+  const auto* scroll_node = clip_space->FindEnclosingScrollNode();
+  int scroll_id = CompositorScrollNode(scroll_node);
+  mask_layer->SetScrollTreeIndex(scroll_id);
   mask_layer->SetClipTreeIndex(clip_id);
   mask_layer->SetEffectTreeIndex(mask_effect.id);
-  UpdateLayerScrollMapping(mask_layer, clip_space);
 }
 
 void PropertyTreeManager::CloseCcEffect() {

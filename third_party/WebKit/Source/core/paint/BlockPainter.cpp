@@ -168,21 +168,42 @@ void BlockPainter::PaintInlineBox(const InlineBox& inline_box,
 
 void BlockPainter::PaintScrollHitTestDisplayItem(const PaintInfo& paint_info) {
   DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
+
+  // Scroll hit test display items are only needed for compositing. This flag is
+  // used for for printing and drag images which do not need hit testing.
+  if (paint_info.GetGlobalPaintFlags() & kGlobalPaintFlattenCompositingLayers)
+    return;
+
   // Without RootLayerScrolling, the LayoutView will not create scroll paint
   // properties and will rely on the LocalFrameView providing a scroll
   // translation property.
   if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled() &&
       layout_block_.IsLayoutView()) {
     auto* view = layout_block_.GetFrame()->View();
-    auto* contents_state = view->TotalPropertyTreeStateForContents();
-    // Paint chunk properties should already be setup to be under the root
-    // frame's scroll translation node so a property scope is not needed.
+    const auto& contents_state = *view->TotalPropertyTreeStateForContents();
     DCHECK(paint_info.context.GetPaintController()
                .CurrentPaintChunkProperties()
-               .property_tree_state.Transform() == contents_state->Transform());
-    if (contents_state->Transform()->ScrollNode()) {
+               .property_tree_state == contents_state);
+    if (contents_state.Transform()->ScrollNode()) {
+      auto property_state = contents_state;
+      // Remove the view's scroll translation so the scroll hit test is in the
+      // unscrolled space.
+      if (view->ScrollTranslation()) {
+        DCHECK(contents_state.Transform() == view->ScrollTranslation());
+        property_state.SetTransform(property_state.Transform()->Parent());
+      }
+      // Remove the view's clip so the scroll hit test is in the unclipped
+      // space.
+      if (view->ContentClip()) {
+        DCHECK(contents_state.Clip() == view->ContentClip());
+        property_state.SetClip(property_state.Clip()->Parent());
+      }
+      ScopedPaintChunkProperties scroll_hit_test_properties(
+          paint_info.context.GetPaintController(), layout_block_,
+          property_state);
       ScrollHitTestDisplayItem::Record(paint_info.context, layout_block_,
-                                       DisplayItem::kScrollHitTest);
+                                       DisplayItem::kScrollHitTest,
+                                       view->ScrollTranslation());
     }
     // The LayoutView should not create a scroll translation or scroll node,
     // instead relying on the LocalFrameView's scroll translation and scroll.
@@ -199,12 +220,17 @@ void BlockPainter::PaintScrollHitTestDisplayItem(const PaintInfo& paint_info) {
       layout_block_.FirstFragment()
           ? layout_block_.FirstFragment()->PaintProperties()
           : nullptr;
+  // If there is an associated scroll node, emit a scroll hit test display item.
   if (properties && properties->Scroll()) {
-    ScopedPaintChunkProperties scroll_properties(
+    DCHECK(properties->ScrollTranslation());
+    // The local border box properties are used instead of the contents
+    // properties so that the scroll hit test is not clipped or scrolled.
+    ScopedPaintChunkProperties scroll_hit_test_properties(
         paint_info.context.GetPaintController(), layout_block_,
-        layout_block_.FirstFragment()->ContentsProperties());
+        *layout_block_.FirstFragment()->LocalBorderBoxProperties());
     ScrollHitTestDisplayItem::Record(paint_info.context, layout_block_,
-                                     DisplayItem::kScrollHitTest);
+                                     DisplayItem::kScrollHitTest,
+                                     properties->ScrollTranslation());
   }
 }
 

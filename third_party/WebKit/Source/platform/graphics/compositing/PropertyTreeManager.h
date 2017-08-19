@@ -88,11 +88,14 @@ class PropertyTreeManager {
   // if none yet exists, and return the compositor node's 'node id', a.k.a.,
   // 'node index'.
 
+  // Returns the compositor transform node id. If a compositor transform node
+  // does not exist, it is created. Any transforms that are for scroll offset
+  // translation will also ensure the associated scroll node is kept up to date.
   int EnsureCompositorTransformNode(const TransformPaintPropertyNode*);
   int EnsureCompositorClipNode(const ClipPaintPropertyNode*);
-  // Update the layer->scroll and scroll->layer mapping. The latter is temporary
-  // until |owning_layer_id| is removed from the scroll node.
-  void UpdateLayerScrollMapping(cc::Layer*, const TransformPaintPropertyNode*);
+  // Scroll nodes are created when calling |EnsureCompositorTransformNode| for
+  // their associated scroll offset transform node.
+  int CompositorScrollNode(const ScrollPaintPropertyNode*);
 
   // This function is expected to be invoked right before emitting each layer.
   // It keeps track of the nesting of clip and effects, output a composited
@@ -127,10 +130,18 @@ class PropertyTreeManager {
   cc::EffectTree& GetEffectTree();
   cc::ScrollTree& GetScrollTree();
 
+  // Ensures the corresponding compositor scroll node exists. Unlike other
+  // Ensure* functions, this should only be called by
+  // |UpdateScrollAndScrollTranslationNodes| to prevent scroll nodes from being
+  // created without updating their associated scroll offset translations.
   int EnsureCompositorScrollNode(const ScrollPaintPropertyNode*);
 
   // Scroll translation has special treatment in the transform and scroll trees.
-  void UpdateScrollAndScrollTranslationNodes(const TransformPaintPropertyNode*);
+  // This creates or updates the scroll offset translation's corresponding
+  // compositor scroll node, and adjusts the compositor scroll offset
+  // translation to account for differences in the blink and cc transform trees.
+  void UpdateScrollAndScrollTranslationNodes(
+      const TransformPaintPropertyNode* scroll_offset_translation);
 
   PropertyTreeManagerClient& client_;
 

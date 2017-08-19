@@ -9,6 +9,7 @@
 #include "platform/PlatformExport.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/graphics/paint/DisplayItem.h"
+#include "platform/graphics/paint/TransformPaintPropertyNode.h"
 
 namespace blink {
 
@@ -19,8 +20,14 @@ class GraphicsContext;
 // scroll hit testing must be in paint order.
 class PLATFORM_EXPORT ScrollHitTestDisplayItem final : public DisplayItem {
  public:
-  ScrollHitTestDisplayItem(const DisplayItemClient&, Type);
+  ScrollHitTestDisplayItem(const DisplayItemClient&,
+                           Type,
+                           PassRefPtr<const TransformPaintPropertyNode>);
   ~ScrollHitTestDisplayItem();
+
+  const TransformPaintPropertyNode& scroll_offset_node() const {
+    return *scroll_offset_node_;
+  }
 
   // DisplayItem
   void Replay(GraphicsContext&) const override;
@@ -36,7 +43,15 @@ class PLATFORM_EXPORT ScrollHitTestDisplayItem final : public DisplayItem {
   // item.
   static void Record(GraphicsContext&,
                      const DisplayItemClient&,
-                     DisplayItem::Type);
+                     DisplayItem::Type,
+                     PassRefPtr<const TransformPaintPropertyNode>);
+
+ private:
+  const ScrollPaintPropertyNode& scroll_node() const {
+    return *scroll_offset_node_->ScrollNode();
+  }
+
+  RefPtr<const TransformPaintPropertyNode> scroll_offset_node_;
 };
 
 }  // namespace blink

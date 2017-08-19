@@ -14,6 +14,7 @@
 #include "core/paint/PaintLayerPainter.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/paint/DrawingDisplayItem.h"
+#include "platform/graphics/paint/ScrollHitTestDisplayItem.h"
 
 namespace blink {
 
@@ -398,6 +399,57 @@ TEST_P(PaintControllerPaintTestForSlimmingPaintV2,
                       TestDisplayItem(container, kScrollHitTestType),
                       TestDisplayItem(child, kBackgroundType),
                       TestDisplayItem(pos_z_child, kBackgroundType));
+}
+
+// TODO(pdr): Move this to BlockPainterTest.cpp.
+TEST_P(PaintControllerPaintTestForSlimmingPaintV2, ScrollHitTestProperties) {
+  SetBodyInnerHTML(
+      "<style>"
+      "  ::-webkit-scrollbar { display: none }"
+      "  body { margin: 0 }"
+      "  #container { width: 200px; height: 200px;"
+      "              overflow: scroll; background: red; }"
+      "  #child { width: 100px; height: 300px; background: green; }"
+      "</style>"
+      "<div id='container'>"
+      "  <div id='child'></div>"
+      "</div>");
+
+  // The document should not scroll.
+  const PaintChunk& html_chunk = RootPaintController().PaintChunks()[1];
+  auto* html_transform = html_chunk.properties.property_tree_state.Transform();
+  EXPECT_EQ(nullptr, html_transform->ScrollNode());
+  auto* html_clip = html_chunk.properties.property_tree_state.Clip();
+
+  // The scroll hit test chunk should not be scrolled or clipped.
+  const PaintChunk& scroll_hit_test_chunk =
+      RootPaintController().PaintChunks()[2];
+  EXPECT_EQ(kScrollHitTestType, scroll_hit_test_chunk.id.type);
+  auto* scroll_hit_test_transform =
+      scroll_hit_test_chunk.properties.property_tree_state.Transform();
+  auto* scroll_hit_test_clip =
+      scroll_hit_test_chunk.properties.property_tree_state.Clip();
+  EXPECT_EQ(html_transform, scroll_hit_test_transform);
+  EXPECT_EQ(nullptr, scroll_hit_test_transform->ScrollNode());
+  EXPECT_EQ(html_clip, scroll_hit_test_clip);
+
+  // The scrolled contents chunk should be scrolled and clipped.
+  const PaintChunk& contents_chunk = RootPaintController().PaintChunks()[3];
+  auto* contents_transform =
+      contents_chunk.properties.property_tree_state.Transform();
+  auto* contents_clip = contents_chunk.properties.property_tree_state.Clip();
+  EXPECT_NE(scroll_hit_test_transform, contents_transform);
+  EXPECT_NE(nullptr, contents_transform->ScrollNode());
+  EXPECT_NE(scroll_hit_test_clip, contents_clip);
+
+  // The scroll hit test maintains a reference to a scroll node and the contents
+  // should be scrolled by this node.
+  const auto& scroll_hit_test_display_item =
+      static_cast<const ScrollHitTestDisplayItem&>(
+          RootPaintController()
+              .GetDisplayItemList()[scroll_hit_test_chunk.begin_index]);
+  EXPECT_EQ(contents_transform,
+            &scroll_hit_test_display_item.scroll_offset_node());
 }
 
 }  // namespace blink
