@@ -19,15 +19,14 @@ message CaptivePortalCert {
 }
 
 message MITMSoftware {
-  // Regex that SSLErrorHandler matches against the |issuer.common_name|
-  // of a certificate to determine whether or not it's a MITM software
-  // certificate.
-  optional string regex = 1;
-  // Name of the MITM software to display on the interstitial.
-  optional string name = 2;
-  // Link to a help center URL with information about how to uninstall or
-  // reconfigure the offending MITM software.
-  optional string help_url = 3;
+  // Human readable name of the MITM software to display on the interstitial.
+  required string name = 1;
+
+  // Substring of the issuer common name on this MITM software's certificates.
+  optional string issuer_common_name = 2;
+
+  // Substring of the issuer organization on this MITM software's certificates.
+  optional string issuer_org = 3;
 }
 
 message SSLErrorAssistantConfig {
