@@ -103,6 +103,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
     DEFERRING_START,
     WILL_REDIRECT_REQUEST,
     DEFERRING_REDIRECT,
+    WILL_FAIL_REQUEST,
+    DEFERRING_FAILURE,
     CANCELING,
     WILL_PROCESS_RESPONSE,
     DEFERRING_RESPONSE,
@@ -140,6 +142,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   net::HostPortPair GetSocketAddress() override;
   const net::HttpResponseHeaders* GetResponseHeaders() override;
   net::HttpResponseInfo::ConnectionInfo GetConnectionInfo() override;
+  base::Optional<net::SSLInfo> GetSSLInfo() override;
+  base::Optional<bool> GetFatalCertError() override;
   void RegisterThrottleForTesting(
       std::unique_ptr<NavigationThrottle> navigation_throttle) override;
   NavigationThrottle::ThrottleCheckResult CallWillStartRequestForTesting(
@@ -300,6 +304,15 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
       RenderProcessHost* post_redirect_process,
       const ThrottleChecksFinishedCallback& callback);
 
+  // Called when the URLRequest will fail.
+  // |callback| will be called when all throttles check have completed. This
+  // will allow the caller to explicitly cancel the navigation (with
+  // ERR_ABORTED) or let the failure proceed as normal.
+  void WillFailRequest(net::Error net_error,
+                       base::Optional<net::SSLInfo> ssl_info,
+                       base::Optional<bool> fatal_cert_error,
+                       const ThrottleChecksFinishedCallback& callback);
+
   // Called when the URLRequest has delivered response headers and metadata.
   // |callback| will be called when all throttle checks have completed,
   // allowing the caller to cancel the navigation or let it proceed.
@@ -412,6 +425,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
 
   NavigationThrottle::ThrottleCheckResult CheckWillStartRequest();
   NavigationThrottle::ThrottleCheckResult CheckWillRedirectRequest();
+  NavigationThrottle::ThrottleCheckResult CheckWillFailRequest();
   NavigationThrottle::ThrottleCheckResult CheckWillProcessResponse();
 
   void ResumeInternal();
@@ -478,6 +492,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   bool subframe_entry_committed_;
   scoped_refptr<net::HttpResponseHeaders> response_headers_;
   net::HttpResponseInfo::ConnectionInfo connection_info_;
+  base::Optional<net::SSLInfo> ssl_info_;
+  base::Optional<bool> fatal_cert_error_;
 
   // The original url of the navigation. This may differ from |url_| if the
   // navigation encounters redirects.

@@ -108,6 +108,8 @@ NavigationHandleImpl::NavigationHandleImpl(
       should_update_history_(false),
       subframe_entry_committed_(false),
       connection_info_(net::HttpResponseInfo::CONNECTION_INFO_UNKNOWN),
+      ssl_info_(base::nullopt),
+      fatal_cert_error_(base::nullopt),
       original_url_(url),
       state_(INITIAL),
       is_transferring_(false),
@@ -332,6 +334,14 @@ const net::HttpResponseHeaders* NavigationHandleImpl::GetResponseHeaders() {
 net::HttpResponseInfo::ConnectionInfo
 NavigationHandleImpl::GetConnectionInfo() {
   return connection_info_;
+}
+
+base::Optional<net::SSLInfo> NavigationHandleImpl::GetSSLInfo() {
+  return ssl_info_;
+}
+
+base::Optional<bool> NavigationHandleImpl::GetFatalCertError() {
+  return fatal_cert_error_;
 }
 
 bool NavigationHandleImpl::HasCommitted() {
@@ -669,6 +679,37 @@ void NavigationHandleImpl::WillRedirectRequest(
   RunCompleteCallback(result);
 }
 
+void NavigationHandleImpl::WillFailRequest(
+    net::Error net_error,
+    base::Optional<net::SSLInfo> ssl_info,
+    base::Optional<bool> fatal_cert_error,
+    const ThrottleChecksFinishedCallback& callback) {
+  TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationHandle", this,
+                               "WillFailRequest");
+
+  state_ = WILL_FAIL_REQUEST;
+  complete_callback_ = callback;
+
+  net_error_code_ = net_error;
+  ssl_info_ = ssl_info;
+  fatal_cert_error_ = fatal_cert_error;
+
+  // Notify each throttle of the request.
+  base::Closure on_defer_callback_copy = on_defer_callback_for_testing_;
+  NavigationThrottle::ThrottleCheckResult result = CheckWillFailRequest();
+  if (result == NavigationThrottle::DEFER) {
+    if (!on_defer_callback_copy.is_null())
+      on_defer_callback_copy.Run();
+    // DO NOT ADD CODE: the NavigationHandle might have been destroyed during
+    // one of the NavigationThrottle checks.
+    return;
+  }
+
+  TRACE_EVENT_ASYNC_STEP_INTO1("navigation", "NavigationHandle", this,
+                               "WillFailRequest", "result", result);
+  RunCompleteCallback(result);
+}
+
 void NavigationHandleImpl::WillProcessResponse(
     RenderFrameHostImpl* render_frame_host,
     scoped_refptr<net::HttpResponseHeaders> response_headers,
@@ -947,6 +988,51 @@ NavigationHandleImpl::CheckWillRedirectRequest() {
   // Notify the delegate that a redirect was encountered and will be followed.
   if (GetDelegate())
     GetDelegate()->DidRedirectNavigation(this);
+
+  return NavigationThrottle::PROCEED;
+}
+
+NavigationThrottle::ThrottleCheckResult
+NavigationHandleImpl::CheckWillFailRequest() {
+  DCHECK(state_ == WILL_FAIL_REQUEST || state_ == DEFERRING_FAILURE);
+  DCHECK(state_ != WILL_FAIL_REQUEST || next_index_ == 0);
+  DCHECK(state_ != DEFERRING_FAILURE || next_index_ != 0);
+
+  base::WeakPtr<NavigationHandleImpl> weak_ref = weak_factory_.GetWeakPtr();
+  for (size_t i = next_index_; i < throttles_.size(); ++i) {
+    NavigationThrottle::ThrottleCheckResult result =
+        throttles_[i]->WillFailRequest();
+    if (!weak_ref) {
+      // The NavigationThrottle execution has destroyed this NavigationHandle.
+      // Return immediately.
+      return NavigationThrottle::DEFER;
+    }
+    TRACE_EVENT_ASYNC_STEP_INTO0(
+        "navigation", "NavigationHandle", this,
+        base::StringPrintf("CheckWillProcessResponse: %s: %d",
+                           throttles_[i]->GetNameForLogging(), result));
+    switch (result) {
+      case NavigationThrottle::PROCEED:
+        continue;
+
+      case NavigationThrottle::CANCEL:
+      case NavigationThrottle::CANCEL_AND_IGNORE:
+      case NavigationThrottle::BLOCK_RESPONSE:
+        state_ = CANCELING;
+        return result;
+
+      case NavigationThrottle::DEFER:
+        state_ = DEFERRING_FAILURE;
+        next_index_ = i + 1;
+        return result;
+
+      case NavigationThrottle::BLOCK_REQUEST:
+      case NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE:
+        NOTREACHED();
+    }
+  }
+  next_index_ = 0;
+  state_ = WILL_FAIL_REQUEST;
 
   return NavigationThrottle::PROCEED;
 }

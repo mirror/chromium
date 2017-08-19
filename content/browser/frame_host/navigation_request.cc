@@ -711,7 +711,6 @@ void NavigationRequest::OnResponseStarted(
                  base::Unretained(this)));
 }
 
-// TODO(crbug.com/751941): Pass certificate_error_info to navigation throttles
 void NavigationRequest::OnRequestFailed(bool has_stale_copy_in_cache,
                                         int net_error,
                                         base::Optional<net::SSLInfo> ssl_info,
@@ -719,63 +718,15 @@ void NavigationRequest::OnRequestFailed(bool has_stale_copy_in_cache,
   DCHECK(state_ == STARTED || state_ == RESPONSE_STARTED);
   TRACE_EVENT_ASYNC_STEP_INTO1("navigation", "NavigationRequest", this,
                                "OnRequestFailed", "error", net_error);
-  state_ = FAILED;
-  navigation_handle_->set_net_error_code(static_cast<net::Error>(net_error));
 
-  // With PlzNavigate, debug URLs will give a failed navigation because the
-  // WebUI backend won't find a handler for them. They will be processed in the
-  // renderer, however do not discard the pending entry so that the URL bar
-  // shows them correctly.
-  if (!IsRendererDebugURL(common_params_.url)) {
-    int expected_pending_entry_id =
-        navigation_handle_.get() ? navigation_handle_->pending_nav_entry_id()
-                                 : nav_entry_id_;
-    frame_tree_node_->navigator()->DiscardPendingEntryIfNeeded(
-        expected_pending_entry_id);
-  }
+  has_stale_copy_in_cache_ = has_stale_copy_in_cache;
+  net_error_ = net_error;
 
-  // If the request was canceled by the user do not show an error page.
-  if (net_error == net::ERR_ABORTED) {
-    frame_tree_node_->ResetNavigationRequest(false, true);
-    return;
-  }
-
-  // Decide whether to leave the error page in the original process.
-  // * If this was a renderer-initiated navigation, and the request is blocked
-  //   because the initiating document wasn't allowed to make the request,
-  //   commit the error in the existing process. This is a strategy to to avoid
-  //   creating a process for the destination, which may belong to an origin
-  //   with a higher privilege level.
-  // * Error pages resulting from errors like network outage, no network, or DNS
-  //   error can reasonably expect that a reload at a later point in time would
-  //   work. These should be allowed to transfer away from the current process:
-  //   they do belong to whichever process that will host the destination URL,
-  //   as a reload will end up committing in that process anyway.
-  // * Error pages that arise during browser-initiated navigations to blocked
-  //   URLs should be allowed to transfer away from the current process, which
-  //   didn't request the navigation and may have a higher privilege level than
-  //   the blocked destination.
-  RenderFrameHostImpl* render_frame_host = nullptr;
-  if (net_error == net::ERR_BLOCKED_BY_CLIENT && !browser_initiated()) {
-    render_frame_host = frame_tree_node_->current_frame_host();
-  } else {
-    render_frame_host =
-        frame_tree_node_->render_manager()->GetFrameHostForNavigation(*this);
-  }
-
-  // Don't ask the renderer to commit an URL if the browser will kill it when
-  // it does.
-  DCHECK(render_frame_host->CanCommitURL(common_params_.url));
-
-  NavigatorImpl::CheckWebUIRendererDoesNotDisplayNormalURL(render_frame_host,
-                                                           common_params_.url);
-
-  TransferNavigationHandleOwnership(render_frame_host);
-  render_frame_host->navigation_handle()->ReadyToCommitNavigation(
-      render_frame_host);
-  render_frame_host->FailedNavigation(common_params_, begin_params_,
-                                      request_params_, has_stale_copy_in_cache,
-                                      net_error);
+  // Check if the navigation should be allowed to proceed.
+  navigation_handle_->WillFailRequest(
+      static_cast<net::Error>(net_error), ssl_info, fatal_cert_error,
+      base::Bind(&NavigationRequest::OnFailureChecksComplete,
+                 base::Unretained(this)));
 }
 
 void NavigationRequest::OnRequestStarted(base::TimeTicks timestamp) {
@@ -928,6 +879,70 @@ void NavigationRequest::OnRedirectChecksComplete(
   }
 
   loader_->FollowRedirect();
+}
+
+void NavigationRequest::OnFailureChecksComplete(
+    NavigationThrottle::ThrottleCheckResult result) {
+  DCHECK(result != NavigationThrottle::DEFER);
+
+  state_ = FAILED;
+  // The error code was set on navigation_handle_ before checks, so we don't set
+  // it here.
+
+  // With PlzNavigate, debug URLs will give a failed navigation because the
+  // WebUI backend won't find a handler for them. They will be processed in the
+  // renderer, however do not discard the pending entry so that the URL bar
+  // shows them correctly.
+  if (!IsRendererDebugURL(common_params_.url)) {
+    int expected_pending_entry_id =
+        navigation_handle_.get() ? navigation_handle_->pending_nav_entry_id()
+                                 : nav_entry_id_;
+    frame_tree_node_->navigator()->DiscardPendingEntryIfNeeded(
+        expected_pending_entry_id);
+  }
+
+  // If the request was canceled by the user do not show an error page.
+  if (net_error_ == net::ERR_ABORTED) {
+    frame_tree_node_->ResetNavigationRequest(false, true);
+    return;
+  }
+
+  // Decide whether to leave the error page in the original process.
+  // * If this was a renderer-initiated navigation, and the request is blocked
+  //   because the initiating document wasn't allowed to make the request,
+  //   commit the error in the existing process. This is a strategy to to avoid
+  //   creating a process for the destination, which may belong to an origin
+  //   with a higher privilege level.
+  // * Error pages resulting from errors like network outage, no network, or DNS
+  //   error can reasonably expect that a reload at a later point in time would
+  //   work. These should be allowed to transfer away from the current process:
+  //   they do belong to whichever process that will host the destination URL,
+  //   as a reload will end up committing in that process anyway.
+  // * Error pages that arise during browser-initiated navigations to blocked
+  //   URLs should be allowed to transfer away from the current process, which
+  //   didn't request the navigation and may have a higher privilege level than
+  //   the blocked destination.
+  RenderFrameHostImpl* render_frame_host = nullptr;
+  if (net_error_ == net::ERR_BLOCKED_BY_CLIENT && !browser_initiated()) {
+    render_frame_host = frame_tree_node_->current_frame_host();
+  } else {
+    render_frame_host =
+        frame_tree_node_->render_manager()->GetFrameHostForNavigation(*this);
+  }
+
+  // Don't ask the renderer to commit an URL if the browser will kill it when
+  // it does.
+  DCHECK(render_frame_host->CanCommitURL(common_params_.url));
+
+  NavigatorImpl::CheckWebUIRendererDoesNotDisplayNormalURL(render_frame_host,
+                                                           common_params_.url);
+
+  TransferNavigationHandleOwnership(render_frame_host);
+  render_frame_host->navigation_handle()->ReadyToCommitNavigation(
+      render_frame_host);
+  render_frame_host->FailedNavigation(common_params_, begin_params_,
+                                      request_params_, has_stale_copy_in_cache_,
+                                      net_error_);
 }
 
 void NavigationRequest::OnWillProcessResponseChecksComplete(
