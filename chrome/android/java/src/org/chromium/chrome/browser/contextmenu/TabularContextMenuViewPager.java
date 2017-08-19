@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.contextmenu;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.View;
@@ -27,6 +28,10 @@ public class TabularContextMenuViewPager extends ViewPager {
         super(context, attrs);
     }
 
+    public static int getContextMenuWidthPx(Resources resources) {
+        return resources.getDisplayMetrics().widthPixels;
+    }
+
     /**
      * Used to show the full ViewPager dialog. Without this the dialog would have no height or
      * width.
@@ -42,7 +47,7 @@ public class TabularContextMenuViewPager extends ViewPager {
         // The width of the context menu is defined so that it leaves space between itself and the
         // screen's edges. It is also bounded to a max size to prevent the menu from stretching
         // across a large display (e.g. a tablet screen).
-        int deviceWidthPx = getResources().getDisplayMetrics().widthPixels;
+        int deviceWidthPx = getContextMenuWidthPx(getResources());
         int contextMenuWidth = Math.min(deviceWidthPx - 2 * mContextMenuMinimumPaddingPx,
                 getResources().getDimensionPixelSize(R.dimen.context_menu_max_width));
 

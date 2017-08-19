@@ -38,6 +38,8 @@ import java.util.List;
  * A custom dialog that separates each group into separate tabs. It uses a dialog instead.
  */
 public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemClickListener {
+    private static int sTabLayoutSize;
+
     private ContextMenuDialog mContextMenuDialog;
     private Callback<Integer> mCallback;
     private int mMenuItemHeight;
@@ -131,6 +133,7 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
 
         viewPager.setAdapter(new TabularContextMenuPagerAdapter(viewGroups));
         TabLayout tabLayout = (TabLayout) viewPager.findViewById(R.id.tab_layout);
+        sTabLayoutSize = tabLayout.getHeight();
         if (itemGroups.size() <= 1) {
             tabLayout.setVisibility(View.GONE);
         } else {
@@ -295,5 +298,9 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
      */
     public void setTopContentOffsetY(float topContentOffsetPx) {
         mTopContentOffsetPx = topContentOffsetPx;
+    }
+
+    public static int getTabLayoutSize() {
+        return sTabLayoutSize;
     }
 }

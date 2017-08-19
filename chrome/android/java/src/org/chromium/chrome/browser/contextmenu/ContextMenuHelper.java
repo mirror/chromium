@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.contextmenu;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.util.Pair;
 import android.view.ContextMenu;
@@ -214,7 +215,8 @@ public class ContextMenuHelper implements OnCreateContextMenuListener {
                 ShareHelper.shareImage(activity, result, name);
             }
         };
-        nativeRetrieveImageForShare(mNativeContextMenuHelper, callback, MAX_SHARE_DIMEN_PX);
+        nativeRetrieveImageForShare(
+                mNativeContextMenuHelper, callback, MAX_SHARE_DIMEN_PX, MAX_SHARE_DIMEN_PX);
     }
 
     /**
@@ -223,15 +225,36 @@ public class ContextMenuHelper implements OnCreateContextMenuListener {
      */
     private void getThumbnail(final Callback<Bitmap> callback) {
         if (mNativeContextMenuHelper == 0) return;
-        int maxSizePx = mActivity.getResources().getDimensionPixelSize(
-                R.dimen.context_menu_header_image_max_size);
+
+        Resources res = mActivity.getResources();
+
+        int deviceWidthPx = TabularContextMenuViewPager.getContextMenuWidthPx(res);
+        int contextMenuMinimumPaddingPx =
+                res.getDimensionPixelSize(R.dimen.context_menu_min_padding);
+        int contextMenuWidth = Math.min(deviceWidthPx - 2 * contextMenuMinimumPaddingPx,
+                res.getDimensionPixelSize(R.dimen.context_menu_max_width));
+
+        int maxWidthPx = contextMenuWidth
+                - res.getDimensionPixelSize(R.dimen.context_menu_header_image_width_padding) * 2;
+
+        int tabLayoutSize = TabularContextMenuUi.getTabLayoutSize();
+
+        // Use deviceWidthPx instead of deviceHeightPx because we want to make sure that the context
+        // menu shows when the device is in its smaller height (i.e. landscape mode).
+        int maxHeightPx = Math.min(deviceWidthPx - tabLayoutSize - (2 * contextMenuMinimumPaddingPx)
+                        - res.getDimensionPixelSize(R.dimen.context_menu_image_top_margin) * 2
+                        - res.getDimensionPixelSize(R.dimen.context_menu_selectable_items_min_size),
+                res.getDimensionPixelSize(R.dimen.context_menu_header_image_max_height));
+
         Callback<Bitmap> bitmapCallback = new Callback<Bitmap>() {
             @Override
             public void onResult(Bitmap result) {
                 callback.onResult(result);
             }
+
         };
-        nativeRetrieveImageForContextMenu(mNativeContextMenuHelper, bitmapCallback, maxSizePx);
+        nativeRetrieveImageForContextMenu(
+                mNativeContextMenuHelper, bitmapCallback, maxWidthPx, maxHeightPx);
     }
 
     @Override
@@ -259,9 +282,9 @@ public class ContextMenuHelper implements OnCreateContextMenuListener {
     private native void nativeOnStartDownload(
             long nativeContextMenuHelper, boolean isLink, boolean isDataReductionProxyEnabled);
     private native void nativeSearchForImage(long nativeContextMenuHelper);
-    private native void nativeRetrieveImageForShare(
-            long nativeContextMenuHelper, Callback<byte[]> callback, int maxSizePx);
-    private native void nativeRetrieveImageForContextMenu(
-            long nativeContextMenuHelper, Callback<Bitmap> callback, int maxSizePx);
+    private native void nativeRetrieveImageForShare(long nativeContextMenuHelper,
+            Callback<byte[]> callback, int maxWidthPx, int maxHeightPx);
+    private native void nativeRetrieveImageForContextMenu(long nativeContextMenuHelper,
+            Callback<Bitmap> callback, int maxWidthPx, int maxHeightPx);
     private native void nativeOnContextMenuClosed(long nativeContextMenuHelper);
 }
