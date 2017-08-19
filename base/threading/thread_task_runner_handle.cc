@@ -54,8 +54,7 @@ ScopedClosureRunner ThreadTaskRunnerHandle::OverrideForTesting(
 
   if (!IsSet()) {
     std::unique_ptr<ThreadTaskRunnerHandle> top_level_ttrh =
-        std::make_unique<ThreadTaskRunnerHandle>(
-            std::move(overriding_task_runner));
+        MakeUnique<ThreadTaskRunnerHandle>(std::move(overriding_task_runner));
     return ScopedClosureRunner(base::Bind(
         [](std::unique_ptr<ThreadTaskRunnerHandle> ttrh_to_release) {},
         base::Passed(&top_level_ttrh)));
