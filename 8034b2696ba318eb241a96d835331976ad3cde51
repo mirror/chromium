@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9be07ed3_b1a7d6df",
+        "filename": "chrome/browser/chromeos/policy/policy_cert_verifier_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-19T01:06:13Z",
+      "side": 1,
+      "message": "These changes might seem strange at first glance, but it\u0027s because they\u0027re passed to NSSCertDatabase, which is changing to deal only with NSS types, not X509Certificates.",
+      "range": {
+        "startLine": 109,
+        "startChar": 7,
+        "endLine": 109,
+        "endChar": 32
+      },
+      "revId": "8034b2696ba318eb241a96d835331976ad3cde51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
