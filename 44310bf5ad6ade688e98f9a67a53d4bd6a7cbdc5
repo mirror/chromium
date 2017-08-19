@@ -22,6 +22,30 @@
       "revId": "44310bf5ad6ade688e98f9a67a53d4bd6a7cbdc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cbe42eb_12f1b8b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-19T00:01:30Z",
+      "side": 1,
+      "message": "Also, the code right now doesn\u0027t cache thumbnails for images either. I think it might be because of the same issue as above with the sizes.\nAssuming favicons are always smaller than the requested icon size, maybe we can always make the retrieval/adding for favicons to always be URL with size of 0 (or something constant) in the cache? That way we won\u0027t need to worry about the size being passed to LargeIconBridge and back.",
+      "parentUuid": "719ab012_869c1780",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 93
+      },
+      "revId": "44310bf5ad6ade688e98f9a67a53d4bd6a7cbdc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
