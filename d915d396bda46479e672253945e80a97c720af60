@@ -22,6 +22,30 @@
       "revId": "d915d396bda46479e672253945e80a97c720af60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b65918_1aecce46",
+        "filename": "chrome/browser/apps/guest_view/web_view_interactive_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-19T15:57:24Z",
+      "side": 0,
+      "message": "From the comment, it doesn\u0027t sound like the test ever real made sense to be running on Chrome OS. It\u0027s also been disabled on all platforms for a while now. Do you think just delete it?",
+      "parentUuid": "a2fb5326_c23b27da",
+      "range": {
+        "startLine": 1181,
+        "startChar": 0,
+        "endLine": 1181,
+        "endChar": 47
+      },
+      "revId": "d915d396bda46479e672253945e80a97c720af60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
