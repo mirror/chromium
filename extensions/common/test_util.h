@@ -15,9 +15,6 @@ class ExtensionBuilder;
 
 namespace test_util {
 
-// Adds an extension manifest to a builder.
-ExtensionBuilder BuildExtension(ExtensionBuilder builder);
-
 // Adds an app manifest to a builder.
 ExtensionBuilder BuildApp(ExtensionBuilder builder);
 
