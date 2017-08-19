@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2725cbab_831fcae9",
+        "filename": "base/test/test_file_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-19T00:52:51Z",
+      "side": 0,
+      "message": "It\u0027s nice that this function is in base/test/test_file_util. op\u003c\u003c is in the main code, so it\u0027s much easier to end up (needlessly) shipping it to users. Could we move op\u003c\u003c to here too?",
+      "range": {
+        "startLine": 24,
+        "startChar": 18,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "2da9dade6f32e245ae78cc788086ea7087b2c7b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
