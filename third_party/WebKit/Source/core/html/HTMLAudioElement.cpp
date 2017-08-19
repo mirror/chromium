@@ -27,6 +27,7 @@
 
 #include "core/HTMLNames.h"
 #include "core/dom/ShadowRoot.h"
+#include "core/frame/UseCounter.h"
 
 namespace blink {
 
