@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a9e479d_db224a99",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-19T00:37:24Z",
+      "side": 1,
+      "message": "I don\u0027t really see the necessity of a scope here.\n\nCould you do me a favor by removing this TODO?",
+      "revId": "98633d5f6971fd628a44ae42e2bfe539e6e69984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa19d2d_a90e4ede",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-19T00:37:24Z",
+      "side": 1,
+      "message": "|base| and |extent| seem unused.",
+      "range": {
+        "startLine": 504,
+        "startChar": 1,
+        "endLine": 505,
+        "endChar": 77
+      },
+      "revId": "98633d5f6971fd628a44ae42e2bfe539e6e69984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
