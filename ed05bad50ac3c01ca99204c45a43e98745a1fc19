@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f148d8a9_7e2f985b",
+        "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-08-19T07:28:47Z",
+      "side": 1,
+      "message": "I don\u0027t really like that part, as I mentioned in the description. I just logged the proper offset when the bug is fixed and used it. Akin to screenshot tests, really.",
+      "parentUuid": "bb2f1a63_15996869",
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24bab9db_f699cf51",
         "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
         "patchSetId": 3
@@ -65,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "d41078be_ea681e2b",
+        "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1606,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-08-19T07:28:47Z",
+      "side": 1,
+      "message": "The test itself is mostly taken from FindInPageControllerTest.FindMovesWhenObscuring. We can be sure that the find bar is fully visible because we do RunUntilIdle.",
+      "parentUuid": "d6da0833_a3f2be37",
+      "range": {
+        "startLine": 1606,
+        "startChar": 1,
+        "endLine": 1606,
+        "endChar": 69
+      },
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bcc5c4b_98f8f631",
         "filename": "chrome/browser/ui/find_bar/find_tab_helper.cc",
         "patchSetId": 3
@@ -76,6 +118,30 @@
       "writtenOn": "2017-08-18T20:55:50Z",
       "side": 1,
       "message": "Why does this only apply to windows and linux? Assuming we actually ran this code on mac, won\u0027t it equally apply there?",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 172,
+        "endChar": 40
+      },
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08ff0e9_a8863e32",
+        "filename": "chrome/browser/ui/find_bar/find_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-08-19T07:28:47Z",
+      "side": 1,
+      "message": "ScreenMac does not define own version of Screen::ScreenToDIPRectInWindow. Mac OS, as I understand does not have any resizing issues because they always use native pixels.",
+      "parentUuid": "2bcc5c4b_98f8f631",
       "range": {
         "startLine": 172,
         "startChar": 4,
