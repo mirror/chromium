@@ -60,6 +60,7 @@
 #include "core/css/PropertyRegistry.h"
 #include "core/css/StylePropertySet.h"
 #include "core/css/StyleRule.h"
+#include "core/css/properties/CSSPropertyAPI.h"
 #include "core/css/resolver/CSSVariableResolver.h"
 #include "core/css/resolver/ElementStyleResources.h"
 #include "core/css/resolver/FilterOperationResolver.h"
@@ -124,7 +125,7 @@ void StyleBuilder::ApplyProperty(CSSPropertyID id,
     ApplyProperty(id, state, *resolved_value);
 
     if (!state.Style()->HasVariableReferenceFromNonInheritedProperty() &&
-        !CSSPropertyMetadata::IsInheritedProperty(id))
+        !CSSPropertyAPI::Get(id).IsInheritedProperty())
       state.Style()->SetHasVariableReferenceFromNonInheritedProperty();
     return;
   }
@@ -150,11 +151,11 @@ void StyleBuilder::ApplyProperty(CSSPropertyID id,
   }
 
   if (is_inherit && !state.ParentStyle()->HasExplicitlyInheritedProperties() &&
-      !CSSPropertyMetadata::IsInheritedProperty(id)) {
+      !CSSPropertyAPI::Get(id).IsInheritedProperty()) {
     state.ParentStyle()->SetHasExplicitlyInheritedProperties();
   } else if (value.IsUnsetValue()) {
     DCHECK(!is_inherit && !is_initial);
-    if (CSSPropertyMetadata::IsInheritedProperty(id))
+    if (CSSPropertyAPI::Get(id).IsInheritedProperty())
       is_inherit = true;
     else
       is_initial = true;
