@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "857fe1a4_8cb08978",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-19T01:33:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba141e3d_127fa6ec",
+      "range": {
+        "startLine": 51,
+        "startChar": 21,
+        "endLine": 51,
+        "endChar": 43
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7867367_4e1529bd",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "17b1adad_dfa331e3",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-19T01:33:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7867367_4e1529bd",
+      "range": {
+        "startLine": 89,
+        "startChar": 41,
+        "endLine": 89,
+        "endChar": 46
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "928ddb39_b76238d9",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 10
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-18T22:16:14Z",
       "side": 1,
       "message": "This should be base::MakeUnique\u003cOriginData\u003e(origin_id, time);",
+      "range": {
+        "startLine": 105,
+        "startChar": 11,
+        "endLine": 105,
+        "endChar": 60
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933ce458_ea6164b5",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-19T01:33:26Z",
+      "side": 1,
+      "message": "ctor is private. And don\u0027t want to expose this ctor. Use WrapUnique to avoid add friend function.",
+      "parentUuid": "928ddb39_b76238d9",
       "range": {
         "startLine": 105,
         "startChar": 11,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fd85af90_bbcb5783",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-19T01:33:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "107e9245_f6e106cb",
+      "range": {
+        "startLine": 109,
+        "startChar": 13,
+        "endLine": 109,
+        "endChar": 35
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac7fe30d_ab23a7da",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 10
@@ -114,6 +210,30 @@
       "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a41fb922_760b9606",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-19T01:33:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac7fe30d_ab23a7da",
+      "range": {
+        "startLine": 123,
+        "startChar": 30,
+        "endLine": 123,
+        "endChar": 42
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "32611f4b_795d051b",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-19T01:33:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d8ddeb4_bd80e484",
+      "range": {
+        "startLine": 147,
+        "startChar": 44,
+        "endLine": 147,
+        "endChar": 49
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af3f926c_55ea5423",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 10
@@ -151,6 +295,30 @@
       "writtenOn": "2017-08-18T22:16:14Z",
       "side": 1,
       "message": "also base::MakeUnique\u003c\u003e",
+      "range": {
+        "startLine": 163,
+        "startChar": 11,
+        "endLine": 163,
+        "endChar": 27
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be045c87_6c93abb7",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-19T01:33:26Z",
+      "side": 1,
+      "message": "Same reason.",
+      "parentUuid": "af3f926c_55ea5423",
       "range": {
         "startLine": 163,
         "startChar": 11,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "456d0856_bf91cddf",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-19T01:33:26Z",
+      "side": 1,
+      "message": "One of the |storage_dict| is const and the other is not. Getting const |storage_dict| avoids writting to persistent storage.\n\nDictionaryPrefUpdate will create an entry if there isn\u0027t one. So in read-only cases, we don\u0027t want persistent storage to be touched.",
+      "parentUuid": "38d6c147_0c68278d",
+      "range": {
+        "startLine": 184,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 8
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "918905dd_f258a7c8",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 10
@@ -206,6 +398,30 @@
       "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481c4ac5_7d7e9386",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-19T01:33:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "918905dd_f258a7c8",
+      "range": {
+        "startLine": 185,
+        "startChar": 42,
+        "endLine": 185,
+        "endChar": 52
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "a63eb9d7_5474f0f5",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-19T01:33:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbdcf6ca_08602ad4",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 2
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c17dbf7_ec372a84",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 10
@@ -252,6 +492,30 @@
       "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40757882_662f2596",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-19T01:33:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c17dbf7_ec372a84",
+      "range": {
+        "startLine": 329,
+        "startChar": 2,
+        "endLine": 329,
+        "endChar": 7
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "2acc74b0_618c6460",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-19T01:33:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "572ba683_fc056b60",
+      "range": {
+        "startLine": 404,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 7
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d23534fb_f3ae2d20",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 10
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "e02f7cd8_3621bc4b",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-19T01:33:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d23534fb_f3ae2d20",
+      "range": {
+        "startLine": 431,
+        "startChar": 2,
+        "endLine": 431,
+        "endChar": 7
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b654d865_e8e8ff0a",
         "filename": "components/cdm/browser/media_drm_storage_impl.h",
         "patchSetId": 10
@@ -321,6 +633,30 @@
       "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d431470_42a855c8",
+        "filename": "components/cdm/browser/media_drm_storage_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-19T01:33:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b654d865_e8e8ff0a",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 8
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
