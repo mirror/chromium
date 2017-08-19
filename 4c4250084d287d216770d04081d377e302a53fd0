@@ -22,6 +22,23 @@
       "revId": "4c4250084d287d216770d04081d377e302a53fd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a47b4739_aa06c8e6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-19T00:09:47Z",
+      "side": 1,
+      "message": "Actually TextClassifier does not exist for Android versions below O, maybe here we also need to check the version.",
+      "revId": "4c4250084d287d216770d04081d377e302a53fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
