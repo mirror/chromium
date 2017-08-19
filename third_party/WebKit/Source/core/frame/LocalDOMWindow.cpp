@@ -375,6 +375,7 @@ void LocalDOMWindow::DispatchWindowLoadEvent() {
         ->PostTask(BLINK_FROM_HERE,
                    WTF::Bind(&LocalDOMWindow::DispatchLoadEvent,
                              WrapPersistent(this)));
+    document()->SuppressLoadEvent();
     return;
   }
   DispatchLoadEvent();
@@ -1488,6 +1489,9 @@ void LocalDOMWindow::DispatchLoadEvent() {
     DCHECK(performance);
     performance->NotifyNavigationTimingToObservers();
   }
+
+  // Mark the document as completely loaded before firing load on FrameOwner.
+  document()->SuppressLoadEvent();
 
   // For load events, send a separate load event to the enclosing frame only.
   // This is a DOM extension and is independent of bubbling/capturing rules of

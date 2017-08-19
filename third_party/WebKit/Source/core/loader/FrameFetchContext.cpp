@@ -707,10 +707,7 @@ bool FrameFetchContext::DefersLoading() const {
 }
 
 bool FrameFetchContext::IsLoadComplete() const {
-  if (IsDetached())
-    return true;
-
-  return document_ && document_->LoadEventFinished();
+  return IsDetached() || !GetFrame()->IsLoading();
 }
 
 bool FrameFetchContext::PageDismissalEventBeingDispatched() const {
