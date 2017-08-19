@@ -28,6 +28,7 @@
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/quads/copy_output_result.h"
 #include "components/viz/service/display/gl_renderer.h"
+#include "components/viz/service/display/skia_renderer.h"
 #include "components/viz/test/paths.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -201,7 +202,7 @@ void PixelTest::SetUpSoftwareRenderer() {
       main_thread_task_runner_.get(), delegated_sync_points_required,
       settings_.enable_color_correct_rasterization,
       settings_.resource_settings);
-  auto renderer = base::MakeUnique<SoftwareRenderer>(
+  auto renderer = base::MakeUnique<viz::SkiaRenderer>(
       &renderer_settings_, output_surface_.get(), resource_provider_.get());
   software_renderer_ = renderer.get();
   renderer_ = std::move(renderer);

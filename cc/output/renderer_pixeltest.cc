@@ -644,7 +644,7 @@ void CreateTestY16TextureDrawQuad_TwoColor(
 }
 
 typedef ::testing::Types<viz::GLRenderer,
-                         SoftwareRenderer,
+                         viz::SkiaRenderer,
                          GLRendererWithExpandedViewport,
                          SoftwareRendererWithExpandedViewport>
     RendererTypes;
@@ -653,7 +653,8 @@ TYPED_TEST_CASE(RendererPixelTest, RendererTypes);
 template <typename RendererType>
 class SoftwareRendererPixelTest : public RendererPixelTest<RendererType> {};
 
-typedef ::testing::Types<SoftwareRenderer, SoftwareRendererWithExpandedViewport>
+typedef ::testing::Types<viz::SkiaRenderer,
+                         SoftwareRendererWithExpandedViewport>
     SoftwareRendererTypes;
 TYPED_TEST_CASE(SoftwareRendererPixelTest, SoftwareRendererTypes);
 
@@ -671,8 +672,8 @@ class FuzzyForSoftwareOnlyPixelComparator : public PixelComparator {
   ExactPixelComparator exact_;
 };
 
-template<>
-bool FuzzyForSoftwareOnlyPixelComparator<SoftwareRenderer>::Compare(
+template <>
+bool FuzzyForSoftwareOnlyPixelComparator<viz::SkiaRenderer>::Compare(
     const SkBitmap& actual_bmp,
     const SkBitmap& expected_bmp) const {
   return fuzzy_.Compare(actual_bmp, expected_bmp);
@@ -972,7 +973,8 @@ template <typename TypeParam>
 class IntersectingQuadSoftwareTest
     : public IntersectingQuadPixelTest<TypeParam> {};
 
-typedef ::testing::Types<SoftwareRenderer, SoftwareRendererWithExpandedViewport>
+typedef ::testing::Types<viz::SkiaRenderer,
+                         SoftwareRendererWithExpandedViewport>
     SoftwareRendererTypes;
 typedef ::testing::Types<viz::GLRenderer, GLRendererWithExpandedViewport>
     GLRendererTypes;
@@ -2262,7 +2264,7 @@ class RendererPixelTestWithBackgroundFilter
   gfx::Rect filter_pass_layer_rect_;
 };
 
-typedef ::testing::Types<viz::GLRenderer, SoftwareRenderer>
+typedef ::testing::Types<viz::GLRenderer, viz::SkiaRenderer>
     BackgroundFilterRendererTypes;
 TYPED_TEST_CASE(RendererPixelTestWithBackgroundFilter,
                 BackgroundFilterRendererTypes);
@@ -2718,8 +2720,8 @@ template<typename TypeParam> bool IsSoftwareRenderer() {
   return false;
 }
 
-template<>
-bool IsSoftwareRenderer<SoftwareRenderer>() {
+template <>
+bool IsSoftwareRenderer<viz::SkiaRenderer>() {
   return true;
 }
 

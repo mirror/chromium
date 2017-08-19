@@ -28,7 +28,6 @@ class DirectRenderer;
 class OutputSurface;
 class RendererSettings;
 class ResourceProvider;
-class SoftwareRenderer;
 class TextureMailboxDeleter;
 }  // namespace cc
 
@@ -44,6 +43,7 @@ namespace viz {
 
 class DisplayClient;
 class SharedBitmapManager;
+class SkiaRenderer;
 
 class VIZ_SERVICE_EXPORT DisplayObserver {
  public:
@@ -136,7 +136,7 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
   std::unique_ptr<SurfaceAggregator> aggregator_;
   std::unique_ptr<cc::TextureMailboxDeleter> texture_mailbox_deleter_;
   std::unique_ptr<cc::DirectRenderer> renderer_;
-  cc::SoftwareRenderer* software_renderer_ = nullptr;
+  SkiaRenderer* software_renderer_ = nullptr;
   std::vector<ui::LatencyInfo> stored_latency_info_;
 
  private:
