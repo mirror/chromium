@@ -10,16 +10,31 @@
 
 namespace content {
 
+namespace {
+
+mojom::URLLoaderFactory* g_test_loader_factory;
+
+}  // namespace
+
 AppCacheUpdateJob::UpdateURLLoaderRequest::~UpdateURLLoaderRequest() {}
 
 void AppCacheUpdateJob::UpdateURLLoaderRequest::Start() {
   mojom::URLLoaderClientPtr client;
   client_binding_.Bind(mojo::MakeRequest(&client));
 
-  loader_factory_getter_->GetNetworkFactory()->get()->CreateLoaderAndStart(
-      mojo::MakeRequest(&url_loader_), -1, -1, mojom::kURLLoadOptionNone,
-      request_, std::move(client),
-      net::MutableNetworkTrafficAnnotationTag(GetTrafficAnnotation()));
+  mojom::URLLoaderFactory* loader_factory = nullptr;
+  if (loader_factory_getter_.get()) {
+    loader_factory = loader_factory_getter_->GetNetworkFactory()->get();
+  } else if (g_test_loader_factory) {
+    loader_factory = g_test_loader_factory;
+  }
+
+  if (loader_factory) {
+    loader_factory->CreateLoaderAndStart(
+        mojo::MakeRequest(&url_loader_), -1, -1, mojom::kURLLoadOptionNone,
+        request_, std::move(client),
+        net::MutableNetworkTrafficAnnotationTag(GetTrafficAnnotation()));
+  }
 }
 
 void AppCacheUpdateJob::UpdateURLLoaderRequest::SetExtraRequestHeaders(
@@ -226,6 +241,11 @@ void AppCacheUpdateJob::UpdateURLLoaderRequest::MaybeStartReading() {
 
   if (handle_watcher_.IsWatching())
     handle_watcher_.ArmOrNotify();
+}
+
+void AppCacheUpdateJob::UpdateURLLoaderRequest::SetLoaderFactoryForTesting(
+    mojom::URLLoaderFactory* loader_factory) {
+  g_test_loader_factory = loader_factory;
 }
 
 }  // namespace content
