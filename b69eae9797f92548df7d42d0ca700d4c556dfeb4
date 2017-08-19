@@ -16,6 +16,24 @@
       "revId": "b69eae9797f92548df7d42d0ca700d4c556dfeb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5f67af_54c2af8c",
+        "filename": "chromeos/audio/cras_audio_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-08-19T02:24:16Z",
+      "side": 1,
+      "message": "Renamed to |default_output_buffer_size_lock_|.",
+      "parentUuid": "75595e0d_6e59a922",
+      "revId": "b69eae9797f92548df7d42d0ca700d4c556dfeb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
