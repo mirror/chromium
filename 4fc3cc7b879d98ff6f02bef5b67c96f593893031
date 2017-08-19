@@ -34,6 +34,24 @@
       "revId": "4fc3cc7b879d98ff6f02bef5b67c96f593893031",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e99251b_80b7c766",
+        "filename": "extensions/common/features/simple_feature.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-19T01:56:00Z",
+      "side": 1,
+      "message": "I thought about it, but not necessarily.  Whitelist is different, because we need to unconditionally check if the list is empty, because if it is, then we don\u0027t restrict to that list.\n\nSaid differently, even if we pushed whitelist_.empty() into IsIdInList(), we couldn\u0027t do:\nif (!IsIdInWhitelist(id) \u0026\u0026 !IsWhitelistedForTest(id)) {\n  return \u003cnot available\u003e\n}\nbecause then any feature that *didn\u0027t* have a whitelist wouldn\u0027t be available to any extension.\n\nSo, no matter what we need the full check of\nif (!whitelist_.empty() \u0026\u0026 !IsIdInWhitelist(id) \u0026\u0026...)\n\nand pushing the check into IsIdInWhitelist would result in a double empty() check for whitelist in each instance.  On top of that, it would mean we have nested function calls before taking the early exit, which can have some overhead of just pushing/popping stack frames (though admittedly the compiler probably optimizes at least some of these).  Given how incredibly frequently these methods are called, these small optimizations might still make a (small) difference.\n\n\nSince we\u0027d still need the empty() check in two places (either twice in this function or once in the whitelist check and once in IsIdInList()) I\u0027ve left this as-is for now, but let me know if you have a preference for moving it to IsIdInList and we can continue discussing - I can see the advantage both ways. :)",
+      "parentUuid": "57125331_78300d51",
+      "revId": "4fc3cc7b879d98ff6f02bef5b67c96f593893031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
