@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "617ac183_f20efc5f",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-19T01:05:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22f104c1_1aec9a28",
+      "range": {
+        "startLine": 936,
+        "startChar": 33,
+        "endLine": 936,
+        "endChar": 53
+      },
+      "revId": "40fd7cdc45d439a61d452950c315b7a0c3c005fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05c11030_c9026d1c",
         "filename": "ui/app_list/views/search_box_view.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "40fd7cdc45d439a61d452950c315b7a0c3c005fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3a9326_399d9824",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-19T01:05:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05c11030_c9026d1c",
+      "range": {
+        "startLine": 182,
+        "startChar": 36,
+        "endLine": 182,
+        "endChar": 37
+      },
+      "revId": "40fd7cdc45d439a61d452950c315b7a0c3c005fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
