@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6b94e5cb_e3d06e2b",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1229389
+      },
+      "writtenOn": "2017-08-19T02:32:30Z",
+      "side": 1,
+      "message": "Should I remove keyboard namespace in chrome_keyboard_ui.h too?",
+      "parentUuid": "781649e4_22b4f422",
+      "range": {
+        "startLine": 55,
+        "startChar": 10,
+        "endLine": 55,
+        "endChar": 20
+      },
+      "revId": "f5c0126d7c5ea7d6749ebd85cfd711a40f5b73a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cd7aee9_14a2cde6",
         "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.cc",
         "patchSetId": 4
@@ -123,6 +147,30 @@
       "writtenOn": "2017-08-18T16:49:18Z",
       "side": 1,
       "message": "const method?",
+      "range": {
+        "startLine": 50,
+        "startChar": 50,
+        "endLine": 50,
+        "endChar": 51
+      },
+      "revId": "f5c0126d7c5ea7d6749ebd85cfd711a40f5b73a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fece1551_aad562fe",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1229389
+      },
+      "writtenOn": "2017-08-19T02:32:30Z",
+      "side": 1,
+      "message": "It returns a constant content::Webcontents pointer, like in the previous keyboard_ui_content.h https://cs.chromium.org/chromium/src/ui/keyboard/content/keyboard_ui_content.h?q\u003dkeyboard_ui_\u0026sq\u003dpackage:chromium\u0026l\u003d44",
+      "parentUuid": "985e44c8_a0b10b42",
       "range": {
         "startLine": 50,
         "startChar": 50,
