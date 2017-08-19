@@ -22,6 +22,30 @@
       "revId": "844e26c176db3c589099d36b2677d25088726bb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c776234a_86809f77",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-19T08:34:44Z",
+      "side": 0,
+      "message": "Good question; it\u0027s not clear from the CreateAndOpenTemporaryFile() implementation, which uses mkstemp(), though the fd-\u003eFILE step does specify \"a+\".\n\nI\u0027ve tested manually and verified that we seem to get the correct output on Fuchsia.",
+      "parentUuid": "fa2f272f_6d435ede",
+      "range": {
+        "startLine": 458,
+        "startChar": 32,
+        "endLine": 458,
+        "endChar": 39
+      },
+      "revId": "844e26c176db3c589099d36b2677d25088726bb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

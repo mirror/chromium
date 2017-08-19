@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5cfa7e3d_79cb12d3",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-19T08:34:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecf160f7_73175942",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "78eca1e43b878e77c3ee4626140b83784e702513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4be71899_ecc995c7",
         "filename": "base/test/launcher/test_launcher.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "78eca1e43b878e77c3ee4626140b83784e702513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3548e3_b18d70d8",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-19T08:34:44Z",
+      "side": 1,
+      "message": "_fileno() and _get_osfhandle() are returning the resources backing the FILE*, not copies, so ScopedHandle would result in a double-CloseHandle().",
+      "parentUuid": "4be71899_ecc995c7",
+      "range": {
+        "startLine": 435,
+        "startChar": 4,
+        "endLine": 435,
+        "endChar": 10
+      },
+      "revId": "78eca1e43b878e77c3ee4626140b83784e702513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6c3f2137_869e625c",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-19T08:34:44Z",
+      "side": 1,
+      "message": "The CHECK on |output_file| above is equivalent to the CHECK that used to be here, since that\u0027s where the file is actually being created \u0026 opened; at this point we\u0027re just pulling the HANDLE out of the FILE.",
+      "parentUuid": "e5e72ddf_0fee397b",
+      "range": {
+        "startLine": 437,
+        "startChar": 4,
+        "endLine": 437,
+        "endChar": 13
+      },
+      "revId": "78eca1e43b878e77c3ee4626140b83784e702513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eefaf553_77289fb2",
         "filename": "base/test/launcher/test_launcher.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b2b22587_d704ee9f",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-19T08:34:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eefaf553_77289fb2",
+      "range": {
+        "startLine": 453,
+        "startChar": 4,
+        "endLine": 453,
+        "endChar": 13
+      },
+      "revId": "78eca1e43b878e77c3ee4626140b83784e702513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b206a51c_2d750cf3",
         "filename": "base/test/launcher/test_launcher.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "78eca1e43b878e77c3ee4626140b83784e702513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a57e58b_807963fb",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-19T08:34:44Z",
+      "side": 1,
+      "message": "The idea was to put the OS_LINUX section at the end of the OS_POSIX clause to aid readability, but it doesn\u0027t really make any difference, I think.",
+      "parentUuid": "b206a51c_2d750cf3",
+      "range": {
+        "startLine": 461,
+        "startChar": 2,
+        "endLine": 461,
+        "endChar": 30
+      },
+      "revId": "78eca1e43b878e77c3ee4626140b83784e702513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
