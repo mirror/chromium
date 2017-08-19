@@ -96989,6 +96989,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="custom_tabs" label="Offline custom tabs"/>
   <suffix name="download" label="Offline downloaded pages"/>
   <suffix name="ntp_suggestions" label="Offline ntp suggestions"/>
+  <suffix name="browser_actions_download"
+      label="Offline Browser Actions pages"/>
   <affected-histogram
       name="OfflinePages.Background.BackgroundLoadingFailedCode"/>
   <affected-histogram

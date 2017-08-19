@@ -29,6 +29,8 @@ import org.chromium.chrome.browser.notifications.NotificationBuilderFactory;
 import org.chromium.chrome.browser.notifications.NotificationConstants;
 import org.chromium.chrome.browser.notifications.NotificationUmaTracker;
 import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
+import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
+import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.share.ShareHelper;
 import org.chromium.chrome.browser.share.ShareParams;
 import org.chromium.chrome.browser.tab.Tab;
@@ -214,7 +216,11 @@ public class BrowserActionsContextMenuItemDelegate {
      * Called when the page of the {@code linkUrl} should be downloaded.
      * @param linkUrl The url of the page to download.
      */
-    public void startDownload(String linkUrl) {}
+    public void startDownload(String linkUrl) {
+        OfflinePageBridge offlinePageBridge =
+                OfflinePageBridge.getForProfile(Profile.getLastUsedProfile());
+        offlinePageBridge.savePageLater(linkUrl, "browser_actions_download", true);
+    }
 
     /**
      * Called when the {@code linkUrl} should be shared.

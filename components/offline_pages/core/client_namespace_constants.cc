@@ -13,6 +13,7 @@ const char kCCTNamespace[] = "custom_tabs";
 const char kDownloadNamespace[] = "download";
 const char kNTPSuggestionsNamespace[] = "ntp_suggestions";
 const char kSuggestedArticlesNamespace[] = "suggested_articles";
+const char kBrowserActionsDownloadNamespace[] = "browser_actions_download";
 
 const char kDefaultNamespace[] = "default";
 

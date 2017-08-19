@@ -62,6 +62,7 @@ public class BrowserActionActivityTest {
     private final CallbackHelper mOnBrowserActionsMenuShownCallback = new CallbackHelper();
     private final CallbackHelper mOnFinishNativeInitializationCallback = new CallbackHelper();
     private final CallbackHelper mOnOpenTabInBackgroundStartCallback = new CallbackHelper();
+    private final CallbackHelper mOnDownloadStartCallback = new CallbackHelper();
 
     private BrowserActionsContextMenuItemDelegate mMenuItemDelegate;
     private SparseArray<PendingIntent> mCustomActions;
@@ -103,6 +104,11 @@ public class BrowserActionActivityTest {
             mCustomActions = customActions;
             mItems = items;
             mProgressDialog = progressDialog;
+        }
+
+        @Override
+        public void onDownloadStart() {
+            mOnDownloadStartCallback.notifyCalled();
         }
     }
 
@@ -187,6 +193,29 @@ public class BrowserActionActivityTest {
         mOnOpenTabInBackgroundStartCallback.waitForCallback(0);
         Assert.assertFalse(mProgressDialog.isShowing());
         Assert.assertEquals(1, mOnOpenTabInBackgroundStartCallback.getCallCount());
+    }
+
+    @Test
+    @SmallTest
+    public void testDownloadAfterInitialization() throws Exception {
+        final BrowserActionActivity activity = startBrowserActionActivity(mTestPage);
+        mOnBrowserActionsMenuShownCallback.waitForCallback(0);
+        // Download an url before initialization finishes.
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                activity.getHelperForTesting().onItemSelected(R.id.browser_actions_save_link_as);
+            }
+        });
+
+        // A ProgressDialog should be displayed and download should be pending until
+        // initialization finishes.
+        Assert.assertTrue(mProgressDialog.isShowing());
+        Assert.assertEquals(0, mOnDownloadStartCallback.getCallCount());
+        mOnFinishNativeInitializationCallback.waitForCallback(0);
+        mOnDownloadStartCallback.waitForCallback(0);
+        Assert.assertFalse(mProgressDialog.isShowing());
+        Assert.assertEquals(1, mOnDownloadStartCallback.getCallCount());
     }
 
     @Test

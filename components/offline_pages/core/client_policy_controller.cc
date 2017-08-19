@@ -67,6 +67,14 @@ ClientPolicyController::ClientPolicyController() {
           .SetIsDisabledWhenPrefetchDisabled(true)
           .SetExpirePeriod(base::TimeDelta::FromDays(30))
           .Build()));
+  policies_.insert(std::make_pair(
+      kBrowserActionsDownloadNamespace,
+      OfflinePageClientPolicyBuilder(kBrowserActionsDownloadNamespace,
+                                     LifetimeType::PERSISTENT, kUnlimitedPages,
+                                     kUnlimitedPages)
+          .SetIsRemovedOnCacheReset(false)
+          .SetIsSupportedByDownload(true)
+          .Build()));
 
   // Fallback policy.
   policies_.insert(std::make_pair(
