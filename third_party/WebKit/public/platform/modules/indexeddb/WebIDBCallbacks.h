@@ -35,6 +35,7 @@ namespace blink {
 class WebIDBCursor;
 class WebIDBDatabase;
 class WebIDBDatabaseError;
+struct WebIDBDatabaseInfo;
 class WebIDBKey;
 struct WebIDBMetadata;
 struct WebIDBValue;
@@ -45,7 +46,7 @@ class WebIDBCallbacks {
 
   // Pointers transfer ownership.
   virtual void OnError(const WebIDBDatabaseError&) = 0;
-  virtual void OnSuccess(const WebVector<WebString>&) = 0;
+  virtual void OnSuccess(const WebVector<WebIDBDatabaseInfo>&) = 0;
   virtual void OnSuccess(WebIDBCursor*,
                          const WebIDBKey&,
                          const WebIDBKey& primary_key,

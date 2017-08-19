@@ -246,6 +246,17 @@ bool StructTraits<indexed_db::mojom::DatabaseMetadataDataView,
 }
 
 // static
+bool StructTraits<indexed_db::mojom::DatabaseInfoDataView,
+                  content::IndexedDBDatabaseInfo>::
+    Read(indexed_db::mojom::DatabaseInfoDataView data,
+         content::IndexedDBDatabaseInfo* out) {
+  if (!data.ReadName(&out->name))
+    return false;
+  out->version = data.version();
+  return true;
+}
+
+// static
 CursorDirection
 EnumTraits<CursorDirection, blink::WebIDBCursorDirection>::ToMojom(
     blink::WebIDBCursorDirection input) {
