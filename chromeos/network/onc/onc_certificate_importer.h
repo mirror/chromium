@@ -5,6 +5,8 @@
 #ifndef CHROMEOS_NETWORK_ONC_ONC_CERTIFICATE_IMPORTER_H_
 #define CHROMEOS_NETWORK_ONC_ONC_CERTIFICATE_IMPORTER_H_
 
+#include <vector>
+
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "chromeos/chromeos_export.h"
