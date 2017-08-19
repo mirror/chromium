@@ -2300,6 +2300,10 @@ void LayerTreeHostImpl::ReleaseTileResources() {
     pending_tree_->ReleaseTileResources();
   if (recycle_tree_)
     recycle_tree_->ReleaseTileResources();
+
+  // PictureLayersImpl requires another update after ReleaseTileResources to
+  // draw.
+  active_tree_->set_needs_update_draw_properties();
 }
 
 void LayerTreeHostImpl::RecreateTileResources() {
