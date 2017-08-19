@@ -34,6 +34,24 @@
       "revId": "63a1b6f74ac0ddb968250ac77c327afdc17e5d37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cbb05ce_87c47d26",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 1473,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-19T00:20:31Z",
+      "side": 1,
+      "message": "Comment was added in\nhttps://chromium.googlesource.com/chromium/src/+/052748af29a7169b982f84d9db2ce4812243cd78\nto allow you to pass an explicit host config JSON file to this script.\nBut I don\u0027t think we need to worry about running this from the same location with 2 different configs.",
+      "parentUuid": "9fc2c116_695b0ca3",
+      "revId": "63a1b6f74ac0ddb968250ac77c327afdc17e5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
