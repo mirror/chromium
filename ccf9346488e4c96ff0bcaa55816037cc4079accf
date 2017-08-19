@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "885f569b_d3fc257e",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_fusion.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-19T02:13:33Z",
+      "side": 1,
+      "message": "ASSERT_TRUE, otherwise dereferencing |it| below will crash.",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 13
+      },
+      "revId": "ccf9346488e4c96ff0bcaa55816037cc4079accf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
