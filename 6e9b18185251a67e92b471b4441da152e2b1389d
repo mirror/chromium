@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbfd5274_f15b877e",
+        "filename": "net/quic/chromium/quic_chromium_packet_writer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-19T00:25:26Z",
+      "side": 1,
+      "message": "nit: Can you do this in the initializer list?\n\nOh, probably not, because of the weak_factory?",
+      "revId": "6e9b18185251a67e92b471b4441da152e2b1389d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
