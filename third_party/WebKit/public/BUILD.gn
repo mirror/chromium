@@ -800,6 +800,7 @@ mojom("mojo_bindings") {
   ]
   public_deps = [
     ":android_mojo_bindings",
+    ":web_client_hints_types_mojo_bindings",
     ":web_feature_mojo_bindings",
     "//device/bluetooth/public/interfaces",
     "//device/screen_orientation/public/interfaces",
@@ -913,12 +914,22 @@ mojom("web_feature_mojo_bindings") {
   ]
 }
 
+# The web_feature_mojo_bindings is separated from the rest of the mojom files
+# because the chromium typemap for blink mojo_bindings has private content
+# dependencies.
+mojom("web_client_hints_types_mojo_bindings") {
+  sources = [
+    "platform/web_client_hints_types.mojom",
+  ]
+}
+
 # Some mojom typemaps are shared between Chromium and Blink variants and
 # therefore require some shared traits implementation. These definitions are
 # relegated to a separate target to avoid duplication between the variants.
 source_set("shared_typemap_traits") {
   visibility = [ ":*" ]
   sources = [
+    "platform/ClientHintsTypesTraits.h",
     "web/ConsoleMessageStructTraits.cpp",
     "web/ConsoleMessageStructTraits.h",
   ]
