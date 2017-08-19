@@ -43,10 +43,19 @@ bool CanSendReport(const SBErrorOptions& error_display_options) {
 DataCollectorsContainer::DataCollectorsContainer() {}
 DataCollectorsContainer::~DataCollectorsContainer() {}
 
-TriggerManager::TriggerManager(BaseUIManager* ui_manager)
-    : ui_manager_(ui_manager) {}
+// static
+TriggerManager* TriggerManager::current_trigger_manager_;
 
-TriggerManager::~TriggerManager() {}
+TriggerManager::TriggerManager(BaseUIManager* ui_manager)
+    : ui_manager_(ui_manager) {
+  LOG(ERROR) << "Constructor:: TriggerManager";
+  current_trigger_manager_ = this;
+}
+
+TriggerManager::~TriggerManager() {
+  LOG(ERROR) << "DeConstructor:: TriggerManager";
+  current_trigger_manager_ = NULL;
+}
 
 // static
 SBErrorOptions TriggerManager::GetSBErrorDisplayOptions(
@@ -83,9 +92,11 @@ bool TriggerManager::StartCollectingThreatDetails(
     return false;
 
   DataCollectorsContainer* collectors = &data_collectors_map_[web_contents];
+
   collectors->threat_details = scoped_refptr<ThreatDetails>(
       ThreatDetails::NewThreatDetails(ui_manager_, web_contents, resource,
                                       request_context_getter, history_service));
+  LOG(ERROR) << "START collecting threat details" << collectors->threat_details;
   return true;
 }
 
@@ -107,7 +118,6 @@ bool TriggerManager::FinishCollectingThreatDetails(
 
   // Determine whether a report should be sent.
   bool should_send_report = CanSendReport(error_display_options);
-
   DataCollectorsContainer* collectors = &data_collectors_map_[web_contents];
   // Find the data collector and tell it to finish collecting data, and then
   // remove it from our map. We release ownership of the data collector here but
@@ -120,6 +130,9 @@ bool TriggerManager::FinishCollectingThreatDetails(
         base::BindOnce(&ThreatDetails::FinishCollection, threat_details,
                        did_proceed, num_visits),
         delay);
+    old_threat_details_.push_back(
+        collectors->threat_details->client_report_request_);
+    LOG(ERROR) << "after threatDetails push_back";
 
     // Record that this trigger fired and collected data.
     trigger_throttler_.TriggerFired(trigger_type);
@@ -129,8 +142,29 @@ bool TriggerManager::FinishCollectingThreatDetails(
   // this tab.
   collectors->threat_details = nullptr;
   data_collectors_map_.erase(web_contents);
-
   return should_send_report;
+}
+
+void TriggerManager::RegisterListener(
+    ThreatDetailsInfo* threat_details_info_proto) {
+  if (listeners_counter) {
+    for (auto& threat_detail : old_threat_details_) {
+      const ClientSafeBrowsingReportRequest* request =
+          threat_details_info_proto->add_report_request();
+      request = &threat_detail;
+    }
+  }
+
+  listeners_counter++;
+}
+
+void TriggerManager::UnregisterListener() {
+  listeners_counter--;
+  if (!listeners_counter) {
+    std::vector<ClientSafeBrowsingReportRequest>().swap(old_threat_details_);
+    LOG(ERROR) << old_threat_details_.size() << "---------------";
+  }
+  LOG(ERROR) << "UnregisterListener:" << listeners_counter;
 }
 
 }  // namespace safe_browsing

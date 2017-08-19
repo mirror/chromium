@@ -26,10 +26,18 @@ class SafeBrowsingUIHandler : public content::WebUIMessageHandler {
   void GetPrefs(const base::ListValue* args);
   void GetDatabaseManagerInfo(const base::ListValue* args);
 
+  void GetThreatDetails(const base::ListValue* args);
+
   void RegisterMessages() override;
+
+  ThreatDetailsInfo threat_details_info_proto_;
 
  private:
   content::BrowserContext* browser_context_;
+
+  // Whether |this| registered as a threat details receiver.
+  bool registered_as_thread_details_receiver_;
+
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingUIHandler);
 };
 

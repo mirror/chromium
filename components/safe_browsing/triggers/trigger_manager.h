@@ -9,7 +9,9 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "components/safe_browsing/proto/webui.pb.h"
 #include "components/safe_browsing/triggers/trigger_throttler.h"
+#include "components/safe_browsing/web_ui/safe_browsing_ui.h"
 #include "components/security_interstitials/content/unsafe_resource.h"
 #include "components/security_interstitials/core/base_safe_browsing_error_ui.h"
 #include "content/public/browser/web_contents.h"
@@ -74,6 +76,11 @@ class TriggerManager {
       const PrefService& pref_service,
       const content::WebContents& web_contents);
 
+  // Return an instance of the ThreatDetails object
+  static TriggerManager* current_trigger_manager() {
+    return current_trigger_manager_;
+  }
+
   // Begins collecting a ThreatDetails report on the specified |web_contents|.
   // |resource| is the unsafe resource that cause the collection to occur.
   // |request_context_getter| is used to retrieve data from the HTTP cache.
@@ -107,6 +114,16 @@ class TriggerManager {
       bool did_proceed,
       int num_visits,
       const SBErrorOptions& error_display_options);
+  int listeners_counter = 0;
+
+  // Registers listener object that receives the information in the webui.
+  void RegisterListener(ThreatDetailsInfo*);
+
+  void UnregisterListener();
+
+  // Record the threat details saved since the first safe browsing tab
+  // was opened.
+  std::vector<ClientSafeBrowsingReportRequest> old_threat_details_;
 
  private:
   friend class TriggerManagerTest;
@@ -120,6 +137,9 @@ class TriggerManager {
 
   // Keeps track of how often triggers fire and throttles them when needed.
   TriggerThrottler trigger_throttler_;
+
+  // Instance of the TriggerManager object
+  static TriggerManager* current_trigger_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(TriggerManager);
 };

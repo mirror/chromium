@@ -11,9 +11,11 @@
 // An instance of this class is generated when a safe browsing warning page
 // is shown (SafeBrowsingBlockingPage).
 
+#include <list>
 #include <memory>
 #include <string>
 #include <unordered_set>
+#include <utility>
 #include <vector>
 
 #include "base/containers/hash_tables.h"
@@ -100,6 +102,8 @@ class ThreatDetails : public base::RefCountedThreadSafe<
   // content::WebContentsObserver implementation.
   bool OnMessageReceived(const IPC::Message& message,
                          content::RenderFrameHost* render_frame_host) override;
+
+  ClientSafeBrowsingReportRequest client_report_request_;
 
  protected:
   friend class ThreatDetailsFactoryImpl;
@@ -232,6 +236,9 @@ class ThreatDetails : public base::RefCountedThreadSafe<
   // Useful for tests, so they can provide their own implementation of
   // SafeBrowsingBlockingPage.
   static ThreatDetailsFactory* factory_;
+
+  // Number of listener objects receiving threat details in the webui.
+  int listeners_counter = 0;
 
   // Used to collect details from the HTTP Cache.
   scoped_refptr<ThreatDetailsCacheCollector> cache_collector_;

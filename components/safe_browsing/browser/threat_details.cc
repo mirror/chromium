@@ -8,9 +8,9 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <list>
 #include <unordered_set>
 #include <vector>
-
 #include "base/bind.h"
 #include "base/lazy_instance.h"
 #include "base/metrics/histogram_macros.h"
@@ -341,7 +341,9 @@ ThreatDetails::ThreatDetails()
       ambiguous_dom_(false),
       trim_to_ad_tags_(false) {}
 
-ThreatDetails::~ThreatDetails() {}
+ThreatDetails::~ThreatDetails() {
+  LOG(ERROR) << "ThreatDetailsDestructor";
+}
 
 bool ThreatDetails::OnMessageReceived(const IPC::Message& message,
                                       RenderFrameHost* render_frame_host) {
@@ -748,6 +750,14 @@ void ThreatDetails::OnCacheCollectionReady() {
     DLOG(ERROR) << "Unable to serialize the threat report.";
     return;
   }
+  // Register the data for the WebUI
+  client_report_request_.set_type(report_->type());
+  client_report_request_.set_page_url(report_->page_url());
+  LOG(ERROR) << report_->page_url() << "*******";
+  client_report_request_.set_client_country(report_->client_country());
+  client_report_request_.set_repeat_visit(report_->repeat_visit());
+  client_report_request_.set_did_proceed(report_->did_proceed());
+
   ui_manager_->SendSerializedThreatDetails(serialized);
 }
 
