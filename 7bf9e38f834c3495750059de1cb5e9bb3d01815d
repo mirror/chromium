@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e545a307_18629be6",
+        "filename": "ash/wallpaper/wallpaper_widget_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-19T00:32:29Z",
+      "side": 1,
+      "message": "this call looks like it was added in 2013 (!) by https://chromiumcodereview.appspot.com/22801017. biao may remember more about it.",
+      "revId": "7bf9e38f834c3495750059de1cb5e9bb3d01815d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
