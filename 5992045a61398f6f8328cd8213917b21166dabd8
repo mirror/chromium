@@ -120,6 +120,30 @@
       "revId": "5992045a61398f6f8328cd8213917b21166dabd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050f7ffd_ce4fdf52",
+        "filename": "base/files/file_path.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-08-19T00:39:20Z",
+      "side": 1,
+      "message": "ah, we probably don\u0027t. I just added operator\u003c\u003c because I wanted to do a LOG() \u003c\u003c my_file somewhere when I was debugging stuff and was surprised to see it wasn\u0027t implemented.\n\nI didn\u0027t know it could replace PrintTo, so I didn\u0027t do any clean up of that",
+      "parentUuid": "ef1dc077_296c0814",
+      "range": {
+        "startLine": 454,
+        "startChar": 16,
+        "endLine": 454,
+        "endChar": 33
+      },
+      "revId": "5992045a61398f6f8328cd8213917b21166dabd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
