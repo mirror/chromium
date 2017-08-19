@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecd8332c_1bf12cab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement/ScreenshotMonitor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-08-19T00:01:53Z",
+      "side": 1,
+      "message": "I am not sure if the directory check in lines 68-83 is duplicated with approach 2 starting in 85. Right now the directory added is right but somehow the file observer\u0027s onevent isn\u0027t triggered still when I tested on Nexus 5.",
+      "range": {
+        "startLine": 66,
+        "startChar": 24,
+        "endLine": 66,
+        "endChar": 41
+      },
+      "revId": "fd52802f884641f9688aa470a1a8e621bc47bcf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
