@@ -6,16 +6,17 @@
 #define CSSPropertyAPI_h
 
 #include "core/CSSPropertyNames.h"
-#include "core/css/CSSProperty.h"
+// #include "core/css/CSSProperty.h"
 #include "core/css/parser/CSSParserTokenRange.h"
 
 namespace blink {
 
 class CSSParserContext;
 class CSSParserLocalContext;
+class CSSProperty;
 class CSSValue;
 
-class CSSPropertyAPI {
+class CORE_EXPORT CSSPropertyAPI {
  public:
   static const CSSPropertyAPI& Get(CSSPropertyID);
 
@@ -31,6 +32,9 @@ class CSSPropertyAPI {
                               const CSSParserContext&,
                               bool use_legacy_parsing,
                               HeapVector<CSSProperty, 256>&) const;
+
+  virtual bool IsInterpolableProperty() const { return false; }
+  virtual bool IsInheritedProperty() const { return false; }
 };
 
 }  // namespace blink

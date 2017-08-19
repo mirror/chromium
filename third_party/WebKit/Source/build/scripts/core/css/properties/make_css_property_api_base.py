@@ -32,13 +32,28 @@ class CSSPropertyAPIWriter(css_properties.CSSProperties):
         self._api_classes = set()
         for property_ in self.properties().values():
             api_class = self.get_classname(property_)
+            if api_class is None:
+                # Use the baseclass if no class was specified.
+                api_class = "CSSPropertyAPI"
             self._api_classes_by_property_id.append(
                 ApiClassData(
                     enum_value=property_['enum_value'],
                     property_id=property_['property_id'],
                     classname=api_class))
-            if api_class:
-                self._api_classes.add(api_class)
+            self._api_classes.add(api_class)
+
+        self._api_classes_by_property_id.append(
+            ApiClassData(
+                enum_value=1,
+                property_id="CSSPropertyApplyAtRule",
+                classname="CSSPropertyAPI"))
+        self._api_classes_by_property_id.append(
+            ApiClassData(
+                enum_value=2,
+                property_id="CSSPropertyVariable",
+                classname="CSSPropertyAPIVariable"))
+        self._api_classes.add("CSSPropertyAPIVariable")
+
         # Sort by enum value.
         self._api_classes_by_property_id.sort(key=lambda t: t.enum_value)
 
