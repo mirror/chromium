@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2bc94cae_78e97d6e",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-19T00:12:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "282f7713_f08b9061",
+      "revId": "32fc4f638b3728f4c4c35f909d47f34c1887f9fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fabf6f9_15768783",
         "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-18T01:06:59Z",
       "side": 1,
       "message": "what compiler do we use on Android? gcc? Is this really better than some #pragmas?",
+      "revId": "32fc4f638b3728f4c4c35f909d47f34c1887f9fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6942d8_a83aaae6",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-19T00:12:54Z",
+      "side": 1,
+      "message": "I dunnow, this is what I\u0027ve always done for unused variable warnings and seems normal to me. Maybe I\u0027m weird.",
+      "parentUuid": "1fabf6f9_15768783",
       "revId": "32fc4f638b3728f4c4c35f909d47f34c1887f9fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "27a2b469_fdf6596b",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-19T00:12:54Z",
+      "side": 1,
+      "message": "I\u0027m not so sure, that seems like a lot of complexity and it will still work fine (they\u0027ll just be serialized). At the end of time it would be nice to have an auto-symbolize option for doing local testing, and in that case we may want some progress UI here since it can take a while.",
+      "parentUuid": "45795e45_c9ae6f34",
+      "revId": "32fc4f638b3728f4c4c35f909d47f34c1887f9fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "701d6f7d_97556baa",
         "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-18T01:06:59Z",
       "side": 1,
       "message": "crying inside. :(",
+      "revId": "32fc4f638b3728f4c4c35f909d47f34c1887f9fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75df00bf_fceda12a",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-19T00:12:54Z",
+      "side": 1,
+      "message": "Then my job is done.",
+      "parentUuid": "701d6f7d_97556baa",
       "revId": "32fc4f638b3728f4c4c35f909d47f34c1887f9fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
