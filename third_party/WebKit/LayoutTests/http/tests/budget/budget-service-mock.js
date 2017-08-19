@@ -16,8 +16,8 @@ class BudgetServiceMock {
     this.error_ = blink.mojom.BudgetServiceErrorType.NONE;
     this.bindingSet_ = new mojo.BindingSet(blink.mojom.BudgetService);
 
-    this.interceptor_ = new MojoInterfaceInterceptor(
-        blink.mojom.BudgetService.name);
+    this.interceptor_ = new MojoInterfaceInterceptor({
+        interfaceName: blink.mojom.BudgetService.name });
     this.interceptor_.oninterfacerequest =
         e => this.bindingSet_.addBinding(this, e.handle);
     this.interceptor_.start();

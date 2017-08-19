@@ -51,15 +51,17 @@ Mojo.createMessagePipe = function() {
 
 /**
  * Binds to the specified Mojo interface.
- * @param {string} interfaceName The interface name to connect.
+ * @param {interfaceName: string, handle: !MojoHandle} options
+ *     The interface name and handle to connect.
  * @param {!MojoHandle} requestHandle The interface request handle.
  */
-Mojo.bindInterface = function(interfaceName, requestHandle) {
+Mojo.bindInterface = function(options) {
+  var optionsWithNativeHandle = Object.assign({}, options);
+  optionsWithNativeHandle.handle = options.handle.takeNativeHandle_();
   Mojo.internal.sendMessage({
     name: "Mojo.bindInterface",
     args: {
-      interfaceName: interfaceName,
-      requestHandle: requestHandle.takeNativeHandle_()
+      options: optionsWithNativeHandle
     }
   });
 };

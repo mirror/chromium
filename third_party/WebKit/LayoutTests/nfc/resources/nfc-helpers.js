@@ -271,8 +271,8 @@ class MockNFC {
   constructor() {
     this.bindingSet_ = new mojo.BindingSet(device.mojom.NFC);
 
-    this.interceptor_ = new MojoInterfaceInterceptor(
-        device.mojom.NFC.name);
+    this.interceptor_ = new MojoInterfaceInterceptor({
+        interfaceName: device.mojom.NFC.name });
     this.interceptor_.oninterfacerequest =
         e => this.bindingSet_.addBinding(this, e.handle);
     this.interceptor_.start();
@@ -292,8 +292,8 @@ class MockNFC {
 
   attachToWindow(otherWindow) {
     otherWindow.nfcInterceptor =
-        new otherWindow.MojoInterfaceInterceptor(
-            device.mojom.NFC.name);
+        new otherWindow.MojoInterfaceInterceptor({
+            interfaceName: device.mojom.NFC.name });
     otherWindow.nfcInterceptor.oninterfacerequest =
         e => this.crossFrameHandleProxy_.forwardHandle(e.handle);
     otherWindow.nfcInterceptor.start();

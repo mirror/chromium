@@ -232,8 +232,8 @@ function sensorMocks() {
       this.minFrequency_ = 1;
       this.binding_ = new mojo.Binding(device.mojom.SensorProvider, this);
 
-      this.interceptor_ = new MojoInterfaceInterceptor(
-          device.mojom.SensorProvider.name);
+      this.interceptor_ = new MojoInterfaceInterceptor({
+          interfaceName: device.mojom.SensorProvider.name });
       this.interceptor_.oninterfacerequest = e => {
         this.bindToPipe(e.handle);
       };

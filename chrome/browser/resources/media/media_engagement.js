@@ -103,9 +103,10 @@ function updateEngagementTable() {
 
 document.addEventListener('DOMContentLoaded', function() {
   uiHandler = new media.mojom.MediaEngagementScoreDetailsProviderPtr;
-  Mojo.bindInterface(
-      media.mojom.MediaEngagementScoreDetailsProvider.name,
-      mojo.makeRequest(uiHandler).handle);
+  Mojo.bindInterface({
+    interfaceName: media.mojom.MediaEngagementScoreDetailsProvider.name,
+    handle: mojo.makeRequest(uiHandler).handle
+  });
   updateEngagementTable();
 
   engagementTableBody = $('engagement-table-body');

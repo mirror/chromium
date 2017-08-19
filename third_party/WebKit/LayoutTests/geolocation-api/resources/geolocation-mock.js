@@ -7,8 +7,8 @@
 
 class GeolocationMock {
   constructor() {
-    this.geolocationServiceInterceptor_ = new MojoInterfaceInterceptor(
-        device.mojom.GeolocationService.name);
+    this.geolocationServiceInterceptor_ = new MojoInterfaceInterceptor({
+        interfaceName: device.mojom.GeolocationService.name });
     this.geolocationServiceInterceptor_.oninterfacerequest =
         e => this.connectGeolocationService_(e.handle);
     this.geolocationServiceInterceptor_.start();

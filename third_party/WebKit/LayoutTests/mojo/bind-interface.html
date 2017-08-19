@@ -7,8 +7,8 @@
 
 promise_test(() => {
   let helper = new content.mojom.MojoLayoutTestHelperPtr;
-  Mojo.bindInterface(content.mojom.MojoLayoutTestHelper.name,
-                     mojo.makeRequest(helper).handle);
+  Mojo.bindInterface({ interfaceName: content.mojom.MojoLayoutTestHelper.name,
+                       handle: mojo.makeRequest(helper).handle });
 
   const kTestMessage = "hello world.";
   const kExpectedReply = ".dlrow olleh";
@@ -19,8 +19,8 @@ promise_test(() => {
 
 promise_test(() => {
   let helper = new content.mojom.MojoLayoutTestHelperPtr;
-  Mojo.bindInterface("totally not a valid interface name",
-                     mojo.makeRequest(helper).handle);
+  Mojo.bindInterface({ interfaceName: "totally not a valid interface name",
+                       handle: mojo.makeRequest(helper).handle });
   return helper.reverse("doesn't matter").then(
       reply => assert_unreached("request should not succeed"),
       e => {});
@@ -43,16 +43,16 @@ promise_test(() => {
   }
 
   let helperImpl = new TestHelperImpl;
-  let interceptor =
-      new MojoInterfaceInterceptor(content.mojom.MojoLayoutTestHelper.name);
+  let interceptor = new MojoInterfaceInterceptor({
+      interfaceName: content.mojom.MojoLayoutTestHelper.name });
   interceptor.oninterfacerequest = e => {
     helperImpl.bindRequest(e.handle);
   };
   interceptor.start();
 
   let helper = new content.mojom.MojoLayoutTestHelperPtr;
-  Mojo.bindInterface(content.mojom.MojoLayoutTestHelper.name,
-                     mojo.makeRequest(helper).handle);
+  Mojo.bindInterface({ interfaceName: content.mojom.MojoLayoutTestHelper.name,
+                       handle: mojo.makeRequest(helper).handle });
   interceptor.stop();
 
   return helper.reverse("doesn't matter").then(reply => {
@@ -62,8 +62,8 @@ promise_test(() => {
 
 promise_test(() => {
   const kTestInterfaceName = "foo::mojom::Ba1r";
-  let a = new MojoInterfaceInterceptor(kTestInterfaceName);
-  let b = new MojoInterfaceInterceptor(kTestInterfaceName);
+  let a = new MojoInterfaceInterceptor({ interfaceName: kTestInterfaceName });
+  let b = new MojoInterfaceInterceptor({ interfaceName: kTestInterfaceName });
   a.oninterfacerequest = () => {};
   b.oninterfacerequest = () => {};
   a.start();
@@ -81,7 +81,8 @@ test(async t => {
   const kTestInterfaceName = "foo::mojom::Bar";
 
   // First check that the interceptor can be started and intercepts requests.
-  let interceptor = new MojoInterfaceInterceptor(kTestInterfaceName);
+  let interceptor =
+      new MojoInterfaceInterceptor({ interfaceName: kTestInterfaceName });
   let promise = new Promise(resolve => {
     interceptor.oninterfacerequest = e => {
       resolve(e.handle);
@@ -90,7 +91,8 @@ test(async t => {
   interceptor.start();
 
   let pipe = Mojo.createMessagePipe();
-  Mojo.bindInterface(kTestInterfaceName, pipe.handle0);
+  Mojo.bindInterface({ interfaceName: kTestInterfaceName,
+                       handle: pipe.handle0 });
   let interceptedHandle = await promise;
   assert_true(interceptedHandle instanceof MojoHandle);
   interceptedHandle.close();
@@ -109,11 +111,13 @@ test(async t => {
       resolve();
     });
   });
-  Mojo.bindInterface(kTestInterfaceName, pipe.handle0);
+  Mojo.bindInterface({ interfaceName: kTestInterfaceName,
+                       handle: pipe.handle0 });
   await promise;
   pipe.handle1.close();
 
-  interceptor = new MojoInterfaceInterceptor(kTestInterfaceName);
+  interceptor =
+      new MojoInterfaceInterceptor({ interfaceName: kTestInterfaceName });
   interceptor.oninterfacerequest = e => {};
   interceptor.start();
   interceptor.stop();

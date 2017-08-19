@@ -22,6 +22,7 @@ namespace blink {
 class ExceptionState;
 class ExecutionContext;
 class ScriptState;
+class MojoInterfaceInterceptorInit;
 
 // A MojoInterfaceInterceptor can be constructed by test scripts in order to
 // intercept all outgoing requests for a specific named interface from the
@@ -38,7 +39,7 @@ class MojoInterfaceInterceptor final
 
  public:
   static MojoInterfaceInterceptor* Create(ScriptState*,
-                                          const String& interface_name);
+                                          const MojoInterfaceInterceptorInit&);
   ~MojoInterfaceInterceptor();
 
   void start(ExceptionState&);
@@ -61,12 +62,13 @@ class MojoInterfaceInterceptor final
  private:
   friend class V8MojoInterfaceInterceptor;
 
-  MojoInterfaceInterceptor(ScriptState*, const String& interface_name);
+  MojoInterfaceInterceptor(ScriptState*, const MojoInterfaceInterceptorInit&);
 
   service_manager::InterfaceProvider* GetInterfaceProvider() const;
   void OnInterfaceRequest(mojo::ScopedMessagePipeHandle);
   void DispatchInterfaceRequestEvent(mojo::ScopedMessagePipeHandle);
 
+  const String service_name_;
   const String interface_name_;
   bool started_ = false;
 };
