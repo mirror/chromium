@@ -47,13 +47,5 @@ scoped_refptr<Extension> CreateEmptyExtension() {
       .Build();
 }
 
-scoped_refptr<Extension> CreateEmptyExtension(const std::string& id) {
-  return ExtensionBuilder()
-      .SetManifest(
-          DictionaryBuilder().Set("name", "test").Set("version", "0.1").Build())
-      .SetID(id)
-      .Build();
-}
-
 }  // namespace test_util
 }  // namespace extensions
