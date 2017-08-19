@@ -1514,12 +1514,38 @@ def _CheckIpcOwners(input_api, output_api):
   # }
   to_check = {}
 
+  def AddPatternToCheck(input_file, pattern):
+    owners_file = input_api.os_path.join(
+        input_api.os_path.dirname(input_file.LocalPath()), 'OWNERS')
+    if owners_file not in to_check:
+      to_check[owners_file] = {}
+    if pattern not in to_check[owners_file]:
+      to_check[owners_file][pattern] = {
+          'files': [],
+          'rules': [
+              'per-file %s=set noparent' % pattern,
+              'per-file %s=file://ipc/SECURITY_OWNERS' % pattern,
+          ]
+      }
+      to_check[owners_file][pattern]['files'].append(f)
+
+  COMMENT_FILTER_RE = input_api.re.compile('\s*//')
   # Iterate through the affected files to see what we actually need to check
   # for. We should only nag patch authors about per-file rules if a file in that
   # directory would match that pattern. If a directory only contains *.mojom
   # files and no *_messages*.h files, we should only nag about rules for
   # *.mojom files.
   for f in input_api.change.AffectedFiles(include_deletes=False):
+    # Manifest files don't have a strong naming convention. Instead, scan
+    # affected files for .json files and see if they look like a manifest.
+    if input_api.os_path.splitext(f.LocalPath())[1] == '.json':
+      mostly_json_lines = f.NewContents()
+      # Comments aren't allowed in strict JSON, so filter them out.
+      json_lines = [line for line in mostly_json_lines
+                    if not COMMENT_FILTER_RE.match(line)]
+      json_content = input_api.json.loads('\n'.join(json_lines))
+      if 'interface_provider_specs' in json_content:
+        AddPatternToCheck(f, input_api.os_path.basename(f.LocalPath()))
     for pattern in file_patterns:
       if input_api.fnmatch.fnmatch(
           input_api.os_path.basename(f.LocalPath()), pattern):
@@ -1530,19 +1556,7 @@ def _CheckIpcOwners(input_api, output_api):
             break
         if skip:
           continue
-        owners_file = input_api.os_path.join(
-            input_api.os_path.dirname(f.LocalPath()), 'OWNERS')
-        if owners_file not in to_check:
-          to_check[owners_file] = {}
-        if pattern not in to_check[owners_file]:
-          to_check[owners_file][pattern] = {
-              'files': [],
-              'rules': [
-                  'per-file %s=set noparent' % pattern,
-                  'per-file %s=file://ipc/SECURITY_OWNERS' % pattern,
-              ]
-          }
-        to_check[owners_file][pattern]['files'].append(f)
+        AddPatternToCheck(f, pattern)
         break
 
   # Now go through the OWNERS files we collected, filtering out rules that are
