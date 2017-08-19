@@ -16,6 +16,24 @@
       "revId": "29b6df355343e1e22cf8e625e801bbea8075370b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f384e58_8792594b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-19T00:51:58Z",
+      "side": 1,
+      "message": "This is were this feature was implemented for Libevent: https://codereview.chromium.org/245923005\nIt\u0027s likely that beside that unittest there is other code that depends on this behavior.",
+      "parentUuid": "6b31273d_22b8d4d7",
+      "revId": "29b6df355343e1e22cf8e625e801bbea8075370b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
