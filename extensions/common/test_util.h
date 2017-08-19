@@ -25,10 +25,6 @@ ExtensionBuilder BuildApp(ExtensionBuilder builder);
 // before running it.
 scoped_refptr<Extension> CreateEmptyExtension();
 
-// Create an extension with a variable |id|, for tests that require multiple
-// extensions side-by-side having distinct IDs.
-scoped_refptr<Extension> CreateEmptyExtension(const std::string& id);
-
 }  // namespace test_util
 }  // namespace extensions
 
