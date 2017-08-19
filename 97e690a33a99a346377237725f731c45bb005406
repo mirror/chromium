@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37c33ad2_693893f4",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-19T22:24:01Z",
+      "side": 1,
+      "message": "Missed this last time. I don\u0027t love making all private members protected. Can you put those members which are accessed by child classes in protected, but keep base-class-only members private?\n\nAdditionally, if there are any members which are *only* used in a subclass, we should move them there.\n\nThis makes it easier to reason about how a variable is used, as you know whether to just look in this file, or look in subclasses as well.",
+      "range": {
+        "startLine": 501,
+        "startChar": 1,
+        "endLine": 501,
+        "endChar": 10
+      },
+      "revId": "97e690a33a99a346377237725f731c45bb005406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ecf528_da6acc37",
+        "filename": "cc/test/fake_layer_tree_resource_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-19T22:24:01Z",
+      "side": 1,
+      "message": "It looks like there\u0027s no difference between this class and FakeDisplayResourceProvider or FakeResourceProvider, other than the class name being instantiated. Can we just make FakeResourceProvider templatized on the class to instantiate, rather than having three ~identical files?",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 36
+      },
+      "revId": "97e690a33a99a346377237725f731c45bb005406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
