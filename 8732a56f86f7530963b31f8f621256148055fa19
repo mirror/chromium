@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d694c55_e0327373",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-19T01:31:25Z",
+      "side": 1,
+      "message": "I\u0027ve moved a modified version of this test to extension_context_menu_model_unittest.cc. In that test, the \"builder.BuildMenu()\" method creates the top-level action menu, which makes it easier to test its visibility.",
+      "parentUuid": "42957baa_ad385081",
+      "range": {
+        "startLine": 407,
+        "startChar": 0,
+        "endLine": 407,
+        "endChar": 78
+      },
+      "revId": "8732a56f86f7530963b31f8f621256148055fa19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4af2edf6_8f2856da",
         "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f1c03b8f_cc6279a5",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1664,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-19T01:31:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4af2edf6_8f2856da",
+      "range": {
+        "startLine": 1664,
+        "startChar": 6,
+        "endLine": 1664,
+        "endChar": 24
+      },
+      "revId": "8732a56f86f7530963b31f8f621256148055fa19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b6ca3b6_07732cf9",
         "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "8732a56f86f7530963b31f8f621256148055fa19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc708d9_ee6681c6",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1667,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-19T01:31:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b6ca3b6_07732cf9",
+      "range": {
+        "startLine": 1667,
+        "startChar": 8,
+        "endLine": 1667,
+        "endChar": 9
+      },
+      "revId": "8732a56f86f7530963b31f8f621256148055fa19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
