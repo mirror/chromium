@@ -16,6 +16,24 @@
       "revId": "5b521ad0d98e263d2f3f40ba5033d597ae4bb8cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df042ad1_5122a744",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptWrappableVisitorTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-19T10:37:58Z",
+      "side": 0,
+      "message": "Not sure why this was there. We have a couple of tests that use AdvanceTracing with v8 wrappers and I don\u0027t see why this would be required. Just aligned behavior to the other tests.",
+      "parentUuid": "438fb5bf_fcc2a657",
+      "revId": "5b521ad0d98e263d2f3f40ba5033d597ae4bb8cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

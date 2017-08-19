@@ -16,6 +16,24 @@
       "revId": "ae983daf3e651c9e642d634b0884477b5ca46711",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce0a109_41290abb",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-19T10:37:58Z",
+      "side": 1,
+      "message": "IIUC NOTREACHED() just falls through in release builds [1]. We definitely want to crash here and get a crash/ entry and not just silently fall through. (In V8 we have it a CHECK(false), which IMHO fits better.)\n\n[1] https://cs.chromium.org/chromium/src/base/logging.h?q\u003dNOTREACHED\u0026l\u003d942",
+      "parentUuid": "e3093bcb_6ccaec77",
+      "revId": "ae983daf3e651c9e642d634b0884477b5ca46711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
