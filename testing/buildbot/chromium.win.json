@@ -497,6 +497,22 @@
       }
     ]
   },
+  "Win Builder": {
+    "scripts": [
+      {
+        "name": "checkbins",
+        "script": "checkbins.py"
+      }
+    ]
+  },
+  "Win x64 Builder": {
+    "scripts": [
+      {
+        "name": "checkbins",
+        "script": "checkbins.py"
+      }
+    ]
+  },
   "Win10 Tests x64": {
     "gtest_tests": [
       {
