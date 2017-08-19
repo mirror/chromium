@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc8b6850_ad14e5dc",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-19T00:19:13Z",
+      "side": 1,
+      "message": "nit: line wrapping is weird here",
+      "range": {
+        "startLine": 127,
+        "startChar": 43,
+        "endLine": 127,
+        "endChar": 0
+      },
+      "revId": "07dbf9a84d460afab0990b7a1caac99d353d1c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
