@@ -22,6 +22,30 @@
       "revId": "2da9dade6f32e245ae78cc788086ea7087b2c7b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f5beef_961fd8be",
+        "filename": "base/test/test_file_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-19T00:54:27Z",
+      "side": 0,
+      "message": "IMO op\u003c\u003c is useful in production code too, specifically for LOG().",
+      "parentUuid": "2725cbab_831fcae9",
+      "range": {
+        "startLine": 24,
+        "startChar": 18,
+        "endLine": 24,
+        "endChar": 22
+      },
+      "revId": "2da9dade6f32e245ae78cc788086ea7087b2c7b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
