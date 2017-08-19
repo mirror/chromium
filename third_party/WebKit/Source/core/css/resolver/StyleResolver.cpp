@@ -63,6 +63,7 @@
 #include "core/css/StylePropertySet.h"
 #include "core/css/StyleRuleImport.h"
 #include "core/css/StyleSheetContents.h"
+#include "core/css/properties/CSSPropertyAPI.h"
 #include "core/css/resolver/AnimatedStyleBuilder.h"
 #include "core/css/resolver/CSSVariableResolver.h"
 #include "core/css/resolver/MatchResult.h"
@@ -1514,7 +1515,7 @@ void StyleResolver::ApplyAllProperty(
     // When hitting matched properties' cache, only inherited properties will be
     // applied.
     if (inherited_only &&
-        !CSSPropertyMetadata::IsInheritedProperty(property_id))
+        !CSSPropertyAPI::Get(property_id).IsInheritedProperty())
       continue;
 
     StyleBuilder::ApplyProperty(property_id, state, all_value);
