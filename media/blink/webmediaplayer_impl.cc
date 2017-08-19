@@ -183,7 +183,7 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
       network_state_(WebMediaPlayer::kNetworkStateEmpty),
       ready_state_(WebMediaPlayer::kReadyStateHaveNothing),
       highest_ready_state_(WebMediaPlayer::kReadyStateHaveNothing),
-      preload_(MultibufferDataSource::AUTO),
+      preload_(MultibufferDataSource::METADATA),
       main_task_runner_(frame->LoadingTaskRunner()),
       media_task_runner_(params->media_task_runner()),
       worker_task_runner_(params->worker_task_runner()),

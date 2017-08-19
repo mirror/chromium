@@ -36,6 +36,7 @@
 #include "core/dom/UserGestureIndicator.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/Settings.h"
+#include "core/frame/UseCounter.h"
 #include "core/fullscreen/Fullscreen.h"
 #include "core/html/media/MediaCustomControlsFullscreenDetector.h"
 #include "core/html/media/MediaRemotingInterstitial.h"
