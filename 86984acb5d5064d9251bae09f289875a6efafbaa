@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "96ecf80c_133802a0",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T02:00:51Z",
+      "side": 1,
+      "message": "Done. I also added trace events where BeginFrame had them, which will help analyze the overhead.",
+      "parentUuid": "7390fed7_3321891e",
+      "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b310fec3_f397e5f8",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-18T19:34:21Z",
       "side": 1,
       "message": "don\u0027t think this is needed.\nspec for buffering + performance observer has not settled. let\u0027s omit this for now",
+      "range": {
+        "startLine": 132,
+        "startChar": 46,
+        "endLine": 132,
+        "endChar": 47
+      },
+      "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe7c58a_5ac89f8e",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T02:00:51Z",
+      "side": 1,
+      "message": "I removed this, but FYI this is for performance.getEntries(), not for observers. I removed the call to NotifyObserver that happens when the entry is created.",
+      "parentUuid": "b310fec3_f397e5f8",
       "range": {
         "startLine": 132,
         "startChar": 46,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "8513586c_6c121bc5",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T02:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb931b17_8a1efa0b",
+      "range": {
+        "startLine": 237,
+        "startChar": 72,
+        "endLine": 237,
+        "endChar": 0
+      },
+      "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ee82fd8_2e412e27",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
         "patchSetId": 1
@@ -85,6 +151,30 @@
       "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bc2281_463f2c5e",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T02:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ee82fd8_2e412e27",
+      "range": {
+        "startLine": 407,
+        "startChar": 63,
+        "endLine": 407,
+        "endChar": 0
+      },
+      "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "693e2cc0_a52cef68",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T02:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae0e3a3e_cd83aaba",
+      "range": {
+        "startLine": 180,
+        "startChar": 47,
+        "endLine": 180,
+        "endChar": 48
+      },
+      "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd932b67_2de8b6a8",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceElementTiming.idl",
         "patchSetId": 1
@@ -131,6 +245,30 @@
       "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d96acf_b8ae71fc",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceElementTiming.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T02:00:51Z",
+      "side": 1,
+      "message": "Done; great suggestion, I totally agree.",
+      "parentUuid": "fd932b67_2de8b6a8",
+      "range": {
+        "startLine": 6,
+        "startChar": 56,
+        "endLine": 6,
+        "endChar": 57
+      },
+      "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "a5a340e9_6c50bf26",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTiming.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T02:00:51Z",
+      "side": 1,
+      "message": "Yeah I think this makes sense.\n\nI\u0027m not sure under what conditions this would happen. I know it does if GetFrame() returns nullptr, but I don\u0027t think that would happen in the context of BeginMainFrame, which we should be in here (commit path). The other case is if the frame does not have a DOM window.\n\nEither way, I think it\u0027s fine to just try again next frame, which is what will happen.",
+      "parentUuid": "55108254_a06a0ea3",
+      "range": {
+        "startLine": 89,
+        "startChar": 64,
+        "endLine": 89,
+        "endChar": 0
+      },
+      "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea488e45_c8cbfc4b",
         "filename": "third_party/WebKit/Source/core/timing/TextElementTiming.cpp",
         "patchSetId": 1
@@ -168,6 +330,30 @@
       "writtenOn": "2017-08-18T19:34:21Z",
       "side": 1,
       "message": "I think we should keep the trace event",
+      "range": {
+        "startLine": 94,
+        "startChar": 39,
+        "endLine": 94,
+        "endChar": 40
+      },
+      "revId": "86984acb5d5064d9251bae09f289875a6efafbaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da2e58e7_daf0aa8b",
+        "filename": "third_party/WebKit/Source/core/timing/TextElementTiming.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T02:00:51Z",
+      "side": 1,
+      "message": "SGTM. Thoughts on the category?",
+      "parentUuid": "ea488e45_c8cbfc4b",
       "range": {
         "startLine": 94,
         "startChar": 39,
