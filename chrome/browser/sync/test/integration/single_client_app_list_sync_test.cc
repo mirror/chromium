@@ -21,8 +21,6 @@
 
 namespace {
 
-const size_t kNumDefaultApps = 2;
-
 bool AllProfilesHaveSameAppList() {
   return SyncAppListHelper::GetInstance()->AllProfilesHaveSameAppList();
 }
@@ -123,15 +121,16 @@ IN_PROC_BROWSER_TEST_F(SingleClientAppListSyncTest, AppListEmpty) {
 IN_PROC_BROWSER_TEST_F(SingleClientAppListSyncTest, AppListSomeApps) {
   ASSERT_TRUE(SetupSync());
 
+  app_list::AppListSyncableService* service =
+      app_list::AppListSyncableServiceFactory::GetForProfile(verifier());
+  const size_t num_default_apps = service->GetNumSyncItemsForTest();
   const size_t kNumApps = 5;
   for (int i = 0; i < static_cast<int>(kNumApps); ++i) {
     apps_helper::InstallApp(GetProfile(0), i);
     apps_helper::InstallApp(verifier(), i);
   }
 
-  app_list::AppListSyncableService* service =
-      app_list::AppListSyncableServiceFactory::GetForProfile(verifier());
-  ASSERT_EQ(kNumApps + kNumDefaultApps, service->GetNumSyncItemsForTest());
+  ASSERT_EQ(kNumApps + num_default_apps, service->GetNumSyncItemsForTest());
 
   ASSERT_TRUE(UpdatedProgressMarkerChecker(GetSyncService(0)).Wait());
   ASSERT_TRUE(AllProfilesHaveSameAppList());
