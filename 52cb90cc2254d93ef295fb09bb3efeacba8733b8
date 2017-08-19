@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eac2b577_9cd9332d",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-19T01:41:52Z",
+      "side": 1,
+      "message": "URLLoaderFactoryGetter has a SetNetworkFactoryForTesting method, is it possible to use that to inject the test factory instead of altering production code? Maybe we can construct a factorygetter for the MockAppCacheService used in the unittests, and inject the factory thru that?",
+      "revId": "52cb90cc2254d93ef295fb09bb3efeacba8733b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
