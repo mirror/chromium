@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62327817_25ac7da6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/IntentHandler.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-19T00:35:47Z",
+      "side": 1,
+      "message": "I will leave it to Jochen to comment on this, but I believe the spec, ints and Blink representations are all the same. So the Blink values are not Chrome specific, I think.",
+      "parentUuid": "e1b8d083_a9bbf596",
+      "revId": "6ecba850bedece5ca71c01b9ab24a8d4c8826656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bd64eb1_4a84d175",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
         "patchSetId": 1
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "23651e0a_e828ae2f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-19T00:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bd64eb1_4a84d175",
+      "revId": "6ecba850bedece5ca71c01b9ab24a8d4c8826656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44faffb0_56d11409",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
         "patchSetId": 1
@@ -70,6 +106,30 @@
       "writtenOn": "2017-08-18T23:45:34Z",
       "side": 1,
       "message": "what is active content?",
+      "range": {
+        "startLine": 262,
+        "startChar": 29,
+        "endLine": 262,
+        "endChar": 35
+      },
+      "revId": "6ecba850bedece5ca71c01b9ab24a8d4c8826656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f4909f_b0ce8b12",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-19T00:35:47Z",
+      "side": 1,
+      "message": "Current custom tab? Clarified in javadoc.",
+      "parentUuid": "44faffb0_56d11409",
       "range": {
         "startLine": 262,
         "startChar": 29,
@@ -105,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "86e84720_ededc881",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-19T00:35:47Z",
+      "side": 1,
+      "message": "Yes, it is handled inside the OriginVerifier. I will add an assert here.",
+      "parentUuid": "4877188d_777d8935",
+      "range": {
+        "startLine": 263,
+        "startChar": 71,
+        "endLine": 263,
+        "endChar": 76
+      },
+      "revId": "6ecba850bedece5ca71c01b9ab24a8d4c8826656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0500a204_12a233d2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
         "patchSetId": 1
@@ -125,6 +209,30 @@
       "revId": "6ecba850bedece5ca71c01b9ab24a8d4c8826656",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6266a5b_1f345696",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-19T00:35:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0500a204_12a233d2",
+      "range": {
+        "startLine": 264,
+        "startChar": 8,
+        "endLine": 264,
+        "endChar": 13
+      },
+      "revId": "6ecba850bedece5ca71c01b9ab24a8d4c8826656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +265,24 @@
       "side": 1,
       "message": "These aren\u0027t used \"that\" many times, so we could just remove these as part of this cl IMO.",
       "parentUuid": "0603fda5_4ce50b8f",
+      "revId": "6ecba850bedece5ca71c01b9ab24a8d4c8826656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a68dc06_de6fb8b5",
+        "filename": "content/public/android/java/src/org/chromium/content_public/common/Referrer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-19T00:35:47Z",
+      "side": 1,
+      "message": "Done with lizeb@ recommendation in this patch. Ted, I will upload the others in the next patch. Mostly uploading one separate path to have separation for these changes.",
+      "parentUuid": "4d4111de_6dcf8aeb",
       "revId": "6ecba850bedece5ca71c01b9ab24a8d4c8826656",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
