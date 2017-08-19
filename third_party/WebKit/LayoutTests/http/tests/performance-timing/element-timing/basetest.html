@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+<title>Performance Element Timing Test: Existence of Text Element Timing Entries</title>
+</head>
+<body>
+    <script src="../../resources/testharness.js"></script>
+    <script src="../../resources/testharnessreport.js"></script>
+
+    <h1 elementtiming="element1">Element 1</h1>
+    <div elementtiming="element2">Element 2</div>
+    <p elementtiming="element3">Element 3</p>
+    <p>No timing</p>
+    <div elementtiming="no_result_empty">
+      <div>
+        <p elementtiming="element4">Element 4</p>
+      </div>
+    </div>
+
+    <script>
+      async_test(function (t) {
+        testRunner.capturePixelsAsyncThen(t.step_func_done(function() {
+            var bufferedEntries = performance.getEntriesByType("elementtiming");
+            expected_names = ["element1", "element2", "element3", "element4"];
+            assert_equals(bufferedEntries.length, expected_names.length, "Wrong number of elementtiming entries");
+            bufferedEntries.sort(function(a, b) { return a.name < b.name ? -1 : (a.name > b.name ? 1 : 0); });
+
+            for (var i = 0; i < expected_names.length; i++) {
+              assert_equals(bufferedEntries[i].entryType, "elementtiming");
+              assert_equals(bufferedEntries[i].elementType, "text");
+              assert_equals(bufferedEntries[i].name, expected_names[i]);
+              assert_equals(bufferedEntries[i].duration, 0);
+              assert_greater_than(bufferedEntries[i].startTime, 0);
+            }
+        }));
+      }, "Basic test to check existence of text elementtiming entries");
+    </script>
+</body>
+</html>

@@ -817,6 +817,10 @@
       status: "stable",
     },
     {
+      name: "PerformanceElementTiming",
+      status: "experimental",
+    },
+    {
       name: "PerformanceNavigationTiming2",
       status: "stable",
     },

@@ -68,6 +68,10 @@ void WebViewFrameWidget::BeginFrame(double last_frame_time_monotonic) {
   return web_view_->BeginFrame(last_frame_time_monotonic);
 }
 
+void WebViewFrameWidget::DidCommitCompositorFrame() {
+  return web_view_->DidCommitCompositorFrame();
+}
+
 void WebViewFrameWidget::UpdateAllLifecyclePhases() {
   return web_view_->UpdateAllLifecyclePhases();
 }
