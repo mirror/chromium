@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8ebed3d_f408e433",
+        "filename": "third_party/WebKit/public/web/WebUserGestureIndicator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-08-19T03:29:30Z",
+      "side": 1,
+      "message": "I know I\u0027m too late, but when you\u0027re landing more cleanups at some point it would be great if you added a short comment to these explaining what they do.  We try to keep the blink public API pretty well commented.  But I know you were just moving/renaming existing uncommented functions :-)",
+      "revId": "a89466ce1d4f5aac646b16c0c66a50cdeb8f228d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
