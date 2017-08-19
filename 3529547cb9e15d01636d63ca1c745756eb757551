@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "772ca6d5_4b6a71c9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/SuggestionsPopupWindow.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-19T00:55:15Z",
+      "side": 1,
+      "message": "Hmm, is this related to the rest of the CL?",
+      "range": {
+        "startLine": 195,
+        "startChar": 50,
+        "endLine": 195,
+        "endChar": 0
+      },
+      "revId": "3529547cb9e15d01636d63ca1c745756eb757551",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
