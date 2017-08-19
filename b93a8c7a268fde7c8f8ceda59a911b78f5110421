@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fb33cd3_9401c362",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentDetailsModifier.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-08-19T03:08:10Z",
+      "side": 1,
+      "message": "This should be very temporary - I suspect UseCounter data will let us make the change.  Add a TODO referencing the bug tracking making this fully spec compliant.",
+      "revId": "b93a8c7a268fde7c8f8ceda59a911b78f5110421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69e51ff9_d10aef63",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-08-19T03:08:10Z",
+      "side": 1,
+      "message": "Please follow the existing message convention, eg. I think this is a replacedWillBeRemoved like \"PaymentRequest\u0027s supportedMethods taking an array is deprecated and will be removed in MXX.  Please use a single string instead.\"",
+      "range": {
+        "startLine": 561,
+        "startChar": 14,
+        "endLine": 561,
+        "endChar": 15
+      },
+      "revId": "bb6a6b97b975680b62f3f380731c677f0ef016bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
