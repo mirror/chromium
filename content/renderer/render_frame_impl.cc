@@ -734,10 +734,10 @@ mojom::URLLoaderFactoryPtr GetBlobURLLoaderFactoryGetter() {
 // The following methods are outside of the anonymous namespace to ensure that
 // the corresponding symbols get emmitted even on symbol_level 1.
 NOINLINE void ExhaustMemory() {
-  volatile void* ptr = nullptr;
+  volatile void* volatile ptr = nullptr;
   do {
     ptr = malloc(0x10000000);
-    base::debug::Alias(&ptr);
+    base::debug::Alias(const_cast<void**>(&ptr));
   } while (ptr);
 }
 
@@ -750,7 +750,7 @@ NOINLINE void CrashIntentionally() {
   static int static_variable_to_make_this_function_unique = 0;
   base::debug::Alias(&static_variable_to_make_this_function_unique);
 
-  volatile int* zero = nullptr;
+  volatile int* volatile zero = nullptr;
   *zero = 0;
 }
 
