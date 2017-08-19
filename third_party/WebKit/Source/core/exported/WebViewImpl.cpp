@@ -107,6 +107,7 @@
 #include "core/paint/compositing/PaintLayerCompositor.h"
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
+#include "core/timing/TextElementTiming.h"
 #include "platform/ContextMenu.h"
 #include "platform/ContextMenuItem.h"
 #include "platform/Cursor.h"
@@ -2006,6 +2007,15 @@ void WebViewImpl::BeginFrame(double last_frame_time_monotonic) {
   PageWidgetDelegate::Animate(*page_, last_frame_time_monotonic);
   if (auto* client = GetValidationMessageClient())
     client->LayoutOverlay();
+}
+
+void WebViewImpl::DidCommitCompositorFrame() {
+  TRACE_EVENT0("blink", "WebViewImpl::DidCommitCompositorFrame");
+  if (!MainFrameImpl())
+    return;
+  Document* document = MainFrameImpl()->GetFrame()->GetDocument();
+  if (document)
+    TextElementTiming::From(*document).DidCommitCompositorFrame();
 }
 
 void WebViewImpl::UpdateAllLifecyclePhases() {
