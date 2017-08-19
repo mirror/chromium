@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d192abde_ef470889",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuItemDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-19T01:17:53Z",
+      "side": 1,
+      "message": "This will download a web page (snapshot) but as of today, it will just cancel if the URL points to a file (anything not text/html). We are thinking about making it work in M63, but for now this is going to be the result. Proceed if you are ok with that :)",
+      "revId": "61080f8e7450dd8ad8dab403b56ce95d809f5d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ac32cd_be1524c5",
+        "filename": "components/offline_pages/core/client_namespace_constants.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-19T01:17:53Z",
+      "side": 1,
+      "message": "Naming suggestion: browser_actions_download -\u003e browser_actions\nThey are all downloads...",
+      "revId": "61080f8e7450dd8ad8dab403b56ce95d809f5d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1336d646_33acaf88",
+        "filename": "components/offline_pages/core/client_namespace_constants.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-19T01:17:53Z",
+      "side": 1,
+      "message": "Same naming suggestion - lets drop \"Download\".",
+      "revId": "61080f8e7450dd8ad8dab403b56ce95d809f5d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
