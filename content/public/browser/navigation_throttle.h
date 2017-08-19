@@ -17,7 +17,9 @@ class CONTENT_EXPORT NavigationThrottle {
   // This is returned to the NavigationHandle to allow the navigation to
   // proceed, or to cancel it.
   enum ThrottleCheckResult {
-    // The navigation proceeds uninterrupted.
+    // The action proceeds. This can either mean the navigation continues (e.g.
+    // for WillStartRequest) or that the navigation halts (e.g. for
+    // WillFailRequest).
     PROCEED,
 
     // Defers the navigation until the NavigationThrottle calls
@@ -72,6 +74,9 @@ class CONTENT_EXPORT NavigationThrottle {
   // implementer need to destroy the WebContents, it should return CANCEL,
   // CANCEL_AND_IGNORE or DEFER and perform the destruction asynchronously.
   virtual ThrottleCheckResult WillRedirectRequest();
+
+  // TODO: comment
+  virtual ThrottleCheckResult WillFailRequest();
 
   // Called when a response's headers and metadata are available.
   //
