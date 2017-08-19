@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "438fb5bf_fcc2a657",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptWrappableVisitorTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-19T00:55:59Z",
+      "side": 0,
+      "message": "What is this change?",
+      "revId": "5b521ad0d98e263d2f3f40ba5033d597ae4bb8cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
