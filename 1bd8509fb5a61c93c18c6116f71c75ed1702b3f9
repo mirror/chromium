@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed04b4e1_23c595cf",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-19T01:13:06Z",
+      "side": 1,
+      "message": "just a note, this section is compiled on Mac, so putting it here means the version of ShowPasswordReuseModalWarningDialog that shows the toolkit-views dialog is linked in (and probably works). If you want a Cocoa version as well, you can wrap the definition of the toolkit-views\u0027 ShowPasswordReuseModalWarningDialog between #if BUILDFLAG(MAC_VIEWS_BROWSER) and give a Cocoa version as well. The path you take will depend on your UI review.",
+      "revId": "1bd8509fb5a61c93c18c6116f71c75ed1702b3f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99fe775b_d2325fc1",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-19T01:13:06Z",
+      "side": 1,
+      "message": "add \"The assets are 48 x 48.\" ?",
+      "revId": "1bd8509fb5a61c93c18c6116f71c75ed1702b3f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ae4d36f_3f9075d8",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-19T01:13:06Z",
+      "side": 1,
+      "message": "constexpr kIconSize \u003d 24;\n\n(generally, if a constexpr is specific to a particular function it\u0027s good to keep it local",
+      "revId": "1bd8509fb5a61c93c18c6116f71c75ed1702b3f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b48fad_eaf5f6f1",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 2396,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-19T01:13:06Z",
+      "side": 1,
+      "message": "following from the earlier note (assuming I got it right)\n\n  if (toolkit_views)\n\nis probably better to start with here, so that we don\u0027t forget to run the test on Mac.",
+      "range": {
+        "startLine": 2396,
+        "startChar": 10,
+        "endLine": 2396,
+        "endChar": 17
+      },
+      "revId": "1bd8509fb5a61c93c18c6116f71c75ed1702b3f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

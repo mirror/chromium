@@ -225,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "f039f2d5_df9edba6",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-19T01:13:06Z",
+      "side": 1,
+      "message": "\u003e Thanks. Change back to ::FIXED.\n\nThanks for trying it out! FIXED is a good start. I think with --secondary-ui-md we\u0027ll get excess padding on the right of the dialog rather than wider message text. But we have the same problem currently with extension install dialogs. The right fix might be for the dialog to override CalculatePreferredSize so the size is more flexible (or something more general, since this concept of \"preferred message width\" appears in a few places). But you can leave that for us folks launching --secondary-ui-md",
+      "parentUuid": "e9fb7682_964ac9fe",
+      "revId": "33f4ea11242e16318ccf571c168b2b214e0769e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e7d4996_ccc6f71f",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 14
