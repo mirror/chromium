@@ -960,6 +960,7 @@ void RenderWidget::DidCommitCompositorFrame() {
     observer.DidCommitCompositorFrame();
   for (auto& observer : render_frame_proxies_)
     observer.DidCommitCompositorFrame();
+  GetWebWidget()->DidCommitCompositorFrame();
 }
 
 void RenderWidget::DidCompletePageScaleAnimation() {}

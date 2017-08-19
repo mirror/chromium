@@ -85,6 +85,9 @@ class WebWidget {
   // |lastFrameTimeMonotonic| is in seconds.
   virtual void BeginFrame(double last_frame_time_monotonic) {}
 
+  // Called when a compositor frame commit operation finishes.
+  virtual void DidCommitCompositorFrame() {}
+
   // Called to run through the entire set of document lifecycle phases needed
   // to render a frame of the web widget. This MUST be called before Paint,
   // and it may result in calls to WebWidgetClient::didInvalidateRect.
