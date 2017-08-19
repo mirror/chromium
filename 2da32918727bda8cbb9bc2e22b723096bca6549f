@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "83a936ab_a7b5599d",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db21202a_d242d3d7",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3633af6_ce5e3cc4",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-18T08:31:04Z",
       "side": 1,
       "message": "Why specify an underlying type for the enum class instead of using the default one (\"int\")? I don\u0027t see any reason to request explicitly a \"short\" here (if we really wanted to limit memory use \"char\" would probably be better, but I don\u0027t think it is worth it).\n\nI think it would be fine without the underlying type:\n\n  enum class DialogButtonStyle {\n    ...\n  };\n\nReference: http://en.cppreference.com/w/cpp/language/enum",
+      "range": {
+        "startLine": 13,
+        "startChar": 28,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb26d24_ad4b6ba6",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "I changed it to char (which I believe is usually compiled to the same size as a short).  I think that if we know that a small subset of values will ever be used, we should constrict the enum class size.  You get more memory-performant code with very little extra code and few downsides.",
+      "parentUuid": "d3633af6_ce5e3cc4",
       "range": {
         "startLine": 13,
         "startChar": 28,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "a849ed57_d71c4dde",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Removed \u003d 0.",
+      "parentUuid": "a22e93b1_9b38c108",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e6f7e04_98ecd91f",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
         "patchSetId": 5
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "e992a8aa_fcf4b215",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e6f7e04_98ecd91f",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7af50a02_25ab2826",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
         "patchSetId": 5
@@ -96,6 +180,24 @@
       "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d94ba80_03a1c982",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7af50a02_25ab2826",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "72e42f3f_995fb505",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c3a3921_d07067c8",
+      "range": {
+        "startLine": 26,
+        "startChar": 62,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b77d51f_e20cc1f0",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
         "patchSetId": 5
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "590bd3c9_b371976f",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b77d51f_e20cc1f0",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de3f6b3d_1db5f7bd",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.mm",
         "patchSetId": 5
@@ -150,6 +294,24 @@
       "writtenOn": "2017-08-18T08:31:04Z",
       "side": 1,
       "message": "Why not make this initialiser public? I don\u0027t see the benefit of forcing use of the factory method vs just exposing the initialiser publicly as the class is not a class cluster. I can understand the presence of a convenience factory method, but I think having the initialiser public does not break any of the encapsulation the class provides.\n\nI think both \"[DialogButtonConfiguration configWithText:text style:style]\" and \"[[DialogButtonConfiguration alloc] initWithText:text style:style]\" should both be valid.",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9673048_2cef0d44",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "One benefit of keeping the initializer as private is to discourage subclassing.  For simple data container objects like this, I think there\u0027s some benefit to minimizing the publicly available API to encourage clients to using the classes as-is.  That being said, someone could still hack around this pretty easily, so we can move the initializer to the .h file if you feel strongly about it.",
+      "parentUuid": "de3f6b3d_1db5f7bd",
       "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "8ff328ac_28af0627",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_configuration_identifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf348e12_49dface3",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7688da0_8e342531",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_configuration_identifier.mm",
         "patchSetId": 5
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "772d601b_43c0e944",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_configuration_identifier.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7688da0_8e342531",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa1e29cc_d8c18228",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_coordinator.h",
         "patchSetId": 5
@@ -204,6 +402,24 @@
       "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac343a1_845d0960",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_coordinator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "fa1e29cc_d8c18228",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -247,6 +463,48 @@
     },
     {
       "key": {
+        "uuid": "85605123_356e69aa",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93cb3b55_2c5e02d0",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb763879_db22b2c4",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "effb4bb5_1a6dabd2",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 26
+      },
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59413660_81f1fd82",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.h",
         "patchSetId": 5
@@ -261,6 +519,24 @@
       "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "532abb36_eb5e21b6",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59413660_81f1fd82",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -281,6 +557,24 @@
     },
     {
       "key": {
+        "uuid": "72f28362_9eb47ca9",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7315580_06a28b89",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4508d2c4_10ef45f7",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.mm",
         "patchSetId": 5
@@ -292,6 +586,24 @@
       "writtenOn": "2017-08-18T08:31:04Z",
       "side": 1,
       "message": "Should this be NOTREACHED()?",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "821d0350_1ef9ecd9",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "No, the default should be empty for dialogs without titles/messages/text fields.  Only buttons are mandatory.",
+      "parentUuid": "4508d2c4_10ef45f7",
       "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -315,6 +627,24 @@
     },
     {
       "key": {
+        "uuid": "bd5f5d1e_03008bc6",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d3ca95db_abdcb9e9",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65821429_d96f89fe",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.mm",
         "patchSetId": 5
@@ -329,6 +659,24 @@
       "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a7c162_5e2ecbeb",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65821429_d96f89fe",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -349,6 +697,24 @@
     },
     {
       "key": {
+        "uuid": "48b05da9_8dc9aa08",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "13e7b0d3_eb2fa51e",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea0f42d3_c939220f",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_text_field_configuration.h",
         "patchSetId": 5
@@ -366,6 +732,24 @@
     },
     {
       "key": {
+        "uuid": "85810729_0509b8e3",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_text_field_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea0f42d3_c939220f",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7cea5c0_f7e37cfe",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_text_field_configuration.h",
         "patchSetId": 5
@@ -377,6 +761,24 @@
       "writtenOn": "2017-08-18T08:31:04Z",
       "side": 1,
       "message": "nit, optional: maybe mark all those properties \"nonnull\"",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97d33e3_8c536bcd",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_text_field_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Some are nullable, but I\u0027ve marked them as such.",
+      "parentUuid": "a7cea5c0_f7e37cfe",
       "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -400,6 +802,24 @@
     },
     {
       "key": {
+        "uuid": "82c620bc_9b3dc99b",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_text_field_configuration.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Same as with other configuration class.",
+      "parentUuid": "9324b1f3_0289c17c",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7874fd7_80c61165",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_view_controller.h",
         "patchSetId": 5
@@ -411,6 +831,23 @@
       "writtenOn": "2017-08-18T08:31:04Z",
       "side": 1,
       "message": "Can you add unit tests?\n\nIt looks like UIAlertController exposes the actions and the textFields property, so you should be able to check that creating a DialogViewController with some configuration results in the correct number of actions and the proper textFields based on the properties of the consumer.",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835f4d74_039da60f",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_view_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-19T00:42:36Z",
+      "side": 1,
+      "message": "Done.",
       "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
