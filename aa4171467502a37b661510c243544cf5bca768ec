@@ -22,6 +22,30 @@
       "revId": "aa4171467502a37b661510c243544cf5bca768ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2026003f_f94f8881",
+        "filename": "services/device/generic_sensor/absolute_orientation_euler_angles_fusion_algorithm_using_accelerometer_and_magnetometer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-19T00:41:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1fea125_56cbe193",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "aa4171467502a37b661510c243544cf5bca768ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
