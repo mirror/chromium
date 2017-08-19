@@ -174,9 +174,12 @@ void WindowTreeHostMus::HideImpl() {
 }
 
 void WindowTreeHostMus::SetBoundsInPixels(const gfx::Rect& bounds) {
-  if (!in_set_bounds_from_server_)
-    delegate_->OnWindowTreeHostBoundsWillChange(this, bounds);
+  const gfx::Rect old_bounds_in_pixels = GetBoundsInPixels();
   WindowTreeHostPlatform::SetBoundsInPixels(bounds);
+  // Notifying the delegate has to happen after changing the bounds so that the
+  // compositor can be updated (which needs the window to be resized already).
+  if (!in_set_bounds_from_server_)
+    delegate_->OnWindowTreeHostBoundsDidChange(this, old_bounds_in_pixels);
 }
 
 void WindowTreeHostMus::DispatchEvent(ui::Event* event) {

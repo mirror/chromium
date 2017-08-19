@@ -626,6 +626,8 @@ void WindowTreeClient::OnSetDisplayRootDone(
   if (!window)
     return;  // Display was already deleted.
 
+  // TODO(sky): figure out why this has to be here rather than in
+  // WindowTreeHostMus's constructor.
   ui::Compositor* compositor = window->GetWindow()->GetHost()->compositor();
   compositor->SetLocalSurfaceId(*local_surface_id);
 }
@@ -720,6 +722,14 @@ void WindowTreeClient::ScheduleInFlightBoundsChange(
       window->HasLocalLayerTreeFrameSink()) {
     local_surface_id = window->GetOrAllocateLocalSurfaceId(new_bounds.size());
     synchronizing_with_child_on_next_frame_ = true;
+    if (window->window_mus_type() == WindowMusType::DISPLAY_MANUALLY_CREATED &&
+        local_surface_id && local_surface_id->is_valid()) {
+      WindowTreeHost* window_tree_host = window->GetWindow()->GetHost();
+      // |window_tree_host| may be null if this is called during creation of
+      // the window associated with the WindowTreeHostMus.
+      if (window_tree_host)
+        window_tree_host->compositor()->SetLocalSurfaceId(*local_surface_id);
+    }
   }
   tree_->SetWindowBounds(change_id, window->server_id(), new_bounds,
                          local_surface_id);
@@ -2049,19 +2059,21 @@ void WindowTreeClient::SwapDisplayRoots(WindowTreeHostMus* window_tree_host1,
   }
 }
 
-void WindowTreeClient::OnWindowTreeHostBoundsWillChange(
+void WindowTreeClient::OnWindowTreeHostBoundsDidChange(
     WindowTreeHostMus* window_tree_host,
-    const gfx::Rect& bounds) {
-  gfx::Rect old_bounds = window_tree_host->GetBoundsInPixels();
-  gfx::Rect new_bounds = bounds;
+    const gfx::Rect& old_bounds_in_pixels) {
+  gfx::Rect old_bounds_in_pixels_adjusted = old_bounds_in_pixels;
+  gfx::Rect new_bounds_in_pixels_adjusted =
+      window_tree_host->GetBoundsInPixels();
   if (window_manager_delegate_) {
     // The window manager origins should always be 0x0. The real origin is
     // communicated by way of SetDisplayConfiguration().
-    old_bounds.set_origin(gfx::Point());
-    new_bounds.set_origin(gfx::Point());
+    old_bounds_in_pixels_adjusted.set_origin(gfx::Point());
+    new_bounds_in_pixels_adjusted.set_origin(gfx::Point());
   }
   ScheduleInFlightBoundsChange(WindowMus::Get(window_tree_host->window()),
-                               old_bounds, new_bounds);
+                               old_bounds_in_pixels_adjusted,
+                               new_bounds_in_pixels_adjusted);
 }
 
 void WindowTreeClient::OnWindowTreeHostClientAreaWillChange(

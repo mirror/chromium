@@ -511,8 +511,9 @@ class AURA_EXPORT WindowTreeClient
                         WindowTreeHostMus* window_tree_host2) override;
 
   // Overriden from WindowTreeHostMusDelegate:
-  void OnWindowTreeHostBoundsWillChange(WindowTreeHostMus* window_tree_host,
-                                        const gfx::Rect& bounds) override;
+  void OnWindowTreeHostBoundsDidChange(
+      WindowTreeHostMus* window_tree_host,
+      const gfx::Rect& old_bounds_in_pixels) override;
   void OnWindowTreeHostClientAreaWillChange(
       WindowTreeHostMus* window_tree_host,
       const gfx::Insets& client_area,
