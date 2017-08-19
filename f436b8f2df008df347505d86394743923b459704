@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "622c12ad_fd8f3438",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-08-19T00:04:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7129f505_4d5090ee",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 4
+      },
+      "revId": "f436b8f2df008df347505d86394743923b459704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "428b3e4c_19c09083",
         "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessConnection.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-18T23:25:29Z",
       "side": 1,
       "message": "perhaps a good time to come up with a better name than \"callbacks\"\n\nhmm.... client interfaces? custom interfaces? what does mojo call these things?",
+      "range": {
+        "startLine": 176,
+        "startChar": 28,
+        "endLine": 176,
+        "endChar": 38
+      },
+      "revId": "f436b8f2df008df347505d86394743923b459704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f38d909_b9084690",
+        "filename": "base/android/java/src/org/chromium/base/process_launcher/ChildProcessConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-08-19T00:04:08Z",
+      "side": 1,
+      "message": "Mojo uses the term interface.\nLet\u0027s go with clientInterfaces,",
+      "parentUuid": "428b3e4c_19c09083",
       "range": {
         "startLine": 176,
         "startChar": 28,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "89e67bcd_7c7a997b",
+        "filename": "base/test/android/java/src/org/chromium/base/MultiprocessTestClientServiceDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-08-19T00:04:08Z",
+      "side": 1,
+      "message": "The IBinder retrieved here match the one provided in MultiprocessTestClientLauncher (and soon I\u0027ll pass in more).",
+      "parentUuid": "e83c5043_346dfde4",
+      "revId": "f436b8f2df008df347505d86394743923b459704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88c098b1_ad1f8159",
         "filename": "content/public/android/java/src/org/chromium/content/app/ContentChildProcessServiceDelegate.java",
         "patchSetId": 4
@@ -76,6 +142,24 @@
       "writtenOn": "2017-08-18T23:24:34Z",
       "side": 1,
       "message": "Nit: This implies that the first callback is the GPU callback. Is this requirement documented anywhere?",
+      "revId": "f436b8f2df008df347505d86394743923b459704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74488ba0_04af338a",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ContentChildProcessServiceDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-08-19T00:04:08Z",
+      "side": 1,
+      "message": "The IBinder\u0027s retrieved here match the ones in the ChildProcessLauncher.Delegate.",
+      "parentUuid": "88c098b1_ad1f8159",
       "revId": "f436b8f2df008df347505d86394743923b459704",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -102,6 +186,30 @@
       "revId": "f436b8f2df008df347505d86394743923b459704",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "239c39ec_bf580df2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-08-19T00:04:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8948c6c4_be39bf44",
+      "range": {
+        "startLine": 441,
+        "startChar": 31,
+        "endLine": 441,
+        "endChar": 33
+      },
+      "revId": "f436b8f2df008df347505d86394743923b459704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
