@@ -22,10 +22,11 @@ namespace init {
 namespace {
 
 bool InitializeStaticEGLInternal() {
-  base::NativeLibrary gles_library = LoadLibraryAndPrintError("libGLESv2.so");
+  base::NativeLibrary gles_library =
+      LoadLibraryAndPrintError("libGLESv2_ANGLE.so");
   if (!gles_library)
     return false;
-  base::NativeLibrary egl_library = LoadLibraryAndPrintError("libEGL.so");
+  base::NativeLibrary egl_library = LoadLibraryAndPrintError("libEGL_ANGLE.so");
   if (!egl_library) {
     base::UnloadNativeLibrary(gles_library);
     return false;

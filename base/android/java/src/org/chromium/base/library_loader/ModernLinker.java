@@ -105,7 +105,8 @@ class ModernLinker extends Linker {
         assert NativeLibraries.sUseLinker;
 
         synchronized (mLock) {
-            assert !mPrepareLibraryLoadCalled;
+            if (mPrepareLibraryLoadCalled) return;
+
             ensureInitializedLocked();
 
             // If in the browser, generate a random base load address for service processes

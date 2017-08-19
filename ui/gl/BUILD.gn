@@ -300,6 +300,8 @@ component("gl") {
     libs = [ "android" ]
 
     deps += [ ":gl_jni_headers" ]
+
+    deps += [ "//third_party/angle:libEGL_ANGLE" ]
   }
 }
 

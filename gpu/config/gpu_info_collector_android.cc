@@ -73,11 +73,12 @@ gpu::CollectInfoResult CollectDriverInfo(gpu::GPUInfo* gpu_info) {
   base::NativeLibrary gles_library, egl_library;
   base::NativeLibraryLoadError error;
   gles_library =
-      base::LoadNativeLibrary(base::FilePath("libGLESv2.so"), &error);
+      base::LoadNativeLibrary(base::FilePath("libGLESv2_ANGLE.so"), &error);
   if (!gles_library)
     LOG(FATAL) << "Failed to load libGLESv2.so";
 
-  egl_library = base::LoadNativeLibrary(base::FilePath("libEGL.so"), &error);
+  egl_library =
+      base::LoadNativeLibrary(base::FilePath("libEGL_ANGLE.so"), &error);
   if (!egl_library)
     LOG(FATAL) << "Failed to load libEGL.so";
 
