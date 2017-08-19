@@ -1,0 +1,11 @@
+Name: Checked in build outputs generated on Windows.
+Version: -
+Revision: -
+License: FIXME
+Security Critical: yes
+
+This directory contains outputs of some tools that run during the chrome/win
+build and that exist only as closed-source Windows binaries and that are used
+only in very few places of the build, and whose build inputs change almost
+never.  By checking in the outputs of these tools, the chrome/win build can
+work on non-Windows hosts.
