@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "358c2bc6_5589aca2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/interfaces.https-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-08-19T03:11:33Z",
+      "side": 1,
+      "message": "Hmm, I wonder what this last failure is all about.  We really should be able to get at LEAST the IDL test passing without too much trouble ;-).  Not related to this CL of course, just ranting...",
+      "range": {
+        "startLine": 33,
+        "startChar": 18,
+        "endLine": 33,
+        "endChar": 24
+      },
+      "revId": "bb6a6b97b975680b62f3f380731c677f0ef016bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69e51ff9_d10aef63",
         "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
         "patchSetId": 4
