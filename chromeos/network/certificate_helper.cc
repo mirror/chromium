@@ -72,9 +72,8 @@ std::string GetCertTokenName(CERTCertificate* cert_handle) {
   return token;
 }
 
-std::string GetIssuerCommonName(CERTCertificate* cert_handle,
-                                const std::string& alternative_text) {
-  return Stringize(CERT_GetCommonName(&cert_handle->issuer), alternative_text);
+std::string GetIssuerDisplayName(CERTCertificate* cert_handle) {
+  return net::x509_util::GetCERTNameDisplayName(&cert_handle->issuer);
 }
 
 std::string GetCertNameOrNickname(CERTCertificate* cert_handle) {
