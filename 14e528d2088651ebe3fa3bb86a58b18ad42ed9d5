@@ -16,6 +16,24 @@
       "revId": "14e528d2088651ebe3fa3bb86a58b18ad42ed9d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54244b06_75ba280f",
+        "filename": "testing/buildbot/chromium.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-19T01:11:35Z",
+      "side": 1,
+      "message": "possibly not, I was just copying what was in the other sections, should I try removing this from \"Win\" above as well?\n\nCheckbins runs on whatever binaries it finds after the compile, so e.g. if someone changes the mitigations on a process then it will check that new process (assuming analyze recompiles it)\n\nperhaps we should just remove this \u0027all\u0027 entirely...",
+      "parentUuid": "0a13ce31_8df60274",
+      "revId": "14e528d2088651ebe3fa3bb86a58b18ad42ed9d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
