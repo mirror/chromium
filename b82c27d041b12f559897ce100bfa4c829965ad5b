@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6ae48676_cd430a06",
+        "filename": "chrome/browser/resources/settings/internet_page/network_summary_item.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-19T00:09:30Z",
+      "side": 1,
+      "message": "Thanks, looks much nicer.",
+      "parentUuid": "9ce2f11b_b7628299",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 52
+      },
+      "revId": "b82c27d041b12f559897ce100bfa4c829965ad5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a36aa57_d471810e",
         "filename": "chrome/browser/resources/settings/internet_page/network_summary_item.js",
         "patchSetId": 4
