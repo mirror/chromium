@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88fde1e0_c24ffa03",
+        "filename": "ui/views/widget/root_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-19T00:34:46Z",
+      "side": 1,
+      "message": "This fails tests for non CrOS builds.\nLooking into it",
+      "range": {
+        "startLine": 645,
+        "startChar": 1,
+        "endLine": 647,
+        "endChar": 69
+      },
+      "revId": "264b806869a648345c30ecb36abac12c19b331fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
