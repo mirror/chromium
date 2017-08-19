@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a13ce31_8df60274",
+        "filename": "testing/buildbot/chromium.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-08-19T01:05:21Z",
+      "side": 1,
+      "message": "Do we need \"all\" for checkbins to work? \n\nIf we add \"all\" here, this\u0027ll also add \"all\" on the CQ bots, and that\u0027ll probably make their compile times too slow for the CQ.",
+      "revId": "14e528d2088651ebe3fa3bb86a58b18ad42ed9d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
