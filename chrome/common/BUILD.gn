@@ -197,6 +197,7 @@ static_library("common") {
 
   public_deps = [
     ":channel_info",
+    ":client_hints_mojom",
     ":common_param_traits_macros",
     ":features",
     ":ini_parser",
@@ -712,6 +713,7 @@ mojom("mojo_bindings") {
     "//mojo/common:common_custom_types",
     "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",
+    "//url/mojo:url_mojom_origin",
   ]
 
   # TODO(crbug.com/714018): Convert the implementation to use OnceCallback.
@@ -737,5 +739,17 @@ mojom("page_load_metrics_mojom") {
   public_deps = [
     "//mojo/common:common_custom_types",
     "//third_party/WebKit/public:web_feature_mojo_bindings",
+  ]
+}
+
+mojom("client_hints_mojom") {
+  sources = [
+    "client_hints.mojom",
+  ]
+
+  public_deps = [
+    "//mojo/common:common_custom_types",
+    "//third_party/WebKit/public:web_client_hints_types_mojo_bindings",
+    "//url/mojo:url_mojom_origin",
   ]
 }
