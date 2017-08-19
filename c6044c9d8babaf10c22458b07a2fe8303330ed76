@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b837e80e_b0211795",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T21:04:55Z",
+      "side": 1,
+      "message": "Good call, SGTM. Done.",
+      "parentUuid": "8a4a113c_f283c7ef",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc5f3706_6e5b4c40",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-18T23:59:37Z",
       "side": 1,
       "message": "I think it would be better to leverage CreateTestWebContents() of the base class RenderViewHostTestHarness, unless you need to create a full-fledged WebContents.",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ced01b75_0c08ff4f",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T21:04:55Z",
+      "side": 1,
+      "message": "I\u0027m not sure I follow. This method and RenderViewHostTestHarness::CreateTestWebContents() both call content::TestWebContents::Create(), the difference being the second parameter is a nullptr here, vs. creating and initializing a new SiteInstance in the latter. I\u0027m not sure what \"full-fledged WebContents\" means, since they both create a TestWebContents?\n\nI agree that we could eliminate some code here, but having a separate CreateTestWebContents() that passes a nullptr is consistent with other TabManager unittests in this directory. I\u0027m in favor of leaving it since this code was previously reviewed, but I\u0027ll defer to others. Thoughts?",
+      "parentUuid": "bc5f3706_6e5b4c40",
       "range": {
         "startLine": 37,
         "startChar": 15,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f1eaa56d_4d65db62",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T21:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "208ee232_89b59a26",
+      "range": {
+        "startLine": 41,
+        "startChar": 28,
+        "endLine": 41,
+        "endChar": 55
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "220fd2e0_89129585",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "270bc971_b6d8b9a1",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T21:04:55Z",
+      "side": 1,
+      "message": "Done (tab_manager), should_test_* remain protected (see below).",
+      "parentUuid": "220fd2e0_89129585",
+      "range": {
+        "startLine": 71,
+        "startChar": 1,
+        "endLine": 71,
+        "endChar": 10
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "04db15ee_46bfc655",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T21:04:55Z",
+      "side": 1,
+      "message": "IMO I don\u0027t think this is necessary here, and I\u0027m in favor of leaving it as is. This is consistent with other unittests in this directory (background_tab_navigation_throttle_unittest.cc). I\u0027m going to leave it as is for now, unless others push back.",
+      "parentUuid": "b06785e6_5cae60ba",
+      "range": {
+        "startLine": 73,
+        "startChar": 7,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98732f4f_662b5df2",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e4eb40_140e6cf7",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T21:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98732f4f_662b5df2",
+      "range": {
+        "startLine": 79,
+        "startChar": 1,
+        "endLine": 79,
+        "endChar": 7
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "837acce2_7ead4203",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T21:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a5ce6e1_970f655f",
+      "range": {
+        "startLine": 115,
+        "startChar": 1,
+        "endLine": 115,
+        "endChar": 10
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "252051fb_8f0920b1",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
         "patchSetId": 6
@@ -174,6 +342,30 @@
       "writtenOn": "2017-08-18T23:59:37Z",
       "side": 1,
       "message": "[foreground,background]_tab names are easier to understand for me. If these are just temporary variables, how about instantiating them inside SetForegroundAndBackgroundTabs)?\nAfter SetForegroundAndBackgroundTabs(), tab1.IsVisible() and !tab2.IsVisible()? SetForegroundAndBackgroundTabs() seems not change visibility of these tabs.",
+      "range": {
+        "startLine": 208,
+        "startChar": 33,
+        "endLine": 208,
+        "endChar": 37
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7039b7b1_d84a3972",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T21:04:55Z",
+      "side": 1,
+      "message": "I\u0027m not opposed to changing the names, but which tab is the foreground and which is the background is irrelevant for the test. And, after switching tabs, the names are no longer representative, so it would have to be something like |initial_foreground_tab|. Leaving for now.\n\nI tried going down the road of initializing in SetForegroundAndBackgroundTabs, but as the method comments indicate, the WebContentses need to be test-scoped as there are some CHECKs that fail if these are not. Note, the variables aren\u0027t temporary, but rather unique_ptrs which will be destroyed at the end of the test(s). The raw pointers are passed, not the unique_ptrs.\n\n\"SetForegroundAndBackgroundTabs() seems not change visibility of these tabs.\" -- Visibility isn\u0027t a part RecordSwitchToTab, so it was omitted. These tests simply mimic having a foreground and background tab and testing RecordSwitchToTab (which needs 2 WebContentses).",
+      "parentUuid": "252051fb_8f0920b1",
       "range": {
         "startLine": 208,
         "startChar": 33,
@@ -206,6 +398,30 @@
       "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da2fe38_2dfd4e49",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-19T21:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54a49ff5_71a1e38c",
+      "range": {
+        "startLine": 340,
+        "startChar": 27,
+        "endLine": 340,
+        "endChar": 37
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
