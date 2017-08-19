@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "2b4d192e_9c02323e",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-19T01:28:21Z",
+      "side": 1,
+      "message": "We discussed that with Justin in person:\nWe cannot do this without propagating the clock to the interface of the task.\nI was trying to capture the response with the comment added above the code.\nI don\u0027t think your const explanation contributes or relates to Justin\u0027s comment.",
+      "parentUuid": "2bfd17a4_a5db24bf",
+      "revId": "b226e898b42a8f408b3416adb77f130137a36f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "201b96b8_9b574f33",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
         "patchSetId": 3
