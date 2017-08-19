@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2eaa6926_f5a7b232",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-19T04:15:25Z",
+      "side": 1,
+      "message": "DecidePermission definitely shouldn\u0027t return ASK. It\u0027s deciding the permission, so the result should be ALLOW or BLOCK.\n\nHaving thought about this more, in a feature policy world all cases where requesting_origin !\u003d embedding_origin should be BLOCK. We have notifications moving here a little early, so what if the implementation of NotificationPermissionContextBase::GetPermissionStatusInternal looks something like:\n\nContentSetting NotificationPermissionContext::GetPermissionStatusInternal(\n    content::RenderFrameHost* render_frame_host,\n    const GURL\u0026 requesting_origin,\n    const GURL\u0026 embedding_origin) const {\n  ContentSetting setting \u003d PermissionContextBase::GetPermissionStatusInternal(\n      render_frame_host, requesting_origin, embedding_origin);\n\n  if (setting \u003d\u003d CONTENT_SETTING_ASK \u0026\u0026\n      requesting_origin !\u003d embedding_origin) {\n    return CONTENT_SETTING_BLOCK;\n  }\n\n  return setting;\n}\n\nWhen we launch feature policy and bar all other permissions from being requested from cross-origin iframes, that conditional could be lifted up into PermissionContextBase::GetPermissionStatusInternal.\n\nThoughts?",
+      "parentUuid": "cffc769c_3f79785b",
+      "range": {
+        "startLine": 177,
+        "startChar": 20,
+        "endLine": 177,
+        "endChar": 41
+      },
+      "revId": "dc392d9431f2f24a610a43a8ceb199c2be3efcbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed619c9c_a5d5ae37",
         "filename": "third_party/WebKit/LayoutTests/http/tests/notifications/permission-behaviour.html",
         "patchSetId": 6
