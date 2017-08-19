@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "a9ded593_94de0e39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-19T00:03:27Z",
+      "side": 1,
+      "message": "s/clank/Chrome/",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "976dec06c8e6eefb5f466a4b84e1ca7488ee0d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44c93481_8ab2d644",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-19T00:03:27Z",
+      "side": 1,
+      "message": "Google Play Store?",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "976dec06c8e6eefb5f466a4b84e1ca7488ee0d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52551535_c597c03f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-19T00:03:27Z",
+      "side": 1,
+      "message": "Google Play Store?",
+      "range": {
+        "startLine": 9,
+        "startChar": 49,
+        "endLine": 9,
+        "endChar": 62
+      },
+      "revId": "976dec06c8e6eefb5f466a4b84e1ca7488ee0d84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2492ac1c_7288e523",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
         "patchSetId": 3
