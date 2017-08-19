@@ -9,11 +9,11 @@
 
 #include "base/memory/ptr_util.h"
 #include "cc/resources/resource_provider.h"
+#include "cc/test/fake_layer_tree_resource_provider.h"
 #include "cc/test/fake_output_surface.h"
 #include "cc/test/fake_output_surface_client.h"
 #include "cc/test/fake_picture_layer_tiling_client.h"
 #include "cc/test/fake_raster_source.h"
-#include "cc/test/fake_resource_provider.h"
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/trees/layer_tree_settings.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -249,8 +249,8 @@ class PictureLayerTilingSetTestWithResources : public testing::Test {
     ASSERT_TRUE(context_provider->BindToCurrentThread());
     auto shared_bitmap_manager = base::MakeUnique<TestSharedBitmapManager>();
     std::unique_ptr<ResourceProvider> resource_provider =
-        FakeResourceProvider::Create(context_provider.get(),
-                                     shared_bitmap_manager.get());
+        FakeLayerTreeResourceProvider::Create(context_provider.get(),
+                                              shared_bitmap_manager.get());
 
     FakePictureLayerTilingClient client(resource_provider.get());
     client.SetTileSize(gfx::Size(256, 256));

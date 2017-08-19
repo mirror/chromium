@@ -28,8 +28,8 @@
 #include "cc/resources/resource_pool.h"
 #include "cc/resources/resource_provider.h"
 #include "cc/resources/scoped_resource.h"
+#include "cc/test/fake_layer_tree_resource_provider.h"
 #include "cc/test/fake_raster_source.h"
-#include "cc/test/fake_resource_provider.h"
 #include "cc/test/test_context_provider.h"
 #include "cc/test/test_gpu_memory_buffer_manager.h"
 #include "cc/test/test_shared_bitmap_manager.h"
@@ -297,13 +297,13 @@ class RasterBufferProviderTest
     worker_context_provider_ = TestContextProvider::CreateWorker();
     TestWebGraphicsContext3D* context3d = context_provider_->TestContext3d();
     context3d->set_support_sync_query(true);
-    resource_provider_ = FakeResourceProvider::Create(
+    resource_provider_ = FakeLayerTreeResourceProvider::Create(
         context_provider_.get(), &shared_bitmap_manager_,
         &gpu_memory_buffer_manager_);
   }
 
   void CreateSoftwareResourceProvider() {
-    resource_provider_ = FakeResourceProvider::Create(
+    resource_provider_ = FakeLayerTreeResourceProvider::Create(
         nullptr, &shared_bitmap_manager_, &gpu_memory_buffer_manager_);
   }
 
@@ -315,7 +315,7 @@ class RasterBufferProviderTest
  protected:
   scoped_refptr<TestContextProvider> context_provider_;
   scoped_refptr<TestContextProvider> worker_context_provider_;
-  std::unique_ptr<ResourceProvider> resource_provider_;
+  std::unique_ptr<LayerTreeResourceProvider> resource_provider_;
   std::unique_ptr<TileTaskManager> tile_task_manager_;
   std::unique_ptr<RasterBufferProvider> raster_buffer_provider_;
   TestGpuMemoryBufferManager gpu_memory_buffer_manager_;

@@ -19,10 +19,10 @@
 #include "cc/resources/ui_resource_manager.h"
 #include "cc/test/fake_content_layer_client.h"
 #include "cc/test/fake_layer_tree_host_client.h"
+#include "cc/test/fake_layer_tree_resource_provider.h"
 #include "cc/test/fake_painted_scrollbar_layer.h"
 #include "cc/test/fake_picture_layer.h"
 #include "cc/test/fake_picture_layer_impl.h"
-#include "cc/test/fake_resource_provider.h"
 #include "cc/test/fake_scoped_ui_resource.h"
 #include "cc/test/fake_scrollbar.h"
 #include "cc/test/fake_video_frame_provider.h"
@@ -882,7 +882,7 @@ class LayerTreeHostContextTestDontUseLostResources
     child_context_provider_ = TestContextProvider::Create();
     CHECK(child_context_provider_->BindToCurrentThread());
     shared_bitmap_manager_.reset(new TestSharedBitmapManager);
-    child_resource_provider_ = FakeResourceProvider::Create(
+    child_resource_provider_ = FakeLayerTreeResourceProvider::Create(
         child_context_provider_.get(), shared_bitmap_manager_.get());
   }
 
