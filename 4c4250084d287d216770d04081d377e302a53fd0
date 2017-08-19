@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9b8fe81_674b4293",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-19T00:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23d5c039_c6a62980",
+      "revId": "4c4250084d287d216770d04081d377e302a53fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f52179b_4f971f43",
         "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-19T00:13:47Z",
       "side": 1,
       "message": "is this override? should move it next to the other overrides",
+      "revId": "4c4250084d287d216770d04081d377e302a53fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "385c24df_b43d580c",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-19T00:54:27Z",
+      "side": 1,
+      "message": "Nope.",
+      "parentUuid": "8f52179b_4f971f43",
       "revId": "4c4250084d287d216770d04081d377e302a53fd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "3116cb02_9807d6ee",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-19T00:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba4c0737_b4234ebc",
+      "range": {
+        "startLine": 738,
+        "startChar": 19,
+        "endLine": 738,
+        "endChar": 37
+      },
+      "revId": "4c4250084d287d216770d04081d377e302a53fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1d46076_3cc6b3bc",
         "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewContentsClientAdapter.java",
         "patchSetId": 3
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "cada6c81_6f8823b4",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewContentsClientAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1223,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-19T00:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1d46076_3cc6b3bc",
+      "revId": "4c4250084d287d216770d04081d377e302a53fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a47b4739_aa06c8e6",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
         "patchSetId": 3
@@ -90,6 +168,24 @@
       "revId": "4c4250084d287d216770d04081d377e302a53fd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514a66e0_cb3625a6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-19T00:54:27Z",
+      "side": 1,
+      "message": "Done (in WebViewChromiumFactoryProvider.java).",
+      "parentUuid": "a47b4739_aa06c8e6",
+      "revId": "4c4250084d287d216770d04081d377e302a53fd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
