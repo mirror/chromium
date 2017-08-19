@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a4856fc5_d6f873fa",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-19T00:40:07Z",
+      "side": 1,
+      "message": "A reason can be, we want SelectionTemplate to be built only by the builder.",
+      "parentUuid": "40752d02_604dfc38",
+      "revId": "08279ae7f9437c0bf50dd6b3114b6262597ef4af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d67d23d8_5068afc8",
         "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
         "patchSetId": 5

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10fef09e_c1b59be9",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-19T00:40:07Z",
+      "side": 1,
+      "message": "nit: s/you/we/ to be more reader-friendly",
+      "range": {
+        "startLine": 43,
+        "startChar": 63,
+        "endLine": 43,
+        "endChar": 66
+      },
+      "revId": "136ecc295806d07b684dcf7cf743e4d67c2f04af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
