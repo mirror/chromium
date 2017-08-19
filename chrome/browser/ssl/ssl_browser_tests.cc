@@ -5442,7 +5442,7 @@ class SSLUIMITMSoftwareTest : public CertVerifierBrowserTest {
     chrome_browser_ssl::MITMSoftware* mitm_software =
         config_proto->add_mitm_software();
     mitm_software->set_name(kTestMITMSoftwareName);
-    mitm_software->set_regex(cert_issuer);
+    mitm_software->set_issuer_common_name(cert_issuer);
     SSLErrorHandler::SetErrorAssistantProto(std::move(config_proto));
   }
 
@@ -5575,7 +5575,7 @@ IN_PROC_BROWSER_TEST_F(SSLUIMITMSoftwareTest,
   chrome_browser_ssl::MITMSoftware* mitm_software =
       config_proto->add_mitm_software();
   mitm_software->set_name("Non-Matching MITM Software");
-  mitm_software->set_regex("pattern-that-does-not-match-anything");
+  mitm_software->set_issuer_common_name("pattern-that-does-not-match-anything");
   SSLErrorHandler::SetErrorAssistantProto(std::move(config_proto));
 
   // Navigate to an unsafe page on the server. Mock out the URL host name to
