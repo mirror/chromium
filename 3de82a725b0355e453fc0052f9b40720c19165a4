@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cf54790_affc9269",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-19T00:07:18Z",
+      "side": 1,
+      "message": "We should have generated a constant for it, something like Page::SetDownloadBehaviorBehavior.",
+      "revId": "3de82a725b0355e453fc0052f9b40720c19165a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522e5400_0f8fe721",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-19T00:07:18Z",
+      "side": 1,
+      "message": "drop {}",
+      "revId": "3de82a725b0355e453fc0052f9b40720c19165a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07943d9d_6fa83004",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-19T00:07:18Z",
+      "side": 1,
+      "message": "ditto, use the constant.\n\nalso\n\nThe lifespan of the delegate should be while there are non-default overrides. I.e. when \"default\" is passed, we should go through the MaybeReset code path. Can we migrate devtools download delegate from the canonical singleton to a ref-counted one?\n\n- Make DevToolsDownloadManager ref-counted, make it store raw pointer to its singleton value in a static field, set that static field in the contructor, null it in destructor.\n- Hand-craft DevToolsDownloadManager::GetInstance() that creates instance lazily and returns ref-counter pointer to it.\n- Store scoped_refptr\u003cDevToolsDownloadManager\u003e in page_handler for as long as you want override to exist.\n\nThat way you have ref-counting that is safe, no leaky singletons and delegate\u0027s destructor will take care of unregistering.",
+      "revId": "3de82a725b0355e453fc0052f9b40720c19165a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950f97b8_bc2eb549",
+        "filename": "content/browser/devtools/protocol/page_handler.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-19T00:07:18Z",
+      "side": 1,
+      "message": "style: don\u0027t declare in .h, use int g_count in anonymous namespace below.",
+      "revId": "3de82a725b0355e453fc0052f9b40720c19165a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7d59e0_c2d0b2fa",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 22
+      },
+      "lineNbr": 5075,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-19T00:07:18Z",
+      "side": 1,
+      "message": "I don\u0027t think you are handling it in the Browser domain, remove this?",
+      "revId": "3de82a725b0355e453fc0052f9b40720c19165a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
