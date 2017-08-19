@@ -16,6 +16,24 @@
       "revId": "8555d3cafae3cd571d83d9a6d6900845c48aa089",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c2d8c5_d63c8cd1",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-19T14:46:11Z",
+      "side": 0,
+      "message": "I am okay with this alternative, although I would prefer something like:\n\n    LOG(ERROR) \u003c\u003c \"Test filters should not contain \u0027#\u0027 character.\";\n    return false;\n\n(this seems more informative + would work in release mode).",
+      "parentUuid": "d8765b03_10f6854e",
+      "revId": "8555d3cafae3cd571d83d9a6d6900845c48aa089",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

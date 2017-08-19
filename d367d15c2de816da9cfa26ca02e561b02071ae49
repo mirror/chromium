@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6365834_275222a5",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-19T14:46:11Z",
+      "side": 1,
+      "message": "Please update //testing/buildbot/filters/README.md to describe the new syntax and include it in the examples.",
+      "range": {
+        "startLine": 867,
+        "startChar": 36,
+        "endLine": 867,
+        "endChar": 72
+      },
+      "revId": "d367d15c2de816da9cfa26ca02e561b02071ae49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7ecbc5_e57d4a54",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-19T14:46:11Z",
+      "side": 1,
+      "message": "Please also support the new syntax in build/android/test_runner.py (see r424437 which added basic comments and blank lines support by tweaking build/android/pylib/gtest/gtest_test_instance.py).\n\nPlease add unit tests in build/android/pylib/gtest/gtest_test_instance_test.py (see r430634 for an example).\n\nTo clarify why these changes are needed - some test filter files are used on both \"Site Isolation Android\" and \"Site Isolation Linux\" FYI bots - e.g. search for \"site-per-process.content_browsertests.filter\" in testing/buildbot/chromium.fyi.json.",
+      "range": {
+        "startLine": 868,
+        "startChar": 27,
+        "endLine": 868,
+        "endChar": 37
+      },
+      "revId": "d367d15c2de816da9cfa26ca02e561b02071ae49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721ed140_99b5f964",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-19T14:46:11Z",
+      "side": 1,
+      "message": "Should that be base::SPLIT_WANT_NONEMPTY?\n\nOTOH, even if we did this, then we need to duplicate the work of skipping empty lines *after* removing the comments below (as you do in the CL).  So - maybe we want the *base* namespace to provide a way to strip comments:\n1. Maybe via base::TRIM_COMMENTS?  Or base::SPLIT_WANT_NONCOMMENTS?\n2. Or maybe introduce a new function, separate from base::SplitString?\n\nWDYT?  I am not quite sure what the right answer would be, but it seems that handling comments in shared code would go a long way toward addressing the concerns (which I share) about inconsistency in what form of comments is allowed.\n\nPS. FWIW, I think we should discuss here whether stripping of comments is useful and can be provided in some from from //base, but I think that (if we think this is desirable) it is totally fine to do it in a separate CL.",
+      "range": {
+        "startLine": 870,
+        "startChar": 45,
+        "endLine": 870,
+        "endChar": 65
+      },
+      "revId": "d367d15c2de816da9cfa26ca02e561b02071ae49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ac3608_482a2b1f",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-19T14:46:11Z",
+      "side": 1,
+      "message": "AFAICT we don\u0027t need to support \u0027#\u0027 in a filter, but\n\n1) this is not obvious (I thought that parametrized tests might be an exception, but it turns out that they use \u0027/\u0027 character;  I also wondered whether the filter files might be used with something other than gtest [i.e. via build/android/test_runner.py] - I think the answer is no but I am not fully confident about that).\n\n2) FWIW, Android instrumentation tests use \u0027#\u0027 character in test filters as a delimiter between class and method name (source: https://chromium.googlesource.com/chromium/src.git/+/master/docs/android_test_instructions.md#Instrumentation-Tests - see \"filtering examples\").\n\n3) if we have comment processing inside base::SplitString (or elsewhere in base namespace), then it should accommodate callers that might care about preserving \u0027#\u0027 character.\n\nSo, I think we should explicitly *consider* the need to escape \u0027\\\u0027 and \u0027#\u0027 (similary to how bash does it).  WDYT?  Is this too much complexity?  Or is there a risk that not supporting escaping today can bring a lot of pain down the road (main pain would be having to retrofit escape characters into existing filter^H^H^Hparsed files).",
+      "range": {
+        "startLine": 872,
+        "startChar": 40,
+        "endLine": 872,
+        "endChar": 45
+      },
+      "revId": "d367d15c2de816da9cfa26ca02e561b02071ae49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6915353_2c803ba9",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-19T14:46:11Z",
+      "side": 1,
+      "message": "The parsing code is starting to get quite complex - would you mind moving it (i.e. code from line 859 [or from line 867?] to line 882) to a separate function?",
+      "range": {
+        "startLine": 880,
+        "startChar": 0,
+        "endLine": 883,
+        "endChar": 53
+      },
+      "revId": "d367d15c2de816da9cfa26ca02e561b02071ae49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
