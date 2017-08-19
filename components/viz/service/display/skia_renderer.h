@@ -25,6 +25,22 @@ class TileDrawQuad;
 }  // namespace cc
 
 namespace viz {
+
+class VIZ_SERVICE_EXPORT SkiaRendererDelegate {
+ public:
+  virtual ~SkiaRendererDelegate() = default;
+
+  virtual SkCanvas* GetRootCanvas(cc::DirectRenderer::DrawingFrame*) = 0;
+
+  virtual void OnFinishedDrawingFrame() = 0;
+
+  virtual SkCanvas* GetCanvasForTexture(const cc::ScopedResource* texture,
+                                        cc::ResourceProvider* provider) = 0;
+  virtual void ResetCanvasForTexture() = 0;
+
+  virtual scoped_refptr<cc::ResourceProvider::Fence> CreateReadLockFence() = 0;
+};
+
 class VIZ_SERVICE_EXPORT SkiaRenderer : public cc::DirectRenderer {
  public:
   SkiaRenderer(const RendererSettings* settings,
@@ -64,7 +80,6 @@ class VIZ_SERVICE_EXPORT SkiaRenderer : public cc::DirectRenderer {
   void ClearCanvas(SkColor color);
   void ClearFramebuffer();
   void SetClipRect(const gfx::Rect& rect);
-  bool IsSoftwareResource(ResourceId resource_id) const;
 
   void DrawDebugBorderQuad(const cc::DebugBorderDrawQuad* quad);
   void DrawPictureQuad(const cc::PictureDrawQuad* quad);
@@ -89,27 +104,24 @@ class VIZ_SERVICE_EXPORT SkiaRenderer : public cc::DirectRenderer {
       const cc::RenderPassDrawQuad* quad,
       SkShader::TileMode content_tile_mode) const;
 
+  const std::unique_ptr<SkiaRendererDelegate> delegate_;
+
   bool disable_picture_quad_image_filtering_ = false;
 
   bool is_scissor_enabled_ = false;
   gfx::Rect scissor_rect_;
 
-  sk_sp<SkSurface> root_surface_;
   sk_sp<SkSurface> overdraw_surface_;
   std::unique_ptr<SkCanvas> overdraw_canvas_;
   std::unique_ptr<SkNWayCanvas> nway_canvas_;
   SkCanvas* root_canvas_ = nullptr;
   SkCanvas* current_canvas_ = nullptr;
   SkPaint current_paint_;
-  std::unique_ptr<cc::ResourceProvider::ScopedWriteLockGL>
-      current_framebuffer_lock_;
-  std::unique_ptr<cc::ResourceProvider::ScopedSkSurface>
-      current_framebuffer_surface_lock_;
 
-  bool use_swap_with_bounds_ = false;
-
+  const bool use_swap_with_bounds_;
   gfx::Rect swap_buffer_rect_;
   std::vector<gfx::Rect> swap_content_bounds_;
+  const bool can_partial_swap_;
 
   DISALLOW_COPY_AND_ASSIGN(SkiaRenderer);
 };
