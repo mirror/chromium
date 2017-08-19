@@ -70,6 +70,30 @@
       "revId": "4e5a42c44befc4ec8fca84180e780df5e0557ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df22c97_ef56dfa9",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-08-19T15:14:41Z",
+      "side": 1,
+      "message": "I also tried passing \u0027use_custom_libcxx \u003d current_cpu!\u003d\"arm\"\u0027 via the args.gn, but gn complains that current_cpu is an \u0027undefined identifier\u0027 at that point. I was a bit surprised by that, since https://chromium.googlesource.com/chromium/src/+/master/tools/gn/docs/reference.md#how-build-arguments-are-set says that current_cpu is one of the first values set, but seems the other buildargs are not in scope for the args.gn\n\n+brettw is that expected / intentional?",
+      "parentUuid": "f1112c89_dad6c796",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 68
+      },
+      "revId": "4e5a42c44befc4ec8fca84180e780df5e0557ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
