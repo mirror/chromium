@@ -59,6 +59,9 @@
         android:layout_width="@dimen/location_bar_icon_width"
         android:layout_height="@dimen/toolbar_height_no_shadow"
         android:layout_gravity="end|center_vertical"
+        android:paddingEnd="12dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
         android:visibility="gone" >
 
         <org.chromium.chrome.browser.widget.TintedImageButton

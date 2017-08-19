@@ -201,6 +201,8 @@ class SuggestionView extends ViewGroup {
             mContentsView.resetTextWidths();
         }
 
+        float density = getResources().getDisplayMetrics().density;
+
         boolean refineVisible = mRefineView.getVisibility() == VISIBLE;
         boolean isRtl = ApiCompatibilityUtils.isLayoutRtl(this);
         int contentsViewOffsetX = isRtl && refineVisible ? mRefineWidth : 0;
@@ -209,7 +211,9 @@ class SuggestionView extends ViewGroup {
                 0,
                 contentsViewOffsetX + mContentsView.getMeasuredWidth(),
                 mContentsView.getMeasuredHeight());
-        int refineViewOffsetX = isRtl ? 0 : getMeasuredWidth() - mRefineWidth;
+        // TODO(injae) move this rightoffset change into an xml change or something not programatic.
+        int rightOffsetDp = (int) (density * 4);
+        int refineViewOffsetX = isRtl ? 0 : getMeasuredWidth() - mRefineWidth - rightOffsetDp;
         mRefineView.layout(
                 refineViewOffsetX,
                 0,
@@ -653,7 +657,6 @@ class SuggestionView extends ViewGroup {
             super(context);
 
             ApiCompatibilityUtils.setLayoutDirection(this, View.LAYOUT_DIRECTION_INHERIT);
-
             setBackground(backgroundDrawable);
             setClickable(true);
             setFocusable(true);
@@ -709,12 +712,15 @@ class SuggestionView extends ViewGroup {
                 }
             });
 
+            float density = getResources().getDisplayMetrics().density;
+
             mTextLine1 = new TextView(context);
             mTextLine1.setLayoutParams(
                     new LayoutParams(LayoutParams.WRAP_CONTENT, mSuggestionHeight));
             mTextLine1.setSingleLine();
             mTextLine1.setTextColor(getStandardFontColor());
             ApiCompatibilityUtils.setTextAlignment(mTextLine1, TEXT_ALIGNMENT_VIEW_START);
+            mTextLine1.setPadding((int) (11 * density), 0, 0, 0);
             addView(mTextLine1);
 
             mTextLine2 = new TextView(context);
@@ -722,6 +728,7 @@ class SuggestionView extends ViewGroup {
                     new LayoutParams(LayoutParams.WRAP_CONTENT, mSuggestionHeight));
             mTextLine2.setSingleLine();
             mTextLine2.setVisibility(INVISIBLE);
+            mTextLine2.setPadding((int) (11 * density), 0, 0, 0);
             ApiCompatibilityUtils.setTextAlignment(mTextLine2, TEXT_ALIGNMENT_VIEW_START);
             addView(mTextLine2);
 
