@@ -45,6 +45,7 @@ class MemlogConnectionManager {
   // as part of the normal allocation process.
   void DumpProcess(
       base::ProcessId pid,
+      const std::string& metadata,
       const std::vector<memory_instrumentation::mojom::VmRegionPtr>& maps,
       base::File output_file);
 

@@ -5,14 +5,18 @@
 #include "chrome/browser/profiling_host/profiling_process_host.h"
 
 #include "base/command_line.h"
+#include "base/json/json_writer.h"
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
 #include "build/build_config.h"
+#include "chrome/common/chrome_content_client.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/profiling/constants.mojom.h"
 #include "chrome/common/profiling/profiling_constants.h"
+#include "components/version_info/version_info.h"
 #include "content/public/browser/browser_child_process_host.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_service.h"
@@ -203,11 +207,31 @@ void ProfilingProcessHost::GetOutputFileOnBlockingThread(base::ProcessId pid) {
 void ProfilingProcessHost::HandleDumpProcessOnIOThread(base::ProcessId pid,
                                                        base::File file) {
   mojo::ScopedHandle handle = mojo::WrapPlatformFile(file.TakePlatformFile());
-  memlog_->DumpProcess(pid, std::move(handle));
+  memlog_->DumpProcess(pid, std::move(handle), GetMetadataJSONForTrace());
 }
 
 void ProfilingProcessHost::SetMode(Mode mode) {
   mode_ = mode;
+}
+
+std::string ProfilingProcessHost::GetMetadataJSONForTrace() {
+  base::Value metadata_dict(base::Value::Type::DICTIONARY);
+  metadata_dict.SetKey(
+      "product-version",
+      base::Value(version_info::GetProductNameAndVersionForUserAgent()));
+  metadata_dict.SetKey("user-agent", base::Value(GetUserAgent()));
+  metadata_dict.SetKey("os-name",
+                       base::Value(base::SysInfo::OperatingSystemName()));
+  metadata_dict.SetKey(
+      "command_line",
+      base::Value(
+          base::CommandLine::ForCurrentProcess()->GetCommandLineString()));
+  metadata_dict.SetKey(
+      "os-arch", base::Value(base::SysInfo::OperatingSystemArchitecture()));
+
+  std::string metadata;
+  base::JSONWriter::Write(metadata_dict, &metadata);
+  return metadata;
 }
 
 }  // namespace profiling

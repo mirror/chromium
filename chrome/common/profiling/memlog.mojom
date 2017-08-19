@@ -17,6 +17,7 @@ interface Memlog {
   AddSender(mojo.common.mojom.ProcessId pid, handle sender_pipe) => ();
 
   // Dumps the memory log of the process with the given |pid| into
-  // |output_file|.
-  DumpProcess(mojo.common.mojom.ProcessId pid, handle output_file);
+  // |output_file|. |metadata| is an escaped JSON string that should be added to
+  // the trace.
+  DumpProcess(mojo.common.mojom.ProcessId pid, handle output_file, string metadata);
 };
