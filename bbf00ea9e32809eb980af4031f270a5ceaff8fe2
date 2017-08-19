@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9913f1ce_6f90dab5",
+        "filename": "net/quic/chromium/quic_connection_logger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-19T00:31:34Z",
+      "side": 1,
+      "message": "I take it calling IsCapturing() is not trivially cheap to call?",
+      "revId": "bbf00ea9e32809eb980af4031f270a5ceaff8fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1de05f71_a0cd4107",
+        "filename": "net/quic/chromium/quic_connection_logger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-19T00:31:34Z",
+      "side": 1,
+      "message": "Does this end up happening twice now? Once in the first switch() and a second time down here?",
+      "revId": "bbf00ea9e32809eb980af4031f270a5ceaff8fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
