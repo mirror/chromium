@@ -10,13 +10,17 @@
 #include "base/memory/singleton.h"
 #include "base/sequenced_task_runner.h"
 #include "base/task_scheduler/post_task.h"
-#include "chrome/browser/offline_pages/android/cct_origin_observer.h"
+#include "build/build_config.h"
 #include "chrome/browser/profiles/incognito_helpers.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_constants.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/offline_pages/core/offline_page_metadata_store_sql.h"
 #include "components/offline_pages/core/offline_page_model_impl.h"
+
+#if defined(OS_ANDROID)
+#include "chrome/browser/offline_pages/android/cct_origin_observer.h"
+#endif
 
 namespace offline_pages {
 
@@ -53,7 +57,11 @@ KeyedService* OfflinePageModelFactory::BuildServiceInstanceFor(
 
   OfflinePageModelImpl* model = new OfflinePageModelImpl(
       std::move(metadata_store), archives_dir, background_task_runner);
+
+#if defined(OS_ANDROID)
   CctOriginObserver::AttachToOfflinePageModel(model);
+#endif
+
   return model;
 }
 

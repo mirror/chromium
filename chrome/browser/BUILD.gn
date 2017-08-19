@@ -2195,16 +2195,8 @@ split_static_library("browser") {
     ]
   }
 
-  if (enable_offline_pages) {
+  if (enable_offline_pages || enable_offline_pages_harness) {
     sources += [
-      "android/offline_pages/downloads/offline_page_download_bridge.cc",
-      "android/offline_pages/downloads/offline_page_download_bridge.h",
-      "android/offline_pages/downloads/offline_page_infobar_delegate.cc",
-      "android/offline_pages/downloads/offline_page_infobar_delegate.h",
-      "android/offline_pages/downloads/offline_page_notification_bridge.cc",
-      "android/offline_pages/downloads/offline_page_notification_bridge.h",
-      "android/offline_pages/downloads/resource_throttle.cc",
-      "android/offline_pages/downloads/resource_throttle.h",
       "offline_pages/background_loader_offliner.cc",
       "offline_pages/background_loader_offliner.h",
       "offline_pages/offline_page_bookmark_observer.cc",
@@ -2213,6 +2205,7 @@ split_static_library("browser") {
       "offline_pages/offline_page_info_handler.h",
       "offline_pages/offline_page_mhtml_archiver.cc",
       "offline_pages/offline_page_mhtml_archiver.h",
+      "offline_pages/offline_page_model_factory.cc",
       "offline_pages/offline_page_model_factory.h",
       "offline_pages/offline_page_request_interceptor.cc",
       "offline_pages/offline_page_request_interceptor.h",
@@ -2222,6 +2215,7 @@ split_static_library("browser") {
       "offline_pages/offline_page_tab_helper.h",
       "offline_pages/offline_page_utils.cc",
       "offline_pages/offline_page_utils.h",
+      "offline_pages/offline_page_utils_posix.cc",
       "offline_pages/offliner_helper.cc",
       "offline_pages/offliner_helper.h",
       "offline_pages/offliner_user_data.cc",
@@ -2230,6 +2224,7 @@ split_static_library("browser") {
       "offline_pages/prefetch/offline_metrics_collector_impl.h",
       "offline_pages/prefetch/offline_prefetch_download_client.cc",
       "offline_pages/prefetch/offline_prefetch_download_client.h",
+      "offline_pages/prefetch/prefetch_background_task.cc",
       "offline_pages/prefetch/prefetch_background_task.h",
       "offline_pages/prefetch/prefetch_background_task_handler_impl.cc",
       "offline_pages/prefetch/prefetch_background_task_handler_impl.h",
@@ -2245,6 +2240,7 @@ split_static_library("browser") {
       "offline_pages/prerendering_loader.h",
       "offline_pages/recent_tab_helper.cc",
       "offline_pages/recent_tab_helper.h",
+      "offline_pages/request_coordinator_factory.cc",
       "offline_pages/request_coordinator_factory.h",
       "offline_pages/resource_loading_observer.h",
     ]
@@ -2256,17 +2252,29 @@ split_static_library("browser") {
         "offline_pages/android/cct_origin_observer.h",
         "offline_pages/android/cct_request_observer.cc",
         "offline_pages/android/cct_request_observer.h",
+        "offline_pages/android/downloads/offline_page_download_bridge.cc",
+        "offline_pages/android/downloads/offline_page_download_bridge.h",
+        "offline_pages/android/downloads/offline_page_infobar_delegate.cc",
+        "offline_pages/android/downloads/offline_page_infobar_delegate.h",
+        "offline_pages/android/downloads/offline_page_notification_bridge.cc",
+        "offline_pages/android/downloads/offline_page_notification_bridge.h",
+        "offline_pages/android/downloads/resource_throttle.cc",
+        "offline_pages/android/downloads/resource_throttle.h",
         "offline_pages/android/load_termination_listener_impl.cc",
         "offline_pages/android/load_termination_listener_impl.h",
         "offline_pages/android/offline_page_bridge.cc",
         "offline_pages/android/offline_page_bridge.h",
-        "offline_pages/android/offline_page_model_factory.cc",
         "offline_pages/android/offline_page_utils_android.cc",
         "offline_pages/android/prefetch_background_task_android.cc",
         "offline_pages/android/prefetch_background_task_android.h",
         "offline_pages/android/prerendering_offliner.cc",
         "offline_pages/android/prerendering_offliner.h",
-        "offline_pages/android/request_coordinator_factory.cc",
+        "offline_pages/android/request_coordinator_factory_android.cc",
+      ]
+      sources -= [
+        "offline_pages/offline_page_utils_posix.cc",
+        "offline_pages/prefetch/prefetch_background_task.cc",
+        "offline_pages/request_coordinator_factory.cc",
       ]
     }
     deps += [
@@ -2286,10 +2294,10 @@ split_static_library("browser") {
   # produce multiple offline pages to evaluate quality of the snapshots.
   if (enable_offline_pages_harness) {
     sources += [
-      "android/offline_pages/evaluation/evaluation_test_scheduler.cc",
-      "android/offline_pages/evaluation/evaluation_test_scheduler.h",
-      "android/offline_pages/evaluation/offline_page_evaluation_bridge.cc",
-      "android/offline_pages/evaluation/offline_page_evaluation_bridge.h",
+      "offline_pages/android/evaluation/evaluation_test_scheduler.cc",
+      "offline_pages/android/evaluation/evaluation_test_scheduler.h",
+      "offline_pages/android/evaluation/offline_page_evaluation_bridge.cc",
+      "offline_pages/android/evaluation/offline_page_evaluation_bridge.h",
     ]
   }
 

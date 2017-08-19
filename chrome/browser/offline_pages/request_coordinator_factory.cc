@@ -1,4 +1,4 @@
-// Copyright 2016 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -10,13 +10,8 @@
 #include "base/memory/singleton.h"
 #include "base/sequenced_task_runner.h"
 #include "base/task_scheduler/post_task.h"
-#include "chrome/browser/android/offline_pages/downloads/offline_page_notification_bridge.h"
 #include "chrome/browser/net/nqe/ui_network_quality_estimator_service.h"
 #include "chrome/browser/net/nqe/ui_network_quality_estimator_service_factory.h"
-#include "chrome/browser/offline_pages/android/background_scheduler_bridge.h"
-#include "chrome/browser/offline_pages/android/cct_request_observer.h"
-#include "chrome/browser/offline_pages/android/load_termination_listener_impl.h"
-#include "chrome/browser/offline_pages/android/prerendering_offliner.h"
 #include "chrome/browser/offline_pages/background_loader_offliner.h"
 #include "chrome/browser/offline_pages/offline_page_model_factory.h"
 #include "chrome/browser/profiles/profile.h"
@@ -54,6 +49,8 @@ RequestCoordinator* RequestCoordinatorFactory::GetForBrowserContext(
       GetInstance()->GetServiceForBrowserContext(context, true));
 }
 
+// TODO(romax): This is not a completed implementation, this is only used for
+// passing build errors for Linux. This will not work properly.
 KeyedService* RequestCoordinatorFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
   std::unique_ptr<OfflinerPolicy> policy(new OfflinerPolicy());
@@ -61,15 +58,8 @@ KeyedService* RequestCoordinatorFactory::BuildServiceInstanceFor(
   OfflinePageModel* model =
       OfflinePageModelFactory::GetInstance()->GetForBrowserContext(context);
 
-  // Determines which offliner to use based on flag.
-  if (ShouldUseNewBackgroundLoader()) {
-    std::unique_ptr<LoadTerminationListenerImpl> load_termination_listener =
-        base::MakeUnique<LoadTerminationListenerImpl>();
-    offliner.reset(new BackgroundLoaderOffliner(
-        context, policy.get(), model, std::move(load_termination_listener)));
-  } else {
-    offliner.reset(new PrerenderingOffliner(context, policy.get(), model));
-  }
+  offliner.reset(
+      new BackgroundLoaderOffliner(context, policy.get(), model, nullptr));
 
   scoped_refptr<base::SequencedTaskRunner> background_task_runner =
       base::CreateSequencedTaskRunnerWithTraits(
@@ -81,20 +71,12 @@ KeyedService* RequestCoordinatorFactory::BuildServiceInstanceFor(
   std::unique_ptr<RequestQueueStoreSQL> queue_store(
       new RequestQueueStoreSQL(background_task_runner, queue_store_path));
   std::unique_ptr<RequestQueue> queue(new RequestQueue(std::move(queue_store)));
-  std::unique_ptr<Scheduler>
-      scheduler(new android::BackgroundSchedulerBridge());
   net::NetworkQualityEstimator::NetworkQualityProvider*
       network_quality_estimator =
           UINetworkQualityEstimatorServiceFactory::GetForProfile(profile);
   RequestCoordinator* request_coordinator = new RequestCoordinator(
       std::move(policy), std::move(offliner), std::move(queue),
-      std::move(scheduler), network_quality_estimator);
-
-  DownloadNotifyingObserver::CreateAndStartObserving(
-      request_coordinator,
-      base::MakeUnique<android::OfflinePageNotificationBridge>());
-
-  CCTRequestObserver::AttachToRequestCoordinator(request_coordinator);
+      std::move(nullptr), network_quality_estimator);
 
   return request_coordinator;
 }
