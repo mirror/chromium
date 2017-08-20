@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "20ea8014_cf9b1682",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-20T15:19:18Z",
+      "side": 1,
+      "message": "Ack, both of your method and the RenderViewHostTestHarness::CreateTestWebContents() create a TestWebContents.\n\nAlthough this code is already reviewed, if there is a better way to do this, I think we should choose the better way.",
+      "parentUuid": "ced01b75_0c08ff4f",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "208ee232_89b59a26",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
         "patchSetId": 6
