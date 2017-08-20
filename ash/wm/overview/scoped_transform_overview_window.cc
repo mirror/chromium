@@ -195,6 +195,7 @@ void ScopedTransformOverviewWindow::RestoreWindow() {
       OverviewAnimationType::OVERVIEW_ANIMATION_LAY_OUT_SELECTOR_ITEMS,
       window_);
   SetOpacity(original_opacity_);
+  GetOverviewWindow()->layer()->SetTrilinearFiltering(false);
 }
 
 void ScopedTransformOverviewWindow::BeginScopedAnimation(
@@ -438,6 +439,7 @@ void ScopedTransformOverviewWindow::PrepareForOverview() {
       ui::SHOW_STATE_MINIMIZED) {
     CreateMirrorWindowForMinimizedState();
   }
+  GetOverviewWindow()->layer()->SetTrilinearFiltering(true);
 }
 
 void ScopedTransformOverviewWindow::CloseWidget() {
