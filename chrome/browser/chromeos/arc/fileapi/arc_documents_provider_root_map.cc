@@ -44,19 +44,19 @@ ArcDocumentsProviderRootMap::GetForArcBrowserContext() {
   return GetForBrowserContext(ArcServiceManager::Get()->browser_context());
 }
 
-ArcDocumentsProviderRootMap::ArcDocumentsProviderRootMap(Profile* profile) {
+ArcDocumentsProviderRootMap::ArcDocumentsProviderRootMap(Profile* profile)
+    : weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  ArcFileSystemOperationRunner* runner =
-      ArcFileSystemOperationRunner::GetForBrowserContext(profile);
-  // ArcDocumentsProviderRootMap is created only for the profile with ARC
-  // in ArcDocumentsProviderRootMapFactory.
-  DCHECK(runner);
+  runner_ = ArcFileSystemOperationRunner::GetForBrowserContext(profile);
+  DCHECK(runner_);
 
+  // TODO(ryoh): Remove this loop after implementing Android-side codes.
   for (const auto& spec : kDocumentsProviderWhitelist) {
     map_[Key(spec.authority, spec.root_document_id)] =
-        base::MakeUnique<ArcDocumentsProviderRoot>(runner, spec.authority,
-                                                   spec.root_document_id);
+        base::MakeUnique<ArcDocumentsProviderRoot>(
+            runner_, spec.authority, spec.root_document_id, "", "", "",
+            std::vector<uint8_t>(), 0);
   }
 }
 
@@ -88,6 +88,49 @@ void ArcDocumentsProviderRootMap::Shutdown() {
   // ArcDocumentsProviderRoot has a reference to another KeyedService
   // (ArcFileSystemOperationRunner), so we need to destruct them on shutdown.
   map_.clear();
+}
+
+void ArcDocumentsProviderRootMap::Refresh(
+    const ArcDocumentsProviderRootMap::RefreshCallback& callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  // TODO(ryoh): Use BindOnce when it becomes possible.
+  runner_->GetRoots(base::Bind(&ArcDocumentsProviderRootMap::OnGetRoots,
+                               weak_ptr_factory_.GetWeakPtr(), callback));
+}
+
+void ArcDocumentsProviderRootMap::OnGetRoots(
+    const ArcDocumentsProviderRootMap::RefreshCallback& callback,
+    base::Optional<std::vector<mojom::RootPtr>> rootsFromMojo) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  std::vector<ArcDocumentsProviderRoot*> roots;
+  std::map<Key, std::unique_ptr<ArcDocumentsProviderRoot>> rootsMap;
+
+  if (rootsFromMojo.has_value()) {
+    for (const mojom::RootPtr& rootFromMojo : *rootsFromMojo) {
+      const std::string& authority = rootFromMojo->authority;
+      const std::string& document_id = rootFromMojo->document_id;
+      const Key key = Key(authority, document_id);
+      auto iter = map_.find(key);
+      if (iter != map_.end()) {
+        roots.push_back(iter->second.get());
+        rootsMap[key] = std::move(iter->second);
+        map_.erase(iter);
+        continue;
+      }
+      std::unique_ptr<ArcDocumentsProviderRoot> root =
+          base::MakeUnique<ArcDocumentsProviderRoot>(
+              runner_, authority, document_id, rootFromMojo->id,
+              rootFromMojo->title, rootFromMojo->summary,
+              rootFromMojo->icon_data, rootFromMojo->flags);
+      roots.push_back(root.get());
+      rootsMap[key] = std::move(root);
+    }
+  }
+
+  map_ = std::move(rootsMap);
+
+  callback.Run(std::move(roots));
 }
 
 }  // namespace arc

@@ -109,6 +109,40 @@ class FakeFileSystemInstance : public mojom::FileSystemInstance {
     ~Document();
   };
 
+  // Specification of a fake root provided by documents provider.
+  struct Root {
+    // Authority.
+    std::string authority;
+
+    // Document ID of this root.
+    std::string root_document_id;
+
+    // Rood ID.
+    std::string id;
+
+    // Title of this root, which will be shown to a user.
+    std::string title;
+
+    // Summary of this root, which may be shown to a user.
+    std::string summary;
+
+    // Icon image data for this root.
+    std::vector<uint8_t> icon_data;
+
+    // Represents the features of this root.
+    int64_t flags;
+
+    Root(const std::string& authority,
+         const std::string& root_document_id,
+         const std::string& id,
+         const std::string& title,
+         const std::string& summary,
+         const std::vector<uint8_t>& icon_data,
+         int64_t flags);
+    Root(const Root& that);
+    ~Root();
+  };
+
   FakeFileSystemInstance();
   ~FakeFileSystemInstance() override;
 
@@ -120,6 +154,9 @@ class FakeFileSystemInstance : public mojom::FileSystemInstance {
 
   // Adds a document accessible by document provider based methods.
   void AddDocument(const Document& document);
+
+  // Set roots provided by document provider.
+  void SetRoots(const std::vector<Root>& roots);
 
   // Triggers watchers installed to a document.
   void TriggerWatchers(const std::string& authority,
@@ -143,6 +180,7 @@ class FakeFileSystemInstance : public mojom::FileSystemInstance {
   void GetRecentDocuments(const std::string& authority,
                           const std::string& root_id,
                           const GetRecentDocumentsCallback& callback) override;
+  void GetRoots(const GetRootsCallback& callback) override;
   void Init(mojom::FileSystemHostPtr host) override;
   void OpenFileToRead(const std::string& url,
                       const OpenFileToReadCallback& callback) override;
@@ -166,6 +204,8 @@ class FakeFileSystemInstance : public mojom::FileSystemInstance {
 
   // Mapping from a document key to a document.
   std::map<DocumentKey, Document> documents_;
+
+  std::vector<Root> roots_;
 
   // Mapping from a document key to its child documents.
   std::map<DocumentKey, std::vector<DocumentKey>> child_documents_;

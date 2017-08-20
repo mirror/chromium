@@ -38,7 +38,6 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
     std::string document_id;
     bool is_directory;
   };
-
   using GetFileInfoCallback = storage::AsyncFileUtil::GetFileInfoCallback;
   using ReadDirectoryCallback =
       base::OnceCallback<void(base::File::Error error,
@@ -52,7 +51,12 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
 
   ArcDocumentsProviderRoot(ArcFileSystemOperationRunner* runner,
                            const std::string& authority,
-                           const std::string& root_document_id);
+                           const std::string& root_document_id,
+                           const std::string& id,
+                           const std::string& title,
+                           const std::string& summary,
+                           const std::vector<uint8_t>& icon,
+                           int64_t flags);
   ~ArcDocumentsProviderRoot() override;
 
   // Queries information of a file just like AsyncFileUtil.GetFileInfo().
@@ -123,6 +127,57 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
 
   // ArcFileSystemOperationRunner::Observer overrides:
   void OnWatchersCleared() override;
+
+  // Returns the authority of this root.
+  inline const std::string& authority() const { return authority_; }
+
+  // Returns the document id of the root document of this root.
+  inline const std::string& root_document_id() const {
+    return root_document_id_;
+  }
+
+  // Returns the id of this root.
+  inline const std::string& id() const { return id_; }
+
+  // Returns the title of this root, which will be shown to users.
+  inline const std::string& title() const { return title_; }
+
+  // Returns the summary of this root, which may be shown to users.
+  inline const std::string& summary() const { return summary_; }
+
+  // Returns the icon data of this root, encoded in png, jpg or gif.
+  inline const std::vector<uint8_t>& icon_data() const { return icon_data_; }
+
+  // Returns if this root supports CreateFile operation.
+  inline bool SupportsCreate() const {
+    return (flags_ & arc::mojom::Root::kSupportsCreate) != 0;
+  }
+
+  // Returns if this root does not depends on external networks.
+  inline bool LocalOnly() const {
+    return (flags_ & arc::mojom::Root::kLocalOnly) != 0;
+  }
+
+  // Returns if this root can be queried to provide recently modified
+  // documents.
+  inline bool SupportsRecents() const {
+    return (flags_ & arc::mojom::Root::kSupportsRecents) != 0;
+  }
+
+  // Returns if this root supports search.
+  inline bool SupportsSearch() const {
+    return (flags_ & arc::mojom::Root::kSupportsSearch) != 0;
+  }
+
+  // Returns if this root supports testing parent child relationships.
+  inline bool SupportsIsChild() const {
+    return (flags_ & arc::mojom::Root::kSupportsIsChild) != 0;
+  }
+
+  // Returns if this root can be ejected.
+  inline bool SupportsEject() const {
+    return (flags_ & arc::mojom::Root::kSupportsEject) != 0;
+  }
 
  private:
   // Thin representation of a document in documents provider.
@@ -228,6 +283,11 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
 
   const std::string authority_;
   const std::string root_document_id_;
+  const std::string id_;
+  const std::string title_;
+  const std::string summary_;
+  const std::vector<uint8_t> icon_data_;
+  const int64_t flags_;
 
   // Map from a file path to a watcher data.
   //

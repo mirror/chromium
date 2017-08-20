@@ -35,10 +35,20 @@ const ArcDocumentsProviderRoot::WatcherData
 ArcDocumentsProviderRoot::ArcDocumentsProviderRoot(
     ArcFileSystemOperationRunner* runner,
     const std::string& authority,
-    const std::string& root_document_id)
+    const std::string& root_document_id,
+    const std::string& id,
+    const std::string& title,
+    const std::string& summary,
+    const std::vector<uint8_t>& icon_data,
+    int64_t flags)
     : runner_(runner),
       authority_(authority),
       root_document_id_(root_document_id),
+      id_(id),
+      title_(title),
+      summary_(summary),
+      icon_data_(icon_data),
+      flags_(flags),
       weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   runner_->AddObserver(this);

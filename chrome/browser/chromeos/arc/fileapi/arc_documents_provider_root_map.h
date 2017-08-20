@@ -9,9 +9,14 @@
 #include <memory>
 #include <string>
 #include <utility>
+#include <vector>
 
+#include "base/callback_forward.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
+#include "base/optional.h"
+#include "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.h"
+#include "components/arc/common/file_system.mojom.h"
 #include "components/keyed_service/core/keyed_service.h"
 
 class Profile;
@@ -33,6 +38,8 @@ class ArcDocumentsProviderRoot;
 // All member function must be called on the UI thread.
 class ArcDocumentsProviderRootMap : public KeyedService {
  public:
+  using RefreshCallback =
+      base::Callback<void(std::vector<ArcDocumentsProviderRoot*> roots)>;
   ~ArcDocumentsProviderRootMap() override;
 
   // Returns an instance for the given browser context, or nullptr if ARC is not
@@ -53,6 +60,9 @@ class ArcDocumentsProviderRootMap : public KeyedService {
   ArcDocumentsProviderRoot* ParseAndLookup(const storage::FileSystemURL& url,
                                            base::FilePath* path) const;
 
+  // Refreshes the roots list and returns it.
+  void Refresh(const RefreshCallback& callback);
+
   // KeyedService overrides:
   void Shutdown() override;
 
@@ -60,6 +70,12 @@ class ArcDocumentsProviderRootMap : public KeyedService {
   friend class ArcDocumentsProviderRootMapFactory;
 
   explicit ArcDocumentsProviderRootMap(Profile* profile);
+
+  ArcFileSystemOperationRunner* runner_;
+  base::WeakPtrFactory<ArcDocumentsProviderRootMap> weak_ptr_factory_;
+
+  void OnGetRoots(const RefreshCallback& callback,
+                  base::Optional<std::vector<mojom::RootPtr>> rootsFromMojo);
 
   // Key is (authority, root_document_id).
   using Key = std::pair<std::string, std::string>;

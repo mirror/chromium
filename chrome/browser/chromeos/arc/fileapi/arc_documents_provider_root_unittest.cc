@@ -59,6 +59,10 @@ struct DocumentSpec {
 //     dup.mp4       video/mp4   dup3-id
 //     dup.mp4       video/mp4   dup4-id
 constexpr char kAuthority[] = "org.chromium.test";
+constexpr char kRootId[] = "test_root_id";
+constexpr char kRootTitle[] = "Test Root";
+constexpr char kRootSummary[] = "This is a test root.";
+
 constexpr DocumentSpec kRootSpec{"root-id", "", "", kAndroidDirectoryMimeType,
                                  -1,        0};
 constexpr DocumentSpec kDirSpec{
@@ -138,7 +142,8 @@ class ArcDocumentsProviderRootTest : public testing::Test {
 
     root_ = base::MakeUnique<ArcDocumentsProviderRoot>(
         ArcFileSystemOperationRunner::GetForBrowserContext(profile_.get()),
-        kAuthority, kRootSpec.document_id);
+        kAuthority, kRootSpec.document_id, kRootId, kRootTitle, kRootSummary,
+        std::vector<uint8_t>(), 0);
   }
 
   void TearDown() override {
