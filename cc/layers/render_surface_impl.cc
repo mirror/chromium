@@ -148,6 +148,10 @@ const FilterOperations& RenderSurfaceImpl::BackgroundFilters() const {
   return OwningEffectNode()->background_filters;
 }
 
+bool RenderSurfaceImpl::TrilinearFiltering() const {
+  return OwningEffectNode()->trilinear_filtering;
+}
+
 bool RenderSurfaceImpl::HasCopyRequest() const {
   return OwningEffectNode()->has_copy_request;
 }
@@ -365,6 +369,7 @@ std::unique_ptr<RenderPass> RenderSurfaceImpl::CreateRenderPass() {
                draw_properties_.screen_space_transform);
   pass->filters = Filters();
   pass->background_filters = BackgroundFilters();
+  pass->generate_mipmap = TrilinearFiltering();
   pass->cache_render_pass = ShouldCacheRenderSurface();
   pass->has_damage_from_contributing_content =
       HasDamageFromeContributingContent();
@@ -440,7 +445,8 @@ void RenderSurfaceImpl::AppendQuads(DrawMode draw_mode,
       render_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
   quad->SetNew(shared_quad_state, content_rect(), visible_layer_rect, id(),
                mask_resource_id, mask_uv_rect, mask_texture_size,
-               surface_contents_scale, FiltersOrigin(), tex_coord_rect);
+               surface_contents_scale, FiltersOrigin(), tex_coord_rect,
+               TrilinearFiltering());
 }
 
 void RenderSurfaceImpl::TileMaskLayer(RenderPass* render_pass,
@@ -528,8 +534,8 @@ void RenderSurfaceImpl::TileMaskLayer(RenderPass* render_pass,
                      quad_visible_rect_in_coverage_space, id(),
                      temp_quad->resources.ids[0], mask_uv_rect,
                      mask_texture_size, owning_layer_to_surface_contents_scale,
-                     FiltersOrigin(),
-                     quad_rect_in_non_normalized_texture_space);
+                     FiltersOrigin(), quad_rect_in_non_normalized_texture_space,
+                     TrilinearFiltering());
       } break;
       case DrawQuad::SOLID_COLOR: {
         if (!static_cast<SolidColorDrawQuad*>(temp_quad)->color)
@@ -544,8 +550,8 @@ void RenderSurfaceImpl::TileMaskLayer(RenderPass* render_pass,
         quad->SetNew(shared_quad_state, render_quad_rect,
                      quad_visible_rect_in_coverage_space, id(), 0, gfx::RectF(),
                      gfx::Size(), owning_layer_to_surface_contents_scale,
-                     FiltersOrigin(),
-                     quad_rect_in_non_normalized_texture_space);
+                     FiltersOrigin(), quad_rect_in_non_normalized_texture_space,
+                     TrilinearFiltering());
       } break;
       case DrawQuad::DEBUG_BORDER:
         NOTIMPLEMENTED();

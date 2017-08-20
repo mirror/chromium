@@ -601,6 +601,9 @@ void DirectRenderer::DrawRenderPass(const RenderPass* render_pass) {
   FlushPolygons(&poly_list, render_pass_scissor_in_draw_space,
                 render_pass_requires_scissor);
   FinishDrawingQuadList();
+
+  if (render_pass->generate_mipmap)
+    GenerateMipmap();
 }
 
 bool DirectRenderer::UseRenderPass(const RenderPass* render_pass) {

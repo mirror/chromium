@@ -175,6 +175,7 @@ class CC_EXPORT DirectRenderer {
   virtual void CopyCurrentRenderPassToBitmap(
       std::unique_ptr<viz::CopyOutputRequest> request) = 0;
   virtual void SetEnableDCLayers(bool enable) = 0;
+  virtual void GenerateMipmap() {}
 
   gfx::Size surface_size_for_swap_buffers() const {
     return reshape_surface_size_;

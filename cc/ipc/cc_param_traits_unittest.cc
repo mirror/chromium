@@ -154,6 +154,7 @@ class CCParamTraitsTest : public testing::Test {
     EXPECT_EQ(a->filters_scale, b->filters_scale);
     EXPECT_EQ(a->filters_origin, b->filters_origin);
     EXPECT_EQ(a->tex_coord_rect, b->tex_coord_rect);
+    EXPECT_EQ(a->trilinear_filtering, b->trilinear_filtering);
   }
 
   void Compare(const SolidColorDrawQuad* a, const SolidColorDrawQuad* b) {
@@ -301,21 +302,22 @@ TEST_F(CCParamTraitsTest, AllQuads) {
       FilterOperation::CreateBrightnessFilter(arbitrary_float2));
 
   std::unique_ptr<RenderPass> child_pass_in = RenderPass::Create();
-  child_pass_in->SetAll(child_id, arbitrary_rect2, arbitrary_rect3,
-                        arbitrary_matrix2, arbitrary_filters1,
-                        arbitrary_filters2, arbitrary_color_space,
-                        arbitrary_bool2, arbitrary_bool3, arbitrary_bool4);
+  child_pass_in->SetAll(
+      child_id, arbitrary_rect2, arbitrary_rect3, arbitrary_matrix2,
+      arbitrary_filters1, arbitrary_filters2, arbitrary_color_space,
+      arbitrary_bool2, arbitrary_bool3, arbitrary_bool4, arbitrary_bool5);
 
   std::unique_ptr<RenderPass> child_pass_cmp = RenderPass::Create();
-  child_pass_cmp->SetAll(child_id, arbitrary_rect2, arbitrary_rect3,
-                         arbitrary_matrix2, arbitrary_filters1,
-                         arbitrary_filters2, arbitrary_color_space,
-                         arbitrary_bool2, arbitrary_bool3, arbitrary_bool4);
+  child_pass_cmp->SetAll(
+      child_id, arbitrary_rect2, arbitrary_rect3, arbitrary_matrix2,
+      arbitrary_filters1, arbitrary_filters2, arbitrary_color_space,
+      arbitrary_bool2, arbitrary_bool3, arbitrary_bool4, arbitrary_bool5);
 
   std::unique_ptr<RenderPass> pass_in = RenderPass::Create();
   pass_in->SetAll(root_id, arbitrary_rect1, arbitrary_rect2, arbitrary_matrix1,
                   arbitrary_filters2, arbitrary_filters1, arbitrary_color_space,
-                  arbitrary_bool1, arbitrary_bool2, arbitrary_bool3);
+                  arbitrary_bool1, arbitrary_bool2, arbitrary_bool3,
+                  arbitrary_bool4);
 
   SharedQuadState* shared_state1_in = pass_in->CreateAndAppendSharedQuadState();
   shared_state1_in->SetAll(arbitrary_matrix1, arbitrary_rect1, arbitrary_rect1,
@@ -326,7 +328,7 @@ TEST_F(CCParamTraitsTest, AllQuads) {
   pass_cmp->SetAll(root_id, arbitrary_rect1, arbitrary_rect2, arbitrary_matrix1,
                    arbitrary_filters2, arbitrary_filters1,
                    arbitrary_color_space, arbitrary_bool1, arbitrary_bool2,
-                   arbitrary_bool3);
+                   arbitrary_bool3, arbitrary_bool4);
 
   SharedQuadState* shared_state1_cmp =
       pass_cmp->CreateAndAppendSharedQuadState();
@@ -350,11 +352,12 @@ TEST_F(CCParamTraitsTest, AllQuads) {
 
   RenderPassDrawQuad* renderpass_in =
       pass_in->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
-  renderpass_in->SetAll(
-      shared_state2_in, arbitrary_rect1, arbitrary_rect2_inside_rect1,
-      arbitrary_rect1_inside_rect1, arbitrary_bool1, child_id,
-      arbitrary_resourceid2, arbitrary_rectf1, arbitrary_size1,
-      arbitrary_vector2df2, arbitrary_pointf2, arbitrary_rectf1);
+  renderpass_in->SetAll(shared_state2_in, arbitrary_rect1,
+                        arbitrary_rect2_inside_rect1,
+                        arbitrary_rect1_inside_rect1, arbitrary_bool1, child_id,
+                        arbitrary_resourceid2, arbitrary_rectf1,
+                        arbitrary_size1, arbitrary_vector2df2,
+                        arbitrary_pointf2, arbitrary_rectf1, arbitrary_bool2);
   pass_cmp->CopyFromAndAppendRenderPassDrawQuad(renderpass_in,
                                                 renderpass_in->render_pass_id);
 
@@ -500,7 +503,7 @@ TEST_F(CCParamTraitsTest, UnusedSharedQuadStates) {
   std::unique_ptr<RenderPass> pass_in = RenderPass::Create();
   pass_in->SetAll(1, gfx::Rect(100, 100), gfx::Rect(), gfx::Transform(),
                   FilterOperations(), FilterOperations(),
-                  gfx::ColorSpace::CreateSRGB(), false, false, false);
+                  gfx::ColorSpace::CreateSRGB(), false, false, false, false);
 
   // The first SharedQuadState is used.
   SharedQuadState* shared_state1_in = pass_in->CreateAndAppendSharedQuadState();
