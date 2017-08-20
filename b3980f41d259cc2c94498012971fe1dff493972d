@@ -22,6 +22,30 @@
       "revId": "b3980f41d259cc2c94498012971fe1dff493972d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006a6f0f_b7b61616",
+        "filename": "device/serial/buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-20T08:28:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f19b2e4_1aa68a3e",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "b3980f41d259cc2c94498012971fe1dff493972d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
