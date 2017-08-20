@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b0341843_bb12ccd8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-20T11:26:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbb0765f_c7545574",
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "881122f7_f6f7dca7",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-18T15:52:04Z",
       "side": 1,
       "message": "Again, we can do things incrementally, but I envision this struct becoming a mojo struct.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 28
+      },
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36509402_6b06537b",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-20T11:26:18Z",
+      "side": 1,
+      "message": "I checked around its usage, seems it\u0027s just used inside blink codes and we have no need to pass it via mojo connections, other than the error type the other two members |message| and |unsanitized_message| are used to populate messages to javascript. Do we still need to mojofy such structs?",
+      "parentUuid": "881122f7_f6f7dca7",
       "range": {
         "startLine": 39,
         "startChar": 0,
@@ -82,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "13872143_db44293a",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-20T11:26:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0342100e_fa4c7863",
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0094fc75_60b6d731",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
         "patchSetId": 2
@@ -99,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "daef3307_99c0633a",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-20T11:26:18Z",
+      "side": 1,
+      "message": "Seems several existing mojom enum definitions for SW codes are not following the kXXX style:\nhttps://cs.chromium.org/chromium/src/content/common/service_worker/service_worker_types.mojom?rcl\u003d24e1e618c395682f340a63711f02977bec4125a6\u0026l\u003d7\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/public/platform/modules/serviceworker/service_worker_event_status.mojom?rcl\u003d24e1e618c395682f340a63711f02977bec4125a6\u0026l\u003d7\n\nAnd I found this https://chromium.googlesource.com/chromium/src/+/master/mojo/public/tools/bindings#Enumeration-Types, which is not using kXXX style, so I suppose maybe the kXXX style is just for native C++ enum definitions.",
+      "parentUuid": "0094fc75_60b6d731",
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "638562fc_cc1c15c5",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
         "patchSetId": 2
@@ -110,6 +188,24 @@
       "writtenOn": "2017-08-18T15:52:04Z",
       "side": 1,
       "message": "Thinking aloud here... I know there\u0027s value in doing things incrementally, but I envision eventually content::ServiceWorkerStatusCode just becomes this mojo enum. I kinda wonder if we should just name this ServiceWorkerStatusCode now. Especially the None value seems to mean this should be named StatusCode, not ErrorType.\n\nBut probably for the first step we don\u0027t need that.",
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57143545_a3fc907e",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-20T11:26:18Z",
+      "side": 1,
+      "message": "Now content::ServiceWorkerStatusCode defines various error types and is typemapping with blink.mojom.ServiceWorkerEventStatus. IIUC the suggestion is that we could create a mojom enum ServiceWorkerStatusCode and make it to consolidate values from both content::ServiceWorkerStatusCode and this WebServiceWorkerErrorType, or even some other possible SW related error types, so that we could apply the mojom ServiceWorkerStatusCode to indicate all possible status/error for all SW related code logic?\n\nSeems this WebServiceWorkerErrorType is to indicate some javascript execution exceptions at https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerError.cpp?rcl\u003d24e1e618c395682f340a63711f02977bec4125a6\u0026l\u003d56, while content::ServiceWorkerStatusCode is for \u0027Generic service worker operation statuses\u0027.\nSeparating them may be clearer?",
+      "parentUuid": "638562fc_cc1c15c5",
       "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
