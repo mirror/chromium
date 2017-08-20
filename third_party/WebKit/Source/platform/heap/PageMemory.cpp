@@ -65,8 +65,8 @@ PageMemoryRegion* PageMemoryRegion::Allocate(size_t size,
   // Round size up to the allocation granularity.
   size = (size + WTF::kPageAllocationGranularityOffsetMask) &
          WTF::kPageAllocationGranularityBaseMask;
-  Address base = static_cast<Address>(
-      WTF::AllocPages(nullptr, size, kBlinkPageSize, WTF::PageInaccessible));
+  Address base = static_cast<Address>(WTF::AllocPages(
+      nullptr, size, kBlinkPageSize, WTF::PageInaccessible, "blink"));
   if (!base)
     BlinkGCOutOfMemory();
   return new PageMemoryRegion(base, size, num_pages, region_tree);

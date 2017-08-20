@@ -373,8 +373,9 @@ static ALWAYS_INLINE void* PartitionAllocPartitionPages(
   // page table bloat and not fragmenting address spaces in 32 bit
   // architectures.
   char* requestedAddress = root->next_super_page;
-  char* super_page = reinterpret_cast<char*>(AllocPages(
-      requestedAddress, kSuperPageSize, kSuperPageSize, PageAccessible));
+  char* super_page = reinterpret_cast<char*>(
+      AllocPages(requestedAddress, kSuperPageSize, kSuperPageSize,
+                 PageAccessible, "partition_alloc"));
   if (UNLIKELY(!super_page))
     return 0;
 
@@ -643,8 +644,8 @@ static ALWAYS_INLINE PartitionPage* PartitionDirectMap(PartitionRootBase* root,
 
   // TODO: these pages will be zero-filled. Consider internalizing an
   // allocZeroed() API so we can avoid a memset() entirely in this case.
-  char* ptr = reinterpret_cast<char*>(
-      AllocPages(0, map_size, kSuperPageSize, PageAccessible));
+  char* ptr = reinterpret_cast<char*>(AllocPages(
+      0, map_size, kSuperPageSize, PageAccessible, "partition_alloc"));
   if (UNLIKELY(!ptr))
     return nullptr;
 

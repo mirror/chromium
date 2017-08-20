@@ -132,7 +132,7 @@ void* ArrayBufferContents::ReserveMemory(size_t size) {
   // TODO(crbug.com/735209): On Windows this commits all the memory, rather than
   // just reserving it. This is very bad and should be fixed, but we don't use
   // this feature on Windows at all yet.
-  return base::AllocPages(hint, size, align, base::PageInaccessible);
+  return base::AllocPages(hint, size, align, base::PageInaccessible, "blink");
 }
 
 void ArrayBufferContents::FreeMemory(void* data) {

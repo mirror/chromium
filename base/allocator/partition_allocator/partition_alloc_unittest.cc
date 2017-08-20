@@ -1099,12 +1099,13 @@ TEST_F(PartitionAllocTest, MappingCollision) {
   pageBase -= kPartitionPageSize;
   // Map a single system page either side of the mapping for our allocations,
   // with the goal of tripping up alignment of the next mapping.
-  void* map1 = AllocPages(pageBase - kPageAllocationGranularity,
-                          kPageAllocationGranularity,
-                          kPageAllocationGranularity, PageInaccessible);
+  void* map1 = AllocPages(
+      pageBase - kPageAllocationGranularity, kPageAllocationGranularity,
+      kPageAllocationGranularity, PageInaccessible, "partition_alloc");
   EXPECT_TRUE(map1);
   void* map2 = AllocPages(pageBase + kSuperPageSize, kPageAllocationGranularity,
-                          kPageAllocationGranularity, PageInaccessible);
+                          kPageAllocationGranularity, PageInaccessible,
+                          "partition_alloc");
   EXPECT_TRUE(map2);
 
   for (i = 0; i < numPartitionPagesNeeded; ++i)
@@ -1122,10 +1123,11 @@ TEST_F(PartitionAllocTest, MappingCollision) {
   // with the goal of tripping up alignment of the next mapping.
   map1 = AllocPages(pageBase - kPageAllocationGranularity,
                     kPageAllocationGranularity, kPageAllocationGranularity,
-                    PageAccessible);
+                    PageAccessible, "partition_alloc");
   EXPECT_TRUE(map1);
-  map2 = AllocPages(pageBase + kSuperPageSize, kPageAllocationGranularity,
-                    kPageAllocationGranularity, PageAccessible);
+  map2 =
+      AllocPages(pageBase + kSuperPageSize, kPageAllocationGranularity,
+                 kPageAllocationGranularity, PageAccessible, "partition_alloc");
   EXPECT_TRUE(map2);
   SetSystemPagesInaccessible(map1, kPageAllocationGranularity);
   SetSystemPagesInaccessible(map2, kPageAllocationGranularity);

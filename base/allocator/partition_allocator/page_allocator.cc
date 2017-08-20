@@ -13,6 +13,20 @@
 #include "base/logging.h"
 #include "build/build_config.h"
 
+#if defined(OS_ANDROID)
+#include <sys/prctl.h>
+
+// Not defined in Android public API.
+#if !defined(PR_SET_VMA)
+#define PR_SET_VMA 0x53564d41
+#endif
+
+#if !defined(PR_SET_VMA_ANON_NAME)
+#define PR_SET_VMA_ANON_NAME 0
+#endif
+
+#endif  // defined(OS_ANDROID)
+
 #if defined(OS_MACOSX)
 #include <mach/mach.h>
 #endif
@@ -50,10 +64,10 @@ namespace base {
 
 // This internal function wraps the OS-specific page allocation call:
 // |VirtualAlloc| on Windows, and |mmap| on POSIX.
-static void* SystemAllocPages(
-    void* hint,
-    size_t length,
-    PageAccessibilityConfiguration page_accessibility) {
+static void* SystemAllocPages(void* hint,
+                              size_t length,
+                              PageAccessibilityConfiguration page_accessibility,
+                              const char* tag) {
   DCHECK(!(length & kPageAllocationGranularityOffsetMask));
   DCHECK(!(reinterpret_cast<uintptr_t>(hint) &
            kPageAllocationGranularityOffsetMask));
@@ -83,6 +97,15 @@ static void* SystemAllocPages(
     ret = 0;
   }
 #endif
+
+#if defined(OS_ANDROID)
+  if (tag) {
+    // On Android, tag our mmap allocation with "partition_alloc" so these
+    // allocations are identifiable via showmap.
+    prctl(PR_SET_VMA, PR_SET_VMA_ANON_NAME, ret, length, tag);
+  }
+#endif  // defined(OS_ANDROID)
+
   return ret;
 }
 
@@ -117,7 +140,7 @@ static void* TrimMapping(void* base,
   if (pre_slack || post_slack) {
     ret = reinterpret_cast<char*>(base) + pre_slack;
     FreePages(base, base_length);
-    ret = SystemAllocPages(ret, trim_length, page_accessibility);
+    ret = SystemAllocPages(ret, trim_length, page_accessibility, nullptr);
   }
 #endif
 
@@ -127,7 +150,8 @@ static void* TrimMapping(void* base,
 void* AllocPages(void* address,
                  size_t length,
                  size_t align,
-                 PageAccessibilityConfiguration page_accessibility) {
+                 PageAccessibilityConfiguration page_accessibility,
+                 const char* tag) {
   DCHECK(length >= kPageAllocationGranularity);
   DCHECK(!(length & kPageAllocationGranularityOffsetMask));
   DCHECK(align >= kPageAllocationGranularity);
@@ -147,7 +171,7 @@ void* AllocPages(void* address,
 
   // First try to force an exact-size, aligned allocation from our random base.
   for (int count = 0; count < 3; ++count) {
-    void* ret = SystemAllocPages(address, length, page_accessibility);
+    void* ret = SystemAllocPages(address, length, page_accessibility, tag);
     if (kHintIsAdvisory || ret) {
       // If the alignment is to our liking, we're done.
       if (!(reinterpret_cast<uintptr_t>(ret) & align_offset_mask))
@@ -183,7 +207,7 @@ void* AllocPages(void* address,
   do {
     // Don't continue to burn cycles on mandatory hints (Windows).
     address = kHintIsAdvisory ? GetRandomPageBase() : nullptr;
-    ret = SystemAllocPages(address, try_length, page_accessibility);
+    ret = SystemAllocPages(address, try_length, page_accessibility, tag);
     // The retries are for Windows, where a race can steal our mapping on
     // resize.
   } while (ret &&
