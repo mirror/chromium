@@ -81,7 +81,7 @@ void AddRenderPassQuad(RenderPass* to_pass, RenderPass* contributing_pass) {
       to_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
   quad->SetNew(shared_state, output_rect, output_rect, contributing_pass->id, 0,
                gfx::RectF(), gfx::Size(), gfx::Vector2dF(), gfx::PointF(),
-               gfx::RectF());
+               gfx::RectF(), false);
 }
 
 void AddRenderPassQuad(RenderPass* to_pass,
@@ -99,7 +99,7 @@ void AddRenderPassQuad(RenderPass* to_pass,
   quad->SetNew(shared_state, output_rect, output_rect, contributing_pass->id,
                mask_resource_id, gfx::RectF(output_rect),
                arbitrary_nonzero_size, gfx::Vector2dF(), gfx::PointF(),
-               gfx::RectF());
+               gfx::RectF(), false);
 }
 
 static void EmptyReleaseCallback(const gpu::SyncToken& sync_token,
@@ -175,7 +175,8 @@ void AddOneOfEveryQuadType(RenderPass* to_pass,
         to_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
     render_pass_quad->SetNew(shared_state, rect, visible_rect, child_pass_id,
                              resource5, gfx::RectF(rect), resource5_size,
-                             gfx::Vector2dF(), gfx::PointF(), gfx::RectF());
+                             gfx::Vector2dF(), gfx::PointF(), gfx::RectF(),
+                             false);
   }
 
   SolidColorDrawQuad* solid_color_quad =

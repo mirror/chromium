@@ -572,6 +572,14 @@ static inline bool DoubleSided(LayerImpl* layer) {
   return layer->test_properties()->double_sided;
 }
 
+static inline bool TrilinearFiltering(Layer* layer) {
+  return layer->trilinear_filtering();
+}
+
+static inline bool TrilinearFiltering(LayerImpl* layer) {
+  return layer->test_properties()->trilinear_filtering;
+}
+
 static inline bool CacheRenderSurface(Layer* layer) {
   return layer->cache_render_surface();
 }
@@ -704,6 +712,11 @@ bool ShouldCreateRenderSurface(LayerType* layer,
 
   // If the layer uses a mask.
   if (MaskLayer(layer)) {
+    return true;
+  }
+
+  // If the layer uses trilinear filtering.
+  if (TrilinearFiltering(layer)) {
     return true;
   }
 
@@ -901,6 +914,7 @@ bool AddEffectNodeIfNeeded(
   node->filters = Filters(layer);
   node->background_filters = BackgroundFilters(layer);
   node->filters_origin = FiltersOrigin(layer);
+  node->trilinear_filtering = TrilinearFiltering(layer);
   node->has_potential_opacity_animation = has_potential_opacity_animation;
   node->has_potential_filter_animation = has_potential_filter_animation;
   node->double_sided = DoubleSided(layer);

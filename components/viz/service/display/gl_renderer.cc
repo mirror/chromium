@@ -246,6 +246,8 @@ struct DrawRenderPassDrawQuadParams {
   // The color space of the texture bound for sampling (from filter_image or
   // contents_resource_lock, depending on the path taken).
   gfx::ColorSpace contents_color_space;
+
+  GLenum min_filter = GL_LINEAR;
 };
 
 static GLint GetActiveTextureUnit(GLES2Interface* gl) {
@@ -1160,6 +1162,8 @@ bool GLRenderer::InitializeRPDQParameters(
       params->contents_device_transform, quad, aa_quad, params->clip_region,
       &params->surface_quad, params->edge);
 
+  params->min_filter =
+      quad->trilinear_filtering ? GL_LINEAR_MIPMAP_LINEAR : GL_LINEAR;
   return true;
 }
 
@@ -1313,7 +1317,8 @@ void GLRenderer::UpdateRPDQTexturesForSampling(
     DCHECK(filter_image_id);
     DCHECK_EQ(GL_TEXTURE0, GetActiveTextureUnit(gl_));
     gl_->BindTexture(GL_TEXTURE_2D, filter_image_id);
-    gl_->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    gl_->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                       params->min_filter);
     gl_->TexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     // |params->contents_color_space| was populated when |params->filter_image|
     // was populated.
@@ -1321,7 +1326,8 @@ void GLRenderer::UpdateRPDQTexturesForSampling(
   } else {
     params->contents_resource_lock =
         base::MakeUnique<cc::ResourceProvider::ScopedSamplerGL>(
-            resource_provider_, params->contents_texture->id(), GL_LINEAR);
+            resource_provider_, params->contents_texture->id(),
+            params->min_filter);
     DCHECK_EQ(static_cast<GLenum>(GL_TEXTURE_2D),
               params->contents_resource_lock->target());
     params->contents_color_space =
@@ -2571,6 +2577,14 @@ void GLRenderer::FinishDrawingFrame() {
 
 void GLRenderer::FinishDrawingQuadList() {
   FlushTextureQuadCache(SHARED_BINDING);
+}
+
+void GLRenderer::GenerateMipmap() {
+  DCHECK(current_framebuffer_lock_);
+  GLuint texture_id = current_framebuffer_lock_->GetTexture();
+  gl_->BindTexture(GL_TEXTURE_2D, texture_id);
+  gl_->GenerateMipmap(GL_TEXTURE_2D);
+  gl_->BindTexture(GL_TEXTURE_2D, 0);
 }
 
 void GLRenderer::SetEnableDCLayers(bool enable) {
