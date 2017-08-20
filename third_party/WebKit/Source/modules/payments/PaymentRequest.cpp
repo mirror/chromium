@@ -206,7 +206,7 @@ void ValidateShippingOptionOrPaymentItem(const T& item,
   if (!PaymentsValidators::IsValidCurrencyCodeFormat(
           item.amount().currency(), item.amount().currencySystem(),
           &error_message)) {
-    exception_state.ThrowTypeError(error_message);
+    exception_state.ThrowRangeError(error_message);
     return;
   }
 }
