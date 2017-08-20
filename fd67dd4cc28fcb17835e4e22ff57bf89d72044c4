@@ -16,6 +16,24 @@
       "revId": "fd67dd4cc28fcb17835e4e22ff57bf89d72044c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e50bc62_5a645229",
+        "filename": "net/cert/cert_verify_proc_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-20T17:53:07Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "7271d788_ec13c338",
+      "revId": "fd67dd4cc28fcb17835e4e22ff57bf89d72044c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

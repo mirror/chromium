@@ -85,6 +85,24 @@
       "revId": "359d5ad007493c0aab9fbdd66b2eb251b005ffcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b4ec42_bae790a3",
+        "filename": "net/data/ssl/ev_roots/001686cd181f83a1b1217d305b365c41e3470a78a1d37b134a98cd547b92dab3.pem",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-20T17:53:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa7fd142_331abcf3",
+      "revId": "359d5ad007493c0aab9fbdd66b2eb251b005ffcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
