@@ -264,12 +264,12 @@ void SurfaceAggregator::HandleSurfaceQuad(
 
     cc::RenderPassId remapped_pass_id = RemapPassId(source.id, surface_id);
 
-    copy_pass->SetAll(remapped_pass_id, source.output_rect, source.output_rect,
-                      source.transform_to_root_target, source.filters,
-                      source.background_filters, blending_color_space_,
-                      source.has_transparent_background,
-                      source.cache_render_pass,
-                      source.has_damage_from_contributing_content);
+    copy_pass->SetAll(
+        remapped_pass_id, source.output_rect, source.output_rect,
+        source.transform_to_root_target, source.filters,
+        source.background_filters, blending_color_space_,
+        source.has_transparent_background, source.cache_render_pass,
+        source.has_damage_from_contributing_content, source.generate_mipmap);
 
     MoveMatchingRequests(source.id, &copy_requests, &copy_pass->copy_requests);
 
@@ -352,7 +352,8 @@ void SurfaceAggregator::HandleSurfaceQuad(
     quad->SetNew(shared_quad_state, surface_quad->rect,
                  surface_quad->visible_rect, remapped_pass_id, 0, gfx::RectF(),
                  gfx::Size(), gfx::Vector2dF(), gfx::PointF(),
-                 gfx::RectF(surface_quad->rect));
+                 gfx::RectF(surface_quad->rect),
+                 /*trilinear_filtering=*/false);
   }
 
   // Need to re-query since referenced_surfaces_ iterators are not stable.
@@ -393,7 +394,8 @@ void SurfaceAggregator::AddColorConversionPass() {
       color_conversion_pass->CreateAndAppendDrawQuad<cc::RenderPassDrawQuad>();
   quad->SetNew(shared_quad_state, output_rect, output_rect,
                root_render_pass->id, 0, gfx::RectF(), gfx::Size(),
-               gfx::Vector2dF(), gfx::PointF(), gfx::RectF(output_rect));
+               gfx::Vector2dF(), gfx::PointF(), gfx::RectF(output_rect),
+               /*trilinear_filtering=*/false);
   dest_pass_list_->push_back(std::move(color_conversion_pass));
 }
 
@@ -570,12 +572,12 @@ void SurfaceAggregator::CopyPasses(const cc::CompositorFrame& frame,
     cc::RenderPassId remapped_pass_id =
         RemapPassId(source.id, surface->surface_id());
 
-    copy_pass->SetAll(remapped_pass_id, source.output_rect, source.output_rect,
-                      source.transform_to_root_target, source.filters,
-                      source.background_filters, blending_color_space_,
-                      source.has_transparent_background,
-                      source.cache_render_pass,
-                      source.has_damage_from_contributing_content);
+    copy_pass->SetAll(
+        remapped_pass_id, source.output_rect, source.output_rect,
+        source.transform_to_root_target, source.filters,
+        source.background_filters, blending_color_space_,
+        source.has_transparent_background, source.cache_render_pass,
+        source.has_damage_from_contributing_content, source.generate_mipmap);
 
     CopyQuadsToPass(source.quad_list, source.shared_quad_state_list,
                     child_to_parent_map, gfx::Transform(), ClipData(),

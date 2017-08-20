@@ -1881,7 +1881,8 @@ GLenum ResourceProvider::BindForSampling(viz::ResourceId resource_id,
   gl->BindTexture(target, resource->gl_id);
   if (filter != resource->filter) {
     gl->TexParameteri(target, GL_TEXTURE_MIN_FILTER, filter);
-    gl->TexParameteri(target, GL_TEXTURE_MAG_FILTER, filter);
+    gl->TexParameteri(target, GL_TEXTURE_MAG_FILTER,
+                      filter == GL_LINEAR_MIPMAP_LINEAR ? GL_LINEAR : filter);
     resource->filter = filter;
   }
 
