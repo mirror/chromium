@@ -24,7 +24,7 @@ bool PaymentsValidators::isValidCurrencyCodeFormat(
       *optional_error_message =
           "'" + code +
           "' is not a valid ISO 4217 currency code, should "
-          "be 3 upper case letters [A-Z]";
+          "be well-formed 3-letter alphabetic code.";
 
     return false;
   }
