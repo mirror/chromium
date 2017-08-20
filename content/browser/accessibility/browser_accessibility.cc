@@ -989,6 +989,16 @@ bool BrowserAccessibility::AccessibilityPerformAction(
     return true;
   }
 
+  if (data.action == ui::AX_ACTION_SCROLL_TO_POINT) {
+    manager_->ScrollToPoint(*this, data.target_point);
+    return true;
+  }
+
+  if (data.action == ui::AX_ACTION_SCROLL_TO_MAKE_VISIBLE) {
+    manager_->ScrollToMakeVisible(*this, data.target_rect);
+    return true;
+  }
+
   return false;
 }
 
