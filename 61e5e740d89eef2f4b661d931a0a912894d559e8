@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bdc70cb2_1bb97bd0",
+        "filename": "chromeos/dbus/dbus_clients_common.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-08-20T03:28:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d1a0023_c5dd07ce",
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bf9f242_72575423",
         "filename": "chromeos/dbus/dbus_clients_common.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78b559a_df06125f",
+        "filename": "chromeos/dbus/dbus_clients_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-08-20T03:28:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bf9f242_72575423",
+      "revId": "61e5e740d89eef2f4b661d931a0a912894d559e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
