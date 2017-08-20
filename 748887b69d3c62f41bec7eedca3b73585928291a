@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e383d1a0_d1307612",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-20T10:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaba9dd9_eab4833e",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d48081d3_a87f7f15",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae6ddf47_4e48e54b",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-20T10:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d48081d3_a87f7f15",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 17
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "912e0b84_58e84f7f",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-20T10:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e5fc62e_c758a737",
+      "range": {
+        "startLine": 101,
+        "startChar": 30,
+        "endLine": 101,
+        "endChar": 52
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16cf3905_9b6cbb11",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
         "patchSetId": 10
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-17T07:03:37Z",
       "side": 1,
       "message": "This happens in a non-error case where Android does not support GetRoots() mojo call. I guess in that case we want to return the existing list instead of an empty list.",
+      "range": {
+        "startLine": 108,
+        "startChar": 6,
+        "endLine": 108,
+        "endChar": 32
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2257d5cb_094cde8f",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-20T10:12:06Z",
+      "side": 1,
+      "message": "I refactored those codes to keep previous root objects if possible.",
+      "parentUuid": "16cf3905_9b6cbb11",
       "range": {
         "startLine": 108,
         "startChar": 6,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "acd527d9_ac2e9243",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-20T10:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b762420_a1e99ff9",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 120,
+        "endChar": 15
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf790c11_1f319ba6",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
         "patchSetId": 10
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "f1eeb5f2_156bc850",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-20T10:12:06Z",
+      "side": 1,
+      "message": "ditto.",
+      "parentUuid": "bf790c11_1f319ba6",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 15
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9e5b8ea_fe4e565d",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
         "patchSetId": 10
@@ -151,6 +295,30 @@
       "writtenOn": "2017-08-17T07:03:37Z",
       "side": 1,
       "message": "Could you please use base::OnceCallback instead? We\u0027re in the process of moving from base::Callback to base::{Once,Repeating}Callback.",
+      "range": {
+        "startLine": 40,
+        "startChar": 32,
+        "endLine": 40,
+        "endChar": 40
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3651162e_4a62a519",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-20T10:12:06Z",
+      "side": 1,
+      "message": "No. We can\u0027t use OnceCallback here for now.\nMojo stub class takes Callback, so compiler thinks RefreshCallback might also be invoked more than once.\n(We can change it after mojo stubs become to take OnceCallback instead of Callback, in the near future. I heard it from hidehiko@)\n\nAnyway, I will mark this as TODO.",
+      "parentUuid": "f9e5b8ea_fe4e565d",
       "range": {
         "startLine": 40,
         "startChar": 32,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "52e6f761_ed33c70a",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-20T10:12:06Z",
+      "side": 1,
+      "message": "For now, I think we don\u0027t need a method like that.\nThe list is required in VolumeManager and we need to refresh the list. https://cs.chromium.org/chromium/src/chrome/browser/chromeos/file_manager/volume_manager.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d751",
+      "parentUuid": "10723185_30770ffa",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 48
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6b0552e_92c3ca2e",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
         "patchSetId": 10
@@ -206,6 +398,30 @@
       "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8cd04dd_c2cd0995",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-20T10:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6b0552e_92c3ca2e",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 48
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "aa2add0f_fa08cb28",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-20T10:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "544be8b5_c4dac924",
+      "range": {
+        "startLine": 77,
+        "startChar": 22,
+        "endLine": 77,
+        "endChar": 23
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe9a4908_dccceec1",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
         "patchSetId": 10
@@ -252,6 +492,30 @@
       "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da46225_c318daea",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-20T10:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe9a4908_dccceec1",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 26
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "27ec4e54_b1d6bf5d",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-20T10:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f82209f_914c46d4",
+      "range": {
+        "startLine": 33,
+        "startChar": 20,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77125730_e4167e19",
         "filename": "components/arc/common/file_system.mojom",
         "patchSetId": 10
@@ -298,6 +586,30 @@
       "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25feab77_31429bfc",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-20T10:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77125730_e4167e19",
+      "range": {
+        "startLine": 45,
+        "startChar": 16,
+        "endLine": 45,
+        "endChar": 38
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "98a9f145_28300354",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-20T10:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38620771_1989ef75",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 14
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8ebdbe4_7a1ddbe3",
         "filename": "components/arc/common/file_system.mojom",
         "patchSetId": 10
@@ -335,6 +671,30 @@
       "writtenOn": "2017-08-17T07:03:37Z",
       "side": 1,
       "message": "QQ: Does this include system providers such as MediaDocumentsProvider?",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 62
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c2ec928_0697359a",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-20T10:12:06Z",
+      "side": 1,
+      "message": "I prefer to do so. I want to design methods generally.\nAre there any reason to treat system provider differently?\n\nHere is a enumurating logic on picker Activity, Android.\nhttps://android.googlesource.com/platform/frameworks/base/+/master/packages/DocumentsUI/src/com/android/documentsui/RootsCache.java#247\nIn a nut shell, Roots are treated differently (such as order, icon, ...) after enumurating.",
+      "parentUuid": "a8ebdbe4_7a1ddbe3",
       "range": {
         "startLine": 179,
         "startChar": 0,
@@ -367,6 +727,30 @@
       "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d7eb17_d3924f4c",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1239149
+      },
+      "writtenOn": "2017-08-20T10:12:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4480cf47_aa32b1b1",
+      "range": {
+        "startLine": 180,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 53
+      },
+      "revId": "748887b69d3c62f41bec7eedca3b73585928291a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
