@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b811ceaa_4029258a",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-20T13:09:33Z",
+      "side": 1,
+      "message": "We will probably not be able to get rid of this one because of union use cases that just use raw pointers. They are very limited though (e.g. node rare data). \n\nThe same will hold for incremental oilpan.",
+      "range": {
+        "startLine": 187,
+        "startChar": 7,
+        "endLine": 187,
+        "endChar": 42
+      },
+      "revId": "a4c47103314132bd3e807add9c85565993a42686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
