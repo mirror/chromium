@@ -17,14 +17,14 @@ bool PaymentsValidators::isValidCurrencyCodeFormat(
     const std::string& system,
     std::string* optional_error_message) {
   if (system == "urn:iso:std:iso:4217") {
-    if (RE2::FullMatch(code, "[A-Z]{3}"))
+    if (RE2::FullMatch(code, "[A-Z|a-z]{3}"))
       return true;
 
     if (optional_error_message)
       *optional_error_message =
           "'" + code +
           "' is not a valid ISO 4217 currency code, should "
-          "be 3 upper case letters [A-Z]";
+          "be well-formed 3-letter alphabetic code.";
 
     return false;
   }
