@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8ef6c32_7a6c0c21",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-20T15:36:34Z",
+      "side": 1,
+      "message": "Could you change to tab_manager_stats_collector() (without the \"get_\")?",
+      "range": {
+        "startLine": 40,
+        "startChar": 28,
+        "endLine": 40,
+        "endChar": 59
+      },
+      "revId": "72bd5197941cd913dbf10589b32a321069b231e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
