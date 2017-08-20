@@ -45,7 +45,7 @@ class SendBuffer : public device::ReadOnlyBuffer {
  public:
   using SendCompleteCallback =
       base::OnceCallback<void(int, device::mojom::SerialSendError)>;
-  SendBuffer(const std::vector<char>& data, SendCompleteCallback callback);
+  SendBuffer(const std::vector<uint8_t>& data, SendCompleteCallback callback);
   ~SendBuffer() override;
 
   const char* GetData() override;

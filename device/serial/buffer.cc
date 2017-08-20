@@ -14,9 +14,10 @@ ReadOnlyBuffer::~ReadOnlyBuffer() {
 WritableBuffer::~WritableBuffer() {
 }
 
-SendBuffer::SendBuffer(const std::vector<char>& data,
+SendBuffer::SendBuffer(const std::vector<uint8_t>& data,
                        SendCompleteCallback callback)
-    : data_(data), callback_(std::move(callback)) {}
+    : data_(data.data(), data.data() + data.size()),
+      callback_(std::move(callback)) {}
 
 SendBuffer::~SendBuffer() {}
 
