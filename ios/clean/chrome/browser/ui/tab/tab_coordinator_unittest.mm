@@ -4,6 +4,7 @@
 
 #import "ios/clean/chrome/browser/ui/tab/tab_coordinator.h"
 
+#import "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
@@ -55,6 +56,10 @@ class TabCoordinatorTest : public BrowserCoordinatorTest {
     }
     coordinator_ = nil;
   }
+  TabContainerViewController* tab_view_controller() {
+    return base::mac::ObjCCastStrict<TabContainerViewController>(
+        coordinator_.viewController);
+  }
 
  protected:
   TabCoordinator* coordinator_;
@@ -72,22 +77,19 @@ TEST_F(TabCoordinatorTest, DefaultToolbar) {
   [[NSUserDefaults standardUserDefaults] setObject:@""
                                             forKey:@"EnableBottomToolbar"];
   [coordinator_ start];
-  EXPECT_EQ([TopToolbarTabViewController class],
-            [coordinator_.viewController class]);
+  EXPECT_EQ(NO, tab_view_controller().usesBottomToolbar);
 }
 
 TEST_F(TabCoordinatorTest, TopToolbar) {
   [[NSUserDefaults standardUserDefaults] setObject:@"Disabled"
                                             forKey:@"EnableBottomToolbar"];
   [coordinator_ start];
-  EXPECT_EQ([TopToolbarTabViewController class],
-            [coordinator_.viewController class]);
+  EXPECT_EQ(NO, tab_view_controller().usesBottomToolbar);
 }
 
 TEST_F(TabCoordinatorTest, BottomToolbar) {
   [[NSUserDefaults standardUserDefaults] setObject:@"Enabled"
                                             forKey:@"EnableBottomToolbar"];
   [coordinator_ start];
-  EXPECT_EQ([BottomToolbarTabViewController class],
-            [coordinator_.viewController class]);
+  EXPECT_EQ(YES, tab_view_controller().usesBottomToolbar);
 }
