@@ -16,6 +16,24 @@
       "revId": "a3daf93858ebeb6a97763557f18f3d8438ba25d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5a4d2f7_dc5f3806",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-20T18:29:16Z",
+      "side": 1,
+      "message": "If the insert() does not succeed (e.g., the key already exists), then the temporary pair will be destroyed. Therefore, the new_cu will be destroyed because the temporary pair now owns new_cu. Therefore, the new_cu_ptr will point to an uninitialized memory region.\n\nThe log shows a series of destructions (https://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Fchromium.memory%2FLinux_ChromiumOS_MSan_Tests%2F2355%2F%2B%2Frecipes%2Fsteps%2Fbrowser_tests%2F0%2Flogs%2FExtensionURLRewriteBrowserTest.BookmarksURL%2F0) This behavior is also related to our current failure of DCHECK when we inserting duplicated key to the map.\n\nMy initial understanding was that the move semantics of C++11 does not provide any guarantee that the variable holds its value after it is moved. That means the variable can be become uninitialized after it is moved. Therefore, I believe we cannot assume internal fields of a variable to be unchanged after std::move(), and any use of a variable after it is moved is unsafe.",
+      "parentUuid": "ead7f4a3_f171d6d4",
+      "revId": "a3daf93858ebeb6a97763557f18f3d8438ba25d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
