@@ -118,6 +118,30 @@
       "revId": "4e5a42c44befc4ec8fca84180e780df5e0557ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb77fcf7_597a20c4",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-08-20T16:56:19Z",
+      "side": 1,
+      "message": "Indeed, we know the args.gn is for our arm devices and we set target_cpu\u003d\"arm\" in the same args.gn, but we need different values for use_custom_libcxx depending on whether current_cpu \u003d\u003d target_cpu (\"arm\"), or current_cpu \u003d\u003d host_cpu (\"x64\")",
+      "parentUuid": "17023fad_662b32f4",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 68
+      },
+      "revId": "4e5a42c44befc4ec8fca84180e780df5e0557ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
