@@ -13,6 +13,7 @@
 
 @interface TestCoordinator : BrowserCoordinator
 @property(nonatomic) UIViewController* viewController;
+@property(nonatomic, copy) void (^willStartHandler)();
 @property(nonatomic, copy) void (^stopHandler)();
 @property(nonatomic) BOOL wasAddedCalled;
 @property(nonatomic) BOOL willBeRemovedCalled;
@@ -24,6 +25,7 @@
 
 @implementation TestCoordinator
 @synthesize viewController = _viewController;
+@synthesize willStartHandler = _willStartHandler;
 @synthesize stopHandler = _stopHandler;
 @synthesize wasAddedCalled = _wasAddedCalled;
 @synthesize willBeRemovedCalled = _willBeRemovedCalled;
@@ -56,6 +58,12 @@
   self.willBeRemovedCalled = YES;
   if (self.willBeRemovedHandler)
     self.willBeRemovedHandler();
+}
+
+- (void)willStart {
+  [super willStart];
+  if (self.willStartHandler)
+    self.willStartHandler();
 }
 
 - (void)removeChildCoordinator:(BrowserCoordinator*)childCoordinator {
@@ -184,6 +192,21 @@ TEST_F(BrowserCoordinatorTest, AddedRemoved) {
   // Remove from the parent.
   [parent removeChildCoordinator:child];
   EXPECT_TRUE(child.willBeRemovedCalled);
+}
+
+// Tests that WillStart is called before starting.
+TEST_F(BrowserCoordinatorTest, WillStart) {
+  TestCoordinator* coordinator = [[TestCoordinator alloc] init];
+  EXPECT_FALSE(coordinator.started);
+  __block BOOL called = NO;
+  __weak TestCoordinator* weakCoordinator = coordinator;
+  coordinator.willStartHandler = ^{
+    EXPECT_FALSE(weakCoordinator.started);
+    called = YES;
+  };
+  [coordinator start];
+  EXPECT_TRUE(called);
+  EXPECT_TRUE(coordinator.started);
 }
 
 TEST_F(BrowserCoordinatorTest, DidStartWillStop) {
