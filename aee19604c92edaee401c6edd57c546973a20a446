@@ -224,6 +224,24 @@
     },
     {
       "key": {
+        "uuid": "d018ec48_2993acb2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-20T23:34:18Z",
+      "side": 0,
+      "message": "_EnumState.process_clean_line() accepts both of InterCaps and kInterCaps.\nWill no one enforce kInterCaps if we remove this check? If it\u0027s true, we should update process_clean_line() and this error message rather than removing the check.",
+      "parentUuid": "2c577523_bf4b8f38",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5594167_ade560cd",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
         "patchSetId": 2
