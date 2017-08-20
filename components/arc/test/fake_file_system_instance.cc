@@ -90,6 +90,25 @@ FakeFileSystemInstance::Document::Document(
 
 FakeFileSystemInstance::Document::~Document() = default;
 
+FakeFileSystemInstance::Root::Root(const Root& that) = default;
+
+FakeFileSystemInstance::Root::Root(const std::string& authority,
+                                   const std::string& root_document_id,
+                                   const std::string& id,
+                                   const std::string& title,
+                                   const std::string& summary,
+                                   const std::vector<uint8_t>& icon_data,
+                                   int64_t flags)
+    : authority(authority),
+      root_document_id(root_document_id),
+      id(id),
+      title(title),
+      summary(summary),
+      icon_data(icon_data),
+      flags(flags) {}
+
+FakeFileSystemInstance::Root::~Root() = default;
+
 FakeFileSystemInstance::FakeFileSystemInstance() {
   bool temp_dir_created = temp_dir_.CreateUniqueTempDir();
   DCHECK(temp_dir_created);
@@ -127,6 +146,11 @@ void FakeFileSystemInstance::AddRecentDocument(const std::string& root_id,
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   RootKey key(document.authority, root_id);
   recent_documents_[key].push_back(document);
+}
+
+void FakeFileSystemInstance::SetRoots(const std::vector<Root>& roots) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  roots_ = roots;
 }
 
 void FakeFileSystemInstance::TriggerWatchers(
@@ -275,6 +299,18 @@ void FakeFileSystemInstance::GetRecentDocuments(
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::BindOnce(callback, base::make_optional(std::move(recents))));
+}
+
+void FakeFileSystemInstance::GetRoots(const GetRootsCallback& callback) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  std::vector<mojom::RootPtr> roots;
+  for (const auto& root : roots_) {
+    roots.push_back(mojom::Root::New(root.authority, root.id, root.title,
+                                     root.summary, root.icon_data, root.flags,
+                                     root.root_document_id));
+  }
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(callback, base::nullopt));
 }
 
 void FakeFileSystemInstance::Init(mojom::FileSystemHostPtr host) {
