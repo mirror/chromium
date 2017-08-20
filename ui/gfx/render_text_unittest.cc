@@ -1012,7 +1012,8 @@ TEST_P(RenderTextTest, ElidedText) {
     { L"0\x05e9\x05bc\x05c1\x05b8",   L"0\x2026\x200E"            , true  },
     { L"01\x05e9\x05bc\x05c1\x05b8",  L"01\x2026\x200E"           , true  },
     { L"012\x05e9\x05bc\x05c1\x05b8", L"012\x2026\x200E"          , true  },
-    { L"012\xF0\x9D\x84\x9E",         L"012\xF0\x2026"            , true  },
+//    { L"012\xF0\x9D\x84\x9E",         L"012\xF0\x2026"            , true  },
+    { L"012\xF0\x9D\x84\x9E",         L"012\x2026"            , true  },
   };
 
   std::unique_ptr<RenderText> expected_render_text(CreateRenderTextInstance());
