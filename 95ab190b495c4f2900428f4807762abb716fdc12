@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f405bec2_b2fcf349",
+        "filename": "content/common/service_worker/service_worker_messages.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-20T15:24:27Z",
+      "side": 1,
+      "message": "you can just remove /* code */ from these, it\u0027s helping clarify the parameter",
+      "revId": "95ab190b495c4f2900428f4807762abb716fdc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f080ca_b20fa6d4",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-20T15:24:27Z",
+      "side": 1,
+      "message": "Still needs a comment here.",
+      "revId": "95ab190b495c4f2900428f4807762abb716fdc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a42fb4_7145ec55",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-20T15:24:27Z",
+      "side": 1,
+      "message": "Everything is alphabetical except Type, so can you just move it between line 19 and 20 to keep the order.\n\n(I realize this is from the original code)",
+      "revId": "95ab190b495c4f2900428f4807762abb716fdc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da38017_0a87ace5",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-20T15:24:27Z",
+      "side": 1,
+      "message": "Last \u003d Type\n\n(I think the original code set Last \u003d Unknown either because Type was never sent in an IPC or it just forgot to update Last, either way it\u0027s cleaner to just set Last \u003d Type)",
+      "revId": "95ab190b495c4f2900428f4807762abb716fdc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

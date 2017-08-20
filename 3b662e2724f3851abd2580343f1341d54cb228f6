@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "e26fb71c_dfb3acd7",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-20T15:24:27Z",
+      "side": 1,
+      "message": "Ah you\u0027re right. Was thinking we\u0027d need to do so for Onion Soup, but if it\u0027s not used in IPCs it can just be a C++ struct in Blink (eventually it\u0027ll be in Source/modules/serviceworker and without the Web prefix).",
+      "parentUuid": "36509402_6b06537b",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 28
+      },
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0342100e_fa4c7863",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
         "patchSetId": 2
@@ -142,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9952dd5a_66aedfc7",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-20T15:24:27Z",
+      "side": 1,
+      "message": "I guess we don\u0027t need to worry too much in this patch. I can probably do a follow up CL that just establishes common/serviceworker and moves this enum here (I\u0027m getting good practice doing that)",
+      "parentUuid": "d04b936e_30442b20",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0094fc75_60b6d731",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
         "patchSetId": 2
@@ -177,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "b424e76f_5b06d808",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-20T15:24:27Z",
+      "side": 1,
+      "message": "The style guide says to use either MACRO_STYLE or kConstant style. kConstant style is preferred these days:\nhttps://google.github.io/styleguide/cppguide.html#Enumerator_Names",
+      "parentUuid": "daef3307_99c0633a",
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "638562fc_cc1c15c5",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
         "patchSetId": 2
@@ -206,6 +272,24 @@
       "side": 1,
       "message": "Now content::ServiceWorkerStatusCode defines various error types and is typemapping with blink.mojom.ServiceWorkerEventStatus. IIUC the suggestion is that we could create a mojom enum ServiceWorkerStatusCode and make it to consolidate values from both content::ServiceWorkerStatusCode and this WebServiceWorkerErrorType, or even some other possible SW related error types, so that we could apply the mojom ServiceWorkerStatusCode to indicate all possible status/error for all SW related code logic?\n\nSeems this WebServiceWorkerErrorType is to indicate some javascript execution exceptions at https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerError.cpp?rcl\u003d24e1e618c395682f340a63711f02977bec4125a6\u0026l\u003d56, while content::ServiceWorkerStatusCode is for \u0027Generic service worker operation statuses\u0027.\nSeparating them may be clearer?",
       "parentUuid": "638562fc_cc1c15c5",
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b836431_7401760d",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-20T15:24:27Z",
+      "side": 1,
+      "message": "Hm yea let\u0027s keep them separate from now. But there is a lot of overlap, I still think eventually they could be merged.",
+      "parentUuid": "57143545_a3fc907e",
       "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
