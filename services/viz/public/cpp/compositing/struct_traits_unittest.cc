@@ -493,11 +493,12 @@ TEST_F(StructTraitsTest, RenderPass) {
   const bool has_transparent_background = true;
   const bool cache_render_pass = false;
   const bool has_damage_from_contributing_content = false;
+  const bool generate_mipmap = false;
   std::unique_ptr<cc::RenderPass> input = cc::RenderPass::Create();
   input->SetAll(render_pass_id, output_rect, damage_rect, transform_to_root,
                 filters, background_filters, color_space,
                 has_transparent_background, cache_render_pass,
-                has_damage_from_contributing_content);
+                has_damage_from_contributing_content, generate_mipmap);
 
   cc::SharedQuadState* shared_state_1 = input->CreateAndAppendSharedQuadState();
   shared_state_1->SetAll(
@@ -612,11 +613,12 @@ TEST_F(StructTraitsTest, RenderPassWithEmptySharedQuadStateList) {
   const bool has_transparent_background = true;
   const bool cache_render_pass = false;
   const bool has_damage_from_contributing_content = false;
+  const bool generate_mipmap = false;
   std::unique_ptr<cc::RenderPass> input = cc::RenderPass::Create();
   input->SetAll(render_pass_id, output_rect, damage_rect, transform_to_root,
                 cc::FilterOperations(), cc::FilterOperations(), color_space,
                 has_transparent_background, cache_render_pass,
-                has_damage_from_contributing_content);
+                has_damage_from_contributing_content, generate_mipmap);
 
   // Unlike the previous test, don't add any quads to the list; we need to
   // verify that the serialization code can deal with that.
@@ -679,12 +681,13 @@ TEST_F(StructTraitsTest, QuadListBasic) {
   gfx::Vector2dF filters_scale(1234.1f, 4321.2f);
   gfx::PointF filters_origin(8765.4f, 4567.8f);
   gfx::RectF tex_coord_rect(1.f, 1.f, 1234.f, 5678.f);
+  const bool trilinear_filtering = false;
 
   cc::RenderPassDrawQuad* render_pass_quad =
       render_pass->CreateAndAppendDrawQuad<cc::RenderPassDrawQuad>();
   render_pass_quad->SetNew(sqs, rect4, rect4, render_pass_id, resource_id4,
                            mask_uv_rect, mask_texture_size, filters_scale,
-                           filters_origin, tex_coord_rect);
+                           filters_origin, tex_coord_rect, trilinear_filtering);
 
   const gfx::Rect rect5(123, 567, 91011, 131415);
   const ResourceId resource_id5(1337);

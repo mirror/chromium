@@ -36,7 +36,8 @@ class CC_EXPORT RenderPassDrawQuad : public DrawQuad {
               const gfx::Size& mask_texture_size,
               const gfx::Vector2dF& filters_scale,
               const gfx::PointF& filters_origin,
-              const gfx::RectF& tex_coord_rect);
+              const gfx::RectF& tex_coord_rect,
+              bool trilinear_filtering);
 
   void SetAll(const SharedQuadState* shared_quad_state,
               const gfx::Rect& rect,
@@ -49,7 +50,8 @@ class CC_EXPORT RenderPassDrawQuad : public DrawQuad {
               const gfx::Size& mask_texture_size,
               const gfx::Vector2dF& filters_scale,
               const gfx::PointF& filters_origin,
-              const gfx::RectF& tex_coord_rect);
+              const gfx::RectF& tex_coord_rect,
+              bool trilinear_filtering);
 
   RenderPassId render_pass_id;
   gfx::RectF mask_uv_rect;
@@ -66,6 +68,8 @@ class CC_EXPORT RenderPassDrawQuad : public DrawQuad {
   gfx::PointF filters_origin;
 
   gfx::RectF tex_coord_rect;
+
+  bool trilinear_filtering = false;
 
   viz::ResourceId mask_resource_id() const {
     return resources.ids[kMaskResourceIdIndex];
