@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "cd1cf175_e35bfaad",
+        "filename": "net/cert/ev_root_ca_metadata.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-20T14:38:30Z",
+      "side": 1,
+      "message": "Yeah, I actually had a local tracking sheet to go through these, after going through the Windows known roots. I\u0027ll do that in a separate CL, since it also involves checking cross-signs and alternative paths for each of the roots in here (e.g. not just the blacklisted ones)",
+      "parentUuid": "0815c5fa_1edde536",
+      "revId": "359d5ad007493c0aab9fbdd66b2eb251b005ffcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db75f5f9_756e0973",
         "filename": "net/cert/ev_root_ca_metadata.cc",
         "patchSetId": 1
@@ -47,6 +65,23 @@
       "writtenOn": "2017-08-19T21:36:09Z",
       "side": 1,
       "message": "Should this entry be removed?",
+      "revId": "359d5ad007493c0aab9fbdd66b2eb251b005ffcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa7fd142_331abcf3",
+        "filename": "net/data/ssl/ev_roots/001686cd181f83a1b1217d305b365c41e3470a78a1d37b134a98cd547b92dab3.pem",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-20T14:38:30Z",
+      "side": 1,
+      "message": "Since you have to tweak this CL anyways, can you include the output of \u0027openssl x509 -text\u0027 in each of these files, consistent with other net/data/ssl lists? (e.g. symantec/)",
       "revId": "359d5ad007493c0aab9fbdd66b2eb251b005ffcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
