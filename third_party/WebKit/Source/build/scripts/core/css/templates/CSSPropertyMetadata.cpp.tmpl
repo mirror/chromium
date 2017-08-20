@@ -19,10 +19,8 @@ bool CSSPropertyMetadata::{{function_name}}(CSSPropertyID unresolvedProperty) {
     {% for property in properties_including_aliases if property[flag] %}
     case {{property.property_id}}:
     {% endfor %}
-    {% if function_name in ("IsInheritedProperty", "IsProperty") %}
-    case CSSPropertyVariable:
-    {% endif %}
     {% if function_name == "IsProperty" %}
+    case CSSPropertyVariable:
     case CSSPropertyApplyAtRule:
     {% endif %}
       return true;
@@ -32,20 +30,6 @@ bool CSSPropertyMetadata::{{function_name}}(CSSPropertyID unresolvedProperty) {
 }
 {% endfor %}
 
-char CSSPropertyMetadata::RepetitionSeparator(CSSPropertyID unresolvedProperty) {
-  switch (unresolvedProperty) {
-  {% for property in properties_including_aliases if property.separator %}
-  case {{property.property_id}}:
-    return '{{property.separator}}';
-  {% endfor %}
-  default:
-    return 0;
-  }
-}
-
-bool CSSPropertyMetadata::PropertyIsRepeated(CSSPropertyID unresolvedProperty) {
-  return RepetitionSeparator(unresolvedProperty) != 0;
-}
 
 bool CSSPropertyMetadata::IsEnabledProperty(CSSPropertyID unresolvedProperty) {
   CSSPropertyID property = resolveCSSPropertyID(unresolvedProperty);
