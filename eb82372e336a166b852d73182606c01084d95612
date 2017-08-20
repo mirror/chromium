@@ -104,6 +104,24 @@
       "revId": "eb82372e336a166b852d73182606c01084d95612",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467b15f3_bc906fff",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-20T23:39:58Z",
+      "side": 1,
+      "message": "Ok looks like the downstream CL depends on this one so we can\u0027t really do that.",
+      "parentUuid": "9e931de1_449ac0ea",
+      "revId": "eb82372e336a166b852d73182606c01084d95612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
