@@ -19,6 +19,7 @@
 #include "core/layout/ng/inline/ng_inline_layout_algorithm.h"
 #include "core/layout/ng/inline/ng_line_box_fragment.h"
 #include "core/layout/ng/inline/ng_line_breaker.h"
+#include "core/layout/ng/inline/ng_offset_mapping_annotation.h"
 #include "core/layout/ng/inline/ng_offset_mapping_result.h"
 #include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
@@ -244,7 +245,8 @@ void AppendTextTransformedOffsetMapping<NGOffsetMappingBuilder>(
   NGOffsetMappingBuilder text_transformed_mapping_builder;
   text_transformed_mapping_builder.AppendIdentityMapping(
       text_transformed_string.length());
-  text_transformed_mapping_builder.Annotate(node);
+  text_transformed_mapping_builder.Annotate(
+      AdoptRef<NGOffsetMappingAnnotation>(new NGNodeAnnotation(node)));
   concatenated_mapping_builder->Concatenate(text_transformed_mapping_builder);
 }
 
