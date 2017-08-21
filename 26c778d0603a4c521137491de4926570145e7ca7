@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74f687a2_afa6d85d",
+        "filename": "chromecast/tools/trace.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-08-21T23:33:59Z",
+      "side": 1,
+      "message": "We could move this into the if and else clauses above so we can omit the unused arguments for TracingBackendAndroid.",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 31,
+        "endChar": 38
+      },
+      "revId": "26c778d0603a4c521137491de4926570145e7ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b6bdf08_37402c73",
+        "filename": "chromecast/tools/tracinglib.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-08-21T23:33:59Z",
+      "side": 1,
+      "message": "Why not just have one argument: the device_id?",
+      "range": {
+        "startLine": 155,
+        "startChar": 20,
+        "endLine": 155,
+        "endChar": 75
+      },
+      "revId": "26c778d0603a4c521137491de4926570145e7ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68632a0e_0fac13de",
+        "filename": "chromecast/tools/tracinglib.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-08-21T23:33:59Z",
+      "side": 1,
+      "message": "Likewise, these unused parameters could be put into the constructor of only the class that needs them.\n\ntrace.Connect() can be in charge of injecting the right parameters to the backend it chooses.",
+      "range": {
+        "startLine": 169,
+        "startChar": 19,
+        "endLine": 169,
+        "endChar": 40
+      },
+      "revId": "26c778d0603a4c521137491de4926570145e7ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a06374_d4f32e55",
+        "filename": "chromecast/tools/tracinglib.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-08-21T23:33:59Z",
+      "side": 1,
+      "message": "Use logging.debug() for printing debug statements like this.",
+      "range": {
+        "startLine": 206,
+        "startChar": 4,
+        "endLine": 206,
+        "endChar": 9
+      },
+      "revId": "26c778d0603a4c521137491de4926570145e7ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c519f39_56b5fcd2",
+        "filename": "chromecast/tools/tracinglib.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1160944
+      },
+      "writtenOn": "2017-08-21T23:33:59Z",
+      "side": 1,
+      "message": "Not a fan of using time.sleep() to synchronize.\n\nCould we instead monitor the last-write timestamp of the file, and pull once it updates?",
+      "range": {
+        "startLine": 207,
+        "startChar": 4,
+        "endLine": 207,
+        "endChar": 13
+      },
+      "revId": "26c778d0603a4c521137491de4926570145e7ca7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
