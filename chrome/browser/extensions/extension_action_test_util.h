@@ -21,8 +21,6 @@ class WebContents;
 }
 
 namespace extensions {
-class Extension;
-
 namespace extension_action_test_util {
 
 // The different possible types of actions for an extension to have (we use
@@ -45,15 +43,6 @@ size_t GetVisiblePageActionCount(content::WebContents* web_contents);
 // Returns the total number of page actions (visible or not) for the given
 // |web_contents|.
 size_t GetTotalPageActionCount(content::WebContents* web_contents);
-
-// Creates and returns an extension with the given |name| with the given
-// |action_type|.
-// Does not add the extension to the extension service or registry.
-scoped_refptr<const Extension> CreateActionExtension(
-    const std::string& name,
-    ActionType action_type,
-    Manifest::Location location = Manifest::INTERNAL,
-    std::unique_ptr<base::DictionaryValue> extra_keys = nullptr);
 
 // Creates a new ToolbarActionsModel for the given |profile|, and associates
 // it with the profile as a keyed service.
