@@ -10,4 +10,41 @@ Polymer({
   is: 'settings-checkbox',
 
   behaviors: [SettingsBooleanControlBehavior],
+
+  /**
+   * Alternative source for the sub-label that can contain html markup.
+   * Only use with trusted input.
+   */
+  subLabelHtml: {
+    type: String,
+    value: '',
+  },
+
+  observers: [
+    'subLabelHtmlChanged_(subLabelHtml)',
+  ],
+
+  /**
+   * Don't let clicks on a link inside the secondary label reach the checkbox.
+   * @private
+   */
+  subLabelHtmlChanged_: function() {
+    var link = this.$$('.secondary.label a');
+    if (link) {
+      link.addEventListener('tap', function(event) {
+        event.stopPropagation();
+      });
+    }
+  },
+
+  /**
+   * @param {string} subLabel
+   * @param {string} subLabelHtml
+   * @return {boolean} Whether there is a subLabel
+   * @private
+   */
+  hasSubLabel_: function(subLabel, subLabelHtml) {
+    return subLabel || subLabelHtml;
+  },
+
 });
