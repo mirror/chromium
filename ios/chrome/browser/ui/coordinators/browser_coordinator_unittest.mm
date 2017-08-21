@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator.h"
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
 
+#import "base/ios/block_types.h"
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator_test.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -13,10 +14,11 @@
 
 @interface TestCoordinator : BrowserCoordinator
 @property(nonatomic) UIViewController* viewController;
-@property(nonatomic, copy) void (^stopHandler)();
+@property(nonatomic, copy) ProceduralBlock willStartHandler;
+@property(nonatomic, copy) ProceduralBlock stopHandler;
 @property(nonatomic) BOOL wasAddedCalled;
 @property(nonatomic) BOOL willBeRemovedCalled;
-@property(nonatomic, copy) void (^willBeRemovedHandler)();
+@property(nonatomic, copy) ProceduralBlock willBeRemovedHandler;
 @property(nonatomic) BOOL removeCalled;
 @property(nonatomic) BOOL childDidStartCalled;
 @property(nonatomic) BOOL childWillStopCalled;
@@ -24,6 +26,7 @@
 
 @implementation TestCoordinator
 @synthesize viewController = _viewController;
+@synthesize willStartHandler = _willStartHandler;
 @synthesize stopHandler = _stopHandler;
 @synthesize wasAddedCalled = _wasAddedCalled;
 @synthesize willBeRemovedCalled = _willBeRemovedCalled;
@@ -56,6 +59,12 @@
   self.willBeRemovedCalled = YES;
   if (self.willBeRemovedHandler)
     self.willBeRemovedHandler();
+}
+
+- (void)willStart {
+  [super willStart];
+  if (self.willStartHandler)
+    self.willStartHandler();
 }
 
 - (void)removeChildCoordinator:(BrowserCoordinator*)childCoordinator {
@@ -184,6 +193,21 @@ TEST_F(BrowserCoordinatorTest, AddedRemoved) {
   // Remove from the parent.
   [parent removeChildCoordinator:child];
   EXPECT_TRUE(child.willBeRemovedCalled);
+}
+
+// Tests that WillStart is called before starting.
+TEST_F(BrowserCoordinatorTest, WillStart) {
+  TestCoordinator* coordinator = [[TestCoordinator alloc] init];
+  EXPECT_FALSE(coordinator.started);
+  __block BOOL called = NO;
+  __weak TestCoordinator* weakCoordinator = coordinator;
+  coordinator.willStartHandler = ^{
+    EXPECT_FALSE(weakCoordinator.started);
+    called = YES;
+  };
+  [coordinator start];
+  EXPECT_TRUE(called);
+  EXPECT_TRUE(coordinator.started);
 }
 
 TEST_F(BrowserCoordinatorTest, DidStartWillStop) {

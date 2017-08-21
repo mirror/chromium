@@ -48,5 +48,6 @@ source_set("unit_tests") {
   deps = [
     ":coordinators",
     ":test_support",
+    "//base",
   ]
 }

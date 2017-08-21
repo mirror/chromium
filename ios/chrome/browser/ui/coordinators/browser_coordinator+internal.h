@@ -62,6 +62,10 @@
 // coordinator.
 - (void)willBeRemovedFromParentCoordinator;
 
+// Called before starting but after superclass call of the same method.
+// Subclasses must call the superclass method at the beginning of this method.
+- (void)willStart NS_REQUIRES_SUPER;
+
 // Called when a child coordinator did start. This is a blank template method.
 // Subclasses can override this method when they need to know when their
 // children start.
@@ -69,7 +73,7 @@
 
 // Called when a child coordinator will stop. This is a blank template method.
 // Subclasses can override this method when they need to know when their
-// children start.
+// children stop.
 - (void)childCoordinatorWillStop:(BrowserCoordinator*)childCoordinator;
 
 // Methods for adding overlay coordinators.
