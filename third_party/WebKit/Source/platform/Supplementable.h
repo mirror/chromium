@@ -26,6 +26,7 @@
 #ifndef Supplementable_h
 #define Supplementable_h
 
+#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/HashMap.h"
@@ -164,9 +165,16 @@ class Supplementable : public virtual GarbageCollectedMixin {
 
   DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(supplements_); }
 
+  DEFINE_INLINE_VIRTUAL_TRACE_WRAPPERS() {
+    for (auto value : supplements_.Values()) {
+      visitor->TraceWrappers(value);
+    }
+  }
+
  protected:
-  using SupplementMap =
-      HeapHashMap<const char*, Member<Supplement<T>>, PtrHash<const char>>;
+  using SupplementMap = HeapHashMap<const char*,
+                                    TraceWrapperMember<Supplement<T>>,
+                                    PtrHash<const char>>;
   SupplementMap supplements_;
 
   Supplementable()
