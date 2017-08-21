@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c184fd4c_893f5e88",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3041,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-21T14:27:03Z",
+      "side": 1,
+      "message": "Only the first entry gets tested. While you can list others, they\u0027re currently ignored - so suggest just having one entry with the configuration you\u0027re looking to launch.",
+      "range": {
+        "startLine": 3041,
+        "startChar": 52,
+        "endLine": 3041,
+        "endChar": 0
+      },
+      "revId": "c517bdef564fbc8027cdad854ac74449a9f35323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
