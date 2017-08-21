@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e39d175b_2f27c6c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2306,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-21T23:40:42Z",
+      "side": 1,
+      "message": "This will definitely work for the crash in question, but looking a bit more, we have two places that call this method and one of them initialized the container and the other doesnt.\n\nSo the problem is stemming from onFadingViewVisibilityChanged being called out of place. There I also see mFadingView which maybe null and is getting added/removed. Is that worrisome at all?",
+      "range": {
+        "startLine": 2306,
+        "startChar": 44,
+        "endLine": 2306,
+        "endChar": 45
+      },
+      "revId": "ca70c4f1052b7179adb635cbeeb1a5b21aad66c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
