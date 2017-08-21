@@ -42,6 +42,9 @@ class {{api_classname}} : public CSSPropertyAPI {
   {% if supports_percentage == 'true' %}
   bool SupportsPercentage() const override { return true; }
   {% endif %}
+  {% if is_property == 'false' %}
+  bool IsProperty() const override { return false; }
+  {% endif %}
 };
 
 }  // namespace blink

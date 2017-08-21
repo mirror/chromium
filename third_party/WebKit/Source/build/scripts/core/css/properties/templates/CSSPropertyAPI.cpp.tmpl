@@ -9,11 +9,12 @@
 #include "core/css/properties/CSSPropertyAPI.h"
 
 {% for api_class in api_classnames %}
-{% if api_class != "CSSPropertyAPIVariable" %}
+{% if api_class not in ("CSSPropertyAPIVariable", "CSSPropertyAPIApplyAtRule") %}
 #include "core/css/properties/{{api_class}}.h"
 {% endif %}
 {% endfor %}
 
+#include "../../../../third_party/WebKit/Source/core/css/properties/CSSPropertyAPIApplyAtRule.h"
 #include "../../../../third_party/WebKit/Source/core/css/properties/CSSPropertyAPIVariable.h"
 
 namespace blink {
