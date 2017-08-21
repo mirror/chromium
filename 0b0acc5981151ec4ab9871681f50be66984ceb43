@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bd60012_c3a228f4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-21T09:01:01Z",
+      "side": 1,
+      "message": "Maybe turn this into a DCHECK right away (if you want).\n\nThe \u0027if\u0027 right after this should ensure that nothing truly bad happens if the CHECK condition if false.",
+      "range": {
+        "startLine": 348,
+        "startChar": 2,
+        "endLine": 348,
+        "endChar": 7
+      },
+      "revId": "0b0acc5981151ec4ab9871681f50be66984ceb43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
