@@ -22,6 +22,30 @@
       "revId": "883c352aead7f4b6afb5acfc8b0bd7e02723b3e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "265e81e0_919cda74",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1111300
+      },
+      "writtenOn": "2017-08-21T08:27:15Z",
+      "side": 1,
+      "message": "I see. Done.\n\nI also updated NeedsToRecordFirstActivePaint to check whether min or not.\nI found that \"open new window\"(Control-N) invokes NeedsToRecordFirstActivePaint() without OnProcessBackgrounded(true).",
+      "parentUuid": "3e5e5139_8c14abe9",
+      "range": {
+        "startLine": 939,
+        "startChar": 27,
+        "endLine": 939,
+        "endChar": 47
+      },
+      "revId": "883c352aead7f4b6afb5acfc8b0bd7e02723b3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
