@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e63b0c16_99797a4b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-21T23:48:21Z",
+      "side": 1,
+      "message": "Does it also include the long-command-line fix, in which case it\u0027d be good to mention that too?",
+      "revId": "4be268e35d14e57ab09ce8e1c2f9bcb9823598da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
