@@ -7,5 +7,25 @@ Running: testBreakpointSetInOriginalAndRemovedInFormatted
 Adding breakpoint.
 Formatting.
 Removing breakpoint.
-Unformatting.
+Exception while running: function uiSourceCodeScriptFormatted() {
+        TestRunner.addResult('Removing breakpoint.');
+        var formattedSourceFrame = panel.visibleView;
+        SourcesTestRunner.removeBreakpoint(formattedSourceFrame, 13);
+        TestRunner.addResult('Unformatting.');
+        Sources.sourceFormatter.discardFormattedUISourceCode(panel.visibleView.uiSourceCode());
+        var breakpoints = Bindings.breakpointManager._storage._setting.get();
+        TestRunner.assertEquals(breakpoints.length, 0, 'There should not be any breakpoints in the storage.');
+        next();
+      }
+TypeError: Cannot read property 'remove' of undefined
+    at Object.InspectorTest.removeBreakpoint (evaluateInWebInspector0.js:1456:93)
+    at Sources.ScriptFormatterEditorAction.uiSourceCodeScriptFormatted (evaluateInWebInspector1.js:98:27)
+    at Sources.ScriptFormatterEditorAction.result (evaluateInWebInspector0.js:694:25)
+    at Sources.ScriptFormatterEditorAction.receiver.(anonymous function) (evaluateInWebInspector0.js:724:22)
+    at Sources.ScriptFormatterEditorAction._editorSelected (file:///usr/local/google/home/chenwilliam/chromium/src/out/Release/resources/inspector/sources/sources_module.js:1089:59)
+    at Sources.SourcesView.dispatchEventToListeners (file:///usr/local/google/home/chenwilliam/chromium/src/out/Release/resources/inspector/inspector.js:477:23)
+    at Sources.SourcesView._editorSelected (file:///usr/local/google/home/chenwilliam/chromium/src/out/Release/resources/inspector/sources/sources_module.js:1238:233)
+    at Sources.TabbedEditorContainer.dispatchEventToListeners (file:///usr/local/google/home/chenwilliam/chromium/src/out/Release/resources/inspector/inspector.js:477:23)
+    at Sources.TabbedEditorContainer._innerShowFile (file:///usr/local/google/home/chenwilliam/chromium/src/out/Release/resources/inspector/sources/sources_module.js:948:262)
+    at Sources.TabbedEditorContainer.showFile (file:///usr/local/google/home/chenwilliam/chromium/src/out/Release/resources/inspector/sources/sources_module.js:931:29)
 

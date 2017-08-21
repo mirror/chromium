@@ -4,31 +4,28 @@
 <script src="../../inspector/resource-tree/resource-tree-test.js"></script>
 <link rel="stylesheet" href="../../inspector/resource-tree/resources/styles-initial.css">
 <script>
-function onload()
-{
-    if (window.testRunner) {
-        testRunner.waitUntilDone();
-        testRunner.showWebInspector();
-    }
-    // This test enumerates all resources currently registered, potentially
-    // including ones no longer reachable, but not yet garbage collected
-    // and finalized.
-    //
-    // To ensure stable test output, perform a GC right here to flush out
-    // the finalizable resources.
-    gc();
-    runTest();
+function onload() {
+  if (window.testRunner) {
+    testRunner.waitUntilDone();
+    testRunner.showWebInspector();
+  }
+  // This test enumerates all resources currently registered, potentially
+  // including ones no longer reachable, but not yet garbage collected
+  // and finalized.
+  //
+  // To ensure stable test output, perform a GC right here to flush out
+  // the finalizable resources.
+  gc();
+  runTest();
 }
 
-function test()
-{
-    function format(resource)
-    {
-        return resource.resourceType().name() + " " + resource.mimeType + " " + resource.url;
-    }
+function test() {
+  function format(resource) {
+    return resource.resourceType().name() + ' ' + resource.mimeType + ' ' + resource.url;
+  }
 
-    ApplicationTestRunner.dumpResources(format);
-    TestRunner.completeTest();
+  ApplicationTestRunner.dumpResources(format);
+  TestRunner.completeTest();
 }
 </script>
 </head>
