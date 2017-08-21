@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e598ebe_8a96dd9e",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-21T20:10:10Z",
+      "side": 1,
+      "message": "nit: use the guard clause pattern:\n\n  if (!pai_started) {\n    DLOG(ERROR) \u003c\u003c \"There is no PAI starter.\";\n    return;\n  }\n  pai_starter-\u003eAcquireLock();",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 46
+      },
+      "revId": "eead19657e4e101b517e6fe59a16a5bf3c07989e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c62ccc9_e3d3c0ef",
+        "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-21T20:10:10Z",
+      "side": 1,
+      "message": "optional: this is unneeded.",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "eead19657e4e101b517e6fe59a16a5bf3c07989e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

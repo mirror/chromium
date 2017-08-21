@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "bad7d37d_6815ddf9",
+        "filename": "chrome/browser/chromeos/login/screens/voice_interaction_value_prop_screen.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-21T20:10:10Z",
+      "side": 1,
+      "message": "TBH I\u0027m not entirely sure which one we should use. But it seems like we are checking stuff to ensure the profile passed in is accurate. But we should probably check whether GetForBrowserContext() returns nullptr.",
+      "parentUuid": "23901f5a_b08eb959",
+      "range": {
+        "startLine": 45,
+        "startChar": 22,
+        "endLine": 45,
+        "endChar": 42
+      },
+      "revId": "800f9a5f5ac5d0f3110177a4fba954d6122677e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e6fffd1_1ca39050",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_unittest.cc",
         "patchSetId": 1
