@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c79fbb3_71c17377",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_off_hours_cleaner.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-21T18:04:52Z",
+      "side": 1,
+      "message": "Why it doesn\u0027t use it\u0027s own designated header? I find the current scheme pretty confusing, especially trying to find the function from device_off_hours_controller.h",
+      "range": {
+        "startLine": 28,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "3ec9791493853e0d2c13f1aa3813e095a521b026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "039e4a21_c6a23bbf",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_off_hours_cleaner.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-21T18:04:52Z",
+      "side": 1,
+      "message": "nit: |policies_to_clear| ?",
+      "range": {
+        "startLine": 35,
+        "startChar": 40,
+        "endLine": 35,
+        "endChar": 52
+      },
+      "revId": "3ec9791493853e0d2c13f1aa3813e095a521b026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
