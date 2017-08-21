@@ -496,6 +496,24 @@
     },
     {
       "key": {
+        "uuid": "98500eee_19f911b8",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-21T22:53:38Z",
+      "side": 1,
+      "message": "Yes to all three of your questions; thank you.\n\nLucas: Based on Ryan\u0027s answer, I\u0027m inclined to push again on either putting the boolean in SSLInfo or switching over to a new error code to represent a fatal certificate error--I think that\u0027s the right combination of code simplicity and layering.  I don\u0027t have major objections to what you have here, but that\u0027s because I think we\u0027re going to need to refactor it for the network service case anyway, so we\u0027ll be re-addressing this soon :-}.  (Also either the boolean or the SSLInfo change might be a more invasive net/ change than your\u0027e likely to want to sign up for--I don\u0027t actually know--I haven\u0027t looked at the generating code.)  But it\u0027s sounding to me as if, long term, we\u0027re going to want to change\u0026simplify how this kind of error is exported from net/.",
+      "parentUuid": "7c41d8f5_652c2c24",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5be53935_82129d8d",
         "filename": "content/browser/loader/navigation_url_loader_network_service.h",
         "patchSetId": 14
