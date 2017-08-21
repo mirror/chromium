@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ddbf14c_42cac250",
+        "filename": "chrome/browser/resources/settings/device_page/display.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-21T23:36:19Z",
+      "side": 1,
+      "message": "I renamed this since it\u0027s not the same usage as other \u0027embedded\u0027 settings-box controls. Those are truly controls embedded in another control. This page just has slightly different layout (which is arguably consistent and should be cleaned up separately). These settings boxes are more accurately indented, not embedded.",
+      "revId": "0587dafa2ca135dd265a2bfea5cd2ff18a5bee6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

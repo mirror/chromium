@@ -16,6 +16,24 @@
       "revId": "f202cd1589d69017ce38f3db780dc8046ad5ec4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c19696b7_318ec41e",
+        "filename": "ui/webui/resources/cr_elements/paper_checkbox_style_css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-21T23:36:19Z",
+      "side": 1,
+      "message": "So, this works as expected (at least as I would expect) - the vars are available within any \u003cstyle\u003e that includes \u0027paper-checkbox-style\u0027 (e.g. \u0027settings-shared\u0027). These are both in fact used there (although arguably not well), and we override --checkbox-margin-start in one place (although we could just as well override -webkit-margin-start there instead).\n\nThat said, given that these are poorly named (they should be --cr-checkbox- like we do in paper_toggle_style_css.html) and not well used (settings-checkbox-spacer is used in one place and has nothing to do with paper-checkbox), I\u0027m just going to remove them.\n\n:)",
+      "parentUuid": "ca1865a6_d3206ffa",
+      "revId": "f202cd1589d69017ce38f3db780dc8046ad5ec4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
