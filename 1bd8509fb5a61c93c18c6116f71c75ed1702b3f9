@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b031efa6_f7be570d",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 1657,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-21T18:14:49Z",
+      "side": 1,
+      "message": "The Cocoa version is coming in a separate CL. I\u0027ll make sure this dialog is not triggered on Mac before its Cocoa version is ready.",
+      "parentUuid": "ed04b4e1_23c595cf",
+      "revId": "1bd8509fb5a61c93c18c6116f71c75ed1702b3f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99fe775b_d2325fc1",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 16
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1c49647b_ad78e267",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-21T18:14:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99fe775b_d2325fc1",
+      "revId": "1bd8509fb5a61c93c18c6116f71c75ed1702b3f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ae4d36f_3f9075d8",
         "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
         "patchSetId": 16
@@ -50,6 +86,24 @@
       "revId": "1bd8509fb5a61c93c18c6116f71c75ed1702b3f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b5173c0_9b521bc6",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-21T18:14:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ae4d36f_3f9075d8",
+      "revId": "1bd8509fb5a61c93c18c6116f71c75ed1702b3f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "1bd8509fb5a61c93c18c6116f71c75ed1702b3f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceacd89e_5cf03c89",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 2396,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-21T18:14:49Z",
+      "side": 1,
+      "message": "Moved to toolkit_views",
+      "parentUuid": "57b48fad_eaf5f6f1",
+      "range": {
+        "startLine": 2396,
+        "startChar": 10,
+        "endLine": 2396,
+        "endChar": 17
+      },
+      "revId": "1bd8509fb5a61c93c18c6116f71c75ed1702b3f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
