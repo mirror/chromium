@@ -232,6 +232,24 @@
     },
     {
       "key": {
+        "uuid": "6bb9188f_ef6e2dd1",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-21T03:44:24Z",
+      "side": 1,
+      "message": "Straightforward naming with a TODO works for me too.\n\nA bit of elaboration just to share my thoughts... I think my concern is not about naming but about exposing internal thing at the module boundary surface, it seems to put some cognitive cost for the people outside the module for our internal TODO. Let\u0027s put a explanatory comment if we use internal terminology.\n\nAnother reasoning I had is that my mental model for this method is rather like \u0027setting up the main communication channel for controlling Service Worker\u0027, while what actually doing this is creating the particular interface.  CreateServiceWorker is not a great naming in the pov either, but there seem some possibility for us to think of a better naming.",
+      "parentUuid": "ef27f674_d78e6530",
+      "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d5715ba_ab6420c7",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 3
