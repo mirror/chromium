@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ef9dd53_21c714e3",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-08-21T20:38:17Z",
+      "side": 1,
+      "message": "nit: .",
+      "range": {
+        "startLine": 169,
+        "startChar": 13,
+        "endLine": 169,
+        "endChar": 14
+      },
+      "revId": "b6c42e2e0045cd9cf593372a4e38a59ac1a868d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
