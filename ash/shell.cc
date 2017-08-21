@@ -44,6 +44,7 @@
 #include "ash/ime/ime_controller.h"
 #include "ash/keyboard/keyboard_ui.h"
 #include "ash/laser/laser_pointer_controller.h"
+#include "ash/link_handler_controller.h"
 #include "ash/login/lock_screen_controller.h"
 #include "ash/login_status.h"
 #include "ash/magnifier/magnification_controller.h"
@@ -633,6 +634,7 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       immersive_context_(base::MakeUnique<ImmersiveContextAsh>()),
       keyboard_brightness_control_delegate_(
           base::MakeUnique<KeyboardBrightnessController>()),
+      link_handler_controller_(new LinkHandlerController()),
       locale_notification_controller_(
           base::MakeUnique<LocaleNotificationController>()),
       lock_screen_controller_(base::MakeUnique<LockScreenController>()),
