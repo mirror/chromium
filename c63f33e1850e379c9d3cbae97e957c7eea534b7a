@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9190767_3e2ce87c",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-21T17:29:14Z",
+      "side": 1,
+      "message": "nit: Seems unrelated - maybe move this to a separate CL?",
+      "revId": "c63f33e1850e379c9d3cbae97e957c7eea534b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
