@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "173396bc_61f7e5fd",
+        "filename": "ios/chrome/browser/ui/webui/sync_internals/sync_internals_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-21T18:41:17Z",
+      "side": 1,
+      "message": "Thanks!",
+      "range": {
+        "startLine": 43,
+        "startChar": 48,
+        "endLine": 43,
+        "endChar": 61
+      },
+      "revId": "48eef112298a9cc6bc6b685f9f74a2eaa45d6c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
