@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "8cb3e80a_4875910c",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-21T11:11:58Z",
+      "side": 1,
+      "message": "I remember the Windows compiler used to have some problems with constexpr, no idea if those would trigger in this case. Otherwise SGTM.\n(Though since the size is part of the type with std::array, you\u0027d still have to pass it by raw pointer.)",
+      "parentUuid": "a8eb9f3d_711c3831",
+      "revId": "46b509b9b6a0ded6b0a39fc1b70809c1e6510646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b57c5b6b_52162267",
         "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
         "patchSetId": 11
