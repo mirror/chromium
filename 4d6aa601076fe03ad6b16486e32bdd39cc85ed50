@@ -70,6 +70,30 @@
       "revId": "4d6aa601076fe03ad6b16486e32bdd39cc85ed50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7aea710_47094bcb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-21T15:43:54Z",
+      "side": 1,
+      "message": "That\u0027s a good idea. Getting the values from the ContentViewCore now.",
+      "parentUuid": "8125b5d4_2431551b",
+      "range": {
+        "startLine": 150,
+        "startChar": 28,
+        "endLine": 150,
+        "endChar": 65
+      },
+      "revId": "4d6aa601076fe03ad6b16486e32bdd39cc85ed50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
