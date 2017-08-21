@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cea1ef9_83792d73",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-21T18:03:48Z",
+      "side": 1,
+      "message": "Unrelated to main intention of the CL.\n\nnewcomer@ is doing work to optimize features::IsFullscreenAppListEnabled() calls, CL: https://chromium-review.git.corp.google.com/c/620110.\n\nCan we do something similar?",
+      "revId": "6273931ad16e0d7570f08bb25db68ce27088174f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4180f77_5621fbfc",
+        "filename": "ui/app_list/views/folder_header_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-21T18:03:48Z",
+      "side": 1,
+      "message": "Text might not render correctly on transparent background. Get we get a proper color here?",
+      "range": {
+        "startLine": 66,
+        "startChar": 42,
+        "endLine": 66,
+        "endChar": 61
+      },
+      "revId": "6273931ad16e0d7570f08bb25db68ce27088174f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "432de647_0ea23d06",
+        "filename": "ui/app_list/views/folder_header_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-21T18:03:48Z",
+      "side": 1,
+      "message": "Would this change the name in AppListModel with the elided text? Is this the right behavior?",
+      "revId": "6273931ad16e0d7570f08bb25db68ce27088174f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb033629_9f5be7fd",
+        "filename": "ui/app_list/views/folder_header_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-21T18:03:48Z",
+      "side": 1,
+      "message": "Use |is_fullscreen_app_list_enabled_| since we have it now ?",
+      "range": {
+        "startLine": 225,
+        "startChar": 13,
+        "endLine": 225,
+        "endChar": 51
+      },
+      "revId": "6273931ad16e0d7570f08bb25db68ce27088174f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b511091b_bd683c57",
+        "filename": "ui/app_list/views/folder_header_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-21T18:03:48Z",
+      "side": 1,
+      "message": "We should update with the raw text, i.e. not the elided version.",
+      "revId": "6273931ad16e0d7570f08bb25db68ce27088174f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
