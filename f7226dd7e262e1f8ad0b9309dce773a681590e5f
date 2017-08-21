@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13c40ffd_dcea36ac",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounterTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-21T20:31:51Z",
+      "side": 1,
+      "message": "please reset this (e.g. using a RuntimeEnabledFeatures::Backup, or by saving the previous value of this variable), to avoid affecting other unit tests",
+      "revId": "f7226dd7e262e1f8ad0b9309dce773a681590e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac51e548_c0f8c298",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounterTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-21T20:31:51Z",
+      "side": 1,
+      "message": "Is this mapping separately tested? If not, maybe check that it is recorded in the other case, or otherwise verify this isn\u0027t spuriously passing because these don\u0027t correspond.",
+      "revId": "f7226dd7e262e1f8ad0b9309dce773a681590e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
