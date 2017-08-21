@@ -685,8 +685,10 @@ void CreateMemoryCoordinatorHandle(
 void CreateResourceCoordinatorProcessInterface(
     RenderProcessHostImpl* render_process_host,
     resource_coordinator::mojom::CoordinationUnitRequest request) {
-  render_process_host->GetProcessResourceCoordinator()->AddBinding(
-      std::move(request));
+  if (auto* process_resource_coordinator =
+          render_process_host->GetProcessResourceCoordinator()) {
+    process_resource_coordinator->AddBinding(std::move(request));
+  }
 }
 
 // Forwards service requests to Service Manager since the renderer cannot launch
@@ -2156,6 +2158,14 @@ resource_coordinator::ResourceCoordinatorInterface*
 RenderProcessHostImpl::GetProcessResourceCoordinator() {
   if (process_resource_coordinator_)
     return process_resource_coordinator_.get();
+
+  // Process is not ready means either the launcher hasn't yet reported a
+  // successful launch, or the channel is not yet connected. At this point, the
+  // GetHandle is not valid, and since the render process hasn't been set up
+  // fully, it doesn't make sense to get the Process Resource Coordinator and
+  // send any signal through it.
+  if (!IsReady())
+    return nullptr;
 
   if (!resource_coordinator::IsResourceCoordinatorEnabled()) {
     process_resource_coordinator_ =
