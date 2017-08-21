@@ -426,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "7007ca61_65760992",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-21T22:43:11Z",
+      "side": 1,
+      "message": "Perhaps this is a limitation in base::DictionaryValue. We can\u0027t modify anything with const base::Dictionary*, even the modification is on the leaf.",
+      "parentUuid": "e1db4a8a_ce7ccfab",
+      "range": {
+        "startLine": 184,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 8
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "918905dd_f258a7c8",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 10

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d404e49_1d042bd2",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-21T22:43:11Z",
+      "side": 1,
+      "message": "GetDictionaryWithoutPathExpansion is deprecated after I rebase. Update to the newest method.",
+      "parentUuid": "876189bf_d617ffb9",
+      "range": {
+        "startLine": 212,
+        "startChar": 20,
+        "endLine": 212,
+        "endChar": 33
+      },
+      "revId": "a6fadbcffa94290c0bda99382774438ac46446b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0c28739_d1aa9b8d",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 12
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "653a6e3d_56cc720c",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-21T22:43:11Z",
+      "side": 1,
+      "message": "I\u0027ll change it.",
+      "parentUuid": "d0c28739_d1aa9b8d",
+      "range": {
+        "startLine": 222,
+        "startChar": 2,
+        "endLine": 222,
+        "endChar": 8
+      },
+      "revId": "a6fadbcffa94290c0bda99382774438ac46446b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9edac7a_8d389e97",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 12
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-21T22:16:14Z",
       "side": 1,
       "message": "I don\u0027t see this function used anywhere in this CL.",
+      "range": {
+        "startLine": 342,
+        "startChar": 36,
+        "endLine": 342,
+        "endChar": 49
+      },
+      "revId": "a6fadbcffa94290c0bda99382774438ac46446b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ef02d3_0e954144",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-21T22:43:11Z",
+      "side": 1,
+      "message": "See updating media license count: https://chromium-review.googlesource.com/c/chromium/src/+/617587. I thought you already review the patch.",
+      "parentUuid": "f9edac7a_8d389e97",
       "range": {
         "startLine": 342,
         "startChar": 36,
