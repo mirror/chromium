@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab7a9cb6_3c4dd0cf",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-21T16:41:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a29b36e8_a89494c5",
+      "range": {
+        "startLine": 69,
+        "startChar": 10,
+        "endLine": 69,
+        "endChar": 12
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f9abec6_97af42c5",
         "filename": "chrome/browser/android/vr_shell/gvr_util.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8c889b_e79af23e",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-21T16:41:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f9abec6_97af42c5",
+      "range": {
+        "startLine": 69,
+        "startChar": 15,
+        "endLine": 70,
+        "endChar": 66
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9b52a6de_293ab72a",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-21T16:41:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9e9217a_bb6cbf04",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 10
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6330884c_aa9a322e",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d765441_0d50b370",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-21T16:41:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6330884c_aa9a322e",
+      "range": {
+        "startLine": 56,
+        "startChar": 21,
+        "endLine": 56,
+        "endChar": 47
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "df576d80_cee8ef45",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-21T16:41:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3afe957_2154c41b",
+      "range": {
+        "startLine": 66,
+        "startChar": 23,
+        "endLine": 66,
+        "endChar": 48
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20feebbd_741e156e",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 9
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "3a480bcd_6dcaa4eb",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-21T16:41:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20feebbd_741e156e",
+      "range": {
+        "startLine": 71,
+        "startChar": 21,
+        "endLine": 71,
+        "endChar": 54
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f36907f4_fba9d326",
         "filename": "chrome/browser/vr/elements/viewport_aware_root.h",
         "patchSetId": 9
@@ -157,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "66f4cee3_40bac46b",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-21T16:41:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f36907f4_fba9d326",
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aaba3e1_9fdbc170",
         "filename": "chrome/browser/vr/elements/viewport_aware_root.h",
         "patchSetId": 9
@@ -168,6 +330,24 @@
       "writtenOn": "2017-08-18T20:32:31Z",
       "side": 1,
       "message": "Do we need to redefine the destructor?",
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84241055_2caf0297",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-21T16:41:32Z",
+      "side": 1,
+      "message": "I think we do. If we dont override it here, deleting this class through base pointer(which is probably what we do in ui_scene) might result undefined behavior.",
+      "parentUuid": "7aaba3e1_9fdbc170",
       "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -191,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "7ad61ef7_69499f09",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-21T16:41:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45452939_46bb6215",
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "815ca1fa_ed342d53",
         "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
         "patchSetId": 9
@@ -205,6 +403,24 @@
       "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3208308d_0a57d695",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-21T16:41:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "815ca1fa_ed342d53",
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "333a89c0_c56ebaa3",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-21T16:41:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22fa3342_6f16866d",
+      "range": {
+        "startLine": 53,
+        "startChar": 41,
+        "endLine": 53,
+        "endChar": 46
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61e62844_55933c2f",
         "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
         "patchSetId": 9
@@ -242,6 +482,30 @@
       "writtenOn": "2017-08-18T20:32:31Z",
       "side": 1,
       "message": "I think it would be better to use EXPECT_FLOAT_EQ here and below.",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 11
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de50eb0_aec92019",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-21T16:41:32Z",
+      "side": 1,
+      "message": "This pattern is borrowed from point3f\u0027s unittest here: https://cs.chromium.org/chromium/src/ui/gfx/geometry/point3_unittest.cc?rcl\u003d96ed6102741ace7d9981a7578c0bc84d7b156b38\u0026l\u003d36\n\nUsing Expect_FLOAT_EQ is too accurate here given that point3F needs to go though\ntransformation.",
+      "parentUuid": "61e62844_55933c2f",
       "range": {
         "startLine": 115,
         "startChar": 2,
