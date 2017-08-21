@@ -53,6 +53,8 @@ class CSSPropertyAPIWriter(css_properties.CSSProperties):
                 enum_value=2,
                 property_id="CSSPropertyVariable",
                 classname="CSSPropertyAPI"))
+        self._api_classes.add("CSSPropertyAPI")
+
         # Sort by enum value.
         self._api_classes_by_property_id.sort(key=lambda t: t.enum_value)
 
