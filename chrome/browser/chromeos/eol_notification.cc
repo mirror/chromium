@@ -20,6 +20,8 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/paint_vector_icon.h"
+#include "ui/message_center/message_center.h"
+#include "ui/message_center/message_center_style.h"
 
 using message_center::MessageCenter;
 
@@ -160,6 +162,14 @@ void EolNotification::Update() {
                                  kEolNotificationId),
       base::string16(),  // display_source
       GURL(), kEolNotificationId, data, new EolNotificationDelegate(profile_));
+  if (message_center::MessageCenter::IsNewStyleNotificationEnabled()) {
+    notification.set_accent_color(
+        message_center::kSystemNotificationColorCriticalWarning);
+    notification.set_small_image(gfx::Image(gfx::CreateVectorIcon(
+        kNotificationEndOfSupportIcon,
+        message_center::kSystemNotificationColorCriticalWarning)));
+    notification.set_vector_small_image(kNotificationEndOfSupportIcon);
+  }
   g_browser_process->notification_ui_manager()->Add(notification, profile_);
 }
 
