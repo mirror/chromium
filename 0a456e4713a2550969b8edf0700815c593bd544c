@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e598054_56db3f7e",
+        "filename": "chrome/browser/safe_browsing/notification_image_reporter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-21T20:12:10Z",
+      "side": 1,
+      "message": "Since you used MOCK_METHOD instead of actually override the CheckCsdWhitelistUrl function. It is now easier to control the behavior of database_manager in individual test.\nCould you add a test to verify that image reporting gets skipped if its url matches csd whitelist?\n\nFeel free to add the test in a separate CL.",
+      "revId": "0a456e4713a2550969b8edf0700815c593bd544c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
