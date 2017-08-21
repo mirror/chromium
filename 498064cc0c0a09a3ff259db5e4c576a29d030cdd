@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "57732e9b_e1a219b2",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-08-21T13:02:34Z",
+      "side": 1,
+      "message": "Fixed, thanks!",
+      "parentUuid": "cab30161_4e7afc2d",
+      "revId": "498064cc0c0a09a3ff259db5e4c576a29d030cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf0656a8_d0f7a6ba",
         "filename": "chrome/browser/predictors/preconnect_manager.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "744dc156_db9c3c9b",
+        "filename": "chrome/browser/predictors/preconnect_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-08-21T13:02:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf0656a8_d0f7a6ba",
+      "range": {
+        "startLine": 83,
+        "startChar": 28,
+        "endLine": 83,
+        "endChar": 46
+      },
+      "revId": "498064cc0c0a09a3ff259db5e4c576a29d030cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8ade6f5_b9a4e189",
         "filename": "chrome/browser/predictors/preconnect_manager.h",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "498064cc0c0a09a3ff259db5e4c576a29d030cdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b198f205_e1bfce09",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-08-21T13:02:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8ade6f5_b9a4e189",
+      "revId": "498064cc0c0a09a3ff259db5e4c576a29d030cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
