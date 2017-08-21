@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fcf0c349_79a6c556",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-21T07:51:11Z",
+      "side": 1,
+      "message": "A bool exactly encompasses the possible (legal) states. The enum, on the other hand, can express a bunch of states that are *not* legal here. So to me, the bool feels a bit cleaner - a bit more compile-time type safety, if you will.\nAnyway, it\u0027s not a big deal and I\u0027ll leave it to you. If you do stay with the enum though, please add a comment listing the legal values.",
+      "parentUuid": "f30861ee_da975adf",
+      "revId": "e60f9fad35ffe52db5fb18fd4c56c28c5a42ade4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "275d5117_7d396350",
         "filename": "components/ntp_tiles/tile_source.h",
         "patchSetId": 4
@@ -69,6 +87,24 @@
       "revId": "e60f9fad35ffe52db5fb18fd4c56c28c5a42ade4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67aaae2_fe97c239",
+        "filename": "components/ntp_tiles/tile_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-21T07:51:11Z",
+      "side": 1,
+      "message": "By \"directly\" I meant as the value of a histogram, in which case it would\u0027ve been very bad to change the values. Seems that isn\u0027t the case though, so all good here.\n(Moving these from POPULAR to POPULAR_BAKED_IN seems acceptable to me. We *might* want to mention that in the histogram description or something, but I\u0027m not sure if that\u0027s necessary.)",
+      "parentUuid": "4f872a08_a05a5bd4",
+      "revId": "e60f9fad35ffe52db5fb18fd4c56c28c5a42ade4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
