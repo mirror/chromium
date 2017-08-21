@@ -239,4 +239,88 @@ TEST_F(ContextMenuJsTest, UnsupportedReferrerPolicy) {
   EXPECT_NSEQ(@"never", result[kContextMenuElementReferrerPolicy]);
 }
 
+// Tests that a callout information about a link is displayed when
+// -webkit-touch-callout property is not specified. Please see:
+// https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout.
+TEST_F(ContextMenuJsTest, LinkOfTextWithoutCalloutProperty) {
+  static const char link_html[] =
+      "<a href='%s'>link"
+      "</a>";
+
+  LoadHtml(base::StringPrintf(link_html, "http://destination"));
+  id result = ExecuteGetElementFromPointJavaScript(1, 1);
+  NSDictionary* expected_result = @{
+    kContextMenuElementInnerText : @"link",
+    kContextMenuElementReferrerPolicy : @"default",
+    kContextMenuElementHyperlink : @"http://destination/",
+  };
+  EXPECT_NSEQ(expected_result, result);
+}
+
+// Tests that a callout information about a link is displayed when
+// -webkit-touch-callout property is set to default. Please see:
+// https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout.
+TEST_F(ContextMenuJsTest, LinkOfTextWithCalloutDefault) {
+  static const char link_html[] =
+      "<a href='%s' style='-webkit-touch-callout:default;'>link"
+      "</a>";
+
+  LoadHtml(base::StringPrintf(link_html, "http://destination"));
+  id result = ExecuteGetElementFromPointJavaScript(1, 1);
+  NSDictionary* expected_result = @{
+    kContextMenuElementInnerText : @"link",
+    kContextMenuElementReferrerPolicy : @"default",
+    kContextMenuElementHyperlink : @"http://destination/",
+  };
+  EXPECT_NSEQ(expected_result, result);
+}
+
+// Tests that no callout information about a link is displayed when
+// -webkit-touch-callout property is set to none. Please see:
+// https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout.
+TEST_F(ContextMenuJsTest, LinkOfTextWithCalloutNone) {
+  static const char link_html[] =
+      "<a href='%s' style='-webkit-touch-callout:none;'>link"
+      "</a>";
+
+  LoadHtml(base::StringPrintf(link_html, "http://destination"));
+  id result = ExecuteGetElementFromPointJavaScript(1, 1);
+  EXPECT_EQ(0u, [result count]);
+}
+
+// Tests that -webkit-touch-callout property can be inherited from ancester if
+// it's not specified. Please see:
+// https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout.
+TEST_F(ContextMenuJsTest, LinkOfTextWithCalloutFromAncester) {
+  static const char link_html[] =
+      "<body style='-webkit-touch-callout: none'>"
+      "<a href='%s'>link"
+      "</a>"
+      "</body>";
+
+  LoadHtml(base::StringPrintf(link_html, "http://destination"));
+  id result = ExecuteGetElementFromPointJavaScript(1, 1);
+  EXPECT_EQ(0u, [result count]);
+}
+
+// Tests that setting -webkit-touch-callout property can override the value
+// inherited from ancester. Please see:
+// https://developer.mozilla.org/en-US/docs/Web/CSS/-webkit-touch-callout.
+TEST_F(ContextMenuJsTest, LinkOfTextWithCalloutOverride) {
+  static const char link_html[] =
+      "<body style='-webkit-touch-callout: none'>"
+      "<a href='%s' style='-webkit-touch-callout: default'>link"
+      "</a>"
+      "</body>";
+
+  LoadHtml(base::StringPrintf(link_html, "http://destination"));
+  id result = ExecuteGetElementFromPointJavaScript(1, 1);
+  NSDictionary* expected_result = @{
+    kContextMenuElementInnerText : @"link",
+    kContextMenuElementReferrerPolicy : @"default",
+    kContextMenuElementHyperlink : @"http://destination/",
+  };
+  EXPECT_NSEQ(expected_result, result);
+}
+
 }  // namespace web
