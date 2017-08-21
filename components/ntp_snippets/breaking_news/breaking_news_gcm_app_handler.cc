@@ -317,6 +317,7 @@ void BreakingNewsGCMAppHandler::OnSendAcknowledged(
   NOTREACHED() << "BreakingNewsGCMAppHandler doesn't send GCM messages.";
 }
 
+// static
 void BreakingNewsGCMAppHandler::RegisterProfilePrefs(
     PrefRegistrySimple* registry) {
   registry->RegisterStringPref(prefs::kBreakingNewsGCMSubscriptionTokenCache,
@@ -325,6 +326,13 @@ void BreakingNewsGCMAppHandler::RegisterProfilePrefs(
                               /*default_value=*/0);
   registry->RegisterInt64Pref(prefs::kBreakingNewsGCMLastForcedSubscriptionTime,
                               /*default_value=*/0);
+}
+
+// static
+void BreakingNewsGCMAppHandler::ClearProfilePrefs(PrefService* pref_service) {
+  pref_service->ClearPref(prefs::kBreakingNewsGCMSubscriptionTokenCache);
+  pref_service->ClearPref(prefs::kBreakingNewsGCMLastTokenValidationTime);
+  pref_service->ClearPref(prefs::kBreakingNewsGCMSubscriptionTokenCache);
 }
 
 void BreakingNewsGCMAppHandler::OnJsonSuccess(
