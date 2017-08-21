@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52b4025f_88ebecb0",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-21T22:07:06Z",
+      "side": 1,
+      "message": "Is it generally valid to pass invalid handles across Mojo? Do we need to be able to distinguish these malformed-input cases from the cases of legitimate INVALID_HANDLE passing?",
+      "revId": "0c1c5885414b0b1075ccfdd93fc0867b12bb9f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "679f6845_e60d9850",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-21T22:07:06Z",
+      "side": 1,
+      "message": "Should we return false here if WrapPlatformHandles() returns a !is_valid() handle?",
+      "revId": "0c1c5885414b0b1075ccfdd93fc0867b12bb9f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
