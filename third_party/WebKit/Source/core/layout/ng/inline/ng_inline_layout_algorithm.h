@@ -80,6 +80,7 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
 
   unsigned is_horizontal_writing_mode_ : 1;
 
+  NGConstraintSpaceBuilder space_builder_;
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
 };
 
