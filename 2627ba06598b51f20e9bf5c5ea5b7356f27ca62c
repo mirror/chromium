@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d44f503c_f2d004ad",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 81011,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-21T21:40:52Z",
+      "side": 1,
+      "message": "This is only emitted for kNonPersistentNotification, not all notifications.  Perhaps that should be clarified?",
+      "range": {
+        "startLine": 81011,
+        "startChar": 4,
+        "endLine": 81011,
+        "endChar": 16
+      },
+      "revId": "2627ba06598b51f20e9bf5c5ea5b7356f27ca62c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
