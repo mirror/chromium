@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0a77099_113efc4e",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-21T21:17:56Z",
+      "side": 1,
+      "message": "if you aren\u0027t going to use nullptr as a special signal, just return a vector directly. Copy elision should prevent vector copy if you return it directly.",
+      "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43be276b_d883c091",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-21T21:17:56Z",
+      "side": 1,
+      "message": "RetryOrExpireDownloadSync?",
+      "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c64d58_6bec169b",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-21T21:17:56Z",
+      "side": 1,
+      "message": "This query is going to do a table scan each time you run it, since there are no indices.  Can you add a TODO to either optimize it to use offline_id or to add an index?",
+      "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7082bbb8_2538ed13",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-21T21:17:56Z",
+      "side": 1,
+      "message": "nit: please pull DOWNLOAD_MAX_ATTEMPTS_REACHED into a variable so that wrapping is more readable.",
+      "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2941188_9e0a8ad0",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-21T21:17:56Z",
+      "side": 1,
+      "message": "could you name this better? Iter works if you are looping but this is harder to read.",
+      "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3530d2fd_594a5a74",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-21T21:17:56Z",
+      "side": 1,
+      "message": "please check error_code as well",
+      "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3739e65_5f78f2d6",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-21T21:17:56Z",
+      "side": 1,
+      "message": "nit: it\u0027s even better to generate a whole bunch of items that reflect all states but DOWNLOADING",
+      "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79065c42_7ebcbf39",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-21T21:17:56Z",
+      "side": 1,
+      "message": "not doing anything with |success_downloads|?",
+      "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
