@@ -33,6 +33,8 @@ void RendererResourceCoordinator::
 
 // static
 RendererResourceCoordinator& RendererResourceCoordinator::Get() {
+  if (!g_renderer_resource_coordinator)
+    Initialize();
   DCHECK(g_renderer_resource_coordinator);
   return *g_renderer_resource_coordinator;
 }
