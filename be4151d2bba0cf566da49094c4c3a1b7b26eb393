@@ -46,6 +46,30 @@
       "revId": "be4151d2bba0cf566da49094c4c3a1b7b26eb393",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fb5fe72_b96c2a99",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-21T16:17:30Z",
+      "side": 1,
+      "message": "Ah - can you mention that specifically in the comment?",
+      "parentUuid": "1d2ee467_e879077f",
+      "range": {
+        "startLine": 317,
+        "startChar": 41,
+        "endLine": 317,
+        "endChar": 42
+      },
+      "revId": "be4151d2bba0cf566da49094c4c3a1b7b26eb393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
