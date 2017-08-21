@@ -7,6 +7,8 @@ package org.chromium.chrome.browser.download.ui;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.AttributeSet;
@@ -111,13 +113,18 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
     }
 
     @Override
-    public String getFilePath() {
+    public @Nullable String getFilePath() {
         return mItem == null ? null : mItem.getFilePath();
     }
 
     @Override
-    public void onThumbnailRetrieved(String filePath, Bitmap thumbnail) {
-        if (TextUtils.equals(getFilePath(), filePath) && thumbnail != null
+    public @Nullable String getContentId() {
+        return mItem == null ? "" : mItem.getId();
+    }
+
+    @Override
+    public void onThumbnailRetrieved(@NonNull String contentId, @Nullable Bitmap thumbnail) {
+        if (TextUtils.equals(getContentId(), contentId) && thumbnail != null
                 && thumbnail.getWidth() > 0 && thumbnail.getHeight() > 0) {
             assert !thumbnail.isRecycled();
             setThumbnailBitmap(thumbnail);
