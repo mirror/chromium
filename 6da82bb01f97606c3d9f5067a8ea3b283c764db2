@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e0ddb2b6_81561254",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-21T06:30:58Z",
+      "side": 1,
+      "message": "nit: Missing a trailing period.",
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d884860_4ae26598",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
         "patchSetId": 17
@@ -94,6 +111,30 @@
     },
     {
       "key": {
+        "uuid": "004146f8_7b750c9a",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-21T06:30:58Z",
+      "side": 1,
+      "message": "ｎya-san, would you mind to elaborate why you recommend explicit old_map.clear() a bit more details?\nAs it is local var, it should be done automatically at its scope-out timing?",
+      "parentUuid": "ba986d0a_56bfed87",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 7
+      },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ad53fc2_d7052505",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
         "patchSetId": 17
@@ -140,6 +181,46 @@
     },
     {
       "key": {
+        "uuid": "30912f13_49a1ba7a",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-21T06:30:58Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc84fa5f_67127c9e",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-21T06:30:58Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f99c0b65_d974ba12",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_unittest.cc",
         "patchSetId": 17
@@ -157,6 +238,115 @@
         "endLine": 34,
         "endChar": 51
       },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f90c127_0a377018",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-21T06:30:58Z",
+      "side": 1,
+      "message": "cf) https://google.github.io/styleguide/cppguide.html#Function_Names",
+      "parentUuid": "f99c0b65_d974ba12",
+      "range": {
+        "startLine": 34,
+        "startChar": 42,
+        "endLine": 34,
+        "endChar": 51
+      },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bbda3eb_590765f5",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-21T06:30:58Z",
+      "side": 1,
+      "message": "style/optional: You don\u0027t need push_back.\n\nstd::vector\u003c...\u003e roots \u003d {\n    FakeFileSystemInstance::Root(\n       ...)\n};\nreturn roots;",
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed1c892_13795897",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-21T06:30:58Z",
+      "side": 1,
+      "message": "Is there any plan to reuse this? Otherwise, please inline, so that, in case of failure, line number will help developers to take a look.",
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a30ebc_323be1f6",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-21T06:30:58Z",
+      "side": 1,
+      "message": "For vars, please use snake_case. So |root_specs|? Or maybe, |expected_roots| ?",
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b54931_81a38cac",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-21T06:30:58Z",
+      "side": 1,
+      "message": "ASSERT_EQ(roots_spect.size(), roots.size()).\n\nHere, ASSERT_* should be used, otherwise following code could cause illegal memory access.\nIIUC, what you\u0027re trying to do here, is checking each roots\u0027 element satisfies the spec.\nThen, the length should be equals.",
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd50882d_b5f77dfe",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-21T06:30:58Z",
+      "side": 1,
+      "message": "Please use []. So,\nExpectMatchesSpec(roots_spec[0], root[0]);",
       "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -249,6 +439,23 @@
         "endLine": 50,
         "endChar": 25
       },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05da4467_d97b7be1",
+        "filename": "components/arc/test/fake_file_system_instance.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-21T06:30:58Z",
+      "side": 1,
+      "message": "I think you wanted to return |roots|.",
       "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
