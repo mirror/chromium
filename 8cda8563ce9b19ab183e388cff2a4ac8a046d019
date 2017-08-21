@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af4ba1ca_4ca3850e",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T17:49:49Z",
+      "side": 1,
+      "message": "enum class",
+      "range": {
+        "startLine": 123,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 22
+      },
+      "revId": "8cda8563ce9b19ab183e388cff2a4ac8a046d019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f91612_f497688c",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T17:49:49Z",
+      "side": 1,
+      "message": "new style for enums is kCamelCase.",
+      "range": {
+        "startLine": 125,
+        "startChar": 4,
+        "endLine": 125,
+        "endChar": 8
+      },
+      "revId": "8cda8563ce9b19ab183e388cff2a4ac8a046d019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed9cb24_ac45c690",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T17:49:49Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be a DCHECK?",
+      "range": {
+        "startLine": 262,
+        "startChar": 2,
+        "endLine": 262,
+        "endChar": 18
+      },
+      "revId": "8cda8563ce9b19ab183e388cff2a4ac8a046d019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "345368d8_235b64bc",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T17:49:49Z",
+      "side": 1,
+      "message": "Same comment about DCHECK? If this (or the last) is called during constructor I could see the conditional necessary. If that\u0027s the case, please add acomment.",
+      "range": {
+        "startLine": 283,
+        "startChar": 2,
+        "endLine": 283,
+        "endChar": 48
+      },
+      "revId": "8cda8563ce9b19ab183e388cff2a4ac8a046d019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
