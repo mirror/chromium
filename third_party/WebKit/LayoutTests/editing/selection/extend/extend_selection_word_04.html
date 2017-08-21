@@ -1,0 +1,154 @@
+<!doctype html>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<script src="../../assert_selection.js"></script><script>
+function testIt(dir, offset, direction, expectedText) {
+  test(() => assert_selection(
+  `<span dir="${dir}">${makeSample(offset)}</span>`,
+  selection => selection.modify('extend', direction, 'word'),
+  `<span dir="${dir}">${expectedText}</span>`),
+  `${dir} ${offset} extend ${direction} word`
+  );
+}
+
+function makeSample(offset){
+  const kSample = '\nabc efd dabeb\n';
+  return kSample.substr(0, offset) + '|' + kSample.substring(offset);
+}
+
+// ltr right word
+testIt('ltr', 0, 'right', '\n^abc| efd dabeb\n');
+testIt('ltr', 1, 'right', '\n^abc| efd dabeb\n');
+testIt('ltr', 2, 'right', '\na^bc| efd dabeb\n');
+testIt('ltr', 3, 'right', '\nab^c| efd dabeb\n');
+testIt('ltr', 4, 'right', '\nabc^ efd| dabeb\n');
+testIt('ltr', 5, 'right', '\nabc ^efd| dabeb\n');
+testIt('ltr', 6, 'right', '\nabc e^fd| dabeb\n');
+testIt('ltr', 7, 'right', '\nabc ef^d| dabeb\n');
+testIt('ltr', 8, 'right', '\nabc efd^ dabeb|\n');
+testIt('ltr', 9, 'right', '\nabc efd ^dabeb|\n');
+testIt('ltr', 10, 'right', '\nabc efd d^abeb|\n');
+testIt('ltr', 11, 'right', '\nabc efd da^beb|\n');
+testIt('ltr', 12, 'right', '\nabc efd dab^eb|\n');
+testIt('ltr', 13, 'right', '\nabc efd dabe^b|\n');
+testIt('ltr', 14, 'right', '\nabc efd dabeb|\n');
+
+// ltr left word
+testIt('ltr', 0, 'left', '\n|abc efd dabeb\n');
+testIt('ltr', 1, 'left', '\n|abc efd dabeb\n');
+testIt('ltr', 2, 'left', '\n|a^bc efd dabeb\n');
+testIt('ltr', 3, 'left', '\n|ab^c efd dabeb\n');
+testIt('ltr', 4, 'left', '\n|abc^ efd dabeb\n');
+testIt('ltr', 5, 'left', '\n|abc ^efd dabeb\n');
+testIt('ltr', 6, 'left', '\nabc |e^fd dabeb\n');
+testIt('ltr', 7, 'left', '\nabc |ef^d dabeb\n');
+testIt('ltr', 8, 'left', '\nabc |efd^ dabeb\n');
+testIt('ltr', 9, 'left', '\nabc |efd ^dabeb\n');
+testIt('ltr', 10, 'left', '\nabc efd |d^abeb\n');
+testIt('ltr', 11, 'left', '\nabc efd |da^beb\n');
+testIt('ltr', 12, 'left', '\nabc efd |dab^eb\n');
+testIt('ltr', 13, 'left', '\nabc efd |dabe^b\n');
+testIt('ltr', 14, 'left', '\nabc efd |dabeb^\n');
+
+// ltr forward word
+testIt('ltr', 0, 'forward', '\n^abc| efd dabeb\n');
+testIt('ltr', 1, 'forward', '\n^abc| efd dabeb\n');
+testIt('ltr', 2, 'forward', '\na^bc| efd dabeb\n');
+testIt('ltr', 3, 'forward', '\nab^c| efd dabeb\n');
+testIt('ltr', 4, 'forward', '\nabc^ efd| dabeb\n');
+testIt('ltr', 5, 'forward', '\nabc ^efd| dabeb\n');
+testIt('ltr', 6, 'forward', '\nabc e^fd| dabeb\n');
+testIt('ltr', 7, 'forward', '\nabc ef^d| dabeb\n');
+testIt('ltr', 8, 'forward', '\nabc efd^ dabeb|\n');
+testIt('ltr', 9, 'forward', '\nabc efd ^dabeb|\n');
+testIt('ltr', 10, 'forward', '\nabc efd d^abeb|\n');
+testIt('ltr', 11, 'forward', '\nabc efd da^beb|\n');
+testIt('ltr', 12, 'forward', '\nabc efd dab^eb|\n');
+testIt('ltr', 13, 'forward', '\nabc efd dabe^b|\n');
+testIt('ltr', 14, 'forward', '\nabc efd dabeb|\n');
+
+// ltr backward word
+testIt('ltr', 0, 'backward', '\n|abc efd dabeb\n');
+testIt('ltr', 1, 'backward', '\n|abc efd dabeb\n');
+testIt('ltr', 2, 'backward', '\n|a^bc efd dabeb\n');
+testIt('ltr', 3, 'backward', '\n|ab^c efd dabeb\n');
+testIt('ltr', 4, 'backward', '\n|abc^ efd dabeb\n');
+testIt('ltr', 5, 'backward', '\n|abc ^efd dabeb\n');
+testIt('ltr', 6, 'backward', '\nabc |e^fd dabeb\n');
+testIt('ltr', 7, 'backward', '\nabc |ef^d dabeb\n');
+testIt('ltr', 8, 'backward', '\nabc |efd^ dabeb\n');
+testIt('ltr', 9, 'backward', '\nabc |efd ^dabeb\n');
+testIt('ltr', 10, 'backward', '\nabc efd |d^abeb\n');
+testIt('ltr', 11, 'backward', '\nabc efd |da^beb\n');
+testIt('ltr', 12, 'backward', '\nabc efd |dab^eb\n');
+testIt('ltr', 13, 'backward', '\nabc efd |dabe^b\n');
+testIt('ltr', 14, 'backward', '\nabc efd |dabeb^\n');
+
+// rtl right word
+testIt('rtl', 0, 'right', '\n^abc| efd dabeb\n');
+testIt('rtl', 1, 'right', '\n^abc| efd dabeb\n');
+testIt('rtl', 2, 'right', '\na^bc| efd dabeb\n');
+testIt('rtl', 3, 'right', '\nab^c| efd dabeb\n');
+testIt('rtl', 4, 'right', '\nabc^ efd| dabeb\n');
+testIt('rtl', 5, 'right', '\nabc ^efd| dabeb\n');
+testIt('rtl', 6, 'right', '\nabc e^fd| dabeb\n');
+testIt('rtl', 7, 'right', '\nabc ef^d| dabeb\n');
+testIt('rtl', 8, 'right', '\nabc efd^ dabeb|\n');
+testIt('rtl', 9, 'right', '\nabc efd ^dabeb|\n');
+testIt('rtl', 10, 'right', '\nabc efd d^abeb|\n');
+testIt('rtl', 11, 'right', '\nabc efd da^beb|\n');
+testIt('rtl', 12, 'right', '\nabc efd dab^eb|\n');
+testIt('rtl', 13, 'right', '\nabc efd dabe^b|\n');
+testIt('rtl', 14, 'right', '\nabc efd dabeb|\n');
+
+// rtl left word
+testIt('rtl', 0, 'left', '\n|abc efd dabeb\n');
+testIt('rtl', 1, 'left', '\n|abc efd dabeb\n');
+testIt('rtl', 2, 'left', '\n|a^bc efd dabeb\n');
+testIt('rtl', 3, 'left', '\n|ab^c efd dabeb\n');
+testIt('rtl', 4, 'left', '\n|abc^ efd dabeb\n');
+testIt('rtl', 5, 'left', '\n|abc ^efd dabeb\n');
+testIt('rtl', 6, 'left', '\nabc |e^fd dabeb\n');
+testIt('rtl', 7, 'left', '\nabc |ef^d dabeb\n');
+testIt('rtl', 8, 'left', '\nabc |efd^ dabeb\n');
+testIt('rtl', 9, 'left', '\nabc |efd ^dabeb\n');
+testIt('rtl', 10, 'left', '\nabc efd |d^abeb\n');
+testIt('rtl', 11, 'left', '\nabc efd |da^beb\n');
+testIt('rtl', 12, 'left', '\nabc efd |dab^eb\n');
+testIt('rtl', 13, 'left', '\nabc efd |dabe^b\n');
+testIt('rtl', 14, 'left', '\nabc efd |dabeb^\n');
+
+// rtl forward word
+testIt('rtl', 0, 'forward', '\n^abc| efd dabeb\n');
+testIt('rtl', 1, 'forward', '\n^abc| efd dabeb\n');
+testIt('rtl', 2, 'forward', '\na^bc| efd dabeb\n');
+testIt('rtl', 3, 'forward', '\nab^c| efd dabeb\n');
+testIt('rtl', 4, 'forward', '\nabc^ efd| dabeb\n');
+testIt('rtl', 5, 'forward', '\nabc ^efd| dabeb\n');
+testIt('rtl', 6, 'forward', '\nabc e^fd| dabeb\n');
+testIt('rtl', 7, 'forward', '\nabc ef^d| dabeb\n');
+testIt('rtl', 8, 'forward', '\nabc efd^ dabeb|\n');
+testIt('rtl', 9, 'forward', '\nabc efd ^dabeb|\n');
+testIt('rtl', 10, 'forward', '\nabc efd d^abeb|\n');
+testIt('rtl', 11, 'forward', '\nabc efd da^beb|\n');
+testIt('rtl', 12, 'forward', '\nabc efd dab^eb|\n');
+testIt('rtl', 13, 'forward', '\nabc efd dabe^b|\n');
+testIt('rtl', 14, 'forward', '\nabc efd dabeb|\n');
+
+// rtl backward word
+testIt('rtl', 0, 'backward', '\n|abc efd dabeb\n');
+testIt('rtl', 1, 'backward', '\n|abc efd dabeb\n');
+testIt('rtl', 2, 'backward', '\n|a^bc efd dabeb\n');
+testIt('rtl', 3, 'backward', '\n|ab^c efd dabeb\n');
+testIt('rtl', 4, 'backward', '\n|abc^ efd dabeb\n');
+testIt('rtl', 5, 'backward', '\n|abc ^efd dabeb\n');
+testIt('rtl', 6, 'backward', '\nabc |e^fd dabeb\n');
+testIt('rtl', 7, 'backward', '\nabc |ef^d dabeb\n');
+testIt('rtl', 8, 'backward', '\nabc |efd^ dabeb\n');
+testIt('rtl', 9, 'backward', '\nabc |efd ^dabeb\n');
+testIt('rtl', 10, 'backward', '\nabc efd |d^abeb\n');
+testIt('rtl', 11, 'backward', '\nabc efd |da^beb\n');
+testIt('rtl', 12, 'backward', '\nabc efd |dab^eb\n');
+testIt('rtl', 13, 'backward', '\nabc efd |dabe^b\n');
+testIt('rtl', 14, 'backward', '\nabc efd |dabeb^\n');
+</script>
