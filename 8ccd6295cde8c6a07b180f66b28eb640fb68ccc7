@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5e7a68a0_272bce9f",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 2270,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-21T21:38:19Z",
+      "side": 1,
+      "message": "The reporter belongs next to the factory.  When we move the request_coordinator_factory, we should move the ukm_reporter too.",
+      "parentUuid": "0d48d977_f8c9e336",
+      "range": {
+        "startLine": 2270,
+        "startChar": 23,
+        "endLine": 2270,
+        "endChar": 30
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2ea994b_8792d755",
         "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8ebdbef8_f7906506",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-21T21:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2ea994b_8792d755",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90e6c7cc_43ab44e6",
         "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-21T18:46:46Z",
       "side": 1,
       "message": "Is that a full name of the metric, or will the complete name have a prefix comprised of event name too? Please explain.",
+      "range": {
+        "startLine": 15,
+        "startChar": 35,
+        "endLine": 15,
+        "endChar": 52
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9e0657_77c06269",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-21T21:38:19Z",
+      "side": 1,
+      "message": "This is the full name of the metric, I\u0027m not using prefixes or suffixes.  Do you think a comment would help clarify this for the next person to read it?",
+      "parentUuid": "90e6c7cc_43ab44e6",
       "range": {
         "startLine": 15,
         "startChar": 35,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1fbde036_4ade5809",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-21T21:38:19Z",
+      "side": 1,
+      "message": "OK, added foreground vs background metric.",
+      "parentUuid": "4f4312fa_c764a907",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 22
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "318b9cf7_392fe1eb",
         "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
         "patchSetId": 3
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "3c41143b_97d71a5e",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-21T21:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "318b9cf7_392fe1eb",
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09af540e_0cb13a3b",
         "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.h",
         "patchSetId": 3
@@ -122,6 +236,30 @@
       "writtenOn": "2017-08-21T18:46:46Z",
       "side": 1,
       "message": "Why is interface in background? Would we not be interested in seeing the data for foreground offlining as well? After all we could spot some trends and differences between foreground and background too and maybe come up with features that are crafted to specific cases?\n\nEither way, there is nothing I can think of about offline_pages_ukm_reporter that spells \"background\". Please explain what I am missing.",
+      "range": {
+        "startLine": 8,
+        "startChar": 40,
+        "endLine": 8,
+        "endChar": 50
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3970dd70_c778f70e",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-21T21:38:19Z",
+      "side": 1,
+      "message": "As it turns out, we do capture foreground metrics as well.  All foreground downloads call \"SavePageLater\" as a backup, and put the page on the disabled list.",
+      "parentUuid": "09af540e_0cb13a3b",
       "range": {
         "startLine": 8,
         "startChar": 40,
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "dab18bad_7fe02377",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-21T21:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03d21e35_fc54bd47",
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa955d70_1019ffdf",
         "filename": "components/offline_pages/core/background/offline_pages_ukm_reporter.h",
         "patchSetId": 3
@@ -165,6 +321,24 @@
       "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fadf4f9d_895d5775",
+        "filename": "components/offline_pages/core/background/offline_pages_ukm_reporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-21T21:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa955d70_1019ffdf",
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "4b7573d6_feb34a36",
+        "filename": "components/offline_pages/core/background/offline_pages_ukm_reporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-21T21:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb22996c_09e06b84",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5db50b9_933442c7",
         "filename": "components/offline_pages/core/background/offline_pages_ukm_reporter_stub.h",
         "patchSetId": 3
@@ -214,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "a02adc37_21eaf4cd",
+        "filename": "components/offline_pages/core/background/offline_pages_ukm_reporter_stub.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-21T21:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5db50b9_933442c7",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 8
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29730ee4_877bf588",
         "filename": "components/offline_pages/core/background/offline_pages_ukm_reporter_stub.h",
         "patchSetId": 3
@@ -234,6 +456,30 @@
       "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45942b3c_5f7ffe57",
+        "filename": "components/offline_pages/core/background/offline_pages_ukm_reporter_stub.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-21T21:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29730ee4_877bf588",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 6
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
