@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "397a784a_4f60e0aa",
+        "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T17:25:26Z",
+      "side": 1,
+      "message": "The problem with hard coding 76 is that it doesn\u0027t take into account any other changes we do. Why do you need any value here, can\u0027t you just make sure it moves?",
+      "parentUuid": "f148d8a9_7e2f985b",
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24bab9db_f699cf51",
         "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
         "patchSetId": 3
@@ -101,6 +119,29 @@
         "startChar": 0,
         "endLine": 1586,
         "endChar": 2
+      },
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4757bfdd_483112ae",
+        "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T17:25:26Z",
+      "side": 1,
+      "message": "I tend to think this test is overkill and is likely to be more pain to keep working. All you want to verify is that display::Screen::GetScreen()-\u003eScreenToDIPRectInWindow is called. Surely there is a more direct way to verify that?",
+      "range": {
+        "startLine": 1591,
+        "startChar": 0,
+        "endLine": 1591,
+        "endChar": 65
       },
       "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -214,6 +255,30 @@
       "side": 1,
       "message": "ScreenMac does not define own version of Screen::ScreenToDIPRectInWindow. Mac OS, as I understand does not have any resizing issues because they always use native pixels.",
       "parentUuid": "2bcc5c4b_98f8f631",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 172,
+        "endChar": 40
+      },
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97c4c15_b45c8f7b",
+        "filename": "chrome/browser/ui/find_bar/find_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T17:25:26Z",
+      "side": 1,
+      "message": "That seems surprising to me. I\u0027m adding tapted for his thoughts.",
+      "parentUuid": "c08ff0e9_a8863e32",
       "range": {
         "startLine": 172,
         "startChar": 4,
