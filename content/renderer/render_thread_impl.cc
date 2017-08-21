@@ -936,6 +936,7 @@ void RenderThreadImpl::Init(
 
   process_foregrounded_count_ = 0;
   needs_to_record_first_active_paint_ = false;
+  was_backgrounded_time_ = base::TimeTicks::Min();
 
   base::MemoryCoordinatorClientRegistry::GetInstance()->Register(this);
 
@@ -1723,6 +1724,7 @@ void RenderThreadImpl::OnProcessBackgrounded(bool backgrounded) {
                    base::Unretained(this), "15min",
                    process_foregrounded_count_),
         base::TimeDelta::FromMinutes(15));
+    was_backgrounded_time_ = base::TimeTicks::Now();
   } else {
     process_foregrounded_count_++;
   }
@@ -2542,6 +2544,17 @@ void RenderThreadImpl::OnRendererInterfaceRequest(
     mojom::RendererAssociatedRequest request) {
   DCHECK(!renderer_binding_.is_bound());
   renderer_binding_.Bind(std::move(request));
+}
+
+bool RenderThreadImpl::NeedsToRecordFirstActivePaint(
+    int ttfap_metric_type) const {
+  if (ttfap_metric_type == RenderWidget::TTFAP_AFTER_PURGED)
+    return needs_to_record_first_active_paint_;
+
+  if (was_backgrounded_time_.is_min())
+    return false;
+  base::TimeDelta passed = base::TimeTicks::Now() - was_backgrounded_time_;
+  return passed.InMinutes() >= 5;
 }
 
 }  // namespace content
