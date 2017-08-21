@@ -69,6 +69,24 @@
       "revId": "3da628e36f89505a8067d42f79fb8f298f209671",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "21408bbc_92442fe4",
+        "filename": "third_party/WebKit/LayoutTests/animations/neutral-keyframe-crashtest.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-08-21T06:20:47Z",
+      "side": 1,
+      "message": "Oops, I meant {iterationStart: 0.5, fill: \u0027forwards\u0027}. That ensures it actually has an effect even with duration 0.",
+      "parentUuid": "c5be44ca_9119d230",
+      "revId": "3da628e36f89505a8067d42f79fb8f298f209671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
