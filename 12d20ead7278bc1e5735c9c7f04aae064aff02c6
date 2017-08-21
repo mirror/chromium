@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e2911f4_63ca51ce",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-21T23:42:47Z",
+      "side": 1,
+      "message": "nit:\n\n  if foo:\n      return True\n  return False\n\ncan be simplified to\n\n  return foo",
+      "revId": "12d20ead7278bc1e5735c9c7f04aae064aff02c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
