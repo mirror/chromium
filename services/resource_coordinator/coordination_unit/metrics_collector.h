@@ -18,6 +18,7 @@ class FrameCoordinationUnitImpl;
 class WebContentsCoordinationUnitImpl;
 
 extern const char kTabFromBackgroundedToFirstAudioStartsUMA[];
+extern const char kTabFromBackgroundedToFirstFaviconUpdatedUMA[];
 extern const char kTabFromBackgroundedToFirstTitleUpdatedUMA[];
 
 // A MetricsCollector observes changes happened inside CoordinationUnit Graph,
@@ -49,6 +50,7 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
     MetricsReportRecord();
     void Reset();
     bool first_audible_after_backgrounded_reported;
+    bool first_favicon_updated_after_backgrounded_reported;
     bool first_title_updated_after_backgrounded_reported;
   };
 
