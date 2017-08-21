@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "cc4d3573_98da999b",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParamsTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-21T20:12:06Z",
+      "side": 1,
+      "message": "Don\u0027t create bogus test fixtures.  Just use TEST() instead of TEST_F()",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2714f7e_571c1f84",
         "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
         "patchSetId": 7
@@ -110,6 +133,52 @@
         "startChar": 0,
         "endLine": 11,
         "endChar": 69
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6509f7f7_b0b6b37a",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-21T20:12:06Z",
+      "side": 1,
+      "message": "use more significant arg names, like \"expected\" and \"actual\"",
+      "range": {
+        "startLine": 33,
+        "startChar": 10,
+        "endLine": 33,
+        "endChar": 11
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e01b6d4_105288f7",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-21T20:12:06Z",
+      "side": 1,
+      "message": "This way of implementing the test will provide no numeric feedback in the test output.  perhaps implement it as:\nEXPECT_LE(actual, expected + color_correction_tolerance);\nEXPECT_GE(actual, expected - color_correction_tolerance);",
+      "range": {
+        "startLine": 36,
+        "startChar": 13,
+        "endLine": 36,
+        "endChar": 14
       },
       "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
