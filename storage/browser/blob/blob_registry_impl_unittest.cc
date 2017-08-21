@@ -72,9 +72,11 @@ class MockDelegate : public BlobRegistryImpl::Delegate {
   bool CanReadFileSystemFile(const FileSystemURL& url) override {
     return can_read_file_system_file_result;
   }
+  bool CanCommitURL(const GURL& url) override { return can_commit_url_result; }
 
   bool can_read_file_result = true;
   bool can_read_file_system_file_result = true;
+  bool can_commit_url_result = true;
 };
 
 void BindBytesProvider(std::unique_ptr<MockBytesProvider> impl,
@@ -199,6 +201,22 @@ class BlobRegistryImplTest : public testing::Test {
 
   size_t BlobsUnderConstruction() {
     return registry_impl_->BlobsUnderConstructionForTesting();
+  }
+
+  void RegisterURL(mojom::BlobPtr blob,
+                   const GURL& url,
+                   mojom::BlobURLTokenPtr* url_token_out) {
+    base::RunLoop loop;
+    registry_->RegisterURL(std::move(blob), url,
+                           base::Bind(
+                               [](base::Closure quit_closure,
+                                  mojom::BlobURLTokenPtr* url_token_out,
+                                  mojom::BlobURLTokenPtr url_token) {
+                                 *url_token_out = std::move(url_token);
+                                 quit_closure.Run();
+                               },
+                               loop.QuitClosure(), url_token_out));
+    loop.Run();
   }
 
  protected:
@@ -930,6 +948,44 @@ TEST_F(BlobRegistryImplTest,
   scoped_task_environment_.RunUntilIdle();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(0u, BlobsUnderConstruction());
+}
+
+TEST_F(BlobRegistryImplTest, PublicBlobUrls) {
+  const std::string kId = "id";
+  std::unique_ptr<BlobDataHandle> handle =
+      CreateBlobFromString(kId, "hello world");
+
+  mojom::BlobPtr blob;
+  registry_->GetBlobFromUUID(MakeRequest(&blob), kId);
+  EXPECT_EQ(kId, UUIDFromBlob(blob.get()));
+  EXPECT_FALSE(blob.encountered_error());
+
+  // Now register a url for that blob.
+  GURL kUrl("blob:id");
+  mojom::BlobURLTokenPtr url_token;
+  RegisterURL(std::move(blob), kUrl, &url_token);
+
+  std::unique_ptr<BlobDataHandle> blob_data_handle =
+      context_->GetBlobDataFromPublicURL(kUrl);
+  ASSERT_TRUE(blob_data_handle.get());
+  EXPECT_EQ(kId, blob_data_handle->uuid());
+
+  handle.reset();
+  base::RunLoop().RunUntilIdle();
+
+  // The url registration should keep the blob alive even after
+  // explicit references are dropped.
+  blob_data_handle = context_->GetBlobDataFromPublicURL(kUrl);
+  EXPECT_TRUE(blob_data_handle);
+  blob_data_handle.reset();
+
+  // Finally drop the token URL.
+  url_token.reset();
+  base::RunLoop().RunUntilIdle();
+
+  blob_data_handle = context_->GetBlobDataFromPublicURL(kUrl);
+  EXPECT_FALSE(blob_data_handle.get());
+  EXPECT_FALSE(context_->registry().HasEntry(kId));
 }
 
 }  // namespace storage

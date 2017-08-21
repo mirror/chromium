@@ -51,6 +51,12 @@ interface Blob {
   GetInternalUUID() => (string uuid);
 };
 
+// An opaque handle passed from the browser process to a child process to
+// manage the lifetime of the returned Blob URL. The URL is revoked when
+// this token is dropped.
+interface BlobURLToken {
+};
+
 // This interface is the primary access point to the blob system. This interface
 // provides methods to register new blobs and get references to existing blobs.
 interface BlobRegistry {
@@ -60,6 +66,9 @@ interface BlobRegistry {
   [Sync] Register(Blob& blob, string uuid,
                   string content_type, string content_disposition,
                   array<DataElement> elements) => ();
+
+  // Registers a public Blob URL with the blob registry.
+  [Sync] RegisterURL(Blob blob, url.mojom.Url url) => (BlobURLToken token);
 
   // Returns a reference to an existing blob. Should not be used by new code,
   // is only exposed to make converting existing blob using code easier.

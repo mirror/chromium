@@ -6,6 +6,7 @@
 
 #include "base/barrier_closure.h"
 #include "base/callback_helpers.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "storage/browser/blob/blob_data_builder.h"
 #include "storage/browser/blob/blob_impl.h"
 #include "storage/browser/blob/blob_storage_context.h"
@@ -44,6 +45,31 @@ bool CalculateBlobMemorySize(const std::vector<mojom::DataElementPtr>& elements,
   *total_bytes = total_size_checked.ValueOrDie();
   return true;
 }
+
+class BlobURLTokenImpl final : public mojom::BlobURLToken {
+ public:
+  static mojom::BlobURLTokenPtr Create(
+      base::WeakPtr<BlobStorageContext> context,
+      const GURL& url) {
+    mojom::BlobURLTokenPtr ptr;
+    mojo::MakeStrongBinding(base::MakeUnique<BlobURLTokenImpl>(context, url),
+                            mojo::MakeRequest(&ptr));
+    return ptr;
+  }
+
+  BlobURLTokenImpl(base::WeakPtr<BlobStorageContext> context, const GURL& url)
+      : context_(context), url_(url) {}
+
+  ~BlobURLTokenImpl() override {
+    if (context_)
+      context_->RevokePublicBlobURL(url_);
+  }
+
+ private:
+  base::WeakPtr<BlobStorageContext> context_;
+  const GURL& url_;
+  DISALLOW_COPY_AND_ASSIGN(BlobURLTokenImpl);
+};
 
 }  // namespace
 
@@ -476,6 +502,31 @@ void BlobRegistryImpl::GetBlobFromUUID(mojom::BlobRequest blob,
     return;
   }
   BlobImpl::Create(context_->GetBlobDataFromUUID(uuid), std::move(blob));
+}
+
+void BlobRegistryImpl::RegisterURL(mojom::BlobPtr blob,
+                                   const GURL& url,
+                                   RegisterURLCallback callback) {
+  Delegate* delegate = bindings_.dispatch_context().get();
+  DCHECK(delegate);
+  if (!url.SchemeIsBlob() || !delegate->CanCommitURL(url)) {
+    bindings_.ReportBadMessage(
+        "Invalid Blob URL passed to BlobRegistry::RegisterURL");
+    return;
+  }
+
+  mojom::Blob* blob_ptr = blob.get();
+  blob_ptr->GetInternalUUID(base::BindOnce(
+      &BlobRegistryImpl::RegisterURLWithUUID, weak_ptr_factory_.GetWeakPtr(),
+      url, std::move(blob), std::move(callback)));
+}
+
+void BlobRegistryImpl::RegisterURLWithUUID(const GURL& url,
+                                           mojom::BlobPtr blob,
+                                           RegisterURLCallback callback,
+                                           const std::string& uuid) {
+  context_->RegisterPublicBlobURL(url, uuid);
+  std::move(callback).Run(BlobURLTokenImpl::Create(context_->AsWeakPtr(), url));
 }
 
 }  // namespace storage
