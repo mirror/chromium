@@ -59,7 +59,7 @@ namespace {
 const int kBindRetries = 10;
 const int kPortStart = 1024;
 const int kPortEnd = 65535;
-const int kActivityMonitorBytesThreshold = 65535;
+const int kActivityMonitorBytesThreshold = 512 * 1024;
 const int kActivityMonitorMinimumSamplesForThroughputEstimate = 2;
 const base::TimeDelta kActivityMonitorMsThreshold =
     base::TimeDelta::FromMilliseconds(100);
@@ -175,7 +175,10 @@ UDPSocketPosix::UDPSocketPosix(DatagramSocket::BindType bind_type,
       recv_from_address_(NULL),
       write_buf_len_(0),
       net_log_(NetLogWithSource::Make(net_log, NetLogSourceType::UDP_SOCKET)),
+      net_log_is_capturing_(net_log_.IsCapturing()),
       bound_network_(NetworkChangeNotifier::kInvalidNetworkHandle) {
+  net_log_timer_.Start(FROM_HERE, base::TimeDelta::FromSeconds(1), this,
+                       &UDPSocketPosix::UpdateIsCapturing);
   net_log_.BeginEvent(NetLogEventType::SOCKET_ALIVE,
                       source.ToEventParametersCallback());
   if (bind_type == DatagramSocket::RANDOM_BIND)
@@ -186,6 +189,10 @@ UDPSocketPosix::~UDPSocketPosix() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   Close();
   net_log_.EndEvent(NetLogEventType::SOCKET_ALIVE);
+}
+
+void UDPSocketPosix::UpdateIsCapturing() {
+  net_log_is_capturing_ = net_log_.IsCapturing();
 }
 
 int UDPSocketPosix::Open(AddressFamily address_family) {
@@ -211,7 +218,6 @@ int UDPSocketPosix::Open(AddressFamily address_family) {
 void UDPSocketPosix::ActivityMonitor::Increment(uint32_t bytes) {
   if (!bytes)
     return;
-  bool timer_running = timer_.IsRunning();
   bytes_ += bytes;
   increments_++;
   // Allow initial updates to make sure throughput estimator has
@@ -220,12 +226,13 @@ void UDPSocketPosix::ActivityMonitor::Increment(uint32_t bytes) {
   if (increments_ < kActivityMonitorMinimumSamplesForThroughputEstimate ||
       bytes_ > kActivityMonitorBytesThreshold) {
     Update();
-    if (timer_running)
+    if (timer_running_)
       timer_.Reset();
   }
-  if (!timer_running) {
+  if (!timer_running_) {
     timer_.Start(FROM_HERE, kActivityMonitorMsThreshold, this,
                  &UDPSocketPosix::ActivityMonitor::OnTimerFired);
+    timer_running_ = true;
   }
 }
 
@@ -238,6 +245,7 @@ void UDPSocketPosix::ActivityMonitor::Update() {
 
 void UDPSocketPosix::ActivityMonitor::OnClose() {
   timer_.Stop();
+  timer_running_ = false;
   Update();
 }
 
@@ -688,7 +696,7 @@ void UDPSocketPosix::LogRead(int result,
     return;
   }
 
-  if (net_log_.IsCapturing()) {
+  if (net_log_is_capturing_) {
     DCHECK(addr_len > 0);
     DCHECK(addr);
 
@@ -723,7 +731,7 @@ void UDPSocketPosix::LogWrite(int result,
     return;
   }
 
-  if (net_log_.IsCapturing()) {
+  if (net_log_is_capturing_) {
     net_log_.AddEvent(
         NetLogEventType::UDP_BYTES_SENT,
         CreateNetLogUDPDataTranferCallback(result, bytes, address));

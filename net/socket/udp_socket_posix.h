@@ -41,7 +41,7 @@ class NET_EXPORT UDPSocketPosix {
   // throughput estimate.
   class ActivityMonitor {
    public:
-    ActivityMonitor() : bytes_(0), increments_(0) {}
+    ActivityMonitor() : bytes_(0), increments_(0), timer_running_(false) {}
     virtual ~ActivityMonitor() {}
     // Provided by sent/received subclass.
     // Update throughput, but batch to limit overhead of NetworkActivityMonitor.
@@ -57,6 +57,7 @@ class NET_EXPORT UDPSocketPosix {
     uint32_t bytes_;
     uint32_t increments_;
     base::RepeatingTimer timer_;
+    bool timer_running_;
     DISALLOW_COPY_AND_ASSIGN(ActivityMonitor);
   };
 
@@ -309,6 +310,7 @@ class NET_EXPORT UDPSocketPosix {
   // Binds to a random port on |address|.
   int RandomBind(const IPAddress& address);
 
+  void UpdateIsCapturing();
   int socket_;
 
   int addr_family_;
@@ -362,6 +364,8 @@ class NET_EXPORT UDPSocketPosix {
   CompletionCallback write_callback_;
 
   NetLogWithSource net_log_;
+  bool net_log_is_capturing_;
+  base::RepeatingTimer net_log_timer_;
 
   // Network that this socket is bound to via BindToNetwork().
   NetworkChangeNotifier::NetworkHandle bound_network_;
