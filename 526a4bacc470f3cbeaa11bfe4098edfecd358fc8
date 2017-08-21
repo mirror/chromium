@@ -16,6 +16,24 @@
       "revId": "526a4bacc470f3cbeaa11bfe4098edfecd358fc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd4f8756_7630cc80",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-21T23:41:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9acee57c_ae336e63",
+      "revId": "526a4bacc470f3cbeaa11bfe4098edfecd358fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
