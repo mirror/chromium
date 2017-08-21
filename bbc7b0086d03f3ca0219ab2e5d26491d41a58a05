@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "98a4d3ca_e5c87058",
+        "filename": "chrome/browser/android/history/browsing_history_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-21T21:14:16Z",
+      "side": 1,
+      "message": "That\u0027s bizarre how chrome://history gets pulled into a normal window on desktop. Thanks for the background! Updated this comment.",
+      "parentUuid": "dabee3cc_5e6649b1",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 14
+      },
+      "revId": "bbc7b0086d03f3ca0219ab2e5d26491d41a58a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71da0ebb_7a24d491",
         "filename": "chrome/browser/android/history/browsing_history_bridge.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "bbc7b0086d03f3ca0219ab2e5d26491d41a58a05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17698886_7a584259",
+        "filename": "chrome/browser/android/history/browsing_history_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-21T21:14:16Z",
+      "side": 1,
+      "message": "Yes! You\u0027re very much correct, thank you, done.",
+      "parentUuid": "71da0ebb_7a24d491",
+      "range": {
+        "startLine": 156,
+        "startChar": 25,
+        "endLine": 156,
+        "endChar": 43
+      },
+      "revId": "bbc7b0086d03f3ca0219ab2e5d26491d41a58a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
