@@ -177,10 +177,12 @@ FileTapHandler.prototype.handleTouchEvents = function(event, index, callback) {
       if (this.isLongTap_) {
         if (this.hasLongPressProcessed_ ||
             callback(event, index, FileTapHandler.TapEvent.LONG_TAP)) {
+          this.focusParentList_(event.target);
           event.preventDefault();
         }
       } else {
         if (callback(event, index, FileTapHandler.TapEvent.TAP)) {
+          this.focusParentList_(event.target);
           event.preventDefault();
         }
       }
@@ -207,4 +209,18 @@ FileTapHandler.prototype.findActiveTouch_ = function(touches) {
       return touches[i];
   }
   return undefined;
+};
+
+/**
+ * Focus on the file list that contains the event target.
+ * @param {!HTMLElement} target
+ */
+FileTapHandler.prototype.focusParentList_ = function(target) {
+  var e = target;
+  while (e && e.id != 'file-list') {
+    e = e.parentElement;
+  }
+  if (e) {
+    e.focus();
+  }
 };
