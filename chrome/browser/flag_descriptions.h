@@ -143,6 +143,9 @@ extern const char kDeviceDiscoveryNotificationsDescription[];
 extern const char kDevtoolsExperimentsName[];
 extern const char kDevtoolsExperimentsDescription[];
 
+extern const char kDirectManipulationStylusName[];
+extern const char kDirectManipulationStylusDescription[];
+
 extern const char kDisableAudioForDesktopShareName[];
 extern const char kDisableAudioForDesktopShareDescription[];
 

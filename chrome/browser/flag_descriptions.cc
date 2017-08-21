@@ -187,6 +187,10 @@ const char kDevtoolsExperimentsDescription[] =
     "Enables Developer Tools experiments. Use Settings panel in Developer "
     "Tools to toggle individual experiments.";
 
+const char kDirectManipulationStylusName[] = "Direct Manipulation Stylus";
+const char kDirectManipulationStylusDescription[] =
+    "If enabled, Chrome will scroll web pages on stylus drag.";
+
 const char kDisableAudioForDesktopShareName[] =
     "Disable Audio For Desktop Share";
 const char kDisableAudioForDesktopShareDescription[] =
