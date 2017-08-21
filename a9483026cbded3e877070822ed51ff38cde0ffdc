@@ -22,6 +22,30 @@
       "revId": "a9483026cbded3e877070822ed51ff38cde0ffdc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0818ad_9c12bc65",
+        "filename": "base/debug/task_annotator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-21T15:46:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a62ebb9b_f9fec15d",
+      "range": {
+        "startLine": 49,
+        "startChar": 69,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "a9483026cbded3e877070822ed51ff38cde0ffdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
