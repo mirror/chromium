@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91ef5c52_e747f0f2",
+        "filename": "chrome/browser/sync/test/integration/two_client_apps_sync_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-21T19:32:44Z",
+      "side": 1,
+      "message": "Is there a reason why you wouldn\u0027t just always use the chrome app? If this chrome app is only present on ChromeOS devices, can you update the comment to make that clear?",
+      "range": {
+        "startLine": 51,
+        "startChar": 50,
+        "endLine": 51,
+        "endChar": 62
+      },
+      "revId": "c20b51dd4f2ca75d61ab55198d884fd7abe4ee9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
