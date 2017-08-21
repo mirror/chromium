@@ -22,6 +22,30 @@
       "revId": "ec3cf852be3d8259fe59d8540e3edd5062955bb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29628286_9c7180f2",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-21T17:41:59Z",
+      "side": 1,
+      "message": "After this change, shortcuts for task manager, feedback, new incognito window, new window, new tab and restore tab will be sent to web page first. The behavior on Chrome OS matches other platforms. The updated test case covers four of these six accelerators.\n\nThe proposal (https://docs.google.com/document/d/1hUu3tq0zJxtXHIcYb0lCzCG7cwYNTi2ye-bb9kGdWgo/edit) covers only the key combinations for browser shortcuts. But for most of the ash accelerators, they do not fit into this category.\n\nSome of other accelerators will be covered by \"system keyboard lock\" feature. In short, it gives web pages a chance to receive keys or key combinations usually reserved by OS (ash accelerators in ChromeOS). I am actively working with Sadrul to make it happen. I will CC changes to you if you are interested in the details.\n\"System keyboard lock\" still won\u0027t cover keys like power*, brightness, etc. These keys do not have a valid JavaScript KeyboardEvent.code. (https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code)\n*) power button has different codes on different platforms and browsers, though \"system keyboard lock\" feature won\u0027t do anything special for it, it\u0027s not reliable for a web page to reserve it.",
+      "parentUuid": "7c905096_3350a94c",
+      "range": {
+        "startLine": 1333,
+        "startChar": 2,
+        "endLine": 1341,
+        "endChar": 3
+      },
+      "revId": "ec3cf852be3d8259fe59d8540e3edd5062955bb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
