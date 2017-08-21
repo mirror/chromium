@@ -23,7 +23,6 @@ SensorProviderProxyImpl::SensorProviderProxyImpl(
     RenderFrameHost* render_frame_host)
     : permission_manager_(permission_manager),
       render_frame_host_(render_frame_host) {
-  DCHECK(permission_manager);
   DCHECK(render_frame_host);
 }
 
@@ -59,6 +58,17 @@ void SensorProviderProxyImpl::GetSensor(
 
 bool SensorProviderProxyImpl::CheckPermission(
     device::mojom::SensorType type) const {
+  // For sensors that are used by DeviceMotionEvent, don't check the
+  // permission.
+  if (type == device::mojom::SensorType::ACCELEROMETER ||
+      type == device::mojom::SensorType::LINEAR_ACCELERATION ||
+      type == device::mojom::SensorType::GYROSCOPE) {
+    return true;
+  }
+
+  if (!permission_manager_)
+    return false;
+
   content::WebContents* web_contents =
       content::WebContents::FromRenderFrameHost(render_frame_host_);
   if (!web_contents)
