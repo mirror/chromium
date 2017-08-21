@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7b2c4d87_757b7f75",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-21T19:32:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54558685_4e2ddc04",
+      "revId": "982fac70291e4a0d456055f6f19af4b6bcb19c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79fea966_aeda53b4",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-21T17:45:57Z",
       "side": 1,
       "message": "Use hovered_rect.IsEmpty() instead.",
+      "revId": "982fac70291e4a0d456055f6f19af4b6bcb19c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd56826_facf15aa",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-21T19:32:45Z",
+      "side": 1,
+      "message": "This should be \u0026\u0026 instead of ||. We want to display size on a line here. I updated it in the new patch.",
+      "parentUuid": "79fea966_aeda53b4",
       "revId": "982fac70291e4a0d456055f6f19af4b6bcb19c3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2773671c_843d1a8f",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-21T19:32:45Z",
+      "side": 1,
+      "message": "we still need it here. I changed it to check if (hovered_rect.height() !\u003d0) for clarity. We want to draw height() if its not empty.",
+      "parentUuid": "ba2cbeba_d47f60d0",
+      "revId": "982fac70291e4a0d456055f6f19af4b6bcb19c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb492a09_62c853e4",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 13
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-21T17:45:57Z",
       "side": 1,
       "message": "ditto",
+      "revId": "982fac70291e4a0d456055f6f19af4b6bcb19c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93119a6_f72b9e92",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-21T19:32:45Z",
+      "side": 1,
+      "message": "we still need it here. i changed it to hovered_rect.width() !\u003d0.",
+      "parentUuid": "cb492a09_62c853e4",
       "revId": "982fac70291e4a0d456055f6f19af4b6bcb19c3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "982fac70291e4a0d456055f6f19af4b6bcb19c3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50dced96_2fe7fff5",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-21T19:32:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c97e9b4_2ef73170",
+      "revId": "982fac70291e4a0d456055f6f19af4b6bcb19c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
