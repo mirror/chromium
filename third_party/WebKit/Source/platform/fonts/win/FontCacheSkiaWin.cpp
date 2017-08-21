@@ -40,6 +40,7 @@
 #include "platform/fonts/FontFaceCreationParams.h"
 #include "platform/fonts/FontPlatformData.h"
 #include "platform/fonts/SimpleFontData.h"
+#include "platform/fonts/opentype/OS2TableCJKFont.h"
 #include "platform/fonts/win/FontFallbackWin.h"
 #include "platform/wtf/PtrUtil.h"
 
@@ -389,6 +390,8 @@ std::unique_ptr<FontPlatformData> FontCache::CreateFontPlatformData(
     }
   }
 
+  bool is_cjk_font = OS2TableCJKFont::IsCJKFontFromOS2Table(tf.get());
+
   std::unique_ptr<FontPlatformData> result =
       WTF::WrapUnique(new FontPlatformData(
           tf, name.data(), font_size,
@@ -398,6 +401,8 @@ std::unique_ptr<FontPlatformData> FontCache::CreateFontPlatformData(
            !tf->isItalic()) ||
               font_description.IsSyntheticItalic(),
           font_description.Orientation()));
+
+  result->SetAvoidEmbeddedBitmaps(!is_cjk_font);
 
   return result;
 }
