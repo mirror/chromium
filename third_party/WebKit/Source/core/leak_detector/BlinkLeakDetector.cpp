@@ -2,23 +2,27 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "controller/leak_detector/BlinkLeakDetector.h"
+#include "core/leak_detector/BlinkLeakDetector.h"
 
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8GCController.h"
-#include "controller/leak_detector/BlinkLeakDetectorClient.h"
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/WebLocalFrameImpl.h"
+#include "core/leak_detector/BlinkLeakDetectorClient.h"
 #include "core/workers/InProcessWorkerMessagingProxy.h"
 #include "core/workers/WorkerThread.h"
-#include "modules/compositorworker/AbstractAnimationWorkletThread.h"
 #include "platform/Timer.h"
 #include "platform/bindings/V8PerIsolateData.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "public/platform/Platform.h"
 
 namespace blink {
+
+namespace {
+BlinkLeakDetector::AbstractAnimationWorkletThreadGCFunction
+    g_abstract_animation_worklet_gc_function = nullptr;
+}
 
 BlinkLeakDetector::BlinkLeakDetector(BlinkLeakDetectorClient* client,
                                      WebFrame* frame)
@@ -66,9 +70,9 @@ void BlinkLeakDetector::PrepareForLeakDetection() {
 }
 
 void BlinkLeakDetector::CollectGarbage() {
-  V8GCController::CollectAllGarbageForTesting(
-      V8PerIsolateData::MainThreadIsolate());
-  AbstractAnimationWorkletThread::CollectAllGarbage();
+  for (int i = 0; i < 5; ++i)
+    V8PerIsolateData::MainThreadIsolate()->LowMemoryNotification();
+  ExecuteAbstractAnimationWorkletThreadGC();
   // Note: Oilpan precise GC is scheduled at the end of the event loop.
 
   // Task queue may contain delayed object destruction tasks.
@@ -104,10 +108,22 @@ void BlinkLeakDetector::TimerFiredGC(TimerBase*) {
     client_->OnLeakDetectionComplete();
   }
 
-  V8GCController::CollectAllGarbageForTesting(
-      V8PerIsolateData::MainThreadIsolate());
-  AbstractAnimationWorkletThread::CollectAllGarbage();
+  for (int i = 0; i < 5; ++i)
+    V8PerIsolateData::MainThreadIsolate()->LowMemoryNotification();
+  ExecuteAbstractAnimationWorkletThreadGC();
   // Note: Oilpan precise GC is scheduled at the end of the event loop.
+}
+
+// static
+void BlinkLeakDetector::InitAbstractAnimationWorkletThreadGC(
+    AbstractAnimationWorkletThreadGCFunction gc_fucntion) {
+  DCHECK(!g_abstract_animation_worklet_gc_function);
+  g_abstract_animation_worklet_gc_function = gc_fucntion;
+}
+
+void BlinkLeakDetector::ExecuteAbstractAnimationWorkletThreadGC() {
+  DCHECK(g_abstract_animation_worklet_gc_function);
+  return g_abstract_animation_worklet_gc_function();
 }
 
 }  // namespace blink
