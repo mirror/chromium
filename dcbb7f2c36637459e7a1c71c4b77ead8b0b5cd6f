@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "a9f7381f_9da8b959",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-21T16:44:49Z",
+      "side": 1,
+      "message": "Depends on what we mean by a seed being \"expired\", what does Chrome do in this situation?\n\nAlso, what does the app do if all it has is an expired seed, does it still use that seed, or fall back to some kind of default implementation?",
+      "parentUuid": "c1177210_2b779de1",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18d5126d_b7f40813",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
         "patchSetId": 5

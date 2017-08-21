@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76afd88d_67e686c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-21T16:44:49Z",
+      "side": 1,
+      "message": "Sorry for adding more and more comments:\nplease mention somewhere in this commit message that the VCS, and the jobservice are run in a separate process - one that is connected to the WebView package.\n\nAnd also please replace \"service directory\" with something like \"the WebView package data directory\", or \"WebView provider data directory\" to make it clear that we are storing the seed under the data directory of the WebView provider, rather than under that of the app.",
+      "range": {
+        "startLine": 17,
+        "startChar": 72,
+        "endLine": 18,
+        "endChar": 9
+      },
+      "revId": "646e89076e27e51fd94631993d94bd64bb6ec3ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "371af052_b0b135a0",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-21T16:44:49Z",
+      "side": 1,
+      "message": "Oh, so this is actually overriding any network constraints - in production code we should not cal setOverrideDeadline at all (unless we want to switch over from only allowing WiFi to also allowing using Data plans).\n\nPlease add \", overriding any other constraints like network type.\" to the end of this comment.",
+      "range": {
+        "startLine": 163,
+        "startChar": 24,
+        "endLine": 164,
+        "endChar": 86
+      },
+      "revId": "646e89076e27e51fd94631993d94bd64bb6ec3ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
