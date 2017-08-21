@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e17a23d8_015e7c0d",
+        "filename": "ios/chrome/app/chrome_app_startup_parameters.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-21T13:24:52Z",
+      "side": 1,
+      "message": "It was id so it could be any kind of parameter.\nChanging to NSString.",
+      "parentUuid": "bdb90cb4_51f9b3c2",
+      "revId": "556c4ad0a9957a6d2d138ee619bb719568ba4b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a81aee40_73b71ff9",
         "filename": "ios/chrome/app/chrome_app_startup_parameters.mm",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "556c4ad0a9957a6d2d138ee619bb719568ba4b57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97774b60_21be4bfe",
+        "filename": "ios/chrome/app/chrome_app_startup_parameters.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-21T13:24:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a81aee40_73b71ff9",
+      "revId": "556c4ad0a9957a6d2d138ee619bb719568ba4b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
