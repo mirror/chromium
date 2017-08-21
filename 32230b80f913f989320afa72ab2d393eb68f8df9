@@ -73,6 +73,24 @@
       "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed63bd0f_8f026316",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-21T19:05:30Z",
+      "side": 1,
+      "message": "I did not find a way to use this as some rows (or columns) may not have a single child due to spanning.",
+      "parentUuid": "600124ed_41ede629",
+      "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
