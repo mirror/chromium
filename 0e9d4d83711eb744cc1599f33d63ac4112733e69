@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3096ef4f_87868a27",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T19:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "312cc9f7_1ae10bc0",
+      "range": {
+        "startLine": 13,
+        "startChar": 34,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "0e9d4d83711eb744cc1599f33d63ac4112733e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e310151a_7f206c6b",
         "filename": "chrome/browser/extensions/activity_log/activity_log_unittest.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-21T18:29:50Z",
       "side": 1,
       "message": "The test_util.h should be removed after this and https://chromium-review.googlesource.com/c/chromium/src/+/620248. Think it would be better if this is in the same relation chain as that CL to find such cases.",
+      "range": {
+        "startLine": 435,
+        "startChar": 31,
+        "endLine": 435,
+        "endChar": 36
+      },
+      "revId": "0e9d4d83711eb744cc1599f33d63ac4112733e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a64dfea_1823a866",
+        "filename": "chrome/browser/extensions/activity_log/activity_log_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T19:17:26Z",
+      "side": 1,
+      "message": "As discussed offline, I\u0027d like to land each of these cleanups as independent CLs so that they can be submitted in any order without merge conflicts.  Then I\u0027ll submit a final CL that deletes the file entirely and cleans up any remaining includes.",
+      "parentUuid": "e310151a_7f206c6b",
       "range": {
         "startLine": 435,
         "startChar": 31,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "bd8d41ba_373ef17f",
+        "filename": "chrome/browser/extensions/api/identity/identity_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T19:17:26Z",
+      "side": 1,
+      "message": "(See other comment)",
+      "parentUuid": "3c5e6ca7_baa8a4b3",
+      "revId": "0e9d4d83711eb744cc1599f33d63ac4112733e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d1afb7e_68f6c195",
         "filename": "extensions/browser/api/api_resource_manager_unittest.cc",
         "patchSetId": 4
@@ -76,6 +142,30 @@
       "writtenOn": "2017-08-21T18:29:50Z",
       "side": 1,
       "message": "nit: newline after",
+      "range": {
+        "startLine": 5,
+        "startChar": 33,
+        "endLine": 5,
+        "endChar": 53
+      },
+      "revId": "0e9d4d83711eb744cc1599f33d63ac4112733e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fc2cf8_3587e809",
+        "filename": "extensions/browser/api/api_resource_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T19:17:26Z",
+      "side": 1,
+      "message": "grr, git cl format.  Done.",
+      "parentUuid": "7d1afb7e_68f6c195",
       "range": {
         "startLine": 5,
         "startChar": 33,
