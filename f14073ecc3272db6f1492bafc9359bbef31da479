@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "f49ade35_76d5f6fd",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T06:33:27Z",
+      "side": 1,
+      "message": "Oh, also, like in your other CL, I think we should only emit this function if {{is_inherited}} is true, using the {% if %} statement.",
+      "revId": "f14073ecc3272db6f1492bafc9359bbef31da479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f77621f3_0f181d4d",
         "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationType.cpp",
         "patchSetId": 6
