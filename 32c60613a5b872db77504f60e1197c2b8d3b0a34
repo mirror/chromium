@@ -532,6 +532,24 @@
     },
     {
       "key": {
+        "uuid": "ffb223c6_de10b4a4",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-21T23:32:31Z",
+      "side": 1,
+      "message": "I\u0027ll go with that plan for now.\n\nSince NavigationURLLoaderNetworkService::OnComplete will still have to call the into the same NavigationURLLoaderDelegate::OnComplete call, I will modify it to pass an empty ssl_info and a conservative `true` for fatal.\nThis violates the contract of OnRequestFailed (the caller is supposed to pass ssl_info if the net error is a certificate error), but only in a code path that already fails (cert error interstitials).\n\nrdsmith@, mmenke@: Let me know if you have a different preference for stubbing out those arguments.",
+      "parentUuid": "1c0c03a0_b0633f77",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5be53935_82129d8d",
         "filename": "content/browser/loader/navigation_url_loader_network_service.h",
         "patchSetId": 14
