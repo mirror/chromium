@@ -34,6 +34,8 @@ class CORE_EXPORT CSSPropertyAPI {
 
   virtual bool IsInterpolableProperty() const { return false; }
   virtual bool IsInheritedProperty() const { return false; }
+  virtual bool IsRepeatedProperty() const { return false; }
+  virtual char RepetitionSeparator() const { return 0; }
 };
 
 }  // namespace blink
