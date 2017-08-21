@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c79514ef_60af8460",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "I\u0027m going to do this item in a separate CL (which we\u0027ll land before this one). Will update this comment thread with a link.",
+      "parentUuid": "5b503d1f_c67e5cbb",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7632c91f_87a40fe9",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 8
@@ -141,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "369a4757_c881e907",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "I agree that this is a little vague in the spec. However I don\u0027t really see this spec as a good faith effort to clearly communicate :) It\u0027s full of ambiguities, it\u0027s clearly reverse engineered from the code, and bits and pieces of it have been updated without relevant dependent information also being updated. Note that before MIC and EPA (which came after the original NTLMv2) the target info was never modified and was repeated verbatim back to the server (it has to be unless the server intends to maintain state between messages).\n\nPage 45 implies that they are copied and added to. Note the wording that says (paraphrased) \"If there is a flags AV_PAIR, then *set* the MIC bit, else *add* an AV_PAIR structure\".\n\nPage 44 - Note that CHALLENGE_MESSAGE.TargetInfo is used as the \"ServerName\" input to ComputeResponse which calculates the NTLM response on the client. This is ambiguous in a different way because it implies it is used verbatim from the challenge message (which used to be true), when in fact it should be the \"updated target info\". I suspect this part of the spec just wasn\u0027t updated.\n\nPage 52 - The server calculates the expected response with ComputeResponse using \u0027ServerName\u0027 which is defined on Page 57 as \"NtChallengeResponseFields.NTLMv2_RESPONSE.NTLMv2_CLIENT_CHALLENGE.AvPairs field\nstructure of the AUTHENTICATE_MESSAGE payload.\". \n\nBecause the client uses the challenge target info in that calculation it has to send it to the server (it has to send the same or updated target info that went into the response) otherwise the server can\u0027t calculate the same response value.\n\nAs a practical matter - I suspect that you could actually arbitrarily modify the target info payloads (with the exception of the fields that contain the channel bindings and spn) as long as you send to the server whatever mutated version you used as the input to ComputeResponse. In fact look at appendix b item #30 - it pretty much says \"some versions of windows append some extra bytes whose content is unspecified\" aka buffer overflow.\n\nI\u0027d further guess that most likely servers that don\u0027t know about EPA/MIC (ie win 2k3 and earlier) you could probably use completely random data as the target info since there\u0027s no reason for the server to even try and parse it.",
+      "parentUuid": "f3bac769_9611bd03",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17ae6c81_f93782a7",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 8
@@ -152,6 +188,24 @@
       "writtenOn": "2017-08-15T23:56:26Z",
       "side": 1,
       "message": "is_mic_enabled should be further conditioned on whether there\u0027s a kTimestamp AVPair present. Or are we assuming that the server will ignore the MIC in that case?",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53fa0d45_7f30de6f",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "My interpretation is that it\u0027s up to the client if it wants to send the MIC (but it SHOULD), and that the presence of the timestamp is just an indirect indicator as to whether the server will actually validate it. Note in the appendix item #16 (which versions send a timestamp) vs #46, #53, and #65 (which versions support MIC) are the same.\n\nPage 29 says the timestamp is always sent in the challenge message (except per #16 because older versions don\u0027t support it).\n\nPage 53 says \"If the AUTHENTICATE_MESSAGE indicates the presence of a MIC field,\u003c65\u003e then the MIC value computed earlier MUST be compared to MessageMIC\". \n\nSo basically servers always send the timestamp (unless they are too old), and they always must validate the MIC if it is sent by the client (unless they are too old to know they should - in which case it will be ignored and since all the security buffers will point after it, they won\u0027t even know that it is there).\n\nSo I think the right thing is to always send it. New/compliant servers will always try to validate it, old/non-compliant servers will just ignore it. And there\u0027s no possibility that it could be downgraded.\n\nIt is worth noting though - that (in regular HTTP case) the client has no way to determine whether the server validated the MIC or just never checked it (except by the assumption that it was a Windows server, and all versions of windows that sent a timestamp check the MIC).\n\nThere seems to be no notion of refusing to interact with a server that doesn\u0027t send a timestamp (ie. implicitly won\u0027t check the MIC) - at least not in the current version.",
+      "parentUuid": "17ae6c81_f93782a7",
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -175,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "d57435f8_0d30af36",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef601a26_4ca9e233",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78a200fb_e261b594",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 8
@@ -189,6 +261,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afdef733_14d9b79c",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78a200fb_e261b594",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "9f4f3de0_ae75330a",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e76e5fdc_4b7d4a3f",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0516f83_38de242b",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 8
@@ -223,6 +331,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aaa038c_48b851c5",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0516f83_38de242b",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -345,6 +471,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3822f505_fa90854b",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Done. Oops.",
+      "parentUuid": "f82d1cd6_3ea052bc",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -505,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "b197206b_1195378c",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74ebbbe9_f66565f9",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77ea377f_67e5c4fa",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 8
@@ -592,6 +754,24 @@
     },
     {
       "key": {
+        "uuid": "6f4006a2_875e2ff7",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "868dc233_53e3afb8",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55729349_a5952595",
         "filename": "net/ntlm/ntlm.h",
         "patchSetId": 8
@@ -606,6 +786,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283e6d4e_4fe37826",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Renamed to v2_input.",
+      "parentUuid": "55729349_a5952595",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -626,6 +824,24 @@
     },
     {
       "key": {
+        "uuid": "ff3cfa94_b0919e5e",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b70595c7_2c5cd5bb",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d6ad582_d95608ea",
         "filename": "net/ntlm/ntlm.h",
         "patchSetId": 8
@@ -640,6 +856,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "343ee3ae_d15ff350",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d6ad582_d95608ea",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -660,6 +894,24 @@
     },
     {
       "key": {
+        "uuid": "092c1512_89af19dc",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Fuzzer also found this and it\u0027s already fixed in the current patch.",
+      "parentUuid": "95cfdc0b_723aaf91",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34d80136_1f9dc908",
         "filename": "net/ntlm/ntlm_buffer_reader.cc",
         "patchSetId": 8
@@ -674,6 +926,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867a25f4_8cecf7f2",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Done. The EOL case is outside the switch since it needs to break the loop (or we can goto).",
+      "parentUuid": "34d80136_1f9dc908",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -694,6 +964,24 @@
     },
     {
       "key": {
+        "uuid": "e4c30865_85576af1",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "eb23cf50_a03c3086",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4213306a_6953b8dd",
         "filename": "net/ntlm/ntlm_buffer_reader.cc",
         "patchSetId": 8
@@ -708,6 +996,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d82ec1d0_806bae10",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4213306a_6953b8dd",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -728,6 +1034,24 @@
     },
     {
       "key": {
+        "uuid": "0fbc37a9_0616003b",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bffa0e4_e2be32e0",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4232599a_5d7fa249",
         "filename": "net/ntlm/ntlm_buffer_reader.cc",
         "patchSetId": 8
@@ -745,6 +1069,24 @@
     },
     {
       "key": {
+        "uuid": "d9675d49_3b0b3e7a",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4232599a_5d7fa249",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff673c10_42c259ca",
         "filename": "net/ntlm/ntlm_buffer_reader.cc",
         "patchSetId": 8
@@ -756,6 +1098,24 @@
       "writtenOn": "2017-08-15T23:56:26Z",
       "side": 1,
       "message": "This pattern would be easier if we construct a child NtlmBufferReader that uses the range sec_buf.offset ... sec_buf.offset + sec_buf.length as its entire buffer and then call ReadTargetInfo() of the child buffer.\n\nThis would ensure that no matter what, we don\u0027t touch anything outside of the range specified by sec_buf.\n\nUnfortunately NtlmBufferReader makes a copy of the buffer being read. Is that necessary? Otherwise you\u0027d be able to easily read embedded structures like this using child NtlmBufferReader instances with almost no overhead.",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8070733e_efe28e06",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Will look at going back to implementing with StringPiece rather than Buffer in next patch set or dependent CL.",
+      "parentUuid": "ff673c10_42c259ca",
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -815,6 +1175,24 @@
     },
     {
       "key": {
+        "uuid": "3d0d5ff2_9067d7a8",
+        "filename": "net/ntlm/ntlm_buffer_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5894d7fc_8818d678",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3472e63b_f426274b",
         "filename": "net/ntlm/ntlm_buffer_reader.h",
         "patchSetId": 8
@@ -850,6 +1228,24 @@
     },
     {
       "key": {
+        "uuid": "2f5d6df5_9411b6b8",
+        "filename": "net/ntlm/ntlm_buffer_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aaf8ae92_5cc67604",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e590be8_5a626b34",
         "filename": "net/ntlm/ntlm_buffer_reader.h",
         "patchSetId": 8
@@ -867,6 +1263,24 @@
     },
     {
       "key": {
+        "uuid": "60bc44f9_1ef292b3",
+        "filename": "net/ntlm/ntlm_buffer_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Good point. Removed them. In the original incarnation of this CL they were used in NtlmClient tests to validate the authenticate message. But since in the previous CL reviews we moved to validating explicitly against test vectors, when I did the same to this CL I didn\u0027t notice these are no longer used.",
+      "parentUuid": "4e590be8_5a626b34",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34cb7d67_640dad30",
         "filename": "net/ntlm/ntlm_client.cc",
         "patchSetId": 8
@@ -881,6 +1295,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b42a13_d7715f33",
+        "filename": "net/ntlm/ntlm_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Yes that code would have hard failed if NTLMv2 was enabled (in v1 mode it would still work). This would affect NT4, 2K, XP, 2K3 servers which all support NTLMv2 but don\u0027t send target info. All later versions always send it. Who knows what various other implementations do though. It\u0027s easy enough to handle properly though.\n\nFixed and added test.",
+      "parentUuid": "34cb7d67_640dad30",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -916,6 +1348,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31abb884_ef46e2ae",
+        "filename": "net/ntlm/ntlm_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c4b981d_9f7c7c5c",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1038,6 +1488,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1161c7a8_59ef8e5c",
+        "filename": "net/ntlm/ntlm_constants.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-21T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2a046a5_0f53dbfd",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
