@@ -26,6 +26,10 @@
 #include "third_party/sqlite/sqlite3.h"
 #include "url/origin.h"
 
+#include "content/common/database.mojom.h"
+#include "content/public/common/service_manager_connection.h"
+#include "services/service_manager/public/cpp/connector.h"
+
 #if defined(OS_POSIX)
 #include "base/file_descriptor_posix.h"
 #endif
@@ -337,7 +341,13 @@ void DatabaseMessageFilter::OnDatabaseOpened(
                               estimated_size, &database_size);
 
   database_connections_.AddConnection(origin_identifier, database_name);
-  Send(new DatabaseMsg_UpdateSize(origin, database_name, database_size));
+  service_manager::Connector* connector =
+      ServiceManagerConnection::GetForProcess()->GetConnector();
+  DCHECK(connector);
+  content::mojom::DatabasePtr database_provider;
+  connector->BindInterface(content::mojom::Database::Name_,
+                           mojo::MakeRequest(&database_provider));
+  database_provider->UpdateSize(origin, database_name, database_size);
 }
 
 void DatabaseMessageFilter::OnDatabaseModified(
@@ -406,20 +416,34 @@ void DatabaseMessageFilter::OnDatabaseSizeChanged(
     const base::string16& database_name,
     int64_t database_size) {
   DCHECK(db_tracker_->task_runner()->RunsTasksInCurrentSequence());
-  if (database_connections_.IsOriginUsed(origin_identifier)) {
-    Send(new DatabaseMsg_UpdateSize(
-        url::Origin(storage::GetOriginFromIdentifier(origin_identifier)),
-        database_name, database_size));
+  if (!database_connections_.IsOriginUsed(origin_identifier)) {
+    return;
   }
+
+  service_manager::Connector* connector =
+      ServiceManagerConnection::GetForProcess()->GetConnector();
+  DCHECK(connector);
+  content::mojom::DatabasePtr database_provider;
+  connector->BindInterface(content::mojom::Database::Name_,
+                           mojo::MakeRequest(&database_provider));
+  database_provider->UpdateSize(
+      url::Origin(storage::GetOriginFromIdentifier(origin_identifier)),
+      database_name, database_size);
 }
 
 void DatabaseMessageFilter::OnDatabaseScheduledForDeletion(
     const std::string& origin_identifier,
     const base::string16& database_name) {
   DCHECK(db_tracker_->task_runner()->RunsTasksInCurrentSequence());
-  Send(new DatabaseMsg_CloseImmediately(
+  service_manager::Connector* connector =
+      ServiceManagerConnection::GetForProcess()->GetConnector();
+  DCHECK(connector);
+  content::mojom::DatabasePtr database_provider;
+  connector->BindInterface(content::mojom::Database::Name_,
+                           mojo::MakeRequest(&database_provider));
+  database_provider->CloseImmediately(
       url::Origin(storage::GetOriginFromIdentifier(origin_identifier)),
-      database_name));
+      database_name);
 }
 
 }  // namespace content
