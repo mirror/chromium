@@ -87,6 +87,12 @@ bool MidiHost::OnMessageReceived(const IPC::Message& message) {
 }
 
 void MidiHost::OnStartSession() {
+  if (is_session_requested_) {
+    bad_message::ReceivedBadMessage(this,
+                                    bad_message::MH_INVALID_START_REQUEST);
+    return;
+  }
+
   is_session_requested_ = true;
   if (midi_service_)
     midi_service_->StartSession(this);
@@ -95,6 +101,11 @@ void MidiHost::OnStartSession() {
 void MidiHost::OnSendData(uint32_t port,
                           const std::vector<uint8_t>& data,
                           double timestamp) {
+  if (!is_session_requested_) {
+    bad_message::ReceivedBadMessage(this, bad_message::MH_INVALID_SEND_REQUEST);
+    return;
+  }
+
   {
     base::AutoLock auto_lock(output_port_count_lock_);
     if (output_port_count_ <= port) {
@@ -132,6 +143,11 @@ void MidiHost::OnSendData(uint32_t port,
 }
 
 void MidiHost::OnEndSession() {
+  if (!is_session_requested_) {
+    bad_message::ReceivedBadMessage(this, bad_message::MH_INVALID_END_REQUEST);
+    return;
+  }
+
   is_session_requested_ = false;
   if (midi_service_)
     midi_service_->EndSession(this);
