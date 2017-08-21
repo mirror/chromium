@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8192f69d_6a6f0c57",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-21T14:51:15Z",
+      "side": 1,
+      "message": "seems weird that you have to call set_small_image and set_vector_small_image; why not add a color parameter to the latter (or use the accent color)",
+      "range": {
+        "startLine": 621,
+        "startChar": 18,
+        "endLine": 621,
+        "endChar": 40
+      },
+      "revId": "1f32576d82fb0bf6c458f71c7baa9509e264d119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
