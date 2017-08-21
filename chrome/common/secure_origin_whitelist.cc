@@ -11,13 +11,11 @@
 
 std::vector<GURL> GetSecureOriginWhitelist() {
   std::vector<GURL> origins;
-  // If kUnsafelyTreatInsecureOriginAsSecure option is given and
-  // kUserDataDir is present, add the given origins as trustworthy
-  // for whitelisting.
+  // If kUnsafelyTreatInsecureOriginAsSecure option is given, then treat the
+  // value as a comma-separated list of origins:
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
-  if (command_line.HasSwitch(switches::kUnsafelyTreatInsecureOriginAsSecure) &&
-      command_line.HasSwitch(switches::kUserDataDir)) {
+  if (command_line.HasSwitch(switches::kUnsafelyTreatInsecureOriginAsSecure)) {
     std::string origins_str = command_line.GetSwitchValueASCII(
         switches::kUnsafelyTreatInsecureOriginAsSecure);
     for (const std::string& origin : base::SplitString(
