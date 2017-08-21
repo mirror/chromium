@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd066495_ea216cc5",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-21T20:28:09Z",
+      "side": 1,
+      "message": "Adding a function in zucchini to deal with FilePath.",
+      "parentUuid": "bdc23c8d_a566721c",
+      "revId": "030261dd6abff00c87bd1ba04f499b0068bd8a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c819342_0a63cf99",
         "filename": "chrome/installer/setup/archive_patch_helper.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "030261dd6abff00c87bd1ba04f499b0068bd8a1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3277b4d_ffe10116",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-21T20:28:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c819342_0a63cf99",
+      "range": {
+        "startLine": 99,
+        "startChar": 25,
+        "endLine": 99,
+        "endChar": 31
+      },
+      "revId": "030261dd6abff00c87bd1ba04f499b0068bd8a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "82f9a798_90c34d22",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-21T20:28:09Z",
+      "side": 1,
+      "message": "That\u0027s a mistake.",
+      "parentUuid": "3e852a25_1f341548",
+      "range": {
+        "startLine": 106,
+        "startChar": 47,
+        "endLine": 106,
+        "endChar": 60
+      },
+      "revId": "030261dd6abff00c87bd1ba04f499b0068bd8a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7a9b1ec_23ea32be",
         "filename": "chrome/installer/setup/archive_patch_helper.cc",
         "patchSetId": 3
@@ -76,6 +142,24 @@
       "writtenOn": "2017-08-21T08:57:32Z",
       "side": 1,
       "message": "i think |new_file| should be closed before the delete attempt since it doesn\u0027t appear to be opened with SHARE_DELETE. alternatively, you could open it with FLAG_CAN_DELETE_ON_CLOSE, immediately call DeleteOnClose(true) so that it automagically disappears in case of any error (including process crash), and then call DeleteOnClose(false) just before the success exit on line 139. this makes the DeleteFile here unnecessary.",
+      "revId": "030261dd6abff00c87bd1ba04f499b0068bd8a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a46bfc61_9d970f9d",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-21T20:28:09Z",
+      "side": 1,
+      "message": "new_file is now close (when it exits scope) before deleting file. I\u0027m keeping DeleteFile though, because it can not easily be done inside zucchini::Apply:\n- DeleteOnClose is windows specific\n- We don\u0027t have direct access on the base::File object through MemoryMappedFile.",
+      "parentUuid": "c7a9b1ec_23ea32be",
       "revId": "030261dd6abff00c87bd1ba04f499b0068bd8a1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
