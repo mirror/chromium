@@ -5,11 +5,29 @@
 #include "gpu/command_buffer/service/service_discardable_manager.h"
 
 #include "base/memory/singleton.h"
+#include "base/sys_info.h"
+#include "build/build_config.h"
 #include "gpu/command_buffer/service/texture_manager.h"
 
 namespace gpu {
-
-const size_t ServiceDiscardableManager::kMaxSize;
+namespace {
+// Cache size values are designed to roughly correspond to existing image cache
+// sizes for 2-3 renderers. These will be updated as more types of data are
+// moved to this cache. Cache size values for Android:
+#if defined(OS_ANDROID)
+const size_t kLowEndAndroidCacheSizeBytes = 512 * 1024;
+const size_t kNormalAndroidCacheSizeBytes = 128 * 1024 * 1024;
+#else
+const size_t kNormalCacheSizeBytes = 384 * 1024 * 1024;
+#if !defined(OS_LINUX)
+const size_t kHighMemoryMaxCacheSizeBytes = 512 * 1024 * 1024;
+// Device ram threshold at which we move from a normal cache to a
+// high-memory-usage cache. While this is a GPU memory cache,
+// we can't read GPU memory reliably, so we use system ram as a proxy.
+const int kHighMemoryCacheSizeMemoryThresholdMB = 4 * 1024;
+#endif  // !defined(OS_LINUX)
+#endif  // defined(OS_ANDROID)
+}  // namespace
 
 ServiceDiscardableManager::GpuDiscardableEntry::GpuDiscardableEntry(
     ServiceDiscardableHandle handle,
@@ -23,7 +41,27 @@ ServiceDiscardableManager::GpuDiscardableEntry::~GpuDiscardableEntry() =
     default;
 
 ServiceDiscardableManager::ServiceDiscardableManager()
-    : entries_(EntryCache::NO_AUTO_EVICT) {}
+    : entries_(EntryCache::NO_AUTO_EVICT) {
+#if defined(OS_ANDROID)
+  if (base::SysInfo::IsLowEndDevice()) {
+    cache_size_limit_ = kLowEndAndroidCacheSizeBytes;
+  } else {
+    cache_size_limit_ = kNormalAndroidCacheSizeBytes;
+  }
+#elif !defined(OS_LINUX)
+  if (base::SysInfo::AmountOfPhysicalMemoryMB() <
+      kHighMemoryCacheSizeMemoryThresholdMB) {
+    cache_size_limit_ = kNormalCacheSizeBytes;
+  } else {
+    cache_size_limit_ = kHighMemoryMaxCacheSizeBytes;
+  }
+#else
+  // TODO(ericrk): AmountOfPhysicalMemoryMB is broken on linux, so just use the
+  // base value here. crbug.com/743271
+  cache_size_limit_ = kNormalCacheSizeBytes;
+#endif
+}
+
 ServiceDiscardableManager::~ServiceDiscardableManager() {
 #if DCHECK_IS_ON()
   for (const auto& entry : entries_) {
@@ -132,7 +170,7 @@ void ServiceDiscardableManager::OnTextureSizeChanged(
 
 void ServiceDiscardableManager::EnforceLimits() {
   for (auto it = entries_.rbegin(); it != entries_.rend();) {
-    if (total_size_ <= kMaxSize) {
+    if (total_size_ <= cache_size_limit_) {
       return;
     }
     if (!it->second.handle.Delete()) {
