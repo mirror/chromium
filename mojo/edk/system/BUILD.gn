@@ -190,6 +190,10 @@ test("mojo_system_unittests") {
     "//testing/gtest",
   ]
 
+  if (is_android) {
+    deps += [ "//mojo/edk/test:test_support_java" ]
+  }
+
   allow_circular_includes_from = [ "//mojo/edk/embedder:embedder_unittests" ]
 }
 
