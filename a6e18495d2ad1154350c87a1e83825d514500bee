@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b114521_6e905afd",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-21T16:50:40Z",
+      "side": 1,
+      "message": "s/Return/Returns",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 9
+      },
+      "revId": "a6e18495d2ad1154350c87a1e83825d514500bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb08b6fd_cd01fced",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-21T16:50:40Z",
+      "side": 1,
+      "message": "nit: s/URL/Url\n\nChrome code is very inconsistent with this however.",
+      "range": {
+        "startLine": 22,
+        "startChar": 15,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "a6e18495d2ad1154350c87a1e83825d514500bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b77fd626_f86786cc",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-21T16:50:40Z",
+      "side": 1,
+      "message": "You can move these key to credential_manager_util.h header, there is no need to duplicate them.\n\nFrom Unit Testing Best Practices (doc I linked in the previous round): \"Though increasing visibility should be avoided for methods, it\u0027s generally fine on constants to help keep tests in sync as those constants change.\"",
+      "range": {
+        "startLine": 37,
+        "startChar": 20,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "a6e18495d2ad1154350c87a1e83825d514500bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a041a0_370fa180",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-21T16:50:40Z",
+      "side": 1,
+      "message": "nit: No need for this, no one is going to copy text fixture anyway.",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 26
+      },
+      "revId": "a6e18495d2ad1154350c87a1e83825d514500bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
