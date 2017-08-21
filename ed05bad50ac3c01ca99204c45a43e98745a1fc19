@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "826e2f60_e72cdb88",
+        "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-08-21T21:21:20Z",
+      "side": 1,
+      "message": "It does move in master, just not enough.",
+      "parentUuid": "397a784a_4f60e0aa",
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24bab9db_f699cf51",
         "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
         "patchSetId": 3
@@ -126,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "8ec49b02_7c76e415",
+        "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1586,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-08-21T21:21:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2b1848ba_98e1d98e",
+      "range": {
+        "startLine": 1586,
+        "startChar": 0,
+        "endLine": 1586,
+        "endChar": 2
+      },
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4757bfdd_483112ae",
         "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
         "patchSetId": 3
@@ -137,6 +179,30 @@
       "writtenOn": "2017-08-21T17:25:26Z",
       "side": 1,
       "message": "I tend to think this test is overkill and is likely to be more pain to keep working. All you want to verify is that display::Screen::GetScreen()-\u003eScreenToDIPRectInWindow is called. Surely there is a more direct way to verify that?",
+      "range": {
+        "startLine": 1591,
+        "startChar": 0,
+        "endLine": 1591,
+        "endChar": 65
+      },
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a15bf6d_a7ef446c",
+        "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1591,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-08-21T21:21:20Z",
+      "side": 1,
+      "message": "But what if in future this behavior changes (afaik there is a lot of refactoring involving DIPs in Aura/Views), and also then we can\u0027t run the test for Macs?",
+      "parentUuid": "4757bfdd_483112ae",
       "range": {
         "startLine": 1591,
         "startChar": 0,
