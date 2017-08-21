@@ -102,6 +102,8 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   bool IsDisplayNone() const override { return !embedded_content_view_; }
   AtomicString Csp() const override { return g_null_atom; }
   const WebParsedFeaturePolicy& ContainerPolicy() const override;
+  bool IsPaused() const { return paused_; }
+  void SetPaused(bool paused) { paused_ = paused; }
 
   // For unit tests, manually trigger the UpdateContainerPolicy method.
   void UpdateContainerPolicyForTests() { UpdateContainerPolicy(); }
@@ -153,6 +155,8 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   Member<Frame> content_frame_;
   Member<EmbeddedContentView> embedded_content_view_;
   SandboxFlags sandbox_flags_;
+
+  bool paused_;
 
   WebParsedFeaturePolicy container_policy_;
 };

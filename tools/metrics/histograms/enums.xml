@@ -23300,6 +23300,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-650504533" label="enable-speculative-launch-service-worker"/>
   <int value="-650176557" label="OfflinePagesSvelteConcurrentLoading:enabled"/>
   <int value="-649956990" label="enable-harfbuzz-rendertext"/>
+  <int value="-649805959" label="FrameSizeFeature:disabled"/>
   <int value="-645455405" label="MacViewsNativeDialogs:enabled"/>
   <int value="-641719457" label="disable-compositor-touch-hit-testing"/>
   <int value="-631740127" label="inert-visual-viewport"/>
@@ -23747,6 +23748,7 @@ from previous Chrome versions.
   <int value="851085848" label="enable-settings-window"/>
   <int value="854730848" label="disable-app-info-dialog-mac"/>
   <int value="855746780" label="disable-physical-keyboard-autocorrect"/>
+  <int value="856415051" label="FrameSizeFeature:enabled"/>
   <int value="857445869" label="enable-captive-portal-bypass-proxy"/>
   <int value="862453793" label="TranslateUI2016Q2:enabled"/>
   <int value="867512869" label="mark-non-secure-as"/>

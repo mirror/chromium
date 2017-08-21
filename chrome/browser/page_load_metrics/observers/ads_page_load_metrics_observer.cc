@@ -15,11 +15,15 @@
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
+#include "net/base/network_change_notifier.h"
 #include "url/gurl.h"
 
 namespace {
 
 const base::Feature kAdsFeature{"AdsMetrics", base::FEATURE_ENABLED_BY_DEFAULT};
+
+const int64_t kMaxWifiFrameSizeBytes = 1;      // 1 * 1024;
+const int64_t kMaxCellularFrameSizeBytes = 1;  // 3 * 1024;
 
 #define ADS_HISTOGRAM(suffix, hist_macro, ad_type, value)                  \
   switch (ad_type) {                                                       \
@@ -138,6 +142,19 @@ void AdsPageLoadMetricsObserver::OnDidFinishSubFrameNavigation(
       navigation_handle->GetParentFrame();
 
   AdTypes ad_types = DetectAds(navigation_handle);
+
+  if (navigation_handle->HasCommitted() && ad_types.test(AD_TYPE_GOOGLE)) {
+    content::RenderFrameHost* render_frame_host =
+        navigation_handle->GetRenderFrameHost();
+    if (render_frame_host) {
+      LOG(ERROR) << "Setting size policy";
+      render_frame_host->SetSizePolicy(
+          net::NetworkChangeNotifier::IsConnectionCellular(
+              net::NetworkChangeNotifier::GetConnectionType())
+              ? kMaxCellularFrameSizeBytes
+              : kMaxWifiFrameSizeBytes);
+    }
+  }
 
   const auto& id_and_data = ad_frames_data_.find(frame_tree_node_id);
   if (id_and_data != ad_frames_data_.end()) {

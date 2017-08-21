@@ -97,6 +97,11 @@ const base::Feature kFramebustingNeedsSameOriginOrUserGesture{
     "FramebustingNeedsSameOriginOrUserGesture",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
+// When enabled, frames that have been given a byte limit will pause after
+// fetching that many bytes over the network.
+const base::Feature kFrameSizeFeature{"FrameSizeFeature",
+                                      base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables extended Gamepad API features like motion tracking and haptics.
 const base::Feature kGamepadExtensions{"GamepadExtensions",
                                        base::FEATURE_DISABLED_BY_DEFAULT};

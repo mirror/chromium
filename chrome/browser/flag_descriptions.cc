@@ -321,6 +321,10 @@ const char kEnableEnumeratingAudioDevicesName[] =
 const char kEnableEnumeratingAudioDevicesDescription[] =
     "Experimentally enable the use of enumerating audio devices.";
 
+const char kEnableFrameSizeLimitName[] = "Default Size Policy";
+const char kEnableFrameSizeLimitDescription[] =
+    "Experiment with putting size limits on frames by default";
+
 const char kEnableGenericSensorName[] = "Generic Sensor";
 const char kEnableGenericSensorDescription[] =
     "Enable sensor APIs based on Generic Sensor API.";

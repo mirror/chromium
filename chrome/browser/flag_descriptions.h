@@ -216,6 +216,9 @@ extern const char kEnableDesktopPWAWindowingDescription[];
 extern const char kEnableEnumeratingAudioDevicesName[];
 extern const char kEnableEnumeratingAudioDevicesDescription[];
 
+extern const char kEnableFrameSizeLimitName[];
+extern const char kEnableFrameSizeLimitDescription[];
+
 extern const char kEnableGenericSensorName[];
 extern const char kEnableGenericSensorDescription[];
 

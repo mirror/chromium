@@ -508,6 +508,10 @@ class WebLocalFrame : public WebFrame {
 
   virtual void SetCaretVisible(bool) = 0;
 
+  // Pauses the frame's task queues if |should_pause| is true, else resumes
+  // the frame.
+  virtual void SetPaused(bool should_pause) = 0;
+
   // Moves the selection extent point. This function does not allow the
   // selection to collapse. If the new extent is set to the same position as
   // the current base, this function will do nothing.

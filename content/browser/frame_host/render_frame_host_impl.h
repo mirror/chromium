@@ -199,6 +199,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
       blink::WebSuddenTerminationDisablerType disabler_type) override;
 
   bool IsFeatureEnabled(blink::WebFeaturePolicyFeature feature) override;
+  void SetSizePolicy(int64_t max_bytes) override;
+  void PauseFrame(bool should_pause) override;
 
   // mojom::FrameHostInterfaceBroker
   void GetInterfaceProvider(

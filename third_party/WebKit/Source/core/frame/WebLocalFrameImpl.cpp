@@ -108,6 +108,7 @@
 #include "core/dom/Node.h"
 #include "core/dom/NodeTraversal.h"
 #include "core/dom/ShadowRoot.h"
+#include "core/dom/StyleChangeReason.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
@@ -1355,6 +1356,17 @@ void WebLocalFrameImpl::DeleteSurroundingTextInCodePoints(int before,
 
 void WebLocalFrameImpl::SetCaretVisible(bool visible) {
   GetFrame()->Selection().SetCaretVisible(visible);
+}
+
+void WebLocalFrameImpl::SetPaused(bool should_pause) {
+  if (!GetFrame()->GetDocument()->LocalOwner())
+    return;
+
+  Scheduler()->SetPaused(should_pause);
+  GetFrame()->GetDocument()->LocalOwner()->SetPaused(should_pause);
+  GetFrame()->GetDocument()->LocalOwner()->SetNeedsStyleRecalc(
+      kLocalStyleChange, StyleChangeReasonForTracing::Create(
+                             StyleChangeReason::kStyleInvalidator));
 }
 
 VisiblePosition WebLocalFrameImpl::VisiblePositionForViewportPoint(

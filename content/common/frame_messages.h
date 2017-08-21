@@ -730,6 +730,10 @@ IPC_MESSAGE_ROUTED1(FrameMsg_VisualStateRequest, uint64_t /* id */)
 // Instructs the renderer to delete the RenderFrame.
 IPC_MESSAGE_ROUTED0(FrameMsg_Delete)
 
+// Requests that the frame pause its script queues. True to pause, false to
+// resume.
+IPC_MESSAGE_ROUTED1(FrameMsg_Pause, bool /* should_pause */)
+
 // Tells the renderer to perform the specified navigation, interrupting any
 // existing navigation.
 IPC_MESSAGE_ROUTED3(FrameMsg_Navigate,

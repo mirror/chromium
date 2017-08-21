@@ -1667,6 +1667,7 @@ bool RenderFrameImpl::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameMsg_UpdateOpener, OnUpdateOpener)
     IPC_MESSAGE_HANDLER(FrameMsg_CommitNavigation, OnCommitNavigation)
     IPC_MESSAGE_HANDLER(FrameMsg_DidUpdateFramePolicy, OnDidUpdateFramePolicy)
+    IPC_MESSAGE_HANDLER(FrameMsg_Pause, OnPauseFrame)
     IPC_MESSAGE_HANDLER(FrameMsg_SetFrameOwnerProperties,
                         OnSetFrameOwnerProperties)
     IPC_MESSAGE_HANDLER(FrameMsg_AdvanceFocus, OnAdvanceFocus)
@@ -2302,6 +2303,10 @@ void RenderFrameImpl::OnDidUpdateFramePolicy(
     const ParsedFeaturePolicyHeader& container_policy) {
   frame_->SetFrameOwnerPolicy(flags,
                               FeaturePolicyHeaderToWeb(container_policy));
+}
+
+void RenderFrameImpl::OnPauseFrame(bool should_pause) {
+  frame_->SetPaused(should_pause);
 }
 
 void RenderFrameImpl::OnSetFrameOwnerProperties(

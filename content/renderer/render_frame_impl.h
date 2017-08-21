@@ -960,6 +960,7 @@ class CONTENT_EXPORT RenderFrameImpl
   void OnDidUpdateFramePolicy(
       blink::WebSandboxFlags flags,
       const ParsedFeaturePolicyHeader& container_policy);
+  void OnPauseFrame(bool should_pause);
   void OnSetFrameOwnerProperties(
       const FrameOwnerProperties& frame_owner_properties);
   void OnAdvanceFocus(blink::WebFocusType type, int32_t source_routing_id);

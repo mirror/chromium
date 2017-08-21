@@ -208,6 +208,7 @@ class CORE_EXPORT WebLocalFrameImpl final
   void DeleteSurroundingText(int before, int after) override;
   void DeleteSurroundingTextInCodePoints(int before, int after) override;
   void SetCaretVisible(bool) override;
+  void SetPaused(bool should_pause) override;
   int PrintBegin(const WebPrintParams&,
                  const WebNode& constrain_to_node) override;
   float PrintPage(int page_to_print, WebCanvas*) override;
@@ -288,6 +289,7 @@ class CORE_EXPORT WebLocalFrameImpl final
   void DidCallAddSearchProvider() override;
   void DidCallIsSearchProviderInstalled() override;
   void ReplaceSelection(const WebString&) override;
+
   void RequestFind(int identifier,
                    const WebString& search_text,
                    const WebFindOptions&) override;

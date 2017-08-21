@@ -212,13 +212,23 @@ static void AdjustStyleForHTMLElement(ComputedStyle& style,
       style.SetTextAlign(ETextAlign::kStart);
     return;
   }
-
   if (isHTMLFrameElement(element) || isHTMLFrameSetElement(element)) {
     // Frames and framesets never honor position:relative or position:absolute.
     // This is necessary to fix a crash where a site tries to position these
     // objects. They also never honor display.
     style.SetPosition(EPosition::kStatic);
     style.SetDisplay(EDisplay::kBlock);
+  }
+
+  if (isHTMLIFrameElement(element)) {
+    HTMLFrameOwnerElement& frame_owner = ToHTMLFrameOwnerElement(element);
+    if (frame_owner.IsPaused()) {
+      style.SetOpacity(0.33);
+      FilterOperations::FilterOperationVector& filter_ops =
+          style.MutableFilter().Operations();
+      filter_ops.push_back(BasicColorMatrixFilterOperation::Create(
+          1.0, FilterOperation::GRAYSCALE));
+    }
     return;
   }
 

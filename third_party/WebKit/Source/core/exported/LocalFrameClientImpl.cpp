@@ -1024,6 +1024,9 @@ void LocalFrameClientImpl::SetHasReceivedUserGesture(bool received_previously) {
   // event in a child frame.
   if (WebAutofillClient* autofill_client = web_frame_->AutofillClient())
     autofill_client->UserGestureObserved();
+
+  // If the frame is paused and it receives a user gesture, unpause it.
+  web_frame_->SetPaused(false);
 }
 
 void LocalFrameClientImpl::SetDevToolsFrameId(const String& devtools_frame_id) {

@@ -320,14 +320,13 @@ void NotifyForEachFrameFromUI(
                         const GlobalFrameRoutingId&)> frame_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  FrameTree* frame_tree = static_cast<RenderFrameHostImpl*>(root_frame_host)
-                              ->frame_tree_node()
-                              ->frame_tree();
-  DCHECK_EQ(root_frame_host, frame_tree->GetMainFrame());
+  FrameTreeNode* frame_tree_node =
+      static_cast<RenderFrameHostImpl*>(root_frame_host)->frame_tree_node();
+  FrameTree* frame_tree = frame_tree_node->frame_tree();
 
   std::unique_ptr<std::set<GlobalFrameRoutingId>> routing_ids(
       new std::set<GlobalFrameRoutingId>());
-  for (FrameTreeNode* node : frame_tree->Nodes()) {
+  for (FrameTreeNode* node : frame_tree->SubtreeNodes(frame_tree_node)) {
     RenderFrameHostImpl* frame_host = node->current_frame_host();
     RenderFrameHostImpl* pending_frame_host =
         IsBrowserSideNavigationEnabled()
@@ -2135,6 +2134,14 @@ bool RenderFrameHostImpl::IsFeatureEnabled(
     blink::WebFeaturePolicyFeature feature) {
   return feature_policy_ && feature_policy_->IsFeatureEnabledForOrigin(
                                 feature, GetLastCommittedOrigin());
+}
+
+void RenderFrameHostImpl::SetSizePolicy(int64_t max_bytes) {
+  frame_tree_node_->set_size_policy_bytes_remaining(max_bytes);
+}
+
+void RenderFrameHostImpl::PauseFrame(bool should_pause) {
+  Send(new FrameMsg_Pause(routing_id_, should_pause));
 }
 
 void RenderFrameHostImpl::OnDidAccessInitialDocument() {

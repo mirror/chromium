@@ -3351,6 +3351,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kPwaMinimalUiDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(features::kPwaMinimalUi)},
 
+    {"frame-size-limit", flag_descriptions::kEnableFrameSizeLimitName,
+     flag_descriptions::kEnableFrameSizeLimitDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kFrameSizeFeature)},
+
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
     // enums.xml and don't forget to run AboutFlagsHistogramTest unit test.

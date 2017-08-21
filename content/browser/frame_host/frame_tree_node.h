@@ -258,6 +258,14 @@ class CONTENT_EXPORT FrameTreeNode {
     frame_owner_properties_ = frame_owner_properties;
   }
 
+  void set_size_policy_bytes_remaining(int64_t bytes_remaining) {
+    if (size_policy_bytes_remaining_ &&
+        size_policy_bytes_remaining_.value() < bytes_remaining) {
+      return;
+    }
+    size_policy_bytes_remaining_ = base::Optional<int64_t>(bytes_remaining);
+  }
+
   bool HasSameOrigin(const FrameTreeNode& node) const {
     return replication_state_.origin.IsSameOriginWith(
         node.replication_state_.origin);
@@ -351,6 +359,10 @@ class CONTENT_EXPORT FrameTreeNode {
   FrameTreeNodeBlameContext& blame_context() { return blame_context_; }
 
   void OnSetHasReceivedUserGesture();
+
+  // Called when a network request made on behalf of this frame has completed.
+  // Used to enforce Transfer Size Policy.
+  void NotifyNetworkBytesRead(int network_response_bytes_read);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(SitePerProcessFeaturePolicyBrowserTest,
@@ -452,6 +464,16 @@ class CONTENT_EXPORT FrameTreeNode {
   base::ObserverList<Observer> observers_;
 
   base::TimeTicks last_focus_time_;
+
+  // If this frame has a size policy set (which can only be set once), this
+  // member stores the remaining number of network bytes remaining before the
+  // frame is in violation.
+  base::Optional<int64_t> size_policy_bytes_remaining_;
+
+  // Points to the nearest ancestor frame with a size policy, if any. The raw
+  // pointer is safe given that for this frame to exist, its ancestors must as
+  // well.
+  FrameTreeNode* size_policy_ancestor_frame_;
 
   // A helper for tracing the snapshots of this FrameTreeNode and attributing
   // browser process activities to this node (when possible).  It is unrelated
