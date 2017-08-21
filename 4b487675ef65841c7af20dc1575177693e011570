@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9afc5bb8_92104ae2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-21T03:39:49Z",
+      "side": 1,
+      "message": "I think this theory (lines 11-16) is invalid.\nInvalidating all the shadow tree (under a certain shadow root) and\ninvalidating the shadow host is completely different thing.",
+      "revId": "4b487675ef65841c7af20dc1575177693e011570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fa480bb_08426963",
         "filename": "third_party/WebKit/Source/core/css/invalidation/InvalidationSet.h",
         "patchSetId": 8
