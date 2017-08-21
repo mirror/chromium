@@ -251,6 +251,7 @@ filelist.handleTap = function(e, index, eventType) {
     sm.leadIndex = index;
     sm.anchorIndex = index;
     sm.endChange();
+    filelist.focusParentList(e);
     return true;
   } else if (sm.multiple && (eventType == FileTapHandler.TapEvent.LONG_PRESS)) {
     sm.beginChange();
@@ -263,6 +264,7 @@ filelist.handleTap = function(e, index, eventType) {
     sm.leadIndex = index;
     sm.anchorIndex = index;
     sm.endChange();
+    filelist.focusParentList(e);
     return true;
     // Do not toggle selection yet, so as to avoid unselecting before drag.
   } else if (
@@ -494,5 +496,19 @@ filelist.handleKeyDown = function(e) {
 
     if (prevent)
       e.preventDefault();
+  }
+};
+
+/**
+ * Focus on the file list that contains the event target.
+ * @param {!Event} event the touch event.
+ */
+filelist.focusParentList = function(event) {
+  var element = event.target;
+  while (element && element.id != 'file-list') {
+    element = element.parentElement;
+  }
+  if (element) {
+    element.focus();
   }
 };
