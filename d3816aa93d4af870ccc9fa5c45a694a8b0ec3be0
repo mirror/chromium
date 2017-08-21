@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83ba761a_223f9621",
+        "filename": "chrome/common/profiling/memlog.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-21T19:52:12Z",
+      "side": 1,
+      "message": "Nit: 80 chars\n\n(I guess we should make these autoformatted somehow...)",
+      "revId": "d3816aa93d4af870ccc9fa5c45a694a8b0ec3be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aaa0c8d_8bf58fc2",
+        "filename": "chrome/profiling/json_exporter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-21T19:52:12Z",
+      "side": 1,
+      "message": "zomg streams",
+      "revId": "d3816aa93d4af870ccc9fa5c45a694a8b0ec3be0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
