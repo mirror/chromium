@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97ab2b07_4cc1af03",
+        "filename": "chrome/browser/media/router/media_router_feature.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-21T21:40:52Z",
+      "side": 1,
+      "message": "Should we simply say\n return !Profile::FromBrowserContext(context)-\u003eIsGuestSession();\n?",
+      "revId": "37de906f97be7e8d5e50b955051302d940a13e59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
