@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5191983e_1048c8c7",
+        "filename": "third_party/WebKit/Source/core/dom/NamedNodeMap.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-21T15:43:15Z",
+      "side": 1,
+      "message": "Hmm. This looks a bit inefficient because it needs to search the vector linearly.",
+      "revId": "6189bae5ecf843c7708990812af76eeeba0a1a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d623a29c_bfc41933",
+        "filename": "third_party/WebKit/Source/core/html/HTMLAllCollection.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-21T15:43:15Z",
+      "side": 1,
+      "message": "Won\u0027t this change a web-exposed behavior? The named getter doesn\u0027t have [NotEnumerable].",
+      "revId": "6189bae5ecf843c7708990812af76eeeba0a1a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0b599e_d3b86fa5",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCollection.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-21T15:43:15Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "6189bae5ecf843c7708990812af76eeeba0a1a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
