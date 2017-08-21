@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a69df8a_f8a4cb05",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-21T16:03:04Z",
+      "side": 1,
+      "message": "General comment: Any time we add another place where we create a cached_sk_image_, it makes it harder in the future to deal with the decoder directly, since we no longer know whether the raw parameters (decoder, paint record, etc) correspond to the cached sk image. Is it possible to instead simply reset the cached_sk_image_ here and add code to GetSkImage to consider the subset rect?\n\nTo clarify, I\u0027m fine with how this is now, since it accomplishes the goal. However, I can see us having bugs in the future because we forgot that we can\u0027t just regenerate cached_sk_image_ because it might have been subset. Do you think it\u0027s worth to making this more robust and limiting the places where we create a cached sk image?",
+      "range": {
+        "startLine": 75,
+        "startChar": 9,
+        "endLine": 75,
+        "endChar": 25
+      },
+      "revId": "68483234e0544e56ff44f919dc5a4dbb7b18afc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
