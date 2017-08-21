@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "ede9898a_b2e2bc8e",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-21T20:58:44Z",
+      "side": 1,
+      "message": "task \u003d std::make_unique\u003cTask\u003e(...)",
+      "range": {
+        "startLine": 79,
+        "startChar": 26,
+        "endLine": 79,
+        "endChar": 31
+      },
+      "revId": "55f24be2b05316abf71ab6683b38f1e654da0b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ecfa647_5f5933ba",
+        "filename": "base/task_scheduler/scheduler_worker_pool.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-21T20:58:44Z",
+      "side": 1,
+      "message": "Nit: Alphabetize.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 25
+      },
+      "revId": "55f24be2b05316abf71ab6683b38f1e654da0b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1b900e3_e3610cc4",
         "filename": "base/task_scheduler/scheduler_worker_pool.h",
         "patchSetId": 6
