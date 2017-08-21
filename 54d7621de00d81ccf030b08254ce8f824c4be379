@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c2bbd75_a56322a3",
+        "filename": "components/policy/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-21T17:51:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b6814ad_4795fd81",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 52
+      },
+      "revId": "54d7621de00d81ccf030b08254ce8f824c4be379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2244aec_67b98b7f",
         "filename": "components/policy/BUILD.gn",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "54d7621de00d81ccf030b08254ce8f824c4be379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2f052f_8c73906f",
+        "filename": "components/policy/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-21T17:51:14Z",
+      "side": 1,
+      "message": "It needs to compile device_off_hours_controller.h",
+      "parentUuid": "a2244aec_67b98b7f",
+      "range": {
+        "startLine": 325,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 3
+      },
+      "revId": "54d7621de00d81ccf030b08254ce8f824c4be379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
