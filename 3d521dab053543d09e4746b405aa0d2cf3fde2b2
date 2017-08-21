@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8241716a_0cbfed73",
+        "filename": "ios/web_view/public/cwv_navigation_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-08-21T06:45:14Z",
+      "side": 1,
+      "message": "Can you clarify in the comment that this method is called only on success, not failure?",
+      "range": {
+        "startLine": 38,
+        "startChar": 54,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "3d521dab053543d09e4746b405aa0d2cf3fde2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2cf0351_73650fad",
+        "filename": "ios/web_view/public/cwv_navigation_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-08-21T06:45:14Z",
+      "side": 1,
+      "message": "I\u0027m not an expert of Obj-C naming convention, but this may be more natural?:\n- (void)webView:(CWVWebView*)webView didFailNavigationWithError:(NSError*)error;\n\nTo be closer to the equivalent in WKWebView:\nhttps://developer.apple.com/documentation/webkit/wknavigationdelegate/1455623-webview?language\u003dobjc",
+      "range": {
+        "startLine": 42,
+        "startChar": 76,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "3d521dab053543d09e4746b405aa0d2cf3fde2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
