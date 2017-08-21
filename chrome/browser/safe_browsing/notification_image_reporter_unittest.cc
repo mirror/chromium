@@ -18,12 +18,16 @@
 #include "components/safe_browsing_db/test_database_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "url/gurl.h"
 
 using content::BrowserThread;
+
+using testing::_;
+using testing::Return;
 
 namespace safe_browsing {
 
@@ -68,7 +72,8 @@ class TestingNotificationImageReporter : public NotificationImageReporter {
 
 class FakeSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
  public:
-  bool MatchCsdWhitelistUrl(const GURL& url) override { return false; }
+  MOCK_METHOD2(CheckCsdWhitelistUrl,
+               AsyncMatch(const GURL&, SafeBrowsingDatabaseManager::Client*));
 
  private:
   ~FakeSafeBrowsingDatabaseManager() override {}
@@ -129,8 +134,11 @@ void NotificationImageReporterTest::SetUp() {
 
   // Initialize SafeBrowsingService with FakeSafeBrowsingDatabaseManager.
   TestSafeBrowsingServiceFactory sb_service_factory;
-  sb_service_factory.SetTestDatabaseManager(
-      new FakeSafeBrowsingDatabaseManager());
+  FakeSafeBrowsingDatabaseManager* database_manager =
+      new FakeSafeBrowsingDatabaseManager();
+  EXPECT_CALL(*database_manager, CheckCsdWhitelistUrl(_, _))
+      .WillRepeatedly(Return(AsyncMatch::NO_MATCH));
+  sb_service_factory.SetTestDatabaseManager(database_manager);
   SafeBrowsingService::RegisterFactory(&sb_service_factory);
   safe_browsing_service_ = sb_service_factory.CreateSafeBrowsingService();
   SafeBrowsingService::RegisterFactory(nullptr);
