@@ -9,6 +9,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
@@ -44,6 +45,10 @@ public class TabularContextMenuViewPager extends ViewPager {
         mBackgroundDrawable.mutate();
     }
 
+    public static int getContextMenuWidthPx(Resources resources) {
+        return resources.getDisplayMetrics().widthPixels;
+    }
+
     /**
      * Used to show the full ViewPager dialog. Without this the dialog would have no height or
      * width.
@@ -56,7 +61,7 @@ public class TabularContextMenuViewPager extends ViewPager {
         // The width of the context menu is defined so that it leaves space between itself and the
         // screen's edges. It is also bounded to a max size to prevent the menu from stretching
         // across a large display (e.g. a tablet screen).
-        int appWindowWidthPx = getResources().getDisplayMetrics().widthPixels;
+        int appWindowWidthPx = getContextMenuWidthPx(getResources());
         int contextMenuWidth = Math.min(appWindowWidthPx - 2 * mContextMenuMinimumPaddingPx,
                 getResources().getDimensionPixelSize(R.dimen.context_menu_max_width));
 
