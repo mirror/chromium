@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8014eae1_986cdbcf",
+        "filename": "components/crash/content/app/crashpad.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-21T20:10:28Z",
+      "side": 1,
+      "message": "You can also make GetCrashReportsImpl() accept (nullptr, 0) and then use its return value (or that plus 5) as the initial size hint.",
+      "revId": "fadb7fcd9389de872f3104c56de0a368a273292d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
