@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59442ed6_bb7a6196",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/templates/CSSPropertyMetadata.cpp.tmpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T06:45:14Z",
+      "side": 0,
+      "message": "I wrote this, and looking at it again, this should really have been NOTREACHED()...",
+      "revId": "f14073ecc3272db6f1492bafc9359bbef31da479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

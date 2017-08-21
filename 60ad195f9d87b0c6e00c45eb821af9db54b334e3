@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63cebdda_8a2a1e23",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T06:45:14Z",
+      "side": 1,
+      "message": "Let\u0027s put the quotes directly in the template instead of concatenating strings here.\n\nAlso, let\u0027s not emit the RepetitionSeparator function if is_repeated is false, which means it doesn\u0027t matter if you pass in None here.",
+      "revId": "60ad195f9d87b0c6e00c45eb821af9db54b334e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d608ea6b_4c6fc57a",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T06:45:14Z",
+      "side": 1,
+      "message": "Again, let\u0027s not omit these at all if {{is_repeated}} is false.",
+      "revId": "60ad195f9d87b0c6e00c45eb821af9db54b334e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a651de6_3051f451",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPI.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T06:45:14Z",
+      "side": 1,
+      "message": "This should also have NOTREACHED imo.",
+      "revId": "60ad195f9d87b0c6e00c45eb821af9db54b334e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
