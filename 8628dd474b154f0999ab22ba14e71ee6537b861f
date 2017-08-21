@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2834d87_55a3f45f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-21T12:10:17Z",
+      "side": 1,
+      "message": "I\u0027d keep this inside the force conditional. No need to use the clock in the common case.",
+      "revId": "8628dd474b154f0999ab22ba14e71ee6537b861f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
