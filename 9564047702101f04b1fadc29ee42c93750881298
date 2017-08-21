@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d6ff7ba_467c1442",
+        "filename": "chrome/browser/resources/settings/controls/settings_checkbox.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-21T19:22:21Z",
+      "side": 1,
+      "message": "If we are going to make this a generic part of settings-checkbox, we should probably use querySelectorAll and modify all of them.\n\nAlternatively - can we put an event handler on the \u0027.secondary.label\u0027 div and filter out events triggered by links? i.e. if (event.target.tagName \u003d\u003d \u0027A\u0027) event.stopPropagation().",
+      "revId": "9564047702101f04b1fadc29ee42c93750881298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

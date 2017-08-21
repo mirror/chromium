@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "af357c96_7b623c08",
+        "filename": "chrome/browser/resources/settings/controls/settings_boolean_control_behavior.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-21T19:22:21Z",
+      "side": 1,
+      "message": "Not sure what you mean by \u0027all of\u0027... it\u0027s pretty small. Most of it is CSS styling specific to settings-checkbox; a more specific control may not need all of that.",
+      "parentUuid": "fae17371_430d5d10",
+      "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6015a251_8616f7b1",
         "filename": "chrome/browser/resources/settings/controls/settings_checkbox.html",
         "patchSetId": 7
@@ -139,6 +157,24 @@
       "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5bc6a3_8afdea71",
+        "filename": "chrome/browser/resources/settings/controls/settings_checkbox.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-21T19:22:21Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "93d87a1a_35fe5d4b",
+      "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
