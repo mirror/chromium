@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "477b0f8c_55e2a3ec",
+        "filename": "third_party/WebKit/Source/core/css/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T01:50:07Z",
+      "side": 0,
+      "message": "I don\u0027t see the actual file being removed from the tree in this CL, did you forget to add the change to the CL?",
+      "revId": "2134c0429447d6e1a9878e53639b83ceda812997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
