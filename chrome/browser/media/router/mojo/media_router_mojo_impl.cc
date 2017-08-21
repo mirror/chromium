@@ -15,7 +15,6 @@
 #include "base/observer_list.h"
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
-#include "chrome/browser/media/router/discovery/dial/dial_media_sink_service_proxy.h"
 #include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h"
 #include "chrome/browser/media/router/issues_observer.h"
 #include "chrome/browser/media/router/media_router_factory.h"
@@ -33,6 +32,10 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/presentation_connection_message.h"
+
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
+#include "chrome/browser/media/router/discovery/dial/dial_media_sink_service_proxy.h"
+#endif
 
 #define DVLOG_WITH_INSTANCE(level) \
   DVLOG(level) << "MR #" << instance_id_ << ": "
@@ -72,6 +75,7 @@ MediaRouterMojoImpl::MediaRouterMojoImpl(content::BrowserContext* context)
 
 MediaRouterMojoImpl::~MediaRouterMojoImpl() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   if (dial_media_sink_service_proxy_) {
     dial_media_sink_service_proxy_->Stop();
     dial_media_sink_service_proxy_->ClearObserver(
@@ -79,6 +83,7 @@ MediaRouterMojoImpl::~MediaRouterMojoImpl() {
   }
   if (cast_media_sink_service_)
     cast_media_sink_service_->Stop();
+#endif
 }
 
 void MediaRouterMojoImpl::OnConnectionError() {
@@ -807,6 +812,7 @@ void MediaRouterMojoImpl::StartDiscovery() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DVLOG_WITH_INSTANCE(1) << "StartDiscovery";
 
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   if (media_router::CastDiscoveryEnabled()) {
     if (!cast_media_sink_service_) {
       cast_media_sink_service_ = new CastMediaSinkService(
@@ -828,6 +834,7 @@ void MediaRouterMojoImpl::StartDiscovery() {
     }
     dial_media_sink_service_proxy_->Start();
   }
+#endif
 }
 
 void MediaRouterMojoImpl::UpdateMediaSinks(

@@ -87,7 +87,9 @@ void EnsureBrowserContextKeyedServiceFactoriesBuilt() {
   extensions::ContentSettingsService::GetFactoryInstance();
   extensions::CookiesAPI::GetFactoryInstance();
   extensions::DeveloperPrivateAPI::GetFactoryInstance();
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   extensions::DialAPIFactory::GetInstance();
+#endif
   extensions::EasyUnlockPrivateAPI::GetFactoryInstance();
   extensions::ExtensionActionAPI::GetFactoryInstance();
   extensions::ExtensionGarbageCollectorFactory::GetInstance();

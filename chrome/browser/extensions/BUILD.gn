@@ -164,10 +164,6 @@ static_library("extensions") {
     "api/developer_private/inspectable_views_finder.h",
     "api/developer_private/show_permissions_dialog_helper.cc",
     "api/developer_private/show_permissions_dialog_helper.h",
-    "api/dial/dial_api.cc",
-    "api/dial/dial_api.h",
-    "api/dial/dial_api_factory.cc",
-    "api/dial/dial_api_factory.h",
     "api/downloads/downloads_api.cc",
     "api/downloads/downloads_api.h",
     "api/downloads_internal/downloads_internal_api.cc",
@@ -495,8 +491,6 @@ static_library("extensions") {
     "chrome_extensions_browser_client.h",
     "chrome_extensions_interface_registration.cc",
     "chrome_extensions_interface_registration.h",
-    "chrome_kiosk_delegate.h",
-    "chrome_kiosk_delegate_chromeos.cc",
     "chrome_process_manager_delegate.cc",
     "chrome_process_manager_delegate.h",
     "chrome_url_request_util.cc",
@@ -810,7 +804,6 @@ static_library("extensions") {
     "//chrome/app/vector_icons",
     "//chrome/browser/devtools",
     "//chrome/browser/media/router",
-    "//chrome/browser/media/router/discovery",
     "//chrome/browser/safe_browsing",
     "//chrome/common",
     "//chrome/common/extensions:mojo_bindings",
@@ -918,10 +911,6 @@ static_library("extensions") {
     "//url",
   ]
 
-  if (!is_chromeos) {
-    sources += [ "chrome_kiosk_delegate.cc" ]
-  }
-
   if (is_chromeos) {
     sources += [
       "api/certificate_provider/certificate_provider_api.cc",
@@ -1005,6 +994,9 @@ static_library("extensions") {
       "api/messaging/native_process_launcher.h",
       "api/messaging/native_process_launcher_posix.cc",
       "api/messaging/native_process_launcher_win.cc",
+      "chrome_kiosk_delegate.cc",
+      "chrome_kiosk_delegate.h",
+      "chrome_kiosk_delegate_chromeos.cc",
       "default_apps.cc",
       "default_apps.h",
     ]
@@ -1122,9 +1114,14 @@ static_library("extensions") {
 
   if (enable_service_discovery) {
     sources += [
+      "api/dial/dial_api.cc",
+      "api/dial/dial_api.h",
+      "api/dial/dial_api_factory.cc",
+      "api/dial/dial_api_factory.h",
       "api/mdns/mdns_api.cc",
       "api/mdns/mdns_api.h",
     ]
+    deps += [ "//chrome/browser/media/router/discovery" ]
   }
 
   if (enable_rlz_support) {

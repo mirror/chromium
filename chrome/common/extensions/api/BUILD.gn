@@ -37,7 +37,6 @@ schema_sources = [
   "debugger.json",
   "desktop_capture.json",
   "developer_private.idl",
-  "dial.idl",
   "downloads.idl",
   "downloads_internal.idl",
   "easy_unlock_private.idl",
@@ -122,7 +121,10 @@ if (is_chromeos) {
   schema_sources += [ "input_ime.json" ]
 }
 if (enable_service_discovery) {
-  schema_sources += [ "mdns.idl" ]
+  schema_sources += [
+    "dial.idl",
+    "mdns.idl",
+  ]
 }
 if (enable_webrtc) {
   schema_sources += [

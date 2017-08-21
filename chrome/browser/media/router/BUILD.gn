@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 #
 
+import("//chrome/common/features.gni")
 import("//extensions/features/features.gni")
 import("//testing/test.gni")
 
@@ -62,7 +63,6 @@ static_library("router") {
 
   if (enable_extensions) {
     deps += [
-      "discovery",
       "//extensions/browser",
       "//mojo/public/cpp/bindings",
     ]
@@ -89,6 +89,10 @@ static_library("router") {
       "mojo/media_router_mojo_metrics.cc",
       "mojo/media_router_mojo_metrics.h",
     ]
+
+    if (enable_service_discovery) {
+      deps += [ "discovery" ]
+    }
   }
 }
 
@@ -112,7 +116,6 @@ static_library("test_support") {
 
   if (enable_extensions) {
     deps += [
-      "discovery",
       "//chrome/common/media_router/mojo:media_router",
       "//chrome/common/media_router/mojo:media_router_test_interfaces",
       "//extensions/browser",
@@ -124,5 +127,9 @@ static_library("test_support") {
       "mojo/media_router_mojo_test.cc",
       "mojo/media_router_mojo_test.h",
     ]
+
+    if (enable_service_discovery) {
+      deps += [ "discovery" ]
+    }
   }
 }

@@ -862,6 +862,10 @@ if (!is_android) {
     if (!use_aura || is_chromeos) {
       sources -= [ "//ui/views/corewm/desktop_capture_controller_unittest.cc" ]
     }
+
+    if (enable_service_discovery) {
+      deps += [ "//chrome/browser/media/router/discovery" ]
+    }
   }
 
   if (enable_app_list && use_ash) {

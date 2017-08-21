@@ -3,6 +3,10 @@
 # found in the LICENSE file.
 #
 
+import("//chrome/common/features.gni")
+
+assert(enable_service_discovery)
+
 static_library("discovery") {
   inputs = [
     "$root_gen_dir/chrome/grit/generated_resources.h",
