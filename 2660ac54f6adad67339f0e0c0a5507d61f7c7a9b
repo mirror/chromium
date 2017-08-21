@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a55551b6_0adbedc4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/subresourceIntegrity/empty-after-revalidate-css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-21T03:47:33Z",
+      "side": 1,
+      "message": "omit \u003c/link\u003e",
+      "revId": "2660ac54f6adad67339f0e0c0a5507d61f7c7a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a242e4f5_71bb9ea5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/subresourceIntegrity/empty-after-revalidate-css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-21T03:47:33Z",
+      "side": 1,
+      "message": "Optional: We usually skip \u003c/html\u003e",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 7
+      },
+      "revId": "2660ac54f6adad67339f0e0c0a5507d61f7c7a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967248b2_46ec8ff9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/subresourceIntegrity/empty-after-revalidate-script.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-21T03:47:33Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "2660ac54f6adad67339f0e0c0a5507d61f7c7a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
