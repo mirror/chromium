@@ -46,6 +46,30 @@
       "revId": "b792ef17539dac399f48c9b178e2405eb67e0589",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67aadfdd_84716977",
+        "filename": "chromeos/components/tether/ble_scanner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-21T23:49:57Z",
+      "side": 1,
+      "message": "Of course, but they\u0027re both saying the same thing. If we add this one, should we remove the other?",
+      "parentUuid": "59a48853_e4b239e8",
+      "range": {
+        "startLine": 249,
+        "startChar": 9,
+        "endLine": 249,
+        "endChar": 13
+      },
+      "revId": "b792ef17539dac399f48c9b178e2405eb67e0589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
