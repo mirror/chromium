@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c0ec6a7_86d81d3d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-21T18:37:42Z",
+      "side": 1,
+      "message": "I think the CL description needs to make clearer whether this patch is improving handling of input from iOS input sources, or actually adding a new UI surface specific to Chromoting, which effectively emulates a complete physical keyboard.  Or are we adding a secondary surface that in some way complements the iOS keyboard?\n\nIt would also help to have a description of some examples, with explanation of why those examples don\u0027t currently work, and how this new implementation supports them. That could be in the bug description rather than in the CL description, for example.\n\nSpecifically, it is not clear why we need a US keyboard layout mapping to support keys like Escape and Control, if those are going to be presented on some custom UI surface - we can just generate the DomCode values for those directly.\n\nIf we\u0027re also talking about situations in which the user presses Ctrl via the new UI and then types stuff into the iOS keyboard, then I think we should consider whether to add support for smarter DomKey-based keyboard remoting (similar to what VNC does) rather than hacking in a special-case for US English layouts.",
+      "revId": "3a73168129240d8844c26d5cf791c952bb1c31c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb9939c_7302d2ef",
+        "filename": "remoting/client/input/keyboard_interpreter.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-21T18:37:42Z",
+      "side": 1,
+      "message": "nit: I think you can use emplace() here instead?",
+      "revId": "3a73168129240d8844c26d5cf791c952bb1c31c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b506239f_8593ec40",
+        "filename": "remoting/client/input/keyboard_interpreter.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-21T18:37:42Z",
+      "side": 1,
+      "message": "You need to be clear in the comment how we\u0027ll decide whether we need that, I think, and it rather depends on the use-case.\n\nIf this is only used when we\u0027re dealing with Ctrl-key combinations then other layouts are likely not relevant. If we are talking about them being needed for general text-entry then that\u0027s different.",
+      "revId": "3a73168129240d8844c26d5cf791c952bb1c31c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d894bc9_4b5bb70e",
+        "filename": "remoting/client/input/keyboard_interpreter.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-21T18:37:42Z",
+      "side": 1,
+      "message": "Why not have this be a function which returns the |keys| sequence to type character |ch|, e.g:\n\nstd::vector\u003cuint32_t\u003e KeysForCharacter(unsigned char ch);\n\nThis won\u0027t work for non-ASCII characters; do we ever need to care about the case of \u0027A\u0027 vs \u0027a\u0027 if we\u0027re pressing it as part of a Ctrl-key sequence?",
+      "revId": "3a73168129240d8844c26d5cf791c952bb1c31c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd359f5_2c8277c1",
+        "filename": "remoting/client/input/keycode_map_us.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-21T18:37:42Z",
+      "side": 1,
+      "message": "I\u0027m not sure what this \"Usage:\" section is intended to express?",
+      "revId": "3a73168129240d8844c26d5cf791c952bb1c31c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

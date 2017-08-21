@@ -317,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "0ebdd633_b8d1ab6a",
+        "filename": "remoting/client/input/keyboard_interpreter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-21T18:37:42Z",
+      "side": 1,
+      "message": "Yes, sorry, bad suggestion on my part.",
+      "parentUuid": "5b0bdf16_73b2cf23",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54cf4b06_f754436a",
         "filename": "remoting/client/input/keyboard_interpreter.h",
         "patchSetId": 8
@@ -486,6 +504,24 @@
       "side": 1,
       "message": "Just added the mapping. Not sure whether it will be used in the future though...",
       "parentUuid": "fd5f8dfc_a5c11e8b",
+      "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aaf11da1_8127e63a",
+        "filename": "remoting/client/input/keycode_map_us.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-21T18:37:42Z",
+      "side": 1,
+      "message": "I thought the whole point of this CL was to add support for \"special keys\" includign Escape?",
+      "parentUuid": "ab91752a_be34ac85",
       "revId": "8af35d7bb005c658a46c053bfa2130f6dacfae3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
