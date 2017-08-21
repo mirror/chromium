@@ -47,6 +47,11 @@ bool ShouldOverrideNavigation(
     return false;
   }
 
+  if (params.was_started_from_context_menu()) {
+    DVLOG(1) << "Don't override: Navigation is from context menu.";
+    return false;
+  }
+
   Browser* browser = chrome::FindBrowserWithWebContents(source);
   if (browser == nullptr) {
     DVLOG(1) << "Don't override: No browser, can't know if already in app.";
