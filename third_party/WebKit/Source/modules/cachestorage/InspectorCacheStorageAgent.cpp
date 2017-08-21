@@ -525,9 +525,16 @@ class CachedResponseMatchCallback
   void OnSuccess(const WebServiceWorkerResponse& response) override {
     std::unique_ptr<protocol::DictionaryValue> headers =
         protocol::DictionaryValue::create();
-    CachedResponseFileReaderLoaderClient::Load(
-        context_, ToHeadersDictionary(response), response.GetBlobDataHandle(),
-        std::move(callback_));
+    if (response.GetBlobDataHandle()) {
+      CachedResponseFileReaderLoaderClient::Load(
+          context_, ToHeadersDictionary(response), response.GetBlobDataHandle(),
+          std::move(callback_));
+    } else {
+      callback_->sendSuccess(CachedResponse::create()
+                                 .setHeaders(ToHeadersDictionary(response))
+                                 .setBody("")
+                                 .build());
+    }
   }
 
   void OnError(WebServiceWorkerCacheError error) override {
