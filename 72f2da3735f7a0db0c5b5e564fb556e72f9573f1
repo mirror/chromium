@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51952cdd_4b1aaf61",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-21T23:42:12Z",
+      "side": 1,
+      "message": "I replaced this (called via LTHI::PrepareToDraw) with an explicit flush in ResourceProvider::PrepareSendToParent because PrepareSendToParent can insert commands for generating mailboxes and sync tokens. WDYT?",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
