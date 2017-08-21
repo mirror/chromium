@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6bc2c39c_8a6e4b11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-21T20:42:43Z",
+      "side": 1,
+      "message": "I believe this comment is out of date; update?",
+      "range": {
+        "startLine": 15,
+        "startChar": 126,
+        "endLine": 15,
+        "endChar": 136
+      },
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0bd0406_e30a5d13",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 14
@@ -36,6 +59,29 @@
     },
     {
       "key": {
+        "uuid": "1b686b0c_5c6faca9",
+        "filename": "content/browser/loader/navigation_resource_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-21T20:42:43Z",
+      "side": 1,
+      "message": "Clueless question: The documentation for this function says \"The caller needs to handle the optional pinning override when issued_by_known_root is false\", but I don\u0027t see any code here that handles that case.  Does it need to be handled?",
+      "range": {
+        "startLine": 36,
+        "startChar": 16,
+        "endLine": 36,
+        "endChar": 38
+      },
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de86047d_03ce08f1",
         "filename": "content/browser/loader/navigation_url_loader_delegate.h",
         "patchSetId": 14
@@ -47,6 +93,29 @@
       "writtenOn": "2017-08-21T12:25:25Z",
       "side": 1,
       "message": "nit:s/irgnored/ignored",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c0e0a11_aa8539e8",
+        "filename": "content/browser/loader/navigation_url_loader_delegate.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-21T20:42:43Z",
+      "side": 1,
+      "message": "base::Optional\u003cbool\u003e strikes me as possibly over-gilding the bit :-}.  This information is available from the TransportSecurityState + the host, and the TransportSecurityState is available from the URLRequestContext, which has a fair amount of visibility.  Would it be reasonable to push this computation up into the consumers that care about it?  Or maybe add the boolean to SSLInfo?\n\n(I\u0027m not strongly advocating for this, but I\u0027m a bit uncomfortable with the function signature.)",
+      "range": {
+        "startLine": 66,
+        "startChar": 37,
+        "endLine": 66,
+        "endChar": 45
+      },
       "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +139,52 @@
     },
     {
       "key": {
+        "uuid": "6038edd3_52b791b3",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-21T20:42:43Z",
+      "side": 1,
+      "message": "nit: This isn\u0027t a complete sentence; should it end in a comma?\n\nnit: Re-fill the paragraph?",
+      "range": {
+        "startLine": 86,
+        "startChar": 10,
+        "endLine": 86,
+        "endChar": 21
+      },
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b3c2882_d7c00e24",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-21T20:42:43Z",
+      "side": 1,
+      "message": "nit, suggestion: I\u0027m inclined to think that the last sentence is redundant with the name of the argument, but if you want to keep it could you put it before the second to last sentence?  I\u0027m inclined to think that argument documentation should go before conditionalization information about whether the arguments are passed or not (i.e. that the reader should know what something is to help evaluating what it means whether it\u0027s valid or not).  Up to you.",
+      "range": {
+        "startLine": 89,
+        "startChar": 21,
+        "endLine": 89,
+        "endChar": 26
+      },
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fde1a64d_47df8bfa",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 14
@@ -81,6 +196,47 @@
       "writtenOn": "2017-08-21T12:25:25Z",
       "side": 1,
       "message": "It\u0027d be better if this code could be shared with NavigationResourceHandler rather than copy-pasted. I\u0027m not exactly sure where it should be, since I\u0027m less familiar with this part of the code. Maybe rdsmith@ has a suggestion?",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db34233_0cbd181c",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-21T20:42:43Z",
+      "side": 1,
+      "message": "This is an excellent question that I\u0027m not sure about the answer to.  I\u0027d like to suggest (and did suggest in another comment) that we get push this code up into the consumers, but I\u0027m not clear how that will work as we move to a network service, since I\u0027m not sure how, or in what ways, TransportSecurityState will be visible to consumers outside of the network stack in the network service world.  The only current calls to ShouldSSLErrorsBeFatal() are within the network stack.\n\nSo I think that long term we\u0027re going to need to transmit that information out through the NetworkService interface, which suggests to me that we actually want to plumb this all the way down to URLLoaderClient, at least in the NetworkService case.  Or possibly we might include the boolean in SSL info, which would simplify this even further.  \n\nBut I don\u0027t have a a lot of confidence in that judgement, so I\u0027m ccing Matt Menke (for general network stack/service API perspective) and Ryan Sleevi (for specifically the SSLInfo question).  Matt/Ryan, any thoughts?",
+      "parentUuid": "fde1a64d_47df8bfa",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5be53935_82129d8d",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-21T20:42:43Z",
+      "side": 1,
+      "message": "My eye happened to notice the inconsistency here between the OnReceiveResponse signature and this one; should this be const base::Optional\u003cnet::SSLInfo\u003e\u0026 for consistency?\n\nI\u0027m also concerned about the duplication of information in this interface.  Is it reasonable to either expect consumers that care about this information to store the SSLInfo between the response reception and the completion signal?  Or maybe removing the Optional\u003cnet::SSLInfo\u003e from the response reception to OnComplete?",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 32
+      },
       "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
