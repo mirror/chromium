@@ -11,6 +11,8 @@
 #if defined(USE_OZONE)
 #include "ui/ozone/public/ozone_platform.h"
 #include "ui/ozone/public/surface_factory_ozone.h"
+#elif defined(OS_LINUX)
+#include "ui/gfx/linux/native_pixmap_dmabuf.h"
 #endif
 
 namespace gpu {
@@ -101,9 +103,9 @@ GpuMemoryBufferFactoryNativePixmap::CreateImageForGpuMemoryBuffer(
                  ->CreateNativePixmapFromHandle(surface_handle, size, format,
                                                 handle.native_pixmap_handle);
 #else
-    // TODO(j.isorce): implement this to enable glCreateImageCHROMIUM on Linux.
-    // On going in http://codereview.chromium.org/2705213005, crbug.com/584248.
-    NOTIMPLEMENTED();
+    pixmap = make_scoped_refptr(new gfx::NativePixmapDmaBuf(
+        size, format, handle.native_pixmap_handle.fds,
+        handle.native_pixmap_handle.planes));
 #endif
     if (!pixmap.get()) {
       DLOG(ERROR) << "Failed to create pixmap from handle";

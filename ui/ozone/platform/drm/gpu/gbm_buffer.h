@@ -11,7 +11,7 @@
 #include "base/macros.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/geometry/size.h"
-#include "ui/gfx/native_pixmap.h"
+#include "ui/gfx/linux/native_pixmap_dmabuf.h"
 #include "ui/ozone/platform/drm/gpu/scanout_buffer.h"
 
 struct gbm_bo;
@@ -42,12 +42,6 @@ class GbmBuffer : public ScanoutBuffer {
       const std::vector<gfx::NativePixmapPlane>& planes);
   uint32_t GetFormat() const { return format_; }
   uint32_t GetFlags() const { return flags_; }
-  bool AreFdsValid() const;
-  size_t GetFdCount() const;
-  int GetFd(size_t plane) const;
-  int GetStride(size_t plane) const;
-  int GetOffset(size_t plane) const;
-  size_t GetSize(size_t plane) const;
 
   gbm_bo* bo() const { return bo_; }
   const scoped_refptr<GbmDevice>& drm() const { return drm_; }
@@ -64,6 +58,7 @@ class GbmBuffer : public ScanoutBuffer {
   bool RequiresGlFinish() const override;
 
  private:
+  friend class GbmPixmap;
   GbmBuffer(const scoped_refptr<GbmDevice>& gbm,
             gbm_bo* bo,
             uint32_t format,
@@ -104,21 +99,13 @@ class GbmBuffer : public ScanoutBuffer {
   DISALLOW_COPY_AND_ASSIGN(GbmBuffer);
 };
 
-class GbmPixmap : public gfx::NativePixmap {
+class GbmPixmap : public gfx::NativePixmapDmaBuf {
  public:
   GbmPixmap(GbmSurfaceFactory* surface_manager,
             const scoped_refptr<GbmBuffer>& buffer);
 
   // NativePixmap:
-  void* GetEGLClientBuffer() const override;
-  bool AreDmaBufFdsValid() const override;
-  size_t GetDmaBufFdCount() const override;
-  int GetDmaBufFd(size_t plane) const override;
-  int GetDmaBufPitch(size_t plane) const override;
-  int GetDmaBufOffset(size_t plane) const override;
   uint64_t GetDmaBufModifier(size_t plane) const override;
-  gfx::BufferFormat GetBufferFormat() const override;
-  gfx::Size GetBufferSize() const override;
   bool ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
                             int plane_z_order,
                             gfx::OverlayTransform plane_transform,
@@ -130,8 +117,6 @@ class GbmPixmap : public gfx::NativePixmap {
 
  private:
   ~GbmPixmap() override;
-  scoped_refptr<ScanoutBuffer> ProcessBuffer(const gfx::Size& size,
-                                             uint32_t format);
 
   GbmSurfaceFactory* surface_manager_;
   scoped_refptr<GbmBuffer> buffer_;

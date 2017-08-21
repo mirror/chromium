@@ -15,7 +15,6 @@
 #include "base/trace_event/trace_event.h"
 #include "ui/gfx/buffer_format_util.h"
 #include "ui/gfx/geometry/size_conversions.h"
-#include "ui/gfx/native_pixmap_handle.h"
 #include "ui/ozone/platform/drm/common/drm_util.h"
 #include "ui/ozone/platform/drm/gpu/drm_window.h"
 #include "ui/ozone/platform/drm/gpu/gbm_device.h"
@@ -34,7 +33,6 @@ GbmBuffer::GbmBuffer(const scoped_refptr<GbmDevice>& gbm,
                      uint32_t addfb_flags,
                      std::vector<base::ScopedFD>&& fds,
                      const gfx::Size& size,
-
                      const std::vector<gfx::NativePixmapPlane>&& planes)
     : drm_(gbm),
       bo_(bo),
@@ -89,41 +87,6 @@ GbmBuffer::~GbmBuffer() {
     drm_->RemoveFramebuffer(opaque_framebuffer_);
   if (bo())
     gbm_bo_destroy(bo());
-}
-
-bool GbmBuffer::AreFdsValid() const {
-  if (fds_.empty())
-    return false;
-
-  for (const auto& fd : fds_) {
-    if (fd.get() == -1)
-      return false;
-  }
-  return true;
-}
-
-size_t GbmBuffer::GetFdCount() const {
-  return fds_.size();
-}
-
-int GbmBuffer::GetFd(size_t index) const {
-  DCHECK_LT(index, fds_.size());
-  return fds_[index].get();
-}
-
-int GbmBuffer::GetStride(size_t index) const {
-  DCHECK_LT(index, planes_.size());
-  return planes_[index].stride;
-}
-
-int GbmBuffer::GetOffset(size_t index) const {
-  DCHECK_LT(index, planes_.size());
-  return planes_[index].offset;
-}
-
-size_t GbmBuffer::GetSize(size_t index) const {
-  DCHECK_LT(index, planes_.size());
-  return planes_[index].size;
 }
 
 uint32_t GbmBuffer::GetFramebufferId() const {
@@ -299,69 +262,16 @@ scoped_refptr<GbmBuffer> GbmBuffer::CreateBufferFromFds(
 
 GbmPixmap::GbmPixmap(GbmSurfaceFactory* surface_manager,
                      const scoped_refptr<GbmBuffer>& buffer)
-    : surface_manager_(surface_manager), buffer_(buffer) {}
-
-gfx::NativePixmapHandle GbmPixmap::ExportHandle() {
-  gfx::NativePixmapHandle handle;
-  gfx::BufferFormat format =
-      ui::GetBufferFormatFromFourCCFormat(buffer_->GetFormat());
-  // TODO(dcastagna): Use gbm_bo_get_num_planes once all the formats we use are
-  // supported by gbm.
-  for (size_t i = 0; i < gfx::NumberOfPlanesForBufferFormat(format); ++i) {
-    // Some formats (e.g: YVU_420) might have less than one fd per plane.
-    if (i < buffer_->GetFdCount()) {
-      base::ScopedFD scoped_fd(HANDLE_EINTR(dup(buffer_->GetFd(i))));
-      if (!scoped_fd.is_valid()) {
-        PLOG(ERROR) << "dup";
-        return gfx::NativePixmapHandle();
-      }
-      handle.fds.emplace_back(
-          base::FileDescriptor(scoped_fd.release(), true /* auto_close */));
-    }
-    handle.planes.emplace_back(buffer_->GetStride(i), buffer_->GetOffset(i),
-                               buffer_->GetSize(i),
-                               buffer_->GetFormatModifier());
-  }
-  return handle;
-}
-
-GbmPixmap::~GbmPixmap() {
-}
-
-void* GbmPixmap::GetEGLClientBuffer() const {
-  return nullptr;
-}
-
-bool GbmPixmap::AreDmaBufFdsValid() const {
-  return buffer_->AreFdsValid();
-}
-
-size_t GbmPixmap::GetDmaBufFdCount() const {
-  return buffer_->GetFdCount();
-}
-
-int GbmPixmap::GetDmaBufFd(size_t plane) const {
-  return buffer_->GetFd(plane);
-}
-
-int GbmPixmap::GetDmaBufPitch(size_t plane) const {
-  return buffer_->GetStride(plane);
-}
-
-int GbmPixmap::GetDmaBufOffset(size_t plane) const {
-  return buffer_->GetOffset(plane);
-}
+    : NativePixmapDmaBuf(
+          buffer->GetSize(),
+          ui::GetBufferFormatFromFourCCFormat(buffer->GetFormat()),
+          buffer->fds_,
+          buffer->planes_),
+      surface_manager_(surface_manager),
+      buffer_(buffer) {}
 
 uint64_t GbmPixmap::GetDmaBufModifier(size_t plane) const {
   return buffer_->GetFormatModifier();
-}
-
-gfx::BufferFormat GbmPixmap::GetBufferFormat() const {
-  return ui::GetBufferFormatFromFourCCFormat(buffer_->GetFormat());
-}
-
-gfx::Size GbmPixmap::GetBufferSize() const {
-  return buffer_->GetSize();
 }
 
 bool GbmPixmap::ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
@@ -374,6 +284,31 @@ bool GbmPixmap::ScheduleOverlayPlane(gfx::AcceleratedWidget widget,
       buffer_, plane_z_order, plane_transform, display_bounds, crop_rect));
 
   return true;
+}
+
+gfx::NativePixmapHandle GbmPixmap::ExportHandle() {
+  gfx::NativePixmapHandle handle;
+  gfx::BufferFormat format = GetBufferFormat();
+  // TODO(dcastagna): Use gbm_bo_get_num_planes once all the formats we use are
+  // supported by gbm.
+  for (size_t i = 0; i < gfx::NumberOfPlanesForBufferFormat(format); ++i) {
+    // Some formats (e.g: YVU_420) might have less than one fd per plane.
+    if (i < GetDmaBufFdCount()) {
+      base::ScopedFD scoped_fd(HANDLE_EINTR(dup(GetDmaBufFd(i))));
+      if (!scoped_fd.is_valid()) {
+        PLOG(ERROR) << "dup";
+        return gfx::NativePixmapHandle();
+      }
+      handle.fds.emplace_back(
+          base::FileDescriptor(scoped_fd.release(), true /* auto_close */));
+    }
+    handle.planes.emplace_back(GetDmaBufPitch(i), GetDmaBufOffset(i),
+                               GetDmaBufSize(i), buffer_->GetFormatModifier());
+  }
+  return handle;
+}
+
+GbmPixmap::~GbmPixmap() {
 }
 
 }  // namespace ui
