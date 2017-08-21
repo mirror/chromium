@@ -584,14 +584,17 @@ Console.ConsoleViewMessage = class {
       titleElement.createTextChild(obj.description || '');
     }
 
-    var note = titleElement.createChild('span', 'object-state-note');
-    note.classList.add('info-note');
-    note.title = Common.UIString('Value below was evaluated just now.');
+    if (obj.hasChildren && !obj.customPreview()) {
+      var note = titleElement.createChild('span', 'object-state-note');
+      note.classList.add('info-note');
+      note.title = Common.UIString('Value below was evaluated just now.');
 
-    var section = new ObjectUI.ObjectPropertiesSection(obj, titleElement, this._linkifier);
-    section.element.classList.add('console-view-object-properties-section');
-    section.enableContextMenu();
-    return section.element;
+      var section = new ObjectUI.ObjectPropertiesSection(obj, titleElement, this._linkifier);
+      section.element.classList.add('console-view-object-properties-section');
+      section.enableContextMenu();
+      return section.element;
+    }
+    return titleElement;
   }
 
   /**
