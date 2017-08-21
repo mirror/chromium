@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7a60176_7de4db1a",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-21T20:39:27Z",
+      "side": 1,
+      "message": "It does nothing but tells whether it\u0027s first-time-set. I think we should keep it since it\u0027s better not to have inaccurate data in histograms.\n\nMarked as resolved.",
+      "parentUuid": "c144f03f_b8c231d4",
+      "range": {
+        "startLine": 153,
+        "startChar": 4,
+        "endLine": 153,
+        "endChar": 26
+      },
+      "revId": "4ae9be231e94349fd1f2944ae8bdb029ae6a2816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca913553_8b50ca0b",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "4ae9be231e94349fd1f2944ae8bdb029ae6a2816",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d297a5f_4012aa94",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-21T20:39:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca913553_8b50ca0b",
+      "range": {
+        "startLine": 159,
+        "startChar": 59,
+        "endLine": 159,
+        "endChar": 78
+      },
+      "revId": "4ae9be231e94349fd1f2944ae8bdb029ae6a2816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8038e43b_f62e2d0f",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-21T20:39:27Z",
+      "side": 1,
+      "message": "I think this can be considered resolved through the email?",
+      "parentUuid": "b042e207_f49c6bc0",
+      "range": {
+        "startLine": 67,
+        "startChar": 20,
+        "endLine": 67,
+        "endChar": 25
+      },
+      "revId": "4ae9be231e94349fd1f2944ae8bdb029ae6a2816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e174a770_ac865cb4",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4012d2f2_f695004d",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-21T20:39:27Z",
+      "side": 1,
+      "message": "I will do that in follow up patches.\n\nWebContentsObserver is only one place we send signals, it\u0027s not trivial to unify the delay behavior all over the places.",
+      "parentUuid": "e174a770_ac865cb4",
+      "range": {
+        "startLine": 73,
+        "startChar": 24,
+        "endLine": 73,
+        "endChar": 0
+      },
+      "revId": "4ae9be231e94349fd1f2944ae8bdb029ae6a2816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bda6354d_0ab201e8",
         "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
         "patchSetId": 10
@@ -108,6 +204,24 @@
       "revId": "4ae9be231e94349fd1f2944ae8bdb029ae6a2816",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb98ed0_727401eb",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-21T20:39:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bda6354d_0ab201e8",
+      "revId": "4ae9be231e94349fd1f2944ae8bdb029ae6a2816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -131,6 +245,30 @@
       "revId": "4ae9be231e94349fd1f2944ae8bdb029ae6a2816",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4042c21f_88b5185c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 80996,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-21T20:39:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afd952ba_9fa2568c",
+      "range": {
+        "startLine": 80996,
+        "startChar": 61,
+        "endLine": 80996,
+        "endChar": 71
+      },
+      "revId": "4ae9be231e94349fd1f2944ae8bdb029ae6a2816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
