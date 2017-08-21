@@ -22,6 +22,30 @@
       "revId": "198e0c97fd8864672c92b975a7b2c6cfccd12ddc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc853b02_49e28f84",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-21T16:08:20Z",
+      "side": 1,
+      "message": "That sounds good.",
+      "parentUuid": "7b84d975_236568d1",
+      "range": {
+        "startLine": 156,
+        "startChar": 10,
+        "endLine": 156,
+        "endChar": 14
+      },
+      "revId": "198e0c97fd8864672c92b975a7b2c6cfccd12ddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
