@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75cf519f_0fcd27ca",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-21T18:50:58Z",
+      "side": 1,
+      "message": "\u003e That SGTM. So, I think, what we want for now is to unconditionally send whatever seed the service has back to the app. There are two issues here that could make this a waste, but for now it seems ok.\n\u003e 1. The app and service already have the same seed. We\u0027re not currently checking for this anyways\n\u003e 2. The service has a seed \u003e 30days old, so even if the app receives it it will later be ignored during field trial setup.\n\nNeeds a comment here explaining what Alexei said. expired is actually still ok..",
+      "revId": "502ecbe7fa2f7ebda6e4b2e830486b4a6686f48b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df9ce416_fedff248",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-21T18:50:58Z",
+      "side": 1,
+      "message": "\u003e Done, I think, not totally sure what you mean with both the true and false lines.\n\n(false, false) says makes everyone not writable, that\u0027s actually the more important line :p, then (true, true) makes only the owner writable",
+      "revId": "502ecbe7fa2f7ebda6e4b2e830486b4a6686f48b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c849f041_e189f614",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-21T18:50:58Z",
+      "side": 1,
+      "message": "\u003e Hm, maybe not. At this point we still have the 4 fields, they originally come from https://cs.chromium.org/chromium/src/components/variations/android/java/src/org/chromium/components/variations/firstrun/VariationsSeedFetcher.java which is shared between WebView and Chrome. Alexei previously agreed that the gzip field could be removed entirely, but that feels like a separate change.  For now I could just add a comment here to say we\u0027re ignoring the gzip field?\n\nYeah, a comment why this doesn\u0027t match the actual number of fields would be good.",
+      "revId": "502ecbe7fa2f7ebda6e4b2e830486b4a6686f48b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
