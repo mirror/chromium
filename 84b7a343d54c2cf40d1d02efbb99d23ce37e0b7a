@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88de0bee_5a6e4e5e",
+        "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ComponentUpdater.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-21T14:21:51Z",
+      "side": 1,
+      "message": "Missing Javadoc.",
+      "revId": "84b7a343d54c2cf40d1d02efbb99d23ce37e0b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a5b66e5_15eaca40",
+        "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ComponentUpdater.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-21T14:21:51Z",
+      "side": 1,
+      "message": "Notice: All the crypto-related Java verify methods I saw* are public static void (not boolean) and throw different exceptions for different kinds of failures. I chose to return a boolean value, because it\u0027s only intended to be called through JNI and makes it easier to use in C++. I\u0027m not extremely confident in that decision though, so leave a comment if it would be better to make it behave like other Java verify methods.\n\n* E.g. https://developer.android.com/reference/java/security/cert/Certificate.html#verify(java.security.PublicKey)",
+      "revId": "84b7a343d54c2cf40d1d02efbb99d23ce37e0b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

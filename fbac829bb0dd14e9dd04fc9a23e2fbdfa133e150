@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fd19ef14_6669b4ba",
+        "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-21T14:21:51Z",
+      "side": 1,
+      "message": "Moved to ComponentUpdater.java.",
+      "parentUuid": "082a053e_397e22fd",
+      "revId": "fbac829bb0dd14e9dd04fc9a23e2fbdfa133e150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b4ed089_53db2687",
         "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ApkSignatureSchemeV2Verifier.java",
         "patchSetId": 3
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "f4ea51ef_a8bb029c",
+        "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-21T14:21:51Z",
+      "side": 1,
+      "message": "For CRX files, a public key (hash) is passed to check against. Did the same in ComponentUpdater.java.",
+      "parentUuid": "f25d6fd4_d51acd1c",
+      "revId": "fbac829bb0dd14e9dd04fc9a23e2fbdfa133e150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0ae9cb4_d5de4a54",
         "filename": "components/test/data/component_updater/signed.apk",
         "patchSetId": 3
@@ -86,6 +122,24 @@
       "revId": "fbac829bb0dd14e9dd04fc9a23e2fbdfa133e150",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd397385_7c8e48b1",
+        "filename": "components/test/data/component_updater/signed.apk",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-21T14:21:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0ae9cb4_d5de4a54",
+      "revId": "fbac829bb0dd14e9dd04fc9a23e2fbdfa133e150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

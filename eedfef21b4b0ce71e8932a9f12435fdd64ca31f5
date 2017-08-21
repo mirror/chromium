@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4dbee88b_36a590db",
+        "filename": "components/component_updater/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-21T14:21:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94187322_a2089902",
+      "revId": "eedfef21b4b0ce71e8932a9f12435fdd64ca31f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a59330c0_c5580b30",
         "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ApkSignatureSchemeV2Verifier.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-11T13:25:04Z",
       "side": 1,
       "message": "Looks good so far, but it seems this is a modified copy of an Android platform\u0027s source file\n(frameworks/base/core/java/android/util/apk/ApkSignatureSchemeV2Verifier.java).\n\nIn this case, please preserve the original license text, instead of adding our own.\n\nAlso it looks like this kind of non-Chromium code should go into third_party/\n(see for example third_party/android_async_task used for a single modified Android source file).\n\nThere are instructions at https://chromium.googlesource.com/chromium/src.git/+/master/docs/adding_to_third_party.md\nthat indicate how to do that, but it is a very complicated process. Egor tells me that it is possible to add a third_party/xxx directory directly to the main Chromium git repository if it is only for a couple of source files. You will have to ask one of the third_party/OWNERS for permission though. I think it\u0027s ok to put both sources under the same directory (e.g. third_party/android_apk_signature_verifier).\n\nI\u0027m sorry if this makes things more complicated. I suggest only doing this once all other changes in this CL are done. In the meantime, just updating the copyright disclaimer should be enough :)",
+      "revId": "eedfef21b4b0ce71e8932a9f12435fdd64ca31f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae85dee8_c4618b20",
+        "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-21T14:21:51Z",
+      "side": 1,
+      "message": "I moved it to third_party/android_apk_signature_verifier for now. I\u0027ll start the approval process once the rest is ready.",
+      "parentUuid": "a59330c0_c5580b30",
       "revId": "eedfef21b4b0ce71e8932a9f12435fdd64ca31f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "13eb4621_a67c79ef",
+        "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ZipUtils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-21T14:21:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9002037_462368c4",
+      "revId": "eedfef21b4b0ce71e8932a9f12435fdd64ca31f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "175d5482_6a447a4e",
         "filename": "components/component_updater/default_component_installer.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9e3587b8_d92ca814",
+        "filename": "components/component_updater/default_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-21T14:21:51Z",
+      "side": 1,
+      "message": "Removed instead.",
+      "parentUuid": "175d5482_6a447a4e",
+      "revId": "eedfef21b4b0ce71e8932a9f12435fdd64ca31f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87446df0_98af3b40",
         "filename": "components/component_updater/default_component_installer.h",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-11T13:25:04Z",
       "side": 1,
       "message": "Please add some documentation about this method\u0027s purpose and use case.\nAlso, if this is Android-specific, put this inside an \"#if defined(OS_ANDROID)\" block.\n\nAlso I\u0027m not sure this is the correct location to put the verification code.\nFor downloaded CRX files, I can see two different checks that are under components/update_client/ rather than components/component_updater/:\n\n1) A first SHA-256 check on the content of the file, where the hash comes from the Omaha update reply (along with the download URL). See components/update_client/crx_downloader.cc:CrxDownloader::VerifyResponse\n\n2) A second CRX-specific digital signature verification that happens just before the CRX file\nis unpacked (components/update_client/component_unpacker.cc:ComponentUnpacker::Verify).\n\nIt looks like 1) can be kept since it should apply to APK files as well.\nOn the other hand, the APK files we download are not meant to be unpacked, so I\nguess our own verification needs to be put somewhere else, or ComponentUnpacker needs to be modified to handle APKs as a special case.\n\nIn all cases, CrxInstaller / DefaultComponentInstaller seem to be used to process all the files once they have been unpacked (and potentially patched) by the update client. That\u0027s where we would put the code to inject Android-specific resources into the current VM and other voodoo, which will happen in later CLs.\n\nCan you look into this?\n\nThere is also components/crx_file/ that contains sources and tests related to the structure of CRX file. This probably indicates that adding components/apk_file/ would be a good idea. That would contain simple unit tests (with corresponding test data files under components/test/data/apk_file/) before looking into modifying ComponentUnpacker / update_client.",
+      "revId": "eedfef21b4b0ce71e8932a9f12435fdd64ca31f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a424e53b_48d500c2",
+        "filename": "components/component_updater/default_component_installer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-21T14:21:51Z",
+      "side": 1,
+      "message": "Removed this method. Now the only new native code in this CL is a unit test. Perhaps the scope of this CL is good for now; or should I work on 1) and 2) in this CL?",
+      "parentUuid": "87446df0_98af3b40",
       "revId": "eedfef21b4b0ce71e8932a9f12435fdd64ca31f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
