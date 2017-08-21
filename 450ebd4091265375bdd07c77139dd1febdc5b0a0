@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b67df48c_35720c49",
+        "filename": "ios/chrome/browser/ui/omnibox/chrome_omnibox_client_ios.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-21T12:40:16Z",
+      "side": 1,
+      "message": "It looks like we use that when focusing the fakebox on ipad.  I think this code is still ok because I only want to kill the prerender when the omnibox loses focus, which is OMNIBOX_FOCUS_NONE.",
+      "parentUuid": "4ce7bb2c_d71715b5",
+      "revId": "450ebd4091265375bdd07c77139dd1febdc5b0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "230d48cf_98f66376",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.h",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "8d35fd6f_3d707d3a",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-21T12:40:16Z",
+      "side": 1,
+      "message": "This is still used by the constructor (even though that argument is no longer used).  I was planning to remove all of this plumbing in a followup CL, because it\u0027s mechanical but it touches a lot of files.",
+      "parentUuid": "230d48cf_98f66376",
+      "range": {
+        "startLine": 25,
+        "startChar": 10,
+        "endLine": 25,
+        "endChar": 25
+      },
+      "revId": "450ebd4091265375bdd07c77139dd1febdc5b0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0bcbdf66_422da381",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-08-11T16:40:25Z",
       "side": 1,
       "message": "Delete?",
+      "range": {
+        "startLine": 26,
+        "startChar": 39,
+        "endLine": 26,
+        "endChar": 55
+      },
+      "revId": "450ebd4091265375bdd07c77139dd1febdc5b0a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7221404c_697ee393",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-21T12:40:16Z",
+      "side": 1,
+      "message": "Will do in a followup.",
+      "parentUuid": "0bcbdf66_422da381",
       "range": {
         "startLine": 26,
         "startChar": 39,
