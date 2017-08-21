@@ -27,6 +27,20 @@
 
 namespace profiling {
 
+namespace {
+
+void OnTraceUploadComplete(TraceCrashServiceUploader* uploader,
+                           bool success,
+                           const std::string& feedback) {
+  if (!success) {
+    LOG(ERROR) << "Cannot upload trace file: " << feedback;
+  }
+
+  // TODO(etienneb): Should we signal trace completion to the user.
+}
+
+}  // namespace
+
 ProfilingProcessHost::ProfilingProcessHost() {
   Add(this);
   registrar_.Add(this, content::NOTIFICATION_RENDERER_PROCESS_CREATED,
@@ -222,13 +236,40 @@ void ProfilingProcessHost::GetOutputFileOnBlockingThread(
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&ProfilingProcessHost::HandleDumpProcessOnIOThread,
-                     base::Unretained(this), pid, std::move(file)));
+                     base::Unretained(this), pid, std::move(dest),
+                     std::move(file)));
 }
 
 void ProfilingProcessHost::HandleDumpProcessOnIOThread(base::ProcessId pid,
+                                                       base::FilePath file_path,
                                                        base::File file) {
   mojo::ScopedHandle handle = mojo::WrapPlatformFile(file.TakePlatformFile());
-  memlog_->DumpProcess(pid, std::move(handle));
+  memlog_->DumpProcess(
+      pid, std::move(handle),
+      base::BindOnce(&ProfilingProcessHost::OnProcessDumpComplete,
+                     base::Unretained(this), std::move(file_path)));
+}
+
+void ProfilingProcessHost::OnProcessDumpComplete(base::FilePath file_path,
+                                                 bool success) {
+  if (!success) {
+    LOG(ERROR) << "Cannot dump process.";
+    return;
+  }
+
+  std::string file_contents;
+  if (!base::ReadFileToString(file_path, &file_contents)) {
+    LOG(ERROR) << "Cannot read trace file contents.";
+    return;
+  }
+
+  TraceCrashServiceUploader* uploader = new TraceCrashServiceUploader(
+      g_browser_process->system_request_context());
+
+  uploader->DoUpload(file_contents.data(),
+                     content::TraceUploader::UNCOMPRESSED_UPLOAD, nullptr,
+                     content::TraceUploader::UploadProgressCallback(),
+                     base::Bind(&OnTraceUploadComplete, base::Owned(uploader)));
 }
 
 void ProfilingProcessHost::SetMode(Mode mode) {

@@ -6,9 +6,12 @@
 #define CHROME_BROWSER_PROFILING_HOST_PROFILING_PROCESS_HOST_H_
 
 #include "base/macros.h"
+#include "base/files/file_util.h"
 #include "base/memory/singleton.h"
 #include "base/process/process.h"
 #include "build/build_config.h"
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/tracing/crash_service_uploader.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/profiling/memlog.mojom.h"
 #include "chrome/common/profiling/memlog_client.h"
@@ -101,9 +104,13 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   void SendPipeToClientProcess(profiling::mojom::MemlogClientPtr memlog_client,
                                mojo::ScopedHandle handle);
 
+
   void GetOutputFileOnBlockingThread(base::ProcessId pid,
                                      const base::FilePath& dest);
-  void HandleDumpProcessOnIOThread(base::ProcessId pid, base::File file);
+  void HandleDumpProcessOnIOThread(base::ProcessId pid,
+                                   base::FilePath file_path,
+                                   base::File file);
+  void OnProcessDumpComplete(base::FilePath file_path, bool success);
 
   void SetMode(Mode mode);
 

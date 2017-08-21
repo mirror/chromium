@@ -33,7 +33,8 @@ class MemlogImpl : public mojom::Memlog {
                  mojo::ScopedHandle sender_pipe,
                  AddSenderCallback callback) override;
   void DumpProcess(base::ProcessId pid,
-                   mojo::ScopedHandle output_file) override;
+                   mojo::ScopedHandle output_file,
+                   DumpProcessCallback callback) override;
 
  private:
   // Helper for managing lifetime of MemlogConnectionManager.
@@ -53,8 +54,15 @@ class MemlogImpl : public mojom::Memlog {
   void OnGetVmRegionsComplete(
       base::ProcessId pid,
       base::File file,
+      DumpProcessCallback callback,
       bool success,
       memory_instrumentation::mojom::GlobalMemoryDumpPtr dump);
+
+  void DumpProcessToFile(
+      base::ProcessId pid,
+      const std::vector<memory_instrumentation::mojom::VmRegionPtr>& maps,
+      base::File output_file,
+      DumpProcessCallback callback);
 
   scoped_refptr<base::SequencedTaskRunner> io_runner_;
   std::unique_ptr<MemlogConnectionManager, DeleteOnRunner> connection_manager_;

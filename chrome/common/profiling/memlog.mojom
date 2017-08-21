@@ -18,5 +18,5 @@ interface Memlog {
 
   // Dumps the memory log of the process with the given |pid| into
   // |output_file|.
-  DumpProcess(mojo.common.mojom.ProcessId pid, handle output_file);
+  DumpProcess(mojo.common.mojom.ProcessId pid, handle output_file) => (bool result);
 };
