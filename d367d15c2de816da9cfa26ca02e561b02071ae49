@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "d0bfde96_150d23e6",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-21T19:41:14Z",
+      "side": 1,
+      "message": "\u003e \u003e Should that be base::SPLIT_WANT_NONEMPTY?\n\u003e \u003e \n\u003e \u003e OTOH, even if we did this, then we need to duplicate the work of skipping empty lines *after* removing the comments below (as you do in the CL).\n\u003e \n\u003e Yes, I think it\u0027s cleaner to filter non-empty line in only one place. \n\nOkay.\n\n\u003e \u003e  So - maybe we want the *base* namespace to provide a way to strip comments:\n\u003e \u003e 1. Maybe via base::TRIM_COMMENTS?  Or base::SPLIT_WANT_NONCOMMENTS?\n\u003e \u003e 2. Or maybe introduce a new function, separate from base::SplitString?\n\u003e \u003e \n\u003e \u003e WDYT?  I am not quite sure what the right answer would be, but it seems that handling comments in shared code would go a long way toward addressing the concerns (which I share) about inconsistency in what form of comments is allowed.\n\u003e \n\u003e If this functionality needs to be in base then I would argue that it shouldn\u0027t be part of base::SplitString(). base::SplitString() is a simple function has well-defined and well-understood behavior. Adding comment parsing support in SplitString would make it harder to use, while being useful only in handful number of cases.\n\nAgreed.\n\n\u003e \u003e PS. FWIW, I think we should discuss here whether stripping of comments is useful and can be provided in some from from //base, but I think that (if we think this is desirable) it is totally fine to do it in a separate CL.\n\u003e \n\u003e Are there other places in chrome where comment stripping would be useful? Rule of three applies here.\n\nGood point.  There are a few more places, but the format they parse is sometimes outside the control of Chromium (e.g. format of Firefox configuration files that Chromium tries to import).\n\nFor reference, this is the list I found:\n- //net/dns/dns_hosts.cc (but 1) extra parsing is required within lines and 2) copying of lines might be undesirable)\n- //tools/gn/tokenizer.cc (this is a proper, streaming tokenizer [unlike SplitString which returns bulk results])\n- //content/browser/appcache/appcache_manifest_parser.cc\n- //chrome/common/importer/firefox_importer_utils.cc\n- //content/browser/accessibility/dump_accessibility_browsertest_base.cc",
+      "parentUuid": "debd1e30_6bfb772d",
+      "range": {
+        "startLine": 870,
+        "startChar": 45,
+        "endLine": 870,
+        "endChar": 65
+      },
+      "revId": "d367d15c2de816da9cfa26ca02e561b02071ae49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91ac3608_482a2b1f",
         "filename": "base/test/launcher/test_launcher.cc",
         "patchSetId": 3
@@ -187,6 +211,30 @@
       "revId": "d367d15c2de816da9cfa26ca02e561b02071ae49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc541a2_4825f98f",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-21T19:41:14Z",
+      "side": 1,
+      "message": "\u003e I could implement escaping, but it would make this change more complicated, while it\u0027s not useful now. How about we try to detect when comment is unintentional and log a warning in that case? Specifically if there is no space in front of # as in \u0027foo#bar\u0027. This behavior would be useful even with escaping. WDYT about this approach?\n\nSounds (and looks) good to me - thanks.  I\u0027ve marked this comment as resolved.\n\n\u003e If escaping becomes necessary in future then I think it may be better to switch these files to JSON, just to avoid reinventing the wheel.",
+      "parentUuid": "567b7c82_bb94b5e6",
+      "range": {
+        "startLine": 872,
+        "startChar": 40,
+        "endLine": 872,
+        "endChar": 45
+      },
+      "revId": "d367d15c2de816da9cfa26ca02e561b02071ae49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
