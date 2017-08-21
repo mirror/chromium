@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df917509_2242ba74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T13:03:05Z",
+      "side": 1,
+      "message": "nit: can you word-wrap at 72 columns?",
+      "revId": "7de4375b4875f9f3fd5b1e7384cb6a745f2658f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
