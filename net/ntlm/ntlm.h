@@ -22,10 +22,6 @@
 #include "net/base/net_export.h"
 #include "net/ntlm/ntlm_constants.h"
 
-namespace base {
-struct MD5Digest;
-}
-
 namespace net {
 namespace ntlm {
 
@@ -92,10 +88,11 @@ NET_EXPORT_PRIVATE void GenerateLMResponseV1WithSessionSecurity(
 //
 // |server_challenge| must contain |kChallengeLen| bytes.
 // |client_challenge| must contain |kChallengeLen| bytes.
+// |session_hash| must contain |kNtlmHashLen|.
 NET_EXPORT_PRIVATE void GenerateSessionHashV1WithSessionSecurity(
     const uint8_t* server_challenge,
     const uint8_t* client_challenge,
-    base::MD5Digest* session_hash);
+    uint8_t* session_hash);
 
 // Generates the NTLM Response for NTLMv1 with session security.
 // Defined by ComputeResponse() in [MS-NLMP] Section 3.3.1 for the
@@ -215,7 +212,7 @@ NET_EXPORT_PRIVATE void GenerateSessionBaseKeyV2(const uint8_t* v2_hash,
 //     channel_bindings_hash = MD5(ClientChannelBindingsUnhashed)
 NET_EXPORT_PRIVATE void GenerateChannelBindingHashV2(
     const std::string& channel_bindings,
-    base::MD5Digest* channel_bindings_hash);
+    uint8_t* channel_bindings_hash);
 
 // The Message Integrity Check (MIC) is a hash calculated over all three
 // messages in the NTLM protocol. The MIC field in the authenticate message
