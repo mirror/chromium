@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b631bc5d_8d11fcd1",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-08-21T14:36:41Z",
+      "side": 1,
+      "message": "Do we need the IsHorizontalMode distinction for the ShapeResult itself? Always executing the else clause below and using the horizontal flags on the runs seems simpler and doesn\u0027t look like much of a performance penalty.",
+      "revId": "142ce745a53abb26b2624ec4ffb01f3042ac92dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
