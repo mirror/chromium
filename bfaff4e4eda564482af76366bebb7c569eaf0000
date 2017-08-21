@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1473a8d0_931b9129",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-21T18:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2bf78dc_9509d6a1",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "bfaff4e4eda564482af76366bebb7c569eaf0000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ee1eae0_c51385c1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "dc57c398_42c8cd96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-21T18:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ee1eae0_c51385c1",
+      "range": {
+        "startLine": 404,
+        "startChar": 8,
+        "endLine": 404,
+        "endChar": 40
+      },
+      "revId": "bfaff4e4eda564482af76366bebb7c569eaf0000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a37555ea_547e9823",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
         "patchSetId": 1
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "f5c7d86a_129fefa8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-21T18:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a37555ea_547e9823",
+      "revId": "bfaff4e4eda564482af76366bebb7c569eaf0000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69c7625b_5441eaba",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
         "patchSetId": 1
@@ -79,6 +145,24 @@
       "revId": "bfaff4e4eda564482af76366bebb7c569eaf0000",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1383af0d_f8d40872",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-21T18:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69c7625b_5441eaba",
+      "revId": "bfaff4e4eda564482af76366bebb7c569eaf0000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -102,6 +186,30 @@
       "revId": "bfaff4e4eda564482af76366bebb7c569eaf0000",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153282b9_60e53514",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-21T18:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07c1617c_022a84a9",
+      "range": {
+        "startLine": 429,
+        "startChar": 17,
+        "endLine": 429,
+        "endChar": 66
+      },
+      "revId": "bfaff4e4eda564482af76366bebb7c569eaf0000",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
