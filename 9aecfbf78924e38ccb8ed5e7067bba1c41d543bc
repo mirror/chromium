@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7249a3d6_abd6980e",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-21T22:43:26Z",
+      "side": 1,
+      "message": "So, I understand why we\u0027d want to bypass the CompositorLock, but the ResizeLock does more, in particular throttle input events so that we don\u0027t try to resize things (read: renderers) faster than we can process. See DelegatedFrameHostClientAura::DelegatedFrameHostCreateResizeLock where  host-\u003edispatcher()-\u003eHoldPointerMoves() is the part that does that. You\u0027d want to keep that, but I suppose not take the CompositorLock? We\u0027d still want something to call DelegatedFrameHostClientAura::CompositorResizeLockEnded if we timed out (this is currently done via the CompositorLock timeout).",
+      "revId": "9aecfbf78924e38ccb8ed5e7067bba1c41d543bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
