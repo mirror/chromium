@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e05051e_b0077581",
+        "filename": "chrome/browser/ui/search/instant_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-21T15:38:59Z",
+      "side": 1,
+      "message": "You\u0027ve removed a check that instant_tab_ is non-null. If that\u0027s intentional, can you add a DCHECK for it being non-null before this DCHECK?",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "9128ada4cad92861b7f46d2cae24704b2a2d2a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05892cff_90c78836",
+        "filename": "chrome/browser/ui/search/instant_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-21T15:38:59Z",
+      "side": 1,
+      "message": "…also when the NTP URL changes as a result of the DSE changing?",
+      "revId": "9128ada4cad92861b7f46d2cae24704b2a2d2a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
