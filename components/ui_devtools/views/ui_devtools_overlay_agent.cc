@@ -48,7 +48,7 @@ void UIDevToolsOverlayAgent::OnMouseEvent(ui::MouseEvent* event) {
   int element_id = dom_agent_->FindElementIdTargetedByPoint(
       event->root_location(), target->GetRootWindow());
 
-  if (event->type() == ui::ET_MOUSE_PRESSED && (pinned_id_ != element_id)) {
+  if (pinned_id_ == element_id || event->type() == ui::ET_MOUSE_PRESSED) {
     event->SetHandled();
     if (element_id) {
       pinned_id_ = element_id;
@@ -58,6 +58,10 @@ void UIDevToolsOverlayAgent::OnMouseEvent(ui::MouseEvent* event) {
   } else if (element_id && !pinned_id_) {
     frontend()->nodeHighlightRequested(element_id);
     dom_agent_->HighlightNode(element_id, false);
+  } else if (element_id && pinned_id_) {
+    // Show distances between 2 elements.
+    dom_agent_->HighlightNode(element_id, false);
+    dom_agent_->ShowDistances(pinned_id_, element_id);
   }
 }
 
