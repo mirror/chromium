@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c7c73940_eed34496",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3190,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-21T12:34:42Z",
+      "side": 1,
+      "message": "I think new flags are supposed to be added at the end.\nYou\u0027ll probably also have to update AboutFlagsHistogramTest.",
+      "revId": "840e359e848958ad97d6dd796a8036798e6bc229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eab92133_1881ef56",
         "filename": "chrome/browser/search/local_ntp_source.cc",
         "patchSetId": 3
