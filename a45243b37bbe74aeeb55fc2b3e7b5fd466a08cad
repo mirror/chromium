@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e2b270b_34538dc2",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-21T12:35:38Z",
+      "side": 1,
+      "message": "I think this \"None\" constant is used in 2 places - consider making it an file constant (maybe name it kDiceRequestHeaderNone).",
+      "range": {
+        "startLine": 199,
+        "startChar": 14,
+        "endLine": 199,
+        "endChar": 33
+      },
+      "revId": "a45243b37bbe74aeeb55fc2b3e7b5fd466a08cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94d62d89_75511b2f",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-21T12:35:38Z",
+      "side": 1,
+      "message": "I think it would make the test more readable to add a variable that holds the dice_request_header and check its value in the test.",
+      "range": {
+        "startLine": 340,
+        "startChar": 4,
+        "endLine": 340,
+        "endChar": 13
+      },
+      "revId": "a45243b37bbe74aeeb55fc2b3e7b5fd466a08cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c6f3c9a_20878924",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-21T12:35:38Z",
+      "side": 1,
+      "message": "I think this test is missing as expect like EXPECT_EQ(\"None\", dice_request_header_);",
+      "range": {
+        "startLine": 489,
+        "startChar": 7,
+        "endLine": 489,
+        "endChar": 10
+      },
+      "revId": "a45243b37bbe74aeeb55fc2b3e7b5fd466a08cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
