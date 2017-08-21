@@ -34,6 +34,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.toolbar.ActionModeController;
 import org.chromium.chrome.browser.toolbar.ToolbarActionModeCallback;
+import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.NumberRollView;
 import org.chromium.chrome.browser.widget.TintedDrawable;
 import org.chromium.chrome.browser.widget.TintedImageButton;
@@ -199,6 +200,10 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
                 R.drawable.btn_menu);
         mSelectionMenuButton = TintedDrawable.constructTintedDrawable(getResources(),
                 R.drawable.btn_menu, android.R.color.white);
+
+        if (!FeatureUtilities.isChromeHomeModernEnabled()) {
+            setTitleTextAppearance(getContext(), R.style.BlackHeadline2);
+        }
     }
 
     /**
