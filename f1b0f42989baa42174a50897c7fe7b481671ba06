@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78d046fe_68bcfbe6",
+        "filename": "build/linux/bin/eu-strip",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-21T07:20:12Z",
+      "side": 1,
+      "message": "Yup, that was an accident! Glad that you noticed that",
+      "parentUuid": "2cd4ac27_4017a715",
+      "revId": "f1b0f42989baa42174a50897c7fe7b481671ba06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9aca4e0e_feb3ac23",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-header-lowercase.py",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "f1b0f42989baa42174a50897c7fe7b481671ba06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d01c95c_325cad6b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-header-lowercase.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-21T07:20:12Z",
+      "side": 1,
+      "message": "I didn\u0027t know that! Thank you so much for pointing that out, and for the explanatory note! Does it look all right now?",
+      "parentUuid": "9aca4e0e_feb3ac23",
+      "revId": "f1b0f42989baa42174a50897c7fe7b481671ba06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
