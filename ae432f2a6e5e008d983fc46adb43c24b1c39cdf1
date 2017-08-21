@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "567c2f91_85a8aa18",
+        "filename": "ash/mus/manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-21T17:24:52Z",
+      "side": 1,
+      "message": "?",
+      "revId": "ae432f2a6e5e008d983fc46adb43c24b1c39cdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b30be8be_0256f9c1",
+        "filename": "chrome/common/instant_struct_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-21T17:24:52Z",
+      "side": 1,
+      "message": "lol?",
+      "revId": "ae432f2a6e5e008d983fc46adb43c24b1c39cdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
