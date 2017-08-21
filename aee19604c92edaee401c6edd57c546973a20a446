@@ -260,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "27931cc7_37ad13b2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-21T06:44:42Z",
+      "side": 0,
+      "message": "I think the check is important.  kInterCaps vs. SHOUTING_CASE is the major difference between Chromium style and Blink style, and the tool support is helpful to reduce review round-trips.\n\nI have added multiple review comments to CLs trying to add snake_case function names to third_party/WebKit for the last few months. I don\u0027t want to consume my time for a task which can be done by tools.",
+      "parentUuid": "8c81b5dc_9d869dd2",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5594167_ade560cd",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
         "patchSetId": 2
