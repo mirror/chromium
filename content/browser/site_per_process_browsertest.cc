@@ -121,6 +121,7 @@
 #include "content/browser/renderer_host/input/touch_selection_controller_client_manager_android.h"
 #include "content/browser/renderer_host/render_widget_host_view_android.h"
 #include "content/test/mock_overscroll_refresh_handler_android.h"
+#include "ui/events/android/motion_event_android.h"
 #include "ui/gfx/geometry/point_f.h"
 #endif
 
@@ -11035,10 +11036,15 @@ class TouchSelectionControllerClientAndroidSiteIsolationTest
                  ui::MotionEvent::Action action,
                  gfx::Point point) {
     DCHECK(action >= ui::MotionEvent::ACTION_DOWN &&
-           action << ui::MotionEvent::ACTION_CANCEL);
-    ui::MotionEventGeneric touch(
-        action, ui::EventTimeForNow(),
-        ui::PointerProperties(point.x(), point.y(), 10));
+           action < ui::MotionEvent::ACTION_CANCEL);
+
+    ui::MotionEventAndroid::Pointer p(0, point.x(), point.y(), 10, 0, 0, 0, 0);
+    JNIEnv* env = base::android::AttachCurrentThread();
+    auto time_ms = (ui::EventTimeForNow() - base::TimeTicks()).InMilliseconds();
+    ui::MotionEventAndroid touch(
+        env, nullptr, 1.f, 0, 0, 0, time_ms,
+        ui::MotionEventAndroid::GetAndroidActionForTesting(action), 1, 0, 0, 0,
+        0, 0, 0, 0, false, &p, nullptr);
     view->OnTouchEvent(touch);
   }
 };
