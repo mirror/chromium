@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09da8611_b8700eb0",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T21:15:36Z",
+      "side": 1,
+      "message": "It\u0027s not clear what type this deduces to; avoid using auto here.",
+      "revId": "e95a04d0d1b1babb8db3ddc1b8e6a396429b57f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1678d71e_2abb1400",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T21:15:36Z",
+      "side": 1,
+      "message": "Why not pass a const api::virtual_keyboard::RestrictFeatures::Params\u0026?",
+      "revId": "e95a04d0d1b1babb8db3ddc1b8e6a396429b57f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5a4a54_8da3cfa2",
+        "filename": "chrome/test/data/chromeos/app_mode/virtual_keyboard/update.sh",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T21:15:36Z",
+      "side": 1,
+      "message": "Why is this file needed?  Packing extensions in this way seems like it\u0027s asking for trouble (since we don\u0027t know which version of chrome will run).",
+      "revId": "e95a04d0d1b1babb8db3ddc1b8e6a396429b57f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
