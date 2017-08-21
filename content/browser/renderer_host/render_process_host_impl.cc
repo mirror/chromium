@@ -2160,15 +2160,13 @@ RenderProcessHostImpl::GetProcessResourceCoordinator() {
   if (!resource_coordinator::IsResourceCoordinatorEnabled()) {
     process_resource_coordinator_ =
         base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
-            nullptr, resource_coordinator::CoordinationUnitType::kProcess,
-            base::GetProcId(GetHandle()));
+            nullptr, resource_coordinator::CoordinationUnitType::kProcess);
   } else {
     auto* connection = ServiceManagerConnection::GetForProcess();
     process_resource_coordinator_ =
         base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
             connection ? connection->GetConnector() : nullptr,
-            resource_coordinator::CoordinationUnitType::kProcess,
-            base::GetProcId(GetHandle()));
+            resource_coordinator::CoordinationUnitType::kProcess);
   }
   return process_resource_coordinator_.get();
 }
@@ -3918,6 +3916,9 @@ void RenderProcessHostImpl::OnProcessLaunched() {
 
   if (IsReady()) {
     DCHECK(!sent_render_process_ready_);
+    GetProcessResourceCoordinator()->SetProperty(
+        resource_coordinator::mojom::PropertyType::kPID,
+        base::GetProcId(GetHandle()));
     sent_render_process_ready_ = true;
     // Send RenderProcessReady only if the channel is already connected.
     for (auto& observer : observers_)
