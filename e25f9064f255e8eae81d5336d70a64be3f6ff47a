@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6fd2452_5fe4a375",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-21T19:48:03Z",
+      "side": 1,
+      "message": "We should go ahead and make imageIndex non optional in setOldImageUrl (or make the default value 0, or treat \u0027undefined\u0027 like 0)",
+      "revId": "e25f9064f255e8eae81d5336d70a64be3f6ff47a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3bb6fbe_eb23740c",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-21T19:48:03Z",
+      "side": 1,
+      "message": "Hmm, did you test the symptoms for crbug.com/752842 ? Also, can you test crbug.com/757376 which may be related?",
+      "revId": "e25f9064f255e8eae81d5336d70a64be3f6ff47a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
