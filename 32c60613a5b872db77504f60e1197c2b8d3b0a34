@@ -272,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "1ec39209_49add52b",
+        "filename": "content/browser/loader/navigation_url_loader_delegate.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-21T21:44:59Z",
+      "side": 1,
+      "message": "Urrghh, Gerrit doesn\u0027t let me respond to comments individually.\n\nLucas: Nah, I have the same reaction to that as I do to base::Optional\u003c\u003e.  I agree with your feeling about SSLInfo in the current code, but as per the conversation with Matt elsewhere we\u0027re eventually going to have to plumb this into the response from the URLLoader directly, and if we see clearly where we\u0027re going with that it might inform the code here.  And maybe SSLInfo would make more sense then?  But yeah, probably not.\n\nI think I\u0027m inclined to go with the direction that I interpreted Emily as suggesting, which is to remove the NetworkService code for now (which isn\u0027t blocking you in the immediate future), work out what we want to do in the network service case long term and use that to inform the NS interface, and don\u0027t worry too much about the non-NS interface since it\u0027s going away anyway.  Is that reasonable from your perspective?\n\nEmily: +1 to dropping the base::Optional; I think your reinterpretation makes sense (and is not unreasonable) and simplifies the code.  Matt\u0027s response to my query about long-term NS interface issues makes me much less reluctant to include this in the plumbing, since we\u0027re almost certainly going to have to somehow long term.",
+      "parentUuid": "7dc31b49_c0681732",
+      "range": {
+        "startLine": 66,
+        "startChar": 37,
+        "endLine": 66,
+        "endChar": 45
+      },
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80cd5a01_6471e198",
         "filename": "content/browser/loader/navigation_url_loader_impl.h",
         "patchSetId": 14
@@ -489,6 +513,30 @@
       "side": 1,
       "message": "I\u0027ve updated the optional arguments to use a reference.\n\nI tried added some simple logging statements, and it seems that interstitials and net errors only trigger OnComplete(), and normal navigations only trigger OnReceiveResponse(). I presume that precludes holding on to the value from one call in hopes of using it for the other.",
       "parentUuid": "5be53935_82129d8d",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 32
+      },
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774a773d_86836fce",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-21T21:44:59Z",
+      "side": 1,
+      "message": "Huh.  I\u0027d naively consider that a bug in the protocol--it doesn\u0027t seem like that should be a variation between the two cases.  Matt\u0027s much more familiar than I a with URLLoader/URLLoaderClient; Matt, does this strike you as wonky/something we should follow up on in the servicification context?",
+      "parentUuid": "15cab21d_966b235e",
       "range": {
         "startLine": 49,
         "startChar": 24,
