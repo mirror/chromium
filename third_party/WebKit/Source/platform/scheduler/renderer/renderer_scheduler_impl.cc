@@ -1954,10 +1954,11 @@ void RendererSchedulerImpl::OnQueueingTimeForWindowEstimated(
                  queueing_time.InMillisecondsF());
 
   if (BlinkResourceCoordinatorBase::IsEnabled()) {
+    /*
     RendererResourceCoordinator::Get().SetProperty(
         resource_coordinator::mojom::PropertyType::
             kExpectedTaskQueueingDuration,
-        queueing_time.InMilliseconds());
+        queueing_time.InMilliseconds());*/
   }
 }
 
