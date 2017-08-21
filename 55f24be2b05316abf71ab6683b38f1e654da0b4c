@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47ff2b9d_57d01cc6",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-21T20:47:20Z",
+      "side": 1,
+      "message": "nit: empty line below",
+      "revId": "55f24be2b05316abf71ab6683b38f1e654da0b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b900e3_e3610cc4",
+        "filename": "base/task_scheduler/scheduler_worker_pool.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-21T20:47:20Z",
+      "side": 1,
+      "message": "Make this public, call it BindToCurrentThread() and make it non-static.\n\nThen in Delegate::OnMainEntry() just call outer_-\u003eBindToCurrentThread()\n\nMakes the use case clearer IMO.",
+      "revId": "55f24be2b05316abf71ab6683b38f1e654da0b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d1d689_58ca4e06",
+        "filename": "base/task_scheduler/scheduler_worker_pool.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-21T20:47:20Z",
+      "side": 1,
+      "message": "Remove this? It\u0027s unused and I don\u0027t see when we\u0027d need to unbind (i.e. threads that set this are owned by this pool already and will die with it).",
+      "revId": "55f24be2b05316abf71ab6683b38f1e654da0b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
