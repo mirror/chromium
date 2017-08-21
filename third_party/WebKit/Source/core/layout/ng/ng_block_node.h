@@ -6,20 +6,20 @@
 #define NGBlockNode_h
 
 #include "core/CoreExport.h"
-#include "core/layout/ng/geometry/ng_physical_offset.h"
+#include "core/layout/LayoutBox.h"
 #include "core/layout/ng/ng_layout_input_node.h"
+#include "core/layout/ng/ng_physical_box_fragment.h"
+#include "platform/heap/Handle.h"
 
 namespace blink {
 
-class LayoutBox;
+class LayoutObject;
 class NGBreakToken;
 class NGConstraintSpace;
 class NGFragmentBuilder;
 class NGLayoutResult;
-class NGPhysicalFragment;
-struct MinMaxSize;
-struct NGBaselineRequest;
 struct NGLogicalOffset;
+struct MinMaxSize;
 
 // Represents a node to be laid out.
 class CORE_EXPORT NGBlockNode final : public NGLayoutInputNode {

@@ -4,7 +4,6 @@
 
 #include "core/layout/ng/ng_fragment.h"
 
-#include "core/layout/ng/geometry/ng_border_edges.h"
 #include "core/layout/ng/geometry/ng_logical_size.h"
 
 namespace blink {

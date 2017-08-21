@@ -5,16 +5,13 @@
 #ifndef NGFloatsUtils_h
 #define NGFloatsUtils_h
 
-#include "core/CoreExport.h"
-#include "platform/LayoutUnit.h"
-#include "platform/wtf/RefPtr.h"
-#include "platform/wtf/Vector.h"
+#include "core/layout/ng/geometry/ng_logical_offset.h"
+#include "core/layout/ng/ng_constraint_space.h"
+#include "core/layout/ng/ng_fragment_builder.h"
+#include "core/layout/ng/ng_positioned_float.h"
+#include "core/layout/ng/ng_unpositioned_float.h"
 
 namespace blink {
-
-class NGConstraintSpace;
-struct NGPositionedFloat;
-struct NGUnpositionedFloat;
 
 // Returns the inline size (relative to {@code parent_space}) of the
 // unpositioned float. If the float is in a different writing mode, this will

@@ -6,7 +6,6 @@
 #define NGConstraintSpaceBuilder_h
 
 #include "core/layout/ng/ng_constraint_space.h"
-#include "core/layout/ng/ng_exclusion.h"
 #include "core/layout/ng/ng_unpositioned_float.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Optional.h"

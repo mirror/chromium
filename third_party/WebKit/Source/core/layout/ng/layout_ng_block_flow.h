@@ -7,14 +7,15 @@
 
 #include "core/CoreExport.h"
 #include "core/layout/LayoutBlockFlow.h"
-#include "core/layout/ng/ng_physical_box_fragment.h"
+#include "core/layout/ng/inline/ng_inline_node_data.h"
+#include "core/layout/ng/ng_block_node.h"
 
 namespace blink {
 
 class NGBreakToken;
 class NGConstraintSpace;
-struct NGInlineNodeData;
 class NGLayoutResult;
+class NGPhysicalBoxFragment;
 
 // This overrides the default layout block algorithm to use Layout NG.
 class CORE_EXPORT LayoutNGBlockFlow final : public LayoutBlockFlow {
