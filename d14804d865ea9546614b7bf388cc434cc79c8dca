@@ -94,6 +94,30 @@
       "revId": "d14804d865ea9546614b7bf388cc434cc79c8dca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf400b1_23b70aa0",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/Path2D.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-21T18:40:43Z",
+      "side": 1,
+      "message": "flackr@, ikilpatrick@: I had an offline discussion with junov@, apparently the implementation of Path2D is ready for worker, the only reason it is still experimental canvas on worker is that OffscreenCanvas is not shipped yet. What do you think about just removing the condition for PaintWorklet?",
+      "parentUuid": "c9ad277a_023f9297",
+      "range": {
+        "startLine": 35,
+        "startChar": 75,
+        "endLine": 35,
+        "endChar": 115
+      },
+      "revId": "d14804d865ea9546614b7bf388cc434cc79c8dca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
