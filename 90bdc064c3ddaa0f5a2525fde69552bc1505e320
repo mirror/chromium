@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9d215fe_3e61e761",
+        "filename": "third_party/WebKit/Source/core/leak_detector/BlinkLeakDetector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-21T05:19:19Z",
+      "side": 1,
+      "message": "Remove this.",
+      "revId": "90bdc064c3ddaa0f5a2525fde69552bc1505e320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1884e9fe_a9f69930",
+        "filename": "third_party/WebKit/Source/core/leak_detector/BlinkLeakDetector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-21T05:19:19Z",
+      "side": 1,
+      "message": "Remove this.",
+      "revId": "90bdc064c3ddaa0f5a2525fde69552bc1505e320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
