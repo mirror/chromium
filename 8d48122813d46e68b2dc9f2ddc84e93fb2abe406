@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9cd24f7b_5218cd60",
+        "filename": "third_party/lzma_sdk/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-21T15:37:59Z",
+      "side": 1,
+      "message": "Agreed.  I was not sure what the policy is for this.  Source code removed.",
+      "parentUuid": "71374571_1c2fd633",
+      "revId": "8d48122813d46e68b2dc9f2ddc84e93fb2abe406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b03f80b_5e1c97f5",
         "filename": "third_party/lzma_sdk/README.chromium",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "926779fb_f1342a6e",
+        "filename": "third_party/lzma_sdk/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-21T15:37:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b03f80b_5e1c97f5",
+      "revId": "8d48122813d46e68b2dc9f2ddc84e93fb2abe406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d20d3ac_bedfa337",
         "filename": "third_party/lzma_sdk/README.chromium",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-21T08:43:29Z",
       "side": 1,
       "message": "is this x86 or amd64? dos it matter?",
+      "revId": "8d48122813d46e68b2dc9f2ddc84e93fb2abe406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620bacb4_49d8bf3c",
+        "filename": "third_party/lzma_sdk/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-08-21T15:37:59Z",
+      "side": 1,
+      "message": "There is only one version in the original archive, x86.  But I will note this here.",
+      "parentUuid": "1d20d3ac_bedfa337",
       "revId": "8d48122813d46e68b2dc9f2ddc84e93fb2abe406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
