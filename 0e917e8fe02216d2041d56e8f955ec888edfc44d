@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b1a3031b_b9b74289",
+        "filename": "chrome/browser/resources/print_preview/settings/page_settings.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-21T21:12:30Z",
+      "side": 1,
+      "message": "Okay. If the opportunity arises to rework how that operates so that a setTimeout is not needed here, that would be great. It is helpful to avoid setTimeout calls. (Because, for example, using setTimeout can make automated testing and such harder).",
+      "parentUuid": "129bd0b9_ea8c25b9",
+      "revId": "0e917e8fe02216d2041d56e8f955ec888edfc44d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73791586_ea08d6b9",
         "filename": "chrome/browser/resources/print_preview/settings/page_settings.js",
         "patchSetId": 4
