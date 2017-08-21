@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6189d31f_142c251d",
+        "filename": "ios/chrome/app/chrome_exe_main.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-21T11:34:04Z",
+      "side": 1,
+      "message": "(For a followup CL) This file should be named startup_loggers.h.",
+      "revId": "1956a80087f91469bd5d6e9b6ebed81d321d965b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4247bee2_1c70d39c",
+        "filename": "ios/chrome/test/perf/chrome_perf_egtests.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-21T11:34:04Z",
+      "side": 1,
+      "message": "This comment refers to the reading list.",
+      "revId": "1956a80087f91469bd5d6e9b6ebed81d321d965b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
