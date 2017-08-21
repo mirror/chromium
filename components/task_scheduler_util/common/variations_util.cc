@@ -122,9 +122,17 @@ std::unique_ptr<base::TaskScheduler::InitParams> GetTaskSchedulerInitParams(
     return nullptr;
   }
 
+  const base::TaskScheduler::TaskPriorityAdjustment task_priority_adjustment =
+      variation_params.find(base::JoinString(
+          {variation_param_prefix, "AllTasksUserBlocking"}, "")) !=
+              variation_params.end()
+          ? base::TaskScheduler::TaskPriorityAdjustment::ALL_TASKS_USER_BLOCKING
+          : base::TaskScheduler::TaskPriorityAdjustment::NONE;
+
   return base::MakeUnique<base::TaskScheduler::InitParams>(
       *background_worker_pool_params, *background_blocking_worker_pool_params,
-      *foreground_worker_pool_params, *foreground_blocking_worker_pool_params);
+      *foreground_worker_pool_params, *foreground_blocking_worker_pool_params,
+      task_priority_adjustment);
 }
 
 #if !defined(OS_IOS)
