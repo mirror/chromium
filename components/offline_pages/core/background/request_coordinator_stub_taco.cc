@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "components/offline_pages/core/background/network_quality_provider_stub.h"
+#include "components/offline_pages/core/background/offline_pages_ukm_reporter_stub.h"
 #include "components/offline_pages/core/background/offliner_stub.h"
 #include "components/offline_pages/core/background/request_queue.h"
 #include "components/offline_pages/core/background/request_queue_in_memory_store.h"
@@ -22,6 +23,7 @@ RequestCoordinatorStubTaco::RequestCoordinatorStubTaco() {
   offliner_ = base::MakeUnique<OfflinerStub>();
   scheduler_ = base::MakeUnique<SchedulerStub>();
   network_quality_provider_ = base::MakeUnique<NetworkQualityProviderStub>();
+  ukm_reporter_ = base::MakeUnique<OfflinePagesUkmReporterStub>();
 }
 
 RequestCoordinatorStubTaco::~RequestCoordinatorStubTaco() {
@@ -66,10 +68,16 @@ void RequestCoordinatorStubTaco::SetNetworkQualityProvider(
   network_quality_provider_ = std::move(network_quality_provider);
 }
 
+void RequestCoordinatorStubTaco::SetOfflinePagesUkmReporter(
+    std::unique_ptr<offline_pages::OfflinePagesUkmReporter> ukm_reporter) {
+  ukm_reporter_ = std::move(ukm_reporter);
+}
+
 void RequestCoordinatorStubTaco::CreateRequestCoordinator() {
   request_coordinator_ = base::MakeUnique<RequestCoordinator>(
       std::move(policy_), std::move(offliner_), std::move(queue_),
-      std::move(scheduler_), network_quality_provider_.get());
+      std::move(scheduler_), network_quality_provider_.get(),
+      std::move(ukm_reporter_));
 }
 
 RequestCoordinator* RequestCoordinatorStubTaco::request_coordinator() {

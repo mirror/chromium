@@ -3586,7 +3586,10 @@ test("unit_tests") {
       "../browser/offline_pages/test_request_coordinator_builder.h",
     ]
     if (is_android) {
-      sources += [ "../browser/offline_pages/android/prerendering_offliner_unittest.cc" ]
+      sources += [
+        "../browser/offline_pages/android/offline_pages_ukm_reporter_impl_unittest.cc",
+        "../browser/offline_pages/android/prerendering_offliner_unittest.cc",
+      ]
     }
     deps += [
       "//components/offline_pages/content/background_loader:test_support",
