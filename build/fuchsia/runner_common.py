@@ -355,10 +355,10 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
       '-append', 'TERM=dumb kernel.halt_on_panic=true',
     ]
 
-  if _IsRunningOnBot():
-    qemu_command += ['-smp', '1', '-cpu', 'Haswell,+smap,-check']
-  else:
-    # Bot executions can't (currently) enable KVM.
+  # if _IsRunningOnBot():
+  #   qemu_command += ['-smp', '1', '-cpu', 'Haswell,+smap,-check']
+  # else:
+  #   # Bot executions can't (currently) enable KVM.
     qemu_command += ['-smp', '4', '-enable-kvm', '-cpu', 'host,migratable=no']
 
   if dry_run:
