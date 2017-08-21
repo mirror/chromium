@@ -36,10 +36,13 @@ import android.widget.PopupWindow;
 
 import org.chromium.base.AnimationFrameTimeHistogram;
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.SysUtils;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.omaha.UpdateMenuItemHelper;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.AccessibilityUtil;
 import org.chromium.chrome.browser.widget.PulseDrawable;
 
@@ -291,6 +294,12 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
                 }
             });
         }
+
+        // TODO(dgn): for testing only, to remove.
+        Tab tab = ((ChromeTabbedActivity) ApplicationStatus.getLastTrackedFocusedActivity())
+                          .getActivityTab();
+        tab.getTabWebContentsDelegateAndroid().onDidBlockFramebust(
+                "http://www.isyourcomputerinfected.biz/");
     }
 
     /**
