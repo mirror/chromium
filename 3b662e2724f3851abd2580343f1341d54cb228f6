@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "4c9e364c_56b77d73",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-21T02:21:36Z",
+      "side": 1,
+      "message": "I think removing Web should be fine, and probably makes better sense",
+      "parentUuid": "9952dd5a_66aedfc7",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0094fc75_60b6d731",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
         "patchSetId": 2
@@ -290,6 +314,24 @@
       "side": 1,
       "message": "Hm yea let\u0027s keep them separate from now. But there is a lot of overlap, I still think eventually they could be merged.",
       "parentUuid": "57143545_a3fc907e",
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0623a8d7_7dd6b860",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-21T02:21:36Z",
+      "side": 1,
+      "message": "Yes, I agree that we could possibly merge these error code. (While, as you know designing error code is a tough thing, it might be worth writing down the ideas into a doc if we\u0027re going to consolidate more)",
+      "parentUuid": "4b836431_7401760d",
       "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
