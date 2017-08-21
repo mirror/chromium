@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7379ddd_8bb4ebe4",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-21T12:47:16Z",
+      "side": 1,
+      "message": "Perhaps move this check and generating the debug output to its own function, e.g. EnsureCompletelyShaped()?",
+      "revId": "83b194deb24c54a476688bcc4982be6a995a9709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca840468_fffc59a8",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-21T12:47:16Z",
+      "side": 1,
+      "message": "In case you need the the font family name as in the font file. This one you can retrieve via the SkStrings coming from LocalizedStrings* createFamilyNameIterator() const; from SkTypeface.",
+      "revId": "83b194deb24c54a476688bcc4982be6a995a9709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
