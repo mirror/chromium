@@ -104,6 +104,10 @@ class LayoutGrid final : public LayoutBlock {
                                                 GridAxis) const;
 
   LayoutUnit GridGap(GridTrackSizingDirection) const;
+  LayoutUnit GetGridItemOffset(GridTrackSizingDirection direction) {
+    return direction == kForRows ? offset_between_rows_
+                                 : offset_between_columns_;
+  }
 
  protected:
   ItemPosition SelfAlignmentNormalBehavior(
