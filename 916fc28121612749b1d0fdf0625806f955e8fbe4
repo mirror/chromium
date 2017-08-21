@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a77d7f9_2fdda681",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-21T20:59:43Z",
+      "side": 1,
+      "message": "can delete this -- unique_ptr is null by default.",
+      "revId": "916fc28121612749b1d0fdf0625806f955e8fbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0286838f_b52a567c",
+        "filename": "media/blink/webmediaplayer_impl_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-21T20:59:43Z",
+      "side": 1,
+      "message": "\u003d nullptr",
+      "revId": "916fc28121612749b1d0fdf0625806f955e8fbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe238eb_ecbdef67",
+        "filename": "media/blink/webmediaplayer_impl_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-21T20:59:43Z",
+      "side": 1,
+      "message": "\u003d nullptr",
+      "revId": "916fc28121612749b1d0fdf0625806f955e8fbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f47cca8_b7da4730",
+        "filename": "media/blink/webmediaplayer_params.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-21T20:59:43Z",
+      "side": 1,
+      "message": "create_bridge_callback_",
+      "revId": "916fc28121612749b1d0fdf0625806f955e8fbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a98bcd_9d7ddb8c",
+        "filename": "media/blink/webmediaplayer_params.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-21T20:59:43Z",
+      "side": 1,
+      "message": "create_submitter_callback_",
+      "revId": "916fc28121612749b1d0fdf0625806f955e8fbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
