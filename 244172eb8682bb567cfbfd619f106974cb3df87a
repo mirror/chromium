@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f57ebd89_6f207a9c",
+        "filename": "ui/events/android/motion_event_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-21T21:04:32Z",
+      "side": 1,
+      "message": "\u003e Yes it is for test only. Renamed the method with .....ForTesting() to make it clear that it is.\n\u003e \n\u003e \u003e maybe just put this logic in the test instead?\n\u003e \n\u003e I\u0027ve tried it before uploading, but then the callsite (site_per_...) needs definitions for JNI_MotionEvent::ACTION_* for which I need to include the jni header or create a new one only for the test. Couldn\u0027t figure out how to avoid linking errors about multiple definitions of symbols like \u0027g_android_view_MotionEvent_clazz\u0027 and \u0027kClassPath_android_view_MotionEvent\u0027.\n\nHmm, yeah, those generated jni header files are meant to be included only once, from a cc file. I guess ForTesting is good enough.\n\nActually now that I noticed, there is no need to specify JNI_MotionEvent here.",
+      "parentUuid": "59d9f4ff_5ffd108b",
+      "revId": "244172eb8682bb567cfbfd619f106974cb3df87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b93db05a_0d2b8ec6",
         "filename": "ui/events/android/motion_event_android.h",
         "patchSetId": 6
