@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99dd9522_2ec6d01f",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-21T05:25:11Z",
+      "side": 1,
+      "message": "Lose the \u0027s\u0027.",
+      "range": {
+        "startLine": 253,
+        "startChar": 51,
+        "endLine": 253,
+        "endChar": 52
+      },
+      "revId": "871b83fb64e667ed935fe9a4aa5a275682db8f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e746f84d_fb87a347",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-21T05:25:11Z",
+      "side": 1,
+      "message": "Is this basically just saying \"assert that the KEYWORD_GENERATED is the last transition type\" (so if a new transition type is added the above list will need to be updated)?\n\nThis feels out of place (being *inside* this instantiated test rather than at the top level). It\u0027s not clear exactly what it\u0027s doing and it isn\u0027t directly linked to the above list.\n\nIs there a way to simply have the instantiator iterate over all transition types from 0 to LAST_CORE, and run this test for every transition type regardless of whether it should open a window or not?\n\nInstead of putting the logic of which ones should open a window in the instantiator, have an if statement inside the test that decides what to expect based on the parameter. For special cases like subframe navigation, just exit the test early.",
+      "range": {
+        "startLine": 254,
+        "startChar": 2,
+        "endLine": 254,
+        "endChar": 13
+      },
+      "revId": "871b83fb64e667ed935fe9a4aa5a275682db8f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c65183_67655a4c",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-21T05:25:11Z",
+      "side": 1,
+      "message": "Good work figuring all this out.",
+      "range": {
+        "startLine": 274,
+        "startChar": 23,
+        "endLine": 274,
+        "endChar": 41
+      },
+      "revId": "871b83fb64e667ed935fe9a4aa5a275682db8f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75f130cc_71d45882",
+        "filename": "content/public/test/test_frame_navigation_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-21T05:25:11Z",
+      "side": 1,
+      "message": "transition_type is not an argument to the navigation; it\u0027s something decided during navigation isn\u0027t it? (It gets set during DidFinishNavigation.)\n\nI don\u0027t think this comment is necessary.",
+      "range": {
+        "startLine": 16,
+        "startChar": 66,
+        "endLine": 16,
+        "endChar": 75
+      },
+      "revId": "871b83fb64e667ed935fe9a4aa5a275682db8f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
