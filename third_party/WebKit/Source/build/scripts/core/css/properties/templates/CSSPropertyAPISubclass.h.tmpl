@@ -32,6 +32,7 @@ class {{api_classname}} : public CSSPropertyAPI {
   bool IsInheritedProperty() const override { return {{is_inherited}}; }
   bool IsRepeatedProperty() const override { return {{is_repeated}}; }
   char RepetitionSeparator() const override { return {{separator}}; }
+  bool IsDescriptor() const override { return {{is_descriptor}}; }
 };
 
 }  // namespace blink
