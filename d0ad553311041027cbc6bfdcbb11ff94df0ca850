@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7361e99_91957b3a",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-21T09:16:17Z",
+      "side": 1,
+      "message": "Yes, I will replace this method in upstream with either PrimarySignInButton() or SecondarySignInButton().",
+      "parentUuid": "205472a2_9ea8f9ba",
+      "range": {
+        "startLine": 203,
+        "startChar": 1,
+        "endLine": 203,
+        "endChar": 0
+      },
+      "revId": "d0ad553311041027cbc6bfdcbb11ff94df0ca850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c292d2c_5e796a1c",
         "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-18T21:13:12Z",
       "side": 1,
       "message": "Sorry, I just want to clarify. Are both of these methods doing the exact same thing? calling SignInMenuButton()?\n\nBut with a later change, we will change so these methods do different things?",
+      "range": {
+        "startLine": 211,
+        "startChar": 1,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "d0ad553311041027cbc6bfdcbb11ff94df0ca850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5efc66dc_47217749",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-21T09:16:17Z",
+      "side": 1,
+      "message": "PrimarySignInButton() will return the matcher for the primary button of the sign-in promo.\nSecondarySignInButton() will return the matcher for the secondary button of the sign-in promo.\n\nThe primary button is \"CONTINUE AS JANE\", the secondary button is \"Not jane@gmail.com\".\nhttps://drive.google.com/file/d/0B3pahfDhxF6yMVJELWFwSGhqNjA/view",
+      "parentUuid": "7c292d2c_5e796a1c",
       "range": {
         "startLine": 211,
         "startChar": 1,
