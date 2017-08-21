@@ -217,7 +217,8 @@ Polymer({
 
   /** @private */
   onDiscardImage_: function() {
-    this.pictureList_.setOldImageUrl('');
+    this.pictureList_.setOldImageUrl('', 0);
+    this.browserProxy_.selectProfileImage();
     announceAccessibleMessage(this.i18n('photoDiscardAccessibleText'));
   },
 

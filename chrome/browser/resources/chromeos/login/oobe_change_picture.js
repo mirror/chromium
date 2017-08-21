@@ -178,7 +178,8 @@ Polymer({
 
   /** @private */
   onDiscardImage_: function() {
-    this.pictureList_.setOldImageUrl('');
+    this.pictureList_.setOldImageUrl('', 0);
+    this.sendSelectImage_(CrPicture.SelectionTypes.PROFILE, '');
     chrome.send('discardPhoto');  // Plays 'SOUND_OBJECT_DELETE'.
     announceAccessibleMessage(this.i18n('photoDiscardAccessibleText'));
   },
