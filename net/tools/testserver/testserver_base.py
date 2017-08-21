@@ -243,6 +243,11 @@ class TestServerRunner(object):
                                   help='Hostname or IP upon which the server '
                                   'will listen. Client connections will also '
                                   'only be allowed from this address.')
+    self.option_parser.add_option('--hostname', default='127.0.0.1',
+                                  dest='hostname',
+                                  help='Hostname that the tests use to '
+                                  'connect to the server. Used when '
+                                  'generating certificates.')
     self.option_parser.add_option('--data-dir', dest='data_dir',
                                   help='Directory from which to read the '
                                   'files.')
