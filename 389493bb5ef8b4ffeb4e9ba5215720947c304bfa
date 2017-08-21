@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fc8cbe8_c685b9e0",
+        "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-21T21:52:58Z",
+      "side": 1,
+      "message": "const std::string\u0026 title",
+      "range": {
+        "startLine": 103,
+        "startChar": 33,
+        "endLine": 103,
+        "endChar": 38
+      },
+      "revId": "389493bb5ef8b4ffeb4e9ba5215720947c304bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43fd5712_49eb074a",
+        "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-21T21:52:58Z",
+      "side": 1,
+      "message": "You can use\nif (base::StartsWith(actual_label, expected_label, base::CompareCase::SENSITIVE)) ... That would avoid any temporary string creation.",
+      "range": {
+        "startLine": 136,
+        "startChar": 10,
+        "endLine": 136,
+        "endChar": 24
+      },
+      "revId": "389493bb5ef8b4ffeb4e9ba5215720947c304bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "891a87b3_48619e07",
+        "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-21T21:52:58Z",
+      "side": 1,
+      "message": "nit: wrap with { and }",
+      "range": {
+        "startLine": 139,
+        "startChar": 24,
+        "endLine": 139,
+        "endChar": 58
+      },
+      "revId": "389493bb5ef8b4ffeb4e9ba5215720947c304bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b4f6bc1_ec654b1a",
+        "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-21T21:52:58Z",
+      "side": 1,
+      "message": "You also need to make sure j is within |item_number|\u0027s range: ASSERT_LT(j, item_number.size());\n\nIf we (incorrectly) passed item_number \u003d {1} for example when we have more than one visible items, then item_number[1] access will access out of bounds.",
+      "range": {
+        "startLine": 158,
+        "startChar": 6,
+        "endLine": 158,
+        "endChar": 15
+      },
+      "revId": "389493bb5ef8b4ffeb4e9ba5215720947c304bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f7c038_97bd429c",
+        "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-21T21:52:58Z",
+      "side": 1,
+      "message": "nit: creating a StringPiece here isn\u0027t necessary, since we already have to create a string by concatenation, so base::ASCIIToUTF16(item_label() + item_number[j]) should be enough.",
+      "range": {
+        "startLine": 159,
+        "startChar": 35,
+        "endLine": 159,
+        "endChar": 46
+      },
+      "revId": "389493bb5ef8b4ffeb4e9ba5215720947c304bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe35e4b4_4c902cf5",
+        "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-21T21:52:58Z",
+      "side": 1,
+      "message": "And before returning you want to make sure |item_number| didn\u0027t have any excess, so EXPECT_EQ(j, item_number.size()); This will make sure we have exact number of visible items as we expect in |item_number|.",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 3
+      },
+      "revId": "389493bb5ef8b4ffeb4e9ba5215720947c304bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439e2283_bab85098",
+        "filename": "chrome/browser/extensions/extension_context_menu_model_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-21T21:52:58Z",
+      "side": 1,
+      "message": "It looks like there is an extra () that can be removed.",
+      "range": {
+        "startLine": 408,
+        "startChar": 7,
+        "endLine": 408,
+        "endChar": 25
+      },
+      "revId": "389493bb5ef8b4ffeb4e9ba5215720947c304bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
