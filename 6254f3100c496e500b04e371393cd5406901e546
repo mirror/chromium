@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be7b0ec8_1e94fb53",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-21T07:42:44Z",
+      "side": 1,
+      "message": "I think the whole method can just be:\n\nResetNoteTakingWindowAndMoveToNextState(\n    true /*close_window*/,\n    NoteTakingExitReason::kUnlockButtonPressed);",
+      "revId": "6254f3100c496e500b04e371393cd5406901e546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b48d91d_503e846c",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/state_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-21T07:42:44Z",
+      "side": 1,
+      "message": "update LockScreenNoteTakingExitReason enum in tools/metrics/histograms/enums.xml",
+      "revId": "6254f3100c496e500b04e371393cd5406901e546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
