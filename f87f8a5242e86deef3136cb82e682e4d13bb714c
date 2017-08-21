@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19e61c4a_2c386632",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-21T14:50:53Z",
+      "side": 1,
+      "message": "Do we actually support this now? stream() etc. are Java 8 *library* features, which require runtime support.",
+      "range": {
+        "startLine": 236,
+        "startChar": 28,
+        "endLine": 236,
+        "endChar": 55
+      },
+      "revId": "f87f8a5242e86deef3136cb82e682e4d13bb714c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
