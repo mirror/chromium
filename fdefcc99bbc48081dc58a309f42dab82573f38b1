@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "333c57f7_aaf4a205",
+        "filename": "content/common/service_worker/service_worker_provider.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T08:01:08Z",
+      "side": 1,
+      "message": "Let\u0027s remove \"container\".\n\n\"Sent from the browser process to the renderer. Contains parameters for the constructor of ServiceWorkerNetworkProvider used for starting a service worker.\"",
+      "revId": "fdefcc99bbc48081dc58a309f42dab82573f38b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c332161_ad6b8073",
+        "filename": "content/common/service_worker/service_worker_provider.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T08:01:08Z",
+      "side": 1,
+      "message": "Let\u0027s remove the \"container\" from this comment now.\n\n\"Sent from the renderer to the browser process. Contains parameters that describe a browser-side provider host.\"",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 71
+      },
+      "revId": "fdefcc99bbc48081dc58a309f42dab82573f38b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44c9a4a3_938adc95",
+        "filename": "content/common/service_worker/service_worker_provider_host_info.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T08:01:08Z",
+      "side": 1,
+      "message": "Let\u0027s remove \"Container\".\n\n\"ServiceWorkerProviderHostInfo contains params for creating a ServiceWorkerProviderHost.\"\n\nWould also be helpful to add a comment \"mojom::ServiceWorkerProviderHostInfo is mapped to this struct.\"",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 13,
+        "endChar": 12
+      },
+      "revId": "fdefcc99bbc48081dc58a309f42dab82573f38b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae83161_3c74f5f2",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T08:01:08Z",
+      "side": 1,
+      "message": "Can we rename this to service_worker_container.mojom now?",
+      "revId": "fdefcc99bbc48081dc58a309f42dab82573f38b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c84b0e0_01d4f887",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T08:01:08Z",
+      "side": 1,
+      "message": "Ah, we could still keep the \"is a renderer-side interfac... the browser process uses this interface...\" etc etc as before. I meant line 19-26 could be the second paragraph.",
+      "revId": "fdefcc99bbc48081dc58a309f42dab82573f38b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
