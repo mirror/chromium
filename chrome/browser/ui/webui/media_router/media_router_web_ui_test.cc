@@ -58,5 +58,5 @@ TestingProfile* MediaRouterWebUITest::CreateProfile() {
 }
 
 BrowserWindow* MediaRouterWebUITest::CreateBrowserWindow() {
-  return new DialogTestBrowserWindow;
+  return new DialogTestBrowserWindow(GetContext());
 }

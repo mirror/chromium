@@ -90,12 +90,11 @@ Widget::InitParams DialogDelegate::GetDialogWidgetInitParams(
   params.context = context;
   params.parent = parent;
 #if !defined(OS_MACOSX)
-  // Web-modal (ui::MODAL_TYPE_CHILD) dialogs with parents are marked as child
-  // widgets to prevent top-level window behavior (independent movement, etc).
+  // Don't mark modal dialogs as child windows so that they bounce correctly.
   // On Mac, however, the parent may be a native window (not a views::Widget),
   // and so the dialog must be considered top-level to gain focus and input
   // method behaviors.
-  params.child = parent && (delegate->GetModalType() == ui::MODAL_TYPE_CHILD);
+  params.child = parent && (delegate->GetModalType() == ui::MODAL_TYPE_NONE);
 #endif
   return params;
 }

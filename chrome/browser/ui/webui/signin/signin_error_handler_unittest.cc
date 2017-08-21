@@ -102,7 +102,7 @@ class SigninErrorHandlerTest : public BrowserWithTestWindowTest {
 
   // BrowserWithTestWindowTest
   BrowserWindow* CreateBrowserWindow() override {
-    return new DialogTestBrowserWindow;
+    return new DialogTestBrowserWindow(GetContext());
   }
 
  private:

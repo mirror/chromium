@@ -19,5 +19,5 @@ void PrintPreviewTest::SetUp() {
 }
 
 BrowserWindow* PrintPreviewTest::CreateBrowserWindow() {
-  return new DialogTestBrowserWindow;
+  return new DialogTestBrowserWindow(GetContext());
 }

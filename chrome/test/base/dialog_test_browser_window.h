@@ -15,13 +15,11 @@ namespace views {
 class Widget;
 }
 
-class Browser;
-
 // Custom test browser window to provide a parent view to a modal dialog.
 class DialogTestBrowserWindow : public TestBrowserWindow,
                                 public web_modal::WebContentsModalDialogHost {
  public:
-  DialogTestBrowserWindow();
+  explicit DialogTestBrowserWindow(gfx::NativeWindow context);
   ~DialogTestBrowserWindow() override;
 
   // BrowserWindow overrides
@@ -36,8 +34,6 @@ class DialogTestBrowserWindow : public TestBrowserWindow,
   void RemoveObserver(web_modal::ModalDialogHostObserver* observer) override;
 
  private:
-  Browser* FindBrowser() const;
-
   // Dummy window for parenting dialogs.
   std::unique_ptr<views::Widget> host_window_;
 
