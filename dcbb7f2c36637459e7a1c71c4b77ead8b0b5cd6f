@@ -284,6 +284,24 @@
     },
     {
       "key": {
+        "uuid": "28a3d23b_0db2cda1",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-21T18:16:38Z",
+      "side": 1,
+      "message": "That SGTM. So, I think, what we want for now is to unconditionally send whatever seed the service has back to the app. There are two issues here that could make this a waste, but for now it seems ok.\n1. The app and service already have the same seed. We\u0027re not currently checking for this anyways\n2. The service has a seed \u003e 30days old, so even if the app receives it it will later be ignored during field trial setup.",
+      "parentUuid": "edb86eb4_85f166eb",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18d5126d_b7f40813",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
         "patchSetId": 5
