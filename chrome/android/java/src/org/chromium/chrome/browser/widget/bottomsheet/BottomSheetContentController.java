@@ -339,6 +339,7 @@ public class BottomSheetContentController extends BottomNavigationView
         getMenu().findItem(mSelectedItemId).setChecked(true);
 
         BottomSheetContent newContent = getSheetContentForId(mSelectedItemId);
+        newContent.hideSearchIconIfNoContent();
         mBottomSheet.showContent(newContent);
     }
 

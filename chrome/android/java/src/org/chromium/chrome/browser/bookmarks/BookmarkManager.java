@@ -457,4 +457,8 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate {
     public BookmarkActionBar getToolbarForTests() {
         return mToolbar;
     }
+
+    public BookmarkItemsAdapter getAdapter() {
+        return mAdapter;
+    }
 }
