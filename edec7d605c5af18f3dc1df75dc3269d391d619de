@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a1a932d_35e7cb77",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:18:57Z",
+      "side": 1,
+      "message": "commented elsewhere: omit \"const\"",
+      "range": {
+        "startLine": 27,
+        "startChar": 32,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "edec7d605c5af18f3dc1df75dc3269d391d619de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
