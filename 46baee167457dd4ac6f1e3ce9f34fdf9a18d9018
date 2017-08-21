@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a455e87_d9134d40",
+        "filename": "content/browser/android/content_view_core.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-21T23:36:33Z",
+      "side": 1,
+      "message": "this is too crazy for long term maintenance\n\nI think if we want to make native WebContentsAndroid only hold a weak ref, then the only option is to create the java object first, and then have the java object create the native object. That way something always holds onto the java object. Might be quite a bit of refactoring though.",
+      "revId": "46baee167457dd4ac6f1e3ce9f34fdf9a18d9018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed179ed_1f52c22d",
+        "filename": "content/browser/web_contents/web_contents_android.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-21T23:36:33Z",
+      "side": 1,
+      "message": "now every caller need to null check this",
+      "revId": "46baee167457dd4ac6f1e3ce9f34fdf9a18d9018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
