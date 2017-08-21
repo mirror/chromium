@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a273126_77a29218",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-21T13:09:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b82962a_92284771",
+      "revId": "6aa18f7087f892a6f1c8911a95ceaf0e6f5110f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ca2c6e1_d6f0bed1",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "779466a7_f973007e",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-21T13:09:48Z",
+      "side": 1,
+      "message": "In the context of the test, the browser is new, so that caching should not play a role. I\u0027d prefer to be overly-picky about what to check for in the test, so that if the implementation of LoadTimingInfo changes we will be informed (via the test failure) and can make an informed decision about what\u0027s necessary to test for.\n\nI agree with your point about the main frame, done.",
+      "parentUuid": "0ca2c6e1_d6f0bed1",
+      "revId": "6aa18f7087f892a6f1c8911a95ceaf0e6f5110f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b7aea14_e0d2ffb9",
         "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-21T12:15:57Z",
       "side": 1,
       "message": "per the earlier comment, let\u0027s add a comment explaining why this test passes (timing arrives before commit).\n\nthe other thing to know here is that for some callbacks like this, they\u0027ve been racy in the past, sometimes arriving after commit. if that happened here we\u0027d expect this test to fail. so if we see this test flake we may just want to remove it, but as long as the timings arrive deterministically before commit we are ok.",
+      "revId": "6aa18f7087f892a6f1c8911a95ceaf0e6f5110f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a375976d_34c852cd",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-21T13:09:48Z",
+      "side": 1,
+      "message": "Added comment.\n\nIs your point that if the request fails, the PLM tracker is torn down and so the waiter would never be called?\n\nI was under the impression that since we forward the timing info from the ResourceDispatcherHost, we\u0027d reliably get this before commit. We will see, I suppose...",
+      "parentUuid": "1b7aea14_e0d2ffb9",
       "revId": "6aa18f7087f892a6f1c8911a95ceaf0e6f5110f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
