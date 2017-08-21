@@ -1,0 +1,451 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ca8679a_746332b0",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "override",
+      "range": {
+        "startLine": 121,
+        "startChar": 31,
+        "endLine": 121,
+        "endChar": 32
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb945ade_0fbe5c92",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "ly",
+      "range": {
+        "startLine": 129,
+        "startChar": 72,
+        "endLine": 129,
+        "endChar": 73
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5341880d_93ef05f1",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "#include \u003ccstddef\u003e",
+      "range": {
+        "startLine": 143,
+        "startChar": 4,
+        "endLine": 143,
+        "endChar": 18
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c57cc73_4ef50b68",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "override",
+      "range": {
+        "startLine": 158,
+        "startChar": 34,
+        "endLine": 158,
+        "endChar": 35
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283ea6b3_67cb4b78",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "to avoid duplicated code, can this call QuickDetect (or a helper fn used by the two)?",
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a4a8cf2_f7c5cc96",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "nit: braces for multi-line conditionals throughout.",
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8400984_85000c2e",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "\"const\"? (below, too)",
+      "range": {
+        "startLine": 295,
+        "startChar": 46,
+        "endLine": 295,
+        "endChar": 47
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "797427f9_c94ae774",
+        "filename": "chrome/installer/zucchini/disassembler_win32.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "nit: use the enum hack for these constants unless you need storage for them. if you do need storage for them, please put a definition in the .cc file.",
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea5feca_c51a2c28",
+        "filename": "chrome/installer/zucchini/disassembler_win32.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "AddressTranslatorFactory",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 72,
+        "endChar": 22
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fba395f_c9ac7d16",
+        "filename": "chrome/installer/zucchini/disassembler_win32.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "this comment is a little confusing. these methods return a unique_ptr to something, which tells the reader that the caller owns the thing returned. if this comment is meant to tell the caller that the returned objects must not outlive |this|, then please state that as clearly as possible.",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 58
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a09621_c37885fc",
+        "filename": "chrome/installer/zucchini/disassembler_win32.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "these names make it sound like these functions do the reading/writing. how about MakeRel32{Reader,Writer}?",
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb633f7e_c392034a",
+        "filename": "chrome/installer/zucchini/disassembler_win32.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "nit: \"have\"",
+      "range": {
+        "startLine": 116,
+        "startChar": 15,
+        "endLine": 116,
+        "endChar": 18
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39264e8e_3f5fd0bd",
+        "filename": "chrome/installer/zucchini/disassembler_win32.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "\"image\"",
+      "range": {
+        "startLine": 120,
+        "startChar": 68,
+        "endLine": 120,
+        "endChar": 73
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53c3b66_ef183212",
+        "filename": "chrome/installer/zucchini/disassembler_win32.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "note that they\u0027re sorted?",
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a7ee530_e0eddd06",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "nit: we normally don\u0027t use \"const\" on in params like this.",
+      "range": {
+        "startLine": 27,
+        "startChar": 32,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94713f0e_f6f9e489",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "constexpr",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 5
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48536acb_c9ab5141",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "nit: you can get rid of a line of code and braces by making this:\n  if (status !\u003d ...)\n    params.err \u003c\u003c ...;\n  return status;",
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9747ab49_cb51006b",
+        "filename": "chrome/installer/zucchini/zucchini_tools.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "since base/containers/README.md says to generally avoid unordered_set, please either add a comment explaining why it\u0027s the right choice given the comments there or switch to a different container.",
+      "range": {
+        "startLine": 41,
+        "startChar": 9,
+        "endLine": 41,
+        "endChar": 22
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbdf6cf7_e3d3f2fd",
+        "filename": "chrome/installer/zucchini/zucchini_tools.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "nit: either use has_value() above in get_num_locations, or omit it here.",
+      "range": {
+        "startLine": 43,
+        "startChar": 40,
+        "endLine": 43,
+        "endChar": 52
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae4a37ed_98c4fda5",
+        "filename": "chrome/installer/zucchini/zucchini_tools.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "rather than \"zucchini_tools.{cc,h}\", which sounds like it could grow to be an ungainly grab-bag, how about \"read_references.{cc,h}\"? or will it make sense for future \"tool-ish\" things to be in the same file for the sake of code sharing or something?",
+      "range": {
+        "startLine": 5,
+        "startChar": 34,
+        "endLine": 5,
+        "endChar": 51
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c7274cc_68ce2977",
+        "filename": "chrome/installer/zucchini/zucchini_tools.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T10:16:45Z",
+      "side": 1,
+      "message": "#include \"chrome/installer/zucchini/buffer_view.h\" for this",
+      "range": {
+        "startLine": 16,
+        "startChar": 28,
+        "endLine": 16,
+        "endChar": 43
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
