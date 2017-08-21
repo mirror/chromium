@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c1f7466_becf1d85",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-21T08:49:42Z",
+      "side": 1,
+      "message": "I\u0027m still unable to figure out the correct type definitions for this change :/",
+      "parentUuid": "c3a13ae3_3d2c0b6a",
+      "revId": "46b509b9b6a0ded6b0a39fc1b70809c1e6510646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b57c5b6b_52162267",
         "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
         "patchSetId": 11
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-18T13:12:21Z",
       "side": 1,
       "message": "Can we just use an empty set/array here now?",
+      "range": {
+        "startLine": 157,
+        "startChar": 46,
+        "endLine": 157,
+        "endChar": 0
+      },
+      "revId": "46b509b9b6a0ded6b0a39fc1b70809c1e6510646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1415dd66_2a9938b2",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-21T08:49:42Z",
+      "side": 1,
+      "message": "I\u0027m not really sure how to test this, since it is an ios change. Would trybots help?",
+      "parentUuid": "b57c5b6b_52162267",
       "range": {
         "startLine": 157,
         "startChar": 46,
