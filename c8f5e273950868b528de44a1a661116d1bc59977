@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0271a3fa_6087f3e0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:23:16Z",
+      "side": 1,
+      "message": "I wonder if that means we\u0027ll have to also generate the file name when sharing a temp page... It would probably not be that much of a problem, but just something to remember.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 68
+      },
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62f34b07_877d7c75",
         "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
         "patchSetId": 2
@@ -36,6 +59,47 @@
     },
     {
       "key": {
+        "uuid": "773b7aa5_14514f7f",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:23:16Z",
+      "side": 1,
+      "message": "Yes that is valid, I was wondering if we can generate a random number for 1-10000 and use that instead of using a sequential increment. WDYT, Justin, Yafei?",
+      "parentUuid": "552852c0_8b105f5b",
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce64355_02b0b597",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:23:16Z",
+      "side": 1,
+      "message": "I wonder if there is value in generating the names in 2 ways. Perhaps one is enough?\nWhat is the value of having random name for cached pages, other than not invoking the filename generation logic?",
+      "range": {
+        "startLine": 145,
+        "startChar": 28,
+        "endLine": 145,
+        "endChar": 49
+      },
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "152c1f17_a3e98f55",
         "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
         "patchSetId": 2
@@ -47,6 +111,70 @@
       "writtenOn": "2017-08-21T17:56:10Z",
       "side": 1,
       "message": "This suffers from race conditions.  If the user has two pages being generated at the same time with the same name, then the same file name will be given to both archives.  Better to choose a random name now, and then move it to a unique file name atomically on the file thread afterwards.",
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63567daa_e303c7d7",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:23:16Z",
+      "side": 1,
+      "message": "We are wrapping the model in TaskQueue, so the race conditions is going to go away.\nI don\u0027t think this concern holds in the long run.\n\nOf course we could postpone the change just in case, but I consider this to be rare scenario, which would really take a lot of things coming together.",
+      "parentUuid": "152c1f17_a3e98f55",
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb4f914_46fe0a28",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:23:16Z",
+      "side": 1,
+      "message": "I wonder if ContinueMHTMLGenerationWithFileName would be a better name. WDYT?\nOr ContinueToGenerateMHTMLWithFileName...\nOr something like that.",
+      "range": {
+        "startLine": 163,
+        "startChar": 31,
+        "endLine": 163,
+        "endChar": 53
+      },
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c770362_70d913c2",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:23:16Z",
+      "side": 1,
+      "message": "If we are already using this error, it will be essential to create a new:\ne.g. ERROR_TOO_MANY_FILE_NAME_COLLISIONS",
+      "range": {
+        "startLine": 170,
+        "startChar": 34,
+        "endLine": 170,
+        "endChar": 63
+      },
       "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
