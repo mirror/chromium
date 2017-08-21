@@ -392,6 +392,13 @@ void BrowserTestBase::InitializeNetworkProcess() {
   if (!network_service)
     return;
 
+  // If running in single process mode, no need for extra network service
+  // configuration, as it just sets globals.
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kSingleProcess)) {
+    return;
+  }
+
   net::RuleBasedHostResolverProc::RuleList rules = host_resolver()->GetRules();
   std::vector<mojom::RulePtr> mojo_rules;
   for (const auto& rule : rules) {
@@ -411,14 +418,15 @@ void BrowserTestBase::InitializeNetworkProcess() {
     mojo_rules.push_back(std::move(mojo_rule));
   }
 
-  if (mojo_rules.empty())
-    return;
-
+  mojo::SyncCallRestrictions::ScopedAllowSyncCall allow_sync_call;
   mojom::NetworkServiceTestPtr network_service_test;
   ServiceManagerConnection::GetForProcess()->GetConnector()->BindInterface(
       mojom::kNetworkServiceName, &network_service_test);
-  mojo::SyncCallRestrictions::ScopedAllowSyncCall allow_sync_call;
-  network_service_test->AddRules(std::move(mojo_rules));
+  if (!mojo_rules.empty())
+    network_service_test->AddRules(std::move(mojo_rules));
+
+  network_service_test->AddRootCertFromFile(
+      net::EmbeddedTestServer::GetRootCertPemPath());
 }
 
 }  // namespace content
