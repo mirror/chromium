@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d16670cb_f01b9eb6",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewContentsClientAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-21T21:24:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e04c9571_de62b64b",
+      "range": {
+        "startLine": 1221,
+        "startChar": 45,
+        "endLine": 1221,
+        "endChar": 49
+      },
+      "revId": "85d5dfb5d08ce4a509b46fea72cf4194f88e44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8b30de0_60763923",
         "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewContentsClientAdapter.java",
         "patchSetId": 4
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "a0cb623e_826a3c0d",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewContentsClientAdapter.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-21T21:24:45Z",
+      "side": 1,
+      "message": "resolved",
+      "parentUuid": "6b71b347_801b95f8",
+      "range": {
+        "startLine": 1222,
+        "startChar": 18,
+        "endLine": 1222,
+        "endChar": 25
+      },
+      "revId": "85d5dfb5d08ce4a509b46fea72cf4194f88e44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db8515dd_7c50f240",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
         "patchSetId": 4
@@ -110,6 +158,24 @@
       "revId": "85d5dfb5d08ce4a509b46fea72cf4194f88e44d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0475208a_c36b1aea",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-08-21T21:24:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db8515dd_7c50f240",
+      "revId": "85d5dfb5d08ce4a509b46fea72cf4194f88e44d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
