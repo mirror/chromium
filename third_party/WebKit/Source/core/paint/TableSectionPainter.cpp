@@ -89,6 +89,9 @@ void TableSectionPainter::PaintRepeatingFooterGroup(
   // Work out the top position of the table so we can decide
   // which page to paint the first footer on.
   LayoutTable* table = layout_table_section_.Table();
+  if (!table->IsPageLogicalHeightKnown())
+    return;
+
   LayoutRect sections_rect(LayoutPoint(), table->Size());
   table->SubtractCaptionRect(sections_rect);
   LayoutUnit page_height = table->PageLogicalHeightForOffset(LayoutUnit());
