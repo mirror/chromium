@@ -22,6 +22,30 @@
       "revId": "340dd81b65292a32e36856b2852eb1ac959834c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b312c022_9e7c4c08",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-21T16:22:21Z",
+      "side": 1,
+      "message": "It worked without it, but it\u0027s probably safer to update it too. Done, thanks!",
+      "parentUuid": "50897da8_f543dd09",
+      "range": {
+        "startLine": 329,
+        "startChar": 49,
+        "endLine": 330,
+        "endChar": 78
+      },
+      "revId": "340dd81b65292a32e36856b2852eb1ac959834c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
