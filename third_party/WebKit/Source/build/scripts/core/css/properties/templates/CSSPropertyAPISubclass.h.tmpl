@@ -36,6 +36,9 @@ class {{api_classname}} : public CSSPropertyAPI {
   bool IsRepeatedProperty() const override { return true; }
   char RepetitionSeparator() const override { return '{{separator}}'; }
   {% endif %}
+  {% if is_descriptor == 'true' %}
+  bool IsDescriptor() const override { return true; }
+  {% endif %}
 };
 
 }  // namespace blink
