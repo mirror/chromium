@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "312cc9f7_1ae10bc0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-21T18:29:50Z",
+      "side": 1,
+      "message": "What\u0027s \"a-p\"? Clarify if needed in CL description.",
+      "range": {
+        "startLine": 13,
+        "startChar": 34,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "0e9d4d83711eb744cc1599f33d63ac4112733e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e310151a_7f206c6b",
+        "filename": "chrome/browser/extensions/activity_log/activity_log_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-21T18:29:50Z",
+      "side": 1,
+      "message": "The test_util.h should be removed after this and https://chromium-review.googlesource.com/c/chromium/src/+/620248. Think it would be better if this is in the same relation chain as that CL to find such cases.",
+      "range": {
+        "startLine": 435,
+        "startChar": 31,
+        "endLine": 435,
+        "endChar": 36
+      },
+      "revId": "0e9d4d83711eb744cc1599f33d63ac4112733e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5e6ca7_baa8a4b3",
+        "filename": "chrome/browser/extensions/api/identity/identity_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-21T18:29:50Z",
+      "side": 1,
+      "message": "Again the test_util.h header should go after this and https://chromium-review.googlesource.com/c/chromium/src/+/620248.",
+      "revId": "0e9d4d83711eb744cc1599f33d63ac4112733e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d1afb7e_68f6c195",
+        "filename": "extensions/browser/api/api_resource_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-21T18:29:50Z",
+      "side": 1,
+      "message": "nit: newline after",
+      "range": {
+        "startLine": 5,
+        "startChar": 33,
+        "endLine": 5,
+        "endChar": 53
+      },
+      "revId": "0e9d4d83711eb744cc1599f33d63ac4112733e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
