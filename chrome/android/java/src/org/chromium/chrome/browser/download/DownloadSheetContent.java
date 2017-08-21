@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.download;
 
+import android.util.Log;
 import android.view.View;
 
 import org.chromium.base.ActivityState;
@@ -112,5 +113,11 @@ public class DownloadSheetContent implements BottomSheetContent {
     @Override
     public boolean applyDefaultTopPadding() {
         return false;
+    }
+
+    @Override
+    public void hideSearchIconIfNoContent() {
+        Log.d("INJAE", "numItems: " + mDownloadManager.getAdapter().getItemCount());
+        mToolbarView.onDataChanged(mDownloadManager.getAdapter().getItemCount());
     }
 }

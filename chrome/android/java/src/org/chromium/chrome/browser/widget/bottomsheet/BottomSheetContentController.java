@@ -116,6 +116,7 @@ public class BottomSheetContentController extends BottomNavigationView
 
         @Override
         public void onSheetContentChanged(BottomSheetContent newContent) {
+            Log.d("INJAE", "BottomSheetContentController onSheetContentChanged");
             if (mBottomSheet.isSheetOpen()) announceBottomSheetContentSelected();
 
             if (mShouldOpenSheetOnNextContentChange) {
@@ -339,6 +340,7 @@ public class BottomSheetContentController extends BottomNavigationView
         getMenu().findItem(mSelectedItemId).setChecked(true);
 
         BottomSheetContent newContent = getSheetContentForId(mSelectedItemId);
+        newContent.hideSearchIconIfNoContent();
         mBottomSheet.showContent(newContent);
     }
 
