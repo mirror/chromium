@@ -54,7 +54,10 @@ namespace {
 CGSize PreferredCellSizeForWidth(UICollectionViewCell* cell, CGFloat width) {
   CGRect cellFrame = cell.frame;
   cellFrame.size.width = width;
-  cellFrame.size.height = CGFLOAT_MAX;
+  // Increase the cell height to big height to avoid any horizontal constrants.
+  // To avoid a warning from _NSLayoutConstraintNumberExceedsLimit, the value
+  // has to be reasonable.
+  cellFrame.size.height = 2000.;
   cell.frame = cellFrame;
   [cell setNeedsLayout];
   [cell layoutIfNeeded];
