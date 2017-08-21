@@ -25,6 +25,7 @@
 #include "chrome/browser/chromeos/file_system_provider/mount_path_util.h"
 #include "chrome/browser/chromeos/file_system_provider/service.h"
 #include "chrome/browser/chromeos/fileapi/recent_context.h"
+#include "chrome/browser/chromeos/fileapi/recent_file.h"
 #include "chrome/browser/chromeos/fileapi/recent_model.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
@@ -726,7 +727,7 @@ FileManagerPrivateInternalGetRecentFilesFunction::Run() {
 }
 
 void FileManagerPrivateInternalGetRecentFilesFunction::OnGetRecentFiles(
-    const std::vector<storage::FileSystemURL>& urls) {
+    const std::vector<chromeos::RecentFile>& files) {
   scoped_refptr<storage::FileSystemContext> file_system_context =
       file_manager::util::GetFileSystemContextForRenderFrameHost(
           chrome_details_.GetProfile(), render_frame_host());
@@ -737,7 +738,8 @@ void FileManagerPrivateInternalGetRecentFilesFunction::OnGetRecentFiles(
   DCHECK(external_backend);
 
   file_manager::util::FileDefinitionList file_definition_list;
-  for (const storage::FileSystemURL& url : urls) {
+  for (const auto& file : files) {
+    const storage::FileSystemURL& url = file.url();
     DCHECK(external_backend->CanHandleType(url.type()));
     file_manager::util::FileDefinition file_definition;
     const bool result =

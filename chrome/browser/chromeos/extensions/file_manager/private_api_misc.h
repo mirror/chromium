@@ -20,6 +20,10 @@
 #include "chrome/browser/extensions/chrome_extension_function_details.h"
 #include "google_apis/drive/drive_api_error_codes.h"
 
+namespace chromeos {
+class RecentFile;
+}  // namespace chromeos
+
 namespace file_manager {
 namespace util {
 struct EntryDefinition;
@@ -290,7 +294,7 @@ class FileManagerPrivateInternalGetRecentFilesFunction
 
  private:
   ResponseAction Run() override;
-  void OnGetRecentFiles(const std::vector<storage::FileSystemURL>& urls);
+  void OnGetRecentFiles(const std::vector<chromeos::RecentFile>& files);
   void OnConvertFileDefinitionListToEntryDefinitionList(
       std::unique_ptr<file_manager::util::EntryDefinitionList>
           entry_definition_list);
