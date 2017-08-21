@@ -66,6 +66,7 @@ class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
                 'is_inherited': 'true',
                 'separator': 0,
                 'is_repeated': 'false',
+                'is_descriptor': 'false',
             }
         return generate_property_api_h
 
@@ -81,6 +82,7 @@ class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
                 'is_inherited': 'true' if property_['inherited'] else 'false',
                 'separator': 0 if property_['separator'] is None else '\'' + property_['separator'] + '\'',
                 'is_repeated': 'true' if property_['separator'] else 'false',
+                'is_descriptor': 'true' if property_['is_descriptor'] else 'false',
             }
         return generate_property_api_h
 
