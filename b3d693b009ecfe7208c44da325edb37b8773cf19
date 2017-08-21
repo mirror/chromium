@@ -16,6 +16,24 @@
       "revId": "b3d693b009ecfe7208c44da325edb37b8773cf19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0653c487_2c93fa4a",
+        "filename": "chrome/common/importer/firefox_importer_utils_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-21T22:03:40Z",
+      "side": 1,
+      "message": "\u003e Except these.\n\n(I meant: don’t make them static out here at namespace scope, where it has a different meaning. But constexpr would still be good.)",
+      "parentUuid": "6c6e2b6a_1bfe003e",
+      "revId": "b3d693b009ecfe7208c44da325edb37b8773cf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
