@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9168fc63_bfe148fd",
+        "filename": "chrome/browser/ui/tab_helpers.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-21T14:23:48Z",
+      "side": 1,
+      "message": "Could the factory function here encapsulate more of the argument gathering? ie. can it just take the profile and web contents (like most other functions called here) and internally gate on the presence of globals and retrieve profile members and keyed services? It seems beneficial to keep as much logic and plumbing out of this file as possible.",
+      "revId": "0ebd4e2468606fbd61384053ed3d0a1a4394e692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
