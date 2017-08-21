@@ -41,6 +41,7 @@ class CORE_EXPORT CSSPropertyAPI {
   }
   virtual bool IsDescriptor() const { return false; }
   virtual bool SupportsPercentage() const { return false; }
+  virtual bool IsProperty() const { return true; }
 };
 
 }  // namespace blink
