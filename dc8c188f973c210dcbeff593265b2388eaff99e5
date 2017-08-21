@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1fe52212_e9a9ea9f",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/paint/invalidation/japanese-rl-selection-clear-expected.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-21T04:03:27Z",
+      "side": 1,
+      "message": "For SVG, you can look at failed LayoutResults in PS12. Linux results are here:\nhttps://storage.googleapis.com/chromium-layout-test-archives/linux_trusty_blink_rel/14112/layout-test-results/results.html\n(note, editing/* failures are flaky, please ignore them.)\n\nFor painting, however, LayoutResutls on bots can\u0027t use \"Show Test\" in overlay results, and all what I found is to run locally. You might know this better though.",
+      "parentUuid": "9c39416a_876bbe09",
+      "range": {
+        "startLine": 11,
+        "startChar": 18,
+        "endLine": 11,
+        "endChar": 38
+      },
+      "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e5427e8_f9345397",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlowLine.cpp",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18fa3e11_79397d54",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlowLine.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-21T04:03:27Z",
+      "side": 1,
+      "message": "Done, now in CL:622814",
+      "parentUuid": "4e5427e8_f9345397",
+      "range": {
+        "startLine": 624,
+        "startChar": 2,
+        "endLine": 624,
+        "endChar": 67
+      },
+      "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "96149c8e_bf8594e0",
+        "filename": "third_party/WebKit/Source/core/layout/line/GlyphOverflow.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-21T04:03:27Z",
+      "side": 1,
+      "message": "Done in the split CL:622814\n\nI went through all usages and confirmed, as far as I can read from the code, they assume logical+alphabetic baseline.",
+      "parentUuid": "16150d57_ac6315b2",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82c58a27_e30eb038",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
         "patchSetId": 14
@@ -91,6 +163,30 @@
       "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b75f792_bb6ef00e",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-21T04:03:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82c58a27_e30eb038",
+      "range": {
+        "startLine": 468,
+        "startChar": 7,
+        "endLine": 468,
+        "endChar": 14
+      },
+      "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "94693cc9_7788bdda",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-21T04:03:27Z",
+      "side": 1,
+      "message": "Done, added https://drafts.csswg.org/css-writing-modes-3/#intro-baselines",
+      "parentUuid": "142c3cf9_c9fbe50c",
+      "range": {
+        "startLine": 476,
+        "startChar": 9,
+        "endLine": 476,
+        "endChar": 32
+      },
+      "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cb85e5a_484aef14",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
         "patchSetId": 14
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "a4b251dd_41b7e51c",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-21T04:03:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cb85e5a_484aef14",
+      "range": {
+        "startLine": 485,
+        "startChar": 8,
+        "endLine": 485,
+        "endChar": 16
+      },
+      "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8480ba11_518a5c10",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.h",
         "patchSetId": 14
@@ -160,6 +304,30 @@
       "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a45eec65_6ee85bf2",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-21T04:03:27Z",
+      "side": 1,
+      "message": "Yeah, a past review requested to switch an \"if\" to a pointer operation, when we needed to update one X or Y value, so that the \"if\" runs only once outside the glyph loop. Now we have multiple values to update, I think \"if\" is easier to read, but I don\u0027t want to put the \"if\" in the glyph loop.\n\nThe loop runs on every glyph on every shaping, in most cases multiple times per layout unless it hits the word cache. Adding one \"if\" usually costs 0.5% or less in micro benchmark, but this loop is too hot and vertical flow UMA 0.4% doesn\u0027t look to justify to me.",
+      "parentUuid": "8480ba11_518a5c10",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 35
+      },
+      "revId": "dc8c188f973c210dcbeff593265b2388eaff99e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
