@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca298eba_1c8dbc22",
+        "filename": "chrome/android/java/res/layout/number_roll_view.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-21T15:19:22Z",
+      "side": 0,
+      "message": "The desired text style matches WhiteHeadline2, so we should use the predefined text styles in ui/android/java/res/values-v17/styles.xml.\n\nThe XML should have an effect unless we\u0027re programatically setting the text color/text size somewhere else. Can you try removing the Java changes and setting the android:textAppearance\u003d\"@style/WhiteHeadline2\" attribute here?",
+      "revId": "1c182ec4825effa2c72648480f7b5b4f5f5ee4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
