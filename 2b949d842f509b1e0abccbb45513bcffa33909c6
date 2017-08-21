@@ -210,6 +210,24 @@
       "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8dd3a44_9aa65d28",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-21T12:00:18Z",
+      "side": 1,
+      "message": "Ah, you\u0027re absolutely right, this is because the metrics arrive before commit.\n\nLet\u0027s add a comment in the test to explain this, as this is subtle but ends up being beneficial for our purposes.",
+      "parentUuid": "3312a01d_3e5a0a3e",
+      "revId": "2b949d842f509b1e0abccbb45513bcffa33909c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
