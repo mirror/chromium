@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aed50387_0b40dfd8",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-21T20:56:23Z",
+      "side": 1,
+      "message": "If we want mipmaps and we fall into this path (which is preferred), we\u0027ll have to correctly specify the number of levels here.",
+      "revId": "c90a44a46d617981ba927b971b57431fea6eb3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c652c61_6ca721de",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-21T20:56:23Z",
+      "side": 1,
+      "message": "What if we draw a RPDQ that specifies trilinear, but the corresponding RP didn\u0027t specify GenerateMipmaps? I think we\u0027ll end up drawing with an incomplete texture (i.e. black). Should we make sure we only pick GL_LINEAR_MIPMAP_LINEAR if the resource has mipmaps? We probably need to track this at the resource level anyway for allocation (see comment in ResourceProvider).\n\nAnother thing: Strict unextended GLES 2.0 (which we claim to support, some Android devices may still be on it) only supports *_MIPMAP_* min filters for power-of-two textures (or you get black, like for incomplete textures). How should we handle this scenario?",
+      "revId": "c90a44a46d617981ba927b971b57431fea6eb3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce53a64_ffbb85b1",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2585,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-21T20:56:23Z",
+      "side": 1,
+      "message": "I want to double-check, but I believe there is a path on Mac where we allocate GMB-backed RenderSurfaces so that we can send them to Core Animation. In that path, we would use GL_TEXTURE_RECTANGLE_ARB (meaning this would be incorrect), which doesn\u0027t support mip-mapping at all anyway. We\u0027d probably need a full GL fallback in that case.\n\nEither way we probably need logic in the overlay processing for CA/DC to either fail overlay promotion if trilinear is selected, or implement it (if at all possible) at the CA/DC level.",
+      "revId": "c90a44a46d617981ba927b971b57431fea6eb3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
