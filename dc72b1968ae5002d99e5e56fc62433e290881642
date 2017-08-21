@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca1f543b_84eb862d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-21T20:28:41Z",
+      "side": 1,
+      "message": "We set the above boolean when this is true already, right? Do we need to check again here? Or is there a difference in setting to false?",
+      "range": {
+        "startLine": 346,
+        "startChar": 17,
+        "endLine": 346,
+        "endChar": 34
+      },
+      "revId": "dc72b1968ae5002d99e5e56fc62433e290881642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
