@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9f39ad8c_da6a6a57",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-21T20:18:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6fd2452_5fe4a375",
+      "revId": "e25f9064f255e8eae81d5336d70a64be3f6ff47a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3bb6fbe_eb23740c",
         "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-21T19:48:03Z",
       "side": 1,
       "message": "Hmm, did you test the symptoms for crbug.com/752842 ? Also, can you test crbug.com/757376 which may be related?",
+      "revId": "e25f9064f255e8eae81d5336d70a64be3f6ff47a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a6c253_569ac0a0",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-21T20:18:24Z",
+      "side": 1,
+      "message": "Yes, just did with latest patch and it fixes all these issues afaict. It doesn\u0027t revert to the last used default image but instead the profile picture when discarding a photo. I think this is more consistent as if you load the settings page and you discard the photo then it\u0027s hard to know what the last used image is unless you selected on during this specific instance of the page.",
+      "parentUuid": "d3bb6fbe_eb23740c",
       "revId": "e25f9064f255e8eae81d5336d70a64be3f6ff47a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
