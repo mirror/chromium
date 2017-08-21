@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43ca173c_ca00f5f6",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-21T17:48:21Z",
+      "side": 1,
+      "message": "Lots of duplicate logic here. Please consolidate this (the dispatchers_ lookup and the PostTask to BindMediaStreamDispatcherRequest) into a single shared method like GetDispatcherForFrame which returns a mojom::MediaStreamDispatcherHost*\n\nThen the rest of the class can just write things like:\n\n  GetDispatcherForFrame(render_process_id_, render_frame_id)\n      -\u003eOnStreamGenerated(...);",
+      "revId": "89959e9c86ffc8a1934867cb2920ea0a88ce8cae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
