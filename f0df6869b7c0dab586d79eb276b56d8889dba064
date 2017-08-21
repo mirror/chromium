@@ -116,6 +116,138 @@
       "revId": "f0df6869b7c0dab586d79eb276b56d8889dba064",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f030117_f02aef4c",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-21T18:52:05Z",
+      "side": 1,
+      "message": "Can we use SetVisible(false) instead ?",
+      "range": {
+        "startLine": 848,
+        "startChar": 29,
+        "endLine": 848,
+        "endChar": 55
+      },
+      "revId": "f0df6869b7c0dab586d79eb276b56d8889dba064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1587f3cc_f687af06",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-21T18:52:05Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 863,
+        "startChar": 28,
+        "endLine": 863,
+        "endChar": 54
+      },
+      "revId": "f0df6869b7c0dab586d79eb276b56d8889dba064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb024131_4ed53582",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-21T18:52:05Z",
+      "side": 1,
+      "message": "SetVisible(false) ?",
+      "range": {
+        "startLine": 894,
+        "startChar": 11,
+        "endLine": 894,
+        "endChar": 23
+      },
+      "revId": "f0df6869b7c0dab586d79eb276b56d8889dba064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7acf5ecc_2cac83fe",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-21T18:52:05Z",
+      "side": 1,
+      "message": "Would this cause mouse wheel not working on the first app page?",
+      "range": {
+        "startLine": 971,
+        "startChar": 39,
+        "endLine": 971,
+        "endChar": 40
+      },
+      "revId": "f0df6869b7c0dab586d79eb276b56d8889dba064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291f70de_fc0fe6b0",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-21T18:52:05Z",
+      "side": 1,
+      "message": "Same question. Would this break scroll event on the first app page? Scroll event can be triggered using two finger scroll on touch pad.",
+      "range": {
+        "startLine": 1011,
+        "startChar": 39,
+        "endLine": 1011,
+        "endChar": 40
+      },
+      "revId": "f0df6869b7c0dab586d79eb276b56d8889dba064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c82150a_81ed97c9",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1877,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-21T18:52:05Z",
+      "side": 1,
+      "message": "Why do we need to do this?",
+      "revId": "f0df6869b7c0dab586d79eb276b56d8889dba064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
