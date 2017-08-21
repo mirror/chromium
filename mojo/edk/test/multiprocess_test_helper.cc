@@ -35,6 +35,9 @@
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
 #include "base/mac/mach_port_broker.h"
+#elif defined(OS_ANDROID)
+#include "base/test/multiprocess_test_android.h"
+#include "mojo/edk/jni/MultiprocessTestLauncherHelper_jni.h"
 #endif
 
 namespace mojo {
@@ -174,14 +177,40 @@ ScopedMessagePipeHandle MultiprocessTestHelper::StartChildWithExtraSwitch(
         ConnectionParams(TransportProtocol::kLegacy, std::move(server_handle)));
   }
 
+#if defined(OS_ANDROID)
+  JNIEnv* env = base::android::AttachCurrentThread();
+  base::android::ScopedJavaLocalRef<jobject> java_launcher_helper =
+      Java_MultiprocessTestLauncherHelper_create(env);
+  test_child_ = base::SpawnMultiProcessTestChildWithDelegate(
+      test_child_main, command_line, options,
+      Java_MultiprocessTestLauncherHelper_getDelegate(env,
+                                                      java_launcher_helper));
+
+  // Retrieve the ParcelableChannels. This blocks as the service will call us
+  // with its channel.
+  base::android::ScopedJavaLocalRef<jobject> parcelable_channel_server =
+      Java_MultiprocessTestLauncherHelper_getParcelableChannelServer(
+          env, java_launcher_helper);
+  DCHECK(!parcelable_channel_server.is_null());
+
+  base::android::ScopedJavaLocalRef<jobject> parcelable_channel_client =
+      Java_MultiprocessTestLauncherHelper_getParcelableChannelClientBlocking(
+          env, java_launcher_helper);
+  DCHECK(!parcelable_channel_client.is_null());
+
+// use the channels below in the connectionparams
+#else
   test_child_ =
       base::SpawnMultiProcessTestChild(test_child_main, command_line, options);
+#endif
+
   if (launch_type == LaunchType::CHILD || launch_type == LaunchType::PEER)
     channel.ChildProcessLaunched();
 
   if (launch_type == LaunchType::CHILD ||
       launch_type == LaunchType::NAMED_CHILD) {
     DCHECK(server_handle.is_valid());
+    // ** JAY ** Pass the parcelable channels here in the connection params **
     child_invitation.Send(
         test_child_.Handle(),
         ConnectionParams(TransportProtocol::kLegacy, std::move(server_handle)),
