@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b82962a_92284771",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-21T12:15:57Z",
+      "side": 1,
+      "message": "it looks like this was only overridden in the one place where you\u0027re using OnTrackerCreated instead. given this, let\u0027s remove the OnCommit callback.",
+      "revId": "6aa18f7087f892a6f1c8911a95ceaf0e6f5110f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca2c6e1_d6f0bed1",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-21T12:15:57Z",
+      "side": 1,
+      "message": "2 thoughts here:\n* i believe some of these fields can be legitimately unset due to caching, so we may not want to assert their presence. for example IIUC if the DNS lookup is cached, or the main resource is cached, we may not get timing data.\n* i think we probably want to assert that it\u0027s the main resource of the page in particular that we receive timing for. as implemented this will trigger if any resource on the page provides timing data. we might consider only considering it a valid loaded resource for the purpises of this function if extra_request_complete_info \u003d\u003d RESOURCE_TYPE_MAIN_FRAME",
+      "revId": "6aa18f7087f892a6f1c8911a95ceaf0e6f5110f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7aea14_e0d2ffb9",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-21T12:15:57Z",
+      "side": 1,
+      "message": "per the earlier comment, let\u0027s add a comment explaining why this test passes (timing arrives before commit).\n\nthe other thing to know here is that for some callbacks like this, they\u0027ve been racy in the past, sometimes arriving after commit. if that happened here we\u0027d expect this test to fail. so if we see this test flake we may just want to remove it, but as long as the timings arrive deterministically before commit we are ok.",
+      "revId": "6aa18f7087f892a6f1c8911a95ceaf0e6f5110f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
