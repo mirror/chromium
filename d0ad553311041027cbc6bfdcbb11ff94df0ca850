@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "94559bd3_6cd9a11d",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-21T13:44:50Z",
+      "side": 1,
+      "message": "Will we still need this matcher if no one is signed in?",
+      "parentUuid": "a7361e99_91957b3a",
+      "range": {
+        "startLine": 203,
+        "startChar": 1,
+        "endLine": 203,
+        "endChar": 0
+      },
+      "revId": "d0ad553311041027cbc6bfdcbb11ff94df0ca850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c292d2c_5e796a1c",
         "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "PrimarySignInButton() will return the matcher for the primary button of the sign-in promo.\nSecondarySignInButton() will return the matcher for the secondary button of the sign-in promo.\n\nThe primary button is \"CONTINUE AS JANE\", the secondary button is \"Not jane@gmail.com\".\nhttps://drive.google.com/file/d/0B3pahfDhxF6yMVJELWFwSGhqNjA/view",
       "parentUuid": "7c292d2c_5e796a1c",
+      "range": {
+        "startLine": 211,
+        "startChar": 1,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "d0ad553311041027cbc6bfdcbb11ff94df0ca850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "396f3d9a_4d624be1",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-21T13:44:50Z",
+      "side": 1,
+      "message": "Thanks for the info. My questions was mostly that the implementation of both matchers are identical. The implementation will change so that they\u0027re different?",
+      "parentUuid": "5efc66dc_47217749",
       "range": {
         "startLine": 211,
         "startChar": 1,
