@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9efd2e3c_7f4547eb",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T06:21:13Z",
+      "side": 0,
+      "message": "Can you please add to the CL description why this class can be removed from this CL?",
+      "revId": "bdeec49039868b0d4b4c4bd11dfa1ade6f99c7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
