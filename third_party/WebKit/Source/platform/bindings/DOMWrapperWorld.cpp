@@ -33,6 +33,7 @@
 #include <memory>
 
 #include "platform/bindings/DOMDataStore.h"
+#include "platform/bindings/V8PerIsolateData.h"
 #include "platform/wtf/HashTraits.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/StdLibExtras.h"
@@ -307,6 +308,22 @@ void DOMWrapperWorld::DissociateDOMWindowWrappersInAllWorlds(
 
   for (auto& world : GetWorldMap().Values())
     world->DomDataStore().UnsetWrapperIfAny(script_wrappable);
+}
+
+bool DOMWrapperWorld::HasWrapperInAnyWorld(ScriptWrappable* script_wrappable) {
+  v8::Isolate* isolate = V8PerIsolateData::MainThreadIsolate();
+  v8::HandleScope handle_scope(isolate);
+
+  Vector<RefPtr<DOMWrapperWorld>> worlds;
+  DOMWrapperWorld::AllWorldsInCurrentThread(worlds);
+  for (const auto& world : worlds) {
+    DOMDataStore& dom_data_store = world->DomDataStore();
+    v8::Local<v8::Object> wrapper =
+        dom_data_store.Get(script_wrappable, isolate);
+    if (!wrapper.IsEmpty())
+      return true;
+  }
+  return false;
 }
 
 }  // namespace blink
