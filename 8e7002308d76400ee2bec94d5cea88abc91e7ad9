@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3df0a53a_aafcbe81",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-21T20:15:40Z",
+      "side": 1,
+      "message": "Can you delete this code? (For mouse wheel?)",
+      "revId": "8e7002308d76400ee2bec94d5cea88abc91e7ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd65f79b_1ef45c41",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-21T20:15:40Z",
+      "side": 1,
+      "message": "And this code delete?",
+      "range": {
+        "startLine": 267,
+        "startChar": 26,
+        "endLine": 267,
+        "endChar": 27
+      },
+      "revId": "8e7002308d76400ee2bec94d5cea88abc91e7ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48487ffb_cebabb4f",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-21T20:15:40Z",
+      "side": 1,
+      "message": "This is unclear where why you are allowing GSE to reset the state on send.",
+      "range": {
+        "startLine": 278,
+        "startChar": 14,
+        "endLine": 278,
+        "endChar": 40
+      },
+      "revId": "8e7002308d76400ee2bec94d5cea88abc91e7ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b3d7aa1_0806b276",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-21T20:15:40Z",
+      "side": 1,
+      "message": "And delete this.",
+      "range": {
+        "startLine": 296,
+        "startChar": 11,
+        "endLine": 296,
+        "endChar": 12
+      },
+      "revId": "8e7002308d76400ee2bec94d5cea88abc91e7ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
