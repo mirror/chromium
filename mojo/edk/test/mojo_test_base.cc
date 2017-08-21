@@ -70,6 +70,8 @@ MojoTestBase::ClientController::ClientController(
 #endif
   helper_.set_process_error_callback(process_error_callback);
   pipe_ = helper_.StartChild(client_name, launch_type);
+#if defined(OS_ANDROID)
+#endif
 #if defined(OS_MACOSX)
   g_mach_broker->AddPlaceholderForPid(helper_.test_child().Handle());
 #endif
