@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca8062db_0cea2ea3",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-21T02:02:59Z",
+      "side": 1,
+      "message": "I feel making this handled by the consumer (ResourceDispatcher or URLLoaderClientImpl) rather than by ThrottlingURLLoader might be slightly cleaner, wdyt?",
+      "revId": "060a56075006c33adf57a329ebffd084ec044f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df06717_45139f31",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-21T02:02:59Z",
+      "side": 1,
+      "message": "Should this rather be called by the consumer?",
+      "revId": "060a56075006c33adf57a329ebffd084ec044f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
