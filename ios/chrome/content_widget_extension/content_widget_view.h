@@ -29,9 +29,12 @@
 @property(nonatomic, readonly) CGFloat widgetExpandedHeight;
 
 // Designated initializer, creates the widget view with a |delegate| for user
-// actions. |compactHeight| indicates the size to use in compact display.
-// |initiallyCompact| indicates which mode to display on initialization.
+// actions. The |secondaryVibrancyEffect| is used
+// to display view elements. |compactHeight| indicates the size to use in
+// compact display. |initiallyCompact| indicates which mode to display on
+// initialization.
 - (instancetype)initWithDelegate:(id<ContentWidgetViewDelegate>)delegate
+         secondaryVibrancyEffect:(UIVibrancyEffect*)secondaryVibrancyEffect
                    compactHeight:(CGFloat)compactHeight
                 initiallyCompact:(BOOL)compact NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;

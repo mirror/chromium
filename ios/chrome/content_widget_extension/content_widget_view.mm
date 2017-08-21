@@ -47,6 +47,8 @@ const int kRows = 2;
 @property(nonatomic, strong) NSArray<MostVisitedTileView*>* mostVisitedTiles;
 // The delegate for actions in the view.
 @property(nonatomic, weak) id<ContentWidgetViewDelegate> delegate;
+// The secondary effect of the widget. Use for a more transparent appearance.
+@property(nonatomic, strong) UIVisualEffect* secondaryEffect;
 
 // Sets up the widget UI for an expanded or compact appearance based on
 // |compact|.
@@ -76,14 +78,17 @@ const int kRows = 2;
 @synthesize siteCount = _siteCount;
 @synthesize mostVisitedTiles = _mostVisitedTiles;
 @synthesize delegate = _delegate;
+@synthesize secondaryEffect = _secondaryEffect;
 
 - (instancetype)initWithDelegate:(id<ContentWidgetViewDelegate>)delegate
+         secondaryVibrancyEffect:(UIVibrancyEffect*)secondaryVibrancyEffect
                    compactHeight:(CGFloat)compactHeight
                 initiallyCompact:(BOOL)compact {
   self = [super initWithFrame:CGRectZero];
   if (self) {
     DCHECK(delegate);
     _delegate = delegate;
+    _secondaryEffect = secondaryVibrancyEffect;
     _compactHeight = compactHeight;
     [self createUI:compact];
   }
@@ -105,7 +110,8 @@ const int kRows = 2;
 - (void)createUI:(BOOL)compact {
   NSMutableArray* tiles = [[NSMutableArray alloc] init];
   for (int i = 0; i < kIconsPerRow * kRows; i++) {
-    [tiles addObject:[[MostVisitedTileView alloc] init]];
+    [tiles addObject:[[MostVisitedTileView alloc]
+                         initWithLabelEffect:self.secondaryEffect]];
   }
   _mostVisitedTiles = tiles;
 

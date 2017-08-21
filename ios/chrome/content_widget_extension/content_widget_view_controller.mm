@@ -70,10 +70,18 @@ const CGFloat widgetCompactHeightIOS9 = 110;
                 .height
           : widgetCompactHeightIOS9;
 
+  UIVibrancyEffect* secondary;
+  if (base::ios::IsRunningOnIOS10OrLater()) {
+    secondary = [UIVibrancyEffect widgetSecondaryVibrancyEffect];
+  } else {
+    secondary = [UIVibrancyEffect notificationCenterVibrancyEffect];
+  }
+
   // A local variable is necessary here as the property is declared weak and the
   // object would be deallocated before being retained by the addSubview call.
   ContentWidgetView* widgetView =
       [[ContentWidgetView alloc] initWithDelegate:self
+                          secondaryVibrancyEffect:secondary
                                     compactHeight:height
                                  initiallyCompact:self.isCompact];
   self.widgetView = widgetView;

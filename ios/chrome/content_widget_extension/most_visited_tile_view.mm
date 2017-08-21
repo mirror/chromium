@@ -29,9 +29,13 @@ const CGFloat kTileWidth = 73;
 
 #pragma mark - Public
 
-- (instancetype)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
+- (instancetype)initWithLabelEffect:(nonnull UIVisualEffect*)labelEffect {
+  self = [super initWithFrame:CGRectZero];
   if (self) {
+    UIVisualEffectView* titleLabelEffectView =
+        [[UIVisualEffectView alloc] initWithEffect:labelEffect];
+    titleLabelEffectView.translatesAutoresizingMaskIntoConstraints = NO;
+
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     _titleLabel.textColor = [UIColor colorWithWhite:kLabelTextColor alpha:1.0];
     _titleLabel.font =
@@ -39,14 +43,18 @@ const CGFloat kTileWidth = 73;
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.isAccessibilityElement = NO;
     _titleLabel.numberOfLines = kLabelNumLines;
+    _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [titleLabelEffectView.contentView addSubview:_titleLabel];
+    AddSameConstraints(titleLabelEffectView, _titleLabel);
 
     _faviconView = [[FaviconViewNew alloc] init];
     _faviconView.isAccessibilityElement = NO;
     _faviconView.font =
         [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    _faviconView.translatesAutoresizingMaskIntoConstraints = NO;
 
     UIStackView* stack = [[UIStackView alloc]
-        initWithArrangedSubviews:@[ _faviconView, _titleLabel ]];
+        initWithArrangedSubviews:@[ _faviconView, titleLabelEffectView ]];
     stack.axis = UILayoutConstraintAxisVertical;
     stack.spacing = kSpaceFaviconTitle;
     stack.alignment = UIStackViewAlignmentCenter;

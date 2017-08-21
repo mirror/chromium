@@ -13,6 +13,12 @@
 // It displays the favicon for this Most Visited suggestion and its title.
 @interface MostVisitedTileView : UIButton
 
+// Designated initializer. |labelEffect| is used to display the title labels.
+- (nonnull instancetype)initWithLabelEffect:(nonnull UIVisualEffect*)labelEffect
+    NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+- (nonnull instancetype)initWithCoder:(nonnull NSCoder*)aDecoder NS_UNAVAILABLE;
+
 // FaviconView displaying the favicon.
 @property(nonatomic, strong, readonly, nonnull) FaviconViewNew* faviconView;
 
