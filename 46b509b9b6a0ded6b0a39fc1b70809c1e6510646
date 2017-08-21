@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a8eb9f3d_711c3831",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-21T09:36:35Z",
+      "side": 1,
+      "message": "constexpr std::array\u003cconst char*\u003e may be easiest.",
+      "parentUuid": "f58ddcff_058e52cc",
+      "revId": "46b509b9b6a0ded6b0a39fc1b70809c1e6510646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b57c5b6b_52162267",
         "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
         "patchSetId": 11
