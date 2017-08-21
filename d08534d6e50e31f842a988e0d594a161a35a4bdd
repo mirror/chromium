@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "207a8706_3d8657db",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-21T14:18:06Z",
+      "side": 1,
+      "message": "I\u0027d change the condition to:\n\n  if (document_-\u003edomWindow() \u0026\u0026 DOMWrapperWorld::HasWrapperInAnyWorld(document_-\u003edomWindow())\n\nBTW did you confirm locally that this condition works as you expected?",
+      "revId": "d08534d6e50e31f842a988e0d594a161a35a4bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b80710d_122c378a",
         "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.cpp",
         "patchSetId": 3
