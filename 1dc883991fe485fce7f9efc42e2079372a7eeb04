@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0855d1b3_e4664fbd",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1232,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-21T22:38:13Z",
+      "side": 1,
+      "message": "This code will move to SadTabTabHelper, so I don\u0027t want to use |self.navigationManager| here.",
+      "range": {
+        "startLine": 1232,
+        "startChar": 9,
+        "endLine": 1232,
+        "endChar": 17
+      },
+      "revId": "1dc883991fe485fce7f9efc42e2079372a7eeb04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
