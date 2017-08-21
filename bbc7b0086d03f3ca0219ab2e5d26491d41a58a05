@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabee3cc_5e6649b1",
+        "filename": "chrome/browser/android/history/browsing_history_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-21T20:50:17Z",
+      "side": 1,
+      "message": "Prior to the change in crbug.com/738627, we used Profile#getLastUsedProfile() and passed a Profile object from Java to this C++ class. #getLastUsedProfile() was returning the regular profile even when the incognito profile was in use.\n\nI did a quick test to confirm that this is still an issue on Android (it is). It appears that desktop (Linux) always opens history in a regular tab (even if chrome://history is entered in the URL bar on an incognito tab), so there\u0027s no need to copy the logic there. I\u0027m not sure if this will affect iOS or not.",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 14
+      },
+      "revId": "bbc7b0086d03f3ca0219ab2e5d26491d41a58a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71da0ebb_7a24d491",
+        "filename": "chrome/browser/android/history/browsing_history_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-21T20:50:17Z",
+      "side": 1,
+      "message": "Should this return the profile that was used to create services above?",
+      "range": {
+        "startLine": 156,
+        "startChar": 25,
+        "endLine": 156,
+        "endChar": 43
+      },
+      "revId": "bbc7b0086d03f3ca0219ab2e5d26491d41a58a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
