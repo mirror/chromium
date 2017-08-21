@@ -838,7 +838,7 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
 
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_FALSE(job_controller_->main_job());
+  EXPECT_TRUE(job_controller_->main_job()->is_waiting());
   EXPECT_TRUE(job_controller_->alternative_job());
 
   // Invoke OnRequestComplete() which should delete |job_controller_| from
