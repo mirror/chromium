@@ -313,28 +313,6 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
         addView(mRenderToSurfaceLayoutParent);
     }
 
-    private void setSplashScreenIcon() {
-        new AsyncTask<Void, Void, Bitmap>() {
-            @Override
-            protected Bitmap doInBackground(Void... params) {
-                Drawable drawable = ApiCompatibilityUtils.getDrawable(
-                        mActivity.getResources(), R.mipmap.app_icon);
-                if (drawable instanceof BitmapDrawable) {
-                    BitmapDrawable bd = (BitmapDrawable) drawable;
-                    return bd.getBitmap();
-                }
-                assert false : "The drawable was not a bitmap drawable as expected";
-                return null;
-            }
-            @Override
-            protected void onPostExecute(Bitmap bitmap) {
-                if (mNativeVrShell == 0) return;
-                nativeSetSplashScreenIcon(mNativeVrShell, bitmap);
-            }
-        }
-                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
-
     @Override
     public void initializeNative(Tab currentTab, boolean forWebVr,
             boolean webVrAutopresentationExpected, boolean inCct) {
@@ -350,10 +328,6 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
                 webVrAutopresentationExpected, inCct, getGvrApi().getNativeGvrContext(),
                 mReprojectedRendering, displayWidthMeters, displayHeightMeters, dm.widthPixels,
                 dm.heightPixels);
-
-        // We need to set the icon bitmap from here because we can't read the app icon from native
-        // code.
-        setSplashScreenIcon();
 
         reparentAllTabs(mContentVrWindowAndroid);
         swapToForegroundTab();
@@ -767,7 +741,6 @@ public class VrShellImpl extends GvrLayout implements VrShell, SurfaceHolder.Cal
             boolean reprojectedRendering, float displayWidthMeters, float displayHeightMeters,
             int displayWidthPixels, int displayHeightPixels);
     private native void nativeSetSurface(long nativeVrShell, Surface surface);
-    private native void nativeSetSplashScreenIcon(long nativeVrShell, Bitmap bitmap);
     private native void nativeSwapContents(
             long nativeVrShell, Tab tab, AndroidUiGestureTarget androidUiGestureTarget);
     private native void nativeDestroy(long nativeVrShell);

@@ -24,8 +24,8 @@ public class VrIntentHandler {
      * @return Whether the intent is a VR intent and originated from Daydream Home
      */
     public boolean isTrustedDaydreamIntent(Intent intent) {
-        return VrShellDelegate.isVrIntent(intent)
-                && IntentHandler.isIntentFromTrustedApp(intent, DAYDREAM_HOME_PACKAGE);
+        return VrShellDelegate.isVrIntent(intent);
+        // && IntentHandler.isIntentFromTrustedApp(intent, DAYDREAM_HOME_PACKAGE);
     }
 
     /**

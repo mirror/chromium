@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "chrome/browser/vr/elements/textured_element.h"
+#include "third_party/skia/include/core/SkColor.h"
 
 namespace vr {
 
@@ -19,6 +20,7 @@ class Text : public TexturedElement {
   Text(int maximum_width_pixels,
        float font_height_meters,
        float text_width_meters,
+       SkColor ColorScheme::*const data_field,
        int resource_id);
   ~Text() override;
 

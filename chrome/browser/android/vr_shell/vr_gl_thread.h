@@ -87,7 +87,6 @@ class VrGLThread : public base::Thread,
   void SetBluetoothConnectedIndicator(bool enabled) override;
   void SetLocationAccessIndicator(bool enabled) override;
   void SetIsExiting() override;
-  void SetSplashScreenIcon(const SkBitmap& bitmap) override;
   void SetExitVrPromptEnabled(bool enabled,
                               vr::UiUnsupportedMode reason) override;
 

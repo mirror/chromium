@@ -5,22 +5,22 @@
 #include "chrome/browser/vr/elements/splash_screen_icon.h"
 
 #include "base/memory/ptr_util.h"
-#include "chrome/browser/vr/elements/splash_screen_icon_texture.h"
+#include "chrome/browser/vr/elements/splash_screen_text_texture.h"
 
 namespace vr {
 
-SplashScreenIcon::SplashScreenIcon(int preferred_width)
+SplashScreenText::SplashScreenText(int preferred_width)
     : TexturedElement(preferred_width),
-      texture_(base::MakeUnique<SplashScreenIconTexture>()) {}
+      texture_(base::MakeUnique<SplashScreenTextTexture>()) {}
 
-SplashScreenIcon::~SplashScreenIcon() = default;
+SplashScreenText::~SplashScreenText() = default;
 
-void SplashScreenIcon::SetSplashScreenIconBitmap(const SkBitmap& bitmap) {
-  texture_->SetSplashScreenIconBitmap(bitmap);
+void SplashScreenText::SetSplashScreenTextBitmap(const SkBitmap& bitmap) {
+  texture_->SetSplashScreenTextBitmap(bitmap);
   UpdateTexture();
 }
 
-UiTexture* SplashScreenIcon::GetTexture() const {
+UiTexture* SplashScreenText::GetTexture() const {
   return texture_.get();
 }
 

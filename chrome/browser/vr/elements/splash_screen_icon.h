@@ -14,21 +14,21 @@ class SkBitmap;
 
 namespace vr {
 
-class SplashScreenIconTexture;
+class SplashScreenTextTexture;
 
-class SplashScreenIcon : public TexturedElement {
+class SplashScreenText : public TexturedElement {
  public:
-  explicit SplashScreenIcon(int preferred_width);
-  ~SplashScreenIcon() override;
+  explicit SplashScreenText(int preferred_width);
+  ~SplashScreenText() override;
 
-  void SetSplashScreenIconBitmap(const SkBitmap& bitmap);
+  void SetSplashScreenTextBitmap(const SkBitmap& bitmap);
 
  private:
   UiTexture* GetTexture() const override;
 
-  std::unique_ptr<SplashScreenIconTexture> texture_;
+  std::unique_ptr<SplashScreenTextTexture> texture_;
 
-  DISALLOW_COPY_AND_ASSIGN(SplashScreenIcon);
+  DISALLOW_COPY_AND_ASSIGN(SplashScreenText);
 };
 
 }  // namespace vr

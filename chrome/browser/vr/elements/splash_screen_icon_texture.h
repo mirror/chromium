@@ -11,22 +11,22 @@
 
 namespace vr {
 
-class SplashScreenIconTexture : public UiTexture {
+class SplashScreenTextTexture : public UiTexture {
  public:
-  SplashScreenIconTexture();
-  ~SplashScreenIconTexture() override;
+  SplashScreenTextTexture();
+  ~SplashScreenTextTexture() override;
   gfx::Size GetPreferredTextureSize(int width) const override;
   gfx::SizeF GetDrawnSize() const override;
 
-  void SetSplashScreenIconBitmap(const SkBitmap& bitmap);
+  void SetSplashScreenTextBitmap(const SkBitmap& bitmap);
 
  private:
   void Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) override;
 
-  sk_sp<SkImage> splash_screen_icon_;
+  sk_sp<SkImage> splash_screen_text_;
   gfx::SizeF size_;
 
-  DISALLOW_COPY_AND_ASSIGN(SplashScreenIconTexture);
+  DISALLOW_COPY_AND_ASSIGN(SplashScreenTextTexture);
 };
 
 }  // namespace vr
