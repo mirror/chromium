@@ -8,8 +8,10 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "ui/aura/window_port.h"
 #include "ui/base/property_data.h"
+#include "ui/gfx/geometry/size.h"
 
 namespace gfx {
 class Size;
@@ -43,6 +45,7 @@ class AURA_EXPORT WindowPortLocal : public WindowPort {
                          std::unique_ptr<ui::PropertyData> data) override;
   std::unique_ptr<cc::LayerTreeFrameSink> CreateLayerTreeFrameSink() override;
   viz::SurfaceId GetSurfaceId() const override;
+  const viz::LocalSurfaceId& GetLocalSurfaceId() override;
   void OnWindowAddedToRootWindow() override;
   void OnWillRemoveWindowFromRootWindow() override;
   void OnEventTargetingPolicyChanged() override;
@@ -53,7 +56,10 @@ class AURA_EXPORT WindowPortLocal : public WindowPort {
 
   Window* const window_;
   viz::FrameSinkId frame_sink_id_;
+  gfx::Size last_size_in_pixels_;
+  float last_device_scale_factor_ = 1.0f;
   viz::LocalSurfaceId local_surface_id_;
+  viz::LocalSurfaceIdAllocator local_surface_id_allocator_;
 
   base::WeakPtrFactory<WindowPortLocal> weak_factory_;
 

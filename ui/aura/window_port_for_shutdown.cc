@@ -60,6 +60,10 @@ viz::SurfaceId WindowPortForShutdown::GetSurfaceId() const {
   return viz::SurfaceId();
 }
 
+const viz::LocalSurfaceId& WindowPortForShutdown::GetLocalSurfaceId() {
+  return local_surface_id_;
+}
+
 void WindowPortForShutdown::OnWindowAddedToRootWindow() {}
 
 void WindowPortForShutdown::OnWillRemoveWindowFromRootWindow() {}
