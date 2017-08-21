@@ -163,7 +163,7 @@ IN_PROC_BROWSER_TEST_F(ArcVoiceInteractionArcHomeServiceTest,
       "</html>");
   ASSERT_EQ(result->children.size(), 1ul);
   auto& content_root = result->children[0];
-  ASSERT_EQ(content_root->children.size(), 3ul);
+  ASSERT_EQ(content_root->children.size(), 5ul);
 
   auto& grand_child1 = content_root->children[0];
   ASSERT_FALSE(grand_child1->selection.is_null());
