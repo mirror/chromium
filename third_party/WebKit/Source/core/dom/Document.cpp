@@ -275,21 +275,15 @@ using namespace HTMLNames;
 
 class DocumentOutliveTimeReporter : public BlinkGCObserver {
  public:
-  DocumentOutliveTimeReporter()
-      : BlinkGCObserver(ThreadState::Current()),
-        gc_age_when_document_detached_(ThreadState::Current()->GcAge()) {}
+  explicit DocumentOutliveTimeReporter(Document* document)
+      : BlinkGCObserver(ThreadState::Current()), document_(document) {}
 
   ~DocumentOutliveTimeReporter() override {
     // As not all documents are destroyed before the process dies, this might
     // miss some long-lived documents or leaked documents.
-    // TODO(hajimehoshi): There are some cases that a document can live after
-    // shutting down because the document can still be reffed (e.g. a document
-    // opened via window.open can be reffed by the opener even after shutting
-    // down). Detect those cases and record them independently.
     UMA_HISTOGRAM_EXACT_LINEAR(
         "Document.OutliveTimeAfterShutdown.DestroyedBeforeProcessDies",
-        ThreadState::Current()->GcAge() - gc_age_when_document_detached_ + 1,
-        101);
+        GetOutliveTimeCount() + 1, 101);
   }
 
   void OnCompleteSweepDone() override {
@@ -299,26 +293,64 @@ class DocumentOutliveTimeReporter : public BlinkGCObserver {
       kGCCountMax,
     };
 
-    int diff = ThreadState::Current()->GcAge() - gc_age_when_document_detached_;
-    if (diff == 5 || diff == 10) {
-      GCCount count = kGCCount5;
-      switch (diff) {
+    // There are some cases that a document can live after shutting down because
+    // the document can still be reffed (e.g. a document opened via window.open
+    // can be reffed by the opener even after shutting down). To avoid such
+    // cases as much as possible, outlive time count is started after all
+    // DomWrapper of the document have disapperared.
+    // TODO(hajimehoshi): If an element of a window (A) is retrieved via window
+    // (A)'s named property and held by another window (B), the document of the
+    // element can live without DOMWrapper. Handle such cases if possible.
+    if (!start_count_) {
+      if (HasDocumentWrapper())
+        return;
+      gc_age_when_document_detached_ = ThreadState::Current()->GcAge();
+      start_count_ = true;
+    }
+
+    int outlive_time_count = GetOutliveTimeCount();
+    if (outlive_time_count == 5 || outlive_time_count == 10) {
+      GCCount gc_count = kGCCount5;
+      switch (outlive_time_count) {
         case 5:
-          count = kGCCount5;
+          gc_count = kGCCount5;
           break;
         case 10:
-          count = kGCCount10;
+          gc_count = kGCCount10;
           break;
         default:
           NOTREACHED();
           break;
       }
       UMA_HISTOGRAM_ENUMERATION("Document.OutliveTimeAfterShutdown.GCCount",
-                                count, kGCCountMax);
+                                gc_count, kGCCountMax);
     }
   }
 
  private:
+  int GetOutliveTimeCount() const {
+    if (!start_count_)
+      return 0;
+    return ThreadState::Current()->GcAge() - gc_age_when_document_detached_;
+  }
+
+  bool HasDocumentWrapper() const {
+    v8::Isolate* isolate = V8PerIsolateData::MainThreadIsolate();
+    v8::HandleScope handle_scope(isolate);
+
+    Vector<RefPtr<DOMWrapperWorld>> worlds;
+    DOMWrapperWorld::AllWorldsInCurrentThread(worlds);
+    for (const auto& world : worlds) {
+      DOMDataStore& dom_data_store = world->DomDataStore();
+      v8::Local<v8::Object> wrapper = dom_data_store.Get(document_, isolate);
+      if (!wrapper.IsEmpty())
+        return true;
+    }
+    return false;
+  }
+
+  WeakPersistent<Document> document_;
+  bool start_count_ = false;
   int gc_age_when_document_detached_ = 0;
 };
 
@@ -2730,7 +2762,7 @@ void Document::Shutdown() {
   frame_ = nullptr;
 
   document_outlive_time_reporter_ =
-      WTF::WrapUnique(new DocumentOutliveTimeReporter());
+      WTF::WrapUnique(new DocumentOutliveTimeReporter(this));
 }
 
 void Document::RemoveAllEventListeners() {
