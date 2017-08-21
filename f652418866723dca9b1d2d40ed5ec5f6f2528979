@@ -272,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "bc7fc8aa_3c896291",
+        "filename": "chrome/browser/feedback/feedback_uploader_factory_chrome.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-21T22:02:48Z",
+      "side": 1,
+      "message": "ah, yeah of course not, sorry!",
+      "parentUuid": "2fcbade9_eff0a669",
+      "range": {
+        "startLine": 25,
+        "startChar": 66,
+        "endLine": 25,
+        "endChar": 68
+      },
+      "revId": "f652418866723dca9b1d2d40ed5ec5f6f2528979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3da91635_771f63c8",
         "filename": "chrome/browser/feedback/feedback_uploader_factory_chrome.cc",
         "patchSetId": 12
@@ -448,6 +472,30 @@
       "side": 1,
       "message": "I think it\u0027s better to keep it here under c/b/feedback bundled with all other feedback code, rather than standalone in c/b/chromeos with unrelated files.",
       "parentUuid": "c4f024e6_03fcac9d",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 23
+      },
+      "revId": "f652418866723dca9b1d2d40ed5ec5f6f2528979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6daca81c_371dd1a0",
+        "filename": "chrome/browser/feedback/feedback_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-21T22:02:48Z",
+      "side": 1,
+      "message": "Can it be feedback_util_chromeos.* then, if it\u0027s only called from Chrome OS code?",
+      "parentUuid": "7ca534e5_79e47bad",
       "range": {
         "startLine": 20,
         "startChar": 5,

@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6528f01_d5492ee7",
+        "filename": "chrome/browser/feedback/feedback_util.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-21T22:02:48Z",
+      "side": 1,
+      "message": "Should be SendFeedbackCallback, right? And then SendSysLogFeedbackCallback will be unused outside Chrome OS, so we can make that file Chrome OS only, I think.",
+      "range": {
+        "startLine": 33,
+        "startChar": 10,
+        "endLine": 33,
+        "endChar": 36
+      },
+      "revId": "3cd0ca3a75613b00f6d0e737e716e345f2201461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81313b14_39fc14ba",
+        "filename": "components/feedback/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-21T22:02:48Z",
+      "side": 1,
+      "message": "unused? (Looks like it\u0027s only used from //chrome/browser/feedback, which is probably a good thing.)",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 47
+      },
+      "revId": "3cd0ca3a75613b00f6d0e737e716e345f2201461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e5f706d_6162dd6f",
+        "filename": "components/feedback/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-21T22:02:48Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "3cd0ca3a75613b00f6d0e737e716e345f2201461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c43191_493b6349",
+        "filename": "components/feedback/DEPS",
+        "patchSetId": 15
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-21T22:02:48Z",
+      "side": 1,
+      "message": "also unused?",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 23
+      },
+      "revId": "3cd0ca3a75613b00f6d0e737e716e345f2201461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c97893_43f27cad",
+        "filename": "components/feedback/DEPS",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-21T22:02:48Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 22
+      },
+      "revId": "3cd0ca3a75613b00f6d0e737e716e345f2201461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
