@@ -144,7 +144,8 @@ extern const base::Feature kModuleDatabase;
 #endif
 
 #if defined(OS_CHROMEOS)
-extern const base::Feature kMultidevice;
+extern const base::Feature kMultiDevice;
+extern const base::Feature kMultiDeviceService;
 #endif
 
 #if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
