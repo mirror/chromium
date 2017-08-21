@@ -81,6 +81,24 @@
       "revId": "da90bbf1d1c856c6199cb79ada8d9a2ac6de7e0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09cb578e_dc77070c",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorCSSAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-21T23:58:13Z",
+      "side": 1,
+      "message": "(Further: we don\u0027t need the root level document here because we already get its \"background color\" on line 2276.)",
+      "parentUuid": "6ca8ba8a_33711213",
+      "revId": "da90bbf1d1c856c6199cb79ada8d9a2ac6de7e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
