@@ -786,4 +786,64 @@ TEST_F(PaintLayerScrollableAreaTest, FloatOverflowInRtlContainer) {
   ASSERT_TRUE(scrollable_area);
   EXPECT_FALSE(scrollable_area->HasHorizontalScrollbar());
 }
+
+struct World : public GarbageCollectedFinalized<World> {
+  using PLSA = PaintLayerScrollableArea;
+
+  Member<PLSA> m1_;
+  Member<PLSA> m2_;
+  WeakMember<PLSA> wm_;
+  HeapLinkedHashSet<WeakMember<PLSA>> h_;
+
+  DEFINE_INLINE_TRACE() {
+    visitor->Trace(m1_);
+    visitor->Trace(m2_);
+    visitor->Trace(wm_);
+    visitor->Trace(h_);
+  }
+
+  void GC() {
+    ThreadState::Current()->CollectGarbage(BlinkGC::kNoHeapPointersOnStack,
+                                           BlinkGC::kGCWithoutSweep,
+                                           BlinkGC::kForcedGC);
+  }
+};
+
+TEST_F(PaintLayerScrollableAreaTest, WeakMembers) {
+  using PLSA = PaintLayerScrollableArea;
+  Persistent<World> w = new World();
+
+  w->m1_ = PLSA::Create(*GetLayoutView().Layer());
+  w->m2_ = PLSA::Create(*GetLayoutView().Layer());
+  w->wm_ = w->m1_;
+  w->h_.insert(w->m1_);
+  w->h_.insert(w->m2_);
+  w->GC();
+
+  ASSERT_EQ(w->m1_.Get(), w->wm_.Get());
+  ASSERT_EQ(2u, w->h_.size());
+
+  HeapLinkedHashSet<WeakMember<PLSA>>::iterator it = w->h_.begin();
+  ASSERT_EQ(w->m1_.Get(), it->Get());
+  ASSERT_EQ(w->m2_.Get(), (++it)->Get());
+  ASSERT_EQ(w->h_.end(), ++it);
+
+  w->m1_->Dispose();
+  w->m1_.Clear();
+  w->GC();
+
+  ASSERT_EQ(nullptr, w->wm_.Get());
+  ASSERT_EQ(1u, w->h_.size());
+  it = w->h_.begin();
+  ASSERT_EQ(w->m2_.Get(), it->Get());
+  ASSERT_EQ(w->h_.end(), ++it);
+
+  w->m2_->Dispose();
+  w->m2_.Clear();
+  w->GC();
+
+  ASSERT_EQ(0u, w->h_.size());
+  ASSERT_EQ(w->h_.end(), w->h_.begin());
 }
+
+}  // namespace blink
