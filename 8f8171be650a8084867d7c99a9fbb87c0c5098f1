@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66246332_018e9495",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T18:00:08Z",
+      "side": 1,
+      "message": "It\u0027s only used here, so it didn\u0027t seem worth the additional complexity. If we start needing this in more places, than I agree a struct trait would be better.",
+      "parentUuid": "be4cd8a1_e91a60ad",
+      "revId": "8f8171be650a8084867d7c99a9fbb87c0c5098f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2dc308fa_d80d5d48",
         "filename": "ui/aura/mus/window_tree_client.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "8f8171be650a8084867d7c99a9fbb87c0c5098f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f457a917_40624f1c",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T18:00:08Z",
+      "side": 1,
+      "message": "Done. I removed kRootWindowBoundsChangesAreIgnored entirely, as it this point it\u0027s more confusing than helpful.",
+      "parentUuid": "2dc308fa_d80d5d48",
+      "revId": "8f8171be650a8084867d7c99a9fbb87c0c5098f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d42afb6f_889c01dd",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T18:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b181e13e_2cdbb017",
+      "revId": "8f8171be650a8084867d7c99a9fbb87c0c5098f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c127b3cd_cd52940e",
         "filename": "ui/aura/mus/window_tree_client.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "8f8171be650a8084867d7c99a9fbb87c0c5098f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec387733_9c5ea71e",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T18:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c127b3cd_cd52940e",
+      "revId": "8f8171be650a8084867d7c99a9fbb87c0c5098f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
