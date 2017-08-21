@@ -34,6 +34,24 @@
       "revId": "5965ca58eeb11ba6e321f3d0343bb9f3c7db1437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06e98b66_e7fef3c4",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T21:49:33Z",
+      "side": 1,
+      "message": "If that\u0027s enough to at least ensure this doesn\u0027t break with no warning, I\u0027m good. :)  Small patches \u003d\u003d good merges.",
+      "parentUuid": "253b93f8_23a4f1a5",
+      "revId": "5965ca58eeb11ba6e321f3d0343bb9f3c7db1437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

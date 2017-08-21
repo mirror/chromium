@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fbadbde_2dd56812",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T21:49:33Z",
+      "side": 1,
+      "message": "Maybe worth a comment explaining why URL is important over origin?",
+      "revId": "240152b1282297d718d5e9f095eed7318a6ba121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6473a0e_a37fafa7",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2259,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T21:49:33Z",
+      "side": 1,
+      "message": "per offline conversation, opener_url and source_origin (we think) are always the same origin.  Can we DCHECK that?  It would help document that using url here isn\u0027t violating any kind of security guarantees.  WDYT?",
+      "revId": "240152b1282297d718d5e9f095eed7318a6ba121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
