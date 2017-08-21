@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a20b999_5d570c66",
+        "filename": "chrome/android/java/res/drawable/selectable_item_icon_modern_bg.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-21T22:05:41Z",
+      "side": 1,
+      "message": "As an aside (not something to change in this patch):\n\nHannah\u0027s spec has this as #F1F3F4, which is yet another shade of grey... but as our decision maker on colors. It\u0027s apparently from the material 2.0 color palette so we\u0027ll eventually update our set of greys.  She also spec\u0027ed #F1F3F4 as the background color for the omnibox (which I still need to change).\n\nI think we want this icon bg and the search box to match the omnibox, so whoever (you or I) updates this should change all 3.",
+      "revId": "d5d94d8d9f118467c74f1e840be383efbc68d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
