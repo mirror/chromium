@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94cb4d74_6d6771b3",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-21T21:15:48Z",
+      "side": 1,
+      "message": "nit: Define this file path as a constant in an anonymous namespace. Also, IIUC, FILE_PATH_LITERAL is not sensitive to Posix/Windows, so you can just write \"chrome/...\".",
+      "range": {
+        "startLine": 329,
+        "startChar": 6,
+        "endLine": 329,
+        "endChar": 53
+      },
+      "revId": "d28ee84a64140e1db189dc7a20292cb2831c6af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d84abf_79635d41",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-21T21:15:48Z",
+      "side": 1,
+      "message": "nit: empty line above",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 15
+      },
+      "revId": "d28ee84a64140e1db189dc7a20292cb2831c6af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01917d3_85ad2a35",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-21T21:15:48Z",
+      "side": 1,
+      "message": "Given that you sometimes don\u0027t need some parameters (\"\", -1) and that you have to define parameters to which you have already given default values in the constructor (-1), I\u0027d suggest simply converting ReportItem to a real class with different constructors as needed.",
+      "range": {
+        "startLine": 96,
+        "startChar": 57,
+        "endLine": 96,
+        "endChar": 63
+      },
+      "revId": "d28ee84a64140e1db189dc7a20292cb2831c6af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f2c551_2c62a9c1",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-21T21:15:48Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 100,
+        "startChar": 9,
+        "endLine": 100,
+        "endChar": 19
+      },
+      "revId": "d28ee84a64140e1db189dc7a20292cb2831c6af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd6e421_1b74e49e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-21T21:15:48Z",
+      "side": 1,
+      "message": "Please use more Chromium-standard classes.\n\nbase::Time now \u003d base::Time::Now();\nitems.push_back(base::StringPrintf(\"...\", now.year, ...))",
+      "range": {
+        "startLine": 109,
+        "startChar": 11,
+        "endLine": 109,
+        "endChar": 17
+      },
+      "revId": "d28ee84a64140e1db189dc7a20292cb2831c6af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
