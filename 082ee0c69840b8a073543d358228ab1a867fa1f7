@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8519de0_ce590a3d",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-21T23:04:59Z",
+      "side": 1,
+      "message": "Is this still needed ?",
+      "revId": "082ee0c69840b8a073543d358228ab1a867fa1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
