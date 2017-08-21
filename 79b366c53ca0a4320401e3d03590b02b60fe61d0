@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17066a55_dcba6a17",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-21T17:12:08Z",
+      "side": 1,
+      "message": "Remove extra diff.",
+      "revId": "79b366c53ca0a4320401e3d03590b02b60fe61d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6acf69ae_33c90195",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-21T17:12:08Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t add much beyond what the signature of the function already says. Instead, remove the part about implementing an interface (that\u0027s already clear from the signature) and explain what effect this will have.\n\nThat is, that histograms for which ShouldRecord() returns false will not be logged. Mention that this will not affect any existing histograms if they were already logged before this is called and that this should be called early during initialization before any other threads have been started.\n\nAlso mention that the ShouldRecord() method may be called on any thread, so it should not mutate any state.\n\nHowever, since this CL doesn\u0027t yet hook up the logic for not recording metrics based on this, please add a TODO() in the comment about that.",
+      "range": {
+        "startLine": 194,
+        "startChar": 15,
+        "endLine": 194,
+        "endChar": 0
+      },
+      "revId": "79b366c53ca0a4320401e3d03590b02b60fe61d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e8e75b_f1ab52b1",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 1736,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-21T17:12:08Z",
+      "side": 1,
+      "message": "Can you mention in CL description the context for this change? Otherwise it\u0027s not obvious to me why this is needed.",
+      "range": {
+        "startLine": 1736,
+        "startChar": 49,
+        "endLine": 1736,
+        "endChar": 0
+      },
+      "revId": "79b366c53ca0a4320401e3d03590b02b60fe61d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f47ef1_aca21fc8",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-21T17:12:08Z",
+      "side": 1,
+      "message": "How come your unit test didn\u0027t catch this? Since it is expecting uint64_t...\n\nDid you just not run it after the last refactor to this code?",
+      "range": {
+        "startLine": 18,
+        "startChar": 27,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "79b366c53ca0a4320401e3d03590b02b60fe61d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
