@@ -192,6 +192,24 @@
       "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be197b72_d6d1f06a",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T05:49:42Z",
+      "side": 1,
+      "message": "Ahh, good catch! I didn\u0027t notice the \"Else\" part of step 6. I think you\u0027re right, the spec doesn\u0027t say anything about this and it\u0027s a spec bug.\n\nI\u0027ll raise the spec issue.",
+      "parentUuid": "192cbcc7_a6abc479",
+      "revId": "644c5233be8ef08baf2bad39b1a9539199c8ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
