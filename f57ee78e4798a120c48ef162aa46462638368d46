@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c450d3ff_e0729b71",
+        "filename": "chrome/app/chrome_manifest.json",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-21T18:44:57Z",
+      "side": 1,
+      "message": "does this need to be conditionalized based on ENABLE_SPELLCHECK ?",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 4
+      },
+      "revId": "f57ee78e4798a120c48ef162aa46462638368d46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f72ac8_063bb1cb",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 3405,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-21T18:44:57Z",
+      "side": 1,
+      "message": "nit: pity this class doesn\u0027t play nice with C++11 range-based for loops ...",
+      "range": {
+        "startLine": 3405,
+        "startChar": 16,
+        "endLine": 3405,
+        "endChar": 43
+      },
+      "revId": "f57ee78e4798a120c48ef162aa46462638368d46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
