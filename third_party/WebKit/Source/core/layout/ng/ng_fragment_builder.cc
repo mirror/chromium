@@ -17,7 +17,7 @@
 namespace blink {
 
 NGFragmentBuilder::NGFragmentBuilder(NGLayoutInputNode node,
-                                     RefPtr<const ComputedStyle> style,
+                                     const ComputedStyle& style,
                                      NGWritingMode writing_mode,
                                      TextDirection direction)
     : NGBaseFragmentBuilder(style, writing_mode, direction),
@@ -26,7 +26,7 @@ NGFragmentBuilder::NGFragmentBuilder(NGLayoutInputNode node,
       did_break_(false) {}
 
 NGFragmentBuilder::NGFragmentBuilder(LayoutObject* layout_object,
-                                     RefPtr<const ComputedStyle> style,
+                                     const ComputedStyle& style,
                                      NGWritingMode writing_mode,
                                      TextDirection direction)
     : NGBaseFragmentBuilder(style, writing_mode, direction),
