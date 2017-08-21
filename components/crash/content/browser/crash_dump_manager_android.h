@@ -31,7 +31,7 @@ class CrashDumpManager {
  public:
   static CrashDumpManager* GetInstance();
 
-  void ProcessMinidumpFileFromChild(base::FilePath crash_dump_dir,
+  bool ProcessMinidumpFileFromChild(base::FilePath crash_dump_dir,
                                     base::ProcessHandle pid,
                                     content::ProcessType process_type,
                                     base::TerminationStatus termination_status,
