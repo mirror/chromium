@@ -64,6 +64,7 @@ class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
                 'is_inherited': 'true' if property_['inherited'] else 'false',
                 'separator': property_['separator'],
                 'is_repeated': 'true' if property_['separator'] else 'false',
+                'is_descriptor': 'true' if property_['is_descriptor'] else 'false',
             }
         return generate_property_api_h
 
