@@ -69,6 +69,24 @@
       "revId": "f1b0f42989baa42174a50897c7fe7b481671ba06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08caa69e_29878169",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-header-lowercase.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-21T07:40:21Z",
+      "side": 1,
+      "message": "Right! But see my new comment.",
+      "parentUuid": "2d01c95c_325cad6b",
+      "revId": "f1b0f42989baa42174a50897c7fe7b481671ba06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

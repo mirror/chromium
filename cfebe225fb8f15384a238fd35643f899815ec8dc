@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d13a12fa_4f3182b4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-header-lowercase.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-21T07:40:21Z",
+      "side": 1,
+      "message": "Oops, sorry I should have noticed this earlier than I commented about use of raw_headers.\n\nThe original test is checking that entries in the Access-Control-Request-Headers header in a preflight are lower cased. So, here you need to extract the header and split the value at comma characters and verify that one of them is \"x-test\" (lower cased). You don\u0027t need raw_headers from the beginning as the value you need to check is in the value part, not the key.",
+      "revId": "cfebe225fb8f15384a238fd35643f899815ec8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
