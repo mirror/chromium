@@ -9,13 +9,11 @@
 
 namespace blink {
 
-NGBaseFragmentBuilder::NGBaseFragmentBuilder(RefPtr<const ComputedStyle> style,
+NGBaseFragmentBuilder::NGBaseFragmentBuilder(const ComputedStyle& style,
                                              NGWritingMode writing_mode,
                                              TextDirection direction)
-    : style_(std::move(style)),
-      writing_mode_(writing_mode),
-      direction_(direction) {
-  DCHECK(style_);
+    : style_(&style), writing_mode_(writing_mode), direction_(direction) {
+  DCHECK(&style);
 }
 
 NGBaseFragmentBuilder::NGBaseFragmentBuilder(NGWritingMode writing_mode,
@@ -23,9 +21,9 @@ NGBaseFragmentBuilder::NGBaseFragmentBuilder(NGWritingMode writing_mode,
     : writing_mode_(writing_mode), direction_(direction) {}
 
 NGBaseFragmentBuilder& NGBaseFragmentBuilder::SetStyle(
-    RefPtr<const ComputedStyle> style) {
-  DCHECK(style);
-  style_ = std::move(style);
+    const ComputedStyle& style) {
+  DCHECK(&style);
+  style_ = &style;
   return *this;
 }
 
