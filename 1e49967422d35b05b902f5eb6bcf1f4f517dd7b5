@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d6d1cb8_89ba3287",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-21T20:38:55Z",
+      "side": 0,
+      "message": "It seems like this logic is still needed. If it\u0027s not, please update bug list in commit message.",
+      "revId": "1e49967422d35b05b902f5eb6bcf1f4f517dd7b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
