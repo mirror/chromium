@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c2a5f981_7e866c2e",
+        "filename": "components/crash/content/browser/DEPS",
+        "patchSetId": 20
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-21T23:49:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "189beb8d_042beb38",
+      "revId": "a74e0549115bc1453a9601c19e9003831f01c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b603e77_e7c1c4a0",
         "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
         "patchSetId": 20
@@ -51,6 +69,24 @@
       "revId": "a74e0549115bc1453a9601c19e9003831f01c7ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a53000_417dbde5",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-21T23:49:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d0b0a09_3980dbe3",
+      "revId": "a74e0549115bc1453a9601c19e9003831f01c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "e3cbc9c2_0ff38ec6",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-21T23:49:01Z",
+      "side": 1,
+      "message": "Done. Thanks for the detailed review!",
+      "parentUuid": "5723b33e_0eff775a",
+      "revId": "a74e0549115bc1453a9601c19e9003831f01c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b544ce04_9258c320",
         "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
         "patchSetId": 20
@@ -103,6 +157,24 @@
       "revId": "a74e0549115bc1453a9601c19e9003831f01c7ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eefc959_76b7113c",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-21T23:49:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b544ce04_9258c320",
+      "revId": "a74e0549115bc1453a9601c19e9003831f01c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +210,24 @@
       "revId": "a74e0549115bc1453a9601c19e9003831f01c7ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "507f0862_4100b444",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-21T23:49:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44be1212_d3808883",
+      "revId": "a74e0549115bc1453a9601c19e9003831f01c7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
