@@ -1811,7 +1811,7 @@
     },
 
     'minimal_symbols': {
-      'gn_args': 'symbol_level=1',
+      'gn_args': 'symbol_level=1 strip_debug_info=true',
     },
 
     'mipsel': {
