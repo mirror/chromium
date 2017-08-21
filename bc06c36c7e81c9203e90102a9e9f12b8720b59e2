@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e546b710_29011b8f",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-21T15:27:53Z",
+      "side": 1,
+      "message": "nit (in string and desc): Autofill is always capitalized.\n\nside Qs: is this ever displayed, or just read out loud? What is the capitalization rule for a11y content? You\u0027ve used sentence casing; is that intentional?",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 158,
+        "endChar": 20
+      },
+      "revId": "bc06c36c7e81c9203e90102a9e9f12b8720b59e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
