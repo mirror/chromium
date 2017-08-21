@@ -86,7 +86,8 @@ class CONTENT_EXPORT DelegatedFrameHost
       public base::SupportsWeakPtr<DelegatedFrameHost> {
  public:
   DelegatedFrameHost(const viz::FrameSinkId& frame_sink_id,
-                     DelegatedFrameHostClient* client);
+                     DelegatedFrameHostClient* client,
+                     bool enable_surface_synchronization);
   ~DelegatedFrameHost() override;
 
   // ui::CompositorObserver implementation.
@@ -256,6 +257,7 @@ class CONTENT_EXPORT DelegatedFrameHost
   const viz::FrameSinkId frame_sink_id_;
   viz::LocalSurfaceId local_surface_id_;
   DelegatedFrameHostClient* const client_;
+  const bool enable_surface_synchronization_;
   ui::Compositor* compositor_;
 
   // The vsync manager we are observing for changes, if any.

@@ -181,7 +181,8 @@ BrowserCompositorMac::BrowserCompositorMac(
   g_browser_compositor_count += 1;
 
   root_layer_.reset(new ui::Layer(ui::LAYER_SOLID_COLOR));
-  delegated_frame_host_.reset(new DelegatedFrameHost(frame_sink_id, this));
+  delegated_frame_host_.reset(new DelegatedFrameHost(
+      frame_sink_id, this, false /* enable_surface_synchronization */));
 
   SetRenderWidgetHostIsHidden(render_widget_host_is_hidden);
   SetNSViewAttachedToWindow(ns_view_attached_to_window);

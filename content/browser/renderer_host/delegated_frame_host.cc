@@ -43,9 +43,11 @@ namespace content {
 // DelegatedFrameHost
 
 DelegatedFrameHost::DelegatedFrameHost(const viz::FrameSinkId& frame_sink_id,
-                                       DelegatedFrameHostClient* client)
+                                       DelegatedFrameHostClient* client,
+                                       bool enable_surface_synchronization)
     : frame_sink_id_(frame_sink_id),
       client_(client),
+      enable_surface_synchronization_(enable_surface_synchronization),
       compositor_(nullptr),
       tick_clock_(new base::DefaultTickClock()),
       skipped_frames_(false),
@@ -83,6 +85,9 @@ void DelegatedFrameHost::WasHidden() {
 }
 
 void DelegatedFrameHost::MaybeCreateResizeLock() {
+  if (enable_surface_synchronization_)
+    return;
+
   DCHECK(!resize_lock_);
 
   if (!compositor_)
@@ -229,6 +234,9 @@ void DelegatedFrameHost::DidNotProduceFrame(const viz::BeginFrameAck& ack) {
 }
 
 bool DelegatedFrameHost::ShouldSkipFrame(const gfx::Size& size_in_dip) {
+  if (enable_surface_synchronization_)
+    return false;
+
   if (!resize_lock_)
     return false;
   // Allow a single renderer frame through even though there's a resize lock
@@ -299,7 +307,7 @@ void DelegatedFrameHost::UpdateGutters() {
 }
 
 gfx::Size DelegatedFrameHost::GetRequestedRendererSize() const {
-  if (resize_lock_)
+  if (!enable_surface_synchronization_ && resize_lock_)
     return resize_lock_->expected_size();
   else
     return client_->DelegatedFrameHostDesiredSizeInDIP();
@@ -461,7 +469,6 @@ void DelegatedFrameHost::SubmitCompositorFrame(
                                     frame_size);
       client_->DelegatedFrameHostGetLayer()->SetShowPrimarySurface(
           surface_info, manager->surface_manager()->reference_factory());
-      client_->DelegatedFrameHostGetLayer()->SetFallbackSurface(surface_info);
       current_surface_size_ = frame_size;
       current_scale_factor_ = frame_device_scale_factor;
     }
@@ -520,8 +527,7 @@ void DelegatedFrameHost::OnBeginFramePausedChanged(bool paused) {
 
 void DelegatedFrameHost::OnFirstSurfaceActivation(
     const viz::SurfaceInfo& surface_info) {
-  // TODO(fsamuel): Once surface synchronization is turned on, the fallback
-  // surface should be set here.
+  client_->DelegatedFrameHostGetLayer()->SetFallbackSurface(surface_info);
 }
 
 void DelegatedFrameHost::OnBeginFrame(const viz::BeginFrameArgs& args) {
@@ -708,6 +714,9 @@ void DelegatedFrameHost::CopyFromCompositingSurfaceHasResultForVideo(
 // DelegatedFrameHost, ui::CompositorObserver implementation:
 
 void DelegatedFrameHost::OnCompositingDidCommit(ui::Compositor* compositor) {
+  if (enable_surface_synchronization_)
+    return;
+
   // If |create_resize_lock_after_commit_| then we should have popped the old
   // lock already.
   DCHECK(!resize_lock_ || !create_resize_lock_after_commit_);
@@ -734,6 +743,9 @@ void DelegatedFrameHost::OnCompositingEnded(ui::Compositor* compositor) {}
 
 void DelegatedFrameHost::OnCompositingLockStateChanged(
     ui::Compositor* compositor) {
+  if (enable_surface_synchronization_)
+    return;
+
   if (resize_lock_ && resize_lock_->timed_out()) {
     // A compositor lock that is part of a resize lock timed out. We allow
     // the UI to produce a frame before locking it again, so we don't lock here.
