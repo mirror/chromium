@@ -7,6 +7,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/bind.h"
@@ -18,6 +19,7 @@
 #include "base/test/histogram_tester.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/time.h"
+#include "chrome/browser/page_load_metrics/ads_detection.h"
 #include "chrome/browser/page_load_metrics/metrics_web_contents_observer.h"
 #include "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_tester.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_observer.h"
@@ -53,7 +55,6 @@ struct ExpectedFrameBytes {
   size_t uncached_kb;
 };
 
-enum class AdType { GOOGLE = 0, SUBRESOURCE_FILTER = 1, ALL = 2 };
 enum class ResourceCached { NOT_CACHED, CACHED };
 enum class FrameType { AD = 0, NON_AD };
 
@@ -103,20 +104,21 @@ class ResourceLoadingCancellingThrottle
   DISALLOW_COPY_AND_ASSIGN(ResourceLoadingCancellingThrottle);
 };
 
-std::string AdTypeToString(AdType ad_type) {
+std::string AdTypeToString(page_load_metrics::AdType ad_type) {
   switch (ad_type) {
-    case AdType::GOOGLE:
+    case page_load_metrics::AD_TYPE_GOOGLE:
       return "Google";
-    case AdType::SUBRESOURCE_FILTER:
+    case page_load_metrics::AD_TYPE_SUBRESOURCE_FILTER:
       return "SubresourceFilter";
-    case AdType::ALL:
+    case page_load_metrics::AD_TYPE_ALL:
       return "All";
   }
   ADD_FAILURE();
   return "";
 }
 
-std::string TypedHistogram(const std::string& suffix, AdType ad_type) {
+std::string TypedHistogram(const std::string& suffix,
+                           page_load_metrics::AdType ad_type) {
   return base::StringPrintf("PageLoad.Clients.Ads.%s.%s",
                             AdTypeToString(ad_type).c_str(), suffix.c_str());
 }
@@ -128,7 +130,7 @@ void TestHistograms(const base::HistogramTester& histograms,
                     const std::vector<ExpectedFrameBytes>& google_ad_frames,
                     size_t non_ad_cached_kb,
                     size_t non_ad_uncached_kb,
-                    AdType ad_type) {
+                    page_load_metrics::AdType ad_type) {
   size_t total_ad_cached_kb = 0;
   size_t total_ad_uncached_kb = 0;
   size_t total_ad_kb = 0;
@@ -321,7 +323,7 @@ TEST_F(AdsPageLoadMetricsObserverTest, PageWithNoAds) {
 
   TestHistograms(histogram_tester(), std::vector<ExpectedFrameBytes>(),
                  0 /* non_ad_cached_kb */, 30 /* non_ad_uncached_kb */,
-                 AdType::GOOGLE);
+                 page_load_metrics::AD_TYPE_GOOGLE);
 
   // Verify that other UMA wasn't written.
   histogram_tester().ExpectTotalCount(
@@ -350,7 +352,7 @@ TEST_F(AdsPageLoadMetricsObserverTest, ResourceBeforeAdFrameCommits) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), {{0, 10}}, 0 /* non_ad_cached_kb */,
-                 10 /*non_ad_uncached_kb*/, AdType::GOOGLE);
+                 10 /*non_ad_uncached_kb*/, page_load_metrics::AD_TYPE_GOOGLE);
 }
 
 TEST_F(AdsPageLoadMetricsObserverTest, AllAdTypesInPage) {
@@ -401,13 +403,13 @@ TEST_F(AdsPageLoadMetricsObserverTest, AllAdTypesInPage) {
 
   TestHistograms(histogram_tester(), {{10, 0}, {0, 10}},
                  30 /* non_ad_cached_kb */, 30 /* non_ad_uncached_kb */,
-                 AdType::GOOGLE);
+                 page_load_metrics::AD_TYPE_GOOGLE);
   TestHistograms(histogram_tester(), {{0, 10}, {10, 10}},
                  30 /* non_ad_cached_kb */, 20 /* non_ad_uncached_kb */,
-                 AdType::SUBRESOURCE_FILTER);
+                 page_load_metrics::AD_TYPE_SUBRESOURCE_FILTER);
   TestHistograms(histogram_tester(), {{10, 0}, {0, 10}, {0, 10}, {10, 10}},
                  20 /* non_ad_cached_kb */, 10 /* non_ad_uncached_kb */,
-                 AdType::ALL);
+                 page_load_metrics::AD_TYPE_ALL);
   histogram_tester().ExpectBucketCount(
       "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 0);
   histogram_tester().ExpectTotalCount(
@@ -470,7 +472,8 @@ TEST_F(AdsPageLoadMetricsObserverTest, PageWithAdFrameThatRenavigates) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), {{0, 20}}, 0 /* non_ad_cached_kb */,
-                 10 /* non_ad_uncached_kb */, AdType::GOOGLE);
+                 10 /* non_ad_uncached_kb */,
+                 page_load_metrics::AD_TYPE_GOOGLE);
   histogram_tester().ExpectBucketCount(
       "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 0);
   histogram_tester().ExpectTotalCount(
@@ -506,7 +509,7 @@ TEST_F(AdsPageLoadMetricsObserverTest, PageWithNonAdFrameThatRenavigatesToAd) {
 
   TestHistograms(histogram_tester(), {{0, 10}, {0, 10}},
                  0 /* non_ad_cached_kb */, 20 /* non_ad_uncached_kb */,
-                 AdType::GOOGLE);
+                 page_load_metrics::AD_TYPE_GOOGLE);
   histogram_tester().ExpectBucketCount(
       "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 0);
   histogram_tester().ExpectTotalCount(
@@ -537,7 +540,8 @@ TEST_F(AdsPageLoadMetricsObserverTest, CountAbortedNavigation) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), {{0, 20}}, 0 /* non_ad_cached_kb */,
-                 10 /* non_ad_uncached_kb */, AdType::GOOGLE);
+                 10 /* non_ad_uncached_kb */,
+                 page_load_metrics::AD_TYPE_GOOGLE);
 }
 
 TEST_F(AdsPageLoadMetricsObserverTest, CountAbortedSecondNavigationForFrame) {
@@ -566,7 +570,8 @@ TEST_F(AdsPageLoadMetricsObserverTest, CountAbortedSecondNavigationForFrame) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), {{0, 20}}, 0 /* non_ad_cached_kb */,
-                 20 /* non_ad_uncached_kb */, AdType::GOOGLE);
+                 20 /* non_ad_uncached_kb */,
+                 page_load_metrics::AD_TYPE_GOOGLE);
 }
 
 TEST_F(AdsPageLoadMetricsObserverTest, TwoResourceLoadsBeforeCommit) {
@@ -601,7 +606,8 @@ TEST_F(AdsPageLoadMetricsObserverTest, TwoResourceLoadsBeforeCommit) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), {{0, 20}}, 0 /* non_ad_cached_kb */,
-                 10 /* non_ad_uncached_kb */, AdType::GOOGLE);
+                 10 /* non_ad_uncached_kb */,
+                 page_load_metrics::AD_TYPE_GOOGLE);
   histogram_tester().ExpectBucketCount(
       "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 0);
   histogram_tester().ExpectUniqueSample(
