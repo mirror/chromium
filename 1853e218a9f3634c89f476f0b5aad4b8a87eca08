@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9910be41_6b627629",
+        "filename": "chrome/common/child_process_logging_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-21T13:16:41Z",
+      "side": 1,
+      "message": "This is not a safe thing to do - StringPiece does not guarantee zero termination, so either there has to be copying, or else the length has to be passed through here as well.",
+      "range": {
+        "startLine": 39,
+        "startChar": 20,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "1853e218a9f3634c89f476f0b5aad4b8a87eca08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
