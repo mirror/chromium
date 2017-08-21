@@ -49,6 +49,7 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/url_constants.h"
+#include "content/public/common/url_utils.h"
 
 namespace content {
 
