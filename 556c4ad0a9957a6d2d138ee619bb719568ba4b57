@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdb90cb4_51f9b3c2",
+        "filename": "ios/chrome/app/chrome_app_startup_parameters.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-21T11:14:08Z",
+      "side": 1,
+      "message": "Why is this id instead of NSString* or NSURL*?  Is the reason documented somewhere?",
+      "revId": "556c4ad0a9957a6d2d138ee619bb719568ba4b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a81aee40_73b71ff9",
+        "filename": "ios/chrome/app/chrome_app_startup_parameters.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-21T11:14:08Z",
+      "side": 1,
+      "message": "Perhaps add \"action \u003d ACTION_NO_ACTION;\" here.  It\u0027s redundant, but it also makes it clear that we didn\u0027t accidentally forget to set it in this block.",
+      "revId": "556c4ad0a9957a6d2d138ee619bb719568ba4b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
