@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3edb065c_bbbf23f9",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2933,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-21T22:59:11Z",
+      "side": 1,
+      "message": "I don\u0027t think this logic should exist here, or the other place you added it. We want to call this exactly once, which is as soon as GetHandle() returns a valid value. It looks like the appropriate place to hook this is in RenderProcessHostImpl::OnProcessLaunched().",
+      "range": {
+        "startLine": 2933,
+        "startChar": 30,
+        "endLine": 2933,
+        "endChar": 31
+      },
+      "revId": "7c627a1a9ad5e55644653286229a084a1fb51bdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
