@@ -31,9 +31,13 @@ namespace blink {
 
 namespace {
 
-std::pair<unsigned, unsigned> GetMarkerPaintOffsets(
+// If an inline text box is truncated by an ellipsis, text box markers paint
+// over the ellipsis and other marker types don't. Other marker types that want
+// the normal behavior should use MarkerPaintStartAndEnd().
+std::pair<unsigned, unsigned> GetTextMatchMarkerPaintOffsets(
     const DocumentMarker& marker,
     const InlineTextBox& text_box) {
+  DCHECK_EQ(DocumentMarker::kTextMatch, marker.GetType());
   const unsigned start_offset = marker.StartOffset() > text_box.Start()
                                     ? marker.StartOffset() - text_box.Start()
                                     : 0U;
@@ -577,6 +581,10 @@ InlineTextBoxPainter::ApplyTruncationToPaintOffsets(
 
 InlineTextBoxPainter::PaintOffsets InlineTextBoxPainter::MarkerPaintStartAndEnd(
     const DocumentMarker& marker) {
+  // Text match markers are painted differently (in an inline text box truncated
+  // by an ellipsis, they paint over the ellipsis) and so should not use this
+  // function.
+  DCHECK_NE(DocumentMarker::kTextMatch, marker.GetType());
   DCHECK(inline_text_box_.Truncation() != kCFullTruncation);
   DCHECK(inline_text_box_.Len());
 
@@ -870,12 +878,7 @@ void InlineTextBoxPainter::PaintDocumentMarker(GraphicsContext& context,
     marker_spans_whole_box = false;
 
   if (!marker_spans_whole_box || grammar) {
-    int start_position, end_position;
-    std::tie(start_position, end_position) =
-        GetMarkerPaintOffsets(marker, inline_text_box_);
-
-    if (inline_text_box_.Truncation() != kCNoTruncation)
-      end_position = std::min<int>(end_position, inline_text_box_.Truncation());
+    const PaintOffsets& marker_offsets = MarkerPaintStartAndEnd(marker);
 
     // Calculate start & width
     int delta_y = (inline_text_box_.GetLineLayoutItem()
@@ -893,7 +896,7 @@ void InlineTextBoxPainter::PaintDocumentMarker(GraphicsContext& context,
     // FIXME: Convert the document markers to float rects.
     IntRect marker_rect = EnclosingIntRect(
         font.SelectionRectForText(run, FloatPoint(start_point), sel_height,
-                                  start_position, end_position));
+                                  marker_offsets.start, marker_offsets.end));
     start = marker_rect.X() - start_point.X();
     width = LayoutUnit(marker_rect.Width());
   }
@@ -1110,7 +1113,8 @@ void InlineTextBoxPainter::PaintTextMatchMarkerForeground(
            .MarkedTextMatchesAreHighlighted())
     return;
 
-  const auto paint_offsets = GetMarkerPaintOffsets(marker, inline_text_box_);
+  const auto paint_offsets =
+      GetTextMatchMarkerPaintOffsets(marker, inline_text_box_);
   TextRun run = inline_text_box_.ConstructTextRun(style);
 
   Color text_color =
@@ -1152,7 +1156,8 @@ void InlineTextBoxPainter::PaintTextMatchMarkerBackground(
            .MarkedTextMatchesAreHighlighted())
     return;
 
-  const auto paint_offsets = GetMarkerPaintOffsets(marker, inline_text_box_);
+  const auto paint_offsets =
+      GetTextMatchMarkerPaintOffsets(marker, inline_text_box_);
   TextRun run = inline_text_box_.ConstructTextRun(style);
 
   Color color = LayoutTheme::GetTheme().PlatformTextSearchHighlightColor(
