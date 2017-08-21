@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b281750d_0e4560d4",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-close-noexception.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-08-21T15:42:21Z",
+      "side": 1,
+      "message": "A new file for a single test? Was this in order to use testharness.js as opposed to js-test.js?\n\nCould you make it \"RTCPeerConnection-close.html\" with a TODO saying other close() related tests are in deprecated js-test.js based files.",
+      "revId": "e907c0ed1fdd65ca7d144e0fb929f21501da1cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
