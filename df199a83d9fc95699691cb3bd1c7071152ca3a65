@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dfbeedc_702ffb57",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T06:43:34Z",
+      "side": 1,
+      "message": "Cool! Now I\u0027d recommend adding a blank line between 285 and 286 and also a comment here like:\n// Write the body stream.",
+      "revId": "df199a83d9fc95699691cb3bd1c7071152ca3a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
