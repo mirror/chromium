@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9885fdeb_f9eed849",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorCSSAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-21T16:52:29Z",
+      "side": 1,
+      "message": "How node can be null?",
+      "range": {
+        "startLine": 159,
+        "startChar": 8,
+        "endLine": 159,
+        "endChar": 13
+      },
+      "revId": "da90bbf1d1c856c6199cb79ada8d9a2ac6de7e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c4c0690_d048007f",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorCSSAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-21T16:52:29Z",
+      "side": 1,
+      "message": "You are missing this part: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/TreeScope.cpp?rcl\u003df536902c5e94852ceb2e310799ffaf85cd025c36\u0026l\u003d282\n\nIntentional?",
+      "revId": "da90bbf1d1c856c6199cb79ada8d9a2ac6de7e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
