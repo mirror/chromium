@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ce6ff59_824e0775",
+        "filename": "third_party/WebKit/Source/core/html/ImageDataTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-21T14:16:30Z",
+      "side": 1,
+      "message": "nit: remove this extra space.",
+      "range": {
+        "startLine": 425,
+        "startChar": 37,
+        "endLine": 425,
+        "endChar": 38
+      },
+      "revId": "b83e6611ca5afef1efa26aec8dec64bcfc80effc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
