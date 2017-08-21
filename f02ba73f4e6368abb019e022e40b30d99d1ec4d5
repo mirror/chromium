@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "834cf817_c6aba5ba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-21T19:55:11Z",
+      "side": 1,
+      "message": "Should we bail out if we get -1 back? I.e.\n\nif (minRequiredStorage \u003d\u003d -1) return true;\n\n?\n\nAnd maybe move -1 to be an constant field?",
+      "revId": "f02ba73f4e6368abb019e022e40b30d99d1ec4d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62e1bb6_1e235314",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-21T19:55:11Z",
+      "side": 1,
+      "message": "Nit: Maybe just re-order this line to be right after the old histogram recording?",
+      "revId": "f02ba73f4e6368abb019e022e40b30d99d1ec4d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df7de1c_ea517735",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-21T19:55:11Z",
+      "side": 1,
+      "message": "It doesn\u0027t really matter too much, but it conceptually feels that if the size \u003d\u003d minRequiredStorage, then we should return true? So \u003e\u003d here?",
+      "range": {
+        "startLine": 430,
+        "startChar": 20,
+        "endLine": 430,
+        "endChar": 21
+      },
+      "revId": "f02ba73f4e6368abb019e022e40b30d99d1ec4d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
