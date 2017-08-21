@@ -19,10 +19,11 @@
 */
 
 [
-    ImplementedAs=DOMMimeTypeArray
+    ImplementedAs=DOMMimeTypeArray,
+    LegacyUnenumerableNamedProperties
 ] interface MimeTypeArray {
     readonly attribute unsigned long length;
     getter MimeType? item(unsigned long index);
     MimeType? namedItem(DOMString name);
-    [NotEnumerable, ImplementedAs=namedItem] getter MimeType? (DOMString name);
+    [ImplementedAs=namedItem] getter MimeType? (DOMString name);
 };

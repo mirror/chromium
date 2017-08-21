@@ -282,6 +282,8 @@ def interface_context(interface, interfaces):
         'has_access_check_callbacks': (is_check_security and
                                        interface.name != 'EventTarget'),
         'has_custom_legacy_call_as_function': has_extended_attribute_value(interface, 'Custom', 'LegacyCallAsFunction'),  # [Custom=LegacyCallAsFunction]
+        'has_legacy_unenumerable_named_properties': (interface.has_named_property_getter and
+                                                     'LegacyUnenumerableNamedProperties' in extended_attributes),
         'has_partial_interface': len(interface.partial_interfaces) > 0,
         'header_includes': header_includes,
         'interface_name': interface.name,
@@ -1447,6 +1449,8 @@ def property_getter(getter, cpp_arguments):
             getter, 'Custom', 'PropertyEnumerator'),
         'is_custom_property_query': has_extended_attribute_value(
             getter, 'Custom', 'PropertyQuery'),
+        # TODO(rakuco): [NotEnumerable] does not make sense here and is only
+        # used in non-standard IDL operations. We need to get rid of them.
         'is_enumerable': 'NotEnumerable' not in extended_attributes,
         'is_null_expression': is_null_expression(idl_type),
         'is_raises_exception': is_raises_exception,
