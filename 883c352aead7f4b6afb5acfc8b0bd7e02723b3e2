@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e5e5139_8c14abe9",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-21T03:33:00Z",
+      "side": 1,
+      "message": "I don\u0027t understand this initialization.\n\nIf we\u0027re initializing the \"last time this was backgrounded\" to be \"never\", doesn\u0027t far-past make more sense than far-future?",
+      "range": {
+        "startLine": 939,
+        "startChar": 27,
+        "endLine": 939,
+        "endChar": 47
+      },
+      "revId": "883c352aead7f4b6afb5acfc8b0bd7e02723b3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
