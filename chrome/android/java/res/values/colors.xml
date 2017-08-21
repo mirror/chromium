@@ -209,6 +209,7 @@
 
     <!-- Translate Infobar colors -->
     <color name="translate_overflow_menu_divider_color">#e0e0e0</color>
+    <color name="translate_tab_text_and_button_color">#5a5a5a</color>
 
     <!-- Other colors -->
     <color name="selectable_list_item_highlight_color">#804281f4</color>

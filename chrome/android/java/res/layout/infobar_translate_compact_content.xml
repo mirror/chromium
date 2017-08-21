@@ -18,6 +18,7 @@
         android:layout_weight="1"
         android:requiresFadingEdge="horizontal"
         android:fadingEdgeLength="@dimen/infobar_translate_fade_edge_length"
+        app:tabTextColor="@color/translate_tab_text_and_button_color"
         app:tabIndicatorColor="@color/infobar_accent_blue"
         app:tabSelectedTextColor="@color/infobar_accent_blue"
         app:tabGravity="fill"
@@ -33,5 +34,5 @@
         android:background="?attr/selectableItemBackground"
         android:contentDescription="@string/accessibility_toolbar_btn_menu"
         android:src="@drawable/btn_menu"
-        app:chrometint="@color/dark_mode_tint" />
+        app:chrometint="@color/translate_tab_text_and_button_color" />
 </LinearLayout>
