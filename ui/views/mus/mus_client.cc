@@ -64,67 +64,11 @@ namespace views {
 // static
 MusClient* MusClient::instance_ = nullptr;
 
-MusClient::MusClient(service_manager::Connector* connector,
-                     const service_manager::Identity& identity,
-                     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-                     bool create_wm_state,
-                     MusClientTestingState testing_state)
+MusClient::MusClient(const service_manager::Identity& identity)
     : identity_(identity) {
   DCHECK(!instance_);
   DCHECK(aura::Env::GetInstance());
   instance_ = this;
-
-#if defined(USE_OZONE)
-  // If we're in a mus client, we aren't going to have all of ozone initialized
-  // even though we're in an ozone build. All the hard coded USE_OZONE ifdefs
-  // that handle cursor code expect that there will be a CursorFactoryOzone
-  // instance. Partially initialize the ozone cursor internals here, like we
-  // partially initialize other ozone subsystems in
-  // ChromeBrowserMainExtraPartsViews.
-  cursor_factory_ozone_ = base::MakeUnique<ui::CursorDataFactoryOzone>();
-#endif
-
-  if (!io_task_runner) {
-    io_thread_ = base::MakeUnique<base::Thread>("IOThread");
-    base::Thread::Options thread_options(base::MessageLoop::TYPE_IO, 0);
-    thread_options.priority = base::ThreadPriority::NORMAL;
-    CHECK(io_thread_->StartWithOptions(thread_options));
-    io_task_runner = io_thread_->task_runner();
-  }
-
-  // TODO(msw): Avoid this... use some default value? Allow clients to extend?
-  property_converter_ = base::MakeUnique<aura::PropertyConverter>();
-  property_converter_->RegisterPrimitiveProperty(
-      wm::kShadowElevationKey,
-      ui::mojom::WindowManager::kShadowElevation_Property,
-      base::Bind(&wm::IsValidShadowElevation));
-
-  if (create_wm_state)
-    wm_state_ = base::MakeUnique<wm::WMState>();
-
-  if (testing_state == MusClientTestingState::CREATE_TESTING_STATE)
-    connector->BindInterface(ui::mojom::kServiceName, &server_test_ptr_);
-
-  window_tree_client_ = base::MakeUnique<aura::WindowTreeClient>(
-      connector, this, nullptr /* window_manager_delegate */,
-      nullptr /* window_tree_client_request */, std::move(io_task_runner));
-  aura::Env::GetInstance()->SetWindowTreeClient(window_tree_client_.get());
-  window_tree_client_->ConnectViaWindowTreeFactory();
-
-  pointer_watcher_event_router_ =
-      base::MakeUnique<PointerWatcherEventRouter>(window_tree_client_.get());
-
-  screen_ = base::MakeUnique<ScreenMus>(this);
-  screen_->Init(connector);
-
-  std::unique_ptr<ClipboardMus> clipboard = base::MakeUnique<ClipboardMus>();
-  clipboard->Init(connector);
-  ui::Clipboard::SetClipboardForCurrentThread(std::move(clipboard));
-
-  ViewsDelegate::GetInstance()->set_native_widget_factory(
-      base::Bind(&MusClient::CreateNativeWidget, base::Unretained(this)));
-  ViewsDelegate::GetInstance()->set_desktop_window_tree_host_factory(base::Bind(
-      &MusClient::CreateDesktopWindowTreeHost, base::Unretained(this)));
 }
 
 MusClient::~MusClient() {
@@ -219,6 +163,65 @@ MusClient::ConfigurePropertiesFromParams(
   }
 
   return properties;
+}
+
+bool MusClient::Init(service_manager::Connector* connector,
+                     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
+                     bool create_wm_state,
+                     MusClientTestingState testing_state) {
+#if defined(USE_OZONE)
+  // If we're in a mus client, we aren't going to have all of ozone initialized
+  // even though we're in an ozone build. All the hard coded USE_OZONE ifdefs
+  // that handle cursor code expect that there will be a CursorFactoryOzone
+  // instance. Partially initialize the ozone cursor internals here, like we
+  // partially initialize other ozone subsystems in
+  // ChromeBrowserMainExtraPartsViews.
+  cursor_factory_ozone_ = base::MakeUnique<ui::CursorDataFactoryOzone>();
+#endif
+
+  if (!io_task_runner) {
+    io_thread_ = base::MakeUnique<base::Thread>("IOThread");
+    base::Thread::Options thread_options(base::MessageLoop::TYPE_IO, 0);
+    thread_options.priority = base::ThreadPriority::NORMAL;
+    CHECK(io_thread_->StartWithOptions(thread_options));
+    io_task_runner = io_thread_->task_runner();
+  }
+
+  // TODO(msw): Avoid this... use some default value? Allow clients to extend?
+  property_converter_ = base::MakeUnique<aura::PropertyConverter>();
+  property_converter_->RegisterPrimitiveProperty(
+      wm::kShadowElevationKey,
+      ui::mojom::WindowManager::kShadowElevation_Property,
+      base::Bind(&wm::IsValidShadowElevation));
+
+  if (create_wm_state)
+    wm_state_ = base::MakeUnique<wm::WMState>();
+
+  if (testing_state == MusClientTestingState::CREATE_TESTING_STATE)
+    connector->BindInterface(ui::mojom::kServiceName, &server_test_ptr_);
+
+  window_tree_client_ = base::MakeUnique<aura::WindowTreeClient>(
+      connector, this, nullptr /* window_manager_delegate */,
+      nullptr /* window_tree_client_request */, std::move(io_task_runner));
+  aura::Env::GetInstance()->SetWindowTreeClient(window_tree_client_.get());
+  window_tree_client_->ConnectViaWindowTreeFactory();
+
+  pointer_watcher_event_router_ =
+      base::MakeUnique<PointerWatcherEventRouter>(window_tree_client_.get());
+
+  screen_ = base::MakeUnique<ScreenMus>(this);
+  if (!screen_->Init(connector))
+    return false;
+
+  std::unique_ptr<ClipboardMus> clipboard = base::MakeUnique<ClipboardMus>();
+  clipboard->Init(connector);
+  ui::Clipboard::SetClipboardForCurrentThread(std::move(clipboard));
+
+  ViewsDelegate::GetInstance()->set_native_widget_factory(
+      base::Bind(&MusClient::CreateNativeWidget, base::Unretained(this)));
+  ViewsDelegate::GetInstance()->set_desktop_window_tree_host_factory(base::Bind(
+      &MusClient::CreateDesktopWindowTreeHost, base::Unretained(this)));
+  return true;
 }
 
 NativeWidget* MusClient::CreateNativeWidget(

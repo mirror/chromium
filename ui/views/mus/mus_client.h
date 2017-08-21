@@ -67,14 +67,10 @@ enum MusClientTestingState { NO_TESTING, CREATE_TESTING_STATE };
 class VIEWS_MUS_EXPORT MusClient : public aura::WindowTreeClientDelegate,
                                    public ScreenMusDelegate {
  public:
-  // Most clients should use AuraInit, which creates a MusClient.
+  // Most clients should use AuraInit, which creates a MusClient. Init must be
+  // called to establish the connection to mus, and to complete setup.
   // |create_wm_state| indicates whether MusClient should create a wm::WMState.
-  MusClient(
-      service_manager::Connector* connector,
-      const service_manager::Identity& identity,
-      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner = nullptr,
-      bool create_wm_state = true,
-      MusClientTestingState testing_state = MusClientTestingState::NO_TESTING);
+  MusClient(const service_manager::Identity& identity);
   ~MusClient() override;
 
   static MusClient* Get() { return instance_; }
@@ -97,6 +93,18 @@ class VIEWS_MUS_EXPORT MusClient : public aura::WindowTreeClientDelegate,
   PointerWatcherEventRouter* pointer_watcher_event_router() {
     return pointer_watcher_event_router_.get();
   }
+
+  // Establishes a connection to mus and sets uo the necessary state for aura
+  // and views./ |create_wm_state| indicates whether MusClient should create a
+  // wm::WMState. This returns true if the entire initialization succeeds,
+  // otherwise false. Initialization can fail if ScreenMus is unable to connect
+  // to the display. If this returns false mus is in an invalid state, and
+  // clients should close their ServiceContext.
+  bool Init(
+      service_manager::Connector* connector,
+      scoped_refptr<base::SingleThreadTaskRunner> io_task_runner = nullptr,
+      bool create_wm_state = true,
+      MusClientTestingState testing_state = MusClientTestingState::NO_TESTING);
 
   // Creates DesktopNativeWidgetAura with DesktopWindowTreeHostMus. This is
   // set as the factory function used for creating NativeWidgets when a

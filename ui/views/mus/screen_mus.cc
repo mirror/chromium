@@ -19,6 +19,15 @@
 #include "ui/views/mus/screen_mus_delegate.h"
 #include "ui/views/mus/window_manager_frame_values.h"
 
+namespace {
+// We need to wait for the set of displays, however if we block on this
+// permanently then the process cannot be killed by the ServiceManager. This
+// ends up causing a deadlock.
+//
+// Instead timeout and fail initialization.
+const int kTimeoutInMicroseconds = 60000000;
+}  // namespace
+
 namespace mojo {
 
 template <>
@@ -51,7 +60,7 @@ ScreenMus::~ScreenMus() {
   display::Screen::SetScreenInstance(nullptr);
 }
 
-void ScreenMus::Init(service_manager::Connector* connector) {
+bool ScreenMus::Init(service_manager::Connector* connector) {
   connector->BindInterface(ui::mojom::kServiceName, &display_manager_);
 
   ui::mojom::DisplayManagerObserverPtr observer;
@@ -59,10 +68,12 @@ void ScreenMus::Init(service_manager::Connector* connector) {
   display_manager_->AddObserver(std::move(observer));
 
   // We need the set of displays before we can continue. Wait for it.
-  //
-  // TODO(rockot): Do something better here. This should not have to block tasks
-  // from running on the calling thread. http://crbug.com/594852.
-  bool success = display_manager_observer_binding_.WaitForIncomingMethodCall();
+  // If we timeout then the displays are not available and we are in an invalid
+  // state.
+  bool success = display_manager_observer_binding_.WaitForIncomingMethodCall(
+      kTimeoutInMicroseconds);
+  if (!success)
+    return false;
 
   // The WaitForIncomingMethodCall() should have supplied the set of Displays,
   // unless mus is going down, in which case encountered_error() is true, or the
@@ -74,6 +85,7 @@ void ScreenMus::Init(service_manager::Connector* connector) {
     display_list().AddDisplay(
         display::Display(0xFFFFFFFF, gfx::Rect(0, 0, 801, 802)), Type::PRIMARY);
   }
+  return true;
 }
 
 display::Display ScreenMus::GetDisplayNearestWindow(

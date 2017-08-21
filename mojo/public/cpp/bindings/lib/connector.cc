@@ -210,16 +210,13 @@ bool Connector::WaitForIncomingMessage(MojoDeadline deadline) {
 
   ResumeIncomingMethodCallProcessing();
 
-  // TODO(rockot): Use a timed Wait here. Nobody uses anything but 0 or
-  // INDEFINITE deadlines at present, so we only support those.
-  DCHECK(deadline == 0 || deadline == MOJO_DEADLINE_INDEFINITE);
-
   MojoResult rv = MOJO_RESULT_UNKNOWN;
   if (deadline == 0 && !message_pipe_->QuerySignalsState().readable())
     return false;
 
-  if (deadline == MOJO_DEADLINE_INDEFINITE) {
-    rv = Wait(message_pipe_.get(), MOJO_HANDLE_SIGNAL_READABLE);
+  if (deadline != 0) {
+    rv = Wait(message_pipe_.get(), MOJO_HANDLE_SIGNAL_READABLE, nullptr,
+              deadline);
     if (rv != MOJO_RESULT_OK) {
       // Users that call WaitForIncomingMessage() should expect their code to be
       // re-entered, so we call the error handler synchronously.

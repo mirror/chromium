@@ -70,7 +70,8 @@ class WatchContext : public base::RefCountedThreadSafe<WatchContext> {
 MojoResult Wait(Handle handle,
                 MojoHandleSignals signals,
                 MojoWatchCondition condition,
-                MojoHandleSignalsState* signals_state) {
+                MojoHandleSignalsState* signals_state,
+                MojoDeadline deadline) {
   ScopedWatcherHandle watcher;
   MojoResult rv = CreateWatcher(&WatchContext::OnNotification, &watcher);
   DCHECK_EQ(MOJO_RESULT_OK, rv);
@@ -103,11 +104,18 @@ MojoResult Wait(Handle handle,
     return ready_result;
   }
 
-  // Wait for the first notification only.
-  context->event().Wait();
+  // Wait for the first notification oinly.
+  if (deadline == MOJO_DEADLINE_INDEFINITE) {
+    context->event().Wait();
+  } else if (!context->event().TimedWait(
+                 base::TimeDelta::FromMicroseconds(deadline))) {
+    ready_result = MOJO_RESULT_DEADLINE_EXCEEDED;
+  }
 
-  ready_result = context->wait_result();
-  DCHECK_NE(MOJO_RESULT_UNKNOWN, ready_result);
+  if (ready_result != MOJO_RESULT_DEADLINE_EXCEEDED) {
+    ready_result = context->wait_result();
+    DCHECK_NE(MOJO_RESULT_UNKNOWN, ready_result);
+  }
 
   if (signals_state)
     *signals_state = context->wait_state();

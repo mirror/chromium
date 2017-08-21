@@ -18,6 +18,7 @@
 #include "base/synchronization/lock.h"
 #include "base/task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/time.h"
 #include "build/build_config.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/public/cpp/bindings/interface_ptr_info.h"
@@ -37,6 +38,13 @@
 #if defined(OS_MACOSX)
 #include "services/service_manager/public/cpp/standalone_service/mach_broker.h"
 #endif
+
+namespace {
+// It is possible that the child process we are attempting to kill is blocked
+// waiting on incoming mojo messages. This timeout ensures that we do not
+// deadlock by waiting on a process that is permanently blocked.
+const int kShutdownTimeoutInSeconds = 30;
+}  // namespace
 
 namespace service_manager {
 
@@ -106,7 +114,9 @@ void ServiceProcessLauncher::Join() {
   mojo_ipc_channel_.reset();
   if (child_process_.IsValid()) {
     int rv = -1;
-    LOG_IF(ERROR, !child_process_.WaitForExit(&rv))
+    LOG_IF(ERROR,
+           !child_process_.WaitForExitWithTimeout(
+               base::TimeDelta::FromSeconds(kShutdownTimeoutInSeconds), &rv))
         << "Failed to wait for child process";
     child_process_.Close();
   }

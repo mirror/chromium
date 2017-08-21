@@ -25,7 +25,10 @@ class VIEWS_MUS_EXPORT ScreenMus : public display::ScreenBase,
   explicit ScreenMus(ScreenMusDelegate* delegate);
   ~ScreenMus() override;
 
-  void Init(service_manager::Connector* connector);
+  // This returns false is the DisplayManagerObserver is unable to intialize.
+  // If this occurs then there is no access to a display, and mus is in an
+  // invalid state. The client should close its ServiceContext.
+  bool Init(service_manager::Connector* connector);
 
  private:
   friend class ScreenMusTestApi;

@@ -97,8 +97,9 @@ bool AuraInit::Init(service_manager::Connector* connector,
           : aura::Env::Mode::LOCAL);
 
   if (mode == Mode::AURA_MUS) {
-    mus_client_ =
-        base::WrapUnique(new MusClient(connector, identity, io_task_runner));
+    mus_client_ = base::WrapUnique(new MusClient(identity));
+    if (!mus_client_->Init(connector, io_task_runner))
+      return false;
   }
   ui::MaterialDesignController::Initialize();
   if (!InitializeResources(connector, resource_file, resource_file_200))

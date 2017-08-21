@@ -21,11 +21,16 @@ namespace mojo {
 // (see return values below), the last known signaling state of |handle| is
 // written to |*signals_state| before returning.
 //
+// If |deadline| is not |MOJO_DEADLINE_INDEFINITE| a timed wait is used. If this
+// occurs the return value will be |MOJO_RESULT_DEADLINE_EXCEEDED|.
+//
 // Return values:
 //   |MOJO_RESULT_OK| if one or more signals in |signals| has been raised on
 //       |handle| with |condition| set to  |MOJO_WATCH_CONDITION_SATISFIED|, or
 //       one or more signals in |signals| has been lowered on |handle| with
 //       |condition| set to |MOJO_WATCH_CONDITION_NOT_SATISFIED|.
+//   |MOJO_RESULT_DEADLINE_EXCEEDED| if a timed wait is used and the timeout is
+//   exceeded.
 //   |MOJO_RESULT_FAILED_PRECONDITION| if the state of |handle| changes such
 //       that no signals in |signals| can ever be raised again and |condition|
 //       is |MOJO_WATCH_CONDITION_SATISFIED|.
@@ -36,14 +41,17 @@ MOJO_CPP_SYSTEM_EXPORT MojoResult
 Wait(Handle handle,
      MojoHandleSignals signals,
      MojoWatchCondition condition,
-     MojoHandleSignalsState* signals_state = nullptr);
+     MojoHandleSignalsState* signals_state = nullptr,
+     MojoDeadline deadline = MOJO_DEADLINE_INDEFINITE);
 
 // A pseudonym for the above Wait() which always waits on
 // |MOJO_WATCH_CONDITION_SATISFIED|.
 inline MojoResult Wait(Handle handle,
                        MojoHandleSignals signals,
-                       MojoHandleSignalsState* signals_state = nullptr) {
-  return Wait(handle, signals, MOJO_WATCH_CONDITION_SATISFIED, signals_state);
+                       MojoHandleSignalsState* signals_state = nullptr,
+                       MojoDeadline deadline = MOJO_DEADLINE_INDEFINITE) {
+  return Wait(handle, signals, MOJO_WATCH_CONDITION_SATISFIED, signals_state,
+              deadline);
 }
 
 // Waits on |handles[0]|, ..., |handles[num_handles-1]| until:

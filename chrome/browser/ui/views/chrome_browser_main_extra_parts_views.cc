@@ -179,10 +179,10 @@ void ChromeBrowserMainExtraPartsViews::ServiceManagerConnectionStarted(
 
   // WMState is owned as a member, so don't have MusClient create it.
   const bool create_wm_state = false;
-  mus_client_ = base::MakeUnique<views::MusClient>(
-      connection->GetConnector(), service_manager::Identity(),
-      content::BrowserThread::GetTaskRunnerForThread(
-          content::BrowserThread::IO),
-      create_wm_state);
+  mus_client_ = base::MakeUnique<views::MusClient>(service_manager::Identity());
+  mus_client_->Init(connection->GetConnector(),
+                    content::BrowserThread::GetTaskRunnerForThread(
+                        content::BrowserThread::IO),
+                    create_wm_state);
 #endif  // defined(USE_AURA)
 }
