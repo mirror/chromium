@@ -28,3 +28,8 @@ bool WebGestureCurveMock::Apply(double time,
   target->ScrollBy(increment, velocity);
   return true;
 }
+
+bool WebGestureCurveMock::ResetCurveBySnappedOffset(
+    const gfx::Vector2dF& offset) {
+  return false;
+}

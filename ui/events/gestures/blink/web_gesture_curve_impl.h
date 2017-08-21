@@ -38,6 +38,10 @@ class WebGestureCurveImpl : public blink::WebGestureCurve {
   // WebGestureCurve implementation.
   bool Apply(double time, blink::WebGestureCurveTarget* target) override;
 
+  void ComputeTotalScrollOffset(gfx::Vector2dF* offset) override;
+
+  bool ResetCurveBySnappedOffset(const gfx::Vector2dF& offset) override;
+
  private:
   enum class ThreadType {
     MAIN,
