@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50897da8_f543dd09",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-21T00:59:57Z",
+      "side": 1,
+      "message": "Do you need to update set_hide_shelf_when_fullscreen(..) too?\n\nI\u0027m not an ash or public-session expert, but it seems related. I.e. if you\u0027re using immersive to ensure the tab strip [or in this case, just the titlebar since it\u0027s a packaged app] reveals itself, you may want the shelf to reveal itself as well rather than hide it completely (i.e. pass false here, or `!immersive_enabled`).\n\nI think either UX will work fine though.",
+      "range": {
+        "startLine": 329,
+        "startChar": 49,
+        "endLine": 330,
+        "endChar": 78
+      },
+      "revId": "340dd81b65292a32e36856b2852eb1ac959834c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
