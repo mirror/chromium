@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d760341_f4d4d124",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-21T10:19:55Z",
+      "side": 1,
+      "message": "Very nice! Thanks for adding these comments!",
+      "revId": "0df9f7d8f93d57a911f83b34a33862c5fefa93b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
