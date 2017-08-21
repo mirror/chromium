@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4446089_47919655",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-21T15:23:30Z",
+      "side": 1,
+      "message": "Under what circumstances would this happen? I don\u0027t think logging an error is appropriate here. Either it\u0027s a bug, in which case you should assert, or it can legitimately happen, in which case you should not log something as loud as an error. Ideally there would be no logging at all for this in a Release build; for debugging you can use Log.d. (And similarly you should try to avoid constructing the debug string in the first place -- maybe extract it to a method and call that only when necessary).",
+      "range": {
+        "startLine": 248,
+        "startChar": 12,
+        "endLine": 248,
+        "endChar": 95
+      },
+      "revId": "d818cc6c87580a24dd2ca4108476e9aee2028f0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
