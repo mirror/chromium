@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8da432e_76bcd665",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-21T07:16:28Z",
+      "side": 1,
+      "message": "Hmm maybe you could do the layer renaming in a separate patch?",
+      "revId": "4dc3850783e0ec32f0ea03e2521b2b285d44d7ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
