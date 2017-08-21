@@ -115,4 +115,160 @@ bool StructTraits<memory_instrumentation::mojom::RequestArgsDataView,
   return true;
 }
 
+// static
+bool StructTraits<memory_instrumentation::mojom::ArgsDataView,
+                  base::trace_event::MemoryDumpArgs>::
+    Read(memory_instrumentation::mojom::ArgsDataView input,
+         base::trace_event::MemoryDumpArgs* out) {
+  if (!input.ReadLevelOfDetail(&out->level_of_detail))
+    return false;
+  return true;
+}
+
+using base::trace_event::MemoryAllocatorDump;
+using IntegerEntry = base::trace_event::MemoryAllocatorDump::IntegerEntry;
+using DoubleEntry = base::trace_event::MemoryAllocatorDump::DoubleEntry;
+using StringEntry = base::trace_event::MemoryAllocatorDump::StringEntry;
+using base::trace_event::MemoryDumpArgs;
+using base::trace_event::ProcessMemoryDump;
+using MemoryAllocatorDumpEdge =
+    base::trace_event::ProcessMemoryDump::MemoryAllocatorDumpEdge;
+using base::trace_event::MemoryAllocatorDumpGuid;
+using memory_instrumentation::mojom::AllocatorDumpPtr;
+using memory_instrumentation::mojom::AllocatorDump;
+using memory_instrumentation::mojom::IntegerEntryDataView;
+using memory_instrumentation::mojom::DoubleEntryDataView;
+using memory_instrumentation::mojom::StringEntryDataView;
+using memory_instrumentation::mojom::RawProcessMemoryDumpDataView;
+using memory_instrumentation::mojom::AllocatorDumpGuidDataView;
+using memory_instrumentation::mojom::AllocatorDumpEdgeDataView;
+
+// static
+bool StructTraits<AllocatorDumpGuidDataView, MemoryAllocatorDumpGuid>::Read(
+    AllocatorDumpGuidDataView input,
+    MemoryAllocatorDumpGuid* out) {
+  out->guid_ = input.guid();
+  return true;
+}
+
+// static
+bool StructTraits<IntegerEntryDataView, IntegerEntry>::Read(
+    IntegerEntryDataView input,
+    IntegerEntry* out) {
+  if (!input.ReadName(&out->name))
+    return false;
+  if (!input.ReadUnits(&out->units))
+    return false;
+  out->value = input.value();
+  return true;
+}
+
+// static
+bool StructTraits<DoubleEntryDataView, DoubleEntry>::Read(
+    DoubleEntryDataView input,
+    DoubleEntry* out) {
+  if (!input.ReadName(&out->name))
+    return false;
+  if (!input.ReadUnits(&out->units))
+    return false;
+  out->value = input.value();
+  return true;
+}
+
+// static
+bool StructTraits<StringEntryDataView, StringEntry>::Read(
+    StringEntryDataView input,
+    StringEntry* out) {
+  if (!input.ReadName(&out->name))
+    return false;
+  if (!input.ReadUnits(&out->units))
+    return false;
+  if (!input.ReadValue(&out->value))
+    return false;
+  return true;
+}
+
+// static
+bool StructTraits<AllocatorDumpEdgeDataView, MemoryAllocatorDumpEdge>::Read(
+    AllocatorDumpEdgeDataView input,
+    MemoryAllocatorDumpEdge* out) {
+  if (!input.ReadSource(&out->source))
+    return false;
+  if (!input.ReadTarget(&out->target))
+    return false;
+  out->importance = input.importance();
+  out->overridable = input.overridable();
+  return true;
+}
+
+// static
+std::unordered_map<std::string, AllocatorDumpPtr>
+StructTraits<RawProcessMemoryDumpDataView, ProcessMemoryDump>::allocator_dumps(
+    const ProcessMemoryDump& pmd) {
+  std::unordered_map<std::string, AllocatorDumpPtr> results;
+  for (const auto& kv : pmd.allocator_dumps()) {
+    const std::unique_ptr<MemoryAllocatorDump>& mad = kv.second;
+    results[mad->absolute_name()] = AllocatorDump::New();
+    AllocatorDump* dump = results[mad->absolute_name()].get();
+    dump->weak = mad->flags() && MemoryAllocatorDump::Flags::WEAK;
+    for (const auto& integer_entry : mad->integers()) {
+      dump->integers.push_back(integer_entry);
+    }
+    for (const auto& double_entry : mad->doubles()) {
+      dump->doubles.push_back(double_entry);
+    }
+    for (const auto& string_entry : mad->strings()) {
+      dump->strings.push_back(string_entry);
+    }
+  }
+  return results;
+}
+
+// static
+std::vector<MemoryAllocatorDumpEdge> StructTraits<
+    RawProcessMemoryDumpDataView,
+    ProcessMemoryDump>::allocator_dump_edges(const ProcessMemoryDump& pmd) {
+  std::vector<MemoryAllocatorDumpEdge> results;
+  for (const auto& kv : pmd.allocator_dumps_edges_) {
+    results.push_back(kv.second);
+  }
+  return results;
+}
+
+// static
+bool StructTraits<RawProcessMemoryDumpDataView, ProcessMemoryDump>::Read(
+    RawProcessMemoryDumpDataView input,
+    ProcessMemoryDump* out) {
+  if (!input.ReadDumpArgs(&out->dump_args_))
+    return false;
+  std::vector<MemoryAllocatorDumpEdge> edges;
+  if (!input.ReadAllocatorDumpEdges(&edges))
+    return false;
+  for (const auto& edge : edges) {
+    out->allocator_dumps_edges_[edge.source] = edge;
+  }
+
+  std::unordered_map<std::string, AllocatorDumpPtr> allocator_dumps;
+  if (!input.ReadAllocatorDumps(&allocator_dumps))
+    return false;
+  for (const auto& kv : allocator_dumps) {
+    const std::string& name = kv.first;
+    const AllocatorDumpPtr& dump = kv.second;
+    MemoryAllocatorDump* mad = out->CreateAllocatorDump(name);
+//    dump->guid = mad->guid();
+    if (dump->weak)
+      mad->set_flags(MemoryAllocatorDump::Flags::WEAK);
+    for (auto entry : dump->integers) {
+      mad->integers_.push_back(entry);
+    }
+    for (auto entry : dump->doubles) {
+      mad->doubles_.push_back(entry);
+    }
+    for (auto entry : dump->strings) {
+      mad->strings_.push_back(entry);
+    }
+  }
+  return true;
+}
+
 }  // namespace mojo

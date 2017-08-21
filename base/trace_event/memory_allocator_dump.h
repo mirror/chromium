@@ -15,7 +15,15 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/trace_event/memory_allocator_dump_guid.h"
+#include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
+#include "mojo/public/cpp/bindings/struct_traits.h"
+
+namespace memory_instrumentation {
+namespace mojom {
+class RawProcessMemoryDumpDataView;
+}  // namespace mojom
+}  // namespace memory_instrumentation
 
 namespace base {
 namespace trace_event {
@@ -31,6 +39,32 @@ class BASE_EXPORT MemoryAllocatorDump {
 
     // A dump marked weak will be discarded by TraceViewer.
     WEAK = 1 << 0,
+  };
+
+  struct IntegerEntry {
+    std::string name;
+    std::string units;
+    uint64_t value;
+    auto tie() const { return std::tie(name, units, value); }
+    bool operator==(const IntegerEntry& rhs) const {
+      return tie() == rhs.tie();
+    }
+  };
+
+  struct DoubleEntry {
+    std::string name;
+    std::string units;
+    double value;
+    auto tie() const { return std::tie(name, units, value); }
+    bool operator==(const DoubleEntry& rhs) const { return tie() == rhs.tie(); }
+  };
+
+  struct StringEntry {
+    std::string name;
+    std::string units;
+    std::string value;
+    auto tie() const { return std::tie(name, units, value); }
+    bool operator==(const StringEntry& rhs) const { return tie() == rhs.tie(); }
   };
 
   static MemoryAllocatorDumpGuid GetDumpIdFromName(
@@ -91,19 +125,28 @@ class BASE_EXPORT MemoryAllocatorDump {
   // expected to have the same guid.
   const MemoryAllocatorDumpGuid& guid() const { return guid_; }
 
-  TracedValue* attributes_for_testing() const { return attributes_.get(); }
+  std::vector<IntegerEntry> integers() const { return integers_; }
+  std::vector<DoubleEntry> doubles() const { return doubles_; }
+  std::vector<StringEntry> strings() const { return strings_; }
+
+  std::unique_ptr<TracedValue> attributes_for_testing() const;
 
  private:
+  friend struct mojo::StructTraits<
+      memory_instrumentation::mojom::RawProcessMemoryDumpDataView,
+      ProcessMemoryDump>;
   const std::string absolute_name_;
   ProcessMemoryDump* const process_memory_dump_;  // Not owned (PMD owns this).
-  std::unique_ptr<TracedValue> attributes_;
+  FRIEND_TEST_ALL_PREFIXES(StructTraitsTest, ProcessMemoryDump);
   MemoryAllocatorDumpGuid guid_;
   int flags_;  // See enum Flags.
   uint64_t size_;
 
-  // A local buffer for Sprintf conversion on fastpath. Avoids allocating
-  // temporary strings on each AddScalar() call.
-  std::string string_conversion_buffer_;
+  std::vector<IntegerEntry> integers_;
+  std::vector<DoubleEntry> doubles_;
+  std::vector<StringEntry> strings_;
+
+  void DumpAttributes(TracedValue* value) const;
 
   DISALLOW_COPY_AND_ASSIGN(MemoryAllocatorDump);
 };

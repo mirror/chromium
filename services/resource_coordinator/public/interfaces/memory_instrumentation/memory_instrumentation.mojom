@@ -48,6 +48,53 @@ struct ChromeMemDump {
 // These structs are internal only (only for the communication between
 // the service and the ClientProcess library)
 
+struct Args {
+  LevelOfDetail level_of_detail;
+};
+
+struct AllocatorDumpGuid {
+  uint64 guid;
+};
+
+struct AllocatorDumpEdge {
+  AllocatorDumpGuid source;
+  AllocatorDumpGuid target;
+  int64 importance;
+  bool overridable;
+};
+
+struct IntegerEntry {
+  string name;
+  string units;
+  uint64 value; 
+};
+
+struct DoubleEntry {
+  string name;
+  string units;
+  double value; 
+};
+
+struct StringEntry {
+  string name;
+  string units;
+  string value; 
+};
+
+struct AllocatorDump {
+  AllocatorDumpGuid guid; 
+  bool weak;
+  array<IntegerEntry> integers;
+  array<DoubleEntry> doubles;
+  array<StringEntry> strings;
+};
+
+struct RawProcessMemoryDump {
+  Args dump_args;
+  array<AllocatorDumpEdge> allocator_dump_edges;
+  map<string, AllocatorDump> allocator_dumps;
+};
+
 struct VmRegion {
   const uint32 kProtectionFlagsRead = 4;
   const uint32 kProtectionFlagsWrite = 2;

@@ -6,10 +6,17 @@
 #define BASE_TRACE_EVENT_MEMORY_ALLOCATOR_DUMP_GUID_H_
 
 #include <stdint.h>
+#include "mojo/public/cpp/bindings/struct_traits.h"
 
 #include <string>
 
 #include "base/base_export.h"
+
+namespace memory_instrumentation {
+namespace mojom {
+class AllocatorDumpGuidDataView;
+}  // namespace mojom
+}  // namespace memory_instrumentation
 
 namespace base {
 namespace trace_event {
@@ -44,6 +51,9 @@ class BASE_EXPORT MemoryAllocatorDumpGuid {
   }
 
  private:
+  friend struct mojo::StructTraits<
+      memory_instrumentation::mojom::AllocatorDumpGuidDataView,
+      MemoryAllocatorDumpGuid>;
   uint64_t guid_;
 
   // Deliberately copy-able.
