@@ -22,6 +22,30 @@
       "revId": "e7fb600de33c0fe54d502d03ef15b4d8743c7f68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49da2b84_675fb981",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1179484
+      },
+      "writtenOn": "2017-08-21T11:48:28Z",
+      "side": 1,
+      "message": "Oops. Thanks.",
+      "parentUuid": "8049ddd6_ea66a679",
+      "range": {
+        "startLine": 463,
+        "startChar": 4,
+        "endLine": 467,
+        "endChar": 5
+      },
+      "revId": "e7fb600de33c0fe54d502d03ef15b4d8743c7f68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
