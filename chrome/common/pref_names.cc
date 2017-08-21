@@ -1341,6 +1341,11 @@ const char kLocalDiscoveryNotificationsEnabled[] =
 // Enable vibration for web notifications.
 const char kNotificationsVibrateEnabled[] = "notifications.vibrate_enabled";
 
+// Dictionary pref storing timestamps that notification channels were created
+// for different sites.
+const char kMigratedToSiteNotificationChannels[] =
+    "notifications.migrated_to_channels";
+
 // Cached information about GPU driver.
 const char kGLExtensionsString[] = "gl_extensions_string";
 const char kGpuDriverInfoMaxSamples[] = "gpu_driver_info_max_samples";
