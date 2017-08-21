@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07a49c8e_76e92832",
+        "filename": "ios/chrome/browser/ui/history/history_collection_view_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T12:54:56Z",
+      "side": 1,
+      "message": "I think you\u0027ve flipped the conditional here (used to be true if beginning of local results and there was no synced results or the beginning of synced results was reached too).\n\nBTW, I find both code too complex, and I think a simpler way to write would be:\n\n  self.finishedLoading \u003d queryResultsInfo.reached_beginning_of_local \u0026\u0026\n      (!queryResultsInfo.has_synced_results || queryResultsInfo.reached_beginning_of_sync);",
+      "revId": "47053bc5b62f8c36263aa88282294460be9d4317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba84ae3f_df2b173d",
+        "filename": "ios/chrome/browser/ui/history/history_collection_view_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T12:54:56Z",
+      "side": 1,
+      "message": "I don\u0027t think those two variables need to be marked \"__block\". The \"__block\" annotation means that the variable is not captured by copy but instead by reference (not reference in the sense of C++ though, this is still safe with regards to local variables).\n\nSince neither variable is changed (i.e. there is no \"filterResults \u003d ...\" or \"searchQuery \u003d ...\") then it is not necessary to capture them by reference, a capture by copy (copy of the pointer) is enough. Calling methods on the pointer in both blocks will still reference the same object, so -addObject: calls will be visible in the second block.",
+      "revId": "47053bc5b62f8c36263aa88282294460be9d4317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15a0ea6_2ee648f9",
+        "filename": "ios/chrome/browser/ui/history/ios_browsing_history_driver.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T12:54:56Z",
+      "side": 1,
+      "message": "nit:\n\n  DCHECK(browser_state_);",
+      "revId": "47053bc5b62f8c36263aa88282294460be9d4317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
