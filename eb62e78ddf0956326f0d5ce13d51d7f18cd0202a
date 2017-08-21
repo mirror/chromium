@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b092345_b4c28894",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-21T01:45:16Z",
+      "side": 1,
+      "message": "See later comment for rationale. I think we want:\n\n  // Always propagate the shift modifier if present. Shift doesn\u0027t always alter\n  // the command selector, but should always be passed along. Control and Alt\n  // have different meanings on Mac, so they do not propagate automatically.\n  if ([keyDownEvent_ modifiers] \u0026 NSShiftKeyMask)\n    eventFlags |\u003d ui::EF_SHIFT_DOWN;\n\n\n(note you don\u0027t need to check for keyDownEvent_ being null in this case, per the objective C style guide)",
+      "revId": "eb62e78ddf0956326f0d5ce13d51d7f18cd0202a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "808102da_f7673720",
+        "filename": "ui/views/controls/textfield/textfield_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-21T01:45:16Z",
+      "side": 1,
+      "message": "TestTextfield() : weak_ptr_factory_(this) {}",
+      "revId": "eb62e78ddf0956326f0d5ce13d51d7f18cd0202a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "469fd808_9e5eada9",
+        "filename": "ui/views/controls/textfield/textfield_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-21T01:45:16Z",
+      "side": 1,
+      "message": "\u003d false;",
+      "revId": "eb62e78ddf0956326f0d5ce13d51d7f18cd0202a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef660e6_7fb2ef52",
+        "filename": "ui/views/controls/textfield/textfield_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-21T01:45:16Z",
+      "side": 1,
+      "message": "\u003d false;",
+      "revId": "eb62e78ddf0956326f0d5ce13d51d7f18cd0202a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5c1255_bdc792c1",
+        "filename": "ui/views/controls/textfield/textfield_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-21T01:45:16Z",
+      "side": 1,
+      "message": "\u003d 0;",
+      "revId": "eb62e78ddf0956326f0d5ce13d51d7f18cd0202a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e78e8de_362bd73f",
+        "filename": "ui/views/controls/textfield/textfield_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3327,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-21T01:45:16Z",
+      "side": 1,
+      "message": "needs a comment, e.g.\n\n\n// Ensure the shift modifier propagates for keys that may be subject to native\n// key mappings. E.g., on Mac, Delete and Shift+Delete are both deleteForward:,\n// but the shift modifier should propagate.",
+      "revId": "eb62e78ddf0956326f0d5ce13d51d7f18cd0202a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f0f731a_51534127",
+        "filename": "ui/views/controls/textfield/textfield_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3331,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-21T01:45:16Z",
+      "side": 1,
+      "message": "constexpr struct {\n    int flag;\n    const char* name;\n  } kFlagsWithNames[] \u003d {...",
+      "revId": "eb62e78ddf0956326f0d5ce13d51d7f18cd0202a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "840281bd_a7c31db2",
+        "filename": "ui/views/controls/textfield/textfield_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3334,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-21T01:45:16Z",
+      "side": 1,
+      "message": "I\u0027d add {0, \"none\"}",
+      "revId": "eb62e78ddf0956326f0d5ce13d51d7f18cd0202a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ebe516_a036e72e",
+        "filename": "ui/views/controls/textfield/textfield_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3339,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-21T01:45:16Z",
+      "side": 1,
+      "message": "Hm there\u0027s something subtle behind why EXPECT_EQ doesn\u0027t work here.\n\nAlt+Delete is deleteWordForward: which views controls expect to receive as Ctrl+Delete\n\nSo Alt+Delete will now send Ctrl+Alt+Delete to views controls on Mac. And I don\u0027t think that\u0027s what we want.\n\nIn general Alt has a different meaning on Mac. So does Control. So I think it only makes sense for `shift` to be propagated in this way.\n\n\nIn which case, I think it\u0027s only worth testing for \u0027shift\u0027 here. We don\u0027t have a use-case for propagating other modifiers (yet), so we shouldn\u0027t be testing for them.\n\n\ni.e. this entire test can probably just be\n\n  InitTextfield();\n  SendKeyPress(ui::VKEY_DELETE, 0);\n  EXPECT_EQ(0, textfield_-\u003eevent_flags());\n  textfield_-\u003eclear();\n  SendKeyPress(ui::VKEY_DELETE, ui::EF_SHIFT_DOWN);\n  EXPECT_EQ(ui::EF_SHIFT_DOWN, textfield_-\u003eevent_flags());",
+      "revId": "eb62e78ddf0956326f0d5ce13d51d7f18cd0202a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
