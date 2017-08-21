@@ -8,6 +8,8 @@
 import json
 import logging
 import math
+import subprocess
+import time
 import websocket
 
 
@@ -76,7 +78,7 @@ class TracingBackend(object):
     }
     self._SendRequest(req)
 
-  def StopTracing(self, timeout=30):
+  def StopTracing(self, output_file, timeout=30):
     """End a tracing session on device.
 
     Args:
@@ -97,7 +99,9 @@ class TracingBackend(object):
         self._tracing_client = None
         result = self._tracing_data
         self._tracing_data = []
-        return result
+
+        with open(output_file, 'w') as f:
+          json.dump(result, f)
 
   def _SendRequest(self, req):
     """Sends request to remote devtools.
@@ -140,3 +144,75 @@ class TracingBackend(object):
       self._tracing_client.BufferUsage(value)
     elif 'Tracing.tracingComplete' == method:
       return True
+
+
+class TracingBackendAndroid(object):
+  def __init__(self):
+    pass
+
+  def Connect(self, device_ip, devtools_port_unused=9222, timeout=10):
+    """Connect to cast_shell on given device and port.
+
+    Args:
+      device_ip: IP of device to connect to.
+      devtools_port: Remote dev tool port to connect to. Defaults to 9222.
+      timeout: Amount of time to wait for connection in seconds. Default 10s.
+    """
+    self.device = device_ip
+
+
+  def Disconnect(self):
+    """If connected to device, disconnect from device."""
+    pass
+
+  def StartTracing(self,
+                   tracing_client=None,
+                   custom_categories=None,
+                   record_continuously=False,
+                   buffer_usage_reporting_interval=0,
+                   timeout=10):
+    """Begin a tracing session on device.
+
+    Args:
+      tracing_client: client for this tracing session.
+      custom_categories: Categories to filter for. None records all categories.
+      record_continuously: Keep tracing until stopped. If false, will exit when
+                           buffer is full.
+      buffer_usage_reporting_interval: How often to report buffer usage.
+      timeout: Time to wait to start tracing in seconds. Default 10s.
+    """
+    categories = (custom_categories if custom_categories else
+                  '_DEFAULT_CHROME_CATEGORIES')
+    self._file = '/sdcard/Download/trace-py-{0}'.format(int(time.time()))
+    command = ['shell', 'am', 'broadcast',
+        '-a', 'com.google.android.apps.mediashell.GPU_PROFILER_START',
+        '-e', 'categories', categories,
+        '-e', 'file', self._file]
+    if record_continuously:
+      command += ['-e', 'continuous']
+
+    self._AdbCommand(command)
+
+  def StopTracing(self, output_file, timeout=30):
+    """End a tracing session on device.
+
+    Args:
+      timeout: Time to wait to stop tracing in seconds. Default 30s.
+
+    Returns:
+      Trace file for the stopped session.
+    """
+    stop_profiling_command = ['shell', 'am', 'broadcast',
+        '-a', 'com.google.android.apps.mediashell.GPU_PROFILER_STOP']
+    self._AdbCommand(stop_profiling_command)
+
+    print('Sleeping for 3 seconds, hopefully the trace will be written by then')
+    time.sleep(3)
+
+    self._AdbCommand(['pull', self._file, output_file])
+
+  def _AdbCommand(self, command):
+    args = ['adb', '-s', self.device]
+    print(' '.join(args + command))
+    result = subprocess.check_output(args + command)
+    print(result)
