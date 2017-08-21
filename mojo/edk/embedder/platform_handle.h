@@ -16,6 +16,9 @@
 #include <mach/mach.h>
 #elif defined(OS_FUCHSIA)
 #include <magenta/syscalls.h>
+#elif defined(OS_ANDROID)
+#include <jni.h>
+#include "base/android/scoped_java_ref.h"
 #endif
 
 namespace mojo {
@@ -51,12 +54,18 @@ struct MOJO_SYSTEM_IMPL_EXPORT PlatformHandle {
 };
 #elif defined(OS_POSIX)
 struct MOJO_SYSTEM_IMPL_EXPORT PlatformHandle {
-  PlatformHandle() {}
-  explicit PlatformHandle(int handle) : handle(handle) {}
+  PlatformHandle();
+  explicit PlatformHandle(int handle);
 #if defined(OS_MACOSX) && !defined(OS_IOS)
-  explicit PlatformHandle(mach_port_t port)
-      : type(Type::MACH), port(port) {}
+  explicit PlatformHandle(mach_port_t port);
 #endif
+#if defined(OS_ANDROID)
+  explicit PlatformHandle(
+      const base::android::JavaRef<jobject>& parcelable_param);
+  PlatformHandle(const PlatformHandle& other);
+  PlatformHandle& operator=(const PlatformHandle& other);
+#endif
+  ~PlatformHandle();
 
   void CloseIfNecessary();
 
@@ -64,6 +73,10 @@ struct MOJO_SYSTEM_IMPL_EXPORT PlatformHandle {
 #if defined(OS_MACOSX) && !defined(OS_IOS)
     if (type == Type::MACH || type == Type::MACH_NAME)
       return port != MACH_PORT_NULL;
+#endif
+#if defined(OS_ANDROID)
+    if (type == Type::PARCELABLE)
+      return !parcelable.is_null();
 #endif
     return handle != -1;
   }
@@ -78,6 +91,9 @@ struct MOJO_SYSTEM_IMPL_EXPORT PlatformHandle {
     // this also allows us to do checks in other places.
     MACH_NAME,
 #endif
+#if defined(OS_ANDROID)
+    PARCELABLE,
+#endif
   };
   Type type = Type::POSIX;
 
@@ -88,6 +104,9 @@ struct MOJO_SYSTEM_IMPL_EXPORT PlatformHandle {
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
   mach_port_t port = MACH_PORT_NULL;
+#endif
+#if defined(OS_ANDROID)
+  base::android::ScopedJavaGlobalRef<jobject> parcelable;
 #endif
 };
 #elif defined(OS_WIN)

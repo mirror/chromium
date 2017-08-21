@@ -38,6 +38,10 @@
 #include "mojo/edk/system/user_message_impl.h"
 #include "mojo/edk/system/watcher_dispatcher.h"
 
+#if defined(OS_ANDROID)
+#include "base/android/jni_android.h"
+#endif
+
 namespace mojo {
 namespace edk {
 
@@ -90,6 +94,15 @@ MojoResult MojoPlatformHandleToScopedPlatformHandle(
       break;
 #endif
 
+#if defined(OS_ANDROID)
+    case MOJO_PLATFORM_HANDLE_TYPE_PARCELABLE:
+      handle.type = PlatformHandle::Type::PARCELABLE;
+      handle.parcelable.Reset(
+          base::android::AttachCurrentThread(),
+          reinterpret_cast<jobject>(platform_handle->value));
+      break;
+#endif
+
     default:
       return MOJO_RESULT_INVALID_ARGUMENT;
   }
@@ -130,6 +143,14 @@ MojoResult ScopedPlatformHandleToMojoPlatformHandle(
       platform_handle->value = static_cast<uint64_t>(handle.release().port);
       break;
 #endif  // defined(OS_MACOSX) && !defined(OS_IOS)
+
+#if defined(OS_ANDROID)
+    case PlatformHandle::Type::PARCELABLE:
+      platform_handle->type = MOJO_PLATFORM_HANDLE_TYPE_PARCELABLE;
+      platform_handle->value =
+          reinterpret_cast<uint64_t>(handle.release().parcelable.Release());
+      break;
+#endif  // defined(OS_ANDROID)
 
     default:
       return MOJO_RESULT_INVALID_ARGUMENT;

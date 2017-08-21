@@ -27,13 +27,23 @@ IncomingBrokerClientInvitation::Accept(ConnectionParams params) {
 // static
 std::unique_ptr<IncomingBrokerClientInvitation>
 IncomingBrokerClientInvitation::AcceptFromCommandLine(
-    TransportProtocol protocol) {
+    TransportProtocol protocol
+#if defined(OS_ANDROID)
+    ,
+    ParcelableChannel parcelable_channel
+#endif
+    ) {
   ScopedPlatformHandle platform_channel =
       PlatformChannelPair::PassClientHandleFromParentProcess(
           *base::CommandLine::ForCurrentProcess());
   DCHECK(platform_channel.is_valid());
-  return base::WrapUnique(new IncomingBrokerClientInvitation(
-      ConnectionParams(protocol, std::move(platform_channel))));
+  ConnectionParams connection_params(protocol, std::move(platform_channel));
+#if defined(OS_ANDROID)
+  connection_params.SetParcelableChannel(std::move(parcelable_channel));
+#endif
+
+  return base::WrapUnique(
+      new IncomingBrokerClientInvitation(std::move(connection_params)));
 }
 
 ScopedMessagePipeHandle IncomingBrokerClientInvitation::ExtractMessagePipe(

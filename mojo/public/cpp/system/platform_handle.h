@@ -19,10 +19,15 @@
 #include "base/macros.h"
 #include "base/memory/shared_memory_handle.h"
 #include "base/process/process_handle.h"
+#include "build/build_config.h"
 #include "mojo/public/c/system/platform_handle.h"
 #include "mojo/public/cpp/system/buffer.h"
 #include "mojo/public/cpp/system/handle.h"
 #include "mojo/public/cpp/system/system_export.h"
+
+#if defined(OS_ANDROID)
+#include "base/android/scoped_java_ref.h"
+#endif
 
 #if defined(OS_WIN)
 #include <windows.h>
@@ -52,6 +57,11 @@ const MojoPlatformHandleType kPlatformFileHandleType =
 const MojoPlatformHandleType kPlatformSharedBufferHandleType =
     MOJO_PLATFORM_HANDLE_TYPE_WINDOWS_HANDLE;
 #endif  // defined(OS_POSIX)
+
+#if defined(OS_ANDROID)
+const MojoPlatformHandleType kPlatformParcelableType =
+    MOJO_PLATFORM_HANDLE_TYPE_PARCELABLE;
+#endif  // defined(OS_ANDROID)
 
 // Wraps a PlatformFile as a Mojo handle. Takes ownership of the file object.
 MOJO_CPP_SYSTEM_EXPORT
@@ -89,6 +99,15 @@ MOJO_CPP_SYSTEM_EXPORT ScopedHandle WrapMachPort(mach_port_t port);
 MOJO_CPP_SYSTEM_EXPORT MojoResult UnwrapMachPort(ScopedHandle handle,
                                                  mach_port_t* port);
 #endif  // defined(OS_MACOSX) && !defined(OS_IOS)
+
+#if defined(OS_ANDROID)
+MOJO_CPP_SYSTEM_EXPORT ScopedHandle
+WrapParcelable(base::android::ScopedJavaLocalRef<jobject> parcelable);
+
+MOJO_CPP_SYSTEM_EXPORT MojoResult
+UnwrapParcelable(ScopedHandle handle,
+                 base::android::ScopedJavaLocalRef<jobject>* parcelable);
+#endif
 
 }  // namespace mojo
 

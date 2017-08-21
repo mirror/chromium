@@ -6,7 +6,6 @@ package org.chromium.mojo.edk;
 
 import org.chromium.mojo.edk.IParcelableChannel;
 
-/** Used by a child process to send its IParcelableChannel to its parent. */
 interface IParcelableChannelProvider {
     oneway void sendParcelableChannel(IParcelableChannel channel);
 }

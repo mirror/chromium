@@ -9,7 +9,9 @@
 
 #include <algorithm>
 #include <limits>
+#include <map>
 #include <memory>
+#include <set>
 
 #include "base/bind.h"
 #include "base/containers/queue.h"
@@ -19,11 +21,16 @@
 #include "base/message_loop/message_loop.h"
 #include "base/synchronization/lock.h"
 #include "base/task_runner.h"
+#include "build/build_config.h"
 #include "mojo/edk/embedder/platform_channel_utils_posix.h"
 #include "mojo/edk/embedder/platform_handle_vector.h"
 
 #if !defined(OS_NACL)
 #include <sys/uio.h>
+#endif
+
+#if defined(OS_ANDROID)
+#include "mojo/edk/system/android/parcelable_channel_client.h"
 #endif
 
 namespace mojo {
@@ -39,10 +46,13 @@ class MessageView {
  public:
   // Owns |message|. |offset| indexes the first unsent byte in the message.
   MessageView(Channel::MessagePtr message, size_t offset)
-      : message_(std::move(message)),
-        offset_(offset),
-        handles_(message_->TakeHandlesForTransport()) {
+      : message_(std::move(message)), offset_(offset) {
     DCHECK_GT(message_->data_num_bytes(), offset_);
+#if defined(OS_ANDROID)
+    // Parcelables must be retrieved before Handles.
+    ids_and_parcelables_ = message_->TakeParcelablesForTransport();
+#endif
+    handles_ = message_->TakeHandlesForTransport();
   }
 
   MessageView(MessageView&& other) { *this = std::move(other); }
@@ -70,6 +80,11 @@ class MessageView {
 
   ScopedPlatformHandleVectorPtr TakeHandles() { return std::move(handles_); }
   Channel::MessagePtr TakeMessage() { return std::move(message_); }
+#if defined(OS_ANDROID)
+  Channel::Message::IDAndParcelableVector TakeParcelables() {
+    return std::move(ids_and_parcelables_);
+  }
+#endif
 
   void SetHandles(ScopedPlatformHandleVectorPtr handles) {
     handles_ = std::move(handles);
@@ -79,13 +94,21 @@ class MessageView {
   Channel::MessagePtr message_;
   size_t offset_;
   ScopedPlatformHandleVectorPtr handles_;
+#if defined(OS_ANDROID)
+  Channel::Message::IDAndParcelableVector ids_and_parcelables_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(MessageView);
 };
 
 class ChannelPosix : public Channel,
                      public base::MessageLoop::DestructionObserver,
-                     public base::MessageLoopForIO::Watcher {
+                     public base::MessageLoopForIO::Watcher
+#if defined(OS_ANDROID)
+    ,
+                     public ParcelableChannelServer::Listener
+#endif
+{
  public:
   ChannelPosix(Delegate* delegate,
                ConnectionParams connection_params,
@@ -93,13 +116,20 @@ class ChannelPosix : public Channel,
       : Channel(delegate),
         self_(this),
         handle_(connection_params.TakeChannelHandle()),
-        io_task_runner_(io_task_runner)
-#if defined(OS_MACOSX)
-        ,
-        handles_to_close_(new PlatformHandleVector)
+#if defined(OS_ANDROID)
+        parcelable_channel_client_(
+            connection_params.TakeParcelableChannelClient()),
+        parcelable_channel_server_(
+            connection_params.TakeParcelableChannelServer()),
+#elif defined(OS_MACOSX)
+        handles_to_close_(new PlatformHandleVector),
 #endif
-  {
+        io_task_runner_(io_task_runner) {
     CHECK(handle_.is_valid());
+#if defined(OS_ANDROID)
+    if (parcelable_channel_server_)
+      parcelable_channel_server_->SetListener(this);
+#endif
   }
 
   void Start() override {
@@ -185,6 +215,52 @@ class ChannelPosix : public Channel,
       } else {
         if (incoming_platform_handles_.empty())
           return false;
+        (*handles)->at(i) = incoming_platform_handles_.front();
+        incoming_platform_handles_.pop_front();
+      }
+    }
+#elif defined(OS_ANDROID)
+    using ParcelableEntry = Channel::Message::ParcelableEntry;
+    using ParcelableExtraHeader = Channel::Message::ParcelableExtraHeader;
+    CHECK(extra_header_size >= sizeof(ParcelableExtraHeader) +
+                                   num_handles * sizeof(ParcelableEntry));
+    const ParcelableExtraHeader* parcelable_header =
+        reinterpret_cast<const ParcelableExtraHeader*>(extra_header);
+    size_t num_parcelables = parcelable_header->num_parcelables;
+    CHECK(num_parcelables <= num_handles);
+    if (incoming_platform_handles_.size() + num_parcelables < num_handles) {
+      // Not the expected number of platform handles, wait for more.
+      handles->reset();
+      return true;
+    }
+
+    // Check if we have all parcelables.
+    const ParcelableEntry* parcelables = parcelable_header->entries;
+    for (size_t i = 0; i < num_parcelables; ++i) {
+      uint32_t id = parcelables[i].id;
+      if (received_parcelables_.find(id) == received_parcelables_.end()) {
+        missing_parcelables_.insert(id);
+      }
+    }
+
+    if (!missing_parcelables_.empty()) {
+      // Some parcelables are missing, wait for more.
+      handles->reset();
+      return true;
+    }
+
+    handles->reset(new PlatformHandleVector(num_handles));
+    for (size_t i = 0, parcelable_index = 0; i < num_handles; ++i) {
+      if (parcelable_index < num_parcelables &&
+          parcelables[parcelable_index].index == i) {
+        uint32_t id = parcelables[parcelable_index].id;
+        ParcelableMap::iterator iter = received_parcelables_.find(id);
+        DCHECK(iter != received_parcelables_.end());
+        (*handles)->at(i) = PlatformHandle(iter->second);
+        received_parcelables_.erase(iter);
+        parcelable_index++;
+      } else {
+        CHECK(!incoming_platform_handles_.empty());
         (*handles)->at(i) = incoming_platform_handles_.front();
         incoming_platform_handles_.pop_front();
       }
@@ -364,6 +440,18 @@ class ChannelPosix : public Channel,
       message_view.advance_data_offset(bytes_written);
 
       ssize_t result;
+#if defined(OS_ANDROID)
+      Channel::Message::IDAndParcelableVector ids_and_parcelables =
+          message_view.TakeParcelables();
+      if (!ids_and_parcelables.empty()) {
+        for (auto iter = ids_and_parcelables.begin();
+             iter != ids_and_parcelables.end(); ++iter) {
+          DCHECK(!iter->second.is_null());
+          parcelable_channel_client_->SendParcelable(iter->first, iter->second);
+        }
+      }
+#endif
+
       ScopedPlatformHandleVectorPtr handles = message_view.TakeHandles();
       if (handles && handles->size()) {
         iovec iov = {const_cast<void*>(message_view.data()),
@@ -533,10 +621,49 @@ class ChannelPosix : public Channel,
   }
 #endif  // defined(OS_MACOSX)
 
+#if defined(OS_ANDROID)
+  void OnParcelableReceived(
+      uint32_t id,
+      const base::android::JavaRef<jobject>& parcelable) override {
+    io_task_runner_->PostTask(
+        FROM_HERE,
+        base::Bind(&ChannelPosix::OnParcelableReceivedOnIOThread, this, id,
+                   base::android::ScopedJavaGlobalRef<jobject>(parcelable)));
+  }
+#endif
+
+  void OnParcelableReceivedOnIOThread(
+      uint32_t id,
+      const base::android::ScopedJavaGlobalRef<jobject>& parcelable) {
+    received_parcelables_[id] = parcelable;
+    bool was_missing = missing_parcelables_.erase(id) > 0;
+    if (was_missing && missing_parcelables_.empty()) {
+      // Pretend some more data was read so the channel checks for the missing
+      // parcelables again.
+      size_t unused;
+      OnReadComplete(0, &unused);
+    }
+  }
+
   // Keeps the Channel alive at least until explicit shutdown on the IO thread.
   scoped_refptr<Channel> self_;
 
   ScopedPlatformHandle handle_;
+#if defined(OS_ANDROID)
+  std::unique_ptr<ParcelableChannelClient> parcelable_channel_client_;
+  std::unique_ptr<ParcelableChannelServer> parcelable_channel_server_;
+
+  std::set<uint32_t> missing_parcelables_;
+  using ParcelableMap =
+      std::map<uint32_t, base::android::ScopedJavaGlobalRef<jobject>>;
+  ParcelableMap received_parcelables_;
+#endif
+
+#if defined(OS_MACOSX)
+  base::Lock handles_to_close_lock_;
+  ScopedPlatformHandleVectorPtr handles_to_close_;
+#endif
+
   scoped_refptr<base::TaskRunner> io_task_runner_;
 
   // These watchers must only be accessed on the IO thread.
@@ -552,11 +679,6 @@ class ChannelPosix : public Channel,
   base::circular_deque<MessageView> outgoing_messages_;
 
   bool leak_handle_ = false;
-
-#if defined(OS_MACOSX)
-  base::Lock handles_to_close_lock_;
-  ScopedPlatformHandleVectorPtr handles_to_close_;
-#endif
 
   DISALLOW_COPY_AND_ASSIGN(ChannelPosix);
 };

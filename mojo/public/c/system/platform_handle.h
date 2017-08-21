@@ -41,12 +41,14 @@ const MojoPlatformHandleType MOJO_PLATFORM_HANDLE_TYPE_FILE_DESCRIPTOR = 1;
 const MojoPlatformHandleType MOJO_PLATFORM_HANDLE_TYPE_MACH_PORT = 2;
 const MojoPlatformHandleType MOJO_PLATFORM_HANDLE_TYPE_WINDOWS_HANDLE = 3;
 const MojoPlatformHandleType MOJO_PLATFORM_HANDLE_TYPE_FUCHSIA_HANDLE = 4;
+const MojoPlatformHandleType MOJO_PLATFORM_HANDLE_TYPE_PARCELABLE = 5;
 #else
 #define MOJO_PLATFORM_HANDLE_TYPE_INVALID ((MojoPlatformHandleType)0)
 #define MOJO_PLATFORM_HANDLE_TYPE_FILE_DESCRIPTOR ((MojoPlatformHandleType)1)
 #define MOJO_PLATFORM_HANDLE_TYPE_MACH_PORT ((MojoPlatformHandleType)2)
 #define MOJO_PLATFORM_HANDLE_TYPE_WINDOWS_HANDLE ((MojoPlatformHandleType)3)
 #define MOJO_PLATFORM_HANDLE_TYPE_FUCHSIA_HANDLE ((MojoPlatformHandleType)4)
+#define MOJO_PLATFORM_HANDLE_TYPE_PARCELABLE ((MojoPlatformHandleType)5)
 #endif
 
 // |MojoPlatformHandle|: A handle to a native platform object.

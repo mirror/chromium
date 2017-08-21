@@ -4,16 +4,13 @@
 
 package org.chromium.mojo.edk;
 
+import android.os.IBinder;
 import android.os.Parcelable;
+import android.os.RemoteException;
 
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.concurrent.GuardedBy;
 
 /**
  * Provides an implementation of IParcelableChannel that stores the received parcelables and make
@@ -23,41 +20,42 @@ import javax.annotation.concurrent.GuardedBy;
 public class ParcelableChannelServer extends IParcelableChannel.Stub {
     private static final String TAG = "ParcelableChanServer";
 
-    private final Object mLock = new Object();
+    private long mNativeParcelableChannelServer;
 
-    @GuardedBy("mLock")
-    private final Map<Integer, Parcelable> mReceivedParcelables = new HashMap<>();
-
-    public void clearReceivedParcelables() {
-        synchronized (mLock) {
-            mReceivedParcelables.clear();
-        }
+    private ParcelableChannelServer(long nativeParcelableChannelServer) {
+        mNativeParcelableChannelServer = nativeParcelableChannelServer;
     }
 
     @Override
     public void sendParcelable(ParcelableWrapper parcelableValue) {
-        synchronized (mLock) {
-            mReceivedParcelables.put(parcelableValue.getId(), parcelableValue.getParcelable());
-            mLock.notifyAll();
+        if (mNativeParcelableChannelServer != 0) {
+            nativeOnParcelableReceived(mNativeParcelableChannelServer, parcelableValue.getId(),
+                    parcelableValue.getParcelable());
         }
     }
 
-    /** Returns the Parcelable associated with id, potentially blocking until there is one. */
     @CalledByNative
-    private Parcelable takeParcelable(int id) {
-        Parcelable parcelable = null;
-        synchronized (mLock) {
-            while (parcelable == null) {
-                parcelable = mReceivedParcelables.remove(id);
-                if (parcelable == null) {
-                    try {
-                        mLock.wait();
-                    } catch (InterruptedException ie) {
-                        Log.e(TAG, "Interrupted while waiting.", ie);
-                    }
-                }
-            }
-        }
-        return parcelable;
+    private static ParcelableChannelServer create(long nativeParcelableChannelServer) {
+        return new ParcelableChannelServer(nativeParcelableChannelServer);
     }
+
+    @CalledByNative
+    private void invalidate() {
+        mNativeParcelableChannelServer = 0;
+    }
+
+    @CalledByNative
+    private boolean setChannelOnParent(IBinder parcelableChannelProvider) {
+        try {
+            IParcelableChannelProvider.Stub.asInterface(parcelableChannelProvider)
+                    .sendParcelableChannel(this);
+            return true;
+        } catch (RemoteException re) {
+            Log.e(TAG, "Failed to set ParcelableChannel on parent.", re);
+            return false;
+        }
+    }
+
+    private native void nativeOnParcelableReceived(
+            long nativeParcelableChannelServer, int id, Parcelable parcelable);
 }

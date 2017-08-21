@@ -13,6 +13,8 @@
 #include <unistd.h>
 #elif defined(OS_WIN)
 #include <windows.h>
+#elif defined(OS_ANDROID)
+#include "base/android/jni_android.h"
 #else
 #error "Platform not yet supported."
 #endif
@@ -21,6 +23,31 @@
 
 namespace mojo {
 namespace edk {
+
+#if defined(OS_POSIX)
+PlatformHandle::PlatformHandle() {}
+
+PlatformHandle::PlatformHandle(int handle) : handle(handle) {}
+
+#if defined(OS_MACOSX) && !defined(OS_IOS)
+PlatformHandle::PlatformHandle(mach_port_t port)
+    : type(Type::MACH), port(port) {}
+#endif
+
+#if defined(OS_ANDROID)
+PlatformHandle::PlatformHandle(
+    const base::android::JavaRef<jobject>& parcelable_param)
+    : type(Type::PARCELABLE), parcelable(parcelable_param) {}
+
+PlatformHandle::PlatformHandle(const PlatformHandle& other) = default;
+
+PlatformHandle& PlatformHandle::operator=(const PlatformHandle& other) =
+    default;
+#endif
+
+PlatformHandle::~PlatformHandle() {}
+
+#endif  // defined(OS_POSIX)
 
 void PlatformHandle::CloseIfNecessary() {
   if (!is_valid())
@@ -51,6 +78,10 @@ void PlatformHandle::CloseIfNecessary() {
     port = MACH_PORT_NULL;
   }
 #endif  // defined(OS_MACOSX) && !defined(OS_IOS)
+#if defined(OS_ANDROID)
+  else if (type == Type::PARCELABLE)
+    parcelable.Reset();
+#endif  // defined(OS_ANDROID)
 #elif defined(OS_WIN)
   if (owning_process != base::GetCurrentProcessHandle()) {
     // This handle may have been duplicated to a new target process but not yet
