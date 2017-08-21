@@ -220,9 +220,6 @@ class WebContentsObserverProxy extends WebContentsObserver {
         for (mObserversIterator.rewind(); mObserversIterator.hasNext();) {
             mObserversIterator.next().destroy();
         }
-        // All observer destroy() implementations should result in their removal
-        // from the proxy.
-        assert mObservers.isEmpty();
         mObservers.clear();
 
         if (mNativeWebContentsObserverProxy != 0) {
