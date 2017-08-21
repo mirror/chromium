@@ -135,6 +135,24 @@
     },
     {
       "key": {
+        "uuid": "befb3e0f_a26d3fbf",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-21T18:27:09Z",
+      "side": 1,
+      "message": "Are you planning to serialize MHTML archiving?  That doesn\u0027t seem right.  I think that long term it might be possible to generate MHTML in parallel and in that case you have a race.\n\nThere isn\u0027t much complexity downside to doing the rename afterwards, since you already have the thread hop before generation to come up with the file name.  This simply adds that step afterwards, and makes the flag for random vs human-readable file names even easier to implement.",
+      "parentUuid": "63567daa_e303c7d7",
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afb4f914_46fe0a28",
         "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
         "patchSetId": 2
