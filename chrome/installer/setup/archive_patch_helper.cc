@@ -7,8 +7,11 @@
 #include <stdint.h>
 
 #include "base/files/file_util.h"
+#include "base/files/memory_mapped_file.h"
 #include "base/logging.h"
 #include "chrome/installer/util/lzma_util.h"
+#include "chrome/installer/zucchini/patch_reader.h"
+#include "chrome/installer/zucchini/zucchini.h"
 #include "courgette/courgette.h"
 #include "third_party/bspatch/mbspatch.h"
 
@@ -37,7 +40,7 @@ bool ArchivePatchHelper::UncompressAndPatch(
   ArchivePatchHelper instance(working_directory, compressed_archive,
                               patch_source, target, consumer);
   return (instance.Uncompress(NULL) &&
-          (instance.EnsemblePatch() || instance.BinaryPatch()));
+          (instance.CourgetteEnsemblePatch() || instance.BinaryPatch()));
 }
 
 bool ArchivePatchHelper::Uncompress(base::FilePath* last_uncompressed_file) {
@@ -60,7 +63,7 @@ bool ArchivePatchHelper::Uncompress(base::FilePath* last_uncompressed_file) {
   return true;
 }
 
-bool ArchivePatchHelper::EnsemblePatch() {
+bool ArchivePatchHelper::CourgetteEnsemblePatch() {
   if (last_uncompressed_file_.empty()) {
     LOG(ERROR) << "No patch file found in compressed archive.";
     return false;
@@ -78,6 +81,29 @@ bool ArchivePatchHelper::EnsemblePatch() {
       << " to file " << patch_source_.value()
       << " and generating file " << target_.value()
       << " using courgette. err=" << result;
+
+  // Ensure a partial output is not left behind.
+  base::DeleteFile(target_, false);
+
+  return false;
+}
+
+bool ArchivePatchHelper::ZucchiniEnsemblePatch() {
+  if (last_uncompressed_file_.empty()) {
+    LOG(ERROR) << "No patch file found in compressed archive.";
+    return false;
+  }
+
+  zucchini::status::Code result =
+      zucchini::Apply(patch_source_, last_uncompressed_file_, target_);
+
+  if (result == zucchini::status::kStatusSuccess)
+    return true;
+
+  LOG(ERROR) << "Failed to apply patch " << last_uncompressed_file_.value()
+             << " to file " << patch_source_.value() << " and generating file "
+             << target_.value()
+             << " using zucchini. err=" << static_cast<uint32_t>(result);
 
   // Ensure a partial output is not left behind.
   base::DeleteFile(target_, false);

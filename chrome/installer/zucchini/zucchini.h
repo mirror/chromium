@@ -5,6 +5,7 @@
 #ifndef CHROME_INSTALLER_ZUCCHINI_ZUCCHINI_H_
 #define CHROME_INSTALLER_ZUCCHINI_ZUCCHINI_H_
 
+#include "base/files/file_path.h"
 #include "chrome/installer/zucchini/buffer_view.h"
 #include "chrome/installer/zucchini/patch_reader.h"
 #include "chrome/installer/zucchini/patch_writer.h"
@@ -48,6 +49,12 @@ status::Code GenerateRaw(ConstBufferView old_image,
 status::Code Apply(ConstBufferView old_image,
                    const EnsemblePatchReader& patch_reader,
                    MutableBufferView new_image);
+
+// Applies the patch in |patch_path| to the bytes in |old_path| and writes the
+// result to |new_path|.
+status::Code Apply(base::FilePath old_path,
+                   base::FilePath patch_path,
+                   base::FilePath new_path);
 
 }  // namespace zucchini
 
