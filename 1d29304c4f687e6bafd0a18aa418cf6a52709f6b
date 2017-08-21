@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c847178_49f86372",
+        "filename": "ui/chromeos/touch_accessibility_enabler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-21T22:36:38Z",
+      "side": 1,
+      "message": "nit: nullptr since you\u0027re touching the line",
+      "revId": "1d29304c4f687e6bafd0a18aa418cf6a52709f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e02e8a_09f02485",
+        "filename": "ui/chromeos/touch_accessibility_enabler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-21T22:36:38Z",
+      "side": 1,
+      "message": "nit: I would add a brief comment explaining why this class has to expose weak pointers to itself (like maybe an example of what could otherwise go wrong).",
+      "revId": "1d29304c4f687e6bafd0a18aa418cf6a52709f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
