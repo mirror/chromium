@@ -19,6 +19,8 @@
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "components/pref_registry/pref_registry_syncable.h"
+#include "components/prefs/pref_service.h"
 
 // A Java counterpart will be generated for this enum.
 // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.chrome.browser.notifications
@@ -60,8 +62,13 @@ class NotificationChannelsProviderAndroid
     virtual std::vector<NotificationChannel> GetChannels() = 0;
   };
 
-  NotificationChannelsProviderAndroid();
+  static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
+
+  explicit NotificationChannelsProviderAndroid();
   ~NotificationChannelsProviderAndroid() override;
+
+  void MigrateToChannelsIfNecessary(PrefService* prefs,
+      content_settings::ObservableProvider* pref_provider);
 
   // UserModifiableProvider methods.
   std::unique_ptr<content_settings::RuleIterator> GetRuleIterator(
@@ -92,6 +99,12 @@ class NotificationChannelsProviderAndroid
 
   void CreateChannelIfRequired(const std::string& origin_string,
                                NotificationChannelStatus new_channel_status);
+  void StoreLastModifiedTimestamp(const std::string& origin_string,
+                                  base::Time timestamp);
+
+  // Prefs are used to store channel creation timestamps.
+  // Weak; owned by the Profile and reset in ShutdownOnUIThread.
+  PrefService* prefs_;
 
   void InitCachedChannels();
 

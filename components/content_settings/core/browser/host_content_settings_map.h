@@ -296,6 +296,8 @@ class HostContentSettingsMap : public content_settings::Observer,
   // |last_modified| timestamp.
   void SetClockForTesting(std::unique_ptr<base::Clock> clock);
 
+  content_settings::PrefProvider* GetPrefProvider() { return pref_provider_; }
+
  private:
   friend class base::RefCountedThreadSafe<HostContentSettingsMap>;
 
