@@ -22,6 +22,76 @@
       "revId": "458f64403c400934adc5e99b8ad1e01b5695cfb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a2c928_4aa77052",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-21T22:05:08Z",
+      "side": 1,
+      "message": "Yes, please do that.  It\u0027s not appropriate to allocate space for hundreds of unused buckets.\n\nYou might also consider using UMA_HISTOGRAM_SPARSE_SLOWLY, which uses a map rather than a vector, and hence only allocates space for the buckets that are actually used.",
+      "parentUuid": "b26c9b26_1d8810e2",
+      "range": {
+        "startLine": 592,
+        "startChar": 6,
+        "endLine": 592,
+        "endChar": 51
+      },
+      "revId": "458f64403c400934adc5e99b8ad1e01b5695cfb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b387bcad_d3a7fae8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 82456,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-21T22:05:08Z",
+      "side": 1,
+      "message": "Please add an enum\u003d attribute here.",
+      "range": {
+        "startLine": 82456,
+        "startChar": 34,
+        "endLine": 82456,
+        "endChar": 0
+      },
+      "revId": "458f64403c400934adc5e99b8ad1e01b5695cfb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9969cb41_5da015f9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 82461,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-21T22:05:08Z",
+      "side": 1,
+      "message": "The enum should be defined within enums.xml.",
+      "range": {
+        "startLine": 82461,
+        "startChar": 57,
+        "endLine": 82461,
+        "endChar": 0
+      },
+      "revId": "458f64403c400934adc5e99b8ad1e01b5695cfb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
