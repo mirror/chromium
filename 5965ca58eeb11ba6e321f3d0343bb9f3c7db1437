@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d598045e_5233ece3",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-08-21T21:01:17Z",
+      "side": 1,
+      "message": "This LGTM.\n\nAs for testing I think this test is exercising this codepath: AppBackgroundPageApiTest.OpenThenClose -- but it doesn\u0027t have a path in its web extent. That might be a good starting point.\n\nI think it\u0027s as simple as adding \u0027extensions/api_test\u0027 to the launch.web_url and app.urls of the manifest declared in the C++ code. This test works by loading another extension ( https://cs.chromium.org/chromium/src/chrome/test/data/extensions/api_test/app_background_page/basic_open/test.js ) that launches this hosted app URL: https://cs.chromium.org/chromium/src/chrome/test/data/extensions/api_test/app_background_page/common/a.html which does the window.open.",
+      "revId": "5965ca58eeb11ba6e321f3d0343bb9f3c7db1437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
