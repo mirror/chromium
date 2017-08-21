@@ -919,4 +919,22 @@ TEST(SimpleFeatureUnitTest, TestChannelsWithoutExtension) {
   }
 }
 
+TEST(SimpleFeatureUnitTest, TestAvailableToEnvironment) {
+  SimpleFeature feature;
+  feature.set_min_manifest_version(2);
+  feature.set_contexts({Feature::BLESSED_EXTENSION_CONTEXT});
+  feature.set_channel(Channel::BETA);
+
+  {
+    ScopedCurrentChannel current_channel(Channel::BETA);
+    EXPECT_EQ(Feature::IS_AVAILABLE,
+              feature.IsAvailableToEnvironment().result());
+  }
+  {
+    ScopedCurrentChannel current_channel(Channel::STABLE);
+    EXPECT_EQ(Feature::UNSUPPORTED_CHANNEL,
+              feature.IsAvailableToEnvironment().result());
+  }
+}
+
 }  // namespace extensions
