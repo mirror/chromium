@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d884860_4ae26598",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-21T05:21:05Z",
+      "side": 1,
+      "message": "Please prefer the member initialization list whenever possible.\n\n  runner_(ArcFileSystemOperationRunner::GetForBrowserContext(profile))",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 72
+      },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e9056a_7f1ca1bd",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-21T05:21:05Z",
+      "side": 1,
+      "message": "In Chromium C++, naming convention for variables is |roots_from_mojo|.\n\nSame for below (|roots_map|, |root_from_mojo|).",
+      "range": {
+        "startLine": 116,
+        "startChar": 48,
+        "endLine": 116,
+        "endChar": 61
+      },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "166e39c0_9223e125",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-21T05:21:05Z",
+      "side": 1,
+      "message": "If Mojo did not return roots, then possible cases are:\n1. Remote ArcFileSystemService is old and does not support GetRoots().\n2. Other errors.\n\nEspecially in the first case, we don\u0027t want to remove hard-coded media provider roots. So I think we want to keep existing roots.",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 34
+      },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba986d0a_56bfed87",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-21T05:21:05Z",
+      "side": 1,
+      "message": "It is a bit difficult to follow the logic if we update the member variables (|map_| in this case) in the middle of processing. In fact, the current code never deletes stale roots.\n\nI recommend something like below.\n\n std::map\u003cKey, std::unique_ptr\u003cArcDocumentsProviderRoot\u003e\u003e old_map \u003d std::move(map_);\n std::map\u003cKey, std::unique_ptr\u003cArcDocumentsProviderRoot\u003e\u003e new_map;\n \n for (const mojom::RootPtr\u0026 root_from_mojo : *roots_from_mojo) {\n   ...\n   auto iter \u003d old_map.find(key);\n   if (iter !\u003d old_map.end()) {\n     new_map.emplace(iter-\u003efirst, std::move(iter-\u003esecond));\n     old_map.erase(iter);\n     continue;\n   }\n   new_map.emplace(key, base::MakeUnique\u003cArcDocumentsProviderRoot\u003e(...));\n }\n \n map_ \u003d std::move(new_map);\n old_map.clear();  // Explicitly destruct removed roots.\n\nAlso, I recommend building |roots| after you finish building |map_|.",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 7
+      },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad53fc2_d7052505",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-21T05:21:05Z",
+      "side": 1,
+      "message": "nit: Could you add a blank line above this?",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 2
+      },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3eb279c_7b93d7c5",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-21T05:21:05Z",
+      "side": 1,
+      "message": "Could you move this between OnGetRoots() and definition of Key? We usually group items by their kinds.\n\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 40
+      },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f99c0b65_d974ba12",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-21T05:21:05Z",
+      "side": 1,
+      "message": "nit: Please name this function MakeRoots().",
+      "range": {
+        "startLine": 34,
+        "startChar": 42,
+        "endLine": 34,
+        "endChar": 51
+      },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b992567a_feb437d9",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-21T05:21:05Z",
+      "side": 1,
+      "message": "Please add test cases for when the set of roots changed.",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 0
+      },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ea556e_a01ce188",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-21T05:21:05Z",
+      "side": 1,
+      "message": "nit: s/SUMMARY/COLUMN_SUMMARY/",
+      "range": {
+        "startLine": 46,
+        "startChar": 48,
+        "endLine": 46,
+        "endChar": 55
+      },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d7f2685_e265cb47",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-21T05:21:05Z",
+      "side": 1,
+      "message": "DocumentsContract.Root.COLUMN_SUMMARY is an optional column.\nhttps://developer.android.com/reference/android/provider/DocumentsContract.Root.html#COLUMN_SUMMARY\n\nThere are two options to handle a missing summary column:\n1. Make this field nullable.\n2. Declare this field will be an empty string if it is missing.\n\nI prefer 2 because it\u0027s simpler and I don\u0027t come up with a situation where we need to distinguish a null summary and an empty summary. But I\u0027m fine with either way, it\u0027s your call.\n\nAnyway, please add a bit more comment about a null summary.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 17
+      },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100556d3_3b5d6979",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-21T05:21:05Z",
+      "side": 1,
+      "message": "DocumentsContract.Root.COLUMN_ICON is an optional column, but DocumentsUI seems to accept a null icon.\n(See: packages/apps/DocumentsUI/src/com/android/documentsui/base/RootInfo.java)\n\nPlease define a behavior when icon is not available, and add comments.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 25
+      },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
