@@ -4,6 +4,7 @@
 
 #include "ui/app_list/app_list_features.h"
 
+#include "base/debug/stack_trace.h"
 #include "base/feature_list.h"
 #include "base/metrics/field_trial_params.h"
 #include "ui/app_list/app_list_switches.h"
@@ -18,7 +19,7 @@ const base::Feature kEnableAnswerCardDarkRun{"EnableAnswerCardDarkRun",
 const base::Feature kEnableBackgroundBlur{"EnableBackgroundBlur",
                                           base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kEnableFullscreenAppList{"EnableFullscreenAppList",
-                                             base::FEATURE_DISABLED_BY_DEFAULT};
+                                             base::FEATURE_ENABLED_BY_DEFAULT};
 const base::Feature kEnablePlayStoreAppSearch{
     "EnablePlayStoreAppSearch", base::FEATURE_DISABLED_BY_DEFAULT};
 
@@ -40,10 +41,19 @@ bool IsBackgroundBlurEnabled() {
   return enabled;
 }
 
+bool FIRST = true;
+
 bool IsFullscreenAppListEnabled() {
   // Not using local static variable to allow tests to change this value.
-  return switches::IsFullscreenAppListEnabled() ||
-         base::FeatureList::IsEnabled(kEnableFullscreenAppList);
+  bool b = switches::IsFullscreenAppListEnabled() ||
+           base::FeatureList::IsEnabled(kEnableFullscreenAppList);
+  if (FIRST) {
+    FIRST = false;
+    LOG(ERROR) << "************ " << b;
+    base::debug::StackTrace().Print();
+  }
+
+  return b;
 }
 
 bool IsTouchFriendlySearchResultsPageEnabled() {
