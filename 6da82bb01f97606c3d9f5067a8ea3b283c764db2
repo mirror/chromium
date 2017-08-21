@@ -135,6 +135,30 @@
     },
     {
       "key": {
+        "uuid": "9f00f71e_0ba01096",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-21T06:44:25Z",
+      "side": 1,
+      "message": "Ah, I preferred destructing old roots before |callback| is invoked.\n\nGenerally speaking, when we call a callback in an object X (in this case ArcDocumentsProviderRootMap object), the callback may call into X\u0027s methods to alter its state. To make it easier to reason about what happens in this case, whenever possible, I prefer doing minimal amount of things after calling the callback. Destructing old roots is not a trivial operation, so I recommend it before invoking the callback.",
+      "parentUuid": "004146f8_7b750c9a",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 7
+      },
+      "revId": "6da82bb01f97606c3d9f5067a8ea3b283c764db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ad53fc2_d7052505",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h",
         "patchSetId": 17
