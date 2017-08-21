@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ddfb92f_2bc4cc4d",
+        "filename": "extensions/common/features/simple_feature_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T23:10:04Z",
+      "side": 1,
+      "message": "This test calls these methods with a bunch of random values; I\u0027d like to go in and clean them all up to use some kind of default instead in a separate CL.",
+      "revId": "3ab92627c125b5647166feb45eb047ec1cbe7680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79f806d9_266c0f83",
+        "filename": "extensions/common/features/simple_feature_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T23:10:04Z",
+      "side": 1,
+      "message": "Fun fact: this used to fail, because IsAvailableToEnvironment() actually just called IsAvailableToManifest with a bunch of invalid values, which weren\u0027t allowed by this feature. :/",
+      "revId": "3ab92627c125b5647166feb45eb047ec1cbe7680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
