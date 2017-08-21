@@ -285,6 +285,42 @@ class ResourceSchedulerTest : public testing::Test {
     scoped_feature_list->InitWithFeatureList(std::move(feature_list));
   }
 
+  void InitializeTwoEnabledExperiments(
+      base::test::ScopedFeatureList* scoped_feature_list,
+      const char* experiment_name_1,
+      const char* experiment_name_2,
+      const std::map<std::string, std::string>& params_1,
+      const std::map<std::string, std::string>& params_2) {
+    base::FieldTrialParamAssociator::GetInstance()->ClearAllParamsForTesting();
+    const std::string kTrialName1 =
+        std::string("TrialName") + std::string(experiment_name_1);
+    const std::string kTrialName2 =
+        std::string("TrialName") + std::string(experiment_name_2);
+    const char kGroupName[] = "GroupName";
+
+    ASSERT_TRUE(
+        base::AssociateFieldTrialParams(kTrialName1, kGroupName, params_1));
+    base::FieldTrial* field_trial_1 =
+        base::FieldTrialList::CreateFieldTrial(kTrialName1, kGroupName);
+    ASSERT_TRUE(field_trial_1);
+
+    ASSERT_TRUE(
+        base::AssociateFieldTrialParams(kTrialName2, kGroupName, params_2));
+    base::FieldTrial* field_trial_2 =
+        base::FieldTrialList::CreateFieldTrial(kTrialName2, kGroupName);
+    ASSERT_TRUE(field_trial_2);
+
+    std::unique_ptr<base::FeatureList> feature_list(
+        base::MakeUnique<base::FeatureList>());
+    feature_list->RegisterFieldTrialOverride(
+        experiment_name_1, base::FeatureList::OVERRIDE_ENABLE_FEATURE,
+        field_trial_1);
+    feature_list->RegisterFieldTrialOverride(
+        experiment_name_2, base::FeatureList::OVERRIDE_ENABLE_FEATURE,
+        field_trial_2);
+    scoped_feature_list->InitWithFeatureList(std::move(feature_list));
+  }
+
   void RequestLimitOverrideConfigTestHelper(bool experiment_status) {
     base::test::ScopedFeatureList scoped_feature_list;
     InitializeMaxDelayableRequestsExperiment(&scoped_feature_list,
@@ -311,26 +347,27 @@ class ResourceSchedulerTest : public testing::Test {
     // Throw in one high priority request to ensure that it does not matter once
     // a body exists.
     std::unique_ptr<TestRequest> high2(
-        NewRequest("http://host/high2", net::HIGHEST));
+        NewRequest("http://hosthigh/high2", net::HIGHEST));
     EXPECT_TRUE(high2->started());
 
     // Should match the configuration set by
     // |InitializeMaxDelayableRequestsExperiment|
-    const int kOverriddenNumRequests = 2;
+    const int kOverriddenNumRequests = 5;
 
     std::vector<std::unique_ptr<TestRequest>> lows_singlehost;
     // Queue the maximum number of delayable requests that should be started
     // before the resource scheduler starts throttling delayable requests.
     for (int i = 0; i < kOverriddenNumRequests; ++i) {
-      std::string url = "http://host/low" + base::IntToString(i);
+      std::string url = "http://hostlow" + base::IntToString(i) + "/low" +
+                        base::IntToString(i);
       lows_singlehost.push_back(NewRequest(url.c_str(), net::LOWEST));
       EXPECT_TRUE(lows_singlehost[i]->started());
     }
 
     std::unique_ptr<TestRequest> second_last_singlehost(
-        NewRequest("http://host/s_last", net::LOWEST));
+        NewRequest("http://hostlow/s_last", net::LOWEST));
     std::unique_ptr<TestRequest> last_singlehost(
-        NewRequest("http://host/last", net::LOWEST));
+        NewRequest("http://hostlow/last", net::LOWEST));
 
     if (experiment_status) {
       // Experiment enabled, hence requests should be limited.
@@ -355,6 +392,7 @@ class ResourceSchedulerTest : public testing::Test {
       EXPECT_TRUE(second_last_singlehost->started());
       EXPECT_TRUE(last_singlehost->started());
     }
+    base::FieldTrialParamAssociator::GetInstance()->ClearAllParamsForTesting();
   }
 
   void InitializeMaxDelayableRequestsExperiment(
@@ -363,9 +401,9 @@ class ResourceSchedulerTest : public testing::Test {
     std::map<std::string, std::string> params;
     params["MaxEffectiveConnectionType"] = "2G";
     params["MaxBDPKbits1"] = "130";
-    params["MaxDelayableRequests1"] = "2";
+    params["MaxDelayableRequests1"] = "5";
     params["MaxBDPKbits2"] = "160";
-    params["MaxDelayableRequests2"] = "4";
+    params["MaxDelayableRequests2"] = "7";
     InitializeExperiment(scoped_feature_list, enabled,
                          "MaxDelayableRequestsNetworkOverride", params);
   }
@@ -1368,7 +1406,7 @@ TEST_F(ResourceSchedulerTest, RequestLimitOverrideFixedForPageLoad) {
 
   // Should be based on the value set by
   // |InitializeMaxDelayableRequestsExperiment| for the given range.
-  const int kOverriddenNumRequests = 2;
+  const int kOverriddenNumRequests = 5;
 
   std::vector<std::unique_ptr<TestRequest>> lows_singlehost;
   // Queue up to the overridden limit.
@@ -1426,9 +1464,9 @@ TEST_F(ResourceSchedulerTest, RequestLimitReducedAcrossPageLoads) {
   EXPECT_TRUE(high->started());
 
   // The number of delayable requests allowed for the first page load.
-  const int kNumDelayableHigh = 4;
+  const int kNumDelayableHigh = 7;
   // The number of delayable requests allowed for the second page load.
-  const int kNumDelayableLow = 2;
+  const int kNumDelayableLow = 5;
 
   std::vector<std::unique_ptr<TestRequest>> delayable_first_page;
   // Queue up to the overridden limit.
@@ -1455,7 +1493,8 @@ TEST_F(ResourceSchedulerTest, RequestLimitReducedAcrossPageLoads) {
   EXPECT_TRUE(high->started());
 
   // Generate requests from second page. None of them should start because the
-  // new limit is 2 and there are already 4 requests in flight.
+  // new limit is |kNumDelayableLow| and there are already |kNumDelayableHigh|
+  // requests in flight.
   std::vector<std::unique_ptr<TestRequest>> delayable_second_page;
   for (int i = 0; i < kNumDelayableLow; ++i) {
     // Keep unique hostnames to prevent the per host limit from kicking in.
@@ -1465,12 +1504,13 @@ TEST_F(ResourceSchedulerTest, RequestLimitReducedAcrossPageLoads) {
   }
 
   // Finish 2 requests from first page load.
-  for (int i = 0; i < kNumDelayableLow; ++i) {
+  for (int i = 0; i < kNumDelayableHigh - kNumDelayableLow; ++i) {
     delayable_first_page.pop_back();
   }
   base::RunLoop().RunUntilIdle();
 
-  // Nothing should start because there are already 2 requests in flight.
+  // Nothing should start because there are already |kNumDelayableLow| requests
+  // in flight.
   for (int i = 0; i < kNumDelayableLow; ++i) {
     EXPECT_FALSE(delayable_second_page[i]->started());
   }
@@ -1710,6 +1750,71 @@ TEST_F(ResourceSchedulerTest, NumDelayableAtStartOfNonDelayableUMA) {
   histogram_tester->ExpectUniqueSample(
       "ResourceScheduler.NumDelayableRequestsInFlightAtStart.NonDelayable", 2,
       1);
+}
+
+// Test that a delayable request is blocked only when the number of in-flight
+// requests exceed kMinInFlightRequestsBlockingDelayableRequestsPerClient.
+TEST_F(ResourceSchedulerTest, TooFewRequestsInFlight) {
+  network_quality_estimator_.set_bandwidth_delay_product_kbits(120);
+  network_quality_estimator_.set_effective_connection_type(
+      net::EFFECTIVE_CONNECTION_TYPE_2G);
+
+  // Must remain in sync with the .cc file.
+  static const size_t kMinInFlightRequestsBlockingDelayableRequestsPerClient =
+      4;
+
+  base::test::ScopedFeatureList scoped_feature_list;
+  std::map<std::string, std::string> params_1;
+  params_1["MaxEffectiveConnectionType"] = "2G";
+  params_1["MaxBDPKbits1"] = "1300";
+  params_1["MaxDelayableRequests1"] = "5";
+
+  double non_delayable_weight = 3.0;
+  std::map<std::string, std::string> params_2;
+  params_2["MaxEffectiveConnectionType"] = "2G";
+  params_2["NonDelayableWeight"] = base::DoubleToString(non_delayable_weight);
+
+  InitializeTwoEnabledExperiments(
+      &scoped_feature_list, "MaxDelayableRequestsNetworkOverride",
+      "NonDelayableThrottlesDelayable", params_1, params_2);
+
+  InitializeScheduler();
+  scheduler()->OnNavigate(kChildId, kRouteId);
+  // Limit will only trigger after the page has a body.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+
+  // Start one non-delayable request.
+  std::vector<std::unique_ptr<TestRequest>> non_delayable_requests;
+  for (int i = 0; i < 2; ++i) {
+    non_delayable_requests.push_back(NewRequest(
+        base::StringPrintf("http://host%d/medium", i).c_str(), net::MEDIUM));
+    ASSERT_TRUE(non_delayable_requests.back()->started());
+  }
+  // Verify that the number of further allowed delayable requests is 0.
+  ASSERT_GE(0, 5 - 2 * 3);
+  ASSERT_LT(0u, kMinInFlightRequestsBlockingDelayableRequestsPerClient -
+                    non_delayable_requests.size());
+
+  // Start at least one more delayable request. It should start since the count
+  // of in-flight requests is below
+  // kMinInFlightRequestsBlockingDelayableRequestsPerClient.
+  std::vector<std::unique_ptr<TestRequest>> delayable_requests;
+  for (size_t i = 0;
+       i < kMinInFlightRequestsBlockingDelayableRequestsPerClient -
+               non_delayable_requests.size();
+       ++i) {
+    std::string url = "http://host" + base::IntToString(i) + "/low";
+    delayable_requests.push_back(NewRequest(url.c_str(), net::LOWEST));
+    EXPECT_TRUE(delayable_requests.back()->started());
+  }
+  // The next delayable request should not start since the count
+  // of in-flight requests is now
+  // kMinInFlightRequestsBlockingDelayableRequestsPerClient.
+  ASSERT_EQ(kMinInFlightRequestsBlockingDelayableRequestsPerClient,
+            non_delayable_requests.size() + delayable_requests.size());
+  std::unique_ptr<TestRequest> last_low(
+      NewRequest("http://lasthost/low", net::LOWEST));
+  EXPECT_FALSE(last_low->started());
 }
 
 }  // unnamed namespace

@@ -146,6 +146,11 @@ static const net::RequestPriority
 // requests should be blocked.
 static const size_t kInFlightNonDelayableRequestCountPerClientThreshold = 1;
 
+// The minimum number of requests allowed in-flight across all hosts before a
+// delayable request is throttled. The limit applies only when not in the
+// layout-blocking phase of loading.
+static const size_t kMinInFlightRequestsBlockingDelayableRequestsPerClient = 4;
+
 struct ResourceScheduler::RequestPriorityParams {
   RequestPriorityParams()
     : priority(net::DEFAULT_PRIORITY),
@@ -814,8 +819,16 @@ class ResourceScheduler::Client {
         resource_scheduler_->non_delayable_throttles_delayable_experiment_
             .GetCurrentNonDelayableWeight(network_quality_estimator_) *
         (in_flight_requests_.size() - in_flight_delayable_count_));
-    if (in_flight_delayable_count_ + num_non_delayable_requests_weighted >=
-        max_delayable_requests_) {
+
+    // Throttle delayable requests only when the count of in-flight requests
+    // exceeds kMinInFlightRequestsBlockingDelayableRequestsPerClient. This
+    // ensures that the delayable requests are not blocked when less than
+    // kMinInFlightRequestsBlockingDelayableRequestsPerClient hanging requests
+    // are in-flight.
+    if ((in_flight_delayable_count_ + num_non_delayable_requests_weighted >=
+         max_delayable_requests_) &&
+        (in_flight_requests_.size() >=
+         kMinInFlightRequestsBlockingDelayableRequestsPerClient)) {
       return DO_NOT_START_REQUEST_AND_STOP_SEARCHING;
     }
 
