@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33e47c1f_d8a3ecd2",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-21T13:50:16Z",
+      "side": 1,
+      "message": "nit: IIRC, bashi@ prefer moving this code out of idl_definitions.py.\nMaybe better to add a TODO comment.",
+      "revId": "d399842e56b64b2ae6739478e541a9b13e0eabcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a85aaf21_934a6462",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-21T13:50:16Z",
+      "side": 1,
+      "message": "nit: Prefer fitting in 80 columns if possible.",
+      "revId": "d399842e56b64b2ae6739478e541a9b13e0eabcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
