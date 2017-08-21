@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d2e9addb_20d00539",
+        "filename": "third_party/WebKit/Source/core/dom/NamedNodeMap.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-21T15:51:25Z",
+      "side": 1,
+      "message": "Yeah, but is there a way not to? I\u0027m assuming we can\u0027t cache these values unless we implement some code to properly invalidate/revalidate it.",
+      "parentUuid": "5191983e_1048c8c7",
+      "revId": "6189bae5ecf843c7708990812af76eeeba0a1a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d623a29c_bfc41933",
         "filename": "third_party/WebKit/Source/core/html/HTMLAllCollection.idl",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-21T15:43:15Z",
       "side": 1,
       "message": "Won\u0027t this change a web-exposed behavior? The named getter doesn\u0027t have [NotEnumerable].",
+      "revId": "6189bae5ecf843c7708990812af76eeeba0a1a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39cafb1f_a2e0524e",
+        "filename": "third_party/WebKit/Source/core/html/HTMLAllCollection.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-21T15:51:25Z",
+      "side": 1,
+      "message": "It will, though both Gecko and WebKit already do this (I haven\u0027t tested Edge yet). Do you think this (and HTMLCollection) needs an I2I?",
+      "parentUuid": "d623a29c_bfc41933",
       "revId": "6189bae5ecf843c7708990812af76eeeba0a1a4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
