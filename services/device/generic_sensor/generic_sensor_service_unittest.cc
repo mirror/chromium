@@ -221,6 +221,8 @@ class GenericSensorServiceTest : public DeviceServiceTestBase {
 
   void SetUp() override {
     scoped_feature_list_.InitAndEnableFeature(features::kGenericSensor);
+    scoped_feature_list_.InitAndEnableFeature(
+        features::kGenericSensorExtraClasses);
     DeviceServiceTestBase::SetUp();
     io_thread_task_runner_->PostTask(
         FROM_HERE, base::BindOnce(&GenericSensorServiceTest::SetUpOnIOThread,
