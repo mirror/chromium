@@ -178,6 +178,10 @@ class LocationBarView : public LocationBar,
   // in the toolbar in full keyboard accessibility mode.
   virtual void SelectAll();
 
+  SelectedKeywordView* selected_keyword_view() {
+    return selected_keyword_view_;
+  }
+
   LocationIconView* location_icon_view() { return location_icon_view_; }
 
   // Where InfoBar arrows should point. The point will be returned in the

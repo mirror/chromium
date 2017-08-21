@@ -212,12 +212,13 @@ void OmniboxAPI::OnExtensionLoaded(content::BrowserContext* browser_context,
   if (!keyword.empty()) {
     // Load the omnibox icon so it will be ready to display in the URL bar.
     omnibox_icon_manager_.LoadIcon(profile_, extension);
-
     if (url_service_) {
       url_service_->Load();
       if (url_service_->loaded()) {
+        // Per crbug.com/628649, when an extension specifies a keyword, register
+        // its short name as the value for its keyword.
         url_service_->RegisterOmniboxKeyword(
-            extension->id(), extension->name(), keyword,
+            extension->id(), extension->short_name(), keyword,
             GetTemplateURLStringForExtension(extension->id()),
             ExtensionPrefs::Get(profile_)->GetInstallTime(extension->id()));
       } else {
@@ -249,7 +250,9 @@ void OmniboxAPI::OnTemplateURLsLoaded() {
   template_url_sub_.reset();
   for (const auto* i : pending_extensions_) {
     url_service_->RegisterOmniboxKeyword(
-        i->id(), i->name(), OmniboxInfo::GetKeyword(i),
+        // Per crbug.com/628649, when an extension specifies a keyword, register
+        // its short name as the value for its keyword.
+        i->id(), i->short_name(), OmniboxInfo::GetKeyword(i),
         GetTemplateURLStringForExtension(i->id()),
         ExtensionPrefs::Get(profile_)->GetInstallTime(i->id()));
   }
