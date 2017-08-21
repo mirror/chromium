@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cd4ac27_4017a715",
+        "filename": "build/linux/bin/eu-strip",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-21T06:00:19Z",
+      "side": 1,
+      "message": "Added unexpectedly?",
+      "revId": "f1b0f42989baa42174a50897c7fe7b481671ba06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aca4e0e_feb3ac23",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-header-lowercase.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-21T06:00:19Z",
+      "side": 1,
+      "message": "use raw_headers on request. request.headers is a case in-sensitive dictionary wrapper.\n\nsee https://github.com/w3c/web-platform-tests/blob/master/tools/wptserve/wptserve/request.py",
+      "revId": "f1b0f42989baa42174a50897c7fe7b481671ba06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
