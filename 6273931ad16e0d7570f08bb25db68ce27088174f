@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "a72208a9_3644f04c",
+        "filename": "ui/app_list/views/folder_header_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-08-21T23:13:50Z",
+      "side": 1,
+      "message": "Removed the code for changing folder name in the data model when it is elided.",
+      "parentUuid": "c0eab8e2_8486ec8c",
+      "revId": "6273931ad16e0d7570f08bb25db68ce27088174f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb033629_9f5be7fd",
         "filename": "ui/app_list/views/folder_header_view.cc",
         "patchSetId": 2
@@ -195,6 +213,24 @@
       "side": 1,
       "message": "I choose to make the folder name in the data model the same as the one displayed see my comment before at line 129.",
       "parentUuid": "b511091b_bd683c57",
+      "revId": "6273931ad16e0d7570f08bb25db68ce27088174f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62f2675_b809e285",
+        "filename": "ui/app_list/views/folder_header_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-08-21T23:13:50Z",
+      "side": 1,
+      "message": "Set the folder name in data model as the raw data.",
+      "parentUuid": "1c770f06_3e1d09ef",
       "revId": "6273931ad16e0d7570f08bb25db68ce27088174f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
