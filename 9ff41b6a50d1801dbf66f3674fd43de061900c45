@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a673f593_1331f64a",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_mediator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-21T09:35:51Z",
+      "side": 1,
+      "message": "// Reset to NO after actual reload.\n\nWe usually name this kind of flags needsReload.",
+      "range": {
+        "startLine": 61,
+        "startChar": 21,
+        "endLine": 61,
+        "endChar": 28
+      },
+      "revId": "9ff41b6a50d1801dbf66f3674fd43de061900c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb457cc7_23a4e7f1",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_data_sink.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-21T09:35:51Z",
+      "side": 1,
+      "message": "what happens if |forceReload| is NO? Data is ignored?",
+      "range": {
+        "startLine": 17,
+        "startChar": 50,
+        "endLine": 17,
+        "endChar": 57
+      },
+      "revId": "9ff41b6a50d1801dbf66f3674fd43de061900c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
