@@ -70,6 +70,7 @@ constants_source_path = "$target_gen_dir/policy_constants.cc"
 protobuf_decoder_path = "$target_gen_dir/cloud_policy_generated.cc"
 app_restrictions_path = "$target_gen_dir/app_restrictions.xml"
 risk_tag_header_path = "$target_gen_dir/risk_tag.h"
+off_hours_cleaner_path = "$target_gen_dir/device_off_hours_cleaner.cc"
 
 action("cloud_policy_code_generate") {
   script = "tools/generate_policy_source.py"
@@ -281,10 +282,33 @@ proto_library("chrome_settings_proto_generated_compile_proto") {
   ]
 }
 
+action("device_off_hours_cleaner_generate") {
+  script = "tools/off_hours_generator.py"
+  google_protobuf_path = "//third_party/protobuf/python"
+  pyproto_path = "$root_build_dir/pyproto"
+  pb2_path = "$root_build_dir/pyproto/chrome/browser/chromeos/policy/proto"
+
+  outputs = [
+    off_hours_cleaner_path,
+  ]
+
+  args = [
+    rebase_path(off_hours_cleaner_path),
+    rebase_path(google_protobuf_path),
+    rebase_path(pyproto_path),
+    rebase_path(pb2_path),
+  ]
+
+  deps = [
+    "//chrome/browser/chromeos:device_policy_proto",
+  ]
+}
+
 static_library("generated") {
   sources = [
     constants_header_path,
     constants_source_path,
+    off_hours_cleaner_path,
     protobuf_decoder_path,
     risk_tag_header_path,
   ]
@@ -293,8 +317,14 @@ static_library("generated") {
   public_deps = [
     ":cloud_policy_code_generate",
     ":cloud_policy_proto_generated_compile",
+    ":device_off_hours_cleaner_generate",
     "//base",
     "//third_party/protobuf:protobuf_lite",
+  ]
+
+  deps = [
+    "//skia",
+    "//third_party/icu",
   ]
 }
 
