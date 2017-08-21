@@ -78,6 +78,9 @@ SubresourceFilterSafeBrowsingActivationThrottle::
       ActivationList::SOCIAL_ENG_ADS_INTERSTITIAL);
   RecordRedirectChainMatchPatternForList(ActivationList::PHISHING_INTERSTITIAL);
   RecordRedirectChainMatchPatternForList(ActivationList::SUBRESOURCE_FILTER);
+  RecordRedirectChainMatchPatternForList(ActivationList::BETTER_ADS);
+  RecordRedirectChainMatchPatternForList(ActivationList::ABUSIVE_ADS);
+  RecordRedirectChainMatchPatternForList(ActivationList::ALL_ADS);
 }
 
 bool SubresourceFilterSafeBrowsingActivationThrottle::NavigationIsPageReload(
@@ -322,6 +325,15 @@ void SubresourceFilterSafeBrowsingActivationThrottle::
     case ActivationList::SUBRESOURCE_FILTER:
       REPORT_REDIRECT_PATTERN_FOR_SUFFIX("SubresourceFilterOnly", is_matched,
                                          chain_size);
+      break;
+    case ActivationList::BETTER_ADS:
+      REPORT_REDIRECT_PATTERN_FOR_SUFFIX("BetterAds", is_matched, chain_size);
+      break;
+    case ActivationList::ABUSIVE_ADS:
+      REPORT_REDIRECT_PATTERN_FOR_SUFFIX("AbusiveAds", is_matched, chain_size);
+      break;
+    case ActivationList::ALL_ADS:
+      REPORT_REDIRECT_PATTERN_FOR_SUFFIX("AllAds", is_matched, chain_size);
       break;
     default:
       NOTREACHED();

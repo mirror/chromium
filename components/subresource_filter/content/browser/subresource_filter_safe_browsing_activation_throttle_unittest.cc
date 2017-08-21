@@ -120,6 +120,12 @@ std::string GetSuffixForList(const ActivationList& type) {
       return "PhishingInterstitial";
     case ActivationList::SUBRESOURCE_FILTER:
       return "SubresourceFilterOnly";
+    case ActivationList::BETTER_ADS:
+      return "BetterAds";
+    case ActivationList::ABUSIVE_ADS:
+      return "AbusiveAds";
+    case ActivationList::ALL_ADS:
+      return "AllAds";
     case ActivationList::NONE:
       return std::string();
   }
@@ -134,7 +140,7 @@ struct ActivationListTestData {
 };
 
 const ActivationListTestData kActivationListTestData[] = {
-    {subresource_filter::kActivationListSocialEngineeringAdsInterstitial,
+    {kActivationListSocialEngineeringAdsInterstitial,
      ActivationList::SOCIAL_ENG_ADS_INTERSTITIAL,
      safe_browsing::SB_THREAT_TYPE_URL_PHISHING,
      safe_browsing::ThreatPatternType::SOCIAL_ENGINEERING_ADS},
@@ -869,6 +875,9 @@ TEST_P(SubresourceFilterSafeBrowsingActivationThrottleParamTest,
                         tester());
   ExpectSampleForSuffix("PhishingInterstitial", std::string(), tester());
   ExpectSampleForSuffix("SubresourceFilterOnly", std::string(), tester());
+  ExpectSampleForSuffix("BetterAds", std::string(), tester());
+  ExpectSampleForSuffix("AbusiveAds", std::string(), tester());
+  ExpectSampleForSuffix("AllAds", std::string(), tester());
 
   tester().ExpectTotalCount(kSafeBrowsingNavigationDelay, 1);
   tester().ExpectTotalCount(kSafeBrowsingNavigationDelayNoSpeculation, 1);

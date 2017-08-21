@@ -14,7 +14,16 @@ enum class ActivationList {
   SOCIAL_ENG_ADS_INTERSTITIAL,
   PHISHING_INTERSTITIAL,
   SUBRESOURCE_FILTER,
-  LAST = SUBRESOURCE_FILTER,
+
+  // Site violates the better ads standard.
+  BETTER_ADS,
+
+  // Site shows abusive ads.
+  ABUSIVE_ADS,
+
+  // Site violates the better ads standard and shows abusive ads.
+  ALL_ADS,
+  LAST = ALL_ADS
 };
 
 // For logging use only.
