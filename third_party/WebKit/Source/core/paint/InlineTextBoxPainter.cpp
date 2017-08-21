@@ -396,8 +396,8 @@ void InlineTextBoxPainter::Paint(const PaintInfo& paint_info,
   const SimpleFontData* font_data = font.PrimaryFont();
   DCHECK(font_data);
 
-  int ascent = font_data ? font_data->GetFontMetrics().Ascent() : 0;
-  LayoutPoint text_origin(box_origin.X(), box_origin.Y() + ascent);
+  float ascent = font_data ? font_data->GetFontMetrics().Ascent() : 0;
+  LayoutPoint text_origin(box_origin.X(), LayoutUnit(box_origin.Y() + ascent));
 
   // 1. Paint backgrounds behind text if needed. Examples of such backgrounds
   // include selection and composition highlights.
@@ -1152,7 +1152,8 @@ void InlineTextBoxPainter::PaintTextMatchMarkerForeground(
   LayoutRect box_rect(box_origin, LayoutSize(inline_text_box_.LogicalWidth(),
                                              inline_text_box_.LogicalHeight()));
   LayoutPoint text_origin(
-      box_origin.X(), box_origin.Y() + font_data->GetFontMetrics().Ascent());
+      box_origin.X(),
+      LayoutUnit(box_origin.Y() + font_data->GetFontMetrics().FloatAscent()));
   TextPainter text_painter(paint_info.context, font, run, text_origin, box_rect,
                            inline_text_box_.IsHorizontal());
 
