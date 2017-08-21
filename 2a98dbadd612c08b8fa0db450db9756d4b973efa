@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "926bc9cb_8b107485",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-08-21T18:17:12Z",
+      "side": 1,
+      "message": "I haven\u0027t found the exact line where this problem is caused but from some logging I believe the issue is in |LayoutObject::PositionForPoint()| (it is called from |FrameSelection::Contains()|). I\u0027ve been able to reliably reproduce this bug by setting line-height to something small like 0.7. This causes the lines of text to overlap and causes the selection rects to overlap. Since two selection rects overlap one |LayoutPoint| could correspond to two different editing |Position|\u0027s. It seems like right now the bottom |Position| is chosen which is what causes the linked bug. I\u0027ll admit that my solution is a bit of a hack but this is a stable blocker and the branch cut is in 2 weeks. I can\u0027t think of a simple solution.",
+      "parentUuid": "9f60d6d7_61a695fc",
+      "range": {
+        "startLine": 21,
+        "startChar": 48,
+        "endLine": 22,
+        "endChar": 68
+      },
+      "revId": "2a98dbadd612c08b8fa0db450db9756d4b973efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "622fb9a1_461c81c6",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-16T14:28:39Z",
       "side": 1,
       "message": "Is this out of date? It seems it\u0027s now fixed by taking the mid point of the y coordinates?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "2a98dbadd612c08b8fa0db450db9756d4b973efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "602aa0e6_9bcc6be7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-08-21T18:17:12Z",
+      "side": 1,
+      "message": "It is out of date. I just fixed this.",
+      "parentUuid": "622fb9a1_461c81c6",
       "range": {
         "startLine": 27,
         "startChar": 0,
