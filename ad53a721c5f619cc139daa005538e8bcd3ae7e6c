@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20083e1b_d347a804",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-21T10:06:19Z",
+      "side": 1,
+      "message": "nit: Please clarify (either in the title or in the description) that it\u0027s a migration from the FILE thread.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 47
+      },
+      "revId": "ad53a721c5f619cc139daa005538e8bcd3ae7e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f0d68f_6917e519",
+        "filename": "components/policy/core/common/cloud/cloud_policy_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-21T10:06:19Z",
+      "side": 1,
+      "message": "nit: Is this member actually needed? It\u0027s only used in one method - CloudPolicyManager::CreateComponentCloudPolicyService() - and for passing it to the constructed objects, therefore it should be fine to just create it via CreateSequencedTaskRunnerWithTraits() in that method.",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 64
+      },
+      "revId": "ad53a721c5f619cc139daa005538e8bcd3ae7e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

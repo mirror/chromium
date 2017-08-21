@@ -498,6 +498,30 @@
     },
     {
       "key": {
+        "uuid": "37334bdb_c339b3f4",
+        "filename": "components/policy/core/common/cloud/cloud_policy_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-21T10:06:19Z",
+      "side": 1,
+      "message": "FWIW, we still have a bunch of BACKGROUND tasks in our /policy/ code. We\u0027ll have to clean this up to something more consistent some day... :)",
+      "parentUuid": "d7ebce4a_1e84b1f1",
+      "range": {
+        "startLine": 40,
+        "startChar": 49,
+        "endLine": 40,
+        "endChar": 59
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a981c2e_80077dee",
         "filename": "components/policy/core/common/cloud/cloud_policy_manager.cc",
         "patchSetId": 11
@@ -533,6 +557,30 @@
       "side": 1,
       "message": "True, removed.",
       "parentUuid": "2a981c2e_80077dee",
+      "range": {
+        "startLine": 140,
+        "startChar": 5,
+        "endLine": 140,
+        "endChar": 9
+      },
+      "revId": "cece9e10fe3ae0753f71a30a93e8fb0aa8df9db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bb78e19d_142a13f1",
+        "filename": "components/policy/core/common/cloud/cloud_policy_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-21T10:06:19Z",
+      "side": 1,
+      "message": "I\u0027m guessing, what the TODO means now, in the new terms, is making ComponentCloudPolicyStore and other implementation details of ComponentCloudPolicyService, wherever possible, not using the blocking task runner. Because the real file operations are only done by ResourceCache, IIRC, and most of the rest doesn\u0027t need the blocking behavior.\n\nThe TODO may also be considered as a heads-up for that ComponentCloudPolicyService\u0027s |backend_task_runner| and |cache| must live on the same task runner.\n\nSo, if you agree with above, then I\u0027d suggest keeping the TODO, but maybe rephrasing it to the today\u0027s realities. And probably reassigning from joaodasilva@ :) Feel free to assign to me.",
+      "parentUuid": "f4a803a5_399f6a7a",
       "range": {
         "startLine": 140,
         "startChar": 5,
