@@ -87,6 +87,24 @@
       "revId": "e25f9064f255e8eae81d5336d70a64be3f6ff47a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1be5713_130c27d8",
+        "filename": "chrome/browser/resources/settings/people_page/change_picture.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-21T20:33:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04b53176_39b9e385",
+      "revId": "e25f9064f255e8eae81d5336d70a64be3f6ff47a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
