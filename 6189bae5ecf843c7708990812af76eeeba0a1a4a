@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "2c1627f6_d49b8ef7",
+        "filename": "third_party/WebKit/Source/core/html/HTMLAllCollection.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-21T15:58:40Z",
+      "side": 1,
+      "message": "At least we need to get an approval from API owners.\n\nWould you list all web-exposed changes this CL may cause?",
+      "parentUuid": "39cafb1f_a2e0524e",
+      "revId": "6189bae5ecf843c7708990812af76eeeba0a1a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e0b599e_d3b86fa5",
         "filename": "third_party/WebKit/Source/core/html/HTMLCollection.idl",
         "patchSetId": 8
