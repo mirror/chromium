@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e712eb65_fb7949b2",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-21T01:55:06Z",
+      "side": 1,
+      "message": "Hm, so for async case such requests just never return? Hadn\u0027t thought that the request could be dropped in the browser. Renderer is short-lived so I assume that wouldn\u0027t cause sticky leak etc...",
+      "revId": "b5b708fc25bba95a46c0abf6044862f8c2c3f0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
