@@ -11,8 +11,6 @@
 
 namespace cc {
 
-class LayerTreeImpl;
-
 class LayerTreeMutatorClient {
  public:
   // This is necessary because it forces an impl frame. We couldn't, for
@@ -22,12 +20,28 @@ class LayerTreeMutatorClient {
   virtual void SetNeedsMutate() = 0;
 };
 
+struct AnimatorInputState {
+ public:
+  int animation_player_id_ = 0;
+  base::TimeTicks current_time_;
+};
+
+using AnimatorsInputState = std::vector<AnimatorInputState>;
+
+// struct AnimatorOutputState {
+//   int animation_player_id_ = 0;
+//   base::TimeTicks local_time_;
+// }
+
 class CC_EXPORT LayerTreeMutator {
  public:
   virtual ~LayerTreeMutator() {}
 
   // Returns true if the mutator should be rescheduled.
-  virtual bool Mutate(base::TimeTicks now, LayerTreeImpl* tree_impl) = 0;
+  // TODO(majidvp): get rid of |now| since each animator now receives its own
+  // current time.
+  virtual bool Mutate(base::TimeTicks now,
+                      std::unique_ptr<AnimatorsInputState>) = 0;
   virtual void SetClient(LayerTreeMutatorClient* client) = 0;
 
   // Returns a callback which is responsible for applying layer tree mutations
