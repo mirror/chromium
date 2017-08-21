@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e211917a_d8206a14",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-21T18:27:54Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "31a8539e_18d6c28e",
+      "range": {
+        "startLine": 402,
+        "startChar": 54,
+        "endLine": 402,
+        "endChar": 58
+      },
+      "revId": "354c04a90f8779ddbd3cd723f975016b6e173588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8e5d3fa_cdf70f7e",
         "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "354c04a90f8779ddbd3cd723f975016b6e173588",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f96013_69a9a34a",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-21T18:27:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8e5d3fa_cdf70f7e",
+      "revId": "354c04a90f8779ddbd3cd723f975016b6e173588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
