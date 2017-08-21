@@ -542,6 +542,7 @@ public class VrShellDelegate
                     }
                 }
                 if (!activitySupportsPresentation(activity)) return;
+                if (!(activity instanceof ChromeActivity)) return;
                 swapHostActivity((ChromeActivity) activity);
                 onResume();
                 break;
