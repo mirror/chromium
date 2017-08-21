@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "650f6aca_aa4bb963",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuItemDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-21T20:38:04Z",
+      "side": 1,
+      "message": "getLastUsedProfile.getOriginalProfile to avoid incognito.",
+      "range": {
+        "startLine": 221,
+        "startChar": 56,
+        "endLine": 221,
+        "endChar": 74
+      },
+      "revId": "ca39efe3c04e138b05eac5fe0ae71354c120c874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "802ad5a9_4464c649",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-21T20:38:04Z",
+      "side": 1,
+      "message": "now we should assert for native initialization callback after this.",
+      "range": {
+        "startLine": 218,
+        "startChar": 33,
+        "endLine": 218,
+        "endChar": 48
+      },
+      "revId": "ca39efe3c04e138b05eac5fe0ae71354c120c874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
