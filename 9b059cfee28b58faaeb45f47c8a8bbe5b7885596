@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "72349726_6ec5ed70",
+        "filename": "chrome_elf/blacklist/blacklist.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-08-21T20:45:36Z",
+      "side": 1,
+      "message": "Ok, mildly cleaner imo would be to put this stuff into another pair of .h / .cc files under blacklist/.",
+      "parentUuid": "86453cb2_4560b50b",
+      "range": {
+        "startLine": 86,
+        "startChar": 72,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "9b059cfee28b58faaeb45f47c8a8bbe5b7885596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7044aa12_827b0337",
         "filename": "components/crash/content/app/crashpad.h",
         "patchSetId": 15
