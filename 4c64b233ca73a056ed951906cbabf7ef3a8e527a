@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8833bc7b_2feec539",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-21T20:46:23Z",
+      "side": 1,
+      "message": "Is it possible to split these 2 changes into two patches?\n\nThe bulk of this patch should only affect touchpad_and_wheel_scroll_latching_enabled_ but the tests have significantly changed in the non-latching case.",
+      "revId": "4c64b233ca73a056ed951906cbabf7ef3a8e527a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb203e69_d6147583",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-21T20:46:23Z",
+      "side": 1,
+      "message": "Where is this change? Is this the change in SetCurrentlyScrollingNode? If so, doesn\u0027t that affect many more cases than just PushPropertyTreesTo?",
+      "revId": "4c64b233ca73a056ed951906cbabf7ef3a8e527a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7672dbe7_a0f70e00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-21T20:46:23Z",
+      "side": 1,
+      "message": "When are scroll begin and scroll end not paired in the non-scroll-latching case? Is that something that can happen today? Can I reproduce that on a real page?\n\nIs there a reason why we don\u0027t force them to be the same always--regardless of latching?",
+      "revId": "4c64b233ca73a056ed951906cbabf7ef3a8e527a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e257808_73abff8d",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2851,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-21T20:46:23Z",
+      "side": 1,
+      "message": "Nit: should this be an else if? It\u0027s technically correct, since the previous line returns, but is there a reason touchpad_and_wheel_scroll_latching_enabled_ should be in the else if?",
+      "revId": "4c64b233ca73a056ed951906cbabf7ef3a8e527a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
