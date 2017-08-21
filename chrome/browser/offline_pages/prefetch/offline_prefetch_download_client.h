@@ -38,6 +38,8 @@ class OfflinePrefetchDownloadClient : public download::Client {
   void OnDownloadSucceeded(const std::string& guid,
                            const base::FilePath& path,
                            uint64_t size) override;
+  bool CanServiceRemoveDownloadedFile(const std::string& guid,
+                                      bool force_delete) override;
 
   PrefetchDownloader* GetPrefetchDownloader() const;
 

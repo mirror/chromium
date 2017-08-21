@@ -35,6 +35,7 @@ bool Entry::operator==(const Entry& other) const {
          state == other.state && target_file_path == other.target_file_path &&
          create_time == other.create_time &&
          completion_time == other.completion_time &&
+         last_cleanup_check_time == other.last_cleanup_check_time &&
          attempt_count == other.attempt_count &&
          traffic_annotation == other.traffic_annotation;
 }

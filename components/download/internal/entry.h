@@ -76,6 +76,10 @@ struct Entry {
   // not yet complete.
   base::Time completion_time;
 
+  // Last time when the entry was checked for cleanup, default is
+  // |completion_time|.
+  base::Time last_cleanup_check_time;
+
   // Stores the number of retries for this download.
   uint32_t attempt_count;
 

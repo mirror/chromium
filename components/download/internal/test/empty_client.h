@@ -31,6 +31,8 @@ class EmptyClient : public Client {
   void OnDownloadSucceeded(const std::string& guid,
                            const base::FilePath& path,
                            uint64_t size) override;
+  bool CanServiceRemoveDownloadedFile(const std::string& guid,
+                                      bool force_delete) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(EmptyClient);
