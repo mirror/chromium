@@ -2,21 +2,17 @@
 <head>
 <script src="../http/tests/inspector/inspector-test.js"></script>
 <script>
-
-function onload()
-{
-    testRunner.showWebInspector(JSON.stringify({ "drawer-view-closeableTabs": JSON.stringify({ sensors: true }) }));
-    runTest();
+function onload() {
+  testRunner.showWebInspector(JSON.stringify({ 'drawer-view-closeableTabs': JSON.stringify({ sensors: true }) }));
+  runTest();
 }
 
-function test()
-{
-    var drawer = UI.inspectorView._drawerTabbedLocation.tabbedPane();
-    TestRunner.addResult("Has sensors tab: " + drawer.hasTab("sensors"));
-    TestRunner.addResult("Has rendering tab: " + drawer.hasTab("rendering"));
-    TestRunner.completeTest();
+function test() {
+  var drawer = UI.inspectorView._drawerTabbedLocation.tabbedPane();
+  TestRunner.addResult('Has sensors tab: ' + drawer.hasTab('sensors'));
+  TestRunner.addResult('Has rendering tab: ' + drawer.hasTab('rendering'));
+  TestRunner.completeTest();
 }
-
 </script>
 </head>
 

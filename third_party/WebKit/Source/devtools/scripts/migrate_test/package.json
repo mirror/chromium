@@ -5,6 +5,7 @@
   "license": "SEE LICENSE IN https://chromium.googlesource.com/chromium/src/+/master/LICENSE",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "eslint": "^4.4.1",
     "mkdirp": "^0.5.1",
     "prettier": "^1.5.3",
     "recast": "^0.12.6"

@@ -1,18 +1,18 @@
-CONSOLE ERROR: line 26: Uncaught SyntaxError: Unexpected identifier
+CONSOLE ERROR: line 23: Uncaught SyntaxError: Unexpected identifier
 Tests getEventListeners() method of console command line API.
 
  
 [page] - inner -
 [page] keydown: {
 [page]     0: {
-[page]         listener: function listener1() { }
+[page]         listener: function listener1() {}
 [page]         once: false
 [page]         passive: false
 [page]         type: "keydown"
 [page]         useCapture: false
 [page]     }
 [page]     1: {
-[page]         listener: function listener2() { }
+[page]         listener: function listener2() {}
 [page]         once: false
 [page]         passive: false
 [page]         type: "keydown"
@@ -21,7 +21,7 @@ Tests getEventListeners() method of console command line API.
 [page] }
 [page] wheel: {
 [page]     0: {
-[page]         listener: function listener2() { }
+[page]         listener: function listener2() {}
 [page]         once: false
 [page]         passive: true
 [page]         type: "wheel"
@@ -31,7 +31,7 @@ Tests getEventListeners() method of console command line API.
 [page] - inner after a removal -
 [page] keydown: {
 [page]     0: {
-[page]         listener: function listener2() { }
+[page]         listener: function listener2() {}
 [page]         once: false
 [page]         passive: false
 [page]         type: "keydown"
@@ -41,7 +41,7 @@ Tests getEventListeners() method of console command line API.
 [page] - outer -
 [page] keydown: {
 [page]     0: {
-[page]         listener: function listener2() { }
+[page]         listener: function listener2() {}
 [page]         once: false
 [page]         passive: false
 [page]         type: "keydown"
@@ -50,7 +50,7 @@ Tests getEventListeners() method of console command line API.
 [page] }
 [page] keyup: {
 [page]     0: {
-[page]         listener: function listener2() { }
+[page]         listener: function listener2() {}
 [page]         once: true
 [page]         passive: false
 [page]         type: "keyup"
@@ -59,7 +59,7 @@ Tests getEventListeners() method of console command line API.
 [page] }
 [page] mousedown: {
 [page]     0: {
-[page]         listener: function listener2() { }
+[page]         listener: function listener2() {}
 [page]         once: false
 [page]         passive: false
 [page]         type: "mousedown"
@@ -68,7 +68,7 @@ Tests getEventListeners() method of console command line API.
 [page] }
 [page] mousemove: {
 [page]     0: {
-[page]         listener: function listener1() { }
+[page]         listener: function listener1() {}
 [page]         once: false
 [page]         passive: false
 [page]         type: "mousemove"
@@ -106,7 +106,7 @@ Tests getEventListeners() method of console command line API.
 [page] }
 [page] popstate: {
 [page]     0: {
-[page]         listener: function listener1() { }
+[page]         listener: function listener1() {}
 [page]         once: false
 [page]         passive: false
 [page]         type: "popstate"
