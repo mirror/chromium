@@ -7,6 +7,7 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -122,9 +123,18 @@ std::unique_ptr<base::TaskScheduler::InitParams> GetTaskSchedulerInitParams(
     return nullptr;
   }
 
+  const base::TaskScheduler::TaskPriorityAdjustment task_priority_adjustment =
+      base::ContainsKey(
+          variation_params,
+          base::JoinString({variation_param_prefix, "AllTasksUserBlocking"},
+                           ""))
+          ? base::TaskScheduler::TaskPriorityAdjustment::ALL_TASKS_USER_BLOCKING
+          : base::TaskScheduler::TaskPriorityAdjustment::NONE;
+
   return base::MakeUnique<base::TaskScheduler::InitParams>(
       *background_worker_pool_params, *background_blocking_worker_pool_params,
-      *foreground_worker_pool_params, *foreground_blocking_worker_pool_params);
+      *foreground_worker_pool_params, *foreground_blocking_worker_pool_params,
+      task_priority_adjustment);
 }
 
 #if !defined(OS_IOS)
