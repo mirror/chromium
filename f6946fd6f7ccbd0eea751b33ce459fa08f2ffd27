@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d0e2ad6_a2580d3c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-08-21T09:40:59Z",
+      "side": 1,
+      "message": "I will elaborate a bit more, but I believe the bug has all necessary context.",
+      "parentUuid": "1db34ce6_e07f9e06",
+      "revId": "f6946fd6f7ccbd0eea751b33ce459fa08f2ffd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "413b0163_902268fd",
         "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-18T15:24:51Z",
       "side": 1,
       "message": "This bug only happens when building with the iOS11 SDK?",
+      "revId": "f6946fd6f7ccbd0eea751b33ce459fa08f2ffd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e988d5f3_eed0da13",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-08-21T09:40:59Z",
+      "side": 1,
+      "message": "You\u0027re actually right. I needed this guard to use @available, but really I should\u0027ve used IsRunningOnOrLater; also the issue happens when I build with iOS 10 SDK but run on iOS 11.",
+      "parentUuid": "413b0163_902268fd",
       "revId": "f6946fd6f7ccbd0eea751b33ce459fa08f2ffd27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "f6946fd6f7ccbd0eea751b33ce459fa08f2ffd27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d93cb7a_405f2a71",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-08-21T09:40:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "81b90d7b_cc49e264",
+      "revId": "f6946fd6f7ccbd0eea751b33ce459fa08f2ffd27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
