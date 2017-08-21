@@ -27,6 +27,7 @@ class {{api_classname}} : public CSSPropertyAPI {
   {% endfor %}
 
   bool IsInterpolableProperty() const override { return {{is_interpolable}}; }
+  bool IsInheritedProperty() const override { return {{is_inherited}}; }
 };
 
 }  // namespace blink
