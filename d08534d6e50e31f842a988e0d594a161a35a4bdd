@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b80710d_122c378a",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-21T14:09:15Z",
+      "side": 1,
+      "message": "Add DCHECK(IsMainThread());\n\nOptionally you might want to add \"InMainThread\" to the function name: HasWrapperInAnyWorldInMainThread.",
+      "revId": "d08534d6e50e31f842a988e0d594a161a35a4bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503ea649_d2e0cb36",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-21T14:09:15Z",
+      "side": 1,
+      "message": "If you care about performance, you can implement Has(script_wrappable, isolate) and use it so that you don\u0027t need to create a local handle each time.  As a bonus, you don\u0027t need the v8::HandleScope above at all, I think.\n\nIf the performance doesn\u0027t matter, it\u0027s okay.",
+      "range": {
+        "startLine": 322,
+        "startChar": 23,
+        "endLine": 322,
+        "endChar": 26
+      },
+      "revId": "d08534d6e50e31f842a988e0d594a161a35a4bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
