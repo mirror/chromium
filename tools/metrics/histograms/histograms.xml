@@ -63853,22 +63853,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Renderer4.SoftwarePaintDurationMS">
-  <owner>wiltzius@chromium.org</owner>
-  <summary>
-    Time spent by WebKit painting the page, in milliseconds, when the page is
-    not GPU accelerated.
-  </summary>
-</histogram>
-
-<histogram name="Renderer4.SoftwarePaintMegapixPerSecond">
-  <owner>wiltzius@chromium.org</owner>
-  <summary>
-    WebKit paint throughput, measured in megapixels per second, when the page is
-    not GPU accelerated.
-  </summary>
-</histogram>
-
 <histogram name="Renderer4.StartToCommit" units="ms">
   <owner>wiltzius@chromium.org</owner>
   <summary>
