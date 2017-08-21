@@ -36,6 +36,31 @@ cr.define('extensions', function() {
   'use strict';
 
   /**
+   * @return {!PageState} The page that should be displayed for the current
+   *     URL.
+   */
+  function getCurrentPage() {
+    const search = new URLSearchParams(location.search);
+    let id = search.get('id');
+    if (id)
+      return {page: Page.DETAILS, extensionId: id};
+    id = search.get('options');
+    if (id)
+      return {page: Page.DETAILS, extensionId: id, subpage: Dialog.OPTIONS};
+    id = search.get('errors');
+    if (id)
+      return {page: Page.ERRORS, extensionId: id};
+
+    if (location.pathname == '/shortcuts')
+      return {page: Page.SHORTCUTS};
+
+    if (location.pathname == '/apps')
+      return {page: Page.LIST, type: extensions.ShowingType.APPS};
+
+    return {page: Page.LIST, type: extensions.ShowingType.EXTENSIONS};
+  }
+
+  /**
    * A helper object to manage in-page navigations. Since the extensions page
    * needs to support different urls for different subpages (like the details
    * page), we use this object to manage the history and url conversions.
@@ -47,38 +72,9 @@ cr.define('extensions', function() {
      *     forward in history; called with the new active page.
      */
     constructor(onHistoryChange) {
-      this.onHistoryChange_ = onHistoryChange;
-      window.addEventListener('popstate', this.onPopState_.bind(this));
-    }
-
-    /** @private */
-    onPopState_() {
-      this.onHistoryChange_(this.getCurrentPage());
-    }
-
-    /**
-     * @return {!PageState} The page that should be displayed for the current
-     *     URL.
-     */
-    getCurrentPage() {
-      const search = new URLSearchParams(location.search);
-      let id = search.get('id');
-      if (id)
-        return {page: Page.DETAILS, extensionId: id};
-      id = search.get('options');
-      if (id)
-        return {page: Page.DETAILS, extensionId: id, subpage: Dialog.OPTIONS};
-      id = search.get('errors');
-      if (id)
-        return {page: Page.ERRORS, extensionId: id};
-
-      if (location.pathname == '/shortcuts')
-        return {page: Page.SHORTCUTS};
-
-      if (location.pathname == '/apps')
-        return {page: Page.LIST, type: extensions.ShowingType.APPS};
-
-      return {page: Page.LIST, type: extensions.ShowingType.EXTENSIONS};
+      window.addEventListener('popstate', () => {
+        onHistoryChange(getCurrentPage());
+      });
     }
 
     /**
@@ -111,7 +107,7 @@ cr.define('extensions', function() {
       }
       assert(path);
       const state = {url: path};
-      const currentPage = this.getCurrentPage();
+      const currentPage = getCurrentPage();
       const isDialogNavigation = currentPage.page == entry.page &&
           currentPage.extensionId == entry.extensionId;
       // Navigating to a dialog doesn't visually change pages; it just opens
@@ -125,5 +121,8 @@ cr.define('extensions', function() {
     }
   }
 
-  return {NavigationHelper: NavigationHelper};
+  return {
+    NavigationHelper: NavigationHelper,
+    getCurrentPage: getCurrentPage,
+  };
 });
