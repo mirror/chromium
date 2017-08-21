@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "49c3683e_03b4686f",
+        "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-21T04:47:46Z",
+      "side": 1,
+      "message": "Would the following also work?  I think this is a little more common\n\nnullptr /* provider_request */, nullptr /* host_ptr_info */\n\n(when we pass non-null values we don\u0027t spell out full type names either)",
+      "parentUuid": "390c621c_44596400",
+      "revId": "20dbfaf12ba575f0cac12149aa511fbb34aeb8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55bb0a05_1e299efe",
         "filename": "content/child/service_worker/service_worker_provider_context.h",
         "patchSetId": 5
