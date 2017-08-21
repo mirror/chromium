@@ -279,7 +279,18 @@ TEST(ScriptModuleTest, Evaluate) {
   EXPECT_EQ("bar", ToCoreString(v8::Local<v8::String>::Cast(value)));
   EXPECT_EQ(ScriptModuleState::kEvaluated,
             module.Status(scope.GetScriptState()));
-  EXPECT_FALSE(module.V8Namespace(scope.GetIsolate()).IsEmpty());
+  v8::Local<v8::Object> module_namespace =
+      v8::Local<v8::Object>::Cast(module.V8Namespace(scope.GetIsolate()));
+  EXPECT_FALSE(module_namespace.IsEmpty());
+
+  v8::Local<v8::Object> module_namespace_object =
+      v8::Local<v8::Object>::Cast(module_namespace);
+  v8::MaybeLocal<v8::Value> exported_value = module_namespace_object->Get(
+      scope.GetContext(), V8String(scope.GetIsolate(), "a"));
+  DCHECK(!exported_value.IsEmpty());
+  v8::MaybeLocal<v8::Number> exported_number =
+      exported_value.ToLocalChecked()->ToNumber(scope.GetContext());
+  EXPECT_EQ(42.0, exported_number.ToLocalChecked()->Value());
 }
 
 }  // namespace
