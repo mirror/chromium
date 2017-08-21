@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/location.h"
+#include "base/optional.h"
 #include "base/trace_event/trace_event.h"
 #include "content/browser/appcache/appcache_navigation_handle.h"
 #include "content/browser/appcache/appcache_navigation_handle_core.h"
@@ -22,6 +23,7 @@
 #include "content/public/browser/navigation_ui_data.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/stream_handle.h"
+#include "net/base/net_errors.h"
 
 namespace content {
 
@@ -107,12 +109,14 @@ void NavigationURLLoaderImpl::NotifyResponseStarted(
       ssl_status, std::move(navigation_data), request_id, is_download,
       is_stream, mojom::URLLoaderFactoryPtrInfo());
 }
-
-void NavigationURLLoaderImpl::NotifyRequestFailed(bool in_cache,
-                                                  int net_error) {
+void NavigationURLLoaderImpl::NotifyRequestFailed(
+    bool in_cache,
+    int net_error,
+    base::Optional<net::SSLInfo> ssl_info,
+    base::Optional<bool> fatal_cert_error) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  delegate_->OnRequestFailed(in_cache, net_error);
+  delegate_->OnRequestFailed(in_cache, net_error, ssl_info, fatal_cert_error);
 }
 
 void NavigationURLLoaderImpl::NotifyRequestStarted(base::TimeTicks timestamp) {
