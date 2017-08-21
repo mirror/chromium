@@ -215,6 +215,14 @@ bool ServiceWorkerNetworkProvider::IsControlledByServiceWorker() const {
   return context() && context()->controller();
 }
 
+mojom::ServiceWorkerWorkerClientRequest
+ServiceWorkerNetworkProvider::BindWorkerFetchContext() {
+  mojom::ServiceWorkerWorkerClientPtr ptr;
+  mojom::ServiceWorkerWorkerClientRequest request = mojo::MakeRequest(&ptr);
+  provider_host_->BindWorkerFetchContext(std::move(ptr));
+  return request;
+}
+
 // Creates an invalid instance (provider_id() returns
 // kInvalidServiceWorkerProviderId).
 ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider() {}
