@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6468c020_d7140ccd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/subresourceIntegrity/empty-after-revalidate-css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-21T18:00:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a55551b6_0adbedc4",
+      "revId": "2660ac54f6adad67339f0e0c0a5507d61f7c7a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a242e4f5_71bb9ea5",
         "filename": "third_party/WebKit/LayoutTests/http/tests/security/subresourceIntegrity/empty-after-revalidate-css.html",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-21T03:47:33Z",
       "side": 1,
       "message": "Optional: We usually skip \u003c/html\u003e",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 7
+      },
+      "revId": "2660ac54f6adad67339f0e0c0a5507d61f7c7a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6a7e2a_671188b8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/subresourceIntegrity/empty-after-revalidate-css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-21T18:00:04Z",
+      "side": 1,
+      "message": "Do yo mean skipping \u003c/html\u003e only?, or omitting both \u003chtml\u003e and \u003c/html\u003e?\nWhat is the reason for that?\n\nBrief statistical survey on HTMLs under LayoutTests/ (all *.html, somehow inaccurate).\n\n1. HTMLs w/ \u003chtml\u003e and \u003c/html\u003e: 25795\n2. HTMLs w/ \u003chtml\u003e and w/o \u003c/html\u003e: 863\n3. HTMLs w/o \u003chtml\u003e but w/ \u003c/html\u003e 420\n4. HTMLs w/o \u003chtml\u003e and w/o \u003c/html\u003e: 21899\n(5. HTMLs ends with \u003c/html (lacking the last \u0027\u003e\u0027 only): 12)\n\nCommands (with :\n1. find third_party/WebKit/LayoutTests/ -name \u0027*.html\u0027 | xargs grep -i -l \u0027\u003chtml\u0027 | xargs grep -i -l \u0027\u003c/html\u0027 | wc\n2. find third_party/WebKit/LayoutTests/ -name \u0027*.html\u0027 | xargs grep -i -l \u0027\u003chtml\u0027 | xargs grep -i -L \u0027\u003c/html\u0027 | wc\n3. find third_party/WebKit/LayoutTests/ -name \u0027*.html\u0027 | xargs grep -i -L \u0027\u003chtml\u0027 | xargs grep -i -l \u0027\u003c/html\u0027 | wc\n4. find third_party/WebKit/LayoutTests/ -name \u0027*.html\u0027 | xargs grep -i -L \u0027\u003chtml\u0027 | xargs grep -i -L \u0027\u003c/html\u0027 | wc\n5. find third_party/WebKit/LayoutTests/ -name \u0027*.html\u0027 | xargs grep -i -l \u0027\u003c/html\u0027 | xargs grep -i -L \u0027\u003c/html\u003e\u0027 | wc",
+      "parentUuid": "a242e4f5_71bb9ea5",
       "range": {
         "startLine": 28,
         "startChar": 6,
