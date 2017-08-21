@@ -363,8 +363,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 - (void)displayCurrentBVC;
 // Shows the Sync settings UI.
 - (void)showSyncSettings;
-// Shows the Save Passwords settings.
-- (void)showSavePasswordsSettings;
 // Invokes the sign in flow with the specified authentication operation and
 // invokes |callback| when finished.
 - (void)showSigninWithOperation:(AuthenticationOperation)operation
@@ -1435,6 +1433,18 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
                  completion:nil];
 }
 
+- (void)showSavePasswordsSettings {
+  if (_settingsNavigationController)
+    return;
+  _settingsNavigationController =
+      [SettingsNavigationController newSavePasswordsController:_mainBrowserState
+                                                      delegate:self];
+  [[self topPresentedViewController]
+      presentViewController:_settingsNavigationController
+                   animated:YES
+                 completion:nil];
+}
+
 #pragma mark - chromeExecuteCommand
 
 - (IBAction)chromeExecuteCommand:(id)sender {
@@ -1468,9 +1478,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
       break;
     case IDC_SHOW_SYNC_PASSPHRASE_SETTINGS:
       [self showSyncEncryptionPassphrase];
-      break;
-    case IDC_SHOW_SAVE_PASSWORDS_SETTINGS:
-      [self showSavePasswordsSettings];
       break;
     case IDC_SHOW_MAIL_COMPOSER:
       [self.currentBVC chromeExecuteCommand:sender];
@@ -1966,18 +1973,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
       [SettingsNavigationController newSyncController:_mainBrowserState
                                allowSwitchSyncAccount:YES
                                              delegate:self];
-  [[self topPresentedViewController]
-      presentViewController:_settingsNavigationController
-                   animated:YES
-                 completion:nil];
-}
-
-- (void)showSavePasswordsSettings {
-  if (_settingsNavigationController)
-    return;
-  _settingsNavigationController =
-      [SettingsNavigationController newSavePasswordsController:_mainBrowserState
-                                                      delegate:self];
   [[self topPresentedViewController]
       presentViewController:_settingsNavigationController
                    animated:YES
