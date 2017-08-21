@@ -1,0 +1,147 @@
+<!doctype html>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<script src="../../assert_selection.js"></script>
+<script>
+
+
+const kSamples = [
+  '\nabc \u05D0\u05D1\u05D2 xyz\n',
+  '\n\u05D0\u05D1\u05D2 xyz \u05D3\u05D4\u05D5 def \u05D6\u05D7\u05D8\n',
+  '\n\u05D0\u05D1\u05D2 \u05D3\u05D4\u05D5 \u05D0\u05D1\u05D2\n',
+  '\nabc efd dabeb\n',
+  'Lorem <span style="direction: rtl">ipsum dolor sit</span> amet',
+  'Lorem <span dir="rtl">ipsum dolor sit</span> amet',
+  'Lorem <span style="direction: ltr">ipsum dolor sit</span> amet',
+  'Lorem <span dir="ltr">ipsum dolor sit</span> amet',
+  'Lorem <div  dir="rtl">ipsum dolor sit</div> amett',
+  '<span style="direction: ltr">ipsum dolor sit</span> amet',
+  'Lorem <span style="direction: ltr">ipsum dolor<div > just a test</div> sit</span> amet',
+  'Lorem <span dir="ltr">ipsum dolor sit</span> amet',
+  'Lorem <div  dir="ltr">ipsum dolor sit</div> amet',
+  '\n Just\n <span>testing \u05E8\u05E7</span>\n \u05D1\u05D5\u05D3\u05E7\n',
+  '\n Just\n <span>testing what</span>\n ever\n',
+  'car means \u05D0\u05D1\u05D2.',
+  '\u202B;car \u05D3\u05D4\u05D5 \u05D0\u05D1\u05D2.\u202c',
+  'they said "\u202B car \u05D3\u05D4\u05D5 \u05D0\u05D1\u05D2\u202c."',
+  '\u05D6\u05D7\u05D8 \u1497\u1498\u1499 \u1500\u1501\u1502 \'\u202athey said ' +
+  '"\u202Bcar \u05D3\u05D4\u05D5 \u05D0\u05D1\u05D2\u202c"\u202c\'?',
+  '\u05D0\u05D1\u05D2 abc \u05D3\u05D4\u05D5<br />edf \u05D6\u05D7\u05D8 abrebg',
+  'abcdefg abcdefg abcdefg a abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg ',
+    'abcdefg abcdefg abcdefg a abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg abcdefg ',
+ ];
+
+function escape(string) {
+  const results = [];
+  for (const char of string) {
+    const charCode = char.charCodeAt(0);
+    if (charCode === 10) {
+      results.push('\\n');
+      continue;
+    }
+    if (charCode >= 0x20 && charCode <= 0x7E) {
+      results.push(char);
+      continue;
+      }
+      results.push(`\\u${charCode.toString(16).toUpperCase().padStart(4, '0')}`);
+
+    }
+    return results.join('');
+}
+
+function genResourcesList(){
+  return [
+    '<!doctype html>',
+    '<script src="../../../resources/testharness.js"><' + '/script>',
+    '<script src="../../../resources/testharnessreport.js"><' + '/script>',
+    '<script src="../../assert_selection.js"><'+ '/script><script>'].join('\n');
+}
+
+function makeInputText(sample, offset) {
+    return sample.substr(0, offset) + '|' + sample.substring(offset);
+}
+
+function genMakeSample(sample) {
+  return `
+function makeSample(offset){
+  const kSample = '${escape(sample)}';
+  return kSample.substr(0, offset) + '|' + kSample.substring(offset);
+}
+`;
+}
+
+function genTestItCall(dir, offset, direction, expectedText) {
+  return `testIt('${dir}', ${offset}, '${direction}', '${escape(expectedText)}');\n`;
+}
+
+function genTestIt(sample, granularity) {
+  return `
+function testIt(dir, offset, direction, expectedText) {
+  attrs = [];
+  attrs.push(\`dir="\${dir}"\`);
+  if (typeof("\${sample}") == "object"){
+    attrs.push(\`style="\${sample.style}"\`);
+  }
+  test(() => assert_selection(
+  \`<div \${attrs.join(" ")}>\${makeSample(offset)}</div>\`,
+  selection => selection.modify('extend', direction, '${granularity}'),
+  \`<div \${attrs.join(" ")}>\${expectedText}</div>\`),
+  \`\${dir} \${offset} extend \${direction} ${granularity}\`
+  );
+}
+`;
+}
+
+function getTestItCalls(sampleText, direction, dir, granularity) {
+  const results = [];
+  for (let offset = 0; offset < sampleText.length; ++offset) {
+    const sample = new Sample(makeInputText(sampleText, offset));
+    const sampleInput = makeInputText(sampleText, offset);
+    sample.selection.modify('extend', direction, granularity);
+    const expectedText = sample.serialize(new DOMTreeTraversal());
+    results.push(genTestItCall(dir, offset, direction, expectedText));
+    if (expectedText.indexOf('^')  < 0){
+     console.log(dir, direction, offset,sampleInput === expectedText ,sampleInput, expectedText);
+     }
+    sample.remove();
+  }
+  return results;
+}
+
+function generate(sample, granularity, sampleIndex) {
+  const results = [];
+  results.push(genResourcesList());
+  results.push(genTestIt(sample, granularity));
+  results.push(genMakeSample(sample));
+  for (const dir of ['ltr', 'rtl']) {
+    for (const direction of ['right', 'left', 'forward', 'backward']) {
+      results.push(`\n// ${dir} ${direction} ${granularity}\n`);
+      const calls = getTestItCalls(sample, direction, dir, granularity);
+      for (const call of calls)
+        results.push(call);
+      results.push('');
+     }
+  }
+
+  const document_body = document.createElement('body');
+  results.push('</'+'script>');
+
+  const result = document.createElement('a');
+
+  result.href = URL.createObjectURL(new Blob(results), {type:'text/html'});
+  result.download = `extend_selection_${granularity}_${Math.ceil(sampleIndex/3).toString().padStart(2,'0')}.html`;
+  result.click();
+  document.body.append(result.download);
+  document.body.appendChild(document.createElement('br'));
+}
+
+let sampleIndex = 0;
+for (const sample of kSamples.slice(21,22)){
+  for (const granularity of ['character', 'lineboundary', 'word']){
+    window.setTimeout(()=> {
+      ++sampleIndex;
+      generate(sample, granularity, sampleIndex); }, 0);
+  }
+}
+</script>
+
