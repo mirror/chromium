@@ -23,9 +23,11 @@
 #include "chrome/browser/prerender/prerender_manager_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/android/bluetooth_chooser_android.h"
+#include "chrome/browser/ui/android/infobars/notify_infobar_delegate_android.h"
 #include "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h"
 #include "chrome/browser/ui/find_bar/find_notification_details.h"
 #include "chrome/browser/ui/find_bar/find_tab_helper.h"
+#include "chrome/browser/ui/framebust_block_infobar_delegate.h"
 #include "chrome/browser/ui/tab_helpers.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/common/chrome_switches.h"
@@ -500,4 +502,17 @@ void NotifyStopped(JNIEnv* env,
       MediaCaptureDevicesDispatcher::GetInstance()
           ->GetMediaStreamCaptureIndicator();
   indicator->NotifyStopped(web_contents);
+}
+
+jlong CreateFramebustBlockDelegate(
+    JNIEnv* env,
+    const JavaParamRef<jclass>& clazz,
+    const JavaParamRef<jstring>& java_blocked_url) {
+  FramebustBlockInfoBarDelegate* delegate = new FramebustBlockInfoBarDelegate(
+      GURL(ConvertJavaStringToUTF8(env, java_blocked_url)));
+
+  // The native infobar will take ownership, and is created by passing through
+  // Java.
+  return reinterpret_cast<uintptr_t>(
+      new NotifyInfoBarDelegateAndroid(delegate));
 }

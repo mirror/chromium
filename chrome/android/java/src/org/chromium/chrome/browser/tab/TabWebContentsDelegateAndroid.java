@@ -35,6 +35,7 @@ import org.chromium.chrome.browser.document.DocumentWebContentsDelegate;
 import org.chromium.chrome.browser.findinpage.FindMatchRectsDetails;
 import org.chromium.chrome.browser.findinpage.FindNotificationDetails;
 import org.chromium.chrome.browser.fullscreen.FullscreenManager;
+import org.chromium.chrome.browser.infobar.NotifyInfoBar;
 import org.chromium.chrome.browser.media.MediaCaptureNotificationService;
 import org.chromium.chrome.browser.policy.PolicyAuditor;
 import org.chromium.chrome.browser.policy.PolicyAuditor.AuditEvent;
@@ -207,6 +208,11 @@ public class TabWebContentsDelegateAndroid extends WebContentsDelegateAndroid {
         while (observers.hasNext()) {
             observers.next().onUpdateUrl(mTab, url);
         }
+    }
+
+    @Override
+    public void onDidBlockFramebust(String url) {
+        NotifyInfoBar.showNotifyInfoBar(mTab, nativeCreateFramebustBlockDelegate(url));
     }
 
     @Override
@@ -550,4 +556,5 @@ public class TabWebContentsDelegateAndroid extends WebContentsDelegateAndroid {
     private static native boolean nativeIsCapturingVideo(WebContents webContents);
     private static native boolean nativeIsCapturingScreen(WebContents webContents);
     private static native void nativeNotifyStopped(WebContents webContents);
+    private static native long nativeCreateFramebustBlockDelegate(String blockedUrl);
 }
