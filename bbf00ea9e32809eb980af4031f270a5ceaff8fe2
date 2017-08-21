@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b921b7de_f13656b5",
+        "filename": "net/quic/chromium/quic_connection_logger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-21T17:18:57Z",
+      "side": 1,
+      "message": "Yea, second order relative to AddEvent, but still annoyingly large in the profiles.",
+      "parentUuid": "9913f1ce_6f90dab5",
+      "revId": "bbf00ea9e32809eb980af4031f270a5ceaff8fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1de05f71_a0cd4107",
         "filename": "net/quic/chromium/quic_connection_logger.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "bbf00ea9e32809eb980af4031f270a5ceaff8fe2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f039df6_3379da3e",
+        "filename": "net/quic/chromium/quic_connection_logger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1140166
+      },
+      "writtenOn": "2017-08-21T17:18:57Z",
+      "side": 1,
+      "message": "Nice spot.  That was a mistake, fixed now.",
+      "parentUuid": "1de05f71_a0cd4107",
+      "revId": "bbf00ea9e32809eb980af4031f270a5ceaff8fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
