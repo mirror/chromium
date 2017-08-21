@@ -266,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "edb86eb4_85f166eb",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-21T17:01:52Z",
+      "side": 1,
+      "message": "I think the \"expired\" terminology is not great to use here. Sorry I didn\u0027t comment on this earlier.\n\nMainly because in Chrome, we ignore Finch configs entirely if they\u0027re are \"expired\" (different meaning than here) - where expired is over 30 days old.\n\nThe meaning used here is \"needs update\" - i.e. we need to fetch it again from the server to pick up any changes. So suggest changing the CL to use \"NeedsUpdate()\" terminology instead - or something like \"ShouldBeRefreshed()\".\n\nIt is fine and actually correct to use the current seed value (even if it needs an update) for instantiating trials - because that\u0027s more correct than disabling them entirely. (Unless the seed is super old - i.e. 30 days per Chromium logic). I think the \"super old\" logic doesn\u0027t need to be added at this time, but the point is you should still use the seed even if \"needs update\" is true.",
+      "parentUuid": "a9f7381f_9da8b959",
+      "revId": "dcbb7f2c36637459e7a1c71c4b77ead8b0b5cd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18d5126d_b7f40813",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsSeedFetchService.java",
         "patchSetId": 5
