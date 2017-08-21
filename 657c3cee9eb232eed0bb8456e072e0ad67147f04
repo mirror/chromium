@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3842464a_4c5e28b6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-21T14:18:56Z",
+      "side": 1,
+      "message": "I removed the \"mostly\" - it now always blocks them, matching Fetch.",
+      "parentUuid": "e6443efe_c2f221e6",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dc37008_cd473198",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ca641c_390419b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-21T14:18:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dc37008_cd473198",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6c5336b2_8d8d9bd4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/resources/sw.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-21T14:18:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6e994c3_0056d803",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76b75d83_f7f9f064",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/resources/utils.js",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adfd62d1_435ed299",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/resources/utils.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-21T14:18:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76b75d83_f7f9f064",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b80847f1_2786df4b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/resources/utils.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-21T14:18:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be87598a_f988e3b2",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a28919bd_a8903000",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/resources/utils.js",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f949c54_b1aa5d4b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/resources/utils.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-21T14:18:56Z",
+      "side": 1,
+      "message": "Done (though `registration` is confusing in the context of Background Fetch; I\u0027d called it `r` to hint that code should refer to `serviceWorkerRegistration` rather than `r`)",
+      "parentUuid": "a28919bd_a8903000",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "112973b0_5726e884",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/secure-request-origins.https.window.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-21T14:18:56Z",
+      "side": 1,
+      "message": "Done (it was FIXME instead of TODO because I was planning to do it in the next patchset of this patch)",
+      "parentUuid": "24bcc5ab_7f4c107a",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23a86bcb_ab7f7228",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/secure-request-origins.https.window.js",
         "patchSetId": 6
@@ -135,6 +261,24 @@
       "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1bb100_d007d8d1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/secure-request-origins.https.window.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-21T14:18:56Z",
+      "side": 1,
+      "message": "Prevailing style in wpt is to use `t` (or occasionally `testCase`, but almost never `test`).",
+      "parentUuid": "23a86bcb_ab7f7228",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "392dc53d_0e05c545",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-21T14:18:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecd01de4_167a5a0f",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8c7a970_7658f4ab",
         "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
         "patchSetId": 6
@@ -169,6 +331,24 @@
       "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe92f39_5a4c61c4",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-21T14:18:56Z",
+      "side": 1,
+      "message": "Makes sense. Though I ended up just disallowing all credentials to match Fetch (the code I was originally basing this on is shared between Fetch and subresource requests).",
+      "parentUuid": "d8c7a970_7658f4ab",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "af5b70b2_584c78e9",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-21T14:18:56Z",
+      "side": 1,
+      "message": "I\u0027ll list them in comments on crbug.com/711354 and crbug.com/757441.",
+      "parentUuid": "4f7317f3_df24f00a",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72a2ae3d_5468d838",
         "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
         "patchSetId": 6
@@ -203,6 +401,24 @@
       "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "686a2f15_101814d2",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-21T14:18:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72a2ae3d_5468d838",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "d6332ae2_71b9b08e",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-21T14:18:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca9f61e0_7b70180c",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef120963_8ddf8bba",
         "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
         "patchSetId": 6
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "c86a19f4_2d13f1c1",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-21T14:18:56Z",
+      "side": 1,
+      "message": "Done (I\u0027d copied this warning from elsewhere, and had kept it as is for consistency FWIW)",
+      "parentUuid": "ef120963_8ddf8bba",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "876a9ded_630606e9",
         "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
         "patchSetId": 6
@@ -254,6 +506,24 @@
       "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f13d17_60fed752",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-21T14:18:56Z",
+      "side": 1,
+      "message": "Done (how ironic, dangling brackets in the dangling markup warning)",
+      "parentUuid": "876a9ded_630606e9",
+      "revId": "657c3cee9eb232eed0bb8456e072e0ad67147f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
