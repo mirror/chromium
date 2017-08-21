@@ -25,6 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A node in the tree containing a list of all suggestions sections. It listens to changes in the
@@ -224,12 +225,28 @@ public class SectionList
     }
 
     /**
-     * Clicks on the more button for the Articles for you section. This assumes that that is the
-     * only present section.
+     * Fetches more suggestions. The SectionList should contain exactly 1 SuggestionsSection that
+     * supports fetching more.
      */
-    public void clickArticlesMoreButton() {
-        assert mSections.size() == 1;
-        mSections.get(KnownCategories.ARTICLES).clickMoreButton(mUiDelegate);
+    public void fetchMore() {
+        List<SuggestionsSection> supportingSections = mSections.values().stream()
+                .filter(section -> section.getCategoryInfo().isFetchMoreSupported())
+                .collect(Collectors.toList());
+
+        String categories = supportingSections.stream()
+                .map(SuggestionsSection::getCategory)
+                .map(i -> i.toString())
+                .collect(Collectors.joining(", "));
+
+        if (supportingSections.size() > 1) {
+            Log.e(TAG, "SectionList.fetchMore - Multiple supporting sections: %s", categories);
+        } else if (supportingSections.size() == 0) {
+            Log.e(TAG, "SectionList.fetchMore - No supporting sections: %s", categories);
+        } else if (getChildren().get(getChildren().size() - 1) != supportingSections.get(0)) {
+            Log.e(TAG, "SectionList.fetchMore - Supporting section not at end: %s", categories);
+        } else {
+            supportingSections.get(0).clickMoreButton(mUiDelegate);
+        }
     }
 
     /**
