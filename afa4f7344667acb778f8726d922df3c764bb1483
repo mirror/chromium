@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f8b634d_f7a68162",
+        "filename": "chrome/browser/ui/webui/browsing_history_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-21T21:58:47Z",
+      "side": 1,
+      "message": "nit: seems like this \\n no longer is needed",
+      "revId": "afa4f7344667acb778f8726d922df3c764bb1483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
