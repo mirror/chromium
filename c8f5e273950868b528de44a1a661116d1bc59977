@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62f34b07_877d7c75",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-21T17:56:10Z",
+      "side": 1,
+      "message": "is byte size what you want, or is length what you want here?",
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "552852c0_8b105f5b",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-21T17:56:10Z",
+      "side": 1,
+      "message": "seems like if the user started to save a lot of similar pages that performance would get worse and worse. Is there a different strategy that doesn\u0027t have this problem?",
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152c1f17_a3e98f55",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-21T17:56:10Z",
+      "side": 1,
+      "message": "This suffers from race conditions.  If the user has two pages being generated at the same time with the same name, then the same file name will be given to both archives.  Better to choose a random name now, and then move it to a unique file name atomically on the file thread afterwards.",
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
