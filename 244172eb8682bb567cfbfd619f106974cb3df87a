@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59d9f4ff_5ffd108b",
+        "filename": "ui/events/android/motion_event_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-21T00:26:48Z",
+      "side": 1,
+      "message": "Yes it is for test only. Renamed the method with .....ForTesting() to make it clear that it is.\n\n\u003e maybe just put this logic in the test instead?\n\nI\u0027ve tried it before uploading, but then the callsite (site_per_...) needs definitions for JNI_MotionEvent::ACTION_* for which I need to include the jni header or create a new one only for the test. Couldn\u0027t figure out how to avoid linking errors about multiple definitions of symbols like \u0027g_android_view_MotionEvent_clazz\u0027 and \u0027kClassPath_android_view_MotionEvent\u0027.",
+      "parentUuid": "67abf616_ea116c88",
+      "revId": "244172eb8682bb567cfbfd619f106974cb3df87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b93db05a_0d2b8ec6",
         "filename": "ui/events/android/motion_event_android.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "244172eb8682bb567cfbfd619f106974cb3df87a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0708892_9bc0da52",
+        "filename": "ui/events/android/motion_event_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-21T00:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b93db05a_0d2b8ec6",
+      "revId": "244172eb8682bb567cfbfd619f106974cb3df87a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
