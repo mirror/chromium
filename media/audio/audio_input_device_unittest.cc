@@ -98,9 +98,9 @@ TEST(AudioInputDeviceTest, FailToCreateStream) {
   base::RunLoop().RunUntilIdle();
 }
 
-ACTION_P5(ReportOnStreamCreated, device, handle, socket, length, segments) {
-  static_cast<AudioInputIPCDelegate*>(device)->OnStreamCreated(
-      handle, socket, length, segments, false);
+ACTION_P4(ReportOnStreamCreated, device, handle, socket, length) {
+  static_cast<AudioInputIPCDelegate*>(device)->OnStreamCreated(handle, socket,
+                                                               length, false);
 }
 
 TEST(AudioInputDeviceTest, CreateStream) {
@@ -136,8 +136,8 @@ TEST(AudioInputDeviceTest, CreateStream) {
   EXPECT_CALL(*input_ipc, CreateStream(_, _, _, _, _))
       .WillOnce(ReportOnStreamCreated(
           device.get(), duplicated_memory_handle,
-          SyncSocket::UnwrapHandle(audio_device_socket_descriptor), memory_size,
-          1));
+          SyncSocket::UnwrapHandle(audio_device_socket_descriptor),
+          memory_size));
   EXPECT_CALL(*input_ipc, RecordStream());
   EXPECT_CALL(callback, OnCaptureStarted())
       .WillOnce(QuitLoop(io_loop.task_runner()));
