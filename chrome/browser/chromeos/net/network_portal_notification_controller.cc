@@ -21,6 +21,7 @@
 #include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_process_platform_part.h"
 #include "chrome/browser/chromeos/mobile/mobile_activator.h"
@@ -334,22 +335,38 @@ NetworkPortalNotificationController::CreateDefaultCaptivePortalNotification(
   scoped_refptr<NetworkPortalNotificationControllerDelegate> delegate(
       new NetworkPortalNotificationControllerDelegate(
           std::string(), network->guid(), weak_factory_.GetWeakPtr()));
-  gfx::Image& icon = GetImageForNotification();
   message_center::NotifierId notifier_id(
       message_center::NotifierId::SYSTEM_COMPONENT,
       ash::system_notifier::kNotifierNetworkPortalDetector);
   base::string16 notificationText;
   bool is_wifi = NetworkTypePattern::WiFi().MatchesType(network->type());
-  std::unique_ptr<Notification> notification(new Notification(
-      message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId,
-      l10n_util::GetStringUTF16(
-          is_wifi ? IDS_PORTAL_DETECTION_NOTIFICATION_TITLE_WIFI
-                  : IDS_PORTAL_DETECTION_NOTIFICATION_TITLE_WIRED),
-      l10n_util::GetStringFUTF16(
-          is_wifi ? IDS_PORTAL_DETECTION_NOTIFICATION_MESSAGE_WIFI
-                  : IDS_PORTAL_DETECTION_NOTIFICATION_MESSAGE_WIRED,
-          base::UTF8ToUTF16(network->name())),
-      icon, base::string16(), GURL(), notifier_id, data, delegate.get()));
+  std::unique_ptr<Notification> notification;
+  if (message_center::MessageCenter::IsNewStyleNotificationEnabled()) {
+    notification = Notification::CreateSystemNotification(
+        message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId,
+        l10n_util::GetStringUTF16(
+            is_wifi ? IDS_PORTAL_DETECTION_NOTIFICATION_TITLE_WIFI
+                    : IDS_PORTAL_DETECTION_NOTIFICATION_TITLE_WIRED),
+        l10n_util::GetStringFUTF16(
+            is_wifi ? IDS_PORTAL_DETECTION_NOTIFICATION_MESSAGE_WIFI
+                    : IDS_PORTAL_DETECTION_NOTIFICATION_MESSAGE_WIRED,
+            base::UTF8ToUTF16(network->name())),
+        gfx::Image(), base::string16(), GURL(), notifier_id, data,
+        delegate.get(), kNotificationCaptivePortalIcon,
+        message_center::SystemNotificationWarningLevel::NORMAL);
+  } else {
+    gfx::Image& icon = GetImageForNotification();
+    notification.reset(new Notification(
+        message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId,
+        l10n_util::GetStringUTF16(
+            is_wifi ? IDS_PORTAL_DETECTION_NOTIFICATION_TITLE_WIFI
+                    : IDS_PORTAL_DETECTION_NOTIFICATION_TITLE_WIRED),
+        l10n_util::GetStringFUTF16(
+            is_wifi ? IDS_PORTAL_DETECTION_NOTIFICATION_MESSAGE_WIFI
+                    : IDS_PORTAL_DETECTION_NOTIFICATION_MESSAGE_WIRED,
+            base::UTF8ToUTF16(network->name())),
+        icon, base::string16(), GURL(), notifier_id, data, delegate.get()));
+  }
   notification->SetSystemPriority();
   return notification;
 }
@@ -364,7 +381,6 @@ NetworkPortalNotificationController::
   scoped_refptr<NetworkPortalNotificationControllerDelegate> delegate(
       new NetworkPortalNotificationControllerDelegate(
           extension->id(), network->guid(), weak_factory_.GetWeakPtr()));
-  gfx::Image& icon = GetImageForNotification();
   message_center::NotifierId notifier_id(
       message_center::NotifierId::SYSTEM_COMPONENT,
       ash::system_notifier::kNotifierNetworkPortalDetector);
@@ -396,11 +412,23 @@ NetworkPortalNotificationController::
     data.buttons.push_back(message_center::ButtonInfo(l10n_util::GetStringUTF16(
         IDS_PORTAL_DETECTION_NOTIFICATION_BUTTON_PORTAL)));
   }
-  std::unique_ptr<Notification> notification(new Notification(
-      message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId,
-      l10n_util::GetStringUTF16(IDS_PORTAL_DETECTION_NOTIFICATION_TITLE_WIFI),
-      notificationText, icon, base::string16() /* display_source */, GURL(),
-      notifier_id, data, delegate.get()));
+  std::unique_ptr<Notification> notification;
+  if (message_center::MessageCenter::IsNewStyleNotificationEnabled()) {
+    notification = Notification::CreateSystemNotification(
+        message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId,
+        l10n_util::GetStringUTF16(IDS_PORTAL_DETECTION_NOTIFICATION_TITLE_WIFI),
+        notificationText, gfx::Image(), base::string16() /* display_source */,
+        GURL(), notifier_id, data, delegate.get(),
+        kNotificationCaptivePortalIcon,
+        message_center::SystemNotificationWarningLevel::NORMAL);
+  } else {
+    gfx::Image& icon = GetImageForNotification();
+    notification.reset(new Notification(
+        message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId,
+        l10n_util::GetStringUTF16(IDS_PORTAL_DETECTION_NOTIFICATION_TITLE_WIFI),
+        notificationText, icon, base::string16() /* display_source */, GURL(),
+        notifier_id, data, delegate.get()));
+  }
   notification->SetSystemPriority();
   return notification;
 }
