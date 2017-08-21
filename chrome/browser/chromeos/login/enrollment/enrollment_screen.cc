@@ -254,7 +254,8 @@ void EnrollmentScreen::AutomaticRetry() {
 
 void EnrollmentScreen::ProcessRetry() {
   ++num_retries_;
-  LOG(WARNING) << "Enrollment retry " << num_retries_;
+  LOG(WARNING) << "Enrollment retry " << num_retries_
+               << ", current_auth_: " << current_auth_;
   Show();
 }
 
