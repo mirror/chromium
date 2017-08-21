@@ -93,6 +93,30 @@
       "revId": "7900fa8ff56f42ca2aae627ca2e6c138d73f4654",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77ccf49_fc42b2c6",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-21T07:49:29Z",
+      "side": 1,
+      "message": "If resizing the cell in this method is in fact the culprit, then this is probably an indication that the cell should not be created or resized in this method. Your CL may be fixing the issue, I\u0027m okay to let this go as a temporary fix, but if it is a band aid on something that should not be done, it probably deserves a bit more thinking about it.",
+      "parentUuid": "5e7abe0b_f2d5994e",
+      "range": {
+        "startLine": 740,
+        "startChar": 0,
+        "endLine": 740,
+        "endChar": 48
+      },
+      "revId": "7900fa8ff56f42ca2aae627ca2e6c138d73f4654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
