@@ -194,6 +194,8 @@ class HistoryDatabase : public DownloadDatabase,
   void MigrateTimeEpoch();
 #endif
 
+  void MigrateURLTableIfNeeded();
+
   // ---------------------------------------------------------------------------
 
   sql::Connection db_;

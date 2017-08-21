@@ -639,9 +639,7 @@ bool URLDatabase::RecreateURLTableWithAllContents() {
   }
 
   // Rename/commit the tmp table.
-  CommitTemporaryURLTable();
-
-  return true;
+  return CommitTemporaryURLTable();
 }
 
 const int kLowQualityMatchTypedLimit = 1;
