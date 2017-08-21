@@ -246,6 +246,7 @@ class CONTENT_EXPORT RenderFrame : public IPC::Listener,
   // Adds |message| to the DevTools console.
   virtual void AddMessageToConsole(ConsoleMessageLevel level,
                                    const std::string& message) = 0;
+
   // Forcefully detaches all connected DevTools clients.
   virtual void DetachDevToolsForTest() = 0;
 
