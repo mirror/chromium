@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebf58871_0b9fce03",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/claim-shared-worker-fetch.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T03:36:16Z",
+      "side": 1,
+      "message": "i was going to suggest just using navigator.serviceWorker.onmessage, but i see claim-worker.js is already using the MessagePort thing",
+      "revId": "a16cb4ba0943e3a7e80f284868d4e3ee2b0e67fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e91f883e_5fe38fb0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/claim-shared-worker-fetch.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T03:36:16Z",
+      "side": 1,
+      "message": "I think ideally this function would test the SharedWorker\u0027s navigator.seviceWorker.controller, but of cours we can\u0027t do that since we don\u0027t yet implement ServiceWorkerContainer for WorkerGlobalScope. Instead of testing the iframe\u0027s controller (which I expect several other tests already do), can we just add a TODO to test the shared worker\u0027s controller)?\n\nor if there is already a test for shared worker\u0027s controller, we don\u0027t need to check controller in this file and just test fetch() instead",
+      "revId": "a16cb4ba0943e3a7e80f284868d4e3ee2b0e67fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d8578a6_f579116b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/claim-worker-fetch.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T03:36:16Z",
+      "side": 1,
+      "message": "(same comments for the SharedWorker case apply here)",
+      "revId": "a16cb4ba0943e3a7e80f284868d4e3ee2b0e67fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
