@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ea6bc23_542d0167",
+        "filename": "third_party/WebKit/Source/core/editing/ImeTextSpan.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-21T19:06:02Z",
+      "side": 1,
+      "message": "yosin@: is it OK for ImeTextSpan to depend on StyleableMarker.h? Or should the enum go somewhere else?",
+      "revId": "69ef949903f287c7343efbe8b31cdf26b0d1ab64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "639dfcd4_c901012f",
+        "filename": "third_party/WebKit/Source/core/editing/markers/StyleableMarker.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-21T19:06:02Z",
+      "side": 1,
+      "message": "Can you please come up with better names for IsNone() and IsThick()?",
+      "revId": "69ef949903f287c7343efbe8b31cdf26b0d1ab64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
