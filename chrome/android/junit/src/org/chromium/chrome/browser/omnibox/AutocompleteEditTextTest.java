@@ -29,7 +29,7 @@ import org.robolectric.Robolectric;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.Shadows;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowAccessibilityManager;
+import org.robolectric.internal.ShadowExtractor;
 import org.robolectric.shadows.ShadowLog;
 
 import org.chromium.base.Log;
@@ -42,7 +42,7 @@ import org.chromium.testing.local.LocalRobolectricTestRunner;
  * TODO(changwan): switch to ParameterizedRobolectricTest once crbug.com/733324 is fixed.
  */
 @RunWith(LocalRobolectricTestRunner.class)
-@Config(manifest = Config.NONE)
+@Config(manifest = Config.NONE, shadows={ChromiumShadowAccessibilityManager.class})
 public class AutocompleteEditTextTest {
     private static final String TAG = "cr_AutocompleteTest";
 
@@ -56,7 +56,7 @@ public class AutocompleteEditTextTest {
     private Context mContext;
     private InputConnection mInputConnection;
     private Verifier mVerifier;
-    private ShadowAccessibilityManager mShadowAccessibilityManager;
+    private ChromiumShadowAccessibilityManager mShadowAccessibilityManager;
     private boolean mIsShown;
 
     // Limits the target of InOrder#verify.
@@ -154,7 +154,7 @@ public class AutocompleteEditTextTest {
         assertTrue(mAutocomplete.isShown());
         // Enable accessibility.
         mShadowAccessibilityManager =
-                Shadows.shadowOf(mAutocomplete.getAccessibilityManagerForTesting());
+                (ChromiumShadowAccessibilityManager) ShadowExtractor.extract(mAutocomplete.getAccessibilityManagerForTesting());
         mShadowAccessibilityManager.setEnabled(true);
         mShadowAccessibilityManager.setTouchExplorationEnabled(true);
         assertTrue(mAutocomplete.getAccessibilityManagerForTesting().isEnabled());
@@ -162,7 +162,7 @@ public class AutocompleteEditTextTest {
 
         mInOrder = inOrder(mVerifier);
         assertTrue(mAutocomplete.requestFocus());
-        mInOrder.verify(mVerifier).onPopulateAccessibilityEvent(
+        mInOrder.verify(mVerifier, times(2)).onPopulateAccessibilityEvent(
                 AccessibilityEvent.TYPE_VIEW_FOCUSED, "", "", 1, -1, -1, -1, -1);
         assertNotNull(mAutocomplete.onCreateInputConnection(new EditorInfo()));
         mInputConnection = mAutocomplete.getInputConnection();
