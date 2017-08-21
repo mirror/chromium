@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f4e8d6e_1773d1f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavascriptAppModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-21T14:53:29Z",
+      "side": 1,
+      "message": "I think a suppress would be more appropriate here. E.g. we already don\u0027t check the cast on line 139.",
+      "revId": "458e5e933fcb240ecb24cc658b3f7dcbfdf816d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42811ad0_edf19910",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorIconsField.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-21T14:53:29Z",
+      "side": 1,
+      "message": "Let\u0027s suppress instead here.",
+      "revId": "458e5e933fcb240ecb24cc658b3f7dcbfdf816d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f76aed_c33adfa8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-21T14:53:29Z",
+      "side": 1,
+      "message": "This one seems necessary though.",
+      "revId": "458e5e933fcb240ecb24cc658b3f7dcbfdf816d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35977f2e_bc2a448c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ContextMenuDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-21T14:53:29Z",
+      "side": 1,
+      "message": "This one seems fine as well.",
+      "revId": "458e5e933fcb240ecb24cc658b3f7dcbfdf816d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0d1224_783abc71",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/SuggestionsPopupWindow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-21T14:53:29Z",
+      "side": 1,
+      "message": "We should suppress here. It should always be a TextView if non-null.",
+      "revId": "458e5e933fcb240ecb24cc658b3f7dcbfdf816d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
