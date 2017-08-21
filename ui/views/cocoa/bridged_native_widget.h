@@ -201,6 +201,10 @@ class VIEWS_EXPORT BridgedNativeWidget
     return child_windows_;
   }
 
+  // Re-parent NativeView if it is TYPE_CONTROL, re-parent NativeWindow if it is
+  // top level widget.
+  void ReparentNativeView(NSView* native_view, NSView* new_parent);
+
   bool target_fullscreen_state() const { return target_fullscreen_state_; }
   bool window_visible() const { return window_visible_; }
   bool wants_to_be_visible() const { return wants_to_be_visible_; }
