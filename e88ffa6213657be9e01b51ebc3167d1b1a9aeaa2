@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ce360a9_584b7167",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-21T08:39:52Z",
+      "side": 1,
+      "message": "nit: Shall we rename this constant, as it\u0027s used now also to limit total number items from *all* sources?",
+      "range": {
+        "startLine": 129,
+        "startChar": 38,
+        "endLine": 129,
+        "endChar": 63
+      },
+      "revId": "e88ffa6213657be9e01b51ebc3167d1b1a9aeaa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
