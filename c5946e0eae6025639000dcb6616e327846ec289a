@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "482a98e7_f5cf1d2b",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3211,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-21T23:26:22Z",
+      "side": 1,
+      "message": "The comment and the code don\u0027t match.",
+      "revId": "c5946e0eae6025639000dcb6616e327846ec289a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd16d6d_14e42bb0",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3214,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-21T23:26:22Z",
+      "side": 1,
+      "message": "Why do you clear the cache?",
+      "revId": "c5946e0eae6025639000dcb6616e327846ec289a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf78bde_cb775857",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4954,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-21T23:26:22Z",
+      "side": 1,
+      "message": "cookiesString -\u003e cookies_string",
+      "revId": "c5946e0eae6025639000dcb6616e327846ec289a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc509683_e4299cb6",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1731,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-21T23:26:22Z",
+      "side": 1,
+      "message": "Why do we need a map?\n\nAlso, do not use a raw pointer.  It should be std::unique_ptr\u003cCookieMap\u003e",
+      "revId": "c5946e0eae6025639000dcb6616e327846ec289a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
