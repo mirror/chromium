@@ -48,6 +48,7 @@
 #include "platform/wtf/Compiler.h"
 #include "platform/wtf/MathExtras.h"
 #include "platform/wtf/PtrUtil.h"
+#include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/Unicode.h"
 
 namespace blink {
@@ -715,10 +716,26 @@ PassRefPtr<ShapeResult> HarfBuzzShaper::Shape(const Font* font,
   }
 
 #if DCHECK_IS_ON()
-  DCHECK_EQ(length, result->NumCharacters());
-  if (length) {
-    DCHECK_EQ(start, result->StartIndexForResult());
-    DCHECK_EQ(end, result->EndIndexForResult());
+  if (length != result->NumCharacters() ||
+      (length && (start != result->StartIndexForResult() ||
+                  end != result->EndIndexForResult()))) {
+    StringBuilder log;
+    log.Append("Font='");
+    const FontDescription& font_description = font->GetFontDescription();
+    for (const FontFamily* family = &font_description.Family();;) {
+      log.Append(family->Family());
+      family = family->Next();
+      if (!family)
+        break;
+      log.Append(", ");
+    }
+    log.Append(String::Format("', %f", font_description.ComputedSize()));
+    log.Append(String::Format(": %u-%u -> %u-%u:", start, end,
+                              result->StartIndexForResult(),
+                              result->EndIndexForResult()));
+    for (unsigned i = start; i < end; ++i)
+      log.Append(String::Format(" %02X", text_[i]));
+    NOTREACHED() << log.ToString();
   }
 #endif
 
