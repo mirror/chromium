@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f62f5e7d_716d3a1a",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/content_script.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T23:02:05Z",
+      "side": 1,
+      "message": "I wonder if this would actually be better done in a way that would have the webpage itself make these requests (e.g. driven by the C++ with content::ExecuteScript).  The reason I\u0027m a bit worried about that is because we may eventually tag XHRs done by content scripts as created by the extension itself, which would quite break this test.",
+      "revId": "aa6f3742e22bd3f6b020dac13c585584fa47a7b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "915be246_5f286f78",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_public_session/framework.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T23:02:05Z",
+      "side": 1,
+      "message": "We could just make the path in getServerURL optional?",
+      "revId": "aa6f3742e22bd3f6b020dac13c585584fa47a7b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26ee730_01d7e377",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_public_session/framework.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T23:02:05Z",
+      "side": 1,
+      "message": "nit: space between 0, and -1",
+      "revId": "aa6f3742e22bd3f6b020dac13c585584fa47a7b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

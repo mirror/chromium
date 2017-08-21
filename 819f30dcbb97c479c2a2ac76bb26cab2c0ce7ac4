@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e7c7e401_1af09f31",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T23:02:05Z",
+      "side": 1,
+      "message": "having |invariant| still strikes me as a bit funny, if only because it\u0027s not really clear (from looking at the call sites) what the implications of it are.  Although part of that may just be the naming and anonymous nature of the bool.  I think, at minimum, this would be more readable with an enum like BROWSER_INITIATED and WEB_INITIATED (feel free to bikeshed), and then have comments in this code indicating what the significance of that is.\n\nI\u0027m also curious - what do we see for the initiator in these different cases?  I\u0027m not just wondering about this CL, but around the larger implications, and if there\u0027s anything else we\u0027ll need to account for.",
+      "parentUuid": "de3ceaf3_0a8122e8",
+      "revId": "819f30dcbb97c479c2a2ac76bb26cab2c0ce7ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9d1429e_79f84231",
         "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/test_initiator.js",
         "patchSetId": 5
