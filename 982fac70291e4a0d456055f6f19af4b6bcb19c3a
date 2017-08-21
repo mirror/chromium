@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54558685_4e2ddc04",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-21T17:45:57Z",
+      "side": 1,
+      "message": "Do you need this? Can you just use std::swap instead?",
+      "revId": "982fac70291e4a0d456055f6f19af4b6bcb19c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79fea966_aeda53b4",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-21T17:45:57Z",
+      "side": 1,
+      "message": "Use hovered_rect.IsEmpty() instead.",
+      "revId": "982fac70291e4a0d456055f6f19af4b6bcb19c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2cbeba_d47f60d0",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-21T17:45:57Z",
+      "side": 1,
+      "message": "We early return in this case. So you shouldn\u0027t need this here.",
+      "revId": "982fac70291e4a0d456055f6f19af4b6bcb19c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb492a09_62c853e4",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-21T17:45:57Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "982fac70291e4a0d456055f6f19af4b6bcb19c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c97e9b4_2ef73170",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-21T17:45:57Z",
+      "side": 1,
+      "message": "Can this function move into an anon namespace too?",
+      "revId": "982fac70291e4a0d456055f6f19af4b6bcb19c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
