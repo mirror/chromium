@@ -194,6 +194,9 @@ extern int CloudPrintServiceProcessMain(const content::MainFunctionParams&);
 
 namespace {
 
+const char* const kNonPortNonDomainWildcardSchemes[] = {
+    extensions::kExtensionScheme, chrome::kChromeSearchScheme};
+
 base::LazyInstance<ChromeMainDelegate::ServiceCatalogFactory>::Leaky
     g_service_catalog_factory = LAZY_INSTANCE_INITIALIZER;
 
@@ -598,8 +601,8 @@ bool ChromeMainDelegate::BasicStartupComplete(int* exit_code) {
   nacl::RegisterPathProvider();
 #endif
 
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
-      extensions::kExtensionScheme);
+  ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(
+      &kNonPortNonDomainWildcardSchemes);
 
 // No support for ANDROID yet as DiagnosticsController needs wchar support.
 // TODO(gspencer): That's not true anymore, or at least there are no w-string

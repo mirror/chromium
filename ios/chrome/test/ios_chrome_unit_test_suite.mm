@@ -27,6 +27,8 @@
 
 namespace {
 
+const char* const kNonPortNonDomainWildcardSchemes[] = {kDummyExtensionScheme};
+
 class IOSChromeUnitTestSuiteInitializer
     : public testing::EmptyTestEventListener {
  public:
@@ -88,6 +90,6 @@ void IOSChromeUnitTestSuite::Initialize() {
   ios::RegisterPathProvider();
   ui::RegisterPathProvider();
   url::AddStandardScheme(kChromeUIScheme, url::SCHEME_WITHOUT_PORT);
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
-      kDummyExtensionScheme);
+  ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(
+      &kNonPortNonDomainWildcardSchemes);
 }

@@ -23,6 +23,8 @@ class ContentSettingsPatternDataView;
 }
 }
 
+typedef const char* const strarr[];
+
 // A pattern used in content setting rules. See |IsValid| for a description of
 // possible patterns.
 class ContentSettingsPattern {
@@ -59,9 +61,11 @@ class ContentSettingsPattern {
     DISJOINT_ORDER_PRE = 2,
   };
 
-  // This enum is used to back an UMA histogram, the order of existing values
-  // should not be changed. New values should only append before SCHEME_MAX.
-  // Also keep it consistent with kSchemeNames in content_settings_pattern.cc.
+  // This enum is used to back a UMA histogram, the order of existing values
+  // should not be changed.
+  // New values should only be appended before SCHEME_MAX.
+  // Also keep it consistent with kSchemeNames in content_settings_pattern.cc,
+  // and the ContentSettingScheme enum in histograms/enums.xml.
   enum SchemeType {
     SCHEME_WILDCARD,
     SCHEME_OTHER,
@@ -69,6 +73,7 @@ class ContentSettingsPattern {
     SCHEME_HTTPS,
     SCHEME_FILE,
     SCHEME_CHROMEEXTENSION,
+    SCHEME_CHROMESEARCH,
     SCHEME_MAX,
   };
 
@@ -88,7 +93,7 @@ class ContentSettingsPattern {
     // - IPv4 or IPv6
     // - hostname
     // - domain
-    // - empty string if the |is_host_wildcard flag is set.
+    // - empty string if the |is_host_wildcard| flag is set.
     std::string host;
 
     // True if the domain wildcard is set.
@@ -172,13 +177,13 @@ class ContentSettingsPattern {
       const ContentSettingsPattern& domain_pattern,
       ContentSettingsPattern* origin_pattern);
 
-  // Sets the scheme that doesn't support domain wildcard and port.
+  // Sets schemes that do not support domain wildcards and ports.
   // Needs to be called by the embedder before using ContentSettingsPattern.
-  // |scheme| can't be NULL, and the pointed string must remain alive until the
-  // app terminates.
-  static void SetNonWildcardDomainNonPortScheme(const char* scheme);
+  // |schemes| can't be NULL or empty, and the pointed to strings
+  // must remain alive until the app terminates.
+  static void SetNonWildcardDomainNonPortSchemes(const strarr* schemes);
 
-  // Compares |scheme| against the scheme set by the embedder.
+  // Compares |scheme| against the schemes set by the embedder.
   static bool IsNonWildcardDomainNonPortScheme(const std::string& scheme);
 
   // Constructs an empty pattern. Empty patterns are invalid patterns. Invalid

@@ -64,6 +64,8 @@
 #error "This file requires ARC support."
 #endif
 
+const char* const kNonPortNonDomainWildcardSchemes[] = {kDummyExtensionScheme};
+
 IOSChromeMainParts::IOSChromeMainParts(
     const base::CommandLine& parsed_command_line)
     : parsed_command_line_(parsed_command_line), local_state_(nullptr) {
@@ -148,8 +150,8 @@ void IOSChromeMainParts::PreMainMessageLoopRun() {
 
   // ContentSettingsPattern need to be initialized before creating the
   // ChromeBrowserState.
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
-      kDummyExtensionScheme);
+  ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(
+      &kNonPortNonDomainWildcardSchemes);
 
   // Ensure ClipboadRecentContentIOS is created.
   ClipboardRecentContent::SetInstance(CreateClipboardRecentContentIOS());
