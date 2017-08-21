@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 #include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/callback_forward.h"
@@ -152,7 +153,6 @@ void AudioInputDevice::SetAutomaticGainControl(bool enabled) {
 void AudioInputDevice::OnStreamCreated(base::SharedMemoryHandle handle,
                                        base::SyncSocket::Handle socket_handle,
                                        int length,
-                                       int total_segments,
                                        bool initially_muted) {
   DCHECK(task_runner()->BelongsToCurrentThread());
   DCHECK(base::SharedMemory::IsHandleValid(handle));
@@ -180,7 +180,7 @@ void AudioInputDevice::OnStreamCreated(base::SharedMemoryHandle handle,
     callback_->OnCaptureMuted(true);
 
   audio_callback_.reset(new AudioInputDevice::AudioThreadCallback(
-      audio_parameters_, handle, length, total_segments, callback_,
+      audio_parameters_, handle, length, kRequestedSharedMemoryCount, callback_,
       base::BindRepeating(&AudioInputDevice::SetLastCallbackTimeToNow, this)));
   audio_thread_.reset(new AudioDeviceThread(audio_callback_.get(),
                                             socket_handle, "AudioInputDevice"));
