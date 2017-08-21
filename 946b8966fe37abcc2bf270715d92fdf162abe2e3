@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a075e7c1_40031fb3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-21T07:44:54Z",
+      "side": 1,
+      "message": "how about returning here when the condition is false to reduce indentation?",
+      "revId": "946b8966fe37abcc2bf270715d92fdf162abe2e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c21157d_b66785cc",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-21T07:44:54Z",
+      "side": 1,
+      "message": "how about explaining why this resource is not for streaming? IIUC, it\u0027s because preloads are never with UseStreamOnResponse(). i.e. s/this resource is/preloaded resources are/.",
+      "revId": "946b8966fe37abcc2bf270715d92fdf162abe2e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052f7678_e5167628",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-21T07:44:54Z",
+      "side": 1,
+      "message": "which of the following processing needs that this precondition holds?",
+      "revId": "946b8966fe37abcc2bf270715d92fdf162abe2e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d56d3c_f619727c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-21T07:44:54Z",
+      "side": 1,
+      "message": "don\u0027t we need to handle the result of Write?",
+      "revId": "946b8966fe37abcc2bf270715d92fdf162abe2e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
