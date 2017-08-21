@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "129bd0b9_ea8c25b9",
+        "filename": "chrome/browser/resources/print_preview/settings/page_settings.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-21T19:54:27Z",
+      "side": 1,
+      "message": "Changing the pages ticket item updates the print header (new number of pages to print and the print button is enabled if it was not already). This causes focus to shift to the Print button. This happens with copies also (see https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/settings/copies_settings.js?l\u003d192)",
+      "parentUuid": "6a530929_20ae05f1",
+      "revId": "0e917e8fe02216d2041d56e8f955ec888edfc44d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73791586_ea08d6b9",
         "filename": "chrome/browser/resources/print_preview/settings/page_settings.js",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "0e917e8fe02216d2041d56e8f955ec888edfc44d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196228e6_cf5c5bdf",
+        "filename": "chrome/browser/resources/print_preview/settings/page_settings.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-21T19:54:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73791586_ea08d6b9",
+      "revId": "0e917e8fe02216d2041d56e8f955ec888edfc44d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
