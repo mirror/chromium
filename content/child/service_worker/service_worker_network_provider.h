@@ -73,6 +73,8 @@ class CONTENT_EXPORT ServiceWorkerNetworkProvider {
 
   bool IsControlledByServiceWorker() const;
 
+  mojom::ServiceWorkerWorkerClientRequest BindWorkerFetchContext();
+
  private:
   ServiceWorkerNetworkProvider();
 
