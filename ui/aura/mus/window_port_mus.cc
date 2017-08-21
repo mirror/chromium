@@ -394,7 +394,7 @@ WindowPortMus::ChangeSource WindowPortMus::OnTransientChildRemoved(
              : ChangeSource::LOCAL;
 }
 
-const viz::LocalSurfaceId& WindowPortMus::GetLocalSurfaceId() const {
+const viz::LocalSurfaceId& WindowPortMus::GetLocalSurfaceId() {
   return local_surface_id_;
 }
 
@@ -552,8 +552,7 @@ WindowPortMus::CreateLayerTreeFrameSink() {
 }
 
 viz::SurfaceId WindowPortMus::GetSurfaceId() const {
-  // This is only used by WindowPortLocal in unit tests.
-  return viz::SurfaceId();
+  return viz::SurfaceId(frame_sink_id_, local_surface_id_);
 }
 
 void WindowPortMus::OnWindowAddedToRootWindow() {}
