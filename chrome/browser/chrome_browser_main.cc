@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <memory>
 #include <set>
 #include <string>
 #include <utility>
@@ -26,6 +27,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/metrics/statistics_recorder.h"
 #include "base/path_service.h"
 #include "base/profiler/scoped_tracker.h"
 #include "base/profiler/stack_sampling_profiler.h"
@@ -70,6 +72,7 @@
 #include "chrome/browser/gpu/three_d_api_observer.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
+#include "chrome/browser/metrics/expired_histograms_array.h"
 #include "chrome/browser/metrics/field_trial_synchronizer.h"
 #include "chrome/browser/metrics/renderer_uptime_tracker.h"
 #include "chrome/browser/metrics/thread_watcher.h"
@@ -128,6 +131,7 @@
 #include "components/google/core/browser/google_util.h"
 #include "components/language_usage_metrics/language_usage_metrics.h"
 #include "components/metrics/call_stack_profile_metrics_provider.h"
+#include "components/metrics/expired_histograms_checker.h"
 #include "components/metrics/metrics_reporting_default_state.h"
 #include "components/metrics/metrics_service.h"
 #include "components/metrics/profiler/content/content_tracking_synchronizer_delegate.h"
@@ -655,6 +659,11 @@ ChromeBrowserMainParts::ChromeBrowserMainParts(
   // cookies need to go through one of Chrome's URLRequestContexts which have
   // a ChromeNetworkDelegate attached that selectively allows cookies again.
   net::URLRequest::SetDefaultCookiePolicyToBlock();
+
+  base::StatisticsRecorder::SetRecordChecker(
+      std::make_unique<metrics::ExpiredHistogramsChecker>(
+          chrome_metrics::kExpiredHistogramsHashes,
+          chrome_metrics::kNumExpiredHistograms));
 }
 
 ChromeBrowserMainParts::~ChromeBrowserMainParts() {
