@@ -178,6 +178,19 @@ void LogShowedFormNotSecureWarningOnCurrentNavigation() {
       "PasswordManager.ShowedFormNotSecureWarningOnCurrentNavigation", true);
 }
 
+void LogContextOfShowAllSavedPasswordsShown(
+    ShowAllSavedPasswordsContext context) {
+  UMA_HISTOGRAM_ENUMERATION("PasswordManager.ShowAllSavedPasswordsShownContext",
+                            context, ShowAllSavedPasswordsContext::COUNT);
+}
+
+void LogContextOfShowAllSavedPasswordsAccepted(
+    ShowAllSavedPasswordsContext context) {
+  UMA_HISTOGRAM_ENUMERATION(
+      "PasswordManager.ShowAllSavedPasswordsAcceptedContext", context,
+      ShowAllSavedPasswordsContext::COUNT);
+}
+
 void LogPasswordSuccessfulSubmissionIndicatorEvent(
     autofill::PasswordForm::SubmissionIndicatorEvent event) {
   UMA_HISTOGRAM_ENUMERATION(
