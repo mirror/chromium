@@ -248,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "352bdb55_2f4865a8",
+        "filename": "content/browser/loader/navigation_url_loader_delegate.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-21T21:37:37Z",
+      "side": 1,
+      "message": "Pushing it to the consumers is definitely possible, it\u0027s just a little clunky because of a thread hop (we send the error to the UI thread, then would have to jump back to the IO thread to query the TransportSecurityState).\n\nAlternatively, we could consider dropping the base::Optional and name it |fatal_certificate_error|. If it\u0027s not a certificate error, then it\u0027s also not a fatal certificate error and it would just be false.",
+      "parentUuid": "7dc31b49_c0681732",
+      "range": {
+        "startLine": 66,
+        "startChar": 37,
+        "endLine": 66,
+        "endChar": 45
+      },
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80cd5a01_6471e198",
         "filename": "content/browser/loader/navigation_url_loader_impl.h",
         "patchSetId": 14
