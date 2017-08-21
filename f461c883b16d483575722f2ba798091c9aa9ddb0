@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62b391cd_bfe158ff",
+        "filename": "third_party/WebKit/Source/core/html/custom/CustomElementRegistry.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-21T16:12:37Z",
+      "side": 1,
+      "message": "Would it be an option to introduce CustomElementRegistry::current_stack_, which is a TraceWrapperMember\u003cCustomElementReactionStack\u003e?\n\nThen we can avoid introducing TraceWrapperPersistent...?",
+      "revId": "f461c883b16d483575722f2ba798091c9aa9ddb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
