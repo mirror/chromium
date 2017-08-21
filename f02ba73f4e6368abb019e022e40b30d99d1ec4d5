@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "edf0c931_e86d30ec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-21T22:17:41Z",
+      "side": 1,
+      "message": "Done.\nYea, early return looks better. \nBut I don\u0027t feel we need to make default value -1 a constant.",
+      "parentUuid": "834cf817_c6aba5ba",
+      "revId": "f02ba73f4e6368abb019e022e40b30d99d1ec4d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e62e1bb6_1e235314",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-21T19:55:11Z",
       "side": 1,
       "message": "Nit: Maybe just re-order this line to be right after the old histogram recording?",
+      "revId": "f02ba73f4e6368abb019e022e40b30d99d1ec4d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cccb05b6_692f7f94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-21T22:17:41Z",
+      "side": 1,
+      "message": "I think so, but the old metrics whould change due to early return.",
+      "parentUuid": "e62e1bb6_1e235314",
       "revId": "f02ba73f4e6368abb019e022e40b30d99d1ec4d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +92,30 @@
       "revId": "f02ba73f4e6368abb019e022e40b30d99d1ec4d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5342527c_0be9cbb5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-21T22:17:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9df7de1c_ea517735",
+      "range": {
+        "startLine": 430,
+        "startChar": 20,
+        "endLine": 430,
+        "endChar": 21
+      },
+      "revId": "f02ba73f4e6368abb019e022e40b30d99d1ec4d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
