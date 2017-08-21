@@ -82,6 +82,23 @@
     },
     {
       "key": {
+        "uuid": "987dd985_8514bd91",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-21T21:44:25Z",
+      "side": 1,
+      "message": "Something we can discuss tomorrow: I think you don\u0027t need to do anything if the number of workers was previously less than |worker_capacity_|.",
+      "revId": "7251dcedf6ea09212e4c1894bfbe0b2c050cd01b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c592af29_95d8ec81",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
         "patchSetId": 11
