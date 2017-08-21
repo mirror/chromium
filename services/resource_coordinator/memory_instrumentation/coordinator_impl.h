@@ -51,6 +51,8 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   void UnregisterClientProcess(mojom::ClientProcess*);
   void RequestGlobalMemoryDump(const base::trace_event::MemoryDumpRequestArgs&,
                                const RequestGlobalMemoryDumpCallback&) override;
+  void EnableHeapProfiling(base::trace_event::HeapProfilingMode,
+                           const EnableHeapProfilingCallback&) override;
   void GetVmRegionsForHeapProfiler(
       const GetVmRegionsForHeapProfilerCallback&) override;
 
@@ -141,6 +143,8 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   void PerformNextQueuedGlobalMemoryDump();
   void FinalizeGlobalMemoryDumpIfAllManagersReplied();
   QueuedMemoryDumpRequest* GetCurrentRequest();
+
+  bool IsHeapProfilingConfiguredAtStartup();
 
   mojo::BindingSet<mojom::Coordinator, service_manager::Identity> bindings_;
 

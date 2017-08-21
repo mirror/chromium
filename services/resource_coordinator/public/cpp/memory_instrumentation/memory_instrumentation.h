@@ -8,6 +8,7 @@
 #include "base/callback_forward.h"
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread_local_storage.h"
+#include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/memory_dump_request_args.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/coordinator.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_export.h"
@@ -27,12 +28,14 @@ namespace memory_instrumentation {
 // handling timeouts).
 class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT MemoryInstrumentation {
  public:
+  using HeapProfilingMode = base::trace_event::HeapProfilingMode;
   using MemoryDumpType = base::trace_event::MemoryDumpType;
   using MemoryDumpLevelOfDetail = base::trace_event::MemoryDumpLevelOfDetail;
   using RequestGlobalDumpCallback =
       base::Callback<void(bool success, mojom::GlobalMemoryDumpPtr)>;
   using RequestGlobalDumpAndAppendToTraceCallback =
       base::Callback<void(bool success, uint64_t dump_id)>;
+  using EnableHeapProfilingCallback = base::Callback<void(bool success)>;
 
   static void CreateInstance(service_manager::Connector*,
                              const std::string& service_name);
@@ -45,6 +48,10 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT MemoryInstrumentation {
   // The callback (if not null), will be posted on the same thread of the
   // RequestGlobalDump() call.
   void RequestGlobalDump(RequestGlobalDumpCallback);
+
+  // Enables heap profiling in all processes controlled by coordinator.
+  // TODO(kraynov): Expose this function to DevTools protocol.
+  void EnableHeapProfiling(HeapProfilingMode, EnableHeapProfilingCallback);
 
   // Requests a global memory dump and serializes the result into the trace.
   // This requires that both tracing and the memory-infra category have been
