@@ -511,8 +511,11 @@ if file -L /sbin/init | grep -q 'ELF 64-bit'; then
   # g++-X.Y-multilib gives us the 32-bit support that we need. Find out the
   # appropriate value of X and Y by seeing what version the current
   # distribution's g++-multilib package depends on.
+  # Some distros do not define a g++-multilib target, so for them fall back to
+  # using the latest subpage (the || clause below).
   multilib_package=$(apt-cache depends g++-multilib --important | \
-      grep -E --color=never --only-matching '\bg\+\+-[0-9.]+-multilib\b')
+      grep -E --color=never --only-matching '\bg\+\+-[0-9.]+-multilib\b' || \
+      apt-cache search 'g\+\+-.*-multilib$' | cut -f1 -d ' ' | tail -n1)
   lib32_list="$lib32_list $multilib_package"
 fi
 
