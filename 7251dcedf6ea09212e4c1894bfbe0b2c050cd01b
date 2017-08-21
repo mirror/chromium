@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ff51b97_f80b5ad9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-21T19:32:48Z",
+      "side": 1,
+      "message": "be",
+      "range": {
+        "startLine": 11,
+        "startChar": 29,
+        "endLine": 11,
+        "endChar": 30
+      },
+      "revId": "7251dcedf6ea09212e4c1894bfbe0b2c050cd01b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be16a20_d3ff8074",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-21T19:32:48Z",
+      "side": 1,
+      "message": "space",
+      "revId": "7251dcedf6ea09212e4c1894bfbe0b2c050cd01b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c7882a_18f6847e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-21T19:32:48Z",
+      "side": 1,
+      "message": "Don\u0027t think this comment is necessary (the lock is also required to call the method)",
+      "revId": "7251dcedf6ea09212e4c1894bfbe0b2c050cd01b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aae77bf_0dc881da",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-21T19:32:48Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 587,
+        "startChar": 8,
+        "endLine": 587,
+        "endChar": 11
+      },
+      "revId": "7251dcedf6ea09212e4c1894bfbe0b2c050cd01b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c592af29_95d8ec81",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-21T19:32:48Z",
+      "side": 1,
+      "message": "Instead of starting threads in lock-steps: use a BarrierClosure(kNumWorkersInWorkerPool, Bind(\u0026WaitableEvent::Signal, Unretained(\u0026blocking_thread_running_)). That way all threads can start in parallel (which makes it not only faster but lets TSAN confirm there\u0027s no race in the BlockingObserver impl).",
+      "revId": "7251dcedf6ea09212e4c1894bfbe0b2c050cd01b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b017073_859fe685",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1007,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-21T19:32:48Z",
+      "side": 1,
+      "message": "BarrierClosure here too",
+      "revId": "7251dcedf6ea09212e4c1894bfbe0b2c050cd01b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c1971fe_fba8b4ad",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-21T19:32:48Z",
+      "side": 1,
+      "message": "BarrierClosure",
+      "revId": "7251dcedf6ea09212e4c1894bfbe0b2c050cd01b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153da853_b2f139b7",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1115,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-21T19:32:48Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "7251dcedf6ea09212e4c1894bfbe0b2c050cd01b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac59e6a4_7eec4288",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-21T19:32:48Z",
+      "side": 1,
+      "message": "Instead let\u0027s count time, e.g. TimeTicks::Now() - before_tick \u003c kExtraTimeToWaitForCleanup. I assume if kExtraTimeToWaitForCleanup is good enough for existing detach tests, it\u0027s good enough for these too? Any reason to do different?",
+      "range": {
+        "startLine": 1132,
+        "startChar": 7,
+        "endLine": 1132,
+        "endChar": 13
+      },
+      "revId": "7251dcedf6ea09212e4c1894bfbe0b2c050cd01b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "c9681794_b4a8b6b9",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-21T19:32:48Z",
+      "side": 1,
+      "message": "That\u0027s fine IMO, I prefer the simple rule of \"we never cleanup the worker on top of the idle stack\". I don\u0027t think we need to optimize by adding \"except when it\u0027s already over capacity\". Capacity being dynamic it could very well be used again anyways.",
+      "parentUuid": "9d6a1ea8_01ea80bd",
+      "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01a17760_bbb3faab",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 8
