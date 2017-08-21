@@ -26,6 +26,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.PasswordUIView;
@@ -36,6 +37,17 @@ import org.chromium.ui.widget.Toast;
  * Password entry editor that allows to view and delete passwords stored in Chrome.
  */
 public class PasswordEntryEditor extends Fragment {
+    // Needs to stay in sync with PasswordManagerAndroidPasswordEntryActions.
+    private enum PasswordEntryActions { VIEWED, DELETED, CANCELLED, COUNT }
+
+    // Needs to stay in sync with PasswordManagerAndroidWebsiteActions.
+    private enum WebsiteActions { COPIED, COUNT }
+
+    // Needs to stay in sync with PasswordManagerAndroidUsernameActions.
+    private enum UsernameActions { COPIED, COUNT }
+
+    // Needs to stay in sync with PasswordManagerAndroidPasswordActions.
+    private enum PasswordActions { COPIED, DISPLAYED, HIDDEN, COUNT }
 
     // ID of this name/password or exception.
     private int mID;
@@ -43,6 +55,9 @@ public class PasswordEntryEditor extends Fragment {
     // If true this is an exception site (never save here).
     // If false this represents a saved name/password.
     private boolean mException;
+
+    // Saves the prefix used to log metrics. Differs between password and exception entries.
+    private String mMetricsPrefix;
 
     @VisibleForTesting
     public static final String VIEW_PASSWORDS = "view-passwords";
@@ -76,6 +91,9 @@ public class PasswordEntryEditor extends Fragment {
                 : null;
 
         mException = (name == null);
+        mMetricsPrefix = mException ? "PasswordManager.Android.PasswordExceptionEntry"
+                                    : "PasswordManager.Android.PasswordCredentialEntry";
+
         final String url = mExtras.getString(SavePasswordsPreferences.PASSWORD_LIST_URL);
         getActivity().setTitle(R.string.password_entry_editor_title);
         mClipboard = (ClipboardManager) getActivity().getApplicationContext().getSystemService(
@@ -117,6 +135,9 @@ public class PasswordEntryEditor extends Fragment {
             urlView.setText(url);
             hookupCancelDeleteButtons();
         }
+
+        RecordHistogram.recordEnumeratedHistogram(mMetricsPrefix,
+                PasswordEntryActions.VIEWED.ordinal(), PasswordEntryActions.COUNT.ordinal());
         return mView;
     }
 
@@ -197,6 +218,9 @@ public class PasswordEntryEditor extends Fragment {
                 removeItem();
                 deleteButton.setEnabled(false);
                 cancelButton.setEnabled(false);
+                RecordHistogram.recordEnumeratedHistogram(mMetricsPrefix,
+                        PasswordEntryActions.DELETED.ordinal(),
+                        PasswordEntryActions.COUNT.ordinal());
             }
         });
 
@@ -204,6 +228,9 @@ public class PasswordEntryEditor extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().finish();
+                RecordHistogram.recordEnumeratedHistogram(mMetricsPrefix,
+                        PasswordEntryActions.CANCELLED.ordinal(),
+                        PasswordEntryActions.COUNT.ordinal());
             }
         });
     }
@@ -223,6 +250,8 @@ public class PasswordEntryEditor extends Fragment {
                              R.string.password_entry_editor_username_copied_into_clipboard,
                              Toast.LENGTH_SHORT)
                         .show();
+                RecordHistogram.recordEnumeratedHistogram(mMetricsPrefix + ".Username",
+                        UsernameActions.COPIED.ordinal(), UsernameActions.COUNT.ordinal());
             }
         });
     }
@@ -242,6 +271,8 @@ public class PasswordEntryEditor extends Fragment {
                              R.string.password_entry_editor_site_copied_into_clipboard,
                              Toast.LENGTH_SHORT)
                         .show();
+                RecordHistogram.recordEnumeratedHistogram(mMetricsPrefix + ".Website",
+                        WebsiteActions.COPIED.ordinal(), WebsiteActions.COUNT.ordinal());
             }
         });
     }
@@ -260,11 +291,16 @@ public class PasswordEntryEditor extends Fragment {
 
         changeHowPasswordIsDisplayed(
                 R.drawable.ic_visibility_off, InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+
+        RecordHistogram.recordEnumeratedHistogram(mMetricsPrefix + ".Password",
+                PasswordActions.DISPLAYED.ordinal(), PasswordActions.COUNT.ordinal());
     }
 
     private void hidePassword() {
         changeHowPasswordIsDisplayed(R.drawable.ic_visibility,
                 InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        RecordHistogram.recordEnumeratedHistogram(mMetricsPrefix + ".Password",
+                PasswordActions.HIDDEN.ordinal(), PasswordActions.COUNT.ordinal());
     }
 
     private void copyPassword() {
@@ -275,6 +311,8 @@ public class PasswordEntryEditor extends Fragment {
                      R.string.password_entry_editor_password_copied_into_clipboard,
                      Toast.LENGTH_SHORT)
                 .show();
+        RecordHistogram.recordEnumeratedHistogram(mMetricsPrefix + ".Password",
+                PasswordActions.COPIED.ordinal(), PasswordActions.COUNT.ordinal());
     }
 
     private void displayReauthenticationFragment() {
