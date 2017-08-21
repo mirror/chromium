@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "cbc859fa_2d228a83",
+        "filename": "ui/app_list/views/folder_header_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-21T23:25:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d7d2db22_86c2b65b",
+      "range": {
+        "startLine": 66,
+        "startChar": 42,
+        "endLine": 66,
+        "endChar": 61
+      },
+      "revId": "6273931ad16e0d7570f08bb25db68ce27088174f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "432de647_0ea23d06",
         "filename": "ui/app_list/views/folder_header_view.cc",
         "patchSetId": 2
@@ -130,6 +154,24 @@
       "writtenOn": "2017-08-21T23:13:50Z",
       "side": 1,
       "message": "Removed the code for changing folder name in the data model when it is elided.",
+      "parentUuid": "c0eab8e2_8486ec8c",
+      "revId": "6273931ad16e0d7570f08bb25db68ce27088174f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0ac4fe_5e682837",
+        "filename": "ui/app_list/views/folder_header_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-21T23:25:53Z",
+      "side": 1,
+      "message": "It would be strange that if I type \"a long title\" but later I get back \"a long...\" when I try to edit it.",
       "parentUuid": "c0eab8e2_8486ec8c",
       "revId": "6273931ad16e0d7570f08bb25db68ce27088174f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
