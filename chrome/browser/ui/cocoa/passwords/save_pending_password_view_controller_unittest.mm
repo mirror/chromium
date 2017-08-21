@@ -166,6 +166,33 @@ TEST_F(SavePendingPasswordViewControllerTest,
 }
 
 TEST_F(SavePendingPasswordViewControllerTest,
+       ShouldSaveEditedUsernameAndDismissWhenSaveClicked) {
+  profile()->GetPrefs()->SetBoolean(
+      password_manager::prefs::kWasSignInPasswordPromoClicked, true);
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndEnableFeature(
+      password_manager::features::kEnableUsernameCorrection);
+  SetUpSavePendingState(false);
+
+  // User enters edit mode, edits the username, clicks save without exiting the
+  // edit mode.
+  [controller().editButton performClick:nil];
+  PendingPasswordItemView* row =
+      [[controller().passwordItemContainer subviews] objectAtIndex:0];
+  [[test_window() contentView] addSubview:[row usernameField]];
+  [test_window() makePretendKeyWindowAndSetFirstResponder:[row usernameField]];
+  [[[row usernameField] currentEditor] insertText:@"editedusername"];
+  EXPECT_NSEQ(@"editedusername", [[row usernameField] stringValue]);
+
+  EXPECT_CALL(*ui_controller(),
+              SavePassword(base::SysNSStringToUTF16(@"editedusername")));
+  EXPECT_CALL(*ui_controller(), NeverSavePassword()).Times(0);
+  [controller().saveButton performClick:nil];
+
+  EXPECT_TRUE([delegate() dismissed]);
+}
+
+TEST_F(SavePendingPasswordViewControllerTest,
        ShouldNeverAndDismissWhenNeverClicked) {
   SetUpSavePendingState(false);
   EXPECT_CALL(*ui_controller(), SavePassword(_)).Times(0);
