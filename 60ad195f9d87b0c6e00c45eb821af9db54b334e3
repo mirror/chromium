@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ecbfbbb1_0f6e629a",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-21T09:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63cebdda_8a2a1e23",
+      "revId": "60ad195f9d87b0c6e00c45eb821af9db54b334e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d608ea6b_4c6fc57a",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8b32ea80_6a8c2cf2",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-21T09:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d608ea6b_4c6fc57a",
+      "revId": "60ad195f9d87b0c6e00c45eb821af9db54b334e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a651de6_3051f451",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPI.h",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "60ad195f9d87b0c6e00c45eb821af9db54b334e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92b21563_ee0fe22d",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPI.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-21T09:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a651de6_3051f451",
+      "revId": "60ad195f9d87b0c6e00c45eb821af9db54b334e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
