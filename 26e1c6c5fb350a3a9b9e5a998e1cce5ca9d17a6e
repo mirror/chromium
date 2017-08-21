@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b3662ad_2395e97b",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-21T18:01:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f25cc4c3_fbb046a1",
+      "range": {
+        "startLine": 302,
+        "startChar": 6,
+        "endLine": 303,
+        "endChar": 60
+      },
+      "revId": "26e1c6c5fb350a3a9b9e5a998e1cce5ca9d17a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f0e2e6b_1fd952d8",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8e2ef47a_009c29e2",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-21T18:01:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f0e2e6b_1fd952d8",
+      "range": {
+        "startLine": 304,
+        "startChar": 10,
+        "endLine": 304,
+        "endChar": 22
+      },
+      "revId": "26e1c6c5fb350a3a9b9e5a998e1cce5ca9d17a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55875648_43633460",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "26e1c6c5fb350a3a9b9e5a998e1cce5ca9d17a6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034b0c3a_1d21964e",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-21T18:01:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55875648_43633460",
+      "range": {
+        "startLine": 909,
+        "startChar": 8,
+        "endLine": 909,
+        "endChar": 70
+      },
+      "revId": "26e1c6c5fb350a3a9b9e5a998e1cce5ca9d17a6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
