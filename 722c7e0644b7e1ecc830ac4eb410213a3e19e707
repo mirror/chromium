@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25331968_1587bf61",
+        "filename": "base/debug/task_annotator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-21T21:21:50Z",
+      "side": 1,
+      "message": "I think [0] and [kStackTaskTraceSnapshotSize - 1] would be easier to read as array indices here",
+      "revId": "722c7e0644b7e1ecc830ac4eb410213a3e19e707",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
