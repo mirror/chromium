@@ -3036,6 +3036,33 @@
                     "enable_features": [
                         "TranslateCompactUI"
                     ]
+                },
+                {
+                    "name": "NeverThresholdEquals7",
+                    "params": {
+                        "translate_auto_never_threshold": "7"
+                    },
+                    "enable_features": [
+                        "TranslateCompactUI"
+                    ]
+                },
+                {
+                    "name": "NeverThresholdEquals10",
+                    "params": {
+                        "translate_auto_never_threshold": "10"
+                    },
+                    "enable_features": [
+                        "TranslateCompactUI"
+                    ]
+                },
+                {
+                    "name": "TurnOffAutoNever",
+                    "params": {
+                        "translate_auto_never_threshold": "99999"
+                    },
+                    "enable_features": [
+                        "TranslateCompactUI"
+                    ]
                 }
             ]
         }
