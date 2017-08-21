@@ -559,6 +559,8 @@ class CONTENT_EXPORT RenderThreadImpl
   // mojom::Renderer:
   void CreateView(mojom::CreateViewParamsPtr params) override;
   void CreateFrame(mojom::CreateFrameParamsPtr params) override;
+  void CreateEmbeddedWorkerInstanceClient(
+      mojom::CreateEmbeddedWorkerInstanceClientParamsPtr params) override;
   void CreateFrameProxy(int32_t routing_id,
                         int32_t render_view_routing_id,
                         int32_t opener_routing_id,
@@ -654,6 +656,9 @@ class CONTENT_EXPORT RenderThreadImpl
   std::unique_ptr<VideoCaptureImplManager> vc_manager_;
 
   std::unique_ptr<viz::ClientSharedBitmapManager> shared_bitmap_manager_;
+
+  // Keeps the time when the instance of RenderThreadImpl is created.
+  const base::TimeTicks render_thread_initialized_time_;
 
   // The count of RenderWidgets running through this thread.
   int widget_count_;

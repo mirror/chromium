@@ -613,6 +613,7 @@ RenderThreadImpl::RenderThreadImpl(
                           .ConnectToBrowser(true)
                           .Build()),
       renderer_scheduler_(std::move(scheduler)),
+      render_thread_initialized_time_(base::TimeTicks::Now()),
       categorized_worker_pool_(new CategorizedWorkerPool()),
       renderer_binding_(this),
       client_id_(1) {
@@ -629,6 +630,7 @@ RenderThreadImpl::RenderThreadImpl(
                           .ConnectToBrowser(true)
                           .Build()),
       renderer_scheduler_(std::move(scheduler)),
+      render_thread_initialized_time_(base::TimeTicks::Now()),
       main_message_loop_(std::move(main_message_loop)),
       categorized_worker_pool_(new CategorizedWorkerPool()),
       is_scroll_animator_enabled_(false),
@@ -762,9 +764,6 @@ void RenderThreadImpl::Init(
   auto registry = base::MakeUnique<service_manager::BinderRegistryWithArgs<
       const service_manager::BindSourceInfo&>>();
   registry->AddInterface(base::Bind(&CreateFrameFactory),
-                         base::ThreadTaskRunnerHandle::Get());
-  registry->AddInterface(base::Bind(&EmbeddedWorkerInstanceClientImpl::Create,
-                                    base::TimeTicks::Now(), GetIOTaskRunner()),
                          base::ThreadTaskRunnerHandle::Get());
   GetServiceManagerConnection()->AddConnectionFilter(
       base::MakeUnique<SimpleConnectionFilterWithSourceInfo>(
@@ -2176,6 +2175,17 @@ void RenderThreadImpl::CreateFrame(mojom::CreateFrameParamsPtr params) {
       params->parent_routing_id, params->previous_sibling_routing_id,
       params->replication_state, compositor_deps, *params->widget_params,
       params->frame_owner_properties);
+}
+
+void RenderThreadImpl::CreateEmbeddedWorkerInstanceClient(
+    mojom::CreateEmbeddedWorkerInstanceClientParamsPtr params) {
+  // The lifetime of EmbeddedWorkerInstanceClientImpl is controlled by the
+  // browser conterpart which is EmbeddedWorkerInstance.
+  // EmbeddedWorkerInstanceClientImpl will be destructed when StopWorker() is
+  // called from the browser process and it succeeds.
+  EmbeddedWorkerInstanceClientImpl::Create(render_thread_initialized_time_,
+                                           GetIOTaskRunner(),
+                                           std::move(params->client_request));
 }
 
 void RenderThreadImpl::CreateFrameProxy(
