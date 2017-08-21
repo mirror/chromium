@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86e33e46_ee80502a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModuleTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-21T07:53:15Z",
+      "side": 1,
+      "message": "V8 bindings prefer avoiding using MaybeLocal/Maybe.\n\n  v8::Local\u003cv8::Value\u003e exported_value \u003d ....ToLocalChecked();",
+      "revId": "1928f91ff068daa948f7135dd27cf9a5d60703ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af67e3da_0d02345a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModuleTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-21T07:53:15Z",
+      "side": 1,
+      "message": "v8::Local\u003cv8::Number\u003e exported_number \u003d ....ToLocalChecked();",
+      "revId": "1928f91ff068daa948f7135dd27cf9a5d60703ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
