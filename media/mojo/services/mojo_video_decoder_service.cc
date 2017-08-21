@@ -138,7 +138,7 @@ void MojoVideoDecoderService::OnDecoderReset(ResetCallback callback) {
 void MojoVideoDecoderService::OnDecoderOutput(
     MojoMediaClient::ReleaseMailboxCB release_cb,
     const scoped_refptr<VideoFrame>& frame) {
-  DVLOG(2) << __func__;
+  DVLOG(2) << __func__ << " " << frame->timestamp().InMilliseconds();
   DCHECK(client_);
   DCHECK(decoder_);
 
