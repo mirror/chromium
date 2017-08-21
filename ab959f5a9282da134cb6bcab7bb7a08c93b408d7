@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8be0e3b2_b78a4990",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-21T12:17:35Z",
+      "side": 1,
+      "message": "The TextTrack.cues ...",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 11
+      },
+      "revId": "ab959f5a9282da134cb6bcab7bb7a08c93b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11573325_1b4f1268",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-21T12:17:35Z",
+      "side": 1,
+      "message": "An \u0027error\u0027 event...",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 9
+      },
+      "revId": "ab959f5a9282da134cb6bcab7bb7a08c93b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0193df41_a5d47b63",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-element-src-change-error-handling.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-21T12:17:35Z",
+      "side": 1,
+      "message": "\"\u0027error\u0027 event did not fire...\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 34,
+        "endLine": 25,
+        "endChar": 61
+      },
+      "revId": "ab959f5a9282da134cb6bcab7bb7a08c93b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f74d4cb_5cae5f12",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-element-src-change-error-handling.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-21T12:17:35Z",
+      "side": 1,
+      "message": "Use step_timeout for this.",
+      "range": {
+        "startLine": 37,
+        "startChar": 24,
+        "endLine": 37,
+        "endChar": 84
+      },
+      "revId": "ab959f5a9282da134cb6bcab7bb7a08c93b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94d33a8a_a48d5b60",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-element-src-change-error-handling.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-21T12:17:35Z",
+      "side": 1,
+      "message": "You can merge this with case 1 (as well as a default case to make sure to fail on unexpected stage numbers.) Ditto for the \u0027error\u0027 cases.",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 18
+      },
+      "revId": "ab959f5a9282da134cb6bcab7bb7a08c93b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb6cc09_75d6de6b",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-element-src-change-error-handling.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-21T12:17:35Z",
+      "side": 1,
+      "message": "Can use t.unreached_func() instead of this.",
+      "range": {
+        "startLine": 80,
+        "startChar": 13,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "ab959f5a9282da134cb6bcab7bb7a08c93b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59adef68_d9f0c9ef",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-element-src-change-error-handling.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-21T12:17:35Z",
+      "side": 1,
+      "message": "t.step_func(step_onLoad);",
+      "range": {
+        "startLine": 84,
+        "startChar": 23,
+        "endLine": 84,
+        "endChar": 67
+      },
+      "revId": "ab959f5a9282da134cb6bcab7bb7a08c93b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ab9587_dd7d1baf",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-element-src-change-error-handling.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-21T12:17:35Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 85,
+        "startChar": 24,
+        "endLine": 85,
+        "endChar": 68
+      },
+      "revId": "ab959f5a9282da134cb6bcab7bb7a08c93b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc72891f_86a75411",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-element-src-change.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-21T12:17:35Z",
+      "side": 1,
+      "message": "...in a microtask.",
+      "range": {
+        "startLine": 22,
+        "startChar": 44,
+        "endLine": 22,
+        "endChar": 60
+      },
+      "revId": "ab959f5a9282da134cb6bcab7bb7a08c93b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c648c492_f357cd7a",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-element-src-change.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-21T12:17:35Z",
+      "side": 1,
+      "message": "t.step_timeout(t.step_func_done(function() {\n  /* contents of step_timer minus t.done(); */\n}), ...);\n\nWaiting for 1s here isn\u0027t great (increase cycle-time on bots.) It\u0027s hard to wait for something that shouldn\u0027t happen in general, but we should try to give it less slack to \"fail\".",
+      "range": {
+        "startLine": 42,
+        "startChar": 16,
+        "endLine": 42,
+        "endChar": 76
+      },
+      "revId": "ab959f5a9282da134cb6bcab7bb7a08c93b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9297f2b_613512c9",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-element-src-change.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-21T12:17:35Z",
+      "side": 1,
+      "message": "t.step_func(step_onLoad);",
+      "range": {
+        "startLine": 60,
+        "startChar": 23,
+        "endLine": 60,
+        "endChar": 66
+      },
+      "revId": "ab959f5a9282da134cb6bcab7bb7a08c93b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60fa0b53_a70d529a",
+        "filename": "third_party/WebKit/LayoutTests/media/track/track-element-src-change.html",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-21T12:17:35Z",
+      "side": 1,
+      "message": "t.unreached_func(\"\u0027error\u0027 event should not fire\");",
+      "range": {
+        "startLine": 61,
+        "startChar": 24,
+        "endLine": 61,
+        "endChar": 68
+      },
+      "revId": "ab959f5a9282da134cb6bcab7bb7a08c93b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b39e6d_32cae1d4",
+        "filename": "third_party/WebKit/Source/core/html/HTMLTrackElement.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-21T12:17:35Z",
+      "side": 1,
+      "message": "Let\u0027s make this \"as part of the synchronous section.\" instead.",
+      "range": {
+        "startLine": 179,
+        "startChar": 27,
+        "endLine": 179,
+        "endChar": 46
+      },
+      "revId": "ab959f5a9282da134cb6bcab7bb7a08c93b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51658ccf_1640ea74",
+        "filename": "third_party/WebKit/Source/core/html/HTMLTrackElement.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-21T12:17:35Z",
+      "side": 1,
+      "message": "Reverse this test instead for a better, less convoluted, flow:\n\nif (url_ \u003d\u003d url)\n  return;\n\nif (track_)\n  ...",
+      "range": {
+        "startLine": 183,
+        "startChar": 6,
+        "endLine": 183,
+        "endChar": 17
+      },
+      "revId": "ab959f5a9282da134cb6bcab7bb7a08c93b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd61c323_86b8cbec",
+        "filename": "third_party/WebKit/Source/core/html/HTMLTrackElement.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-21T12:17:35Z",
+      "side": 1,
+      "message": "Excess \u0027i\u0027.",
+      "range": {
+        "startLine": 194,
+        "startChar": 38,
+        "endLine": 194,
+        "endChar": 47
+      },
+      "revId": "ab959f5a9282da134cb6bcab7bb7a08c93b408d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
