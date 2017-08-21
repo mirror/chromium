@@ -22,6 +22,30 @@
       "revId": "37beb51e8df060ce052858068650993c380e49e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a32dece6_3709a0fc",
+        "filename": "ash/drag_drop/drag_drop_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-08-21T08:31:24Z",
+      "side": 1,
+      "message": "MoveMouseBy twice was actually enough to generate drag and drop events. Updated.",
+      "parentUuid": "6eae6b4e_0ef17d72",
+      "range": {
+        "startLine": 250,
+        "startChar": 18,
+        "endLine": 250,
+        "endChar": 36
+      },
+      "revId": "37beb51e8df060ce052858068650993c380e49e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
