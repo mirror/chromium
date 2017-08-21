@@ -16,6 +16,24 @@
       "revId": "fadb7fcd9389de872f3104c56de0a368a273292d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4589141d_95950065",
+        "filename": "components/crash/content/app/crashpad.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-21T20:19:41Z",
+      "side": 1,
+      "message": "Thanks, I believe it\u0027ll not barf on the case - and 25 should, by god, be sufficient to do this in one go for most users :).",
+      "parentUuid": "8014eae1_986cdbcf",
+      "revId": "fadb7fcd9389de872f3104c56de0a368a273292d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
