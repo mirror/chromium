@@ -34,6 +34,24 @@
       "revId": "5542f7a96c987c7f00a8d881e31e6d9cdd7c9dc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf27fb23_36fd8222",
+        "filename": "ios/web/web_state/navigation_callbacks_inttest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-21T17:41:30Z",
+      "side": 1,
+      "message": "Since the native content provider isn\u0027t used for the other tests, we\u0027re already doing extra work in SetUp() for those tests to set it up.  How about creating a subclass of the test fixture specific to tests that need the native content?  It looks like the URL is constant for both tests, so we could also perform that step in SetUp() as well for those tests.",
+      "parentUuid": "7c7cc316_4e7259ce",
+      "revId": "5542f7a96c987c7f00a8d881e31e6d9cdd7c9dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
