@@ -50,6 +50,7 @@
 #include "ui/views/controls/link.h"
 #include "ui/views/controls/menu/menu_config.h"
 #include "ui/views/controls/menu/menu_runner.h"
+#include "ui/views/controls/scroll_view.h"
 #include "ui/views/controls/separator.h"
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/native_cursor.h"
@@ -188,8 +189,6 @@ class ContentSettingBubbleContents::ListItemContainer : public views::View {
 
   ContentSettingBubbleContents* parent_;
 
-  int icon_column_width_;
-
   // Our controls representing list items, so we can add or remove
   // these dynamically. Each pair represetns one list item.
   std::vector<Row> list_item_views_;
@@ -199,7 +198,7 @@ class ContentSettingBubbleContents::ListItemContainer : public views::View {
 
 ContentSettingBubbleContents::ListItemContainer::ListItemContainer(
     ContentSettingBubbleContents* parent)
-        : parent_(parent), icon_column_width_(0) {
+    : parent_(parent) {
   ResetLayout();
 }
 
@@ -218,8 +217,6 @@ void ContentSettingBubbleContents::ListItemContainer::AddItem(
     icon->SetImage(item.image.AsImageSkia());
     label = new views::Label(item.title);
   }
-  icon_column_width_ = std::max(icon->GetPreferredSize().width(),
-                                icon_column_width_);
   list_item_views_.push_back(Row(icon, label));
   AddRowToLayout(list_item_views_.back(), list_item_views_.size() > 1);
 }
@@ -260,6 +257,12 @@ void ContentSettingBubbleContents::ListItemContainer::ResetLayout() {
   item_list_column_set->AddPaddingColumn(0, related_control_horizontal_spacing);
   item_list_column_set->AddColumn(GridLayout::LEADING, GridLayout::FILL, 1,
                                   GridLayout::USE_PREF, 0, 0);
+  views::ScrollView* scroll_view =
+      views::ScrollView::GetScrollViewForContents(this);
+  // Because this function is called from the constructor, the view has not yet
+  // been placed into a ScrollView.
+  if (scroll_view)
+    scroll_view->ClipHeightTo(-1, -1);
 }
 
 void ContentSettingBubbleContents::ListItemContainer::AddRowToLayout(
@@ -268,14 +271,29 @@ void ContentSettingBubbleContents::ListItemContainer::AddRowToLayout(
   views::GridLayout* layout =
       static_cast<views::GridLayout*>(GetLayoutManager());
   DCHECK(layout);
-  if (padding_above) {
-    const int vertical_padding = ChromeLayoutProvider::Get()->GetDistanceMetric(
-        views::DISTANCE_RELATED_CONTROL_VERTICAL);
-    layout->AddPaddingRow(0, vertical_padding);
+  ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
+  if (padding_above && !provider->IsHarmonyMode()) {
+    layout->AddPaddingRow(0, provider->GetDistanceMetric(
+                                 views::DISTANCE_RELATED_CONTROL_VERTICAL));
   }
   layout->StartRow(0, 0);
   layout->AddView(row.first);
   layout->AddView(row.second);
+
+  views::ScrollView* scroll_view =
+      views::ScrollView::GetScrollViewForContents(this);
+  DCHECK(scroll_view);
+  if (!scroll_view->is_bounded()) {
+    // Limit visible height of list to 4 items
+    scroll_view->ClipHeightTo(
+        0, std::max(row.first->GetPreferredSize().height(),
+                    row.second->GetPreferredSize().height()) *
+                   4 +
+               3 * (provider->IsHarmonyMode()
+                        ? 0
+                        : provider->GetDistanceMetric(
+                              views::DISTANCE_RELATED_CONTROL_VERTICAL)));
+  }
 }
 
 // ContentSettingBubbleContents -----------------------------------------------
@@ -397,8 +415,9 @@ void ContentSettingBubbleContents::Init() {
   if (!bubble_content.list_items.empty()) {
     const int kItemListColumnSetId = 2;
     views::ColumnSet* column_set = layout->AddColumnSet(kItemListColumnSetId);
-    column_set->AddColumn(GridLayout::LEADING, GridLayout::FILL, 1,
-                          GridLayout::USE_PREF, 0, 0);
+    column_set->AddColumn(
+        provider->IsHarmonyMode() ? GridLayout::FILL : GridLayout::LEADING,
+        GridLayout::FILL, 1, GridLayout::USE_PREF, 0, 0);
 
     for (const ContentSettingBubbleModel::ListItem& list_item :
          bubble_content.list_items) {
@@ -407,8 +426,10 @@ void ContentSettingBubbleContents::Init() {
           layout->AddPaddingRow(0, related_control_vertical_spacing);
 
         list_item_container_ = new ListItemContainer(this);
+        views::ScrollView* scroll_view = new views::ScrollView();
+        scroll_view->SetContents(list_item_container_);
         layout->StartRow(0, kItemListColumnSetId);
-        layout->AddView(list_item_container_);
+        layout->AddView(scroll_view);
       }
 
       list_item_container_->AddItem(list_item);
@@ -518,17 +539,21 @@ void ContentSettingBubbleContents::Init() {
     bubble_content_empty = false;
   }
 
-  layout->AddPaddingRow(0, related_control_vertical_spacing);
-  if (bubble_content.show_manage_text_as_checkbox) {
-    layout->StartRow(0, kIndentedSingleColumnSetId);
-    manage_checkbox_ = new views::Checkbox(bubble_content.manage_text);
-    manage_checkbox_->set_listener(this);
-    layout->AddView(manage_checkbox_);
-  } else {
-    layout->StartRow(0, kSingleColumnSetId);
-    manage_link_ = new views::Link(bubble_content.manage_text);
-    manage_link_->set_listener(this);
-    layout->AddView(manage_link_);
+  if (bubble_content.manage_text_style !=
+      ContentSettingBubbleModel::ManageTextStyle::Button) {
+    layout->AddPaddingRow(0, related_control_vertical_spacing);
+    if (bubble_content.manage_text_style ==
+        ContentSettingBubbleModel::ManageTextStyle::Checkbox) {
+      layout->StartRow(0, kIndentedSingleColumnSetId);
+      manage_checkbox_ = new views::Checkbox(bubble_content.manage_text);
+      manage_checkbox_->set_listener(this);
+      layout->AddView(manage_checkbox_);
+    } else {
+      layout->StartRow(0, kSingleColumnSetId);
+      manage_link_ = new views::Link(bubble_content.manage_text);
+      manage_link_->set_listener(this);
+      layout->AddView(manage_link_);
+    }
   }
 
   if (!bubble_content_empty) {
@@ -557,6 +582,12 @@ views::View* ContentSettingBubbleContents::CreateExtraView() {
   return learn_more_button_;
 }
 
+bool ContentSettingBubbleContents::Cancel() {
+  GetWidget()->Close();
+  content_setting_bubble_model_->OnManageLinkClicked();
+  return false;
+}
+
 bool ContentSettingBubbleContents::Accept() {
   content_setting_bubble_model_->OnDoneClicked();
   return true;
@@ -567,16 +598,30 @@ bool ContentSettingBubbleContents::Close() {
 }
 
 int ContentSettingBubbleContents::GetDialogButtons() const {
-  return ui::DIALOG_BUTTON_OK;
+  return ui::DIALOG_BUTTON_OK |
+         (content_setting_bubble_model_->bubble_content().manage_text_style ==
+                  ContentSettingBubbleModel::ManageTextStyle::Button
+              ? ui::DIALOG_BUTTON_CANCEL
+              : 0);
 }
 
 base::string16 ContentSettingBubbleContents::GetDialogButtonLabel(
     ui::DialogButton button) const {
-  const base::string16& done_text =
-      content_setting_bubble_model_->bubble_content().done_button_text;
-  if (!done_text.empty())
-    return done_text;
-  return l10n_util::GetStringUTF16(IDS_DONE);
+  if (button == ui::DIALOG_BUTTON_OK) {
+    const base::string16& done_text =
+        content_setting_bubble_model_->bubble_content().done_button_text;
+    if (!done_text.empty())
+      return done_text;
+    return l10n_util::GetStringUTF16(IDS_DONE);
+  }
+  if (button == ui::DIALOG_BUTTON_CANCEL) {
+    const base::string16& manage_text =
+        content_setting_bubble_model_->bubble_content().manage_text;
+    if (!manage_text.empty())
+      return manage_text;
+    return l10n_util::GetStringUTF16(IDS_MANAGE);
+  }
+  return base::string16();
 }
 
 void ContentSettingBubbleContents::StyleLearnMoreButton(
