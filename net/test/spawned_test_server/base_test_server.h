@@ -386,7 +386,7 @@ class BaseTestServer {
       base::DictionaryValue* arguments) const WARN_UNUSED_RESULT;
 
  private:
-  void Init(const std::string& host);
+  void Init();
 
   // Document root of the test server.
   base::FilePath document_root_;
