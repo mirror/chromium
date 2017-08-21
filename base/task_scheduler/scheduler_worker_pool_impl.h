@@ -94,6 +94,9 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // TODO(fdoray): Remove this method. https://crbug.com/687264
   int GetMaxConcurrentTasksDeprecated() const;
 
+  // Waits until at least |n| workers are idle.
+  void WaitForWorkersIdleForTesting(size_t n);
+
   // Waits until all workers are idle.
   void WaitForAllWorkersIdleForTesting();
 
@@ -116,6 +119,9 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // Returns |worker_capacity_|.
   size_t GetWorkerCapacityForTesting();
 
+  // Returns the number of workers that are idle (i.e. not running tasks).
+  size_t NumberOfIdleWorkersForTesting();
+
  private:
   class SchedulerWorkerDelegateImpl;
 
@@ -123,17 +129,29 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
                           TaskTracker* task_tracker,
                           DelayedTaskManager* delayed_task_manager);
 
+  // Waits until at least |n| workers are idle. |lock_| must be held to call
+  // this function.
+  void WaitForWorkersIdleWithLockForTesting(size_t n);
+
   // Wakes up the last worker from this worker pool to go idle, if any.
   void WakeUpOneWorker();
 
+  // Performs the same action as WakeUpOneWorker() except asserts |lock_| is
+  // acquired rather than acquires it.
+  void WakeUpOneWorkerWithLock();
+
+  // Adds a worker, if needed, to maintain one idle worker, |worker_capacity_|
+  // permitting.
+  void MaintainAtLeastOneIdleWorkerWithLock();
+
   // Adds |worker| to |idle_workers_stack_|.
-  void AddToIdleWorkersStack(SchedulerWorker* worker);
+  void AddToIdleWorkersStackWithLock(SchedulerWorker* worker);
 
   // Peeks from |idle_workers_stack_|.
-  const SchedulerWorker* PeekAtIdleWorkersStack() const;
+  const SchedulerWorker* PeekAtIdleWorkersStackWithLock() const;
 
   // Removes |worker| from |idle_workers_stack_|.
-  void RemoveFromIdleWorkersStack(SchedulerWorker* worker);
+  void RemoveFromIdleWorkersStackWithLock(SchedulerWorker* worker);
 
   // Returns true if worker cleanup is permitted.
   bool CanWorkerCleanupForTesting();
@@ -141,7 +159,11 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // Tries to add a new SchedulerWorker to the pool. Returns the new
   // SchedulerWorker on success, nullptr otherwise. Cannot be called before
   // Start(). Must be called under the protection of |lock_|.
-  SchedulerWorker* CreateRegisterAndStartSchedulerWorker();
+  SchedulerWorker* CreateRegisterAndStartSchedulerWorkerWithLock();
+
+  // Returns the number of workers in the pool that should not run tasks due to
+  // the pool being over worker capacity.
+  size_t NumberOfWorkersThatCantRunTasksWithLock() const;
 
   const std::string name_;
   const ThreadPriority priority_hint_;
@@ -171,6 +193,9 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // workers.
   size_t worker_capacity_ = 0;
 
+  // Initial value of |worker_capacity_| as set in Start().
+  size_t initial_worker_capacity_;
+
   // Stack of idle workers. Initially, all workers are on this stack. A worker
   // is removed from the stack before its WakeUp() function is called and when
   // it receives work from GetWork() (a worker calls GetWork() when its sleep
@@ -178,7 +203,7 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // is pushed on this stack when it receives nullptr from GetWork().
   SchedulerWorkerStack idle_workers_stack_;
 
-  // Signaled when all workers become idle.
+  // Signaled when a worker is added to the idle workers stack.
   std::unique_ptr<ConditionVariable> idle_workers_stack_cv_for_testing_;
 
   // Number of wake ups that occurred before Start(). Never modified after
