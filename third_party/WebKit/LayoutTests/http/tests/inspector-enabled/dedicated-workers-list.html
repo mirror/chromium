@@ -4,56 +4,47 @@
 <script src="../inspector/debugger-test.js"></script>
 
 <script>
-function handleLoad()
-{
-    if (window.testRunner)
-        testRunner.waitUntilDone();
+function handleLoad() {
+  if (window.testRunner) testRunner.waitUntilDone();
 
-    var worker1 = new Worker("resources/dedicated-worker.js?id=1");
-    worker1.onmessage = handleMessageFromWorker;
-    var worker2 = new Worker("resources/dedicated-worker.js?id=2");
-    worker2.onmessage = handleMessageFromWorker;
-    var messageCount = 0;
-    function handleMessageFromWorker(event)
-    {
-        messageCount++;
-        console.log("Received message from worker " + messageCount);
-        if (messageCount === 2) {
-            if (window.testRunner)
-                testRunner.showWebInspector();
-            runTest();
-        }
+  var worker1 = new Worker('resources/dedicated-worker.js?id=1');
+  worker1.onmessage = handleMessageFromWorker;
+  var worker2 = new Worker('resources/dedicated-worker.js?id=2');
+  worker2.onmessage = handleMessageFromWorker;
+  var messageCount = 0;
+  function handleMessageFromWorker(event) {
+    messageCount++;
+    console.log('Received message from worker ' + messageCount);
+    if (messageCount === 2) {
+      if (window.testRunner) testRunner.showWebInspector();
+      runTest();
     }
+  }
 }
 
+async function test() {
+  var workerCount = 0;
+  var observer = {
+    targetAdded(target) {
+      if (!TestRunner.isDedicatedWorker(target)) return;
+      workerCount++;
+      TestRunner.addResult('Added worker: ' + workerCount);
+      if (workerCount === 2) {
+        TestRunner.addResult('Done.');
+        TestRunner.completeTest();
+      }
+    },
 
-async function test()
-{
-    var workerCount = 0;
-    var observer = {
-        targetAdded(target) {
-            if (!TestRunner.isDedicatedWorker(target))
-                return;
-            workerCount++;
-            TestRunner.addResult("Added worker: " + workerCount);
-            if (workerCount === 2) {
-                TestRunner.addResult("Done.");
-                TestRunner.completeTest();
-            }
-        },
+    targetRemoved() {}
+  };
 
-        targetRemoved() {
-        }
-    };
+  await TestRunner.TargetAgent.setAutoAttach(false, false);
+  // Debugger should not crash when autoconnecting is immediately followed by termination.
 
-    await TestRunner.TargetAgent.setAutoAttach(false, false);
-    // Debugger should not crash when autoconnecting is immediately followed by termination.
-
-    SDK.targetManager.observeTargets(observer);
-    TestRunner.TargetAgent.setAutoAttach(true, true);
-    TestRunner.addResult("Worker inspection enabled");
-};
-
+  SDK.targetManager.observeTargets(observer);
+  TestRunner.TargetAgent.setAutoAttach(true, true);
+  TestRunner.addResult('Worker inspection enabled');
+}
 </script>
 
 </head>

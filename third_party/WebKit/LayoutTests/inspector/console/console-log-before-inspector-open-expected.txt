@@ -1,13 +1,13 @@
-CONSOLE MESSAGE: line 7: log
-CONSOLE MESSAGE: line 8: info
-CONSOLE WARNING: line 9: warn
-CONSOLE ERROR: line 10: error
+CONSOLE MESSAGE: line 6: log
+CONSOLE MESSAGE: line 7: info
+CONSOLE WARNING: line 8: warn
+CONSOLE ERROR: line 9: error
 Tests that Web Inspector won't crash if some console have been logged by the time it's opening.
 
-console-log-before-inspector-open.html:7 log
-console-log-before-inspector-open.html:8 info
-console-log-before-inspector-open.html:9 warn
+console-log-before-inspector-open.html:6 log
+console-log-before-inspector-open.html:7 info
+console-log-before-inspector-open.html:8 warn
+(anonymous) @ console-log-before-inspector-open.html:8
+console-log-before-inspector-open.html:9 error
 (anonymous) @ console-log-before-inspector-open.html:9
-console-log-before-i…pector-open.html:10 error
-(anonymous) @ console-log-before-i…pector-open.html:10
 

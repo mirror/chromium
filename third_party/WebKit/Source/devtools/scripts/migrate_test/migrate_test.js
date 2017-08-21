@@ -387,11 +387,7 @@ function getPanel(inputPath) {
   const folder = inputPath.indexOf('LayoutTests/inspector') === -1 ? components[4] : components[2];
   if (folder.endsWith('.html'))
     return;
-  const panel = panelByFolder[folder];
-  if (!panel) {
-    throw new Error('Could not figure out which panel to map folder: ' + folder);
-  }
-  return panel;
+  return panelByFolder[folder];
 }
 
 function mapTestHelpers(testHelpers) {

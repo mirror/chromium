@@ -1,10 +1,10 @@
-CONSOLE MESSAGE: line 18: [object Object]
+CONSOLE MESSAGE: line 17: [object Object]
 Tests that Web Inspector won't crash if some console have been logged by the time it's opening.
 
-console-log-short-hand-method.html:18 Object
+console-log-short-hand-method.html:17 Object
     baz: (...)
-    boo: ƒ (c,d)
-    foo: ƒ foo(a,b)
+    boo: ƒ (c, d)
+    foo: ƒ foo(a, b)
     gen: ƒ* gen()
     get baz: ƒ baz()
     set baz: ƒ baz(x)
