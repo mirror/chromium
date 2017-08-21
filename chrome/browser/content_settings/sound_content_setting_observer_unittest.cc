@@ -6,6 +6,7 @@
 
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/tabs/tab_utils.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -14,6 +15,7 @@ namespace {
 
 constexpr char kURL1[] = "http://google.com";
 constexpr char kURL2[] = "http://youtube.com";
+constexpr char kExtensionId[] = "extensionid";
 
 }  // anonymous namespace
 
@@ -42,6 +44,10 @@ class SoundContentSettingObserverTest : public ChromeRenderViewHostTestHarness {
   void ChangeDefaultSoundContentSettingTo(ContentSetting setting) {
     host_content_settings_map_->SetDefaultContentSetting(
         CONTENT_SETTINGS_TYPE_SOUND, setting);
+  }
+
+  void SetMuteStateForReason(bool state, TabMutedReason reason) {
+    chrome::SetTabAudioMuted(web_contents(), state, reason, kExtensionId);
   }
 
  private:
@@ -95,5 +101,46 @@ TEST_F(SoundContentSettingObserverTest, AudioMutingUpdatesWithNavigation) {
 
   // Should be muted for kURL1.
   NavigateAndCommit(GURL(kURL1));
+  EXPECT_TRUE(web_contents()->IsAudioMuted());
+}
+
+TEST_F(SoundContentSettingObserverTest, DontMuteWhenUnmutedByExtension) {
+  EXPECT_FALSE(web_contents()->IsAudioMuted());
+
+  // Mute kURL1 via content setting.
+  ChangeSoundContentSettingTo(CONTENT_SETTING_BLOCK);
+  EXPECT_TRUE(web_contents()->IsAudioMuted());
+
+  // Unmute by extension.
+  SetMuteStateForReason(false, TabMutedReason::EXTENSION);
+  EXPECT_FALSE(web_contents()->IsAudioMuted());
+
+  // Navigating to a new URL and back to kURL1 should not mute the tab unmuted
+  // by an extension.
+  NavigateAndCommit(GURL(kURL2));
+  EXPECT_FALSE(web_contents()->IsAudioMuted());
+  NavigateAndCommit(GURL(kURL1));
+  EXPECT_FALSE(web_contents()->IsAudioMuted());
+}
+
+TEST_F(SoundContentSettingObserverTest, DontUnmuteWhenMutedByExtension) {
+  EXPECT_FALSE(web_contents()->IsAudioMuted());
+
+  SetMuteStateForReason(true, TabMutedReason::EXTENSION);
+  EXPECT_TRUE(web_contents()->IsAudioMuted());
+
+  // Navigating to a new URL should not unmute the tab muted by an extension.
+  NavigateAndCommit(GURL(kURL2));
+  EXPECT_TRUE(web_contents()->IsAudioMuted());
+}
+
+TEST_F(SoundContentSettingObserverTest, DontUnmuteWhenMutedForMediaCapture) {
+  EXPECT_FALSE(web_contents()->IsAudioMuted());
+
+  SetMuteStateForReason(true, TabMutedReason::MEDIA_CAPTURE);
+  EXPECT_TRUE(web_contents()->IsAudioMuted());
+
+  // Navigating to a new URL should not unmute the tab muted for media capture.
+  NavigateAndCommit(GURL(kURL2));
   EXPECT_TRUE(web_contents()->IsAudioMuted());
 }
