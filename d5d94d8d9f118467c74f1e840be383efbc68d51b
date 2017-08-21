@@ -16,6 +16,24 @@
       "revId": "d5d94d8d9f118467c74f1e840be383efbc68d51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b92a346_004ea6d2",
+        "filename": "chrome/android/java/res/drawable/selectable_item_icon_modern_bg.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-21T22:43:57Z",
+      "side": 1,
+      "message": "Will update this week as discussed offline.",
+      "parentUuid": "0a20b999_5d570c66",
+      "revId": "d5d94d8d9f118467c74f1e840be383efbc68d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
