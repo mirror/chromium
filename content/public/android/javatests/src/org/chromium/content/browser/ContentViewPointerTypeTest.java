@@ -5,7 +5,9 @@
 package org.chromium.content.browser;
 
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.SystemClock;
+import android.support.test.filters.SmallTest;
 import android.view.InputDevice;
 import android.view.MotionEvent;
 
@@ -15,7 +17,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.chromium.base.test.util.DisabledTest;
+import org.chromium.base.test.util.Feature;
+import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.blink_public.web.WebCursorInfoType;
 import org.chromium.content.browser.test.ContentJUnit4ClassRunner;
@@ -85,9 +88,9 @@ public class ContentViewPointerTypeTest {
     }
 
     @Test
-    //@SmallTest
-    //@Feature({"Main"})
-    @DisabledTest(message = "crbug.com/755112")
+    @SmallTest
+    @MinAndroidSdkLevel(Build.VERSION_CODES.N)
+    @Feature({"Main"})
     public void testPointerType() throws Throwable {
         checkPointerTypeForNode("hand", WebCursorInfoType.TYPE_HAND);
         checkPointerTypeForNode("text", WebCursorInfoType.TYPE_I_BEAM);
