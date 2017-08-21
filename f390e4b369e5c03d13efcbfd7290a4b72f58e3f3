@@ -49,6 +49,53 @@
     },
     {
       "key": {
+        "uuid": "bace234f_ab0f7170",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-21T14:42:21Z",
+      "side": 1,
+      "message": "Thanks. Right, that\u0027s fine since WebFrameScheduler is at the same level in the stack as MainThreadTaskQueues.",
+      "parentUuid": "9d80768a_a00cf4ed",
+      "range": {
+        "startLine": 58,
+        "startChar": 29,
+        "endLine": 58,
+        "endChar": 46
+      },
+      "revId": "f390e4b369e5c03d13efcbfd7290a4b72f58e3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "621cf6d0_5770def2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-21T14:42:21Z",
+      "side": 1,
+      "message": "Could we call this task_start_time and rename the existing ones to something like task_{start,end}_time_sec? I\u0027m also not completely convinced it helps to cache the result like this -- recomputing it should be almost free.",
+      "range": {
+        "startLine": 505,
+        "startChar": 18,
+        "endLine": 505,
+        "endChar": 23
+      },
+      "revId": "f390e4b369e5c03d13efcbfd7290a4b72f58e3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1fe3fda_7a6eaf88",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 4
@@ -84,6 +131,30 @@
       "side": 1,
       "message": "I think it\u0027s needed. I\u0027m trying to account for the fact that the RendererSchedulerImpl is no longer a |task_time_observers_| (think about the case when before it was the only task_time_observer). |observer_| is set on the constructor of RendererSchedulerImpl, and is reset to nullptr on SchedulerHelper::Shutdown, which resets the TaskQueueManager.\n\nI think this check should always be true when the SchedulerHelper comes from the RendererSchedulerImpl. Before, it would set itself as a TaskTimeObserver. Now, it will always set the |observer_|.",
       "parentUuid": "e1fe3fda_7a6eaf88",
+      "range": {
+        "startLine": 515,
+        "startChar": 56,
+        "endLine": 515,
+        "endChar": 65
+      },
+      "revId": "f390e4b369e5c03d13efcbfd7290a4b72f58e3f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a69129_d2e5dc9f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-21T14:42:21Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t think I fully follow that explanation. I don\u0027t think we should be making any assumptions about what SchedulerHelper or RendererSchedulerImpl are doing at this point.\n\nCould we instead have the TaskQueues request to be notified about task run times since that seems to be the bit of knowledge we need here?",
+      "parentUuid": "13ed5449_236e0a17",
       "range": {
         "startLine": 515,
         "startChar": 56,
