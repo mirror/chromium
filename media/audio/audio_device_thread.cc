@@ -8,13 +8,15 @@
 
 #include "base/logging.h"
 #include "base/sys_info.h"
+#include "build/build_config.h"
 
 namespace {
 
 base::ThreadPriority GetAudioThreadPriority() {
-#if defined(OS_CHROMEOS)
-  // On Chrome OS, there are priority inversion issues with having realtime
-  // threads on systems with only two cores, see crbug.com/710245.
+#if defined(OS_CHROMEOS) || defined(OS_WIN)
+  // On Chrome OS and Windows, there are priority inversion issues with
+  // having realtime threads on systems with only two cores, see
+  // crbug.com/710245 and crbug.com/754213.
   return base::SysInfo::NumberOfProcessors() > 2
              ? base::ThreadPriority::REALTIME_AUDIO
              : base::ThreadPriority::NORMAL;
