@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29d1f3a7_d404b8a1",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-21T23:35:06Z",
+      "side": 1,
+      "message": "Doesn\u0027t this apply to SPv1 also?",
+      "revId": "07de4d79d402f0e4185c23d934f81a68b49fcd36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
