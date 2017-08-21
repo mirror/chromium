@@ -689,11 +689,11 @@ void KeyboardController::ShowAnimationFinished() {
   }
 
   ChangeState(KeyboardControllerState::SHOWN);
-  NotifyKeyboardBoundsChangingAndEnsrueCaretInWorkArea();
+  NotifyKeyboardBoundsChangingAndEnsureCaretInWorkArea();
 }
 
 void KeyboardController::
-    NotifyKeyboardBoundsChangingAndEnsrueCaretInWorkArea() {
+    NotifyKeyboardBoundsChangingAndEnsureCaretInWorkArea() {
   // Notify observers after animation finished to prevent reveal desktop
   // background during animation.
   NotifyContentsBoundsChanging(container_->bounds());
