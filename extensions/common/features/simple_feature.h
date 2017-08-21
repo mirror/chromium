@@ -79,6 +79,7 @@ class SimpleFeature : public Feature {
                                     Context context,
                                     const GURL& url,
                                     Platform platform) const override;
+  Availability IsAvailableToEnvironment() const override;
   bool IsInternal() const override;
   bool IsIdInBlacklist(const std::string& extension_id) const override;
   bool IsIdInWhitelist(const std::string& extension_id) const override;

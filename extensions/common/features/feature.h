@@ -146,7 +146,7 @@ class Feature {
   // relies on an Extension now - maybe it will, one day, so if there's an
   // Extension available (or a runtime context, etc) then use the more targeted
   // method instead.
-  Availability IsAvailableToEnvironment() const;
+  virtual Availability IsAvailableToEnvironment() const = 0;
 
   virtual bool IsIdInBlacklist(const std::string& extension_id) const = 0;
   virtual bool IsIdInWhitelist(const std::string& extension_id) const = 0;
