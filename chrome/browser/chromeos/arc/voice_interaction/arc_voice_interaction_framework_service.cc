@@ -291,6 +291,15 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionRunning(
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
     ash::VoiceInteractionState state) {
   DCHECK_NE(state_, state);
+  if (state_ == ash::VoiceInteractionState::NOT_READY) {
+    PrefService* prefs = ProfileManager::GetActiveUserProfile()->GetPrefs();
+    SetVoiceInteractionEnabled(
+        prefs->GetBoolean(prefs::kArcVoiceInteractionValuePropAccepted) &&
+        prefs->GetBoolean(prefs::kVoiceInteractionEnabled));
+    SetVoiceInteractionContextEnabled(
+        ProfileManager::GetActiveUserProfile()->GetPrefs()->GetBoolean(
+            prefs::kVoiceInteractionContextEnabled));
+  }
   state_ = state;
   ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(state);
 }
@@ -353,6 +362,11 @@ void ArcVoiceInteractionFrameworkService::StartVoiceInteractionSetupWizard() {
           StartVoiceInteractionSetupWizard);
   if (!framework_instance)
     return;
+
+  // We'll need to enable voice interaction so that the voice interaction
+  // component in ARC side settings is properly configured to launch OOBE
+  // flow.
+  SetVoiceInteractionEnabled(true);
   framework_instance->StartVoiceInteractionSetupWizard();
 }
 
