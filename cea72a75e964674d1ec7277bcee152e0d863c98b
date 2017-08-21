@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ee2ba10_99fa51fc",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-21T04:03:19Z",
+      "side": 1,
+      "message": "Sorry, I looked this again but I still feel this is a bit too cryptic name to expose here.  We don\u0027t need to lie about what we do here, but could we still try to use the name that explains the intention here?  Some candidates:\n\nSetUpEmbeddedWorkerChannelForServiceWorker\n\nWith a brief comment about what \u0027embedded worker channel\u0027 means here. We can rename further when EmbeddedWorker gets renamed.",
+      "revId": "cea72a75e964674d1ec7277bcee152e0d863c98b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
