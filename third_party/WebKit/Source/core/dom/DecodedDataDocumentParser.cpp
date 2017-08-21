@@ -55,7 +55,7 @@ std::unique_ptr<TextResourceDecoder> DecodedDataDocumentParser::TakeDecoder() {
 }
 
 void DecodedDataDocumentParser::AppendBytes(const char* data, size_t length) {
-  if (!length)
+  if (!length || !decoder_)
     return;
 
   // This should be checking isStopped(), but XMLDocumentParser prematurely
