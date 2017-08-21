@@ -22,6 +22,30 @@
       "revId": "d60a5dbf65cd1bc43b352ffd0c0e7dd42bad8f3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5547be2d_cfb6b5ff",
+        "filename": "ios/chrome/browser/ui/webui/ntp_tiles_internals_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-21T09:35:50Z",
+      "side": 1,
+      "message": "Thanks",
+      "parentUuid": "a92200f1_095d63a0",
+      "range": {
+        "startLine": 71,
+        "startChar": 46,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "d60a5dbf65cd1bc43b352ffd0c0e7dd42bad8f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

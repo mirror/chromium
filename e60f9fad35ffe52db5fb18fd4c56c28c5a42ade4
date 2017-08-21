@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5fe5bc56_65ca3879",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-21T09:35:50Z",
+      "side": 1,
+      "message": "Done, the bool makes much more sense here. Sorry for misreading your comment earlier :)",
+      "parentUuid": "fcf0c349_79a6c556",
+      "revId": "e60f9fad35ffe52db5fb18fd4c56c28c5a42ade4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "275d5117_7d396350",
         "filename": "components/ntp_tiles/tile_source.h",
         "patchSetId": 4
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "By \"directly\" I meant as the value of a histogram, in which case it would\u0027ve been very bad to change the values. Seems that isn\u0027t the case though, so all good here.\n(Moving these from POPULAR to POPULAR_BAKED_IN seems acceptable to me. We *might* want to mention that in the histogram description or something, but I\u0027m not sure if that\u0027s necessary.)",
       "parentUuid": "4f872a08_a05a5bd4",
+      "revId": "e60f9fad35ffe52db5fb18fd4c56c28c5a42ade4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "86546426_1016b705",
+        "filename": "components/ntp_tiles/tile_source.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-21T09:35:50Z",
+      "side": 1,
+      "message": "Okay yes, I haven\u0027t found a histogram that would store the TileSource.\nAdded the clarification to the histogram suffix description.",
+      "parentUuid": "c67aaae2_fe97c239",
       "revId": "e60f9fad35ffe52db5fb18fd4c56c28c5a42ade4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
