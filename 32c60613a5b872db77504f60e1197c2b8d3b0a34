@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24f499a4_27574e12",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-21T21:28:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bc2c39c_8a6e4b11",
+      "range": {
+        "startLine": 15,
+        "startChar": 126,
+        "endLine": 15,
+        "endChar": 136
+      },
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0bd0406_e30a5d13",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 14
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "8cd5fe83_c8bf9e0b",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-21T21:28:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0bd0406_e30a5d13",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "685a88c4_4f333536",
         "filename": "content/browser/frame_host/navigation_request.h",
         "patchSetId": 14
@@ -56,6 +98,24 @@
       "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a110f2d_13a7a2ab",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-21T21:28:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "685a88c4_4f333536",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "a7dffdd9_3c533628",
+        "filename": "content/browser/loader/navigation_resource_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-21T21:28:23Z",
+      "side": 1,
+      "message": "I believe that part of the documentation only applies to CheckPublicKeyPins(), not CheckPublicKeyPins().",
+      "parentUuid": "1b686b0c_5c6faca9",
+      "range": {
+        "startLine": 36,
+        "startChar": 16,
+        "endLine": 36,
+        "endChar": 38
+      },
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de86047d_03ce08f1",
         "filename": "content/browser/loader/navigation_url_loader_delegate.h",
         "patchSetId": 14
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "42e2c96b_0696da84",
+        "filename": "content/browser/loader/navigation_url_loader_delegate.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-21T21:28:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de86047d_03ce08f1",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c0e0a11_aa8539e8",
         "filename": "content/browser/loader/navigation_url_loader_delegate.h",
         "patchSetId": 14
@@ -110,6 +212,30 @@
       "writtenOn": "2017-08-21T20:42:43Z",
       "side": 1,
       "message": "base::Optional\u003cbool\u003e strikes me as possibly over-gilding the bit :-}.  This information is available from the TransportSecurityState + the host, and the TransportSecurityState is available from the URLRequestContext, which has a fair amount of visibility.  Would it be reasonable to push this computation up into the consumers that care about it?  Or maybe add the boolean to SSLInfo?\n\n(I\u0027m not strongly advocating for this, but I\u0027m a bit uncomfortable with the function signature.)",
+      "range": {
+        "startLine": 66,
+        "startChar": 37,
+        "endLine": 66,
+        "endChar": 45
+      },
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc31b49_c0681732",
+        "filename": "content/browser/loader/navigation_url_loader_delegate.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-21T21:28:23Z",
+      "side": 1,
+      "message": "I think Emily had some ideas about how we could retrieve it somewhere down the consumption chain, in future CLs.\n\nI don\u0027t think attaching it to SSLInfo makes sense – \"is the host for this connection a a host with fatal SSL errors for the current profile?\" isn\u0027t really a property of the connection. I\u0027m also not sure we can attach the proper info in all the proper places, or if all uses of SSLInfo even correspond to a host.\n\nWe considered grouping `ssl_info` and `fatal` into a struct, but that felt like overkill, and I don\u0027t remember if we ever thought of a good place that could be shared by all functions in this chain.\n\nWould something like std::tuple be more comfortable?",
+      "parentUuid": "2c0e0a11_aa8539e8",
       "range": {
         "startLine": 66,
         "startChar": 37,
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "da58635a_bb2d58fd",
+        "filename": "content/browser/loader/navigation_url_loader_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-21T21:28:23Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "80cd5a01_6471e198",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6038edd3_52b791b3",
         "filename": "content/browser/loader/navigation_url_loader_impl_core.h",
         "patchSetId": 14
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "23b9272e_a5690040",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-21T21:28:23Z",
+      "side": 1,
+      "message": "Oops, refactoring error. :-(",
+      "parentUuid": "6038edd3_52b791b3",
+      "range": {
+        "startLine": 86,
+        "startChar": 10,
+        "endLine": 86,
+        "endChar": 21
+      },
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b3c2882_d7c00e24",
         "filename": "content/browser/loader/navigation_url_loader_impl_core.h",
         "patchSetId": 14
@@ -182,6 +350,30 @@
       "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44556051_3c192d61",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-21T21:28:23Z",
+      "side": 1,
+      "message": "I\u0027ve updated this to match the documentation in NavigationURLLoaderDelegate.",
+      "parentUuid": "3b3c2882_d7c00e24",
+      "range": {
+        "startLine": 89,
+        "startChar": 21,
+        "endLine": 89,
+        "endChar": 26
+      },
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -261,6 +453,30 @@
     },
     {
       "key": {
+        "uuid": "15cab21d_966b235e",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-21T21:28:23Z",
+      "side": 1,
+      "message": "I\u0027ve updated the optional arguments to use a reference.\n\nI tried added some simple logging statements, and it seems that interstitials and net errors only trigger OnComplete(), and normal navigations only trigger OnReceiveResponse(). I presume that precludes holding on to the value from one call in hopes of using it for the other.",
+      "parentUuid": "5be53935_82129d8d",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 32
+      },
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b26d5bd_1c80faf5",
         "filename": "content/public/common/resource_request_completion_status.h",
         "patchSetId": 14
@@ -272,6 +488,24 @@
       "writtenOn": "2017-08-21T12:25:25Z",
       "side": 1,
       "message": "If I read the code correctly, this member is not used at all. Please remove it. In particular, adding means we transmit a bogus SSLInfo to the renderer process on each ResourceRequest. That doesn\u0027t seem to be something we want.",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88db3d5_cbec8573",
+        "filename": "content/public/common/resource_request_completion_status.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-21T21:28:23Z",
+      "side": 1,
+      "message": "This is needed for NavigationURLLoaderNetworkService::URLLoaderRequestController::OnComplete.",
+      "parentUuid": "8b26d5bd_1c80faf5",
       "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
