@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a74a6c2d_b84b1c6c",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-21T22:13:10Z",
+      "side": 1,
+      "message": "How does this interact with the local_surface_id_ coming from OnSurfaceChanged ?",
+      "revId": "37020437cf5b22e787f9f506de06ced266a1c770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
