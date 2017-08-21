@@ -33,17 +33,23 @@ const int kNumCommandIds =
 static_assert(kNumCommandIds == 14,
               "invalid number of command IDs reserved for open with");
 
-std::vector<ash::LinkHandlerInfo> CreateLinkHandlerInfo(size_t num_apps) {
-  std::vector<ash::LinkHandlerInfo> handlers;
+std::vector<ash::mojom::LinkHandlerInfoPtr> CreateLinkHandlerInfo(
+    size_t num_apps) {
+  std::vector<ash::mojom::LinkHandlerInfoPtr> handlers;
   for (size_t i = 0; i < num_apps; ++i) {
+    ash::mojom::LinkHandlerInfoPtr handler = ash::mojom::LinkHandlerInfo::New();
+
+    handler->name = base::StringPrintf("App %" PRIuS, i);
+    handler->id = i;
+
     gfx::ImageSkia image_skia;
-    image_skia.AddRepresentation(gfx::ImageSkiaRep(gfx::Size(1, 1), 1.0f));
-    ash::LinkHandlerInfo info = {
-        base::StringPrintf("App %" PRIuS, i),
-        // Use an empty image for the first item to test ModelChanged() with
-        // both empty and non-empty icons.
-        (i == 0) ? gfx::Image() : gfx::Image(image_skia), i};
-    handlers.push_back(info);
+    // Use an empty image for the first item to test OnLinkHandlerModelChanged()
+    // with both empty and non-empty icons.
+    if (i != 0)
+      image_skia.AddRepresentation(gfx::ImageSkiaRep(gfx::Size(1, 1), 1.0f));
+    handler->icon = image_skia;
+
+    handlers.push_back(std::move(handler));
   }
   return handlers;
 }
@@ -157,7 +163,7 @@ TEST(OpenWithMenuObserverTest, TestBuildHandlersMap) {
   }
 }
 
-TEST(OpenWithMenuObserverTest, TestModelChanged) {
+TEST(OpenWithMenuObserverTest, TestOnLinkHandlerModelChanged) {
   content::TestBrowserThreadBundle thread_bundle;
   MockRenderViewContextMenu mock_menu(false);
   OpenWithMenuObserver observer(&mock_menu);
@@ -171,7 +177,7 @@ TEST(OpenWithMenuObserverTest, TestModelChanged) {
   // Check that all menu items are hidden when there is no app to show.
   const size_t kZeroApps = 0;
   MockRenderViewContextMenu::MockMenuItem item;
-  observer.ModelChanged(CreateLinkHandlerInfo(kZeroApps));
+  observer.OnLinkHandlerModelChanged(CreateLinkHandlerInfo(kZeroApps));
   EXPECT_EQ(static_cast<size_t>(kNumCommandIds), mock_menu.GetMenuSize());
   for (size_t i = 0; i < mock_menu.GetMenuSize(); ++i) {
     EXPECT_TRUE(mock_menu.GetMenuItem(i, &item)) << i;
@@ -180,7 +186,7 @@ TEST(OpenWithMenuObserverTest, TestModelChanged) {
 
   // Check that all 3 apps are on the main menu.
   const size_t kThreeApps = 3;
-  observer.ModelChanged(CreateLinkHandlerInfo(kThreeApps));
+  observer.OnLinkHandlerModelChanged(CreateLinkHandlerInfo(kThreeApps));
   EXPECT_EQ(static_cast<size_t>(kNumCommandIds), mock_menu.GetMenuSize());
   for (size_t i = 0; i < kThreeApps; ++i) {
     EXPECT_TRUE(mock_menu.GetMenuItem(i, &item)) << i;
@@ -201,7 +207,7 @@ TEST(OpenWithMenuObserverTest, TestModelChanged) {
   // Check that the first 2 apps are on the main menu and the rest is on the
   // submenu.
   const size_t kFourApps = 4;
-  observer.ModelChanged(CreateLinkHandlerInfo(kFourApps));
+  observer.OnLinkHandlerModelChanged(CreateLinkHandlerInfo(kFourApps));
   EXPECT_EQ(static_cast<size_t>(kNumCommandIds), mock_menu.GetMenuSize());
   for (size_t i = 0; i < 2; ++i) {
     EXPECT_TRUE(mock_menu.GetMenuItem(i, &item)) << i;
