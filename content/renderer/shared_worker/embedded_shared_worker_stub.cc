@@ -257,6 +257,7 @@ EmbeddedSharedWorkerStub::CreateDevToolsMessageLoop() {
 std::unique_ptr<blink::WebWorkerFetchContext>
 EmbeddedSharedWorkerStub::CreateWorkerFetchContext(
     blink::WebServiceWorkerNetworkProvider* web_network_provider) {
+  CHECK(web_network_provider);
   DCHECK(base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
   mojom::WorkerURLLoaderFactoryProviderPtr worker_url_loader_factory_provider;
   RenderThreadImpl::current()

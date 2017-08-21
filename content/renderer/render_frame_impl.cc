@@ -3037,6 +3037,7 @@ RenderFrameImpl::CreateWorkerFetchContext() {
       frame_->GetDocument().IsSecureContext());
   blink::WebServiceWorkerNetworkProvider* web_provider =
       frame_->GetDocumentLoader()->GetServiceWorkerNetworkProvider();
+  CHECK(web_provider);
   if (web_provider) {
     ServiceWorkerNetworkProvider* provider =
         ServiceWorkerNetworkProvider::FromWebServiceWorkerNetworkProvider(
