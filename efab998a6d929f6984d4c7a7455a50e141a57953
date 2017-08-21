@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ebb570e_eba0eff4",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-21T19:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7edfd003_85de92e5",
+      "revId": "efab998a6d929f6984d4c7a7455a50e141a57953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9e83b7e_7cfd3765",
         "filename": "ash/system/palette/common_palette_tool.h",
         "patchSetId": 15
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-17T21:31:39Z",
       "side": 1,
       "message": "nit: could this be made protected?\n\nIf not, we usually put inline getters at the top of the class, after the constructors\n\n(We are inconsistent about this, but the majority of ash code does that.)",
+      "revId": "efab998a6d929f6984d4c7a7455a50e141a57953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb636473_0aff8420",
+        "filename": "ash/system/palette/common_palette_tool.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-21T19:33:14Z",
+      "side": 1,
+      "message": "Made protected",
+      "parentUuid": "d9e83b7e_7cfd3765",
       "revId": "efab998a6d929f6984d4c7a7455a50e141a57953",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "71396adc_da36add4",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-21T19:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90bef18c_4080c744",
+      "revId": "efab998a6d929f6984d4c7a7455a50e141a57953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dd8b79a_26bcf375",
         "filename": "ash/system/palette/tools/metalayer_unittest.cc",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "efab998a6d929f6984d4c7a7455a50e141a57953",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2d9538_5c892b2a",
+        "filename": "ash/system/palette/tools/metalayer_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-21T19:33:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dd8b79a_26bcf375",
+      "revId": "efab998a6d929f6984d4c7a7455a50e141a57953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
