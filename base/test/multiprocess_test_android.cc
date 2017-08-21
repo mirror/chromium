@@ -13,6 +13,7 @@
 #include "base/base_switches.h"
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "base/test/multiprocess_test_android.h"
 #include "jni/MainReturnCodeResult_jni.h"
 #include "jni/MultiprocessTestClientLauncher_jni.h"
 
@@ -27,6 +28,16 @@ namespace base {
 Process SpawnMultiProcessTestChild(const std::string& procname,
                                    const CommandLine& base_command_line,
                                    const LaunchOptions& options) {
+  return SpawnMultiProcessTestChildWithDelegate(
+      procname, base_command_line, options,
+      android::ScopedJavaLocalRef<jobject>());
+}
+
+Process SpawnMultiProcessTestChildWithDelegate(
+    const std::string& procname,
+    const CommandLine& base_command_line,
+    const LaunchOptions& options,
+    const android::ScopedJavaLocalRef<jobject> delegate) {
   JNIEnv* env = android::AttachCurrentThread();
   DCHECK(env);
 
@@ -50,7 +61,7 @@ Process SpawnMultiProcessTestChild(const std::string& procname,
   android::ScopedJavaLocalRef<jobjectArray> j_argv =
       android::ToJavaArrayOfStrings(env, command_line.argv());
   jint pid = android::Java_MultiprocessTestClientLauncher_launchClient(
-      env, j_argv, fds);
+      env, j_argv, fds, delegate);
   return Process(pid);
 }
 

@@ -4,11 +4,14 @@
 
 package org.chromium.base;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.IBinder;
 import android.os.Looper;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
+import android.text.TextUtils;
 import android.util.SparseArray;
 
 import org.chromium.base.annotations.CalledByNative;
@@ -20,7 +23,8 @@ import org.chromium.base.process_launcher.FileDescriptorInfo;
 import org.chromium.base.process_launcher.IChildProcessService;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;
@@ -39,6 +43,24 @@ public final class MultiprocessTestClientLauncher {
     private static final String TAG = "cr_MProcTCLauncher";
 
     private static final int CONNECTION_TIMEOUT_MS = 10 * 1000;
+
+    static final String DELEGATE_INIT_CLASS_EXTRA = "org.chromium.base.DELEGATE_INIT_CLASS_EXTRA";
+
+    /** Delegate that can be used to customize the service started. */
+    public static interface Delegate {
+        /**
+         * @return optional list of extra interfaces that should be provided to the created process.
+         */
+        List<IBinder> getExtraClientInterfaces();
+
+        /**
+         * @return the name of a class with a static initializeMultiprocessTestService method that
+         * will be invoked when the process starts. This provides a way to customize the started
+         * service without having to provide a different subclass of the service (which would then
+         * require a different service entry in the manifest).
+         */
+        String getInitClass();
+    }
 
     private static final SparseArray<MultiprocessTestClientLauncher> sPidToLauncher =
             new SparseArray<>();
@@ -92,6 +114,17 @@ public final class MultiprocessTestClientLauncher {
     private final ChildProcessLauncher.Delegate mLauncherDelegate =
             new ChildProcessLauncher.Delegate() {
                 @Override
+                public void onBeforeConnectionSetup(Bundle connectionBundle) {
+                    if (mDelegate != null) {
+                        String initDelegateClassName = mDelegate.getInitClass();
+                        if (!TextUtils.isEmpty(initDelegateClassName)) {
+                            connectionBundle.putString(
+                                    DELEGATE_INIT_CLASS_EXTRA, initDelegateClassName);
+                        }
+                    }
+                }
+
+                @Override
                 public void onConnectionEstablished(ChildProcessConnection connection) {
                     assert isRunningOnLauncherThread();
                     int pid = connection.getPid();
@@ -113,6 +146,8 @@ public final class MultiprocessTestClientLauncher {
 
     private final ChildProcessLauncher mLauncher;
 
+    private final Delegate mDelegate;
+
     private final ReentrantLock mConnectedLock = new ReentrantLock();
     private final Condition mConnectedCondition = mConnectedLock.newCondition();
     @GuardedBy("mConnectedLock")
@@ -129,7 +164,8 @@ public final class MultiprocessTestClientLauncher {
     @GuardedBy("mMainReturnCodeLock")
     private Integer mMainReturnCode;
 
-    private MultiprocessTestClientLauncher(String[] commandLine, FileDescriptorInfo[] filesToMap) {
+    private MultiprocessTestClientLauncher(
+            String[] commandLine, FileDescriptorInfo[] filesToMap, Delegate delegate) {
         assert isRunningOnLauncherThread();
 
         if (sConnectionAllocator == null) {
@@ -139,8 +175,15 @@ public final class MultiprocessTestClientLauncher {
                     "org.chromium.native_test.NUM_TEST_CLIENT_SERVICES", false /* bindToCaller */,
                     false /* bindAsExternalService */, false /* useStrongBinding */);
         }
+        mDelegate = delegate;
+
+        List<IBinder> callbacks = new ArrayList<>();
+        callbacks.add(mCallback);
+        if (mDelegate != null && mDelegate.getExtraClientInterfaces() != null) {
+            callbacks.addAll(mDelegate.getExtraClientInterfaces());
+        }
         mLauncher = new ChildProcessLauncher(sLauncherHandler, mLauncherDelegate, commandLine,
-                filesToMap, sConnectionAllocator, Arrays.asList(mCallback));
+                filesToMap, sConnectionAllocator, callbacks);
     }
 
     private boolean waitForConnection(long timeoutMs) {
@@ -195,15 +238,16 @@ public final class MultiprocessTestClientLauncher {
      * @return the PID of the started process or 0 if the process could not be started.
      */
     @CalledByNative
-    private static int launchClient(
-            final String[] commandLine, final FileDescriptorInfo[] filesToMap) {
+    private static int launchClient(final String[] commandLine,
+            final FileDescriptorInfo[] filesToMap, final Delegate delegate) {
         initLauncherThread();
 
         final MultiprocessTestClientLauncher launcher =
                 runOnLauncherAndGetResult(new Callable<MultiprocessTestClientLauncher>() {
                     @Override
                     public MultiprocessTestClientLauncher call() {
-                        return createAndStartLauncherOnLauncherThread(commandLine, filesToMap);
+                        return createAndStartLauncherOnLauncherThread(
+                                commandLine, filesToMap, delegate);
                     }
                 });
         if (launcher == null) {
@@ -226,11 +270,11 @@ public final class MultiprocessTestClientLauncher {
     }
 
     private static MultiprocessTestClientLauncher createAndStartLauncherOnLauncherThread(
-            String[] commandLine, FileDescriptorInfo[] filesToMap) {
+            String[] commandLine, FileDescriptorInfo[] filesToMap, Delegate delegate) {
         assert isRunningOnLauncherThread();
 
         MultiprocessTestClientLauncher launcher =
-                new MultiprocessTestClientLauncher(commandLine, filesToMap);
+                new MultiprocessTestClientLauncher(commandLine, filesToMap, delegate);
         if (!launcher.mLauncher.start(
                     true /* setupConnection */, true /* queueIfNoFreeConnection */)) {
             return null;
