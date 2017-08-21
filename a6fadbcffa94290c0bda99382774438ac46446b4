@@ -188,6 +188,30 @@
       "revId": "a6fadbcffa94290c0bda99382774438ac46446b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63dd7153_05ebc302",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-21T23:17:12Z",
+      "side": 1,
+      "message": "I missed that you also did a rebase.",
+      "parentUuid": "a8ef02d3_0e954144",
+      "range": {
+        "startLine": 342,
+        "startChar": 36,
+        "endLine": 342,
+        "endChar": 49
+      },
+      "revId": "a6fadbcffa94290c0bda99382774438ac46446b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
