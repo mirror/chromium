@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "481dc682_cd78d29c",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-21T08:48:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "647a06e6_0c6e7b02",
+      "revId": "f14073ecc3272db6f1492bafc9359bbef31da479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f49ade35_76d5f6fd",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "f14073ecc3272db6f1492bafc9359bbef31da479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6453fc1_4f3a7929",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-21T08:48:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f49ade35_76d5f6fd",
+      "revId": "f14073ecc3272db6f1492bafc9359bbef31da479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ba68543b_d0757fde",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-21T08:48:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f77621f3_0f181d4d",
+      "revId": "f14073ecc3272db6f1492bafc9359bbef31da479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63716244_7d07112e",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPI.h",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-21T06:31:20Z",
       "side": 1,
       "message": "Is this necessary?",
+      "revId": "f14073ecc3272db6f1492bafc9359bbef31da479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0346ccb7_a60a832f",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPI.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-21T08:48:56Z",
+      "side": 1,
+      "message": "Yeah. It\u0027s used in the ParseShorthand signature \u0026 it doesn\u0027t build without it.",
+      "parentUuid": "63716244_7d07112e",
       "revId": "f14073ecc3272db6f1492bafc9359bbef31da479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "f14073ecc3272db6f1492bafc9359bbef31da479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3827ad_c3757bb6",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleBuilderCustom.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-21T08:48:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0462d2b_601e69e4",
+      "revId": "f14073ecc3272db6f1492bafc9359bbef31da479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

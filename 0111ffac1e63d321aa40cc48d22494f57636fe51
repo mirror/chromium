@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "51343b0a_6d8e7199",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/templates/CSSPropertyMetadata.cpp.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-21T08:48:56Z",
+      "side": 0,
+      "message": "The last CL was for interpolable. So I can\u0027t remove this until this CL, if I understand what you\u0027re saying.",
+      "parentUuid": "3850092e_d3ea9f84",
+      "revId": "0111ffac1e63d321aa40cc48d22494f57636fe51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88ab50cb_6d3a5120",
         "filename": "third_party/WebKit/Source/core/css/CSSProperty.h",
         "patchSetId": 6
