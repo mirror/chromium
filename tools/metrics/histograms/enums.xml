@@ -34611,6 +34611,18 @@ from previous Chrome versions.
   <int value="2" label="New Profile"/>
 </enum>
 
+<enum name="SigninDiceResponseEvent">
+  <int value="0" label="SigninAbort">Signin: the token fetch was aborted.</int>
+  <int value="1" label="SigninStart">Signin: the token fetch was started.</int>
+  <int value="2" label="SigninSuccess">Signin: the token fetch succeeded.</int>
+  <int value="3" label="SigninFailure">
+    Signin: the token fetch failed with an error from Gaia.
+  </int>
+  <int value="4" label="SigninTimeout">Signin: the token fetch timed out.</int>
+  <int value="5" label="SignoutMain">Signout from main account.</int>
+  <int value="6" label="SignoutOther">Signout from other account.</int>
+</enum>
+
 <enum name="SigninFlowConfirmations">
   <int value="0" label="Shown"/>
   <int value="1" label="OK"/>

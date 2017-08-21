@@ -9,6 +9,7 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/memory/singleton.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "chrome/browser/profiles/profile.h"
@@ -32,6 +33,32 @@
 const int kDiceTokenFetchTimeoutSeconds = 10;
 
 namespace {
+
+// The UMA histogram that logs events related to Dice responses.
+const char kDiceResponseEventHistogram[] = "Signin.DiceResponseEvent";
+
+// Used for UMA. Do not reorder, append new values at the end.
+enum DiceResponseEvent {
+  // The token fetch was aborted. For example, if another request for the same
+  // account is already in flight.
+  kSigninAbort = 0,
+  // The token fetch was started.
+  kSigninStart = 1,
+  // The token fetch succeeded.
+  kSigninSuccess = 2,
+  // The token fetch failed because Gaia responsed with an error.
+  kSigninFailure = 3,
+  // The token fetch failed because no response was received from Gaia.
+  kSigninTimeout = 4,
+  // The user signed out their main account.
+  kSignoutMain = 5,
+  // The suer signed out another account.
+  kSignoutOther = 6,
+
+  // Maximum value, used for histogram reporting. Do not remove, and append new
+  // values before this one.
+  kDiceResponseEventMax
+};
 
 class DiceResponseHandlerFactory : public BrowserContextKeyedServiceFactory {
  public:
@@ -107,6 +134,8 @@ DiceResponseHandler::DiceTokenFetcher::DiceTokenFetcher(
 DiceResponseHandler::DiceTokenFetcher::~DiceTokenFetcher() {}
 
 void DiceResponseHandler::DiceTokenFetcher::OnTimeout() {
+  UMA_HISTOGRAM_ENUMERATION(kDiceResponseEventHistogram, kSigninTimeout,
+                            kDiceResponseEventMax);
   gaia_auth_fetcher_.reset();
   timeout_closure_.Cancel();
   dice_response_handler_->OnTokenExchangeFailure(
@@ -116,6 +145,8 @@ void DiceResponseHandler::DiceTokenFetcher::OnTimeout() {
 
 void DiceResponseHandler::DiceTokenFetcher::OnClientOAuthSuccess(
     const GaiaAuthConsumer::ClientOAuthResult& result) {
+  UMA_HISTOGRAM_ENUMERATION(kDiceResponseEventHistogram, kSigninSuccess,
+                            kDiceResponseEventMax);
   gaia_auth_fetcher_.reset();
   timeout_closure_.Cancel();
   dice_response_handler_->OnTokenExchangeSuccess(this, gaia_id_, email_,
@@ -125,6 +156,8 @@ void DiceResponseHandler::DiceTokenFetcher::OnClientOAuthSuccess(
 
 void DiceResponseHandler::DiceTokenFetcher::OnClientOAuthFailure(
     const GoogleServiceAuthError& error) {
+  UMA_HISTOGRAM_ENUMERATION(kDiceResponseEventHistogram, kSigninFailure,
+                            kDiceResponseEventMax);
   gaia_auth_fetcher_.reset();
   timeout_closure_.Cancel();
   dice_response_handler_->OnTokenExchangeFailure(this, error);
@@ -214,12 +247,17 @@ void DiceResponseHandler::ProcessDiceSigninHeader(
   DCHECK(!email.empty());
   DCHECK(!authorization_code.empty());
 
-  if (!CanGetTokenForAccount(gaia_id, email))
+  if (!CanGetTokenForAccount(gaia_id, email)) {
+    UMA_HISTOGRAM_ENUMERATION(kDiceResponseEventHistogram, kSigninAbort,
+                              kDiceResponseEventMax);
     return;
+  }
 
   for (auto it = token_fetchers_.begin(); it != token_fetchers_.end(); ++it) {
     if ((it->get()->gaia_id() == gaia_id) && (it->get()->email() == email) &&
         (it->get()->authorization_code() == authorization_code)) {
+      UMA_HISTOGRAM_ENUMERATION(kDiceResponseEventHistogram, kSigninAbort,
+                                kDiceResponseEventMax);
       return;  // There is already a request in flight with the same parameters.
     }
   }
@@ -249,6 +287,8 @@ void DiceResponseHandler::ProcessDiceSignoutHeader(
                                                           emails[i]);
     if (signed_out_account == current_account) {
       VLOG(1) << "[Dice] Signing out all accounts.";
+      UMA_HISTOGRAM_ENUMERATION(kDiceResponseEventHistogram, kSignoutMain,
+                                kDiceResponseEventMax);
       signin_manager_->SignOut(signin_metrics::SERVER_FORCED_DISABLE,
                                signin_metrics::SignoutDelete::IGNORE_METRIC);
       // Cancel all Dice token fetches currently in flight.
@@ -261,6 +301,8 @@ void DiceResponseHandler::ProcessDiceSignoutHeader(
 
   for (const auto& account : signed_out_accounts) {
     VLOG(1) << "[Dice]: Revoking token for account: " << account;
+    UMA_HISTOGRAM_ENUMERATION(kDiceResponseEventHistogram, kSignoutOther,
+                              kDiceResponseEventMax);
     token_service_->RevokeCredentials(account);
     // If a token fetch is in flight for the same account, cancel it.
     for (auto it = token_fetchers_.begin(); it != token_fetchers_.end(); ++it) {

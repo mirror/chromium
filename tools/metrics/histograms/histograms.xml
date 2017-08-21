@@ -73751,6 +73751,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The total number of accounts in the cookie jar.</summary>
 </histogram>
 
+<histogram name="Signin.DiceResponseEvent" enum="SigninDiceResponseEvent">
+  <owner>droger@chromium.org</owner>
+  <summary>
+    Records events related to Dice responses (Signin and Signout).
+  </summary>
+</histogram>
+
 <histogram name="Signin.DuringFirstRun">
   <owner>mlerman@chromium.org</owner>
   <summary>
