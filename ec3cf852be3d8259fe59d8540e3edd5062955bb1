@@ -46,6 +46,29 @@
       "revId": "ec3cf852be3d8259fe59d8540e3edd5062955bb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9af96f1_d9d3c23c",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-21T18:33:30Z",
+      "side": 1,
+      "message": "I have a feeling that this line is useless, we should always return NOT_HANDLED_IS_SHORTCUT here. Since the accelerator can be found by BrowserView::FindCommandIfForAccelerator().\nBut this seems out of the scope of this change. I will leave it in a different change to reduce the chance of reverting this important change.",
+      "range": {
+        "startLine": 1355,
+        "startChar": 0,
+        "endLine": 1355,
+        "endChar": 63
+      },
+      "revId": "ec3cf852be3d8259fe59d8540e3edd5062955bb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
