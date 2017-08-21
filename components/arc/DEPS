@@ -1,5 +1,6 @@
 include_rules = [
   "+ash/public/cpp",
+  "+ash/public/interfaces",
   "+chromeos/chromeos_switches.h",
   "+chromeos/cryptohome",
   "+chromeos/dbus",

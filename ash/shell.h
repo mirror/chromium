@@ -110,6 +110,7 @@ class ImmersiveHandlerFactoryAsh;
 class KeyboardBrightnessControlDelegate;
 class KeyboardUI;
 class LaserPointerController;
+class LinkHandlerController;
 class LinkHandlerModelFactory;
 class LocaleNotificationController;
 class LockStateController;
@@ -356,6 +357,9 @@ class ASH_EXPORT Shell : public SessionObserver,
     return window_selector_controller_.get();
   }
   OverlayEventFilter* overlay_filter() { return overlay_filter_.get(); }
+  LinkHandlerController* link_handler_controller() {
+    return link_handler_controller_.get();
+  }
   LinkHandlerModelFactory* link_handler_model_factory() {
     return link_handler_model_factory_;
   }
@@ -685,6 +689,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<KeyboardBrightnessControlDelegate>
       keyboard_brightness_control_delegate_;
   std::unique_ptr<KeyboardUI> keyboard_ui_;
+  std::unique_ptr<LinkHandlerController> link_handler_controller_;
   std::unique_ptr<LocaleNotificationController> locale_notification_controller_;
   std::unique_ptr<LockScreenController> lock_screen_controller_;
   std::unique_ptr<LogoutConfirmationController> logout_confirmation_controller_;
