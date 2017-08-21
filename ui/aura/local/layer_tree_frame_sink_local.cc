@@ -18,16 +18,11 @@
 namespace aura {
 
 LayerTreeFrameSinkLocal::LayerTreeFrameSinkLocal(
-    const viz::FrameSinkId& frame_sink_id,
-    viz::HostFrameSinkManager* host_frame_sink_manager)
+    const viz::FrameSinkId& frame_sink_id)
     : cc::LayerTreeFrameSink(nullptr, nullptr, nullptr, nullptr),
-      frame_sink_id_(frame_sink_id),
-      host_frame_sink_manager_(host_frame_sink_manager) {
-  host_frame_sink_manager_->RegisterFrameSinkId(frame_sink_id_, this);
-}
+      frame_sink_id_(frame_sink_id) {}
 
 LayerTreeFrameSinkLocal::~LayerTreeFrameSinkLocal() {
-  host_frame_sink_manager_->InvalidateFrameSinkId(frame_sink_id_);
 }
 
 bool LayerTreeFrameSinkLocal::BindToClient(
@@ -37,18 +32,15 @@ bool LayerTreeFrameSinkLocal::BindToClient(
   DCHECK(!thread_checker_);
   thread_checker_ = base::MakeUnique<base::ThreadChecker>();
 
-  support_ = host_frame_sink_manager_->CreateCompositorFrameSinkSupport(
-      this, frame_sink_id_, false /* is_root */,
-      true /* needs_sync_points */);
+  auto* context_factory_private =
+      aura::Env::GetInstance()->context_factory_private();
+  viz::HostFrameSinkManager* host_frame_sink_manager =
+      context_factory_private->GetHostFrameSinkManager();
+  support_ = host_frame_sink_manager->CreateCompositorFrameSinkSupport(
+      this, frame_sink_id_, false /* is_root */, true /* needs_sync_points */);
   begin_frame_source_ = base::MakeUnique<viz::ExternalBeginFrameSource>(this);
   client->SetBeginFrameSource(begin_frame_source_.get());
   return true;
-}
-
-void LayerTreeFrameSinkLocal::SetSurfaceChangedCallback(
-    const SurfaceChangedCallback& callback) {
-  DCHECK(!surface_changed_callback_);
-  surface_changed_callback_ = callback;
 }
 
 void LayerTreeFrameSinkLocal::DetachFromClient() {
@@ -86,11 +78,6 @@ void LayerTreeFrameSinkLocal::SubmitCompositorFrame(cc::CompositorFrame frame) {
   bool result =
       support_->SubmitCompositorFrame(local_surface_id_, std::move(frame));
   DCHECK(result);
-
-  if (local_surface_id_ != old_local_surface_id) {
-    surface_changed_callback_.Run(
-        viz::SurfaceId(frame_sink_id_, local_surface_id_), surface_size_);
-  }
 }
 
 void LayerTreeFrameSinkLocal::DidNotProduceFrame(
@@ -139,8 +126,5 @@ void LayerTreeFrameSinkLocal::OnNeedsBeginFrames(bool needs_begin_frames) {
   DCHECK(thread_checker_->CalledOnValidThread());
   support_->SetNeedsBeginFrame(needs_begin_frames);
 }
-
-void LayerTreeFrameSinkLocal::OnFirstSurfaceActivation(
-    const viz::SurfaceInfo& surface_info) {}
 
 }  // namespace aura

@@ -4,6 +4,7 @@
 
 #include "ui/aura/local/window_port_local.h"
 
+#include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "ui/aura/client/cursor_client.h"
 #include "ui/aura/env.h"
@@ -58,9 +59,23 @@ class ScopedCursorHider {
 }  // namespace
 
 WindowPortLocal::WindowPortLocal(Window* window)
-    : window_(window), weak_factory_(this) {}
+    : window_(window), weak_factory_(this) {
+  DCHECK(!frame_sink_id_.is_valid());
+  auto* context_factory_private =
+      aura::Env::GetInstance()->context_factory_private();
+  frame_sink_id_ = context_factory_private->AllocateFrameSinkId();
+  viz::HostFrameSinkManager* host_frame_sink_manager =
+      context_factory_private->GetHostFrameSinkManager();
+  host_frame_sink_manager->RegisterFrameSinkId(frame_sink_id_, this);
+}
 
-WindowPortLocal::~WindowPortLocal() {}
+WindowPortLocal::~WindowPortLocal() {
+  auto* context_factory_private =
+      aura::Env::GetInstance()->context_factory_private();
+  viz::HostFrameSinkManager* host_frame_sink_manager =
+      context_factory_private->GetHostFrameSinkManager();
+  host_frame_sink_manager->InvalidateFrameSinkId(frame_sink_id_);
+}
 
 void WindowPortLocal::OnPreInit(Window* window) {}
 
@@ -98,14 +113,7 @@ void WindowPortLocal::OnPropertyChanged(
 
 std::unique_ptr<cc::LayerTreeFrameSink>
 WindowPortLocal::CreateLayerTreeFrameSink() {
-  DCHECK(!frame_sink_id_.is_valid());
-  auto* context_factory_private =
-      aura::Env::GetInstance()->context_factory_private();
-  frame_sink_id_ = context_factory_private->AllocateFrameSinkId();
-  auto frame_sink = base::MakeUnique<LayerTreeFrameSinkLocal>(
-      frame_sink_id_, context_factory_private->GetHostFrameSinkManager());
-  frame_sink->SetSurfaceChangedCallback(base::Bind(
-      &WindowPortLocal::OnSurfaceChanged, weak_factory_.GetWeakPtr()));
+  auto frame_sink = base::MakeUnique<LayerTreeFrameSinkLocal>(frame_sink_id_);
   if (window_->GetRootWindow())
     window_->layer()->GetCompositor()->AddFrameSink(frame_sink_id_);
   return std::move(frame_sink);
@@ -127,11 +135,9 @@ void WindowPortLocal::OnWillRemoveWindowFromRootWindow() {
 
 void WindowPortLocal::OnEventTargetingPolicyChanged() {}
 
-void WindowPortLocal::OnSurfaceChanged(const viz::SurfaceId& surface_id,
-                                       const gfx::Size& surface_size) {
-  DCHECK_EQ(surface_id.frame_sink_id(), frame_sink_id_);
-  local_surface_id_ = surface_id.local_surface_id();
-  viz::SurfaceInfo surface_info(surface_id, 1.0f, surface_size);
+void WindowPortLocal::OnFirstSurfaceActivation(
+    const viz::SurfaceInfo& surface_info) {
+  DCHECK_EQ(surface_info.id().frame_sink_id(), frame_sink_id_);
   scoped_refptr<viz::SurfaceReferenceFactory> reference_factory =
       aura::Env::GetInstance()
           ->context_factory_private()

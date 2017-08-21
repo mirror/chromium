@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
+#include "components/viz/host/host_frame_sink_client.h"
 #include "ui/aura/window_port.h"
 #include "ui/base/property_data.h"
 
@@ -20,7 +21,8 @@ namespace aura {
 class Window;
 
 // WindowPort implementation for classic aura, e.g. not mus.
-class AURA_EXPORT WindowPortLocal : public WindowPort {
+class AURA_EXPORT WindowPortLocal : public WindowPort,
+                                    public viz::HostFrameSinkClient {
  public:
   explicit WindowPortLocal(Window* window);
   ~WindowPortLocal() override;
@@ -46,6 +48,9 @@ class AURA_EXPORT WindowPortLocal : public WindowPort {
   void OnWindowAddedToRootWindow() override;
   void OnWillRemoveWindowFromRootWindow() override;
   void OnEventTargetingPolicyChanged() override;
+
+  // public viz::HostFrameSinkClient:
+  void OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) override;
 
  private:
   void OnSurfaceChanged(const viz::SurfaceId& surface_id,
