@@ -142,6 +142,30 @@
       "revId": "2b7429fdf796b6856ee313a4c05b33babca9b26e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31117469_8494e251",
+        "filename": "ui/wm/core/window_animations.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-21T18:57:24Z",
+      "side": 1,
+      "message": "Hi sky@, we try to keep what we plan to merge as simple as possible.\n\nFrom varkha@\u0027s comments, there might not be a simple refactoring solution for all current reporters. It would create complexity to maintain the lifetime of the reporter without lazy instance.\n\nFor this hide animation, we can add an observer to destroy the reporter at the end of animation, be it may not work for overview mode.\n\nWe need to spend some time to come up a plan how to do it. I created a bug to track: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d757499",
+      "parentUuid": "374b1013_d541cf89",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 73
+      },
+      "revId": "2b7429fdf796b6856ee313a4c05b33babca9b26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
