@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d302de3c_fde49bc4",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-21T22:30:54Z",
+      "side": 1,
+      "message": "Again, there are several tests that do this setup. Can it be moved into SetUp() or a shared helper function?",
+      "revId": "d1c81254745a4834dd3dd667950c620a16576dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
