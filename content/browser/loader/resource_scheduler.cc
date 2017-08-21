@@ -814,8 +814,10 @@ class ResourceScheduler::Client {
         resource_scheduler_->non_delayable_throttles_delayable_experiment_
             .GetCurrentNonDelayableWeight(network_quality_estimator_) *
         (in_flight_requests_.size() - in_flight_delayable_count_));
-    if (in_flight_delayable_count_ + num_non_delayable_requests_weighted >=
-        max_delayable_requests_) {
+
+    if ((in_flight_delayable_count_ + num_non_delayable_requests_weighted >=
+         max_delayable_requests_) &&
+        (in_flight_requests_.size() >= 4)) {
       return DO_NOT_START_REQUEST_AND_STOP_SEARCHING;
     }
 
