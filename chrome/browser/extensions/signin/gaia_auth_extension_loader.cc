@@ -52,8 +52,8 @@ void LoadGaiaAuthExtension(BrowserContext* context) {
     return;
   }
 
-  component_loader->Add(IDR_GAIA_AUTH_MANIFEST,
-                        base::FilePath(FILE_PATH_LITERAL("gaia_auth")));
+  std::string id = component_loader->Add(
+      IDR_GAIA_AUTH_MANIFEST, base::FilePath(FILE_PATH_LITERAL("gaia_auth")));
 }
 
 void UnloadGaiaAuthExtension(BrowserContext* context) {
