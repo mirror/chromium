@@ -6,13 +6,14 @@
 #define NGExclusionSpace_h
 
 #include "core/CoreExport.h"
-#include "core/layout/ng/ng_exclusion.h"
+#include "core/layout/ng/geometry/ng_logical_rect.h"
 #include "core/style/ComputedStyleConstants.h"
 #include "platform/LayoutUnit.h"
-#include "platform/wtf/Optional.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
+
+struct NGExclusion;
 
 typedef NGLogicalRect NGLayoutOpportunity;
 

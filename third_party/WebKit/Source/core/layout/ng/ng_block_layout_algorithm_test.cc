@@ -4,7 +4,6 @@
 
 #include "core/layout/ng/ng_block_layout_algorithm.h"
 
-#include "core/dom/NodeComputedStyle.h"
 #include "core/dom/TagCollection.h"
 #include "core/layout/LayoutTestHelper.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
@@ -17,7 +16,6 @@
 #include "core/layout/ng/ng_length_utils.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
 #include "core/layout/ng/ng_physical_fragment.h"
-#include "core/layout/ng/ng_unpositioned_float.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "testing/gmock/include/gmock/gmock.h"
