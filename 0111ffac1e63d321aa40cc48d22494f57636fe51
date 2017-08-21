@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3850092e_d3ea9f84",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/templates/CSSPropertyMetadata.cpp.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T06:31:20Z",
+      "side": 0,
+      "message": "You can remove this now because you moved \"IsInheritedProperty\" in your previous CL right? If that\u0027s the case, could you please remove the \"IsInheritedProperty\" case in this if statement in that CL first?",
+      "revId": "0111ffac1e63d321aa40cc48d22494f57636fe51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ab50cb_6d3a5120",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperty.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T06:31:20Z",
+      "side": 0,
+      "message": "StylePropertyMetadata was using CSSPropertyMetadata (blinks) o.o",
+      "revId": "0111ffac1e63d321aa40cc48d22494f57636fe51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

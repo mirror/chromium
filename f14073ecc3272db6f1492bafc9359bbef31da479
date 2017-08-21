@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "647a06e6_0c6e7b02",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T06:31:20Z",
+      "side": 1,
+      "message": "What, if anything really needs to be generated for this one class? It seems like we might as well hand-write it if we\u0027re just going to specify everything directly like this?",
+      "revId": "f14073ecc3272db6f1492bafc9359bbef31da479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77621f3_0f181d4d",
+        "filename": "third_party/WebKit/Source/core/animation/CSSInterpolationType.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T06:31:20Z",
+      "side": 1,
+      "message": "It would be better if we didn\u0027t call Get() more than once - it\u0027s a relatively expensive operation (if the compiler isn\u0027t smart enough to cache the result, I\u0027m not sure if it would). It would be better to pull out a variable is_inherited before these if statements.",
+      "revId": "f14073ecc3272db6f1492bafc9359bbef31da479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63716244_7d07112e",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPI.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T06:31:20Z",
+      "side": 1,
+      "message": "Is this necessary?",
+      "revId": "f14073ecc3272db6f1492bafc9359bbef31da479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0462d2b_601e69e4",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleBuilderCustom.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T06:31:20Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it\u0027s worth it, but likewise with my earlier comment, it\u0027d be great if we didn\u0027t call Get multiple times inside one function.",
+      "revId": "f14073ecc3272db6f1492bafc9359bbef31da479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
