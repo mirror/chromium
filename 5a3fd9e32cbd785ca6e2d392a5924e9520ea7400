@@ -22,6 +22,30 @@
       "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93ebe55_7a205f3b",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-21T23:26:05Z",
+      "side": 1,
+      "message": "[self suggestionProviders] and [self accessoryViewProviders] get providers from password controller.",
+      "parentUuid": "f3cc6267_a3e3b568",
+      "range": {
+        "startLine": 522,
+        "startChar": 2,
+        "endLine": 522,
+        "endChar": 23
+      },
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
