@@ -22,6 +22,30 @@
       "revId": "be4151d2bba0cf566da49094c4c3a1b7b26eb393",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d2ee467_e879077f",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-21T16:04:18Z",
+      "side": 1,
+      "message": "If location \u003d\u003d null (or !location) then it would crash inside the Valdiate call on line 316.",
+      "parentUuid": "8cb7e1c2_9e065f4e",
+      "range": {
+        "startLine": 317,
+        "startChar": 41,
+        "endLine": 317,
+        "endChar": 42
+      },
+      "revId": "be4151d2bba0cf566da49094c4c3a1b7b26eb393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
