@@ -265,7 +265,7 @@ def _FindDebugBinary(entry, file_mapping):
   if binary.startswith(cwd_prefix):
     binary = binary[len(cwd_prefix):]
   elif binary.startswith(system_prefix):
-    binary = binary[len(system_prefix)]
+    binary = binary[len(system_prefix):]
   # Allow any other paths to pass-through; sometimes neither prefix is present.
 
   if binary in file_mapping:
