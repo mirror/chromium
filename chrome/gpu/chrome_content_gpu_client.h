@@ -13,6 +13,7 @@
 
 #if defined(OS_CHROMEOS)
 #include "components/arc/common/video_decode_accelerator.mojom.h"
+#include "components/arc/common/video_decode_accelerator_deprecated.mojom.h"
 #include "components/arc/common/video_encode_accelerator.mojom.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 
@@ -30,6 +31,9 @@ class ChromeContentGpuClient : public content::ContentGpuClient {
 
  private:
 #if defined(OS_CHROMEOS)
+  void CreateArcVideoDecodeAcceleratorDeprecated(
+      ::arc::mojom::VideoDecodeAcceleratorDeprecatedRequest request);
+
   void CreateArcVideoDecodeAccelerator(
       ::arc::mojom::VideoDecodeAcceleratorRequest request);
 
