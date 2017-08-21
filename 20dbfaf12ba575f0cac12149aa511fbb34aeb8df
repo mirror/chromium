@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ede1614e_8498a088",
+        "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T04:56:50Z",
+      "side": 1,
+      "message": "Yea I guess that\u0027s OK, I\u0027ve always found that awkward though. (BTW is there any runtime difference between using the empty ctor() and nullptr? If so, sure, nullptr is better)\n\nI guess really your IDE/text editor should surface the info for you, so I can\u0027t complain too much.",
+      "parentUuid": "49c3683e_03b4686f",
+      "revId": "20dbfaf12ba575f0cac12149aa511fbb34aeb8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55bb0a05_1e299efe",
         "filename": "content/child/service_worker/service_worker_provider_context.h",
         "patchSetId": 5
