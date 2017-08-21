@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "51ecc893_883ccad0",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-08-21T19:53:08Z",
+      "side": 1,
+      "message": "Done. The most recent change already does this.",
+      "parentUuid": "5957688c_e7c46327",
+      "range": {
+        "startLine": 1721,
+        "startChar": 32,
+        "endLine": 1721,
+        "endChar": 79
+      },
+      "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e8b747e_22952b14",
         "filename": "ui/views/view.cc",
         "patchSetId": 2
