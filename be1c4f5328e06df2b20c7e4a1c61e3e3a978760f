@@ -22,6 +22,30 @@
       "revId": "be1c4f5328e06df2b20c7e4a1c61e3e3a978760f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0fc6a72_34daa571",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/resources/inspector-protocol-test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-21T23:11:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f6808102_c3339b9e",
+      "range": {
+        "startLine": 30,
+        "startChar": 85,
+        "endLine": 30,
+        "endChar": 98
+      },
+      "revId": "be1c4f5328e06df2b20c7e4a1c61e3e3a978760f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
