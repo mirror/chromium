@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8049ddd6_ea66a679",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-08-21T11:44:13Z",
+      "side": 1,
+      "message": "It seems (by looking at the trybots) that you need to move this above line 462",
+      "range": {
+        "startLine": 463,
+        "startChar": 4,
+        "endLine": 467,
+        "endChar": 5
+      },
+      "revId": "e7fb600de33c0fe54d502d03ef15b4d8743c7f68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
