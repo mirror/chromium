@@ -1,0 +1,329 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45d9e6e1_d37a154a",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "\"network fallback (i.e., simulate the service worker not calling respondWith())\"",
+      "range": {
+        "startLine": 50,
+        "startChar": 55,
+        "endLine": 50,
+        "endChar": 63
+      },
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1eeabe_2040415d",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "Comment could be expanded:\n// Tells this helper to simulate failure to dispatch the fetch event to the service worker.",
+      "range": {
+        "startLine": 53,
+        "startChar": 5,
+        "endLine": 53,
+        "endChar": 26
+      },
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9bec735_c2dee5f5",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "FailFetch()",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 16
+      },
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acab3383_aace2471",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this SimulateWorkerStopped() anymore. ServiceWorkerURLRequestJobTest probably just has this as a historical remnant. The line 92 below should be sufficient to simulate failure to dispatch the fetch event.",
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f1cff23_5c5c5365",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "the style should be like: \"kFailFetch\"\n\nHowever I\u0027d rather this be named kFailFetchEventDispatch for clarify",
+      "range": {
+        "startLine": 100,
+        "startChar": 56,
+        "endLine": 100,
+        "endChar": 66
+      },
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5276299_906f2665",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "Probably this comment should say something like:\n// Indicates whether ServiceWorkerURLLoaderJob decided to handle a request, i.e., it returned a non-null StartLoaderCallback for the request.",
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c13b80_ba24a948",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "on second thought, maybe JobResult is nicer",
+      "range": {
+        "startLine": 165,
+        "startChar": 13,
+        "endLine": 165,
+        "endChar": 26
+      },
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a268898b_e6ea2a7d",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "We don\u0027t actually need this function since isMainResourceLoadFailedCalled is in the protected: area. So the tests can access it directly.",
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa9b253_e2e41d26",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "Probably don\u0027t need this comment",
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4628f6e2_7c72b994",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "this should move to around line 243 and be written in the form \"was_main_resource_load_failed_called_\"",
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf36b78_3097ba8f",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "A better comment.. something like:\n// Test when the service worker responds with network fallback (i.e., does not call FetchEvent#respondWith).",
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b550f6_efe82a33",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "Don\u0027t need this comment now.",
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53bc978e_1f62d9b2",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "It\u0027s slightly easier to read if TestRequest() is on a different line than the EXPECT():\n\nHandlerResult result \u003d TestRequest();\nEXPECT_EQ(ServiceWorkerURLLoaderJobTest::HandlerResult::kDidNotHandleRequest, result);\n\nIt helps separate the execution statements from the expectation statements.",
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c534b138_e1e43d58",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "Can you remove the \"ServiceWorkerURLLoaderJobTest::\"?",
+      "range": {
+        "startLine": 284,
+        "startChar": 12,
+        "endLine": 284,
+        "endChar": 43
+      },
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f44616_09aa1006",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "Something like\n\"Test when dispatching the fetch event to the service worker failed.\"",
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "571f4cb9_76fc7cb0",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "Don\u0027t need this comment now.",
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ebd3eae_a0cb48fd",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T07:06:29Z",
+      "side": 1,
+      "message": "Similar as above.",
+      "revId": "f9c2caf90c244a46ffbe9415e41af451f714a5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
