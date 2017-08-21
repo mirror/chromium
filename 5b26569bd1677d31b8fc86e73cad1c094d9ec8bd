@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c816f8a_0a6120e5",
+        "filename": "base/values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-21T15:29:16Z",
+      "side": 1,
+      "message": "The call to GetPathComponents was initially confusing to me since I thought you were referring to a function I\u0027m supposed to know about. Maybe just replace it with \"...\" just to make clear that one should initialize it as you want?",
+      "range": {
+        "startLine": 192,
+        "startChar": 45,
+        "endLine": 192,
+        "endChar": 62
+      },
+      "revId": "5b26569bd1677d31b8fc86e73cad1c094d9ec8bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0829ef2_51d68e50",
+        "filename": "base/values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-21T15:29:16Z",
+      "side": 1,
+      "message": "Interesting, I didn\u0027t think StringPiece would work here but I guess it it\u0027s green everywhere then it must be fine.",
+      "range": {
+        "startLine": 194,
+        "startChar": 23,
+        "endLine": 194,
+        "endChar": 39
+      },
+      "revId": "5b26569bd1677d31b8fc86e73cad1c094d9ec8bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b145c2_7ee027b8",
+        "filename": "base/values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-21T15:29:16Z",
+      "side": 1,
+      "message": "Is this the recommended way to pass a const span? This call seems plausible to me, but I didn\u0027t see any advice in span.h. Can you follow up with dcheng to have one of you add such calling advice? (I\u0027m guessing we will want to pass by value in all cases just like we prefer for StringPiece.)",
+      "revId": "5b26569bd1677d31b8fc86e73cad1c094d9ec8bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
