@@ -83,6 +83,8 @@ SavePageResult ToSavePageResult(ArchiverResult archiver_result) {
       break;
     case ArchiverResult::ERROR_INTERSTITIAL_PAGE:
       result = SavePageResult::INTERSTITIAL_PAGE;
+    case ArchiverResult::ERROR_TOO_MANY_FILE_NAME_COLLISIONS:
+      result = SavePageResult::TOO_MANY_FILE_NAME_COLLISIONS;
     default:
       NOTREACHED();
       result = SavePageResult::CONTENT_UNAVAILABLE;

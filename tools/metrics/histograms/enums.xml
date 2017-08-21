@@ -27749,6 +27749,10 @@ from previous Chrome versions.
     Save operation failed because an interstitial page (i.e. page warning of
     expired certificates or improper dev signatures) was detected.
   </int>
+  <int value="11" label="Too many file name collisions">
+    Save operation failed because there are too many files with same url and
+    title, which caused the counter of duplicate file names exceeded the limit.
+  </int>
 </enum>
 
 <enum name="OfflinePagesSharedPageWasOffline">
