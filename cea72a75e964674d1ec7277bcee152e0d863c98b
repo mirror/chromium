@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "30dcf93a_67803cf4",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T04:16:52Z",
+      "side": 1,
+      "message": "I don\u0027t really see the point of the struct, can we just use the single param in this patch? Later patches can add the struct without much difficulty since there is just one callsite.\n\nThen all TODOs can be consolidated at at the function itself and it\u0027s clearer what the method is doing.",
+      "revId": "cea72a75e964674d1ec7277bcee152e0d863c98b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1806e1_dc196d28",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T04:16:52Z",
+      "side": 1,
+      "message": "an EmbeddedWorkerInstanceClient, which is what manages",
+      "range": {
+        "startLine": 154,
+        "startChar": 64,
+        "endLine": 155,
+        "endChar": 50
+      },
+      "revId": "cea72a75e964674d1ec7277bcee152e0d863c98b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ee2ba10_99fa51fc",
         "filename": "content/common/renderer.mojom",
         "patchSetId": 5
@@ -13,6 +53,98 @@
       "writtenOn": "2017-08-21T04:03:19Z",
       "side": 1,
       "message": "Sorry, I looked this again but I still feel this is a bit too cryptic name to expose here.  We don\u0027t need to lie about what we do here, but could we still try to use the name that explains the intention here?  Some candidates:\n\nSetUpEmbeddedWorkerChannelForServiceWorker\n\nWith a brief comment about what \u0027embedded worker channel\u0027 means here. We can rename further when EmbeddedWorker gets renamed.",
+      "revId": "cea72a75e964674d1ec7277bcee152e0d863c98b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2960ec16_ed68baf3",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T04:16:52Z",
+      "side": 1,
+      "message": "I can live with that name... I understand the desire to not raise our ugly TODOs to the top-level layers. I think we can just go ahead and change the interface names in a follow-up patch:\n\nEmbeddedWorkerInstanceClient \u003d\u003e ServiceWorkerExecutionManager\nEmbeddedWorkerInstanceHost \u003d\u003e ServiceWorkerExecutionManagerHost",
+      "parentUuid": "8ee2ba10_99fa51fc",
+      "revId": "cea72a75e964674d1ec7277bcee152e0d863c98b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c411618_d53dc975",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T04:16:52Z",
+      "side": 1,
+      "message": "My idea was this should be set after InitializeWebKit() and called blink_initialized_time_\n(admittedly, not really sure whether it matters)",
+      "range": {
+        "startLine": 633,
+        "startChar": 6,
+        "endLine": 633,
+        "endChar": 37
+      },
+      "revId": "cea72a75e964674d1ec7277bcee152e0d863c98b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e7e04f_cc61188f",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2185,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T04:16:52Z",
+      "side": 1,
+      "message": "This seems better in the documentation for EmbeddedWorkerInstanceClientImpl::Create.",
+      "revId": "cea72a75e964674d1ec7277bcee152e0d863c98b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43058034_0be5146f",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T04:16:52Z",
+      "side": 1,
+      "message": "I don\u0027t really see how that happens though, WorkerContextDestroyed() just deletes wrapper_, which I guess deletes WebEmbeddedWorker (WebEmbeddedWorkerImpl) but I don\u0027t see mojo object there that would link to EmbeddedWorkerInstanceClientImpl. Can you make it even more clear?\n\nOr is it really that the browser side EmbeddedWorkerInstance clears |instance_host_binding_| which kills EmbeddedWorkerInstanceClientImpl?",
+      "revId": "cea72a75e964674d1ec7277bcee152e0d863c98b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed04b35_b84e5af1",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T04:16:52Z",
+      "side": 1,
+      "message": "(see my  comment above, nto sure I understand this part)",
       "revId": "cea72a75e964674d1ec7277bcee152e0d863c98b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
