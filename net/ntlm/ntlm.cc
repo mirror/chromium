@@ -12,9 +12,10 @@
 #include "base/md5.h"
 #include "base/strings/utf_string_conversions.h"
 #include "net/ntlm/des.h"
-#include "net/ntlm/md4.h"
 #include "net/ntlm/ntlm_buffer_writer.h"
 #include "third_party/boringssl/src/include/openssl/hmac.h"
+#include "third_party/boringssl/src/include/openssl/md4.h"
+#include "third_party/boringssl/src/include/openssl/md5.h"
 
 namespace net {
 namespace ntlm {
@@ -86,19 +87,15 @@ void UpdateTargetInfoAvPairs(bool is_mic_enabled,
   }
 
   if (is_epa_enabled) {
-    if (channel_bindings.empty()) {
-      // When no channel bindings are supplied, the channel binding hash is
-      // set to all zeros.
-      av_pairs->emplace_back(TargetInfoAvId::kChannelBindings,
-                             Buffer(kChannelBindingsHashLen, 0));
-    } else {
-      // Hash the channel bindings.
-      base::MD5Digest channel_bindings_hash;
-      GenerateChannelBindingHashV2(channel_bindings, &channel_bindings_hash);
-      av_pairs->emplace_back(
-          TargetInfoAvId::kChannelBindings,
-          Buffer(channel_bindings_hash.a, kChannelBindingsHashLen));
+    Buffer channel_bindings_hash(kChannelBindingsHashLen, 0);
+
+    // Hash the channel bindings if they exist otherwise they remain zeros.
+    if (!channel_bindings.empty()) {
+      GenerateChannelBindingHashV2(channel_bindings, &channel_bindings_hash[0]);
     }
+
+    av_pairs->emplace_back(TargetInfoAvId::kChannelBindings,
+                           std::move(channel_bindings_hash));
 
     // Convert the SPN to little endian unicode.
     base::string16 spn16 = base::UTF8ToUTF16(spn);
@@ -152,12 +149,13 @@ void GenerateNtlmHashV1(const base::string16& password, uint8_t* hash) {
   NtlmBufferWriter writer(length);
 
   // The writer will handle the big endian case if necessary.
-  bool result = writer.WriteUtf16String(password);
+  bool result = writer.WriteUtf16String(password) && writer.IsEndOfBuffer();
   DCHECK(result);
 
-  weak_crypto::MD4Sum(
-      reinterpret_cast<const uint8_t*>(writer.GetBuffer().data()), length,
-      hash);
+  MD4_CTX ctx;
+  MD4_Init(&ctx);
+  MD4_Update(&ctx, writer.GetBuffer().data(), writer.GetLength());
+  MD4_Final(hash, &ctx);
 }
 
 void GenerateResponseDesl(const uint8_t* hash,
@@ -213,17 +211,12 @@ void GenerateLMResponseV1WithSessionSecurity(const uint8_t* client_challenge,
 
 void GenerateSessionHashV1WithSessionSecurity(const uint8_t* server_challenge,
                                               const uint8_t* client_challenge,
-                                              base::MD5Digest* session_hash) {
-  base::MD5Context ctx;
-  base::MD5Init(&ctx);
-  base::MD5Update(
-      &ctx, base::StringPiece(reinterpret_cast<const char*>(server_challenge),
-                              kChallengeLen));
-  base::MD5Update(
-      &ctx, base::StringPiece(reinterpret_cast<const char*>(client_challenge),
-                              kChallengeLen));
-
-  base::MD5Final(session_hash, &ctx);
+                                              uint8_t* session_hash) {
+  MD5_CTX ctx;
+  MD5_Init(&ctx);
+  MD5_Update(&ctx, server_challenge, kChallengeLen);
+  MD5_Update(&ctx, client_challenge, kChallengeLen);
+  MD5_Final(session_hash, &ctx);
 }
 
 void GenerateNtlmResponseV1WithSessionSecurity(const base::string16& password,
@@ -235,12 +228,12 @@ void GenerateNtlmResponseV1WithSessionSecurity(const base::string16& password,
   GenerateNtlmHashV1(password, ntlm_hash);
 
   // Generate the NTLMv1 Session Hash.
-  base::MD5Digest session_hash;
+  uint8_t session_hash[kNtlmHashLen];
   GenerateSessionHashV1WithSessionSecurity(server_challenge, client_challenge,
-                                           &session_hash);
+                                           session_hash);
 
-  // Only the first 8 bytes of |session_hash.a| are actually used.
-  GenerateResponseDesl(ntlm_hash, session_hash.a, ntlm_response);
+  // Only the first 8 bytes of |session_hash| are actually used.
+  GenerateResponseDesl(ntlm_hash, session_hash, ntlm_response);
 }
 
 void GenerateResponsesV1WithSessionSecurity(const base::string16& password,
@@ -320,20 +313,18 @@ void GenerateSessionBaseKeyV2(const uint8_t* v2_hash,
 }
 
 void GenerateChannelBindingHashV2(const std::string& channel_bindings,
-                                  base::MD5Digest* channel_bindings_hash) {
+                                  uint8_t* channel_bindings_hash) {
   NtlmBufferWriter writer(kEpaUnhashedStructHeaderLen);
   bool result = writer.WriteZeros(16) &&
                 writer.WriteUInt32(channel_bindings.length()) &&
                 writer.IsEndOfBuffer();
   DCHECK(result);
 
-  base::MD5Context ctx;
-  base::MD5Init(&ctx);
-  base::MD5Update(&ctx, base::StringPiece(reinterpret_cast<const char*>(
-                                              writer.GetBuffer().data()),
-                                          writer.GetBuffer().size()));
-  base::MD5Update(&ctx, channel_bindings);
-  base::MD5Final(channel_bindings_hash, &ctx);
+  MD5_CTX ctx;
+  MD5_Init(&ctx);
+  MD5_Update(&ctx, writer.GetBuffer().data(), writer.GetBuffer().size());
+  MD5_Update(&ctx, channel_bindings.data(), channel_bindings.size());
+  MD5_Final(channel_bindings_hash, &ctx);
 }
 
 void GenerateMicV2(const uint8_t* session_key,
