@@ -2944,7 +2944,7 @@ DocumentParser* Document::ImplicitOpen(
   DocumentParserTiming::From(*this).MarkParserStart();
   SetParsingState(kParsing);
   SetReadyState(kLoading);
-  if (load_event_progress_ != kLoadEventInProgress &&
+  if (!load_completion_in_progress_ &&
       PageDismissalEventBeingDispatched() == kNoDismissal) {
     load_event_progress_ = kLoadEventNotRun;
   }
@@ -3099,7 +3099,7 @@ void Document::ImplicitClose() {
   DCHECK(!InStyleRecalc());
   DCHECK(parser_);
 
-  load_event_progress_ = kLoadEventInProgress;
+  AutoReset<bool> firing_load_events(&load_completion_in_progress_, true);
 
   // We have to clear the parser, in case someone document.write()s from the
   // onLoad event handler, as in Radar 3206524.
@@ -3114,29 +3114,26 @@ void Document::ImplicitClose() {
   if (SvgExtensions())
     AccessSVGExtensions().DispatchSVGLoadEventToOutermostSVGElements();
 
-  if (this->domWindow())
-    this->domWindow()->DocumentWasClosed();
+  if (!GetFrame()) {
+    load_event_progress_ = kLoadEventCompleted;
+    return;
+  }
+
+  domWindow()->DocumentWasClosed();
 
   if (GetFrame()) {
     GetFrame()->Client()->DispatchDidHandleOnloadEvents();
     Loader()->GetApplicationCacheHost()->StopDeferringEvents();
   }
 
-  if (!GetFrame()) {
-    load_event_progress_ = kLoadEventCompleted;
+  if (!GetFrame())
     return;
-  }
-
-  // Make sure both the initial layout and reflow happen after the onload
-  // fires. This will improve onload scores, and other browsers do it.
-  // If they wanna cheat, we can too. -dwh
 
   if (GetFrame()->GetNavigationScheduler().LocationChangePending() &&
       ElapsedTime() < kCLayoutScheduleThreshold) {
     // Just bail out. Before or during the onload we were shifted to another
     // page.  The old i-Bench suite does this. When this happens don't bother
     // painting or laying out.
-    load_event_progress_ = kLoadEventCompleted;
     return;
   }
 
@@ -3154,8 +3151,6 @@ void Document::ImplicitClose() {
          GetLayoutViewItem().NeedsLayout()))
       View()->UpdateLayout();
   }
-
-  load_event_progress_ = kLoadEventCompleted;
 
   if (GetFrame() && !GetLayoutViewItem().IsNull() &&
       GetSettings()->GetAccessibilityEnabled()) {
@@ -3185,32 +3180,32 @@ static bool AllDescendantsAreComplete(Frame* frame) {
 bool Document::ShouldComplete() {
   return parsing_state_ == kFinishedParsing && HaveImportsLoaded() &&
          !fetcher_->BlockingRequestCount() && !IsDelayingLoadEvent() &&
-         load_event_progress_ != kLoadEventInProgress &&
-         AllDescendantsAreComplete(frame_);
+         AllDescendantsAreComplete(frame_) && LoadEventStillNeeded();
 }
 
 void Document::CheckCompleted() {
-  if (!ShouldComplete())
-    return;
+  if (ShouldComplete()) {
+    if (frame_) {
+      frame_->Client()->RunScriptsAtDocumentIdle();
 
-  if (frame_) {
-    frame_->Client()->RunScriptsAtDocumentIdle();
+      // Injected scripts may have disconnected this frame.
+      if (!frame_)
+        return;
 
-    // Injected scripts may have disconnected this frame.
-    if (!frame_)
-      return;
+      // Check again, because runScriptsAtDocumentIdle() may have delayed the
+      // load event.
+      if (!ShouldComplete())
+        return;
+    }
 
-    // Check again, because runScriptsAtDocumentIdle() may have delayed the load
-    // event.
-    if (!ShouldComplete())
-      return;
+    // OK, completed. Fire load completion events as needed.
+    SetReadyState(kComplete);
+    if (LoadEventStillNeeded())
+      ImplicitClose();
   }
 
-  // OK, completed. Fire load completion events as needed.
-  SetReadyState(kComplete);
-  if (LoadEventStillNeeded())
-    ImplicitClose();
-
+  if (!LoadEventFinished())
+    return;
   // The readystatechanged or load event may have disconnected this frame.
   if (!frame_ || !frame_->IsAttached())
     return;
@@ -3357,7 +3352,6 @@ Document::PageDismissalType Document::PageDismissalEventBeingDispatched()
       return kUnloadDismissal;
 
     case kLoadEventNotRun:
-    case kLoadEventInProgress:
     case kLoadEventCompleted:
     case kBeforeUnloadEventCompleted:
     case kUnloadEventHandled:

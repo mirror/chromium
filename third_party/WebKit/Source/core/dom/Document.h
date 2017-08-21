@@ -1062,7 +1062,6 @@ class CORE_EXPORT Document : public ContainerNode,
 
   enum LoadEventProgress {
     kLoadEventNotRun,
-    kLoadEventInProgress,
     kLoadEventCompleted,
     kBeforeUnloadEventInProgress,
     kBeforeUnloadEventCompleted,
@@ -1072,7 +1071,8 @@ class CORE_EXPORT Document : public ContainerNode,
     kUnloadEventHandled
   };
   bool LoadEventStillNeeded() const {
-    return load_event_progress_ == kLoadEventNotRun;
+    return load_event_progress_ == kLoadEventNotRun &&
+           !load_completion_in_progress_;
   }
   bool LoadEventFinished() const {
     return load_event_progress_ >= kLoadEventCompleted;
@@ -1726,6 +1726,8 @@ class CORE_EXPORT Document : public ContainerNode,
   bool has_high_media_engagement_;
 
   std::unique_ptr<DocumentOutliveTimeReporter> document_outlive_time_reporter_;
+
+  bool load_completion_in_progress_ = false;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;
