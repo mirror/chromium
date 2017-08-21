@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac47af61_723febdd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-21T23:29:15Z",
+      "side": 1,
+      "message": "nit: Wrap long lines in CL description.\nSuggest something like:\n\nCap searchbox top padding during drag\n\nSearchbox top padding during dragging should not be larger\nthan its final top padding.\n\nBug: 756171",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 82
+      },
+      "revId": "3b0e15371ba69fe4ab61188b995b52ca04be68d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
