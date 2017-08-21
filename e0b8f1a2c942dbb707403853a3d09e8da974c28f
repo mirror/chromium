@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6103e46a_ec845a62",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-21T09:54:51Z",
+      "side": 1,
+      "message": "let\u0027s undo this change to keep changes in the not-finch-guarded path minimal.",
+      "range": {
+        "startLine": 1101,
+        "startChar": 41,
+        "endLine": 1101,
+        "endChar": 0
+      },
+      "revId": "e0b8f1a2c942dbb707403853a3d09e8da974c28f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
