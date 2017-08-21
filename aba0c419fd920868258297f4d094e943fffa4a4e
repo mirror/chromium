@@ -22,6 +22,30 @@
       "revId": "aba0c419fd920868258297f4d094e943fffa4a4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb63867_d3242aa6",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-21T13:04:22Z",
+      "side": 1,
+      "message": "It\u0027s a member attribute, so calling the getter on something that doesn\u0027t implement the relevant interface throws. The prototype isn\u0027t an instance of `FederatedCredential`, it\u0027s the thing that `FederatedCredential` is an instance of. *shrug* Looks like 1.1.2.4 of https://heycam.github.io/webidl/#dfn-attribute-getter if you\u0027re curious. :)",
+      "parentUuid": "a2e3dfa8_ac2395d9",
+      "range": {
+        "startLine": 182,
+        "startChar": 43,
+        "endLine": 182,
+        "endChar": 50
+      },
+      "revId": "aba0c419fd920868258297f4d094e943fffa4a4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
