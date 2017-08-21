@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "986ab2e0_93160fd3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewHighlighter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-21T21:58:52Z",
+      "side": 1,
+      "message": "Done. Added a tag to keep track of highlight state and added a test to ensure we can call this multiple times.",
+      "parentUuid": "3cf99d23_4d7a10e3",
+      "range": {
+        "startLine": 32,
+        "startChar": 23,
+        "endLine": 32,
+        "endChar": 38
+      },
+      "revId": "be1afb8ef0cb62ebd8a4a98dd5526fd438553964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5907c68e_f5c976e9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewHighlighter.java",
         "patchSetId": 7
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "80bc2536_3e9cf8d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewHighlighter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-21T21:58:52Z",
+      "side": 1,
+      "message": "hmm, as far as I see, we are not changing the original background (We are just adding it to a LayerDrawable). I rotated few times to see if anything looks off, didn\u0027t see any. Was there something that you remember seeing before when you wrote the highlight code initially? let me know.",
+      "parentUuid": "5907c68e_f5c976e9",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "be1afb8ef0cb62ebd8a4a98dd5526fd438553964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca7e44e3_63186c5e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 7
@@ -82,6 +130,30 @@
       "writtenOn": "2017-08-16T22:37:59Z",
       "side": 1,
       "message": "Do we want any kind of user-triggered expand?  Will this only trigger in the one experiment where the user uses the button?",
+      "range": {
+        "startLine": 564,
+        "startChar": 8,
+        "endLine": 565,
+        "endChar": 66
+      },
+      "revId": "be1afb8ef0cb62ebd8a4a98dd5526fd438553964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ce8860_a5637c55",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-21T21:58:52Z",
+      "side": 1,
+      "message": "You are right. We should move this to OnSheetOpened or something.",
+      "parentUuid": "ca7e44e3_63186c5e",
       "range": {
         "startLine": 564,
         "startChar": 8,
