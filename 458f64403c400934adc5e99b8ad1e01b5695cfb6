@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b26c9b26_1d8810e2",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1212246
+      },
+      "writtenOn": "2017-08-21T15:16:38Z",
+      "side": 1,
+      "message": "I just found a more elegant solution. It turns out that for protobufs enums, you can get the size of the enum directly. In this case you can use:\nmetrics::TranslateEventProto::EventType_MAX +1\n\nAnd you can drop the EVENT_TYPE_MAX in the enum.",
+      "range": {
+        "startLine": 592,
+        "startChar": 6,
+        "endLine": 592,
+        "endChar": 51
+      },
+      "revId": "458f64403c400934adc5e99b8ad1e01b5695cfb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
