@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db654142_742c6f5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-21T17:23:13Z",
+      "side": 1,
+      "message": "What\u0027s the TL;DR or the responsibilities of the SigninPromoController? I would expect #shouldShowPromo to do checks like the \"isDismissed\" check we have at line 77. \n\nShouldn\u0027t it also check that signin is allowed and that we are not signed in? If that was the case we could remove most of the code we have here and just use that controller instead.",
+      "range": {
+        "startLine": 84,
+        "startChar": 38,
+        "endLine": 84,
+        "endChar": 53
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c84af273_74e02af9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-21T17:23:13Z",
+      "side": 1,
+      "message": "\"new\" and \"old\" is relative, the new one will be old at the next reskinning. isn\u0027t there a more descriptive way to caracterise it? \"ContinueAsPromo\"? or something like that?",
+      "range": {
+        "startLine": 302,
+        "startChar": 25,
+        "endLine": 302,
+        "endChar": 43
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d12af3_e99af0fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-21T17:23:13Z",
+      "side": 1,
+      "message": "you can even assert here, it should never be called if we don\u0027t use the new type of promo, right?",
+      "range": {
+        "startLine": 340,
+        "startChar": 17,
+        "endLine": 340,
+        "endChar": 38
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2926ed45_0256ccea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-21T17:23:13Z",
+      "side": 1,
+      "message": "for impressions, we have an ImpressionTracker that makes sure the item is actually visible on the screen rather than merely initialised out of the viewport. Would it make more sense to use that? \n\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ImpressionTracker.java",
+      "range": {
+        "startLine": 354,
+        "startChar": 17,
+        "endLine": 354,
+        "endChar": 32
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966d117b_d9b10740",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-21T17:23:13Z",
+      "side": 1,
+      "message": "Do you really need the application context here or is any context enough? If it\u0027s just to resolve resources and whatnot, please use the context from the view.",
+      "range": {
+        "startLine": 360,
+        "startChar": 20,
+        "endLine": 360,
+        "endChar": 56
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ad5bff_1dc156dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-21T17:23:13Z",
+      "side": 1,
+      "message": "Why change the name of the pref?",
+      "range": {
+        "startLine": 361,
+        "startChar": 18,
+        "endLine": 361,
+        "endChar": 48
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
