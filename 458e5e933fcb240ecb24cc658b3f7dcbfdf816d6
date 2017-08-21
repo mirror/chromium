@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "4e8c91d6_3c157145",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-21T15:05:10Z",
+      "side": 1,
+      "message": "Technically it\u0027s not actually necessary, as activitySupportsPresentation will only return true for some subclasses of ChromeActivity, so the activity is already necessarily an instance of ChromeActivity at this point.\n\nThis added check is fine though.",
+      "parentUuid": "68f76aed_c33adfa8",
+      "revId": "458e5e933fcb240ecb24cc658b3f7dcbfdf816d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35977f2e_bc2a448c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ContextMenuDialog.java",
         "patchSetId": 2
