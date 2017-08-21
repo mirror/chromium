@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1df18675_4d26fc57",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T17:45:04Z",
+      "side": 1,
+      "message": "Declare default values rather the member initiazer?",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 35
+      },
+      "revId": "914540049ccf2b5aeb7398452d469aff7062911b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46df6d1e_13a5a385",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T17:45:04Z",
+      "side": 1,
+      "message": "This is an improvement, but I\u0027m curious why you prefer this vs a bitmask? That seems to more naturally map to what you have.",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 22
+      },
+      "revId": "914540049ccf2b5aeb7398452d469aff7062911b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946299dc_23b4c200",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T17:45:04Z",
+      "side": 1,
+      "message": "public Standard...",
+      "range": {
+        "startLine": 73,
+        "startChar": 37,
+        "endLine": 73,
+        "endChar": 65
+      },
+      "revId": "914540049ccf2b5aeb7398452d469aff7062911b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
