@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ed27202_fd5002a2",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-21T15:32:21Z",
+      "side": 1,
+      "message": "nit: ...when we are...\n\nslightly confusing statements \"we would have shown the UI\" and \"in these cases the UI is suppressed\".\nWhy does this histogram need to be from a UI perspective instead of saying that resources were blocked during a forced activation.",
+      "revId": "ec673180b5756e09cc80512b18f1e08a13650dcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
