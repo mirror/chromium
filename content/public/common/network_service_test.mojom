@@ -4,6 +4,8 @@
 
 module content.mojom;
 
+import "mojo/common/file_path.mojom";
+
 struct Rule {
   string host_pattern;
   string replacement;
@@ -15,4 +17,8 @@ interface NetworkServiceTest {
   // service is running.
   [Sync]
   AddRules(array<Rule> rules) => ();
+
+  // Adds a root cert located at the specified path.
+  [Sync]
+  AddRootCertFromFile(mojo.common.mojom.FilePath cert_path) => ();
 };
