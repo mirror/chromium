@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "841d06b8_3cc177ac",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3352,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T22:17:53Z",
+      "side": 1,
+      "message": "All the changes I\u0027ve seen to date are windows specific. So, shouldn\u0027t this be windows specific?",
+      "range": {
+        "startLine": 3352,
+        "startChar": 4,
+        "endLine": 3352,
+        "endChar": 33
+      },
+      "revId": "48d5fd4eebb94839193bc676093192abf7d16d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
