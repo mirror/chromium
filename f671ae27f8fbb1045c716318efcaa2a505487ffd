@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59c1be10_92f5eb1c",
+        "filename": "components/payments/content/payments_validators.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-21T19:06:17Z",
+      "side": 1,
+      "message": "Let\u0027s continue using upper case in browser. Only Blink should accept lower case, but it should upper-case the code before sending it to the browser.",
+      "range": {
+        "startLine": 20,
+        "startChar": 35,
+        "endLine": 20,
+        "endChar": 38
+      },
+      "revId": "f671ae27f8fbb1045c716318efcaa2a505487ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ee0ba9_4961f951",
+        "filename": "third_party/WebKit/Source/modules/payments/PaymentRequest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-21T19:06:17Z",
+      "side": 1,
+      "message": "Please make sure that payments::mojom::blink::PaymentItem::From() will convert the input to contain upper-case only currency code.",
+      "range": {
+        "startLine": 306,
+        "startChar": 11,
+        "endLine": 306,
+        "endChar": 52
+      },
+      "revId": "f671ae27f8fbb1045c716318efcaa2a505487ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
