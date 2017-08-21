@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a2cd0e96_32b4db24",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-21T09:06:11Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "8e323e98_f0c5cce0",
+      "range": {
+        "startLine": 1055,
+        "startChar": 4,
+        "endLine": 1055,
+        "endChar": 19
+      },
+      "revId": "a84dfe26a2c6760d238562f4dffa5ee2f5fcbc36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4631b078_94b824e7",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fab0766d_b41f35f4",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-21T09:06:11Z",
+      "side": 1,
+      "message": "Actually |ClearExpiredDismissedSuggestions| does not do this. It just deletes expired dismissed suggestions.\n\nI agree that this logic is not necessary in this function now, however, it is unlikely that someone will delete categories without actually cleaning up the database, thus, I would prefer keeping it here. Moreover, if we move it out, someone may remove a category and forget cleaning up the database.",
+      "parentUuid": "4631b078_94b824e7",
+      "range": {
+        "startLine": 1059,
+        "startChar": 18,
+        "endLine": 1059,
+        "endChar": 29
+      },
+      "revId": "a84dfe26a2c6760d238562f4dffa5ee2f5fcbc36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fbe81e7_10cbf402",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 6
@@ -62,6 +110,24 @@
       "revId": "a84dfe26a2c6760d238562f4dffa5ee2f5fcbc36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a35940_7714d299",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3638,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-21T09:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fbe81e7_10cbf402",
+      "revId": "a84dfe26a2c6760d238562f4dffa5ee2f5fcbc36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "715d0092_ccf07b25",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3640,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-21T09:06:11Z",
+      "side": 1,
+      "message": "FetchedCategory is movable only and FetchTheseSuggestions consumes it.\n\nNote that this builder is const, that is this is its final state.",
+      "parentUuid": "2ca3c9ce_ee75d032",
+      "range": {
+        "startLine": 3640,
+        "startChar": 31,
+        "endLine": 3640,
+        "endChar": 56
+      },
+      "revId": "a84dfe26a2c6760d238562f4dffa5ee2f5fcbc36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52b0bc15_a3c65b2e",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 6
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "2081ddf2_73d56ee9",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3660,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-21T09:06:11Z",
+      "side": 1,
+      "message": "Unfortunately, I do not know how to build inline. This is a known issue, I tried multiple ways when added the builders and did not manage.\n\nIn particular, your suggestion leads to a compile error with\n\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\nerror: no matching constructor for initialization of \u0027base::Optional\u003cstd::vector\u003cFetchedCategory\u003e \u003e\u0027\n                        Status::Success(), {articles_category_builder.Build()});\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d",
+      "parentUuid": "52b0bc15_a3c65b2e",
+      "range": {
+        "startLine": 3660,
+        "startChar": 66,
+        "endLine": 3660,
+        "endChar": 0
+      },
+      "revId": "a84dfe26a2c6760d238562f4dffa5ee2f5fcbc36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64dd7421_1b962827",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 6
@@ -131,6 +245,30 @@
       "revId": "a84dfe26a2c6760d238562f4dffa5ee2f5fcbc36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf00cd5_b8c8fd25",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3757,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-21T09:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64dd7421_1b962827",
+      "range": {
+        "startLine": 3757,
+        "startChar": 7,
+        "endLine": 3757,
+        "endChar": 60
+      },
+      "revId": "a84dfe26a2c6760d238562f4dffa5ee2f5fcbc36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
