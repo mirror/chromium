@@ -310,7 +310,7 @@ Node::Node(TreeScope* tree_scope, ConstructionType type)
       previous_(nullptr),
       next_(nullptr) {
   DCHECK(tree_scope_ || type == kCreateDocument || type == kCreateShadowRoot);
-#if !defined(NDEBUG) || (defined(DUMP_NODE_STATISTICS) && DUMP_NODE_STATISTICS)
+#if !defined(UNICORN) || (defined(DUMP_NODE_STATISTICS) && DUMP_NODE_STATISTICS)
   TrackForDebugging();
 #endif
   InstanceCounters::IncrementCounter(InstanceCounters::kNodeCounter);
@@ -673,7 +673,7 @@ LayoutRect Node::BoundingBox() const {
   return LayoutRect();
 }
 
-#ifndef NDEBUG
+#ifndef UNICORN
 inline static ShadowRoot* OldestShadowRootFor(const Node* node) {
   if (!node->IsElementNode())
     return nullptr;
@@ -1666,7 +1666,7 @@ std::ostream& operator<<(std::ostream& ostream, const Node* node) {
   return ostream << *node;
 }
 
-#ifndef NDEBUG
+#ifndef UNICORN
 
 String Node::ToString() const {
   // TODO(tkent): We implemented toString() with operator<<.  We should
@@ -2657,7 +2657,7 @@ DEFINE_TRACE_WRAPPERS(Node) {
 
 }  // namespace blink
 
-#ifndef NDEBUG
+#ifndef UNICORN
 
 void showNode(const blink::Node* node) {
   if (node)

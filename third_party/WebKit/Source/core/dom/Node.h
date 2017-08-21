@@ -713,7 +713,7 @@ class CORE_EXPORT Node : public EventTarget {
   // Tracing--rename it to something indicative.
   String DebugName() const;
 
-#ifndef NDEBUG
+#ifndef UNICORN
   String ToString() const;
   String ToTreeStringForThis() const;
   String ToFlatTreeStringForThis() const;
@@ -1042,7 +1042,7 @@ CORE_EXPORT std::ostream& operator<<(std::ostream&, const Node*);
 
 }  // namespace blink
 
-#ifndef NDEBUG
+#ifndef UNICORN
 // Outside the WebCore namespace for ease of invocation from gdb.
 void showNode(const blink::Node*);
 void showTree(const blink::Node*);
