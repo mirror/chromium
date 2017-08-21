@@ -8,12 +8,13 @@
 #include <string>
 #include <vector>
 
-#include "build/build_config.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/metrics/field_trial.h"
+#include "base/strings/string_util.h"
 #include "base/task_scheduler/scheduler_worker_params.h"
 #include "base/task_scheduler/scheduler_worker_pool_params.h"
+#include "build/build_config.h"
 #include "components/variations/variations_associated_data.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -46,53 +47,119 @@ class TaskSchedulerUtilVariationsUtilTest : public testing::Test {
   DISALLOW_COPY_AND_ASSIGN(TaskSchedulerUtilVariationsUtilTest);
 };
 
+// Returns variation params with pool descriptors. Pool descriptor keys are
+// prefixed with |variation_param_prefix|.
+std::map<std::string, std::string> GetVariationParamsWithPoolDescriptors(
+    base::StringPiece variation_param_prefix) {
+  std::map<std::string, std::string> variation_params;
+  variation_params[base::JoinString({variation_param_prefix, "Background"},
+                                    "")] = "1;1;1;0;42";
+  variation_params[base::JoinString(
+      {variation_param_prefix, "BackgroundBlocking"}, "")] = "2;2;1;0;52";
+  variation_params[base::JoinString({variation_param_prefix, "Foreground"},
+                                    "")] = "4;4;1;0;62";
+  variation_params[base::JoinString(
+      {variation_param_prefix, "ForegroundBlocking"}, "")] = "8;8;1;0;72";
+  return variation_params;
+}
+
+// Verify that the SchedulerWorkerPoolParams in |init_params| match the pool
+// descriptors returned by GetVariationParamsWithPoolDescriptors(). Also
+// verifies that SchedulerBackwardCompatibility is enabled in
+// |init_params.foreground_blocking_worker_pool_params| and disabled in all
+// other SchedulerWorkerPoolParams.
+void VerifyPoolDescriptorsInVariationParams(
+    const base::TaskScheduler::InitParams& init_params) {
+  EXPECT_EQ(1, init_params.background_worker_pool_params.max_threads());
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(42),
+            init_params.background_worker_pool_params.suggested_reclaim_time());
+  EXPECT_EQ(base::SchedulerBackwardCompatibility::DISABLED,
+            init_params.background_worker_pool_params.backward_compatibility());
+
+  EXPECT_EQ(2,
+            init_params.background_blocking_worker_pool_params.max_threads());
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(52),
+            init_params.background_blocking_worker_pool_params
+                .suggested_reclaim_time());
+  EXPECT_EQ(base::SchedulerBackwardCompatibility::DISABLED,
+            init_params.background_blocking_worker_pool_params
+                .backward_compatibility());
+
+  EXPECT_EQ(4, init_params.foreground_worker_pool_params.max_threads());
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(62),
+            init_params.foreground_worker_pool_params.suggested_reclaim_time());
+  EXPECT_EQ(base::SchedulerBackwardCompatibility::DISABLED,
+            init_params.foreground_worker_pool_params.backward_compatibility());
+
+  EXPECT_EQ(8,
+            init_params.foreground_blocking_worker_pool_params.max_threads());
+  EXPECT_EQ(base::TimeDelta::FromMilliseconds(72),
+            init_params.foreground_blocking_worker_pool_params
+                .suggested_reclaim_time());
+  EXPECT_EQ(base::SchedulerBackwardCompatibility::INIT_COM_STA,
+            init_params.foreground_blocking_worker_pool_params
+                .backward_compatibility());
+}
+
 }  // namespace
 
-TEST_F(TaskSchedulerUtilVariationsUtilTest, OrderingParams5) {
-  std::map<std::string, std::string> variation_params;
-  variation_params["RendererBackground"] = "1;1;1;0;42";
-  variation_params["RendererBackgroundBlocking"] = "2;2;1;0;52";
-  variation_params["RendererForeground"] = "4;4;1;0;62";
-  variation_params["RendererForegroundBlocking"] = "8;8;1;0;72";
+TEST_F(TaskSchedulerUtilVariationsUtilTest, OrderingParams5NoPrefix) {
+  const auto variation_params = GetVariationParamsWithPoolDescriptors("");
+
+  auto init_params = GetTaskSchedulerInitParams(
+      "", variation_params, base::SchedulerBackwardCompatibility::INIT_COM_STA);
+  ASSERT_TRUE(init_params);
+
+  VerifyPoolDescriptorsInVariationParams(*init_params.get());
+  EXPECT_EQ(base::TaskScheduler::TaskPriorityAdjustment::NONE,
+            init_params->task_priority_adjustment);
+}
+
+TEST_F(TaskSchedulerUtilVariationsUtilTest,
+       OrderingParams5AllTasksUserBlockingNoPrefix) {
+  auto variation_params = GetVariationParamsWithPoolDescriptors("");
+  variation_params["AllTasksUserBlocking"] = "true";
+
+  auto init_params = GetTaskSchedulerInitParams(
+      "", variation_params, base::SchedulerBackwardCompatibility::INIT_COM_STA);
+  ASSERT_TRUE(init_params);
+
+  VerifyPoolDescriptorsInVariationParams(*init_params.get());
+  EXPECT_EQ(
+      base::TaskScheduler::TaskPriorityAdjustment::ALL_TASKS_USER_BLOCKING,
+      init_params->task_priority_adjustment);
+}
+
+TEST_F(TaskSchedulerUtilVariationsUtilTest, OrderingParams5WithPrefix) {
+  auto variation_params = GetVariationParamsWithPoolDescriptors("Renderer");
+
+  // Should be ignored.
+  variation_params["AllTasksUserBlocking"] = "true";
 
   auto init_params = GetTaskSchedulerInitParams(
       "Renderer", variation_params,
       base::SchedulerBackwardCompatibility::INIT_COM_STA);
   ASSERT_TRUE(init_params);
 
-  EXPECT_EQ(1, init_params->background_worker_pool_params.max_threads());
-  EXPECT_EQ(
-      base::TimeDelta::FromMilliseconds(42),
-      init_params->background_worker_pool_params.suggested_reclaim_time());
-  EXPECT_EQ(
-      base::SchedulerBackwardCompatibility::DISABLED,
-      init_params->background_worker_pool_params.backward_compatibility());
+  VerifyPoolDescriptorsInVariationParams(*init_params.get());
+  EXPECT_EQ(base::TaskScheduler::TaskPriorityAdjustment::NONE,
+            init_params->task_priority_adjustment);
+}
 
-  EXPECT_EQ(2,
-            init_params->background_blocking_worker_pool_params.max_threads());
-  EXPECT_EQ(base::TimeDelta::FromMilliseconds(52),
-            init_params->background_blocking_worker_pool_params
-                .suggested_reclaim_time());
-  EXPECT_EQ(base::SchedulerBackwardCompatibility::DISABLED,
-            init_params->background_blocking_worker_pool_params
-                .backward_compatibility());
+TEST_F(TaskSchedulerUtilVariationsUtilTest,
+       OrderingParams5AllTasksUserBlockingWithPrefix) {
+  auto variation_params = GetVariationParamsWithPoolDescriptors("Renderer");
+  variation_params["RendererAllTasksUserBlocking"] = "true";
 
-  EXPECT_EQ(4, init_params->foreground_worker_pool_params.max_threads());
-  EXPECT_EQ(
-      base::TimeDelta::FromMilliseconds(62),
-      init_params->foreground_worker_pool_params.suggested_reclaim_time());
-  EXPECT_EQ(
-      base::SchedulerBackwardCompatibility::DISABLED,
-      init_params->foreground_worker_pool_params.backward_compatibility());
+  auto init_params = GetTaskSchedulerInitParams(
+      "Renderer", variation_params,
+      base::SchedulerBackwardCompatibility::INIT_COM_STA);
+  ASSERT_TRUE(init_params);
 
-  EXPECT_EQ(8,
-            init_params->foreground_blocking_worker_pool_params.max_threads());
-  EXPECT_EQ(base::TimeDelta::FromMilliseconds(72),
-            init_params->foreground_blocking_worker_pool_params
-                .suggested_reclaim_time());
-  EXPECT_EQ(base::SchedulerBackwardCompatibility::INIT_COM_STA,
-            init_params->foreground_blocking_worker_pool_params
-                .backward_compatibility());
+  VerifyPoolDescriptorsInVariationParams(*init_params.get());
+  EXPECT_EQ(
+      base::TaskScheduler::TaskPriorityAdjustment::ALL_TASKS_USER_BLOCKING,
+      init_params->task_priority_adjustment);
 }
 
 TEST_F(TaskSchedulerUtilVariationsUtilTest, NoData) {
