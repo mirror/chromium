@@ -52,4 +52,8 @@ UI_BASE_EXPORT extern const char kDisallowNonExactResourceReuse[];
 
 }  // namespace switches
 
+namespace features {
+UI_BASE_EXPORT extern const base::Feature kDirectManipulationStylus;
+}  // namespace features
+
 #endif  // UI_BASE_UI_BASE_SWITCHES_H_
