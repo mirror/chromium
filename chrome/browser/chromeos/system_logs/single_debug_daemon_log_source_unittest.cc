@@ -151,4 +151,18 @@ TEST_F(SingleDebugDaemonLogSourceTest, MultipleSources) {
   EXPECT_EQ("lsusb: response from GetLog", response().begin()->second);
 }
 
+TEST_F(SingleDebugDaemonLogSourceTest, SingleCall) {
+  SingleDebugDaemonLogSource source(SupportedSource::kSystemLogStats);
+
+  source.Fetch(fetch_callback());
+  base::RunLoop().RunUntilIdle();
+
+  EXPECT_EQ(1, num_callback_calls());
+  ASSERT_EQ(1U, response().size());
+
+  EXPECT_EQ("system_log_stats", response().begin()->first);
+  EXPECT_EQ("system_log_stats: response from GetLog",
+            response().begin()->second);
+}
+
 }  // namespace system_logs

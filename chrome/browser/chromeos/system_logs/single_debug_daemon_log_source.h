@@ -22,6 +22,9 @@ class SingleDebugDaemonLogSource : public SystemLogsSource {
 
     // For "lsusb" command.
     kLsusb,
+
+    // For "system_log_stats" command.
+    kSystemLogStats,
   };
 
   explicit SingleDebugDaemonLogSource(SupportedSource source);
