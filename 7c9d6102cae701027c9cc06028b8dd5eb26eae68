@@ -16,6 +16,24 @@
       "revId": "7c9d6102cae701027c9cc06028b8dd5eb26eae68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "412031d5_fcc63435",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-21T04:32:31Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not a fan of the updated layout, but whatever.\n\nNor am I.  I didn\u0027t notice git cl format did that.  (I didn\u0027t do it manually.)\n\nFiled clang bug crbug.com/757296",
+      "parentUuid": "5f9e7ec7_a136dcc6",
+      "revId": "7c9d6102cae701027c9cc06028b8dd5eb26eae68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
