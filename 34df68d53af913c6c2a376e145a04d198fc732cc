@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5ccefbe_8a30dd9c",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-21T10:12:37Z",
+      "side": 1,
+      "message": "The code in ParseWeeklyTime() in device_policy_decoder_chromeos.cc has to be adjusted as well, I\u0027m guessing?\n\nHowever, won\u0027t require you to do this in this CL if you just want to suppress the proto warnings and finish your synchronization.",
+      "range": {
+        "startLine": 826,
+        "startChar": 4,
+        "endLine": 826,
+        "endChar": 13
+      },
+      "revId": "34df68d53af913c6c2a376e145a04d198fc732cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
