@@ -16,6 +16,24 @@
       "revId": "eb7d9ebec1293ddac729727e73373a2444d2895a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6859a53c_565ca52c",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIBackground.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-21T03:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aeee3576_e268357c",
+      "revId": "eb7d9ebec1293ddac729727e73373a2444d2895a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
