@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "033e2b28_7cd34ade",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-21T23:48:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac64b1c6_f01fe6a4",
+      "revId": "84b45f3fc8262848fabd750e04b05d38ec578ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcb55a8a_e07bb8bf",
         "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "84b45f3fc8262848fabd750e04b05d38ec578ff4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a310bf14_cbf64121",
+        "filename": "third_party/WebKit/Source/modules/cachestorage/InspectorCacheStorageAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-21T23:48:20Z",
+      "side": 1,
+      "message": "No. Fetching the response is successful, it is just that the response is empty. Headers are returned just fine.",
+      "parentUuid": "fcb55a8a_e07bb8bf",
+      "revId": "84b45f3fc8262848fabd750e04b05d38ec578ff4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
