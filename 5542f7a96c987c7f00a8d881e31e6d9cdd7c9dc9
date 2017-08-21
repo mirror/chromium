@@ -106,6 +106,24 @@
       "revId": "5542f7a96c987c7f00a8d881e31e6d9cdd7c9dc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13da00a0_cfda5389",
+        "filename": "ios/web/web_state/navigation_callbacks_inttest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-21T20:26:30Z",
+      "side": 1,
+      "message": "I started adding methods for test urls and ended up with 5 methods (test url, fragment url, push url, replace url, native url). It just feels like too much complexity for avoiding some code duplication and I\u0027d prefer to leave this CL as it is. Thanks for being flexible!",
+      "parentUuid": "fb1515ea_80667e9b",
+      "revId": "5542f7a96c987c7f00a8d881e31e6d9cdd7c9dc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
