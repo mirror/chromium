@@ -169,7 +169,8 @@ class TestURLLoaderThrottle : public URLLoaderThrottle {
       will_redirect_request_callback_.Run(delegate_, defer);
   }
 
-  void WillProcessResponse(bool* defer) override {
+  void WillProcessResponse(const ResourceResponseInfo& response_info,
+                           bool* defer) override {
     will_process_response_called_++;
     if (will_process_response_callback_)
       will_process_response_callback_.Run(delegate_, defer);
@@ -549,6 +550,20 @@ TEST_F(ThrottlingURLLoaderTest, ResumeNoOpIfAlreadyCanceled) {
   EXPECT_EQ(0u, client_.on_received_response_called());
   EXPECT_EQ(0u, client_.on_received_redirect_called());
   EXPECT_EQ(1u, client_.on_complete_called());
+}
+
+// A simple smoke test to validate that multiple throttles are supported.  See
+// MultiURLLoaderThrottle and associated tests for more comprehensive tests.
+TEST_F(ThrottlingURLLoaderTest, MultipleThrottlesSupportedSmoke) {
+  throttles_.push_back(base::MakeUnique<TestURLLoaderThrottle>());
+  auto* throttle2 =
+      static_cast<TestURLLoaderThrottle*>(throttles_.back().get());
+
+  CreateLoaderAndStart();
+  factory_.NotifyClientOnReceiveResponse();
+
+  EXPECT_EQ(1u, throttle_->will_start_request_called());
+  EXPECT_EQ(1u, throttle2->will_start_request_called());
 }
 
 }  // namespace
