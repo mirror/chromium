@@ -486,7 +486,8 @@
   {
     "prefix": "outofblink-cors",
     "base": "external/wpt/fetch",
-    "args": ["--enable-features=OutOfBlinkCORS,LoadingWithMojo"]
+    "args": ["--enable-features=OutOfBlinkCORS,LoadingWithMojo",
+             "--disable-features=OffMainThreadFetch"]
   },
   {
     "prefix": "presentation",
