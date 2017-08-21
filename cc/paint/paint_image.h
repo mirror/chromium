@@ -24,16 +24,49 @@ using PaintRecord = PaintOpBuffer;
 class CC_PAINT_EXPORT PaintImage {
  public:
   using Id = int;
+  using ContentId = int;
 
   // An id that can be used for all non-lazy images. Note that if an image is
   // not lazy, it does not mean that this id must be used; one can still use
   // GetNextId to generate a stable id for such images.
   static const Id kNonLazyStableId = -1;
 
+  // For a multi-frame image, if no frame index is provided, the first frame is
+  // used as the default frame.
+  static const size_t kDefaultFrameIndex = 0;
+
+  class CC_PAINT_EXPORT FrameKey {
+   public:
+    FrameKey(Id paint_image_id,
+             ContentId content_id,
+             size_t frame_index,
+             gfx::Rect subset_rect);
+    bool operator==(const FrameKey& other) const;
+
+    uint64_t hash() const { return hash_; }
+    std::string ToString() const;
+
+   private:
+    Id paint_image_id_;
+    ContentId content_id_;
+    size_t frame_index_;
+    // TODO(khushalsagar): Remove this when callers take care of subsetting.
+    gfx::Rect subset_rect_;
+
+    uint64_t hash_;
+  };
+
+  struct CC_PAINT_EXPORT FrameKeyHash {
+    size_t operator()(const FrameKey& frame_key) const {
+      return frame_key.hash();
+    }
+  };
+
   enum class AnimationType { ANIMATED, VIDEO, STATIC };
   enum class CompletionState { DONE, PARTIALLY_DONE };
 
   static Id GetNextId();
+  static ContentId GetNextContentId();
 
   PaintImage();
   PaintImage(const PaintImage& other);
@@ -53,7 +86,6 @@ class CC_PAINT_EXPORT PaintImage {
   const sk_sp<SkImage>& GetSkImage() const;
   AnimationType animation_type() const { return animation_type_; }
   CompletionState completion_state() const { return completion_state_; }
-  size_t frame_count() const { return frame_count_; }
   bool is_multipart() const { return is_multipart_; }
 
   // TODO(vmpstr): Don't get the SkImage here if you don't need to.
@@ -62,14 +94,28 @@ class CC_PAINT_EXPORT PaintImage {
   int width() const { return GetSkImage()->width(); }
   int height() const { return GetSkImage()->height(); }
   SkColorSpace* color_space() const { return GetSkImage()->colorSpace(); }
+  size_t frame_index() const { return frame_index_; }
+
+  // Returns a unique id for the pixel data for the frame at |frame_index|. Used
+  // only for lazy-generated imaged.
+  FrameKey GetKeyForFrame(size_t frame_index) const;
+
+  // Returns the total number of frames known to exist in this image.
+  size_t FrameCount() const;
+
+  std::string ToString() const;
 
  private:
+  static const ContentId kInvalidContentId = -1;
   friend class PaintImageBuilder;
   FRIEND_TEST_ALL_PREFIXES(PaintImageTest, Subsetting);
 
   sk_sp<SkImage> sk_image_;
+
   sk_sp<PaintRecord> paint_record_;
   gfx::Rect paint_record_rect_;
+  ContentId paint_record_content_id_ = kInvalidContentId;
+
   sk_sp<PaintImageGenerator> paint_image_generator_;
 
   Id id_ = 0;
@@ -80,14 +126,17 @@ class CC_PAINT_EXPORT PaintImage {
   // at the origin.
   gfx::Rect subset_rect_;
 
-  // The number of frames known to exist in this image (eg number of GIF frames
-  // loaded). 0 indicates either unknown or only a single frame, both of which
-  // should be treated similarly.
-  size_t frame_count_ = 0;
+  // The frame index to use when rasterizing this image (used for multi-frame
+  // images).
+  size_t frame_index_ = kDefaultFrameIndex;
 
   // Whether the data fetched for this image is a part of a multpart response.
   bool is_multipart_ = false;
 
+  // |sk_image_id_| is the id used when constructing an SkImage representation
+  // for a generator backed image.
+  // TODO(khushalsagar): Remove the use of this uniqueID. See crbug.com/753639.
+  uint32_t sk_image_id_ = SkiaPaintImageGenerator::kNeedNewImageUniqueID;
   mutable sk_sp<SkImage> cached_sk_image_;
 };
 
