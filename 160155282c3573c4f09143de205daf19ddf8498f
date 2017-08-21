@@ -16,6 +16,24 @@
       "revId": "160155282c3573c4f09143de205daf19ddf8498f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "473d1383_3d9ecf99",
+        "filename": "build/android/gyp/write_build_config.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1168179
+      },
+      "writtenOn": "2017-08-21T14:54:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8657749_90d401ca",
+      "revId": "160155282c3573c4f09143de205daf19ddf8498f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
