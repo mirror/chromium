@@ -62,6 +62,7 @@ using PerformanceEntryVector = HeapVector<Member<PerformanceEntry>>;
 using PerformanceObservers = HeapListHashSet<Member<PerformanceObserver>>;
 
 class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
+  friend class PerformanceTest;
 
  public:
   ~PerformanceBase() override;
