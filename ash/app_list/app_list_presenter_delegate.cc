@@ -153,8 +153,12 @@ void AppListPresenterDelegate::OnDismissed() {
   DCHECK(view_);
 
   is_visible_ = false;
-  aura::Window* root_window =
-      RootWindowController::ForTargetRootWindow()->GetRootWindow();
+  Shelf* shelf = Shelf::ForWindow(view_->GetWidget()->GetNativeView());
+  aura::Window* root_window = Shell::GetRootWindowForDisplayId(
+      display::Screen::GetScreen()
+          ->GetDisplayNearestWindow(shelf->shelf_widget()->GetNativeWindow())
+          .id());
+
   Shell::Get()->NotifyAppListVisibilityChanged(is_visible_, root_window);
 }
 
