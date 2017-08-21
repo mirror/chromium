@@ -478,6 +478,24 @@
     },
     {
       "key": {
+        "uuid": "7c41d8f5_652c2c24",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-21T22:40:13Z",
+      "side": 1,
+      "message": "So, making sure I parse this right - the question is whether the higher layers should check this themselves, or whether the lower layers should emit this, right?\n\nFrom the POV of //net, I think it\u0027s fine to have the lower layers surface this, because the boolean is an implementation detail of HSTS, which is why it hangs off the TransportSecurityState. Since HSTS itself suggests treating such errors as fatal, it doesn\u0027t \u0027offend\u0027 my layering sensibilities to suggest //net should surface this information to its consumers.\n\nDid that answer the question you were asking, Randy?\n\nAs to whether or not it belongs in SSLInfo, I\u0027ll note that we already have \u0027host/connection-attempt specific\u0027 flags hanging on the SSLInfo (notably, |pkp_bypassed|, as well as informational aspects (|client_cert_sent|, |token_binding_negotiated|). Given that the same place(s) we\u0027re setting |pkp_bypassed| are roughly where we\u0027d check for whether errors should be fatal, and indeed, another implementation strategy \u0027could\u0027 have been to create a dedicated fatal error code (rather than this bool + the more specific error code), I don\u0027t see anything fundamentally wrong with refactoring to surface this from the SSLInfo, and then having the consumers above make use of it.\n\nDoes that explanation also make sense?",
+      "parentUuid": "05bf7580_aab30775",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5be53935_82129d8d",
         "filename": "content/browser/loader/navigation_url_loader_network_service.h",
         "patchSetId": 14
