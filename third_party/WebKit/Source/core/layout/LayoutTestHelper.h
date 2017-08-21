@@ -77,6 +77,8 @@ class RenderingTest : public ::testing::Test {
 
   RenderingTest(LocalFrameClient* = nullptr);
 
+  static void LoadAhem(LocalFrame&);
+
  protected:
   void SetUp() override;
   void TearDown() override;
