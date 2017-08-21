@@ -22,6 +22,30 @@
       "revId": "ccf9346488e4c96ff0bcaa55816037cc4079accf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d25aa1_71f4c22d",
+        "filename": "services/device/generic_sensor/fake_platform_sensor_fusion.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-21T17:11:41Z",
+      "side": 1,
+      "message": "I tried using ASSERT_TRUE() here, but it can only be used in a function which has no return value.\n\nI added an if statement:\nif (it \u003d\u003d sensor_readings_.end())\n    return false;\nto avoid dereferencing |it| when it is |sensor_readings_.end()|.",
+      "parentUuid": "885f569b_d3fc257e",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 13
+      },
+      "revId": "ccf9346488e4c96ff0bcaa55816037cc4079accf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
