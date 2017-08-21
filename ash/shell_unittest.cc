@@ -553,42 +553,10 @@ TEST_F(ShellTest2, DontCrashWhenWindowDeleted) {
   window_->Init(ui::LAYER_NOT_DRAWN);
 }
 
-// Tests the local state code path used with Config::CLASSIC and Config::MUS.
-class ShellLocalStateTestNonMash : public NoSessionAshTestBase {
- public:
-  ShellLocalStateTestNonMash() = default;
-  ~ShellLocalStateTestNonMash() override = default;
+// Tests the local state code path.
+using ShellLocalStateTest = ShellTest;
 
-  // Must outlive Shell.
-  TestingPrefServiceSimple local_state_;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(ShellLocalStateTestNonMash);
-};
-
-TEST_F(ShellLocalStateTestNonMash, LocalState) {
-  if (Shell::GetAshConfig() == Config::MASH)
-    return;
-
-  TestShellObserver observer;
-  Shell::Get()->AddShellObserver(&observer);
-
-  // In classic ash, chrome calls into ash to set up local state.
-  Shell::RegisterLocalStatePrefs(local_state_.registry());
-  Shell::Get()->SetLocalStatePrefService(&local_state_);
-  EXPECT_EQ(&local_state_, observer.last_local_state_);
-  EXPECT_EQ(&local_state_, Shell::Get()->GetLocalStatePrefService());
-
-  Shell::Get()->RemoveShellObserver(&observer);
-}
-
-// Tests the local state code path used with Config::MASH.
-using ShellLocalStateTestMash = ShellTest;
-
-TEST_F(ShellLocalStateTestMash, LocalState) {
-  if (Shell::GetAshConfig() != Config::MASH)
-    return;
-
+TEST_F(ShellLocalStateTest, LocalState) {
   TestShellObserver observer;
   Shell::Get()->AddShellObserver(&observer);
 
