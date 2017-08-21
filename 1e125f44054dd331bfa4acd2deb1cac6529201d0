@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd91de97_6a452377",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T20:52:45Z",
+      "side": 1,
+      "message": "this seems like the sort of thing that every caller would want to do. is there a reason to leave a bad file behind in certain cases? if not, please move this into Apply",
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556f254e_9153e345",
+        "filename": "chrome/installer/zucchini/zucchini.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T20:52:45Z",
+      "side": 1,
+      "message": "FilePath has historically been passed by constref. unless this has changed thanks to movable types (I\u0027m not aware), please use constref here.",
+      "range": {
+        "startLine": 55,
+        "startChar": 19,
+        "endLine": 55,
+        "endChar": 33
+      },
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1650e52a_eb757466",
+        "filename": "chrome/installer/zucchini/zucchini_apply.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T20:52:45Z",
+      "side": 1,
+      "message": "be aware that since the input and output files are mapped into memory, I/O errors will lead to crashes while accessing the mapped regions rather than predictable return values from file I/O APIs. you could turn the I/O errors back into predictable return values on Windows by using structured exception handling (__try and friends). is it the right thing to crash on error rather than gracefully fail?",
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
