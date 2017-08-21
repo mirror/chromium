@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "07bf45d6_e67c015c",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-21T12:29:30Z",
+      "side": 1,
+      "message": "Adding those on the server is very quick and easy, so sure, go for it.\nWe should skip the interactive ones for now though - 2, 3, and 4 are interactive.",
+      "parentUuid": "ce41ce6b_68a469ba",
+      "revId": "19dc2d0d40d8f397817504c8ccfbbbfd8cf12c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09dadcd2_e5c8b771",
         "filename": "chrome/browser/search/local_ntp_source.cc",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "19dc2d0d40d8f397817504c8ccfbbbfd8cf12c3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf9d4eb_24d23955",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-21T12:29:30Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "e711d091_26ab131e",
+      "revId": "19dc2d0d40d8f397817504c8ccfbbbfd8cf12c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
