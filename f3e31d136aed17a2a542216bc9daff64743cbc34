@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08882211_377a4e88",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounterTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-21T21:39:02Z",
+      "side": 1,
+      "message": "super-nit: data member name should end in _",
+      "revId": "f3e31d136aed17a2a542216bc9daff64743cbc34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
