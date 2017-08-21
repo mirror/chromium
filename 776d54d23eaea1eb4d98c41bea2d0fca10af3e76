@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "114b6a95_c2a59103",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-21T22:41:04Z",
+      "side": 1,
+      "message": "khorimoto@ Should the callback method work like this?",
+      "revId": "776d54d23eaea1eb4d98c41bea2d0fca10af3e76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
