@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6804e412_33a8fa3c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/infobar/InfoBarRenderTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-21T15:10:27Z",
+      "side": 1,
+      "message": "No no, I like it :)",
+      "parentUuid": "f7a2c942_46a4787e",
+      "range": {
+        "startLine": 77,
+        "startChar": 49,
+        "endLine": 77,
+        "endChar": 51
+      },
+      "revId": "e167d1a7f5029d1bacbcc9d809712f688f7a99e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c6e9b3a_af95278c",
         "filename": "chrome/browser/ui/android/infobars/framebust_block_infobar.cc",
         "patchSetId": 7
