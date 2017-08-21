@@ -16,6 +16,24 @@
       "revId": "bdeec49039868b0d4b4c4bd11dfa1ade6f99c7e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107dbad7_95524765",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-21T07:26:49Z",
+      "side": 0,
+      "message": "I moved this into a separate change here https://chromium-review.googlesource.com/c/623037",
+      "parentUuid": "9efd2e3c_7f4547eb",
+      "revId": "bdeec49039868b0d4b4c4bd11dfa1ade6f99c7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
