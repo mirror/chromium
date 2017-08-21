@@ -1743,6 +1743,43 @@ TEST_F(NativeWidgetMacTest, ReparentNativeViewBounds) {
   parent->CloseNow();
 }
 
+// Test two kind of widgets to re-parent.
+TEST_F(NativeWidgetMacTest, ReparentNativeViewTypes) {
+  std::unique_ptr<Widget> toplevel1(new Widget);
+  Widget::InitParams toplevel1_params =
+      CreateParams(Widget::InitParams::TYPE_POPUP);
+  toplevel1_params.ownership = Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
+  toplevel1->Init(toplevel1_params);
+
+  std::unique_ptr<Widget> toplevel2(new Widget);
+  Widget::InitParams toplevel2_params =
+      CreateParams(Widget::InitParams::TYPE_POPUP);
+  toplevel2_params.ownership = Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
+  toplevel2->Init(toplevel2_params);
+
+  Widget* child = new Widget;
+  Widget::InitParams child_params(Widget::InitParams::TYPE_CONTROL);
+  child->Init(child_params);
+
+  Widget::ReparentNativeView(child->GetNativeView(),
+                             toplevel1->GetNativeView());
+  EXPECT_EQ([child->GetNativeView() window],
+            [toplevel1->GetNativeView() window]);
+  EXPECT_EQ(0, [child->GetNativeWindow() alphaValue]);
+
+  Widget::ReparentNativeView(child->GetNativeView(),
+                             toplevel2->GetNativeView());
+  EXPECT_EQ([child->GetNativeView() window],
+            [toplevel2->GetNativeView() window]);
+  EXPECT_EQ(0, [child->GetNativeWindow() alphaValue]);
+  EXPECT_NE(0, [toplevel1->GetNativeWindow() alphaValue]);
+
+  Widget::ReparentNativeView(toplevel2->GetNativeView(),
+                             toplevel1->GetNativeView());
+  EXPECT_EQ([toplevel2->GetNativeWindow() parentWindow],
+            [toplevel1->GetNativeView() window]);
+}
+
 // Test class for Full Keyboard Access related tests.
 class NativeWidgetMacFullKeyboardAccessTest : public NativeWidgetMacTest {
  public:
