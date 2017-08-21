@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
+import android.view.textclassifier.TextClassifier;
 
 import org.chromium.base.BuildInfo;
 import org.chromium.base.Log;
@@ -1138,29 +1139,26 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
     }
 
-    // TODO(timav): Use |TextClassifier| instead of |Object| after we switch to Android SDK 26.
     /**
      * Sets TextClassifier for Smart Text selection.
      */
-    public void setTextClassifier(Object textClassifier) {
+    public void setTextClassifier(TextClassifier textClassifier) {
         if (mSelectionClient != null) mSelectionClient.setTextClassifier(textClassifier);
     }
 
-    // TODO(timav): Use |TextClassifier| instead of |Object| after we switch to Android SDK 26.
     /**
      * Returns TextClassifier that is used for Smart Text selection. If the custom classifier
      * has been set with setTextClassifier, returns that object, otherwise returns the system
      * classifier.
      */
-    public Object getTextClassifier() {
+    public TextClassifier getTextClassifier() {
         return mSelectionClient == null ? null : mSelectionClient.getTextClassifier();
     }
 
-    // TODO(timav): Use |TextClassifier| instead of |Object| after we switch to Android SDK 26.
     /**
      * Returns the TextClassifier which has been set with setTextClassifier(), or null.
      */
-    public Object getCustomTextClassifier() {
+    public TextClassifier getCustomTextClassifier() {
         return mSelectionClient == null ? null : mSelectionClient.getCustomTextClassifier();
     }
 
