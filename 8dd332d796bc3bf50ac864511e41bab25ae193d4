@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f7c8c36_4c3109d3",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 1605,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-21T17:41:36Z",
+      "side": 1,
+      "message": "we already have a feature counter for createImageBitmap.  These should go into a separate dedicated histogram IMHO.",
+      "range": {
+        "startLine": 1605,
+        "startChar": 2,
+        "endLine": 1605,
+        "endChar": 40
+      },
+      "revId": "8dd332d796bc3bf50ac864511e41bab25ae193d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
