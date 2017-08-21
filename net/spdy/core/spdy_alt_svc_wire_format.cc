@@ -9,6 +9,8 @@
 #include <limits>
 
 #include "base/logging.h"
+#include "base/strings/string_number_conversions.h"
+#include "net/quic/core/quic_versions.h"
 #include "net/spdy/platform/api/spdy_string_utils.h"
 
 namespace net {
@@ -31,6 +33,11 @@ bool ParsePositiveIntegerImpl(SpdyStringPiece::const_iterator c,
     *value += *c - '0';
   }
   return (c == end && *value > 0);
+}
+
+uint32_t ReverseUIntByteOrder(uint32_t input) {
+  return (input << 24) | ((input << 8) & 0xff0000) | ((input >> 8) & 0xff00) |
+         ((input >> 24) & 0xff);
 }
 
 }  // namespace
@@ -75,6 +82,12 @@ bool SpdyAltSvcWireFormat::ParseHeaderFieldValue(
     if (percent_encoded_protocol_id_end == c ||
         !PercentDecode(c, percent_encoded_protocol_id_end, &protocol_id)) {
       return false;
+    }
+    // Check for IETF format for advertising QUIC:
+    // h2q=":49288";quic=51303338;quic=51303334
+    const bool is_ietf_format_quic = (protocol_id.compare("h2q") == 0);
+    if (is_ietf_format_quic) {
+      protocol_id = "quic";
     }
     c = percent_encoded_protocol_id_end;
     if (c == value.end()) {
@@ -176,6 +189,24 @@ bool SpdyAltSvcWireFormat::ParseHeaderFieldValue(
             // List ends in comma.
             return false;
           }
+        }
+      } else if (is_ietf_format_quic && parameter_name.compare("quic") == 0) {
+        // IETF format for advertising QUIC. Version is hex encoding of QUIC
+        // version tag. Hex-encoded string should not include leading "0x" or
+        // leading zeros.
+        // Example for advertising QUIC versions "Q038" and "Q034":
+        // h2q=":49288";quic=51303338;quic=51303334
+        if (*parameter_value_begin == '0') {
+          return false;
+        }
+        uint32_t v_tag;
+        if (!base::HexStringToUInt(std::string(parameter_value_begin, c),
+                                   &v_tag)) {
+          return false;
+        }
+        QuicVersion v = QuicTagToQuicVersion(ReverseUIntByteOrder(v_tag));
+        if (v != QUIC_VERSION_UNSUPPORTED) {
+          version.push_back(v);
         }
       }
     }
