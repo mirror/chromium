@@ -26,9 +26,12 @@
 
 namespace {
 
-std::string GetHash(const base::FilePath& relative_path) {
-  size_t int_key = BASE_HASH_NAMESPACE::hash<base::FilePath>()(relative_path);
-  return base::SizeTToString(int_key);
+std::string GetPartitionKey(const base::FilePath& relative_path) {
+  // Create a partition_key string with no '.'s in it.
+  const base::FilePath::StringType& path = relative_path.value();
+  return base::HexEncode(
+      path.c_str(),
+      path.size() * sizeof(base::FilePath::StringType::value_type));
 }
 
 }  // namespace
@@ -46,20 +49,17 @@ ChromeZoomLevelPrefs::ChromeZoomLevelPrefs(
   DCHECK(!partition_path.empty());
   DCHECK((partition_path == profile_path) ||
          profile_path.IsParent(partition_path));
-  // Create a partition_key string with no '.'s in it. For the default
-  // StoragePartition, this string will always be "0".
   base::FilePath partition_relative_path;
   profile_path.AppendRelativePath(partition_path, &partition_relative_path);
-  partition_key_ = GetHash(partition_relative_path);
-
+  partition_key_ = GetPartitionKey(partition_relative_path);
 }
 
 ChromeZoomLevelPrefs::~ChromeZoomLevelPrefs() {
 }
 
-std::string ChromeZoomLevelPrefs::GetHashForTesting(
+std::string ChromeZoomLevelPrefs::GetPartitionKeyForTesting(
     const base::FilePath& relative_path) {
-  return GetHash(relative_path);
+  return GetPartitionKey(relative_path);
 }
 
 void ChromeZoomLevelPrefs::SetDefaultZoomLevelPref(double level) {
