@@ -27,7 +27,6 @@
 #include "url/gurl.h"
 
 class InstantIOContext;
-class InstantSearchPrerenderer;
 class InstantServiceObserver;
 class Profile;
 struct InstantMostVisitedItem;
@@ -93,8 +92,6 @@ class InstantService : public KeyedService,
   // Sends the current set of search URLs to a renderer process.
   void SendSearchURLsToRenderer(content::RenderProcessHost* rph);
 
-  InstantSearchPrerenderer* GetInstantSearchPrerenderer();
-
  private:
   friend class InstantExtendedTest;
   friend class InstantServiceTest;
@@ -104,9 +101,6 @@ class InstantService : public KeyedService,
   FRIEND_TEST_ALL_PREFIXES(InstantExtendedManualTest,
                            MANUAL_SearchesFromFakebox);
   FRIEND_TEST_ALL_PREFIXES(InstantExtendedTest, ProcessIsolation);
-  FRIEND_TEST_ALL_PREFIXES(InstantServiceEnabledTest,
-                           SendsSearchURLsToRenderer);
-  FRIEND_TEST_ALL_PREFIXES(InstantServiceTest, GetSuggestionFromServiceSide);
   FRIEND_TEST_ALL_PREFIXES(InstantServiceTest, GetSuggestionFromClientSide);
 
   // KeyedService:
@@ -147,8 +141,6 @@ class InstantService : public KeyedService,
   void OnThemeChanged();
 #endif
 
-  void ResetInstantSearchPrerendererIfNecessary();
-
   Profile* const profile_;
 
   std::unique_ptr<SearchEngineBaseURLTracker> search_engine_base_url_tracker_;
@@ -167,9 +159,6 @@ class InstantService : public KeyedService,
   content::NotificationRegistrar registrar_;
 
   scoped_refptr<InstantIOContext> instant_io_context_;
-
-  // Set to NULL if the default search provider does not support Instant.
-  std::unique_ptr<InstantSearchPrerenderer> instant_prerenderer_;
 
   // Data sources for NTP tiles (aka Most Visited tiles). Only one of these will
   // be non-null.
