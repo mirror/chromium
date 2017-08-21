@@ -59,7 +59,7 @@ struct StructTraits<gfx::mojom::ImageSkiaDataView, gfx::ImageSkia> {
   static std::vector<gfx::ImageSkiaRep> image_reps(const gfx::ImageSkia& input);
 
   static bool IsNull(const gfx::ImageSkia& input) {
-    return input.image_reps().empty();
+    return image_reps(input).empty();
   }
   static void SetToNull(gfx::ImageSkia* out) { *out = gfx::ImageSkia(); }
 
