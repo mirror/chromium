@@ -411,14 +411,15 @@ void BrowserTestBase::InitializeNetworkProcess() {
     mojo_rules.push_back(std::move(mojo_rule));
   }
 
-  if (mojo_rules.empty())
-    return;
-
+  mojo::SyncCallRestrictions::ScopedAllowSyncCall allow_sync_call;
   mojom::NetworkServiceTestPtr network_service_test;
   ServiceManagerConnection::GetForProcess()->GetConnector()->BindInterface(
       mojom::kNetworkServiceName, &network_service_test);
-  mojo::SyncCallRestrictions::ScopedAllowSyncCall allow_sync_call;
-  network_service_test->AddRules(std::move(mojo_rules));
+  if (!mojo_rules.empty())
+    network_service_test->AddRules(std::move(mojo_rules));
+
+  network_service_test->AddRootCertFromFile(
+      net::EmbeddedTestServer::GetRootCertPemPath());
 }
 
 }  // namespace content
