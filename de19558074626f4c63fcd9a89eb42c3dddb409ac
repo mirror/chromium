@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "908a2832_e601f56e",
+        "filename": "content/browser/service_worker/embedded_worker_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-21T03:38:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fa2ba73_013b39a7",
+      "range": {
+        "startLine": 455,
+        "startChar": 30,
+        "endLine": 455,
+        "endChar": 32
+      },
+      "revId": "de19558074626f4c63fcd9a89eb42c3dddb409ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6535eb4e_82d49b6b",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "de19558074626f4c63fcd9a89eb42c3dddb409ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58b3ffc_82823c11",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2184,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-21T03:38:26Z",
+      "side": 1,
+      "message": "Oops, I didn\u0027t realize that. Added a new member (|render_thread_initialized_time_|) for keeping the time when the instance is created.",
+      "parentUuid": "6535eb4e_82d49b6b",
+      "range": {
+        "startLine": 2184,
+        "startChar": 43,
+        "endLine": 2184,
+        "endChar": 65
+      },
+      "revId": "de19558074626f4c63fcd9a89eb42c3dddb409ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

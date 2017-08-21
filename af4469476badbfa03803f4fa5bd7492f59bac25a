@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "8ad8ced0_6bcccc41",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-21T03:38:26Z",
+      "side": 1,
+      "message": "Yeah, currently we don\u0027t need to have the struct.\nThis is to align with other Create* methods and also to indicate that other parameters will be moved at following patches.",
+      "parentUuid": "9b17bbf9_0bcb6e93",
+      "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08893f58_6d387af6",
         "filename": "content/common/renderer.mojom",
         "patchSetId": 3
@@ -190,6 +208,24 @@
       "side": 1,
       "message": "Yea, it\u0027s jarring which is what I meant with \"until we figure out a better name\" for this interface. AFAICT we\u0027re adding a method to \u0027Renderer\u0027 whose contract is simply \"Create an instance of the XXX Mojo interface\", so it\u0027d ideally be named CreateXXX(). If XXX is not informative at this scope, then it seems the problem is with the XXX name.\n\nIf we can\u0027t live with EmbeddedWorkerInstanceClient now, then maybe we should now change it to something like \"ServiceWorkerLauncher\" or \"ServiceWorkerExecutionManager\".\n\nAlso as shimazu@ said, the name CreateServiceWorker() was chosen because ideally the method contract would be to start a service worker. But I\u0027d prefer an \"ugly\" name that matches the actual contract than a \"pretty\" name for what we wish the contract to be. It keeps the code honest and is like a self-documented TODO to fix the contract.",
       "parentUuid": "9e8cd8ba_466b1f90",
+      "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fcf2e91d_66cc907b",
+        "filename": "content/common/renderer.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-21T03:38:26Z",
+      "side": 1,
+      "message": "Thanks. Renaming EWInstanceClient to \"ServiceWorkerLauncher\" or \"ServiceWorkerExecutionManager\" sounds good.\nKept the names as ps4 and added a TODO comment.\nDoes it seems okay?",
+      "parentUuid": "ef27f674_d78e6530",
       "revId": "af4469476badbfa03803f4fa5bd7492f59bac25a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
