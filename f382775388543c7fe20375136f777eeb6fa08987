@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cd23410_cc8c67c4",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-08-21T18:14:42Z",
+      "side": 1,
+      "message": "else if ?",
+      "revId": "f382775388543c7fe20375136f777eeb6fa08987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abfd0572_334c7266",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-08-21T18:14:42Z",
+      "side": 1,
+      "message": "Can you add the opposite test? and one where both are invalid.",
+      "revId": "f382775388543c7fe20375136f777eeb6fa08987",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
