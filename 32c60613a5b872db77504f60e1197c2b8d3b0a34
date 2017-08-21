@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0bd0406_e30a5d13",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 714,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-21T12:25:25Z",
+      "side": 1,
+      "message": "nit: add a . at the end of the TODO.",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685a88c4_4f333536",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-21T12:25:25Z",
+      "side": 1,
+      "message": "This function no longer exists, right? If so, please remove it.",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de86047d_03ce08f1",
+        "filename": "content/browser/loader/navigation_url_loader_delegate.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-21T12:25:25Z",
+      "side": 1,
+      "message": "nit:s/irgnored/ignored",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80cd5a01_6471e198",
+        "filename": "content/browser/loader/navigation_url_loader_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-21T12:25:25Z",
+      "side": 1,
+      "message": "Move this comment to navigation_url_loader_delegate.h, since it makes more sense to describe the interface (NavigationURLLoaderDelegate) rather than this function in the impl, which just notifies the Delegate.",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde1a64d_47df8bfa",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-21T12:25:25Z",
+      "side": 1,
+      "message": "It\u0027d be better if this code could be shared with NavigationResourceHandler rather than copy-pasted. I\u0027m not exactly sure where it should be, since I\u0027m less familiar with this part of the code. Maybe rdsmith@ has a suggestion?",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b26d5bd_1c80faf5",
+        "filename": "content/public/common/resource_request_completion_status.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-21T12:25:25Z",
+      "side": 1,
+      "message": "If I read the code correctly, this member is not used at all. Please remove it. In particular, adding means we transmit a bogus SSLInfo to the renderer process on each ResourceRequest. That doesn\u0027t seem to be something we want.",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
