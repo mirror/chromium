@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "072d3c98_45327065",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-21T21:27:39Z",
+      "side": 1,
+      "message": "Just creating a NetworkServiceTest object in the same-site cases causes a DCHECK, due to having two ScopedHostResolverProcs in process.  We didn\u0027t see this before because the only tests that run in single process mode don\u0027t add any HostResolverRules.",
+      "range": {
+        "startLine": 398,
+        "startChar": 38,
+        "endLine": 398,
+        "endChar": 0
+      },
+      "revId": "4ad07efd8b0cf1c2a9d5751ec9f6469b33d4a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
