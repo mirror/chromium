@@ -1,0 +1,239 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d48d977_f8c9e336",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 2270,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:46:46Z",
+      "side": 1,
+      "message": "Why are we putting this code into android specific location?\nIs there any dependency on Android here?",
+      "range": {
+        "startLine": 2270,
+        "startChar": 23,
+        "endLine": 2270,
+        "endChar": 30
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ea994b_8792d755",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:46:46Z",
+      "side": 1,
+      "message": "I don\u0027t understand. This is a .cc file, which means you should add an include with proper .h file.\n\nI think one of the other .h files is already including that, hence no compilation errors.",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e6c7cc_43ab44e6",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:46:46Z",
+      "side": 1,
+      "message": "Is that a full name of the metric, or will the complete name have a prefix comprised of event name too? Please explain.",
+      "range": {
+        "startLine": 15,
+        "startChar": 35,
+        "endLine": 15,
+        "endChar": 52
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4312fa_c764a907",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:46:46Z",
+      "side": 1,
+      "message": "If I understand that correctly, this is the actual reporting of the metric, while updateSourceURL just associates the source ID with the URL, until you add a single metric, you haven\u0027t reported anything.\n\nAlso, to make the metric more useful, please consider Foreground/Background enum or something else that might be useful than just counting URLs.",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 22
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318b9cf7_392fe1eb",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:46:46Z",
+      "side": 1,
+      "message": "nit: Remove?\nUp to you, thou.",
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09af540e_0cb13a3b",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:46:46Z",
+      "side": 1,
+      "message": "Why is interface in background? Would we not be interested in seeing the data for foreground offlining as well? After all we could spot some trends and differences between foreground and background too and maybe come up with features that are crafted to specific cases?\n\nEither way, there is nothing I can think of about offline_pages_ukm_reporter that spells \"background\". Please explain what I am missing.",
+      "range": {
+        "startLine": 8,
+        "startChar": 40,
+        "endLine": 8,
+        "endChar": 50
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d21e35_fc54bd47",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:46:46Z",
+      "side": 1,
+      "message": "missing dtor override. Please ensure OfflinePagesUkmReporter has a virtual dtor too, if there is none.",
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa955d70_1019ffdf",
+        "filename": "components/offline_pages/core/background/offline_pages_ukm_reporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:46:46Z",
+      "side": 1,
+      "message": "please add documentation.",
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb22996c_09e06b84",
+        "filename": "components/offline_pages/core/background/offline_pages_ukm_reporter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:46:46Z",
+      "side": 1,
+      "message": "add virtual dtor, per earlier comment.",
+      "range": {
+        "startLine": 13,
+        "startChar": 1,
+        "endLine": 13,
+        "endChar": 7
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5db50b9_933442c7",
+        "filename": "components/offline_pages/core/background/offline_pages_ukm_reporter_stub.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:46:46Z",
+      "side": 1,
+      "message": "add dtor override, please.",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 8
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29730ee4_877bf588",
+        "filename": "components/offline_pages/core/background/offline_pages_ukm_reporter_stub.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:46:46Z",
+      "side": 1,
+      "message": "Did you consider any of these?\nconst GURL\u0026 ... () const {",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 6
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
