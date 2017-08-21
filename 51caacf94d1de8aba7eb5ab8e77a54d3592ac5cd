@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "351e1b71_d1aef200",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-21T03:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eab5333c_1a01201b",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 30
+      },
+      "revId": "51caacf94d1de8aba7eb5ab8e77a54d3592ac5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "222c9d3c_f23f54f6",
         "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "51caacf94d1de8aba7eb5ab8e77a54d3592ac5cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f72287_fb4e24ea",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1538,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-21T03:56:51Z",
+      "side": 1,
+      "message": "Ack. I think you\u0027re right, but it might be useful even then.. Technically, the content layer doesn\u0027t have to send WasHidden/WasShown when dragging a tab off a browser, since the content is visible the whole time (it probably does though).",
+      "parentUuid": "222c9d3c_f23f54f6",
+      "revId": "51caacf94d1de8aba7eb5ab8e77a54d3592ac5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
