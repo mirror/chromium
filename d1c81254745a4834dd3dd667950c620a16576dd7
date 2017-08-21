@@ -16,6 +16,24 @@
       "revId": "d1c81254745a4834dd3dd667950c620a16576dd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc955a7_b77655f5",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-21T22:42:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d302de3c_fde49bc4",
+      "revId": "d1c81254745a4834dd3dd667950c620a16576dd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
