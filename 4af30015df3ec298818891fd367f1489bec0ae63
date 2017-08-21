@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e1acc4e_4ecdac53",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-21T17:45:05Z",
+      "side": 1,
+      "message": "I was mimicking |OverscrollController::WillHandleEvent()| but probably did it incorrectly... Changed to try completing scroll for touchpad GSE as well.\nSee:\nhttps://cs.chromium.org/chromium/src/content/browser/renderer_host/overscroll_controller.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d100",
+      "parentUuid": "6e38eceb_4efff575",
+      "range": {
+        "startLine": 343,
+        "startChar": 10,
+        "endLine": 343,
+        "endChar": 36
+      },
+      "revId": "4af30015df3ec298818891fd367f1489bec0ae63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85da5683_8e87511e",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
         "patchSetId": 3
