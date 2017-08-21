@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d833c59c_0b8e8958",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-21T21:13:11Z",
+      "side": 1,
+      "message": "I think !contents_opaque() is fine.",
+      "revId": "d51178e37f950dd468aad5dc06235c837b2a708d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
