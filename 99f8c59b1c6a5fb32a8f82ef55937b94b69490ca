@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20c67721_d16e9674",
+        "filename": "chrome/browser/autofill/form_structure_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-21T21:46:06Z",
+      "side": 1,
+      "message": "this seems fine but can you file a bug to remove it and update expectations? I don\u0027t work on Autofill any more but if you apply the autofill label the right people should be cc\u0027d.",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 74
+      },
+      "revId": "99f8c59b1c6a5fb32a8f82ef55937b94b69490ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
