@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4897cdbc_cd0be21c",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-21T20:27:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e598ebe_8a96dd9e",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 46
+      },
+      "revId": "eead19657e4e101b517e6fe59a16a5bf3c07989e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c62ccc9_e3d3c0ef",
         "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "eead19657e4e101b517e6fe59a16a5bf3c07989e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38dec68f_3087fde2",
+        "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-21T20:27:39Z",
+      "side": 1,
+      "message": "Done. Strange, it compiles cc file even with different declaration.",
+      "parentUuid": "2c62ccc9_e3d3c0ef",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "eead19657e4e101b517e6fe59a16a5bf3c07989e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
