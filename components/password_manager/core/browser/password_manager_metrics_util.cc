@@ -178,6 +178,13 @@ void LogShowedFormNotSecureWarningOnCurrentNavigation() {
       "PasswordManager.ShowedFormNotSecureWarningOnCurrentNavigation", true);
 }
 
+void LogShowedShowAllSavedPasswordsFallback() {
+  // Always record 'true': this is a counter of the number of times the fallback
+  // is shown.
+  UMA_HISTOGRAM_BOOLEAN("PasswordManager.ShowedShowAllSavedPasswordsFallback",
+                        true);
+}
+
 void LogPasswordSuccessfulSubmissionIndicatorEvent(
     autofill::PasswordForm::SubmissionIndicatorEvent event) {
   UMA_HISTOGRAM_ENUMERATION(

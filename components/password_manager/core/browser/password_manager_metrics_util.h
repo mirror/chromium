@@ -319,6 +319,9 @@ void LogShowedHttpNotSecureExplanation();
 // per main-frame navigation.
 void LogShowedFormNotSecureWarningOnCurrentNavigation();
 
+// Log that the "Show all saved passwords" fallback was shown.
+void LogShowedShowAllSavedPasswordsFallback();
+
 // Log a password successful submission event.
 void LogPasswordSuccessfulSubmissionIndicatorEvent(
     autofill::PasswordForm::SubmissionIndicatorEvent event);

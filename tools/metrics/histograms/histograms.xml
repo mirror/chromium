@@ -54444,6 +54444,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PasswordManager.ShowedShowAllSavedPasswordsFallback"
+    enum="BooleanShown">
+  <owner>jdoerrie@chromium.org</owner>
+  <owner>melandory@chromium.org</owner>
+  <summary>
+    Recorded when the &quot;Show all saved passwords&quot; fallback is shown in
+    the list of password suggestions.
+  </summary>
+</histogram>
+
 <histogram name="PasswordManager.SignInPromo"
     enum="PasswordBubbleSignInPromoDismissalReason">
   <owner>vasilii@chromium.org</owner>

@@ -273,6 +273,8 @@ void PasswordAutofillManager::OnShowPasswordSuggestions(
         std::string(), std::string(),
         autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY);
     suggestions.push_back(all_saved_passwords);
+
+    metrics_util::LogShowedShowAllSavedPasswordsFallback();
   }
 
   autofill_client_->ShowAutofillPopup(bounds,
