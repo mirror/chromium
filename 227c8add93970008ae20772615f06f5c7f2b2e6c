@@ -16,6 +16,24 @@
       "revId": "227c8add93970008ae20772615f06f5c7f2b2e6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13435019_6e9a0332",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-21T19:58:45Z",
+      "side": 1,
+      "message": "Like to put this in AppListViewFullscreenTest.StartPageLeftArrowFocusTest to skip call InitializeStartPageView? But before call start_page_view(), should do Initialize() here to initialize view_ etc. Otherwise, cal start_page_view() in the testcase will crash.",
+      "parentUuid": "fa75d910_98752ca5",
+      "revId": "227c8add93970008ae20772615f06f5c7f2b2e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
