@@ -9,32 +9,34 @@
 #include <vector>
 
 #include "ash/ash_export.h"
+#include "ash/public/interfaces/link_handler.mojom.h"
+#include "mojo/public/cpp/bindings/interface_ptr_set.h"
 #include "ui/gfx/image/image.h"
 
 class GURL;
 
 namespace ash {
 
-struct ASH_EXPORT LinkHandlerInfo {
-  std::string name;
-  gfx::Image icon;
-  uint32_t id;
-};
-
 // A model LinkHandlerModelFactory returns.
 class ASH_EXPORT LinkHandlerModel {
  public:
-  class Observer {
-   public:
-    virtual ~Observer();
-    virtual void ModelChanged(const std::vector<LinkHandlerInfo>& handlers) = 0;
-  };
-
   virtual ~LinkHandlerModel();
-  virtual void AddObserver(Observer* observer) = 0;
+  void AddObserver(mojom::LinkHandlerObserverAssociatedPtrInfo observer);
 
-  // Opens the |url| with a handler specified by the |handler_id|.
-  virtual void OpenLinkWithHandler(const GURL& url, uint32_t handler_id) = 0;
+  // Opens the URL with the handler specified by the |handler_id|.
+  virtual void OpenLinkWithHandler(uint32_t handler_id) = 0;
+
+ protected:
+  LinkHandlerModel();
+
+  mojo::AssociatedInterfacePtrSet<mojom::LinkHandlerObserver>* observers() {
+    return &observers_;
+  }
+
+ private:
+  mojo::AssociatedInterfacePtrSet<mojom::LinkHandlerObserver> observers_;
+
+  DISALLOW_COPY_AND_ASSIGN(LinkHandlerModel);
 };
 
 }  // namespace ash

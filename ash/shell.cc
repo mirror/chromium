@@ -21,6 +21,7 @@
 #include "ash/cast_config_controller.h"
 #include "ash/display/ash_display_controller.h"
 #include "ash/display/cursor_window_controller.h"
+#include "ash/link_handler_model_factory.h"
 #include "ash/display/display_color_manager_chromeos.h"
 #include "ash/display/display_configuration_controller.h"
 #include "ash/display/display_error_observer_chromeos.h"
@@ -633,6 +634,7 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       immersive_context_(base::MakeUnique<ImmersiveContextAsh>()),
       keyboard_brightness_control_delegate_(
           base::MakeUnique<KeyboardBrightnessController>()),
+      link_handler_controller_(new LinkHandlerController()),
       locale_notification_controller_(
           base::MakeUnique<LocaleNotificationController>()),
       lock_screen_controller_(base::MakeUnique<LockScreenController>()),

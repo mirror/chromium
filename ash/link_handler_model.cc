@@ -6,7 +6,14 @@
 
 namespace ash {
 
-LinkHandlerModel::Observer::~Observer() {}
+LinkHandlerModel::LinkHandlerModel() {}
 LinkHandlerModel::~LinkHandlerModel() {}
+
+void LinkHandlerModel::AddObserver(
+    mojom::LinkHandlerObserverAssociatedPtrInfo observer) {
+  mojom::LinkHandlerObserverAssociatedPtr observer_ptr;
+  observer_ptr.Bind(std::move(observer));
+  observers_.AddPtr(std::move(observer_ptr));
+}
 
 }  // namespace ash
