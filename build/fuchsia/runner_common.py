@@ -346,10 +346,10 @@ def RunFuchsia(bootfs_and_manifest, use_device, dry_run):
       '-append', 'TERM=dumb kernel.halt_on_panic=true',
     ]
 
-  if int(os.environ.get('CHROME_HEADLESS', 0)) == 0:
-    qemu_command += ['-enable-kvm', '-cpu', 'host,migratable=no']
-  else:
-    qemu_command += ['-cpu', 'Haswell,+smap,-check']
+  # if int(os.environ.get('CHROME_HEADLESS', 0)) == 0:
+  qemu_command += ['-enable-kvm', '-cpu', 'host,migratable=no']
+  # else:
+  #   qemu_command += ['-cpu', 'Haswell,+smap,-check']
 
   if dry_run:
     print 'Run:', ' '.join(qemu_command)
