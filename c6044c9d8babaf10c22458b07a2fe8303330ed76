@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "d1f36d49_b9a3845a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-21T00:49:07Z",
+      "side": 1,
+      "message": "I agree that if there is a better way then we should choose the better way, and I appreciate the suggestion :). My point about the review was that it was reviewed for a *prior CL*, and since this CL doesn\u0027t touch the method, maybe we\u0027re getting away from the scope of _this_ change?\n\nThe reason it uses content::TestWebContents::Create() directly is because tab_manager_unittests.cc does, and this was split off from that in a previous CL and kept consistent. Like the TabManager unittests, this passes nullptr as the SiteInstance, which is different from RenderViewHostTestHarness::CreateTestWebContents().\n\nI have no problems with changing it, but will defer to others on whether or not it should be done in this CL or at all, and whether or not that means we should consider changing it in other places too, since it is currently consistent with other TabManager unittests.",
+      "parentUuid": "76c205e9_7f8a2ca2",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "208ee232_89b59a26",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
         "patchSetId": 6
