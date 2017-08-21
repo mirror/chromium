@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3794234_9ce95cdb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/NumberRollView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-21T21:45:38Z",
+      "side": 0,
+      "message": "nit: Add this blank line back",
+      "revId": "7167aee073a77caf21b1cf1c4d9bc3288460c1d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
