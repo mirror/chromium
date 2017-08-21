@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bfbbae4_fe00553f",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 4307,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-21T04:02:08Z",
+      "side": 1,
+      "message": "RENAMING sounds too generic here.\nCould you name it as IDS_RENAMING_OF_DEVICE_STARTED_FAILURE_MESSAGE to distinguish from renaming files, and to be consistent with other string IDs?",
+      "range": {
+        "startLine": 4307,
+        "startChar": 17,
+        "endLine": 4307,
+        "endChar": 53
+      },
+      "revId": "224b1e265d485e5a61218b92e40dd5215145b425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "908a2ed5_629a8b67",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 4310,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-21T04:02:08Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 4310,
+        "startChar": 17,
+        "endLine": 4310,
+        "endChar": 54
+      },
+      "revId": "224b1e265d485e5a61218b92e40dd5215145b425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c258c5_23358084",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 4313,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-21T04:02:08Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 4313,
+        "startChar": 17,
+        "endLine": 4313,
+        "endChar": 54
+      },
+      "revId": "224b1e265d485e5a61218b92e40dd5215145b425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
