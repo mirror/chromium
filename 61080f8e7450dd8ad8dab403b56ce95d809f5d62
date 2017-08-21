@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "c0119ab1_b9521735",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuItemDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-21T18:14:19Z",
+      "side": 1,
+      "message": "Let\u0027s add a TODO to revisit this around M63 time. For now, we are OK with this cancelling if the URL points to a file.",
+      "parentUuid": "d192abde_ef470889",
+      "revId": "61080f8e7450dd8ad8dab403b56ce95d809f5d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfda57b0_35bf46a3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-21T18:14:19Z",
+      "side": 1,
+      "message": "I think if you don\u0027t time this well, these tests will end up being flaky. We are assuming that the progress dialog will always be showing, whereas it is actually dependent on native initialization not finishing yet.\n\nI think it would be better to assert the above after the callback below for example.\n\nAnd maybe guard the above assers (for progress dialog and downloadstartcallback count) with the expected conditional for native not being initialized (if it is initialized assert true safely and move on.)",
+      "range": {
+        "startLine": 215,
+        "startChar": 8,
+        "endLine": 215,
+        "endChar": 45
+      },
+      "revId": "61080f8e7450dd8ad8dab403b56ce95d809f5d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ac32cd_be1524c5",
         "filename": "components/offline_pages/core/client_namespace_constants.cc",
         "patchSetId": 1
