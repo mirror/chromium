@@ -16,6 +16,24 @@
       "revId": "18a2e967ffb4b4933a09a4ea36176f4f070bdbac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82d9c85b_fb3f3560",
+        "filename": "chrome/browser/prerender/prerender_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2104,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-08-21T09:55:04Z",
+      "side": 0,
+      "message": "Ah, thank you for explanation. It was not obvious to figure out that it is always enabled.",
+      "parentUuid": "638fdf20_ae76d43f",
+      "revId": "18a2e967ffb4b4933a09a4ea36176f4f070bdbac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
