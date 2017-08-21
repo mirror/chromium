@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1079b515_f0dea791",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-dir-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-21T18:55:30Z",
+      "side": 1,
+      "message": "For reference, it looks like this was added as part of a V8 roll:\nhttps://chromium.googlesource.com/chromium/src/+/0b07200c644f3b7147b3720a35bda0d16842ada8\n\nSuspect CL:\nhttps://chromium.googlesource.com/v8/v8/+/c5e9416b1d2e55a4d052e8dcd9848c18e4f3d8a5",
+      "range": {
+        "startLine": 48,
+        "startChar": 25,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "39dea83045db5bf0a4c262e2c2711a13778395ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
