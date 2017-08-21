@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "975ed02e_4b9bffe4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-21T22:23:25Z",
+      "side": 1,
+      "message": "Can we simplify and increase coverage by just listening for this durationchange event as well?",
+      "range": {
+        "startLine": 189,
+        "startChar": 21,
+        "endLine": 189,
+        "endChar": 28
+      },
+      "revId": "dca6c54be94f8bf84117ccf98016a7229e8d7bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "371fcc91_2c18dbc8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/media-source/mediasource-duration.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-21T22:23:25Z",
+      "side": 1,
+      "message": "Would change this to read: \"Mark endOfStream to trigger duration reduction\"",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 125
+      },
+      "revId": "dca6c54be94f8bf84117ccf98016a7229e8d7bfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
