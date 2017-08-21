@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b1d34db_1faed7a3",
+        "filename": "base/task_scheduler/task_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-21T18:24:27Z",
+      "side": 1,
+      "message": "We should probably comment that others should not use this enum. Maybe we might want to go as far as to put this in an internal namespace?",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 37
+      },
+      "revId": "8e855477d6f724f3126a9cb7f9471a925500d3d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
