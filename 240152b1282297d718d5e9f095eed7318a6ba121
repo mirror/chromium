@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "146007c9_cbe062ad",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-21T22:07:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fbadbde_2dd56812",
+      "revId": "240152b1282297d718d5e9f095eed7318a6ba121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6473a0e_a37fafa7",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "240152b1282297d718d5e9f095eed7318a6ba121",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ea4ac7_360ff157",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2259,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-21T22:07:53Z",
+      "side": 1,
+      "message": "Done. Note that nothing uses source_origin after this patch, so I was also planning on removing it in a follow up. I didn\u0027t do it now to make the merge smaller.",
+      "parentUuid": "e6473a0e_a37fafa7",
+      "revId": "240152b1282297d718d5e9f095eed7318a6ba121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
