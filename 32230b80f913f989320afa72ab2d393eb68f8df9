@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e71b4591_0cb2ddbf",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-21T18:59:26Z",
+      "side": 1,
+      "message": "nit: extra {}",
+      "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb046771_6e101e1b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-21T18:59:26Z",
+      "side": 1,
+      "message": "No get prefixes in blink: GridItemOffset",
+      "range": {
+        "startLine": 107,
+        "startChar": 13,
+        "endLine": 107,
+        "endChar": 30
+      },
+      "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920c8155_3e80b0be",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-21T18:59:26Z",
+      "side": 1,
+      "message": "Please do not inline methods which are not trivial getters.",
+      "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "600124ed_41ede629",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-21T18:59:26Z",
+      "side": 1,
+      "message": "Should we use this one instead? Let\u0027s consult with someone familiar with LayoutGrid.",
+      "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
