@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a97b817_24465f47",
+        "filename": "chrome/browser/installable/installable_data.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-21T07:21:41Z",
+      "side": 1,
+      "message": "It seems strange to have a \u0027using\u0027 at the end of a .h file. Is this needed?",
+      "revId": "9d858bf7d022606bdf29c4e09dd3cc3392bb8168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0925e14c_a8d0d6b8",
+        "filename": "chrome/browser/installable/task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-21T07:21:41Z",
+      "side": 1,
+      "message": "Ah, maybe this is where the using should go?\n\nAlso, Task and TaskQueue are very generic names considering they are not namespaced at all. Can you call them something like InstallableTask and InstallableTaskQueue?",
+      "revId": "9d858bf7d022606bdf29c4e09dd3cc3392bb8168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
