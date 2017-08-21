@@ -248,4 +248,8 @@ const char kDeviceLoginScreenInputMethods[] =
 // A boolean pref that matches enable-per-user-time-zone chrome://flags value.
 const char kPerUserTimezoneEnabled[] = "cros.flags.per_user_timezone_enabled";
 
+// This policy contains time intervals and ignored policies which is used
+// by DeviceOffHours policy to allow less restricted using Chromebooks.
+const char kDeviceOffHours[] = "cros.device_off_hours";
+
 }  // namespace chromeos
