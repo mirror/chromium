@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f291139c_4645a520",
+        "filename": "third_party/WebKit/Source/core/leak_detector/BlinkLeakDetector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-21T04:52:26Z",
+      "side": 1,
+      "message": "I could, but I would have to change it to LowMemoryNotification() anyway when adding a devtools protocol method, because CollectAllGarbageForTesting will throw an error when running in a non-test mode.",
+      "parentUuid": "22c5c954_b5da5528",
+      "revId": "fc55d9505696d7c03e17f4e6a77d890a965016ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bbb7711_bc15498b",
         "filename": "third_party/WebKit/Source/core/leak_detector/BlinkLeakDetector.cpp",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e1620c1d_658c14ce",
+        "filename": "third_party/WebKit/Source/core/leak_detector/BlinkLeakDetector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-21T04:52:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bbb7711_bc15498b",
+      "revId": "fc55d9505696d7c03e17f4e6a77d890a965016ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ad8859b_a3e382d0",
         "filename": "third_party/WebKit/Source/core/leak_detector/BlinkLeakDetector.cpp",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "fc55d9505696d7c03e17f4e6a77d890a965016ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb31967_cf130233",
+        "filename": "third_party/WebKit/Source/core/leak_detector/BlinkLeakDetector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-21T04:52:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ad8859b_a3e382d0",
+      "revId": "fc55d9505696d7c03e17f4e6a77d890a965016ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
