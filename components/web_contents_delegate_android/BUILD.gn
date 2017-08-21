@@ -32,7 +32,7 @@ android_resources("web_contents_delegate_android_java_resources") {
   custom_package = "org.chromium.components.web_contents_delegate_android"
   resource_dirs = [ "android/java/res" ]
   deps = [
-    "//components/strings:components_strings_grd",
+    "//components/web_contents_delegate_android/strings:web_contents_delegate_android_strings_grd",
   ]
 }
 

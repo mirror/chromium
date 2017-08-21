@@ -1,0 +1,92 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/config/locales.gni")
+import("//ppapi/features/features.gni")
+import("//tools/grit/grit_rule.gni")
+
+if (is_android) {
+  import("//build/config/android/rules.gni")
+  android_web_contents_delegate_android_strings_java_resources = [
+    "java/res/values-am/web_contents_delegate_android_strings.xml",
+    "java/res/values-ar/web_contents_delegate_android_strings.xml",
+    "java/res/values-bg/web_contents_delegate_android_strings.xml",
+    "java/res/values-ca/web_contents_delegate_android_strings.xml",
+    "java/res/values-cs/web_contents_delegate_android_strings.xml",
+    "java/res/values-da/web_contents_delegate_android_strings.xml",
+    "java/res/values-de/web_contents_delegate_android_strings.xml",
+    "java/res/values-el/web_contents_delegate_android_strings.xml",
+    "java/res/values-en-rGB/web_contents_delegate_android_strings.xml",
+    "java/res/values-es-rUS/web_contents_delegate_android_strings.xml",
+    "java/res/values-es/web_contents_delegate_android_strings.xml",
+    "java/res/values-fa/web_contents_delegate_android_strings.xml",
+    "java/res/values-fi/web_contents_delegate_android_strings.xml",
+    "java/res/values-fr/web_contents_delegate_android_strings.xml",
+    "java/res/values-hi/web_contents_delegate_android_strings.xml",
+    "java/res/values-hr/web_contents_delegate_android_strings.xml",
+    "java/res/values-hu/web_contents_delegate_android_strings.xml",
+    "java/res/values-in/web_contents_delegate_android_strings.xml",
+    "java/res/values-it/web_contents_delegate_android_strings.xml",
+    "java/res/values-iw/web_contents_delegate_android_strings.xml",
+    "java/res/values-ja/web_contents_delegate_android_strings.xml",
+    "java/res/values-ko/web_contents_delegate_android_strings.xml",
+    "java/res/values-lt/web_contents_delegate_android_strings.xml",
+    "java/res/values-lv/web_contents_delegate_android_strings.xml",
+    "java/res/values-nb/web_contents_delegate_android_strings.xml",
+    "java/res/values-nl/web_contents_delegate_android_strings.xml",
+    "java/res/values-pl/web_contents_delegate_android_strings.xml",
+    "java/res/values-pt-rBR/web_contents_delegate_android_strings.xml",
+    "java/res/values-pt-rPT/web_contents_delegate_android_strings.xml",
+    "java/res/values-ro/web_contents_delegate_android_strings.xml",
+    "java/res/values-ru/web_contents_delegate_android_strings.xml",
+    "java/res/values-sk/web_contents_delegate_android_strings.xml",
+    "java/res/values-sl/web_contents_delegate_android_strings.xml",
+    "java/res/values-sr/web_contents_delegate_android_strings.xml",
+    "java/res/values-sv/web_contents_delegate_android_strings.xml",
+    "java/res/values-sw/web_contents_delegate_android_strings.xml",
+    "java/res/values-th/web_contents_delegate_android_strings.xml",
+    "java/res/values-tl/web_contents_delegate_android_strings.xml",
+    "java/res/values-tr/web_contents_delegate_android_strings.xml",
+    "java/res/values-uk/web_contents_delegate_android_strings.xml",
+    "java/res/values-vi/web_contents_delegate_android_strings.xml",
+    "java/res/values-zh-rCN/web_contents_delegate_android_strings.xml",
+    "java/res/values-zh-rTW/web_contents_delegate_android_strings.xml",
+    "java/res/values/web_contents_delegate_android_strings.xml",
+  ]
+}
+
+group("strings") {
+  public_deps = [
+    ":web_contents_delegate_android_strings",
+  ]
+}
+
+grit("web_contents_delegate_android_strings") {
+  source = "../web_contents_delegate_android_strings.grd"
+  defines = [ "enable_plugins=$enable_plugins" ]
+
+  outputs = [
+    "grit/web_contents_delegate_android_strings.h",
+  ]
+  foreach(locale, locales_with_fake_bidi) {
+    outputs += [ "web_contents_delegate_android_strings_$locale.pak" ]
+  }
+
+  if (is_android) {
+    outputs += android_web_contents_delegate_android_strings_java_resources
+  }
+}
+
+if (is_android) {
+  java_strings_grd_prebuilt("web_contents_delegate_android_strings_grd") {
+    grit_output_dir = "$root_gen_dir/components/web_contents_delegate_android/strings/java/res"
+    generated_files = rebase_path(
+            android_web_contents_delegate_android_strings_java_resources,
+            "java/res",
+            ".")
+    deps = [
+      ":web_contents_delegate_android_strings",
+    ]
+  }
+}

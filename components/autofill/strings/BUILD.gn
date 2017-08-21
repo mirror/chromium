@@ -1,0 +1,90 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/config/locales.gni")
+import("//ppapi/features/features.gni")
+import("//tools/grit/grit_rule.gni")
+
+if (is_android) {
+  import("//build/config/android/rules.gni")
+  android_autofill_strings_java_resources = [
+    "java/res/values-am/autofill_strings.xml",
+    "java/res/values-ar/autofill_strings.xml",
+    "java/res/values-bg/autofill_strings.xml",
+    "java/res/values-ca/autofill_strings.xml",
+    "java/res/values-cs/autofill_strings.xml",
+    "java/res/values-da/autofill_strings.xml",
+    "java/res/values-de/autofill_strings.xml",
+    "java/res/values-el/autofill_strings.xml",
+    "java/res/values-en-rGB/autofill_strings.xml",
+    "java/res/values-es-rUS/autofill_strings.xml",
+    "java/res/values-es/autofill_strings.xml",
+    "java/res/values-fa/autofill_strings.xml",
+    "java/res/values-fi/autofill_strings.xml",
+    "java/res/values-fr/autofill_strings.xml",
+    "java/res/values-hi/autofill_strings.xml",
+    "java/res/values-hr/autofill_strings.xml",
+    "java/res/values-hu/autofill_strings.xml",
+    "java/res/values-in/autofill_strings.xml",
+    "java/res/values-it/autofill_strings.xml",
+    "java/res/values-iw/autofill_strings.xml",
+    "java/res/values-ja/autofill_strings.xml",
+    "java/res/values-ko/autofill_strings.xml",
+    "java/res/values-lt/autofill_strings.xml",
+    "java/res/values-lv/autofill_strings.xml",
+    "java/res/values-nb/autofill_strings.xml",
+    "java/res/values-nl/autofill_strings.xml",
+    "java/res/values-pl/autofill_strings.xml",
+    "java/res/values-pt-rBR/autofill_strings.xml",
+    "java/res/values-pt-rPT/autofill_strings.xml",
+    "java/res/values-ro/autofill_strings.xml",
+    "java/res/values-ru/autofill_strings.xml",
+    "java/res/values-sk/autofill_strings.xml",
+    "java/res/values-sl/autofill_strings.xml",
+    "java/res/values-sr/autofill_strings.xml",
+    "java/res/values-sv/autofill_strings.xml",
+    "java/res/values-sw/autofill_strings.xml",
+    "java/res/values-th/autofill_strings.xml",
+    "java/res/values-tl/autofill_strings.xml",
+    "java/res/values-tr/autofill_strings.xml",
+    "java/res/values-uk/autofill_strings.xml",
+    "java/res/values-vi/autofill_strings.xml",
+    "java/res/values-zh-rCN/autofill_strings.xml",
+    "java/res/values-zh-rTW/autofill_strings.xml",
+    "java/res/values/autofill_strings.xml",
+  ]
+}
+
+group("strings") {
+  public_deps = [
+    ":autofill_strings",
+  ]
+}
+
+grit("autofill_strings") {
+  source = "../autofill_strings.grd"
+  defines = [ "enable_plugins=$enable_plugins" ]
+
+  outputs = [
+    "grit/autofill_strings.h",
+  ]
+  foreach(locale, locales_with_fake_bidi) {
+    outputs += [ "autofill_strings_$locale.pak" ]
+  }
+
+  if (is_android) {
+    outputs += android_autofill_strings_java_resources
+  }
+}
+
+if (is_android) {
+  java_strings_grd_prebuilt("autofill_strings_grd") {
+    grit_output_dir = "$root_gen_dir/components/autofill/strings/java/res"
+    generated_files =
+        rebase_path(android_autofill_strings_java_resources, "java/res", ".")
+    deps = [
+      ":autofill_strings",
+    ]
+  }
+}
