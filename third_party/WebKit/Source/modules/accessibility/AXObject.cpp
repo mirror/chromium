@@ -609,20 +609,26 @@ bool AXObject::IsPasswordFieldAndShouldHideValue() const {
 }
 
 bool AXObject::IsClickable() const {
+  if (IsButton() || IsLink() || IsTextControl())
+    return true;
+
+  // TODO(dmazzoni): Ensure that kColorWellRole and kSpinButtonRole are
+  // correctly handled here via their constituent parts.
   switch (RoleValue()) {
-    case kButtonRole:
-    case kCheckBoxRole:
-    case kColorWellRole:
+    // TOTO(dmazzoni): Replace kComboBoxRole with two new combo box roles.
+    // Composite widget and text field.
     case kComboBoxRole:
-    case kLinkRole:
+    case kCheckBoxRole:
+    case kDisclosureTriangleRole:
+    case kListBoxRole:
     case kListBoxOptionRole:
-    case kMenuButtonRole:
-    case kPopUpButtonRole:
+    case kMenuItemCheckBoxRole:
+    case kMenuItemRadioRole:
+    case kMenuItemRole:
+    case kMenuListOptionRole:
     case kRadioButtonRole:
-    case kSpinButtonRole:
+    case kSwitchRole:
     case kTabRole:
-    case kTextFieldRole:
-    case kToggleButtonRole:
       return true;
     default:
       return false;
@@ -1348,15 +1354,24 @@ AXDefaultActionVerb AXObject::Action() const {
 
   switch (RoleValue()) {
     case kButtonRole:
+    case kDisclosureTriangleRole:
+    case kSwitchRole:
     case kToggleButtonRole:
       return AXDefaultActionVerb::kPress;
+    // TOTO(dmazzoni): Add combo box text field role here.
+    case kSearchBoxRole:
     case kTextFieldRole:
       return AXDefaultActionVerb::kActivate;
+    case kListBoxOptionRole:
     case kMenuItemRadioRole:
+    case kMenuListOptionRole:
     case kRadioButtonRole:
       return AXDefaultActionVerb::kSelect;
     case kLinkRole:
       return AXDefaultActionVerb::kJump;
+    // TOTO(dmazzoni): Change kComboBoxRole to combo box composite widget.
+    case kComboBoxRole:
+    case kListBoxRole:
     case kPopUpButtonRole:
       return AXDefaultActionVerb::kOpen;
     default:
@@ -1365,9 +1380,12 @@ AXDefaultActionVerb AXObject::Action() const {
                    ? AXDefaultActionVerb::kCheck
                    : AXDefaultActionVerb::kUncheck;
       }
+
+      // For all anchors and all elements with a click listener.
       return AXDefaultActionVerb::kClick;
   }
 }
+
 bool AXObject::AriaPressedIsPresent() const {
   AtomicString result;
   return HasAOMPropertyOrARIAAttribute(AOMStringProperty::kPressed, result);
