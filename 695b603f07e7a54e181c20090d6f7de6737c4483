@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f660ed95_9aaa9d82",
+        "filename": "third_party/WebKit/Source/core/layout/line/GlyphOverflow.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-21T17:42:52Z",
+      "side": 1,
+      "message": "from",
+      "range": {
+        "startLine": 47,
+        "startChar": 27,
+        "endLine": 47,
+        "endChar": 31
+      },
+      "revId": "695b603f07e7a54e181c20090d6f7de6737c4483",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
