@@ -596,7 +596,7 @@ void HandleStartVoiceInteraction(const ui::Accelerator& accelerator) {
     base::RecordAction(
         base::UserMetricsAction("VoiceInteraction.Started.Assistant"));
   }
-  Shell::Get()->app_list()->StartVoiceInteractionSession();
+  Shell::Get()->app_list()->ToggleVoiceInteractionSession();
 }
 
 void HandleSuspend() {
