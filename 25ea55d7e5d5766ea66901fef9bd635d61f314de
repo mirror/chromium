@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a951b6d_6edb2a3e",
+        "filename": "chrome/browser/search/instant_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-08-21T14:06:22Z",
+      "side": 0,
+      "message": "just curious: is it also part of the plan to remove InstantService or this one is needed for something else?",
+      "range": {
+        "startLine": 44,
+        "startChar": 3,
+        "endLine": 44,
+        "endChar": 67
+      },
+      "revId": "25ea55d7e5d5766ea66901fef9bd635d61f314de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
