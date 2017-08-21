@@ -119,6 +119,7 @@ void TestSessionControllerClient::AddUserSession(
           account_id)) {
     auto pref_service = base::MakeUnique<TestingPrefServiceSimple>();
     Shell::RegisterProfilePrefs(pref_service->registry());
+    Shell::RegisterProfilePrefsForTesting(pref_service->registry());
     Shell::Get()->session_controller()->ProvideUserPrefServiceForTest(
         account_id, std::move(pref_service));
   }

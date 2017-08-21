@@ -43,6 +43,8 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
   explicit SessionController(service_manager::Connector* connector);
   ~SessionController() override;
 
+  void ConnectToLoginScreenPrefService();
+
   base::TimeDelta session_length_limit() const { return session_length_limit_; }
   base::TimeTicks session_start_time() const { return session_start_time_; }
 
@@ -179,6 +181,9 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
   // run |start_lock_callback_| to indicate ash is locked successfully.
   void OnLockAnimationFinished();
 
+  void OnLoginScreenPrefServiceInitialized(
+      std::unique_ptr<PrefService> pref_service);
+
   void OnProfilePrefServiceInitialized(
       const AccountId& account_id,
       std::unique_ptr<PrefService> pref_service);
@@ -228,6 +233,7 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
 
   service_manager::Connector* const connector_;
 
+  std::unique_ptr<PrefService> login_screen_prefs_;
   std::map<AccountId, std::unique_ptr<PrefService>> per_user_prefs_;
   PrefService* last_active_user_prefs_ = nullptr;
 

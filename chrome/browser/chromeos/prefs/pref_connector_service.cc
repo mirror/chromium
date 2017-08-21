@@ -20,6 +20,16 @@ AshPrefConnector::AshPrefConnector() : weak_factory_(this) {
 
 AshPrefConnector::~AshPrefConnector() = default;
 
+void AshPrefConnector::GetPrefStoreConnectorForLoginScreen(
+    prefs::mojom::PrefStoreConnectorRequest request) {
+  LOG(ERROR) << "JAMES GetPrefStoreConnectorForLoginScreen";
+  Profile* profile = chromeos::ProfileHelper::Get()->GetSigninProfile();
+  CHECK(profile);
+  CHECK(profile->IsOffTheRecord());  // Is this the problem?
+  content::BrowserContext::GetConnectorFor(profile)->BindInterface(
+      prefs::mojom::kServiceName, std::move(request));
+}
+
 void AshPrefConnector::GetPrefStoreConnectorForUser(
     const AccountId& account_id,
     prefs::mojom::PrefStoreConnectorRequest request) {

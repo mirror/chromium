@@ -462,9 +462,22 @@ void SessionControllerClient::Observe(
       OnLoginUserProfilePrepared(profile);
       break;
     }
+    // JAMES
+    case chrome::NOTIFICATION_LOGIN_OR_LOCK_WEBUI_VISIBLE:
+      OnLoginOrLockWebuiVisible();
+      break;
     default:
       NOTREACHED() << "Unexpected notification " << type;
       break;
+  }
+}
+
+void SessionControllerClient::OnLoginOrLockWebuiVisible() {
+  LOG(ERROR) << "JAMES OnLoginOrLockWebuiVisible";
+  Profile* profile = ProfileManager::GetActiveUserProfile();
+  // JAMES check if sent?
+  if (chromeos::ProfileHelper::IsSigninProfile(profile)) {
+    LOG(ERROR) << "JAMES is signin profile";
   }
 }
 

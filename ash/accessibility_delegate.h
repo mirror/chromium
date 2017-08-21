@@ -13,6 +13,10 @@
 namespace ash {
 
 // A delegate class to control and query accessibility features.
+//
+// NOTE: Methods in this class are migrating to AccessibilityController to
+// support mash (because ash is in a separate process and cannot call back into
+// chrome). Add new methods there, not here.
 class ASH_EXPORT AccessibilityDelegate {
  public:
   virtual ~AccessibilityDelegate() {}
@@ -159,6 +163,8 @@ class ASH_EXPORT AccessibilityDelegate {
   // Forward an accessibility gesture from the touch exploration controller to
   // ChromeVox.
   virtual void HandleAccessibilityGesture(ui::AXGesture gesture) = 0;
+
+  // NOTE: Prefer adding methods to AccessibilityController, see class comment.
 };
 
 }  // namespace ash

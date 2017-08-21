@@ -84,6 +84,7 @@ class WindowModalityController;
 namespace ash {
 
 class AcceleratorController;
+class AccessibilityController;
 class AccessibilityDelegate;
 class AshDisplayController;
 class AppListDelegateImpl;
@@ -261,6 +262,8 @@ class ASH_EXPORT Shell : public SessionObserver,
   // Can be called before Shell is initialized.
   static void RegisterProfilePrefs(PrefRegistrySimple* registry);
 
+  static void RegisterProfilePrefsForTesting(PrefRegistrySimple* registry);
+
   // Creates a default views::NonClientFrameView for use by windows in the
   // Ash environment.
   views::NonClientFrameView* CreateDefaultNonClientFrameView(
@@ -291,6 +294,9 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   AcceleratorController* accelerator_controller() {
     return accelerator_controller_.get();
+  }
+  AccessibilityController* accessibility_controller() {
+    return accessibility_controller_.get();
   }
   AccessibilityDelegate* accessibility_delegate() {
     return accessibility_delegate_.get();
@@ -674,6 +680,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<WindowPositioner> window_positioner_;
 
   std::unique_ptr<AcceleratorController> accelerator_controller_;
+  std::unique_ptr<AccessibilityController> accessibility_controller_;
   std::unique_ptr<AccessibilityDelegate> accessibility_delegate_;
   std::unique_ptr<AshDisplayController> ash_display_controller_;
   std::unique_ptr<BrightnessControlDelegate> brightness_control_delegate_;

@@ -64,6 +64,39 @@ SessionController::~SessionController() {
     std::move(start_lock_callback_).Run(false /* locked */);
 }
 
+void SessionController::ConnectToLoginScreenPrefService() {
+  if (!connector_)
+    return;
+
+  // Already connected.
+  if (login_screen_prefs_.get())
+    return;
+
+  LOG(ERROR) << "JAMES ConnectToLoginScreenPrefService with state "
+             << int(state_);
+
+  // Connect to the login screen profile. But what about crash-and-restore?
+  DCHECK(state_ == SessionState::OOBE || state_ == SessionState::LOGIN_PRIMARY);
+
+  // connect to login pref service.... how?
+  LOG(ERROR) << "JAMES connecting to login pref service";
+  auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
+  Shell::RegisterProfilePrefs(pref_registry.get());
+  ash::mojom::PrefConnectorPtr pref_connector_connector;
+  connector_->BindInterface(mojom::kPrefConnectorServiceName,
+                            &pref_connector_connector);
+  prefs::mojom::PrefStoreConnectorPtr pref_connector;
+
+  // JAMES some other method? dummy account_id?
+  pref_connector_connector->GetPrefStoreConnectorForLoginScreen(
+      mojo::MakeRequest(&pref_connector));
+
+  prefs::ConnectToPrefService(
+      std::move(pref_connector), std::move(pref_registry),
+      base::Bind(&SessionController::OnLoginScreenPrefServiceInitialized,
+                 weak_ptr_factory_.GetWeakPtr()));
+}
+
 void SessionController::BindRequest(mojom::SessionControllerRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
@@ -386,6 +419,9 @@ void SessionController::SetSessionState(SessionState state) {
     for (auto& observer : observers_)
       observer.OnLockStateChanged(locked);
   }
+
+  if (state_ == SessionState::OOBE || state_ == SessionState::LOGIN_PRIMARY)
+    ConnectToLoginScreenPrefService();
 }
 
 void SessionController::AddUserSession(mojom::UserSessionPtr user_session) {
@@ -394,6 +430,7 @@ void SessionController::AddUserSession(mojom::UserSessionPtr user_session) {
   user_sessions_.push_back(std::move(user_session));
 
   if (connector_) {
+    LOG(ERROR) << "JAMES AddUserSession connecting to prefs";
     auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
     Shell::RegisterProfilePrefs(pref_registry.get());
     ash::mojom::PrefConnectorPtr pref_connector_connector;
@@ -484,6 +521,20 @@ void SessionController::UpdateLoginStatus() {
 void SessionController::OnLockAnimationFinished() {
   if (!start_lock_callback_.is_null())
     std::move(start_lock_callback_).Run(true /* locked */);
+}
+
+void SessionController::OnLoginScreenPrefServiceInitialized(
+    std::unique_ptr<PrefService> pref_service) {
+  LOG(ERROR) << "JAMES OnLoginScreenPrefServiceInitialized";
+  // |pref_service| can be null when running standalone without chrome.
+  if (!pref_service)
+    return;
+
+  login_screen_prefs_ = std::move(pref_service);
+  // Chrome's GetActiveUserProfile() can return the login screen profile, so do
+  // the same thing here.
+  last_active_user_prefs_ = login_screen_prefs_.get();
+  // JAMES notify observers?
 }
 
 void SessionController::OnProfilePrefServiceInitialized(

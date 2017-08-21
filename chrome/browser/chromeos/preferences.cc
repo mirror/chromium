@@ -154,12 +154,10 @@ void Preferences::RegisterProfilePrefs(
   registry->RegisterBooleanPref(prefs::kPerformanceTracingEnabled, false);
 
   registry->RegisterBooleanPref(
-      prefs::kTapToClickEnabled,
-      true,
+      prefs::kTapToClickEnabled, true,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   registry->RegisterBooleanPref(
-      prefs::kTapDraggingEnabled,
-      false,
+      prefs::kTapDraggingEnabled, false,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   registry->RegisterBooleanPref(prefs::kEnableTouchpadThreeFingerClick, false);
   // This preference can only be set to true by policy or command_line flag
@@ -167,12 +165,12 @@ void Preferences::RegisterProfilePrefs(
   registry->RegisterBooleanPref(prefs::kUnifiedDesktopEnabledByDefault, false,
                                 PrefRegistry::NO_REGISTRATION_FLAGS);
   registry->RegisterBooleanPref(
-      prefs::kNaturalScroll, base::CommandLine::ForCurrentProcess()->HasSwitch(
-                                 switches::kNaturalScrollDefault),
+      prefs::kNaturalScroll,
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kNaturalScrollDefault),
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   registry->RegisterBooleanPref(
-      prefs::kPrimaryMouseButtonRight,
-      false,
+      prefs::kPrimaryMouseButtonRight, false,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   registry->RegisterBooleanPref(prefs::kLabsMediaplayerEnabled, false);
   registry->RegisterBooleanPref(prefs::kLabsAdvancedFilesystemEnabled, false);
@@ -181,9 +179,11 @@ void Preferences::RegisterProfilePrefs(
   registry->RegisterBooleanPref(
       ash::prefs::kAccessibilityStickyKeysEnabled, false,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+  LOG(ERROR) << "JAMES registering large cursor pref in chrome";
+  // JAMES does non-public break ash?
   registry->RegisterBooleanPref(
       ash::prefs::kAccessibilityLargeCursorEnabled, false,
-      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF | PrefRegistry::PUBLIC);
   registry->RegisterIntegerPref(ash::prefs::kAccessibilityLargeCursorDipSize,
                                 ash::kDefaultLargeCursorSize);
   registry->RegisterBooleanPref(ash::prefs::kAccessibilitySpokenFeedbackEnabled,
@@ -236,16 +236,13 @@ void Preferences::RegisterProfilePrefs(
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
 
   registry->RegisterIntegerPref(
-      prefs::kMouseSensitivity,
-      3,
+      prefs::kMouseSensitivity, 3,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   registry->RegisterIntegerPref(
-      prefs::kTouchpadSensitivity,
-      3,
+      prefs::kTouchpadSensitivity, 3,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   registry->RegisterBooleanPref(
-      prefs::kUse24HourClock,
-      base::GetHourClockType() == base::k24HourClock,
+      prefs::kUse24HourClock, base::GetHourClockType() == base::k24HourClock,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterBooleanPref(
       drive::prefs::kDisableDrive, false,
@@ -271,12 +268,10 @@ void Preferences::RegisterProfilePrefs(
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF |
           PrefRegistry::PUBLIC);  // Used in ash.
   registry->RegisterIntegerPref(
-      prefs::kLanguageRemapControlKeyTo,
-      input_method::kControlKey,
+      prefs::kLanguageRemapControlKeyTo, input_method::kControlKey,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   registry->RegisterIntegerPref(
-      prefs::kLanguageRemapAltKeyTo,
-      input_method::kAltKey,
+      prefs::kLanguageRemapAltKeyTo, input_method::kAltKey,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   // We don't sync the CapsLock remapping pref, since the UI hides this pref
   // on certain devices, so syncing a non-default value to a device that
@@ -330,14 +325,12 @@ void Preferences::RegisterProfilePrefs(
 
   // Number of times Data Saver prompt has been shown on 3G data network.
   registry->RegisterIntegerPref(
-      prefs::kDataSaverPromptsShown,
-      0,
+      prefs::kDataSaverPromptsShown, 0,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
 
   // Initially all existing users would see "What's new" for current version
   // after update.
-  registry->RegisterStringPref(prefs::kChromeOSReleaseNotesVersion,
-                               "0.0.0.0",
+  registry->RegisterStringPref(prefs::kChromeOSReleaseNotesVersion, "0.0.0.0",
                                user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
 
   registry->RegisterBooleanPref(prefs::kExternalStorageDisabled, false);
@@ -400,8 +393,8 @@ void Preferences::InitUserPrefs(sync_preferences::PrefServiceSyncable* prefs) {
   BooleanPrefMember::NamedChangeCallback callback =
       base::Bind(&Preferences::OnPreferenceChanged, base::Unretained(this));
 
-  performance_tracing_enabled_.Init(prefs::kPerformanceTracingEnabled,
-                                    prefs, callback);
+  performance_tracing_enabled_.Init(prefs::kPerformanceTracingEnabled, prefs,
+                                    callback);
   tap_to_click_enabled_.Init(prefs::kTapToClickEnabled, prefs, callback);
   tap_dragging_enabled_.Init(prefs::kTapDraggingEnabled, prefs, callback);
   three_finger_click_enabled_.Init(prefs::kEnableTouchpadThreeFingerClick,
@@ -411,31 +404,31 @@ void Preferences::InitUserPrefs(sync_preferences::PrefServiceSyncable* prefs) {
   natural_scroll_.Init(prefs::kNaturalScroll, prefs, callback);
   mouse_sensitivity_.Init(prefs::kMouseSensitivity, prefs, callback);
   touchpad_sensitivity_.Init(prefs::kTouchpadSensitivity, prefs, callback);
-  primary_mouse_button_right_.Init(prefs::kPrimaryMouseButtonRight,
-                                   prefs, callback);
-  download_default_directory_.Init(prefs::kDownloadDefaultDirectory,
-                                   prefs, callback);
-  touch_hud_projection_enabled_.Init(prefs::kTouchHudProjectionEnabled,
-                                     prefs, callback);
+  primary_mouse_button_right_.Init(prefs::kPrimaryMouseButtonRight, prefs,
+                                   callback);
+  download_default_directory_.Init(prefs::kDownloadDefaultDirectory, prefs,
+                                   callback);
+  touch_hud_projection_enabled_.Init(prefs::kTouchHudProjectionEnabled, prefs,
+                                     callback);
   preload_engines_.Init(prefs::kLanguagePreloadEngines, prefs, callback);
-  enabled_extension_imes_.Init(prefs::kLanguageEnabledExtensionImes,
-                               prefs, callback);
-  current_input_method_.Init(prefs::kLanguageCurrentInputMethod,
-                             prefs, callback);
-  previous_input_method_.Init(prefs::kLanguagePreviousInputMethod,
-                              prefs, callback);
+  enabled_extension_imes_.Init(prefs::kLanguageEnabledExtensionImes, prefs,
+                               callback);
+  current_input_method_.Init(prefs::kLanguageCurrentInputMethod, prefs,
+                             callback);
+  previous_input_method_.Init(prefs::kLanguagePreviousInputMethod, prefs,
+                              callback);
   ime_menu_activated_.Init(prefs::kLanguageImeMenuActivated, prefs, callback);
   // Notifies the system tray to remove the IME items.
   if (base::FeatureList::IsEnabled(features::kOptInImeMenu) &&
       ime_menu_activated_.GetValue())
     input_method::InputMethodManager::Get()->ImeMenuActivationChanged(true);
 
-  xkb_auto_repeat_enabled_.Init(
-      prefs::kLanguageXkbAutoRepeatEnabled, prefs, callback);
-  xkb_auto_repeat_delay_pref_.Init(
-      prefs::kLanguageXkbAutoRepeatDelay, prefs, callback);
-  xkb_auto_repeat_interval_pref_.Init(
-      prefs::kLanguageXkbAutoRepeatInterval, prefs, callback);
+  xkb_auto_repeat_enabled_.Init(prefs::kLanguageXkbAutoRepeatEnabled, prefs,
+                                callback);
+  xkb_auto_repeat_delay_pref_.Init(prefs::kLanguageXkbAutoRepeatDelay, prefs,
+                                   callback);
+  xkb_auto_repeat_interval_pref_.Init(prefs::kLanguageXkbAutoRepeatInterval,
+                                      prefs, callback);
 
   wake_on_wifi_darkconnect_.Init(prefs::kWakeOnWifiDarkConnect, prefs,
                                  callback);
@@ -603,12 +596,10 @@ void Preferences::ApplyPreferences(ApplyReason reason,
     if (user_is_active)
       mouse_settings.SetSensitivity(sensitivity);
     if (reason == REASON_PREF_CHANGED) {
-      UMA_HISTOGRAM_ENUMERATION("Mouse.PointerSensitivity.Changed",
-                                sensitivity,
+      UMA_HISTOGRAM_ENUMERATION("Mouse.PointerSensitivity.Changed", sensitivity,
                                 system::kMaxPointerSensitivity + 1);
     } else if (reason == REASON_INITIALIZATION) {
-      UMA_HISTOGRAM_ENUMERATION("Mouse.PointerSensitivity.Started",
-                                sensitivity,
+      UMA_HISTOGRAM_ENUMERATION("Mouse.PointerSensitivity.Started", sensitivity,
                                 system::kMaxPointerSensitivity + 1);
     }
   }
@@ -729,8 +720,8 @@ void Preferences::ApplyPreferences(ApplyReason reason,
                        : WakeOnWifiManager::WAKE_ON_WIFI_NONE;
     // The flag enables wake on WiFi packet feature but doesn't update a
     // preference.
-    if (base::CommandLine::ForCurrentProcess()->
-            HasSwitch(switches::kWakeOnWifiPacket)) {
+    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kWakeOnWifiPacket)) {
       features |= WakeOnWifiManager::WAKE_ON_WIFI_PACKET;
     }
     WakeOnWifiManager::Get()->OnPreferenceChanged(
@@ -850,9 +841,8 @@ void Preferences::UpdateAutoRepeatRate() {
   rate.repeat_interval_in_ms = xkb_auto_repeat_interval_pref_.GetValue();
   DCHECK(rate.initial_delay_in_ms > 0);
   DCHECK(rate.repeat_interval_in_ms > 0);
-  input_method::InputMethodManager::Get()
-      ->GetImeKeyboard()
-      ->SetAutoRepeatRate(rate);
+  input_method::InputMethodManager::Get()->GetImeKeyboard()->SetAutoRepeatRate(
+      rate);
 
   user_manager::known_user::SetIntegerPref(user_->GetAccountId(),
                                            prefs::kLanguageXkbAutoRepeatDelay,

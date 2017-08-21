@@ -12,6 +12,8 @@ const string kPrefConnectorServiceName = "ash_pref_connector";
 // A connector of PrefStoreConnectors. Provides ash with access to per-profile
 // prefs.
 interface PrefConnector {
+  GetPrefStoreConnectorForLoginScreen(prefs.mojom.PrefStoreConnector& connector);
+
   // Provides, via |connector|, a PrefStoreConnector for |account_id|. If
   // |account_id| is invalid or unknown, |connector| will be closed.
   GetPrefStoreConnectorForUser(signin.mojom.AccountId account_id,

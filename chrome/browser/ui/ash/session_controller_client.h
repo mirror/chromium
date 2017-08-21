@@ -112,6 +112,8 @@ class SessionControllerClient
   // Called when the login profile is ready.
   void OnLoginUserProfilePrepared(Profile* profile);
 
+  void OnLoginOrLockWebuiVisible();
+
   // Sends the user session info for a given profile.
   void SendUserSessionForProfile(Profile* profile);
 

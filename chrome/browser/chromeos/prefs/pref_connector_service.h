@@ -29,7 +29,9 @@ class AshPrefConnector : public ash::mojom::PrefConnector,
 
  private:
   // ash::mojom::PrefConnector:
-  void GetPrefStoreConnectorForUser(
+  void GetPrefStoreConnectorForLoginScreen(
+    prefs::mojom::PrefStoreConnectorRequest request) override;
+void GetPrefStoreConnectorForUser(
       const AccountId& account_id,
       prefs::mojom::PrefStoreConnectorRequest request) override;
 

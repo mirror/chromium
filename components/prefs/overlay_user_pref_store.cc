@@ -74,6 +74,13 @@ bool OverlayUserPrefStore::GetValue(const std::string& key,
                                     const base::Value** result) const {
   // If the |key| shall NOT be stored in the overlay store, there must not
   // be an entry.
+  bool good = ShallBeStoredInOverlay(key) || !overlay_->GetValue(key, NULL);
+  if (!good) {
+    LOG(ERROR) << "key " << key << " shall " << ShallBeStoredInOverlay(key)
+               << " getvalue " << overlay_->GetValue(key, NULL)
+               << " underlay init " << underlay_->IsInitializationComplete()
+               << " overlay init " << overlay_->IsInitializationComplete();
+  }
   DCHECK(ShallBeStoredInOverlay(key) || !overlay_->GetValue(key, NULL));
 
   if (overlay_->GetValue(key, result))
