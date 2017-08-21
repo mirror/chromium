@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2051bbf_72cbcde6",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-21T23:30:48Z",
+      "side": 1,
+      "message": "Why is this necessary?  The only time a fetcher was created and this is false is if you get a call to Stop().  But Stop() should reset the |token_fetcher_|, which I would imagine means it\u0027ll never end up calling this function.  Am I misunderstanding what reset() does?",
+      "range": {
+        "startLine": 260,
+        "startChar": 28,
+        "endLine": 260,
+        "endChar": 0
+      },
+      "revId": "cda61b9e1c94cf0d69d0f88920307930104b94b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7a6ed1_0b72894f",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-21T23:30:48Z",
+      "side": 1,
+      "message": "It\u0027s unclear from the comment and the function name whether is meant to stop creating the OAuth token fetcher or the URL fetcher.",
+      "range": {
+        "startLine": 64,
+        "startChar": 19,
+        "endLine": 64,
+        "endChar": 26
+      },
+      "revId": "cda61b9e1c94cf0d69d0f88920307930104b94b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab67d52_e3208027",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-21T23:30:48Z",
+      "side": 1,
+      "message": "Why do you need this?  Isn\u0027t token_fetcher_ non-NULL when the fetch is in progress, per comment at line 116-117.",
+      "range": {
+        "startLine": 120,
+        "startChar": 7,
+        "endLine": 120,
+        "endChar": 27
+      },
+      "revId": "cda61b9e1c94cf0d69d0f88920307930104b94b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e15a7ba_da10ecf3",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-21T23:30:48Z",
+      "side": 1,
+      "message": "Do you need this?  Looking at the contextual suggestion code, I\u0027d think you should just be able to call StopCreatingFetcher() regardless of whether you\u0027re waiting for a request or not.\n\nA: \"Stop!\"\nB: \"I wasn\u0027t doing anything.\"\nA: \"Well, sorry to bother you.  Just being safe.\"\n:-)",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 49
+      },
+      "revId": "cda61b9e1c94cf0d69d0f88920307930104b94b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
