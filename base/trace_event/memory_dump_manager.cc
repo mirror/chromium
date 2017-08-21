@@ -190,15 +190,19 @@ void MemoryDumpManager::EnableHeapProfilingIfNeeded() {
   }
 }
 
-void MemoryDumpManager::EnableHeapProfiling(HeapProfilingMode profiling_mode) {
+bool MemoryDumpManager::EnableHeapProfiling(HeapProfilingMode profiling_mode) {
 #if BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
   AutoLock lock(lock_);
-  // Should we not enable heap profiling if tracing is enabled, since
-  // session_state_ will not be initialized.
-  if (heap_profiling_state_ == HeapProfilingState::DISABLED_PERMANENTLY)
-    return;
+  bool notify_mdps = true;
 
-  if (heap_profiling_state_ == HeapProfilingState::DISABLED) {
+  if (profiling_mode != kHeapProfilingModeDisabled) {
+    if (heap_profiling_state_ != HeapProfilingState::DISABLED) {
+      // Don't enable permanently disabled or already enabled heap profiler.
+      return false;
+    }
+    heap_profiling_state_ = HeapProfilingState::ENABLED;
+    heap_profiling_mode_ = profiling_mode;
+
     switch (profiling_mode) {
       case kHeapProfilingModePseudo:
         AllocationContextTracker::SetCaptureMode(
@@ -215,27 +219,43 @@ void MemoryDumpManager::EnableHeapProfiling(HeapProfilingMode profiling_mode) {
             AllocationContextTracker::CaptureMode::NO_STACK);
         break;
       case kHeapProfilingModeTaskProfiler:
-        if (!base::debug::ThreadHeapUsageTracker::IsHeapTrackingEnabled())
+        if (!base::debug::ThreadHeapUsageTracker::IsHeapTrackingEnabled()) {
           base::debug::ThreadHeapUsageTracker::EnableHeapTracking();
-        return;  // Do not notify dump providers.
+        } else {
+          return false;
+        }
+        notify_mdps = false;
+        break;
       default:
-        return;  // Do not notify dump providers.
+        NOTREACHED() << "Invalid heap profiling mode.";
+        return false;
     }
-    heap_profiling_state_ = HeapProfilingState::ENABLED;
-  } else if (profiling_mode == kHeapProfilingModeDisabled) {
-    heap_profiling_state_ = HeapProfilingState::DISABLED_PERMANENTLY;
-    AllocationContextTracker::SetCaptureMode(
-        AllocationContextTracker::CaptureMode::DISABLED);
-    DCHECK(!base::debug::ThreadHeapUsageTracker::IsHeapTrackingEnabled())
-        << "ThreadHeapUsageTracker cannot be disabled";
   } else {
-    return;
+    // profiling_mode == kHeapProfilingModeDisabled.
+    if (heap_profiling_state_ == HeapProfilingState::ENABLED) {
+      // Disable working heap profiler.
+      AllocationContextTracker::SetCaptureMode(
+          AllocationContextTracker::CaptureMode::DISABLED);
+      DCHECK(!base::debug::ThreadHeapUsageTracker::IsHeapTrackingEnabled())
+          << "ThreadHeapUsageTracker cannot be disabled";
+    } else {
+      // Already disabled, no need to notify MDPs.
+      notify_mdps = false;
+    }
+    // Regardless the state, don't let heap profiler being enabled again.
+    heap_profiling_state_ = HeapProfilingState::DISABLED_PERMANENTLY;
+    heap_profiling_mode_ = kHeapProfilingModeDisabled;
   }
 
-  for (auto mdp : dump_providers_) {
-    mdp->dump_provider->OnHeapProfilingEnabled(heap_profiling_state_ ==
-                                               HeapProfilingState::ENABLED);
+  if (notify_mdps) {
+    for (auto mdp : dump_providers_) {
+      mdp->dump_provider->OnHeapProfilingEnabled(heap_profiling_state_ ==
+                                                 HeapProfilingState::ENABLED);
+    }
   }
+  return true;
+#else
+  return false;
 #endif  // BUILDFLAG(USE_ALLOCATOR_SHIM) && !defined(OS_NACL)
 }
 

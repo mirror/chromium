@@ -174,6 +174,35 @@ void CoordinatorImpl::RequestGlobalMemoryDump(
   PerformNextQueuedGlobalMemoryDump();
 }
 
+bool CoordinatorImpl::IsHeapProfilingConfiguredAtStartup() {
+  base::trace_event::HeapProfilingMode cmdline_profiling_mode =
+      base::trace_event::MemoryDumpManager::
+          GetHeapProfilingModeFromCommandLine();
+  return cmdline_profiling_mode !=
+         base::trace_event::HeapProfilingMode::kHeapProfilingModeDisabled;
+}
+
+void CoordinatorImpl::EnableHeapProfiling(
+    base::trace_event::HeapProfilingMode mode,
+    const EnableHeapProfilingCallback& callback) {
+  if (IsHeapProfilingConfiguredAtStartup()) {
+    // Must not override command line setting if present.
+    callback.Run(false);
+    return;
+  }
+
+  // Broadcast such request to children.
+  auto child_callback = [](bool success) {
+    // TODO(kraynov): Combine callback results.
+    DCHECK(success) << "Failed to enable heap profiling in child process.";
+  };
+  for (const auto& kv : clients_) {
+    mojom::ClientProcess* client = kv.second->client.get();
+    client->EnableHeapProfiling(mode, base::Bind(child_callback));
+  }
+  callback.Run(true);
+}
+
 void CoordinatorImpl::GetVmRegionsForHeapProfiler(
     const GetVmRegionsForHeapProfilerCallback& callback) {
   base::trace_event::MemoryDumpRequestArgs args{
@@ -205,6 +234,17 @@ void CoordinatorImpl::RegisterClientProcess(
   auto iterator_and_inserted =
       clients_.emplace(client_process, std::move(client_info));
   DCHECK(iterator_and_inserted.second);
+
+  // Enable heap profiling in newly created processes.
+  auto* mdm = base::trace_event::MemoryDumpManager::GetInstance();
+  if (mdm->is_heap_profiling_enabled() &&
+      !IsHeapProfilingConfiguredAtStartup()) {
+    auto child_callback = [](bool success) {
+      DCHECK(success) << "Failed to enable heap profiling in child process.";
+    };
+    client_process->EnableHeapProfiling(mdm->heap_profiling_mode(),
+                                        base::Bind(child_callback));
+  }
 }
 
 void CoordinatorImpl::UnregisterClientProcess(

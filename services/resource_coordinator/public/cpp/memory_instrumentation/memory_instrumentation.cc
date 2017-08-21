@@ -58,6 +58,13 @@ void MemoryInstrumentation::RequestGlobalDump(
                                        base::Bind(callback_adapter, callback));
 }
 
+void MemoryInstrumentation::EnableHeapProfiling(
+    HeapProfilingMode mode,
+    EnableHeapProfilingCallback callback) {
+  const auto& coordinator = GetCoordinatorBindingForCurrentThread();
+  coordinator->EnableHeapProfiling(mode, base::Bind(callback));
+}
+
 void MemoryInstrumentation::RequestGlobalDumpAndAppendToTrace(
     MemoryDumpType dump_type,
     MemoryDumpLevelOfDetail level_of_detail,

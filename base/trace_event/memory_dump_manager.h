@@ -143,7 +143,17 @@ class BASE_EXPORT MemoryDumpManager {
   // Enable heap profiling with specified |profiling_mode|. Disabling heap
   // profiler will disable it permanently and cannot be enabled again. Noop if
   // heap profiling was already enabled or permanently disabled.
-  void EnableHeapProfiling(HeapProfilingMode profiling_mode);
+  bool EnableHeapProfiling(HeapProfilingMode profiling_mode);
+
+  bool is_heap_profiling_enabled() {
+    AutoLock lock(lock_);
+    return heap_profiling_state_ == HeapProfilingState::ENABLED;
+  }
+
+  HeapProfilingMode heap_profiling_mode() {
+    AutoLock lock(lock_);
+    return heap_profiling_mode_;
+  }
 
   // Lets tests see if a dump provider is registered.
   bool IsDumpProviderRegisteredForTesting(MemoryDumpProvider*);
@@ -321,6 +331,8 @@ class BASE_EXPORT MemoryDumpManager {
   // New memory dump providers should be told to enable heap profiling if state
   // is ENABLED.
   HeapProfilingState heap_profiling_state_;
+
+  HeapProfilingMode heap_profiling_mode_ = kHeapProfilingModeInvalid;
 
   DISALLOW_COPY_AND_ASSIGN(MemoryDumpManager);
 };
