@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fc7f062e_6e817f29",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-21T09:32:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa0765dc_a5c2de87",
+      "range": {
+        "startLine": 313,
+        "startChar": 14,
+        "endLine": 313,
+        "endChar": 27
+      },
+      "revId": "058e78f7a2f209ab9b4dfec32ba4fd5ca1959659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6acedc98_62dd068f",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "058e78f7a2f209ab9b4dfec32ba4fd5ca1959659",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d59f7bec_240dc9dd",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-21T09:32:03Z",
+      "side": 1,
+      "message": "Only if the user deliberately remove some tiles. And new tiles will be added if a page is visited.\nI think it is acceptable to do this.",
+      "parentUuid": "6acedc98_62dd068f",
+      "range": {
+        "startLine": 340,
+        "startChar": 10,
+        "endLine": 340,
+        "endChar": 11
+      },
+      "revId": "058e78f7a2f209ab9b4dfec32ba4fd5ca1959659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
