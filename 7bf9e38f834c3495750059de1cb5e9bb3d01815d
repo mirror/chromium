@@ -16,6 +16,24 @@
       "revId": "7bf9e38f834c3495750059de1cb5e9bb3d01815d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "128f0b02_dcdfa3d4",
+        "filename": "ash/wallpaper/wallpaper_widget_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-21T23:29:11Z",
+      "side": 1,
+      "message": "Sorry. It is a long time ago and I don\u0027really remember. The original bug mentioned slow device. Perhaps try on a slow device with a non default wallpaper to see if you see anything strange? If not, then lgtm",
+      "parentUuid": "e545a307_18629be6",
+      "revId": "7bf9e38f834c3495750059de1cb5e9bb3d01815d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
