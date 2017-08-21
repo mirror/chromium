@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24a2880d_30ae26c2",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-21T22:49:58Z",
+      "side": 1,
+      "message": "style nit: i would assign this in the constructor.",
+      "revId": "5f845a203fe40d7645a12d2079b15900dce58f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d093ac96_0d2173f0",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-21T22:49:58Z",
+      "side": 1,
+      "message": "You should not need it any longer.",
+      "revId": "5f845a203fe40d7645a12d2079b15900dce58f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77458306_9ec6239f",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-21T22:49:58Z",
+      "side": 1,
+      "message": "download_manager_delegate_ \u003d nullptr;",
+      "revId": "5f845a203fe40d7645a12d2079b15900dce58f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c524f4_0e3bf349",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-21T22:49:58Z",
+      "side": 1,
+      "message": "Inline it and only override when behavior is not \u0027default\u0027?",
+      "revId": "5f845a203fe40d7645a12d2079b15900dce58f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f254d27_41ecd49a",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-21T22:49:58Z",
+      "side": 1,
+      "message": "You should not need to count any more, right?",
+      "revId": "5f845a203fe40d7645a12d2079b15900dce58f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
