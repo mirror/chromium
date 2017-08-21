@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6e62ce77_11f41d53",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-21T23:47:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26d5e613_50c752e1",
+      "range": {
+        "startLine": 83,
+        "startChar": 17,
+        "endLine": 83,
+        "endChar": 26
+      },
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b29ed9d_c7018dc1",
         "filename": "chrome/installer/setup/archive_patch_helper.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03802374_1d1f99be",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-21T23:47:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b29ed9d_c7018dc1",
+      "range": {
+        "startLine": 106,
+        "startChar": 24,
+        "endLine": 106,
+        "endChar": 32
+      },
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "743e283c_cbc8ccdc",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-21T23:47:41Z",
+      "side": 1,
+      "message": "New zucchini::Apply() will be used in MainApply() (as follow-up CL). We sometimes want to keep the invalid new file for debugging, which can be set with a command line switch (--keep). It also seems to be simpler to ensure file is deleted on error if this is done here because of SEH.",
+      "parentUuid": "fd91de97_6a452377",
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36b5c780_3f772493",
         "filename": "chrome/installer/setup/archive_patch_helper.h",
         "patchSetId": 4
@@ -103,6 +169,30 @@
       "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b682914_815cbd62",
+        "filename": "chrome/installer/setup/archive_patch_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-21T23:47:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36b5c780_3f772493",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 30
+      },
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -129,6 +219,30 @@
     },
     {
       "key": {
+        "uuid": "853b9a40_0dd43112",
+        "filename": "chrome/installer/setup/archive_patch_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-21T23:47:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cb97c64_472bbdb9",
+      "range": {
+        "startLine": 63,
+        "startChar": 21,
+        "endLine": 63,
+        "endChar": 29
+      },
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f6bac4d_6268e7a1",
         "filename": "chrome/installer/zucchini/zucchini.h",
         "patchSetId": 4
@@ -140,6 +254,30 @@
       "writtenOn": "2017-08-21T23:20:23Z",
       "side": 1,
       "message": "I thought always thought zucchini-lib should let the caller handle File I/O, and operate purely on ConstBufferView. But if this is a practical way to get things to work, then oh well...  \n\nNote that courgette.h makes a similar compromise.",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 78
+      },
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ffb205_b0891db4",
+        "filename": "chrome/installer/zucchini/zucchini.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-21T23:47:41Z",
+      "side": 1,
+      "message": "That causes some kind of asymmetry between Generate and Apply. I think this is the practical (and fastest) solution for now. Suggestions for the future:\n-Implement file-level Generate\n-Move these function to a different header.\n-have a new target for file-level zucchini, something like zucchini_io.",
+      "parentUuid": "9f6bac4d_6268e7a1",
       "range": {
         "startLine": 53,
         "startChar": 2,
@@ -222,6 +360,30 @@
     },
     {
       "key": {
+        "uuid": "8e455e08_6e60525b",
+        "filename": "chrome/installer/zucchini/zucchini_apply.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-21T23:47:41Z",
+      "side": 1,
+      "message": "Moving to zucchini_file_io",
+      "parentUuid": "7c92adc3_19386fd3",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 260,
+        "endChar": 18
+      },
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "248d3a8e_a7b0c31b",
         "filename": "chrome/installer/zucchini/zucchini_apply.cc",
         "patchSetId": 4
@@ -236,6 +398,24 @@
       "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f4f0885_9171af62",
+        "filename": "chrome/installer/zucchini/zucchini_apply.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-21T23:47:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "248d3a8e_a7b0c31b",
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
