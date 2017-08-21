@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0576bc05_9226e613",
+        "filename": "ash/shell_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-21T16:50:15Z",
+      "side": 1,
+      "message": "nit: remove reference to mash",
+      "revId": "b044961a20f27f7c13978cb3d348df43bdae79c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77857e00_fa81bbbe",
+        "filename": "ash/test/ash_test_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-21T16:50:15Z",
+      "side": 1,
+      "message": "+xiyuan. I think we should always create testing local state prefs, whether or not we are simulating login. Maybe this should happen before TestSessionControllerClient() is created / initialized?",
+      "revId": "b044961a20f27f7c13978cb3d348df43bdae79c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4524e3be_aec8e84f",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-21T16:50:15Z",
+      "side": 1,
+      "message": "+wzang. I\u0027m pretty sure this CL breaks the loading of cached wallpaper colors, since this runs immediately at startup. Can you check to see if it loads them properly?",
+      "revId": "b044961a20f27f7c13978cb3d348df43bdae79c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
