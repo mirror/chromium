@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e56e51a_2f0d246f",
+        "filename": "build/android/pylib/local/local_test_server_spawner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-21T19:29:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf4d4efa_2d5efcee",
+      "revId": "d362e2456152e154dbc6fe6ca56b4ad03091e319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08af9ffb_4531a715",
         "filename": "build/android/pylib/local/local_test_server_spawner.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-18T00:51:06Z",
       "side": 1,
       "message": "Will fuchsia be doing something similar? If so, should the code be shared somewhere?",
+      "revId": "d362e2456152e154dbc6fe6ca56b4ad03091e319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c62191_8816d235",
+        "filename": "build/android/pylib/local/local_test_server_spawner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-21T19:29:29Z",
+      "side": 1,
+      "message": "Yes, see https://chromium-review.googlesource.com/c/620286 .\nI don\u0027t think there is anything that\u0027s worth sharing. Content of the file and the way it\u0027s passed to the tests is different.",
+      "parentUuid": "08af9ffb_4531a715",
       "revId": "d362e2456152e154dbc6fe6ca56b4ad03091e319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
