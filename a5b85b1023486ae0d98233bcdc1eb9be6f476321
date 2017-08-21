@@ -22,6 +22,30 @@
       "revId": "a5b85b1023486ae0d98233bcdc1eb9be6f476321",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9617f45c_8363c13c",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-21T12:08:50Z",
+      "side": 1,
+      "message": "Done for both GetWin10OnboardingTabsForState and GetStandardOnboardingTabsForState (this change required a lot of attention as the order of the arguments for GetWin10OnboardingTabsForState does not match the one in GetStandardOnboardingTabsForState).",
+      "parentUuid": "0eb22ef4_8862aeba",
+      "range": {
+        "startLine": 120,
+        "startChar": 6,
+        "endLine": 120,
+        "endChar": 63
+      },
+      "revId": "a5b85b1023486ae0d98233bcdc1eb9be6f476321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
