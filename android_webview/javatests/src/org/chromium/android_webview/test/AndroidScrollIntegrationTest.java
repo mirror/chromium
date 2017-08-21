@@ -288,8 +288,10 @@ public class AndroidScrollIntegrationTest {
         mActivityTestRule.enableJavaScriptOnUiThread(testContainerView.getAwContents());
 
         InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                () -> firstFrameObserver.register(testContainerView.getContentViewCore(),
-                        firstFrameObserverName));
+                ()
+                        -> firstFrameObserver.register(
+                                testContainerView.getAwContents().getWebContents(),
+                                firstFrameObserverName));
 
         mActivityTestRule.loadDataSync(testContainerView.getAwContents(),
                 contentsClient.getOnPageFinishedHelper(),
@@ -322,8 +324,10 @@ public class AndroidScrollIntegrationTest {
         final JavascriptEventObserver onscrollObserver = new JavascriptEventObserver();
 
         InstrumentationRegistry.getInstrumentation().runOnMainSync(
-                () -> onscrollObserver.register(testContainerView.getContentViewCore(),
-                        "onscrollObserver"));
+                ()
+                        -> onscrollObserver.register(
+                                testContainerView.getAwContents().getWebContents(),
+                                "onscrollObserver"));
 
         loadTestPageAndWaitForFirstFrame(testContainerView, contentsClient, "onscrollObserver", "");
 
