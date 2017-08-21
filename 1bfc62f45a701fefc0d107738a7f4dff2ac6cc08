@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83ee4fc5_2e3fec27",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-21T15:44:26Z",
+      "side": 1,
+      "message": "Isn\u0027t this disallowed by the styleguide?\nhttps://google.github.io/styleguide/cppguide.html#Namespaces",
+      "revId": "1bfc62f45a701fefc0d107738a7f4dff2ac6cc08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cee69de_11d7ee2b",
+        "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-21T15:44:26Z",
+      "side": 1,
+      "message": "This is a really weird method. Would you mind adding a comment to the h file saying \"The navigation is left in a pending state and cannot be successfully completed\".",
+      "revId": "1bfc62f45a701fefc0d107738a7f4dff2ac6cc08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
