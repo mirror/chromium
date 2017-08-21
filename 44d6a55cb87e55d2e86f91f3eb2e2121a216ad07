@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0f1fdeb_70c3fdcc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-08-21T01:42:56Z",
+      "side": 1,
+      "message": "Your bug numbers seem to be wrong. The second one should be 754442 (not sure about the first one)",
+      "range": {
+        "startLine": 14,
+        "startChar": 18,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "44d6a55cb87e55d2e86f91f3eb2e2121a216ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc14076_df959959",
+        "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-08-21T01:42:56Z",
+      "side": 1,
+      "message": "I think it would be nice to differentiate the case where we cannot create an accelerator because jda_factories is empty (\"JpegDecodeAccelerator not supported on this platform\" in the previous code) to the case where we have an actual error creating it (tmp_decoder \u003d\u003d NULL or something)",
+      "revId": "44d6a55cb87e55d2e86f91f3eb2e2121a216ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "412e0067_98a70e9c",
+        "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-08-21T01:42:56Z",
+      "side": 1,
+      "message": "English nit: either \"Failed to create JpegDecodeAccelerator\" or \"Error creating JpegDecodeAccelerator\".",
+      "revId": "44d6a55cb87e55d2e86f91f3eb2e2121a216ad07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
