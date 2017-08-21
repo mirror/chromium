@@ -111,6 +111,9 @@ IPC_SYNC_MESSAGE_CONTROL3_2(GpuChannelMsg_CreateCommandBuffer,
 IPC_SYNC_MESSAGE_CONTROL1_0(GpuChannelMsg_DestroyCommandBuffer,
                             int32_t /* instance_id */)
 
+IPC_MESSAGE_CONTROL1(GpuChannelMsg_FlushCommandBuffers,
+                     std::vector<gpu::FlushParams> /* flush_list */)
+
 // Simple NOP message which can be used as fence to ensure all previous sent
 // messages have been received.
 IPC_SYNC_MESSAGE_CONTROL0_0(GpuChannelMsg_Nop)
@@ -177,7 +180,7 @@ IPC_SYNC_MESSAGE_ROUTED3_1(GpuCommandBufferMsg_WaitForGetOffsetInRange,
 // frame is also sent to the GPU process.
 IPC_MESSAGE_ROUTED4(GpuCommandBufferMsg_AsyncFlush,
                     int32_t /* put_offset */,
-                    uint32_t /* flush_count */,
+                    uint32_t /* flush_id */,
                     std::vector<ui::LatencyInfo> /* latency_info */,
                     std::vector<gpu::SyncToken> /* sync_token_fences */)
 
