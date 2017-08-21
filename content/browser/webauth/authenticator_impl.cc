@@ -79,9 +79,17 @@ void AuthenticatorImpl::MakeCredential(
     relying_party_id = options->relying_party->id;
   }
 
-  // TODO(kpaulhamus): Check ScopedCredentialParameter's type and
-  // algorithmIdentifier after algorithmIdentifier is added to mojom to
-  // make sure it is U2F_V2.
+  // Check that at least one of the cryptographic parameters is supported.
+  // Only ES256 is currently supported by U2F_V2.
+  for (const auto& params : options->crypto_parameters) {
+    if (params->algorithm_identifier == -7) {
+      break;
+    }
+    std::move(callback).Run(
+        webauth::mojom::AuthenticatorStatus::NOT_SUPPORTED_ERROR, nullptr);
+    return;
+  }
+
   client_data.SetString(kTypeKey, kMakeCredentialType);
   client_data.SetString(kChallengeKey,
                         base::StringPiece(reinterpret_cast<const char*>(
