@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "abf0825d_f68a70f3",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_mediator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-21T13:08:29Z",
+      "side": 1,
+      "message": "It will be empty so it should be fine.",
+      "parentUuid": "34ee5bff_cc1684f8",
+      "range": {
+        "startLine": 362,
+        "startChar": 19,
+        "endLine": 362,
+        "endChar": 54
+      },
+      "revId": "468c318b260b50b72b4f90e75545fc4f7764948c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d435d54_f6fc6b51",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "468c318b260b50b72b4f90e75545fc4f7764948c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a94ca04_3a49ac80",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-21T13:08:29Z",
+      "side": 1,
+      "message": "A footer configures a cell, another footer configures the same cell (because it is reused).\nBoth footers will have the same \"configuredCell\".",
+      "parentUuid": "4d435d54_f6fc6b51",
+      "range": {
+        "startLine": 231,
+        "startChar": 30,
+        "endLine": 231,
+        "endChar": 38
+      },
+      "revId": "468c318b260b50b72b4f90e75545fc4f7764948c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
