@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b6814ad_4795fd81",
+        "filename": "components/policy/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-21T14:22:42Z",
+      "side": 1,
+      "message": "I believe you can\u0027t have such dependency in //components/. See //components/README.\nYou should move it in //chrome/browser/chromeos/...",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 52
+      },
+      "revId": "54d7621de00d81ccf030b08254ce8f824c4be379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2244aec_67b98b7f",
+        "filename": "components/policy/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-21T14:22:42Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it be in action\u0027s deps?",
+      "range": {
+        "startLine": 325,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 3
+      },
+      "revId": "54d7621de00d81ccf030b08254ce8f824c4be379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
