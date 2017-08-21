@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "18de1fbc_b1d473ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-08-21T22:41:09Z",
+      "side": 1,
+      "message": "i\u0027m fine with changing all temp names to url-title. so that we don\u0027t have to generate a name when copying the temp pages outside of internal storage. Since temp pages will be copied to some other places before sharing and deleted after sharing, I don\u0027t think there will be an issue where we have to resolve the naming conflicts.",
+      "parentUuid": "0271a3fa_6087f3e0",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 68
+      },
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62f34b07_877d7c75",
         "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7815762c_6928c4a4",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-08-21T22:41:09Z",
+      "side": 1,
+      "message": "I think I meant length but simple string truncate wouldn\u0027t do the work, since some of the names will be truncated leaving incomplete UTF8 chars. And there seems no easy way to have a fixed length calculated in bytes, so I\u0027m having this here. Renamed to kTitleMaxByteSize.",
+      "parentUuid": "62f34b07_877d7c75",
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "ed313b16_bf636e66",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-08-21T22:41:09Z",
+      "side": 1,
+      "message": "the sequential also means they have an order, if we\u0027re going to use random number, maybe file (1000).mhtml will be saved several days before the file (1).mhtml, which seems opposite to common sense.\nThe reason why I\u0027m using a sequential check is because it\u0027s the one being used currently for chrome downloads. I\u0027m open to better ideas, but yet I don\u0027t have one.",
+      "parentUuid": "773b7aa5_14514f7f",
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fce64355_02b0b597",
         "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
         "patchSetId": 2
@@ -97,6 +157,30 @@
       "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c03e597_0767f49d",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-08-21T22:41:09Z",
+      "side": 1,
+      "message": "there isn\u0027t a strong advantage for using random name for cached pages, but they must be having random GUIDs for a reason. Also the design doc only mentioned user-requested pages so I wasn\u0027t sure to change those names, and that\u0027s why I\u0027m keeping them as random names. I think having meaningful names are fine here, especially when considering the possibility to share cached pages. Will remove all related code.",
+      "parentUuid": "fce64355_02b0b597",
+      "range": {
+        "startLine": 145,
+        "startChar": 28,
+        "endLine": 145,
+        "endChar": 49
+      },
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -153,6 +237,24 @@
     },
     {
       "key": {
+        "uuid": "2e383c80_05dacae3",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-08-21T22:41:09Z",
+      "side": 1,
+      "message": "Yes, the CL introduced a race condition :(\n\nI think it\u0027s a good idea to have random temp names before renaming to actual filenames. But there might be a chance that some of the files will be left behind with random temp names (and probably gets imported into database later as shared pages). The consistency check isn\u0027t able to tell between these files and normally saved pages so I guess there may be an issue here. Should I address the issue if we\u0027re going with this?\n\nOn the other hand, if we serialize SavePage() in OfflinePageModel, the MHTML archiving will be serialized as well, which will prevent the problem mentioned above. I\u0027m not sure what\u0027s the long term goal, but this seems reasonable in a short term.\n\nIt will be great if we can chat offline about this.",
+      "parentUuid": "befb3e0f_a26d3fbf",
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afb4f914_46fe0a28",
         "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
         "patchSetId": 2
@@ -176,6 +278,30 @@
     },
     {
       "key": {
+        "uuid": "cf4478c0_09e38898",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-08-21T22:41:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afb4f914_46fe0a28",
+      "range": {
+        "startLine": 163,
+        "startChar": 31,
+        "endLine": 163,
+        "endChar": 53
+      },
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c770362_70d913c2",
         "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
         "patchSetId": 2
@@ -196,6 +322,30 @@
       "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f69fb8_25ec3e68",
+        "filename": "chrome/browser/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-08-21T22:41:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c770362_70d913c2",
+      "range": {
+        "startLine": 170,
+        "startChar": 34,
+        "endLine": 170,
+        "endChar": 63
+      },
+      "revId": "c8f5e273950868b528de44a1a661116d1bc59977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
