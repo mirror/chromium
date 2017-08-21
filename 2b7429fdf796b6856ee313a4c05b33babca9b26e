@@ -94,6 +94,54 @@
       "revId": "2b7429fdf796b6856ee313a4c05b33babca9b26e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194e83be_2bd2d437",
+        "filename": "ui/wm/core/window_animations.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-21T16:07:18Z",
+      "side": 1,
+      "message": "Using base::LinearHistogram::FactoryGet (e.g. [1]) for the window hiding animation should be fine. I would be more worried though to use it when we have potentially many windows going through a sequence of animations and invoking FactoryGet dozens or more times for each user action (which is the case with overview mode). There I\u0027d rather stick to a lazy instance that ensures we only keep one histogram object around and don\u0027t recreate it multiple times.\nFor this CL - using FactoryGet() should not be any more complicated so the change could still make it and be mergeable in M-61. The only trick is to find a good object with the right lifetime (extending till the end of the animation) to tuck the reporter in it.\n\n[1] -  https://cs.chromium.org/chromium/src/chrome/browser/previews/previews_infobar_delegate.cc?type\u003dcs\u0026l\u003d48",
+      "parentUuid": "4f6fd642_ef6fce17",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 73
+      },
+      "revId": "2b7429fdf796b6856ee313a4c05b33babca9b26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "374b1013_d541cf89",
+        "filename": "ui/wm/core/window_animations.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-21T16:07:18Z",
+      "side": 1,
+      "message": "A single lazy instance wouldn\u0027t work, the way histograms work you either need to create a real histogram object on the fly with base::LinearHistogram::FactoryGet() (every time) or instantiate a separate histogram object for each UMA path (and then the path needs to be compile time constant). This is intentional in the histogram design. See a comment at https://cs.chromium.org/chromium/src/base/metrics/histogram_macros.h?type\u003dcs\u0026l\u003d23",
+      "parentUuid": "071a0add_a33352db",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 73
+      },
+      "revId": "2b7429fdf796b6856ee313a4c05b33babca9b26e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
