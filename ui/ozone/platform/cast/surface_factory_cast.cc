@@ -59,6 +59,7 @@ class CastPixmap : public gfx::NativePixmap {
   int GetDmaBufPitch(size_t plane) const override { return 0; }
   int GetDmaBufOffset(size_t plane) const override { return 0; }
   uint64_t GetDmaBufModifier(size_t plane) const override { return 0; }
+  size_t GetDmaBufSize(size_t plane) const override { return 0; }
   gfx::BufferFormat GetBufferFormat() const override {
     return gfx::BufferFormat::BGRA_8888;
   }
