@@ -144,7 +144,7 @@ TEST_F(HTMLMediaElementEventListenersTest,
 
   EXPECT_EQ(Video(), nullptr);
   GetDocument().body()->setInnerHTML("<body><video></video</body>");
-  Video()->SetSrc("http://example.com");
+  Video()->setSrc("http://example.com");
 
   testing::RunPendingTasks();
 
