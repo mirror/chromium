@@ -1196,6 +1196,17 @@ Please check your email at <ph name="ACCOUNT_EMAIL">$2<ex>jane.doe@example.com</
         </message>
       </if>
 
+      <!-- Framebust / Blocked Redirection InfoBar -->
+      <if expr="is_android">
+        <!-- TODO(https://crbug.com/754754) only implemented in Android for now. -->
+        <message name="IDS_REDIRECT_BLOCKED_INFOBAR_DESCRIPTION" desc="The desciption stating that a redirection was blocked on this page. This is shown on the infobar allowing to override Chrome and continue the navigation.">
+           Chrome prevented content on this page from redirecting you to the following site:
+        </message>
+        <message name="IDS_REDIRECT_BLOCKED_INFOBAR_SHORT_DESCRIPTION" desc="The sort desciption stating that a redirection was blocked on this page. This is shown on the infobar allowing to override Chrome and continue the navigation.">
+           Redirect blocked
+        </message>
+      </if>
+
       <!-- OOBE -->
       <if expr="chromeos">
         <message name="IDS_INSTALLING_UPDATE" desc="Label shown on the updates installation screen during OOBE">
