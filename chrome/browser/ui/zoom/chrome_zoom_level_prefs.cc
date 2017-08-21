@@ -9,10 +9,12 @@
 #include <memory>
 
 #include "base/bind.h"
+#include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/values.h"
 #include "chrome/common/chrome_constants.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
 #include "components/prefs/json_pref_store.h"
 #include "components/prefs/pref_filter.h"
@@ -29,6 +31,20 @@ namespace {
 std::string GetHash(const base::FilePath& relative_path) {
   size_t int_key = BASE_HASH_NAMESPACE::hash<base::FilePath>()(relative_path);
   return base::SizeTToString(int_key);
+}
+
+const char kZoomLevelPath[] = "zoom_level";
+const char kLastModifiedPath[] = "last_modified";
+
+// Extract a timestamp from |dictionary[kLastModifiedPath]|.
+// Will return base::Time() if no timestamp exists.
+base::Time GetTimeStamp(const base::DictionaryValue* dictionary) {
+  std::string timestamp_str;
+  dictionary->GetStringWithoutPathExpansion(kLastModifiedPath, &timestamp_str);
+  int64_t timestamp = 0;
+  base::StringToInt64(timestamp_str, &timestamp);
+  base::Time last_modified = base::Time::FromInternalValue(timestamp);
+  return last_modified;
 }
 
 }  // namespace
@@ -124,8 +140,13 @@ void ChromeZoomLevelPrefs::OnZoomLevelChanged(
   if (modification_is_removal) {
     host_zoom_dictionary_weak->RemoveWithoutPathExpansion(change.host, nullptr);
   } else {
-    host_zoom_dictionary_weak->SetDoubleWithoutPathExpansion(change.host,
-                                                             level);
+    auto dict = base::MakeUnique<base::DictionaryValue>();
+    dict->SetDouble(kZoomLevelPath, level);
+    dict->SetString(
+        kLastModifiedPath,
+        base::Int64ToString(change.last_modified.ToInternalValue()));
+    host_zoom_dictionary_weak->SetDictionaryWithoutPathExpansion(
+        change.host, std::move(dict));
   }
 }
 
@@ -142,8 +163,18 @@ void ChromeZoomLevelPrefs::ExtractPerHostZoomLevels(
        i.Advance()) {
     const std::string& host(i.key());
     double zoom_level = 0;
+    base::Time last_modified;
 
-    bool has_valid_zoom_level = i.value().GetAsDouble(&zoom_level);
+    bool has_valid_zoom_level;
+    if (i.value().is_dict()) {
+      const base::DictionaryValue* dict;
+      i.value().GetAsDictionary(&dict);
+      has_valid_zoom_level = dict->GetDouble(kZoomLevelPath, &zoom_level);
+      last_modified = GetTimeStamp(dict);
+    } else {
+      // Old zoom level that is stored directly as a double.
+      has_valid_zoom_level = i.value().GetAsDouble(&zoom_level);
+    }
 
     // Filter out A) the empty host, B) zoom levels equal to the default; and
     // remember them, so that we can later erase them from Prefs.
@@ -159,7 +190,7 @@ void ChromeZoomLevelPrefs::ExtractPerHostZoomLevels(
       continue;
     }
 
-    host_zoom_map_->SetZoomLevelForHost(host, zoom_level);
+    host_zoom_map_->InitializeZoomLevelForHost(host, zoom_level, last_modified);
   }
 
   // We don't bother sanitizing non-partition dictionaries as they will be
@@ -193,6 +224,9 @@ void ChromeZoomLevelPrefs::InitHostZoomMap(
 
   // Initialize the default zoom level.
   host_zoom_map_->SetDefaultZoomLevel(GetDefaultZoomLevelPref());
+  // Record timestamps if zoomlevels can be deleted in ClearBrowsingData.
+  bool store_last_modified = base::FeatureList::IsEnabled(features::kTabsInCbd);
+  host_zoom_map->SetStoreLastModified(store_last_modified);
 
   // Initialize the HostZoomMap with per-host zoom levels from the persisted
   // zoom-level preference values.

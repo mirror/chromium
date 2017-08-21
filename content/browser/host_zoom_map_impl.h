@@ -43,6 +43,9 @@ class CONTENT_EXPORT HostZoomMapImpl : public NON_EXPORTED_BASE(HostZoomMap),
                     const std::string& host) const override;
   ZoomLevelVector GetAllZoomLevels() const override;
   void SetZoomLevelForHost(const std::string& host, double level) override;
+  void InitializeZoomLevelForHost(const std::string& host,
+                                  double level,
+                                  base::Time last_modified) override;
   void SetZoomLevelForHostAndScheme(const std::string& scheme,
                                     const std::string& host,
                                     double level) override;
@@ -51,7 +54,8 @@ class CONTENT_EXPORT HostZoomMapImpl : public NON_EXPORTED_BASE(HostZoomMap),
   void SetTemporaryZoomLevel(int render_process_id,
                              int render_view_id,
                              double level) override;
-
+  void ClearZoomLevels(base::Time delete_begin, base::Time delete_end) override;
+  void SetStoreLastModified(bool store_last_modified) override;
   void ClearTemporaryZoomLevel(int render_process_id,
                                int render_view_id) override;
   double GetDefaultZoomLevel() const override;
@@ -103,8 +107,14 @@ class CONTENT_EXPORT HostZoomMapImpl : public NON_EXPORTED_BASE(HostZoomMap),
 
   void SendErrorPageZoomLevelRefresh();
 
+  void SetClockForTesting(std::unique_ptr<base::Clock> clock) override;
+
  private:
-  typedef std::map<std::string, double> HostZoomLevels;
+  struct ZoomLevel {
+    double level;
+    base::Time last_modified;
+  };
+  typedef std::map<std::string, ZoomLevel> HostZoomLevels;
   typedef std::map<std::string, HostZoomLevels> SchemeHostZoomLevels;
 
   struct RenderViewKey {
@@ -129,6 +139,10 @@ class CONTENT_EXPORT HostZoomMapImpl : public NON_EXPORTED_BASE(HostZoomMap),
   double GetZoomLevelForHostInternal(const std::string& host) const;
   double GetZoomLevelForHostAndSchemeInternal(const std::string& scheme,
                                               const std::string& host) const;
+
+  void SetZoomLevelForHostInternal(const std::string& host,
+                                   double level,
+                                   base::Time last_modified);
 
   // Notifies the renderers from this browser context to change the zoom level
   // for the specified host and scheme.
@@ -157,6 +171,10 @@ class CONTENT_EXPORT HostZoomMapImpl : public NON_EXPORTED_BASE(HostZoomMap),
   mutable base::Lock lock_;
 
   NotificationRegistrar registrar_;
+
+  bool store_last_modified_;
+
+  std::unique_ptr<base::Clock> clock_;
 
   DISALLOW_COPY_AND_ASSIGN(HostZoomMapImpl);
 };

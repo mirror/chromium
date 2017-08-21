@@ -15,6 +15,10 @@
 #include "content/common/content_export.h"
 #include "url/gurl.h"
 
+namespace base {
+class Clock;
+}
+
 namespace content {
 
 class NavigationEntry;
@@ -52,6 +56,7 @@ class HostZoomMap {
     std::string host;
     std::string scheme;
     double zoom_level;
+    base::Time last_modified;
   };
 
   typedef std::vector<ZoomLevelChange> ZoomLevelVector;
@@ -132,6 +137,12 @@ class HostZoomMap {
   // This should only be called on the UI thread.
   virtual void SetZoomLevelForHost(const std::string& host, double level) = 0;
 
+  // Sets the zoom level for the |host| to |level| with a given |last_modified|
+  // timestamp. Should only be used for initialization.
+  virtual void InitializeZoomLevelForHost(const std::string& host,
+                                          double level,
+                                          base::Time last_modified) = 0;
+
   // Here |host| is the host portion of URL, or (in the absence of a host)
   // the complete spec of the URL.
   // Sets the zoom level for the |scheme|/|host| pair to |level|. No values
@@ -156,6 +167,14 @@ class HostZoomMap {
                                      int render_view_id,
                                      double level) = 0;
 
+  // Clear zoom levels with a modification date greater than or equal
+  // to |delete_begin| and less than |delete_end|.
+  virtual void ClearZoomLevels(base::Time delete_begin,
+                               base::Time delete_end) = 0;
+
+  // Set whether the map should keep track of modification timestamps.
+  virtual void SetStoreLastModified(bool store_last_modified) = 0;
+
   // Clears the temporary zoom level stored for this WebContents.
   //
   // This should only be called on the UI thread.
@@ -172,6 +191,8 @@ class HostZoomMap {
   // Add and remove zoom level changed callbacks.
   virtual std::unique_ptr<Subscription> AddZoomLevelChangedCallback(
       const ZoomLevelChangedCallback& callback) = 0;
+
+  virtual void SetClockForTesting(std::unique_ptr<base::Clock> clock) = 0;
 
  protected:
   virtual ~HostZoomMap() {}
