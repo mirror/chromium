@@ -78,11 +78,6 @@ class SubresourceFilterAgent
   bool OnMessageReceived(const IPC::Message& message) override;
   void WillCreateWorkerFetchContext(blink::WebWorkerFetchContext*) override;
 
-  // Subframe navigations matching these URLs/schemes will not trigger
-  // ReadyToCommitNavigation in the browser process, so they must be treated
-  // specially to maintain activation.
-  bool ShouldUseParentActivation(const GURL& url) const;
-
   // Owned by the ChromeContentRendererClient and outlives us.
   UnverifiedRulesetDealer* ruleset_dealer_;
 
