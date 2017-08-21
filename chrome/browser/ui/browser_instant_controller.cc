@@ -14,7 +14,6 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/location_bar/location_bar.h"
-#include "chrome/browser/ui/search/instant_search_prerenderer.h"
 #include "chrome/browser/ui/search/search_model.h"
 #include "chrome/browser/ui/search/search_tab_helper.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -97,40 +96,6 @@ BrowserInstantController::~BrowserInstantController() {
   instant_service->RemoveObserver(this);
 }
 
-void BrowserInstantController::OpenInstant(WindowOpenDisposition disposition,
-                                           const GURL& url) {
-  // Unsupported dispositions.
-  if (disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB ||
-      disposition == WindowOpenDisposition::NEW_WINDOW ||
-      disposition == WindowOpenDisposition::NEW_FOREGROUND_TAB) {
-    return;
-  }
-
-  // The omnibox currently doesn't use other dispositions, so we don't attempt
-  // to handle them. If you hit this DCHECK file a bug and I'll (sky) add
-  // support for the new disposition.
-  DCHECK(disposition == WindowOpenDisposition::CURRENT_TAB)
-      << static_cast<int>(disposition);
-
-  const base::string16& search_terms =
-      search::ExtractSearchTermsFromURL(profile(), url);
-  if (search_terms.empty())
-    return;
-
-  InstantSearchPrerenderer* prerenderer =
-      InstantSearchPrerenderer::GetForProfile(profile());
-  if (!prerenderer)
-    return;
-
-  if (prerenderer->CanCommitQuery(GetActiveWebContents(), search_terms)) {
-    // Submit query to render the prefetched results. Browser will swap the
-    // prerendered contents with the active tab contents.
-    prerenderer->Commit(EmbeddedSearchRequestParams(url));
-  } else {
-    prerenderer->Cancel();
-  }
-}
-
 Profile* BrowserInstantController::profile() const {
   return browser_->profile();
 }
@@ -141,13 +106,6 @@ content::WebContents* BrowserInstantController::GetActiveWebContents() const {
 
 void BrowserInstantController::ActiveTabChanged() {
   instant_.ActiveTabChanged();
-}
-
-void BrowserInstantController::TabDeactivated(content::WebContents* contents) {
-  InstantSearchPrerenderer* prerenderer =
-      InstantSearchPrerenderer::GetForProfile(profile());
-  if (prerenderer)
-    prerenderer->Cancel();
 }
 
 void BrowserInstantController::ModelChanged(const SearchMode& old_mode,
