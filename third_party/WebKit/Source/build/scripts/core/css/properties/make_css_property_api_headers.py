@@ -67,6 +67,7 @@ class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
                 'separator': 0,
                 'is_repeated': 'false',
                 'is_descriptor': 'false',
+                'supports_percentage': 'false'
             }
         return generate_property_api_h
 
@@ -83,6 +84,7 @@ class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
                 'separator': 0 if property_['separator'] is None else '\'' + property_['separator'] + '\'',
                 'is_repeated': 'true' if property_['separator'] else 'false',
                 'is_descriptor': 'true' if property_['is_descriptor'] else 'false',
+                'supports_percentage': 'true' if ('Percent' in property_['typedom_types']) else 'false',
             }
         return generate_property_api_h
 
