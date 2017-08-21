@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "390c621c_44596400",
+        "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T04:37:50Z",
+      "side": 1,
+      "message": "Especially since now there are two nullptr being passed, I prefer keeping the types mojom::ServiceWorkerProvdierAssociatedRequest() to help document what the params are for. Or else doing nullptr /* mojom::ServiceWorkerProvdierAssociatedRequest */ which seems less readable.",
+      "revId": "20dbfaf12ba575f0cac12149aa511fbb34aeb8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55bb0a05_1e299efe",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T04:37:50Z",
+      "side": 1,
+      "message": "// Called when ServiceWorkerNetworkProvider is destructed. This function severs the Mojo binding to the browser-side ServiceWorkerProviderHost. The reason ServiceWorkerNetworkProvider is special compared to the other providers, is that it is destructed synchronously when a service worker client (Document) is removed from the DOM. Once this happens, the ServiceWorkerProviderHost must destruct quickly in order to remove the ServiceWorkerClient from the system (thus allowing unregistration/update to occur and ensuring the Clients API doesn\u0027t return the client).",
+      "revId": "20dbfaf12ba575f0cac12149aa511fbb34aeb8df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
