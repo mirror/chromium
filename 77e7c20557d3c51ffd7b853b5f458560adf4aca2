@@ -33,6 +33,23 @@
       "revId": "77e7c20557d3c51ffd7b853b5f458560adf4aca2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb34612f_731e0051",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-21T07:29:41Z",
+      "side": 1,
+      "message": "Should these set_* methods assert if DownloadTo* methods (or equivalent StartLoading-like methods if we add more) are not called yet?  Or does it make sense to introduce a struct like SimpleURLLoaderOption that has various setters for behavior options like this and to make the DownloadTo* methods take the param at once?  (net::URLFetcher has various Set* methods that are supposed to be called before the request is started, but it sometimes felt it\u0027s a bit error prone-- so asking similar question here)",
+      "revId": "77e7c20557d3c51ffd7b853b5f458560adf4aca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
