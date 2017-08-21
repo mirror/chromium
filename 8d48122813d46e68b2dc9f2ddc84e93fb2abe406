@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71374571_1c2fd633",
+        "filename": "third_party/lzma_sdk/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T08:43:29Z",
+      "side": 1,
+      "message": "since we don\u0027t build the module from source, i don\u0027t see a reason to include the source. it just adds a bit of weight to checkouts. wdyt?",
+      "revId": "8d48122813d46e68b2dc9f2ddc84e93fb2abe406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b03f80b_5e1c97f5",
+        "filename": "third_party/lzma_sdk/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T08:43:29Z",
+      "side": 1,
+      "message": "please note that these are the amd64 versions of the executables.",
+      "revId": "8d48122813d46e68b2dc9f2ddc84e93fb2abe406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d20d3ac_bedfa337",
+        "filename": "third_party/lzma_sdk/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-21T08:43:29Z",
+      "side": 1,
+      "message": "is this x86 or amd64? dos it matter?",
+      "revId": "8d48122813d46e68b2dc9f2ddc84e93fb2abe406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
