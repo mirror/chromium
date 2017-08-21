@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c71ed98b_6f9fe5bf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-21T16:39:05Z",
+      "side": 1,
+      "message": "nit: mention that this is about site channels.",
+      "revId": "1cb22a63bea81d15cc6bf15e2876dda2e0cba261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf1807e_47924b79",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-21T16:39:05Z",
+      "side": 1,
+      "message": "nit: unnecessary. This file just passes on the pointer.",
+      "revId": "1cb22a63bea81d15cc6bf15e2876dda2e0cba261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e4cc2a7_eb47813b",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-21T16:39:05Z",
+      "side": 1,
+      "message": "nit: already included in the header file",
+      "revId": "1cb22a63bea81d15cc6bf15e2876dda2e0cba261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e494dba8_f59a02fc",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-21T16:39:05Z",
+      "side": 1,
+      "message": "nit: since we don\u0027t use anything from ObservableProvider, maybe just use ProviderInterface*?",
+      "revId": "1cb22a63bea81d15cc6bf15e2876dda2e0cba261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e726966_a77ed5ad",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-21T16:39:05Z",
+      "side": 1,
+      "message": "nit: add a TODO for the downgrade? (!should_use_channels_ after a previous upgrade)",
+      "revId": "1cb22a63bea81d15cc6bf15e2876dda2e0cba261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2655b8d1_5aa688c5",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-21T16:39:05Z",
+      "side": 1,
+      "message": "nit: false /* incognito */",
+      "revId": "1cb22a63bea81d15cc6bf15e2876dda2e0cba261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6dbc16a_43609d94",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-21T16:39:05Z",
+      "side": 1,
+      "message": "nit: combine lines 352/353",
+      "revId": "1cb22a63bea81d15cc6bf15e2876dda2e0cba261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097828d0_688afbb6",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-21T16:39:05Z",
+      "side": 1,
+      "message": "nit: some documentation would be nice.",
+      "revId": "1cb22a63bea81d15cc6bf15e2876dda2e0cba261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0174b03_40a48d6b",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-21T16:39:05Z",
+      "side": 1,
+      "message": "Here and elsewhere: add a comment on why we do this. We\u0027re going to forget about why it\u0027s here in a few months\u0027 time.",
+      "revId": "1cb22a63bea81d15cc6bf15e2876dda2e0cba261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554746db_7a152c1f",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-21T16:39:05Z",
+      "side": 1,
+      "message": "nit: this ordering might be fragile. I would change this to:\n\nfor (size_t i \u003d 0; i \u003c 2; ++i) {\n  const NotificationChannel\u0026 channel \u003d fake_bridge_-\u003eGetChannels()[i];\n  if (channel.origin \u003d\u003d \"https://allowed.com\") {\n    EXPECT_EQ(channel.status, NotificationChannelStatus::ENABLED);\n  } else {\n    ASSERT_EQ(channel.origin, \"https://blocked.com\");\n    EXPECT_EQ(channel.status, NotificationChannelStatus::BLOCKED);\n  }\n}\n\n(You\u0027d be right pointing out that there\u0027s no guarantee \"https://allowed.com\" could be returned twice. Could do some boolean magic to work around that, but I\u0027m not sure whether it\u0027s worth it.)",
+      "revId": "1cb22a63bea81d15cc6bf15e2876dda2e0cba261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d47420_4a698748",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-21T16:39:05Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "1cb22a63bea81d15cc6bf15e2876dda2e0cba261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ca87b6_735267ee",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-21T16:39:05Z",
+      "side": 1,
+      "message": "nit: document this method as it\u0027s public.\n\nAs the GetRuleIterator() method is defined to be `const` (as you experienced...), maybe we can make this method const too?",
+      "revId": "1cb22a63bea81d15cc6bf15e2876dda2e0cba261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
