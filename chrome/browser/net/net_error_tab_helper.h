@@ -106,7 +106,8 @@ class NetErrorTabHelper
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
   // Virtual for testing.
-  virtual void DownloadPageLaterHelper(const GURL& url);
+  virtual void DownloadPageLaterHelper(const GURL& url,
+                                       const std::string& origin);
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
 
   content::WebContentsFrameBindingSet<chrome::mojom::NetworkDiagnostics>
