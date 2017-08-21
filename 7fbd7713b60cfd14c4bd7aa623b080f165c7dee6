@@ -16,6 +16,24 @@
       "revId": "7fbd7713b60cfd14c4bd7aa623b080f165c7dee6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19fbec8d_4a0cc2cd",
+        "filename": "ui/events/android/motion_event_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-08-21T22:48:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25941269_177ebd0b",
+      "revId": "7fbd7713b60cfd14c4bd7aa623b080f165c7dee6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
