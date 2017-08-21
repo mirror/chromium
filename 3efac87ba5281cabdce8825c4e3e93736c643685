@@ -16,6 +16,24 @@
       "revId": "3efac87ba5281cabdce8825c4e3e93736c643685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b84e20_7f7f0757",
+        "filename": "chrome/app/chrome_exe_main_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-08-21T20:29:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ec3d70d_7357b029",
+      "revId": "3efac87ba5281cabdce8825c4e3e93736c643685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
