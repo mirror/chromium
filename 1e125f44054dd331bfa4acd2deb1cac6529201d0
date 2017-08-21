@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "26d5e613_50c752e1",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-21T23:20:23Z",
+      "side": 1,
+      "message": "NIT: Courgette (capitalize).",
+      "range": {
+        "startLine": 83,
+        "startChar": 17,
+        "endLine": 83,
+        "endChar": 26
+      },
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b29ed9d_c7018dc1",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-21T23:20:23Z",
+      "side": 1,
+      "message": "NIT: Zucchini (capitalize).",
+      "range": {
+        "startLine": 106,
+        "startChar": 24,
+        "endLine": 106,
+        "endChar": 32
+      },
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fd91de97_6a452377",
         "filename": "chrome/installer/setup/archive_patch_helper.cc",
         "patchSetId": 4
@@ -13,6 +59,93 @@
       "writtenOn": "2017-08-21T20:52:45Z",
       "side": 1,
       "message": "this seems like the sort of thing that every caller would want to do. is there a reason to leave a bad file behind in certain cases? if not, please move this into Apply",
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ba3341_a2edfd59",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-21T23:20:23Z",
+      "side": 1,
+      "message": "Please ping waffles@; I remember he had to deal with this issue, but the details escapes me.",
+      "parentUuid": "fd91de97_6a452377",
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b5c780_3f772493",
+        "filename": "chrome/installer/setup/archive_patch_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-21T23:20:23Z",
+      "side": 1,
+      "message": "NIT: Courgette (capitali",
+      "range": {
+        "startLine": 59,
+        "startChar": 21,
+        "endLine": 59,
+        "endChar": 30
+      },
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cb97c64_472bbdb9",
+        "filename": "chrome/installer/setup/archive_patch_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-21T23:20:23Z",
+      "side": 1,
+      "message": "NIT: Zucchini (capitalize).",
+      "range": {
+        "startLine": 63,
+        "startChar": 21,
+        "endLine": 63,
+        "endChar": 29
+      },
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6bac4d_6268e7a1",
+        "filename": "chrome/installer/zucchini/zucchini.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-21T23:20:23Z",
+      "side": 1,
+      "message": "I thought always thought zucchini-lib should let the caller handle File I/O, and operate purely on ConstBufferView. But if this is a practical way to get things to work, then oh well...  \n\nNote that courgette.h makes a similar compromise.",
+      "range": {
+        "startLine": 53,
+        "startChar": 2,
+        "endLine": 53,
+        "endChar": 78
+      },
       "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -63,6 +196,46 @@
       "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c92adc3_19386fd3",
+        "filename": "chrome/installer/zucchini/zucchini_apply.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-21T23:20:23Z",
+      "side": 1,
+      "message": "Prefer to have all these file-related stuff in a new .cc file though?",
+      "range": {
+        "startLine": 260,
+        "startChar": 0,
+        "endLine": 260,
+        "endChar": 18
+      },
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "248d3a8e_a7b0c31b",
+        "filename": "chrome/installer/zucchini/zucchini_apply.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-21T23:20:23Z",
+      "side": 1,
+      "message": "Should we validate |old_file| size and CRC right here, to early-exit if an incompatible patch is provided, so we won\u0027t have to go through file creation and patch application?",
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
