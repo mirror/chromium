@@ -88,6 +88,24 @@
       "revId": "3bead4835ac4e8c5f0203591bff17e4480d51f79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "659399e6_142c0596",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T04:50:07Z",
+      "side": 1,
+      "message": "No, the steps 1-4 are for the second bullet point. Basically, if skipWaiting() caused us to activate, we resolve the promise after \u0027activating\u0027, but if we couldn\u0027t yet activate, resolve the promise now (very weird, IMO, but that\u0027s the spec).",
+      "parentUuid": "df39f837_cee18fe6",
+      "revId": "3bead4835ac4e8c5f0203591bff17e4480d51f79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
