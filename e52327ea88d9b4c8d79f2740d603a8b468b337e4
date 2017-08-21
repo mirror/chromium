@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d855453_5c2e8d55",
+        "filename": "components/browser_watcher/postmortem_report_collector.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1174230
+      },
+      "writtenOn": "2017-08-21T22:04:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aab139d2_0448445b",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 30
+      },
+      "revId": "e52327ea88d9b4c8d79f2740d603a8b468b337e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7ea39aa_ad94c45d",
         "filename": "components/browser_watcher/postmortem_report_collector.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "85874aaf_30caff1b",
+        "filename": "components/browser_watcher/postmortem_report_collector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1174230
+      },
+      "writtenOn": "2017-08-21T22:04:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7ea39aa_ad94c45d",
+      "range": {
+        "startLine": 32,
+        "startChar": 6,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "e52327ea88d9b4c8d79f2740d603a8b468b337e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eb0610f_406af427",
         "filename": "components/browser_watcher/postmortem_report_collector.h",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-18T13:30:58Z",
       "side": 1,
       "message": "CollectAndMaybeSubmit?",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 32
+      },
+      "revId": "e52327ea88d9b4c8d79f2740d603a8b468b337e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc864f0a_069d7dd7",
+        "filename": "components/browser_watcher/postmortem_report_collector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1174230
+      },
+      "writtenOn": "2017-08-21T22:04:24Z",
+      "side": 1,
+      "message": "Went for ProcessOneReport. Done.",
+      "parentUuid": "6eb0610f_406af427",
       "range": {
         "startLine": 79,
         "startChar": 7,
