@@ -1676,11 +1676,11 @@ LayoutUnit LayoutBlock::BaselinePosition(
     return LayoutUnit(-1);
 
   const FontMetrics& font_metrics = font_data->GetFontMetrics();
-  return LayoutUnit((font_metrics.Ascent(baseline_type) +
-                     (LineHeight(first_line, direction, line_position_mode) -
-                      font_metrics.Height()) /
-                         2)
-                        .ToInt());
+  return LayoutUnit(
+      font_metrics.FloatAscent(baseline_type) +
+      floorf((LineHeight(first_line, direction, line_position_mode) -
+              font_metrics.FloatHeight()) /
+             2));
 }
 
 LayoutUnit LayoutBlock::MinLineHeightForReplacedObject(
@@ -1762,13 +1762,12 @@ LayoutUnit LayoutBlock::InlineBlockBaseline(
   if (font_data && !have_normal_flow_child && HasLineIfEmpty()) {
     const FontMetrics& font_metrics = font_data->GetFontMetrics();
     return LayoutUnit(
-        (font_metrics.Ascent() +
-         (LineHeight(true, line_direction, kPositionOfInteriorLineBoxes) -
-          font_metrics.Height()) /
-             2 +
-         (line_direction == kHorizontalLine ? BorderTop() + PaddingTop()
-                                            : BorderRight() + PaddingRight()))
-            .ToInt());
+        font_metrics.FloatAscent() +
+        (LineHeight(true, line_direction, kPositionOfInteriorLineBoxes) -
+         font_metrics.FloatHeight()) /
+            2 +
+        (line_direction == kHorizontalLine ? BorderTop() + PaddingTop()
+                                           : BorderRight() + PaddingRight()));
   }
   return LayoutUnit(-1);
 }
