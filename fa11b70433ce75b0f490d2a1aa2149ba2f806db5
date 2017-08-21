@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "076e5215_f76efdae",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-credential-sync.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-21T02:52:22Z",
+      "side": 1,
+      "message": "You can use https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions for (a bit) less typing.",
+      "revId": "fa11b70433ce75b0f490d2a1aa2149ba2f806db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2c0e7b_b30e4ca5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-credential-sync.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-21T02:52:22Z",
+      "side": 1,
+      "message": "let\u0027s switch to call them \"URL credentials\" here using this opportunity. 401 is not handled when CORS flag is set and it prevents credentials embedded in a URL from being used. But some other credentials e.g. cookies are still sent, IIUC.",
+      "revId": "fa11b70433ce75b0f490d2a1aa2149ba2f806db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c83833b_fab6a379",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-auth-basic.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-21T02:52:22Z",
+      "side": 1,
+      "message": "how about just using !\u003d",
+      "revId": "fa11b70433ce75b0f490d2a1aa2149ba2f806db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
