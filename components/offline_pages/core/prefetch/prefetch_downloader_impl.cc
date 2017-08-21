@@ -88,12 +88,15 @@ void PrefetchDownloaderImpl::CancelDownload(const std::string& download_id) {
 }
 
 void PrefetchDownloaderImpl::OnDownloadServiceReady(
-    const std::vector<std::string>& outstanding_download_ids) {
+    const std::vector<std::string>& outstanding_download_ids,
+    const std::vector<PrefetchDownloadResult>& success_downloads) {
   DCHECK_EQ(download::DownloadService::ServiceStatus::READY,
             download_service_->GetStatus());
   service_started_ = true;
 
-  // TODO(jianli): Remove orphaned downloads.
+  PrefetchDispatcher* dispatcher = prefetch_service_->GetPrefetchDispatcher();
+  if (dispatcher)
+    dispatcher->CleanupDownloads(outstanding_download_ids, success_downloads);
 
   for (const auto& entry : pending_downloads_)
     StartDownload(entry.first, entry.second);

@@ -21,7 +21,8 @@ void TestPrefetchDownloader::StartDownload(
 void TestPrefetchDownloader::CancelDownload(const std::string& download_id) {}
 
 void TestPrefetchDownloader::OnDownloadServiceReady(
-    const std::vector<std::string>& outstanding_download_ids) {}
+    const std::vector<std::string>& outstanding_download_ids,
+    const std::vector<PrefetchDownloadResult>& success_downloads) {}
 
 void TestPrefetchDownloader::OnDownloadServiceUnavailable() {}
 

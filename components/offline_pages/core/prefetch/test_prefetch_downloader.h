@@ -24,7 +24,8 @@ class TestPrefetchDownloader : public PrefetchDownloader {
                      const std::string& download_location) override;
   void CancelDownload(const std::string& download_id) override;
   void OnDownloadServiceReady(
-      const std::vector<std::string>& outstanding_download_ids) override;
+      const std::vector<std::string>& outstanding_download_ids,
+      const std::vector<PrefetchDownloadResult>& success_downloads) override;
   void OnDownloadServiceUnavailable() override;
   void OnDownloadServiceShutdown() override;
   void OnDownloadSucceeded(const std::string& download_id,
