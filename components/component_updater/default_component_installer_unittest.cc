@@ -7,6 +7,10 @@
 #include <utility>
 #include <vector>
 
+#include "base/android/jni_string.h"
+#include "base/logging.h"
+#include "jni/ComponentUpdater_jni.h"
+
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
@@ -212,6 +216,54 @@ void DefaultComponentInstallerTest::UnpackComplete(
 }
 
 }  // namespace
+
+TEST_F(DefaultComponentInstallerTest, VerifyAPKSignature) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+
+  base::FilePath test_data_dir;
+  PathService::Get(base::DIR_SOURCE_ROOT, &test_data_dir);
+  test_data_dir = test_data_dir.AppendASCII("components")
+                      .AppendASCII("test")
+                      .AppendASCII("data")
+                      .AppendASCII("component_updater");
+
+  auto cert1Path = base::android::ConvertUTF8ToJavaString(
+      env, test_data_dir.AppendASCII("1.crt").MaybeAsASCII());
+  auto cert2Path = base::android::ConvertUTF8ToJavaString(
+      env, test_data_dir.AppendASCII("2.crt").MaybeAsASCII());
+
+  // An APK signed with certificate #1.
+  auto signed1Apk = base::android::ConvertUTF8ToJavaString(
+      env, test_data_dir.AppendASCII("signed-1.apk").MaybeAsASCII());
+  // Signed with #2.
+  auto signed2Apk = base::android::ConvertUTF8ToJavaString(
+      env, test_data_dir.AppendASCII("signed-2.apk").MaybeAsASCII());
+  // Signed with both certificates.
+  auto signedBothApk = base::android::ConvertUTF8ToJavaString(
+      env, test_data_dir.AppendASCII("signed-1-2.apk").MaybeAsASCII());
+
+  auto unsignedApk = base::android::ConvertUTF8ToJavaString(
+      env, test_data_dir.AppendASCII("unsigned.apk").MaybeAsASCII());
+
+  auto pk1 = Java_ComponentUpdater_loadPublicKey(env, cert1Path);
+  auto pk2 = Java_ComponentUpdater_loadPublicKey(env, cert2Path);
+
+  // Signed APKs should verify with the corresponding public key.
+  EXPECT_TRUE(Java_ComponentUpdater_verify(env, signed1Apk, pk1));
+  EXPECT_TRUE(Java_ComponentUpdater_verify(env, signed2Apk, pk2));
+
+  // APKs signed with multiple certificates should verify with either
+  // corresponding public key.
+  EXPECT_TRUE(Java_ComponentUpdater_verify(env, signedBothApk, pk1));
+  EXPECT_TRUE(Java_ComponentUpdater_verify(env, signedBothApk, pk2));
+
+  // Signed APKs shouldn't verify given the wrong public key.
+  EXPECT_FALSE(Java_ComponentUpdater_verify(env, signed1Apk, pk2));
+  EXPECT_FALSE(Java_ComponentUpdater_verify(env, signed2Apk, pk1));
+
+  // Unsigned APKs shouldn't verify.
+  EXPECT_FALSE(Java_ComponentUpdater_verify(env, unsignedApk, pk1));
+}
 
 // Tests that the component metadata is propagated from the default
 // component installer and its component traits, through the instance of the
