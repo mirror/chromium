@@ -16,6 +16,24 @@
       "revId": "ec673180b5756e09cc80512b18f1e08a13650dcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243c3dff_020759dc",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-21T15:41:57Z",
+      "side": 1,
+      "message": "I kept it in this language to align it (make it comparable to), UI metrics.\n\nFor instance, if we implement the change to make the UI shown only after first paint, the metrics would be necessarily be aligned with resources being blocked.\n\nHappy to change it if you think that isn\u0027t a strong enough reason.",
+      "parentUuid": "8ed27202_fd5002a2",
+      "revId": "ec673180b5756e09cc80512b18f1e08a13650dcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
