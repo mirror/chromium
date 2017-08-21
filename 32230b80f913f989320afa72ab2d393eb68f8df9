@@ -59,6 +59,23 @@
     },
     {
       "key": {
+        "uuid": "2e186d9a_167c8c8d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-08-21T19:40:37Z",
+      "side": 1,
+      "message": "The offset_between_rows_ and offset_between_columns_ attributes store the distance between tracks only caused by the Content Alignment properties. There may be additional space due to grid gaps.\n\nAdditionally, I think the name if the function is a bit confusing, since the offset added by Content Alignment is not related at all with grid items.",
+      "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "600124ed_41ede629",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
         "patchSetId": 2
@@ -88,6 +105,24 @@
       "side": 1,
       "message": "I did not find a way to use this as some rows (or columns) may not have a single child due to spanning.",
       "parentUuid": "600124ed_41ede629",
+      "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "767c7d15_001ab771",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-08-21T19:40:37Z",
+      "side": 1,
+      "message": "I haven\u0027t read the whole patch yet, so my comment could be unrelated. I just wanted to confirm that this method returns the offset of a grid item from its left side due to alignment, considering its whole grid area (so including spans). \n\nHowever, I\u0027m not sure I have understood completely your sentence \"may not have a single child die to spanning\"",
+      "parentUuid": "ed63bd0f_8f026316",
       "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
