@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "62080e27_fc6ba254",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T13:59:27Z",
+      "side": 1,
+      "message": "sizeof(char) !\u003d sizeof(short) as short is usually 16 bits while char is usually 8 bits.\n\nThe C (and by extension C++ standard) states that int should be the fastest native type and using a smaller type is not always faster.\n\nFor example, while passing the variable as parameter, the stack are aligned on 32-bit, so when pushing a 8-bit value, the compiler convert it to a 32-bit value, push it, then pop a 32-bit and discard the high value bits. So using a 8-bit or 32-bit has the same cost.\n\nWhen storing the value in a structure/class, the compiler will probably add padding after it because the ABI states that each type are by default aligned on the smaller of sizeof(type) and 32-bit. So unless you take great care when declaring your struct, having a smaller enum does not save anything in general.\n\nTL;DR: I don\u0027t think this gains much and not sure it is worth specifying the underlying type.\n\nI don\u0027t feel strongly though, so you can keep this as \"char\" if you want.",
+      "parentUuid": "7eb26d24_ad4b6ba6",
+      "range": {
+        "startLine": 13,
+        "startChar": 28,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a22e93b1_9b38c108",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
         "patchSetId": 5
@@ -128,6 +152,24 @@
       "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a325fe94_624a837c",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T13:59:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a849ed57_d71c4dde",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -312,6 +354,24 @@
       "side": 1,
       "message": "One benefit of keeping the initializer as private is to discourage subclassing.  For simple data container objects like this, I think there\u0027s some benefit to minimizing the publicly available API to encourage clients to using the classes as-is.  That being said, someone could still hack around this pretty easily, so we can move the initializer to the .h file if you feel strongly about it.",
       "parentUuid": "de3f6b3d_1db5f7bd",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c0a9b3_f8af1a74",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_button_configuration.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T13:59:27Z",
+      "side": 1,
+      "message": "TL;DR: I feel strongly that the initialiser should be defined in the header and public because 1. all methods are public in Objective-C (it is easy to add a category and to redefine them to allow the compiler to let you call them), 2. there is better way to prevent sub-classing (with DCHECK).\n\nIt\u0027s quite easy to subclass even with the current code:\n\n  @interface SubclassOfDialogButtonConfiguration : DialogButtonConfiguration\n  @end\n\n  @inteface DialogButtonConfiguration (RedefineSuperclassPrivateInitializer)\n  - (instancetype)initWithText:(NSString*)text\n                         style:(DialogButtonStyle)style;\n  @end\n\n  @implementation SubclassOfDialogButtonConfiguration\n  - (instancetype)init {\n    self \u003d [super initWithText:@\"foo\" style:(DialogButtonStyle)0];\n    if (self) {\n      ...\n    }\n  }\n  @end\n\nSo I do not think moving the initialiser definition to the .mm offer much protection. In fact, it is worse because it force the subclass to redefine the initialiser which can lead to weird error at runtime when the superclass changes the initialiser definition instead of a clean build time error.\n\nIn Objective-C, all methods are more or less public. So IMO, this does not bring anything.\n\nIf you really want to disable subclassing, there is a better way. Since Objective-C is dynamic, and the -class property is equals to what is used during +alloc invocation, you can just check that -class is DialogButtonConfiguration to prevent subclassing:\n\n  @implementation DialogButtonConfiguration\n  - (instancetype)initWithText:(NSString*)text\n                         style:(DialogButtonStyle)style {\n    DCHECK([self class] \u003d\u003d [DialogButtonConfiguration class])\n        \u003c\u003c \"DialogButtonConfiguration should not be sub-classed!\";\n    ...\n  }\n  @end\n\nThis requires the NS_DESIGNATED_INITIALIZER (otherwise the code could just call another initialiser that does not contain the check, but with NS_DESIGNATED_INITIALIZER the compiler enforces that the correct method is invoked and that the DCHECK will be reached).",
+      "parentUuid": "e9673048_2cef0d44",
       "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -610,6 +670,24 @@
     },
     {
       "key": {
+        "uuid": "f6e93871_33d183f8",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T13:59:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "821d0350_1ef9ecd9",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3ca95db_abdcb9e9",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_mediator.mm",
         "patchSetId": 5
@@ -785,6 +863,24 @@
     },
     {
       "key": {
+        "uuid": "4e5357bb_1ac34d7e",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_text_field_configuration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T13:59:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c97d33e3_8c536bcd",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9324b1f3_0289c17c",
         "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_text_field_configuration.mm",
         "patchSetId": 5
@@ -814,6 +910,24 @@
       "side": 1,
       "message": "Same as with other configuration class.",
       "parentUuid": "9324b1f3_0289c17c",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609ab0fa_d67e34e3",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_text_field_configuration.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T13:59:27Z",
+      "side": 1,
+      "message": "Same comment.",
+      "parentUuid": "82c620bc_9b3dc99b",
       "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -851,6 +965,24 @@
       "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc32b84_621d7592",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_view_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T13:59:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "835f4d74_039da60f",
+      "revId": "2da32918727bda8cbb9bc2e22b723096bca6549f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

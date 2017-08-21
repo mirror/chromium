@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17ab5799_b3820398",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_configuration_identifier.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T13:59:27Z",
+      "side": 1,
+      "message": "I think you can use AtomicSequenceNumber to make this thread-safe:\n\n  #include \"base/atomic_sequence_num.h\"\n\n  namespace {\n  AtomicSequenceNumber g_dialog_configuration_identifier;\n  }  // namespace\n\n  @implementation DialogConfigurationIdentifier {\n    int _uniqueID;\n  }\n  - (instancetype)init {\n    return [self initWithUniqueID:g_dialog_configuration_identifier.GetNext()];\n  }\n  - (instancetype)initWithUniqueID:(int)uniqueID {\n    if ((self \u003d [super init])) {\n      _uniqueID \u003d uniqueID;\n    }\n  }\n  @end\n\nNote: AtomicSequenceNumber class comment explicitly say it is safe to use as a global object.\n\nI think it is better to leverage code from base here instead of having code that is potentially thread unsafe. BTW, using int instead of NSUInteger should be fine here (just cast it to the correct type in -hash implementation).",
+      "revId": "5c9f7ec8b5af26cd514c7e994c77f09e65febdb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98931056_bdc0f795",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/test_helpers/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T13:59:27Z",
+      "side": 1,
+      "message": "2016 → 2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "5c9f7ec8b5af26cd514c7e994c77f09e65febdb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f7436e0_355408fb",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/test_helpers/test_dialog_mediator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T13:59:27Z",
+      "side": 1,
+      "message": "nit: \"copy\" instead of \"strong\" here (and below) so that if NSMutableString/NSMutableArray are passed, the object does not see the value modified after the property is set (-copy just does -retain if objects are immutable so it is cheap).",
+      "range": {
+        "startLine": 15,
+        "startChar": 21,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "5c9f7ec8b5af26cd514c7e994c77f09e65febdb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e212aa_c4dcc788",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/test_helpers/test_dialog_view_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T13:59:27Z",
+      "side": 1,
+      "message": "NS_DESIGNATED_INITIALIZER?",
+      "revId": "5c9f7ec8b5af26cd514c7e994c77f09e65febdb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
