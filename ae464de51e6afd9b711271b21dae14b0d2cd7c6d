@@ -263,6 +263,30 @@
     },
     {
       "key": {
+        "uuid": "91822c54_67b8c795",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-21T09:45:33Z",
+      "side": 1,
+      "message": "Correction: credential_manager_util.mm",
+      "parentUuid": "31305fc7_b9ced5b3",
+      "range": {
+        "startLine": 55,
+        "startChar": 50,
+        "endLine": 55,
+        "endChar": 75
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebe548da_ce68a45f",
         "filename": "ios/chrome/browser/passwords/credential_manager.mm",
         "patchSetId": 4
