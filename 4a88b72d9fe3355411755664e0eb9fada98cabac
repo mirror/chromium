@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc6ca3dc_4bc1020f",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManagerTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-21T17:53:28Z",
+      "side": 1,
+      "message": "s/2015/2017/",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "4a88b72d9fe3355411755664e0eb9fada98cabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac555a7_55ba3c26",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManagerTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-21T17:53:28Z",
+      "side": 1,
+      "message": "nit: I think it is best to separate all testcases below in separate TEST_F.\n\nHere are the advantages:\n - Each test is checking a single case which is best practice.\n - Much easier to find out what is failing by looking at the failing test name\n - You can move SetHtmlInnterHTML and SetUpScrollBoundaryBehaviorPage to the class SetUp() function",
+      "range": {
+        "startLine": 82,
+        "startChar": 26,
+        "endLine": 82,
+        "endChar": 67
+      },
+      "revId": "4a88b72d9fe3355411755664e0eb9fada98cabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2b30c9b_c8e3c016",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManagerTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-21T17:53:28Z",
+      "side": 1,
+      "message": "nit: we should dispatch scrollEnd too to ensure gesture is deemed complete by\nmanager. Otherwise I suspect we are not clearing the \"current_gesture_handling_node\"\nwhich may affect the code path you are testing.",
+      "revId": "4a88b72d9fe3355411755664e0eb9fada98cabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ea1a84_7e287921",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManagerTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-21T17:53:28Z",
+      "side": 1,
+      "message": "nit: i suggest capturing this repeated getter sequence in a member function to make things readable.\n\nEven better, why not have a method scroll(dx,dy) which sends Scroll{Begin,Update,End} in that\norder. This way you guarantee the Begin and Update will have the same delta and also\nmake things more readable by reducing boilerplate.",
+      "range": {
+        "startLine": 113,
+        "startChar": 2,
+        "endLine": 113,
+        "endChar": 45
+      },
+      "revId": "4a88b72d9fe3355411755664e0eb9fada98cabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2c6c57_6519dd12",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManagerTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-21T17:53:28Z",
+      "side": 1,
+      "message": "s/shouldn/should",
+      "range": {
+        "startLine": 154,
+        "startChar": 40,
+        "endLine": 154,
+        "endChar": 47
+      },
+      "revId": "4a88b72d9fe3355411755664e0eb9fada98cabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c4567f2_20d73bc6",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManagerTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1125304
+      },
+      "writtenOn": "2017-08-21T17:53:28Z",
+      "side": 1,
+      "message": "s/shouldn/should",
+      "range": {
+        "startLine": 154,
+        "startChar": 40,
+        "endLine": 154,
+        "endChar": 47
+      },
+      "revId": "4a88b72d9fe3355411755664e0eb9fada98cabac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
