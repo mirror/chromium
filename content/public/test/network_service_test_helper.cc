@@ -6,9 +6,12 @@
 
 #include "base/bind.h"
 #include "base/feature_list.h"
+#include "base/files/file_path.h"
+#include "base/logging.h"
 #include "content/public/common/content_features.h"
 #include "content/public/test/test_host_resolver.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
+#include "net/cert/test_root_certs.h"
 #include "net/dns/mock_host_resolver.h"
 
 namespace content {
@@ -26,6 +29,15 @@ class NetworkServiceTestHelper::NetworkServiceTestImpl
       test_host_resolver_.host_resolver()->AddRule(rule->host_pattern,
                                                    rule->replacement);
     }
+    std::move(callback).Run();
+  }
+
+  void AddRootCertFromFile(const base::FilePath& cert_path,
+                           AddRootCertFromFileCallback callback) override {
+    net::TestRootCerts* root_certs = net::TestRootCerts::GetInstance();
+    bool added_root_certs = root_certs->AddFromFile(cert_path);
+    DCHECK(added_root_certs)
+        << "Failed to install root cert from EmbeddedTestServer";
     std::move(callback).Run();
   }
 
