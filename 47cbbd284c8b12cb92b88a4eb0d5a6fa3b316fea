@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c6112e3_58d47923",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-21T20:06:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "370a34bb_fbf2013c",
+      "revId": "47cbbd284c8b12cb92b88a4eb0d5a6fa3b316fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d547f3d8_bd6b3e65",
         "filename": "services/resource_coordinator/coordination_unit/metrics_collector.h",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "47cbbd284c8b12cb92b88a4eb0d5a6fa3b316fea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7472b49_e9b83d84",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-21T20:06:09Z",
+      "side": 1,
+      "message": "Thanks for pointing this out, I will clean this up in a follow-up patch.",
+      "parentUuid": "d547f3d8_bd6b3e65",
+      "range": {
+        "startLine": 43,
+        "startChar": 28,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "47cbbd284c8b12cb92b88a4eb0d5a6fa3b316fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
