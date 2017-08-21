@@ -949,4 +949,33 @@ TEST_F(LayoutBoxModelObjectTest, NoCrashStackingContextChangeNonRooted) {
   object.SetDangerousOneWayParent(parent);
 }
 
+TEST_F(LayoutBoxModelObjectTest, InvalidatePaintLayerOnStackedChange) {
+  SetBodyInnerHTML(
+      "<style>"
+      "  .old { background: red; position: relative; height: 2000px; }"
+      "  .new { all: inherit }"
+      "</style>"
+      "<div style='height: 100px; backface-visibility: hidden'>"
+      "  <div id='target' class='old'></div>"
+      "</div>");
+
+  auto& target = *GetLayoutObjectByElementId("target");
+  auto& target_layer = *ToLayoutBoxModelObject(target).Layer();
+  auto& compositing_container = *target_layer.CompositingContainer();
+  auto& parent = *target.Parent();
+  EXPECT_FALSE(target.StyleRef().IsStackingContext());
+  EXPECT_TRUE(target.StyleRef().IsStacked());
+  EXPECT_FALSE(parent.StyleRef().IsStacked());
+  EXPECT_NE(parent, compositing_container.GetLayoutObject());
+
+  GetDocument().getElementById("target")->setAttribute(HTMLNames::classAttr,
+                                                       "new");
+  GetDocument().View()->UpdateLifecycleToLayoutClean();
+
+  EXPECT_FALSE(target.StyleRef().IsStacked());
+  EXPECT_TRUE(compositing_container.NeedsRepaint());
+  auto& new_compositing_container = *target_layer.CompositingContainer();
+  EXPECT_EQ(parent, new_compositing_container.GetLayoutObject());
+}
+
 }  // namespace blink
