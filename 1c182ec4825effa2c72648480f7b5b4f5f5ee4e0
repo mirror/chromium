@@ -16,6 +16,24 @@
       "revId": "1c182ec4825effa2c72648480f7b5b4f5f5ee4e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf3c088_7f33c3a9",
+        "filename": "chrome/android/java/res/layout/number_roll_view.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-21T17:35:01Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "ca298eba_1c8dbc22",
+      "revId": "1c182ec4825effa2c72648480f7b5b4f5f5ee4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
