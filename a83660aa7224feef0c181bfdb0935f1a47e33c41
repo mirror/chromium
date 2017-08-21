@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "26d5bd59_74ecb5fc",
+        "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "Ack, OK to keep them.",
+      "parentUuid": "f9f0044d_02574b02",
+      "revId": "a83660aa7224feef0c181bfdb0935f1a47e33c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0d1f87e_e764f8f7",
         "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.cc",
         "patchSetId": 14

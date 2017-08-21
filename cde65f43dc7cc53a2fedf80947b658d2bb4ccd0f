@@ -1,0 +1,305 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cedda86_fc5f1ce6",
+        "filename": "content/child/child_url_loader_factory_getter.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "Comment needs updating? Now if the default ctor is used, they are both null?",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3df96a5_bd3e78a1",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "thanks for the comments, much more understandable for me",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de2558d0_50d2c7e9",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "std::move(getter)?",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac47b15_4b24d7a8",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6da59d_154902e0",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "std::move(getter)?",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d99afc2_1373a122",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "nit: events",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 16
+      },
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33e3a686_ef144620",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "std::move",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2424c4_6b99b317",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "then you don\u0027t need these comment separators too",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2aad5f5_40718a74",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "std::move(getter)?",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17539002_90ec99c1",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "std::move(getter)?",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daab71e6_06073231",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "I see, that seems to make sense then.",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "85b02ea2_540eb2b2",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "since this is just supposed to be the origin, could it be url::Origin or url::SchemeHostPort?",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f1fc2d_192f47ec",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "is it worth putting this class in its own file? it\u0027s pretty big",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30fcb43a_070919a6",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "Since the comment is pretty long, could the first sentence of the comment be a brief description of what the function does?",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111a84d7_18ad75d1",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "nit: over to",
+      "range": {
+        "startLine": 170,
+        "startChar": 56,
+        "endLine": 170,
+        "endChar": 61
+      },
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65bebe4_117b83f1",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "could this just be url::Origin or url::SchemeHostPort?",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c061a9a6_5c374626",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T15:59:00Z",
+      "side": 1,
+      "message": "just curious: any reason to put this here instead of in the class?",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
