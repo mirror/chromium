@@ -45,6 +45,7 @@
 #include "platform/fonts/FontDescription.h"
 #include "platform/fonts/FontFaceCreationParams.h"
 #include "platform/fonts/SimpleFontData.h"
+#include "platform/fonts/opentype/OS2TableCJKFont.h"
 #include "platform/graphics/skia/SkiaUtils.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/PtrUtil.h"
@@ -289,15 +290,23 @@ std::unique_ptr<FontPlatformData> FontCache::CreateFontPlatformData(
   if (!tf)
     return nullptr;
 
-  return WTF::WrapUnique(new FontPlatformData(
-      tf, name.data(), font_size,
-      (font_description.Weight() >
-           FontSelectionValue(200) +
-               FontSelectionValue(tf->fontStyle().weight()) ||
-       font_description.IsSyntheticBold()),
-      ((font_description.Style() == ItalicSlopeValue()) && !tf->isItalic()) ||
-          font_description.IsSyntheticItalic(),
-      font_description.Orientation()));
+  bool is_cjk_font = OS2TableCJKFont::IsCJKFontFromOS2Table(tf.get());
+
+  std::unique_ptr<FontPlatformData> font_platform_data =
+      WTF::WrapUnique(new FontPlatformData(
+          tf, name.data(), font_size,
+          (font_description.Weight() >
+               FontSelectionValue(200) +
+                   FontSelectionValue(tf->fontStyle().weight()) ||
+           font_description.IsSyntheticBold()),
+          ((font_description.Style() == ItalicSlopeValue()) &&
+           !tf->isItalic()) ||
+              font_description.IsSyntheticItalic(),
+          font_description.Orientation()));
+
+  font_platform_data->SetAvoidEmbeddedBitmaps(!is_cjk_font);
+
+  return font_platform_data;
 }
 #endif  // !defined(OS_WIN)
 
