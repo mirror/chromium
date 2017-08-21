@@ -210,6 +210,30 @@
       "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4174c29b_bedb206d",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-08-21T12:31:34Z",
+      "side": 1,
+      "message": "I\u0027m ok with that change. Maybe we should reference the bug here, or update the bug to mention this file (or both).",
+      "parentUuid": "47849e7b_89ccee46",
+      "range": {
+        "startLine": 101,
+        "startChar": 49,
+        "endLine": 101,
+        "endChar": 61
+      },
+      "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
