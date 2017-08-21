@@ -52,6 +52,7 @@ class CORE_EXPORT BaseFetchContext : public FetchContext {
 
   void AddWarningConsoleMessage(const String&, LogSource) const override;
   void AddErrorConsoleMessage(const String&, LogSource) const override;
+  virtual String GetOutgoingReferrer() const = 0;
 
  protected:
   // Used for security checks.
@@ -76,7 +77,6 @@ class CORE_EXPORT BaseFetchContext : public FetchContext {
   virtual bool ShouldBlockFetchAsCredentialedSubresource(const ResourceRequest&,
                                                          const KURL&) const = 0;
   virtual ReferrerPolicy GetReferrerPolicy() const = 0;
-  virtual String GetOutgoingReferrer() const = 0;
   virtual const KURL& Url() const = 0;
   virtual const SecurityOrigin* GetParentSecurityOrigin() const = 0;
   virtual Optional<WebAddressSpace> GetAddressSpace() const = 0;

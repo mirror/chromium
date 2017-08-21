@@ -12,6 +12,7 @@
 #include "base/optional.h"
 #include "content/common/content_export.h"
 #include "content/public/common/previews_state.h"
+#include "content/public/common/referrer.h"
 #include "content/public/common/request_context_frame_type.h"
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/resource_request_body.h"
@@ -89,11 +90,26 @@ struct CONTENT_EXPORT ResourceRequest {
   // or kAppCacheNoHostId.
   int appcache_host_id;
 
-  // True if corresponding AppCache group should be resetted.
+  // True if corresponding AppCache group should be reset.
   bool should_reset_appcache = false;
 
-  // Indicates which frame (or worker context) the request is being loaded into,
-  // or kInvalidServiceWorkerProviderId.
+  // https://wicg.github.io/cors-rfc1918/#external-request
+  bool is_external_request = false;
+
+  // Some clients have a need to suppress CORS preflight requests (e.g.
+  // EventSource and ResourceMultiBufferDataProvider). If true, no preflight
+  // requests will be performed.
+  bool prevent_preflight = false;
+
+  // TODO(hintzed): Preliminary approach to communicate cors preflight referrer.
+  //  Referrer cors_preflight_referrer;
+  GURL cors_preflight_referrer;
+
+  blink::WebReferrerPolicy cors_preflight_referrer_policy =
+      blink::kWebReferrerPolicyAlways;
+
+  // Indicates which frame (or worker context) the request is being loaded
+  // into, or kInvalidServiceWorkerProviderId.
   int service_worker_provider_id = kInvalidServiceWorkerProviderId;
 
   // True if the request originated from a Service Worker, e.g. due to a
@@ -146,7 +162,7 @@ struct CONTENT_EXPORT ResourceRequest {
   // True if upload progress should be available for request.
   bool enable_upload_progress = false;
 
-  // True if login prompts for this request should be supressed. Cached
+  // True if login prompts for this request should be suppressed. Cached
   // credentials or default credentials may still be used for authentication.
   bool do_not_prompt_for_login = false;
 
@@ -191,7 +207,7 @@ struct CONTENT_EXPORT ResourceRequest {
   // browser.
   GURL resource_body_stream_url;
 
-  // Wether or not the initiator of this request is a secure context.
+  // Whether or not the initiator of this request is a secure context.
   bool initiated_in_secure_context = false;
 
   // The response should be downloaded and stored in the network cache, but not

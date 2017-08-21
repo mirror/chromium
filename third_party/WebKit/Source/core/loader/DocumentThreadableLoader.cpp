@@ -208,21 +208,73 @@ void DocumentThreadableLoader::Start(const ResourceRequest& request) {
 void DocumentThreadableLoader::StartOutOfBlinkCORS(
     const ResourceRequest& request) {
   DCHECK(out_of_blink_cors_);
+  // Setting an outgoing referer is only supported in the async code path.
+  DCHECK(async_ || request.HttpReferrer().IsEmpty());
 
-  // TODO(hintzed) replace this delegation with an implementation that does not
-  // perform CORS checks but relies on CORSURLLoader for CORS
-  // (https://crbug.com/736308).
-  StartBlinkCORS(request);
+  bool cors_enabled = IsCORSEnabledRequestMode(request.GetFetchRequestMode());
+
+  // kPreventPreflight can be used only when the CORS is enabled.
+  DCHECK(options_.preflight_policy == kConsiderPreflight || cors_enabled);
+
+  cors_redirect_limit_ = kMaxCORSRedirects;
+
+  request_context_ = request.GetRequestContext();
+  fetch_request_mode_ = request.GetFetchRequestMode();
+  fetch_credentials_mode_ = request.GetFetchCredentialsMode();
+  redirect_mode_ = request.GetFetchRedirectMode();
+
+  if (request.GetFetchRequestMode() == WebURLRequest::kFetchRequestModeNoCORS) {
+    SECURITY_CHECK(IsNoCORSAllowedContext(request_context_,
+                                          request.GetServiceWorkerMode()));
+  } else {
+    cors_flag_ = !GetSecurityOrigin()->CanRequestNoSuborigin(request.Url());
+  }
+
+  // Per https://w3c.github.io/webappsec-suborigins/#security-model-opt-outs,
+  // credentials are forced when credentials mode is "same-origin", the
+  // 'unsafe-credentials' option is set, and the request's physical origin is
+  // the same as the URL's.
+
+  suborigin_force_credentials_ =
+      GetSecurityOrigin()->HasSuboriginAndShouldAllowCredentialsFor(
+          request.Url());
+
+  request_started_seconds_ = MonotonicallyIncreasingTime();
+
+  // Save any headers on the request here. If this request redirects
+  // cross-origin, we cancel the old request create a new one, and copy these
+  // headers.
+  request_headers_ = request.HttpHeaderFields();
+
+  ResourceRequest new_request(request);
+
+  // TODO(hintzed): Doing this is probably wrong, but I can't figure out
+  // what the "right" way would be - any advice would be appreciated!
+  if (GetDocument()) {
+    new_request.SetCORSPreflightReferrer(SecurityPolicy::GenerateReferrer(
+        GetDocument()->GetReferrerPolicy(), request.Url(),
+        GetDocument()->OutgoingReferrer()));
+  } else {
+    new_request.SetCORSPreflightReferrer(SecurityPolicy::GenerateReferrer(
+        GetExecutionContext()->GetReferrerPolicy(), request.Url(),
+        loading_context_->GetFetchContext()->GetOutgoingReferrer()));
+  }
+
+  LoadRequest(new_request, resource_loader_options_);
 }
 
 void DocumentThreadableLoader::DispatchInitialRequestOutOfBlinkCORS(
     ResourceRequest& request) {
   DCHECK(out_of_blink_cors_);
+  if (!request.IsExternalRequest() && !cors_flag_) {
+    LoadRequest(request, resource_loader_options_);
+    return;
+  }
 
-  // TODO(hintzed) replace this delegation with an implementation that does not
-  // perform CORS checks but relies on CORSURLLoader for CORS
-  // (https://crbug.com/736308).
-  DispatchInitialRequestBlinkCORS(request);
+  DCHECK(IsCORSEnabledRequestMode(request.GetFetchRequestMode()) ||
+         request.IsExternalRequest());
+
+  MakeCrossOriginAccessRequest(request);
 }
 
 void DocumentThreadableLoader::HandleResponseOutOfBlinkCORS(
@@ -231,11 +283,51 @@ void DocumentThreadableLoader::HandleResponseOutOfBlinkCORS(
     WebURLRequest::FetchCredentialsMode credentials_mode,
     const ResourceResponse& response,
     std::unique_ptr<WebDataConsumerHandle> handle) {
-  // TODO(hintzed) replace this delegation with an implementation that does not
-  // perform CORS checks but relies on CORSURLLoader for CORS
-  // (https://crbug.com/736308).
-  HandleResponseBlinkCORS(identifier, request_mode, credentials_mode, response,
-                          std::move(handle));
+  DCHECK(out_of_blink_cors_);
+  DCHECK(client_);
+
+  if (!actual_request_.IsNull()) {
+    ReportResponseReceived(identifier, response);
+    HandlePreflightResponse(response);
+    return;
+  }
+
+  if (response.WasFetchedViaServiceWorker()) {
+    if (response.WasFetchedViaForeignFetch()) {
+      loading_context_->GetFetchContext()->CountUsage(
+          WebFeature::kForeignFetchInterception);
+    }
+    if (response.WasFallbackRequiredByServiceWorker()) {
+      // At this point we must have m_fallbackRequestForServiceWorker. (For
+      // SharedWorker the request won't be CORS or CORS-with-preflight,
+      // therefore fallback-to-network is handled in the browser process when
+      // the ServiceWorker does not call respondWith().)
+      DCHECK(!fallback_request_for_service_worker_.IsNull());
+      ReportResponseReceived(identifier, response);
+      LoadFallbackRequestForServiceWorker();
+      return;
+    }
+
+    fallback_request_for_service_worker_ = ResourceRequest();
+    client_->DidReceiveResponse(identifier, response, std::move(handle));
+    return;
+  }
+
+  // Even if the request met the conditions to get handled by a Service Worker
+  // in the constructor of this class (and therefore
+  // |m_fallbackRequestForServiceWorker| is set), the Service Worker may skip
+  // processing the request. Only if the request is same origin, the skipped
+  // response may come here (wasFetchedViaServiceWorker() returns false) since
+  // such a request doesn't have to go through the CORS algorithm by calling
+  // loadFallbackRequestForServiceWorker().
+  // FIXME: We should use |m_sameOriginRequest| when we will support Suborigins
+  // (crbug.com/336894) for Service Worker.
+  DCHECK(fallback_request_for_service_worker_.IsNull() ||
+         GetSecurityOrigin()->CanRequest(
+             fallback_request_for_service_worker_.Url()));
+  fallback_request_for_service_worker_ = ResourceRequest();
+
+  client_->DidReceiveResponse(identifier, response, std::move(handle));
 }
 
 bool DocumentThreadableLoader::RedirectReceivedOutOfBlinkCORS(
@@ -243,26 +335,149 @@ bool DocumentThreadableLoader::RedirectReceivedOutOfBlinkCORS(
     const ResourceRequest& new_request,
     const ResourceResponse& redirect_response) {
   DCHECK(out_of_blink_cors_);
+  DCHECK(client_);
+  DCHECK_EQ(resource, this->GetResource());
+  DCHECK(async_);
 
-  // TODO(hintzed) replace this delegation with an implementation that does not
-  // perform CORS checks but relies on CORSURLLoader for CORS
-  // (https://crbug.com/736308).
-  return RedirectReceivedBlinkCORS(resource, new_request, redirect_response);
+  suborigin_force_credentials_ = false;
+
+  checker_.RedirectReceived();
+
+  const KURL& new_url = new_request.Url();
+  const KURL& original_url = redirect_response.Url();
+
+  if (redirect_mode_ == WebURLRequest::kFetchRedirectModeManual) {
+    // We use |redirect_mode_| to check the original redirect mode.
+    // |new_request| is a new request for redirect. So we don't set the
+    // redirect mode of it in WebURLLoaderImpl::Context::OnReceivedRedirect().
+    DCHECK(new_request.UseStreamOnResponse());
+    // There is no need to read the body of redirect response because there is
+    // no way to read the body of opaque-redirect filtered response's internal
+    // response.
+    // TODO(horo): If we support any API which expose the internal body, we will
+    // have to read the body. And also HTTPCache changes will be needed because
+    // it doesn't store the body of redirect responses.
+    ResponseReceived(resource, redirect_response,
+                     WTF::MakeUnique<EmptyDataHandle>());
+
+    NotifyFinished(resource);
+
+    return false;
+  }
+
+  if (redirect_mode_ == WebURLRequest::kFetchRedirectModeError) {
+    ThreadableLoaderClient* client = client_;
+    Clear();
+    client->DidFailRedirectCheck();
+
+    return false;
+  }
+
+  // Allow same origin requests to continue after allowing clients to audit the
+  // redirect.
+  if (IsAllowedRedirect(new_request.GetFetchRequestMode(), new_url)) {
+    client_->DidReceiveRedirectTo(new_url);
+    if (client_->IsDocumentThreadableLoaderClient()) {
+      return static_cast<DocumentThreadableLoaderClient*>(client_)
+          ->WillFollowRedirect(new_url, redirect_response);
+    }
+    return true;
+  }
+
+  if (cors_redirect_limit_ <= 0) {
+    ThreadableLoaderClient* client = client_;
+    Clear();
+    client->DidFailRedirectCheck();
+    return false;
+  }
+
+  --cors_redirect_limit_;
+
+  probe::didReceiveCORSRedirectResponse(
+      GetExecutionContext(), resource->Identifier(),
+      GetDocument() && GetDocument()->GetFrame()
+          ? GetDocument()->GetFrame()->Loader().GetDocumentLoader()
+          : nullptr,
+      redirect_response, resource);
+
+  client_->DidReceiveRedirectTo(new_url);
+
+  // FIXME: consider combining this with CORS redirect handling performed by
+  // CrossOriginAccessControl::handleRedirect().
+  ClearResource();
+
+  // If
+  // - CORS flag is set, and
+  // - the origin of the redirect target URL is not same origin with the
+  // origin
+  //   of the current request's URL
+  // set the source origin to a unique opaque origin.
+  //
+  // See https://fetch.spec.whatwg.org/#http-redirect-fetch.
+  if (cors_flag_) {
+    RefPtr<SecurityOrigin> original_origin =
+        SecurityOrigin::Create(original_url);
+    RefPtr<SecurityOrigin> new_origin = SecurityOrigin::Create(new_url);
+    if (!original_origin->IsSameSchemeHostPort(new_origin.Get()))
+      security_origin_ = SecurityOrigin::CreateUnique();
+  }
+
+  // Set |cors_flag_| so that further logic (corresponds to the main fetch in
+  // the spec) will be performed with CORS flag set.
+  // See https://fetch.spec.whatwg.org/#http-redirect-fetch.
+  cors_flag_ = true;
+
+  // Save the referrer to use when following the redirect.
+  override_referrer_ = true;
+  referrer_after_redirect_ =
+      Referrer(new_request.HttpReferrer(), new_request.GetReferrerPolicy());
+
+  ResourceRequest cross_origin_request(new_request);
+
+  // Remove any headers that may have been added by the network layer that
+  // cause access control to fail.
+  cross_origin_request.ClearHTTPReferrer();
+  cross_origin_request.ClearHTTPOrigin();
+  cross_origin_request.ClearHTTPUserAgent();
+
+  // Add any request headers which we previously saved from the
+  // original request.
+  for (const auto& header : request_headers_)
+    cross_origin_request.SetHTTPHeaderField(header.key, header.value);
+
+  // TODO(hintzed): To communicate the unique origin after redirects to
+  // CORSURLLoader. Might not be necessary once we figured out how to
+  // implement CORS redirects properly with CORSURLLoader.
+  cross_origin_request.SetRequestorOrigin(security_origin_);
+
+  MakeCrossOriginAccessRequestOutOfBlinkCORS(cross_origin_request);
+
+  return false;
 }
 
 void DocumentThreadableLoader::MakeCrossOriginAccessRequestOutOfBlinkCORS(
     const ResourceRequest& request) {
   DCHECK(out_of_blink_cors_);
 
-  // TODO(hintzed) replace this delegation with an implementation that does not
-  // perform CORS checks but relies on CORSURLLoader for CORS
-  // (https://crbug.com/736308).
-  MakeCrossOriginAccessRequestBlinkCORS(request);
+  ResourceRequest cross_origin_request(request);
+  ResourceLoaderOptions cross_origin_options(resource_loader_options_);
+
+  cross_origin_request.RemoveUserAndPassFromURL();
+
+  // We don't want any requests that could involve a CORS preflight to get
+  // intercepted by a foreign SW, even if we have the result of the preflight
+  // cached already. See https://crbug.com/674370.
+  cross_origin_request.SetServiceWorkerMode(
+      WebURLRequest::ServiceWorkerMode::kNone);
+
+  PrepareCrossOriginRequest(cross_origin_request);
+  LoadRequest(cross_origin_request, cross_origin_options);
 }
 
 void DocumentThreadableLoader::StartBlinkCORS(const ResourceRequest& request) {
   // Setting an outgoing referer is only supported in the async code path.
   DCHECK(async_ || request.HttpReferrer().IsEmpty());
+  DCHECK(!out_of_blink_cors_);
 
   bool cors_enabled = IsCORSEnabledRequestMode(request.GetFetchRequestMode());
 
@@ -399,6 +614,7 @@ void DocumentThreadableLoader::DispatchInitialRequest(
 
 void DocumentThreadableLoader::DispatchInitialRequestBlinkCORS(
     ResourceRequest& request) {
+  DCHECK(!out_of_blink_cors_);
   if (!request.IsExternalRequest() && !cors_flag_) {
     LoadRequest(request, resource_loader_options_);
     return;
@@ -421,6 +637,7 @@ void DocumentThreadableLoader::PrepareCrossOriginRequest(
 void DocumentThreadableLoader::LoadPreflightRequest(
     const ResourceRequest& actual_request,
     const ResourceLoaderOptions& actual_options) {
+  DCHECK(!out_of_blink_cors_);
   WebURLRequest web_url_request = WebCORS::CreateAccessControlPreflightRequest(
       WrappedResourceRequest(actual_request));
 
@@ -457,6 +674,7 @@ void DocumentThreadableLoader::MakeCrossOriginAccessRequest(
 
 void DocumentThreadableLoader::MakeCrossOriginAccessRequestBlinkCORS(
     const ResourceRequest& request) {
+  DCHECK(!out_of_blink_cors_);
   DCHECK(IsCORSEnabledRequestMode(request.GetFetchRequestMode()) ||
          request.IsExternalRequest());
   DCHECK(client_);
@@ -641,6 +859,7 @@ bool DocumentThreadableLoader::RedirectReceivedBlinkCORS(
     Resource* resource,
     const ResourceRequest& new_request,
     const ResourceResponse& redirect_response) {
+  DCHECK(!out_of_blink_cors_);
   DCHECK(client_);
   DCHECK_EQ(resource, this->GetResource());
   DCHECK(async_);
@@ -966,6 +1185,7 @@ void DocumentThreadableLoader::HandleResponseBlinkCORS(
     WebURLRequest::FetchCredentialsMode credentials_mode,
     const ResourceResponse& response,
     std::unique_ptr<WebDataConsumerHandle> handle) {
+  DCHECK(!out_of_blink_cors_);
   DCHECK(client_);
 
   if (!actual_request_.IsNull()) {
