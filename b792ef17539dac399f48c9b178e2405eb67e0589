@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2235fea8_b6d30c4f",
+        "filename": "chromeos/components/tether/ble_scanner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-21T23:57:47Z",
+      "side": 1,
+      "message": "use StartDiscoverySession (without filter) since removing only RSSI filter is not enough.",
+      "revId": "b792ef17539dac399f48c9b178e2405eb67e0589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f9b413a_30ed9d90",
         "filename": "chromeos/components/tether/ble_scanner.cc",
         "patchSetId": 1
