@@ -22,6 +22,30 @@
       "revId": "4c116ab2739bd79511632dfde2fdc685eb50926a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084be352_b38f155a",
+        "filename": "chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-21T21:23:54Z",
+      "side": 1,
+      "message": "Ack\n\ntapted@ asked me to add this comment line in patch #16.",
+      "parentUuid": "37c29ef5_588ad9f0",
+      "range": {
+        "startLine": 71,
+        "startChar": 5,
+        "endLine": 71,
+        "endChar": 28
+      },
+      "revId": "4c116ab2739bd79511632dfde2fdc685eb50926a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
