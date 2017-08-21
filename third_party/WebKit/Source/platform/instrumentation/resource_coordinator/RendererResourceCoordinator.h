@@ -20,7 +20,6 @@ class PLATFORM_EXPORT RendererResourceCoordinator
   WTF_MAKE_NONCOPYABLE(RendererResourceCoordinator);
 
  public:
-  static void Initialize();
   static RendererResourceCoordinator& Get();
 
   // Used to switch the current renderer resource coordinator only for testing.

@@ -16,15 +16,6 @@ RendererResourceCoordinator* g_renderer_resource_coordinator = nullptr;
 }  // namespace
 
 // static
-void RendererResourceCoordinator::Initialize() {
-  blink::Platform* platform = Platform::Current();
-  DCHECK(IsMainThread());
-  DCHECK(platform);
-  g_renderer_resource_coordinator = new RendererResourceCoordinator(
-      platform->GetConnector(), platform->GetBrowserServiceName());
-}
-
-// static
 void RendererResourceCoordinator::
     SetCurrentRendererResourceCoordinatorForTesting(
         RendererResourceCoordinator* renderer_resource_coordinator) {
@@ -33,7 +24,13 @@ void RendererResourceCoordinator::
 
 // static
 RendererResourceCoordinator& RendererResourceCoordinator::Get() {
-  DCHECK(g_renderer_resource_coordinator);
+  if (!g_renderer_resource_coordinator) {
+    blink::Platform* platform = Platform::Current();
+    DCHECK(IsMainThread());
+    DCHECK(platform);
+    g_renderer_resource_coordinator = new RendererResourceCoordinator(
+        platform->GetConnector(), platform->GetBrowserServiceName());
+  }
   return *g_renderer_resource_coordinator;
 }
 
