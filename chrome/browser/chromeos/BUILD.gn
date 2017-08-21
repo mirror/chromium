@@ -41,6 +41,7 @@ source_set("chromeos") {
   deps = [
     # TODO(tbarzic): Cleanup this list.
     ":attestation_proto",
+    ":off_hours_generated",
     "//apps",
     "//ash",
     "//ash:ash_with_content",
@@ -1244,6 +1245,7 @@ source_set("chromeos") {
     "policy/device_local_account_policy_store.h",
     "policy/device_network_configuration_updater.cc",
     "policy/device_network_configuration_updater.h",
+    "policy/device_off_hours_controller.h",
     "policy/device_policy_decoder_chromeos.cc",
     "policy/device_policy_decoder_chromeos.h",
     "policy/device_status_collector.cc",
@@ -2011,4 +2013,44 @@ proto_library("attestation_proto") {
 service_manifest("ash_pref_connector_manifest") {
   name = "ash_pref_connector"
   source = "prefs/ash_pref_connector_manifest.json"
+}
+
+off_hours_cleaner_path = "$target_gen_dir/device_off_hours_cleaner.cc"
+
+action("device_off_hours_cleaner_generate") {
+  script = "policy/tools/generate_off_hours_cleaner.py"
+  google_protobuf_path = "//third_party/protobuf/python"
+  pyproto_path = "$root_build_dir/pyproto"
+  pb2_path = "$root_build_dir/pyproto/chrome/browser/chromeos/policy/proto"
+
+  outputs = [
+    off_hours_cleaner_path,
+  ]
+
+  args = [
+    rebase_path(off_hours_cleaner_path),
+    rebase_path(google_protobuf_path),
+    rebase_path(pyproto_path),
+    rebase_path(pb2_path),
+  ]
+
+  public_deps = [
+    ":device_policy_proto",
+  ]
+}
+
+static_library("off_hours_generated") {
+  sources = [
+    off_hours_cleaner_path,
+  ]
+
+  public_deps = [
+    ":device_off_hours_cleaner_generate",
+    "//third_party/protobuf:protobuf_lite",
+  ]
+
+  deps = [
+    "//skia",
+    "//third_party/icu",
+  ]
 }
