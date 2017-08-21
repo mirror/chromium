@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83354956_5a0c08c0",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-21T23:02:05Z",
+      "side": 1,
+      "message": "In general there are various ways in which this could fail, most notably the case where the supplied file-descriptor is valid, but does not support transfer. In that case the fd is still valid after the transfer attempt, and should be closed normally.",
+      "parentUuid": "b26e28bd_3fab9641",
+      "revId": "0c1c5885414b0b1075ccfdd93fc0867b12bb9f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52b4025f_88ebecb0",
         "filename": "mojo/edk/system/channel_fuchsia.cc",
         "patchSetId": 4
