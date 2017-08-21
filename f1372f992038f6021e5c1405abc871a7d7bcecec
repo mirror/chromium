@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7813ac5e_70b29026",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/css/css-get-background-colors.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-21T16:44:45Z",
+      "side": 1,
+      "message": "I don\u0027t understand this part. If there is no text at all - why white?",
+      "revId": "f1372f992038f6021e5c1405abc871a7d7bcecec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff16605b_840103ff",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/css/css-get-background-colors.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-21T16:44:45Z",
+      "side": 1,
+      "message": "Missing expectations change for this?",
+      "revId": "f1372f992038f6021e5c1405abc871a7d7bcecec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
