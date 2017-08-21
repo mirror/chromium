@@ -31,6 +31,7 @@
 #include "modules/indexeddb/IDBKey.h"
 #include "modules/indexeddb/IDBValue.h"
 #include "platform/bindings/ScriptWrappable.h"
+#include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/text/WTFString.h"
@@ -46,8 +47,8 @@ class IDBObjectStore;
 // IDBAny is used for:
 //  * source of IDBCursor (IDBObjectStore or IDBIndex)
 //  * source of IDBRequest (IDBObjectStore, IDBIndex, IDBCursor, or null)
-//  * result of IDBRequest (IDBDatabase, IDBCursor, DOMStringList, undefined,
-//    integer, key or value)
+//  * result of IDBRequest (IDBDatabase, IDBCursor, Vector<IDBDatabaseInfo>,
+//    undefined, integer, key or value)
 //
 // This allows for lazy conversion to script values (via IDBBindingUtilities),
 // and avoids the need for many dedicated union types.
