@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "56bbe2d1_a56c4997",
+        "filename": "components/subresource_filter/content/common/subresource_filter_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-21T19:18:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d54469e2_4a1e6a9f",
+      "revId": "3a8231c218f89e9c6a6c96105c716a31cb8fac05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cecb6e9e_a999f5df",
         "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-21T17:20:07Z",
       "side": 1,
       "message": "Break this into two early returns for readability.",
+      "revId": "3a8231c218f89e9c6a6c96105c716a31cb8fac05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496abd7d_a4ea5c2e",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-21T19:18:58Z",
+      "side": 1,
+      "message": "Need the 1st 2 conditions along with either of the third. Breaking into two will still need repeating the 1st 2 conditions. Not sure if it will be helpful.",
+      "parentUuid": "cecb6e9e_a999f5df",
       "revId": "3a8231c218f89e9c6a6c96105c716a31cb8fac05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
