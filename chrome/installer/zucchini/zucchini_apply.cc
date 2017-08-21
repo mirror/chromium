@@ -9,6 +9,8 @@
 #include <memory>
 #include <utility>
 
+#include "base/files/file.h"
+#include "base/files/memory_mapped_file.h"
 #include "base/logging.h"
 #include "chrome/installer/zucchini/disassembler.h"
 #include "chrome/installer/zucchini/element_detection.h"
