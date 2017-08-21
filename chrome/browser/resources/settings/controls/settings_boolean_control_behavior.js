@@ -56,6 +56,15 @@ var SettingsBooleanControlBehaviorImpl = {
     },
 
     /**
+     * Alternative source for the sub-label that can contain html markup.
+     * Only use with trusted input.
+     */
+    subLabelHtml: {
+      type: String,
+      value: '',
+    },
+
+    /**
      * For numeric prefs only, the integer value equivalent to the unchecked
      * state. This is the value sent to prefs if the user unchecks the control.
      * During initialization, the control is unchecked if and only if the pref
