@@ -889,6 +889,17 @@ void StyleEngine::ScheduleTypeRuleSetInvalidations(
     rule_set->Features().CollectTypeRuleInvalidationSet(invalidation_lists,
                                                         node);
   DCHECK(invalidation_lists.siblings.IsEmpty());
+  if (node.IsShadowRoot()) {
+    Element& host = ToShadowRoot(node).host();
+    for (auto& invalidation_set : invalidation_lists.descendants) {
+      if (host.NeedsStyleRecalc()) break;
+      if (invalidation_set->InvalidatesTagName(host)) {
+        host.SetNeedsStyleRecalc(kLocalStyleChange,
+                                 StyleChangeReasonForTracing::Create(
+                                     StyleChangeReason::kStyleSheetChange));
+      }
+    }
+  }
   style_invalidator_.ScheduleInvalidationSetsForNode(invalidation_lists, node);
 }
 
