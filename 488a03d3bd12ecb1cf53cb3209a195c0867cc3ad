@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0767869e_f64aabf6",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintImageGeneratorImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-21T19:23:37Z",
+      "side": 1,
+      "message": "When does HasDocumentDefinition() return true but we fail to get a DocumentPaintDefinition?",
+      "range": {
+        "startLine": 91,
+        "startChar": 9,
+        "endLine": 91,
+        "endChar": 22
+      },
+      "revId": "488a03d3bd12ecb1cf53cb3209a195c0867cc3ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c342e36b_f252c4bd",
+        "filename": "third_party/WebKit/Source/modules/csspaint/ContextAttributes.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-21T19:23:37Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the whole dictionary be runtime enabled?",
+      "revId": "488a03d3bd12ecb1cf53cb3209a195c0867cc3ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
