@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "ff561b57_0ebc30e4",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1532,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-21T17:47:54Z",
+      "side": 1,
+      "message": "The C++ JSONParser also allows /* */ comments...",
+      "revId": "ae432f2a6e5e008d983fc46adb43c24b1c39cdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f431bcaf_8f445ab2",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1541,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-21T17:47:54Z",
+      "side": 1,
+      "message": "Rather than splitext, why not just f.LocalPath().endswith(\u0027.json\u0027)",
+      "range": {
+        "startLine": 1541,
+        "startChar": 25,
+        "endLine": 1541,
+        "endChar": 33
+      },
+      "revId": "ae432f2a6e5e008d983fc46adb43c24b1c39cdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a28e3a_1a6d3c50",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1546,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-21T17:47:54Z",
+      "side": 1,
+      "message": "Parsing the JSON seems like it could be slow. How much does this slow down a change to testing/buildbot/chromium.perf.json or net/http/transport_security_state_static.json (two of the largest JSON files in the tree)?",
+      "revId": "ae432f2a6e5e008d983fc46adb43c24b1c39cdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "567c2f91_85a8aa18",
         "filename": "ash/mus/manifest.json",
         "patchSetId": 1
