@@ -11,8 +11,10 @@
 #include "base/memory/ref_counted.h"
 #include "base/time/time.h"
 #include "cc/animation/animation.h"
+#include "cc/animation/animation_controller.h"
 #include "cc/animation/animation_curve.h"
 #include "cc/animation/animation_export.h"
+#include "cc/animation/effect_controller.h"
 #include "cc/animation/element_animations.h"
 #include "cc/trees/element_id.h"
 
@@ -34,7 +36,8 @@ struct PropertyAnimationState;
 // Each AnimationPlayer has its copy on the impl thread.
 // This is a CC counterpart for blink::AnimationPlayer (in 1:1 relationship).
 class CC_ANIMATION_EXPORT AnimationPlayer
-    : public base::RefCounted<AnimationPlayer> {
+    : public base::RefCounted<AnimationPlayer>,
+      public AnimationController {
  public:
   static scoped_refptr<AnimationPlayer> Create(int id);
   scoped_refptr<AnimationPlayer> CreateImplInstance() const;
@@ -226,6 +229,8 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   bool is_ticking_;
 
   bool scroll_offset_animation_was_interrupted_;
+
+  std::unique_ptr<EffectController> effect_controller_;
 
   DISALLOW_COPY_AND_ASSIGN(AnimationPlayer);
 };
