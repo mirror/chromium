@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3ab4351_ceabd126",
+        "filename": "ios/web/web_state/js/context_menu_js_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-21T17:04:44Z",
+      "side": 1,
+      "message": "const char kLinkHtml[] \u003d \"\u003ca href\u003d\u0027%s\u0027\u003elink\u003c/a\u003e\";\n\nNo need to make this static, no need for line-breaks, and add k prefix.\n\nSame comment for other places. If you want to close tag on a separate line, then it should be something like this:\n\n\"\u003ca href\u003d\u0027%s\u0027\u003e\"\n\"  link\"\n\u003c/a\u003e\n\nBut It does not make things any more readable IMO.",
+      "range": {
+        "startLine": 246,
+        "startChar": 15,
+        "endLine": 246,
+        "endChar": 19
+      },
+      "revId": "2c16e583bb068c36d50fbeb08e97fe702ce1d650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5812a068_621b82cf",
+        "filename": "ios/web/web_state/js/context_menu_js_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-21T17:04:44Z",
+      "side": 1,
+      "message": "EXPECT_NSEQ(@{}, result);\n\nIt\u0027s important that result is an empty dictionary, and not f.e. empty array\n\nSame comment for other places",
+      "range": {
+        "startLine": 288,
+        "startChar": 17,
+        "endLine": 288,
+        "endChar": 23
+      },
+      "revId": "2c16e583bb068c36d50fbeb08e97fe702ce1d650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907e0045_bdf5cbdf",
+        "filename": "ios/web/web_state/js/context_menu_js_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-21T17:04:44Z",
+      "side": 1,
+      "message": "nit:\n\"\u003cbody style\u003d\u0027-webkit-touch-callout: none\u0027\u003e\"\n\"  \u003ca href\u003d\u0027%s\u0027\u003elink\u003c/a\u003e\"\n\"\u003c/body\u003e\";",
+      "range": {
+        "startLine": 297,
+        "startChar": 10,
+        "endLine": 297,
+        "endChar": 14
+      },
+      "revId": "2c16e583bb068c36d50fbeb08e97fe702ce1d650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c9248a_ad063bc0",
+        "filename": "ios/web/web_state/js/context_menu_js_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-21T17:04:44Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 312,
+        "startChar": 20,
+        "endLine": 312,
+        "endChar": 25
+      },
+      "revId": "2c16e583bb068c36d50fbeb08e97fe702ce1d650",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
