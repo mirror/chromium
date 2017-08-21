@@ -16,6 +16,24 @@
       "revId": "891350b9f8e818a80280aeb98ed4bb4335205a7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe6383f_044034bb",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_metrics.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-21T18:07:48Z",
+      "side": 1,
+      "message": "That\u0027s weird. I would assume that if MAC_OS_X_VERSION_10_11 is defined, any symbole from the 10.11 SDK would be defined too. But I guess it is better to follow the same pattern.\nAnd I guess should move this to sdk_forward_declarations.h.",
+      "parentUuid": "a46650e1_b342aa1f",
+      "revId": "891350b9f8e818a80280aeb98ed4bb4335205a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
