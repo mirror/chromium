@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fda56fa9_7039eb02",
+        "filename": "tools/gn/bin/roll_gn.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-08-21T09:49:44Z",
+      "side": 1,
+      "message": "Unused const",
+      "revId": "8c228faf52f12f8492fd7630d3ac0ddeefc2bd17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
