@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fa480bb_08426963",
+        "filename": "third_party/WebKit/Source/core/css/invalidation/InvalidationSet.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-21T03:36:13Z",
+      "side": 1,
+      "message": "With the implementation of overloaded InvalidatesTagName(Element\u0026), \nyou don\u0027t need this version.",
+      "revId": "4b487675ef65841c7af20dc1575177693e011570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46afaff0_27282fd9",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-21T03:36:13Z",
+      "side": 1,
+      "message": "I think this if-statement should be out of the loop (before line 894), and\nput |break;| after between line 900 and 901.",
+      "revId": "4b487675ef65841c7af20dc1575177693e011570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
