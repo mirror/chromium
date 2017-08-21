@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7ef8e49_8aa0bf1f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-21T11:26:49Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 9
+      },
+      "revId": "bc1e081342359373f59f5b8e734bdd8b661d867b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389af3f7_012fe037",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/IntentHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-21T11:26:49Z",
+      "side": 1,
+      "message": "nit: Referrer\n\nI suspect that this doesn\u0027t compile :-)",
+      "revId": "bc1e081342359373f59f5b8e734bdd8b661d867b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0200600c_fecb8212",
+        "filename": "content/public/android/java/src/org/chromium/content_public/common/Referrer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-21T11:26:49Z",
+      "side": 1,
+      "message": "nit: You can remove this comment, and the one below now.",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "bc1e081342359373f59f5b8e734bdd8b661d867b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
