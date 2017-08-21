@@ -22,6 +22,10 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
 
     this._securityOriginManager = target.model(SDK.SecurityOriginManager);
 
+    this._originsUpdated = new Set();
+    this._cacheListUpdatedCalled = false;
+    this._refreshListLock = false;
+
     /** @type {boolean} */
     this._enabled = false;
   }
@@ -238,7 +242,37 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
    * @override
    */
   cacheStorageListUpdated(origin) {
-    this.dispatchEventToListeners(SDK.ServiceWorkerCacheModel.Events.CacheStorageListUpdated, {origin: origin});
+    if (origin.endsWith('/'))
+      origin = origin.slice(0, -1);
+    this._originsUpdated.add(origin);
+
+    if (this._refreshListLock) {
+      this._cacheListUpdatedCalled = true;
+      return;
+    }
+
+    this._throttleCacheListUpdated();
+  }
+
+  _throttleCacheListUpdated() {
+    this._refreshListLock = true;
+    this._cacheListUpdatedCalled = false;
+
+    var origins = new Set(this._originsUpdated);
+    this._originsUpdated.clear();
+
+    for (var updatedOrigin of origins)
+      this._loadCacheNames(updatedOrigin);
+
+    setTimeout(this._removeRefreshListLock.bind(this), 2000);
+  }
+
+  _removeRefreshListLock() {
+    this._refreshListLock = false;
+    if (this._cacheListUpdatedCalled) {
+      this._cacheListUpdatedCalled = false;
+      this._throttleCacheListUpdated();
+    }
   }
 
   /**
@@ -258,7 +292,6 @@ SDK.SDKModel.register(SDK.ServiceWorkerCacheModel, SDK.Target.Capability.Browser
 SDK.ServiceWorkerCacheModel.Events = {
   CacheAdded: Symbol('CacheAdded'),
   CacheRemoved: Symbol('CacheRemoved'),
-  CacheStorageListUpdated: Symbol('CacheStorageListUpdated'),
   CacheStorageContentUpdated: Symbol('CacheStorageContentUpdated')
 };
 
