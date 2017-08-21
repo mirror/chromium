@@ -271,12 +271,14 @@ void ScriptWrappableVisitor::InvalidateDeadObjectsInMarkingDeque() {
   for (auto it = marking_deque_.begin(); it != marking_deque_.end(); ++it) {
     auto& marking_data = *it;
     if (marking_data.ShouldBeInvalidated()) {
+      CHECK(false);
       marking_data.Invalidate();
     }
   }
   for (auto it = verifier_deque_.begin(); it != verifier_deque_.end(); ++it) {
     auto& marking_data = *it;
     if (marking_data.ShouldBeInvalidated()) {
+      CHECK(false);
       marking_data.Invalidate();
     }
   }
@@ -284,6 +286,7 @@ void ScriptWrappableVisitor::InvalidateDeadObjectsInMarkingDeque() {
        ++it) {
     auto header = *it;
     if (header && !header->IsMarked()) {
+      CHECK(false);
       *it = nullptr;
     }
   }
