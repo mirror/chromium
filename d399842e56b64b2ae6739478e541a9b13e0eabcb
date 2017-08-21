@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7b0e869e_59409496",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-21T14:16:11Z",
+      "side": 1,
+      "message": "I tried doing this a few iterations ago but failed (see https://chromium-review.googlesource.com/c/580990/1/third_party/WebKit/Source/bindings/scripts/idl_definitions.py#367)\n\nI\u0027ve added a TODO comment.",
+      "parentUuid": "33e47c1f_d8a3ecd2",
+      "revId": "d399842e56b64b2ae6739478e541a9b13e0eabcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a85aaf21_934a6462",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "d399842e56b64b2ae6739478e541a9b13e0eabcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87a4567_2955e313",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-21T14:16:11Z",
+      "side": 1,
+      "message": "I\u0027m now using a separate variable for this.",
+      "parentUuid": "a85aaf21_934a6462",
+      "revId": "d399842e56b64b2ae6739478e541a9b13e0eabcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
