@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0d79c10_e3d99b9e",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T03:12:09Z",
+      "side": 1,
+      "message": "could we use base::Optional instread? I\u0027m not sure positive event ids is an guarantee we really should rely on.",
+      "revId": "54ec46e3327fc91bc18ed22072eae894cd1dfea2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
