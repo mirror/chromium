@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "876189bf_d617ffb9",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-21T22:16:14Z",
+      "side": 1,
+      "message": "In the previous code you used GetDictionaryWithoutPathExpansion() with a comment about origins containing periods. Why did you do something different here?",
+      "range": {
+        "startLine": 212,
+        "startChar": 20,
+        "endLine": 212,
+        "endChar": 33
+      },
+      "revId": "a6fadbcffa94290c0bda99382774438ac46446b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c28739_d1aa9b8d",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-21T22:16:14Z",
+      "side": 1,
+      "message": "As this function is creating the sessions dict, why not always just create it, completely replacing anything that was there before? So something like:\n  origin_dict \u003d storage_dict-\u003eSetDictionaryWithoutPathExpansion(...);\n  return origin_dict-\u003eSetDictionary(...);\nOr, all in one long line:\n  return storage_dict-\u003eSetDictionaryWithoutPathExpansion(...)-\u003eSetDictionary(...);",
+      "range": {
+        "startLine": 222,
+        "startChar": 2,
+        "endLine": 222,
+        "endChar": 8
+      },
+      "revId": "a6fadbcffa94290c0bda99382774438ac46446b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9edac7a_8d389e97",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-21T22:16:14Z",
+      "side": 1,
+      "message": "I don\u0027t see this function used anywhere in this CL.",
+      "range": {
+        "startLine": 342,
+        "startChar": 36,
+        "endLine": 342,
+        "endChar": 49
+      },
+      "revId": "a6fadbcffa94290c0bda99382774438ac46446b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

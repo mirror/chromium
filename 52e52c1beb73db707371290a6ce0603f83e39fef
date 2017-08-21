@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "26b6c08b_46844d4b",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-21T22:16:14Z",
+      "side": 1,
+      "message": "Interesting. I didn\u0027t know that MakeUnique can\u0027t be used on private ctor\u0027s.",
+      "parentUuid": "933ce458_ea6164b5",
+      "range": {
+        "startLine": 105,
+        "startChar": 11,
+        "endLine": 105,
+        "endChar": 60
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "107e9245_f6e106cb",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 10
@@ -375,6 +399,30 @@
       "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1db4a8a_ce7ccfab",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-21T22:16:14Z",
+      "side": 1,
+      "message": "Looks like if const T* passed in, GetDictionary() returns a const T*. If just a T*, no const. So looks like no easy way around this. Guess this is required. Too bad.",
+      "parentUuid": "456d0856_bf91cddf",
+      "range": {
+        "startLine": 184,
+        "startChar": 0,
+        "endLine": 184,
+        "endChar": 8
+      },
+      "revId": "52e52c1beb73db707371290a6ce0603f83e39fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
