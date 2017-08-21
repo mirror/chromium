@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e833d64_cf24d361",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T16:58:01Z",
+      "side": 1,
+      "message": "--target-arch?",
+      "revId": "e184d7ed5d5798b5941b86101e9d09fa56abb2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c76e21_cb8cab62",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T16:58:01Z",
+      "side": 1,
+      "message": "nit: maybe command or something similar, since adb_gdb isn\u0027t a flag?",
+      "revId": "e184d7ed5d5798b5941b86101e9d09fa56abb2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ef0a87_f15fd156",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T16:58:01Z",
+      "side": 1,
+      "message": "oh, this is why I missed this in a previous review -- it\u0027s in a concurrent review. Colorama!",
+      "revId": "e184d7ed5d5798b5941b86101e9d09fa56abb2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
