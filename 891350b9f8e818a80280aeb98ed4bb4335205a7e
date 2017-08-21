@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a46650e1_b342aa1f",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_metrics.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-21T18:03:11Z",
+      "side": 1,
+      "message": "Seems OK, but I notice that nearly all other locations a larger pattern is used:\n\nhttps://cs.chromium.org/search/?sq\u003dpackage:chromium\u0026type\u003dcs\u0026q\u003d%22if+!defined(MAC_OS_X_VERSION%22\n\n#if !defined(MAC_OS_X_VERSION_10_11) || \\\n    MAC_OS_X_VERSION_MAX_ALLOWED \u003c MAC_OS_X_VERSION_10_11",
+      "revId": "891350b9f8e818a80280aeb98ed4bb4335205a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
