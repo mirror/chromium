@@ -26,17 +26,11 @@ namespace subresource_filter {
 
 namespace {
 
-// Records histograms about the pattern of redirect chains, and about the
-// pattern of whether the last URL in the chain matched the activation list.
-#define REPORT_REDIRECT_PATTERN_FOR_SUFFIX(suffix, is_matched, chain_size)    \
-  do {                                                                        \
-    UMA_HISTOGRAM_BOOLEAN("SubresourceFilter.PageLoad.FinalURLMatch." suffix, \
-                          is_matched);                                        \
-    if (is_matched) {                                                         \
-      UMA_HISTOGRAM_COUNTS(                                                   \
-          "SubresourceFilter.PageLoad.RedirectChainLength." suffix,           \
-          chain_size);                                                        \
-    };                                                                        \
+// Records histograms about the pattern of redirect chains.
+#define REPORT_REDIRECT_PATTERN_FOR_SUFFIX(suffix, chain_size)                 \
+  do {                                                                         \
+    UMA_HISTOGRAM_COUNTS(                                                      \
+        "SubresourceFilter.PageLoad.RedirectChainLength." suffix, chain_size); \
   } while (0)
 
 }  // namespace
@@ -310,18 +304,20 @@ void SubresourceFilterSafeBrowsingActivationThrottle::
       check_results_.back().threat_type, check_results_.back().threat_metadata);
   bool is_matched = matched_list == activation_list;
   size_t chain_size = check_results_.size();
+  UMA_HISTOGRAM_ENUMERATION("SubresourceFilter.PageLoad.ActivationList",
+                            activationList);
+  if (!is_matched)
+    return;
   switch (activation_list) {
     case ActivationList::SOCIAL_ENG_ADS_INTERSTITIAL:
       REPORT_REDIRECT_PATTERN_FOR_SUFFIX("SocialEngineeringAdsInterstitial",
-                                         is_matched, chain_size);
+                                         chain_size);
       break;
     case ActivationList::PHISHING_INTERSTITIAL:
-      REPORT_REDIRECT_PATTERN_FOR_SUFFIX("PhishingInterstitial", is_matched,
-                                         chain_size);
+      REPORT_REDIRECT_PATTERN_FOR_SUFFIX("PhishingInterstitial", chain_size);
       break;
     case ActivationList::SUBRESOURCE_FILTER:
-      REPORT_REDIRECT_PATTERN_FOR_SUFFIX("SubresourceFilterOnly", is_matched,
-                                         chain_size);
+      REPORT_REDIRECT_PATTERN_FOR_SUFFIX("SubresourceFilterOnly", chain_size);
       break;
     default:
       NOTREACHED();
