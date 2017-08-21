@@ -239,6 +239,30 @@
     },
     {
       "key": {
+        "uuid": "31305fc7_b9ced5b3",
+        "filename": "ios/chrome/browser/passwords/credential_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-21T08:10:47Z",
+      "side": 1,
+      "message": "Done, moved Parse* methods to credential_manager_util.cc and attached unittests to that file.",
+      "parentUuid": "2018f870_6c699276",
+      "range": {
+        "startLine": 55,
+        "startChar": 50,
+        "endLine": 55,
+        "endChar": 75
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebe548da_ce68a45f",
         "filename": "ios/chrome/browser/passwords/credential_manager.mm",
         "patchSetId": 4
@@ -298,6 +322,30 @@
       "side": 1,
       "message": "This is exactly what I propose. Invalid URLs are just ignored.",
       "parentUuid": "3ad31f81_48ce29df",
+      "range": {
+        "startLine": 146,
+        "startChar": 13,
+        "endLine": 146,
+        "endChar": 18
+      },
+      "revId": "ae464de51e6afd9b711271b21dae14b0d2cd7c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ad273e5_adeb3326",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-21T08:10:47Z",
+      "side": 1,
+      "message": "Ok, sorry, I  have read \"I\u0027d just skip it\" as \"Don\u0027t validate URLs here\" instead of \"Ignore invalid URLs\".",
+      "parentUuid": "9ff065a2_b53b2588",
       "range": {
         "startLine": 146,
         "startChar": 13,
