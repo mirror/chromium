@@ -139,6 +139,24 @@
       "revId": "95ab190b495c4f2900428f4807762abb716fdc12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4962b848_b82125d1",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T03:48:19Z",
+      "side": 1,
+      "message": "Yea seems dangerous/weird for some enum values to be sendable by IPC and some not. So I prefer moving Type up to Unknown and set Last to Unknown.\n\n(sorry for the contradictory comments before, I noticed the Last \u003d Type thing before the alphabetical order thing and didntt update the earlier comment)",
+      "parentUuid": "8a5a1236_a2504329",
+      "revId": "95ab190b495c4f2900428f4807762abb716fdc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

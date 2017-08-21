@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d077c997_1dafc5f5",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T03:48:19Z",
+      "side": 1,
+      "message": "Maybe more like:\n\"Error codes for service worker APIs. This enum is used by blink::WebServiceWorkerError, and the related class blink::ServiceWorkerError converts blink::WebServiceWorkerError to runtime exceptions.\"",
+      "revId": "0a64d4ac8479dbd4193c6ee18eca6aba14a8f285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8393738a_794e30cf",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T03:48:19Z",
+      "side": 1,
+      "message": "yep bump this to Last \u003d Type",
+      "revId": "0a64d4ac8479dbd4193c6ee18eca6aba14a8f285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
