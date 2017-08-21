@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1513a2dd_ba898724",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 96581,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-21T22:00:57Z",
+      "side": 1,
+      "message": "This suffix actually has different meanings depending on the version of Chrome that\u0027s reporting it, right?  That is, it previously included all suggestions, including baked-in ones?  If so, please rename this suffix so that the existing name\u0027s semantics are not confused.",
+      "range": {
+        "startLine": 96581,
+        "startChar": 78,
+        "endLine": 96581,
+        "endChar": 0
+      },
+      "revId": "1b4608fd2f1253151143e8066cbc3de51a28de95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
