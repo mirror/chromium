@@ -214,6 +214,48 @@
     },
     {
       "key": {
+        "uuid": "ab35ad8d_df490077",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-21T03:30:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13872143_db44293a",
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e94f4cc_4615c058",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-21T03:30:43Z",
+      "side": 1,
+      "message": "Done. Removed \"Web\" prefix and Thanks Matt a lot for moving to common/serviceworker/ later.",
+      "parentUuid": "4c9e364c_56b77d73",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0094fc75_60b6d731",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
         "patchSetId": 2
@@ -264,6 +306,24 @@
       "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01920ba6_08a31e14",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-21T03:30:43Z",
+      "side": 1,
+      "message": "Done. Applied kXXX style.",
+      "parentUuid": "b424e76f_5b06d808",
+      "revId": "3b662e2724f3851abd2580343f1341d54cb228f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

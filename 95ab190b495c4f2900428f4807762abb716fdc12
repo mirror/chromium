@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "108e4c4f_05522832",
+        "filename": "content/common/service_worker/service_worker_messages.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-21T03:30:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2222a58_0a782427",
+      "revId": "95ab190b495c4f2900428f4807762abb716fdc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0f080ca_b20fa6d4",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
         "patchSetId": 3
@@ -51,6 +69,24 @@
       "revId": "95ab190b495c4f2900428f4807762abb716fdc12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8498d0c4_1cbaf6a7",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-21T03:30:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0f080ca_b20fa6d4",
+      "revId": "95ab190b495c4f2900428f4807762abb716fdc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +118,24 @@
       "writtenOn": "2017-08-20T15:24:27Z",
       "side": 1,
       "message": "Last \u003d Type\n\n(I think the original code set Last \u003d Unknown either because Type was never sent in an IPC or it just forgot to update Last, either way it\u0027s cleaner to just set Last \u003d Type)",
+      "revId": "95ab190b495c4f2900428f4807762abb716fdc12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a5a1236_a2504329",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-21T03:30:43Z",
+      "side": 1,
+      "message": "Yeah the original code does that because Type should never been sent via IPC, for this check at https://cs.chromium.org/chromium/src/content/common/service_worker/service_worker_messages.h?rcl\u003d3e0f5df1e114fd76debfbcfcfd0973c9cc8d1dca\u0026l\u003d33, if we moved Type up to Unknown we may loose the check. \nBut considering that this enum will be sent via mojo methods in future, it should be fine that we just loose the legacy IPC check for now? (Move Type up to Unknown and set Last as Unknown)",
+      "parentUuid": "2da38017_0a87ace5",
       "revId": "95ab190b495c4f2900428f4807762abb716fdc12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
