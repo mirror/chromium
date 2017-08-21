@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6543a94a_2294977e",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-21T02:04:45Z",
+      "side": 1,
+      "message": "I acknowledged it, but as a result of discussion with you, this time I keep changes of coding style in other tests. I added the explanation of this in the description for the record.",
+      "parentUuid": "a2d8e554_18947723",
+      "revId": "f9f9c1c717afe75bc903e71e06a51e05e8d27166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0261914d_803605fc",
         "filename": "tools/idl_parser/idl_parser_test.py",
         "patchSetId": 4
@@ -50,6 +68,24 @@
       "revId": "f9f9c1c717afe75bc903e71e06a51e05e8d27166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5721342_76eeb5f2",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-08-21T02:04:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0d93ce2_a489350d",
+      "revId": "f9f9c1c717afe75bc903e71e06a51e05e8d27166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
