@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "996436e8_97bc4ed1",
+        "filename": "cc/output/direct_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-21T23:43:05Z",
+      "side": 1,
+      "message": "nit: combine else and if:\n\n} else if (render_pass-\u003ecache_render_pass \u0026\u0026\n           !render_pass-\u003ehas_damage_from_contributing_content) {\n  return false;\n}",
+      "range": {
+        "startLine": 632,
+        "startChar": 2,
+        "endLine": 637,
+        "endChar": 3
+      },
+      "revId": "61d6d262b64fb995ec10af6f04aa07d54dde0ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
