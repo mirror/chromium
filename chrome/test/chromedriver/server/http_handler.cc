@@ -327,6 +327,9 @@ HttpHandler::HttpHandler(
       CommandMapping(
           kPost, "session/:sessionId/timeouts",
           WrapToCommand("SetTimeout", base::Bind(&ExecuteSetTimeout))),
+      CommandMapping(
+          kPost, "session/:sessionId/timeouts",
+          WrapToCommand("GetTimeouts", base::Bind(&ExecuteGetTimeouts))),
       CommandMapping(kPost, "session/:sessionId/execute_sql",
                      WrapToCommand("ExecuteSql",
                                    base::Bind(&ExecuteUnimplementedCommand))),
