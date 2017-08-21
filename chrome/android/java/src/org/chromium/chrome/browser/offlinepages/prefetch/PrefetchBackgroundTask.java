@@ -11,6 +11,8 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.chrome.browser.background_task_scheduler.NativeBackgroundTask;
+import org.chromium.chrome.browser.offlinepages.DeviceConditions;
+import org.chromium.chrome.browser.offlinepages.TriggerConditions;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.components.background_task_scheduler.BackgroundTask.TaskFinishedCallback;
 import org.chromium.components.background_task_scheduler.BackgroundTaskScheduler;
@@ -18,6 +20,7 @@ import org.chromium.components.background_task_scheduler.BackgroundTaskScheduler
 import org.chromium.components.background_task_scheduler.TaskIds;
 import org.chromium.components.background_task_scheduler.TaskInfo;
 import org.chromium.components.background_task_scheduler.TaskParameters;
+import org.chromium.net.ConnectionType;
 
 import java.util.concurrent.TimeUnit;
 
@@ -89,12 +92,31 @@ public class PrefetchBackgroundTask extends NativeBackgroundTask {
     @Override
     public int onStartTaskBeforeNativeLoaded(
             Context context, TaskParameters taskParameters, TaskFinishedCallback callback) {
-        // TODO(dewittj): Ensure that the conditions are right to do work.  If the maximum time to
+        // Ensure that the conditions are right to do work.  If the maximum time to
         // wait is reached, it is possible the task will fire even if network conditions are
         // incorrect.  We want:
         // * Unmetered WiFi connection
         // * >50% battery
-        // * Preferences enabled.
+        // TODO(dewittj): * Preferences enabled.
+
+        // TODO(REVIEWERS) - We set the callback here so it is set on doneProcessing.  Should we?
+        mTaskFinishedCallback = callback;
+
+        // Set conditions required to trigger prefetching
+        TriggerConditions triggerConditions = new TriggerConditions(
+                false /* Device need not be plugged in to power*/,
+                50 /* Must have at least 50% battery */, true /* Unmetered network required */);
+
+        // Check current device conditions.
+        DeviceConditions deviceConditions = DeviceConditions.getCurrentConditions(context);
+
+        if (!areBatteryConditionsMet(deviceConditions, triggerConditions)) {
+            return NativeBackgroundTask.RESCHEDULE;
+        }
+        if (!areNetworkConditionsMet(context, deviceConditions, triggerConditions)) {
+            return NativeBackgroundTask.RESCHEDULE;
+        }
+
         return NativeBackgroundTask.LOAD_NATIVE;
     }
 
@@ -148,6 +170,34 @@ public class PrefetchBackgroundTask extends NativeBackgroundTask {
         assert mTaskFinishedCallback != null;
         mTaskFinishedCallback.taskFinished(needsReschedule);
         setNativeTask(0);
+    }
+
+    /** Whether battery conditions (on power and enough battery percentage) are met. */
+    private static boolean areBatteryConditionsMet(
+            DeviceConditions deviceConditions, TriggerConditions triggerConditions) {
+        return deviceConditions.isPowerConnected()
+                || (deviceConditions.getBatteryPercentage()
+                           >= triggerConditions.getMinimumBatteryPercentage());
+    }
+
+    /** Whether network conditions are met. */
+    private static boolean areNetworkConditionsMet(Context context,
+            DeviceConditions deviceConditions, TriggerConditions triggerConditions) {
+        // If there is no connectivity, network conditions are not met.
+        if (deviceConditions.getNetConnectionType() == ConnectionType.CONNECTION_NONE) return false;
+
+        // If we have some connectivity, and don't care whether it is metered, conditions are met.
+        if (!triggerConditions.requireUnmeteredNetwork()) return true;
+
+        // Wifi Hotspots and anything marked by in the WiFi settings dialog count as metered, if
+        // the network is metered, conditions are not met
+        if (DeviceConditions.isActiveNetworkMetered(context)) return false;
+
+        // Otherwise, assume that WiFi is unmetered.
+        if (deviceConditions.getNetConnectionType() == ConnectionType.CONNECTION_WIFI) return true;
+
+        // Anything other than WiFi is assumed to be metered, bluetooth included.
+        return false;
     }
 
     @VisibleForTesting
