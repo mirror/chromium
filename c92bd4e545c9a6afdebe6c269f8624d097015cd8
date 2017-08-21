@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78ac8730_850acdc7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/w3c/webperf/submission/Google/HighResolutionTime/worker-shared-basic.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-21T05:39:58Z",
+      "side": 1,
+      "message": "Can you make the assertion comment consistent with worker-dedicated-basic.html?\n\n\"Time in the worker should be before the current time in the main document\"",
+      "revId": "c92bd4e545c9a6afdebe6c269f8624d097015cd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
