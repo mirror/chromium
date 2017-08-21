@@ -1,0 +1,57 @@
+<!--
+@MAC-ALLOW:AXRole*
+@WIN-ALLOW:*SELECTABLE
+@WIN-ALLOW:xml-roles*
+-->
+<!DOCTYPE html>
+<html>
+<body>
+  <!-- Wrapper around cells -->
+  <div role="grid">
+    <div role="row">
+      <div id="a1"><div role="gridcell">A1</div></div>
+      <div id="b1"><div role="gridcell">A2</div></div>
+    </div>
+    <div role="row">
+      <div id="a2"><div role="gridcell">B1</div></div>
+      <div id="b2"><div><div role="gridcell">B2</div></div></div>
+    </div>
+  </div>
+
+  <!-- Wrapper around rows -->
+  <div role="grid">
+    <div id="r1">
+      <div role="row">
+        <div role="gridcell">A1</div>
+        <div role="gridcell">A2</div>
+      </div>
+    </div>
+    <div id="r2">
+      <div>
+        <div role="row">
+          <div role="gridcell">B1</div>
+          <div role="gridcell">B2</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wrapper around both -->
+  <div role="grid">
+    <div id="p1">
+      <div>
+        <div role="row">
+          <div id="x1"><div><div role="gridcell">A1</div></div></div>
+          <div id="y1"><div role="gridcell">A2</div></div>
+        </div>
+      </div>
+    </div>
+    <div id="p2">
+      <div role="row">
+        <div id="x2"><div role="gridcell">B1</div></div>
+        <div id="y2"><div role="gridcell">B2</div></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
