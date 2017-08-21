@@ -22,6 +22,30 @@
       "revId": "e88ffa6213657be9e01b51ebc3167d1b1a9aeaa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7a36202_ebb81bdb",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-21T09:01:45Z",
+      "side": 1,
+      "message": "I definitely agree. Please let me rename this in a following CL.",
+      "parentUuid": "7ce360a9_584b7167",
+      "range": {
+        "startLine": 129,
+        "startChar": 38,
+        "endLine": 129,
+        "endChar": 63
+      },
+      "revId": "e88ffa6213657be9e01b51ebc3167d1b1a9aeaa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
