@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d681646_3b184533",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-21T12:47:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a075e7c1_40031fb3",
+      "revId": "946b8966fe37abcc2bf270715d92fdf162abe2e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c21157d_b66785cc",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "946b8966fe37abcc2bf270715d92fdf162abe2e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5ce02b_6ebe1d35",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-21T12:47:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c21157d_b66785cc",
+      "revId": "946b8966fe37abcc2bf270715d92fdf162abe2e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "129d4ddf_549f9388",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-21T12:47:29Z",
+      "side": 1,
+      "message": "Without this assumption Resource::DidAddClient would be more complicated.",
+      "parentUuid": "052f7678_e5167628",
+      "revId": "946b8966fe37abcc2bf270715d92fdf162abe2e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98d56d3c_f619727c",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-21T07:44:54Z",
       "side": 1,
       "message": "don\u0027t we need to handle the result of Write?",
+      "revId": "946b8966fe37abcc2bf270715d92fdf162abe2e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90458e9d_9eea6bc9",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-21T12:47:29Z",
+      "side": 1,
+      "message": "The return value of BufferingDataPipeWriter::Write is in any case untrustworthy, because it buffers input and actual write operations may be delayed. I expect that when we cannot write data to a pipe (by other than \"should wait\" error), we will see a read error when reading.",
+      "parentUuid": "98d56d3c_f619727c",
       "revId": "946b8966fe37abcc2bf270715d92fdf162abe2e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
