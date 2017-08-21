@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdf24e27_e7cc286a",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-21T06:26:10Z",
+      "side": 1,
+      "message": "nit: in Blink, early-return style is preferred. e.g.\n\nif (!node.IsShadowRoot())\n  return;\n\nElement\u0026 host \u003d ...\n\nwhich saves one level of indentation and clearer code path.",
+      "revId": "d61941c0dc265727c18ea19fc1c727b3abbada1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
