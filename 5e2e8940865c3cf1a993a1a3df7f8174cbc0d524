@@ -16,6 +16,24 @@
       "revId": "5e2e8940865c3cf1a993a1a3df7f8174cbc0d524",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f6310b_cef49a1a",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/list-wrapping-image-crash.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1238128
+      },
+      "writtenOn": "2017-08-21T01:30:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb6229a0_cee61bba",
+      "revId": "5e2e8940865c3cf1a993a1a3df7f8174cbc0d524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
