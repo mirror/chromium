@@ -28,6 +28,7 @@
 #include "content/public/common/service_worker_modes.h"
 #include "ipc/ipc_listener.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "storage/public/interfaces/blobs.mojom.h"
 #include "third_party/WebKit/public/platform/WebMessagePortChannel.h"
 #include "third_party/WebKit/public/platform/modules/payments/payment_app.mojom.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h"
@@ -408,6 +409,8 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
 
   base::TimeTicks blink_initialized_time_;
   base::TimeTicks start_worker_received_time_;
+
+  storage::mojom::BlobRegistryPtr blob_registry_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerContextClient);
 };

@@ -103,6 +103,10 @@ class WebBlobRegistry {
   // the code transition period).
   BLINK_PLATFORM_EXPORT static mojo::ScopedMessagePipeHandle GetBlobPtrFromUUID(
       const WebString& uuid);
+
+  // Returns a Mojo pipe handle to the blob registry.
+  BLINK_PLATFORM_EXPORT static mojo::ScopedMessagePipeHandle
+  GetRegistryPipeHandle();
 };
 
 }  // namespace blink

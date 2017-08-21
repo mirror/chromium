@@ -29,4 +29,12 @@ mojo::ScopedMessagePipeHandle WebBlobRegistry::GetBlobPtrFromUUID(
   return blob_ptr.PassInterface().PassHandle();
 }
 
+// static
+mojo::ScopedMessagePipeHandle WebBlobRegistry::GetRegistryPipeHandle() {
+  storage::mojom::blink::BlobRegistryPtr blob_registry;
+  Platform::Current()->GetInterfaceProvider()->GetInterface(
+      MakeRequest(&blob_registry));
+  return blob_registry.PassInterface().PassHandle();
+}
+
 }  // namespace blink

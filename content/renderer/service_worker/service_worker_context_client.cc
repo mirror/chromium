@@ -814,6 +814,8 @@ void ServiceWorkerContextClient::WillDestroyWorkerContext(
   // (while we're still on the worker thread).
   proxy_ = NULL;
 
+  blob_registry_.reset();
+
   // Aborts all the pending events callbacks.
   AbortPendingEventCallbacks(context_->install_event_callbacks,
                              false /* has_fetch_handler */);
@@ -1030,10 +1032,13 @@ void ServiceWorkerContextClient::RespondToFetchEvent(
       blob_ptr = response.blob->TakeBlobPtr();
       response.blob = nullptr;
     } else {
-      blob_ptr.Bind(storage::mojom::BlobPtrInfo(
-          blink::WebBlobRegistry::GetBlobPtrFromUUID(
-              blink::WebString::FromASCII(response.blob_uuid)),
-          storage::mojom::Blob::Version_));
+      if (!blob_registry_) {
+        blob_registry_.Bind(storage::mojom::BlobRegistryPtrInfo(
+            blink::WebBlobRegistry::GetRegistryPipeHandle(),
+            storage::mojom::BlobRegistry::Version_));
+      }
+      blob_registry_->GetBlobFromUUID(MakeRequest(&blob_ptr),
+                                      response.blob_uuid);
     }
     response_callback->OnResponseBlob(
         response, std::move(blob_ptr),
