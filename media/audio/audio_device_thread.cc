@@ -41,7 +41,8 @@ AudioDeviceThread::Callback::Callback(const AudioParameters& audio_parameters,
       segment_length_(memory_length_ /
                       (total_segments_ ? total_segments_ : 1)) {
   CHECK_GT(total_segments_, 0);
-  CHECK_EQ(memory_length_ % total_segments_, 0);
+  CHECK_EQ(memory_length_ % total_segments_, 0)
+      << memory_length << " " << total_segments;
   thread_checker_.DetachFromThread();
 }
 

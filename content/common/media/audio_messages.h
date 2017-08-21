@@ -55,14 +55,12 @@ IPC_MESSAGE_CONTROL4(
 
 // Tell the renderer process that an audio input stream has been created.
 // The renderer process would be given a SyncSocket that it should read from
-// from then on. It is also given number of segments in shared memory and
-// whether the stream initially is muted.
+// from then on. It is also given whether the stream initially is muted.
 IPC_MESSAGE_CONTROL(AudioInputMsg_NotifyStreamCreated,
                     int /* stream id */,
                     base::SharedMemoryHandle /* handle */,
                     base::SyncSocket::TransitDescriptor /* socket descriptor */,
                     uint32_t /* length */,
-                    uint32_t /* segment count */,
                     bool /* initially muted */)
 
 // Notification message sent from AudioRendererHost to renderer for state
