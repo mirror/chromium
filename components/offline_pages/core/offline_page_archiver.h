@@ -52,6 +52,9 @@ class OfflinePageArchiver {
                                     // there was a security error.
     ERROR_ERROR_PAGE,               // We detected an error page.
     ERROR_INTERSTITIAL_PAGE,        // We detected an interstitial page.
+    ERROR_TOO_MANY_FILE_NAME_COLLISIONS,  // There are too many pages with same
+                                          // url and title saved that there's no
+                                          // way to generate new names.
   };
 
   // Describes the parameters to control how to create an archive.

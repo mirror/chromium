@@ -38,6 +38,9 @@ enum class SavePageResult {
   ERROR_PAGE,
   // Returned when we detect trying to save a chrome interstitial page.
   INTERSTITIAL_PAGE,
+  // Returned when the file name cannot be generated due to the duplicate
+  // counter has exceeded the limit.
+  TOO_MANY_FILE_NAME_COLLISIONS,
   // NOTE: always keep this entry at the end. Add new result types only
   // immediately above this line. Make sure to update the corresponding
   // histogram enum accordingly.
