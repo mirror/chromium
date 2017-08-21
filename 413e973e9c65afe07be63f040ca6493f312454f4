@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd8ad8d1_2e0620f7",
+        "filename": "chrome/browser/chromeos/settings/device_settings_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-21T13:55:05Z",
+      "side": 1,
+      "message": "The interval should be ignored of start or end are not defined.",
+      "range": {
+        "startLine": 619,
+        "startChar": 0,
+        "endLine": 619,
+        "endChar": 30
+      },
+      "revId": "413e973e9c65afe07be63f040ca6493f312454f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c0c778_c9026410",
+        "filename": "chrome/browser/chromeos/settings/device_settings_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-21T13:55:05Z",
+      "side": 1,
+      "message": "Omit braces with one-line body. Here and few lines below.",
+      "range": {
+        "startLine": 621,
+        "startChar": 0,
+        "endLine": 623,
+        "endChar": 9
+      },
+      "revId": "413e973e9c65afe07be63f040ca6493f312454f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34dae8bd_98e65a6a",
+        "filename": "chrome/browser/chromeos/settings/device_settings_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-21T13:55:05Z",
+      "side": 1,
+      "message": "I think in general the setting should be set only if it has some valid value, i.e.at least timezone should be present. What is the common pattern with other settings here?",
+      "range": {
+        "startLine": 647,
+        "startChar": 0,
+        "endLine": 647,
+        "endChar": 68
+      },
+      "revId": "413e973e9c65afe07be63f040ca6493f312454f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45c309b_eebc4507",
+        "filename": "chromeos/settings/cros_settings_names.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-21T13:55:05Z",
+      "side": 1,
+      "message": "That\u0027s not a policy here anymore. Here are definition of prefs (settings).",
+      "range": {
+        "startLine": 251,
+        "startChar": 3,
+        "endLine": 251,
+        "endChar": 14
+      },
+      "revId": "413e973e9c65afe07be63f040ca6493f312454f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
