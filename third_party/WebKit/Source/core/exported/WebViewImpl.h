@@ -578,6 +578,8 @@ class CORE_EXPORT WebViewImpl final
   CompositorMutatorImpl& Mutator();
   CompositorMutatorImpl* CompositorMutator();
 
+  void Intervene() override;
+
   WebViewClient* client_;  // Can be 0 (e.g. unittests, shared workers, etc.)
 
   Persistent<ChromeClient> chrome_client_;

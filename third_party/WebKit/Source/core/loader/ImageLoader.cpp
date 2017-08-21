@@ -38,6 +38,7 @@
 #include "core/layout/LayoutImage.h"
 #include "core/layout/LayoutVideo.h"
 #include "core/layout/svg/LayoutSVGImage.h"
+#include "core/page/Page.h"
 #include "core/probe/CoreProbes.h"
 #include "core/svg/graphics/SVGImage.h"
 #include "platform/bindings/Microtask.h"
@@ -443,7 +444,7 @@ void ImageLoader::UpdateFromElement(UpdateFromElementBehavior update_behavior,
   // Don't load images for inactive documents. We don't want to slow down the
   // raw HTML parsing case by loading images we don't intend to display.
   Document& document = element_->GetDocument();
-  if (document.IsActive())
+  if (document.IsActive() && document.GetPage()->JavascriptEnabled())
     EnqueueImageLoadingMicroTask(update_behavior, referrer_policy);
 }
 
@@ -654,6 +655,23 @@ void ImageLoader::ElementDidMoveToNewDocument() {
   }
   ClearFailedLoadURL();
   ClearImage();
+}
+
+void ImageLoader::ForceResetPendingActivity() {
+  if (pending_load_event_.IsActive())
+    pending_load_event_.Cancel();
+
+  if (pending_task_) {
+    pending_task_->ClearLoader();
+    pending_task_.reset();
+  }
+  if (image_ && !image_complete_ && !loading_image_document_) {
+    ImageResourceContent* image = image_.Get();
+    if (image)
+      image->RemoveObserver(this);
+    image_ = nullptr;
+    delay_until_image_notify_finished_ = nullptr;
+  }
 }
 
 }  // namespace blink

@@ -467,4 +467,18 @@ void MemoryCache::OnMemoryPressure(WebMemoryPressureLevel level) {
   PruneAll();
 }
 
+void MemoryCache::PruneForTesting() {
+  for (const auto& resource_map_iter : resource_maps_) {
+    for (const auto& resource_iter : *resource_map_iter.value) {
+      Resource* resource = resource_iter.value->GetResource();
+      DCHECK(resource);
+      if (resource->IsLoaded() && resource->GetType() == Resource::kScript) {
+        resource
+            ->RevalidationFailed();  // DestroyDecodedDataForFailedRevalidation();
+        resource->ClearData();
+      }
+    }
+  }
+}
+
 }  // namespace blink

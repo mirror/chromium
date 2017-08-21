@@ -63,6 +63,7 @@ class CORE_EXPORT InProcessWorkerMessagingProxy
   void WorkerThreadCreated() override;
 
   bool HasPendingActivity() const;
+  void ForceResetPendingActivity();
 
   // These methods come from worker context thread via
   // InProcessWorkerObjectProxy and are called on the parent context thread.

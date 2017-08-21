@@ -70,8 +70,18 @@ void WindowProxy::ClearForNavigation() {
   DisposeContext(Lifecycle::kGlobalObjectIsDetached, kFrameWillBeReused);
 }
 
+void WindowProxy::ClearForNavigationEx() {
+  DisposeContext(Lifecycle::kGlobalObjectIsDetached, kFrameWillBeReused);
+  global_proxy_.Clear();
+}
+
 void WindowProxy::ClearForSwap() {
   DisposeContext(Lifecycle::kGlobalObjectIsDetached, kFrameWillNotBeReused);
+}
+
+void WindowProxy::ClearForTrim() {
+  DisposeContext(Lifecycle::kGlobalObjectIsDetached, kFrameWillBeReused);
+  global_proxy_.Clear();
 }
 
 v8::Local<v8::Object> WindowProxy::GlobalProxyIfNotDetached() {

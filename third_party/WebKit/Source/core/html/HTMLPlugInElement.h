@@ -52,6 +52,7 @@ class CORE_EXPORT HTMLPlugInElement
   DECLARE_VIRTUAL_TRACE();
 
   bool HasPendingActivity() const final;
+  void ForceResetPendingActivity() final;
 
   void SetFocused(bool, WebFocusType) override;
   void ResetInstance();

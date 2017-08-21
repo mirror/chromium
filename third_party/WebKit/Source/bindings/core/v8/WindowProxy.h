@@ -151,7 +151,9 @@ class WindowProxy : public GarbageCollectedFinalized<WindowProxy> {
 
   void ClearForClose();
   void ClearForNavigation();
+  void ClearForNavigationEx();
   void ClearForSwap();
+  void ClearForTrim();
 
   CORE_EXPORT v8::Local<v8::Object> GlobalProxyIfNotDetached();
   v8::Local<v8::Object> ReleaseGlobalProxy();

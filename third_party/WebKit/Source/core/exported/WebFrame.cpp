@@ -131,6 +131,102 @@ bool WebFrame::Swap(WebFrame* frame) {
   return true;
 }
 
+bool WebFrame::SwapWithoutJS(WebFrame* frame) {
+  using std::swap;
+  Frame* old_frame = ToCoreFrame(*this);
+  if (!old_frame->IsAttached())
+    return false;
+
+  // Unload the current Document in this frame: this calls unload handlers,
+  // detaches child frames, etc. Since this runs script, make sure this frame
+  // wasn't detached before continuing with the swap.
+  // FIXME: There is no unit test for this condition, so one needs to be
+  // written.
+  if (!old_frame->PrepareForCommit())
+    return false;
+
+  // If there is a local parent, it might incorrectly declare itself complete
+  // during the detach phase of this swap. Suppress its completion until swap is
+  // over, at which point its completion will be correctly dependent on its
+  // newly swapped-in child.
+  std::unique_ptr<IncrementLoadEventDelayCount> delay_parent_load =
+      parent_ && parent_->IsWebLocalFrame()
+          ? IncrementLoadEventDelayCount::Create(
+                *ToWebLocalFrameImpl(parent_)->GetFrame()->GetDocument())
+          : nullptr;
+
+  if (parent_) {
+    if (parent_->first_child_ == this)
+      parent_->first_child_ = frame;
+    if (parent_->last_child_ == this)
+      parent_->last_child_ = frame;
+    // FIXME: This is due to the fact that the |frame| may be a provisional
+    // local frame, because we don't know if the navigation will result in
+    // an actual page or something else, like a download. The PlzNavigate
+    // project will remove the need for provisional local frames.
+    frame->parent_ = parent_;
+  }
+
+  if (previous_sibling_) {
+    previous_sibling_->next_sibling_ = frame;
+    swap(previous_sibling_, frame->previous_sibling_);
+  }
+  if (next_sibling_) {
+    next_sibling_->previous_sibling_ = frame;
+    swap(next_sibling_, frame->next_sibling_);
+  }
+
+  if (opener_) {
+    frame->SetOpener(opener_);
+    SetOpener(nullptr);
+  }
+  opened_frame_tracker_->TransferTo(frame);
+
+  Page* page = old_frame->GetPage();
+  AtomicString name = old_frame->Tree().GetName();
+  FrameOwner* owner = old_frame->Owner();
+
+  // Although the Document in this frame is now unloaded, many resources
+  // associated with the frame itself have not yet been freed yet.
+  old_frame->Detach(FrameDetachType::kSwap);
+
+  // Clone the state of the current Frame into the one being swapped in.
+  // FIXME: This is a bit clunky; this results in pointless decrements and
+  // increments of connected subframes.
+  if (frame->IsWebLocalFrame()) {
+    // TODO(dcheng): in an ideal world, both branches would just use
+    // WebFrame's initializeCoreFrame() helper. However, Blink
+    // currently requires a 'provisional' local frame to serve as a
+    // placeholder for loading state when swapping to a local frame.
+    // In this case, the core LocalFrame is already initialized, so just
+    // update a bit of state.
+    LocalFrame& local_frame = *ToWebLocalFrameImpl(frame)->GetFrame();
+    DCHECK_EQ(owner, local_frame.Owner());
+    if (owner) {
+      owner->SetContentFrame(local_frame);
+      if (owner->IsLocal()) {
+        ToHTMLFrameOwnerElement(owner)->SetEmbeddedContentView(
+            local_frame.View());
+      }
+    } else {
+      local_frame.GetPage()->SetMainFrame(&local_frame);
+      // This trace event is needed to detect the main frame of the
+      // renderer in telemetry metrics. See crbug.com/692112#c11.
+      TRACE_EVENT_INSTANT1("loading", "markAsMainFrame",
+                           TRACE_EVENT_SCOPE_THREAD, "frame", &local_frame);
+    }
+  } else {
+    ToWebRemoteFrameImpl(frame)->InitializeCoreFrame(*page, owner, name);
+  }
+
+  if (parent_ && old_frame->HasReceivedUserGesture())
+    ToCoreFrame(*frame)->UpdateUserActivationInFrameTree();
+
+  parent_ = nullptr;
+
+  return true;
+}
+
 void WebFrame::Detach() {
   ToCoreFrame(*this)->Detach(FrameDetachType::kRemove);
 }

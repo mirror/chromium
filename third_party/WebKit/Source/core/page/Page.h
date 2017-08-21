@@ -233,6 +233,9 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
     return tab_key_cycles_through_elements_;
   }
 
+  // ScopedPageSuspender helpers.
+  void SetPaused(bool);
+
   // Pausing is used to implement the "Optionally, pause while waiting for
   // the user to acknowledge the message" step of simple dialog processing:
   // https://html.spec.whatwg.org/multipage/webappapis.html#simple-dialogs
@@ -302,6 +305,9 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
 
   void RegisterPluginsChangedObserver(PluginsChangedObserver*);
 
+  void EnableJavascript(bool enabled) { js_enabled_ = enabled; }
+  bool JavascriptEnabled() const { return js_enabled_; }
+
  private:
   friend class ScopedPageSuspender;
 
@@ -311,9 +317,6 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
 
   // SettingsDelegate overrides.
   void SettingsChanged(SettingsDelegate::ChangeType) override;
-
-  // ScopedPageSuspender helpers.
-  void SetPaused(bool);
 
   // Notify |plugins_changed_observers_| that plugins have changed.
   void NotifyPluginsChanged() const;
@@ -384,6 +387,8 @@ class CORE_EXPORT Page final : public GarbageCollectedFinalized<Page>,
 #endif
 
   int subframe_count_;
+
+  bool js_enabled_;
 
   HeapHashSet<WeakMember<PluginsChangedObserver>> plugins_changed_observers_;
 };

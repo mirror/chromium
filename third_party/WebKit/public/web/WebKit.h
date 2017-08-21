@@ -47,6 +47,7 @@ BLINK_EXPORT void Initialize(Platform*);
 // Get the V8 Isolate for the main thread.
 // initialize must have been called first.
 BLINK_EXPORT v8::Isolate* MainThreadIsolate();
+BLINK_EXPORT void RunBlinkGC();
 
 // Alters the rendering of content to conform to a fixed set of rules.
 BLINK_EXPORT void SetLayoutTestMode(bool);

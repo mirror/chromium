@@ -62,6 +62,7 @@ class CORE_EXPORT WorkletGlobalScope
       const WrapperTypeInfo*,
       v8::Local<v8::Object> wrapper) final;
   bool HasPendingActivity() const override;
+  void ForceResetPendingActivity() override;
 
   ExecutionContext* GetExecutionContext() const;
 

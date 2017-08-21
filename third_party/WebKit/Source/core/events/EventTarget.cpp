@@ -151,6 +151,12 @@ EventTargetData::EventTargetData() {}
 
 EventTargetData::~EventTargetData() {}
 
+HeapHashSet<WeakMember<EventTarget>>& EventTarget::All() {
+  DEFINE_STATIC_LOCAL(HeapHashSet<WeakMember<EventTarget>>, all,
+                      (new HeapHashSet<WeakMember<EventTarget>>));
+  return all;
+}
+
 DEFINE_TRACE(EventTargetData) {
   visitor->Trace(event_listener_map);
 }
@@ -159,9 +165,17 @@ DEFINE_TRACE_WRAPPERS(EventTargetData) {
   visitor->TraceWrappers(event_listener_map);
 }
 
-EventTarget::EventTarget() {}
+EventTarget::EventTarget() {
+  if (IsMainThread()) {
+    EventTarget::All().insert(this);
+  }
+}
 
-EventTarget::~EventTarget() {}
+EventTarget::~EventTarget() {
+  if (IsMainThread()) {
+    EventTarget::All().erase(this);
+  }
+}
 
 Node* EventTarget::ToNode() {
   return nullptr;
@@ -815,6 +829,23 @@ void EventTarget::RemoveAllEventListeners() {
   if (!d)
     return;
   d->event_listener_map.Clear();
+
+  // Notify firing events planning to invoke the listener at 'index' that
+  // they have one less listener to invoke.
+  if (d->firing_event_iterators) {
+    for (const auto& iterator : *d->firing_event_iterators) {
+      iterator.iterator = 0;
+      iterator.end = 0;
+    }
+  }
+}
+
+void EventTarget::RemoveAllEventListenersForTesting() {
+  EventTargetData* d = GetEventTargetData();
+  if (!d)
+    return;
+
+  d->event_listener_map.ClearForTesting();
 
   // Notify firing events planning to invoke the listener at 'index' that
   // they have one less listener to invoke.

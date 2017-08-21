@@ -32,6 +32,7 @@
 
 #include "core/events/EventListenerMap.h"
 
+#include "bindings/core/v8/V8AbstractEventListener.h"
 #include "core/events/EventTarget.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/Vector.h"
@@ -76,6 +77,20 @@ bool EventListenerMap::ContainsCapturing(const AtomicString& event_type) const {
     }
   }
   return false;
+}
+
+void EventListenerMap::ClearForTesting() {
+  CheckNoActiveIterators();
+
+  for (auto& entry : entries_) {
+    for (auto& listener : *entry.second) {
+      if (listener.Listener()->GetType() != EventListener::kJSEventListenerType)
+        continue;
+      static_cast<V8AbstractEventListener*>(listener.Listener())
+          ->ClearListenerObject();
+    }
+  }
+  entries_.clear();
 }
 
 void EventListenerMap::Clear() {

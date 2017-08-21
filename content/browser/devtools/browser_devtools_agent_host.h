@@ -32,6 +32,7 @@ class BrowserDevToolsAgentHost : public DevToolsAgentHostImpl {
   bool Activate() override;
   void Reload() override;
   bool Close() override;
+  bool Intervene() override;
 
   scoped_refptr<base::SingleThreadTaskRunner> tethering_task_runner_;
   CreateServerSocketCallback socket_callback_;

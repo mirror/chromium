@@ -58,6 +58,7 @@ class CORE_EXPORT EventListenerMap {
   bool Contains(const AtomicString& event_type) const;
   bool ContainsCapturing(const AtomicString& event_type) const;
 
+  void ClearForTesting();
   void Clear();
   bool Add(const AtomicString& event_type,
            EventListener*,

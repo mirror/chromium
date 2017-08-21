@@ -1569,6 +1569,12 @@ void RTCPeerConnection::ContextDestroyed(ExecutionContext*) {
   ReleasePeerConnectionHandler();
 }
 
+void RTCPeerConnection::ForceResetPendingActivity() {
+  if (!HasPendingActivity())
+    return;
+  CloseInternal();
+}
+
 void RTCPeerConnection::ChangeSignalingState(SignalingState signaling_state) {
   if (signaling_state_ != kSignalingStateClosed) {
     signaling_state_ = signaling_state;

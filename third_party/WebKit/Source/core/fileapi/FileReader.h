@@ -79,6 +79,7 @@ class CORE_EXPORT FileReader final : public EventTargetWithInlineData,
 
   // ScriptWrappable
   bool HasPendingActivity() const final;
+  void ForceResetPendingActivity() final;
 
   // EventTarget
   const AtomicString& InterfaceName() const override;

@@ -227,6 +227,9 @@
 #else
 #include <malloc.h>
 #endif
+#if defined(OS_ANDROID)
+#include <android/log.h>
+#endif
 
 using base::ThreadRestrictions;
 using blink::WebDocument;
@@ -1662,6 +1665,8 @@ bool RenderThreadImpl::IsScrollAnimatorEnabled() {
 }
 
 void RenderThreadImpl::OnRAILModeChanged(v8::RAILMode rail_mode) {
+  if (blink::MainThreadIsolate()->IsCleared())
+    return;
   blink::MainThreadIsolate()->SetRAILMode(rail_mode);
   blink::SetRAILModeOnWorkerThreadIsolates(rail_mode);
 }
@@ -2298,6 +2303,28 @@ void RenderThreadImpl::OnCreateNewSharedWorker(
 void RenderThreadImpl::OnMemoryPressure(
     base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level) {
   TRACE_EVENT0("memory","RenderThreadImpl::OnMemoryPressure");
+#if defined(OS_ANDROID)
+  // Dump memory usage
+  {
+    RendererMemoryMetrics memory_metrics;
+    if (GetRendererMemoryMetrics(&memory_metrics)) {
+      __android_log_print(
+          ANDROID_LOG_INFO, "chromium",
+          "(%s) partition_alloc(%dkb), blink_gc(%dkb), discardable(%dkb), "
+          "malloc(%dmb), v8(%dmb)",
+          (memory_pressure_level ==
+                   base::MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE
+               ? "MODERATE"
+               : (memory_pressure_level == base::MemoryPressureListener::
+                                               MEMORY_PRESSURE_LEVEL_CRITICAL
+                      ? "CRITICAL"
+                      : "NONE")),
+          memory_metrics.partition_alloc_kb, memory_metrics.blink_gc_kb,
+          memory_metrics.discardable_kb, memory_metrics.malloc_mb,
+          memory_metrics.v8_main_thread_isolate_mb);
+    }
+  }
+#endif
   if (blink_platform_impl_) {
     blink::WebMemoryCoordinator::OnMemoryPressure(
         static_cast<blink::WebMemoryPressureLevel>(memory_pressure_level));
@@ -2520,9 +2547,10 @@ void RenderThreadImpl::OnSyncMemoryPressure(
       v8_memory_pressure_level == v8::MemoryPressureLevel::kCritical)
     v8_memory_pressure_level = v8::MemoryPressureLevel::kModerate;
 #endif  // !BUILDFLAG(ALLOW_CRITICAL_MEMORY_PRESSURE_HANDLING_IN_FOREGROUND)
-
-  blink::MainThreadIsolate()->MemoryPressureNotification(
-      v8_memory_pressure_level);
+  if (!blink::MainThreadIsolate()->IsCleared()) {
+    blink::MainThreadIsolate()->MemoryPressureNotification(
+        v8_memory_pressure_level);
+  }
   blink::MemoryPressureNotificationToWorkerThreadIsolates(
       v8_memory_pressure_level);
 }
@@ -2542,6 +2570,14 @@ void RenderThreadImpl::OnRendererInterfaceRequest(
     mojom::RendererAssociatedRequest request) {
   DCHECK(!renderer_binding_.is_bound());
   renderer_binding_.Bind(std::move(request));
+}
+
+void RenderThreadImpl::Intervene() {
+  OnTrimMemoryImmediately();
+  blink::RunBlinkGC();
+
+  if (v8::Isolate* isolate = blink::MainThreadIsolate())
+    isolate->Clear();
 }
 
 }  // namespace content

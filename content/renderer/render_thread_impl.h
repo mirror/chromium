@@ -515,6 +515,8 @@ class CONTENT_EXPORT RenderThreadImpl
     return needs_to_record_first_active_paint_;
   }
 
+  void Intervene();
+
  protected:
   RenderThreadImpl(
       const InProcessChildThreadParams& params,

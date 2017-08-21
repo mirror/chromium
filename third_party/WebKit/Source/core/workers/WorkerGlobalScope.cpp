@@ -331,6 +331,12 @@ bool WorkerGlobalScope::HasPendingActivity() const {
   return !ExecutionContext::IsContextDestroyed();
 }
 
+void WorkerGlobalScope::ForceResetPendingActivity() {
+  // Use close() instead?
+  // GetExecutionContext()->NotifyContextDestroyed();
+  LOG(INFO) << "WorkerGlobalScope::ForceResetPendingActivity()";
+}
+
 bool WorkerGlobalScope::IsContextThread() const {
   return GetThread()->IsCurrentThread();
 }

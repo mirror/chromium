@@ -58,6 +58,10 @@ class CORE_EXPORT SVGImageElement final
     return GetImageLoader().HasPendingActivity();
   }
 
+  void ForceResetPendingActivity() final {
+    GetImageLoader().ForceResetPendingActivity();
+  }
+
   // Exposed for testing.
   ImageResourceContent* CachedImage() const {
     return GetImageLoader().GetImage();

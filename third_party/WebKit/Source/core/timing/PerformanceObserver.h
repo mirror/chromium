@@ -47,6 +47,7 @@ class CORE_EXPORT PerformanceObserver final
 
   // ScriptWrappable
   bool HasPendingActivity() const final;
+  void ForceResetPendingActivity() final;
 
   DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();

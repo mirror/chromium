@@ -72,6 +72,11 @@ void PNGImageDecoder::Decode(size_t index) {
   if (Failed())
     return;
 
+  if (ImageDecoder::IsDisabled()) {
+    SetFailed();
+    return;
+  }
+
   UpdateAggressivePurging(index);
 
   Vector<size_t> frames_to_decode = FindFramesToDecode(index);

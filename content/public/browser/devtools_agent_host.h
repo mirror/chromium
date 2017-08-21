@@ -195,6 +195,9 @@ class CONTENT_EXPORT DevToolsAgentHost
   // Closes agent host. Returns false if the operation failed.
   virtual bool Close() = 0;
 
+  // Intervention.
+  virtual bool Intervene() = 0;
+
   // Returns the time when the host was last active.
   virtual base::TimeTicks GetLastActivityTime() = 0;
 

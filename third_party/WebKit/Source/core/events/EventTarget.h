@@ -152,6 +152,9 @@ class CORE_EXPORT EventTarget : public GarbageCollectedFinalized<EventTarget>,
                            EventListenerOptions&);
   virtual void RemoveAllEventListeners();
 
+  static HeapHashSet<WeakMember<EventTarget>>& All();
+  void RemoveAllEventListenersForTesting();
+
   DispatchEventResult DispatchEvent(Event*);
 
   // dispatchEventForBindings is intended to only be called from

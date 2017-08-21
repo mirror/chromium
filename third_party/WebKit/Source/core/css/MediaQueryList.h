@@ -78,6 +78,7 @@ class CORE_EXPORT MediaQueryList final
 
   // From ScriptWrappable
   bool HasPendingActivity() const final;
+  void ForceResetPendingActivity() final;
 
   // From ContextLifecycleObserver
   void ContextDestroyed(ExecutionContext*) override;

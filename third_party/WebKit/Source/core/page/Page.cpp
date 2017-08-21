@@ -139,7 +139,8 @@ Page::Page(PageClients& page_clients)
       device_scale_factor_(1),
       visibility_state_(kPageVisibilityStateVisible),
       is_cursor_visible_(true),
-      subframe_count_(0) {
+      subframe_count_(0),
+      js_enabled_(true) {
   DCHECK(editor_client_);
 
   DCHECK(!AllPages().Contains(this));

@@ -402,6 +402,8 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
       bool enabled,
       const blink::WebDeviceEmulationParams& params) override;
 
+  bool IsScriptDisabled() const { return js_disabled_; }
+
   // Do not delete directly.  This class is reference counted.
   ~RenderViewImpl() override;
 
@@ -506,6 +508,7 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   void OnAllowScriptToClose(bool script_can_close);
   void OnCancelDownload(int32_t download_id);
   void OnClosePage();
+  void OnIntervenePage();
   void OnClose();
 
   void OnDeterminePageLanguage();
@@ -801,6 +804,8 @@ class CONTENT_EXPORT RenderViewImpl : public RenderWidget,
   BitmapMap disambiguation_bitmaps_;
 
   std::unique_ptr<IdleUserDetector> idle_user_detector_;
+
+  bool js_disabled_;
 
   // ---------------------------------------------------------------------------
   // ADDING NEW DATA? Please see if it fits appropriately in one of the above

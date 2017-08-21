@@ -64,6 +64,7 @@ class CORE_EXPORT SharedWorker final
   bool IsBeingConnected() { return is_being_connected_; }
 
   bool HasPendingActivity() const final;
+  void ForceResetPendingActivity() final;
 
   DECLARE_VIRTUAL_TRACE();
 

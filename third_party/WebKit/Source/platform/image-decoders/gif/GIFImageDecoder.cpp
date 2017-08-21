@@ -215,6 +215,11 @@ void GIFImageDecoder::Decode(size_t index) {
 
   DCHECK_LT(index, frame_buffer_cache_.size());
 
+  if (ImageDecoder::IsDisabled()) {
+    SetFailed();
+    return;
+  }
+
   UpdateAggressivePurging(index);
   SkImageInfo image_info = codec_->getInfo()
                                .makeColorType(kN32_SkColorType)

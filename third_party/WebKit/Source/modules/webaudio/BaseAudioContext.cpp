@@ -216,6 +216,10 @@ bool BaseAudioContext::HasPendingActivity() const {
   return !is_cleared_;
 }
 
+void BaseAudioContext::ForceResetPendingActivity() {
+  Clear();
+}
+
 AudioDestinationNode* BaseAudioContext::destination() const {
   // Cannot be called from the audio thread because this method touches objects
   // managed by Oilpan, and the audio thread is not managed by Oilpan.

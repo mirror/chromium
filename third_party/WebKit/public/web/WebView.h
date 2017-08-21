@@ -468,6 +468,9 @@ class WebView : protected WebWidget {
   // completed.
   WebWidget* GetWidget() { return this; }
 
+  // Test
+  virtual void Intervene() {}
+
  protected:
   ~WebView() {}
 };

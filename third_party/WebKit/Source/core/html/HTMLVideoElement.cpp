@@ -100,6 +100,12 @@ bool HTMLVideoElement::HasPendingActivity() const {
          (image_loader_ && image_loader_->HasPendingActivity());
 }
 
+void HTMLVideoElement::ForceResetPendingActivity() {
+  HTMLMediaElement::ForceResetPendingActivity();
+  if (image_loader_)
+    image_loader_->ForceResetPendingActivity();
+}
+
 Node::InsertionNotificationRequest HTMLVideoElement::InsertedInto(
     ContainerNode* insertion_point) {
   if (insertion_point->isConnected() && custom_controls_fullscreen_detector_)

@@ -26,6 +26,7 @@ class SharedWorkerDevToolsAgentHost : public WorkerDevToolsAgentHost {
   bool Activate() override;
   void Reload() override;
   bool Close() override;
+  bool Intervene() override;
 
   bool Matches(const SharedWorkerInstance& other);
 

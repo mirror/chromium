@@ -204,4 +204,9 @@ bool InProcessWorkerMessagingProxy::HasPendingActivity() const {
   return !AskedToTerminate();
 }
 
+void InProcessWorkerMessagingProxy::ForceResetPendingActivity() {
+  // Terminate
+  TerminateGlobalScope();
+}
+
 }  // namespace blink

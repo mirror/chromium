@@ -33,6 +33,7 @@ const char kPageListRequest[] = "/json";
 const char kVersionRequest[] = "/json/version";
 const char kClosePageRequest[] = "/json/close/%s";
 const char kActivatePageRequest[] = "/json/activate/%s";
+const char kIntervenePageRequest[] = "/json/intervene/%s";
 const char kBrowserTargetSocket[] = "/devtools/browser";
 const int kPollingIntervalMs = 1000;
 
@@ -138,6 +139,7 @@ class AgentHostDelegate
   bool Activate() override;
   void Reload() override;
   bool Close() override;
+  bool Intervene() override;
   base::TimeTicks GetLastActivityTime() override;
   void SendMessageToBackend(const std::string& message) override;
 
@@ -313,6 +315,13 @@ void AgentHostDelegate::Reload() {
 bool AgentHostDelegate::Close() {
   std::string request = base::StringPrintf(kClosePageRequest,
                                            remote_id_.c_str());
+  device_->SendJsonRequest(browser_id_, request, base::Bind(&NoOp));
+  return true;
+}
+
+bool AgentHostDelegate::Intervene() {
+  std::string request =
+      base::StringPrintf(kIntervenePageRequest, remote_id_.c_str());
   device_->SendJsonRequest(browser_id_, request, base::Bind(&NoOp));
   return true;
 }

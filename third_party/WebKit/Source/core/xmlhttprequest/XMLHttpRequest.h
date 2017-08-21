@@ -111,6 +111,7 @@ class XMLHttpRequest final : public XMLHttpRequestEventTarget,
 
   // ScriptWrappable
   bool HasPendingActivity() const final;
+  void ForceResetPendingActivity() final;
 
   // XMLHttpRequestEventTarget
   const AtomicString& InterfaceName() const override;

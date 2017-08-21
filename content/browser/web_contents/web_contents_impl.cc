@@ -1877,6 +1877,12 @@ void WebContentsImpl::Activate() {
     delegate_->ActivateContents(this);
 }
 
+void WebContentsImpl::Intervene() {
+  if (!GetRenderViewHost())
+    return;
+  GetRenderViewHost()->IntervenePage();
+}
+
 void WebContentsImpl::LostCapture(RenderWidgetHostImpl* render_widget_host) {
   if (!RenderViewHostImpl::From(render_widget_host))
     return;

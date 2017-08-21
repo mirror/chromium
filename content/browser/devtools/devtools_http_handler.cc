@@ -558,7 +558,7 @@ void DevToolsHttpHandler::OnJsonRequest(
     return;
   }
 
-  if (command == "activate" || command == "close") {
+  if (command == "activate" || command == "close" || command == "intervene") {
     scoped_refptr<DevToolsAgentHost> agent_host =
         DevToolsAgentHost::GetForId(target_id);
     if (!agent_host) {
@@ -577,6 +577,16 @@ void DevToolsHttpHandler::OnJsonRequest(
                  net::HTTP_INTERNAL_SERVER_ERROR,
                  NULL,
                  "Could not activate target id: " + target_id);
+      }
+      return;
+    }
+
+    if (command == "intervene") {
+      if (agent_host->Intervene()) {
+        SendJson(connection_id, net::HTTP_OK, NULL, "Target intervened");
+      } else {
+        SendJson(connection_id, net::HTTP_INTERNAL_SERVER_ERROR, NULL,
+                 "Could not intervene target id: " + target_id);
       }
       return;
     }

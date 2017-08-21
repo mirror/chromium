@@ -51,6 +51,9 @@ class DevToolsExternalAgentProxyDelegate {
   // Reloads agent host.
   virtual bool Close() = 0;
 
+  // Intervention.
+  virtual bool Intervene() = 0;
+
   // Returns the time when the host was last active.
   virtual base::TimeTicks GetLastActivityTime() = 0;
 

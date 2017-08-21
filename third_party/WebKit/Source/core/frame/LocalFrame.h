@@ -279,6 +279,9 @@ class CORE_EXPORT LocalFrame final : public Frame,
       LocalFrame*,
       UserGestureToken::Status = UserGestureToken::kPossiblyExistingGesture);
 
+  void TrimJS();
+  bool IsDisabledScript() const { return js_disabled_; }
+
  private:
   friend class FrameNavigationDisabler;
 
@@ -333,6 +336,8 @@ class CORE_EXPORT LocalFrame final : public Frame,
 
   IntRect remote_viewport_intersection_;
   std::unique_ptr<FrameResourceCoordinator> frame_resource_coordinator_;
+
+  bool js_disabled_;
 };
 
 inline FrameLoader& LocalFrame::Loader() const {

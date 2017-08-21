@@ -102,6 +102,10 @@ bool PerformanceObserver::HasPendingActivity() const {
   return is_registered_;
 }
 
+void PerformanceObserver::ForceResetPendingActivity() {
+  disconnect();
+}
+
 bool PerformanceObserver::ShouldBeSuspended() const {
   return execution_context_->IsContextSuspended();
 }

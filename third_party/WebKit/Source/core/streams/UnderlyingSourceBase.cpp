@@ -58,6 +58,13 @@ bool UnderlyingSourceBase::HasPendingActivity() const {
   return controller_ && controller_->IsActive() && is_stream_locked_;
 }
 
+void UnderlyingSourceBase::ForceResetPendingActivity() {
+  if (controller_) {
+    controller_->NoteHasBeenCanceled();
+    controller_.Clear();
+  }
+}
+
 void UnderlyingSourceBase::ContextDestroyed(ExecutionContext*) {
   if (controller_) {
     controller_->NoteHasBeenCanceled();

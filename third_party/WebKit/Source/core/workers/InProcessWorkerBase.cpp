@@ -90,6 +90,12 @@ bool InProcessWorkerBase::HasPendingActivity() const {
          script_loader_;
 }
 
+void InProcessWorkerBase::ForceResetPendingActivity() {
+  if (script_loader_)
+    script_loader_->Cancel();
+  terminate();
+}
+
 void InProcessWorkerBase::OnResponse() {
   probe::didReceiveScriptResponse(GetExecutionContext(),
                                   script_loader_->Identifier());

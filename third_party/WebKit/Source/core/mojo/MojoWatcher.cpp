@@ -66,6 +66,19 @@ bool MojoWatcher::HasPendingActivity() const {
   return handle_.is_valid();
 }
 
+void MojoWatcher::ForceResetPendingActivity() {
+  // Last notification.
+  handle_ = mojo::Handle();
+
+  // Only dispatch to the callback if this cancellation was implicit due to
+  // |m_handle| closure. If it was explicit, |m_watcherHandle| has already
+  // been reset.
+  if (watcher_handle_.is_valid()) {
+    watcher_handle_.reset();
+    // RunWatchCallback(callback_, this, result);
+  }
+}
+
 void MojoWatcher::ContextDestroyed(ExecutionContext*) {
   cancel();
 }

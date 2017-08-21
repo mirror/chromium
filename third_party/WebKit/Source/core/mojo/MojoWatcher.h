@@ -37,8 +37,9 @@ class MojoWatcher final : public GarbageCollectedFinalized<MojoWatcher>,
   DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
 
-  // ActiveScriptWrappable
+  // ScriptWrappable
   bool HasPendingActivity() const final;
+  void ForceResetPendingActivity() final;
 
   // ContextLifecycleObserver
   void ContextDestroyed(ExecutionContext*) final;

@@ -157,15 +157,18 @@ v8::Local<v8::Object> ScriptPromisePropertyBase::EnsureHolderWrapper(
 void ScriptPromisePropertyBase::ClearWrappers() {
   CheckThis();
   CheckWrappers();
-  v8::HandleScope handle_scope(isolate_);
-  for (WeakPersistentSet::iterator i = wrappers_.begin(); i != wrappers_.end();
-       ++i) {
-    v8::Local<v8::Object> wrapper = (*i)->NewLocal(isolate_);
-    if (!wrapper.IsEmpty()) {
-      v8::Context::Scope scope(wrapper->CreationContext());
-      // TODO(peria): Use deleteProperty() if http://crbug.com/v8/6227 is fixed.
-      ResolverSymbol().Set(wrapper, v8::Undefined(isolate_));
-      PromiseSymbol().Set(wrapper, v8::Undefined(isolate_));
+  if (!isolate_->IsCleared()) {
+    v8::HandleScope handle_scope(isolate_);
+    for (WeakPersistentSet::iterator i = wrappers_.begin();
+         i != wrappers_.end(); ++i) {
+      v8::Local<v8::Object> wrapper = (*i)->NewLocal(isolate_);
+      if (!wrapper.IsEmpty()) {
+        v8::Context::Scope scope(wrapper->CreationContext());
+        // TODO(peria): Use deleteProperty() if http://crbug.com/v8/6227 is
+        // fixed.
+        ResolverSymbol().Set(wrapper, v8::Undefined(isolate_));
+        PromiseSymbol().Set(wrapper, v8::Undefined(isolate_));
+      }
     }
   }
   wrappers_.clear();

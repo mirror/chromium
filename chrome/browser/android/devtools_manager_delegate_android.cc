@@ -112,6 +112,13 @@ class TabProxyDelegate : public content::DevToolsExternalAgentProxyDelegate,
     return true;
   }
 
+  bool Intervene() override {
+    MaterializeAgentHost();
+    if (agent_host_)
+      return agent_host_->Intervene();
+    return false;
+  }
+
   base::TimeTicks GetLastActivityTime() override {
     return agent_host_ ? agent_host_->GetLastActivityTime() : base::TimeTicks();
   }

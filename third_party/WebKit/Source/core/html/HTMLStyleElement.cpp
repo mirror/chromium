@@ -146,6 +146,11 @@ void HTMLStyleElement::setDisabled(bool set_disabled) {
     style_sheet->setDisabled(set_disabled);
 }
 
+void HTMLStyleElement::Poof() {
+  if (sheet_)
+    ClearSheet(*this);
+}
+
 DEFINE_TRACE(HTMLStyleElement) {
   StyleElement::Trace(visitor);
   HTMLElement::Trace(visitor);

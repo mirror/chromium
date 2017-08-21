@@ -119,7 +119,9 @@ class CORE_EXPORT MutationObserver final
 
   HeapHashSet<Member<Node>> GetObservedNodes() const;
 
+  // From ScriptWrappable
   bool HasPendingActivity() const override { return !records_.IsEmpty(); }
+  void ForceResetPendingActivity() override;
 
   // Eagerly finalized as destructor accesses heap object members.
   EAGERLY_FINALIZE();

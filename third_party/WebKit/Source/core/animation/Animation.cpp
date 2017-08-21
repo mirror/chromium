@@ -694,6 +694,14 @@ bool Animation::HasPendingActivity() const {
          (!finished_ && HasEventListeners(EventTypeNames::finish));
 }
 
+void Animation::ForceResetPendingActivity() {
+  if (finished_promise_)
+    finished_promise_->Reset();
+  pending_finished_event_ = nullptr;
+  finished_ = true;
+  RemoveAllEventListeners();
+}
+
 void Animation::ContextDestroyed(ExecutionContext*) {
   PlayStateUpdateScope update_scope(*this, kTimingUpdateOnDemand);
 

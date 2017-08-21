@@ -101,6 +101,7 @@ class CORE_EXPORT MessagePort : public EventTargetWithInlineData,
 
   // ScriptWrappable implementation.
   bool HasPendingActivity() const final;
+  void ForceResetPendingActivity() final;
 
   // ContextLifecycleObserver implementation.
   void ContextDestroyed(ExecutionContext*) override { close(); }

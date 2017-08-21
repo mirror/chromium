@@ -1843,7 +1843,9 @@ void RenderFrameImpl::OnSwapOut(
   // it to return false without detaching.  Catch any cases that the
   // RenderView's main_render_frame_ isn't cleared below (whether swap returns
   // false or not).
-  bool success = frame_->Swap(proxy->web_frame());
+  bool success = (render_view_ && render_view_->IsScriptDisabled())
+                     ? frame_->SwapWithoutJS(proxy->web_frame())
+                     : frame_->Swap(proxy->web_frame());
 
   // For main frames, the swap should have cleared the RenderView's pointer to
   // this frame.

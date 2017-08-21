@@ -26,10 +26,22 @@ void WindowProxyManager::ClearForNavigation() {
     entry.value->ClearForNavigation();
 }
 
+void WindowProxyManager::ClearForNavigationEx() {
+  window_proxy_->ClearForNavigationEx();
+  for (auto& entry : isolated_worlds_)
+    entry.value->ClearForNavigation();
+}
+
 void WindowProxyManager::ClearForSwap() {
   window_proxy_->ClearForSwap();
   for (auto& entry : isolated_worlds_)
     entry.value->ClearForSwap();
+}
+
+void WindowProxyManager::ClearForTrim() {
+  window_proxy_->ClearForTrim();
+  for (auto& entry : isolated_worlds_)
+    entry.value->ClearForNavigation();
 }
 
 void WindowProxyManager::ReleaseGlobalProxies(

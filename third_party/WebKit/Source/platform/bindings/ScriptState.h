@@ -149,6 +149,8 @@ class PLATFORM_EXPORT ScriptState : public RefCounted<ScriptState> {
   ScriptState(v8::Local<v8::Context>, PassRefPtr<DOMWrapperWorld>);
 
  private:
+  ScriptState() = delete;
+
   v8::Isolate* isolate_;
   // This persistent handle is weak.
   ScopedPersistent<v8::Context> context_;

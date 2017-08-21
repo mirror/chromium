@@ -137,6 +137,8 @@ class CONTENT_EXPORT RenderViewHost : public IPC::Sender {
   // RenderViewHostDelegate.
   virtual void SyncRendererPrefs() = 0;
 
+  virtual void IntervenePage() = 0;
+
   // Returns the current WebKit preferences. Note: WebPreferences is cached, so
   // this lookup will be fast
   virtual WebPreferences GetWebkitPreferences() = 0;

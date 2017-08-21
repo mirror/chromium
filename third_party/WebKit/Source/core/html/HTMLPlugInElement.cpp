@@ -100,6 +100,12 @@ bool HTMLPlugInElement::HasPendingActivity() const {
   return image_loader_ && image_loader_->HasPendingActivity();
 }
 
+void HTMLPlugInElement::ForceResetPendingActivity() {
+  if (!image_loader_)
+    return;
+  image_loader_->ForceResetPendingActivity();
+}
+
 void HTMLPlugInElement::SetPersistedPlugin(PluginView* plugin) {
   if (persisted_plugin_ == plugin)
     return;

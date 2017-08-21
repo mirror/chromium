@@ -125,6 +125,8 @@ void LocalWindowProxy::Initialize() {
   ScopedUsHistogramTimer timer(GetFrame()->IsMainFrame() ? main_frame_hist
                                                          : non_main_frame_hist);
 
+  if (GetIsolate()->IsCleared())
+    return;
   ScriptForbiddenScope::AllowUserAgentScript allow_script;
 
   v8::HandleScope handle_scope(GetIsolate());

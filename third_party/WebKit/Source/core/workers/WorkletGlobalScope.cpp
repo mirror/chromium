@@ -76,6 +76,11 @@ bool WorkletGlobalScope::HasPendingActivity() const {
   return !ExecutionContext::IsContextDestroyed();
 }
 
+void WorkletGlobalScope::ForceResetPendingActivity() {
+  // GetExecutionContext()->NotifyContextDestroyed();
+  LOG(INFO) << "WorkletGlobalScope::ForceResetPendingActivity()";
+}
+
 ExecutionContext* WorkletGlobalScope::GetExecutionContext() const {
   return const_cast<WorkletGlobalScope*>(this);
 }

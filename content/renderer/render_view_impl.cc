@@ -554,6 +554,7 @@ RenderViewImpl::RenderViewImpl(CompositorDependencies* compositor_deps,
 #endif
       enumeration_completion_id_(0),
       session_storage_namespace_id_(params.session_storage_namespace_id),
+      js_disabled_(false),
       weak_ptr_factory_(this) {
   GetWidget()->set_owner_delegate(this);
 }
@@ -1151,6 +1152,7 @@ bool RenderViewImpl::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewMsg_EnumerateDirectoryResponse,
                         OnEnumerateDirectoryResponse)
     IPC_MESSAGE_HANDLER(ViewMsg_ClosePage, OnClosePage)
+    IPC_MESSAGE_HANDLER(ViewMsg_IntervenePage, OnIntervenePage)
     IPC_MESSAGE_HANDLER(ViewMsg_MoveOrResizeStarted, OnMoveOrResizeStarted)
     IPC_MESSAGE_HANDLER(ViewMsg_SetBackgroundOpaque, OnSetBackgroundOpaque)
     IPC_MESSAGE_HANDLER(ViewMsg_EnablePreferredSizeChangedMode,
@@ -2068,6 +2070,15 @@ void RenderViewImpl::OnClosePage() {
   webview()->MainFrame()->ToWebLocalFrame()->DispatchUnloadEvent();
 
   Send(new ViewHostMsg_ClosePage_ACK(GetRoutingID()));
+}
+
+void RenderViewImpl::OnIntervenePage() {
+  if (closing_)
+    return;
+  js_disabled_ = true;
+  webview()->Intervene();
+  if (RenderThreadImpl* render_thread_impl = RenderThreadImpl::current())
+    render_thread_impl->Intervene();
 }
 
 void RenderViewImpl::OnClose() {

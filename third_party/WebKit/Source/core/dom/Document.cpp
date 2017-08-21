@@ -35,10 +35,12 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/HTMLScriptElementOrSVGScriptElement.h"
 #include "bindings/core/v8/ScriptController.h"
+#include "bindings/core/v8/ScriptSourceCode.h"
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/StringOrDictionary.h"
 #include "bindings/core/v8/V0CustomElementConstructorBuilder.h"
 #include "bindings/core/v8/V8ElementCreationOptions.h"
+#include "bindings/core/v8/V8GCController.h"
 #include "bindings/core/v8/WindowProxy.h"
 #include "core/HTMLElementFactory.h"
 #include "core/HTMLElementTypeHelpers.h"
@@ -157,6 +159,7 @@
 #include "core/html/HTMLMetaElement.h"
 #include "core/html/HTMLPlugInElement.h"
 #include "core/html/HTMLScriptElement.h"
+#include "core/html/HTMLStyleElement.h"
 #include "core/html/HTMLTemplateElement.h"
 #include "core/html/HTMLTitleElement.h"
 #include "core/html/PluginDocument.h"
@@ -235,6 +238,7 @@
 #include "platform/bindings/Microtask.h"
 #include "platform/bindings/V8DOMWrapper.h"
 #include "platform/bindings/V8PerIsolateData.h"
+#include "platform/image-decoders/ImageDecoder.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/network/ContentSecurityPolicyParsers.h"
@@ -645,7 +649,8 @@ Document::Document(const DocumentInit& initializer,
       would_load_reason_(WouldLoadReason::kInvalid),
       password_count_(0),
       logged_field_edit_(false),
-      engagement_level_(mojom::blink::EngagementLevel::NONE) {
+      engagement_level_(mojom::blink::EngagementLevel::NONE),
+      js_disabled_(false) {
   if (frame_) {
     DCHECK(frame_->GetPage());
     ProvideContextFeaturesToDocumentFrom(*this, *frame_->GetPage());
@@ -714,6 +719,130 @@ Document::~Document() {
   DCHECK(!ax_object_cache_);
 
   InstanceCounters::DecrementCounter(InstanceCounters::kDocumentCounter);
+}
+
+void Document::TrimJS() {
+  // for (Node& c : NodeTraversal::DescendantsOf(*this)) {
+  // c.RemoveAllEventListeners();
+  //}
+  for (const auto& i : EventTarget::All()) {
+    i->RemoveAllEventListenersForTesting();
+  }
+  timers_.Clear();
+  intersection_observer_controller_ = nullptr;
+  V8GCController::SetDisabled(true);
+}
+
+void Document::toggleImageDecode(bool enabled) {
+  ImageDecoder::SetDisabled(!enabled);
+}
+
+void Document::toggleFrames(bool enabled) {
+  if (!enabled) {
+    Frame* frame = GetFrame();
+    CHECK(frame);
+    for (Frame* child = frame->Tree().FirstChild(); child;
+         child = child->Tree().NextSibling()) {
+      child->Navigate(
+          FrameLoadRequest(nullptr, ResourceRequest("about:blank")));
+    }
+  }
+  HTMLFrameElementBase::SetDisabled(!enabled);
+}
+
+void Document::toggleCSS(bool enabled) {
+  StyleResolver::SetDisabled(!enabled);
+  if (!enabled) {
+    StaticElementList* style_list = QuerySelectorAll("style");
+    if (style_list) {
+      unsigned size = style_list->length();
+      for (unsigned i = 0; i < size; ++i) {
+        toHTMLStyleElement(style_list->item(i))->setDisabled(true);
+      }
+    }
+    StaticElementList* link_list = QuerySelectorAll("link");
+    if (link_list) {
+      unsigned size = link_list->length();
+      for (unsigned i = 0; i < size; ++i) {
+        LinkStyle* ls = toHTMLLinkElement(link_list->item(i))->GetLinkStyle();
+        if (ls) {
+          ls->SetDisabledState(true);
+        }
+      }
+    }
+  }
+  SetNeedsStyleRecalc(kNeedsReattachStyleChange,
+                      StyleChangeReasonForTracing::Create("intervention"));
+}
+
+void Document::toggleBackgroundImage(bool enabled) {
+  StyleImage::SetDisabled(!enabled);
+  SetNeedsStyleRecalc(kNeedsReattachStyleChange,
+                      StyleChangeReasonForTracing::Create("intervention"));
+}
+
+String Document::trimDOM() {
+  // recalcLayout
+  int x = 0;
+  int y = 0;
+  HeapVector<Member<Node>> v;
+  HeapHashSet<Member<Node>> blacklist;
+  for (Node& c : NodeTraversal::DescendantsOf(*this)) {
+    if (!c.GetLayoutObject()) {
+      v.push_back(&c);
+    }
+    if (c.HasTagName(HTMLNames::styleTag) || c.HasTagName(HTMLNames::linkTag)) {
+      for (Node* a = &c; a; a = a->parentNode()) {
+        blacklist.insert(a);
+      }
+      for (Node& d : NodeTraversal::DescendantsOf(c)) {
+        blacklist.insert(&d);
+      }
+    }
+    // Keep <option> even if they don't have layoutObjects
+    if (c.GetLayoutObject() && c.HasTagName(HTMLNames::selectTag)) {
+      for (Node& d : NodeTraversal::DescendantsOf(c)) {
+        blacklist.insert(&d);
+      }
+    }
+    y++;
+  }
+  for (const auto& i : v) {
+    if (!blacklist.Contains(i)) {
+      i->remove();
+      x++;
+    }
+  }
+  /*
+  HTMLBodyElement* body = FirstBodyElement();
+  if (body) {
+    for (const auto& i : s) {
+      body->appendChild(i);
+    }
+  }*/
+  return String::Format("Trimmed %d/%d nodes", x, y);
+}
+
+void Document::trimJS() {
+#if 0
+  for (Node& c : NodeTraversal::DescendantsOf(*this)) {
+    c.RemoveAllEventListeners();
+  }
+#endif
+  for (const auto& i : EventTarget::All()) {
+    i->RemoveAllEventListenersForTesting();
+  }
+  // V8GCController::SetDisabled(true);
+  V8GCController::ResetPendingActivity(V8PerIsolateData::MainThreadIsolate());
+  //
+  V8GCController::DumpPersistentHandles(V8PerIsolateData::MainThreadIsolate());
+  //
+  GetFrame()->GetScriptController().ClearWindowProxy();
+  LOG(INFO) << "Document::TrimJSTimerFired";
+}
+
+void Document::pauseJS() {
+  js_disabled_ = true;
 }
 
 SelectorQueryCache& Document::GetSelectorQueryCache() {
@@ -5977,6 +6106,8 @@ bool Document::IsSecureTransitionTo(const KURL& url) const {
 }
 
 bool Document::CanExecuteScripts(ReasonForCallingCanExecuteScripts reason) {
+  if (!GetPage()->JavascriptEnabled())
+    return false;
   if (IsSandboxed(kSandboxScripts)) {
     // FIXME: This message should be moved off the console once a solution to
     // https://bugs.webkit.org/show_bug.cgi?id=103274 exists.

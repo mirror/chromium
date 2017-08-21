@@ -45,6 +45,7 @@ class CORE_EXPORT UnderlyingSourceBase
 
   // ScriptWrappable
   bool HasPendingActivity() const;
+  void ForceResetPendingActivity() override;
 
   // ContextLifecycleObserver
   void ContextDestroyed(ExecutionContext*) override;

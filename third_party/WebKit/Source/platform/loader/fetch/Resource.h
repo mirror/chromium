@@ -70,6 +70,8 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   USING_GARBAGE_COLLECTED_MIXIN(Resource);
   WTF_MAKE_NONCOPYABLE(Resource);
 
+  friend class MemoryCache;
+
  public:
   // |Type| enum values are used in UMAs, so do not change the values of
   // existing |Type|. When adding a new |Type|, append it at the end and update

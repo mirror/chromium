@@ -156,6 +156,8 @@ void HTMLDocument::AddItemToMap(HashCountedSet<AtomicString>& map,
     return;
   map.insert(name);
   if (LocalFrame* f = GetFrame()) {
+    if (f->IsDisabledScript())
+      return;
     f->GetScriptController()
         .WindowProxy(DOMWrapperWorld::MainWorld())
         ->NamedItemAdded(this, name);

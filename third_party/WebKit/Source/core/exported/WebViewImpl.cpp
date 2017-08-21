@@ -40,6 +40,7 @@
 #include "core/clipboard/DataObject.h"
 #include "core/dom/ContextFeaturesClientImpl.h"
 #include "core/dom/Document.h"
+#include "core/dom/ElementTraversal.h"
 #include "core/dom/LayoutTreeBuilderTraversal.h"
 #include "core/dom/Text.h"
 #include "core/dom/UserGestureIndicator.h"
@@ -73,6 +74,8 @@
 #include "core/frame/VisualViewport.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/fullscreen/Fullscreen.h"
+#include "core/html/HTMLDivElement.h"
+#include "core/html/HTMLFrameElementBase.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/HTMLPlugInElement.h"
 #include "core/html/HTMLTextAreaElement.h"
@@ -168,8 +171,13 @@
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
 
+#include "platform/loader/fetch/MemoryCache.h"
+
 #if defined(WTF_USE_DEFAULT_RENDER_THEME)
 #include "core/layout/LayoutThemeDefault.h"
+#endif
+#if defined(OS_ANDROID)
+#include <android/log.h>
 #endif
 
 // Get rid of WTF's pow define so we can use std::pow.
@@ -4129,6 +4137,30 @@ LocalFrame* WebViewImpl::FocusedLocalFrameInWidget() const {
 
 LocalFrame* WebViewImpl::FocusedLocalFrameAvailableForIme() const {
   return ime_accept_events_ ? FocusedLocalFrameInWidget() : nullptr;
+}
+
+void WebViewImpl::Intervene() {
+#if defined(OS_ANDROID)
+  __android_log_write(ANDROID_LOG_INFO, "blink", "WebViewImpl::Intervene()");
+#endif
+  Page* page = GetPage();
+  if (!page)
+    return;
+
+  for (Frame* frame = page->MainFrame(); frame;
+       frame = frame->Tree().TraverseNext()) {
+    if (!frame->IsLocalFrame())
+      continue;
+    ToLocalFrame(frame)->TrimJS();
+    if (Document* document = ToLocalFrame(frame)->GetDocument())
+      document->TrimJS();
+  }
+  V8GCController::ResetPendingActivity(V8PerIsolateData::MainThreadIsolate());
+  page->EnableJavascript(false);
+  ScriptWrappableVisitor::DisableTraceWrappers();
+  // Destory all ScriptResources
+  // Doesnt' work well...
+  GetMemoryCache()->PruneForTesting();
 }
 
 }  // namespace blink

@@ -59,6 +59,7 @@ class CORE_EXPORT HTMLInputElement
   DECLARE_VIRTUAL_TRACE();
 
   bool HasPendingActivity() const final;
+  void ForceResetPendingActivity() final;
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(webkitspeechchange);
 

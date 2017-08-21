@@ -87,6 +87,7 @@ class BLINK_EXPORT WebFrame {
   virtual WebRemoteFrame* ToWebRemoteFrame() = 0;
 
   bool Swap(WebFrame*);
+  bool SwapWithoutJS(WebFrame*);
 
   // This method closes and deletes the WebFrame. This is typically called by
   // the embedder in response to a frame detached callback to the WebFrame

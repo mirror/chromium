@@ -579,6 +579,10 @@ void RenderViewHostImpl::ClosePage() {
   }
 }
 
+void RenderViewHostImpl::IntervenePage() {
+  Send(new ViewMsg_IntervenePage(GetRoutingID()));
+}
+
 void RenderViewHostImpl::ClosePageIgnoringUnloadEvents() {
   close_timeout_->Stop();
   is_waiting_for_close_ack_ = false;

@@ -166,6 +166,8 @@ class PLATFORM_EXPORT MemoryCache final
 
   void OnMemoryPressure(WebMemoryPressureLevel) override;
 
+  void PruneForTesting();
+
  private:
   enum PruneStrategy {
     // Automatically decide how much to prune.

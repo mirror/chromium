@@ -47,6 +47,7 @@ class CORE_EXPORT InProcessWorkerBase
 
   // ScriptWrappable
   bool HasPendingActivity() const final;
+  void ForceResetPendingActivity() final;
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(message);
 

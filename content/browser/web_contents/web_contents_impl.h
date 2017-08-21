@@ -611,6 +611,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
                          const blink::WebInputEvent::Type type) override;
   void OnIgnoredUIEvent() override;
   void Activate() override;
+  void Intervene();
   void UpdatePreferredSize(const gfx::Size& pref_size) override;
   void CreateNewWidget(int32_t render_process_id,
                        int32_t route_id,

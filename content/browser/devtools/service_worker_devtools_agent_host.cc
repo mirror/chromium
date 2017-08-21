@@ -93,6 +93,10 @@ bool ServiceWorkerDevToolsAgentHost::Close() {
   return true;
 }
 
+bool ServiceWorkerDevToolsAgentHost::Intervene() {
+  return false;
+}
+
 void ServiceWorkerDevToolsAgentHost::UnregisterWorker() {
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
                           base::BindOnce(&UnregisterServiceWorkerOnIO,

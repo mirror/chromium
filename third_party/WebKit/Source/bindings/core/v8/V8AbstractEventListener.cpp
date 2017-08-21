@@ -55,19 +55,20 @@ V8AbstractEventListener::V8AbstractEventListener(bool is_attribute,
       world_(world),
       isolate_(isolate),
       worker_global_scope_(nullptr) {
-  if (IsMainThread())
+  if (IsMainThread()) {
     InstanceCounters::IncrementCounter(
         InstanceCounters::kJSEventListenerCounter);
-  else
+  } else
     worker_global_scope_ =
         ToWorkerGlobalScope(CurrentExecutionContext(isolate));
 }
 
 V8AbstractEventListener::~V8AbstractEventListener() {
   DCHECK(listener_.IsEmpty());
-  if (IsMainThread())
+  if (IsMainThread()) {
     InstanceCounters::DecrementCounter(
         InstanceCounters::kJSEventListenerCounter);
+  }
 }
 
 void V8AbstractEventListener::handleEvent(ExecutionContext* execution_context,

@@ -22,6 +22,8 @@
 
 namespace blink {
 
+bool ScriptWrappableVisitor::trace_wrappers_enabled_ = false;
+
 ScriptWrappableVisitor::~ScriptWrappableVisitor() {}
 
 void ScriptWrappableVisitor::TracePrologue() {
@@ -175,6 +177,9 @@ void ScriptWrappableVisitor::RegisterV8References(
     const std::vector<std::pair<void*, void*>>&
         internal_fields_of_potential_wrappers) {
   CHECK(ThreadState::Current());
+  //
+  // if (!trace_wrappers_enabled_)
+  // return;
   // TODO(hlopko): Visit the vector in the V8 instead of passing it over if
   // there is no performance impact
   for (auto& pair : internal_fields_of_potential_wrappers) {
@@ -307,6 +312,10 @@ void ScriptWrappableVisitor::PerformCleanup(v8::Isolate* isolate) {
 ScriptWrappableVisitor* ScriptWrappableVisitor::CurrentVisitor(
     v8::Isolate* isolate) {
   return V8PerIsolateData::From(isolate)->GetScriptWrappableVisitor();
+}
+
+void ScriptWrappableVisitor::DisableTraceWrappers() {
+  trace_wrappers_enabled_ = false;
 }
 
 }  // namespace blink

@@ -25,6 +25,10 @@ void DecommitFreeableMemory() {
   WTF::Partitions::DecommitFreeableMemory();
 }
 
+void RunBlinkGC() {
+  ThreadState::Current()->CollectAllGarbage();
+}
+
 // static
 bool MemoryCoordinator::is_low_end_device_ = false;
 int64_t MemoryCoordinator::physical_memory_mb_ = 0;

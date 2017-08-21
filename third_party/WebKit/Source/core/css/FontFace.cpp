@@ -758,4 +758,12 @@ bool FontFace::HasPendingActivity() const {
   return status_ == kLoading && GetExecutionContext();
 }
 
+void FontFace::ForceResetPendingActivity() {
+  if (loaded_property_)
+    loaded_property_->Reset();
+  loaded_property_ = nullptr;
+  // Make status_ = kError
+  SetError(nullptr);
+}
+
 }  // namespace blink

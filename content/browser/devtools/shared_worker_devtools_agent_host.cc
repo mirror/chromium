@@ -56,6 +56,10 @@ bool SharedWorkerDevToolsAgentHost::Close() {
   return true;
 }
 
+bool SharedWorkerDevToolsAgentHost::Intervene() {
+  return false;
+}
+
 bool SharedWorkerDevToolsAgentHost::Matches(
     const SharedWorkerInstance& other) {
   return shared_worker_->Matches(other);

@@ -108,6 +108,10 @@ class CORE_EXPORT HTMLImageElement final
     return GetImageLoader().HasPendingActivity();
   }
 
+  void ForceResetPendingActivity() final {
+    GetImageLoader().ForceResetPendingActivity();
+  }
+
   bool CanContainRangeEndPoint() const override { return false; }
 
   const AtomicString ImageSourceURL() const override;

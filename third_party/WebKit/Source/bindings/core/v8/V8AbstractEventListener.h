@@ -114,6 +114,8 @@ class CORE_EXPORT V8AbstractEventListener : public EventListener {
   DECLARE_VIRTUAL_TRACE();
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
+  static void dump();
+
  protected:
   V8AbstractEventListener(bool is_attribute, DOMWrapperWorld&, v8::Isolate*);
 

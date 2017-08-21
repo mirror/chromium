@@ -222,6 +222,10 @@ bool FileReader::HasPendingActivity() const {
   return state_ == kLoading || still_firing_events_;
 }
 
+void FileReader::ForceResetPendingActivity() {
+  Terminate();
+}
+
 void FileReader::readAsArrayBuffer(Blob* blob,
                                    ExceptionState& exception_state) {
   DCHECK(blob);

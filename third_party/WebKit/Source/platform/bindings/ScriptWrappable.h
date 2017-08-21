@@ -109,6 +109,9 @@ class PLATFORM_EXPORT ScriptWrappable : public TraceWrapperBase {
   // instance is unreachable from JavaScript.
   virtual bool HasPendingActivity() const { return false; }
 
+  // Make pending activity to be stopped.
+  virtual void ForceResetPendingActivity() {}
+
   // Associates this instance with the given |wrapper| if this instance is not
   // yet associated with any wrapper.  Returns true if the given wrapper is
   // associated with this instance, or false if this instance is already

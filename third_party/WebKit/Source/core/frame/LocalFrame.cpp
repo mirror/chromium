@@ -756,7 +756,8 @@ inline LocalFrame::LocalFrame(LocalFrameClient* client,
       page_zoom_factor_(ParentPageZoomFactor(this)),
       text_zoom_factor_(ParentTextZoomFactor(this)),
       in_view_source_mode_(false),
-      interface_registry_(interface_registry) {
+      interface_registry_(interface_registry),
+      js_disabled_(false) {
   if (IsLocalRoot()) {
     probe_sink_ = new CoreProbeSink();
     performance_monitor_ = new PerformanceMonitor(this);
@@ -1123,6 +1124,17 @@ std::unique_ptr<UserGestureIndicator> LocalFrame::CreateUserGesture(
   if (frame)
     frame->NotifyUserActivation();
   return WTF::MakeUnique<UserGestureIndicator>(status);
+}
+
+void LocalFrame::TrimJS() {
+  // GetScriptController().ClearForClose();
+  GetScriptController().ClearWindowProxy();
+  GetWindowProxyManager()->ClearForNavigationEx();
+
+  if (Document* document = GetDocument())
+    document->TrimJS();
+  // Should be set in the best place... not everywhere...
+  js_disabled_ = true;
 }
 
 }  // namespace blink

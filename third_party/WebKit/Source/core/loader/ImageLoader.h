@@ -108,6 +108,7 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
   }
 
   bool HasPendingActivity() const { return HasPendingEvent() || pending_task_; }
+  void ForceResetPendingActivity();
 
   bool HasPendingError() const { return pending_error_event_.IsActive(); }
 

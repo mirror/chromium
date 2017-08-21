@@ -365,6 +365,10 @@ void MutationObserver::DeliverMutations() {
     slot->DispatchSlotChangeEvent();
 }
 
+void MutationObserver::ForceResetPendingActivity() {
+  disconnect();
+}
+
 DEFINE_TRACE(MutationObserver) {
   visitor->Trace(delegate_);
   visitor->Trace(records_);

@@ -234,6 +234,10 @@ bool MessagePort::HasPendingActivity() const {
   return started_ && IsEntangled();
 }
 
+void MessagePort::ForceResetPendingActivity() {
+  close();
+}
+
 MessagePortChannelArray MessagePort::DisentanglePorts(
     ExecutionContext* context,
     const MessagePortArray& ports,

@@ -114,6 +114,8 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer {
   // Immediately clean up all wrappers.
   static void PerformCleanup(v8::Isolate*);
 
+  static void DisableTraceWrappers();
+
   // Conservative Dijkstra barrier.
   //
   // On assignment 'x.a = y' during incremental marking the Dijkstra barrier
@@ -360,6 +362,7 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer {
                            WriteBarrierOnHeapVectorSwap1);
   FRIEND_TEST_ALL_PREFIXES(ScriptWrappableVisitorTest,
                            WriteBarrierOnHeapVectorSwap2);
+  static bool trace_wrappers_enabled_;
 };
 
 }  // namespace blink

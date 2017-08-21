@@ -55,6 +55,7 @@ class CORE_EXPORT HTMLVideoElement final : public HTMLMediaElement,
   DECLARE_VIRTUAL_TRACE();
 
   bool HasPendingActivity() const final;
+  void ForceResetPendingActivity() final;
 
   enum class MediaRemotingStatus { kNotStarted, kStarted, kDisabled };
 

@@ -1259,6 +1259,15 @@ bool RenderFrameDevToolsAgentHost::Close() {
   return false;
 }
 
+bool RenderFrameDevToolsAgentHost::Intervene() {
+  WebContentsImpl* wc = static_cast<WebContentsImpl*>(web_contents());
+  if (wc) {
+    wc->Intervene();
+    return true;
+  }
+  return false;
+}
+
 base::TimeTicks RenderFrameDevToolsAgentHost::GetLastActivityTime() {
   if (content::WebContents* contents = web_contents())
     return contents->GetLastActiveTime();

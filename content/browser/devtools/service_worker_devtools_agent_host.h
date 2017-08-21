@@ -41,6 +41,7 @@ class ServiceWorkerDevToolsAgentHost : public WorkerDevToolsAgentHost {
   bool Activate() override;
   void Reload() override;
   bool Close() override;
+  bool Intervene() override;
 
   // WorkerDevToolsAgentHost overrides.
   void OnAttachedStateChanged(bool attached) override;

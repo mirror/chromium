@@ -98,6 +98,12 @@ bool SharedWorker::HasPendingActivity() const {
   return is_being_connected_;
 }
 
+void SharedWorker::ForceResetPendingActivity() {
+  if (port_)
+    port_->ForceResetPendingActivity();
+  is_being_connected_ = false;
+}
+
 DEFINE_TRACE(SharedWorker) {
   visitor->Trace(port_);
   AbstractWorker::Trace(visitor);

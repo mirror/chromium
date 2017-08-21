@@ -142,6 +142,11 @@ bool HTMLInputElement::HasPendingActivity() const {
   return ImageLoader() && ImageLoader()->HasPendingActivity();
 }
 
+void HTMLInputElement::ForceResetPendingActivity() {
+  if (ImageLoader())
+    ImageLoader()->ForceResetPendingActivity();
+}
+
 HTMLImageLoader& HTMLInputElement::EnsureImageLoader() {
   if (!image_loader_)
     image_loader_ = HTMLImageLoader::Create(this);

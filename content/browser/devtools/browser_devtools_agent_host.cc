@@ -88,6 +88,10 @@ bool BrowserDevToolsAgentHost::Close() {
   return false;
 }
 
+bool BrowserDevToolsAgentHost::Intervene() {
+  return false;
+}
+
 void BrowserDevToolsAgentHost::Reload() {
 }
 

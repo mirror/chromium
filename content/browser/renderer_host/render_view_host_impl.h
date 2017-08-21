@@ -108,6 +108,7 @@ class CONTENT_EXPORT RenderViewHostImpl : public RenderViewHost,
   void NotifyMoveOrResizeStarted() override;
   void SetWebUIProperty(const std::string& name,
                         const std::string& value) override;
+  void IntervenePage() override;
   void SyncRendererPrefs() override;
   WebPreferences GetWebkitPreferences() override;
   void UpdateWebkitPreferences(const WebPreferences& prefs) override;

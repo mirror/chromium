@@ -453,6 +453,8 @@ IPC_MESSAGE_ROUTED2(ViewMsg_EnumerateDirectoryResponse,
 // Expects a ClosePage_ACK message when finished.
 IPC_MESSAGE_ROUTED0(ViewMsg_ClosePage)
 
+IPC_MESSAGE_ROUTED0(ViewMsg_IntervenePage)
+
 // Notifies the renderer that a paint is to be generated for the rectangle
 // passed in.
 IPC_MESSAGE_ROUTED1(ViewMsg_Repaint,

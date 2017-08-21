@@ -1892,6 +1892,10 @@ bool XMLHttpRequest::HasPendingActivity() const {
   return event_dispatch_recursion_level_ > 0;
 }
 
+void XMLHttpRequest::ForceResetPendingActivity() {
+  InternalAbort();
+}
+
 const AtomicString& XMLHttpRequest::InterfaceName() const {
   return EventTargetNames::XMLHttpRequest;
 }

@@ -123,6 +123,7 @@ class CORE_EXPORT WorkerGlobalScope
 
   // ScriptWrappable
   bool HasPendingActivity() const override;
+  void ForceResetPendingActivity() override;
 
   // ExecutionContext
   bool IsWorkerGlobalScope() const final { return true; }

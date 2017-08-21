@@ -127,6 +127,7 @@ class CORE_EXPORT FontFace : public GarbageCollectedFinalized<FontFace>,
 
   // ScriptWrappable:
   bool HasPendingActivity() const final;
+  void ForceResetPendingActivity() override;
 
  private:
   static FontFace* Create(ExecutionContext*,

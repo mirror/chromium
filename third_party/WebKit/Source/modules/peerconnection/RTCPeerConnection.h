@@ -210,6 +210,7 @@ class MODULES_EXPORT RTCPeerConnection final
   // ScriptWrappable
   // We keep the this object alive until either stopped or closed.
   bool HasPendingActivity() const final { return !closed_ && !stopped_; }
+  void ForceResetPendingActivity() final;
 
   DECLARE_VIRTUAL_TRACE();
 

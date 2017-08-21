@@ -268,6 +268,7 @@ class HeapSnaphotWrapperVisitor : public ScriptWrappableVisitor,
 // for the provided information itself.
 v8::HeapProfiler::RetainerInfos V8GCController::GetRetainerInfos(
     v8::Isolate* isolate) {
+  LOG(INFO) << "V8GCController::GetRetainerInfos()";
   V8PerIsolateData::TemporaryScriptWrappableVisitorScope scope(
       isolate, std::unique_ptr<HeapSnaphotWrapperVisitor>(
                    new HeapSnaphotWrapperVisitor(isolate)));
@@ -275,8 +276,12 @@ v8::HeapProfiler::RetainerInfos V8GCController::GetRetainerInfos(
   HeapSnaphotWrapperVisitor* tracer =
       reinterpret_cast<HeapSnaphotWrapperVisitor*>(scope.CurrentVisitor());
   tracer->CollectV8Roots();
-  tracer->TraceV8Roots();
-  tracer->TracePendingActivities();
+  if (!V8GCController::IsDisabled()) {
+    tracer->TraceV8Roots();
+    tracer->TracePendingActivities();
+  } else {
+    LOG(INFO) << "Skipped traceWrapper";
+  }
   return v8::HeapProfiler::RetainerInfos{tracer->Groups(), tracer->Edges()};
 }
 
@@ -360,6 +365,14 @@ void UpdateCollectedPhantomHandles(v8::Isolate* isolate) {
 }
 
 }  // namespace
+
+static bool s_is_disabled = false;
+bool V8GCController::IsDisabled() {
+  return s_is_disabled;
+}
+void V8GCController::SetDisabled(bool disabled) {
+  s_is_disabled = disabled;
+}
 
 void V8GCController::GcEpilogue(v8::Isolate* isolate,
                                 v8::GCType type,
@@ -501,6 +514,8 @@ class DOMWrapperTracer : public v8::PersistentHandleVisitor {
 };
 
 void V8GCController::TraceDOMWrappers(v8::Isolate* isolate, Visitor* visitor) {
+  if (V8GCController::IsDisabled())
+    return;
   DOMWrapperTracer tracer(visitor);
   isolate->VisitHandlesWithClassIds(&tracer);
 }
@@ -563,6 +578,75 @@ bool V8GCController::HasPendingActivity(v8::Isolate* isolate,
   scan_pending_activity_histogram.Count(
       static_cast<int>(WTF::CurrentTimeMS() - start_time));
   return visitor.PendingActivityFound();
+}
+
+class PendingActivityVisitorEx : public v8::PersistentHandleVisitor {
+ public:
+  PendingActivityVisitorEx(v8::Isolate* isolate) : isolate_(isolate) {}
+
+  void VisitPersistentHandle(v8::Persistent<v8::Value>* value,
+                             uint16_t class_id) override {
+    // If we have already found any wrapper that has a pending activity,
+    // we don't need to check other wrappers.
+    if (class_id != WrapperTypeInfo::kNodeClassId &&
+        class_id != WrapperTypeInfo::kObjectClassId)
+      return;
+
+    v8::Local<v8::Object> wrapper = v8::Local<v8::Object>::New(
+        isolate_, v8::Persistent<v8::Object>::Cast(*value));
+    DCHECK(V8DOMWrapper::HasInternalFieldsSet(wrapper));
+    // The ExecutionContext check is heavy, so it should be done at the last.
+    if (ToWrapperTypeInfo(wrapper)->IsActiveScriptWrappable() &&
+        ToScriptWrappable(wrapper)->HasPendingActivity()) {
+      // Make HasPendingActivity() to return false.
+      ToScriptWrappable(wrapper)->ForceResetPendingActivity();
+    }
+  }
+
+ private:
+  v8::Isolate* isolate_;
+};
+
+void V8GCController::ResetPendingActivity(v8::Isolate* isolate) {
+  // V8GCController::hasPendingActivity is used only when a worker checks if
+  // the worker contains any wrapper that has pending activities.
+  DCHECK(IsMainThread());
+  v8::HandleScope scope(isolate);
+  PendingActivityVisitorEx visitor(isolate);
+  isolate->VisitHandlesWithClassIds(&visitor);
+}
+
+class VisitorForDump : public v8::PersistentHandleVisitor {
+ public:
+  VisitorForDump(v8::Isolate* isolate) : isolate_(isolate) {}
+
+  void VisitPersistentHandle(v8::Persistent<v8::Value>* value,
+                             uint16_t class_id) override {
+    // If we have already found any wrapper that has a pending activity,
+    // we don't need to check other wrappers.
+    if (class_id != WrapperTypeInfo::kNodeClassId &&
+        class_id != WrapperTypeInfo::kObjectClassId)
+      return;
+
+    v8::Local<v8::Object> wrapper = v8::Local<v8::Object>::New(
+        isolate_, v8::Persistent<v8::Object>::Cast(*value));
+    DCHECK(V8DOMWrapper::HasInternalFieldsSet(wrapper));
+    fprintf(
+        stderr, "%s (%s)\n", ToWrapperTypeInfo(wrapper)->interface_name,
+        v8::Persistent<v8::Object>::Cast(*value).IsWeak() ? "weak" : "strong");
+  }
+
+ private:
+  v8::Isolate* isolate_;
+};
+
+void V8GCController::DumpPersistentHandles(v8::Isolate* isolate) {
+  // V8GCController::hasPendingActivity is used only when a worker checks if
+  // the worker contains any wrapper that has pending activities.
+  DCHECK(IsMainThread());
+  v8::HandleScope scope(isolate);
+  VisitorForDump visitor(isolate);
+  isolate->VisitHandlesWithClassIds(&visitor);
 }
 
 }  // namespace blink

@@ -3471,6 +3471,29 @@ bool HTMLMediaElement::HasPendingActivity() const {
   return false;
 }
 
+void HTMLMediaElement::ForceResetPendingActivity() {
+  ForgetResourceSpecificTracks();
+
+  CloseMediaSource();
+
+  CancelDeferredLoad();
+
+  {
+    AudioSourceProviderClientLockScope scope(*this);
+    ClearMediaPlayerAndAudioSourceProviderClientWithoutLocking();
+  }
+
+  StopPeriodicTimers();
+  load_timer_.Stop();
+
+  pending_action_flags_ = 0;
+  load_state_ = kWaitingForSource;
+
+  // We can't cast if we don't have a media player.
+  playing_remotely_ = false;
+  RemoteRouteAvailabilityChanged(WebRemotePlaybackAvailability::kUnknown);
+}
+
 bool HTMLMediaElement::IsFullscreen() const {
   return Fullscreen::IsFullscreenElement(*this);
 }

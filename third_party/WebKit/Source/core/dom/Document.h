@@ -36,6 +36,7 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptValue.h"
+#include "bindings/core/v8/V8GCController.h"
 #include "core/CoreExport.h"
 #include "core/dom/ContainerNode.h"
 #include "core/dom/DocumentEncodingData.h"
@@ -286,7 +287,17 @@ class CORE_EXPORT Document : public ContainerNode,
   using SecurityContext::GetContentSecurityPolicy;
   using TreeScope::getElementById;
 
+  void toggleImageDecode(bool enabled);
+  void toggleFrames(bool enabled);
+  void toggleBackgroundImage(bool enabled);
+  void toggleCSS(bool enabled);
+  String trimDOM();
+  void trimJS();
+  void pauseJS();
+
   bool CanContainRangeEndPoint() const override { return true; }
+
+  void TrimJS();
 
   SelectorQueryCache& GetSelectorQueryCache();
 
@@ -1726,6 +1737,8 @@ class CORE_EXPORT Document : public ContainerNode,
   bool has_high_media_engagement_;
 
   std::unique_ptr<DocumentOutliveTimeReporter> document_outlive_time_reporter_;
+
+  bool js_disabled_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;
