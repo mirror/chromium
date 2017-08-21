@@ -22,6 +22,30 @@
       "revId": "dc72b1968ae5002d99e5e56fc62433e290881642",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038e8b69_b2cb549d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ToolbarProgressBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-21T21:03:19Z",
+      "side": 1,
+      "message": "The name I picked for that variable could be better. It represents whether or not the animation should be playing for the current page load. The animator itself stops when it hits the current page progress, this is to restart it again. Renamed the variable to be more clear.",
+      "parentUuid": "ca1f543b_84eb862d",
+      "range": {
+        "startLine": 346,
+        "startChar": 17,
+        "endLine": 346,
+        "endChar": 34
+      },
+      "revId": "dc72b1968ae5002d99e5e56fc62433e290881642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
