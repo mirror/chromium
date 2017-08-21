@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f735f6c_ac0696a4",
+        "filename": "chrome/browser/resources/settings/controls/settings_boolean_control_behavior.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-21T09:50:47Z",
+      "side": 1,
+      "message": "I moved it to settings checkbox. Thanks",
+      "parentUuid": "c63cc5ff_86a0b26d",
+      "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67b25ad0_b0439b28",
         "filename": "chrome/browser/resources/settings/controls/settings_boolean_control_behavior.js",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-14T19:46:28Z",
       "side": 1,
       "message": "This is pretty hacky. Do we need this in more than one place? We might be better off just creating a one-off custom element using SettingsBooleanControlBehavior.",
+      "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae17371_430d5d10",
+        "filename": "chrome/browser/resources/settings/controls/settings_boolean_control_behavior.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-21T09:50:47Z",
+      "side": 1,
+      "message": "I moved the code to settings_checkbox. Is there a way to create a on-off checkbox control without copying all of settings_checkbox.html?",
+      "parentUuid": "67b25ad0_b0439b28",
       "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9d39cfb5_80830831",
+        "filename": "chrome/browser/resources/settings/controls/settings_checkbox.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-21T09:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6015a251_8616f7b1",
+      "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d1ae9f3_aa78fdea",
         "filename": "chrome/browser/resources/settings/controls/settings_checkbox.html",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-14T19:46:28Z",
       "side": 1,
       "message": "Does the extra margin impact existing checkboxes? I\u0027m definitely wondering whether we want to generalize this.",
+      "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d87a1a_35fe5d4b",
+        "filename": "chrome/browser/resources/settings/controls/settings_checkbox.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-21T09:50:47Z",
+      "side": 1,
+      "message": "The content of settings-checkbox with sublabel has a height of 40px. --settings-row-two-line-min-height is 64px by default and the smallest value I have seen is 48px in CBD. \n\nSo I think the additional 4px top and 4px bottom margin shouldn\u0027t matter? \n\nThe reason I added the margin is that when we show subLabels with more than one line, the checkboxes got too close. Alternatively I could set the margins using parameters.\n\nSettings-checkbox without sublabel has a min-height of 48px, so it also isn\u0027t affected.",
+      "parentUuid": "4d1ae9f3_aa78fdea",
       "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1f6c1b_7ffb956f",
+        "filename": "chrome/browser/resources/settings/controls/settings_checkbox.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-21T09:50:47Z",
+      "side": 1,
+      "message": "The element doesn\u0027t use any space when subLabelHtml is not set. Thanks for the suggestion",
+      "parentUuid": "d7560e7c_55fcbe73",
+      "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
