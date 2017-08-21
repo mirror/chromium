@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f96f3d7_1503b891",
+        "filename": "chrome/browser/extensions/permissions_updater.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T20:42:36Z",
+      "side": 1,
+      "message": "nit: why do we need a profile instead of a browser context?",
+      "revId": "2475ff6b4a805ca5b8b925dad840af78b0ddf13b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
