@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "838ecf40_01b9102b",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-21T11:58:31Z",
+      "side": 1,
+      "message": "Is it possible to ensure that we do this only once after the feature is disabled?\n\nOr it is cheap enough not to worry?",
+      "range": {
+        "startLine": 301,
+        "startChar": 4,
+        "endLine": 301,
+        "endChar": 63
+      },
+      "revId": "2ca0237aecd1efb8209d337f30859d857e1aafad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3a96f6_ec3738ad",
+        "filename": "components/ntp_snippets/breaking_news/subscription_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-21T11:58:31Z",
+      "side": 1,
+      "message": "Do you happen to know an easy way to test that this clears *all* prefs?\n\nI thought about running the class for some time and then doing ClearProfilePrefs and checking that all profile prefs are set to default.\nHowever, this requires enumerating the paths and I could not find a way to achieve this.",
+      "range": {
+        "startLine": 282,
+        "startChar": 30,
+        "endLine": 282,
+        "endChar": 47
+      },
+      "revId": "2ca0237aecd1efb8209d337f30859d857e1aafad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
