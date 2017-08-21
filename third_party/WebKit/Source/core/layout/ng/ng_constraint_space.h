@@ -23,7 +23,6 @@
 namespace blink {
 
 class LayoutBox;
-struct NGExclusion;
 
 enum NGFragmentationType {
   kFragmentNone,
@@ -58,8 +57,6 @@ class CORE_EXPORT NGConstraintSpace final
   NGWritingMode WritingMode() const {
     return static_cast<NGWritingMode>(writing_mode_);
   }
-
-  void AddExclusion(const NGExclusion& exclusion);
 
   // The size to use for percentage resolution.
   // See: https://drafts.csswg.org/css-sizing/#percentage-sizing
