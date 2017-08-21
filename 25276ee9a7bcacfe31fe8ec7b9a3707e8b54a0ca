@@ -69,6 +69,24 @@
       "revId": "25276ee9a7bcacfe31fe8ec7b9a3707e8b54a0ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef468a0e_89ce3d1a",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-08-21T17:33:57Z",
+      "side": 1,
+      "message": "I arrived too late, but I\u0027d probably use IMMEDIATE_CRASH() from base/logging.h here to share whatever mechanism (and the resulting error code / signal on the various platforms) we use for official CHCECKs",
+      "parentUuid": "2773b28b_b8fbc28b",
+      "revId": "25276ee9a7bcacfe31fe8ec7b9a3707e8b54a0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
