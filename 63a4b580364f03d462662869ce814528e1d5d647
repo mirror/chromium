@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45b90227_754b3cba",
+        "filename": "ios/chrome/browser/ui/payments/cells/accessibility_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-21T12:42:14Z",
+      "side": 1,
+      "message": "nit: #import \u003cFoundation/Foundation.h\u003e should be sufficient.",
+      "range": {
+        "startLine": 8,
+        "startChar": 8,
+        "endLine": 8,
+        "endChar": 23
+      },
+      "revId": "63a4b580364f03d462662869ce814528e1d5d647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee2fc52_bee837e2",
+        "filename": "ios/chrome/browser/ui/payments/cells/accessibility_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-21T12:42:14Z",
+      "side": 1,
+      "message": "nit: appendItem",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 15
+      },
+      "revId": "63a4b580364f03d462662869ce814528e1d5d647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f375bc_515a87e4",
+        "filename": "ios/chrome/browser/ui/payments/cells/accessibility_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-21T12:42:14Z",
+      "side": 1,
+      "message": "nit: buildAccessibilityLabel",
+      "range": {
+        "startLine": 18,
+        "startChar": 13,
+        "endLine": 18,
+        "endChar": 18
+      },
+      "revId": "63a4b580364f03d462662869ce814528e1d5d647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b73af7_419e60c4",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_accessibility_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-21T12:42:14Z",
+      "side": 1,
+      "message": "I think prefer we didn\u0027t use the AccessibilityLabelBuilder here in this file, just as another way of testing the label against the expectation.",
+      "revId": "63a4b580364f03d462662869ce814528e1d5d647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b67f09_2017c16d",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_debit_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-21T12:42:14Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 67
+      },
+      "revId": "63a4b580364f03d462662869ce814528e1d5d647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
