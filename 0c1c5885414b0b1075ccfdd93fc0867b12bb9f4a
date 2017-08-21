@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b26e28bd_3fab9641",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-08-21T22:40:25Z",
+      "side": 1,
+      "message": "Why not just pass .release() on line 46? if |handle| is valid mxio_transfer_fd() will take ownership of it, if it\u0027s not valid then trying to shut down probably isn\u0027t gonna do any good anyway",
+      "revId": "0c1c5885414b0b1075ccfdd93fc0867b12bb9f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52b4025f_88ebecb0",
         "filename": "mojo/edk/system/channel_fuchsia.cc",
         "patchSetId": 4
