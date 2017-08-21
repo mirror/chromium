@@ -61,6 +61,7 @@ class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
                 'api_classname': api_classname,
                 'methods_for_class': self.methods_for_classes[api_classname],
                 'is_interpolable': 'true' if property_['interpolable'] else 'false',
+                'is_inherited': 'true' if property_['inherited'] else 'false',
             }
         return generate_property_api_h
 
