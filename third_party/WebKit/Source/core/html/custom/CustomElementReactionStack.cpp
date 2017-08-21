@@ -8,13 +8,15 @@
 #include "core/html/custom/CEReactionsScope.h"
 #include "core/html/custom/CustomElementReactionQueue.h"
 #include "platform/bindings/Microtask.h"
+#include "platform/bindings/TraceWrapperPersistent.h"
 
 namespace blink {
 
 namespace {
 
-Persistent<CustomElementReactionStack>& GetCustomElementReactionStack() {
-  DEFINE_STATIC_LOCAL(Persistent<CustomElementReactionStack>,
+TraceWrapperPersistent<CustomElementReactionStack>&
+GetCustomElementReactionStack() {
+  DEFINE_STATIC_LOCAL(TraceWrapperPersistent<CustomElementReactionStack>,
                       custom_element_reaction_stack,
                       (new CustomElementReactionStack));
   return custom_element_reaction_stack;
@@ -120,7 +122,7 @@ CustomElementReactionStack& CustomElementReactionStack::Current() {
 CustomElementReactionStack*
 CustomElementReactionStackTestSupport::SetCurrentForTest(
     CustomElementReactionStack* new_stack) {
-  Persistent<CustomElementReactionStack>& stack =
+  TraceWrapperPersistent<CustomElementReactionStack>& stack =
       GetCustomElementReactionStack();
   CustomElementReactionStack* old_stack = stack.Get();
   stack = new_stack;

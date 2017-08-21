@@ -94,7 +94,8 @@ DEFINE_TRACE(CustomElementRegistry) {
 }
 
 DEFINE_TRACE_WRAPPERS(CustomElementRegistry) {
-  // TODO(mlippautz): This is not safe for incremental marking.
+  // This is safe as writes to the stack persistent are guarded by
+  // TraceWrapperPersistent.
   visitor->TraceWrappersWithManualWriteBarrier(
       &CustomElementReactionStack::Current());
   for (auto definition : definitions_)
