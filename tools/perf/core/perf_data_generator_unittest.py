@@ -92,7 +92,7 @@ class PerfDataGeneratorTest(unittest.TestCase):
           'dimension_sets': [{'os': 'SkyNet', 'id': 'T-850', 'pool': 'T-RIP'}],
           'hard_timeout': 10800,
           'can_use_on_swarming_builders': True,
-          'expiration': 72000,
+          'expiration': 36000,
           'io_timeout': 600,
           'upload_test_results': False,
         },
