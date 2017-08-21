@@ -12,6 +12,7 @@
 #include "cc/animation/animation_delegate.h"
 #include "cc/animation/animation_events.h"
 #include "cc/animation/animation_host.h"
+#include "cc/animation/animation_id_provider.h"
 #include "cc/animation/animation_timeline.h"
 #include "cc/animation/scroll_offset_animation_curve.h"
 #include "cc/animation/transform_operations.h"
@@ -24,7 +25,8 @@ scoped_refptr<AnimationPlayer> AnimationPlayer::Create(int id) {
 }
 
 AnimationPlayer::AnimationPlayer(int id)
-    : animation_host_(),
+    : AnimationController(id),
+      animation_host_(),
       animation_timeline_(),
       element_animations_(),
       animation_delegate_(),
@@ -32,13 +34,18 @@ AnimationPlayer::AnimationPlayer(int id)
       needs_push_properties_(false),
       needs_to_start_animations_(false),
       is_ticking_(false),
-      scroll_offset_animation_was_interrupted_(false) {
+      scroll_offset_animation_was_interrupted_(false),
+      effect_controller_(EffectController::Create(
+          AnimationIdProvider::NextEffectControllerId())) {
   DCHECK(id_);
+  AddEffectController(std::move(effect_controller_));
 }
 
 AnimationPlayer::~AnimationPlayer() {
   DCHECK(!animation_timeline_);
   DCHECK(!element_animations_);
+  if (effect_controller_)
+    RemoveEffectController(std::move(effect_controller_));
 }
 
 scoped_refptr<AnimationPlayer> AnimationPlayer::CreateImplInstance() const {
@@ -71,6 +78,7 @@ void AnimationPlayer::AttachElement(ElementId element_id) {
   DCHECK(element_id);
 
   element_id_ = element_id;
+  effect_controller_->SetElementId(element_id);
 
   // Register player only if layer AND host attached.
   if (animation_host_)

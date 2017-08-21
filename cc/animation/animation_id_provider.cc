@@ -7,14 +7,26 @@
 
 namespace cc {
 
+base::AtomicSequenceNumber g_next_animation_controller_id;
 base::AtomicSequenceNumber g_next_animation_id;
+base::AtomicSequenceNumber g_next_effect_controller_id;
 base::AtomicSequenceNumber g_next_group_id;
 base::AtomicSequenceNumber g_next_timeline_id;
 base::AtomicSequenceNumber g_next_player_id;
 
+int AnimationIdProvider::NextAnimationControllerId() {
+  // Animation controller IDs start from 1.
+  return g_next_animation_controller_id.GetNext() + 1;
+}
+
 int AnimationIdProvider::NextAnimationId() {
   // Animation IDs start from 1.
   return g_next_animation_id.GetNext() + 1;
+}
+
+int AnimationIdProvider::NextEffectControllerId() {
+  // Effect controller IDs start from 1.
+  return g_next_effect_controller_id.GetNext() + 1;
 }
 
 int AnimationIdProvider::NextGroupId() {

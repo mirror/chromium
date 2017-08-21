@@ -9,6 +9,8 @@ cc_component("animation") {
   sources = [
     "animation.cc",
     "animation.h",
+    "animation_controller.cc",
+    "animation_controller.h",
     "animation_curve.cc",
     "animation_curve.h",
     "animation_delegate.h",
@@ -24,6 +26,8 @@ cc_component("animation") {
     "animation_target.h",
     "animation_timeline.cc",
     "animation_timeline.h",
+    "effect_controller.cc",
+    "effect_controller.h",
     "element_animations.cc",
     "element_animations.h",
     "keyframed_animation_curve.cc",
