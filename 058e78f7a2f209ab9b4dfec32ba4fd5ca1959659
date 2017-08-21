@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa0765dc_a5c2de87",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-21T09:15:37Z",
+      "side": 1,
+      "message": "Super optional nit:\nI prefer ternary operator for this case.",
+      "range": {
+        "startLine": 313,
+        "startChar": 14,
+        "endLine": 313,
+        "endChar": 27
+      },
+      "revId": "058e78f7a2f209ab9b4dfec32ba4fd5ca1959659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6acedc98_62dd068f",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-21T09:15:37Z",
+      "side": 1,
+      "message": "is it possible to have only one line of most visited?",
+      "range": {
+        "startLine": 340,
+        "startChar": 10,
+        "endLine": 340,
+        "endChar": 11
+      },
+      "revId": "058e78f7a2f209ab9b4dfec32ba4fd5ca1959659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
