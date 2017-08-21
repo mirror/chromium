@@ -79,7 +79,6 @@ void PepperPlatformAudioInput::OnStreamCreated(
     base::SharedMemoryHandle handle,
     base::SyncSocket::Handle socket_handle,
     int length,
-    int total_segments,
     bool initially_muted) {
 #if defined(OS_WIN)
   DCHECK(handle.IsValid());
@@ -89,8 +88,6 @@ void PepperPlatformAudioInput::OnStreamCreated(
   DCHECK_NE(-1, socket_handle);
 #endif
   DCHECK(length);
-  // TODO(yzshen): Make use of circular buffer scheme. crbug.com/181449.
-  DCHECK_EQ(1, total_segments);
 
   if (base::ThreadTaskRunnerHandle::Get().get() != main_task_runner_.get()) {
     // If shutdown has occurred, |client_| will be NULL and the handles will be
@@ -98,7 +95,7 @@ void PepperPlatformAudioInput::OnStreamCreated(
     main_task_runner_->PostTask(
         FROM_HERE,
         base::BindOnce(&PepperPlatformAudioInput::OnStreamCreated, this, handle,
-                       socket_handle, length, total_segments, initially_muted));
+                       socket_handle, length, initially_muted));
   } else {
     // Must dereference the client only on the main thread. Shutdown may have
     // occurred while the request was in-flight, so we need to NULL check.
