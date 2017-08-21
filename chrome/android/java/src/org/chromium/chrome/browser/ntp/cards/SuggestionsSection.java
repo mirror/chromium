@@ -508,6 +508,11 @@ public class SuggestionsSection extends InnerNode {
         mProgressIndicator.setVisible(true);
     }
 
+    /** Whether the section can fetch more suggestions. */
+    public boolean canFetchMore() {
+        return mCategoryInfo.isFetchMoreSupported();
+    }
+
     /**
      * Programmatically click the more button. This differs from directly calling
      * {@link #fetchSuggestions()} in that it disables the button.

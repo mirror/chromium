@@ -224,12 +224,30 @@ public class SectionList
     }
 
     /**
-     * Clicks on the more button for the Articles for you section. This assumes that that is the
-     * only present section.
+     * Fetches more suggestions. The SectionList should contain exactly 1 SuggestionsSection that
+     * supports fetching more.
      */
-    public void clickArticlesMoreButton() {
-        assert mSections.size() == 1;
-        mSections.get(KnownCategories.ARTICLES).clickMoreButton(mUiDelegate);
+    public void fetchMore() {
+        SuggestionsSection fetchMoreSection = null;
+        for (SuggestionsSection section : mSections.values()) {
+            if (!section.canFetchMore()) continue;
+
+            if (fetchMoreSection != null) {
+                Log.e(TAG, "SectionList attempted to fetch more while containing multiple "
+                                + "sections that support it: %d and %d",
+                        fetchMoreSection.getCategory(), section.getCategory());
+            }
+
+            fetchMoreSection = section;
+        }
+
+        if (fetchMoreSection == null) {
+            Log.e(TAG, "SectionList attempted to fetch more while containing no section that "
+                    + "supports it");
+            return;
+        }
+
+        fetchMoreSection.clickMoreButton(mUiDelegate);
     }
 
     /**
