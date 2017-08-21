@@ -187,6 +187,14 @@ void Label::SetMultiLine(bool multi_line) {
   ResetLayout();
 }
 
+void Label::SetMaxLines(int max_lines) {
+  if (max_lines_ == max_lines)
+    return;
+  max_lines_ = max_lines;
+  multi_line_ = max_lines > 0;
+  ResetLayout();
+}
+
 void Label::SetObscured(bool obscured) {
   if (this->obscured() == obscured)
     return;
@@ -819,6 +827,7 @@ void Label::Init(const base::string16& text, const gfx::FontList& font_list) {
   subpixel_rendering_enabled_ = true;
   auto_color_readability_ = true;
   multi_line_ = false;
+  max_lines_ = 0;
   UpdateColorsFromTheme(GetNativeTheme());
   handles_tooltips_ = true;
   collapse_when_hidden_ = false;
@@ -867,15 +876,14 @@ void Label::MaybeBuildRenderTextLines() const {
         rtl ? gfx::DIRECTIONALITY_FORCE_RTL : gfx::DIRECTIONALITY_FORCE_LTR;
   }
 
-  // Text eliding is not supported for multi-lined Labels.
-  // TODO(mukai): Add multi-lined elided text support.
   gfx::ElideBehavior elide_behavior =
-      multi_line() ? gfx::NO_ELIDE : elide_behavior_;
+      max_lines() ? gfx::ELIDE_TAIL : elide_behavior_;
   if (!multi_line() || render_text_->MultilineSupported()) {
     std::unique_ptr<gfx::RenderText> render_text =
         CreateRenderText(text(), alignment, directionality, elide_behavior);
     render_text->SetDisplayRect(rect);
     render_text->SetMultiline(multi_line());
+    render_text->SetMaxLines(max_lines());
     render_text->SetWordWrapBehavior(render_text_->word_wrap_behavior());
 
     // Setup render text for selection controller.
