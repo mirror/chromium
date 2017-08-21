@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "973af413_5b2e874f",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-21T13:56:39Z",
+      "side": 1,
+      "message": "Once the sign-in promo will be enabled for UI tests, I will remove this method since all the current UI tests will use PrimarySignInButton() or SecondarySignInButton().\n\nThe current sign-in button will have its own UI test (since it can still be visible in some cases), but I will probably use directly kSettingsSignInCellId instead of having this helper method.",
+      "parentUuid": "94559bd3_6cd9a11d",
+      "range": {
+        "startLine": 203,
+        "startChar": 1,
+        "endLine": 203,
+        "endChar": 0
+      },
+      "revId": "d0ad553311041027cbc6bfdcbb11ff94df0ca850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c292d2c_5e796a1c",
         "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
         "patchSetId": 4
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Thanks for the info. My questions was mostly that the implementation of both matchers are identical. The implementation will change so that they\u0027re different?",
       "parentUuid": "5efc66dc_47217749",
+      "range": {
+        "startLine": 211,
+        "startChar": 1,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "d0ad553311041027cbc6bfdcbb11ff94df0ca850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b27b4c7_bb8f913b",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-21T13:56:39Z",
+      "side": 1,
+      "message": "The implementation will be changed to get the the first button for PrimarySignInButton() and the second button for SecondarySignInButton().",
+      "parentUuid": "396f3d9a_4d624be1",
       "range": {
         "startLine": 211,
         "startChar": 1,
