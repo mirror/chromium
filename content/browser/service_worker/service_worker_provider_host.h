@@ -26,7 +26,6 @@
 #include "content/common/service_worker/service_worker_provider_host_info.h"
 #include "content/common/service_worker/service_worker_provider_interfaces.mojom.h"
 #include "content/common/service_worker/service_worker_types.h"
-#include "content/common/worker_url_loader_factory_provider.mojom.h"
 #include "content/public/common/request_context_frame_type.h"
 #include "content/public/common/request_context_type.h"
 #include "content/public/common/resource_type.h"
@@ -330,7 +329,7 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   // the parent frame's ServiceWorkerProviderHost. (This is used only when
   // off-main-thread-fetch is enabled.)
   void BindWorkerFetchContext(
-      mojom::ServiceWorkerWorkerClientAssociatedPtrInfo client_ptr_info);
+      mojom::ServiceWorkerWorkerClientPtr client_ptr) override;
 
  private:
   friend class ForeignFetchRequestHandlerTest;
@@ -467,7 +466,7 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   // Keeps ServiceWorkerWorkerClient pointers of dedicated or shared workers
   // which are associated with the ServiceWorkerProviderHost.
   std::unordered_map<mojom::ServiceWorkerWorkerClient*,
-                     mojom::ServiceWorkerWorkerClientAssociatedPtr>
+                     mojom::ServiceWorkerWorkerClientPtr>
       worker_clients_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerProviderHost);

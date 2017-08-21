@@ -99,6 +99,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   void CountFeature(uint32_t feature);
   const std::set<uint32_t>& used_features() const;
 
+  mojom::ServiceWorkerWorkerClientRequest BindWorkerFetchContext();
+
   // Called when ServiceWorkerNetworkProvider is destructed. This function
   // severs the Mojo binding to the browser-side ServiceWorkerProviderHost. The
   // reason ServiceWorkerNetworkProvider is special compared to the other

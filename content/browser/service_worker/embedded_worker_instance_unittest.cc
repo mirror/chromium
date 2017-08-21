@@ -50,6 +50,11 @@ class ProviderHostEndpoints : public mojom::ServiceWorkerProviderHost {
 
   ~ProviderHostEndpoints() override {}
 
+  void BindWorkerFetchContext(
+      mojom::ServiceWorkerWorkerClientPtr client) override {
+    NOTIMPLEMENTED();
+  };
+
   mojom::ServiceWorkerProviderInfoForStartWorkerPtr CreateProviderInfoPtr() {
     DCHECK(!binding_.is_bound());
     DCHECK(!client_.is_bound());
