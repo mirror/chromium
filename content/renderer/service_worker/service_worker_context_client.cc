@@ -39,7 +39,6 @@
 #include "content/common/service_worker/service_worker_messages.h"
 #include "content/common/service_worker/service_worker_status_code.h"
 #include "content/common/service_worker/service_worker_utils.h"
-#include "content/common/worker_url_loader_factory_provider.mojom.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/push_event_payload.h"
 #include "content/public/common/referrer.h"
@@ -1217,15 +1216,27 @@ std::unique_ptr<blink::WebWorkerFetchContext>
 ServiceWorkerContextClient::CreateServiceWorkerFetchContext() {
   DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
   DCHECK(base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
-  mojom::WorkerURLLoaderFactoryProviderPtr worker_url_loader_factory_provider;
-  RenderThreadImpl::current()
-      ->blink_platform_impl()
-      ->GetInterfaceProvider()
-      ->GetInterface(mojo::MakeRequest(&worker_url_loader_factory_provider));
 
+  mojom::URLLoaderFactoryPtrInfo url_loader_factory_copy;
+  PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory> url_loader_factory =
+      RenderThreadImpl::current()
+          ->blink_platform_impl()
+          ->CreateNetworkURLLoaderFactory();
+  url_loader_factory->Clone(mojo::MakeRequest(&url_loader_factory_copy));
+
+  mojom::URLLoaderFactoryPtrInfo blob_url_loader_factory_copy;
+
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    mojom::URLLoaderFactoryPtr blob_url_loader_factory;
+    RenderThreadImpl::current()->GetRendererHost()->GetBlobURLLoaderFactory(
+        mojo::MakeRequest(&blob_url_loader_factory));
+    blob_url_loader_factory->Clone(
+        mojo::MakeRequest(&blob_url_loader_factory_copy));
+  }
   // Blink is responsible for deleting the returned object.
   return base::MakeUnique<ServiceWorkerFetchContextImpl>(
-      script_url_, worker_url_loader_factory_provider.PassInterface(),
+      script_url_, std::move(url_loader_factory_copy),
+      std::move(blob_url_loader_factory_copy),
       provider_context_->provider_id());
 }
 
