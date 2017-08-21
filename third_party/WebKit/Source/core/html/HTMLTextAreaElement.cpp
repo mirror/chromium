@@ -245,7 +245,8 @@ bool HTMLTextAreaElement::ShouldShowFocusRingOnMouseFocus() const {
 }
 
 void HTMLTextAreaElement::UpdateFocusAppearance(
-    SelectionBehaviorOnFocus selection_behavior) {
+    SelectionBehaviorOnFocus selection_behavior,
+    const FocusOptions& options) {
   switch (selection_behavior) {
     case SelectionBehaviorOnFocus::kReset:  // Fallthrough.
     case SelectionBehaviorOnFocus::kRestore:
@@ -255,7 +256,7 @@ void HTMLTextAreaElement::UpdateFocusAppearance(
       return;
   }
   if (GetDocument().GetFrame())
-    GetDocument().GetFrame()->Selection().RevealSelection();
+    GetDocument().GetFrame()->Selection().RevealSelection(options);
 }
 
 void HTMLTextAreaElement::DefaultEventHandler(Event* event) {

@@ -36,6 +36,7 @@
 #include "core/dom/ElementData.h"
 #include "core/dom/SpaceSplitString.h"
 #include "core/dom/WhitespaceAttacher.h"
+#include "core/html/FocusOptions.h"
 #include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "public/platform/WebFocusType.h"
@@ -56,6 +57,7 @@ class DOMTokenList;
 class ElementRareData;
 class ElementShadow;
 class ExceptionState;
+class FocusOptions;
 class Image;
 class InputDeviceCapabilities;
 class Locale;
@@ -110,15 +112,18 @@ struct FocusParams {
   FocusParams() {}
   FocusParams(SelectionBehaviorOnFocus selection,
               WebFocusType focus_type,
-              InputDeviceCapabilities* capabilities)
+              InputDeviceCapabilities* capabilities,
+              FocusOptions focus_options = FocusOptions())
       : selection_behavior(selection),
         type(focus_type),
-        source_capabilities(capabilities) {}
+        source_capabilities(capabilities),
+        options(focus_options) {}
 
   SelectionBehaviorOnFocus selection_behavior =
       SelectionBehaviorOnFocus::kRestore;
   WebFocusType type = kWebFocusTypeNone;
   Member<InputDeviceCapabilities> source_capabilities = nullptr;
+  FocusOptions options = FocusOptions();
 };
 
 typedef HeapVector<Member<Attr>> AttrNodeList;
@@ -548,7 +553,10 @@ class CORE_EXPORT Element : public ContainerNode {
   virtual Image* ImageContents() { return nullptr; }
 
   virtual void focus(const FocusParams& = FocusParams());
-  virtual void UpdateFocusAppearance(SelectionBehaviorOnFocus);
+  void focus(FocusOptions);
+
+  virtual void UpdateFocusAppearance(SelectionBehaviorOnFocus,
+                                     const FocusOptions& = FocusOptions());
   virtual void blur();
 
   void setDistributeScroll(ScrollStateCallback*, String native_scroll_behavior);

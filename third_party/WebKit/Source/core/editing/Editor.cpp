@@ -178,7 +178,7 @@ Editor::RevealSelectionScope::~RevealSelectionScope() {
   --editor_->prevent_reveal_selection_;
   if (!editor_->prevent_reveal_selection_) {
     editor_->GetFrame().Selection().RevealSelection(
-        ScrollAlignment::kAlignToEdgeIfNeeded, kRevealExtent);
+        FocusOptions(), ScrollAlignment::kAlignToEdgeIfNeeded, kRevealExtent);
   }
 }
 
@@ -1076,7 +1076,7 @@ bool Editor::InsertTextWithoutSendingTextEvent(
       LocalFrame* focused_or_main_frame =
           ToLocalFrame(page->GetFocusController().FocusedOrMainFrame());
       focused_or_main_frame->Selection().RevealSelection(
-          ScrollAlignment::kAlignCenterIfNeeded);
+          FocusOptions(), ScrollAlignment::kAlignCenterIfNeeded);
     }
   }
 
@@ -1408,7 +1408,8 @@ void Editor::RevealSelectionAfterEditingOperation(
     return;
   if (!GetFrame().Selection().IsAvailable())
     return;
-  GetFrame().Selection().RevealSelection(alignment, reveal_extent_option);
+  GetFrame().Selection().RevealSelection(FocusOptions(), alignment,
+                                         reveal_extent_option);
 }
 
 // TODO(yosin): We should move |Transpose()| into |ExecuteTranspose()| in
