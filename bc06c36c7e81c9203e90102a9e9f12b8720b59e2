@@ -22,6 +22,30 @@
       "revId": "bc06c36c7e81c9203e90102a9e9f12b8720b59e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d208f5b_d982f450",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-08-21T15:29:59Z",
+      "side": 1,
+      "message": "This is actually a straight up move from https://cs.chromium.org/chromium/src/ui/android/java/strings/android_ui_strings.grd?l\u003d192\u0026rcl\u003d65a1ae787fd57bdf3846c3bcf7bff5b7bd54b03b\n\nI\u0027d prefer to not make edits in this CL if that\u0027s okay, since I\u0027d like to keep it a simple move.\n\nWDYT?",
+      "parentUuid": "e546b710_29011b8f",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 158,
+        "endChar": 20
+      },
+      "revId": "bc06c36c7e81c9203e90102a9e9f12b8720b59e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
