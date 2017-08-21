@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2e741268_60a89d61",
+        "filename": "third_party/WebKit/Source/core/leak_detector/BlinkLeakDetector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-08-21T05:03:06Z",
+      "side": 1,
+      "message": "CollectAllGarbageForTesting requires --expose-gc flag. I wanted the leak detector to be useable without any command line flags. But (now that I think about this) if we want to use CollectAllGarbageForTesting, we could just add the flag when executing the telemetry test.",
+      "parentUuid": "f291139c_4645a520",
+      "revId": "fc55d9505696d7c03e17f4e6a77d890a965016ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bbb7711_bc15498b",
         "filename": "third_party/WebKit/Source/core/leak_detector/BlinkLeakDetector.cpp",
         "patchSetId": 1
