@@ -47,6 +47,12 @@ class Helper : public EmbeddedWorkerTestHelper {
     blob_size_ = blob_size;
   }
 
+  // Tells this helper to respond to fetch events with fallback.
+  void RespondWithFallback() { response_mode_ = ResponseMode::kFallback; }
+
+  // For FailFatchDispatch
+  void failfetch() { response_mode_ = ResponseMode::kFailfetch; }
+
  protected:
   void OnFetchEvent(
       int embedded_worker_id,
@@ -77,17 +83,29 @@ class Helper : public EmbeddedWorkerTestHelper {
             base::Time::Now());
         std::move(finish_callback).Run(SERVICE_WORKER_OK, base::Time::Now());
         return;
+      case ResponseMode::kFallback:
+        response_callback->OnFallback(base::Time::Now());
+        std::move(finish_callback).Run(SERVICE_WORKER_OK, base::Time::Now());
+        return;
+      case ResponseMode::kFailfetch:
+        SimulateWorkerStopped(embedded_worker_id);
+        std::move(finish_callback)
+            .Run(SERVICE_WORKER_ERROR_ABORT, base::Time::Now());
+        return;
     }
     NOTREACHED();
   }
 
  private:
-  enum class ResponseMode { kDefault, kBlob };
+  enum class ResponseMode { kDefault, kBlob, kFallback, kFailfetch };
   ResponseMode response_mode_ = ResponseMode::kDefault;
 
   // For ResponseMode::kBlob.
   std::string blob_uuid_;
   uint64_t blob_size_ = 0;
+
+  // For ResponseMode::stream_handle_
+  blink::mojom::ServiceWorkerStreamHandlePtr stream_handle_;
 
   DISALLOW_COPY_AND_ASSIGN(Helper);
 };
@@ -146,9 +164,15 @@ class ServiceWorkerURLLoaderJobTest
     return blob_context_.AsWeakPtr();
   }
 
+  // For TestRequest
+  enum class HandlerResult {
+    kHandledRequest,
+    kDidNotHandleRequest,
+  };
+
   // Performs a request. When this returns, |client_| will have information
   // about the response.
-  void TestRequest() {
+  HandlerResult TestRequest() {
     ResourceRequest request;
     request.url = GURL("https://www.example.com/");
     request.method = "GET";
@@ -161,16 +185,17 @@ class ServiceWorkerURLLoaderJobTest
         GetBlobStorageContext());
     job->ForwardToServiceWorker();
     base::RunLoop().RunUntilIdle();
-    // TODO(falken): When fallback to network tests are added,
-    // callback can be null. In that case this function should return cleanly
-    // and somehow tell the caller we're falling back to network.
-    EXPECT_FALSE(callback.is_null());
+    if (callback.is_null()) {
+      return HandlerResult::kDidNotHandleRequest;
+    }
 
     // Start the loader. It will load |request.url|.
     mojom::URLLoaderPtr loader;
     std::move(callback).Run(mojo::MakeRequest(&loader),
                             client_.CreateInterfacePtr());
     client_.RunUntilComplete();
+
+    return HandlerResult::kHandledRequest;
   }
 
   void ExpectFetchedViaServiceWorker(const ResourceResponseHead& info) {
@@ -186,7 +211,14 @@ class ServiceWorkerURLLoaderJobTest
     EXPECT_EQ(std::string(), info.cache_storage_cache_name);
   }
 
+  bool MainResourceLoadFailedWasCalled() {
+    return isMainResourceLoadFailedCalled;
+  }
+
  protected:
+  // For MainResourceLoadFailedWasCalled
+  bool isMainResourceLoadFailedCalled = false;
+
   // ServiceWorkerURLLoaderJob::Delegate --------------------------------------
   void OnPrepareToRestart() override {}
 
@@ -200,7 +232,9 @@ class ServiceWorkerURLLoaderJobTest
     return true;
   }
 
-  void MainResourceLoadFailed() override {}
+  void MainResourceLoadFailed() override {
+    isMainResourceLoadFailedCalled = true;
+  }
   // --------------------------------------------------------------------------
 
   TestBrowserThreadBundle thread_bundle_;
@@ -212,7 +246,8 @@ class ServiceWorkerURLLoaderJobTest
 };
 
 TEST_F(ServiceWorkerURLLoaderJobTest, Basic) {
-  TestRequest();
+  EXPECT_EQ(ServiceWorkerURLLoaderJobTest::HandlerResult::kHandledRequest,
+            TestRequest());
   EXPECT_EQ(net::OK, client_.completion_status().error_code);
   const ResourceResponseHead& info = client_.response_head();
   EXPECT_EQ(200, info.headers->response_code());
@@ -229,7 +264,8 @@ TEST_F(ServiceWorkerURLLoaderJobTest, BlobResponse) {
   helper_->RespondWithBlob(blob_handle->uuid(), blob_handle->size());
 
   // Perform the request.
-  TestRequest();
+  EXPECT_EQ(ServiceWorkerURLLoaderJobTest::HandlerResult::kHandledRequest,
+            TestRequest());
   const ResourceResponseHead& info = client_.response_head();
   EXPECT_EQ(200, info.headers->response_code());
   ExpectFetchedViaServiceWorker(info);
@@ -242,7 +278,25 @@ TEST_F(ServiceWorkerURLLoaderJobTest, BlobResponse) {
   EXPECT_EQ(kResponseBody, response);
 }
 
-// TODO(falken): Add tests for stream response, network fallback, etc. Basically
-// everything in ServiceWorkerURLRequestJobTest.
+// No callback
+TEST_F(ServiceWorkerURLLoaderJobTest, Fallback) {
+  // Construct the Stream to respond with.
+  helper_->RespondWithFallback();
+
+  // Perform the request.
+  EXPECT_EQ(ServiceWorkerURLLoaderJobTest::HandlerResult::kDidNotHandleRequest,
+            TestRequest());
+}
+
+// SW don't answer
+TEST_F(ServiceWorkerURLLoaderJobTest, FailFetchDispatch) {
+  // Construct the Stream to respond with.
+  helper_->failfetch();
+
+  // Perform the request.
+  EXPECT_EQ(ServiceWorkerURLLoaderJobTest::HandlerResult::kDidNotHandleRequest,
+            TestRequest());
+  EXPECT_TRUE(MainResourceLoadFailedWasCalled());
+}
 
 }  // namespace content
