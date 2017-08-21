@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba51c209_42e04867",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-21T22:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8ff5cae_fefc9ff2",
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1c4ae2c_328003d5",
         "filename": "media/audio/alsa/alsa_input.cc",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-08T01:57:37Z",
       "side": 1,
       "message": "Should this Now() call be made up on L207? I ask just in case there are locks or other significant time-consuming operations.\n\nAlso, it seems this loop could call OnData() multiple times. Should |capture_time| be incremented for each loop, like you did for the other platform glue?",
+      "range": {
+        "startLine": 221,
+        "startChar": 24,
+        "endLine": 221,
+        "endChar": 46
+      },
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e97bb5_ee78b755",
+        "filename": "media/audio/alsa/alsa_input.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-21T22:36:14Z",
+      "side": 1,
+      "message": "Probably, done.",
+      "parentUuid": "f1c4ae2c_328003d5",
       "range": {
         "startLine": 221,
         "startChar": 24,
@@ -56,6 +98,24 @@
       "revId": "0d09330d71449c785dbcac686af51501e976a92a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb0b2dd_4a467ac9",
+        "filename": "media/audio/audio_input_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-21T22:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b4c642b_ae191095",
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +159,48 @@
     },
     {
       "key": {
+        "uuid": "80259146_52ee40c0",
+        "filename": "media/audio/audio_io.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-21T22:36:14Z",
+      "side": 1,
+      "message": "Where capture time is provided; yes. Done.",
+      "parentUuid": "ab2019da_fd7d60dc",
+      "range": {
+        "startLine": 123,
+        "startChar": 43,
+        "endLine": 123,
+        "endChar": 57
+      },
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e91a3c15_97c3bf8e",
+        "filename": "media/audio/audio_io.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-21T22:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7188f36_6d638dba",
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9175cb2f_6e670e61",
         "filename": "media/audio/cras/cras_input.cc",
         "patchSetId": 4
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "1475f7c7_f60f07e8",
+        "filename": "media/audio/cras/cras_input.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-21T22:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9175cb2f_6e670e61",
+      "range": {
+        "startLine": 301,
+        "startChar": 26,
+        "endLine": 301,
+        "endChar": 67
+      },
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce942fc8_7f5f5233",
         "filename": "media/audio/mac/audio_low_latency_input_mac.cc",
         "patchSetId": 4
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "c0439d10_04733562",
+        "filename": "media/audio/mac/audio_low_latency_input_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-21T22:36:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ce942fc8_7f5f5233",
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18f77c98_6c738de1",
         "filename": "media/audio/win/audio_low_latency_input_win.cc",
         "patchSetId": 4
@@ -150,6 +294,24 @@
       "writtenOn": "2017-08-08T15:22:59Z",
       "side": 1,
       "message": "So, we do not have a guarantee that |capture_time| is monotonic?",
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1553d211_93869b80",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-21T22:36:14Z",
+      "side": 1,
+      "message": "Seems like things will not be accurate without IAudioClock, but I don\u0027t know if we actually have a case where we don\u0027t have one:\n\nhttps://msdn.microsoft.com/en-us/library/windows/desktop/dd370881(v\u003dvs.85).aspx\n\nThe MSDN page does not list any restrictions on presence, so I\u0027m not sure why this service is requested conditionally versus being required. I\u0027ll leave a TODO here for now that we should try to require IAudioClock.\n\n+tommi who added this in https://codereview.chromium.org/1326713004 -- Tommi, do you remember why you made |audio_clock| conditional? I.e. is it ever null?",
+      "parentUuid": "18f77c98_6c738de1",
       "revId": "0d09330d71449c785dbcac686af51501e976a92a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -190,6 +352,48 @@
       "writtenOn": "2017-08-08T15:22:59Z",
       "side": 1,
       "message": "|capture_time_microseconds| is a bit ugly but much more informative, and would help to avoid/catch bugs when wrong precision is used.",
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6145a3b_ce324859",
+        "filename": "media/base/audio_parameters.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-21T22:36:14Z",
+      "side": 1,
+      "message": "As with above, will leave alone for now and we can see if using the types directly in a followup works.",
+      "parentUuid": "428dd993_f8b59e4a",
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419b4d50_fdbcdacc",
+        "filename": "media/base/audio_parameters.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-21T22:36:14Z",
+      "side": 1,
+      "message": "Will consider that for a followup where we replace the output parameters below as well.",
+      "parentUuid": "f2935730_d6be0e67",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 22
+      },
       "revId": "0d09330d71449c785dbcac686af51501e976a92a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
