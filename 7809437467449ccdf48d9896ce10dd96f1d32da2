@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75527e4a_62343b22",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-21T20:30:37Z",
+      "side": 1,
+      "message": "Yes. There is an ongoing discussion if it should be Chrome specific or not.",
+      "parentUuid": "fc6c58af_93971d8b",
+      "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d8e11d1_922fd722",
         "filename": "chrome/browser/media/media_storage_id_salt.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac3d3ea5_02537735",
+        "filename": "chrome/browser/media/media_storage_id_salt.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-21T20:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d8e11d1_922fd722",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 9
+      },
+      "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e9abcdfc_01266bd6",
+        "filename": "chrome/browser/media/media_storage_id_salt.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-21T20:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc9ac6e0_1fa4e085",
+      "range": {
+        "startLine": 36,
+        "startChar": 35,
+        "endLine": 36,
+        "endChar": 46
+      },
+      "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea16180e_58af03f9",
         "filename": "chrome/browser/media/media_storage_id_salt_unittest.cc",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "331e452a_ab3df6d3",
+        "filename": "chrome/browser/media/media_storage_id_salt_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-21T20:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea16180e_58af03f9",
+      "range": {
+        "startLine": 11,
+        "startChar": 11,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "8ffc4c01_1e2efae9",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-21T20:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeec2d12_22f2c2f9",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 5
+      },
+      "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc63d900_8e3bee8b",
         "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
         "patchSetId": 3
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "d364c577_e7c7031e",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-21T20:30:37Z",
+      "side": 1,
+      "message": "As this is running in the browser process, I\u0027m hesitant to skip checks so it doesn\u0027t crash here. GetSalt() checks |rfh|, but I added the DCHECK(rfh) below since it may not be obvious to the next person. I\u0027m open to changing it to if (rfh) { GetSalt(); ComputeStorageId(); } if the consensus is that all these functions always work. WDYT?",
+      "parentUuid": "dc63d900_8e3bee8b",
+      "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45f09a95_9d2177bd",
         "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
         "patchSetId": 3
@@ -139,6 +271,24 @@
       "writtenOn": "2017-08-17T09:02:36Z",
       "side": 1,
       "message": "I\u0027m assuming that this will just do the right thing if |rfh| is navigated before the response callback runs? (since the other message handler does the same thing)",
+      "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "796b3b8a_7b82e038",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-21T20:30:37Z",
+      "side": 1,
+      "message": "I haven\u0027t investigated, but pepper should do the right thing.",
+      "parentUuid": "45f09a95_9d2177bd",
       "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
