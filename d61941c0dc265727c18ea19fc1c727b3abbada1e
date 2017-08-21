@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "16e58879_6ee9b401",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-21T12:11:34Z",
+      "side": 1,
+      "message": "How about:\n\nInclude shadow host in elements invalidated by type ruleset invalidations.",
+      "revId": "d61941c0dc265727c18ea19fc1c727b3abbada1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7033da0a_451045ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-21T12:11:34Z",
+      "side": 1,
+      "message": "You can just drop this sentence.",
+      "revId": "d61941c0dc265727c18ea19fc1c727b3abbada1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c6ed60_6a777bf9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-21T12:11:34Z",
+      "side": 1,
+      "message": "Please limit the line length to 72 chars.\n\nThe description should talk about type ruleset invalidations as this is specific to those.\n\nFor instance:\n\nWhen we do a ruleset invalidation for a shadow scope, we schedule an\ninvalidation set for type selectors on the shadow root node, but that\nset also contains tag names for type selectors in :host() selectors as\nwell. In order to invalidate host elements properly, check if the host\u0027s\ntag name is contained in any of the type invalidation sets and mark it\nfor style recalc.\n\nAn alternative would have been to schedule these invalidation sets on\nthe host element instead and marked the invalidation set as tree-\nboundary-crossing in the presence of :host(type) selectors, but that\nwould have invalidated more elements unnecessarily.",
+      "revId": "d61941c0dc265727c18ea19fc1c727b3abbada1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdf24e27_e7cc286a",
         "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
         "patchSetId": 11
@@ -13,6 +64,41 @@
       "writtenOn": "2017-08-21T06:26:10Z",
       "side": 1,
       "message": "nit: in Blink, early-return style is preferred. e.g.\n\nif (!node.IsShadowRoot())\n  return;\n\nElement\u0026 host \u003d ...\n\nwhich saves one level of indentation and clearer code path.",
+      "revId": "d61941c0dc265727c18ea19fc1c727b3abbada1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0d59c8_20b31464",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-21T12:11:34Z",
+      "side": 1,
+      "message": "Second that. I don\u0027t remember what the chromium style guide says, though.",
+      "parentUuid": "cdf24e27_e7cc286a",
+      "revId": "d61941c0dc265727c18ea19fc1c727b3abbada1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d5b354_c1d5586f",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngineTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-21T12:11:34Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be kRuleSetInvalidationsScheduled?",
       "revId": "d61941c0dc265727c18ea19fc1c727b3abbada1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
