@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a70e424_4983de8b",
+        "filename": "chrome/browser/ui/cocoa/omnibox/omnibox_popup_cell.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-21T23:39:01Z",
+      "side": 1,
+      "message": "The docs say the default for this is NO, but it seems we also set it in omnibox_view_mac.mm.",
+      "revId": "4c2dcab94bae65828500b778f067125bd1dda506",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
