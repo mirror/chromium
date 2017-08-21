@@ -16,6 +16,24 @@
       "revId": "5965ca58eeb11ba6e321f3d0343bb9f3c7db1437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253b93f8_23a4f1a5",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-21T21:13:20Z",
+      "side": 1,
+      "message": "Thanks Nick.\nI confirmed that appending \"extensions/api_test\" to the two URLs suffices to cause the tests to fail with the current code. The change here fixes it. If this is OK with Devlin I\u0027ll leave it at that.",
+      "parentUuid": "d598045e_5233ece3",
+      "revId": "5965ca58eeb11ba6e321f3d0343bb9f3c7db1437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
