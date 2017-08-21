@@ -46,6 +46,30 @@
       "revId": "db1c9d4dcb35ed27e7c5b7c0b7deafb1fe701adf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13408062_25c016b0",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-21T21:34:15Z",
+      "side": 0,
+      "message": "I see now, the right solution is to compute the device list in the posted callback instead of computing it and then posting. What we can do here is replace this function with:\n\nbool was_empty \u003d pending_enumerations_.empty();\npending_enumerations_.push_back(callback);\nif (enumeration_ready_ \u0026\u0026 was_empty) {\n  base::ThreadTaskRunnerHandle::Get()-\u003ePostTask(\n      FROM_HERE,\n      base::Bind(\u0026HidService::RunPendingEnumerations, GetWeakPtr()));\n}\n\nYou will need to add a virtual GetWeakPtr() method which is implemented by each of this classes subclasses (which already hold a WeakPtrFactory).\n\nRunPendingEnumerations should be the inside of the if statement in FirstEnumerationComplete and can be shared with this function.",
+      "parentUuid": "960a9e30_f4e1e190",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 50
+      },
+      "revId": "db1c9d4dcb35ed27e7c5b7c0b7deafb1fe701adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
