@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bad2da05_d8cfe630",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-header-lowercase.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-21T01:49:42Z",
+      "side": 1,
+      "message": "That makes sense! Is it better to put \u0027if request.headers.get(\"x-test\") is None:\u0027 rather than \u0027if request.headers.get(\"x-test\"):\u0027? For now, I\u0027ve put it the way you recommended.",
+      "parentUuid": "1796a869_5852da61",
+      "range": {
+        "startLine": 7,
+        "startChar": 19,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "5b5af3d113d1e35eb4ba02ece544d621c425ccf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61875528_d35342de",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-header-lowercase.py",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "5b5af3d113d1e35eb4ba02ece544d621c425ccf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9923ffce_49f0fd46",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-preflight-request-header-lowercase.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-21T01:49:42Z",
+      "side": 1,
+      "message": "Got it! Thank you for the tip!",
+      "parentUuid": "61875528_d35342de",
+      "revId": "5b5af3d113d1e35eb4ba02ece544d621c425ccf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
