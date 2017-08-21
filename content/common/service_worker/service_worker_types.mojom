@@ -29,3 +29,9 @@ struct ServiceWorkerRegistrationObjectInfo;
 // Defined in service_worker_types.h.
 [Native]
 struct ServiceWorkerVersionAttributes;
+
+// Container for delivering the information about the
+// ServiceWorkerRegistrationOptions.
+// Defined in service_worker_types.h.
+[Native]
+struct ServiceWorkerRegistrationOptions;
