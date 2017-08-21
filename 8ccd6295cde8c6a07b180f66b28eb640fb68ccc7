@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "30c94b70_dd776b53",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 2270,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T22:31:26Z",
+      "side": 1,
+      "message": "Please explain why it belongs next to the factory.\n\"Because it is used there\" might not be a viable response.\nThe factory would belong in c/b/op/ if it wasn\u0027t for the fact, that it depends on Android stuff.\nDoes ukm_reporter depend on Android?",
+      "parentUuid": "5e7a68a0_272bce9f",
+      "range": {
+        "startLine": 2270,
+        "startChar": 23,
+        "endLine": 2270,
+        "endChar": 30
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2ea994b_8792d755",
         "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
         "patchSetId": 3
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "550b58c8_7a1158ad",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T22:31:26Z",
+      "side": 1,
+      "message": "I am secretly hoping the UMA reviewer is going to suggest naming the metric:\nOfflinePages.SavePageRequested so that metrics don\u0027t get out of control. I\u0027d actually ask explicitly about that.\n\nAlso, is there no xml file with a complete list of UKM metrics with ownership and so on?",
+      "parentUuid": "bb9e0657_77c06269",
+      "range": {
+        "startLine": 15,
+        "startChar": 35,
+        "endLine": 15,
+        "endChar": 52
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f4312fa_c764a907",
         "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
         "patchSetId": 3
@@ -187,6 +235,30 @@
       "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab42751e_5cd21d6c",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T22:31:26Z",
+      "side": 1,
+      "message": "thanks.",
+      "parentUuid": "1fbde036_4ade5809",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 22
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +332,30 @@
       "side": 1,
       "message": "As it turns out, we do capture foreground metrics as well.  All foreground downloads call \"SavePageLater\" as a backup, and put the page on the disabled list.",
       "parentUuid": "09af540e_0cb13a3b",
+      "range": {
+        "startLine": 8,
+        "startChar": 40,
+        "endLine": 8,
+        "endChar": 50
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17427c6_59e084a0",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T22:31:26Z",
+      "side": 1,
+      "message": "I don\u0027t think this addressed the question thou: Why is the interface defined in c/op/c/background?",
+      "parentUuid": "3970dd70_c778f70e",
       "range": {
         "startLine": 8,
         "startChar": 40,
