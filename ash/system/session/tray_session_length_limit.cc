@@ -149,18 +149,31 @@ void TraySessionLengthLimit::UpdateNotification() {
   message_center::RichNotificationData data;
   data.should_make_spoken_feedback_for_popup_updates =
       (limit_state_ != last_limit_state_);
-  std::unique_ptr<message_center::Notification> notification(
-      new message_center::Notification(
-          message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId,
-          base::string16() /* title */,
-          ComposeNotificationMessage() /* message */,
-          gfx::Image(
-              gfx::CreateVectorIcon(kSystemMenuTimerIcon, kMenuIconColor)),
-          base::string16() /* display_source */, GURL(),
-          message_center::NotifierId(
-              message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierSessionLengthTimeout),
-          data, nullptr /* delegate */));
+  std::unique_ptr<message_center::Notification> notification;
+  if (message_center::MessageCenter::IsNewStyleNotificationEnabled()) {
+    notification = message_center::Notification::CreateSystemNotification(
+        message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId,
+        base::string16() /* title */,
+        ComposeNotificationMessage() /* message */,
+        gfx::Image(gfx::CreateVectorIcon(kSystemMenuTimerIcon, kMenuIconColor)),
+        base::string16() /* display_source */, GURL(),
+        message_center::NotifierId(
+            message_center::NotifierId::SYSTEM_COMPONENT,
+            system_notifier::kNotifierSessionLengthTimeout),
+        data, nullptr /* delegate */, kNotificationClockIcon,
+        message_center::SystemNotificationWarningLevel::NORMAL);
+  } else {
+    notification.reset(new message_center::Notification(
+        message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId,
+        base::string16() /* title */,
+        ComposeNotificationMessage() /* message */,
+        gfx::Image(gfx::CreateVectorIcon(kSystemMenuTimerIcon, kMenuIconColor)),
+        base::string16() /* display_source */, GURL(),
+        message_center::NotifierId(
+            message_center::NotifierId::SYSTEM_COMPONENT,
+            system_notifier::kNotifierSessionLengthTimeout),
+        data, nullptr /* delegate */));
+  }
   notification->SetSystemPriority();
   if (message_center->FindVisibleNotificationById(kNotificationId)) {
     message_center->UpdateNotification(kNotificationId,
