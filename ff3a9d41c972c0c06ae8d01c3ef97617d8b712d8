@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "691b88bf_374368c3",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-21T20:48:33Z",
+      "side": 1,
+      "message": "I wonder if, instead of introducing a new |type| property, it would make sense to just have app_list and extension_list as different pages?  They have different routes, each are a full page worth, etc.  WDYT?",
+      "revId": "ff3a9d41c972c0c06ae8d01c3ef97617d8b712d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
