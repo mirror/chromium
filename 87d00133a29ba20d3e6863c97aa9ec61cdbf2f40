@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c487811c_0d3fc3b7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/allowpaymentrequest/removing-allowpaymentrequest.https.sub-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-08-21T22:36:05Z",
+      "side": 1,
+      "message": "This test is related to iframe\u0027s PaymentRequest as you already know.\nLooking the test, we can summarize it as follows:\n  - iframe navigation and try payment request (echo-PaymentRequest.html)\n  - assert success\n    - Then, iframe.allowPaymentRequest \u003d false\n  - iframe navigation and try payment request (echo-PaymentRequest.html)\n  - assert exception\n\nBefore my patch, when creating a PaymentRequest with supportedMethods as a DOMString, it would cause an exception. So, the previous -expected.txt would be that.\n\nAfter my patch, we can pass the first assert with no exception from now.\n\nNevertheless, this test is still failed. I\u0027m not sure but I guess that allowPaymentRequest is not working well in some specific cases. But it does not related to this patch now.\n\nInstead I\u0027ll fix it in follow-up CL. :)",
+      "parentUuid": "409a9a01_005111a5",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 150
+      },
+      "revId": "87d00133a29ba20d3e6863c97aa9ec61cdbf2f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2a5a985_02b00521",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/allowpaymentrequest/setting-allowpaymentrequest.https.sub-expected.txt",
         "patchSetId": 8
@@ -59,6 +83,30 @@
       "writtenOn": "2017-08-21T20:08:10Z",
       "side": 1,
       "message": "Can you specify the milestone when the deprecated feature will be removed and the https://www.chromestatus.com/features number?",
+      "range": {
+        "startLine": 560,
+        "startChar": 6,
+        "endLine": 561,
+        "endChar": 43
+      },
+      "revId": "87d00133a29ba20d3e6863c97aa9ec61cdbf2f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c1a2961_0ce9c33e",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-08-21T22:36:05Z",
+      "side": 1,
+      "message": "I think that we can deprecate this feature from now (since this patch).\nBut we are not sure whether we can remove it. (and not sure whether we can specify the target milestone)\n\nAfter this patch, if we collect enough data to remove it, we will able to specify the target milestone. WDYT?",
+      "parentUuid": "d56f5ff6_457c990b",
       "range": {
         "startLine": 560,
         "startChar": 6,
