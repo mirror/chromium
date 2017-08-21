@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f4c13d02_9cae236b",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-21T09:58:09Z",
+      "side": 1,
+      "message": "OK, use SetAs{Back,Forward}Selection() and drop |is_built_|.",
+      "parentUuid": "2ff35154_9ee44497",
+      "revId": "08279ae7f9437c0bf50dd6b3114b6262597ef4af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d67d23d8_5068afc8",
         "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
         "patchSetId": 5
