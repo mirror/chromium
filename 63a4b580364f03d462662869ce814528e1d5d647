@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7150c9f3_5c7fc551",
+        "filename": "ios/chrome/browser/ui/payments/cells/accessibility_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-21T13:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45b90227_754b3cba",
+      "range": {
+        "startLine": 8,
+        "startChar": 8,
+        "endLine": 8,
+        "endChar": 23
+      },
+      "revId": "63a4b580364f03d462662869ce814528e1d5d647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cee2fc52_bee837e2",
         "filename": "ios/chrome/browser/ui/payments/cells/accessibility_util.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "63a4b580364f03d462662869ce814528e1d5d647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82d544c2_bd41ddd8",
+        "filename": "ios/chrome/browser/ui/payments/cells/accessibility_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-21T13:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cee2fc52_bee837e2",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 15
+      },
+      "revId": "63a4b580364f03d462662869ce814528e1d5d647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "12cc242e_8c77dc55",
+        "filename": "ios/chrome/browser/ui/payments/cells/accessibility_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-21T13:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8f375bc_515a87e4",
+      "range": {
+        "startLine": 18,
+        "startChar": 13,
+        "endLine": 18,
+        "endChar": 18
+      },
+      "revId": "63a4b580364f03d462662869ce814528e1d5d647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3b73af7_419e60c4",
         "filename": "ios/chrome/browser/ui/payments/payment_request_accessibility_egtest.mm",
         "patchSetId": 2
@@ -85,6 +157,24 @@
       "revId": "63a4b580364f03d462662869ce814528e1d5d647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c181375e_bdba6310",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_accessibility_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-21T13:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3b73af7_419e60c4",
+      "revId": "63a4b580364f03d462662869ce814528e1d5d647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -108,6 +198,30 @@
       "revId": "63a4b580364f03d462662869ce814528e1d5d647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd76058d_80f036e4",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_debit_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-21T13:57:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8b67f09_2017c16d",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 67
+      },
+      "revId": "63a4b580364f03d462662869ce814528e1d5d647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
