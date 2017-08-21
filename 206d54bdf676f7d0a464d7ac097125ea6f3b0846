@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0814e90d_a3bbc371",
+        "filename": "third_party/WebKit/Source/core/html/HTMLOListElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-21T07:56:39Z",
+      "side": 1,
+      "message": "Please remove WebFeature::kHTMLOListElementStartGetterReversedWithoutStartAttribute.",
+      "revId": "206d54bdf676f7d0a464d7ac097125ea6f3b0846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b7ddde_d097dc8a",
+        "filename": "third_party/WebKit/Source/core/html/HTMLOListElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-21T07:56:39Z",
+      "side": 1,
+      "message": "I prefer renaming this to something like |StartConsideringItemCount()|, and expose start() to the Web as ever.",
+      "revId": "206d54bdf676f7d0a464d7ac097125ea6f3b0846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
