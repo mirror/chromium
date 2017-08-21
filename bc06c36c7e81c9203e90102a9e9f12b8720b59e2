@@ -46,6 +46,30 @@
       "revId": "bc06c36c7e81c9203e90102a9e9f12b8720b59e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601e9721_b9d60c01",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-21T15:39:05Z",
+      "side": 1,
+      "message": "if you want to make the change in a follow up, that\u0027s fine, but it seems like a simple enough modification to just throw in with this change.",
+      "parentUuid": "3d208f5b_d982f450",
+      "range": {
+        "startLine": 158,
+        "startChar": 12,
+        "endLine": 158,
+        "endChar": 20
+      },
+      "revId": "bc06c36c7e81c9203e90102a9e9f12b8720b59e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
