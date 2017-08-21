@@ -705,12 +705,13 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
       } else if (state_.opaque_region.isRect()) {
         opaque_rect = gfx::SkIRectToRect(state_.opaque_region.getBounds());
       }
+      bool needs_blending = !opaque_rect.Contains(quad_rect);
 
       texture_quad->SetNew(
-          quad_state, quad_rect, opaque_rect, quad_rect, current_resource_.id,
-          true /* premultiplied_alpha */, uv_top_left, uv_bottom_right,
-          SK_ColorTRANSPARENT /* background_color */, vertex_opacity,
-          false /* y_flipped */, false /* nearest_neighbor */,
+          quad_state, quad_rect, opaque_rect, quad_rect, needs_blending,
+          current_resource_.id, true /* premultiplied_alpha */, uv_top_left,
+          uv_bottom_right, SK_ColorTRANSPARENT /* background_color */,
+          vertex_opacity, false /* y_flipped */, false /* nearest_neighbor */,
           state_.only_visible_on_secure_output);
       if (current_resource_.is_overlay_candidate)
         texture_quad->set_resource_size_in_pixels(current_resource_.size);
