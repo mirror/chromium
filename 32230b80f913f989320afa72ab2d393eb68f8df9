@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c23ccdd7_486b3214",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorHighlight.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-21T23:31:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e71b4591_0cb2ddbf",
+      "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb046771_6e101e1b",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b739b151_59b85e66",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-21T23:31:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb046771_6e101e1b",
+      "range": {
+        "startLine": 107,
+        "startChar": 13,
+        "endLine": 107,
+        "endChar": 30
+      },
+      "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -91,6 +133,24 @@
       "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327ceff8_cb35320d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-21T23:31:20Z",
+      "side": 1,
+      "message": "I moved the method definition to the .cpp file.",
+      "parentUuid": "689e75ed_7338e63f",
+      "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
