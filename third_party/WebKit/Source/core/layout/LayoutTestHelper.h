@@ -77,6 +77,11 @@ class RenderingTest : public ::testing::Test {
 
   RenderingTest(LocalFrameClient* = nullptr);
 
+  // Load the 'Ahem' font to the LocalFrame.
+  // The 'Ahem' font is the only font whose font metrics is consistent across
+  // platforms, but it's not guaranteed to be available.
+  static void LoadAhem(LocalFrame&);
+
  protected:
   void SetUp() override;
   void TearDown() override;
