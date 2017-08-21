@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a404cfe4_65758a61",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-21T21:15:11Z",
+      "side": 1,
+      "message": "Was this still needed? (or is @apply(--cr-dialog-title); addressing that)",
+      "revId": "f2ecc23131e89829f9ccb6f93166cb7ecfdca7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
