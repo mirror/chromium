@@ -107,12 +107,14 @@ bool Surface::QueueFrame(cc::CompositorFrame frame,
 
   if (frame_size != surface_info_.size_in_pixels() ||
       device_scale_factor != surface_info_.device_scale_factor()) {
+    fprintf(stderr, ">>>Surface invariants violation\n");
     TRACE_EVENT_INSTANT0("cc", "Surface invariants violation",
                          TRACE_EVENT_SCOPE_THREAD);
     return false;
   }
 
   if (closed_) {
+    fprintf(stderr, ">>>Rejecting frames\n");
     std::vector<ReturnedResource> resources =
         TransferableResource::ReturnResources(frame.resource_list);
     surface_client_->ReturnResources(resources);
