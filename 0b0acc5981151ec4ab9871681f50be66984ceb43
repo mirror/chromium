@@ -22,6 +22,30 @@
       "revId": "0b0acc5981151ec4ab9871681f50be66984ceb43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa90ee0_89f01e9c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-21T17:32:42Z",
+      "side": 1,
+      "message": "Some random thoughts:\n\nThe bad thing this CHECK() tries to avoid is:\n  Data() is null, but there is still some decoded data.\n  SRI is checked against Data(), but not the decoded data, and thus wrong decoded data can be\n  used even with SRI.\n\nThis might catch the inconsistency around Resource::CheckResourceIntegrity(), and keeping this\nCHECK might be helpful, because the timing and data dependency around CheckResourceIntegrity()\nis changing, and is (or at least used to be) prone to error.\n\nOn the other side, DecodedSize() is not checking the true decoded data itself, and this CHECK\nis also prone to false positive due to wrong DecodedSize() implementation (which itself is\nharmless).\nAlso, this CHECK can be interpreted as a part of checking consistencies around encoded and decoded data: stating \"If encoded data is null, then decoded data should be also null\".\nBut this happens to be checked here in CheckResourceIntegrity(), and happens to use\nDecodedSize().\nIf this CHECK really matters, then we might want to consider to implement and manage\nthis kind of checks more systematically (a similar issue exists in ImageResource).\n\nAnyway I defer the decision, and commit this CL anyway to see whether this change completely resolves the crashes on canary/dev.",
+      "parentUuid": "5bd60012_c3a228f4",
+      "range": {
+        "startLine": 348,
+        "startChar": 2,
+        "endLine": 348,
+        "endChar": 7
+      },
+      "revId": "0b0acc5981151ec4ab9871681f50be66984ceb43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
