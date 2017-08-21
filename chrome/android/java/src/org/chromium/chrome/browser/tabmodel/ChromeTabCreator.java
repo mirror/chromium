@@ -9,6 +9,7 @@ import android.text.TextUtils;
 
 import org.chromium.base.SysUtils;
 import org.chromium.base.TraceEvent;
+import org.chromium.blink_public.web.WebReferrerPolicy;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.ServiceTabLauncher;
@@ -240,7 +241,8 @@ public class ChromeTabCreator extends TabCreatorManager.TabCreator {
             loadUrlParams.setIntentReceivedTimestamp(intentTimestamp);
             loadUrlParams.setVerbatimHeaders(headers);
             if (referer != null) {
-                loadUrlParams.setReferrer(new Referrer(referer, Referrer.REFERRER_POLICY_DEFAULT));
+                loadUrlParams.setReferrer(
+                        new Referrer(referer, WebReferrerPolicy.WEB_REFERRER_POLICY_DEFAULT));
             }
             return createNewTab(loadUrlParams, TabLaunchType.FROM_EXTERNAL_APP, null, intent);
         }

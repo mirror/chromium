@@ -17,6 +17,7 @@ import android.widget.TextView;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.FieldTrialList;
 import org.chromium.base.metrics.RecordHistogram;
+import org.chromium.blink_public.web.WebReferrerPolicy;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.profiles.Profile;
@@ -201,7 +202,7 @@ public class DataUseTabUIManager {
                                         pageTransitionType);
                                 if (!TextUtils.isEmpty(referrerUrl)) {
                                     Referrer referrer = new Referrer(referrerUrl,
-                                            Referrer.REFERRER_POLICY_ALWAYS);
+                                            WebReferrerPolicy.WEB_REFERRER_POLICY_ALWAYS);
                                     loadUrlParams.setReferrer(referrer);
                                 }
                                 tab.loadUrl(loadUrlParams);

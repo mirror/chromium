@@ -37,6 +37,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.base.metrics.RecordHistogram;
+import org.chromium.blink_public.web.WebReferrerPolicy;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.ChromeApplication;
@@ -1274,7 +1275,8 @@ public class CustomTabsConnection {
         LoadUrlParams loadParams = new LoadUrlParams(url);
         String referrer = getReferrer(session, extrasIntent);
         if (referrer != null && !referrer.isEmpty()) {
-            loadParams.setReferrer(new Referrer(referrer, Referrer.REFERRER_POLICY_DEFAULT));
+            loadParams.setReferrer(
+                    new Referrer(referrer, WebReferrerPolicy.WEB_REFERRER_POLICY_DEFAULT));
         }
         mSpeculation = SpeculationParams.forHiddenTab(session, url, tab, referrer, extras);
         mSpeculation.tab.loadUrl(loadParams);

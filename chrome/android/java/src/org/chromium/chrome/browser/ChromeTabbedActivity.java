@@ -46,6 +46,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
+import org.chromium.blink_public.web.WebReferrerPolicy;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.IntentHandler.IntentHandlerDelegate;
 import org.chromium.chrome.browser.IntentHandler.TabOpenType;
@@ -1193,8 +1194,8 @@ public class ChromeTabbedActivity
                         loadUrlParams.setTransitionType(IntentHandler.getTransitionTypeFromIntent(
                                 intent, transitionType));
                         if (referer != null) {
-                            loadUrlParams.setReferrer(
-                                    new Referrer(referer, Referrer.REFERRER_POLICY_DEFAULT));
+                            loadUrlParams.setReferrer(new Referrer(
+                                    referer, WebReferrerPolicy.WEB_REFERRER_POLICY_DEFAULT));
                         }
                         currentTab.loadUrl(loadUrlParams);
                         RecordUserAction.record("MobileTabClobbered");
