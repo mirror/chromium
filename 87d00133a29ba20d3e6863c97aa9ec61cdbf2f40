@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "409a9a01_005111a5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/allowpaymentrequest/removing-allowpaymentrequest.https.sub-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-21T20:08:10Z",
+      "side": 1,
+      "message": "Your patch should not have this change. It does not seem related to what you\u0027re doing in the patch. If it\u0027s somehow related, let me know.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 150
+      },
+      "revId": "87d00133a29ba20d3e6863c97aa9ec61cdbf2f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a5a985_02b00521",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/payment-request/allowpaymentrequest/setting-allowpaymentrequest.https.sub-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-21T20:08:10Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 149
+      },
+      "revId": "87d00133a29ba20d3e6863c97aa9ec61cdbf2f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56f5ff6_457c990b",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-21T20:08:10Z",
+      "side": 1,
+      "message": "Can you specify the milestone when the deprecated feature will be removed and the https://www.chromestatus.com/features number?",
+      "range": {
+        "startLine": 560,
+        "startChar": 6,
+        "endLine": 561,
+        "endChar": 43
+      },
+      "revId": "87d00133a29ba20d3e6863c97aa9ec61cdbf2f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
