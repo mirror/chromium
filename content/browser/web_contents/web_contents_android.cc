@@ -19,6 +19,7 @@
 #include "content/browser/accessibility/browser_accessibility_manager_android.h"
 #include "content/browser/android/content_view_core.h"
 #include "content/browser/android/interstitial_page_delegate_android.h"
+#include "content/browser/android/java/gin_java_bridge_dispatcher_host.h"
 #include "content/browser/frame_host/interstitial_page_impl.h"
 #include "content/browser/media/android/browser_media_player_manager.h"
 #include "content/browser/media/android/media_web_contents_observer_android.h"
@@ -187,33 +188,46 @@ WebContentsAndroid::WebContentsAndroid(WebContentsImpl* web_contents)
       weak_factory_(this) {
   g_allocated_web_contents_androids.Get().insert(this);
   JNIEnv* env = AttachCurrentThread();
-  obj_.Reset(env,
-             Java_WebContentsImpl_create(env, reinterpret_cast<intptr_t>(this),
-                                         navigation_controller_.GetJavaObject())
-                 .obj());
+  java_global_ref_.Reset(
+      env, Java_WebContentsImpl_create(env, reinterpret_cast<intptr_t>(this),
+                                       navigation_controller_.GetJavaObject())
+               .obj());
+  java_ref_ = JavaObjectWeakGlobalRef(
+      env, ScopedJavaLocalRef<jobject>(java_global_ref_).obj());
   RendererPreferences* prefs = web_contents_->GetMutableRendererPrefs();
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   prefs->network_contry_iso =
       command_line->HasSwitch(switches::kNetworkCountryIso) ?
           command_line->GetSwitchValueASCII(switches::kNetworkCountryIso)
           : net::android::GetTelephonyNetworkCountryIso();
+  java_bridge_dispatcher_host_ = new GinJavaBridgeDispatcherHost(
+      web_contents, Java_WebContentsImpl_getRetainedJavascriptObjects(
+                        env, java_ref_.get(env)));
 }
 
 WebContentsAndroid::~WebContentsAndroid() {
   DCHECK(g_allocated_web_contents_androids.Get().find(this) !=
       g_allocated_web_contents_androids.Get().end());
   g_allocated_web_contents_androids.Get().erase(this);
-  Java_WebContentsImpl_clearNativePtr(AttachCurrentThread(), obj_);
+  JNIEnv* env = AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> j_obj = java_ref_.get(env);
+  java_ref_.reset();
+  if (!j_obj.is_null())
+    Java_WebContentsImpl_clearNativePtr(AttachCurrentThread(), j_obj);
 }
 
-base::android::ScopedJavaLocalRef<jobject>
-WebContentsAndroid::GetJavaObject() {
-  return base::android::ScopedJavaLocalRef<jobject>(obj_);
+ScopedJavaLocalRef<jobject> WebContentsAndroid::GetJavaObject() {
+  JNIEnv* env = AttachCurrentThread();
+  return java_ref_.get(env);
 }
 
-base::android::ScopedJavaLocalRef<jobject>
-WebContentsAndroid::GetTopLevelNativeWindow(JNIEnv* env,
-                                            const JavaParamRef<jobject>& obj) {
+void WebContentsAndroid::ResetGlobalRef() {
+  java_global_ref_.Reset();
+}
+
+ScopedJavaLocalRef<jobject> WebContentsAndroid::GetTopLevelNativeWindow(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj) {
   ui::WindowAndroid* window_android = web_contents_->GetTopLevelNativeWindow();
   if (!window_android)
     return nullptr;
@@ -683,6 +697,34 @@ ScopedJavaLocalRef<jobject> WebContentsAndroid::GetOrCreateEventForwarder(
   return native_view->GetEventForwarder();
 }
 
+void WebContentsAndroid::SetAllowJavascriptInterfacesInspection(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    jboolean allow) {
+  if (java_bridge_dispatcher_host_)
+    java_bridge_dispatcher_host_->SetAllowObjectContentsInspection(allow);
+}
+
+void WebContentsAndroid::AddJavascriptInterface(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& /* obj */,
+    const JavaParamRef<jobject>& object,
+    const JavaParamRef<jstring>& name,
+    const JavaParamRef<jclass>& safe_annotation_clazz) {
+  if (java_bridge_dispatcher_host_)
+    java_bridge_dispatcher_host_->AddNamedObject(
+        ConvertJavaStringToUTF8(env, name), object, safe_annotation_clazz);
+}
+
+void WebContentsAndroid::RemoveJavascriptInterface(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& /* obj */,
+    const JavaParamRef<jstring>& name) {
+  if (java_bridge_dispatcher_host_)
+    java_bridge_dispatcher_host_->RemoveNamedObject(
+        ConvertJavaStringToUTF8(env, name));
+}
+
 void WebContentsAndroid::OnFinishGetContentBitmap(
     const JavaRef<jobject>& obj,
     const JavaRef<jobject>& callback,
@@ -730,7 +772,10 @@ void WebContentsAndroid::OnFinishDownloadImage(
 void WebContentsAndroid::SetMediaSession(
     const ScopedJavaLocalRef<jobject>& j_media_session) {
   JNIEnv* env = base::android::AttachCurrentThread();
-  Java_WebContentsImpl_setMediaSession(env, obj_, j_media_session);
+  ScopedJavaLocalRef<jobject> j_obj = java_ref_.get(env);
+  if (j_obj.is_null())
+    return;
+  Java_WebContentsImpl_setMediaSession(env, j_obj, j_media_session);
 }
 
 }  // namespace content
