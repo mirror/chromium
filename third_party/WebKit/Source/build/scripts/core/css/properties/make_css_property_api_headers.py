@@ -50,9 +50,9 @@ class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
                 self.methods_for_classes[classname].add(
                     self._api_methods[method_name])
             self._outputs[classname + '.h'] = (
-                self.generate_property_api_h_builder(classname))
+                self.generate_property_api_h_builder(classname, property_))
 
-    def generate_property_api_h_builder(self, api_classname):
+    def generate_property_api_h_builder(self, api_classname, property_):
         @template_expander.use_jinja(
             'core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl')
         def generate_property_api_h():
@@ -60,6 +60,7 @@ class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
                 'input_files': self._input_files,
                 'api_classname': api_classname,
                 'methods_for_class': self.methods_for_classes[api_classname],
+                'is_interpolable': 'true' if property_['interpolable'] else 'false',
             }
         return generate_property_api_h
 
