@@ -142,6 +142,30 @@
       "revId": "4e5a42c44befc4ec8fca84180e780df5e0557ba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2830a3_f8ef2d05",
+        "filename": "build/config/c++/c++.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-08-21T20:57:42Z",
+      "side": 1,
+      "message": "Another idea:\n\nAdd a new var: \"use_custom_libcxx_on_host\" that defaults false and then make this condition read:\n\n use_custom_libcxx \u003d\n      is_msan || is_fuchsia || (use_custom_libcxx_on_host \u0026\u0026 current_cpu \u003d\u003d host_cpu) ||\n      (is_linux \u0026\u0026 is_clang \u0026\u0026\n       (!is_chromeos || default_toolchain !\u003d \"//build/toolchain/cros:target\"))\n\n\nAnd then we can set use_custom_libcxx_on_host \u003d True on our internal builders, and it will default False everywhere else",
+      "parentUuid": "eb77fcf7_597a20c4",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 68
+      },
+      "revId": "4e5a42c44befc4ec8fca84180e780df5e0557ba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
