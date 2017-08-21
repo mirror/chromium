@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce41ce6b_68a469ba",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-21T12:20:37Z",
+      "side": 1,
+      "message": "How would you feel about it if I set up \"ddljson_desktopN.json\" URLs now, even though the targets don\u0027t exist yet?",
+      "parentUuid": "6ae5561b_39780125",
+      "revId": "19dc2d0d40d8f397817504c8ccfbbbfd8cf12c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09dadcd2_e5c8b771",
         "filename": "chrome/browser/search/local_ntp_source.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-11T14:05:59Z",
       "side": 1,
       "message": "Can it happen that we\u0027re calling StartGetLogo here while there is still a request ongoing, i.e. observing_ is true? If not, why not?\n\nIt seems to me like there\u0027s 3 cases to handle here:\n- We\u0027re still waiting for this request, i.e. the \"if\" case here.\n- That request has finished, we need to start a new one, i.e. the \"else\" case here.\n- We\u0027re already waiting for a *new* request (from another NTP).",
+      "revId": "19dc2d0d40d8f397817504c8ccfbbbfd8cf12c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e711d091_26ab131e",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-21T12:20:37Z",
+      "side": 1,
+      "message": "Yes, it can. In case 3, we\u0027re fine with a \"cached request\" (since it should have been fresh at the given version) but shouldn\u0027t call StartGetLogo().\n\nFixed and reordered.",
+      "parentUuid": "09dadcd2_e5c8b771",
       "revId": "19dc2d0d40d8f397817504c8ccfbbbfd8cf12c3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1f7b6d05_05897fef",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-21T12:20:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f6a351e_abc6d586",
+      "revId": "19dc2d0d40d8f397817504c8ccfbbbfd8cf12c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b775799_28af34e8",
         "filename": "chrome/browser/search/local_ntp_source.cc",
         "patchSetId": 1
@@ -73,6 +127,54 @@
       "revId": "19dc2d0d40d8f397817504c8ccfbbbfd8cf12c3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0c2a87_492f7658",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-21T12:20:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b775799_28af34e8",
+      "range": {
+        "startLine": 547,
+        "startChar": 43,
+        "endLine": 547,
+        "endChar": 0
+      },
+      "revId": "19dc2d0d40d8f397817504c8ccfbbbfd8cf12c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f61d7ee_b7215029",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-21T12:20:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b775799_28af34e8",
+      "range": {
+        "startLine": 547,
+        "startChar": 43,
+        "endLine": 547,
+        "endChar": 0
+      },
+      "revId": "19dc2d0d40d8f397817504c8ccfbbbfd8cf12c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
