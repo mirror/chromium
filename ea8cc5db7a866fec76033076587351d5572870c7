@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d096866f_7b55188e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-21T20:35:13Z",
+      "side": 1,
+      "message": "I remember a past review of this talking about an IntentService for this. Right now you will be blocking UI thread for all messages you are getting.",
+      "range": {
+        "startLine": 31,
+        "startChar": 43,
+        "endLine": 31,
+        "endChar": 50
+      },
+      "revId": "ea8cc5db7a866fec76033076587351d5572870c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30bf868_6747abbb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-21T20:35:13Z",
+      "side": 1,
+      "message": "What was the final call for making this permanent. Right now if the user dismisses it when Chrome is not running, what happens?",
+      "range": {
+        "startLine": 108,
+        "startChar": 25,
+        "endLine": 108,
+        "endChar": 39
+      },
+      "revId": "ea8cc5db7a866fec76033076587351d5572870c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d696f28_212f173a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-21T20:35:13Z",
+      "side": 1,
+      "message": "lets do\n\nif (!fromBrowserActions) return false; here.",
+      "range": {
+        "startLine": 157,
+        "startChar": 16,
+        "endLine": 157,
+        "endChar": 34
+      },
+      "revId": "ea8cc5db7a866fec76033076587351d5572870c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b687d67_0cdddad0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-21T20:35:13Z",
+      "side": 1,
+      "message": "I think we can actually do without this, since it is only called once.",
+      "range": {
+        "startLine": 165,
+        "startChar": 27,
+        "endLine": 165,
+        "endChar": 52
+      },
+      "revId": "ea8cc5db7a866fec76033076587351d5572870c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
