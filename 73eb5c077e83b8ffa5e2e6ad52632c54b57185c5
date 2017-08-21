@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7943a0f7_4b83d5fc",
+        "filename": "device/serial/buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-21T19:01:04Z",
+      "side": 1,
+      "message": "Now the copy happens here instead. We need to change the type of |data_|.",
+      "revId": "73eb5c077e83b8ffa5e2e6ad52632c54b57185c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc1e999_4f281719",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-21T19:01:04Z",
+      "side": 1,
+      "message": "Update this function to take a const std::vector\u003cuint8_t\u003e\u0026 and rename it to \"ByteVectorToString\".",
+      "revId": "73eb5c077e83b8ffa5e2e6ad52632c54b57185c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
