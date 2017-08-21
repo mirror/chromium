@@ -626,6 +626,8 @@ void WindowTreeClient::OnSetDisplayRootDone(
   if (!window)
     return;  // Display was already deleted.
 
+  // TODO(sky): figure out why this has to be here rather than in
+  // WindowTreeHostMus's constructor.
   ui::Compositor* compositor = window->GetWindow()->GetHost()->compositor();
   compositor->SetLocalSurfaceId(*local_surface_id);
 }
@@ -838,6 +840,21 @@ void WindowTreeClient::OnWindowMusBoundsChanged(WindowMus* window,
   // effect of those and can be ignored.
   if (IsRoot(window)) {
     DCHECK(kRootWindowBoundsChangesAreIgnored);
+    // NOTE: this happen to here as during the call to
+    // OnWindowTreeHostBoundsWillChange() the compositor hasn't been updated
+    // yet.
+    if (window->window_mus_type() == WindowMusType::DISPLAY_MANUALLY_CREATED) {
+      WindowTreeHost* window_tree_host = window->GetWindow()->GetHost();
+      // |window_tree_host| may be null if this is called during creation of
+      // the window associated with the WindowTreeHostMus.
+      if (window_tree_host) {
+        base::Optional<viz::LocalSurfaceId> local_surface_id =
+            window->GetOrAllocateLocalSurfaceId(
+                window_tree_host->GetBoundsInPixels().size());
+        if (local_surface_id && local_surface_id->is_valid())
+          window_tree_host->compositor()->SetLocalSurfaceId(*local_surface_id);
+      }
+    }
     return;
   }
 
