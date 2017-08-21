@@ -220,6 +220,24 @@
     },
     {
       "key": {
+        "uuid": "05bf7580_aab30775",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-21T21:05:23Z",
+      "side": 1,
+      "message": "Yea, I think we\u0027ll need this as part of the URLLoader API, either with its own error code, or as a bool somewhere.",
+      "parentUuid": "6db34233_0cbd181c",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5be53935_82129d8d",
         "filename": "content/browser/loader/navigation_url_loader_network_service.h",
         "patchSetId": 14
