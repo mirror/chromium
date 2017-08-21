@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "a6c8a6df_e503a1e3",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-08-21T20:22:01Z",
+      "side": 1,
+      "message": "How\u0027s this?\n\nAgreed on all points re: the second paragraph.",
+      "parentUuid": "988da8d5_e3b9b4a3",
+      "range": {
+        "startLine": 150,
+        "startChar": 49,
+        "endLine": 152,
+        "endChar": 16
+      },
+      "revId": "627cf208a1dcffa80b4cc6e4d2ce5a1c3d735061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d3fc6fb_cc189d58",
         "filename": "base/profiler/native_stack_sampler_mac.cc",
         "patchSetId": 1
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Either way is reasonable. I think there\u0027s some value in using the same operations as done by libunwind.",
       "parentUuid": "c375f659_2b81eefa",
+      "range": {
+        "startLine": 162,
+        "startChar": 10,
+        "endLine": 163,
+        "endChar": 77
+      },
+      "revId": "627cf208a1dcffa80b4cc6e4d2ce5a1c3d735061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33cfb2fd_573ba88f",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-08-21T20:22:01Z",
+      "side": 1,
+      "message": "Kept it as is and added some docs",
+      "parentUuid": "e40dd5df_55a2d56d",
       "range": {
         "startLine": 162,
         "startChar": 10,
