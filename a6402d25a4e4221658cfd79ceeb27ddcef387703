@@ -16,6 +16,24 @@
       "revId": "a6402d25a4e4221658cfd79ceeb27ddcef387703",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d61f61_4eb6abc1",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-08-21T17:57:32Z",
+      "side": 1,
+      "message": "Perfect, thanks for the pointer. Done.",
+      "parentUuid": "daf51499_57f6e50f",
+      "revId": "a6402d25a4e4221658cfd79ceeb27ddcef387703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
