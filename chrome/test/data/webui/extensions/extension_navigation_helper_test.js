@@ -39,8 +39,7 @@ cr.define('extension_navigation_helper_tests', function() {
       var navigationHelper = new extensions.NavigationHelper(changePage);
 
       expectEquals('chrome://extensions/navigation_helper.html', location.href);
-      expectDeepEquals(
-          {page: Page.LIST, type: 0}, navigationHelper.getCurrentPage());
+      expectDeepEquals({page: Page.LIST, type: 0}, extensions.getCurrentPage());
 
       var currentLength = history.length;
       navigationHelper.updateHistory({page: Page.DETAILS, extensionId: id});
@@ -105,7 +104,7 @@ cr.define('extension_navigation_helper_tests', function() {
       for (let key in stateUrlPairs) {
         let entry = stateUrlPairs[key];
         history.pushState({}, '', entry.url);
-        expectDeepEquals(entry.state, navigationHelper.getCurrentPage(), key);
+        expectDeepEquals(entry.state, extensions.getCurrentPage(), key);
       }
 
       // Test state -> url.
@@ -122,8 +121,7 @@ cr.define('extension_navigation_helper_tests', function() {
       var navigationHelper = new extensions.NavigationHelper(function() {});
 
       history.pushState({}, '', 'chrome://extensions/');
-      expectDeepEquals(
-          {page: Page.LIST, type: 0}, navigationHelper.getCurrentPage());
+      expectDeepEquals({page: Page.LIST, type: 0}, extensions.getCurrentPage());
 
       var expectedLength = history.length;
 
