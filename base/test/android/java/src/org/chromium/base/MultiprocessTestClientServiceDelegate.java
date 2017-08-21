@@ -52,23 +52,17 @@ public class MultiprocessTestClientServiceDelegate implements ChildProcessServic
 
     @Override
     public void onConnectionSetup(Bundle connectionBundle, List<IBinder> callbacks) {
-        System.err.println("** JAY ** onConnectionSetup");
         mTestCallback = ITestCallback.Stub.asInterface(callbacks.get(0));
         String initClassName = connectionBundle.getString(
                 MultiprocessTestClientLauncher.DELEGATE_INIT_CLASS_EXTRA);
         if (initClassName != null) {
-            System.err.println("** JAY ** onConnectionSetup initClass=" + initClassName);
             // We use reflection as a way to customize the service without having to declare a new
             // service for each customization.
             try {
                 Class initClass = Class.forName(initClassName);
                 Method initMethod =
                         initClass.getMethod("initializeMultiprocessTestService", List.class);
-                Boolean result = (Boolean) initMethod.invoke(
-                        null /* object */, callbacks.subList(1, callbacks.size()));
-                if (result == null || !result.booleanValue()) {
-                    Log.e(TAG, "Failed to initilaize MultiProcessTestClientService.");
-                }
+                initMethod.invoke(null /* object */, callbacks.subList(1, callbacks.size()));
             } catch (ClassNotFoundException cnfe) {
                 Log.e(TAG, "Failed to find initialization delegate class " + initClassName);
             } catch (NoSuchMethodException nsme) {

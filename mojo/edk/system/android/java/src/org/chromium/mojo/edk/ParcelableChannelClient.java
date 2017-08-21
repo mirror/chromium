@@ -4,6 +4,7 @@
 
 package org.chromium.mojo.edk;
 
+import android.os.IBinder;
 import android.os.Parcelable;
 import android.os.RemoteException;
 
@@ -16,12 +17,17 @@ import org.chromium.base.annotations.JNINamespace;
  */
 @JNINamespace("mojo::edk")
 public final class ParcelableChannelClient {
-    private static final String TAG = "ParcelableChanClient";
+    private static final String TAG = "ParcelChanClient";
 
     private IParcelableChannel mIParcelableChannel;
 
-    public ParcelableChannelClient(IParcelableChannel parcelableChannel) {
+    private ParcelableChannelClient(IParcelableChannel parcelableChannel) {
         mIParcelableChannel = parcelableChannel;
+    }
+
+    @CalledByNative
+    public static ParcelableChannelClient create(IBinder parcelableChannel) {
+        return new ParcelableChannelClient(IParcelableChannel.Stub.asInterface(parcelableChannel));
     }
 
     @CalledByNative

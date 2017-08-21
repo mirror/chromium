@@ -7,6 +7,7 @@ import("//testing/test.gni")
 import("../../../mojo/public/tools/bindings/mojom.gni")
 
 if (is_android) {
+  import("//base/android/jni_generator/jni_exception_list.gni")
   import("//build/config/android/config.gni")
   import("//build/config/android/rules.gni")
 }
@@ -105,6 +106,10 @@ component("system") {
     deps += [ "//crypto" ]
   }
 
+  if (is_android) {
+    deps += [ "//mojo/edk/system/android:parcelable_support" ]
+  }
+
   if (is_win) {
     cflags = [ "/wd4324" ]  # Structure was padded due to __declspec(align()),
                             # which is uninteresting.
@@ -112,7 +117,7 @@ component("system") {
 
   # Use target_os == "chromeos" instead of is_chromeos because we need to
   # build NaCl targets (i.e. IRT) for ChromeOS the same as the rest of ChromeOS.
-  if (is_android || target_os == "chromeos") {
+  if (target_os == "chromeos") {
     defines += [ "MOJO_EDK_LEGACY_PROTOCOL" ]
   }
 

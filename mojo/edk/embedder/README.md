@@ -203,9 +203,16 @@ We can modify our existing sample code as follows:
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "local/foo.mojom.h"  // You provide this
 
+#if defined(OS_ANDROID)
 base::ProcessHandle LaunchCoolChildProcess(
     const base::CommandLine& command_line,
     mojo::edk::ScopedPlatformHandle channel);
+#else
+base::ProcessHandle LaunchCoolChildProcess(
+    const base::CommandLine& command_line,
+    mojo::edk::ScopedPlatformHandle channel,
+    base::android::ScopedJavaGlobalRef<jobject> ibinders);
+#endif
 
 int main(int argc, char** argv) {
   mojo::edk::Init();
@@ -220,6 +227,10 @@ int main(int argc, char** argv) {
 
   mojo::edk::PlatformChannelPair channel;
 
+#if defined(OS_ANDROID)
+  mojo::edk::ParcelableChannelPair parcelable_channel;
+#endif
+
   mojo::edk::OutgoingBrokerClientInvitation invitation;
 
   // Create a new message pipe with one end being retrievable in the new
@@ -229,11 +240,19 @@ int main(int argc, char** argv) {
       invitation.AttachMessagePipe("pretty_cool_pipe");
 
   base::ProcessHandle child_handle =
-      LaunchCoolChildProcess(channel.PassClientHandle());
-  invitation.Send(
-      child_handle,
-      mojo::edk::ConnectionParams(mojo::edk::TransportProtocol::kLegacy,
-                                  channel.PassServerHandle()));
+      LaunchCoolChildProcess(channel.PassClientHandle(),
+          parcelable_channel.GetIBindersForChildProcess());
+
+  mojo::edk::ConnectionParams connection_params(
+      mojo::edk::TransportProtocol::kLegacy,
+      channel.PassServerHandle());
+#if defined(OS_ANDROID)
+  connection_params.SetParcelableChannels(parcelable_channel.GetClientChannel(),
+      parcelable_channel.GetServerChannel());
+#endif
+
+  invitation.Send(child_handle, std::move(connection_params));
+);
 
   // We can start using our end of the pipe immediately. Here we assume the
   // other end will eventually be bound to a local::mojom::Foo implementation,
@@ -291,9 +310,17 @@ int main(int argc, char** argv) {
       ipc_thread.task_runner(),
       mojo::edk::ScopedIPCSupport::ShutdownPolicy::CLEAN);
 
+  mojo::edk::ConnectionParams connection_params(
+      mojo::edk::TransportProtocol::kLegacy, GetChannelHandle())
+#if defined(OS_ANDROID)
+  mojo::edk::ParcelableChannelPair parcelable_channel =
+      mojo::edk::ParcelableChannelPair::FromIBinders(GetParcelableChannelIBinders());
+  connection_params.SetParcelableChannels(parcelable_channel.GetClientChannel(),
+      parcelable_channel.GetServerChannel());
+#endif
+
   auto invitation = mojo::edk::IncomingBrokerClientInvitation::Accept(
-      mojo::edk::ConnectionParams(mojo::edk::TransportProtocol::kLegacy,
-                                  GetChannelHandle()));
+      std::move(connection_params));
 
   mojo::ScopedMessagePipeHandle my_pipe =
       invitation->ExtractMessagePipe("pretty_cool_pipe");

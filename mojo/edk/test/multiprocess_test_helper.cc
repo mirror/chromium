@@ -37,7 +37,8 @@
 #include "base/mac/mach_port_broker.h"
 #elif defined(OS_ANDROID)
 #include "base/test/multiprocess_test_android.h"
-#include "mojo/edk/jni/MultiprocessTestLauncherHelper_jni.h"
+#include "mojo/edk/jni/MultiprocessTestLauncherDelegate_jni.h"
+#include "mojo/edk/jni/MultiprocessTestServiceHelper_jni.h"
 #endif
 
 namespace mojo {
@@ -179,26 +180,13 @@ ScopedMessagePipeHandle MultiprocessTestHelper::StartChildWithExtraSwitch(
 
 #if defined(OS_ANDROID)
   JNIEnv* env = base::android::AttachCurrentThread();
-  base::android::ScopedJavaLocalRef<jobject> java_launcher_helper =
-      Java_MultiprocessTestLauncherHelper_create(env);
+  ParcelableChannel parcelable_channel =
+      ParcelableChannel::CreateForParentProcess();
+
   test_child_ = base::SpawnMultiProcessTestChildWithDelegate(
       test_child_main, command_line, options,
-      Java_MultiprocessTestLauncherHelper_getDelegate(env,
-                                                      java_launcher_helper));
-
-  // Retrieve the ParcelableChannels. This blocks as the service will call us
-  // with its channel.
-  base::android::ScopedJavaLocalRef<jobject> parcelable_channel_server =
-      Java_MultiprocessTestLauncherHelper_getParcelableChannelServer(
-          env, java_launcher_helper);
-  DCHECK(!parcelable_channel_server.is_null());
-
-  base::android::ScopedJavaLocalRef<jobject> parcelable_channel_client =
-      Java_MultiprocessTestLauncherHelper_getParcelableChannelClientBlocking(
-          env, java_launcher_helper);
-  DCHECK(!parcelable_channel_client.is_null());
-
-// use the channels below in the connectionparams
+      Java_MultiprocessTestLauncherDelegate_create(
+          env, parcelable_channel.GetIBindersForClientProcess()));
 #else
   test_child_ =
       base::SpawnMultiProcessTestChild(test_child_main, command_line, options);
@@ -210,11 +198,15 @@ ScopedMessagePipeHandle MultiprocessTestHelper::StartChildWithExtraSwitch(
   if (launch_type == LaunchType::CHILD ||
       launch_type == LaunchType::NAMED_CHILD) {
     DCHECK(server_handle.is_valid());
-    // ** JAY ** Pass the parcelable channels here in the connection params **
-    child_invitation.Send(
-        test_child_.Handle(),
-        ConnectionParams(TransportProtocol::kLegacy, std::move(server_handle)),
-        process_error_callback_);
+
+    ConnectionParams connection_params(TransportProtocol::kVersion0,
+                                       std::move(server_handle));
+#if defined(OS_ANDROID)
+    connection_params.SetParcelableChannel(std::move(parcelable_channel));
+#endif
+
+    child_invitation.Send(test_child_.Handle(), std::move(connection_params),
+                          process_error_callback_);
   }
 
   CHECK(test_child_.IsValid());
@@ -248,6 +240,7 @@ void MultiprocessTestHelper::ChildSetup() {
   NamedPlatformHandle named_pipe(
       command_line.GetSwitchValueNative(kNamedPipeName));
   if (command_line.HasSwitch(kRunAsBrokerClient)) {
+    LOG(ERROR) << "## JAY ## MultiprocessTestHelper::ChildSetup() AS BROKER";
     std::unique_ptr<IncomingBrokerClientInvitation> invitation;
 #if defined(OS_MACOSX) && !defined(OS_IOS)
     CHECK(base::MachPortBroker::ChildSendTaskPortToParent("mojo_test"));
@@ -256,19 +249,40 @@ void MultiprocessTestHelper::ChildSetup() {
       invitation = IncomingBrokerClientInvitation::Accept(ConnectionParams(
           TransportProtocol::kLegacy, CreateClientHandle(named_pipe)));
     } else {
+      LOG(ERROR) << "## JAY ## MultiprocessTestHelper::ChildSetup() "
+                    "AcceptFromCommandLine";
+#if defined(OS_ANDROID)
+      base::android::ScopedJavaLocalRef<jobjectArray> ibinders =
+          Java_MultiprocessTestServiceHelper_getParcelableChannelIBinders(
+              base::android::AttachCurrentThread());
+      ParcelableChannel parcelable_channel =
+          ParcelableChannel::CreateForChildProcess(ibinders);
+      invitation = IncomingBrokerClientInvitation::AcceptFromCommandLine(
+          TransportProtocol::kVersion0, std::move(parcelable_channel));
+#else
       invitation = IncomingBrokerClientInvitation::AcceptFromCommandLine(
           TransportProtocol::kLegacy);
+#endif
+      LOG(ERROR) << "## JAY ## MultiprocessTestHelper::ChildSetup() "
+                    "AcceptFromCommandLine DONE";
     }
     primordial_pipe = invitation->ExtractMessagePipe(kTestChildMessagePipeName);
   } else {
+    LOG(ERROR) << "## JAY ## MultiprocessTestHelper::ChildSetup() NOT AS "
+                  "BROKER -- CONNECT";
     if (named_pipe.is_valid()) {
       primordial_pipe = g_child_peer_connection.Get().Connect(ConnectionParams(
           TransportProtocol::kLegacy, CreateClientHandle(named_pipe)));
     } else {
-      primordial_pipe = g_child_peer_connection.Get().Connect(ConnectionParams(
-          TransportProtocol::kLegacy,
+      LOG(ERROR) << "## JAY ## MultiprocessTestHelper::ChildSetup() FOR REAL";
+      ConnectionParams connection_params(
+          TransportProtocol::kVersion0,
           PlatformChannelPair::PassClientHandleFromParentProcess(
-              *base::CommandLine::ForCurrentProcess())));
+              *base::CommandLine::ForCurrentProcess()));
+#if defined(OS_ANDROID)
+#endif
+      primordial_pipe =
+          g_child_peer_connection.Get().Connect(std::move(connection_params));
     }
   }
 }

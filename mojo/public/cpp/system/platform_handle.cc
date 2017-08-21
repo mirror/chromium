@@ -9,6 +9,10 @@
 #include "base/mac/mach_logging.h"
 #endif
 
+#if defined(OS_ANDROID)
+#include "base/android/jni_android.h"
+#endif
+
 namespace mojo {
 
 namespace {
@@ -177,5 +181,43 @@ MojoResult UnwrapMachPort(ScopedHandle handle, mach_port_t* port) {
   return MOJO_RESULT_OK;
 }
 #endif  // defined(OS_MACOSX) && !defined(OS_IOS)
+
+#if defined(OS_ANDROID)
+ScopedHandle WrapParcelable(
+    base::android::ScopedJavaLocalRef<jobject> parcelable) {
+  MojoPlatformHandle platform_handle;
+  platform_handle.struct_size = sizeof(MojoPlatformHandle);
+  platform_handle.type = MOJO_PLATFORM_HANDLE_TYPE_PARCELABLE;
+  platform_handle.value = reinterpret_cast<uint64_t>(parcelable.Release());
+
+  MojoHandle mojo_handle;
+  MojoResult result = MojoWrapPlatformHandle(&platform_handle, &mojo_handle);
+  CHECK_EQ(result, MOJO_RESULT_OK);
+
+  return ScopedHandle(Handle(mojo_handle));
+}
+
+MojoResult UnwrapParcelable(
+    ScopedHandle handle,
+    base::android::ScopedJavaLocalRef<jobject>* parcelable) {
+  DCHECK(handle.is_valid());
+  MojoPlatformHandle platform_handle;
+  platform_handle.struct_size = sizeof(MojoPlatformHandle);
+  MojoResult result =
+      MojoUnwrapPlatformHandle(handle.release().value(), &platform_handle);
+  if (result != MOJO_RESULT_OK)
+    return result;
+
+  CHECK_EQ(platform_handle.type, MOJO_PLATFORM_HANDLE_TYPE_PARCELABLE);
+  jobject jparcelable = reinterpret_cast<jobject>(platform_handle.value);
+  parcelable->Reset(base::android::AttachCurrentThread(), jparcelable);
+
+  // ScopedHandle holds a GlobalRef that gets released in
+  // ScopedPlatformHandleToMojoPlatformHandle and must be cleared.
+  base::android::AttachCurrentThread()->DeleteGlobalRef(jparcelable);
+
+  return MOJO_RESULT_OK;
+}
+#endif
 
 }  // namespace mojo

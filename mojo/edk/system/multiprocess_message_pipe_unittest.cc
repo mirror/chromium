@@ -32,9 +32,14 @@
 #include "mojo/public/c/system/functions.h"
 #include "mojo/public/c/system/types.h"
 #include "mojo/public/cpp/system/message_pipe.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
 #include "mojo/public/cpp/system/wait.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#if defined(OS_ANDROID)
+#include "mojo/edk/test/android/parcelable_utils.h"
+#endif
 
 namespace mojo {
 namespace edk {
@@ -151,8 +156,10 @@ DEFINE_TEST_CLIENT_WITH_PIPE(EchoEcho, MultiprocessMessagePipeTest, h) {
 
     std::string read_buffer(1000, '\0');
     uint32_t read_buffer_size = static_cast<uint32_t>(read_buffer.size());
-    CHECK_EQ(MojoReadMessage(h, &read_buffer[0], &read_buffer_size, nullptr, 0,
-                             MOJO_READ_MESSAGE_FLAG_NONE),
+    MojoHandle handles[10];
+    uint32_t num_handles = 10;
+    CHECK_EQ(MojoReadMessage(h, &read_buffer[0], &read_buffer_size, handles,
+                             &num_handles, MOJO_READ_MESSAGE_FLAG_NONE),
              MOJO_RESULT_OK);
     read_buffer.resize(read_buffer_size);
     VLOG(2) << "Child got: " << read_buffer;
@@ -163,10 +170,11 @@ DEFINE_TEST_CLIENT_WITH_PIPE(EchoEcho, MultiprocessMessagePipeTest, h) {
     }
 
     std::string write_buffer = read_buffer + read_buffer;
-    CHECK_EQ(MojoWriteMessage(h, write_buffer.data(),
-                              static_cast<uint32_t>(write_buffer.size()),
-                              nullptr, 0u, MOJO_WRITE_MESSAGE_FLAG_NONE),
-             MOJO_RESULT_OK);
+    CHECK_EQ(
+        MojoWriteMessage(h, write_buffer.data(),
+                         static_cast<uint32_t>(write_buffer.size()), handles,
+                         num_handles, MOJO_WRITE_MESSAGE_FLAG_NONE),
+        MOJO_RESULT_OK);
   }
 
   return rv;
@@ -206,6 +214,70 @@ TEST_P(MultiprocessMessagePipeTestWithPeerSupport, Basic) {
   });
   EXPECT_EQ(1, exit_code);
 }
+
+#if defined(OS_ANDROID)
+TEST_F(MultiprocessMessagePipeTest, BasicParcelable) {
+  int exit_code = RunTestClientAndGetExitCode("EchoEcho", [&](MojoHandle h) {
+    MojoHandle handles[2];
+    base::android::ScopedJavaLocalRef<jobject> parcelable1 =
+        mojo::edk::test::CreateJavaPoint(11, 22);
+    base::android::ScopedJavaLocalRef<jobject> parcelable2 =
+        mojo::edk::test::CreateJavaPoint(88, 99);
+    ScopedHandle parcelable1_handle = WrapParcelable(parcelable1);
+    handles[0] = parcelable1_handle.release().value();
+    ScopedHandle parcelable2_handle = WrapParcelable(parcelable2);
+    handles[1] = parcelable2_handle.release().value();
+
+    std::string hello("hello");
+    ASSERT_EQ(
+        MOJO_RESULT_OK,
+        MojoWriteMessage(h, hello.data(), static_cast<uint32_t>(hello.size()),
+                         handles, 2u, MOJO_WRITE_MESSAGE_FLAG_NONE));
+
+    HandleSignalsState hss;
+    ASSERT_EQ(MOJO_RESULT_OK,
+              WaitForSignals(h, MOJO_HANDLE_SIGNAL_READABLE, &hss));
+    // The child may or may not have closed its end of the message pipe and died
+    // (and we may or may not know it yet), so our end may or may not appear as
+    // writable.
+    EXPECT_TRUE((hss.satisfied_signals & MOJO_HANDLE_SIGNAL_READABLE));
+    EXPECT_TRUE((hss.satisfiable_signals & MOJO_HANDLE_SIGNAL_READABLE));
+
+    std::string read_buffer(1000, '\0');
+    uint32_t read_buffer_size = static_cast<uint32_t>(read_buffer.size());
+    MojoHandle received_handles[10];
+    uint32_t num_received_handles = 10;
+    CHECK_EQ(
+        MojoReadMessage(h, &read_buffer[0], &read_buffer_size, received_handles,
+                        &num_received_handles, MOJO_READ_MESSAGE_FLAG_NONE),
+        MOJO_RESULT_OK);
+    read_buffer.resize(read_buffer_size);
+    VLOG(2) << "Parent got: " << read_buffer;
+    ASSERT_EQ(hello + hello, read_buffer);
+
+    ASSERT_EQ(2U, num_received_handles);
+    base::android::ScopedJavaLocalRef<jobject> received_parcelable1;
+    ASSERT_EQ(MOJO_RESULT_OK,
+              UnwrapParcelable(MakeScopedHandle(Handle(received_handles[0])),
+                               &received_parcelable1));
+    EXPECT_TRUE(mojo::edk::test::AreJavaObjectsEqual(
+        parcelable1.obj(), received_parcelable1.obj()));
+
+    base::android::ScopedJavaLocalRef<jobject> received_parcelable2;
+    ASSERT_EQ(MOJO_RESULT_OK,
+              UnwrapParcelable(MakeScopedHandle(Handle(received_handles[1])),
+                               &received_parcelable2));
+    EXPECT_TRUE(mojo::edk::test::AreJavaObjectsEqual(
+        parcelable2.obj(), received_parcelable2.obj()));
+    std::string quitquitquit("quitquitquit");
+    CHECK_EQ(MojoWriteMessage(h, quitquitquit.data(),
+                              static_cast<uint32_t>(quitquitquit.size()),
+                              nullptr, 0u, MOJO_WRITE_MESSAGE_FLAG_NONE),
+             MOJO_RESULT_OK);
+  });
+  EXPECT_EQ(1, exit_code);
+}
+#endif  // defined(OS_ANDROID)
 
 TEST_P(MultiprocessMessagePipeTestWithPeerSupport, QueueMessages) {
   static const size_t kNumMessages = 1001;

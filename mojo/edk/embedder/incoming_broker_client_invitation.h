@@ -8,10 +8,15 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "build/build_config.h"
 #include "mojo/edk/embedder/connection_params.h"
 #include "mojo/edk/embedder/transport_protocol.h"
 #include "mojo/edk/system/system_impl_export.h"
 #include "mojo/public/cpp/system/message_pipe.h"
+
+#if defined(OS_ANDROID)
+#include "mojo/edk/embedder/parcelable_channel.h"
+#endif
 
 namespace mojo {
 namespace edk {
@@ -33,8 +38,14 @@ class MOJO_SYSTEM_IMPL_EXPORT IncomingBrokerClientInvitation {
   // HANDLE) in the calling process. The handle should correspond to one end of
   // an OS pipe whose other end was used by another process to send an
   // OutgoingBrokerClientInvitation.
+#if defined(OS_ANDROID)
+  static std::unique_ptr<IncomingBrokerClientInvitation> AcceptFromCommandLine(
+      TransportProtocol protocol,
+      ParcelableChannel parcelable_channel = ParcelableChannel());
+#else
   static std::unique_ptr<IncomingBrokerClientInvitation> AcceptFromCommandLine(
       TransportProtocol protocol);
+#endif
 
   // Extracts a named message pipe from the accepted invitation. Must be called
   // after Accept() or AcceptFromCommandLine().

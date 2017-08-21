@@ -20,6 +20,13 @@ static_library("test_support") {
     ]
   }
 
+  if (is_android) {
+    sources += [
+      "android/parcelable_utils.cc",
+      "android/parcelable_utils.h",
+    ]
+  }
+
   if (is_fuchsia) {
     sources += [ "test_utils_fuchsia.cc" ]
   } else {
@@ -35,7 +42,10 @@ static_library("test_support") {
   ]
 
   if (is_android) {
-    deps += [ ":test_support_jni_headers" ]
+    deps += [
+      ":test_support_jni_headers",
+      "//mojo/edk/system/android:parcelable_support",
+    ]
   }
 }
 
@@ -143,7 +153,8 @@ if (is_android) {
   generate_jni("test_support_jni_headers") {
     jni_package = "mojo/edk"
     sources = [
-      "android/java/src/org/chromium/mojo/edk/MultiprocessTestLauncherHelper.java",
+      "android/java/src/org/chromium/mojo/edk/MultiprocessTestLauncherDelegate.java",
+      "android/java/src/org/chromium/mojo/edk/MultiprocessTestServiceHelper.java",
     ]
   }
 
@@ -152,26 +163,13 @@ if (is_android) {
     deps = [
       "//base:base_java",
       "//base/test:test_support_java",
+      "//mojo/edk/system/android:parcelable_java",
       "//third_party/android_tools:android_support_annotations_java",
       "//third_party/jsr-305:jsr_305_javalib",
     ]
-    srcjar_deps = [ ":multiprocess_java_aidl" ]
     java_files = [
-      "android/java/src/org/chromium/mojo/edk/MultiprocessTestLauncherHelper.java",
+      "android/java/src/org/chromium/mojo/edk/MultiprocessTestLauncherDelegate.java",
       "android/java/src/org/chromium/mojo/edk/MultiprocessTestServiceHelper.java",
-      "android/java/src/org/chromium/mojo/edk/ParcelableChannelClient.java",
-      "android/java/src/org/chromium/mojo/edk/ParcelableChannelServer.java",
-      "android/java/src/org/chromium/mojo/edk/ParcelableWrapper.java",
-    ]
-  }
-
-  android_aidl("multiprocess_java_aidl") {
-    import_include = [ "android/java/src" ]
-    sources = [
-      "android/java/src/org/chromium/mojo/edk/IParcelableChannel.aidl",
-      "android/java/src/org/chromium/mojo/edk/IParcelableChannelProvider.aidl",
-
-      #"android/java/src/org/chromium/mojo/edk/ParcelableWrapper.aidl",
     ]
   }
 }
