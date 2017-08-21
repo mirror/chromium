@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d73f69b_0351c46f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-21T17:46:08Z",
+      "side": 1,
+      "message": "I am not sure I can enumerate all the things wrong with the current logic. The underline and background painting were both broken in different ways. I\u0027ll try to write a summary in the description.\n\nGood eye on the subpixel differences, I hadn\u0027t noticed. You\u0027re referring to the underlines, right?\n\nI don\u0027t think I changed the TextMatch rendering code at all. I\u0027m not sure exactly what you\u0027re comparing, but I did change the offsets in one of the test cases in my previous CL after uploading the baselines to make it more consistent with the tests for the other marker types, so you may have just been comparing against a different version of the test?",
+      "parentUuid": "690b634d_6cc90a9d",
+      "revId": "e80fae7a5d317e82cc040479671e33a0e0080f35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cadc1319_cb0c01d6",
         "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
         "patchSetId": 3
@@ -30,6 +48,41 @@
       "writtenOn": "2017-08-17T02:15:46Z",
       "side": 1,
       "message": "This looks similar to the code on line 433. Can this common logic be split into a helper?",
+      "revId": "e80fae7a5d317e82cc040479671e33a0e0080f35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a8a23b_7ec4c3b6",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-21T17:46:08Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "cadc1319_cb0c01d6",
+      "revId": "e80fae7a5d317e82cc040479671e33a0e0080f35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f38d1f2_05e3d5c4",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-21T17:46:08Z",
+      "side": 1,
+      "message": "I assume the subpixel differences are due to SelectionRectForText() and InlineTextBox::GetLineLayoutItem() not behaving in exactly the same way. It looks like we\u0027re using floats/FloatRects in both the old and new code paths, so I can\u0027t pin it down specifically to rounding differences without poking around in the implementations of those two methods.\n\nAre the subpixel differences of concern? To my eye, they\u0027re very minor, and the gaps between the selection highlight and the underline on the left and right (inserted intentionally by \"width -\u003d 2\") look slightly more symmetric after this CL.",
       "revId": "e80fae7a5d317e82cc040479671e33a0e0080f35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
