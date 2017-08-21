@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e57a9b31_6dabf1eb",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-21T22:38:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17066a55_dcba6a17",
+      "revId": "79b366c53ca0a4320401e3d03590b02b60fe61d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6acf69ae_33c90195",
         "filename": "base/metrics/statistics_recorder.h",
         "patchSetId": 13
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-21T17:12:08Z",
       "side": 1,
       "message": "This comment doesn\u0027t add much beyond what the signature of the function already says. Instead, remove the part about implementing an interface (that\u0027s already clear from the signature) and explain what effect this will have.\n\nThat is, that histograms for which ShouldRecord() returns false will not be logged. Mention that this will not affect any existing histograms if they were already logged before this is called and that this should be called early during initialization before any other threads have been started.\n\nAlso mention that the ShouldRecord() method may be called on any thread, so it should not mutate any state.\n\nHowever, since this CL doesn\u0027t yet hook up the logic for not recording metrics based on this, please add a TODO() in the comment about that.",
+      "range": {
+        "startLine": 194,
+        "startChar": 15,
+        "endLine": 194,
+        "endChar": 0
+      },
+      "revId": "79b366c53ca0a4320401e3d03590b02b60fe61d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f43a5f99_1a88bc13",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-21T22:38:11Z",
+      "side": 1,
+      "message": "\u003e \"That is, that histograms for which ShouldRecord() returns false will not be logged.\"\nI mention it in the comment to ShouldRecordHistogram, should I duplicate it?\n\n\u003e \"Also mention that the ShouldRecord() method may be called on any thread, so it should not mutate any state.\"\nShould I place it in the comment about ShouldRecord() in RecordHistogramChecker rather than in this one?",
+      "parentUuid": "6acf69ae_33c90195",
       "range": {
         "startLine": 194,
         "startChar": 15,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "8f415f7a_b9a445f6",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 1736,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-21T22:38:11Z",
+      "side": 1,
+      "message": "Hm, I didn\u0027t do this. Git did it, I think.",
+      "parentUuid": "74e8e75b_f1ab52b1",
+      "range": {
+        "startLine": 1736,
+        "startChar": 49,
+        "endLine": 1736,
+        "endChar": 0
+      },
+      "revId": "79b366c53ca0a4320401e3d03590b02b60fe61d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68f47ef1_aca21fc8",
         "filename": "tools/metrics/histograms/generate_expired_histograms_array.py",
         "patchSetId": 13
@@ -76,6 +142,30 @@
       "writtenOn": "2017-08-21T17:12:08Z",
       "side": 1,
       "message": "How come your unit test didn\u0027t catch this? Since it is expecting uint64_t...\n\nDid you just not run it after the last refactor to this code?",
+      "range": {
+        "startLine": 18,
+        "startChar": 27,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "79b366c53ca0a4320401e3d03590b02b60fe61d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d49497_f1975af9",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-08-21T22:38:11Z",
+      "side": 1,
+      "message": "Oh, it drives me crazy :)\nI definitely ran unittests. Maybe I messed up with all this git stuff because I had this typo while changing code locally, but then I corrected it.",
+      "parentUuid": "68f47ef1_aca21fc8",
       "range": {
         "startLine": 18,
         "startChar": 27,
