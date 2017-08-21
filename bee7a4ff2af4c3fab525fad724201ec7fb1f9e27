@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "711cebd1_a101ca6e",
+        "filename": "ios/chrome/browser/ui/side_swipe/card_side_swipe_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-21T18:19:21Z",
+      "side": 1,
+      "message": "Out of curiosity, why __unsafe_unretained instead of __weak?",
+      "revId": "bee7a4ff2af4c3fab525fad724201ec7fb1f9e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
