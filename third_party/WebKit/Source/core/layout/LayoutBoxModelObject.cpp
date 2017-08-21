@@ -226,22 +226,31 @@ void LayoutBoxModelObject::WillBeDestroyed() {
 
 void LayoutBoxModelObject::StyleWillChange(StyleDifference diff,
                                            const ComputedStyle& new_style) {
-  // This object's layer may begin or cease to be a stacking context, in which
-  // case the paint invalidation container of this object and descendants may
-  // change. Thus we need to invalidate paint eagerly for all such children.
-  // PaintLayerCompositor::paintInvalidationOnCompositingChange() doesn't work
-  // for the case because we can only see the new paintInvalidationContainer
-  // during compositing update.
-  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() && Style() &&
-      Style()->IsStackingContext() != new_style.IsStackingContext() &&
-      // InvalidatePaintIncludingNonCompositingDescendants() requires this.
+  // This object's layer may begin or cease to be stacked or stacking context,
+  // in which case the paint invalidation container of this object and
+  // descendants may change. Thus we need to invalidate paint eagerly for all
+  // such children. PaintLayerCompositor::paintInvalidationOnCompositingChange()
+  // doesn't work for the case because we can only see the new
+  // paintInvalidationContainer during compositing update.
+  // For SPv2, change of stacked/stacking context status may cause change of the
+  // PaintLayer's CompositingContainer, we need to eagerly invalidate the
+  // current compositing container which may have painted a cached subsequence
+  // containing this object.
+  if (Style() &&
+      (Style()->IsStacked() != new_style.IsStacked() ||
+       Style()->IsStackingContext() != new_style.IsStackingContext()) &&
+      // ObjectPaintInvalidator requires this.
       IsRooted()) {
-    // The following disablers are valid because we need to invalidate based on
-    // the current status.
-    DisableCompositingQueryAsserts compositing_disabler;
-    DisablePaintInvalidationStateAsserts paint_disabler;
-    ObjectPaintInvalidator(*this)
-        .InvalidatePaintIncludingNonCompositingDescendants();
+    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+      ObjectPaintInvalidator(*this).SlowSetPaintingLayerNeedsRepaint();
+    } else {
+      // The following disablers are valid because we need to invalidate based
+      // on the current status.
+      DisableCompositingQueryAsserts compositing_disabler;
+      DisablePaintInvalidationStateAsserts paint_disabler;
+      ObjectPaintInvalidator(*this)
+          .InvalidatePaintIncludingNonCompositingDescendants();
+    }
   }
 
   if (HasLayer() && diff.CssClipChanged())
