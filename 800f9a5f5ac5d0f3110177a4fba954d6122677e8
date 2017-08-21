@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3b0e56a_db432cdd",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-21T16:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ba2d298_25b9bdda",
+      "range": {
+        "startLine": 48,
+        "startChar": 5,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "800f9a5f5ac5d0f3110177a4fba954d6122677e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5906c855_4526cf46",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "800f9a5f5ac5d0f3110177a4fba954d6122677e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2203f3f3_00b8d180",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-21T16:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5906c855_4526cf46",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "800f9a5f5ac5d0f3110177a4fba954d6122677e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ef20d808_8788dbae",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-21T16:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d4aa791_b1fb8d6e",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 12
+      },
+      "revId": "800f9a5f5ac5d0f3110177a4fba954d6122677e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49a6b85e_fb45ca20",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.h",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "800f9a5f5ac5d0f3110177a4fba954d6122677e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671eef92_e6c183c0",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-21T16:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49a6b85e_fb45ca20",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 31
+      },
+      "revId": "800f9a5f5ac5d0f3110177a4fba954d6122677e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "20558ff7_0cf13aa6",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-21T16:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf8cafee_5d970209",
+      "range": {
+        "startLine": 96,
+        "startChar": 7,
+        "endLine": 96,
+        "endChar": 29
+      },
+      "revId": "800f9a5f5ac5d0f3110177a4fba954d6122677e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42617bd6_463b077f",
         "filename": "chrome/browser/chromeos/login/screens/voice_interaction_value_prop_screen.cc",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-21T15:51:32Z",
       "side": 1,
       "message": "Shouldn\u0027t this be GetPrimaryUserProfile()? All the ARC classes are started with that profile: https://cs.chromium.org/chromium/src/chrome/browser/chromeos/arc/arc_service_launcher.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d114",
+      "range": {
+        "startLine": 45,
+        "startChar": 22,
+        "endLine": 45,
+        "endChar": 42
+      },
+      "revId": "800f9a5f5ac5d0f3110177a4fba954d6122677e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23901f5a_b08eb959",
+        "filename": "chrome/browser/chromeos/login/screens/voice_interaction_value_prop_screen.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-21T16:44:04Z",
+      "side": 1,
+      "message": "I think in this case they are equal. From my experience working with with login we usually use GetActiveUserProfile.\n\nUsing search *screen.cc gives me 0 for GetPrimaryUserProfile and 4 entries (not including this file) for GetActiveUserProfile",
+      "parentUuid": "42617bd6_463b077f",
       "range": {
         "startLine": 45,
         "startChar": 22,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "cb89a362_2e92e08e",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1317,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-21T16:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e6fffd1_1ca39050",
+      "range": {
+        "startLine": 1317,
+        "startChar": 5,
+        "endLine": 1317,
+        "endChar": 8
+      },
+      "revId": "800f9a5f5ac5d0f3110177a4fba954d6122677e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9388832c_07aafd75",
         "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.h",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2017-08-21T15:51:32Z",
       "side": 1,
       "message": "I wonder if it\u0027s possible to pass in a callback that would update the pref when it\u0027s started to the constructor of ArcPaiStarted to avoid passing in a Profile* and keep passing in a content::BrowserContext*. Or pass in the PrefService() in the worst case.",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 9
+      },
+      "revId": "800f9a5f5ac5d0f3110177a4fba954d6122677e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c277487d_d374ff28",
+        "filename": "chrome/browser/ui/app_list/arc/arc_pai_starter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-21T16:44:04Z",
+      "side": 1,
+      "message": "Done as PerfService.",
+      "parentUuid": "9388832c_07aafd75",
       "range": {
         "startLine": 44,
         "startChar": 2,
