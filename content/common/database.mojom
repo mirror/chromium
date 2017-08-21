@@ -1,0 +1,25 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+import "mojo/common/string16.mojom";
+import "url/mojo/origin.mojom";
+
+// Database messages sent from the browser to the renderer.
+interface Database {
+  // Notifies the child process of the new database size
+  UpdateSize(url.mojom.Origin origin,
+             mojo.common.mojom.String16 name,
+             int64 size);
+
+  // Notifies the child process of the new space available
+  UpdateSpaceAvailable(url.mojom.Origin origin, int64 space_available);
+
+  // Notifies the child process to reset it's cached value for the origin.
+  ResetSpaceAvailable(url.mojom.Origin origin);
+
+  // Asks the child process to close a database immediately
+  CloseImmediately(url.mojom.Origin origin, mojo.common.mojom.String16 name);
+};

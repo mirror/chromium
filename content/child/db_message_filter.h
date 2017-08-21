@@ -8,7 +8,7 @@
 #include <stdint.h>
 
 #include "base/strings/string16.h"
-#include "ipc/message_filter.h"
+#include "content/common/database.mojom.h"
 
 namespace url {
 class Origin;
@@ -18,25 +18,21 @@ namespace content {
 
 // Receives database messages from the browser process and processes them on the
 // IO thread.
-class DBMessageFilter : public IPC::MessageFilter {
+class DBMessageFilter : public content::mojom::Database {
  public:
   DBMessageFilter();
-
-  // IPC::MessageFilter
-  bool OnMessageReceived(const IPC::Message& message) override;
-
- protected:
-  ~DBMessageFilter() override {}
+  ~DBMessageFilter() override;
 
  private:
-  void OnDatabaseUpdateSize(const url::Origin& origin,
-                            const base::string16& database_name,
-                            int64_t database_size);
-  void OnDatabaseUpdateSpaceAvailable(const url::Origin& origin,
-                                      int64_t space_available);
-  void OnDatabaseResetSpaceAvailable(const url::Origin& origin);
-  void OnDatabaseCloseImmediately(const url::Origin& origin,
-                                  const base::string16& database_name);
+  // content::mojom::Database:
+  void UpdateSize(const url::Origin& origin,
+                  const base::string16& name,
+                  int64_t size) override;
+  void UpdateSpaceAvailable(const url::Origin& origin,
+                            int64_t space_available) override;
+  void ResetSpaceAvailable(const url::Origin& origin) override;
+  void CloseImmediately(const url::Origin& origin,
+                        const base::string16& name) override;
 };
 
 }  // namespace content
