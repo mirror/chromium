@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cb7e1c2_9e065f4e",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-21T15:54:49Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this crash if location is null? Shouldn\u0027t this use something like the ternary operator to handle cases where location is not null?",
+      "range": {
+        "startLine": 317,
+        "startChar": 41,
+        "endLine": 317,
+        "endChar": 42
+      },
+      "revId": "be4151d2bba0cf566da49094c4c3a1b7b26eb393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
