@@ -62,7 +62,11 @@ void AudioWorkletThread::CollectAllGarbage() {
 
 void AudioWorkletThread::EnsureSharedBackingThread() {
   DCHECK(IsMainThread());
-  WorkletThreadHolder<AudioWorkletThread>::EnsureInstance("AudioWorkletThread");
+
+  // AudioWorkletThread uses the WebThread with elevated priority (DISPLAY).
+  // See: crbug.com/756169
+  WorkletThreadHolder<AudioWorkletThread>::EnsureInstance(
+      Platform::Current()->CreateWebAudioThread().release());
 }
 
 void AudioWorkletThread::ClearSharedBackingThread() {
