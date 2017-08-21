@@ -115,9 +115,10 @@ std::unique_ptr<base::Value> DecodeConnectionType(int value) {
 std::unique_ptr<base::DictionaryValue> ParseWeeklyTime(
     const em::WeeklyTimeProto& weekly_time) {
   auto weekly_time_res = base::MakeUnique<base::DictionaryValue>();
-  if (!weekly_time.has_weekday()) {
-    LOG(ERROR) << "Day of week in interval can't be absent.";
-    return nullptr;
+  if (!weekly_time.has_weekday() ||
+      weekly_time.weekday() == em::WeeklyTimeProto::DAY_OF_WEEK_UNSPECIFIED) {
+      LOG(ERROR) << "Day of week in interval can't be absent or unspecified.";
+      return nullptr;
   }
   if (!weekly_time.has_time()) {
     LOG(ERROR) << "Time in interval can't be absent.";
@@ -934,11 +935,11 @@ void DecodeGenericPolicies(const em::ChromeDeviceSettingsProto& policy,
       intervals->Append(std::move(interval));
     }
     off_hours->SetList("intervals", std::move(intervals));
-    auto policy = base::MakeUnique<base::ListValue>();
+    auto ignored_policies = base::MakeUnique<base::ListValue>();
     for (const auto& entry : container.ignored_policy()) {
-      policy->AppendString(entry);
+      ignored_policies->AppendString(entry);
     }
-    off_hours->SetList("ignored_policies", std::move(policy));
+    off_hours->SetList("ignored_policies", std::move(ignored_policies));
     if (container.has_timezone()) {
       off_hours->SetString("timezone", container.timezone());
     }
