@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be4cd8a1_e91a60ad",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-21T17:28:37Z",
+      "side": 1,
+      "message": "Should there be a struct-trait instead?",
+      "revId": "8f8171be650a8084867d7c99a9fbb87c0c5098f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc308fa_d80d5d48",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-21T17:28:37Z",
+      "side": 1,
+      "message": "We should remove this?",
+      "revId": "8f8171be650a8084867d7c99a9fbb87c0c5098f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b181e13e_2cdbb017",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-21T17:28:37Z",
+      "side": 1,
+      "message": "GetOrAllocateLocalSurfaceId() returns a LocalSurfaceId. We shouldn\u0027t need to use Optional here.",
+      "revId": "8f8171be650a8084867d7c99a9fbb87c0c5098f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c127b3cd_cd52940e",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-21T17:28:37Z",
+      "side": 1,
+      "message": "Maybe DCHECK() instead that the id is valid?",
+      "revId": "8f8171be650a8084867d7c99a9fbb87c0c5098f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
