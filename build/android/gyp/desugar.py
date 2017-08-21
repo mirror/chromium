@@ -31,6 +31,7 @@ def _OnStaleMd5(input_jar, output_jar, classpath, bootclasspath_entry):
       # Don't include try-with-resources files in every .jar. Instead, they
       # are included via //third_party/bazel/desugar:desugar_runtime_java.
       '--desugar_try_with_resources_omit_runtime_classes',
+      '--copy_bridges_from_classpath',
   ]
   for path in classpath:
     cmd += ['--classpath_entry', path]
