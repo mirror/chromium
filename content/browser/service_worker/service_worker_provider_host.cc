@@ -150,10 +150,8 @@ std::unique_ptr<ServiceWorkerProviderHost> ServiceWorkerProviderHost::Create(
 }
 
 void ServiceWorkerProviderHost::BindWorkerFetchContext(
-    mojom::ServiceWorkerWorkerClientAssociatedPtrInfo client_ptr_info) {
+    mojom::ServiceWorkerWorkerClientPtr client) {
   DCHECK(base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
-  mojom::ServiceWorkerWorkerClientAssociatedPtr client;
-  client.Bind(std::move(client_ptr_info));
   client.set_connection_error_handler(
       base::BindOnce(&ServiceWorkerProviderHost::UnregisterWorkerFetchContext,
                      base::Unretained(this), client.get()));
@@ -163,8 +161,8 @@ void ServiceWorkerProviderHost::BindWorkerFetchContext(
 
   auto result = worker_clients_.insert(
       std::make_pair<mojom::ServiceWorkerWorkerClient*,
-                     mojom::ServiceWorkerWorkerClientAssociatedPtr>(
-          client.get(), std::move(client)));
+                     mojom::ServiceWorkerWorkerClientPtr>(client.get(),
+                                                          std::move(client)));
   DCHECK(result.second);
 }
 

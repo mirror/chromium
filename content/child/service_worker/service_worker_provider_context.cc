@@ -142,6 +142,14 @@ const std::set<uint32_t>& ServiceWorkerProviderContext::used_features() const {
   return controllee_state_->used_features;
 }
 
+mojom::ServiceWorkerWorkerClientRequest
+ServiceWorkerProviderContext::BindWorkerFetchContext() {
+  mojom::ServiceWorkerWorkerClientPtr ptr;
+  mojom::ServiceWorkerWorkerClientRequest request = mojo::MakeRequest(&ptr);
+  provider_host_->BindWorkerFetchContext(std::move(ptr));
+  return request;
+}
+
 void ServiceWorkerProviderContext::OnNetworkProviderDestroyed() {
   provider_host_.reset();
 }

@@ -317,7 +317,8 @@ std::unique_ptr<blink::WebURLLoader> RendererBlinkPlatformImpl::CreateURLLoader(
   ChildThreadImpl* child_thread = ChildThreadImpl::current();
 
   if (!url_loader_factory_ && child_thread)
-    url_loader_factory_ = CreateNetworkURLLoaderFactory();
+    url_loader_factory_ = CreateNetworkURLLoaderFactory(
+        base::FeatureList::IsEnabled(features::kOutOfBlinkCORS));
 
   // There may be no child thread in RenderViewTests.  These tests can still use
   // data URLs to bypass the ResourceDispatcher.
@@ -327,7 +328,8 @@ std::unique_ptr<blink::WebURLLoader> RendererBlinkPlatformImpl::CreateURLLoader(
 }
 
 PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
-RendererBlinkPlatformImpl::CreateNetworkURLLoaderFactory() {
+RendererBlinkPlatformImpl::CreateNetworkURLLoaderFactory(
+    bool attach_cors_url_loader) {
   ChildThreadImpl* child_thread = ChildThreadImpl::current();
   DCHECK(child_thread);
   PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory> url_loader_factory;
@@ -343,7 +345,7 @@ RendererBlinkPlatformImpl::CreateNetworkURLLoaderFactory() {
   }
 
   // Attach the CORS-enabled URLLoader for the network URLLoaderFactory.
-  if (base::FeatureList::IsEnabled(features::kOutOfBlinkCORS)) {
+  if (attach_cors_url_loader) {
     mojom::URLLoaderFactoryPtr factory_ptr;
     CORSURLLoaderFactory::CreateAndBind(std::move(url_loader_factory),
                                         mojo::MakeRequest(&factory_ptr));
