@@ -6,12 +6,22 @@ rootWebArea name='Action verbs'
 ++++staticText name='Heading'
 ++++++inlineTextBox name='Heading'
 ++button name='Button' defaultActionVerb=press
+++staticText name=' '
+++++inlineTextBox name=' '
 ++link name='Link' defaultActionVerb=jump
 ++++staticText name='Link' defaultActionVerb=click
 ++++++inlineTextBox name='Link'
+++staticText name=' '
+++++inlineTextBox name=' '
 ++textField
+++staticText name=' '
+++++inlineTextBox name=' '
 ++checkBox defaultActionVerb=check checkedState=false
+++staticText name=' '
+++++inlineTextBox name=' '
 ++checkBox defaultActionVerb=uncheck checkedState=true
+++staticText name=' '
+++++inlineTextBox name=' '
 ++radioButton defaultActionVerb=select checkedState=false
 ++switch name='ARIA Switch' defaultActionVerb=check checkedState=false
 ++popUpButton collapsed haspopup defaultActionVerb=open

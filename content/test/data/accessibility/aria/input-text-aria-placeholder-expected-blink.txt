@@ -1,9 +1,15 @@
 rootWebArea
 ++textField name='aria-placeholder1'
+++staticText name=' '
+++++inlineTextBox name=' '
 ++textField name='placeholder2'
 ++++genericContainer
+++staticText name=' '
+++++inlineTextBox name=' '
 ++textField name='aria-label3' placeholder='placeholder3'
 ++++genericContainer
+++staticText name=' '
+++++inlineTextBox name=' '
 ++textField name='aria-label4' placeholder='aria-placeholder4'
 ++textField description='aria-description5' name='aria-label5' placeholder='placeholder5' descriptionFrom=relatedElement
 ++++genericContainer
