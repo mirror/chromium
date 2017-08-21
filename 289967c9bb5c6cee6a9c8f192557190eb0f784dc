@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6b0985b1_31ea0e41",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-21T15:18:57Z",
+      "side": 1,
+      "message": "Using the DCHECK on boolean inside the switch now.\n\nThis is to make sure the boolean and the type is tied together.",
+      "parentUuid": "8f67b531_d47f4aee",
+      "range": {
+        "startLine": 148,
+        "startChar": 15,
+        "endLine": 148,
+        "endChar": 36
+      },
+      "revId": "289967c9bb5c6cee6a9c8f192557190eb0f784dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9422be9_c7b46f34",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
         "patchSetId": 18
@@ -45,6 +69,30 @@
       "revId": "289967c9bb5c6cee6a9c8f192557190eb0f784dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5310b91f_2ebbb16d",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-21T15:18:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9422be9_c7b46f34",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 28
+      },
+      "revId": "289967c9bb5c6cee6a9c8f192557190eb0f784dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "403ec816_72fd03ad",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-21T15:18:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a1c0507_afa71081",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 19
+      },
+      "revId": "289967c9bb5c6cee6a9c8f192557190eb0f784dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b84653e_b6399de7",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
         "patchSetId": 18
@@ -91,6 +163,30 @@
       "revId": "289967c9bb5c6cee6a9c8f192557190eb0f784dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5d3f96_3f4732c1",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-21T15:18:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b84653e_b6399de7",
+      "range": {
+        "startLine": 36,
+        "startChar": 38,
+        "endLine": 36,
+        "endChar": 44
+      },
+      "revId": "289967c9bb5c6cee6a9c8f192557190eb0f784dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
