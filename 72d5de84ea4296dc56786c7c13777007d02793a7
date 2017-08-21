@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28984fd7_35a26e0d",
+        "filename": "chrome/browser/ui/cocoa/passwords/manage_passwords_view_controller_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-21T19:56:07Z",
+      "side": 1,
+      "message": "EXPECT_EQ(1u, [touch_bar_items count]) to verify no additional, unexpected items?",
+      "revId": "72d5de84ea4296dc56786c7c13777007d02793a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89cff659_d76f795c",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-21T19:56:07Z",
+      "side": 1,
+      "message": "EXPECT_EQ(3u, [touch_bar_items count]) for the same reason?",
+      "revId": "72d5de84ea4296dc56786c7c13777007d02793a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
