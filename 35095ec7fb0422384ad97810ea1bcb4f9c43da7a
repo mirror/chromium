@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7229c95_33d3f3ab",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-enabled/console-clear-arguments-on-frame-navigation.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-21T18:57:11Z",
+      "side": 1,
+      "message": "I\u0027m adding braces (with eslint) to even single statement conditionals because the formatter I\u0027m using will force it to be formatted all on one line: `if (a) sameLine();`(it\u0027s not clang-format which doesn\u0027t do a good job of preserving some types of formatting).",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 26
+      },
+      "revId": "35095ec7fb0422384ad97810ea1bcb4f9c43da7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
