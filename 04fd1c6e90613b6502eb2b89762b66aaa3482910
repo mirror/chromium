@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63361f46_7752f69d",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-21T16:13:21Z",
+      "side": 1,
+      "message": "If we always process the unlocks before the deletes, should this be a DCHECK? If it can\u0027t be, then can you leave a comment here to explain why it\u0027s safe to unlock the image data? It feels like it wouldn\u0027t be since locked means that someone might be attempting to use this image.",
+      "range": {
+        "startLine": 1316,
+        "startChar": 4,
+        "endLine": 1316,
+        "endChar": 39
+      },
+      "revId": "04fd1c6e90613b6502eb2b89762b66aaa3482910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df02dc3_e9274a41",
+        "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-21T16:13:21Z",
+      "side": 1,
+      "message": "xD",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 4
+      },
+      "revId": "04fd1c6e90613b6502eb2b89762b66aaa3482910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
