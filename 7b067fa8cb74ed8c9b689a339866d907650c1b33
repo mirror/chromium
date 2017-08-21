@@ -1132,6 +1132,30 @@
     },
     {
       "key": {
+        "uuid": "ecb5f819_630d5b6d",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-21T16:45:32Z",
+      "side": 1,
+      "message": "Hm, maybe not. At this point we still have the 4 fields, they originally come from https://cs.chromium.org/chromium/src/components/variations/android/java/src/org/chromium/components/variations/firstrun/VariationsSeedFetcher.java which is shared between WebView and Chrome. Alexei previously agreed that the gzip field could be removed entirely, but that feels like a separate change.  For now I could just add a comment here to say we\u0027re ignoring the gzip field?",
+      "parentUuid": "519a65a1_c8160a62",
+      "range": {
+        "startLine": 145,
+        "startChar": 46,
+        "endLine": 145,
+        "endChar": 47
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2e87a27_59fc5f68",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsWebViewSeedHandler.java",
         "patchSetId": 7
