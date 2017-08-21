@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f58ddcff_058e52cc",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-21T09:09:47Z",
+      "side": 1,
+      "message": "Let\u0027s try together in person, I think that\u0027ll be more efficient :)",
+      "parentUuid": "2c1f7466_becf1d85",
+      "revId": "46b509b9b6a0ded6b0a39fc1b70809c1e6510646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b57c5b6b_52162267",
         "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
         "patchSetId": 11
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "I\u0027m not really sure how to test this, since it is an ios change. Would trybots help?",
       "parentUuid": "b57c5b6b_52162267",
+      "range": {
+        "startLine": 157,
+        "startChar": 46,
+        "endLine": 157,
+        "endChar": 0
+      },
+      "revId": "46b509b9b6a0ded6b0a39fc1b70809c1e6510646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24d048f_78c1b4b3",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-21T09:09:47Z",
+      "side": 1,
+      "message": "Currently, this just sets a dummy scheme, presumably to avoid hitting the null check in ContentSettingsPattern. So I\u0027d say, if the new code (with empty array) still compiles, then we should be fine. So yes, trybots should cover this just fine.",
+      "parentUuid": "1415dd66_2a9938b2",
       "range": {
         "startLine": 157,
         "startChar": 46,
