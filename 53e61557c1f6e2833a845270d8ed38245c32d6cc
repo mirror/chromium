@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b88aa47f_b70c3473",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-21T02:14:33Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 208,
+        "startChar": 32,
+        "endLine": 208,
+        "endChar": 33
+      },
+      "revId": "53e61557c1f6e2833a845270d8ed38245c32d6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be941e9b_763a3dba",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-21T02:14:33Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 211,
+        "startChar": 31,
+        "endLine": 211,
+        "endChar": 32
+      },
+      "revId": "53e61557c1f6e2833a845270d8ed38245c32d6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c7e8b0_82bcfa73",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-21T02:14:33Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 212,
+        "startChar": 24,
+        "endLine": 212,
+        "endChar": 25
+      },
+      "revId": "53e61557c1f6e2833a845270d8ed38245c32d6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aeea360_10e8cdf8",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-21T02:14:33Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 213,
+        "startChar": 31,
+        "endLine": 213,
+        "endChar": 32
+      },
+      "revId": "53e61557c1f6e2833a845270d8ed38245c32d6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4befbd3_50bb44a0",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-21T02:14:33Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 214,
+        "startChar": 24,
+        "endLine": 214,
+        "endChar": 25
+      },
+      "revId": "53e61557c1f6e2833a845270d8ed38245c32d6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa8586c_3b6557be",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-21T02:14:33Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 230,
+        "startChar": 31,
+        "endLine": 230,
+        "endChar": 32
+      },
+      "revId": "53e61557c1f6e2833a845270d8ed38245c32d6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a25db50d_7c3efaa8",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-08-21T02:14:33Z",
+      "side": 1,
+      "message": "Would you add a check of the error message?",
+      "revId": "53e61557c1f6e2833a845270d8ed38245c32d6cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
