@@ -25,6 +25,7 @@
 #include "base/threading/thread.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "content/browser/devtools/devtools_agent_host_impl.h"
 #include "content/browser/devtools/devtools_http_handler.h"
 #include "content/browser/devtools/devtools_manager.h"
 #include "content/browser/devtools/grit/devtools_resources.h"
@@ -270,7 +271,8 @@ class DevToolsAgentHostClientImpl : public DevToolsAgentHostClient {
         connection_id_(connection_id),
         agent_host_(agent_host) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
-    agent_host_->AttachClient(this);
+    static_cast<DevToolsAgentHostImpl*>(agent_host_.get())
+        ->AttachMultiClient(this);
   }
 
   ~DevToolsAgentHostClientImpl() override {
@@ -699,12 +701,6 @@ void DevToolsHttpHandler::OnWebSocketRequest(
     return;
   }
 
-  if (agent->IsAttached()) {
-    Send500(connection_id,
-            "Target with given id is being inspected: " + target_id);
-    return;
-  }
-
   connection_to_client_[connection_id].reset(new DevToolsAgentHostClientImpl(
       thread_->message_loop(), server_wrapper_.get(), connection_id, agent));
 
@@ -852,16 +848,11 @@ std::unique_ptr<base::DictionaryValue> DevToolsHttpHandler::SerializeDescriptor(
   if (favicon_url.is_valid())
     dictionary->SetString(kTargetFaviconUrlField, favicon_url.spec());
 
-  if (!agent_host->IsAttached()) {
-    dictionary->SetString(kTargetWebSocketDebuggerUrlField,
-                          base::StringPrintf("ws://%s%s%s",
-                                             host.c_str(),
-                                             kPageUrlPrefix,
-                                             id.c_str()));
-    std::string devtools_frontend_url = GetFrontendURLInternal(id, host);
-    dictionary->SetString(
-        kTargetDevtoolsFrontendUrlField, devtools_frontend_url);
-  }
+  dictionary->SetString(kTargetWebSocketDebuggerUrlField,
+                        base::StringPrintf("ws://%s%s%s", host.c_str(),
+                                           kPageUrlPrefix, id.c_str()));
+  std::string devtools_frontend_url = GetFrontendURLInternal(id, host);
+  dictionary->SetString(kTargetDevtoolsFrontendUrlField, devtools_frontend_url);
 
   return dictionary;
 }
