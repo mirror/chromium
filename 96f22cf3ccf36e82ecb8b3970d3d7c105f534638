@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b2932fe_d8c0bbe6",
+        "filename": "components/task_scheduler_util/common/variations_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-21T21:11:44Z",
+      "side": 1,
+      "message": "Too bad we have to tie this to the (unused) pools experiments but if that\u0027s easier for now, sure.",
+      "revId": "96f22cf3ccf36e82ecb8b3970d3d7c105f534638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0120dcdf_c740de75",
+        "filename": "components/task_scheduler_util/common/variations_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-21T21:11:44Z",
+      "side": 1,
+      "message": "Why should we care about splitting the prefix? Feels we only want this experiment across all processes.\n\n(and then we also don\u0027t need to tweak the tests)",
+      "revId": "96f22cf3ccf36e82ecb8b3970d3d7c105f534638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
