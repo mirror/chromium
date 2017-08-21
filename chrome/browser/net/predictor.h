@@ -232,10 +232,6 @@ class Predictor {
   // resolve the associated hosts ASAP during our next startup.
   void LearnAboutInitialNavigation(const GURL& url);
 
-  // Renderer bundles up list and sends to this browser API via IPC.
-  // TODO(csharrison): Use a GURL vector instead to include port and scheme.
-  void DnsPrefetchList(const std::vector<std::string>& hostnames);
-
   // May be called from either the IO or UI thread and will PostTask
   // to the IO thread if necessary.
   void DnsPrefetchMotivatedList(const std::vector<GURL>& urls,

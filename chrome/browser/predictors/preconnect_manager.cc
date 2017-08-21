@@ -68,6 +68,24 @@ void PreconnectManager::Start(const GURL& url,
   TryToLaunchPreresolveJobs();
 }
 
+// It is called from an IPC message originating in the renderer. Thus these
+// requests have a higher priority than requests originated in the predictor.
+void PreconnectManager::StartDetached(
+    const std::vector<GURL>& preconnect_origins,
+    const std::vector<GURL>& preresolve_hosts) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  // Push jobs in front of the queue due to higher priority.
+  for (auto it = preresolve_hosts.rbegin(); it != preresolve_hosts.rend(); ++it)
+    queued_jobs_.emplace_front(*it, false, nullptr);
+
+  for (auto it = preconnect_origins.rbegin(); it != preconnect_origins.rend();
+       ++it) {
+    queued_jobs_.emplace_front(*it, true, nullptr);
+  }
+
+  TryToLaunchPreresolveJobs();
+}
+
 void PreconnectManager::Stop(const GURL& url) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   auto it = preresolve_info_.find(url);
@@ -99,13 +117,14 @@ void PreconnectManager::TryToLaunchPreresolveJobs() {
     auto& job = queued_jobs_.front();
     PreresolveInfo* info = job.info;
 
-    if (!info->was_canceled) {
+    if (!info || !info->was_canceled) {
       int status = PreresolveUrl(
           job.url, base::Bind(&PreconnectManager::OnPreresolveFinished,
                               weak_factory_.GetWeakPtr(), job));
       if (status == net::ERR_IO_PENDING) {
         // Will complete asynchronously.
-        ++info->inflight_count;
+        if (info)
+          ++info->inflight_count;
         ++inflight_preresolves_count_;
       } else {
         // Completed synchronously (was already cached by HostResolver), or else
@@ -116,8 +135,9 @@ void PreconnectManager::TryToLaunchPreresolveJobs() {
     }
 
     queued_jobs_.pop_front();
-    --info->queued_count;
-    if (info->is_done())
+    if (info)
+      --info->queued_count;
+    if (info && info->is_done())
       AllPreresolvesForUrlFinished(info);
   }
 }
@@ -126,21 +146,24 @@ void PreconnectManager::OnPreresolveFinished(const PreresolveJob& job,
                                              int result) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
   FinishPreresolve(job, result == net::OK);
+  PreresolveInfo* info = job.info;
   --inflight_preresolves_count_;
-  --job.info->inflight_count;
-  if (job.info->is_done())
-    AllPreresolvesForUrlFinished(job.info);
+  if (info)
+    --info->inflight_count;
+  if (info && job.info->is_done())
+    AllPreresolvesForUrlFinished(info);
   TryToLaunchPreresolveJobs();
 }
 
 void PreconnectManager::FinishPreresolve(const PreresolveJob& job, bool found) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-  if (found && job.need_preconnect && !job.info->was_canceled) {
-    PreconnectUrl(job.url, job.info->url);
+  if (found && job.need_preconnect && (!job.info || !job.info->was_canceled)) {
+    PreconnectUrl(job.url, job.info ? job.info->url : GURL());
   }
 }
 
 void PreconnectManager::AllPreresolvesForUrlFinished(PreresolveInfo* info) {
+  DCHECK(info);
   DCHECK(info->is_done());
   auto it = preresolve_info_.find(info->url);
   DCHECK(it != preresolve_info_.end());

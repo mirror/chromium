@@ -45,6 +45,7 @@ struct PreresolveJob {
   // Raw pointer usage is fine here because even though PreresolveJob can
   // outlive PreresolveInfo it's only accessed on PreconnectManager class
   // context and PreresolveInfo lifetime is tied to PreconnectManager.
+  // May be equal to nullptr in case of detached job.
   PreresolveInfo* info;
 };
 
@@ -82,6 +83,10 @@ class PreconnectManager {
   void Start(const GURL& url,
              const std::vector<GURL>& preconnect_origins,
              const std::vector<GURL>& preresolve_hosts);
+  // Starts special preconnect and preresolve jobs that are not cancellable and
+  // don't report about their completion.
+  void StartDetached(const std::vector<GURL>& preconnect_origins,
+                     const std::vector<GURL>& preresolve_hosts);
   // No additional jobs keyed by the |url| will be queued after this.
   void Stop(const GURL& url);
 
