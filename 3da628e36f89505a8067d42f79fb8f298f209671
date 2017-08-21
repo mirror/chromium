@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ac874ce_f23806c6",
+        "filename": "third_party/WebKit/LayoutTests/animations/neutral-keyframe-crashtest.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T05:54:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f299174_65b27ec2",
+      "revId": "3da628e36f89505a8067d42f79fb8f298f209671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20f5c503_05579cb4",
         "filename": "third_party/WebKit/LayoutTests/animations/neutral-keyframe-crashtest.html",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "3da628e36f89505a8067d42f79fb8f298f209671",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5be44ca_9119d230",
+        "filename": "third_party/WebKit/LayoutTests/animations/neutral-keyframe-crashtest.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T05:54:26Z",
+      "side": 1,
+      "message": "Unfortunately the test doesn\u0027t crash (without the other change) any more if I do that :/\n\nReading the docs suggests that if a duration is not specified, the animation doesn\u0027t play, so maybe it\u0027s not generating a keyframe at all in that case?\n\nI can make the test fail reliably using a smaller duration + iterationStart:0.5 though, WDYT?",
+      "parentUuid": "20f5c503_05579cb4",
+      "revId": "3da628e36f89505a8067d42f79fb8f298f209671",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
