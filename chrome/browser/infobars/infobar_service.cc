@@ -66,6 +66,18 @@ int InfoBarService::GetActiveEntryID() {
   return active_entry ? active_entry->GetUniqueID() : 0;
 }
 
+infobars::InfoBar* InfoBarService::AddInfoBar(
+    std::unique_ptr<infobars::InfoBar> infobar) {
+  infobars::InfoBar* infobar_ptr =
+      InfoBarManager::AddInfoBar(std::move(infobar));
+
+  // Store the URL that we launched this infobar from to help with determining
+  // whether the infobar should expire or not.
+  infobar_ptr->delegate()->set_launch_url(web_contents()->GetURL());
+
+  return infobar_ptr;
+}
+
 void InfoBarService::NotifyInfoBarAdded(infobars::InfoBar* infobar) {
   infobars::InfoBarManager::NotifyInfoBarAdded(infobar);
   // TODO(droger): Remove the notifications and have listeners change to be
@@ -111,8 +123,12 @@ void InfoBarService::NavigationEntryCommitted(
       ui::PageTransitionCoreTypeIs(load_details.entry->GetTransitionType(),
                                    ui::PAGE_TRANSITION_RELOAD);
   ignore_next_reload_ = false;
-  if (!ignore)
-    OnNavigation(NavigationDetailsFromLoadCommittedDetails(load_details));
+  if (!ignore) {
+    infobars::InfoBarDelegate::NavigationDetails nav_details =
+        NavigationDetailsFromLoadCommittedDetails(load_details);
+    nav_details.committed_url = web_contents()->GetURL();
+    OnNavigation(nav_details);
+  }
 }
 
 void InfoBarService::WebContentsDestroyed() {

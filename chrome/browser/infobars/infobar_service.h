@@ -51,6 +51,7 @@ class InfoBarService : public infobars::InfoBarManager,
   void set_ignore_next_reload() { ignore_next_reload_ = true; }
 
   // InfoBarManager:
+  infobars::InfoBar* AddInfoBar(std::unique_ptr<infobars::InfoBar> infobar);
   // TODO(sdefresne): Change clients to invoke this on infobars::InfoBarManager
   // and turn the method override private.
   std::unique_ptr<infobars::InfoBar> CreateConfirmInfoBar(

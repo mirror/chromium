@@ -6,6 +6,7 @@
 #define COMPONENTS_INFOBARS_CORE_INFOBAR_MANAGER_H_
 
 #include <stddef.h>
+#include <ui/base/window_open_disposition.h>
 
 #include <memory>
 #include <vector>

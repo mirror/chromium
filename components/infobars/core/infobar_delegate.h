@@ -5,10 +5,8 @@
 #ifndef COMPONENTS_INFOBARS_CORE_INFOBAR_DELEGATE_H_
 #define COMPONENTS_INFOBARS_CORE_INFOBAR_DELEGATE_H_
 
-#include "base/macros.h"
-#include "base/strings/string16.h"
-#include "build/build_config.h"
-#include "ui/base/window_open_disposition.h"
+#include <base/macros.h>
+#include <url/gurl.h>
 
 class ConfirmInfoBarDelegate;
 class HungRendererInfoBarDelegate;
@@ -160,6 +158,7 @@ class InfoBarDelegate {
     bool did_replace_entry;
     bool is_reload;
     bool is_redirect;
+    GURL committed_url;
   };
 
   // Value to use when the InfoBar has no icon to show.
@@ -236,6 +235,9 @@ class InfoBarDelegate {
 
   void set_infobar(InfoBar* infobar) { infobar_ = infobar; }
   void set_nav_entry_id(int nav_entry_id) { nav_entry_id_ = nav_entry_id; }
+  void set_launch_url(const GURL& url) { launch_url_ = url; }
+
+  const GURL& launch_url() { return launch_url_; }
 
  protected:
   InfoBarDelegate();
@@ -248,6 +250,9 @@ class InfoBarDelegate {
 
   // The ID of the active navigation entry at the time we became owned.
   int nav_entry_id_;
+
+  // The URL we launched this infobar on.
+  GURL launch_url_;
 
   DISALLOW_COPY_AND_ASSIGN(InfoBarDelegate);
 };

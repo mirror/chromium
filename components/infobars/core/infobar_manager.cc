@@ -32,7 +32,6 @@ void InfoBarManager::Observer::OnInfoBarReplaced(InfoBar* old_infobar,
 void InfoBarManager::Observer::OnManagerShuttingDown(InfoBarManager* manager) {
 }
 
-
 // InfoBarManager --------------------------------------------------------------
 
 InfoBar* InfoBarManager::AddInfoBar(std::unique_ptr<InfoBar> infobar) {

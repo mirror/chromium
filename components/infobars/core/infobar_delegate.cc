@@ -63,14 +63,18 @@ bool InfoBarDelegate::EqualsDelegate(InfoBarDelegate* delegate) const {
 }
 
 bool InfoBarDelegate::ShouldExpire(const NavigationDetails& details) const {
-  return details.is_navigation_to_different_page &&
-      !details.did_replace_entry &&
-      // This next condition ensures a navigation that passes the above
-      // conditions doesn't dismiss infobars added while that navigation was
-      // already in process.  We carve out an exception for reloads since we
-      // want reloads to dismiss infobars, but they will have unchanged entry
-      // IDs.
-      ((nav_entry_id_ != details.entry_id) || details.is_reload);
+  bool navigation_url_is_launch_url =
+      details.committed_url.EqualsIgnoringRef(GURL(launch_url_));
+
+  return !navigation_url_is_launch_url &&
+         details.is_navigation_to_different_page &&
+         !details.did_replace_entry &&
+         // This next condition ensures a navigation that passes the above
+         // conditions doesn't dismiss infobars added while that navigation was
+         // already in process.  We carve out an exception for reloads since we
+         // want reloads to dismiss infobars, but they will have unchanged entry
+         // IDs.
+         ((nav_entry_id_ != details.entry_id) || details.is_reload);
 }
 
 void InfoBarDelegate::InfoBarDismissed() {
