@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5957688c_e7c46327",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1721,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T16:11:09Z",
+      "side": 1,
+      "message": "Since positioning is calculated top down, shouldn\u0027t you use the scale factor from the ancestor here for consistency? They are likely the same, but it\u0027s better to be consistent.",
+      "parentUuid": "65f699ac_30827409",
+      "range": {
+        "startLine": 1721,
+        "startChar": 32,
+        "endLine": 1721,
+        "endChar": 79
+      },
+      "revId": "dcb7d3a1d7586b96451fdb374e100184381dff5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e8b747e_22952b14",
         "filename": "ui/views/view.cc",
         "patchSetId": 2
