@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46692bdc_6fb33b8e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 97048,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-21T18:52:16Z",
+      "side": 1,
+      "message": "Justin had a patch in parallel with the following change:\n-  \u003csuffix name\u003d\"ntp_suggestions\" label\u003d\"Offline ntp suggestions\"/\u003e\n+  \u003csuffix name\u003d\"ntp_suggestions\" label\u003d\"NTP suggestions offlined by the user\"/\u003e\n+  \u003csuffix name\u003d\"suggested_articles\" label\u003d\"Prefetched NTP suggestions\"/\u003e\n\nI suggest that would be a good update.",
+      "revId": "5a929ee23c7b764a6d38041b392154ad143be8e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
