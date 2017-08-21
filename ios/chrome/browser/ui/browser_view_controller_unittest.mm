@@ -357,6 +357,16 @@ TEST_F(BrowserViewControllerTest, TestNativeContentController) {
                              webState:webStateImpl_.get()];
   EXPECT_TRUE(controller != nil);
   EXPECT_TRUE([controller isMemberOfClass:[PageNotAvailableController class]]);
+
+  controller = [bvc_ controllerForURL:GURL(kChromeUIBookmarksURL)
+                             webState:webStateImpl_.get()];
+  EXPECT_TRUE(controller != nil);
+  if (IsIPadIdiom()) {
+    EXPECT_TRUE([controller isMemberOfClass:[NewTabPageController class]]);
+  } else {
+    EXPECT_TRUE(
+        [controller isMemberOfClass:[PageNotAvailableController class]]);
+  }
 }
 
 TEST_F(BrowserViewControllerTest, TestErrorController) {
