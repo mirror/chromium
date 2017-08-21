@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3126164d_660501bf",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-21T20:13:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75cf519f_0fcd27ca",
+      "revId": "502ecbe7fa2f7ebda6e4b2e830486b4a6686f48b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df9ce416_fedff248",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fd51cf55_06e3f0e5",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-21T20:13:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df9ce416_fedff248",
+      "revId": "502ecbe7fa2f7ebda6e4b2e830486b4a6686f48b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c849f041_e189f614",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
         "patchSetId": 11
@@ -50,6 +86,24 @@
       "revId": "502ecbe7fa2f7ebda6e4b2e830486b4a6686f48b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "debb042d_ca8663c5",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsUtils.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-08-21T20:13:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c849f041_e189f614",
+      "revId": "502ecbe7fa2f7ebda6e4b2e830486b4a6686f48b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
