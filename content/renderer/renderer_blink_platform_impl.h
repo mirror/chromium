@@ -249,7 +249,7 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   void RequestPurgeMemory() override;
 
   PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
-  CreateNetworkURLLoaderFactory();
+  CreateNetworkURLLoaderFactory(bool attach_cors_url_loader);
 
  private:
   bool CheckPreparsedJsCachingEnabled() const;
