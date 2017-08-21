@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b942e08_bf11700c",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-21T20:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bf8646b_a57abdd6",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 3
+      },
+      "revId": "662b98880414a34d37ce855f053b38ed1289f40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3cd2b8f_bb6ec884",
         "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "662b98880414a34d37ce855f053b38ed1289f40c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e664247_f7a08559",
+        "filename": "ui/ozone/public/interfaces/gpu_adapter.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-21T20:21:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3cd2b8f_bb6ec884",
+      "range": {
+        "startLine": 74,
+        "startChar": 3,
+        "endLine": 74,
+        "endChar": 4
+      },
+      "revId": "662b98880414a34d37ce855f053b38ed1289f40c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
