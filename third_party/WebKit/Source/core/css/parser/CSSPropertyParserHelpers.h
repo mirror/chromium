@@ -193,6 +193,9 @@ CSSValueList* ConsumeCommaSeparatedList(Func callback,
 
 CSSValue* ConsumeTransformList(CSSParserTokenRange&, const CSSParserContext&);
 
+CSSValue* ConsumePrefixedBackgroundBox(CSSParserTokenRange&,
+                                       bool allow_text_value);
+
 }  // namespace CSSPropertyParserHelpers
 
 }  // namespace blink

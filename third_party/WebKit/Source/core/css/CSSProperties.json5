@@ -2971,11 +2971,13 @@
     {
       name: "-webkit-background-clip",
       api_class: "CSSPropertyAPIWebkitClip",
+      api_methods: ["ParseSingleValue"],
       use_handlers_for: "CSSPropertyBackgroundClip",
     },
     {
       name: "-webkit-background-origin",
       api_class: "CSSPropertyAPIWebkitOrigin",
+      api_methods: ["ParseSingleValue"],
       use_handlers_for: "CSSPropertyBackgroundOrigin",
     },
     {
@@ -3302,6 +3304,7 @@
     {
       name: "-webkit-mask-clip",
       api_class: "CSSPropertyAPIWebkitClip",
+      api_methods: ["ParseSingleValue"],
       custom_all: true,
     },
     {
@@ -3320,6 +3323,7 @@
     {
       name: "-webkit-mask-origin",
       api_class: "CSSPropertyAPIWebkitOrigin",
+      api_methods: ["ParseSingleValue"],
       custom_all: true,
     },
     {
