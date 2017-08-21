@@ -1,0 +1,138 @@
+<!doctype html>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<script src="../../assert_selection.js"></script><script>
+function testIt(dir, offset, direction, expectedText) {
+  test(() => assert_selection(
+  `<span dir="${dir}">${makeSample(offset)}</span>`,
+  selection => selection.modify('extend', direction, 'lineboundary'),
+  `<span dir="${dir}">${expectedText}</span>`),
+  `${dir} ${offset} extend ${direction} lineboundary`
+  );
+}
+
+function makeSample(offset){
+  const kSample = '\nabc \u05D0\u05D1\u05D2 xyz\n';
+  return kSample.substr(0, offset) + '|' + kSample.substring(offset);
+}
+
+// ltr right lineboundary
+testIt('ltr', 0, 'right', '\n^abc \u05D0\u05D1\u05D2 xyz|\n');
+testIt('ltr', 1, 'right', '\n^abc \u05D0\u05D1\u05D2 xyz|\n');
+testIt('ltr', 2, 'right', '\na^bc \u05D0\u05D1\u05D2 xyz|\n');
+testIt('ltr', 3, 'right', '\nab^c \u05D0\u05D1\u05D2 xyz|\n');
+testIt('ltr', 4, 'right', '\nabc^ \u05D0\u05D1\u05D2 xyz|\n');
+testIt('ltr', 5, 'right', '\nabc ^\u05D0\u05D1\u05D2 xyz|\n');
+testIt('ltr', 6, 'right', '\nabc \u05D0^\u05D1\u05D2 xyz|\n');
+testIt('ltr', 7, 'right', '\nabc \u05D0\u05D1^\u05D2 xyz|\n');
+testIt('ltr', 8, 'right', '\nabc \u05D0\u05D1\u05D2^ xyz|\n');
+testIt('ltr', 9, 'right', '\nabc \u05D0\u05D1\u05D2 ^xyz|\n');
+testIt('ltr', 10, 'right', '\nabc \u05D0\u05D1\u05D2 x^yz|\n');
+testIt('ltr', 11, 'right', '\nabc \u05D0\u05D1\u05D2 xy^z|\n');
+testIt('ltr', 12, 'right', '\nabc \u05D0\u05D1\u05D2 xyz|\n');
+
+// ltr left lineboundary
+testIt('ltr', 0, 'left', '\n|abc \u05D0\u05D1\u05D2 xyz\n');
+testIt('ltr', 1, 'left', '\n|abc \u05D0\u05D1\u05D2 xyz\n');
+testIt('ltr', 2, 'left', '\n|a^bc \u05D0\u05D1\u05D2 xyz\n');
+testIt('ltr', 3, 'left', '\n|ab^c \u05D0\u05D1\u05D2 xyz\n');
+testIt('ltr', 4, 'left', '\n|abc^ \u05D0\u05D1\u05D2 xyz\n');
+testIt('ltr', 5, 'left', '\n|abc ^\u05D0\u05D1\u05D2 xyz\n');
+testIt('ltr', 6, 'left', '\n|abc \u05D0^\u05D1\u05D2 xyz\n');
+testIt('ltr', 7, 'left', '\n|abc \u05D0\u05D1^\u05D2 xyz\n');
+testIt('ltr', 8, 'left', '\n|abc \u05D0\u05D1\u05D2^ xyz\n');
+testIt('ltr', 9, 'left', '\n|abc \u05D0\u05D1\u05D2 ^xyz\n');
+testIt('ltr', 10, 'left', '\n|abc \u05D0\u05D1\u05D2 x^yz\n');
+testIt('ltr', 11, 'left', '\n|abc \u05D0\u05D1\u05D2 xy^z\n');
+testIt('ltr', 12, 'left', '\n|abc \u05D0\u05D1\u05D2 xyz^\n');
+
+// ltr forward lineboundary
+testIt('ltr', 0, 'forward', '\n^abc \u05D0\u05D1\u05D2 xyz|\n');
+testIt('ltr', 1, 'forward', '\n^abc \u05D0\u05D1\u05D2 xyz|\n');
+testIt('ltr', 2, 'forward', '\na^bc \u05D0\u05D1\u05D2 xyz|\n');
+testIt('ltr', 3, 'forward', '\nab^c \u05D0\u05D1\u05D2 xyz|\n');
+testIt('ltr', 4, 'forward', '\nabc^ \u05D0\u05D1\u05D2 xyz|\n');
+testIt('ltr', 5, 'forward', '\nabc ^\u05D0\u05D1\u05D2 xyz|\n');
+testIt('ltr', 6, 'forward', '\nabc \u05D0^\u05D1\u05D2 xyz|\n');
+testIt('ltr', 7, 'forward', '\nabc \u05D0\u05D1^\u05D2 xyz|\n');
+testIt('ltr', 8, 'forward', '\nabc \u05D0\u05D1\u05D2^ xyz|\n');
+testIt('ltr', 9, 'forward', '\nabc \u05D0\u05D1\u05D2 ^xyz|\n');
+testIt('ltr', 10, 'forward', '\nabc \u05D0\u05D1\u05D2 x^yz|\n');
+testIt('ltr', 11, 'forward', '\nabc \u05D0\u05D1\u05D2 xy^z|\n');
+testIt('ltr', 12, 'forward', '\nabc \u05D0\u05D1\u05D2 xyz|\n');
+
+// ltr backward lineboundary
+testIt('ltr', 0, 'backward', '\n|abc \u05D0\u05D1\u05D2 xyz\n');
+testIt('ltr', 1, 'backward', '\n|abc \u05D0\u05D1\u05D2 xyz\n');
+testIt('ltr', 2, 'backward', '\n|a^bc \u05D0\u05D1\u05D2 xyz\n');
+testIt('ltr', 3, 'backward', '\n|ab^c \u05D0\u05D1\u05D2 xyz\n');
+testIt('ltr', 4, 'backward', '\n|abc^ \u05D0\u05D1\u05D2 xyz\n');
+testIt('ltr', 5, 'backward', '\n|abc ^\u05D0\u05D1\u05D2 xyz\n');
+testIt('ltr', 6, 'backward', '\n|abc \u05D0^\u05D1\u05D2 xyz\n');
+testIt('ltr', 7, 'backward', '\n|abc \u05D0\u05D1^\u05D2 xyz\n');
+testIt('ltr', 8, 'backward', '\n|abc \u05D0\u05D1\u05D2^ xyz\n');
+testIt('ltr', 9, 'backward', '\n|abc \u05D0\u05D1\u05D2 ^xyz\n');
+testIt('ltr', 10, 'backward', '\n|abc \u05D0\u05D1\u05D2 x^yz\n');
+testIt('ltr', 11, 'backward', '\n|abc \u05D0\u05D1\u05D2 xy^z\n');
+testIt('ltr', 12, 'backward', '\n|abc \u05D0\u05D1\u05D2 xyz^\n');
+
+// rtl right lineboundary
+testIt('rtl', 0, 'right', '\n^abc \u05D0\u05D1\u05D2 xyz|\n');
+testIt('rtl', 1, 'right', '\n^abc \u05D0\u05D1\u05D2 xyz|\n');
+testIt('rtl', 2, 'right', '\na^bc \u05D0\u05D1\u05D2 xyz|\n');
+testIt('rtl', 3, 'right', '\nab^c \u05D0\u05D1\u05D2 xyz|\n');
+testIt('rtl', 4, 'right', '\nabc^ \u05D0\u05D1\u05D2 xyz|\n');
+testIt('rtl', 5, 'right', '\nabc ^\u05D0\u05D1\u05D2 xyz|\n');
+testIt('rtl', 6, 'right', '\nabc \u05D0^\u05D1\u05D2 xyz|\n');
+testIt('rtl', 7, 'right', '\nabc \u05D0\u05D1^\u05D2 xyz|\n');
+testIt('rtl', 8, 'right', '\nabc \u05D0\u05D1\u05D2^ xyz|\n');
+testIt('rtl', 9, 'right', '\nabc \u05D0\u05D1\u05D2 ^xyz|\n');
+testIt('rtl', 10, 'right', '\nabc \u05D0\u05D1\u05D2 x^yz|\n');
+testIt('rtl', 11, 'right', '\nabc \u05D0\u05D1\u05D2 xy^z|\n');
+testIt('rtl', 12, 'right', '\nabc \u05D0\u05D1\u05D2 xyz|\n');
+
+// rtl left lineboundary
+testIt('rtl', 0, 'left', '\n|abc \u05D0\u05D1\u05D2 xyz\n');
+testIt('rtl', 1, 'left', '\n|abc \u05D0\u05D1\u05D2 xyz\n');
+testIt('rtl', 2, 'left', '\n|a^bc \u05D0\u05D1\u05D2 xyz\n');
+testIt('rtl', 3, 'left', '\n|ab^c \u05D0\u05D1\u05D2 xyz\n');
+testIt('rtl', 4, 'left', '\n|abc^ \u05D0\u05D1\u05D2 xyz\n');
+testIt('rtl', 5, 'left', '\n|abc ^\u05D0\u05D1\u05D2 xyz\n');
+testIt('rtl', 6, 'left', '\n|abc \u05D0^\u05D1\u05D2 xyz\n');
+testIt('rtl', 7, 'left', '\n|abc \u05D0\u05D1^\u05D2 xyz\n');
+testIt('rtl', 8, 'left', '\n|abc \u05D0\u05D1\u05D2^ xyz\n');
+testIt('rtl', 9, 'left', '\n|abc \u05D0\u05D1\u05D2 ^xyz\n');
+testIt('rtl', 10, 'left', '\n|abc \u05D0\u05D1\u05D2 x^yz\n');
+testIt('rtl', 11, 'left', '\n|abc \u05D0\u05D1\u05D2 xy^z\n');
+testIt('rtl', 12, 'left', '\n|abc \u05D0\u05D1\u05D2 xyz^\n');
+
+// rtl forward lineboundary
+testIt('rtl', 0, 'forward', '\n^abc \u05D0\u05D1\u05D2 xyz|\n');
+testIt('rtl', 1, 'forward', '\n^abc \u05D0\u05D1\u05D2 xyz|\n');
+testIt('rtl', 2, 'forward', '\na^bc \u05D0\u05D1\u05D2 xyz|\n');
+testIt('rtl', 3, 'forward', '\nab^c \u05D0\u05D1\u05D2 xyz|\n');
+testIt('rtl', 4, 'forward', '\nabc^ \u05D0\u05D1\u05D2 xyz|\n');
+testIt('rtl', 5, 'forward', '\nabc ^\u05D0\u05D1\u05D2 xyz|\n');
+testIt('rtl', 6, 'forward', '\nabc \u05D0^\u05D1\u05D2 xyz|\n');
+testIt('rtl', 7, 'forward', '\nabc \u05D0\u05D1^\u05D2 xyz|\n');
+testIt('rtl', 8, 'forward', '\nabc \u05D0\u05D1\u05D2^ xyz|\n');
+testIt('rtl', 9, 'forward', '\nabc \u05D0\u05D1\u05D2 ^xyz|\n');
+testIt('rtl', 10, 'forward', '\nabc \u05D0\u05D1\u05D2 x^yz|\n');
+testIt('rtl', 11, 'forward', '\nabc \u05D0\u05D1\u05D2 xy^z|\n');
+testIt('rtl', 12, 'forward', '\nabc \u05D0\u05D1\u05D2 xyz|\n');
+
+// rtl backward lineboundary
+testIt('rtl', 0, 'backward', '\n|abc \u05D0\u05D1\u05D2 xyz\n');
+testIt('rtl', 1, 'backward', '\n|abc \u05D0\u05D1\u05D2 xyz\n');
+testIt('rtl', 2, 'backward', '\n|a^bc \u05D0\u05D1\u05D2 xyz\n');
+testIt('rtl', 3, 'backward', '\n|ab^c \u05D0\u05D1\u05D2 xyz\n');
+testIt('rtl', 4, 'backward', '\n|abc^ \u05D0\u05D1\u05D2 xyz\n');
+testIt('rtl', 5, 'backward', '\n|abc ^\u05D0\u05D1\u05D2 xyz\n');
+testIt('rtl', 6, 'backward', '\n|abc \u05D0^\u05D1\u05D2 xyz\n');
+testIt('rtl', 7, 'backward', '\n|abc \u05D0\u05D1^\u05D2 xyz\n');
+testIt('rtl', 8, 'backward', '\n|abc \u05D0\u05D1\u05D2^ xyz\n');
+testIt('rtl', 9, 'backward', '\n|abc \u05D0\u05D1\u05D2 ^xyz\n');
+testIt('rtl', 10, 'backward', '\n|abc \u05D0\u05D1\u05D2 x^yz\n');
+testIt('rtl', 11, 'backward', '\n|abc \u05D0\u05D1\u05D2 xy^z\n');
+testIt('rtl', 12, 'backward', '\n|abc \u05D0\u05D1\u05D2 xyz^\n');
+</script>
