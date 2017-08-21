@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aa724be_37eb07cf",
+        "filename": "headless/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-21T14:22:18Z",
+      "side": 1,
+      "message": "I assume there\u0027s no easy way to get this list from where these files are defined?",
+      "range": {
+        "startLine": 809,
+        "startChar": 21,
+        "endLine": 809,
+        "endChar": 33
+      },
+      "revId": "fac4f9fea662c12520170ed72a33975a21f65cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
