@@ -14,6 +14,7 @@
 #include "core/css/ComputedStyleCSSValueMapping.h"
 #include "core/css/PropertyRegistration.h"
 #include "core/css/parser/CSSTokenizer.h"
+#include "core/css/properties/CSSPropertyAPI.h"
 #include "core/css/resolver/CSSVariableResolver.h"
 #include "core/css/resolver/StyleBuilder.h"
 #include "core/css/resolver/StyleResolverState.h"
@@ -186,13 +187,13 @@ InterpolationValue CSSInterpolationType::MaybeConvertSingleInternal(
 
   if (value->IsInitialValue() ||
       (value->IsUnsetValue() &&
-       !CSSPropertyMetadata::IsInheritedProperty(CssProperty()))) {
+       !CSSPropertyAPI::Get(CssProperty()).IsInheritedProperty())) {
     return MaybeConvertInitial(state, conversion_checkers);
   }
 
   if (value->IsInheritedValue() ||
       (value->IsUnsetValue() &&
-       CSSPropertyMetadata::IsInheritedProperty(CssProperty()))) {
+       CSSPropertyAPI::Get(CssProperty()).IsInheritedProperty())) {
     return MaybeConvertInherit(state, conversion_checkers);
   }
 
