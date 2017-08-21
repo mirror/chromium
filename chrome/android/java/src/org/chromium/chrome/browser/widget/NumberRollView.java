@@ -61,7 +61,6 @@ public class NumberRollView extends FrameLayout {
 
         assert mUpNumber != null;
         assert mDownNumber != null;
-
         setNumberRoll(mNumber);
     }
 
