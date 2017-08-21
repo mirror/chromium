@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f8a8491_49da1571",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModuleTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-21T13:29:28Z",
+      "side": 1,
+      "message": "nit: |module_namespace| is already of type v8::Object.",
+      "range": {
+        "startLine": 286,
+        "startChar": 24,
+        "endLine": 286,
+        "endChar": 47
+      },
+      "revId": "e12884119f3c6fc1b9aea87428d98ff3b75727ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06caf69c_1a7d89e8",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModuleTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-21T13:29:28Z",
+      "side": 1,
+      "message": "nit: Given you\u0027re okay to crash in error case, you can write it as:\n  double number \u003d exported_value-\u003eNumberValue(context).ToChecked();",
+      "revId": "e12884119f3c6fc1b9aea87428d98ff3b75727ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
