@@ -84,6 +84,74 @@
       "revId": "916fc28121612749b1d0fdf0625806f955e8fbe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc6ca2ee_45437cc1",
+        "filename": "third_party/WebKit/Source/platform/exported/WebVideoFrameSubmitter.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-21T21:35:27Z",
+      "side": 1,
+      "message": "It\u0027s not really nice to pass around a raw pointer of mojo::Binding. Can we delegate the work in line 29 - 39 to VideoFrameSubmitter? Then you don\u0027t need to expose the raw pointer from VideoFrameSubmitter.",
+      "revId": "916fc28121612749b1d0fdf0625806f955e8fbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af53234_6bceccc3",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-21T21:35:27Z",
+      "side": 1,
+      "message": "Shall we add a comment about what these operations on RGB are doing?",
+      "revId": "916fc28121612749b1d0fdf0625806f955e8fbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b74c21_af0b033b",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-21T21:35:27Z",
+      "side": 1,
+      "message": "What is this class for?\n\nAdd a per-class comment.",
+      "revId": "916fc28121612749b1d0fdf0625806f955e8fbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef1751a_890ca955",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-21T21:35:27Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "916fc28121612749b1d0fdf0625806f955e8fbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
