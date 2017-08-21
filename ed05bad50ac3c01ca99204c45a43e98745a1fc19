@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9b124cf0_4f8f4350",
+        "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1586,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-08-21T07:18:24Z",
+      "side": 1,
+      "message": "The test class FindInPageDPITest inherits from (FindInPageControllerTest) doesn\u0027t have one. Should it be fixed for both, or is there a specific reason the parent doesn\u0027t need it and this one does?",
+      "parentUuid": "24bab9db_f699cf51",
+      "range": {
+        "startLine": 1586,
+        "startChar": 0,
+        "endLine": 1586,
+        "endChar": 2
+      },
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6da0833_a3f2be37",
         "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
         "patchSetId": 3
