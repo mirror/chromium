@@ -80,6 +80,12 @@ public class ExternalPrerenderHandler {
                 prerenderOnCellular);
     }
 
+    public WebContents startRedirectWalk(Profile profile, WebContents webContents, String url,
+            String expectedRedirectEndpoint, String referrer) {
+        return nativeStartRedirectWalk(mNativeExternalPrerenderHandler, profile, webContents, url,
+                expectedRedirectEndpoint, referrer);
+    }
+
     /**
      * Cancel the current prerender action on this {@link ExternalPrerenderHandler}.
      */
@@ -159,6 +165,9 @@ public class ExternalPrerenderHandler {
             long nativeExternalPrerenderHandlerAndroid, Profile profile,
             WebContents webContents, String url, String referrer,
             int top, int left, int bottom, int right, boolean prerenderOnCellular);
+    private static native WebContents nativeStartRedirectWalk(
+            long nativeExternalPrerenderHandlerAndroid, Profile profile, WebContents webContents,
+            String url, String expectedRedirectEndpoint, String referrer);
     private static native boolean nativeHasPrerenderedUrl(
             Profile profile, String url, WebContents webContents);
     private static native boolean nativeHasPrerenderedAndFinishedLoadingUrl(

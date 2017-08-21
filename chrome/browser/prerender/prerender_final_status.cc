@@ -70,6 +70,8 @@ const char* kFinalStatusNames[] = {
     "Credential Manager API",
     "NoStatePrefetch Finished",
     "Low-End Device",
+    "Successful Redirect Walk",
+    "Failed Redirect Walk",
     "Max",
 };
 static_assert(arraysize(kFinalStatusNames) == FINAL_STATUS_MAX + 1,

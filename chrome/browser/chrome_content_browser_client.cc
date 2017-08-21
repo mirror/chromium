@@ -67,6 +67,7 @@
 #include "chrome/browser/prerender/prerender_manager.h"
 #include "chrome/browser/prerender/prerender_manager_factory.h"
 #include "chrome/browser/prerender/prerender_message_filter.h"
+#include "chrome/browser/prerender/prerender_navigation_throttle.h"
 #include "chrome/browser/printing/printing_message_filter.h"
 #include "chrome/browser/profiles/chrome_browser_main_extra_parts_profiles.h"
 #include "chrome/browser/profiles/profile.h"
@@ -3136,10 +3137,15 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
   // https://crbug.com/370595
   prerender::PrerenderContents* prerender_contents =
       prerender::PrerenderContents::FromWebContents(handle->GetWebContents());
-  if (!prerender_contents && handle->IsInMainFrame()) {
-    throttles.push_back(
-        navigation_interception::InterceptNavigationDelegate::CreateThrottleFor(
-            handle));
+  if (handle->IsInMainFrame()) {
+    if (!prerender_contents) {
+      throttles.push_back(navigation_interception::InterceptNavigationDelegate::
+                              CreateThrottleFor(handle));
+    } else if (prerender_contents->origin() ==
+               prerender::Origin::ORIGIN_REDIRECTS_WALK) {
+      throttles.push_back(prerender::CreateThrottleForRedirectsWalk(
+          prerender_contents, handle));
+    }
   }
 #else
   if (handle->IsInMainFrame()) {

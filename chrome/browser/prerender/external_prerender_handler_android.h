@@ -40,6 +40,15 @@ class ExternalPrerenderHandlerAndroid {
       jint right,
       jboolean forced_prerender);
 
+  base::android::ScopedJavaLocalRef<jobject> StartRedirectWalk(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      const base::android::JavaParamRef<jobject>& jprofile,
+      const base::android::JavaParamRef<jobject>& jweb_contents,
+      const base::android::JavaParamRef<jstring>& jurl,
+      const base::android::JavaParamRef<jstring>& jexpected_redirect_endpoint,
+      const base::android::JavaParamRef<jstring>& jreferrer);
+
   // Cancel the prerender associated with the prerender_handle_
   void CancelCurrentPrerender(
       JNIEnv* env,
