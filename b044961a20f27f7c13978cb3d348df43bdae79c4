@@ -68,6 +68,24 @@
       "revId": "b044961a20f27f7c13978cb3d348df43bdae79c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2648e0bf_3c2a4119",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-21T18:40:48Z",
+      "side": 1,
+      "message": "Thanks for the heads up. Yes I checked that it breaks the cached color loading. The wallpaper has to use a default color for dimming, which is quite different from the mock.",
+      "parentUuid": "4524e3be_aec8e84f",
+      "revId": "b044961a20f27f7c13978cb3d348df43bdae79c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
