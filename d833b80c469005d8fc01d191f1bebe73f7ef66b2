@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9f03c054_e5f7166b",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-21T21:11:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43e5c83c_4e0ca198",
+      "revId": "d833b80c469005d8fc01d191f1bebe73f7ef66b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd60b479_bf71da38",
         "filename": "ios/chrome/browser/ui/history_popup/legacy_tab_history_coordinator.mm",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2017-08-18T11:42:29Z",
       "side": 1,
       "message": "Ideally we would refactor this so that the parent (presentationProvider) actually adds the child as a subview.  This way the child never needs an explicit pointer to the superview and we can remove it from the presentationProvider protocol.\n\nIn general, I want to avoid passing around UIViews, because that\u0027s a huge API surface that will eventually be abused.",
+      "revId": "d833b80c469005d8fc01d191f1bebe73f7ef66b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd423bc9_13e0f719",
+        "filename": "ios/chrome/browser/ui/history_popup/legacy_tab_history_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-21T21:11:31Z",
+      "side": 1,
+      "message": "Yes, this is the real reason we need the parent view. Getting rid of it would require some \"inside the box\" refactoring, which could take some time since the historyPopupController super class is used by the tools menu and omnibox. \n\nI plan on only passing UIViews for boxing when needed (which will be temporary) but not for a clean interface.",
+      "parentUuid": "d354f4ef_6bd96baa",
       "revId": "d833b80c469005d8fc01d191f1bebe73f7ef66b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
