@@ -49,7 +49,10 @@ OmniboxPopupViewIOS::OmniboxPopupViewIOS(
     OmniboxEditModel* edit_model,
     OmniboxPopupViewSuggestionsDelegate* delegate,
     id<OmniboxPopupPositioner> positioner)
-    : model_(new OmniboxPopupModel(this, edit_model)),
+    : model_(new OmniboxPopupModel(this,
+                                   edit_model,
+                                   edit_model->client(),
+                                   edit_model->autocomplete_controller())),
       delegate_(delegate),
       positioner_(positioner),
       is_open_(false) {
@@ -57,6 +60,7 @@ OmniboxPopupViewIOS::OmniboxPopupViewIOS(
   DCHECK(browser_state);
   DCHECK(edit_model);
 
+  edit_model->set_popup_model(model_.get());
   std::unique_ptr<image_fetcher::IOSImageDataFetcherWrapper> imageFetcher =
       base::MakeUnique<image_fetcher::IOSImageDataFetcherWrapper>(
           browser_state->GetRequestContext());
