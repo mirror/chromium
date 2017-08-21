@@ -56,12 +56,6 @@ void WKBasedNavigationManagerImpl::SetSessionController(
 
 void WKBasedNavigationManagerImpl::InitializeSession() {}
 
-void WKBasedNavigationManagerImpl::ReplaceSessionHistory(
-    std::vector<std::unique_ptr<NavigationItem>> items,
-    int current_index) {
-  DLOG(WARNING) << "Not yet implemented.";
-}
-
 void WKBasedNavigationManagerImpl::OnNavigationItemsPruned(
     size_t pruned_item_count) {
   delegate_->OnNavigationItemsPruned(pruned_item_count);
@@ -352,6 +346,12 @@ void WKBasedNavigationManagerImpl::CopyStateFromAndPrune(
 bool WKBasedNavigationManagerImpl::CanPruneAllButLastCommittedItem() const {
   DLOG(WARNING) << "Not yet implemented.";
   return true;
+}
+
+void WKBasedNavigationManagerImpl::Restore(
+    int selected_navigation,
+    std::vector<std::unique_ptr<NavigationItem>> items) {
+  DLOG(WARNING) << "Not yet implemented.";
 }
 
 NavigationItemImpl* WKBasedNavigationManagerImpl::GetNavigationItemImplAtIndex(
