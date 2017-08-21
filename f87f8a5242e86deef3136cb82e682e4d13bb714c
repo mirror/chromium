@@ -22,6 +22,30 @@
       "revId": "f87f8a5242e86deef3136cb82e682e4d13bb714c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd330508_44567b01",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SectionList.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-21T15:06:54Z",
+      "side": 1,
+      "message": "Oh, that\u0027s a shame :-(",
+      "parentUuid": "19e61c4a_2c386632",
+      "range": {
+        "startLine": 236,
+        "startChar": 28,
+        "endLine": 236,
+        "endChar": 55
+      },
+      "revId": "f87f8a5242e86deef3136cb82e682e4d13bb714c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
