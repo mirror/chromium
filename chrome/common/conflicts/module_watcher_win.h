@@ -15,16 +15,15 @@ class ModuleWatcherTest;
 
 union LDR_DLL_NOTIFICATION_DATA;
 
-// This class observes modules as they are loaded and unloaded into a process's
-// address space.
+// This class observes modules as they are loaded into a process's address
+// space.
 //
 // This class is safe to be created on any thread. Similarly, it is safe to be
 // destroyed on any thread, independent of the thread on which the instance was
 // created.
 class ModuleWatcher {
  public:
-  // Houses information about a module load/unload event, and some module
-  // metadata.
+  // Houses information about a module event, and some module metadata.
   struct ModuleEvent {
     ModuleEvent() = default;
     ModuleEvent(const ModuleEvent& other) = default;

@@ -181,8 +181,7 @@ uint32_t GetModuleTimeDateStamp(const void* module_load_address) {
 
 // Used as the callback for ModuleWatcher events in this process. Dispatches
 // them to the ModuleDatabase.
-void OnModuleEvent(uint32_t process_id,
-                   uint64_t creation_time,
+void OnModuleEvent(content::ProcessType process_type,
                    const ModuleWatcher::ModuleEvent& event) {
   auto* module_database = ModuleDatabase::GetInstance();
   uintptr_t load_address =
@@ -192,13 +191,8 @@ void OnModuleEvent(uint32_t process_id,
     case mojom::ModuleEventType::MODULE_ALREADY_LOADED:
     case mojom::ModuleEventType::MODULE_LOADED: {
       module_database->OnModuleLoad(
-          process_id, creation_time, event.module_path, event.module_size,
+          process_type, event.module_path, event.module_size,
           GetModuleTimeDateStamp(event.module_load_address), load_address);
-      return;
-    }
-
-    case mojom::ModuleEventType::MODULE_UNLOADED: {
-      module_database->OnModuleUnload(process_id, creation_time, load_address);
       return;
     }
   }
@@ -208,23 +202,17 @@ void OnModuleEvent(uint32_t process_id,
 // the provided |module_watcher|, and starts the enumeration of registered
 // modules in the Windows Registry.
 void SetupModuleDatabase(std::unique_ptr<ModuleWatcher>* module_watcher) {
-  uint64_t creation_time = 0;
-  ModuleEventSinkImpl::GetProcessCreationTime(::GetCurrentProcess(),
-                                              &creation_time);
   ModuleDatabase::SetInstance(base::MakeUnique<ModuleDatabase>(
       content::BrowserThread::GetTaskRunnerForThread(
           content::BrowserThread::UI)));
   auto* module_database = ModuleDatabase::GetInstance();
-  uint32_t process_id = ::GetCurrentProcessId();
 
   // The ModuleWatcher will immediately start emitting module events, but the
   // ModuleDatabase expects an OnProcessStarted event prior to that. For child
   // processes this is handled via the ModuleEventSinkImpl. For the browser
   // process a manual notification is sent before wiring up the ModuleWatcher.
-  module_database->OnProcessStarted(process_id, creation_time,
-                                    content::PROCESS_TYPE_BROWSER);
   *module_watcher = ModuleWatcher::Create(
-      base::BindRepeating(&OnModuleEvent, process_id, creation_time));
+      base::BindRepeating(&OnModuleEvent, content::PROCESS_TYPE_BROWSER));
 
   // Enumerate shell extensions and input method editors. It is safe to use
   // base::Unretained() here because the ModuleDatabase is never freed.
