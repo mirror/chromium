@@ -8,6 +8,7 @@
 #include "core/CoreExport.h"
 #include "core/layout/ng/geometry/ng_static_position.h"
 #include "core/layout/ng/ng_block_node.h"
+#include "core/layout/ng/ng_exclusion_space.h"
 #include "core/layout/ng/ng_out_of_flow_positioned_descendant.h"
 #include "core/layout/ng/ng_physical_fragment.h"
 #include "platform/LayoutUnit.h"
@@ -59,6 +60,8 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
     return unpositioned_floats_;
   }
 
+  const NGExclusionSpace& ExclusionSpace() const { return *exclusion_space_; }
+
   NGLayoutResultStatus Status() const {
     return static_cast<NGLayoutResultStatus>(status_);
   }
@@ -78,14 +81,16 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
                  Vector<NGOutOfFlowPositionedDescendant>
                      out_of_flow_positioned_descendants,
                  Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats,
+                 std::unique_ptr<const NGExclusionSpace> exclusion_space,
                  const WTF::Optional<NGLogicalOffset> bfc_offset,
                  const NGMarginStrut end_margin_strut,
                  NGLayoutResultStatus status);
 
   RefPtr<NGPhysicalFragment> physical_fragment_;
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
-
   Vector<NGOutOfFlowPositionedDescendant> oof_positioned_descendants_;
+
+  const std::unique_ptr<const NGExclusionSpace> exclusion_space_;
   const WTF::Optional<NGLogicalOffset> bfc_offset_;
   const NGMarginStrut end_margin_strut_;
 
