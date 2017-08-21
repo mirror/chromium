@@ -4,6 +4,7 @@
 
 #include "content/test/test_navigation_url_loader_delegate.h"
 
+#include "base/optional.h"
 #include "base/run_loop.h"
 #include "content/public/browser/global_request_id.h"
 #include "content/public/browser/navigation_data.h"
@@ -73,8 +74,11 @@ void TestNavigationURLLoaderDelegate::OnResponseStarted(
     response_started_->Quit();
 }
 
-void TestNavigationURLLoaderDelegate::OnRequestFailed(bool in_cache,
-                                                      int net_error) {
+void TestNavigationURLLoaderDelegate::OnRequestFailed(
+    bool in_cache,
+    int net_error,
+    base::Optional<net::SSLInfo> ssl_info,
+    base::Optional<bool> fatal) {
   net_error_ = net_error;
   if (request_failed_)
     request_failed_->Quit();
