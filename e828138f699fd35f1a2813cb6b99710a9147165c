@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0946d5ef_9aae1760",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19491,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-21T22:46:05Z",
+      "side": 1,
+      "message": "nit: Duplicate \"the handle\"",
+      "range": {
+        "startLine": 19491,
+        "startChar": 15,
+        "endLine": 19491,
+        "endChar": 25
+      },
+      "revId": "e828138f699fd35f1a2813cb6b99710a9147165c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f270bf5e_2e9d4e0e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19492,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-21T22:46:05Z",
+      "side": 1,
+      "message": "It\u0027s probably worth documenting that this histogram measures the best case of flipping or not flipping.  As currently written, it sounds a bit like the handle might always be flipped.",
+      "revId": "e828138f699fd35f1a2813cb6b99710a9147165c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a247bc63_be9ed1c0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 19532,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-21T22:46:05Z",
+      "side": 1,
+      "message": "Please define an enum in enums.xml, with labels like \"No improvement\" and \"Less clipping\", and associate it here.",
+      "range": {
+        "startLine": 19532,
+        "startChar": 20,
+        "endLine": 19532,
+        "endChar": 0
+      },
+      "revId": "e828138f699fd35f1a2813cb6b99710a9147165c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff82468_3bf46712",
+        "filename": "ui/touch_selection/touch_handle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-21T22:46:05Z",
+      "side": 1,
+      "message": "nit: UMA_HISTOGRAM_* macros expand to a fair bit of code, so it\u0027s best not to duplicate these two histograms in both the if/else branch.  Instead, please move them out of the if/else, and set int/boolean variables in the if/else.",
+      "range": {
+        "startLine": 302,
+        "startChar": 0,
+        "endLine": 306,
+        "endChar": 74
+      },
+      "revId": "e828138f699fd35f1a2813cb6b99710a9147165c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
