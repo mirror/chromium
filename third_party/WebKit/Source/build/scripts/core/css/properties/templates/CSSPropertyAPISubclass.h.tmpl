@@ -32,6 +32,10 @@ class {{api_classname}} : public CSSPropertyAPI {
   {% if is_inherited == 'true' %}
   bool IsInheritedProperty() const override { return true; }
   {% endif %}
+  {% if is_repeated == 'true' %}
+  bool IsRepeatedProperty() const override { return true; }
+  char RepetitionSeparator() const override { return '{{separator}}'; }
+  {% endif %}
 };
 
 }  // namespace blink
