@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af0d8b46_fd9dcd67",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T04:42:05Z",
+      "side": 1,
+      "message": "I think you missed the earlier comment for the commit message on patch set 2.",
+      "revId": "26e3dcbff0a51e1baf6d48aa24b6d208446e65c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feee1c03_42483af3",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T04:42:05Z",
+      "side": 1,
+      "message": "nit: add \u0027.\u0027 at the end of the comment, like line 113",
+      "range": {
+        "startLine": 117,
+        "startChar": 29,
+        "endLine": 117,
+        "endChar": 30
+      },
+      "revId": "26e3dcbff0a51e1baf6d48aa24b6d208446e65c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0854dc04_dfb6e4de",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-21T04:42:05Z",
+      "side": 1,
+      "message": "I thought maybe lines 290-292 could be moved above line 283. Does not that work?\n\n(My understanding is the HTTP response comes in first with the headers like \"200 OK\", and then the body can stream in later.)",
+      "range": {
+        "startLine": 290,
+        "startChar": 0,
+        "endLine": 290,
+        "endChar": 61
+      },
+      "revId": "26e3dcbff0a51e1baf6d48aa24b6d208446e65c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
