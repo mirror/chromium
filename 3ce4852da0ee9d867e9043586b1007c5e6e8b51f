@@ -437,6 +437,30 @@
     },
     {
       "key": {
+        "uuid": "61f5a7e1_f3bf0efa",
+        "filename": "chrome/test/chromedriver/capabilities_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-21T17:26:19Z",
+      "side": 1,
+      "message": "I addressed a couple of these now that Value::SetPath is available to complement Value::SetKey.",
+      "parentUuid": "33ef8e47_d4cdc359",
+      "range": {
+        "startLine": 143,
+        "startChar": 7,
+        "endLine": 143,
+        "endChar": 10
+      },
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e40f657d_54f4278f",
         "filename": "content/browser/renderer_host/input/mouse_latency_browsertest.cc",
         "patchSetId": 8

@@ -16,6 +16,24 @@
       "revId": "b19079647de43820d8401e4f2e1dac79fe464a9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62bd840_e005d306",
+        "filename": "base/values.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-21T17:26:19Z",
+      "side": 1,
+      "message": "Done, dropped this completely for Lists and Dicts. I changed some code around to make this work in all situations.",
+      "parentUuid": "75dbf64b_09c7777e",
+      "revId": "b19079647de43820d8401e4f2e1dac79fe464a9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
