@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd8e478b_5a0712b8",
+        "filename": "ash/system/tray_caps_lock.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-21T16:36:39Z",
+      "side": 1,
+      "message": "nit: MakeUnique\u003c\u003e\n\nAlso, is there a bug filed to clean up the old notifications after \"new style\" is the default? If not, please file one.\n\nAlso, optional for future CLs, you don\u0027t need to change it here: I\u0027m OK with adding \"using message_center:Foo\" and \"using l10n_util::GetStringUTF16\" if it makes line wrapping better. These notifications can be very dense.",
+      "revId": "cd1b0fe03d10b8cf4e1c749729a82726cbda5b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
