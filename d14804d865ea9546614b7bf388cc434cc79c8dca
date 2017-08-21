@@ -118,6 +118,30 @@
       "revId": "d14804d865ea9546614b7bf388cc434cc79c8dca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4265cb5_e0a28f5e",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/Path2D.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-21T18:55:19Z",
+      "side": 1,
+      "message": "Yes, this makes sense to me. Let\u0027s enable it here.",
+      "parentUuid": "acf400b1_23b70aa0",
+      "range": {
+        "startLine": 35,
+        "startChar": 75,
+        "endLine": 35,
+        "endChar": 115
+      },
+      "revId": "d14804d865ea9546614b7bf388cc434cc79c8dca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
