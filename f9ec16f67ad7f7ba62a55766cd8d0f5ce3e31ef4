@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23bddc62_f1389041",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T16:23:50Z",
+      "side": 1,
+      "message": "I missed this in a previous review, but you may be interested in https://codesearch.chromium.org/chromium/src/third_party/colorama/",
+      "revId": "f9ec16f67ad7f7ba62a55766cd8d0f5ce3e31ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303e1c09_454ad271",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T16:23:50Z",
+      "side": 1,
+      "message": "What are the units on these numbers?",
+      "revId": "f9ec16f67ad7f7ba62a55766cd8d0f5ce3e31ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24853b9b_0b13cab3",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T16:23:50Z",
+      "side": 1,
+      "message": "beware that *everything* is liable to work differently across android versions, particularly over the L-\u003eM jump.",
+      "revId": "f9ec16f67ad7f7ba62a55766cd8d0f5ce3e31ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34bd248c_26428bc9",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T16:23:50Z",
+      "side": 1,
+      "message": "Why is this running w/ check_return\u003dFalse?",
+      "revId": "f9ec16f67ad7f7ba62a55766cd8d0f5ce3e31ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

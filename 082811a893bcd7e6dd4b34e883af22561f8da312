@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8131366a_2f7361f7",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T16:23:50Z",
+      "side": 1,
+      "message": "nit: compile these three into constants.",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9a4c50_7a514e8f",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T16:23:50Z",
+      "side": 1,
+      "message": "What is this intended to do? What it\u0027s actually doing doesn\u0027t seem to make much sense. (and if this is intended to do what it\u0027s actually doing, please add some implementation comments here.)",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74d2bcc_7ecdce6d",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T16:23:50Z",
+      "side": 1,
+      "message": "In what scenarios are we calling this script? Is passing the arch from GN a possibility?",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43014544_3d127308",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T16:23:50Z",
+      "side": 1,
+      "message": "Can we just iterate through until we stop seeing them rather than doing this arbitrarily?",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28a2511_86259383",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T16:23:50Z",
+      "side": 1,
+      "message": "Have you seen classes1.dex? I think I\u0027ve typically seen classes.dex, classes2.dex, ...",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "507faf04_1d18fbfe",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T16:23:50Z",
+      "side": 1,
+      "message": "Could we just add this outside the suffix loop, or does the ordering relative to the path on line 273 matter?",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e274a64c_841cb12a",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T16:23:50Z",
+      "side": 1,
+      "message": "Why is this location only be present for arm?",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ac6c7d_7b0f34e7",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T16:23:50Z",
+      "side": 1,
+      "message": "nit: move this into its own function.",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
