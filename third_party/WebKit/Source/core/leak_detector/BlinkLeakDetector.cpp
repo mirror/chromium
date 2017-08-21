@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "controller/leak_detector/BlinkLeakDetector.h"
+#include "core/leak_detector/BlinkLeakDetector.h"
 
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "bindings/core/v8/V8GCController.h"
-#include "controller/leak_detector/BlinkLeakDetectorClient.h"
+#include "core/CoreInitializer.h"
 #include "core/editing/spellcheck/SpellChecker.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/WebLocalFrameImpl.h"
+#include "core/leak_detector/BlinkLeakDetectorClient.h"
 #include "core/workers/InProcessWorkerMessagingProxy.h"
 #include "core/workers/WorkerThread.h"
-#include "modules/compositorworker/AbstractAnimationWorkletThread.h"
 #include "platform/Timer.h"
 #include "platform/bindings/V8PerIsolateData.h"
 #include "platform/loader/fetch/MemoryCache.h"
@@ -66,9 +66,9 @@ void BlinkLeakDetector::PrepareForLeakDetection() {
 }
 
 void BlinkLeakDetector::CollectGarbage() {
-  V8GCController::CollectAllGarbageForTesting(
-      V8PerIsolateData::MainThreadIsolate());
-  AbstractAnimationWorkletThread::CollectAllGarbage();
+  for (int i = 0; i < 5; ++i)
+    V8PerIsolateData::MainThreadIsolate()->LowMemoryNotification();
+  CoreInitializer::GetInstance().CollectAllGarbageForAnimationWorklet();
   // Note: Oilpan precise GC is scheduled at the end of the event loop.
 
   // Task queue may contain delayed object destruction tasks.
@@ -104,9 +104,9 @@ void BlinkLeakDetector::TimerFiredGC(TimerBase*) {
     client_->OnLeakDetectionComplete();
   }
 
-  V8GCController::CollectAllGarbageForTesting(
-      V8PerIsolateData::MainThreadIsolate());
-  AbstractAnimationWorkletThread::CollectAllGarbage();
+  for (int i = 0; i < 5; ++i)
+    V8PerIsolateData::MainThreadIsolate()->LowMemoryNotification();
+  CoreInitializer::GetInstance().CollectAllGarbageForAnimationWorklet();
   // Note: Oilpan precise GC is scheduled at the end of the event loop.
 }
 
