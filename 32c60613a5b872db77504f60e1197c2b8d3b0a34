@@ -514,6 +514,24 @@
     },
     {
       "key": {
+        "uuid": "1c0c03a0_b0633f77",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-21T23:16:37Z",
+      "side": 1,
+      "message": "I\u0027d propose the following order of events:\n1.) Simplify this CL by taking out the network service stuff, and change the base::Optional\u003cbool\u003e to a bool.\n2.) Design the exact certificate error hooks we want from network service, and push the bool inside SSLInfo as part of that work.\n3.) Remove the bool for this code path.\nI know this is a bit more review load for you folks (sorry!), but it would be very helpful to us to be able to parallelize (i.e. I can work on #2 and #3 while Lucas continues on the interstitials work at NavigationThrottle layers and above).",
+      "parentUuid": "98500eee_19f911b8",
+      "revId": "32c60613a5b872db77504f60e1197c2b8d3b0a34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5be53935_82129d8d",
         "filename": "content/browser/loader/navigation_url_loader_network_service.h",
         "patchSetId": 14
