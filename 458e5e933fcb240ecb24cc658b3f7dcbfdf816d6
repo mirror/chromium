@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "159cdf2f_2bfda382",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/JavascriptAppModalDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T23:42:47Z",
+      "side": 1,
+      "message": "This one is no longer detected as an error, oddly. Maybe the switch to lambdas in between patchsets?\n\nRegardless, I\u0027ve removed this check.",
+      "parentUuid": "6f4e8d6e_1773d1f4",
+      "revId": "458e5e933fcb240ecb24cc658b3f7dcbfdf816d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42811ad0_edf19910",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorIconsField.java",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "458e5e933fcb240ecb24cc658b3f7dcbfdf816d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c7f5fb_24674349",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ui/EditorIconsField.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T23:42:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42811ad0_edf19910",
+      "revId": "458e5e933fcb240ecb24cc658b3f7dcbfdf816d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "9d61e3e7_a5c736f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T23:42:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e8c91d6_3c157145",
+      "revId": "458e5e933fcb240ecb24cc658b3f7dcbfdf816d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35977f2e_bc2a448c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ContextMenuDialog.java",
         "patchSetId": 2
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "90d056e3_83b27e88",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ContextMenuDialog.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T23:42:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "35977f2e_bc2a448c",
+      "revId": "458e5e933fcb240ecb24cc658b3f7dcbfdf816d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb0d1224_783abc71",
         "filename": "content/public/android/java/src/org/chromium/content/browser/input/SuggestionsPopupWindow.java",
         "patchSetId": 2
@@ -102,6 +174,24 @@
       "revId": "458e5e933fcb240ecb24cc658b3f7dcbfdf816d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f1b42ad_b6e07596",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/SuggestionsPopupWindow.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-21T23:42:47Z",
+      "side": 1,
+      "message": "Yoland fixed this one w/ a suppression in https://chromium.googlesource.com/chromium/src/+/0cc5d0ea79f9c6c97102d04fbe7c46f327904ced.",
+      "parentUuid": "eb0d1224_783abc71",
+      "revId": "458e5e933fcb240ecb24cc658b3f7dcbfdf816d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
