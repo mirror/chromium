@@ -99,6 +99,10 @@ class CORE_EXPORT InvalidationSet {
   static void CacheTracingFlag();
 
   bool InvalidatesElement(Element&) const;
+  bool InvalidatesTagName(Element&) const;
+  bool InvalidatesId(Element&) const;
+  bool InvalidatesClass(Element&) const;
+  bool InvalidatesAttribute(Element&) const;
 
   void AddClass(const AtomicString& class_name);
   void AddId(const AtomicString& id);
@@ -122,6 +126,10 @@ class CORE_EXPORT InvalidationSet {
 
   void SetInvalidatesSlotted() { invalidates_slotted_ = true; }
   bool InvalidatesSlotted() const { return invalidates_slotted_; }
+
+  bool InvalidatesTagName(const AtomicString& tag_name) const {
+    return tag_names_ && tag_names_->Contains(tag_name);
+  }
 
   bool IsEmpty() const {
     return !classes_ && !ids_ && !tag_names_ && !attributes_ &&

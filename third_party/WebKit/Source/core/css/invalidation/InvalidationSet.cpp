@@ -108,6 +108,57 @@ bool InvalidationSet::InvalidatesElement(Element& element) const {
   return false;
 }
 
+bool InvalidationSet::InvalidatesTagName(Element& element) const {
+  if (tag_names_ && tag_names_->Contains(element.TagQName().LocalName())) {
+    TRACE_STYLE_INVALIDATOR_INVALIDATION_SELECTORPART_IF_ENABLED(
+        element, kInvalidationSetMatchedTagName, *this,
+        element.TagQName().LocalName());
+    return true;
+  }
+
+  return false;
+}
+
+bool InvalidationSet::InvalidatesId(Element& element) const {
+  if (element.HasID() && ids_ &&
+      ids_->Contains(element.IdForStyleResolution())) {
+    TRACE_STYLE_INVALIDATOR_INVALIDATION_SELECTORPART_IF_ENABLED(
+        element, kInvalidationSetMatchedId, *this,
+        element.IdForStyleResolution());
+    return true;
+  }
+
+  return false;
+}
+
+bool InvalidationSet::InvalidatesClass(Element& element) const {
+  if (element.HasClass() && classes_) {
+    const SpaceSplitString& class_names = element.ClassNames();
+    for (const auto& class_name : *classes_) {
+      if (class_names.Contains(class_name)) {
+        TRACE_STYLE_INVALIDATOR_INVALIDATION_SELECTORPART_IF_ENABLED(
+            element, kInvalidationSetMatchedClass, *this, class_name);
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+bool InvalidationSet::InvalidatesAttribute(Element& element) const {
+  if (element.hasAttributes() && attributes_) {
+    for (const auto& attribute : *attributes_) {
+      if (element.hasAttribute(attribute)) {
+        TRACE_STYLE_INVALIDATOR_INVALIDATION_SELECTORPART_IF_ENABLED(
+            element, kInvalidationSetMatchedAttribute, *this, attribute);
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
 void InvalidationSet::Combine(const InvalidationSet& other) {
   CHECK(is_alive_);
   CHECK(other.is_alive_);
