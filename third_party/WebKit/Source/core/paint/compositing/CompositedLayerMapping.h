@@ -507,9 +507,8 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
   // radii are small and the outcome is used to reduce the number of layers,
   // not influence correctness.
   bool AncestorRoundedCornersWillClip(
-      const FloatRect& child_rect_in_nearest_clipping_space,
-      const PaintLayer* nearest_clipping_ancestor,
-      const PaintLayer* compositing_ancestor);
+      const FloatRect& bounds_in_ancestor_space,
+      const PaintLayer* clip_inheritance_ancestor);
 
   // Return true in |owningLayerIsClipped| iff |m_owningLayer|'s compositing
   // ancestor is not a descendant (inclusive) of the clipping container for
@@ -518,7 +517,6 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
   // is not a descendant (inclusive) of a container that applies a mask for
   // |m_owningLayer|.
   void OwningLayerClippedOrMaskedByLayerNotAboveCompositedAncestor(
-      const PaintLayer* scroll_parent,
       bool& owning_layer_is_clipped,
       bool& owning_layer_is_masked);
 

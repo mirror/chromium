@@ -72,66 +72,66 @@ bool ClipRectsContext::ShouldRespectRootLayerClip() const {
   return true;
 }
 
-static void AdjustClipRectsForChildren(
-    const LayoutBoxModelObject& layout_object,
-    ClipRects& clip_rects) {
-  EPosition position = layout_object.StyleRef().GetPosition();
-  // A fixed object is essentially the root of its containing block hierarchy,
-  // so when we encounter such an object, we reset our clip rects to the
-  // fixedClipRect.
-  if (position == EPosition::kFixed) {
-    clip_rects.SetPosClipRect(clip_rects.FixedClipRect());
+// Match the SPv2 counterpart PaintPropertyTreeBuilder::UpdatePaintOffset.
+static void InheritAncestorClipByPosition(EPosition position,
+                                          ClipRects& clip_rects) {
+  if (position == EPosition::kAbsolute) {
+    clip_rects.SetOverflowClipRect(clip_rects.PosClipRect());
+  } else if (position == EPosition::kFixed) {
     clip_rects.SetOverflowClipRect(clip_rects.FixedClipRect());
     clip_rects.SetFixed(true);
-  } else if (position == EPosition::kRelative) {
-    clip_rects.SetPosClipRect(clip_rects.OverflowClipRect());
-  } else if (position == EPosition::kAbsolute) {
-    clip_rects.SetOverflowClipRect(clip_rects.PosClipRect());
   }
 }
 
-static void ApplyClipRects(const ClipRectsContext& context,
-                           const LayoutBoxModelObject& layout_object,
-                           LayoutPoint offset,
-                           ClipRects& clip_rects) {
-  DCHECK(layout_object.IsBox());
-  const LayoutBox& box = *ToLayoutBox(&layout_object);
+// Match the SPv2 counterpart PaintPropertyTreeBuilder::UpdateCssClip.
+static void ApplyCssClip(const ClipRectsContext& context,
+                         const LayoutBoxModelObject& object,
+                         LayoutPoint offset,
+                         ClipRects& clip_rects) {
+  if (!object.HasClip())
+    return;
 
-  DCHECK(box.ShouldClipOverflow() || box.HasClip());
-  LayoutView* view = box.View();
-  DCHECK(view);
-  if (clip_rects.Fixed() && &context.root_layer->GetLayoutObject() == view)
-    offset -= LayoutSize(view->GetFrameView()->GetScrollOffset());
+  const LayoutBox& box = ToLayoutBox(object);
+  LayoutRect new_clip = box.ClipRect(offset);
+  clip_rects.SetOverflowClipRect(
+      Intersection(new_clip, clip_rects.OverflowClipRect()));
+  clip_rects.SetFixedClipRect(
+      Intersection(new_clip, clip_rects.FixedClipRect()));
+  // Skip SetPosClipRect because CSS clip requires non-static position,
+  // thus absolute position children always inherit in-flow clips.
+}
 
-  if (box.ShouldClipOverflow()) {
-    ClipRect new_overflow_clip =
-        box.OverflowClipRect(offset, context.overlay_scrollbar_clip_behavior);
-    new_overflow_clip.SetHasRadius(box.StyleRef().HasBorderRadius());
-    clip_rects.SetOverflowClipRect(
-        Intersection(new_overflow_clip, clip_rects.OverflowClipRect()));
-    if (box.IsPositioned())
-      clip_rects.SetPosClipRect(
-          Intersection(new_overflow_clip, clip_rects.PosClipRect()));
-    if (box.CanContainFixedPositionObjects())
-      clip_rects.SetFixedClipRect(
-          Intersection(new_overflow_clip, clip_rects.FixedClipRect()));
-    if (box.StyleRef().ContainsPaint())
-      clip_rects.SetPosClipRect(
-          Intersection(new_overflow_clip, clip_rects.PosClipRect()));
-  }
-  if (box.HasClip()) {
-    LayoutRect new_clip = box.ClipRect(offset);
-    clip_rects.SetPosClipRect(Intersection(new_clip, clip_rects.PosClipRect()));
-    clip_rects.SetOverflowClipRect(
-        Intersection(new_clip, clip_rects.OverflowClipRect()));
-    clip_rects.SetFixedClipRect(
-        Intersection(new_clip, clip_rects.FixedClipRect()));
-  }
+// Match the SPv2 counterpart PaintPropertyTreeBuilder::UpdateOverflowClip.
+static void ApplyOverflowClip(const ClipRectsContext& context,
+                              const LayoutBoxModelObject& object,
+                              LayoutPoint offset,
+                              ClipRects& clip_rects) {
+  if (!object.IsBox())
+    return;
+  const LayoutBox& box = ToLayoutBox(object);
+  if (!box.ShouldClipOverflow())
+    return;
+
+  ClipRect new_overflow_clip =
+      box.OverflowClipRect(offset, context.overlay_scrollbar_clip_behavior);
+  new_overflow_clip.SetHasRadius(box.StyleRef().HasBorderRadius());
+
+  clip_rects.SetOverflowClipRect(
+      Intersection(new_overflow_clip, clip_rects.OverflowClipRect()));
+}
+
+// Match the SPv2 counterpart PaintPropertyTreeBuilder::UpdateOutOfFlowContext.
+static void AdjustClipRectsForChildren(const LayoutBoxModelObject& object,
+                                       ClipRects& clip_rects) {
+  if (object.CanContainAbsolutePositionObjects())
+    clip_rects.SetPosClipRect(clip_rects.OverflowClipRect());
+  if (object.CanContainFixedPositionObjects())
+    clip_rects.SetFixedClipRect(clip_rects.OverflowClipRect());
 }
 
 PaintLayerClipper::PaintLayerClipper(const PaintLayer& layer,
-                                     bool usegeometry_mapper)
-    : layer_(layer), use_geometry_mapper_(usegeometry_mapper) {}
+                                     bool use_geometry_mapper)
+    : layer_(layer), use_geometry_mapper_(use_geometry_mapper) {}
 
 ClipRects* PaintLayerClipper::ClipRectsIfCached(
     const ClipRectsContext& context) const {
@@ -144,7 +144,7 @@ ClipRects* PaintLayerClipper::ClipRectsIfCached(
   // We should add a test that has an inconsistent root. See
   // http://crbug.com/366118 for an example.
   if (context.root_layer != entry.root)
-    return 0;
+    return nullptr;
 #if DCHECK_IS_ON()
   DCHECK(entry.overlay_scrollbar_clip_behavior ==
          context.overlay_scrollbar_clip_behavior);
@@ -367,42 +367,42 @@ void PaintLayerClipper::CalculateClipRects(const ClipRectsContext& context,
     return;
   }
 
-  bool is_clipping_root = &layer_ == context.root_layer;
-
-  if (is_clipping_root && !context.ShouldRespectRootLayerClip()) {
-    clip_rects.Reset(LayoutRect(LayoutRect::InfiniteIntRect()));
-    if (layout_object.StyleRef().GetPosition() == EPosition::kFixed)
-      clip_rects.SetFixed(true);
-    return;
-  }
-
   // For transformed layers, the root layer was shifted to be us, so there is no
   // need to examine the parent. We want to cache clip rects with us as the
   // root.
-  PaintLayer* parent_layer = !is_clipping_root ? layer_.Parent() : nullptr;
-  // Ensure that our parent's clip has been calculated so that we can examine
-  // the values.
-  if (parent_layer) {
-    PaintLayerClipper(*parent_layer, use_geometry_mapper_)
+  bool is_clipping_root = &layer_ == context.root_layer;
+  if (!is_clipping_root && layer_.Parent()) {
+    PaintLayerClipper(*layer_.Parent(), use_geometry_mapper_)
         .GetOrCalculateClipRects(context, clip_rects);
+    InheritAncestorClipByPosition(layout_object.StyleRef().GetPosition(),
+                                  clip_rects);
   } else {
     clip_rects.Reset(LayoutRect(LayoutRect::InfiniteIntRect()));
   }
 
-  AdjustClipRectsForChildren(layout_object, clip_rects);
+  if (is_clipping_root && !context.ShouldRespectRootLayerClip())
+    return;
 
   // Computing paint offset is expensive, skip the computation if the object
   // is known to have no clip. This check is redundant otherwise.
-  if (HasOverflowClip(layer_) || layout_object.HasClip()) {
+  if (layout_object.HasClip() ||
+      (layout_object.IsBox() &&
+       ToLayoutBox(layout_object).ShouldClipOverflow())) {
     // This offset cannot use convertToLayerCoords, because sometimes our
     // rootLayer may be across some transformed layer boundary, for example, in
     // the PaintLayerCompositor overlapMap, where clipRects are needed in view
     // space.
-    ApplyClipRects(context, layout_object,
-                   LayoutPoint(layout_object.LocalToAncestorPoint(
-                       FloatPoint(), &context.root_layer->GetLayoutObject())),
-                   clip_rects);
+    LayoutPoint paint_offset(layout_object.LocalToAncestorPoint(
+        FloatPoint(), &context.root_layer->GetLayoutObject()));
+    LayoutView* view = layout_object.View();
+    DCHECK(view);
+    if (clip_rects.Fixed() && &context.root_layer->GetLayoutObject() == view)
+      paint_offset -= LayoutSize(view->GetFrameView()->GetScrollOffset());
+
+    ApplyCssClip(context, layout_object, paint_offset, clip_rects);
+    ApplyOverflowClip(context, layout_object, paint_offset, clip_rects);
   }
+  AdjustClipRectsForChildren(layout_object, clip_rects);
 }
 
 static ClipRect BackgroundClipRectForPosition(const ClipRects& parent_rects,
