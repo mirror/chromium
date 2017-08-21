@@ -24,14 +24,14 @@ namespace {
 
 // Specifications for a Zucchini command.
 struct Command {
-  constexpr Command(const char* const name,
-                    const char* const usage,
-                    int num_args,
-                    CommandFunction command_function)
-      : name(name),
-        usage(usage),
-        num_args(num_args),
-        command_function(command_function) {}
+  constexpr Command(const char* const name_in,
+                    const char* const usage_in,
+                    int num_args_in,
+                    CommandFunction command_function_in)
+      : name(name_in),
+        usage(usage_in),
+        num_args(num_args_in),
+        command_function(command_function_in) {}
   Command(const Command&) = default;
   ~Command() = default;
 
