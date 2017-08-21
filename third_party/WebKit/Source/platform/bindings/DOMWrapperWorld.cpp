@@ -62,6 +62,7 @@ static bool IsMainWorldId(int world_id) {
 }
 #endif
 
+// static
 PassRefPtr<DOMWrapperWorld> DOMWrapperWorld::Create(v8::Isolate* isolate,
                                                     WorldType world_type) {
   DCHECK_NE(WorldType::kIsolated, world_type);
@@ -98,6 +99,7 @@ DOMWrapperWorld::DOMWrapperWorld(v8::Isolate* isolate,
   }
 }
 
+// static
 DOMWrapperWorld& DOMWrapperWorld::MainWorld() {
   DCHECK(IsMainThread());
   DEFINE_STATIC_REF(
@@ -106,6 +108,7 @@ DOMWrapperWorld& DOMWrapperWorld::MainWorld() {
   return *cached_main_world;
 }
 
+// static
 void DOMWrapperWorld::AllWorldsInCurrentThread(
     Vector<RefPtr<DOMWrapperWorld>>& worlds) {
   if (IsMainThread())
@@ -114,6 +117,7 @@ void DOMWrapperWorld::AllWorldsInCurrentThread(
     worlds.push_back(world);
 }
 
+// static
 void DOMWrapperWorld::MarkWrappersInAllWorlds(
     ScriptWrappable* script_wrappable,
     const ScriptWrappableVisitor* visitor) {
@@ -148,6 +152,7 @@ void DOMWrapperWorld::Dispose() {
   GetWorldMap().erase(world_id_);
 }
 
+// static
 PassRefPtr<DOMWrapperWorld> DOMWrapperWorld::EnsureIsolatedWorld(
     v8::Isolate* isolate,
     int world_id) {
@@ -181,6 +186,7 @@ SecurityOrigin* DOMWrapperWorld::IsolatedWorldSecurityOrigin() {
   return it == origins.end() ? 0 : it->value.Get();
 }
 
+// static
 void DOMWrapperWorld::SetIsolatedWorldSecurityOrigin(
     int world_id,
     PassRefPtr<SecurityOrigin> security_origin) {
@@ -205,6 +211,7 @@ String DOMWrapperWorld::NonMainWorldHumanReadableName() {
   return IsolatedWorldHumanReadableNames().at(GetWorldId());
 }
 
+// static
 void DOMWrapperWorld::SetNonMainWorldHumanReadableName(
     int world_id,
     const String& human_readable_name) {
@@ -231,6 +238,7 @@ bool DOMWrapperWorld::IsolatedWorldHasContentSecurityPolicy() {
   return it == policies.end() ? false : it->value;
 }
 
+// static
 void DOMWrapperWorld::SetIsolatedWorldContentSecurityPolicy(
     int world_id,
     const String& policy) {
@@ -257,6 +265,7 @@ void DOMWrapperWorld::UnregisterDOMObjectHolder(
   dom_object_holders_.erase(holder_base);
 }
 
+// static
 void DOMWrapperWorld::WeakCallbackForDOMObjectHolder(
     const v8::WeakCallbackInfo<DOMObjectHolderBase>& data) {
   DOMObjectHolderBase* holder_base = data.GetParameter();
@@ -298,6 +307,7 @@ int DOMWrapperWorld::GenerateWorldIdForType(WorldType world_type) {
   return kInvalidWorldId;
 }
 
+// static
 void DOMWrapperWorld::DissociateDOMWindowWrappersInAllWorlds(
     ScriptWrappable* script_wrappable) {
   DCHECK(script_wrappable);
