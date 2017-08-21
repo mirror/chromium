@@ -82,8 +82,11 @@ class NavigationURLLoaderImplCore
                              bool is_download,
                              bool is_stream);
 
-  // Notifies |loader_| on the UI thread that the request failed.
-  void NotifyRequestFailed(bool in_cache, int net_error);
+  // Notifies |loader_| on the UI thread that the request failed..
+  void NotifyRequestFailed(bool in_cache,
+                           int net_error,
+                           base::Optional<net::SSLInfo> ssl_info,
+                           base::Optional<bool> fatal_cert_error);
 
  private:
   friend class base::RefCountedThreadSafe<NavigationURLLoaderImplCore>;
