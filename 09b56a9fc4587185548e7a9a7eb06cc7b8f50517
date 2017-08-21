@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ec22cc2_36bcf5a1",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/java_script_dialog_mediator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T14:08:21Z",
+      "side": 1,
+      "message": "Can you add a unit test? At least a test that instantiate the JavaScriptDialogMediator.",
+      "revId": "09b56a9fc4587185548e7a9a7eb06cc7b8f50517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721fa2b5_6c0cdf96",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/java_script_dialog_request.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-21T14:08:21Z",
+      "side": 1,
+      "message": "befor → before",
+      "range": {
+        "startLine": 21,
+        "startChar": 59,
+        "endLine": 21,
+        "endChar": 64
+      },
+      "revId": "09b56a9fc4587185548e7a9a7eb06cc7b8f50517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
