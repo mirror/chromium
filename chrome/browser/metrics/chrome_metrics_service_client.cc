@@ -107,6 +107,7 @@
 #endif
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
+#include "chrome/browser/extensions/extension_install_metrics_provider.h"
 #include "chrome/browser/metrics/extensions_metrics_provider.h"
 #endif
 
@@ -545,6 +546,8 @@ void ChromeMetricsServiceClient::RegisterMetricsServiceProviders() {
   metrics_service_->RegisterMetricsProvider(
       std::unique_ptr<metrics::MetricsProvider>(
           new ExtensionsMetricsProvider(metrics_state_manager_)));
+  metrics_service_->RegisterMetricsProvider(
+      base::MakeUnique<extensions::ExtensionInstallMetricsProvider>());
 #endif
 
   metrics_service_->RegisterMetricsProvider(
