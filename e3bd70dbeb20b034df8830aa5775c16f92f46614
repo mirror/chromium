@@ -16,6 +16,24 @@
       "revId": "e3bd70dbeb20b034df8830aa5775c16f92f46614",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27a2043_dba30bfd",
+        "filename": "content/renderer/media/audio_input_message_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-21T20:30:47Z",
+      "side": 1,
+      "message": "We may never know why I said \"clock\" instead of \"type\". Insufficient jellybeans?",
+      "parentUuid": "3d2968f2_5384b6c3",
+      "revId": "e3bd70dbeb20b034df8830aa5775c16f92f46614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
