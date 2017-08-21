@@ -1,0 +1,8 @@
+Name: Android Support Library Bottom Navigation Menu
+URL: https://developer.android.com/reference/android/support/design/widget/BottomNavigationView.html
+
+Description:
+Bottom navigation menu widget from Android SDK Sources 25.
+
+Local Modifications:
+* Removed unnecessary version check when creating animation helper in BottomNavigationMenuView.
