@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "cc04b8fd_7e7eb4b9",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-21T06:10:05Z",
+      "side": 1,
+      "message": "In order not to break autotest, Chromium reports both \"ChromeArc\" and \"GpuArc\" histogram.\n\"ChromeArc\" will be removed.\nPlease see crbug.com/745457#c6 for the detail.",
+      "parentUuid": "e726b6fe_3840e313",
+      "range": {
+        "startLine": 230,
+        "startChar": 0,
+        "endLine": 230,
+        "endChar": 46
+      },
+      "revId": "e37d238896166d6a5d16c758f905fc349a465883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4274f59f_a292addb",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 9
