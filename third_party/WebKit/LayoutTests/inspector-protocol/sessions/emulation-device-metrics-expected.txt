@@ -1,0 +1,54 @@
+Tests that multiple cannot emulate simultaneously.
+Emulating in 1
+{
+    id : <messageId>
+    result : {
+    }
+}
+session1.canEmulate: true
+session2.canEmulate: false
+Emulating in 2
+{
+    error : {
+        code : -32000
+        message : Another client is emulating
+    }
+    id : <messageId>
+}
+session1.canEmulate: true
+session2.canEmulate: false
+Clearing in 1
+{
+    id : <messageId>
+    result : {
+    }
+}
+session1.canEmulate: true
+session2.canEmulate: true
+Emulating in 2
+{
+    id : <messageId>
+    result : {
+    }
+}
+session1.canEmulate: false
+session2.canEmulate: true
+Emulating in 1
+{
+    error : {
+        code : -32000
+        message : Another client is emulating
+    }
+    id : <messageId>
+}
+session1.canEmulate: false
+session2.canEmulate: true
+Clearing in 2
+{
+    id : <messageId>
+    result : {
+    }
+}
+session1.canEmulate: true
+session2.canEmulate: true
+

@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/containers/flat_set.h"
 #include "base/strings/string_number_conversions.h"
 #include "build/build_config.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
@@ -25,6 +26,10 @@ using GeolocationContext = device::GeolocationContext;
 using Geoposition = device::Geoposition;
 
 namespace {
+
+using EmulatingHosts = base::flat_set<RenderFrameHostImpl*>;
+base::LazyInstance<EmulatingHosts>::Leaky g_emulating_hosts =
+    LAZY_INSTANCE_INITIALIZER;
 
 blink::WebScreenOrientationType WebScreenOrientationTypeFromString(
     const std::string& type) {
@@ -70,6 +75,8 @@ void EmulationHandler::SetRenderFrameHost(RenderFrameHostImpl* host) {
   if (host_ == host)
     return;
 
+  if (host_ && device_emulation_enabled_)
+    g_emulating_hosts.Get().erase(host_);
   host_ = host;
   if (touch_emulation_enabled_)
     UpdateTouchEventEmulationState();
@@ -132,14 +139,27 @@ Response EmulationHandler::SetEmitTouchEventsForMouse(
 }
 
 Response EmulationHandler::CanEmulate(bool* result) {
+  Response response = CanEmulate();
+  *result = response.isSuccess();
+  return Response::OK();
+}
+
+Response EmulationHandler::CanEmulate() {
 #if defined(OS_ANDROID)
-  *result = false;
+  return Response::Error("Not supported on this platform");
 #else
-  *result = true;
-  if (WebContentsImpl* web_contents = GetWebContents())
-    *result &= !web_contents->GetVisibleURL().SchemeIs(kChromeDevToolsScheme);
-  if (host_ && host_->GetRenderWidgetHost())
-    *result &= !host_->GetRenderWidgetHost()->auto_resize_enabled();
+  if (WebContentsImpl* web_contents = GetWebContents()) {
+    if (web_contents->GetVisibleURL().SchemeIs(kChromeDevToolsScheme))
+      return Response::Error("Not supported for this page");
+  }
+  if (host_ && host_->GetRenderWidgetHost() &&
+      host_->GetRenderWidgetHost()->auto_resize_enabled()) {
+    return Response::Error("Not supported for this page");
+  }
+  bool host_emulating = host_ && g_emulating_hosts.Get().find(host_) !=
+                                     g_emulating_hosts.Get().end();
+  if (host_emulating && !device_emulation_enabled_)
+    return Response::Error("Another client is emulating");
 #endif  // defined(OS_ANDROID)
   return Response::OK();
 }
@@ -210,6 +230,10 @@ Response EmulationHandler::SetDeviceMetricsOverride(
           base::IntToString(max_orientation_angle));
     }
   }
+
+  Response response = CanEmulate();
+  if (!response.isSuccess())
+    return response;
 
   blink::WebDeviceEmulationParams params;
   params.screen_position = mobile ? blink::WebDeviceEmulationParams::kMobile
@@ -307,6 +331,13 @@ void EmulationHandler::UpdateTouchEventEmulationState() {
 }
 
 void EmulationHandler::UpdateDeviceEmulationState() {
+  if (host_) {
+    if (device_emulation_enabled_)
+      g_emulating_hosts.Get().insert(host_);
+    else
+      g_emulating_hosts.Get().erase(host_);
+  }
+
   RenderWidgetHostImpl* widget_host =
       host_ ? host_->GetRenderWidgetHost() : nullptr;
   if (!widget_host)

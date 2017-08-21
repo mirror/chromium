@@ -62,6 +62,7 @@ class EmulationHandler : public DevToolsDomainHandler,
   WebContentsImpl* GetWebContents();
   void UpdateTouchEventEmulationState();
   void UpdateDeviceEmulationState();
+  Response CanEmulate();
 
   bool touch_emulation_enabled_;
   std::string touch_emulation_configuration_;
