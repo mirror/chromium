@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "9fbfbb35_d454ad7b",
+        "filename": "ash/test/ash_test_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-21T18:25:38Z",
+      "side": 1,
+      "message": "Agree. This should happen after Shell init, regardless of user login.",
+      "parentUuid": "77857e00_fa81bbbe",
+      "revId": "b044961a20f27f7c13978cb3d348df43bdae79c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4524e3be_aec8e84f",
         "filename": "ash/wallpaper/wallpaper_controller.cc",
         "patchSetId": 5
