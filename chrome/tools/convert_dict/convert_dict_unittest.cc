@@ -142,14 +142,8 @@ void RunDictionaryTest(const char* codepage,
 // Tests whether or not our DicReader can read all the input English words
 TEST(ConvertDictTest, English) {
   const char kCodepage[] = "UTF-8";
-  const wchar_t* kWords[] = {
-    L"I",
-    L"he",
-    L"she",
-    L"it",
-    L"we",
-    L"you",
-    L"they",
+  const wchar_t* const kWords[] = {
+      L"I", L"he", L"she", L"it", L"we", L"you", L"they",
   };
 
   std::map<base::string16, bool> word_list;
@@ -164,15 +158,15 @@ TEST(ConvertDictTest, English) {
 // Tests whether or not our DicReader can read all the input Russian words.
 TEST(ConvertDictTest, Russian) {
   const char kCodepage[] = "KOI8-R";
-  const wchar_t* kWords[] = {
-    L"\x044f",
-    L"\x0442\x044b",
-    L"\x043e\x043d",
-    L"\x043e\x043d\x0430",
-    L"\x043e\x043d\x043e",
-    L"\x043c\x044b",
-    L"\x0432\x044b",
-    L"\x043e\x043d\x0438",
+  const wchar_t* const kWords[] = {
+      L"\x044f",
+      L"\x0442\x044b",
+      L"\x043e\x043d",
+      L"\x043e\x043d\x0430",
+      L"\x043e\x043d\x043e",
+      L"\x043c\x044b",
+      L"\x0432\x044b",
+      L"\x043e\x043d\x0438",
   };
 
   std::map<base::string16, bool> word_list;
@@ -187,17 +181,17 @@ TEST(ConvertDictTest, Russian) {
 // Tests whether or not our DicReader can read all the input Hungarian words.
 TEST(ConvertDictTest, Hungarian) {
   const char kCodepage[] = "ISO8859-2";
-  const wchar_t* kWords[] = {
-    L"\x00e9\x006e",
-    L"\x0074\x0065",
-    L"\x0151",
-    L"\x00f6\x006e",
-    L"\x006d\x0061\x0067\x0061",
-    L"\x006d\x0069",
-    L"\x0074\x0069",
-    L"\x0151\x006b",
-    L"\x00f6\x006e\x00f6\x006b",
-    L"\x006d\x0061\x0067\x0075\x006b",
+  const wchar_t* const kWords[] = {
+      L"\x00e9\x006e",
+      L"\x0074\x0065",
+      L"\x0151",
+      L"\x00f6\x006e",
+      L"\x006d\x0061\x0067\x0061",
+      L"\x006d\x0069",
+      L"\x0074\x0069",
+      L"\x0151\x006b",
+      L"\x00f6\x006e\x00f6\x006b",
+      L"\x006d\x0061\x0067\x0075\x006b",
   };
 
   std::map<base::string16, bool> word_list;
