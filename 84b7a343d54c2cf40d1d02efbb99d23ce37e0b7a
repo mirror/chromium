@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c35b1738_f3bb31d2",
+        "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ComponentUpdater.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-08-21T16:08:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "88de0bee_5a6e4e5e",
+      "revId": "84b7a343d54c2cf40d1d02efbb99d23ce37e0b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a5b66e5_15eaca40",
         "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ComponentUpdater.java",
         "patchSetId": 5
@@ -33,6 +51,92 @@
       "revId": "84b7a343d54c2cf40d1d02efbb99d23ce37e0b7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c19ca3b_d7fc8c4d",
+        "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ComponentUpdater.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-08-21T16:08:59Z",
+      "side": 1,
+      "message": "Maybe take a look at the CRX verification code? Does it try to return a human-readable error string in or specific code in case of verification failure? If so, why not try to mimic this. Otherwise, keep the boolean.",
+      "parentUuid": "9a5b66e5_15eaca40",
+      "revId": "84b7a343d54c2cf40d1d02efbb99d23ce37e0b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6cf11474_832e9670",
+        "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ComponentUpdater.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-08-21T16:08:59Z",
+      "side": 1,
+      "message": "nit: Please call inputStream.close() before returning to avoid leaking resources until the GC hits then fan :)",
+      "revId": "84b7a343d54c2cf40d1d02efbb99d23ce37e0b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0edb0a14_879223cc",
+        "filename": "components/component_updater/default_component_installer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-08-21T16:08:59Z",
+      "side": 1,
+      "message": "nit: Should be properly enclosed in a #if defined(OS_ANDROID) ... #endif block.",
+      "revId": "84b7a343d54c2cf40d1d02efbb99d23ce37e0b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4f4b29_d0b966fc",
+        "filename": "components/component_updater/default_component_installer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-08-21T16:08:59Z",
+      "side": 1,
+      "message": "You might want to add a unit-test to check that loadPublicKey() works as advertized (e.g. doesn\u0027t always return the same key, fails if the path is invalid).",
+      "revId": "84b7a343d54c2cf40d1d02efbb99d23ce37e0b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5ac9dd_c003ea2a",
+        "filename": "components/test/data/component_updater/README",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-08-21T16:08:59Z",
+      "side": 1,
+      "message": "This is excellent, thank you :)",
+      "revId": "84b7a343d54c2cf40d1d02efbb99d23ce37e0b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
