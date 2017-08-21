@@ -28,6 +28,7 @@
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/quads/copy_output_result.h"
 #include "components/viz/service/display/gl_renderer.h"
+#include "components/viz/service/display/skia_renderer.h"
 #include "components/viz/test/paths.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -153,8 +154,7 @@ bool PixelTest::PixelsMatchReference(const base::FilePath& ref_file,
       *result_bitmap_, test_data_dir.Append(ref_file), comparator);
 }
 
-void PixelTest::SetUpGLRenderer(bool use_skia_gpu_backend,
-                                bool flipped_output_surface) {
+void PixelTest::SetUpGLRenderer(bool flipped_output_surface) {
   enable_pixel_output_.reset(new gl::DisableNullDrawGLBindings);
 
   scoped_refptr<TestInProcessContextProvider> context_provider(
@@ -177,9 +177,11 @@ void PixelTest::SetUpGLRenderer(bool use_skia_gpu_backend,
   texture_mailbox_deleter_ = base::MakeUnique<TextureMailboxDeleter>(
       base::ThreadTaskRunnerHandle::Get());
 
-  renderer_ = base::MakeUnique<viz::GLRenderer>(
-      &renderer_settings_, output_surface_.get(), resource_provider_.get(),
-      texture_mailbox_deleter_.get());
+  renderer_ = base::MakeUnique<viz::SkiaRenderer>(
+      &renderer_settings_, output_surface_.get(), resource_provider_.get());
+  // renderer_ = base::MakeUnique<viz::GLRenderer>(
+  //     &renderer_settings_, output_surface_.get(), resource_provider_.get(),
+  //     texture_mailbox_deleter_.get());
   renderer_->Initialize();
   renderer_->SetVisible(true);
 }

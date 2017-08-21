@@ -183,7 +183,6 @@ void SkiaRenderer::BindFramebufferToOutputSurface() {
     root_surface_ = SkSurface::MakeFromBackendRenderTarget(
         gr_context, desc, nullptr, &surface_props);
   }
-
   root_canvas_ = root_surface_->getCanvas();
 
   current_canvas_ = root_canvas_;
@@ -596,7 +595,20 @@ void SkiaRenderer::DrawUnsupportedQuad(const cc::DrawQuad* quad) {
 void SkiaRenderer::CopyCurrentRenderPassToBitmap(
     std::unique_ptr<CopyOutputRequest> request) {
   // TODO(weiliangc): Make copy request work. (crbug.com/644851)
-  NOTIMPLEMENTED();
+  gfx::Rect copy_rect = current_frame()->current_render_pass->output_rect;
+  if (request->has_area())
+    copy_rect.Intersect(request->area());
+
+  gfx::Rect window_copy_rect = MoveFromDrawToWindowSpace(copy_rect);
+
+  std::unique_ptr<SkBitmap> bitmap(new SkBitmap);
+  bitmap->allocPixels(SkImageInfo::MakeN32Premul(window_copy_rect.width(),
+                                                 window_copy_rect.height()));
+  if (!current_canvas_->readPixels(*bitmap, window_copy_rect.x(),
+                                   window_copy_rect.y()))
+    bitmap->reset();
+
+  request->SendBitmapResult(std::move(bitmap));
 }
 
 void SkiaRenderer::SetEnableDCLayers(bool enable) {
