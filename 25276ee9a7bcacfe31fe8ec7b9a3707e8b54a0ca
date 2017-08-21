@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4de1c268_704c40fa",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-21T17:04:07Z",
+      "side": 1,
+      "message": "Depends on the cast. If it doesn\u0027t create a temporary, then yes.",
+      "parentUuid": "d21aa121_7e3b6299",
+      "revId": "25276ee9a7bcacfe31fe8ec7b9a3707e8b54a0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7ed4bc7_034bc9fc",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-21T16:28:03Z",
       "side": 1,
       "message": "I\u0027m not sure I buy the explanation on the bug. volatile should apply to the data not the pointer (like const, and unlike restrict). Dereferencing the (regular) pointer to volatile memory should do the right thing. Adding volatile to the pointer should mean essentially forcing spilling the variable onto the stack, but that shouldn\u0027t matter for this. That\u0027s consistent with the output in the bug, maybe I\u0027m missing something.\n\nThe reason I\u0027m particularly concerned is that we use volatile in parts of the code to ensure the compiler respects load/stores to avoid security issues with memory shared with untrusted processes (e.g. preventing reading a value again after validation, or storing a temporary into shared memory then reading it again). We use the pointer-to-volatile pattern, not the volatile-pointer-to-volatile-memory pattern, and if we need to change it I would like to understand why.",
+      "revId": "25276ee9a7bcacfe31fe8ec7b9a3707e8b54a0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2773b28b_b8fbc28b",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-21T17:04:07Z",
+      "side": 1,
+      "message": "You\u0027re correct that this doesn\u0027t do anything (see bug), but I feel the reasoning for the patch isn\u0027t completely bogus: If only the pointed-to data is volatile but not the pointer itself, the compiler can be sure that the pointer points to 0 during the write in the next line, and since that\u0027s UB it could choose to omit the write. (But, as you point out on the bug, it doesn\u0027t seem to do that.) If the pointer itself was volatile, it couldn\u0027t make that assumption.",
+      "parentUuid": "d7ed4bc7_034bc9fc",
       "revId": "25276ee9a7bcacfe31fe8ec7b9a3707e8b54a0ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
