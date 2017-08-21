@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "29e96c6f_39b9f842",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-credential-sync.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-21T01:03:45Z",
+      "side": 1,
+      "message": "Good point! Thanks for pointing that out!",
+      "parentUuid": "43fc5847_e24db1e4",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "b2d39b0f8bc805444ebf1ff6fb54145ab78f7792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "584fdfa7_111f5735",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-credential-sync.htm",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "51c6db5d_2e9e1e76",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-credential-sync.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-21T01:03:45Z",
+      "side": 1,
+      "message": "That makes sense. Thanks for the advice!",
+      "parentUuid": "584fdfa7_111f5735",
+      "range": {
+        "startLine": 19,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "b2d39b0f8bc805444ebf1ff6fb54145ab78f7792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f9b04e2_5c9c38d7",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-auth-basic.py",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "b2d39b0f8bc805444ebf1ff6fb54145ab78f7792",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a88232_f960a7d2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-auth-basic.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-21T01:03:45Z",
+      "side": 1,
+      "message": "Good question! The original LayoutTest file is used in another test, so I thought that test might use the cookie part, but it looks like that one doesn\u0027t use cookies, either. You\u0027re right; the line should probably be removed! Thanks for noticing that!",
+      "parentUuid": "6f9b04e2_5c9c38d7",
+      "range": {
+        "startLine": 8,
+        "startChar": 23,
+        "endLine": 8,
+        "endChar": 30
+      },
+      "revId": "b2d39b0f8bc805444ebf1ff6fb54145ab78f7792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
