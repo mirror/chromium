@@ -31,6 +31,7 @@
 #include "chromeos/cryptohome/system_salt_getter.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/network/network_handler.h"
+#include "components/prefs/testing_pref_service.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
 #include "device/bluetooth/dbus/bluez_dbus_manager.h"
 #include "services/ui/public/cpp/input_devices/input_device_client.h"
@@ -165,8 +166,12 @@ void AshTestHelper::SetUp(bool start_session) {
       new TestSessionControllerClient(shell->session_controller()));
   session_controller_client_->InitializeAndBind();
 
-  if (start_session)
+  if (start_session) {
     session_controller_client_->CreatePredefinedUserSessions(1);
+    auto pref_service = base::MakeUnique<TestingPrefServiceSimple>();
+    Shell::RegisterLocalStatePrefs(pref_service->registry());
+    Shell::Get()->OnLocalStatePrefServiceInitialized(std::move(pref_service));
+  }
 
   // Tests that change the display configuration generally don't care about
   // the notifications and the popup UI can interfere with things like

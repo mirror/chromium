@@ -57,10 +57,8 @@ constexpr int kCompositorLockTimeoutMs = 750;
 // Caches color calculation results in local state pref service.
 void CacheProminentColors(const std::vector<SkColor>& colors,
                           const std::string& current_location) {
-  // Local state can be null in tests.
-  // TODO(crbug.com/751191): Remove the check for Mash.
-  if (Shell::GetAshConfig() == Config::MASH ||
-      !Shell::Get()->GetLocalStatePrefService()) {
+  // Local state can be null during startup.
+  if (!Shell::Get()->GetLocalStatePrefService()) {
     return;
   }
   DictionaryPrefUpdate wallpaper_colors_update(
@@ -78,10 +76,8 @@ base::Optional<std::vector<SkColor>> GetCachedColors(
     const std::string& current_location) {
   base::Optional<std::vector<SkColor>> cached_colors_out;
   const base::ListValue* prominent_colors = nullptr;
-  // Local state can be null in tests.
-  // TODO(crbug.com/751191): Remove the check for Mash.
-  if (Shell::GetAshConfig() == Config::MASH ||
-      !Shell::Get()->GetLocalStatePrefService() ||
+  // Local state can be null during startup.
+  if (!Shell::Get()->GetLocalStatePrefService() ||
       !Shell::Get()
            ->GetLocalStatePrefService()
            ->GetDictionary(prefs::kWallpaperColors)
