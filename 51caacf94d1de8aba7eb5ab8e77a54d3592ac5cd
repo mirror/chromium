@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eab5333c_1a01201b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-08-21T03:25:42Z",
+      "side": 1,
+      "message": "This",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 30
+      },
+      "revId": "51caacf94d1de8aba7eb5ab8e77a54d3592ac5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "222c9d3c_f23f54f6",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1538,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-08-21T03:25:42Z",
+      "side": 1,
+      "message": "Hopefully this special case won\u0027t be needed after I get https://chromium-review.googlesource.com/c/597507 done...",
+      "revId": "51caacf94d1de8aba7eb5ab8e77a54d3592ac5cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
