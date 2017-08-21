@@ -1352,7 +1352,7 @@ void ServiceWorkerVersion::DidSkipWaiting(int request_id) {
 void ServiceWorkerVersion::OnClaimClients(int request_id) {
   if (status_ != ACTIVATING && status_ != ACTIVATED) {
     embedded_worker_->SendMessage(ServiceWorkerMsg_ClaimClientsError(
-        request_id, blink::WebServiceWorkerError::kErrorTypeState,
+        request_id, blink::mojom::ServiceWorkerErrorType::kState,
         base::ASCIIToUTF16(kClaimClientsStateErrorMesage)));
     return;
   }
@@ -1367,7 +1367,7 @@ void ServiceWorkerVersion::OnClaimClients(int request_id) {
   }
 
   embedded_worker_->SendMessage(ServiceWorkerMsg_ClaimClientsError(
-      request_id, blink::WebServiceWorkerError::kErrorTypeAbort,
+      request_id, blink::mojom::ServiceWorkerErrorType::kAbort,
       base::ASCIIToUTF16(kClaimClientsShutdownErrorMesage)));
 }
 

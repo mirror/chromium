@@ -583,7 +583,7 @@ class ServiceWorkerContextClient::NavigationPreloadRequest final
     // This will delete |this|.
     client->OnNavigationPreloadError(
         fetch_event_id_, base::MakeUnique<blink::WebServiceWorkerError>(
-                             blink::WebServiceWorkerError::kErrorTypeNetwork,
+                             blink::mojom::ServiceWorkerErrorType::kNetwork,
                              blink::WebString::FromUTF8(message),
                              blink::WebString::FromUTF8(unsanitized_message)));
   }
@@ -1686,7 +1686,7 @@ void ServiceWorkerContextClient::OnOpenWindowError(
     return;
   }
   callbacks->OnError(blink::WebServiceWorkerError(
-      blink::WebServiceWorkerError::kErrorTypeNavigation,
+      blink::mojom::ServiceWorkerErrorType::kNavigation,
       blink::WebString::FromUTF8(message)));
   context_->client_callbacks.Remove(request_id);
 }
@@ -1709,7 +1709,7 @@ void ServiceWorkerContextClient::OnFocusClientResponse(
     callback->OnSuccess(std::move(web_client));
   } else {
     callback->OnError(blink::WebServiceWorkerError(
-        blink::WebServiceWorkerError::kErrorTypeNotFound,
+        blink::mojom::ServiceWorkerErrorType::kNotFound,
         "The WindowClient was not found."));
   }
 
@@ -1749,7 +1749,7 @@ void ServiceWorkerContextClient::OnNavigateClientError(int request_id,
   }
   std::string message = "Cannot navigate to URL: " + url.spec();
   callbacks->OnError(blink::WebServiceWorkerError(
-      blink::WebServiceWorkerError::kErrorTypeNavigation,
+      blink::mojom::ServiceWorkerErrorType::kNavigation,
       blink::WebString::FromUTF8(message)));
   context_->client_callbacks.Remove(request_id);
 }
@@ -1782,7 +1782,7 @@ void ServiceWorkerContextClient::OnDidClaimClients(int request_id) {
 
 void ServiceWorkerContextClient::OnClaimClientsError(
     int request_id,
-    blink::WebServiceWorkerError::ErrorType error_type,
+    blink::mojom::ServiceWorkerErrorType error_type,
     const base::string16& message) {
   TRACE_EVENT0("ServiceWorker",
                "ServiceWorkerContextClient::OnClaimClientsError");
