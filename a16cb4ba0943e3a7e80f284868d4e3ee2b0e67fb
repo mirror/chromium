@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4d6c56b0_f2c371fc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/claim-shared-worker-fetch.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-08-21T04:35:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ebf58871_0b9fce03",
+      "revId": "a16cb4ba0943e3a7e80f284868d4e3ee2b0e67fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e91f883e_5fe38fb0",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/claim-shared-worker-fetch.https.html",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "296f3763_c7264d8d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/claim-shared-worker-fetch.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-08-21T04:35:18Z",
+      "side": 1,
+      "message": "Done\n\nAdded TODO comment",
+      "parentUuid": "e91f883e_5fe38fb0",
+      "revId": "a16cb4ba0943e3a7e80f284868d4e3ee2b0e67fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d8578a6_f579116b",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/claim-worker-fetch.https.html",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "a16cb4ba0943e3a7e80f284868d4e3ee2b0e67fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd2c672_b208658b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/claim-worker-fetch.https.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-08-21T04:35:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d8578a6_f579116b",
+      "revId": "a16cb4ba0943e3a7e80f284868d4e3ee2b0e67fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
