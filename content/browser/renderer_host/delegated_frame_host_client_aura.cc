@@ -47,20 +47,21 @@ gfx::Size DelegatedFrameHostClientAura::DelegatedFrameHostDesiredSizeInDIP()
 }
 
 bool DelegatedFrameHostClientAura::DelegatedFrameCanCreateResizeLock() const {
-#if !defined(OS_CHROMEOS)
-  // On Windows and Linux, holding pointer moves will not help throttling
-  // resizes.
-  // TODO(piman): on Windows we need to block (nested run loop?) the
-  // WM_SIZE event. On Linux we need to throttle at the WM level using
-  // _NET_WM_SYNC_REQUEST.
   return false;
-#else
-  if (!render_widget_host_view_->host_->renderer_initialized() ||
-      render_widget_host_view_->host_->auto_resize_enabled()) {
-    return false;
-  }
-  return true;
-#endif
+//#if !defined(OS_CHROMEOS)
+//  // On Windows and Linux, holding pointer moves will not help throttling
+//  // resizes.
+//  // TODO(piman): on Windows we need to block (nested run loop?) the
+//  // WM_SIZE event. On Linux we need to throttle at the WM level using
+//  // _NET_WM_SYNC_REQUEST.
+//  return false;
+//#else
+//  if (!render_widget_host_view_->host_->renderer_initialized() ||
+//      render_widget_host_view_->host_->auto_resize_enabled()) {
+//    return false;
+//  }
+//  return true;
+//#endif
 }
 
 std::unique_ptr<CompositorResizeLock>
@@ -71,6 +72,10 @@ DelegatedFrameHostClientAura::DelegatedFrameHostCreateResizeLock() {
 
   gfx::Size desired_size = render_widget_host_view_->window_->bounds().size();
   return base::MakeUnique<CompositorResizeLock>(this, desired_size);
+}
+
+viz::LocalSurfaceId DelegatedFrameHostClientAura::GetLocalSurfaceId() const {
+  return render_widget_host_view_->GetLocalSurfaceId();
 }
 
 void DelegatedFrameHostClientAura::OnBeginFrame() {

@@ -4,6 +4,7 @@
 
 #include "ui/aura/local/window_port_local.h"
 
+#include "base/debug/stack_trace.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "ui/aura/client/cursor_client.h"
 #include "ui/aura/env.h"
@@ -58,7 +59,9 @@ class ScopedCursorHider {
 }  // namespace
 
 WindowPortLocal::WindowPortLocal(Window* window)
-    : window_(window), weak_factory_(this) {}
+    : window_(window), weak_factory_(this) {
+  local_surface_id_ = local_surface_id_allocator_.GenerateId();
+}
 
 WindowPortLocal::~WindowPortLocal() {}
 
@@ -80,7 +83,13 @@ void WindowPortLocal::OnWillMoveChild(size_t current_index, size_t dest_index) {
 void WindowPortLocal::OnVisibilityChanged(bool visible) {}
 
 void WindowPortLocal::OnDidChangeBounds(const gfx::Rect& old_bounds,
-                                        const gfx::Rect& new_bounds) {}
+                                        const gfx::Rect& new_bounds) {
+  if (last_size_in_pixels_ == new_bounds.size() && local_surface_id_.is_valid())
+    return;
+
+  last_size_in_pixels_ = new_bounds.size();
+  local_surface_id_ = local_surface_id_allocator_.GenerateId();
+}
 
 void WindowPortLocal::OnDidChangeTransform(
     const gfx::Transform& old_transform,
@@ -113,6 +122,10 @@ WindowPortLocal::CreateLayerTreeFrameSink() {
 
 viz::SurfaceId WindowPortLocal::GetSurfaceId() const {
   return viz::SurfaceId(frame_sink_id_, local_surface_id_);
+}
+
+const viz::LocalSurfaceId& WindowPortLocal::GetLocalSurfaceId() const {
+  return local_surface_id_;
 }
 
 void WindowPortLocal::OnWindowAddedToRootWindow() {
