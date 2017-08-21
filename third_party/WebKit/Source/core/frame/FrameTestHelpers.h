@@ -321,6 +321,8 @@ class WebViewHelper {
                                 RefPtr<SecurityOrigin> = nullptr,
                                 TestWebViewClient* = nullptr);
 
+  void LoadAhem();
+
   void Resize(WebSize);
 
   void Reset();
