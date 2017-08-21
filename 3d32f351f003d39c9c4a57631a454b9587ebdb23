@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12a99724_ed860763",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-21T19:55:07Z",
+      "side": 1,
+      "message": "For clarity, let\u0027s emphasize both \"resources blocked \" and \"no UI\"\n\n// Logged when we are forcing activation (e.g. via devtools) and resources have been blocked. \n// Note that in these cases the UI is suppressed.\nkActionForcedActivationNoUIResourceBlocked",
+      "revId": "3d32f351f003d39c9c4a57631a454b9587ebdb23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6704832_4f89ebbf",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 36302,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-21T19:55:07Z",
+      "side": 1,
+      "message": "Lets call this \"UI Suppressed and resources blocked (Forced Activation)\" to be consistent with \"UI Suppressed (Smart Logic)\"",
+      "revId": "3d32f351f003d39c9c4a57631a454b9587ebdb23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
