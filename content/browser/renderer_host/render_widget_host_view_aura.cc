@@ -24,6 +24,7 @@
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/quads/copy_output_result.h"
 #include "components/viz/common/quads/texture_mailbox.h"
+#include "components/viz/common/switches.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/accessibility/browser_accessibility_state_impl.h"
 #include "content/browser/bad_message.h"
@@ -1950,8 +1951,12 @@ void RenderWidgetHostViewAura::CreateDelegatedFrameHostClient() {
     delegated_frame_host_client_ =
         base::MakeUnique<DelegatedFrameHostClientAura>(this);
   }
+  bool enable_surface_synchronization =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableSurfaceSynchronization);
   delegated_frame_host_ = base::MakeUnique<DelegatedFrameHost>(
-      frame_sink_id_, delegated_frame_host_client_.get());
+      frame_sink_id_, delegated_frame_host_client_.get(),
+      enable_surface_synchronization);
   if (renderer_compositor_frame_sink_) {
     delegated_frame_host_->DidCreateNewRendererCompositorFrameSink(
         renderer_compositor_frame_sink_);
