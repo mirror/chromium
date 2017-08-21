@@ -63,6 +63,24 @@ public class OfflinePageOrigin {
         }
     }
 
+    /** Creates origin based on uid and context. */
+    public OfflinePageOrigin(Context context, int uid) {
+        if (uid == Process.myUid) {
+            mAppName = "";
+            mSignatures = null;
+            return;
+        }
+        PackageManager pm = context.getPackageManager();
+        String[] packages = pm.getPackagesForUid(uid);
+        if (packages.length != 1) {
+            mAppName = "";
+            mSignatures = null;
+        } else {
+            mAppName = packages[0];
+            mSignatures = getAppSignaturesFor(context, mAppName);
+        }
+    }
+
     /** Creates a Chrome origin. */
     public OfflinePageOrigin() {
         this("", null);
