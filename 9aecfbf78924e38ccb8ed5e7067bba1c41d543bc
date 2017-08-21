@@ -16,6 +16,24 @@
       "revId": "9aecfbf78924e38ccb8ed5e7067bba1c41d543bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7bfb9cd_1098e836",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-21T22:47:18Z",
+      "side": 1,
+      "message": "Ahh, good point. In aura-mus, we already deal with this by holding pointer moves until a DidReceiveCompositorFrameAck comes back from the compositor. Basically, with surface sync, we don\u0027t send back an ack until the frame activates. A frame will activate when its dependencies are resolved or it hits a deadline, so the behavior is the same as here. I\u0027ll see what I can do to refactor this code a bit to do that. Please hold off until then.",
+      "parentUuid": "7249a3d6_abd6980e",
+      "revId": "9aecfbf78924e38ccb8ed5e7067bba1c41d543bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
