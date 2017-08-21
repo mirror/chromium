@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17593cd9_ce3ed1a2",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-21T22:23:07Z",
+      "side": 1,
+      "message": "you can fold the bool into Message. false \u003d\u003d null exactly right now",
+      "revId": "7db1ca2bb8ea876e8c3d967a3515126c2808975a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67bacec9_688c80e9",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-21T22:23:07Z",
+      "side": 1,
+      "message": "else assert false again",
+      "revId": "7db1ca2bb8ea876e8c3d967a3515126c2808975a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609beca6_a6cadd1d",
+        "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-21T22:23:07Z",
+      "side": 1,
+      "message": "probably a good idea to set sMsgFromSeedFetchService back to null",
+      "revId": "7db1ca2bb8ea876e8c3d967a3515126c2808975a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
