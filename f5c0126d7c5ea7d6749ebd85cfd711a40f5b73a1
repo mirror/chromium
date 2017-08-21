@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "79dd6bcd_4aae9d9d",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-21T22:35:21Z",
+      "side": 1,
+      "message": "Looks like this is just local to this file. Please move to anonymous namespace.",
+      "parentUuid": "6b94e5cb_e3d06e2b",
+      "range": {
+        "startLine": 55,
+        "startChar": 10,
+        "endLine": 55,
+        "endChar": 20
+      },
+      "revId": "f5c0126d7c5ea7d6749ebd85cfd711a40f5b73a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cd7aee9_14a2cde6",
         "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.cc",
         "patchSetId": 4
@@ -171,6 +195,30 @@
       "side": 1,
       "message": "It returns a constant content::Webcontents pointer, like in the previous keyboard_ui_content.h https://cs.chromium.org/chromium/src/ui/keyboard/content/keyboard_ui_content.h?q\u003dkeyboard_ui_\u0026sq\u003dpackage:chromium\u0026l\u003d44",
       "parentUuid": "985e44c8_a0b10b42",
+      "range": {
+        "startLine": 50,
+        "startChar": 50,
+        "endLine": 50,
+        "endChar": 51
+      },
+      "revId": "f5c0126d7c5ea7d6749ebd85cfd711a40f5b73a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1151db74_f0e0db0a",
+        "filename": "chrome/browser/ui/ash/chrome_keyboard_ui.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-21T22:35:21Z",
+      "side": 1,
+      "message": "My request was to make this const *method*.",
+      "parentUuid": "fece1551_aad562fe",
       "range": {
         "startLine": 50,
         "startChar": 50,
