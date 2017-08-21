@@ -16,6 +16,24 @@
       "revId": "b5b708fc25bba95a46c0abf6044862f8c2c3f0ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfc0df42_937d894b",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-21T22:44:30Z",
+      "side": 1,
+      "message": "I investigated a little further and it does look like the request eventually gets cleaned up on the renderer side but it seems better to be explicit about it.",
+      "parentUuid": "e712eb65_fb7949b2",
+      "revId": "b5b708fc25bba95a46c0abf6044862f8c2c3f0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

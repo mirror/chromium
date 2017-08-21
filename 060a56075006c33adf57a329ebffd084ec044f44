@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6b3191aa_96276b85",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-21T22:44:30Z",
+      "side": 1,
+      "message": "I don\u0027t see why this error should be reported to the client differently than other errors, which is to call forwarding_client_-\u003eOnComplete() with an error the way CancelWithError() does.\n\nI\u0027ve added logic to OnClientConnectionError() to make it clearer than failing with net::ERR_FAILED (or some other new error code we may want to add) is the right way to handle this case but that that is currently disabled for asynchronous requests without PlzNavigate.",
+      "parentUuid": "e97cc377_91e17bbf",
+      "revId": "060a56075006c33adf57a329ebffd084ec044f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8df06717_45139f31",
         "filename": "content/common/throttling_url_loader.cc",
         "patchSetId": 4
