@@ -166,6 +166,30 @@
       "revId": "e06d40f52c4a69790bfb31deaea6595b8443fd2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11964a7_c0e0f4d9",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-21T17:41:38Z",
+      "side": 0,
+      "message": "\u003e \u003e Your EventHandler will be installed before ActivationEventHandler, right?\n\u003e \n\u003e Sorry, I got confused by this part. ActivationEventHandler should be TrayBubbleView::ActivationEventHandler. What do you mean \"Your EventHandler\"?\n\nBy \u0027your EventHandler\u0027 I meant the EventHandler implementation you are installing.\n\u003e \n\u003e \u003e I agree that you want to route it to the FocusManager too. Seems like you you want simulate the flow we have now:\n\u003e \u003e . Send to ActivationEventHandler first.\n\u003e \u003e . If not handled, then send to tray\u0027s focusmanager.\n\u003e \u003e . Mark handled/stop propagation.\n\u003e \n\u003e I\u0027ve uploaded a new patch set with routing events to the widget of TrayBubbleView. How about the new patch set? Widget::OnKeyEvent internally reroutes the event to FocusManager of the widget. We won\u0027t need to have our own accelerators in TrayBubbleView as those keys (Tab, Shift+Tab, Esc) should be correctly handled if key events are dispatched to the widget.\n\u003e \n\u003e If this direction is okay, I\u0027m going to clean up this CL with removing unnecessary code (e.g. we no longer need TrayBubbleView::ActivateAndStartNavigation, etc).\n\nYes, this direction SGTM",
+      "parentUuid": "b4878ce4_0c9cec0e",
+      "range": {
+        "startLine": 69,
+        "startChar": 17,
+        "endLine": 69,
+        "endChar": 38
+      },
+      "revId": "e06d40f52c4a69790bfb31deaea6595b8443fd2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
