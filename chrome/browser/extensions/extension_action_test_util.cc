@@ -105,41 +105,6 @@ size_t GetTotalPageActionCount(content::WebContents* web_contents) {
   return GetPageActionCount(web_contents, false);
 }
 
-scoped_refptr<const Extension> CreateActionExtension(
-    const std::string& name,
-    ActionType action_type,
-    Manifest::Location location,
-    std::unique_ptr<base::DictionaryValue> extra_keys) {
-  DictionaryBuilder manifest;
-  manifest.Set("name", name)
-          .Set("description", "An extension")
-          .Set("manifest_version", 2)
-          .Set("version", "1.0.0");
-
-  const char* action_key = nullptr;
-  switch (action_type) {
-    case NO_ACTION:
-      break;
-    case PAGE_ACTION:
-      action_key = manifest_keys::kPageAction;
-      break;
-    case BROWSER_ACTION:
-      action_key = manifest_keys::kBrowserAction;
-      break;
-  }
-
-  if (action_key)
-    manifest.Set(action_key, DictionaryBuilder().Build());
-
-  ExtensionBuilder builder;
-  builder.SetManifest(manifest.Build())
-      .SetID(crx_file::id_util::GenerateId(name))
-      .SetLocation(location);
-  if (extra_keys)
-    builder.MergeManifest(std::move(extra_keys));
-  return builder.Build();
-}
-
 ToolbarActionsModel* CreateToolbarModelForProfile(Profile* profile) {
   return CreateToolbarModelImpl(profile, true);
 }
