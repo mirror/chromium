@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c155e67_7466fd06",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_base.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T06:14:37Z",
+      "side": 1,
+      "message": "Good catch - I\u0027ve added this line to my CL too.",
+      "revId": "bdeec49039868b0d4b4c4bd11dfa1ade6f99c7e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
