@@ -293,7 +293,7 @@
             }
             testResults.push(
                 `${convertResult(tests[i].status)} ` +
-                `${sanitize(tests[i].name)} ${sanitize(tests[i].message)}\n`);
+                `${sanitize(tests[i].name)} ${sanitize(tests[i].message).trim()}\n`);
         }
         return testResults.join('');
     }
@@ -303,7 +303,7 @@
         window.tests = tests;
         for (let test of tests) {
             testResults += `${convertResult(test.status)} ` +
-                `${sanitize(test.name)} ${sanitize(test.message)}\n`;
+                `${sanitize(test.name)} ${sanitize(test.message).trim()}\n`;
         }
         return testResults;
     }
