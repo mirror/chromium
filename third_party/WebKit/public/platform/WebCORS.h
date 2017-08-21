@@ -164,6 +164,13 @@ BLINK_PLATFORM_EXPORT void ExtractCorsExposedHeaderNamesList(
 BLINK_PLATFORM_EXPORT bool IsOnAccessControlResponseHeaderWhitelist(
     const WebString&);
 
+BLINK_PLATFORM_EXPORT WebString ListOfCORSEnabledURLSchemes();
+
+BLINK_PLATFORM_EXPORT bool IsCORSSafelistedMethod(const WebString&);
+
+BLINK_PLATFORM_EXPORT bool ContainsOnlyCORSSafelistedOrForbiddenHeaders(
+    const HTTPHeaderMap&);
+
 }  // namespace WebCORS
 
 }  // namespace blink

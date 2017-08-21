@@ -156,7 +156,7 @@ bool WebCORSPreflightResultCacheItem::Parse(
 bool WebCORSPreflightResultCacheItem::AllowsCrossOriginMethod(
     const WebString& method,
     WebString& error_description) const {
-  if (methods_.Contains(method) || FetchUtils::IsCORSSafelistedMethod(method))
+  if (methods_.Contains(method) || WebCORS::IsCORSSafelistedMethod(method))
     return true;
 
   error_description.Assign(WebString::FromASCII("Method " + method.Ascii() +
