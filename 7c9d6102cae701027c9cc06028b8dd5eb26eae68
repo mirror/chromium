@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f9e7ec7_a136dcc6",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-21T04:10:00Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of the updated layout, but whatever.",
+      "revId": "7c9d6102cae701027c9cc06028b8dd5eb26eae68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
