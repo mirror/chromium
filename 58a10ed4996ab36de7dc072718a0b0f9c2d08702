@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf2c08bf_cf0af827",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-21T22:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0a77099_113efc4e",
+      "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43be276b_d883c091",
         "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "dd5d7257_b57c7e91",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-21T22:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43be276b_d883c091",
+      "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94c64d58_6bec169b",
         "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-21T21:17:56Z",
       "side": 1,
       "message": "This query is going to do a table scan each time you run it, since there are no indices.  Can you add a TODO to either optimize it to use offline_id or to add an index?",
+      "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "922e96a8_5185af72",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-21T22:32:18Z",
+      "side": 1,
+      "message": "Switched to using offline_id.",
+      "parentUuid": "94c64d58_6bec169b",
       "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4e23d5b1_2d483550",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-21T22:32:18Z",
+      "side": 1,
+      "message": "Personally I found that this was more readable than referring to a temp variable.",
+      "parentUuid": "7082bbb8_2538ed13",
+      "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2941188_9e0a8ad0",
         "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de6072e_1cadadfd",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-21T22:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2941188_9e0a8ad0",
+      "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "625fcbcb_53f4f294",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-21T22:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3530d2fd_594a5a74",
+      "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3739e65_5f78f2d6",
         "filename": "components/offline_pages/core/prefetch/download_cleanup_task_unittest.cc",
         "patchSetId": 1
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7a039eb6_766039cc",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-21T22:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3739e65_5f78f2d6",
+      "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79065c42_7ebcbf39",
         "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca3c139_eaec4155",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-21T22:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79065c42_7ebcbf39",
+      "revId": "58a10ed4996ab36de7dc072718a0b0f9c2d08702",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
