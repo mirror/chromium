@@ -16,6 +16,24 @@
       "revId": "c647a1c3a534bf9c0c7b6bc948a2b773026284bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac3b614_8fd90863",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
+        "patchSetId": 17
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-21T07:18:07Z",
+      "side": 1,
+      "message": "It\u0027s still used for running tests, so no :/",
+      "parentUuid": "211eccff_e92e3c30",
+      "revId": "c647a1c3a534bf9c0c7b6bc948a2b773026284bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
