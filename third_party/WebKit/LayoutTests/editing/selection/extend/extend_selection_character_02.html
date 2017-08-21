@@ -1,0 +1,274 @@
+<!doctype html>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<script src="../../assert_selection.js"></script><script>
+function testIt(dir, offset, direction, expectedText) {
+  test(() => assert_selection(
+  `<span dir="${dir}">${makeSample(offset)}</span>`,
+  selection => selection.modify('extend', direction, 'character'),
+  `<span dir="${dir}">${expectedText}</span>`),
+  `${dir} ${offset} extend ${direction} character`
+  );
+}
+
+function makeSample(offset){
+  const kSample = '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n';
+  return kSample.substr(0, offset) + '|' + kSample.substring(offset);
+}
+
+// ltr right character
+testIt('ltr', 0, 'right', '\n^\u05D0|;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 1, 'right', '\n^\u05D0|;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 2, 'right', '\n\u05D0^;|\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 3, 'right', '\n\u05D0;^\u05D1|;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 4, 'right', '\n\u05D0;\u05D1^;|\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 5, 'right', '\n\u05D0;\u05D1;^\u05D2|; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 6, 'right', '\n\u05D0;\u05D1;\u05D2^;| xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 7, 'right', '\n\u05D0;\u05D1;\u05D2;^ |xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 8, 'right', '\n\u05D0;\u05D1;\u05D2; ^x|yz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 9, 'right', '\n\u05D0;\u05D1;\u05D2; x^y|z \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 10, 'right', '\n\u05D0;\u05D1;\u05D2; xy^z| \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 11, 'right', '\n\u05D0;\u05D1;\u05D2; xyz^ |\u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 12, 'right', '\n\u05D0;\u05D1;\u05D2; xyz ^\u05D3|;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 13, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3^;|\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 14, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;^\u05D4|;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 15, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4^;|\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 16, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;^\u05D5|; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 17, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5^;| def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 18, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5;^ |def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 19, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; ^d|ef \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 20, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; d^e|f \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 21, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; de^f| \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 22, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def^ |\u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 23, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def ^\u05D6|;\u05D7;\u05D8;\n');
+testIt('ltr', 24, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6^;|\u05D7;\u05D8;\n');
+testIt('ltr', 25, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;^\u05D7|;\u05D8;\n');
+testIt('ltr', 26, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7^;|\u05D8;\n');
+testIt('ltr', 27, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;^\u05D8|;\n');
+testIt('ltr', 28, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8^;|\n');
+testIt('ltr', 29, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;|\n');
+
+// ltr left character
+testIt('ltr', 0, 'left', '|\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 1, 'left', '\n|\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 2, 'left', '\n|\u05D0^;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 3, 'left', '\n\u05D0|;^\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 4, 'left', '\n\u05D0;|\u05D1^;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 5, 'left', '\n\u05D0;\u05D1|;^\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 6, 'left', '\n\u05D0;\u05D1;|\u05D2^; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 7, 'left', '\n\u05D0;\u05D1;\u05D2|;^ xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 8, 'left', '\n\u05D0;\u05D1;\u05D2;| ^xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 9, 'left', '\n\u05D0;\u05D1;\u05D2; |x^yz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 10, 'left', '\n\u05D0;\u05D1;\u05D2; x|y^z \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 11, 'left', '\n\u05D0;\u05D1;\u05D2; xy|z^ \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 12, 'left', '\n\u05D0;\u05D1;\u05D2; xyz| ^\u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 13, 'left', '\n\u05D0;\u05D1;\u05D2; xyz |\u05D3^;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 14, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3|;^\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 15, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;|\u05D4^;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 16, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4|;^\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 17, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;|\u05D5^; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 18, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5|;^ def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 19, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5;| ^def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 20, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; |d^ef \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 21, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; d|e^f \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 22, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; de|f^ \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 23, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def| ^\u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 24, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def |\u05D6^;\u05D7;\u05D8;\n');
+testIt('ltr', 25, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6|;^\u05D7;\u05D8;\n');
+testIt('ltr', 26, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;|\u05D7^;\u05D8;\n');
+testIt('ltr', 27, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7|;^\u05D8;\n');
+testIt('ltr', 28, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;|\u05D8^;\n');
+testIt('ltr', 29, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8|;^\n');
+
+// ltr forward character
+testIt('ltr', 0, 'forward', '\n^\u05D0|;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 1, 'forward', '\n^\u05D0|;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 2, 'forward', '\n\u05D0^;|\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 3, 'forward', '\n\u05D0;^\u05D1|;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 4, 'forward', '\n\u05D0;\u05D1^;|\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 5, 'forward', '\n\u05D0;\u05D1;^\u05D2|; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 6, 'forward', '\n\u05D0;\u05D1;\u05D2^;| xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 7, 'forward', '\n\u05D0;\u05D1;\u05D2;^ |xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 8, 'forward', '\n\u05D0;\u05D1;\u05D2; ^x|yz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 9, 'forward', '\n\u05D0;\u05D1;\u05D2; x^y|z \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 10, 'forward', '\n\u05D0;\u05D1;\u05D2; xy^z| \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 11, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz^ |\u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 12, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz ^\u05D3|;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 13, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3^;|\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 14, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;^\u05D4|;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 15, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4^;|\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 16, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;^\u05D5|; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 17, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5^;| def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 18, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5;^ |def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 19, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; ^d|ef \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 20, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; d^e|f \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 21, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; de^f| \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 22, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def^ |\u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 23, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def ^\u05D6|;\u05D7;\u05D8;\n');
+testIt('ltr', 24, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6^;|\u05D7;\u05D8;\n');
+testIt('ltr', 25, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;^\u05D7|;\u05D8;\n');
+testIt('ltr', 26, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7^;|\u05D8;\n');
+testIt('ltr', 27, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;^\u05D8|;\n');
+testIt('ltr', 28, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8^;|\n');
+testIt('ltr', 29, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;|\n');
+
+// ltr backward character
+testIt('ltr', 0, 'backward', '|\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 1, 'backward', '\n|\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 2, 'backward', '\n|\u05D0^;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 3, 'backward', '\n\u05D0|;^\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 4, 'backward', '\n\u05D0;|\u05D1^;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 5, 'backward', '\n\u05D0;\u05D1|;^\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 6, 'backward', '\n\u05D0;\u05D1;|\u05D2^; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 7, 'backward', '\n\u05D0;\u05D1;\u05D2|;^ xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 8, 'backward', '\n\u05D0;\u05D1;\u05D2;| ^xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 9, 'backward', '\n\u05D0;\u05D1;\u05D2; |x^yz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 10, 'backward', '\n\u05D0;\u05D1;\u05D2; x|y^z \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 11, 'backward', '\n\u05D0;\u05D1;\u05D2; xy|z^ \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 12, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz| ^\u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 13, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz |\u05D3^;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 14, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3|;^\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 15, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;|\u05D4^;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 16, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4|;^\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 17, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;|\u05D5^; def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 18, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5|;^ def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 19, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5;| ^def \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 20, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; |d^ef \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 21, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; d|e^f \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 22, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; de|f^ \u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 23, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def| ^\u05D6;\u05D7;\u05D8;\n');
+testIt('ltr', 24, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def |\u05D6^;\u05D7;\u05D8;\n');
+testIt('ltr', 25, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6|;^\u05D7;\u05D8;\n');
+testIt('ltr', 26, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;|\u05D7^;\u05D8;\n');
+testIt('ltr', 27, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7|;^\u05D8;\n');
+testIt('ltr', 28, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;|\u05D8^;\n');
+testIt('ltr', 29, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8|;^\n');
+
+// rtl right character
+testIt('rtl', 0, 'right', '\n^\u05D0|;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 1, 'right', '\n^\u05D0|;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 2, 'right', '\n\u05D0^;|\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 3, 'right', '\n\u05D0;^\u05D1|;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 4, 'right', '\n\u05D0;\u05D1^;|\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 5, 'right', '\n\u05D0;\u05D1;^\u05D2|; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 6, 'right', '\n\u05D0;\u05D1;\u05D2^;| xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 7, 'right', '\n\u05D0;\u05D1;\u05D2;^ |xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 8, 'right', '\n\u05D0;\u05D1;\u05D2; ^x|yz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 9, 'right', '\n\u05D0;\u05D1;\u05D2; x^y|z \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 10, 'right', '\n\u05D0;\u05D1;\u05D2; xy^z| \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 11, 'right', '\n\u05D0;\u05D1;\u05D2; xyz^ |\u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 12, 'right', '\n\u05D0;\u05D1;\u05D2; xyz ^\u05D3|;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 13, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3^;|\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 14, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;^\u05D4|;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 15, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4^;|\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 16, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;^\u05D5|; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 17, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5^;| def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 18, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5;^ |def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 19, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; ^d|ef \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 20, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; d^e|f \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 21, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; de^f| \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 22, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def^ |\u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 23, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def ^\u05D6|;\u05D7;\u05D8;\n');
+testIt('rtl', 24, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6^;|\u05D7;\u05D8;\n');
+testIt('rtl', 25, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;^\u05D7|;\u05D8;\n');
+testIt('rtl', 26, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7^;|\u05D8;\n');
+testIt('rtl', 27, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;^\u05D8|;\n');
+testIt('rtl', 28, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8^;|\n');
+testIt('rtl', 29, 'right', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;|\n');
+
+// rtl left character
+testIt('rtl', 0, 'left', '|\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 1, 'left', '\n|\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 2, 'left', '\n|\u05D0^;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 3, 'left', '\n\u05D0|;^\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 4, 'left', '\n\u05D0;|\u05D1^;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 5, 'left', '\n\u05D0;\u05D1|;^\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 6, 'left', '\n\u05D0;\u05D1;|\u05D2^; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 7, 'left', '\n\u05D0;\u05D1;\u05D2|;^ xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 8, 'left', '\n\u05D0;\u05D1;\u05D2;| ^xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 9, 'left', '\n\u05D0;\u05D1;\u05D2; |x^yz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 10, 'left', '\n\u05D0;\u05D1;\u05D2; x|y^z \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 11, 'left', '\n\u05D0;\u05D1;\u05D2; xy|z^ \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 12, 'left', '\n\u05D0;\u05D1;\u05D2; xyz| ^\u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 13, 'left', '\n\u05D0;\u05D1;\u05D2; xyz |\u05D3^;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 14, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3|;^\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 15, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;|\u05D4^;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 16, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4|;^\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 17, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;|\u05D5^; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 18, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5|;^ def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 19, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5;| ^def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 20, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; |d^ef \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 21, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; d|e^f \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 22, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; de|f^ \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 23, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def| ^\u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 24, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def |\u05D6^;\u05D7;\u05D8;\n');
+testIt('rtl', 25, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6|;^\u05D7;\u05D8;\n');
+testIt('rtl', 26, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;|\u05D7^;\u05D8;\n');
+testIt('rtl', 27, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7|;^\u05D8;\n');
+testIt('rtl', 28, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;|\u05D8^;\n');
+testIt('rtl', 29, 'left', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8|;^\n');
+
+// rtl forward character
+testIt('rtl', 0, 'forward', '\n^\u05D0|;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 1, 'forward', '\n^\u05D0|;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 2, 'forward', '\n\u05D0^;|\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 3, 'forward', '\n\u05D0;^\u05D1|;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 4, 'forward', '\n\u05D0;\u05D1^;|\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 5, 'forward', '\n\u05D0;\u05D1;^\u05D2|; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 6, 'forward', '\n\u05D0;\u05D1;\u05D2^;| xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 7, 'forward', '\n\u05D0;\u05D1;\u05D2;^ |xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 8, 'forward', '\n\u05D0;\u05D1;\u05D2; ^x|yz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 9, 'forward', '\n\u05D0;\u05D1;\u05D2; x^y|z \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 10, 'forward', '\n\u05D0;\u05D1;\u05D2; xy^z| \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 11, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz^ |\u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 12, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz ^\u05D3|;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 13, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3^;|\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 14, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;^\u05D4|;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 15, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4^;|\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 16, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;^\u05D5|; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 17, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5^;| def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 18, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5;^ |def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 19, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; ^d|ef \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 20, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; d^e|f \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 21, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; de^f| \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 22, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def^ |\u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 23, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def ^\u05D6|;\u05D7;\u05D8;\n');
+testIt('rtl', 24, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6^;|\u05D7;\u05D8;\n');
+testIt('rtl', 25, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;^\u05D7|;\u05D8;\n');
+testIt('rtl', 26, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7^;|\u05D8;\n');
+testIt('rtl', 27, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;^\u05D8|;\n');
+testIt('rtl', 28, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8^;|\n');
+testIt('rtl', 29, 'forward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;|\n');
+
+// rtl backward character
+testIt('rtl', 0, 'backward', '|\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 1, 'backward', '\n|\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 2, 'backward', '\n|\u05D0^;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 3, 'backward', '\n\u05D0|;^\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 4, 'backward', '\n\u05D0;|\u05D1^;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 5, 'backward', '\n\u05D0;\u05D1|;^\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 6, 'backward', '\n\u05D0;\u05D1;|\u05D2^; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 7, 'backward', '\n\u05D0;\u05D1;\u05D2|;^ xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 8, 'backward', '\n\u05D0;\u05D1;\u05D2;| ^xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 9, 'backward', '\n\u05D0;\u05D1;\u05D2; |x^yz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 10, 'backward', '\n\u05D0;\u05D1;\u05D2; x|y^z \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 11, 'backward', '\n\u05D0;\u05D1;\u05D2; xy|z^ \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 12, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz| ^\u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 13, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz |\u05D3^;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 14, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3|;^\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 15, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;|\u05D4^;\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 16, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4|;^\u05D5; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 17, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;|\u05D5^; def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 18, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5|;^ def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 19, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5;| ^def \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 20, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; |d^ef \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 21, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; d|e^f \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 22, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; de|f^ \u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 23, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def| ^\u05D6;\u05D7;\u05D8;\n');
+testIt('rtl', 24, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def |\u05D6^;\u05D7;\u05D8;\n');
+testIt('rtl', 25, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6|;^\u05D7;\u05D8;\n');
+testIt('rtl', 26, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;|\u05D7^;\u05D8;\n');
+testIt('rtl', 27, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7|;^\u05D8;\n');
+testIt('rtl', 28, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;|\u05D8^;\n');
+testIt('rtl', 29, 'backward', '\n\u05D0;\u05D1;\u05D2; xyz \u05D3;\u05D4;\u05D5; def \u05D6;\u05D7;\u05D8|;^\n');
+</script>
