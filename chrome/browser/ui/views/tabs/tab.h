@@ -16,6 +16,7 @@
 #include "chrome/browser/ui/views/tabs/tab_renderer_data.h"
 #include "ui/base/layout.h"
 #include "ui/gfx/animation/animation_delegate.h"
+#include "ui/gfx/animation/linear_animation.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/paint_throbber.h"
@@ -333,7 +334,13 @@ class Tab : public gfx::AnimationDelegate,
   ThrobberView* throbber_;
   AlertIndicatorButton* alert_indicator_button_;
   views::ImageButton* close_button_;
+
   views::Label* title_;
+  // The title's bounds are animated when switching between showing and hiding
+  // the tab's favicon/throbber.
+  gfx::Rect start_title_bounds_;
+  gfx::Rect target_title_bounds_;
+  gfx::LinearAnimation title_animation_;
 
   bool tab_activated_with_last_tap_down_;
 
