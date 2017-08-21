@@ -9,6 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "build/build_config.h"
+#include "components/network_error_logging/network_error_logging_service.h"
 #include "components/network_session_configurator/browser/network_session_configurator.h"
 #include "components/network_session_configurator/common/network_switches.h"
 #include "content/network/cache_url_loader.h"
@@ -76,6 +77,9 @@ void ApplyContextParamsToBuilder(
       network_context_params->http_09_on_non_default_ports_enabled;
 
   builder->set_http_network_session_params(session_params);
+
+  builder->SetNetworkErrorLoggingDelegate(
+      network_error_logging::NetworkErrorLoggingService::Create());
 }
 
 std::unique_ptr<net::URLRequestContext> MakeURLRequestContext(

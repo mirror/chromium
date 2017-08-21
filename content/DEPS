@@ -26,6 +26,10 @@ include_rules = [
   # as autofill or extensions, and chrome implementation details such as
   # settings, packaging details, installation or crash reporting.
 
+  # Network Error Logging (https://wicg.github.io/network-error-logging/)
+  # is related to the implementation of the web platform.
+  "+components/network_error_logging",
+
   "+crypto",
   "+grit/blink_resources.h",
   "+grit/content_strings.h",
