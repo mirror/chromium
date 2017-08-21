@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7f81f13_12799e75",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-21T17:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10896a4b_03fed449",
+      "range": {
+        "startLine": 10,
+        "startChar": 48,
+        "endLine": 10,
+        "endChar": 64
+      },
+      "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f06f0cbe_e39d5710",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "eb7595e1_31d9412d",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-21T17:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f06f0cbe_e39d5710",
+      "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "253e5ba4_2e4088f8",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 8
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-18T23:25:25Z",
       "side": 1,
       "message": "I don\u0027t think CanCleanup() should have something to do with capacity.",
+      "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d6a1ea8_01ea80bd",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-21T17:23:56Z",
+      "side": 1,
+      "message": "This is to prevent the case where if you have a \"suspended\" worker on top of the idle stack, it can\u0027t get cleaned up since it\u0027s on top of the idle stack (yet it won\u0027t ever do work).\n\nDo you think the comment needs re-phrasing?",
+      "parentUuid": "253e5ba4_2e4088f8",
       "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "7d801b86_0351e7e8",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-21T17:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01a17760_bbb3faab",
+      "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e93a3ef0_cf0c4982",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 8
@@ -90,6 +168,24 @@
       "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c9d7de_2c75789a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-21T17:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e93a3ef0_cf0c4982",
+      "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "03ebb4e6_64d93539",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-21T17:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fb8dd53_227fe765",
+      "range": {
+        "startLine": 677,
+        "startChar": 20,
+        "endLine": 677,
+        "endChar": 34
+      },
+      "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5262afea_6556fee5",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 8
@@ -130,6 +250,24 @@
       "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4107305_3932155d",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-21T17:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5262afea_6556fee5",
+      "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
