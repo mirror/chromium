@@ -11,6 +11,8 @@ import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.ChromeVersionInfo;
 import org.chromium.chrome.browser.crash.MinidumpUploadService.ProcessType;
+import org.chromium.chrome.browser.signin.SigninAccessPoint;
+import org.chromium.chrome.browser.signin.SigninPromoController;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 
 import java.util.Locale;
@@ -49,7 +51,8 @@ public class ChromePreferenceManager {
 
     private static final String CONTENT_SUGGESTIONS_SHOWN_KEY = "content_suggestions_shown";
 
-    private static final String NTP_SIGNIN_PROMO_DISMISSED = "ntp.signin_promo_dismissed";
+    private static final String NTP_NEW_SIGNIN_PROMO_DISMISSED = "ntp.new_signin_promo_dismissed";
+    private static final String NTP_OLD_SIGNIN_PROMO_DISMISSED = "ntp.signin_promo_dismissed";
     private static final String NTP_ANIMATION_RUN_COUNT = "ntp_recycler_view_animation_run_count";
 
     private static final String SUCCESS_UPLOAD_SUFFIX = "_crash_success_upload";
@@ -353,12 +356,26 @@ public class ChromePreferenceManager {
 
     /** Checks if the user dismissed the sign in promo from the new tab page. */
     public boolean getNewTabPageSigninPromoDismissed() {
-        return mSharedPreferences.getBoolean(NTP_SIGNIN_PROMO_DISMISSED, false);
+        final String key;
+        if (SigninPromoController.shouldShowPromo(SigninAccessPoint.NTP_CONTENT_SUGGESTIONS)) {
+            key = NTP_NEW_SIGNIN_PROMO_DISMISSED;
+        } else {
+            key = NTP_OLD_SIGNIN_PROMO_DISMISSED;
+        }
+
+        return mSharedPreferences.getBoolean(key, false);
     }
 
     /** Set whether the user dismissed the sign in promo from the new tab page. */
     public void setNewTabPageSigninPromoDismissed(boolean isPromoDismissed) {
-        writeBoolean(NTP_SIGNIN_PROMO_DISMISSED, isPromoDismissed);
+        final String key;
+        if (SigninPromoController.shouldShowPromo(SigninAccessPoint.NTP_CONTENT_SUGGESTIONS)) {
+            key = NTP_NEW_SIGNIN_PROMO_DISMISSED;
+        } else {
+            key = NTP_OLD_SIGNIN_PROMO_DISMISSED;
+        }
+
+        writeBoolean(key, isPromoDismissed);
     }
 
     /** Gets the number of times the New Tab Page first card animation has been run. */
