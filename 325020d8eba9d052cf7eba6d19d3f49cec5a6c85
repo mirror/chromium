@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e831b6c6_42d0905e",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-21T04:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5298bffa_f718cc62",
+      "range": {
+        "startLine": 174,
+        "startChar": 22,
+        "endLine": 174,
+        "endChar": 73
+      },
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96aae9a9_4c99899d",
         "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2c28518e_29b1bc70",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-21T04:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96aae9a9_4c99899d",
+      "range": {
+        "startLine": 80,
+        "startChar": 31,
+        "endLine": 80,
+        "endChar": 45
+      },
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "299ec6f1_18eb3295",
         "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
         "patchSetId": 13
@@ -59,6 +107,24 @@
       "writtenOn": "2017-08-18T18:59:38Z",
       "side": 1,
       "message": "It seems a bit unsafe to be able to override Invalidate() because |this| gets destroyed by it. Should we instead add an overridable helper method (InvalidateInternal() or something) instead?",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a1b464_01314358",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-21T04:12:01Z",
+      "side": 1,
+      "message": "Added InvalidateInternal().",
+      "parentUuid": "299ec6f1_18eb3295",
       "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -79,6 +145,24 @@
       "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fabd5645_792da745",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-21T04:12:01Z",
+      "side": 1,
+      "message": "It is legal to mix them. This is necessary, for instance, if you would like the construction/destruction of member variables in a certain order. However, let me see if I can just expose the members via protected getter methods instead.",
+      "parentUuid": "bf8343c5_31c1e854",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +212,54 @@
     },
     {
       "key": {
+        "uuid": "dedff466_18374547",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-21T04:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3426ecec_bd32988a",
+      "range": {
+        "startLine": 173,
+        "startChar": 16,
+        "endLine": 173,
+        "endChar": 23
+      },
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73cdde80_86fd454e",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-21T04:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03f85303_8e47ac6f",
+      "range": {
+        "startLine": 173,
+        "startChar": 5,
+        "endLine": 173,
+        "endChar": 12
+      },
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c95a094a_efd0c922",
         "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
         "patchSetId": 13
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "6ea954eb_9c3abb4e",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-21T04:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c95a094a_efd0c922",
+      "range": {
+        "startLine": 190,
+        "startChar": 41,
+        "endLine": 190,
+        "endChar": 61
+      },
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "255dfaa9_18c59e7d",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop.h",
         "patchSetId": 13
@@ -171,6 +327,30 @@
       "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a985866_69ecfcd3",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-21T04:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "255dfaa9_18c59e7d",
+      "range": {
+        "startLine": 100,
+        "startChar": 54,
+        "endLine": 101,
+        "endChar": 26
+      },
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +389,24 @@
     },
     {
       "key": {
+        "uuid": "3fa72a29_d1531b5c",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-21T04:12:01Z",
+      "side": 1,
+      "message": "1) We designed GetRouteController() so that it would immediately return something usable to the caller, but that the initialization might happen either before/after the method returns.\n2) In MRMojoImpl, we follow the pattern of having the DoX() methods call to the MediaRouteProvider with a method whose name closely matches the X() counterpart (There are a couple of exceptions to this). In this case we are telling the MediaRouteProvider to create a MediaRouteController instance and bind the interface request to it. I believe the naming is accurate in this regard.",
+      "parentUuid": "60a8460c_0b020048",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "078fb578_eb30784f",
         "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
         "patchSetId": 13
@@ -226,6 +424,24 @@
     },
     {
       "key": {
+        "uuid": "6e43aacb_687c455f",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-21T04:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "078fb578_eb30784f",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6b18d5f_aa017276",
         "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
         "patchSetId": 13
@@ -240,6 +456,24 @@
       "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5dccb9b_233fe7b7",
+        "filename": "chrome/browser/resources/media_router/elements/route_controls/route_controls.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-21T04:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6b18d5f_aa017276",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -294,6 +528,24 @@
     },
     {
       "key": {
+        "uuid": "f9abb16c_e5d19c5d",
+        "filename": "chrome/browser/resources/media_router/media_router_browser_api.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-21T04:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78782d35_5847e67d",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3d78fca_c150303e",
         "filename": "chrome/browser/resources/media_router/media_router_data.js",
         "patchSetId": 13
@@ -308,6 +560,24 @@
       "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e03106_88bdfe18",
+        "filename": "chrome/browser/resources/media_router/media_router_data.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-21T04:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3d78fca_c150303e",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -328,6 +598,24 @@
     },
     {
       "key": {
+        "uuid": "119ca903_c01631c7",
+        "filename": "chrome/common/media_router/mojo/media_controller.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-21T04:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6e26a13_9fd63ebc",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "578012aa_3c05e6c7",
         "filename": "chrome/common/media_router/mojo/media_controller.mojom",
         "patchSetId": 13
@@ -342,6 +630,24 @@
       "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a90551_7c07ca4c",
+        "filename": "chrome/common/media_router/mojo/media_controller.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-21T04:12:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "578012aa_3c05e6c7",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
