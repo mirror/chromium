@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a62739c_51d8ca1a",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-22T09:55:39Z",
+      "side": 1,
+      "message": "I\u0027d call it a proper fix for 756798 but not for 756121. The crash was called because the controller died but didn\u0027t unregister itself as a delegate. It may happen later if we introduce a follow-up bubble after \"Never\" was clicked.\n\nYou should fix it too.",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 3
+      },
+      "revId": "341ad9ba473592a43ce0c44747c50c4d377a7385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad3f867_91d35afe",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-22T09:55:39Z",
+      "side": 1,
+      "message": "This is a strange line. I see it came from the older test. If you need a window then you should add the top view to it instead of some username input. Also it require a comment with an explanation.\n\nProbably it should be done in the beginning of the test",
+      "range": {
+        "startLine": 182,
+        "startChar": 31,
+        "endLine": 182,
+        "endChar": 41
+      },
+      "revId": "341ad9ba473592a43ce0c44747c50c4d377a7385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
