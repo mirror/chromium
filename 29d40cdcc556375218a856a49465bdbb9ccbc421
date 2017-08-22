@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82d4cbac_55c13da9",
+        "filename": "testing/buildbot/filters/fuchsia.content_unittests.filter",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-22T22:49:55Z",
+      "side": 1,
+      "message": "nit: Are there any of these that can be wild-carded, e.g. the MojoAsyncResourceHandlerWithAllocationSizeTest/MojoAsyncResourceHandlerWithAllocationSizeTest.BeginWriteFailsOnReadCompleted/* ones?",
+      "revId": "29d40cdcc556375218a856a49465bdbb9ccbc421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
