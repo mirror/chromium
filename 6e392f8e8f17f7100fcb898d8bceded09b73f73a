@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ce1d88b_b329ed2a",
+        "filename": "chrome/browser/web_applications/web_app_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-22T07:18:39Z",
+      "side": 1,
+      "message": "Can this code (CreateShortcuts) be called concurrently? If so the below technique is not going to save you. Shouldn\u0027t there be a lock of some kind?",
+      "range": {
+        "startLine": 692,
+        "startChar": 59,
+        "endLine": 692,
+        "endChar": 76
+      },
+      "revId": "6e392f8e8f17f7100fcb898d8bceded09b73f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0cdc198_1efbf1c7",
+        "filename": "chrome/browser/web_applications/web_app_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-22T07:18:39Z",
+      "side": 1,
+      "message": "Where is this call? I don\u0027t see it in that method.",
+      "range": {
+        "startLine": 693,
+        "startChar": 16,
+        "endLine": 693,
+        "endChar": 38
+      },
+      "revId": "6e392f8e8f17f7100fcb898d8bceded09b73f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
