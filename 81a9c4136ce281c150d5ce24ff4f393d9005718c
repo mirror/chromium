@@ -45,6 +45,75 @@
       "revId": "81a9c4136ce281c150d5ce24ff4f393d9005718c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "777fa6f2_61821d2e",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-22T18:58:33Z",
+      "side": 1,
+      "message": "List what library you\u0027re opening here, if not the three error lines will look the same.\n\nE.g.:\n\nPLOG(ERROR) \u003c\u003c \"dlopen(libglapi.so) failed with error \" \u003c\u003c errno\n\nAlso consider using dlerror() for more legible error messages.",
+      "range": {
+        "startLine": 150,
+        "startChar": 20,
+        "endLine": 150,
+        "endChar": 26
+      },
+      "revId": "81a9c4136ce281c150d5ce24ff4f393d9005718c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b5601a3_e81c1aac",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-22T18:58:33Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 154,
+        "startChar": 20,
+        "endLine": 154,
+        "endChar": 26
+      },
+      "revId": "81a9c4136ce281c150d5ce24ff4f393d9005718c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28bde54_068b7395",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-22T18:58:33Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 157,
+        "startChar": 14,
+        "endLine": 157,
+        "endChar": 20
+      },
+      "revId": "81a9c4136ce281c150d5ce24ff4f393d9005718c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

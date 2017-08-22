@@ -143,6 +143,29 @@
     },
     {
       "key": {
+        "uuid": "6fa75400_52339344",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-22T18:58:33Z",
+      "side": 1,
+      "message": "This you need for DISALLOW_COPY_AND_ASSIGN",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 24
+      },
+      "revId": "e4d9644db4c2029312d0bb0e8a76e7b806539888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fc4ce18_f8c39389",
         "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
         "patchSetId": 3
