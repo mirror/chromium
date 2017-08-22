@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "940a485c_ff0345bf",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-22T00:43:06Z",
+      "side": 1,
+      "message": "Lol, I love the error message in [1]: \"PAGE_TRANSITION_LAST_CORE must equal PAGE_TRANSITION_KEYWORD_GENERATED\". A classic case of a comment (or in this case message) adding precisely 0 information above what\u0027s already in the code, when an explanation is needed :)\n\n(Yours is fine though.)\n\nOK but I\u0027m still concerned, are you testing each page transition type in some test? My suggestion above wasn\u0027t just about getting the assert outside of the individual test runs (though that\u0027s better). It was about ensuring that we systematically run a test for each transition type, and possibly hard-code some conditional logic inside the test to account for expected variations. Whereas the way it\u0027s set up now, there is no guarantee that they are all tested.",
+      "parentUuid": "30d6e5e2_b2e04766",
+      "range": {
+        "startLine": 254,
+        "startChar": 2,
+        "endLine": 254,
+        "endChar": 13
+      },
+      "revId": "871b83fb64e667ed935fe9a4aa5a275682db8f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56c65183_67655a4c",
         "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
         "patchSetId": 4
