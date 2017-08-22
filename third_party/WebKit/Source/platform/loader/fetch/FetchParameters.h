@@ -127,7 +127,7 @@ class PLATFORM_EXPORT FetchParameters {
   void SetSpeculativePreloadType(SpeculativePreloadType,
                                  double discovery_time = 0);
 
-  double PreloadDiscoveryTime() { return preload_discovery_time_; }
+  double PreloadDiscoveryTime() const { return preload_discovery_time_; }
 
   bool IsLinkPreload() const { return options_.initiator_info.is_link_preload; }
   void SetLinkPreload(bool is_link_preload) {
@@ -198,6 +198,26 @@ class PLATFORM_EXPORT FetchParameters {
   ResourceWidth resource_width_;
   ClientHintsPreferences client_hint_preferences_;
   PlaceholderImageRequestType placeholder_image_request_type_;
+};
+
+template <>
+struct CrossThreadCopier<FetchParameters> {
+  static FetchParameters Copy(
+      const FetchParameters& params) {
+    FetchParameters fetch_params(
+        ResourceRequest(params.GetResourceRequest().CopyData().get()),
+        params.Options());
+    fetch_params.SetDecoderOptions(params.DecoderOptions());
+    fetch_params.SetSpeculativePreloadType(params.GetSpeculativePreloadType(),
+                                           params.PreloadDiscoveryTime());
+    fetch_params.SetDefer(params.Defer());
+    fetch_params.SetOriginRestriction(params.GetOriginRestriction());
+    fetch_params.SetResourceWidth(params.GetResourceWidth());
+    // The default value is always used for |client_hint_preferences_|.
+    if (params.GetPlaceholderImageRequestType() == FetchParameters::kAllowPlaceholder)
+      fetch_params.SetAllowImagePlaceholder();
+    return fetch_params;
+  }
 };
 
 }  // namespace blink
