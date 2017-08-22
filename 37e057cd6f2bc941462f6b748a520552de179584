@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad62c85a_684b0f5b",
+        "filename": "content/browser/download/url_download_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-22T18:32:00Z",
+      "side": 1,
+      "message": "Can any of these go in the header?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 52
+      },
+      "revId": "37e057cd6f2bc941462f6b748a520552de179584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df29bdef_d5bce4e8",
+        "filename": "content/browser/download/url_download_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-22T18:32:00Z",
+      "side": 1,
+      "message": "Do we want this?",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 18
+      },
+      "revId": "37e057cd6f2bc941462f6b748a520552de179584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
