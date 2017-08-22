@@ -30,6 +30,7 @@
 #include "components/update_client/update_client.h"
 #include "components/update_client/updater_state.h"
 #include "components/update_client/utils.h"
+#include "extensions/features/features.h"
 #include "url/gurl.h"
 
 namespace update_client {
@@ -175,8 +176,17 @@ void UpdateCheckerImpl::UpdateCheckSucceeded(
   DCHECK(thread_checker_.CalledOnValidThread());
 
   const int daynum = results.daystart_elapsed_days;
-  if (daynum != ProtocolParser::kNoDaystart)
+  if (daynum != ProtocolParser::kNoDaystart) {
     metadata_->SetDateLastRollCall(ids_checked_, daynum);
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+    metadata_->SetDateLastActive(ids_checked_, daynum);
+#endif
+  }
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  metadata_->ClearActiveBit(ids_checked_);
+#endif
+
   for (const auto& result : results.list) {
     auto entry = result.cohort_attrs.find(ProtocolParser::Result::kCohort);
     if (entry != result.cohort_attrs.end())

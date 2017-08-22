@@ -20,6 +20,11 @@
 #include "components/update_client/update_query_params.h"
 #include "components/update_client/updater_state.h"
 #include "components/update_client/utils.h"
+#include "extensions/features/features.h"
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+#include "extensions/common/disable_reason.h"
+#endif
 
 #if defined(OS_WIN)
 #include "base/win/windows_version.h"
@@ -280,7 +285,7 @@ std::string BuildUpdateCheckRequest(
     const Configurator& config,
     const std::vector<std::string>& ids_checked,
     const IdToComponentPtrMap& components,
-    PersistedData* metadata,
+    const PersistedData* metadata,
     const std::string& additional_attributes,
     bool enabled_component_updates,
     const std::unique_ptr<UpdaterState::Attributes>& updater_state_attributes) {
@@ -289,14 +294,15 @@ std::string BuildUpdateCheckRequest(
   for (const auto& id : ids_checked) {
     DCHECK_EQ(1u, components.count(id));
     const Component& component = *components.at(id);
+    const CrxComponent& crx_component = component.crx_component();
+    const std::string& component_id = component.id();
 
     const update_client::InstallerAttributes installer_attributes(
-        SanitizeInstallerAttributes(
-            component.crx_component().installer_attributes));
+        SanitizeInstallerAttributes(crx_component.installer_attributes));
     std::string app("<app ");
     base::StringAppendF(&app, "appid=\"%s\" version=\"%s\"",
-                        component.id().c_str(),
-                        component.crx_component().version.GetString().c_str());
+                        component_id.c_str(),
+                        crx_component.version.GetString().c_str());
     if (!brand.empty())
       base::StringAppendF(&app, " brand=\"%s\"", brand.c_str());
     if (component.on_demand())
@@ -305,9 +311,9 @@ std::string BuildUpdateCheckRequest(
       base::StringAppendF(&app, " %s=\"%s\"", attr.first.c_str(),
                           attr.second.c_str());
     }
-    const std::string cohort = metadata->GetCohort(component.id());
-    const std::string cohort_name = metadata->GetCohortName(component.id());
-    const std::string cohort_hint = metadata->GetCohortHint(component.id());
+    const std::string cohort = metadata->GetCohort(component_id);
+    const std::string cohort_name = metadata->GetCohortName(component_id);
+    const std::string cohort_hint = metadata->GetCohortHint(component_id);
     if (!cohort.empty())
       base::StringAppendF(&app, " cohort=\"%s\"", cohort.c_str());
     if (!cohort_name.empty())
@@ -316,23 +322,39 @@ std::string BuildUpdateCheckRequest(
       base::StringAppendF(&app, " cohorthint=\"%s\"", cohort_hint.c_str());
     base::StringAppendF(&app, ">");
 
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+    if (crx_component.disable_reasons !=
+        extensions::disable_reason::DISABLE_NONE) {
+      base::StringAppendF(&app, "<disable");
+      for (int enum_value = 1;
+           enum_value < extensions::disable_reason::DISABLE_REASON_LAST;
+           enum_value <<= 1) {
+        if (crx_component.disable_reasons & enum_value) {
+          base::StringAppendF(&app, " reason=\"%s\"",
+                              base::IntToString(enum_value).c_str());
+        }
+      }
+      base::StringAppendF(&app, "/>");
+    }
+#endif  // BUILDFLAG(ENABLE_EXTENSIONS)
+
     base::StringAppendF(&app, "<updatecheck");
-    if (component.crx_component()
-            .supports_group_policy_enable_component_updates &&
+    if (crx_component.supports_group_policy_enable_component_updates &&
         !enabled_component_updates) {
       base::StringAppendF(&app, " updatedisabled=\"true\"");
     }
     base::StringAppendF(&app, "/>");
 
-    base::StringAppendF(&app, "<ping rd=\"%d\" ping_freshness=\"%s\"/>",
-                        metadata->GetDateLastRollCall(component.id()),
-                        metadata->GetPingFreshness(component.id()).c_str());
-    if (!component.crx_component().fingerprint.empty()) {
+    std::string ping_element =
+        BuildUpdateCheckPingElement(metadata, component_id);
+    base::StringAppendF(&app, "%s", ping_element.c_str());
+
+    if (!crx_component.fingerprint.empty()) {
       base::StringAppendF(&app,
                           "<packages>"
                           "<package fp=\"%s\"/>"
                           "</packages>",
-                          component.crx_component().fingerprint.c_str());
+                          crx_component.fingerprint.c_str());
     }
     base::StringAppendF(&app, "</app>");
     app_elements.append(app);
@@ -375,6 +397,41 @@ std::string BuildEventPingRequest(const Configurator& config,
       config.GetProdId(), config.GetBrowserVersion().GetString(),
       config.GetChannel(), config.GetLang(), config.GetOSLongName(),
       config.GetDownloadPreference(), app, "", nullptr);
+}
+
+std::string BuildUpdateCheckPingElement(const PersistedData* metadata,
+                                        const std::string& component_id) {
+  std::string ping("<ping");
+  int date_last_rollcall = metadata->GetDateLastRollCall(component_id);
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  if (metadata->GetActiveBit(component_id)) {
+    int date_last_active = metadata->GetDateLastActive(component_id);
+    int days_since_last_active = metadata->GetDaysSinceLastActive(component_id);
+    if (date_last_active == -2 && days_since_last_active == -2) {
+      // When both date_* and days_* are not available, we can assume that this
+      // is the first time the extension/component is active.
+      date_last_active = -1;
+      days_since_last_active = -1;
+    }
+    base::StringAppendF(&ping, " active=\"1\" ad=\"%d\" a=\"%d\"",
+                        date_last_active, days_since_last_active);
+  }
+  int days_since_last_rollcall =
+      metadata->GetDaysSinceLastRollCall(component_id);
+  if (date_last_rollcall == -2 && days_since_last_rollcall == -2) {
+    // When both date_* and days_* are not available, we can assume that this
+    // is the first time the extension/component sends out an update check.
+    date_last_rollcall = -1;
+    days_since_last_rollcall = -1;
+  }
+  base::StringAppendF(&ping, " rd=\"%d\" r=\"%d\"", date_last_rollcall,
+                      days_since_last_rollcall);
+#else   // BUILDFLAG(ENABLE_EXTENSIONS)
+  base::StringAppendF(&ping, " rd=\"%d\"", date_last_rollcall);
+#endif  // BUILDFLAG(ENABLE_EXTENSIONS)
+  base::StringAppendF(&ping, " ping_freshness=\"%s\"/>",
+                      metadata->GetPingFreshness(component_id).c_str());
+  return ping;
 }
 
 }  // namespace update_client

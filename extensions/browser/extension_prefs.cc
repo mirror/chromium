@@ -1748,6 +1748,7 @@ bool ExtensionPrefs::NeedsStorageGarbageCollection() const {
 void ExtensionPrefs::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {
   registry->RegisterDictionaryPref(pref_names::kExtensions);
+  registry->RegisterDictionaryPref(pref_names::kUpdateClientData);
   registry->RegisterListPref(pref_names::kToolbar,
                              user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterIntegerPref(pref_names::kToolbarSize, -1);

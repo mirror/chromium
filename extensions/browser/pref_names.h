@@ -47,6 +47,10 @@ extern const char kBookmarkAppCreationLaunchType[];
 // extension ids.
 extern const char kExtensions[];
 
+// Dictionary pref that keeps track of per-extension update client data
+// settings.
+extern const char kUpdateClientData[];
+
 // Dictionary pref that manages extensions, controlled by policy.
 // Values are expected to conform to the schema of the ExtensionManagement
 // policy.
