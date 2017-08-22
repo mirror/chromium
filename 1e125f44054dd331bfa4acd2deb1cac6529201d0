@@ -185,6 +185,24 @@
     },
     {
       "key": {
+        "uuid": "e0911172_88e42b0e",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-22T17:42:31Z",
+      "side": 1,
+      "message": "I moved DeleteFile inside Apply(). For exception handling, see other comment.\nI\u0027m not sure how I can get guaranteed cleanup (even on crash). DeleteOnClose() might be an option, but is windows specific and not exposed from MemoryMappedFile(), so it would need some extra work. Since CourgetteEnsemblePatch() does not seem to provide such guarantee, I\u0027m wondering if this is important for setup.",
+      "parentUuid": "3ae23091_b62be2bf",
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36b5c780_3f772493",
         "filename": "chrome/installer/setup/archive_patch_helper.h",
         "patchSetId": 4
