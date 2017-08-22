@@ -22,6 +22,30 @@
       "revId": "53548098600ebc8133a19cc43e7548bcec2c0785",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09577a5b_36cfda6c",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T23:44:21Z",
+      "side": 1,
+      "message": "blob_ptr is passed to the callback and sent to the browser process on line 1049. We can write to blob_registry right after MakeRequest so I think this is fine. (These lines do the same as what WebBlobRegistry::GetBlobPtrFromUUID used to do)",
+      "parentUuid": "7cfaf7da_e0db09a2",
+      "range": {
+        "startLine": 1047,
+        "startChar": 0,
+        "endLine": 1047,
+        "endChar": 76
+      },
+      "revId": "53548098600ebc8133a19cc43e7548bcec2c0785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
