@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4721588_f5dcb954",
+        "filename": "base/containers/span.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T16:59:44Z",
+      "side": 1,
+      "message": "Can you combine this with line 84 somehow? That\u0027s what I was trying to get with by saying that it\u0027s a value type, but I guess it\u0027s still useful to explain what that means.",
+      "revId": "f975a5b7f276f0f88cde89da431cfd9f63e00c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b186f9b8_81780076",
+        "filename": "base/containers/span.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T16:59:44Z",
+      "side": 1,
+      "message": "For read-only data access, pass a span\u003cconst T\u003e: the caller can supply either a span\u003cconst T\u003e or a span\u003cT\u003e, while the callee will have a read-only view.",
+      "range": {
+        "startLine": 106,
+        "startChar": 3,
+        "endLine": 108,
+        "endChar": 48
+      },
+      "revId": "f975a5b7f276f0f88cde89da431cfd9f63e00c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4e0010_e98ad545",
+        "filename": "base/containers/span.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T16:59:44Z",
+      "side": 1,
+      "message": "Nit: sizeof(str_buffer) would be slightly more standard Chrome",
+      "range": {
+        "startLine": 120,
+        "startChar": 32,
+        "endLine": 120,
+        "endChar": 35
+      },
+      "revId": "f975a5b7f276f0f88cde89da431cfd9f63e00c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
