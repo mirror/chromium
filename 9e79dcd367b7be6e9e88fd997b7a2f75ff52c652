@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "675ed5c8_572c8ad5",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/list_container.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-22T12:27:12Z",
+      "side": 1,
+      "message": "Could you make this function as a private method?",
+      "revId": "9e79dcd367b7be6e9e88fd997b7a2f75ff52c652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
