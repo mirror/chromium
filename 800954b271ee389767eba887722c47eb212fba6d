@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26bbcea9_bf9775ec",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-22T21:57:34Z",
+      "side": 1,
+      "message": "Let\u0027s have a good placeholder here as well.",
+      "revId": "800954b271ee389767eba887722c47eb212fba6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8560a29_6deca8ed",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-22T21:57:34Z",
+      "side": 1,
+      "message": "Let\u0027s have a typedef for this in TextUtils.",
+      "range": {
+        "startLine": 1027,
+        "startChar": 23,
+        "endLine": 1027,
+        "endChar": 115
+      },
+      "revId": "800954b271ee389767eba887722c47eb212fba6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e5f5ac_04d4a8e2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1211,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-22T21:57:34Z",
+      "side": 1,
+      "message": "This looks weird. Let\u0027s do a separate check \"if (!filter.key)\"",
+      "revId": "800954b271ee389767eba887722c47eb212fba6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
