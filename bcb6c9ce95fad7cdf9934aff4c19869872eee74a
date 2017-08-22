@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59b7349c_efab9e64",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-22T18:57:42Z",
+      "side": 1,
+      "message": "nhiroki@\n\nUnfortunately I couldn\u0027t get this compiled. The nullptr initialization on this std::unique_ptr does not work. How can I make this work?",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 65
+      },
+      "revId": "bcb6c9ce95fad7cdf9934aff4c19869872eee74a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
