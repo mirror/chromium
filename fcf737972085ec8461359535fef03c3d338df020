@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ac55b20_6d24c850",
+        "filename": "media/mojo/services/mojo_media_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-22T17:48:13Z",
+      "side": 1,
+      "message": "Only a forward declaration is needed here.",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 68
+      },
+      "revId": "fcf737972085ec8461359535fef03c3d338df020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
