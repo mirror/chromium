@@ -154,6 +154,8 @@ class BrowserProcessImpl : public BrowserProcess,
 #endif
   network_time::NetworkTimeTracker* network_time_tracker() override;
   gcm::GCMDriver* gcm_driver() override;
+  resource_coordinator::WindowOcclusionTracker* GetWindowOcclusionTracker()
+      override;
   resource_coordinator::TabManager* GetTabManager() override;
   shell_integration::DefaultWebClientState CachedDefaultWebClientState()
       override;
@@ -343,6 +345,11 @@ class BrowserProcessImpl : public BrowserProcess,
   std::unique_ptr<ChromeChildProcessWatcher> child_process_watcher_;
 
   std::unique_ptr<ChromeDeviceClient> device_client_;
+
+#if defined(OS_CHROMEOS)
+  std::unique_ptr<resource_coordinator::WindowOcclusionTracker>
+      window_occlusion_tracker_;
+#endif
 
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
   // Any change to this #ifdef must be reflected as well in

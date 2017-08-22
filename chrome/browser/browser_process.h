@@ -117,6 +117,7 @@ class RapporServiceImpl;
 
 namespace resource_coordinator {
 class TabManager;
+class WindowOcclusionTracker;
 }
 
 namespace safe_browsing {
@@ -283,6 +284,10 @@ class BrowserProcess {
   virtual network_time::NetworkTimeTracker* network_time_tracker() = 0;
 
   virtual gcm::GCMDriver* gcm_driver() = 0;
+
+  // Returns the WindowOcclusionTracker, if supported on this platform.
+  virtual resource_coordinator::WindowOcclusionTracker*
+  GetWindowOcclusionTracker() = 0;
 
   // Returns the tab manager. On non-supported platforms, this returns null.
   virtual resource_coordinator::TabManager* GetTabManager() = 0;
