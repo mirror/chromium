@@ -1258,8 +1258,10 @@ void HTMLMediaElement::StartPlayerLoad() {
 
   web_media_player_->Load(GetLoadType(), source, CorsMode());
 
-  if (IsFullscreen())
+  if (IsFullscreen()) {
+    web_media_player_->SetIsEffectivelyFullscreen(true);
     web_media_player_->EnteredFullscreen();
+  }
 
   web_media_player_->BecameDominantVisibleContent(mostly_filling_viewport_);
 }
@@ -3480,8 +3482,15 @@ void HTMLMediaElement::DidEnterFullscreen() {
 
   if (web_media_player_) {
     // FIXME: There is no embedder-side handling in layout test mode.
-    if (!LayoutTestSupport::IsRunningLayoutTest())
+    if (!LayoutTestSupport::IsRunningLayoutTest()) {
       web_media_player_->EnteredFullscreen();
+      // Also notify "effectively fullscreen" immediately, rather than waiting
+      // for the intersection timer to fire.  If no timer is set, then this is
+      // the only notification that it will get.  While it will be a worse
+      // approximation to "effectively fullscreen", it will still be better than
+      // returning false.
+      web_media_player_->SetIsEffectivelyFullscreen(true);
+    }
     web_media_player_->OnDisplayTypeChanged(DisplayType());
   }
 
@@ -3497,6 +3506,7 @@ void HTMLMediaElement::DidExitFullscreen() {
   UpdateControlsVisibility();
 
   if (GetWebMediaPlayer()) {
+    GetWebMediaPlayer()->SetIsEffectivelyFullscreen(false);
     GetWebMediaPlayer()->ExitedFullscreen();
     GetWebMediaPlayer()->OnDisplayTypeChanged(DisplayType());
   }

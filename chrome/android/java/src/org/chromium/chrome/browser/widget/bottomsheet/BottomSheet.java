@@ -792,7 +792,15 @@ public class BottomSheet
                     // This onLayoutChange() will be called after the user enters fullscreen video
                     // mode. Ensure the sheet state is reset to peek so that the sheet does not
                     // open over the fullscreen video. See crbug.com/740499.
-                    if (mFullscreenManager != null && mFullscreenManager.isOverlayVideoMode()) {
+                    boolean isFullscreen = false;
+                    if (mTabModelSelector != null) {
+                        final Tab tab = mTabModelSelector.getCurrentTab();
+                        if (tab != null && tab.getWebContents() != null) {
+                            isFullscreen =
+                                    tab.getWebContents().hasActiveEffectivelyFullscreenVideo();
+                        }
+                    }
+                    if (isFullscreen) {
                         setSheetState(SHEET_STATE_PEEK, false);
                     } else {
                         setSheetState(mCurrentState, false);
