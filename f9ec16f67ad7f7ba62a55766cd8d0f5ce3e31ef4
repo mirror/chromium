@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9ea739d4_547f0139",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T01:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23bddc62_f1389041",
+      "revId": "f9ec16f67ad7f7ba62a55766cd8d0f5ce3e31ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "303e1c09_454ad271",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-21T16:23:50Z",
       "side": 1,
       "message": "What are the units on these numbers?",
+      "revId": "f9ec16f67ad7f7ba62a55766cd8d0f5ce3e31ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0dbeb4a_b84f169f",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T01:42:25Z",
+      "side": 1,
+      "message": "The units depend on the du flags, which in this case -k means kilobytes.",
+      "parentUuid": "303e1c09_454ad271",
       "revId": "f9ec16f67ad7f7ba62a55766cd8d0f5ce3e31ef4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "198f1f1b_b78bc5a6",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T01:42:25Z",
+      "side": 1,
+      "message": ":(. I\u0027ve at least tested this with KK, L, M, N, O",
+      "parentUuid": "24853b9b_0b13cab3",
+      "revId": "f9ec16f67ad7f7ba62a55766cd8d0f5ce3e31ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34bd248c_26428bc9",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-21T16:23:50Z",
       "side": 1,
       "message": "Why is this running w/ check_return\u003dFalse?",
+      "revId": "f9ec16f67ad7f7ba62a55766cd8d0f5ce3e31ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5fb21d1_a7ec8b86",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T01:42:25Z",
+      "side": 1,
+      "message": "Added comment.",
+      "parentUuid": "34bd248c_26428bc9",
       "revId": "f9ec16f67ad7f7ba62a55766cd8d0f5ce3e31ef4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

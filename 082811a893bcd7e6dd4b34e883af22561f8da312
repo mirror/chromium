@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b0eca1b_4e1d35ba",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T01:42:25Z",
+      "side": 1,
+      "message": "I\u0027d prefer to leave them here so that there\u0027s not a level of indirection when reading the code. I recall reading that pre-compiling Python regexes has very little performance implication since python already has a cache for them.",
+      "parentUuid": "8131366a_2f7361f7",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf9a4c50_7a514e8f",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "02f2daa6_9e450b4f",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T01:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf9a4c50_7a514e8f",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f74d2bcc_7ecdce6d",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-21T16:23:50Z",
       "side": 1,
       "message": "In what scenarios are we calling this script? Is passing the arch from GN a possibility?",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c48131_a379c313",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T01:42:25Z",
+      "side": 1,
+      "message": "It would be possible, but in the case of 64-bit monochrome, there can actually be both arm and arm64 at the same time. \n\nAlso - I plan to make another change to this script whereby you can run things like \"mem-usage\", \"disk-usage\", \"ps\" by executing it directly and passing the package name. I\u0027m hoping that this will effectively replace the remaining need for the other wrapper scripts I\u0027m deleting, where you\u0027d want to run some of these things without first having to build anything.",
+      "parentUuid": "f74d2bcc_7ecdce6d",
       "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5cd1476a_ff11a9be",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T01:42:25Z",
+      "side": 1,
+      "message": "We could, but this is faster \u0026 less code (faster because it is all done in a single RunShellCommand()",
+      "parentUuid": "43014544_3d127308",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f28a2511_86259383",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-21T16:23:50Z",
       "side": 1,
       "message": "Have you seen classes1.dex? I think I\u0027ve typically seen classes.dex, classes2.dex, ...",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4dc062d_0e8d2765",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T01:42:25Z",
+      "side": 1,
+      "message": "No, done.",
+      "parentUuid": "f28a2511_86259383",
       "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "2dd41cd5_efcbc2a7",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T01:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "507faf04_1d18fbfe",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e274a64c_841cb12a",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 2
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-21T16:23:50Z",
       "side": 1,
       "message": "Why is this location only be present for arm?",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef24fa5_ebc1cf1c",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T01:42:25Z",
+      "side": 1,
+      "message": "That\u0027s just because it uses suffix, but not the outer arch. Added a comment.",
+      "parentUuid": "e274a64c_841cb12a",
       "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -135,6 +261,24 @@
       "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4666db_302d34f8",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T01:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38ac6c7d_7b0f34e7",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
