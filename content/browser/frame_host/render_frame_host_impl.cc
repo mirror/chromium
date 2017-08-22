@@ -3290,7 +3290,7 @@ void RenderFrameHostImpl::CommitNavigation(
   DCHECK(
       (response && (body.get() || handle.is_valid())) ||
       common_params.url.SchemeIs(url::kDataScheme) ||
-      !ShouldMakeNetworkRequestForURL(common_params.url) ||
+      !IsURLHandledByNetworkRequest(common_params.url) ||
       FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type) ||
       IsRendererDebugURL(common_params.url));
   UpdatePermissionsForNavigation(common_params, request_params);
@@ -3331,7 +3331,7 @@ void RenderFrameHostImpl::CommitNavigation(
                                      common_params, request_params));
 
   // If a network request was made, update the Previews state.
-  if (ShouldMakeNetworkRequestForURL(common_params.url) &&
+  if (IsURLHandledByNetworkRequest(common_params.url) &&
       !FrameMsg_Navigate_Type::IsSameDocument(common_params.navigation_type)) {
     last_navigation_previews_state_ = common_params.previews_state;
   }
