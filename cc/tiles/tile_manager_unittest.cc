@@ -1543,7 +1543,7 @@ class TileManagerTest : public TestLayerTreeHostBase {
       const LayerTreeSettings& settings,
       TaskRunnerProvider* task_runner_provider,
       TaskGraphRunner* task_graph_runner) override {
-    return base::MakeUnique<testing::NiceMock<MockLayerTreeHostImpl>>(
+    return std::make_unique<testing::NiceMock<MockLayerTreeHostImpl>>(
         settings, task_runner_provider, task_graph_runner);
   }
 
@@ -1750,7 +1750,7 @@ TEST_F(TileManagerTest, LowResHasNoImage) {
 class ActivationTasksDoNotBlockReadyToDrawTest : public TileManagerTest {
  protected:
   std::unique_ptr<TaskGraphRunner> CreateTaskGraphRunner() override {
-    return base::MakeUnique<SynchronousTaskGraphRunner>();
+    return std::make_unique<SynchronousTaskGraphRunner>();
   }
 
   std::unique_ptr<LayerTreeFrameSink> CreateLayerTreeFrameSink() override {
@@ -1827,7 +1827,7 @@ TEST_F(PartialRasterTileManagerTest, CancelledTasksHaveNoContentId) {
   // scheduled work is immediately cancelled.
 
   host_impl()->tile_manager()->SetTileTaskManagerForTesting(
-      base::MakeUnique<FakeTileTaskManagerImpl>());
+      std::make_unique<FakeTileTaskManagerImpl>());
 
   // Pick arbitrary IDs - they don't really matter as long as they're constant.
   const int kLayerId = 7;
@@ -1914,7 +1914,7 @@ void RunPartialRasterCheck(std::unique_ptr<LayerTreeHostImpl> host_impl,
   // Create a VerifyResourceContentIdTileTaskManager to ensure that the
   // raster task we see is created with |kExpectedId|.
   host_impl->tile_manager()->SetTileTaskManagerForTesting(
-      base::MakeUnique<FakeTileTaskManagerImpl>());
+      std::make_unique<FakeTileTaskManagerImpl>());
 
   VerifyResourceContentIdRasterBufferProvider raster_buffer_provider(
       kExpectedId);
@@ -1991,7 +1991,7 @@ class MockReadyToDrawRasterBufferProviderImpl
       const Resource* resource,
       uint64_t resource_content_id,
       uint64_t previous_content_id) override {
-    return base::MakeUnique<FakeRasterBuffer>();
+    return std::make_unique<FakeRasterBuffer>();
   }
 
  private:
@@ -2338,12 +2338,12 @@ class CheckerImagingTileManagerTest : public TestLayerTreeHostBase {
       TaskRunnerProvider* task_runner_provider,
       TaskGraphRunner* task_graph_runner) override {
     task_runner_ = make_scoped_refptr(new SynchronousSimpleTaskRunner);
-    return base::MakeUnique<FakeLayerTreeHostImpl>(
+    return std::make_unique<FakeLayerTreeHostImpl>(
         settings, task_runner_provider, task_graph_runner, task_runner_);
   }
 
   std::unique_ptr<TaskGraphRunner> CreateTaskGraphRunner() override {
-    return base::MakeUnique<SynchronousTaskGraphRunner>();
+    return std::make_unique<SynchronousTaskGraphRunner>();
   }
 
   void FlushDecodeTasks() {
@@ -2373,7 +2373,7 @@ TEST_F(CheckerImagingTileManagerTest,
   recording_source->set_fill_with_nonsolid_color(true);
 
   sk_sp<SkImage> image = SkImage::MakeFromGenerator(
-      base::MakeUnique<testing::StrictMock<MockImageGenerator>>(
+      std::make_unique<testing::StrictMock<MockImageGenerator>>(
           gfx::Size(512, 512)));
   recording_source->add_draw_image(image, gfx::Point(0, 0));
 

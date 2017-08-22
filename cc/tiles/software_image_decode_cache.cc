@@ -613,7 +613,7 @@ SoftwareImageDecodeCache::GetOriginalSizeImageDecode(
     }
   }
 
-  return base::MakeUnique<DecodedImage>(
+  return std::make_unique<DecodedImage>(
       decoded_info.makeColorSpace(target_color_space),
       std::move(decoded_pixels), SkSize::Make(0, 0),
       next_tracing_id_.GetNext());
@@ -742,7 +742,7 @@ SoftwareImageDecodeCache::GetScaledImageDecode(const ImageKey& key,
     DCHECK(result) << key.ToString();
   }
 
-  return base::MakeUnique<DecodedImage>(
+  return std::make_unique<DecodedImage>(
       scaled_info.makeColorSpace(decoded_draw_image.image()->refColorSpace()),
       std::move(scaled_pixels),
       SkSize::Make(-key.src_rect().x(), -key.src_rect().y()),

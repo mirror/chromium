@@ -69,7 +69,7 @@ bool AreDisplayListDrawingResultsSame(const gfx::Rect& layer_rect,
 }
 
 sk_sp<SkImage> CreateDiscardableImage(const gfx::Size& size) {
-  return SkImage::MakeFromGenerator(base::MakeUnique<TestImageGenerator>(
+  return SkImage::MakeFromGenerator(std::make_unique<TestImageGenerator>(
       SkImageInfo::MakeN32Premul(size.width(), size.height())));
 }
 

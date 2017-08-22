@@ -73,7 +73,7 @@ void MailboxReleased(const gpu::SyncToken& sync_token,
 class FullscreenOverlayValidator : public OverlayCandidateValidator {
  public:
   void GetStrategies(OverlayProcessor::StrategyList* strategies) override {
-    strategies->push_back(base::MakeUnique<OverlayStrategyFullscreen>(this));
+    strategies->push_back(std::make_unique<OverlayStrategyFullscreen>(this));
   }
   bool AllowCALayerOverlays() override { return false; }
   bool AllowDCLayerOverlays() override { return false; }
@@ -85,8 +85,8 @@ class SingleOverlayValidator : public OverlayCandidateValidator {
   SingleOverlayValidator() : expected_rects_(1, gfx::RectF(kOverlayRect)) {}
 
   void GetStrategies(OverlayProcessor::StrategyList* strategies) override {
-    strategies->push_back(base::MakeUnique<OverlayStrategySingleOnTop>(this));
-    strategies->push_back(base::MakeUnique<OverlayStrategyUnderlay>(this));
+    strategies->push_back(std::make_unique<OverlayStrategySingleOnTop>(this));
+    strategies->push_back(std::make_unique<OverlayStrategyUnderlay>(this));
   }
 
   bool AllowCALayerOverlays() override { return false; }
@@ -148,21 +148,21 @@ class DCLayerValidator : public OverlayCandidateValidator {
 class SingleOnTopOverlayValidator : public SingleOverlayValidator {
  public:
   void GetStrategies(OverlayProcessor::StrategyList* strategies) override {
-    strategies->push_back(base::MakeUnique<OverlayStrategySingleOnTop>(this));
+    strategies->push_back(std::make_unique<OverlayStrategySingleOnTop>(this));
   }
 };
 
 class UnderlayOverlayValidator : public SingleOverlayValidator {
  public:
   void GetStrategies(OverlayProcessor::StrategyList* strategies) override {
-    strategies->push_back(base::MakeUnique<OverlayStrategyUnderlay>(this));
+    strategies->push_back(std::make_unique<OverlayStrategyUnderlay>(this));
   }
 };
 
 class UnderlayCastOverlayValidator : public SingleOverlayValidator {
  public:
   void GetStrategies(OverlayProcessor::StrategyList* strategies) override {
-    strategies->push_back(base::MakeUnique<OverlayStrategyUnderlayCast>(this));
+    strategies->push_back(std::make_unique<OverlayStrategyUnderlayCast>(this));
   }
 };
 
@@ -461,7 +461,7 @@ class OverlayTest : public testing::Test {
   void SetUp() override {
     provider_ = TestContextProvider::Create();
     provider_->BindToCurrentThread();
-    output_surface_ = base::MakeUnique<OutputSurfaceType>(provider_);
+    output_surface_ = std::make_unique<OutputSurfaceType>(provider_);
     output_surface_->BindToClient(&client_);
     output_surface_->SetOverlayCandidateValidator(
         new OverlayCandidateValidatorType);
@@ -2336,7 +2336,7 @@ class GLRendererWithOverlaysTest : public testing::Test {
     if (use_validator)
       output_surface_->SetOverlayCandidateValidator(new SingleOverlayValidator);
 
-    renderer_ = base::MakeUnique<OverlayInfoRendererGL>(
+    renderer_ = std::make_unique<OverlayInfoRendererGL>(
         &settings_, output_surface_.get(), resource_provider_.get());
     renderer_->Initialize();
     renderer_->SetVisible(true);

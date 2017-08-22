@@ -2772,7 +2772,7 @@ TEST_F(LayerTreeHostCommonTest, ClipRectWithClipParentAndFilters) {
   clip->SetMasksToBounds(true);
 
   root->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   root->test_properties()->clip_children->insert(filter_child_1);
   filter_child_1->test_properties()->clip_parent = root;
 
@@ -3335,7 +3335,7 @@ TEST_F(LayerTreeHostCommonTest,
   clip_parent->SetBounds(gfx::Size(50, 50));
   clip_parent->SetMasksToBounds(true);
   clip_parent->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   clip_parent->test_properties()->clip_children->insert(clip_child);
 
   render_surface1->SetBounds(gfx::Size(20, 20));
@@ -3370,7 +3370,7 @@ TEST_F(LayerTreeHostCommonTest, ClipRectOfSurfaceWhoseParentIsAClipChild) {
   clip_parent->SetPosition(gfx::PointF(2.f, 2.f));
   clip_parent->SetBounds(gfx::Size(50, 50));
   clip_parent->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   clip_parent->test_properties()->clip_children->insert(clip_child);
 
   clip_layer->SetBounds(gfx::Size(50, 50));
@@ -3440,7 +3440,7 @@ TEST_F(LayerTreeHostCommonTest, VisibleRectsMultipleSurfaces) {
 
   clip_parent->SetBounds(gfx::Size(50, 50));
   clip_parent->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   clip_parent->test_properties()->clip_children->insert(clip_child);
 
   unclipped_desc_surface->SetBounds(gfx::Size(20, 20));
@@ -3481,7 +3481,7 @@ TEST_F(LayerTreeHostCommonTest, RootClipPropagationToClippedSurface) {
 
   clip_parent->SetBounds(gfx::Size(50, 50));
   clip_parent->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   clip_parent->test_properties()->clip_children->insert(clip_child);
 
   unclipped_desc_surface->SetBounds(gfx::Size(100, 100));
@@ -5383,7 +5383,7 @@ TEST_F(LayerTreeHostCommonTest, DescendantsOfClipChildren) {
 
   clip_child->test_properties()->clip_parent = clip_parent;
   clip_parent->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   clip_parent->test_properties()->clip_children->insert(clip_child);
 
   root->SetBounds(gfx::Size(50, 50));
@@ -5430,7 +5430,7 @@ TEST_F(LayerTreeHostCommonTest,
 
   clip_child->test_properties()->clip_parent = clip_parent;
   clip_parent->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   clip_parent->test_properties()->clip_children->insert(clip_child);
 
   clip_parent->SetMasksToBounds(true);
@@ -5705,7 +5705,7 @@ TEST_F(LayerTreeHostCommonTest, ClippedByScrollParent) {
 
   scroll_child->test_properties()->scroll_parent = scroll_parent;
   scroll_parent->test_properties()->scroll_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   scroll_parent->test_properties()->scroll_children->insert(scroll_child);
 
   root->SetBounds(gfx::Size(50, 50));
@@ -5735,7 +5735,7 @@ TEST_F(LayerTreeHostCommonTest, ScrollChildAndScrollParentDifferentTargets) {
 
   scroll_child->test_properties()->scroll_parent = scroll_parent;
   scroll_parent->test_properties()->scroll_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   scroll_parent->test_properties()->scroll_children->insert(scroll_child);
 
   root->SetBounds(gfx::Size(50, 50));
@@ -5837,7 +5837,7 @@ TEST_F(LayerTreeHostCommonTest, ClippedByOutOfOrderScrollParent) {
 
   scroll_child->test_properties()->scroll_parent = scroll_parent;
   scroll_parent->test_properties()->scroll_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   scroll_parent->test_properties()->scroll_children->insert(scroll_child);
 
   ExecuteCalculateDrawProperties(root);
@@ -5880,12 +5880,12 @@ TEST_F(LayerTreeHostCommonTest, ClippedByOutOfOrderScrollGrandparent) {
 
   scroll_child->test_properties()->scroll_parent = scroll_parent;
   scroll_parent->test_properties()->scroll_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   scroll_parent->test_properties()->scroll_children->insert(scroll_child);
 
   scroll_parent_border->test_properties()->scroll_parent = scroll_grandparent;
   scroll_grandparent->test_properties()->scroll_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   scroll_grandparent->test_properties()->scroll_children->insert(
       scroll_parent_border);
 
@@ -5953,12 +5953,12 @@ TEST_F(LayerTreeHostCommonTest, OutOfOrderClippingRequiresRSLLSorting) {
 
   scroll_child->test_properties()->scroll_parent = scroll_parent;
   scroll_parent->test_properties()->scroll_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   scroll_parent->test_properties()->scroll_children->insert(scroll_child);
 
   scroll_parent_border->test_properties()->scroll_parent = scroll_grandparent;
   scroll_grandparent->test_properties()->scroll_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   scroll_grandparent->test_properties()->scroll_children->insert(
       scroll_parent_border);
 
@@ -8584,7 +8584,7 @@ TEST_F(LayerTreeHostCommonTest, UpdateScrollChildPosition) {
 
   scroll_child->test_properties()->scroll_parent = scroll_parent;
   scroll_parent->test_properties()->scroll_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   scroll_parent->test_properties()->scroll_children->insert(scroll_child);
 
   ExecuteCalculateDrawProperties(root);
@@ -9165,7 +9165,7 @@ TEST_F(LayerTreeHostCommonTest,
 
   render_surface->test_properties()->clip_parent = clip_parent;
   clip_parent->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   clip_parent->test_properties()->clip_children->insert(render_surface);
 
   ExecuteCalculateDrawProperties(root);
@@ -9198,7 +9198,7 @@ TEST_F(LayerTreeHostCommonTest,
 
   clip_child->test_properties()->clip_parent = clip_parent;
   clip_parent->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   clip_parent->test_properties()->clip_children->insert(clip_child);
 
   ExecuteCalculateDrawProperties(root);
@@ -9230,7 +9230,7 @@ TEST_F(LayerTreeHostCommonTest,
 
   clip_child->test_properties()->clip_parent = clip_parent;
   clip_parent->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   clip_parent->test_properties()->clip_children->insert(clip_child);
 
   ExecuteCalculateDrawProperties(root);
@@ -9258,7 +9258,7 @@ TEST_F(LayerTreeHostCommonTest, UnclippedClipParent) {
 
   clip_child->test_properties()->clip_parent = clip_parent;
   clip_parent->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   clip_parent->test_properties()->clip_children->insert(clip_child);
 
   ExecuteCalculateDrawProperties(root);
@@ -9306,7 +9306,7 @@ TEST_F(LayerTreeHostCommonTest, RenderSurfaceContentRectWithMultipleSurfaces) {
 
   clip_child->test_properties()->clip_parent = clip_parent;
   clip_parent->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   clip_parent->test_properties()->clip_children->insert(clip_child);
 
   ExecuteCalculateDrawProperties(root);
@@ -9353,7 +9353,7 @@ TEST_F(LayerTreeHostCommonTest, ClipBetweenClipChildTargetAndClipParentTarget) {
 
   clip_child->test_properties()->clip_parent = clip_parent;
   clip_parent->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   clip_parent->test_properties()->clip_children->insert(clip_child);
 
   ExecuteCalculateDrawProperties(root);
@@ -9390,7 +9390,7 @@ TEST_F(LayerTreeHostCommonTest, VisibleRectForDescendantOfScaledSurface) {
 
   clip_child->test_properties()->clip_parent = clip_parent;
   clip_parent->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   clip_parent->test_properties()->clip_children->insert(clip_child);
 
   ExecuteCalculateDrawProperties(root);
@@ -9449,7 +9449,7 @@ TEST_F(LayerTreeHostCommonTest, ClipParentDrawsIntoScaledRootSurface) {
 
   clip_child->test_properties()->clip_parent = clip_parent;
   clip_parent->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   clip_parent->test_properties()->clip_children->insert(clip_child);
 
   float device_scale_factor = 1.f;
@@ -9481,7 +9481,7 @@ TEST_F(LayerTreeHostCommonTest, ClipChildVisibleRect) {
 
   clip_child->test_properties()->clip_parent = clip_parent;
   clip_parent->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   clip_parent->test_properties()->clip_children->insert(clip_child);
 
   ExecuteCalculateDrawProperties(root);
@@ -9558,7 +9558,7 @@ TEST_F(LayerTreeHostCommonTest, TwoUnclippedRenderSurfaces) {
 
   clip_child->test_properties()->clip_parent = root;
   root->test_properties()->clip_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   root->test_properties()->clip_children->insert(clip_child);
 
   ExecuteCalculateDrawProperties(root);
@@ -9659,7 +9659,7 @@ TEST_F(LayerTreeHostCommonTest, NoisyTransform) {
 
   scroll_child->test_properties()->scroll_parent = scroll_parent;
   scroll_parent->test_properties()->scroll_children =
-      base::MakeUnique<std::set<LayerImpl*>>();
+      std::make_unique<std::set<LayerImpl*>>();
   scroll_parent->test_properties()->scroll_children->insert(scroll_child);
 
   scroll_parent->SetDrawsContent(true);
