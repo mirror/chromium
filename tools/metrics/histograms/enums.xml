@@ -37795,6 +37795,37 @@ would be helpful to identify which type is being sent.
   <int value="6" label="Translation error"/>
 </enum>
 
+<enum name="TranslateEvent">
+  <int value="0" label="Unknown"/>
+  <int value="1" label="User decline"/>
+  <int value="2" label="User accept"/>
+  <int value="3" label="User dismiss"/>
+  <int value="4" label="User ignore"/>
+  <int value="5" label="User never translate language"/>
+  <int value="6" label="User never translate site"/>
+  <int value="7" label="User always translate language"/>
+  <int value="8" label="User context menu translate"/>
+  <int value="9" label="User revert"/>
+  <int value="10" label="Automatically translated"/>
+  <int value="11" label="Disabled by pref"/>
+  <int value="12" label="Language disabled by user config"/>
+  <int value="13" label="Url disabled by user config"/>
+  <int value="14" label="Language disabled by auto blacklist"/>
+  <int value="15" label="Disabled by ranker"/>
+  <int value="16" label="Unsupported language"/>
+  <int value="17" label="Unsupported url"/>
+  <int value="18" label="Matches previous language"/>
+  <int value="19" label="Browser window is invalid"/>
+  <int value="20" label="Browser window not active"/>
+  <int value="21" label="Browser window is minimized"/>
+  <int value="22" label="Web contents not active"/>
+  <int value="23" label="Editable field is active"/>
+  <int value="24" label="Language in ulp"/>
+  <int value="25" label="Auto translation by pref"/>
+  <int value="26" label="Auto translation by link"/>
+  <int value="27" label="Initialization error"/>
+</enum>
+
 <enum name="TranslateInitiationStatus">
   <int value="0" label="Completely disabled by prefs"/>
   <int value="1" label="Completely disabled by switch"/>
