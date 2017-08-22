@@ -378,7 +378,6 @@ ColorChooserView::ColorChooserView(ColorChooserListener* listener,
 
   View* container2 = new View();
   GridLayout* layout = new GridLayout(container2);
-  container2->SetLayoutManager(layout);
   ColumnSet* columns = layout->AddColumnSet(0);
   columns->AddColumn(
       GridLayout::LEADING, GridLayout::FILL, 0, GridLayout::USE_PREF, 0, 0);

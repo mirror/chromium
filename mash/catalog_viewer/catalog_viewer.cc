@@ -54,7 +54,6 @@ class CatalogViewerContents : public views::WidgetDelegateView,
     SetBackground(views::CreateStandardPanelBackground());
 
     views::GridLayout* layout = new views::GridLayout(this);
-    SetLayoutManager(layout);
 
     views::ColumnSet* columns = layout->AddColumnSet(0);
     columns->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 0,
