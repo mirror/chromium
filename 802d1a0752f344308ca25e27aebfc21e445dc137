@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b5ab887_93b76b95",
+        "filename": "chrome/browser/android/tab_web_contents_delegate_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-22T16:55:16Z",
+      "side": 1,
+      "message": "There is a lot of raw pointers here, and also bouncing up and down the JNI boundary... Could we\na) Have the NotifyInfoBarAndroid create its own NotifyInfoBarDelegateBridge instead of creating it here?\nb) From here directly trigger the NotifyInfoBarAndroid? Essentially, expose the Create() method in notify_infobar_android.cc publicly and call that from here instead of through JNI.",
+      "range": {
+        "startLine": 510,
+        "startChar": 37,
+        "endLine": 510,
+        "endChar": 78
+      },
+      "revId": "802d1a0752f344308ca25e27aebfc21e445dc137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "568ce0fa_f7d89dc4",
+        "filename": "chrome/browser/ui/android/infobars/notify_infobar_delegate_bridge.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-22T16:55:16Z",
+      "side": 1,
+      "message": "Do these need to be virtual?",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "802d1a0752f344308ca25e27aebfc21e445dc137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a9a9621_ab2e0660",
+        "filename": "chrome/browser/ui/framebust_block_infobar_delegate.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-22T16:55:16Z",
+      "side": 1,
+      "message": "If the string is only defined on Android, wouldn\u0027t you need to exclude this on not-Android? At that point, it might make more sense to #ifdef out the whole thing until we need it somewhere else.",
+      "revId": "802d1a0752f344308ca25e27aebfc21e445dc137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f288a7_6b6b5982",
+        "filename": "components/web_contents_delegate_android/web_contents_delegate_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-22T16:55:16Z",
+      "side": 1,
+      "message": "Move this up to right after line 410?",
+      "range": {
+        "startLine": 413,
+        "startChar": 2,
+        "endLine": 413,
+        "endChar": 20
+      },
+      "revId": "802d1a0752f344308ca25e27aebfc21e445dc137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
