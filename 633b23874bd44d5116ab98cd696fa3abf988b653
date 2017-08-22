@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cec7da94_a472a6f3",
+        "filename": "tools/clang/scripts/run_tool.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-22T05:37:35Z",
+      "side": 1,
+      "message": "Sorry I did not get it last time. Removed it and will add it to path when required.",
+      "parentUuid": "93f1e359_84a4372f",
+      "revId": "633b23874bd44d5116ab98cd696fa3abf988b653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6856779_e1d63049",
         "filename": "tools/clang/scripts/run_tool.py",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-22T04:57:26Z",
       "side": 1,
       "message": "Just curious: do we need to bake this into a script? It seems easy for an external app to just set these flags correctly.",
+      "revId": "633b23874bd44d5116ab98cd696fa3abf988b653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa505c39_b5f51ca2",
+        "filename": "tools/clang/scripts/run_tool.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-22T05:37:35Z",
+      "side": 1,
+      "message": "As far as I found out, if this would not be specified in command line, the relative path will be used. I tried adding it to any of the default paths (PATH, CPATH, C_INCLUDE_PATH, CPLUS_INCLUDE_PATH), but did not help.",
+      "parentUuid": "c6856779_e1d63049",
       "revId": "633b23874bd44d5116ab98cd696fa3abf988b653",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
