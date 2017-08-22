@@ -219,41 +219,6 @@ ShortcutLocations::ShortcutLocations()
       in_quick_launch_bar(false) {
 }
 
-#if defined(TOOLKIT_VIEWS)
-std::unique_ptr<ShortcutInfo> GetShortcutInfoForTab(
-    content::WebContents* web_contents) {
-  const favicon::FaviconDriver* favicon_driver =
-      favicon::ContentFaviconDriver::FromWebContents(web_contents);
-  const extensions::TabHelper* extensions_tab_helper =
-      extensions::TabHelper::FromWebContents(web_contents);
-  const WebApplicationInfo& app_info = extensions_tab_helper->web_app_info();
-
-  std::unique_ptr<ShortcutInfo> info(new ShortcutInfo);
-  info->url = app_info.app_url.is_empty() ? web_contents->GetURL() :
-                                            app_info.app_url;
-  info->title = app_info.title.empty() ?
-      (web_contents->GetTitle().empty() ? base::UTF8ToUTF16(info->url.spec()) :
-                                          web_contents->GetTitle()) :
-      app_info.title;
-  info->description = app_info.description;
-  // Even though GetFavicon returns a gfx::Image, we *deliberately* call
-  // AsImageSkia to get the internal ImageSkia, then construct a new gfx::Image.
-  // This ensures the ShortcutInfo's favicon does not share a backing store with
-  // |web_contents|, which would not be thread safe. https://crbug.com/596348.
-  info->favicon.Add(favicon_driver->GetFavicon().AsImageSkia());
-
-  Profile* profile =
-      Profile::FromBrowserContext(web_contents->GetBrowserContext());
-  info->profile_path = profile->GetPath();
-
-  return info;
-}
-#endif
-
-#if !defined(OS_WIN)
-void UpdateShortcutForTabContents(content::WebContents* web_contents) {}
-#endif
-
 std::unique_ptr<ShortcutInfo> ShortcutInfoForExtensionAndProfile(
     const extensions::Extension* app,
     Profile* profile) {

@@ -23,10 +23,6 @@ namespace base {
 class TaskRunner;
 }
 
-namespace content {
-class WebContents;
-}
-
 namespace extensions {
 class Extension;
 }
@@ -129,21 +125,6 @@ enum ShortcutCreationReason {
 // Called by GetShortcutInfoForApp after fetching the ShortcutInfo.
 typedef base::Callback<void(std::unique_ptr<ShortcutInfo>)>
     ShortcutInfoCallback;
-
-#if defined(TOOLKIT_VIEWS)
-// Extracts shortcut info of the given WebContents. The result's |favicon|
-// member does *not* share a backing store with |web_contents| (so it is
-// safe to use it on another thread).
-std::unique_ptr<ShortcutInfo> GetShortcutInfoForTab(
-    content::WebContents* web_contents);
-#endif
-
-// Updates web app shortcut of the WebContents. This function checks and
-// updates web app icon and shortcuts if needed. For icon, the check is based
-// on MD5 hash of icon image. For shortcuts, it checks the desktop, start menu
-// and quick launch (as well as pinned shortcut) for shortcut and only
-// updates (recreates) them if they exits.
-void UpdateShortcutForTabContents(content::WebContents* web_contents);
 
 std::unique_ptr<ShortcutInfo> ShortcutInfoForExtensionAndProfile(
     const extensions::Extension* app,
