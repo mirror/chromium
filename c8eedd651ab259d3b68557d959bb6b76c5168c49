@@ -324,6 +324,29 @@
     },
     {
       "key": {
+        "uuid": "3d4b5211_54b4b243",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-22T03:05:47Z",
+      "side": 1,
+      "message": "@khorimoto -- should I have this? I followed the example from https://cs.chromium.org/chromium/src/components/leveldb/remote_iterator_unittest.cc\nHowever, because I pass run_loop_-\u003eQuitClosure() here, I have to reset the RunLoops each time (in line 112) since they are not reusable",
+      "range": {
+        "startLine": 60,
+        "startChar": 38,
+        "endLine": 60,
+        "endChar": 62
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4dcadd9_8247342b",
         "filename": "components/multidevice/service/multidevice_service_unittest.cc",
         "patchSetId": 26
