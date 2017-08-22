@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "1a7222bd_2eefa0bf",
+        "filename": "chrome/browser/chromeos/fileapi/recent_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-22T04:24:47Z",
+      "side": 1,
+      "message": "Well, I definitely agree naming of RecentContext is not good, and I\u0027m happy to rename it.\n\nNow that it is used only in RecentSource::GetRecentFiles(), how about RecentSource::Params?\n\nAnyway, I\u0027d like to do renaming in a separate CL.",
+      "parentUuid": "3f3bf014_71142401",
+      "revId": "036b6879faa79ab0c611221a3102d4f621d80a8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b96e538e_2e4ee3d7",
         "filename": "chrome/browser/chromeos/fileapi/recent_context.h",
         "patchSetId": 1
