@@ -131,6 +131,9 @@ class CORE_EXPORT CSSParserTokenStream {
     return Iterator(next_index_);
   }
 
+  // Get the index of the character in the original string to be consumed next.
+  size_t Offset() const { return offset_; }
+
   void ConsumeWhitespace();
   CSSParserToken ConsumeIncludingWhitespace();
   void UncheckedConsumeComponentValue(unsigned nesting_level = 0);
@@ -148,16 +151,14 @@ class CORE_EXPORT CSSParserTokenStream {
   }
 
   const CSSParserToken& ConsumeInternal() {
-    const CSSParserToken& token = Peek();
-    if (!token.IsEOF())
-      next_index_++;
-
-    DCHECK_LE(next_index_, tokenizer_.CurrentSize());
-    return token;
+    if (EnsureLookAhead() == LookAhead::kIsEOF)
+      return g_static_eof_token;
+    return UncheckedConsumeInternal();
   }
 
   const CSSParserToken& UncheckedConsumeInternal() {
     DCHECK_LT(next_index_, tokenizer_.CurrentSize());
+    offset_ = tokenizer_.input_.Offset();
     return tokenizer_.tokens_[next_index_++];
   }
 
@@ -165,6 +166,7 @@ class CORE_EXPORT CSSParserTokenStream {
 
   CSSTokenizer& tokenizer_;
   size_t next_index_;  // Index of next token to be consumed.
+  size_t offset_ = 0;
 };
 
 }  // namespace blink
