@@ -15,8 +15,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "base/tracked_objects.h"
-#include "components/sync/model/attachments/attachment_id.h"
-#include "components/sync/model/attachments/attachment_service_proxy_for_test.h"
 #include "components/sync/model/fake_sync_change_processor.h"
 #include "components/sync/model/sync_change.h"
 #include "components/sync/model/sync_data.h"
