@@ -6,7 +6,7 @@
  * Location information which shows where the path points in FileManager's
  * file system.
  *
- * @param {!VolumeInfo} volumeInfo Volume information.
+ * @param {VolumeInfo} volumeInfo Volume information.
  * @param {VolumeManagerCommon.RootType} rootType Root type.
  * @param {boolean} isRootEntry Whether the entry is root entry or not.
  * @param {boolean} isReadOnly Whether the entry is read only or not.

@@ -314,6 +314,47 @@ DriveMetadataSearchContentScanner.prototype.scan = function(
 };
 
 /**
+ * @constructor
+ * @param {string} allowedPath
+ * @param {string} query Search query.
+ * @extends {ContentScanner}
+ */
+function RecentContentScanner(allowedPath, query) {
+  ContentScanner.call(this);
+
+  /**
+   * @private {string}
+   */
+  this.allowedPath_ = allowedPath;
+
+  /**
+   * @private {string}
+   */
+  this.query_ = query;
+}
+
+/**
+ * Extends ContentScanner.
+ */
+RecentContentScanner.prototype.__proto__ = ContentScanner.prototype;
+
+/**
+ * @override
+ */
+RecentContentScanner.prototype.scan = function(
+    entriesCallback, successCallback, errorCallback) {
+  // TODO(fukino): Pass |allowedPath_| to getRecentFiles().
+  chrome.fileManagerPrivate.getRecentFiles(function(entries) {
+    // TODO(fukino): Handle errors.
+    if (entries.length > 0) {
+      entriesCallback(entries.filter(
+          entry => entry.name.toLowerCase().indexOf(this.query_) >= 0));
+    }
+    successCallback();
+  }.bind(this));
+};
+
+/**
  * This class manages filters and determines a file should be shown or not.
  * When filters are changed, a 'changed' event is fired.
  *
@@ -923,4 +964,19 @@ DirectoryContents.createForDriveMetadataSearch = function(
       function() {
         return new DriveMetadataSearchContentScanner(searchType);
       });
+};
+
+/**
+ * Creates a DirectoryContents instance to show the mixed recent files.
+ *
+ * @param {FileListContext} context File list context.
+ * @param {!FakeEntry} recentRootEntry Fake directory entry representing the
+ *     root of recent files.
+ * @param {string} query Search query.
+ * @return {DirectoryContents} Created DirectoryContents instance.
+ */
+DirectoryContents.createForRecent = function(context, recentRootEntry, query) {
+  return new DirectoryContents(context, true, recentRootEntry, function() {
+    return new RecentContentScanner(recentRootEntry.allowedPath, query);
+  });
 };
