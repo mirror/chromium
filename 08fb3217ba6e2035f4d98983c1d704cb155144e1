@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "9edcd66e_75c48d7c",
+        "filename": "components/safe_browsing/net_event_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-22T21:25:03Z",
+      "side": 1,
+      "message": "Thanks but I don\u0027t want to burden you with that.",
+      "parentUuid": "de0a1f30_1d8e5ccc",
+      "range": {
+        "startLine": 27,
+        "startChar": 30,
+        "endLine": 27,
+        "endChar": 42
+      },
+      "revId": "08fb3217ba6e2035f4d98983c1d704cb155144e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09419a24_396c6197",
         "filename": "components/safe_browsing/net_event_logger.h",
         "patchSetId": 2
