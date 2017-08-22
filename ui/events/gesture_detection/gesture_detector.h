@@ -78,9 +78,6 @@ class GESTURE_DETECTION_EXPORT GestureDetector {
     int single_tap_repeat_interval;
 
     VelocityTracker::Strategy velocity_tracker_strategy;
-
-    // Whether press gestures are generated for stylus.
-    bool press_enabled_for_stylus_;
   };
 
   GestureDetector(const Config& config,
@@ -181,7 +178,6 @@ class GESTURE_DETECTION_EXPORT GestureDetector {
   bool showpress_enabled_;
   bool swipe_enabled_;
   bool two_finger_tap_enabled_;
-  bool press_enabled_for_stylus_;
 
   // Determines speed during touch scrolling.
   VelocityTrackerState velocity_tracker_;
