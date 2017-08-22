@@ -14,7 +14,7 @@ Running: testGetNonFirstLineFunctionDetails
 notFirstLineFunction type = function
 Function details: 
 lineNumber: 10
-columnNumber: 32
+columnNumber: 31
 scriptId is valid: true
 functionName: notFirstLineFunction
 scopeChain #0: Global; <global object properties omitted>
@@ -23,7 +23,7 @@ Running: testGetDetailsOfFunctionWithInferredName
 obj.m type = function
 Function details: 
 lineNumber: 16
-columnNumber: 15
+columnNumber: 17
 scriptId is valid: true
 functionName: m
 scopeChain #0: Global; <global object properties omitted>
@@ -32,7 +32,7 @@ Running: testGetDetailsOfFunctionWithDisplayName
 functionWithDisplayName type = function
 Function details: 
 lineNumber: 19
-columnNumber: 32
+columnNumber: 34
 scriptId is valid: true
 functionName: user-friendly name
 scopeChain #0: Global; <global object properties omitted>
@@ -41,7 +41,7 @@ Running: testGetDetailsOfFunctionWithDisplayNameGetter
 functionWithDisplayNameGetter type = function
 Function details: 
 lineNumber: 22
-columnNumber: 38
+columnNumber: 40
 scriptId is valid: true
 functionName: functionWithDisplayNameGetter
 scopeChain #0: Global; <global object properties omitted>
@@ -50,7 +50,7 @@ Running: testSmallClosure
 smallClosure type = function
 Function details: 
 lineNumber: 25
-columnNumber: 49
+columnNumber: 51
 scriptId is valid: true
 functionName: 
 scopeChain #0: Closure; p: "Capybara"
@@ -60,7 +60,7 @@ Running: testBigClosure
 bigClosure type = function
 Function details: 
 lineNumber: 38
-columnNumber: 27
+columnNumber: 29
 scriptId is valid: true
 functionName: 
 scopeChain #0: Catch; ex: <no string representation>
@@ -72,7 +72,7 @@ Running: testGenFunction
 gen type = function
 Function details: 
 lineNumber: 45
-columnNumber: 13
+columnNumber: 15
 scriptId is valid: true
 functionName: gen
 isGenerator: true
