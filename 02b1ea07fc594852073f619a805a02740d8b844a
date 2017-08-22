@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba5c6c00_2b01d9cd",
+        "filename": "ios/build/chrome_build.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-22T13:57:09Z",
+      "side": 1,
+      "message": "nit: widget",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "02b1ea07fc594852073f619a805a02740d8b844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0681cc29_ddb78a96",
+        "filename": "ios/build/chrome_build.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-22T13:57:09Z",
+      "side": 1,
+      "message": "nit: alphabetical sort",
+      "revId": "02b1ea07fc594852073f619a805a02740d8b844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

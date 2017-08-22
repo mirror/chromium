@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "2d39a363_5c9c15ec",
+        "filename": "ios/chrome/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-22T13:57:09Z",
+      "side": 0,
+      "message": "Revert TEAM \u0026 OS",
+      "revId": "a9fc3dfecf124efee034b86c1aca6910088f4bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4d9e377_1ee1dd8e",
         "filename": "ios/chrome/today_extension/today_metrics_logger.h",
         "patchSetId": 2
