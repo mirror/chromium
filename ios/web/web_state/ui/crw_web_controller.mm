@@ -4183,8 +4183,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
 
   BOOL allowNavigation = navigationResponse.canShowMIMEType;
   if (allowNavigation) {
-    allowNavigation =
-        self.webStateImpl->ShouldAllowResponse(navigationResponse.response);
+    allowNavigation = self.webStateImpl->ShouldAllowResponse(
+        navigationResponse.response, navigationResponse.forMainFrame);
     if (!allowNavigation && navigationResponse.isForMainFrame) {
       [_pendingNavigationInfo setCancelled:YES];
     }
