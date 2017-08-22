@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb1977c0_11fb58c3",
+        "filename": "third_party/WebKit/Source/platform/loader/SubresourceIntegrity.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-08-22T22:09:20Z",
+      "side": 1,
+      "message": "It looks like this variant of CheckSubresourceIntegrity is only used in tests. Can we get rid of it and have tests use the IntegrityMetadataSet version?",
+      "range": {
+        "startLine": 54,
+        "startChar": 14,
+        "endLine": 54,
+        "endChar": 39
+      },
+      "revId": "10930c1fbc80443c1afc2d71dc3781a25a6730dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
