@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "708d0e40_d46c7237",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIFlexGrowOrShrink.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-22T05:47:26Z",
+      "side": 0,
+      "message": "Oh, I didn\u0027t realise there were some of these too. I ran the same script to remove them as well.",
+      "parentUuid": "9a00fb95_1fa4f4b4",
+      "revId": "44e01669b86aed76975279e9853d0a7d08444a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df9f9c5f_496c3b6e",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIFontFamily.cpp",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1285241a_59c0e921",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIFontFamily.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-22T05:47:26Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "df9f9c5f_496c3b6e",
+      "revId": "44e01669b86aed76975279e9853d0a7d08444a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9505428b_59114787",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIFontFeatureSettings.cpp",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "44e01669b86aed76975279e9853d0a7d08444a02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aede2a10_d9f86e07",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIFontFeatureSettings.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-22T05:47:26Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "9505428b_59114787",
+      "revId": "44e01669b86aed76975279e9853d0a7d08444a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
