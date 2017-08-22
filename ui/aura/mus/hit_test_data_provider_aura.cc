@@ -43,12 +43,10 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
       gfx::Rect rect_mouse(child->bounds());
       gfx::Rect rect_touch;
       bool touch_and_mouse_are_same = true;
-      const WindowMus* window_mus = WindowMus::Get(child);
       const WindowPortMus* window_port = WindowPortMus::Get(child);
       // TODO(varkha): Use a surface ID for windows that submit their own
       // compositor frames and a frame sink ID otherwise.
-      viz::SurfaceId surface_id(window_port->frame_sink_id(),
-                                window_mus->GetLocalSurfaceId());
+      viz::SurfaceId surface_id(window->GetSurfaceId());
       uint32_t flags = window_port->client_surface_embedder()
                            ? viz::mojom::kHitTestChildSurface
                            : viz::mojom::kHitTestMine;
