@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d365619_249f1108",
+        "filename": "chrome/browser/installable/installable_data.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-08-22T01:00:34Z",
+      "side": 1,
+      "message": "InstallableCallback is referenced in both task_queue.h and installable_manager.h (prior to this CL, it lived in installable_manager.h along with everything else).  I put it in installable_data.h so that it would be available to both task_queue.h and installable_manager.h, which both include installable_data.h.\n\nI looks like it would everything would still function if I removed it from task_queue.h and duplicated it in each of task_queue.h and installable_manager.h, but I thought it better to have it defined in only one place. This type of using directive is new to me though, so I don\u0027t know what the conventional usage is.",
+      "parentUuid": "5a97b817_24465f47",
+      "revId": "9d858bf7d022606bdf29c4e09dd3cc3392bb8168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0925e14c_a8d0d6b8",
         "filename": "chrome/browser/installable/task_queue.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-21T07:21:41Z",
       "side": 1,
       "message": "Ah, maybe this is where the using should go?\n\nAlso, Task and TaskQueue are very generic names considering they are not namespaced at all. Can you call them something like InstallableTask and InstallableTaskQueue?",
+      "revId": "9d858bf7d022606bdf29c4e09dd3cc3392bb8168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb828f6_95605ee4",
+        "filename": "chrome/browser/installable/task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-08-22T01:00:34Z",
+      "side": 1,
+      "message": "\u003e Also, Task and TaskQueue are very generic names considering they are not namespaced at all. Can you call them something like InstallableTask and InstallableTaskQueue?\n\nDone.",
+      "parentUuid": "0925e14c_a8d0d6b8",
       "revId": "9d858bf7d022606bdf29c4e09dd3cc3392bb8168",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
