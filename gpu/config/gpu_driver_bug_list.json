@@ -1,6 +1,6 @@
 {
   "name": "gpu driver bug list",
-  "version": "10.26",
+  "version": "10.27",
   "entries": [
     {
       "id": 1,
@@ -2605,6 +2605,17 @@
       "vendor_id": "0x8086",
       "features": [
         "reset_teximage2d_base_level"
+      ]
+    },
+    {
+      "id": 240,
+      "description": "Disable attribute 0 if it's bound but unallocated on Mac",
+      "cr_bugs": [756293],
+      "os": {
+        "type": "macosx"
+      },
+      "features": [
+        "disable_attrib0_if_unallocated"
       ]
     }
   ],
