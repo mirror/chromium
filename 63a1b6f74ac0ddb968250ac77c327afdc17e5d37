@@ -52,6 +52,24 @@
       "revId": "63a1b6f74ac0ddb968250ac77c327afdc17e5d37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "986becff_d952dbc8",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 1473,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-22T21:16:45Z",
+      "side": 1,
+      "message": "I don\u0027t think we should remove this check. Allowing the user to start more than one desktop without a distinguishing feature would make --stop behave unpredictably. (It would kill one of them more or less at random, but not the other(s).)\n\nCurrently, get_daemon_proc looks for another python process with the same script argument as the current process. This is primarily to distinguish CRD python processes from other python processes. This CL additionally updates it to check that --start and --child-process were passed to the script in question.\n\nThis approach has a few oddities:\n1. ./chrome-remote-desktop and /path/to/chrome-remote-desktop will not be considered the same. This is exacerbated by this CL, since user-session will always use an absolute path. That is, `./chrome-remote-desktop --start` will eventually execute `/path/to/chrome-remote-desktop --start --child-process`, which means `./chrome-remote-desktop --stop` won\u0027t work. (It would have to be `/path/to/chrome-remote-desktop --stop`.)\n2. ./chrome-remote-desktop started from different directories *will* find each other.\n3. You *can* start multiple hosts with the same host ID if you launch them from different directories. (I\u0027ve done this accidentally during development.)\n4. You *cannot* start multiple hosts with different host IDs using the same script path.\n\n1 and 2 could be fixed by attempting to determine the real, absolute path of the script in all cases. More ideal, I think, would be to key off of the host ID instead of the script path. I have a couple of ideas for how this might be accomplished.",
+      "parentUuid": "6cbb05ce_87c47d26",
+      "revId": "63a1b6f74ac0ddb968250ac77c327afdc17e5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
