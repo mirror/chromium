@@ -46,6 +46,30 @@
       "revId": "c20b51dd4f2ca75d61ab55198d884fd7abe4ee9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d64b45_c97a2197",
+        "filename": "chrome/browser/sync/test/integration/two_client_apps_sync_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-22T20:15:52Z",
+      "side": 1,
+      "message": "Hmm, not sure. Poking around, it looks like the sync tests complains if any of the extensions are \"invalid\", aka empty ordinal. And it seems you have a default app that is invalid. I don\u0027t know why we throw up our hands at invalid apps, maybe they cannot accurately perform the Equals check? Maybe we want to make sure they\u0027re synced \"correctly\"? I don\u0027t have much domain specific knowledge here.\n\nTesting this locally, it seems that the extension id for the offending app is ahfgeienlihckogmohjhadlkjgocpleb, where both https://cs.chromium.org/chromium/src/chrome/browser/extensions/chrome_app_sorting.cc?gsn\u003dGetPageOrdinal\u0026l\u003d384 and https://cs.chromium.org/chromium/src/chrome/browser/extensions/chrome_app_sorting.cc?gsn\u003dGetAppLaunchOrdinal\u0026l\u003d301 are failing their lookups.\n\nIt seems like this app is getting added to this list through https://cs.chromium.org/chromium/src/chrome/browser/sync/test/integration/sync_app_helper.cc?l\u003d98 , my first question I guess is should GenerateInstalledExtensionsSet() be returning this thing?",
+      "parentUuid": "eeecb436_34c9d4ed",
+      "range": {
+        "startLine": 51,
+        "startChar": 50,
+        "endLine": 51,
+        "endChar": 62
+      },
+      "revId": "c20b51dd4f2ca75d61ab55198d884fd7abe4ee9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
