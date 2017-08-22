@@ -50,12 +50,17 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_view_host.h"
+#include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
+#include "content/public/common/bindings_policy.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/constants.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
+#include "third_party/WebKit/public/platform/WebMouseEvent.h"
 #include "third_party/icu/source/i18n/unicode/coll.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/web_dialogs/web_dialog_delegate.h"
@@ -70,6 +75,13 @@ const int kCreateRouteTimeoutSeconds = 20;
 const int kCreateRouteTimeoutSecondsForTab = 60;
 const int kCreateRouteTimeoutSecondsForLocalFile = 60;
 const int kCreateRouteTimeoutSecondsForDesktop = 120;
+const base::string16 kSetUpFullScreenOnClick = base::ASCIIToUTF16(
+    "function fullScreenOnClickHandler(e) {"
+    " removeEventListener('click', fullScreenOnClickHandler);"
+    " var video = document.getElementsByTagName('video')[0];"
+    " if(video) video.webkitRequestFullScreen();"
+    "}"
+    "addEventListener('click', fullScreenOnClickHandler);");
 
 std::string GetHostFromURL(const GURL& gurl) {
   if (gurl.is_empty())
@@ -113,6 +125,30 @@ MediaSource GetSourceForRouteObserver(const std::vector<MediaSource>& sources) {
   auto source_it =
       std::find_if(sources.begin(), sources.end(), CanConnectToMediaSource);
   return source_it != sources.end() ? *source_it : MediaSource("");
+}
+
+// Injects a full screen command into the web contents targeted at the first
+// video element.
+void FullScreenTabWithJavascript(content::WebContents* web_contents) {
+  content::RenderFrameHost* render_frame_host = web_contents->GetMainFrame();
+
+  // Execute javascript code to full screen on click.
+  render_frame_host->ExecuteJavaScript(kSetUpFullScreenOnClick);
+
+  // Simulate click.
+  // This does not violate the security around the full screening code, because
+  // this code is only executed when a user has clicked a button to request the
+  // browser to cast a file, and this is one of the results of that request.
+  blink::WebMouseEvent mouse_event(blink::WebInputEvent::kMouseDown,
+                                   blink::WebInputEvent::kNoModifiers, 0);
+  mouse_event.button = blink::WebMouseEvent::Button::kLeft;
+  mouse_event.SetPositionInWidget(0, 0);
+  mouse_event.click_count = 1;
+  web_contents->GetRenderViewHost()->GetWidget()->ForwardMouseEvent(
+      mouse_event);
+  mouse_event.SetType(blink::WebInputEvent::kMouseUp);
+  web_contents->GetRenderViewHost()->GetWidget()->ForwardMouseEvent(
+      mouse_event);
 }
 
 }  // namespace
@@ -177,6 +213,43 @@ class MediaRouterUI::UIIssuesObserver : public IssuesObserver {
   MediaRouterUI* ui_;
 
   DISALLOW_COPY_AND_ASSIGN(UIIssuesObserver);
+};
+
+// A class which calls a callback and then deletes itself if and when the
+// WebContents is loaded.
+class MediaRouterUI::WebContentsLoadedObserver
+    : public content::WebContentsObserver {
+ public:
+  WebContentsLoadedObserver(
+      base::OnceCallback<void(content::WebContents*)> callback,
+      content::WebContents* web_contents)
+      : content::WebContentsObserver(), callback_(std::move(callback)) {
+    // If the webcontents has already finished loading, callback directly.
+    // Otherwise start listening.
+    if (!web_contents->IsLoading()) {
+      std::move(callback_).Run(web_contents);
+      delete this;
+    } else {
+      web_contents_ = web_contents;
+      Observe(web_contents);
+    }
+  }
+  ~WebContentsLoadedObserver() override{};
+
+  void DidStopLoading() override {
+    std::move(callback_).Run(web_contents_);
+    delete this;
+  }
+
+  void RenderProcessGone(base::TerminationStatus status) override {
+    // If the Render Process dissapears and we haven't triggered, stop
+    // observing.
+    delete this;
+  }
+
+ private:
+  base::OnceCallback<void(content::WebContents*)> callback_;
+  content::WebContents* web_contents_;
 };
 
 MediaRouterUI::UIMediaRoutesObserver::UIMediaRoutesObserver(
@@ -500,8 +573,9 @@ bool MediaRouterUI::CreateRoute(const MediaSink::Id& sink_id,
     SessionID::id_type tab_id = SessionTabHelper::IdForTab(tab_contents);
     source_id = MediaSourceForTab(tab_id).id();
 
-    SetLocalFileRouteParameters(sink_id, &origin, &route_response_callbacks,
-                                &timeout, &incognito);
+    SetLocalFileRouteParameters(sink_id, &origin, tab_contents,
+                                &route_response_callbacks, &timeout,
+                                &incognito);
   } else if (!SetRouteParameters(sink_id, cast_mode, &source_id, &origin,
                                  &route_response_callbacks, &timeout,
                                  &incognito)) {
@@ -605,6 +679,7 @@ bool MediaRouterUI::SetRouteParameters(
 bool MediaRouterUI::SetLocalFileRouteParameters(
     const MediaSink::Id& sink_id,
     url::Origin* origin,
+    content::WebContents* tab_contents,
     std::vector<MediaRouteResponseCallback>* route_response_callbacks,
     base::TimeDelta* timeout,
     bool* incognito) {
@@ -623,6 +698,12 @@ bool MediaRouterUI::SetLocalFileRouteParameters(
 
   route_response_callbacks->push_back(base::BindOnce(
       &MediaRouterUI::MaybeReportFileInformation, weak_factory_.GetWeakPtr()));
+
+  route_response_callbacks->push_back(base::BindOnce(
+      &MediaRouterUI::MaybeReportFileInformation, weak_factory_.GetWeakPtr()));
+
+  route_response_callbacks->push_back(base::BindOnce(
+      &MediaRouterUI::FullScreenTab, weak_factory_.GetWeakPtr(), tab_contents));
 
   *timeout = GetRouteRequestTimeout(MediaCastMode::LOCAL_FILE);
   *incognito = Profile::FromWebUI(web_ui())->IsOffTheRecord();
@@ -803,6 +884,14 @@ void MediaRouterUI::MaybeReportCastingSource(MediaCastMode cast_mode,
                                              const RouteRequestResult& result) {
   if (result.result_code() == RouteRequestResult::OK)
     MediaRouterMetrics::RecordMediaRouterCastingSource(cast_mode);
+}
+
+void MediaRouterUI::FullScreenTab(content::WebContents* web_contents,
+                                  const RouteRequestResult& result) {
+  if (result.result_code() == RouteRequestResult::OK) {
+    new WebContentsLoadedObserver(base::BindOnce(&FullScreenTabWithJavascript),
+                                  web_contents);
+  }
 }
 
 void MediaRouterUI::MaybeReportFileInformation(
