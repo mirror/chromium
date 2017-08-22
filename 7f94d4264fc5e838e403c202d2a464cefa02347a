@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "544b8994_0f7aee3f",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-22T22:06:17Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN the test class.",
+      "range": {
+        "startLine": 72,
+        "startChar": 1,
+        "endLine": 72,
+        "endChar": 2
+      },
+      "revId": "7f94d4264fc5e838e403c202d2a464cefa02347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6adf4ce8_79d502b1",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-22T22:06:17Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN the test class.",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 1
+      },
+      "revId": "7f94d4264fc5e838e403c202d2a464cefa02347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf7c2da3_54063452",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
         "patchSetId": 11
@@ -60,6 +106,30 @@
       "side": 1,
       "message": "put it as protected makes more sense to me.",
       "parentUuid": "e6ec2404_48ac3b19",
+      "range": {
+        "startLine": 136,
+        "startChar": 24,
+        "endLine": 136,
+        "endChar": 34
+      },
+      "revId": "7f94d4264fc5e838e403c202d2a464cefa02347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51275629_60f6cce2",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-22T22:06:17Z",
+      "side": 1,
+      "message": "Ack. Using the protected data members seems allowed by the C++ guideline (https://google.github.io/styleguide/cppguide.html#Access_Control)",
+      "parentUuid": "04773a80_79b60378",
       "range": {
         "startLine": 136,
         "startChar": 24,
