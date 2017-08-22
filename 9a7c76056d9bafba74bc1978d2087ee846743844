@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78498b0e_2c0a6b83",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkActionBar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-22T22:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b186b98f_99c62756",
+      "range": {
+        "startLine": 148,
+        "startChar": 39,
+        "endLine": 148,
+        "endChar": 47
+      },
+      "revId": "9a7c76056d9bafba74bc1978d2087ee846743844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88dd363a_cfc952a3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadManagerUi.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a53227e2_69878e9b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadManagerUi.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-22T22:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88dd363a_cfc952a3",
+      "range": {
+        "startLine": 508,
+        "startChar": 34,
+        "endLine": 508,
+        "endChar": 44
+      },
+      "revId": "9a7c76056d9bafba74bc1978d2087ee846743844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb143d1e_bff05b1c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-22T15:08:23Z",
       "side": 1,
       "message": "This method is a bit confusing to me. It assumes that each content has a search icon and feels like it should return whether or not the icon should be hidden.\n\nIIRC the problem was that something was setting the search icon to be visible. Where was that happening? In any case, it appears you need this only to be called from the content controller\u0027s sheet observer. Why not add observers to the bookmarks/downloads manager and remove the need for this?",
+      "range": {
+        "startLine": 307,
+        "startChar": 13,
+        "endLine": 307,
+        "endChar": 38
+      },
+      "revId": "9a7c76056d9bafba74bc1978d2087ee846743844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11dc4998_947ba86e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-22T22:11:33Z",
+      "side": 1,
+      "message": "I moved the logic to showNormalView",
+      "parentUuid": "cb143d1e_bff05b1c",
       "range": {
         "startLine": 307,
         "startChar": 13,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ef0b308f_d3abb543",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-22T22:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d1db857_539fd652",
+      "range": {
+        "startLine": 342,
+        "startChar": 19,
+        "endLine": 342,
+        "endChar": 44
+      },
+      "revId": "9a7c76056d9bafba74bc1978d2087ee846743844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbe307cb_6a13eb1d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
         "patchSetId": 4
@@ -108,6 +204,24 @@
       "revId": "9a7c76056d9bafba74bc1978d2087ee846743844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77cd6a20_9d8dfa2e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-08-22T22:11:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbe307cb_6a13eb1d",
+      "revId": "9a7c76056d9bafba74bc1978d2087ee846743844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
