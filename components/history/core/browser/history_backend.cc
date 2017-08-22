@@ -681,6 +681,8 @@ void HistoryBackend::InitImpl(
       NOTREACHED();
   }
 
+  db_->MigrateURLTableIfNeeded();
+
   // Fill the in-memory database and send it back to the history service on the
   // main thread.
   {

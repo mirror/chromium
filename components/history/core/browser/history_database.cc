@@ -37,6 +37,7 @@ namespace {
 // Current version number. We write databases at the "current" version number,
 // but any previous version that can read the "compatible" one can make do with
 // our database without *too* many bad effects.
+const char kAUTOINCREMENTInURLTable[] = "AUTOINCREMENT_in_url_table";
 const int kCurrentVersionNumber = 36;
 const int kCompatibleVersionNumber = 16;
 const char kEarlyExpirationThresholdKey[] = "early_expiration_threshold";
@@ -145,6 +146,7 @@ sql::InitStatus HistoryDatabase::Init(const base::FilePath& history_name) {
 
   if (!committer.Commit())
     return LogInitFailure(InitStep::COMMIT);
+
   return sql::INIT_OK;
 }
 
@@ -394,6 +396,40 @@ void HistoryDatabase::UpdateEarlyExpirationThreshold(base::Time threshold) {
   meta_table_.SetValue(kEarlyExpirationThresholdKey,
                        threshold.ToInternalValue());
   cached_early_expiration_threshold_ = threshold;
+}
+
+void HistoryDatabase::MigrateURLTableIfNeeded() {
+  int has_AUTOINCREMENT = 0;
+  if (meta_table_.GetValue(kAUTOINCREMENTInURLTable, &has_AUTOINCREMENT) && has_AUTOINCREMENT == 1) {
+    return;
+  }
+
+  // Wrap the RecreateURLTableWithAllContents() in a tranaction. This will prevent the database from getting corrupted if we crash in the middle of migration.
+  sql::Transaction committer(&db_);
+  if (!committer.Begin()) {
+    return;
+  }
+
+/*  meta_table_.GetValue(kAUTOINCREMENTInURLTable, &has_AUTOINCREMENT);
+  if (has_AUTOINCREMENT == 1) {
+    meta_table_.SetValue(kAUTOINCREMENTInURLTable, 0);
+  } else {
+    meta_table_.SetValue(kAUTOINCREMENTInURLTable, 1);
+  }*/
+
+//  if (meta_table_.SetValue(kAUTOINCREMENTInURLTable, 0)) return;
+
+  if (!RecreateURLTableWithAllContents()) {
+    return;
+  }
+
+  if (!meta_table_.SetValue(kAUTOINCREMENTInURLTable, 1))
+    return;
+
+  if (!committer.Commit()) {
+    return;
+  }
+
 }
 
 sql::Connection& HistoryDatabase::GetDB() {

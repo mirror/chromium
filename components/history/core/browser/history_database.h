@@ -163,6 +163,8 @@ class HistoryDatabase : public DownloadDatabase,
   virtual base::Time GetEarlyExpirationThreshold();
   virtual void UpdateEarlyExpirationThreshold(base::Time threshold);
 
+  void MigrateURLTableIfNeeded();
+
  private:
 #if defined(OS_ANDROID)
   // AndroidProviderBackend uses the |db_|.
