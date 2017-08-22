@@ -352,11 +352,6 @@ CRLSetFetcher* TestingBrowserProcess::crl_set_fetcher() {
   return nullptr;
 }
 
-component_updater::PnaclComponentInstaller*
-TestingBrowserProcess::pnacl_component_installer() {
-  return nullptr;
-}
-
 component_updater::SupervisedUserWhitelistInstaller*
 TestingBrowserProcess::supervised_user_whitelist_installer() {
   return nullptr;
