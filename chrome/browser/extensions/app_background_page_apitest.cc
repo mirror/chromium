@@ -426,7 +426,9 @@ IN_PROC_BROWSER_TEST_F(AppBackgroundPageApiTest, DISABLED_OpenPopupFromBGPage) {
   ASSERT_TRUE(RunExtensionTest("app_background_page/bg_open")) << message_;
 }
 
-IN_PROC_BROWSER_TEST_F(AppBackgroundPageApiTest, DISABLED_OpenThenClose) {
+// Partly a regression test for crbug.com/756465. Namely, that window.open
+// correctly matches an app URL with a path component.
+IN_PROC_BROWSER_TEST_F(AppBackgroundPageApiTest, OpenThenClose) {
   std::string app_manifest = base::StringPrintf(
       "{"
       "  \"name\": \"App\","
@@ -434,10 +436,10 @@ IN_PROC_BROWSER_TEST_F(AppBackgroundPageApiTest, DISABLED_OpenThenClose) {
       "  \"manifest_version\": 2,"
       "  \"app\": {"
       "    \"urls\": ["
-      "      \"http://a.com/\""
+      "      \"http://a.com/extensions/api_test\""
       "    ],"
       "    \"launch\": {"
-      "      \"web_url\": \"http://a.com:%u/\""
+      "      \"web_url\": \"http://a.com:%u/extensions/api_test\""
       "    }"
       "  },"
       "  \"permissions\": [\"background\"]"
