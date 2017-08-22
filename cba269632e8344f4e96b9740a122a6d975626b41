@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c929d97_c35cffff",
+        "filename": "chrome/browser/chromeos/policy/device_local_account_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-08-22T09:24:17Z",
+      "side": 0,
+      "message": "I do wonder if perhaps a test to ensure that Fullscreen is *allowed* would be preferable here to removing all test coverage?",
+      "range": {
+        "startLine": 1067,
+        "startChar": 31,
+        "endLine": 1067,
+        "endChar": 43
+      },
+      "revId": "cba269632e8344f4e96b9740a122a6d975626b41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
