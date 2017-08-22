@@ -111,6 +111,30 @@
       "revId": "04dc1d757a3e4fac61a9ef310a747aebdd73cba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36bb2717_bbdb2317",
+        "filename": "ui/wm/core/window_animations.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-22T17:53:07Z",
+      "side": 1,
+      "message": "I added a check: !window-\u003elayer()-\u003echildren().empty()",
+      "parentUuid": "4e7a2d79_209f85a5",
+      "range": {
+        "startLine": 304,
+        "startChar": 46,
+        "endLine": 304,
+        "endChar": 66
+      },
+      "revId": "04dc1d757a3e4fac61a9ef310a747aebdd73cba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
