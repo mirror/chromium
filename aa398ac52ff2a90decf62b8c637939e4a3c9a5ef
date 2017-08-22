@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c6e02fc_fff46eb8",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-22T05:20:16Z",
+      "side": 1,
+      "message": "off-topic: can this be\n\nstd::vector\u003cmojom::DocumtnPtr\u003e children \u003d std::move(maybe_children).value();\n\ninstead, (or TODO?)",
+      "revId": "aa398ac52ff2a90decf62b8c637939e4a3c9a5ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2c5a18_7328e97b",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-22T05:20:16Z",
+      "side": 1,
+      "message": "off-topic: while you\u0027re here, could you add TODO to make these OnceCallback?",
+      "revId": "aa398ac52ff2a90decf62b8c637939e4a3c9a5ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adfa16a9_2c03abd4",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-22T05:20:16Z",
+      "side": 1,
+      "message": "Clarification: IIUC, even without SetDeferCallbacks(), this test should work?\nCould you comment your intention?",
+      "revId": "aa398ac52ff2a90decf62b8c637939e4a3c9a5ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
