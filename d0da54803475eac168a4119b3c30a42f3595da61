@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b10d81e0_beb8530d",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-22T20:17:08Z",
+      "side": 1,
+      "message": "You should be able to override ActivationChanged. Also make BrowserNonClientFrameView::ActivationChanged() protected to make it more obvious there are other overrides.",
+      "range": {
+        "startLine": 109,
+        "startChar": 7,
+        "endLine": 109,
+        "endChar": 32
+      },
+      "revId": "d0da54803475eac168a4119b3c30a42f3595da61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
