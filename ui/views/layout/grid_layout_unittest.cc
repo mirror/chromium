@@ -802,9 +802,8 @@ TEST_F(GridLayoutTest, LayoutOnAddDeath) {
     return;
 
   // Don't use the |layout| data member from the test harness, otherwise
-  // SetLayoutManager() can take not take ownership.
+  // |host| can't take take ownership.
   GridLayout* grid_layout = new GridLayout(&host);
-  host.SetLayoutManager(grid_layout);
   ColumnSet* set = grid_layout->AddColumnSet(0);
   set->AddColumn(GridLayout::FILL, GridLayout::FILL, 0, GridLayout::USE_PREF, 0,
                  0);

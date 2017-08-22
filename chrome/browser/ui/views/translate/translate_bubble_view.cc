@@ -545,7 +545,6 @@ views::View* TranslateBubbleView::CreateViewBeforeTranslate() {
 
   views::View* view = new views::View();
   views::GridLayout* layout = new views::GridLayout(view);
-  view->SetLayoutManager(layout);
 
   using views::GridLayout;
 
@@ -674,7 +673,6 @@ views::View* TranslateBubbleView::CreateViewTranslating() {
 
   views::View* view = new views::View();
   views::GridLayout* layout = new views::GridLayout(view);
-  view->SetLayoutManager(layout);
 
   using views::GridLayout;
 
@@ -726,7 +724,6 @@ views::View* TranslateBubbleView::CreateViewAfterTranslate() {
 
   views::View* view = new views::View();
   views::GridLayout* layout = new views::GridLayout(view);
-  view->SetLayoutManager(layout);
 
   using views::GridLayout;
 
@@ -777,7 +774,6 @@ views::View* TranslateBubbleView::CreateViewError() {
 
   views::View* view = new views::View();
   views::GridLayout* layout = new views::GridLayout(view);
-  view->SetLayoutManager(layout);
 
   using views::GridLayout;
 
@@ -858,7 +854,6 @@ views::View* TranslateBubbleView::CreateViewAdvanced() {
 
   views::View* view = new views::View();
   views::GridLayout* layout = new views::GridLayout(view);
-  view->SetLayoutManager(layout);
 
   using views::GridLayout;
 
