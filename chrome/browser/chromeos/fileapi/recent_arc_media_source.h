@@ -13,7 +13,6 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
-#include "chrome/browser/chromeos/fileapi/recent_context.h"
 #include "chrome/browser/chromeos/fileapi/recent_source.h"
 
 class Profile;
@@ -31,8 +30,7 @@ class RecentArcMediaSource : public RecentSource {
   ~RecentArcMediaSource() override;
 
   // RecentSource overrides:
-  void GetRecentFiles(RecentContext context,
-                      GetRecentFilesCallback callback) override;
+  void GetRecentFiles(Params params, GetRecentFilesCallback callback) override;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(RecentArcMediaSourceTest, GetRecentFiles_UmaStats);
@@ -47,7 +45,7 @@ class RecentArcMediaSource : public RecentSource {
   Profile* const profile_;
   std::vector<std::unique_ptr<MediaRoot>> roots_;
 
-  RecentContext context_;
+  Params params_;
   GetRecentFilesCallback callback_;
 
   // Time when the build started.

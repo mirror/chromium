@@ -82,20 +82,20 @@ RecentDownloadSource::~RecentDownloadSource() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
-void RecentDownloadSource::GetRecentFiles(RecentContext context,
+void RecentDownloadSource::GetRecentFiles(Params params,
                                           GetRecentFilesCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(!context_.is_valid());
+  DCHECK(!params_.is_valid());
   DCHECK(callback_.is_null());
   DCHECK(build_start_time_.is_null());
   DCHECK_EQ(0, inflight_readdirs_);
   DCHECK_EQ(0, inflight_stats_);
   DCHECK(recent_files_.empty());
 
-  context_ = std::move(context);
+  params_ = std::move(params);
   callback_ = std::move(callback);
 
-  DCHECK(context_.is_valid());
+  DCHECK(params_.is_valid());
   DCHECK(!callback_.is_null());
 
   build_start_time_ = base::TimeTicks::Now();
@@ -105,7 +105,7 @@ void RecentDownloadSource::GetRecentFiles(RecentContext context,
 
 void RecentDownloadSource::ScanDirectory(const base::FilePath& path) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(context_.is_valid());
+  DCHECK(params_.is_valid());
 
   storage::FileSystemURL url = BuildDownloadsURL(path);
 
@@ -113,7 +113,7 @@ void RecentDownloadSource::ScanDirectory(const base::FilePath& path) {
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&ReadDirectoryOnIOThread,
-                     make_scoped_refptr(context_.file_system_context()), url,
+                     make_scoped_refptr(params_.file_system_context()), url,
                      base::Bind(&RecentDownloadSource::OnReadDirectory,
                                 weak_ptr_factory_.GetWeakPtr(), path)));
 }
@@ -124,7 +124,7 @@ void RecentDownloadSource::OnReadDirectory(
     const storage::FileSystemOperation::FileEntryList& entries,
     bool has_more) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(context_.is_valid());
+  DCHECK(params_.is_valid());
 
   for (const auto& entry : entries) {
     base::FilePath subpath = path.Append(entry.name);
@@ -137,7 +137,7 @@ void RecentDownloadSource::OnReadDirectory(
           BrowserThread::IO, FROM_HERE,
           base::BindOnce(
               &GetMetadataOnIOThread,
-              make_scoped_refptr(context_.file_system_context()), url,
+              make_scoped_refptr(params_.file_system_context()), url,
               storage::FileSystemOperation::GET_METADATA_FIELD_LAST_MODIFIED,
               base::Bind(&RecentDownloadSource::OnGetMetadata,
                          weak_ptr_factory_.GetWeakPtr(), url)));
@@ -155,12 +155,12 @@ void RecentDownloadSource::OnGetMetadata(const storage::FileSystemURL& url,
                                          base::File::Error result,
                                          const base::File::Info& info) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(context_.is_valid());
+  DCHECK(params_.is_valid());
 
   if (result == base::File::FILE_OK &&
-      info.last_modified >= context_.cutoff_time()) {
+      info.last_modified >= params_.cutoff_time()) {
     recent_files_.emplace(RecentFile(url, info.last_modified));
-    while (recent_files_.size() > context_.max_files())
+    while (recent_files_.size() > params_.max_files())
       recent_files_.pop();
   }
 
@@ -186,11 +186,11 @@ void RecentDownloadSource::OnReadOrStatFinished() {
                       base::TimeTicks::Now() - build_start_time_);
   build_start_time_ = base::TimeTicks();
 
-  context_ = RecentContext();
+  params_ = Params();
   GetRecentFilesCallback callback;
   std::swap(callback, callback_);
 
-  DCHECK(!context_.is_valid());
+  DCHECK(!params_.is_valid());
   DCHECK(callback_.is_null());
   DCHECK(build_start_time_.is_null());
   DCHECK_EQ(0, inflight_readdirs_);
@@ -203,12 +203,12 @@ void RecentDownloadSource::OnReadOrStatFinished() {
 storage::FileSystemURL RecentDownloadSource::BuildDownloadsURL(
     const base::FilePath& path) const {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(context_.is_valid());
+  DCHECK(params_.is_valid());
 
   storage::ExternalMountPoints* mount_points =
       storage::ExternalMountPoints::GetSystemInstance();
 
-  return mount_points->CreateExternalFileSystemURL(context_.origin(),
+  return mount_points->CreateExternalFileSystemURL(params_.origin(),
                                                    mount_point_name_, path);
 }
 
