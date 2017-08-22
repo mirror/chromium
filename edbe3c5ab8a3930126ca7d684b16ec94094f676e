@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "17bb09b8_1907168b",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-22T23:07:27Z",
+      "side": 1,
+      "message": "this class should only handle two display types: DISPLAY_RECOMMENDATION and DISPLAY_TILE.\n\nI reverted to non change here. This clean up is not necessary right now.",
+      "parentUuid": "9357e5a4_57b345d2",
+      "revId": "edbe3c5ab8a3930126ca7d684b16ec94094f676e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c4470a5_f8b9dc0f",
         "filename": "ui/app_list/views/search_result_tile_item_view.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-22T00:05:06Z",
       "side": 1,
       "message": "Perhaps this (and the other SetMaxLines(0) call) should have comments explaining what they\u0027re doing, eg. \"Allow an unlimited number of lines of text for the title\"? (I\u0027m not sure that\u0027s true/intended, and should maybe qualify that the number of lines is actually limited by the available screen/window/view height?)",
+      "revId": "edbe3c5ab8a3930126ca7d684b16ec94094f676e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe083c4_155df52d",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-22T23:07:27Z",
+      "side": 1,
+      "message": "sure, I added the comment.",
+      "parentUuid": "6c4470a5_f8b9dc0f",
       "revId": "edbe3c5ab8a3930126ca7d684b16ec94094f676e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1816eb31_d444b461",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-22T23:07:27Z",
+      "side": 1,
+      "message": "I added a logic in Label::CalculatePreferredSize() to make preferred height meet the requirement. And remove this.\nAlso updated screenshot is in CL\u0027s description.",
+      "parentUuid": "82bb5554_d865838c",
+      "revId": "edbe3c5ab8a3930126ca7d684b16ec94094f676e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c80660bc_07cc8a91",
         "filename": "ui/views/controls/label.cc",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-22T00:05:06Z",
       "side": 1,
       "message": "Hmm, I\u0027m not sure this is right:\n1) Shouldn\u0027t the label be considered multi-line if the max lines is \u003e 1?\n2) Should the label change to single or multi-line for 0? Or leave that alone?\n3) This seems to bypass the code and checks in SetMultiLine...\nPerhaps we should leave calling SetMultiLine to the callers?",
+      "revId": "edbe3c5ab8a3930126ca7d684b16ec94094f676e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6592d3_8223e88c",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-22T23:07:27Z",
+      "side": 1,
+      "message": "OK, I leave the SetMultiLine to the callers. Code base also implies this usage. https://cs.chromium.org/chromium/src/chrome/browser/ui/views/omnibox/omnibox_result_view.cc?type\u003dcs\u0026q\u003dsetmaxlines\u0026sq\u003dpackage:chromium\u0026l\u003d740",
+      "parentUuid": "c80660bc_07cc8a91",
       "revId": "edbe3c5ab8a3930126ca7d684b16ec94094f676e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "003efed8_7fc37e35",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-22T23:07:27Z",
+      "side": 1,
+      "message": "I updated the comment. Correct change may need more investigation.\n\nA better way is to restrict ELIDE_TAIL when max_lines() is not zero, considering this CL need to be merged to m61.",
+      "parentUuid": "1cf31a1d_0f115c88",
+      "revId": "edbe3c5ab8a3930126ca7d684b16ec94094f676e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69ec5000_19e38d3c",
         "filename": "ui/views/controls/label.cc",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-22T00:05:06Z",
       "side": 1,
       "message": "Should this codepath respect |max_lines_|? (rendering multi-line labels when RenderText doesn\u0027t support multi-line, ie. RenderTextMac)",
+      "revId": "edbe3c5ab8a3930126ca7d684b16ec94094f676e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93517c9f_93d40f8e",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-22T23:07:27Z",
+      "side": 1,
+      "message": "It should. However, I don\u0027t have a mac for investigation right now. Can I add a TODO here? Since we don\u0027t have caller on mac platform. It should probably be OK for future investigation.",
+      "parentUuid": "69ec5000_19e38d3c",
       "revId": "edbe3c5ab8a3930126ca7d684b16ec94094f676e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
