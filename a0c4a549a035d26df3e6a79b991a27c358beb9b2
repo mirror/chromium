@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d70f548_44f108b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-08-22T20:12:40Z",
+      "side": 1,
+      "message": "What do you think about rewriting this as\n\nreturn isChromeHomeModernEnabled() \u0026\u0026 ChromeFeatureList.isEnabled(... DOODLE);",
+      "range": {
+        "startLine": 335,
+        "startChar": 19,
+        "endLine": 335,
+        "endChar": 36
+      },
+      "revId": "a0c4a549a035d26df3e6a79b991a27c358beb9b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
