@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e8d1dbe_b8e166cf",
+        "filename": "chrome/browser/ui/search/local_ntp_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T16:40:18Z",
+      "side": 1,
+      "message": "Without this, the test failed maybe 1 out of 3 times on my machine, though curiously it doesn\u0027t seem to be flaky on the bots (assuming I was using the flakiness dashboard correctly...)",
+      "revId": "8c61aee4760cee82d29e99e3773bc2cb1e204b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
