@@ -36,8 +36,12 @@ typedef DWORD PlatformThreadId;
 typedef mach_port_t PlatformThreadId;
 #elif defined(OS_FUCHSIA)
 typedef mx_handle_t PlatformThreadId;
-#elif defined(OS_POSIX)
+#elif defined(OS_LINUX) || defined(OS_ANDROID)
 typedef pid_t PlatformThreadId;
+#elif defined(OS_NACL)
+typedef int32_t PlatformThreadId;
+#elif defined(OS_POSIX)
+typedef pthread_t PlatformThreadId;
 #endif
 
 // Used for thread checking and debugging.
