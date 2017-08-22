@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dec39d18_9c643d60",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-22T01:13:52Z",
+      "side": 1,
+      "message": "remove this",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "30051f03e17d69da5fd77d56dd625334a3b9ae5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb3315f_5df78641",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-22T01:13:52Z",
+      "side": 1,
+      "message": "Did you check that the UI never uses this field? Else we might just want to leave this line.",
+      "range": {
+        "startLine": 352,
+        "startChar": 22,
+        "endLine": 352,
+        "endChar": 26
+      },
+      "revId": "30051f03e17d69da5fd77d56dd625334a3b9ae5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
