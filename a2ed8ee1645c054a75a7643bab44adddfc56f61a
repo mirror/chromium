@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b572c18_a9e082a2",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-22T21:17:14Z",
+      "side": 1,
+      "message": "Should the name of the test and the test comment be tweaked now since there is no longer any notion of orphaned jobs?",
+      "revId": "a2ed8ee1645c054a75a7643bab44adddfc56f61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a0ee9df_56c690bf",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-22T21:17:14Z",
+      "side": 1,
+      "message": "How bout:\n\n// Resetting |request_| will terminate the alt job, even though it has not\n// yet finished and will delete |job_controller_| from |factory_|.\n\nTo make it clear that the alt job is not somehow living beyond the controller.",
+      "range": {
+        "startLine": 930,
+        "startChar": 24,
+        "endLine": 930,
+        "endChar": 40
+      },
+      "revId": "a2ed8ee1645c054a75a7643bab44adddfc56f61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
