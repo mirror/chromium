@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b5380c6_a7e00c28",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/OfflineAudioContext/offlineaudiocontext-event-listener-gc.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-22T22:13:44Z",
+      "side": 1,
+      "message": "Nit: Maybe buffer.getChannelData(0).fill(1) instead of the loop?",
+      "revId": "5a739632e0f542443a546f564d09a92a33684a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
