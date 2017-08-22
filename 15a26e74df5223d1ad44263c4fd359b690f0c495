@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc23f4df_92b4c004",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_metrics_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T12:09:07Z",
+      "side": 1,
+      "message": "Maybe it\u0027s just me not knowing ObjC, but I\u0027d put the \"opened\" into the first part, like\nonSuggestionOpened:\natIndexPath:\n...",
+      "range": {
+        "startLine": 26,
+        "startChar": 49,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08423849_45f3c1a8",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_metrics_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T12:09:07Z",
+      "side": 1,
+      "message": "Similar here, onMenuOpenedForSuggestion:...",
+      "range": {
+        "startLine": 41,
+        "startChar": 51,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8563d9_d57c0093",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_metrics_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T12:09:07Z",
+      "side": 1,
+      "message": "/*visited\u003d*/false\n\nAlso, this probably shouldn\u0027t be hardcoded to false :)",
+      "range": {
+        "startLine": 91,
+        "startChar": 29,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
