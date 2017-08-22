@@ -1290,6 +1290,22 @@ void AppListView::OnWallpaperColorsChanged() {
   SetBackgroundShieldColor();
 }
 
+SkColor AppListView::GetBackgroundShieldColor(
+    const std::vector<SkColor>& prominent_colors) const {
+  if (prominent_colors.empty())
+    return kDefaultBackgroundColor;
+
+  DCHECK_EQ(static_cast<size_t>(ColorProfileType::NUM_OF_COLOR_PROFILES),
+            prominent_colors.size());
+
+  const SkColor dark_muted =
+      prominent_colors[static_cast<int>(ColorProfileType::DARK_MUTED)];
+  if (SK_ColorTRANSPARENT == dark_muted)
+    return kDefaultBackgroundColor;
+  return color_utils::AlphaBlend(SK_ColorBLACK, dark_muted,
+                                 kDarkMutedBlendAlpha);
+}
+
 void AppListView::SetBackgroundShieldColor() {
   // There is a chance when AppListView::OnWallpaperColorsChanged is called from
   // AppListViewDelegate, the |app_list_background_shield_| is not initialized.
@@ -1298,19 +1314,8 @@ void AppListView::SetBackgroundShieldColor() {
 
   std::vector<SkColor> prominent_colors;
   GetWallpaperProminentColors(&prominent_colors);
-
-  if (prominent_colors.empty()) {
-    app_list_background_shield_->layer()->SetColor(kDefaultBackgroundColor);
-  } else {
-    DCHECK_EQ(static_cast<size_t>(ColorProfileType::NUM_OF_COLOR_PROFILES),
-              prominent_colors.size());
-
-    const SkColor dark_muted =
-        prominent_colors[static_cast<int>(ColorProfileType::DARK_MUTED)];
-    const SkColor dark_muted_mixed = color_utils::AlphaBlend(
-        SK_ColorBLACK, dark_muted, kDarkMutedBlendAlpha);
-    app_list_background_shield_->layer()->SetColor(dark_muted_mixed);
-  }
+  app_list_background_shield_->layer()->SetColor(
+      GetBackgroundShieldColor(prominent_colors));
 }
 
 }  // namespace app_list

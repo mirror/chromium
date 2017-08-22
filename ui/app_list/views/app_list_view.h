@@ -279,6 +279,8 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   void OnWallpaperColorsChanged() override;
 
   void GetWallpaperProminentColors(std::vector<SkColor>* colors);
+  SkColor GetBackgroundShieldColor(
+      const std::vector<SkColor>& prominent_colors) const;
   void SetBackgroundShieldColor();
 
   AppListViewDelegate* delegate_;  // Weak. Owned by AppListService.
