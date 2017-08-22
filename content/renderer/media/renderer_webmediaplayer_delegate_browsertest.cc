@@ -280,6 +280,17 @@ TEST_F(RendererWebMediaPlayerDelegateTest,
   base::RunLoop().RunUntilIdle();
 }
 
+TEST_F(RendererWebMediaPlayerDelegateTest,
+       SuspendRequestsAreOnlySentOnceIfNotHandled) {
+  int delegate_id_1 = delegate_manager_->AddObserver(&observer_1_);
+  delegate_manager_->SetIdle(delegate_id_1, true);
+  EXPECT_CALL(observer_1_, OnIdleTimeout());
+  tick_clock_.Advance(kIdleTimeout + base::TimeDelta::FromMicroseconds(1));
+  base::RunLoop().RunUntilIdle();
+  delegate_manager_->ClearStaleFlag(delegate_id_1);
+  ASSERT_TRUE(delegate_manager_->IsIdleCleanupTimerRunningForTesting());
+}
+
 TEST_F(RendererWebMediaPlayerDelegateTest, IdleDelegatesAreSuspended) {
   // Add one non-idle observer and one idle observer.
   const int delegate_id_1 = delegate_manager_->AddObserver(&observer_1_);
