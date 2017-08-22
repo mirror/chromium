@@ -91,6 +91,30 @@
       "revId": "7f1c273a3d14e798affa47d08dd66439a55f2c5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989f8d48_c564aeb0",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-22T23:44:50Z",
+      "side": 1,
+      "message": "I thought so. But Trybot complained if struct does not have con/destructor.\nSee trybot results with patch 11. https://chromium-review.googlesource.com/c/chromium/src/+/609564/11",
+      "parentUuid": "7bd6d2f5_ff0c2cfb",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 20
+      },
+      "revId": "7f1c273a3d14e798affa47d08dd66439a55f2c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
