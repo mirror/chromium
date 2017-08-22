@@ -53,6 +53,29 @@
     },
     {
       "key": {
+        "uuid": "688e63db_cefc97f3",
+        "filename": "components/url_formatter/elide_url.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-22T21:27:32Z",
+      "side": 1,
+      "message": "I\u0027m not a huge fan of introducing another elision method. It would be good if we could have one method with the flexibility you need. I\u0027m not an expert in this area of the code, so I\u0027m calling in pkasting@ for a second pair of eyes.",
+      "range": {
+        "startLine": 65,
+        "startChar": 15,
+        "endLine": 65,
+        "endChar": 40
+      },
+      "revId": "494e5fc0eac8fa207a91887375100083891ba21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5d8d1f3_87a78daf",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 1
