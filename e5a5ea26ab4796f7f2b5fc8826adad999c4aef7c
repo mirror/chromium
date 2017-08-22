@@ -34,6 +34,29 @@
       "revId": "e5a5ea26ab4796f7f2b5fc8826adad999c4aef7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb71322_b5cd7340",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-22T08:25:41Z",
+      "side": 1,
+      "message": "put inside \u003ccode/\u003e\n\n(or $(ref:), but I\u0027m not sure if that works for dictionary properties)",
+      "range": {
+        "startLine": 137,
+        "startChar": 53,
+        "endLine": 137,
+        "endChar": 76
+      },
+      "revId": "e5a5ea26ab4796f7f2b5fc8826adad999c4aef7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

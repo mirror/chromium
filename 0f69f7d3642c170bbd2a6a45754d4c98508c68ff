@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f3c8ce3_6111b5a8",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-22T08:25:41Z",
+      "side": 1,
+      "message": "wdyt about renaming to |inMaximizeMode|",
+      "revId": "0f69f7d3642c170bbd2a6a45754d4c98508c68ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c194b942_3bb90a31",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-22T08:25:41Z",
+      "side": 1,
+      "message": "is this needed in settings, or would isMaximizeMode be enough?",
+      "range": {
+        "startLine": 174,
+        "startChar": 12,
+        "endLine": 174,
+        "endChar": 35
+      },
+      "revId": "0f69f7d3642c170bbd2a6a45754d4c98508c68ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
