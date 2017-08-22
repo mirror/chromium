@@ -43,6 +43,8 @@
 #include "ui/wm/core/window_animations.h"
 #include "ui/wm/core/window_util.h"
 
+#include "base/debug/debugger.h"
+
 namespace exo {
 namespace {
 

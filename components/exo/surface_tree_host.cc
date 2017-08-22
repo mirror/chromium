@@ -21,6 +21,8 @@
 #include "ui/base/cursor/cursor.h"
 #include "ui/gfx/path.h"
 
+#include "base/debug/debugger.h"
+
 namespace exo {
 
 namespace {
@@ -95,6 +97,7 @@ SurfaceTreeHost::~SurfaceTreeHost() {
 }
 
 void SurfaceTreeHost::SetRootSurface(Surface* root_surface) {
+  // base::debug::BreakDebugger();
   if (root_surface == root_surface_)
     return;
 
