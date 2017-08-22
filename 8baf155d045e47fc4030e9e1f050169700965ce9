@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "196587ba_adbb0a93",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1536,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-22T20:46:24Z",
+      "side": 1,
+      "message": "Can you add this as a comment?",
+      "parentUuid": "ebaf2827_4ee7f18e",
+      "revId": "8baf155d045e47fc4030e9e1f050169700965ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9121454_1204b066",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
         "patchSetId": 2
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "See above. It seems that self painting layers check their layout objects\u0027 bounds themselves, via fragments,",
       "parentUuid": "3a4c1ea0_b559a73e",
+      "revId": "8baf155d045e47fc4030e9e1f050169700965ce9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d548d43_c8e7f3d7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1540,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-22T20:46:24Z",
+      "side": 1,
+      "message": "If HitTestContentsForFragments checks the oveflow clip rect, why doesn\u0027t it also check the inner border radius at the same time?",
+      "parentUuid": "eed7b9f3_d5ef3f67",
       "revId": "8baf155d045e47fc4030e9e1f050169700965ce9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
