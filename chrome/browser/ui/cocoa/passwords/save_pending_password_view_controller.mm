@@ -31,7 +31,23 @@
   return saveButton_;
 }
 
+- (void)dealloc {
+  PendingPasswordItemView* row =
+      [[passwordItemContainer_ subviews] objectAtIndex:0];
+  if ([[row usernameField] isEditable]) {
+    [[row usernameField] setDelegate:nil];
+  }
+  [super dealloc];
+}
+
 - (void)onSaveClicked:(id)sender {
+  if (editMode_) {
+    PendingPasswordItemView* row =
+        [[passwordItemContainer_ subviews] objectAtIndex:0];
+    self.model->OnUsernameEdited(
+        base::SysNSStringToUTF16([[row usernameField] stringValue]));
+    [self disableEditMode];
+  }
   ManagePasswordsBubbleModel* model = self.model;
   if (model) {
     model->OnSaveClicked();
