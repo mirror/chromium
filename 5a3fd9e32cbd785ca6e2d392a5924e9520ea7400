@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2131306_cb82da41",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-22T18:54:13Z",
+      "side": 1,
+      "message": "The code early returns to prevent presentation of a settings screen when any settings screen is presented.\n\nA bit out of scope for this CL. This CL is just moving the already existing showSavePasswordsSettings method to the ApplicationCommands pragma, with no changes to the implementation. \n\nNot sure that a comment would add much value beyond the code itself, and it is a common idiom used all over main controller.",
+      "parentUuid": "cf3a2b74_b0bc46a1",
+      "range": {
+        "startLine": 1438,
+        "startChar": 4,
+        "endLine": 1438,
+        "endChar": 10
+      },
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ee646a6_863a3349",
         "filename": "ios/chrome/browser/passwords/password_controller.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-22T01:16:30Z",
       "side": 1,
       "message": "Please document |dispatcher| ownership (weak vs. strong).",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39740b09_439c5031",
+        "filename": "ios/chrome/browser/passwords/password_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-22T18:54:13Z",
+      "side": 1,
+      "message": "This is an interesting case, and I don\u0027t think we have established coding conventions for this since the ARC conversion, and most cases do not add special comment for the dispatcher.\n\nA few thoughts:\n1. Style guide says that no additional comments are required for ARC managed objects.\n2. Additionally, I thought that when an id\u003c?\u003e is passed somewhere, the convention was for it not to be retained.\n3. Last, at the password controller level, it is just passing dispatcher through to the password generation agent. It does not know if the password generation agent retains the dispatcher. As of now, it does not, but it theoretically could change and then this comment goes stale.",
+      "parentUuid": "4ee646a6_863a3349",
       "range": {
         "startLine": 54,
         "startChar": 37,
@@ -140,6 +188,30 @@
     },
     {
       "key": {
+        "uuid": "d5dd265d_003dab1d",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-22T18:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63b114c1_fc3bee82",
+      "range": {
+        "startLine": 510,
+        "startChar": 26,
+        "endLine": 510,
+        "endChar": 45
+      },
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3cc6267_a3e3b568",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 3
@@ -211,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "5f724386_288b8a97",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-22T18:54:13Z",
+      "side": 1,
+      "message": "Resolving",
+      "parentUuid": "ec223ba4_0e68f10d",
+      "range": {
+        "startLine": 522,
+        "startChar": 2,
+        "endLine": 522,
+        "endChar": 23
+      },
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd894b5a_c325d0bf",
         "filename": "ios/chrome/browser/ui/commands/application_commands.h",
         "patchSetId": 3
@@ -222,6 +318,24 @@
       "writtenOn": "2017-08-22T01:16:30Z",
       "side": 1,
       "message": "6 out of 12 methods in this protocol are related to settings. How about creating a separate protocol just to handle settings? At this point ApplicationCommands is quite big and we should probably stop growing it.",
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b71f46_bce038a4",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-22T18:54:13Z",
+      "side": 1,
+      "message": "The agreed upon design/refactoring plan for removing IDC Command was to group all commands implemented in MainController under ApplicationCommands, and all commands under BVC as BrowserCommands. Making multiple protocols would add complexity at various levels of the codebase, including adding protocols that MainController/BVC must implement, whenever the dispatcher is referenced, setting up proper command forwarding, etc.",
+      "parentUuid": "cd894b5a_c325d0bf",
       "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -248,6 +362,30 @@
       "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911f8f75_356d9783",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-22T18:54:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a94af722_0b5f016e",
+      "range": {
+        "startLine": 67,
+        "startChar": 3,
+        "endLine": 67,
+        "endChar": 36
+      },
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
