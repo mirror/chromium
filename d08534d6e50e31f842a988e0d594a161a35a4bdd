@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bb89dc5d_3c166f3f",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-08-22T04:03:00Z",
+      "side": 1,
+      "message": "\u003e if (document_-\u003edomWindow() \u0026\u0026 DOMWrapperWorld::HasWrapperInAnyWorld(document_-\u003edomWindow())\n\nAh, you\u0027re right. Done.\n\n\u003e BTW did you confirm locally that this condition works as you expected?\n\nYes, I have confirmed that the existing leak of auto-fill was reported as a long-lived document, and the other documents are reported as short-live (like 0) document. It looks like both cases worked even with the old condition...",
+      "parentUuid": "207a8706_3d8657db",
+      "revId": "d08534d6e50e31f842a988e0d594a161a35a4bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b80710d_122c378a",
         "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d08534d6e50e31f842a988e0d594a161a35a4bdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdabc412_0a39b21a",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-08-22T04:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b80710d_122c378a",
+      "revId": "d08534d6e50e31f842a988e0d594a161a35a4bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "d08534d6e50e31f842a988e0d594a161a35a4bdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81512343_3f85b8ca",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-08-22T04:03:00Z",
+      "side": 1,
+      "message": "Done; PTAL just in case\n\nPerhaps, DOMDataStore::ContainsWrapper would world for this case?",
+      "parentUuid": "503ea649_d2e0cb36",
+      "range": {
+        "startLine": 322,
+        "startChar": 23,
+        "endLine": 322,
+        "endChar": 26
+      },
+      "revId": "d08534d6e50e31f842a988e0d594a161a35a4bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
