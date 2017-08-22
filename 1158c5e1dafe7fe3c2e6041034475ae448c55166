@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce6f282d_539e728b",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-22T14:54:30Z",
+      "side": 1,
+      "message": "we have to set enumeration_ready_ false here to avoid AddDevice() call observer.OnDeviceAdded()\nearlier than RunPendingEnumerations. It turns out the RunPendingEnumerations is same as FirstEnumerationComplete().",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 29
+      },
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
