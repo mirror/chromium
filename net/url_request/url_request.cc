@@ -979,6 +979,9 @@ void URLRequest::Redirect(const RedirectInfo& redirect_info) {
   token_binding_referrer_ = redirect_info.referred_token_binding_host;
 
   url_chain_.push_back(redirect_info.new_url);
+  UMA_HISTOGRAM_EXACT_LINEAR("Net.RedirectChainLength",
+                             kMaxRedirects - redirect_limit_,
+                             kMaxRedirects + 1);
   --redirect_limit_;
 
   Start();
