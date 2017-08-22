@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56dc465f_16174d14",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T01:18:26Z",
+      "side": 1,
+      "message": "Can you do a DCHECK here for the type of provider this is? It seems to me this should only be called for provider_type() \u003d\u003d SERVICE_WORKER_PROVIDER_FOR_WINDOW.",
+      "revId": "066fd893c96a46175c4c6f7d6f518e0cf7834e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1ba2b9_ed33a8eb",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T01:18:26Z",
+      "side": 1,
+      "message": "Is this redundant with the client\u0027s own ServiceWorkerProviderHost sending the SetController IPC? Are two IPCs sent in the current impl?",
+      "revId": "066fd893c96a46175c4c6f7d6f518e0cf7834e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79ad9b2_b9d63f94",
+        "filename": "content/browser/service_worker/service_worker_provider_host.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T01:18:26Z",
+      "side": 1,
+      "message": "If docu is in the mojom file, we don\u0027t need it here and can just say:\n\n// mojom::ServiceWorkerProviderHost implementation",
+      "revId": "066fd893c96a46175c4c6f7d6f518e0cf7834e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645a3fdc_0d781eb6",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T01:18:26Z",
+      "side": 1,
+      "message": "mojom::ServiceWorkerProviderHost::BindWorkerFetchContext()",
+      "revId": "066fd893c96a46175c4c6f7d6f518e0cf7834e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d837ea_cb420910",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T01:18:26Z",
+      "side": 1,
+      "message": "I wonder if we\u0027ll still need this interface once ServiceWorkerProvider (to be renamed ServiceWorkerContainer) adds the SetControllerServiceWorker() method.\n\nSince \"ServiceWorkerWorkerClient\" is non-obvious to parse, can we explain the name:\n\"ServiceWorkerWorkerClient represents a service worker client that is a worker (i.e., a shared worker or dedicated worker).\"",
+      "revId": "066fd893c96a46175c4c6f7d6f518e0cf7834e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86371b52_b74c0356",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T01:18:26Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused why this is needed... worker clients should have their own ProviderHost that sends the SetController IPC.",
+      "revId": "066fd893c96a46175c4c6f7d6f518e0cf7834e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c95aabe_449361cb",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T01:18:26Z",
+      "side": 1,
+      "message": "Add documentation for BindWorkerFetchContext(). The C++ file has:\n\n  // Binds the ServiceWorkerWorkerClient of a dedicated (or shared) worker to\n  // the parent frame\u0027s ServiceWorkerProviderHost. (This is used only when\n  // off-main-thread-fetch is enabled.)\n\nwhich looks pretty good, but could we expand about why you\u0027d use it:\n\n\"This sets the ServiceWorkerWorkerClient\u0027s controller service worker to the provider host\u0027s controller, and ensures resource loads from the client are intercepted by the controller.",
+      "revId": "066fd893c96a46175c4c6f7d6f518e0cf7834e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
