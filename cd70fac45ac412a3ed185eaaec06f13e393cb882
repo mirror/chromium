@@ -16,6 +16,24 @@
       "revId": "cd70fac45ac412a3ed185eaaec06f13e393cb882",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b25c851_620040e7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-root-scroller.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-22T13:25:10Z",
+      "side": 1,
+      "message": "Not sure; I think I was just trying to be explicit. Removed.",
+      "parentUuid": "36b8d70d_115c5736",
+      "revId": "cd70fac45ac412a3ed185eaaec06f13e393cb882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
