@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d5588d0_f167ba81",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-22T00:50:39Z",
+      "side": 1,
+      "message": "Is this necessary or an optimization? If necessary, what about trying to scroll at the last page? Do we need to skip scrolling there too?",
+      "revId": "a15f03eaac2cd22ab39c1d3ac421ebeea0dc2180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a8b598_7abf12a8",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-22T00:50:39Z",
+      "side": 1,
+      "message": "Do we need this state test for other scroll handlers (OnMouseWheel and OnScrollEvent) ?",
+      "revId": "a15f03eaac2cd22ab39c1d3ac421ebeea0dc2180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac0de72_0fcad839",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1887,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-22T00:50:39Z",
+      "side": 1,
+      "message": "Is this call necessary? Layout() is heavy and we should only call it when necessary. Also seems odd to be in UpdateOpacity.",
+      "revId": "a15f03eaac2cd22ab39c1d3ac421ebeea0dc2180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc76b31_0586911d",
+        "filename": "ui/app_list/views/contents_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-22T00:50:39Z",
+      "side": 1,
+      "message": "Can this be moved out of the loop?",
+      "revId": "a15f03eaac2cd22ab39c1d3ac421ebeea0dc2180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -386,6 +386,24 @@
       "revId": "f0df6869b7c0dab586d79eb276b56d8889dba064",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af2f35a5_9d10b399",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1877,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-22T00:50:39Z",
+      "side": 1,
+      "message": "Okay. How do we know the code here runs for a drag down, not an EndDrag for drag up? And we probably should move it into EndDrag instead of here.",
+      "parentUuid": "68af06de_adc27af3",
+      "revId": "f0df6869b7c0dab586d79eb276b56d8889dba064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

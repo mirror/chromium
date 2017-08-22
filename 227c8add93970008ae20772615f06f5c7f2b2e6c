@@ -34,6 +34,24 @@
       "revId": "227c8add93970008ae20772615f06f5c7f2b2e6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28138d5d_b85593b6",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-22T00:50:39Z",
+      "side": 1,
+      "message": "Okay. What is the plan with the two DISABLED_ tests? Are they still needed? If not, maybe we should just remove the code. If we would fix it later, I am okay with DISABLED_ prefix but let\u0027s file bug to track the work like sheriffs.",
+      "parentUuid": "13435019_6e9a0332",
+      "revId": "227c8add93970008ae20772615f06f5c7f2b2e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
