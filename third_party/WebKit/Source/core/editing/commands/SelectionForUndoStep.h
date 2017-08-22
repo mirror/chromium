@@ -47,6 +47,9 @@ class SelectionForUndoStep final {
   bool IsCaret() const;
   bool IsNone() const;
   bool IsRange() const;
+  bool IsNonOrphanedCaretOrRange() const {
+    return !IsNone() && !Start().IsOrphan() && !End().IsOrphan();
+  }
 
   // Returns |base_| if |base_ <= extent| at construction time, otherwise
   // |extent_|.
