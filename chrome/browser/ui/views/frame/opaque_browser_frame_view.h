@@ -17,6 +17,7 @@
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/button/menu_button_listener.h"
 #include "ui/views/linux_ui/linux_ui.h"
+#include "ui/views/widget/widget_observer.h"
 #include "ui/views/window/non_client_view.h"
 
 class BrowserView;
@@ -38,7 +39,8 @@ class OpaqueBrowserFrameView : public BrowserNonClientFrameView,
                                public views::ButtonListener,
                                public views::MenuButtonListener,
                                public TabIconViewModel,
-                               public OpaqueBrowserFrameViewLayoutDelegate {
+                               public OpaqueBrowserFrameViewLayoutDelegate,
+                               public views::WidgetObserver {
  public:
   // Constructs a non-client view for an BrowserFrame.
   OpaqueBrowserFrameView(BrowserFrame* frame, BrowserView* browser_view);
@@ -68,6 +70,8 @@ class OpaqueBrowserFrameView : public BrowserNonClientFrameView,
   // views::View:
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   void OnNativeThemeChanged(const ui::NativeTheme* native_theme) override;
+  void AddedToWidget() override;
+  void RemovedFromWidget() override;
 
   // views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
@@ -100,6 +104,9 @@ class OpaqueBrowserFrameView : public BrowserNonClientFrameView,
   bool ShouldRenderNativeNavButtons() const override;
   int GetTopAreaHeight() const override;
   const views::NavButtonProvider* GetNavButtonProvider() const override;
+
+  // views::WidgetObserver
+  void OnWidgetActivationChanged(views::Widget* widget, bool active) override;
 
  protected:
   views::ImageButton* minimize_button() const { return minimize_button_; }
@@ -190,6 +197,8 @@ class OpaqueBrowserFrameView : public BrowserNonClientFrameView,
   std::unique_ptr<OpaqueBrowserFrameViewPlatformSpecific> platform_observer_;
 
   std::unique_ptr<views::NavButtonProvider> nav_button_provider_;
+
+  ScopedObserver<views::Widget, views::WidgetObserver> scoped_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(OpaqueBrowserFrameView);
 };

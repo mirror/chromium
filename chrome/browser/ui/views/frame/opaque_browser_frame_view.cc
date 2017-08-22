@@ -74,7 +74,8 @@ OpaqueBrowserFrameView::OpaqueBrowserFrameView(BrowserFrame* frame,
       window_icon_(nullptr),
       window_title_(nullptr),
       profile_switcher_(this),
-      frame_background_(new views::FrameBackground()) {
+      frame_background_(new views::FrameBackground()),
+      scoped_observer_(this) {
   SetLayoutManager(layout_);
 
   minimize_button_ = InitWindowCaptionButton(IDR_MINIMIZE,
@@ -299,6 +300,16 @@ void OpaqueBrowserFrameView::OnNativeThemeChanged(
   MaybeRedrawFrameButtons();
 }
 
+void OpaqueBrowserFrameView::AddedToWidget() {
+  BrowserNonClientFrameView::AddedToWidget();
+  scoped_observer_.Add(GetWidget());
+}
+
+void OpaqueBrowserFrameView::RemovedFromWidget() {
+  BrowserNonClientFrameView::RemovedFromWidget();
+  scoped_observer_.RemoveAll();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // OpaqueBrowserFrameView, views::ButtonListener implementation:
 
@@ -457,6 +468,14 @@ int OpaqueBrowserFrameView::GetTopAreaHeight() const {
 const views::NavButtonProvider* OpaqueBrowserFrameView::GetNavButtonProvider()
     const {
   return nav_button_provider_.get();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// OpaqueBrowserFrameView, views::WidgetObserver implementation:
+
+void OpaqueBrowserFrameView::OnWidgetActivationChanged(views::Widget* widget,
+                                                       bool active) {
+  MaybeRedrawFrameButtons();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -693,7 +712,8 @@ views::ImageButton* OpaqueBrowserFrameView::GetButtonFromDisplayType(
 
 void OpaqueBrowserFrameView::MaybeRedrawFrameButtons() {
   if (ShouldRenderNativeNavButtons()) {
-    nav_button_provider_->RedrawImages(GetTopAreaHeight(), IsMaximized());
+    nav_button_provider_->RedrawImages(GetTopAreaHeight(), IsMaximized(),
+                                       ShouldPaintAsActive());
     for (auto type : {
              chrome::FrameButtonDisplayType::kMinimize,
              IsMaximized() ? chrome::FrameButtonDisplayType::kRestore
