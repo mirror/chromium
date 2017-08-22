@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eef496aa_3360282e",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T10:55:24Z",
+      "side": 1,
+      "message": "|source| is assigned regardless. the only difference is the return value.",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 45
+      },
+      "revId": "df990ca7f3934b1426cfb4d562b26394eed56850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6288ec3c_901cd0ca",
+        "filename": "chrome/installer/zucchini/disassembler_win32.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T10:55:24Z",
+      "side": 1,
+      "message": "if you can\u0027t use the enum hack for this, please move initialization into the .cc file where you define the value\u0027s storage.",
+      "revId": "df990ca7f3934b1426cfb4d562b26394eed56850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e263eb_2d7d1665",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T10:55:24Z",
+      "side": 1,
+      "message": "const here was good, as it made |name| immutable. please put it back.",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 14
+      },
+      "revId": "df990ca7f3934b1426cfb4d562b26394eed56850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

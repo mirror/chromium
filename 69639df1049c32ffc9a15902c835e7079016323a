@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "39562ce4_51180d0a",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T10:55:24Z",
+      "side": 1,
+      "message": "ping",
+      "parentUuid": "cb945ade_0fbe5c92",
+      "range": {
+        "startLine": 129,
+        "startChar": 72,
+        "endLine": 129,
+        "endChar": 73
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5341880d_93ef05f1",
         "filename": "chrome/installer/zucchini/disassembler_win32.cc",
         "patchSetId": 4
@@ -414,6 +438,30 @@
       "writtenOn": "2017-08-21T10:16:45Z",
       "side": 1,
       "message": "rather than \"zucchini_tools.{cc,h}\", which sounds like it could grow to be an ungainly grab-bag, how about \"read_references.{cc,h}\"? or will it make sense for future \"tool-ish\" things to be in the same file for the sake of code sharing or something?",
+      "range": {
+        "startLine": 5,
+        "startChar": 34,
+        "endLine": 5,
+        "endChar": 51
+      },
+      "revId": "69639df1049c32ffc9a15902c835e7079016323a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba2904e_18b9d0bd",
+        "filename": "chrome/installer/zucchini/zucchini_tools.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T10:55:24Z",
+      "side": 1,
+      "message": "ping?",
+      "parentUuid": "ae4a37ed_98c4fda5",
       "range": {
         "startLine": 5,
         "startChar": 34,
