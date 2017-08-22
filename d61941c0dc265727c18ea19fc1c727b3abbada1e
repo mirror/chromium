@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec608358_d8fdf034",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-08-22T09:49:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16e58879_6ee9b401",
+      "revId": "d61941c0dc265727c18ea19fc1c727b3abbada1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7033da0a_451045ae",
         "filename": "/COMMIT_MSG",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "59bd111a_a65ceca7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-08-22T09:49:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7033da0a_451045ae",
+      "revId": "d61941c0dc265727c18ea19fc1c727b3abbada1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26c6ed60_6a777bf9",
         "filename": "/COMMIT_MSG",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-21T12:11:34Z",
       "side": 1,
       "message": "Please limit the line length to 72 chars.\n\nThe description should talk about type ruleset invalidations as this is specific to those.\n\nFor instance:\n\nWhen we do a ruleset invalidation for a shadow scope, we schedule an\ninvalidation set for type selectors on the shadow root node, but that\nset also contains tag names for type selectors in :host() selectors as\nwell. In order to invalidate host elements properly, check if the host\u0027s\ntag name is contained in any of the type invalidation sets and mark it\nfor style recalc.\n\nAn alternative would have been to schedule these invalidation sets on\nthe host element instead and marked the invalidation set as tree-\nboundary-crossing in the presence of :host(type) selectors, but that\nwould have invalidated more elements unnecessarily.",
+      "revId": "d61941c0dc265727c18ea19fc1c727b3abbada1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acbd2c34_ad0d4cdf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-08-22T09:49:00Z",
+      "side": 1,
+      "message": "I modified the commit message.\nWould you check it again please?",
+      "parentUuid": "26c6ed60_6a777bf9",
       "revId": "d61941c0dc265727c18ea19fc1c727b3abbada1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "3fa8b551_b6fa3a1b",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngine.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-08-22T09:49:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f0d59c8_20b31464",
+      "revId": "d61941c0dc265727c18ea19fc1c727b3abbada1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45d5b354_c1d5586f",
         "filename": "third_party/WebKit/Source/core/dom/StyleEngineTest.cpp",
         "patchSetId": 11
@@ -102,6 +174,24 @@
       "revId": "d61941c0dc265727c18ea19fc1c727b3abbada1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57abd674_166ebcd0",
+        "filename": "third_party/WebKit/Source/core/dom/StyleEngineTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-08-22T09:49:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45d5b354_c1d5586f",
+      "revId": "d61941c0dc265727c18ea19fc1c727b3abbada1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
