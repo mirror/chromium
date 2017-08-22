@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "f4a135af_54eb7bc1",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-22T04:35:55Z",
+      "side": 1,
+      "message": "ThrottlingURLLoader is the consumer of the Mojo interface. The interface provided to consumers of ThrottlingURLLoader shouldn\u0027t leak unnecessary details about Mojo. A Mojo pipe connection error should be just like any other net error code, not a special signal that they may forget to implement properly. If the Mojo pipe closes unexpectedly then that load has failed. There isn\u0027t another option for how to respond to that failure.\n\nThe logic in ResourceDispatcher I am copying is in StartSync() where if the legacy sync IPC call fails net::ERR_FAILED is returned. In that case ResourceDispatcher is the direct consumer of the legacy IPC channel and hides the IPC failure from WebURLLoaderImpl, its client.\n\nmmenke@ has the same logic in his SimpleURLLoader:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/600630/29/content/public/common/simple_url_loader.cc#451",
+      "parentUuid": "4886153f_b218be09",
+      "revId": "060a56075006c33adf57a329ebffd084ec044f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8df06717_45139f31",
         "filename": "content/common/throttling_url_loader.cc",
         "patchSetId": 4
