@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4591461d_416a5958",
+        "filename": "content/public/common/DEPS",
+        "patchSetId": 27
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-22T01:37:14Z",
+      "side": 1,
+      "message": "also feel free to add rules to simple_url_loader.cc to restrict its includes to avoid inadvertent content/ includes",
+      "revId": "7c4acd6a2f5645cc68edb1c8aa9266e9ebecc207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862215ce_97f33b06",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-22T01:37:14Z",
+      "side": 1,
+      "message": "nit: not needed since pure virtual methods make it non-copyable",
+      "revId": "7c4acd6a2f5645cc68edb1c8aa9266e9ebecc207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
