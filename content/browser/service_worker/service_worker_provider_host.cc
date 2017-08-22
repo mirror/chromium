@@ -907,4 +907,11 @@ void ServiceWorkerProviderHost::SendSetControllerServiceWorker(
   Send(new ServiceWorkerMsg_SetControllerServiceWorker(params));
 }
 
+void ServiceWorkerProviderHost::Register(
+    const GURL& script_url,
+    const ServiceWorkerRegistrationOptions& options,
+    RegisterCallback callback) {
+  NOTIMPLEMENTED();
+}
+
 }  // namespace content
