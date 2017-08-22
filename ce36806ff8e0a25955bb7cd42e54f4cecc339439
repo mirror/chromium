@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "151d3a99_26cd490b",
+        "filename": "content/child/child_url_loader_factory_getter.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T07:57:21Z",
+      "side": 1,
+      "message": "Could we do this only if neither of blob_loader_factory_ nor blob_loader_factory_getter_ is given (in addition to !kNetworkService)? (I can imagine we might launch BlobURLLoader earlier than NetworkService launch)",
+      "revId": "ce36806ff8e0a25955bb7cd42e54f4cecc339439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a43614aa_40bc3861",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 21
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T07:57:21Z",
+      "side": 1,
+      "message": "It feels a bit sudden / not clear what this \u0027(ex: ...)\u0027 means, could you expand the intention a bit further?",
+      "revId": "ce36806ff8e0a25955bb7cd42e54f4cecc339439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f12b5f9_709e615d",
+        "filename": "content/renderer/renderer_blink_platform_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T07:57:21Z",
+      "side": 1,
+      "message": "Oops, I think we want to have this on RenderFrameImpl for regular frames as the intention was to use per-frame loader factory (so that we can get rid of routing_id at some point)",
+      "revId": "ce36806ff8e0a25955bb7cd42e54f4cecc339439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
