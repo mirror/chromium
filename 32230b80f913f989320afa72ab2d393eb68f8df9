@@ -172,6 +172,24 @@
     },
     {
       "key": {
+        "uuid": "47929d31_ae6652d7",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-22T16:02:17Z",
+      "side": 1,
+      "message": "What we need is a way to compute the column width/row height. Basically, devtools needs  columnGap + offset_between_columns_ and rowGap + offset_between_rows_",
+      "parentUuid": "f1e10f29_926d0059",
+      "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "600124ed_41ede629",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
         "patchSetId": 2
@@ -240,6 +258,24 @@
       "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4dfb95_df6d9e60",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-22T16:02:17Z",
+      "side": 1,
+      "message": "(resolved)",
+      "parentUuid": "5769a0f6_96abf50f",
+      "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
