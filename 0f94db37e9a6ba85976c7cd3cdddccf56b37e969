@@ -51,6 +51,24 @@
       "revId": "0f94db37e9a6ba85976c7cd3cdddccf56b37e969",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5987ec1_974bfaef",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-22T17:11:19Z",
+      "side": 1,
+      "message": "OK, I made it a ContextLifecycleObserver, but note that\nAXObjectCacheImpl is owned by Document already, and I\u0027m not\nsure there\u0027s any point in having an AXObjectCache on an\nunattached document.\n\nRight now we clear AXObjectCache in Document::Shutdown,\nwhat if we just clear it when it\u0027s being unattached?",
+      "parentUuid": "d3573fd1_673b747c",
+      "revId": "0f94db37e9a6ba85976c7cd3cdddccf56b37e969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

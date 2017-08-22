@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "dda25f01_04a3e322",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-22T17:11:19Z",
+      "side": 1,
+      "message": "Reordered and moved to the bottom of this file. A lot of Blink\nclasses seem to mix functions and member variables, but I\u0027d like\nto clean up the whole header in a follow-up.",
+      "parentUuid": "e6985806_3c726955",
+      "revId": "8a256eba26ed9dfaa109085374c1334da37a5895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9aa4937_cab6da7a",
         "filename": "third_party/WebKit/Source/modules/permissions/Permissions.cpp",
         "patchSetId": 7
