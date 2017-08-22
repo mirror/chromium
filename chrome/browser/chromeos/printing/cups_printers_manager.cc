@@ -103,6 +103,9 @@ class CupsPrintersManagerImpl : public CupsPrintersManager,
         event_tracker_(event_tracker),
         printers_(kNumPrinterClasses),
         weak_ptr_factory_(this) {
+    // Prime the printer cache with the configured and enterprise printers.
+    printers_[kConfigured] = synced_printers_manager_->GetConfiguredPrinters();
+    printers_[kEnterprise] = synced_printers_manager_->GetEnterprisePrinters();
     synced_printers_manager_observer_.Add(synced_printers_manager_);
 
     // Callbacks may ensue immediately when the observer proxies are set up, so
@@ -188,6 +191,7 @@ class CupsPrintersManagerImpl : public CupsPrintersManager,
   // SyncedPrintersManager::Observer implementation
   void OnConfiguredPrintersChanged(
       const std::vector<Printer>& printers) override {
+    LOG(WARNING) << "Configured Printers Callback";
     printers_[kConfigured] = printers;
     configured_printer_ids_ = GetIdsSet(printers);
     for (auto& observer : observer_list_) {

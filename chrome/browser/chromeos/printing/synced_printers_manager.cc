@@ -70,6 +70,7 @@ class SyncedPrintersManagerImpl : public SyncedPrintersManager {
     for (const auto& value : values) {
       printers.push_back(*SpecificsToPrinter(value));
     }
+    LOG(WARNING) << "Configured Printers: " << printers.size();
     return printers;
   }
 
