@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "cf3a2b74_b0bc46a1",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T01:16:30Z",
+      "side": 1,
+      "message": "Does this code early return because _settingsNavigationController presence mean that |SavePasswordsSettings| is already shown? Would it be better to add isSettingsUIDisplayed method to avoid awkward code?\n\nIf you think that we should not spend time on fixing MainController, then adding comments is good enough.",
+      "range": {
+        "startLine": 1438,
+        "startChar": 4,
+        "endLine": 1438,
+        "endChar": 10
+      },
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee646a6_863a3349",
+        "filename": "ios/chrome/browser/passwords/password_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T01:16:30Z",
+      "side": 1,
+      "message": "Please document |dispatcher| ownership (weak vs. strong).",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f89b063_0218b1d0",
+        "filename": "ios/chrome/browser/passwords/password_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T01:16:30Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 23
+      },
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504a04ce_d7950d89",
+        "filename": "ios/chrome/browser/passwords/password_generation_agent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T01:16:30Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 46,
+        "startChar": 26,
+        "endLine": 46,
+        "endChar": 45
+      },
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86d0220_6d1a070a",
+        "filename": "ios/chrome/browser/passwords/password_generation_agent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T01:16:30Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 92,
+        "startChar": 23,
+        "endLine": 92,
+        "endChar": 25
+      },
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b114c1_fc3bee82",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T01:16:30Z",
+      "side": 1,
+      "message": "passwordsUIDelegate (variable name)",
+      "range": {
+        "startLine": 510,
+        "startChar": 26,
+        "endLine": 510,
+        "endChar": 45
+      },
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3cc6267_a3e3b568",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 3
@@ -66,6 +204,46 @@
         "startChar": 2,
         "endLine": 522,
         "endChar": 23
+      },
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd894b5a_c325d0bf",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T01:16:30Z",
+      "side": 1,
+      "message": "6 out of 12 methods in this protocol are related to settings. How about creating a separate protocol just to handle settings? At this point ApplicationCommands is quite big and we should probably stop growing it.",
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a94af722_0b5f016e",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T01:16:30Z",
+      "side": 1,
+      "message": "nit: \"Shows the Save Passwords Settings UI\"?",
+      "range": {
+        "startLine": 67,
+        "startChar": 3,
+        "endLine": 67,
+        "endChar": 36
       },
       "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
