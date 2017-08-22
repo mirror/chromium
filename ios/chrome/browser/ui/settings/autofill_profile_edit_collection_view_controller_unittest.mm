@@ -74,7 +74,8 @@ class AutofillProfileEditCollectionViewControllerTest : public PlatformTest {
     autofill_profile_edit_controller_ =
         [AutofillProfileEditCollectionViewController
             controllerWithProfile:autofill_profile
-              personalDataManager:personal_data_manager_];
+              personalDataManager:personal_data_manager_
+                       dispatcher:nil];
   }
 
   web::TestWebThreadBundle thread_bundle_;
