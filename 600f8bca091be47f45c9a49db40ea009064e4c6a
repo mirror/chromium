@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a94ec5b_d23b8059",
+        "filename": "base/task_scheduler/scheduler_worker_pool_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-22T20:51:40Z",
+      "side": 1,
+      "message": "This isn\u0027t specific to SchedulerWorkerPoolWindowsImpl, right? Same with the other tests of existing code.\n\nLet\u0027s pull this out into a separate change and then you can add the Windows specific code here. This will make it clear what code is new and what isn\u0027t.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 29
+      },
+      "revId": "600f8bca091be47f45c9a49db40ea009064e4c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
