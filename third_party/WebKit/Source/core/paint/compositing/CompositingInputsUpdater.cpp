@@ -71,29 +71,17 @@ static const PaintLayer* FindParentLayerOnContainingBlockChain(
   return nullptr;
 }
 
-static bool HasClippedStackingAncestor(const PaintLayer* layer,
-                                       const PaintLayer* clipping_layer) {
-  if (layer == clipping_layer)
+static bool NeedsToEscapeClipInheritedFromCompositingContainer(
+    const PaintLayer* layer,
+    const LayoutObject& desired_clip) {
+  const PaintLayer* compositing_parent = layer->CompositingContainer();
+  DCHECK(compositing_parent);
+  const LayoutObject* inherited_clip = &compositing_parent->GetLayoutObject();
+  if (!inherited_clip->HasClipRelatedProperty())
+    inherited_clip = compositing_parent->ClippingContainer();
+  if (!inherited_clip)
     return false;
-  bool found_intervening_clip = false;
-  const LayoutObject& clipping_layout_object =
-      clipping_layer->GetLayoutObject();
-  for (const PaintLayer* current = layer->CompositingContainer(); current;
-       current = current->CompositingContainer()) {
-    if (current == clipping_layer)
-      return found_intervening_clip;
-
-    if (current->GetLayoutObject().HasClipRelatedProperty() &&
-        !clipping_layout_object.IsDescendantOf(&current->GetLayoutObject()))
-      found_intervening_clip = true;
-
-    if (const LayoutObject* container = current->ClippingContainer()) {
-      if (&clipping_layout_object != container &&
-          !clipping_layout_object.IsDescendantOf(container))
-        found_intervening_clip = true;
-    }
-  }
-  return false;
+  return !desired_clip.IsDescendantOf(inherited_clip);
 }
 
 void CompositingInputsUpdater::UpdateRecursive(PaintLayer* layer,
@@ -210,22 +198,23 @@ void CompositingInputsUpdater::UpdateRecursive(PaintLayer* layer,
                 ? &parent_layer_on_clipping_container_chain->GetLayoutObject()
                 : parent_layer_on_clipping_container_chain->ClippingContainer();
 
-        const PaintLayer* clipping_layer =
-            properties.clipping_container
-                ? properties.clipping_container->EnclosingLayer()
-                : layer->Compositor()->RootLayer();
-
         if (!layer->SubtreeIsInvisible()) {
-          if (layer->GetLayoutObject().IsOutOfFlowPositioned()) {
-            if (HasClippedStackingAncestor(layer, clipping_layer))
-              properties.clip_parent = clipping_layer;
-          } else {
-            if (clipping_layer && clipping_layer->CompositingContainer() ==
-                                      layer->CompositingContainer()) {
-              // If the clipping container of |layer| is a sibling in the
-              // stacking tree, and it escapes a stacking ancestor clip,
-              // this layer should escape that clip also.
-              properties.clip_parent = clipping_layer->ClipParent();
+          if (layer->GetLayoutObject().IsOutOfFlowPositioned() &&
+              NeedsToEscapeClipInheritedFromCompositingContainer(
+                  layer, parent_layer_on_clipping_container_chain
+                             ->GetLayoutObject())) {
+            properties.clip_parent = parent_layer_on_clipping_container_chain;
+          } else if (parent_layer_on_clipping_container_chain
+                         ->CompositingContainer() ==
+                     layer->CompositingContainer()) {
+            // If the clipping container of |layer| is a sibling in the
+            // stacking tree, and it escapes a stacking ancestor clip,
+            // this layer should escape that clip also.
+            if (parent_layer_on_clipping_container_chain->ClipParent()) {
+              properties.clip_parent =
+                  parent_has_clip_related_property
+                      ? parent_layer_on_clipping_container_chain
+                      : parent_layer_on_clipping_container_chain->ClipParent();
             }
           }
         }
