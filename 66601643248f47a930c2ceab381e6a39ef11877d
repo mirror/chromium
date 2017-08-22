@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "183b9155_0267d49d",
+        "filename": "ash/system/bluetooth/bluetooth_notification_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-22T16:21:20Z",
+      "side": 1,
+      "message": "This needs a helper function for showing these notifications. There\u0027s too much duplication. That could either be a helper just for this class, or a shared helper like I suggested in the earlier CL.",
+      "revId": "66601643248f47a930c2ceab381e6a39ef11877d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
