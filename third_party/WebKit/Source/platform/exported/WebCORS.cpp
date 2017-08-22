@@ -566,6 +566,28 @@ bool IsOnAccessControlResponseHeaderWhitelist(const WebString& name) {
   return allowed_cross_origin_response_headers.Contains(name);
 }
 
+WebString ListOfCORSEnabledURLSchemes() {
+  StringBuilder builder;
+
+  String list;
+  for (const auto& scheme : url::GetCORSEnabledSchemes()) {
+    if (!builder.IsEmpty())
+      builder.Append(", ");
+    builder.Append(scheme.c_str(), scheme.length());
+  }
+
+  return builder.ToString();
+}
+
+// https://fetch.spec.whatwg.org/#cors-safelisted-method
+bool IsCORSSafelistedMethod(const WebString& method) {
+  return FetchUtils::IsCORSSafelistedMethod(method);
+}
+
+bool ContainsOnlyCORSSafelistedOrForbiddenHeaders(const HTTPHeaderMap& map) {
+  return FetchUtils::ContainsOnlyCORSSafelistedOrForbiddenHeaders(map);
+}
+
 }  // namespace WebCORS
 
 }  // namespace blink
