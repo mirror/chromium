@@ -223,6 +223,10 @@ void BrowserTestBase::SetUp() {
     use_software_gl = false;
 #endif
 
+#if defined(OS_FUCHSIA)
+  InitNewChildProcessJob();
+#endif  // defined(OS_FUCHSIA)
+
   if (use_software_gl && !use_software_compositing_)
     command_line->AppendSwitch(switches::kOverrideUseSoftwareGLForTests);
 
