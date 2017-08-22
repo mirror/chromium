@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb5e1eb8_7f597614",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-22T20:53:54Z",
+      "side": 1,
+      "message": "Why is this only for windows? Don\u0027t we have pen support on chromeos and android too?",
+      "revId": "90c1a7e473b635862abb84fb7f17dbefcafbc141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7108e9_db081aeb",
+        "filename": "third_party/WebKit/Source/core/input/MouseEventManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-22T20:53:54Z",
+      "side": 1,
+      "message": "nit: can you remove this extra newline that was added? I think this comment needs to be as close to mouse_pressed_ \u003d false as possible.",
+      "revId": "90c1a7e473b635862abb84fb7f17dbefcafbc141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
