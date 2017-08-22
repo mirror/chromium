@@ -46,6 +46,30 @@
       "revId": "35f61abe5cf9453d92e83d3e7403c56ed5a9858f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f331109b_158d615e",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-22T21:19:15Z",
+      "side": 1,
+      "message": "My understanding is that DCHECK()s are allowed/expected to be slow, but we want \"real\" code to be fast, so doing extra work in the DCHECK() doesn\u0027t seem problematic to me. \n\nBut I\u0027m happy to defer to your judgement.",
+      "parentUuid": "c14c1499_8998854c",
+      "range": {
+        "startLine": 370,
+        "startChar": 41,
+        "endLine": 370,
+        "endChar": 0
+      },
+      "revId": "35f61abe5cf9453d92e83d3e7403c56ed5a9858f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
