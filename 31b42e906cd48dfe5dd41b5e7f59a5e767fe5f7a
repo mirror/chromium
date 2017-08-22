@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb943714_413f0733",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T18:58:55Z",
+      "side": 1,
+      "message": "Maybe initialise in the header instead?",
+      "revId": "31b42e906cd48dfe5dd41b5e7f59a5e767fe5f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "611608d7_6b541a11",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T18:58:55Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this have been called whet `Commit()` is called? I mean, changes should have gone trough SetMediaPlaybacks() or SetVisits() for a Commit() to have meaningful changes?",
+      "revId": "31b42e906cd48dfe5dd41b5e7f59a5e767fe5f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b17b2d9_b6c60c5c",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T18:58:55Z",
+      "side": 1,
+      "message": "style: { }",
+      "revId": "31b42e906cd48dfe5dd41b5e7f59a5e767fe5f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98eaa6b4_0f3854d5",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T18:58:55Z",
+      "side": 1,
+      "message": "Maybe worth reminding the reader what\u0027s the logic here? Alternatively, you can write something more verbose that might not need comments like:\n```\nif (is_high_) {\n  is_high_ \u003d total_score_ \u003e\u003d kHighurScoreLowerThreshold;\n} else {\n  is_high_ \u003d total_score_ \u003e\u003d kHighScoreUpperThreshold;\n}\n```",
+      "revId": "31b42e906cd48dfe5dd41b5e7f59a5e767fe5f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce31e69b_4b2a95a5",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T18:58:55Z",
+      "side": 1,
+      "message": "If you make this a simple getter, you should name it something like `total_score()` to follow coding style.",
+      "revId": "31b42e906cd48dfe5dd41b5e7f59a5e767fe5f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60aee59_2cce0bb0",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T18:58:55Z",
+      "side": 1,
+      "message": "I don\u0027t know if the style guide has clear rules about this but it\u0027s probably better to move this to the cc file.",
+      "revId": "31b42e906cd48dfe5dd41b5e7f59a5e767fe5f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c338e1_5eb0d881",
+        "filename": "chrome/browser/media/media_engagement_score.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T18:58:55Z",
+      "side": 1,
+      "message": "nit: `total_score_` sounds weird to me -- what about `actual_score_`?",
+      "revId": "31b42e906cd48dfe5dd41b5e7f59a5e767fe5f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
