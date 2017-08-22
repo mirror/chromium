@@ -641,18 +641,10 @@ GridLayout::GridLayout(View* host)
       current_row_col_set_(nullptr),
       adding_view_(false) {
   DCHECK(host);
+  host->SetLayoutManager(this);
 }
 
 GridLayout::~GridLayout() {
-}
-
-// static
-GridLayout* GridLayout::CreatePanel(View* host) {
-  GridLayout* layout = new GridLayout(host);
-  host->SetBorder(CreateEmptyBorder(
-      LayoutProvider::Get()->GetInsetsMetric(INSETS_DIALOG_CONTENTS)));
-  host->SetLayoutManager(layout);
-  return layout;
 }
 
 ColumnSet* GridLayout::AddColumnSet(int id) {
