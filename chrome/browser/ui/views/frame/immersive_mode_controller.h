@@ -115,6 +115,9 @@ class ImmersiveModeController {
   // host the reveal, or not currently revealed.
   virtual views::Widget* GetRevealWidget() = 0;
 
+  virtual void OnWidgetActivationChanged(views::Widget* widget,
+                                         bool active) = 0;
+
   virtual void AddObserver(Observer* observer);
   virtual void RemoveObserver(Observer* observer);
 

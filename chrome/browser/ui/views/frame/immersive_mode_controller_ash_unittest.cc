@@ -10,8 +10,10 @@
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
 #include "base/macros.h"
+#include "base/test/scoped_feature_list.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller.h"
@@ -346,4 +348,47 @@ TEST_F(ImmersiveModeControllerAshTestHostedApp, Layout) {
   EXPECT_FALSE(tabstrip->visible());
   EXPECT_FALSE(toolbar->visible());
   EXPECT_EQ(header_height, GetBoundsInWidget(contents_web_view).y());
+}
+
+class ImmersiveModeControllerAshTestTabletMode
+    : public ImmersiveModeControllerAshTest {
+ public:
+  ImmersiveModeControllerAshTestTabletMode()
+      : ImmersiveModeControllerAshTest(Browser::TYPE_TABBED, false) {}
+  ~ImmersiveModeControllerAshTestTabletMode() override {}
+
+  void SetUp() override {
+    scoped_feature_list.InitAndEnableFeature(ash::kHideTitleBars);
+    ImmersiveModeControllerAshTest::SetUp();
+  }
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list;
+
+  DISALLOW_COPY_AND_ASSIGN(ImmersiveModeControllerAshTestTabletMode);
+};
+
+TEST_F(ImmersiveModeControllerAshTestTabletMode, Layout) {
+  EXPECT_FALSE(controller()->IsEnabled());
+  ash::Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(
+      true);
+  EXPECT_TRUE(controller()->IsEnabled());
+  browser()->window()->Minimize();
+  EXPECT_FALSE(controller()->IsEnabled());
+  browser()->window()->Show();
+
+  ToggleFullscreen();
+  EXPECT_TRUE(controller()->IsEnabled());
+  ash::Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(
+      false);
+  EXPECT_TRUE(controller()->IsEnabled());
+
+  ash::Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(
+      true);
+  EXPECT_TRUE(controller()->IsEnabled());
+  ToggleFullscreen();
+  EXPECT_TRUE(controller()->IsEnabled());
+  ash::Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(
+      false);
+  EXPECT_FALSE(controller()->IsEnabled());
 }

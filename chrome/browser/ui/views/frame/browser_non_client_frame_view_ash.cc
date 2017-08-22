@@ -332,6 +332,10 @@ void BrowserNonClientFrameViewAsh::OnOverviewModeEnded() {
 }
 
 void BrowserNonClientFrameViewAsh::OnTabletModeStarted() {
+  if (ash::Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars() &&
+      !frame()->IsFullscreen()) {
+    browser_view()->immersive_mode_controller()->SetEnabled(true);
+  }
   caption_button_container_->UpdateSizeButtonVisibility();
   InvalidateLayout();
   frame()->client_view()->InvalidateLayout();
@@ -339,7 +343,14 @@ void BrowserNonClientFrameViewAsh::OnTabletModeStarted() {
 }
 
 void BrowserNonClientFrameViewAsh::OnTabletModeEnded() {
-  OnTabletModeStarted();
+  if (ash::Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars() &&
+      !frame()->IsFullscreen()) {
+    browser_view()->immersive_mode_controller()->SetEnabled(false);
+  }
+  caption_button_container_->UpdateSizeButtonVisibility();
+  InvalidateLayout();
+  frame()->client_view()->InvalidateLayout();
+  frame()->GetRootView()->Layout();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

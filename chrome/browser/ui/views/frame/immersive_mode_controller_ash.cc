@@ -6,6 +6,7 @@
 
 #include "ash/public/cpp/immersive/immersive_revealed_lock.h"
 #include "ash/shell.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/window_state.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -121,6 +122,14 @@ void ImmersiveModeControllerAsh::Init(BrowserView* browser_view) {
 }
 
 void ImmersiveModeControllerAsh::SetEnabled(bool enabled) {
+  if (ash::Shell::Get()
+          ->tablet_mode_controller()
+          ->IsTabletModeWindowManagerEnabled() &&
+      ash::Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars() ==
+          !enabled) {
+    return;
+  }
+
   if (controller_->IsEnabled() == enabled)
     return;
 
@@ -166,6 +175,21 @@ void ImmersiveModeControllerAsh::OnFindBarVisibleBoundsChanged(
 
 views::Widget* ImmersiveModeControllerAsh::GetRevealWidget() {
   return mash_reveal_widget_.get();
+}
+
+void ImmersiveModeControllerAsh::OnWidgetActivationChanged(
+    views::Widget* widget,
+    bool active) {
+  if (!ash::Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars())
+    return;
+
+  controller_->SetEnabled(
+      browser_view_->browser()->is_app()
+          ? ash::ImmersiveFullscreenController::WINDOW_TYPE_HOSTED_APP
+          : ash::ImmersiveFullscreenController::WINDOW_TYPE_BROWSER,
+      active);
+  LayoutBrowserRootView();
+  browser_view_->frame()->non_client_view()->Layout();
 }
 
 void ImmersiveModeControllerAsh::EnableWindowObservers(bool enable) {
@@ -313,6 +337,9 @@ ImmersiveModeControllerAsh::GetVisibleBoundsInScreen() const {
 void ImmersiveModeControllerAsh::OnPostWindowStateTypeChange(
     ash::wm::WindowState* window_state,
     ash::wm::WindowStateType old_type) {
+  if (ash::Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars())
+    return;
+
   // Disable immersive fullscreen when the user exits fullscreen without going
   // through FullscreenController::ToggleBrowserFullscreenMode(). This is the
   // case if the user exits fullscreen via the restore button.
