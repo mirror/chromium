@@ -10,8 +10,10 @@
 
 #include "base/callback_forward.h"
 #include "base/memory/ref_counted.h"
+#include "media/base/video_decoder.h"
 #include "media/mojo/interfaces/video_decoder.mojom.h"
 #include "media/mojo/services/media_mojo_export.h"
+#include "services/service_manager/public/cpp/service_context_ref.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -26,7 +28,7 @@ class Connector;
 namespace mojom {
 class InterfaceProvider;
 }
-}
+}  // namespace service_manager
 
 namespace media {
 
@@ -54,14 +56,16 @@ class MEDIA_MOJO_EXPORT MojoMediaClient {
 
   // Called exactly once before any other method. |connector| can be used by
   // |this| to connect to other services. It is guaranteed to outlive |this|.
-  virtual void Initialize(service_manager::Connector* connector);
+  virtual void Initialize(
+      service_manager::Connector* connector,
+      service_manager::ServiceContextRefFactory* context_ref_factory);
 
   virtual std::unique_ptr<AudioDecoder> CreateAudioDecoder(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   // TODO(sandersd): |output_cb| should not be required.
   // See https://crbug.com/733828.
-  virtual std::unique_ptr<VideoDecoder> CreateVideoDecoder(
+  virtual std::unique_ptr<VideoDecoder, VideoDecoderDeleter> CreateVideoDecoder(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
       MediaLog* media_log,
       mojom::CommandBufferIdPtr command_buffer_id,

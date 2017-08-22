@@ -120,6 +120,23 @@ class MEDIA_EXPORT VideoDecoder {
   DISALLOW_COPY_AND_ASSIGN(VideoDecoder);
 };
 
+class VideoDecoderDeleter {
+ public:
+  using DeleterFunc = void (*)(VideoDecoder* ptr);
+
+  VideoDecoderDeleter(DeleterFunc deleter_func = nullptr)
+      : deleter_func(deleter_func) {}
+
+  void operator()(VideoDecoder* ptr) {
+    if (deleter_func)
+      deleter_func(ptr);
+    else
+      std::default_delete<VideoDecoder>()(ptr);
+  }
+
+  DeleterFunc deleter_func;
+};
+
 }  // namespace media
 
 #endif  // MEDIA_BASE_VIDEO_DECODER_H_

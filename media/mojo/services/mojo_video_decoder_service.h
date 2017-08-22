@@ -12,12 +12,13 @@
 #include "base/memory/weak_ptr.h"
 #include "base/unguessable_token.h"
 #include "media/base/decode_status.h"
+#include "media/base/video_decoder.h"
 #include "media/mojo/interfaces/video_decoder.mojom.h"
 #include "media/mojo/services/mojo_media_client.h"
 
 namespace gpu {
 struct SyncToken;
-};
+}
 
 namespace media {
 
@@ -25,7 +26,6 @@ class DecoderBuffer;
 class MojoDecoderBufferReader;
 class MojoMediaClient;
 class MojoMediaLog;
-class VideoDecoder;
 class VideoFrame;
 
 // Implementation of a mojom::VideoDecoder which runs in the GPU process,
@@ -67,7 +67,7 @@ class MojoVideoDecoderService : public mojom::VideoDecoder {
   std::unique_ptr<MojoDecoderBufferReader> mojo_decoder_buffer_reader_;
 
   MojoMediaClient* mojo_media_client_;
-  std::unique_ptr<media::VideoDecoder> decoder_;
+  std::unique_ptr<media::VideoDecoder, VideoDecoderDeleter> decoder_;
   std::map<base::UnguessableToken, MojoMediaClient::ReleaseMailboxCB>
       release_mailbox_cbs_;
 
