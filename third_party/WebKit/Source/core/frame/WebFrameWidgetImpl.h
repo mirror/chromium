@@ -179,6 +179,9 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   WebInputEventResult HandleKeyEvent(const WebKeyboardEvent&) override;
   WebInputEventResult HandleCharEvent(const WebKeyboardEvent&) override;
 
+  // Allow base class access to PageWidgetEventHandler.
+  PageWidgetEventHandler* GetPageWidgetEventHandler() override;
+
   // This method returns the focused frame belonging to this WebWidget, that
   // is, a focused frame with the same local root as the one corresponding
   // to this widget. It will return nullptr if no frame is focused or, the
@@ -186,6 +189,8 @@ class WebFrameWidgetImpl final : public WebFrameWidgetBase,
   LocalFrame* FocusedLocalFrameInWidget() const;
 
   LocalFrame* FocusedLocalFrameAvailableForIme() const;
+
+  WebLocalFrame* LocalRoot();
 
   CompositorMutatorImpl& Mutator();
 

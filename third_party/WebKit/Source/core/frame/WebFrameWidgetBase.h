@@ -5,6 +5,8 @@
 #ifndef WebFrameWidgetBase_h
 #define WebFrameWidgetBase_h
 
+#include <memory>
+
 #include "core/CoreExport.h"
 #include "core/clipboard/DataObject.h"
 #include "core/dom/UserGestureIndicator.h"
@@ -13,6 +15,7 @@
 #include "platform/wtf/Assertions.h"
 #include "public/platform/WebCoalescedInputEvent.h"
 #include "public/platform/WebDragData.h"
+#include "public/platform/WebGestureCurveTarget.h"
 #include "public/web/WebFrameWidget.h"
 
 namespace blink {
@@ -20,18 +23,24 @@ namespace blink {
 class CompositorAnimationHost;
 class CompositorMutatorImpl;
 class GraphicsLayer;
+class PageWidgetEventHandler;
+class WebActiveGestureAnimation;
 class WebImage;
 class WebLayer;
 class WebLayerTreeView;
+class WebMouseWheelEvent;
 class WebViewImpl;
 class HitTestResult;
+struct WebActiveWheelFlingParameters;
 struct WebPoint;
 
 class CORE_EXPORT WebFrameWidgetBase
     : public GarbageCollectedFinalized<WebFrameWidgetBase>,
-      public WebFrameWidget {
+      public WebFrameWidget,
+      public WebGestureCurveTarget {
  public:
-  virtual ~WebFrameWidgetBase() {}
+  WebFrameWidgetBase();
+  virtual ~WebFrameWidgetBase();
 
   virtual bool ForSubframe() const = 0;
   virtual void ScheduleAnimation() = 0;
@@ -51,6 +60,16 @@ class CORE_EXPORT WebFrameWidgetBase
   virtual CompositorAnimationHost* AnimationHost() const = 0;
 
   virtual HitTestResult CoreHitTestResultAt(const WebPoint&) = 0;
+
+  // Fling operations.
+  bool EndActiveFlingAnimation();
+  WebInputEventResult HandleGestureFlingEvent(const WebGestureEvent&);
+  void UpdateGestureAnimation(double last_frame_time_monotonic);
+  void TransferActiveWheelFlingAnimation(const WebActiveWheelFlingParameters&);
+
+  // WebGestureCureveTarget implementation.
+  bool ScrollBy(const WebFloatSize& delta,
+                const WebFloatSize& velocity) override;
 
   // WebFrameWidget implementation.
   WebDragOperation DragTargetDragEnter(const WebDragData&,
@@ -89,6 +108,7 @@ class CORE_EXPORT WebFrameWidgetBase
   void DidNotAcquirePointerLock() override;
   void DidLosePointerLock() override;
   void ShowContextMenu(WebMenuSourceType) override;
+  bool IsFlinging() const override;
 
   // Image decode functionality.
   void RequestDecode(const PaintImage&, WTF::Function<void(bool)> callback);
@@ -118,6 +138,12 @@ class CORE_EXPORT WebFrameWidgetBase
   // Helper function to process events while pointer locked.
   void PointerLockMouseEvent(const WebCoalescedInputEvent&);
 
+  WebInputEventResult HandleMouseWheelWidget(LocalFrame&,
+                                             const WebMouseWheelEvent&);
+  // The following function is implemented in derived classes but called
+  // in the base class.
+  virtual PageWidgetEventHandler* GetPageWidgetEventHandler() = 0;
+
   // A copy of the web drop data object we received from the browser.
   Member<DataObject> current_drag_data_;
 
@@ -132,6 +158,15 @@ class CORE_EXPORT WebFrameWidgetBase
   WebDragOperation drag_operation_ = kWebDragOperationNone;
 
  private:
+  std::unique_ptr<WebActiveGestureAnimation> gesture_animation_;
+  WebPoint position_on_fling_start_;
+  WebPoint global_position_on_fling_start_;
+  int fling_modifier_;
+  WebGestureDevice fling_source_device_;
+
+  // Fling local.
+  WebGestureEvent CreateGestureScrollEventFromFling(WebInputEvent::Type,
+                                                    WebGestureDevice) const;
   void CancelDrag();
   LocalFrame* FocusedLocalFrameInWidget() const;
 
