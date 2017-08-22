@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "392ee5ba_e9761ca4",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-08-22T03:36:14Z",
+      "side": 1,
+      "message": "On further reflection I think a vector whose index is absolute columns (like you originally described) would be better because that would be easier to calculate in UpdateColumnCache.",
+      "parentUuid": "059638cd_3095f471",
+      "revId": "b4151c7c91c142c7a25f633bd8853db54450619e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f41757d7_1957edf3",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
         "patchSetId": 18
