@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96cfd95f_b0425a5b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 84906,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-22T19:24:28Z",
+      "side": 1,
+      "message": "This is really confusing.  Are you using units\u003d\"ms\" to count the number of marking steps?  Yet the code makes it look like you\u0027re talking about durations, for which a time would make sense.\n\nPlease rewrite.",
+      "range": {
+        "startLine": 84906,
+        "startChar": 80,
+        "endLine": 84906,
+        "endChar": 0
+      },
+      "revId": "0ebb413033ada6bac1ba8260960f109fd2363735",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
