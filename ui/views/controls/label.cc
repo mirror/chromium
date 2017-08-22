@@ -187,6 +187,13 @@ void Label::SetMultiLine(bool multi_line) {
   ResetLayout();
 }
 
+void Label::SetMaxLines(int max_lines) {
+  if (max_lines_ == max_lines)
+    return;
+  max_lines_ = max_lines;
+  ResetLayout();
+}
+
 void Label::SetObscured(bool obscured) {
   if (this->obscured() == obscured)
     return;
@@ -328,6 +335,14 @@ gfx::Size Label::CalculatePreferredSize() const {
 
   if (multi_line() && max_width_ != 0 && max_width_ < size.width())
     return gfx::Size(max_width_, GetHeightForWidth(max_width_));
+
+  // Cap the number of lines to |max_lines()| if multiline and non-zero
+  // |max_lines()|.
+  if (multi_line() && max_lines()) {
+    int line_height = std::max(this->line_height(), font_list().GetHeight());
+    return gfx::Size(size.width(),
+                     std::min(max_lines() * line_height, size.height()));
+  }
 
   return size;
 }
@@ -819,6 +834,7 @@ void Label::Init(const base::string16& text, const gfx::FontList& font_list) {
   subpixel_rendering_enabled_ = true;
   auto_color_readability_ = true;
   multi_line_ = false;
+  max_lines_ = 0;
   UpdateColorsFromTheme(GetNativeTheme());
   handles_tooltips_ = true;
   collapse_when_hidden_ = false;
@@ -867,15 +883,19 @@ void Label::MaybeBuildRenderTextLines() const {
         rtl ? gfx::DIRECTIONALITY_FORCE_RTL : gfx::DIRECTIONALITY_FORCE_LTR;
   }
 
-  // Text eliding is not supported for multi-lined Labels.
-  // TODO(mukai): Add multi-lined elided text support.
+  // When multi line with max_lines capped, only ELIDE_TAIL is supported;
+  // When multi line without max_lines capped, multi line has no text eliding.
+  // TODO(warx): Investigate more elide text support.
   gfx::ElideBehavior elide_behavior =
       multi_line() ? gfx::NO_ELIDE : elide_behavior_;
+  if (max_lines())
+    elide_behavior = gfx::ELIDE_TAIL;
   if (!multi_line() || render_text_->MultilineSupported()) {
     std::unique_ptr<gfx::RenderText> render_text =
         CreateRenderText(text(), alignment, directionality, elide_behavior);
     render_text->SetDisplayRect(rect);
     render_text->SetMultiline(multi_line());
+    render_text->SetMaxLines(max_lines());
     render_text->SetWordWrapBehavior(render_text_->word_wrap_behavior());
 
     // Setup render text for selection controller.
@@ -887,6 +907,8 @@ void Label::MaybeBuildRenderTextLines() const {
 
     lines_.push_back(std::move(render_text));
   } else {
+    // TODO(warx): Apply max_lines property when RenderText doesn't support
+    // multi-line.
     std::vector<base::string16> lines = GetLinesForWidth(rect.width());
     if (lines.size() > 1)
       rect.set_height(std::max(line_height(), font_list().GetHeight()));

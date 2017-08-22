@@ -24,7 +24,7 @@ namespace {
 
 constexpr int kSearchTileWidth = 80;
 constexpr int kSearchTileTopPadding = 4;
-constexpr int kSearchTitleSpacing = 6;
+constexpr int kSearchTitleSpacing = 5;
 constexpr int kSearchRatingStarSize = 12;
 constexpr int kSearchRatingStarHorizontalSpacing = 1;
 constexpr int kSearchRatingStarVerticalSpacing = 2;
@@ -136,6 +136,17 @@ void SearchResultTileItemView::SetSearchResult(SearchResult* item) {
           views::CreateSolidBackground(kCardBackgroundColorFullscreen));
       title()->SetFontList(base_font.DeriveWithSizeDelta(1));
       title()->SetEnabledColor(kSearchTitleColor);
+    }
+
+    if (item_->display_type() == SearchResult::DISPLAY_TILE &&
+        item_->result_type() == SearchResult::RESULT_INSTALLED_APP) {
+      title()->SetMultiLine(true);
+      title()->SetMaxLines(2);
+    } else {
+      title()->SetMultiLine(false);
+      // Reset max lines to make title() display only limited by the available
+      // view height.
+      title()->SetMaxLines(0);
     }
   }
 
