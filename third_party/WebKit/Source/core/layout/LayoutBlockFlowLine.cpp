@@ -1975,9 +1975,25 @@ void LayoutBlockFlow::LayoutInlineChildren(bool relayout_children,
         }
       } else if (o->IsText() ||
                  (o->IsLayoutInline() && !walker.AtEndOfInline())) {
-        if (!o->IsText())
+        if (!o->IsText()) {
+          // TODO(smcgruer): Create a LayoutBoxModelObject::UpdateAfterLayout
+          // and make sure it is called for inline children.
+          // Register child if its sticky.
+          if (o->IsStickyPositioned()) {
+            Persistent<Node> ancestor_overflow_node =
+                o->StyleRef().AncestorOverflowNode();
+            LayoutBoxModelObject* ancestor_overflow_object =
+                ancestor_overflow_node->GetLayoutBoxModelObject();
+            // HACK(smcgruer): We can do this at style time.
+            ToLayoutBoxModelObject(o)->Layer()->UpdateAncestorOverflowLayer(
+                ancestor_overflow_object->Layer());
+            ancestor_overflow_object->Layer()
+                ->GetScrollableArea()
+                ->RegisterStickyElement(ToLayoutBoxModelObject(o));
+          }
           ToLayoutInline(o)->UpdateAlwaysCreateLineBoxes(
               layout_state.IsFullLayout());
+        }
         if (layout_state.IsFullLayout() || o->SelfNeedsLayout())
           DirtyLineBoxesForObject(o, layout_state.IsFullLayout());
         o->ClearNeedsLayout();

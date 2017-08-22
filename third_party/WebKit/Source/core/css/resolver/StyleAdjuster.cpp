@@ -562,6 +562,21 @@ void StyleAdjuster::AdjustComputedStyle(
       style.SetJustifyItems(parent_style.JustifyItems());
   }
 
+  if (element->parentNode() == element->GetDocument()) {
+    style.SetAncestorOverflowNode(element->GetDocument());
+  }
+
+  if (style.OverflowX() != EOverflow::kVisible ||
+      style.OverflowY() != EOverflow::kVisible) {
+    if (element == element->GetDocument().body()) {
+      // TODO(smcgruer): This seems to be necessary as BODY doesn't get a
+      // Layer(). Confirm that it is correct.
+      style.SetAncestorOverflowNode(element->GetDocument());
+    } else {
+      style.SetAncestorOverflowNode(element);
+    }
+  }
+
   AdjustEffectiveTouchAction(style, parent_style, element);
 }
 }  // namespace blink
