@@ -231,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "31e60b58_535e87fc",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T14:08:08Z",
+      "side": 1,
+      "message": "Before this CL, there was a check that either the global var is null, or equal to the passed-in pointer. That should still be valid, right?",
+      "parentUuid": "f67edb4f_5b13ad76",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c48f4847_200d001d",
         "filename": "components/content_settings/core/common/content_settings_pattern.cc",
         "patchSetId": 15
