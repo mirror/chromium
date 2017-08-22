@@ -12,6 +12,7 @@
 namespace blink {
 
 class LayoutText;
+class NGPhysicalTextFragment;
 
 enum class NGOffsetMappingUnitType { kIdentity, kCollapsed, kExpanded };
 
@@ -35,6 +36,7 @@ class NGOffsetMappingUnit {
  public:
   NGOffsetMappingUnit(NGOffsetMappingUnitType,
                       const LayoutText*,
+                      const NGPhysicalTextFragment*,
                       unsigned dom_start,
                       unsigned dom_end,
                       unsigned text_content_start,
@@ -42,6 +44,7 @@ class NGOffsetMappingUnit {
 
   NGOffsetMappingUnitType GetType() const { return type_; }
   const LayoutText* GetOwner() const { return owner_; }
+  const NGPhysicalTextFragment* GetTextFragment() const { return fragment_; }
   unsigned DOMStart() const { return dom_start_; }
   unsigned DOMEnd() const { return dom_end_; }
   unsigned TextContentStart() const { return text_content_start_; }
@@ -52,6 +55,10 @@ class NGOffsetMappingUnit {
  private:
   const NGOffsetMappingUnitType type_ = NGOffsetMappingUnitType::kIdentity;
 
+  // We can safely store raw pointers in this class, because the class can only
+  // be used with clean layout, and hence, cannot possibly out-live any
+  // LayoutText or NGPhysicalTextFragment.
+
   // Ideally, we should store |Node| as owner, instead of |LayoutObject|.
   // However, we need to ensure the invariant that, units of the same owner are
   // consecutive in |NGOffsetMappingResult::units|. There is a tricky case in
@@ -59,6 +66,7 @@ class NGOffsetMappingUnit {
   // even laid out in the same block. As a workaround, we store |LayoutObject|.
   const LayoutText* const owner_;
 
+  const NGPhysicalTextFragment* fragment_;
   const unsigned dom_start_;
   const unsigned dom_end_;
   const unsigned text_content_start_;
