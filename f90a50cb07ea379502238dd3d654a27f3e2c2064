@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5990352_b6c9ed8a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T19:23:11Z",
+      "side": 1,
+      "message": "This will DCHECK() before O because the code checks if the fullscreen detection is running (see https://cs.chromium.org/chromium/src/content/browser/media/media_web_contents_observer.cc?rcl\u003d251bf4fc5010bb7b2d02e81b2810e9ca5cbb3c8a\u0026l\u003d30).",
+      "revId": "f90a50cb07ea379502238dd3d654a27f3e2c2064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a28998cd_d0373e03",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1263,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T19:23:11Z",
+      "side": 1,
+      "message": "EnteredFullscreen should send the right signal to the browser process. Why do you need this?",
+      "revId": "f90a50cb07ea379502238dd3d654a27f3e2c2064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
