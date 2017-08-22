@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "399ea2ce_d2612668",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-22T04:50:13Z",
+      "side": 1,
+      "message": "You should be able to pass in regular Python types here instead of the strings \"true\" and \"false\". Weirdly I Jinja uses lowercase for true/false for historical reasons. Is property[\u0027interpolable\u0027] already a boolean?\n\nhttp://jinja.pocoo.org/docs/2.9/templates/#literals",
+      "revId": "dfcd8b90cafda1a5109afd6c31edf0249b53e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc57b227_33b3c76f",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-22T04:50:13Z",
+      "side": 1,
+      "message": "If you use the regular true/false type here, you can just write\n\n{% if is_interpolable %}\n\nhttp://jinja.pocoo.org/docs/2.9/templates/#if",
+      "revId": "dfcd8b90cafda1a5109afd6c31edf0249b53e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c99c312_48762d5e",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-22T04:50:13Z",
+      "side": 1,
+      "message": "Side note that\u0027s a bit late (sorry I didn\u0027t think of it before)... the \"Property\" suffix on the name of this function seems unnecessary. Can we rename it to just \"IsInterpolable\"?",
+      "revId": "dfcd8b90cafda1a5109afd6c31edf0249b53e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
