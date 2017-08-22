@@ -3351,6 +3351,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kPwaMinimalUiDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(features::kPwaMinimalUi)},
 
+    {"enable-manual-password-saving",
+     flag_descriptions::kManualPasswordSavingName,
+     flag_descriptions::kManualPasswordSavingDescription, kOsDesktop,
+     FEATURE_VALUE_TYPE(password_manager::features::kEnableManualSaving)},
+
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
     // enums.xml and don't forget to run AboutFlagsHistogramTest unit test.
