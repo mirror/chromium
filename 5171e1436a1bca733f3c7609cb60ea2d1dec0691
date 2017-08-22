@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df64baf7_725b9c00",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-22T22:42:03Z",
+      "side": 1,
+      "message": "nit: Perhaps use enum class?",
+      "range": {
+        "startLine": 250,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 4
+      },
+      "revId": "5171e1436a1bca733f3c7609cb60ea2d1dec0691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e29f093_77a6c0fd",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 34554,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-22T22:42:03Z",
+      "side": 1,
+      "message": "Optional nit: You might want to use briefer labels for a more concise view on the dashboards.  I\u0027ll defer to you on the right balance between brevity and clarity, though.",
+      "range": {
+        "startLine": 34553,
+        "startChar": 0,
+        "endLine": 34554,
+        "endChar": 69
+      },
+      "revId": "5171e1436a1bca733f3c7609cb60ea2d1dec0691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
