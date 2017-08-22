@@ -333,6 +333,10 @@ test("gpu_unittests") {
     sources += [ "ipc/client/gpu_memory_buffer_impl_native_pixmap_unittest.cc" ]
   }
 
+  if (is_win || is_linux) {
+    sources += [ "command_buffer/service/gles2_cmd_decoder_passthrough_unittest_buffers.cc" ]
+  }
+
   configs += [
     "//build/config:precompiled_headers",
 
