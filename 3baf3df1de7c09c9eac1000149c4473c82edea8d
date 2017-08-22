@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a147f150_2eb7cbb9",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-22T21:15:16Z",
+      "side": 1,
+      "message": "Add a comment (somewhere around here) explaining that if ENABLE_PLUGINS is false, the PDF plugin is never available, and that we should always intercept PDF iframe navigations.",
+      "revId": "3baf3df1de7c09c9eac1000149c4473c82edea8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
