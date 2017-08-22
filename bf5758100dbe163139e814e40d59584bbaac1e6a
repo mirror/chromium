@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1069a012_a7a55efe",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-22T04:47:47Z",
+      "side": 1,
+      "message": "Nit: A bit tidier:\n\nconst char* uma_string \u003d \"...\";\nif (outlive_time_count \u003d\u003d 5) {\n  UMA_HISTOGRAM_ENUMERATION(uma_string, kGCCount5, ...);\n} else if (outlive_time_count \u003d\u003d 10) {\n  UMA_HISTOGRAM_ENUMERATION(uma_string, kGCCount10, ...);\n}",
+      "revId": "bf5758100dbe163139e814e40d59584bbaac1e6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
