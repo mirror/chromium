@@ -9,7 +9,6 @@
 #include "base/files/file_path.h"
 #include "base/logging.h"
 #include "build/build_config.h"
-#include "chrome/browser/browser_process.h"
 #include "chrome/browser/net/default_network_context_params.h"
 #include "chrome/browser/net/system_network_context_manager.h"
 #include "chrome/browser/profiles/profile.h"
@@ -74,7 +73,7 @@ ProfileNetworkContextService::ProfileNetworkContextService(Profile* profile)
                  base::Unretained(this)));
   // The system context must be initialized before any other network contexts.
   // TODO(mmenke): Figure out a way to enforce this.
-  g_browser_process->system_network_context_manager()->GetContext();
+  SystemNetworkContextManager::Context();
   DisableQuicIfNotAllowed();
 }
 
@@ -136,5 +135,5 @@ void ProfileNetworkContextService::DisableQuicIfNotAllowed() {
   if (quic_allowed_.GetValue())
     return;
 
-  g_browser_process->system_network_context_manager()->DisableQuic();
+  SystemNetworkContextManager::DisableQuic();
 }

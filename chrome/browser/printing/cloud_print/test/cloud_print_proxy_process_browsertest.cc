@@ -42,6 +42,7 @@
 #include "chrome/test/base/chrome_unit_test_suite.h"
 #include "chrome/test/base/test_launcher_utils.h"
 #include "chrome/test/base/testing_browser_process.h"
+#include "chrome/test/base/testing_io_thread_state.h"
 #include "chrome/test/base/testing_profile.h"
 #include "chrome/test/base/testing_profile_manager.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
@@ -540,6 +541,11 @@ TEST_F(CloudPrintProxyPolicyStartupTest, StartAndShutdown) {
       TestingBrowserProcess::GetGlobal();
   TestingProfileManager profile_manager(browser_process);
   ASSERT_TRUE(profile_manager.SetUp());
+
+  // Must be created after the TestingProfileManager since that creates the
+  // LocalState for the BrowserProcess.  Must be created before profiles are
+  // constructed.
+  chrome::TestingIOThreadState testing_io_thread_state;
 
   base::Process process =
       Launch("CloudPrintMockService_StartEnabledWaitForQuit");

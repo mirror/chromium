@@ -10,6 +10,10 @@
 #include "base/macros.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
 
+namespace chrome {
+class TestingIOThreadState;
+}
+
 class BrowserView;
 class ScopedTestingLocalState;
 
@@ -33,6 +37,7 @@ class TestWithBrowserView : public BrowserWithTestWindowTest {
  private:
   BrowserView* browser_view_;  // Not owned.
   std::unique_ptr<ScopedTestingLocalState> local_state_;
+  std::unique_ptr<chrome::TestingIOThreadState> testing_io_thread_state_;
 
   DISALLOW_COPY_AND_ASSIGN(TestWithBrowserView);
 };

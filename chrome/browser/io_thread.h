@@ -38,7 +38,6 @@
 class PrefProxyConfigTracker;
 class PrefService;
 class PrefRegistrySimple;
-class SystemNetworkContextManager;
 
 #if defined(OS_ANDROID)
 namespace chrome {
@@ -50,6 +49,10 @@ class ExternalDataUseObserver;
 
 namespace certificate_transparency {
 class TreeStateTracker;
+}
+
+namespace chrome {
+class TestingIOThreadState;
 }
 
 namespace chrome_browser_net {
@@ -163,8 +166,7 @@ class IOThread : public content::BrowserThreadDelegate {
   IOThread(PrefService* local_state,
            policy::PolicyService* policy_service,
            net_log::ChromeNetLog* net_log,
-           extensions::EventRouterForwarder* extension_event_router_forwarder,
-           SystemNetworkContextManager* system_network_context_manager);
+           extensions::EventRouterForwarder* extension_event_router_forwarder);
 
   ~IOThread() override;
 
@@ -228,6 +230,7 @@ class IOThread : public content::BrowserThreadDelegate {
 
  private:
   friend class test::IOThreadPeer;
+  friend class chrome::TestingIOThreadState;
 
   // BrowserThreadDelegate implementation, runs on the IO thread.
   // This handles initialization and destruction of state that must

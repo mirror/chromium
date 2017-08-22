@@ -11,7 +11,6 @@
 #include "base/strings/stringprintf.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/threading/thread_restrictions.h"
-#include "chrome/browser/browser_process.h"
 #include "chrome/browser/net/profile_network_context_service.h"
 #include "chrome/browser/net/profile_network_context_service_factory.h"
 #include "chrome/browser/net/system_network_context_manager.h"
@@ -83,8 +82,7 @@ class NetworkContextConfigurationBrowserTest
   void SetUpOnMainThread() override {
     switch (GetParam().network_context_type) {
       case NetworkContextType::kSystem: {
-        network_context_ =
-            g_browser_process->system_network_context_manager()->GetContext();
+        network_context_ = SystemNetworkContextManager::Context();
         break;
       }
       case NetworkContextType::kProfile: {
