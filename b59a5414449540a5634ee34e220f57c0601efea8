@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "23974316_3c3e7e36",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-08-22T12:34:59Z",
+      "side": 1,
+      "message": "I think you spoke to Peter about this, but for the record, no - the secondary pattern shouldn\u0027t matter for notification permissions, at least on Android. (As I understand it, with notification permissions we usually expect the primary pattern to be the same as the secondary pattern, since we disallow notification permission requests from cross-origin iframes. I think wildcard secondary patterns are also possible because extensions can request these (?) but that shouldn\u0027t be a concern here since this code is just for Android.)",
+      "parentUuid": "5cbb1c9c_86214e1d",
+      "range": {
+        "startLine": 349,
+        "startChar": 45,
+        "endLine": 349,
+        "endChar": 60
+      },
+      "revId": "b59a5414449540a5634ee34e220f57c0601efea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "012f75e4_77c82f63",
         "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
         "patchSetId": 11
@@ -39,6 +63,24 @@
       "revId": "b59a5414449540a5634ee34e220f57c0601efea8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a8fc77_16102100",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-08-22T12:34:59Z",
+      "side": 1,
+      "message": "Rejecting this nit as logically superfluous :P",
+      "parentUuid": "012f75e4_77c82f63",
+      "revId": "b59a5414449540a5634ee34e220f57c0601efea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "b59a5414449540a5634ee34e220f57c0601efea8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da67300f_84faa73c",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-08-22T12:34:59Z",
+      "side": 1,
+      "message": "Right now the NCPA won\u0027t be constructed unless the flag is enabled, so it seems a bit pointless, but I guess it doesn\u0027t hurt since in a future CL I will need to start constructing it regardless to handle the cleanup-on-flag-disable code path (and this way I won\u0027t need to touch browser_prefs again :)\n\nDone.",
+      "parentUuid": "bad174e9_aa03397c",
+      "range": {
+        "startLine": 672,
+        "startChar": 12,
+        "endLine": 672,
+        "endChar": 23
+      },
+      "revId": "b59a5414449540a5634ee34e220f57c0601efea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
