@@ -22,6 +22,30 @@
       "revId": "3acc3b9848accf162231100d82d807bda2ec0725",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696e80e3_fc244324",
+        "filename": "chrome/renderer/chrome_content_renderer_client_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1116492
+      },
+      "writtenOn": "2017-08-22T22:24:16Z",
+      "side": 1,
+      "message": "It actually means \"The image that the user right-clicked/long-pressed on is a placeholder image, i.e. add the appropriate context menu properties for a placeholder image\". I\u0027ve renamed the parameter here to is_image_in_context_a_placeholder_image to hopefully clarify this.\n\nI can replace it elsewhere or change it to an enum if you\u0027d prefer that.",
+      "parentUuid": "22b6757a_c7fd4f6c",
+      "range": {
+        "startLine": 400,
+        "startChar": 25,
+        "endLine": 400,
+        "endChar": 45
+      },
+      "revId": "3acc3b9848accf162231100d82d807bda2ec0725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
