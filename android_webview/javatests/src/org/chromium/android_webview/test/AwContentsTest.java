@@ -41,6 +41,7 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.parameter.SkipCommandLineParameterization;
 import org.chromium.content.browser.BindingManager;
 import org.chromium.content.browser.ChildProcessLauncherHelper;
+import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content_public.common.ContentUrlConstants;
 import org.chromium.net.test.EmbeddedTestServer;
 import org.chromium.net.test.util.TestWebServer;
@@ -432,6 +433,50 @@ public class AwContentsTest {
             awContents.evaluateJavaScriptForTests("window.bridge.run();", null);
         });
         callback.waitForCallback(0, 1, WAIT_TIMEOUT_MS, TimeUnit.MILLISECONDS);
+    }
+
+    static class SelectionJavaScriptObject {
+        private AwContents mAwContents;
+        private boolean mHasSelectionChanged;
+        public SelectionJavaScriptObject(AwContents awContents) {
+            mAwContents = awContents;
+            mHasSelectionChanged = false;
+        }
+
+        @JavascriptInterface
+        public void onSelectionChanged() {
+            mHasSelectionChanged = true;
+            assertFalse(mAwContents.getContentViewCore().isSelectActionBarShowing());
+        }
+
+        public boolean hasSelectionChanged() {
+            return mHasSelectionChanged;
+        }
+    }
+
+    @Feature({"AndroidWebView"})
+    @SmallTest
+    public void testSelectionActionModeOrdering() throws Throwable {
+        final AwTestContainerView testView = createAwTestContainerViewOnMainSync(mContentsClient);
+        final AwContents awContents = testView.getAwContents();
+        final SelectionJavaScriptObject javaScriptObject =
+                new SelectionJavaScriptObject(awContents);
+        loadDataSync(awContents, mContentsClient.getOnPageFinishedHelper(),
+                "<html><input id='input' value='SampleTextForTesting'</html>", "text/html", false);
+        AwSettings awSettings = awContents.getSettings();
+        awSettings.setJavaScriptEnabled(true);
+        awContents.addJavascriptInterface(javaScriptObject, "cb");
+        awContents.evaluateJavaScriptForTests("window.document.addEventListener('selectionchange',"
+                        + "function() { cb.onSelectionChanged(); }, false);",
+                null);
+        DOMUtils.longPressNode(awContents.getContentViewCore(), "input");
+        pollUiThread(new Callable<Boolean>() {
+            @Override
+            public Boolean call() {
+                return awContents.getContentViewCore().isSelectActionBarShowing();
+            }
+        });
+        assertTrue(javaScriptObject.hasSelectionChanged());
     }
 
     @Test

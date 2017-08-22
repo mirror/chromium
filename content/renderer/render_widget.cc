@@ -32,6 +32,7 @@
 #include "content/common/content_switches_internal.h"
 #include "content/common/drag_event_source_info.h"
 #include "content/common/drag_messages.h"
+#include "content/common/frame_messages.h"
 #include "content/common/input/synthetic_gesture_packet.h"
 #include "content/common/input_messages.h"
 #include "content/common/render_message_filter.mojom.h"
@@ -2009,6 +2010,18 @@ void RenderWidget::OnOrientationChange() {
     WebFrameWidget* web_frame_widget = static_cast<WebFrameWidget*>(web_widget);
     web_frame_widget->LocalRoot()->SendOrientationChangeEvent();
   }
+}
+
+void RenderWidget::ShowContextMenu(const ContextMenuParams& params,
+                                   int routing_id) {
+  Send(new FrameHostMsg_ContextMenu(routing_id, params));
+}
+
+void RenderWidget::ShowDeferredContextMenu(const ContextMenuParams& params,
+                                           int routing_id) {
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::Bind(&RenderWidget::ShowContextMenu, this, params, routing_id));
 }
 
 void RenderWidget::SetHidden(bool hidden) {
