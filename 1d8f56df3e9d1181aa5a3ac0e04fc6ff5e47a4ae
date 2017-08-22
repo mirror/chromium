@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed2454fa_5ef30e70",
+        "filename": "components/autofill/content/renderer/devtools_page_analyser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-22T12:42:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce1147f9_403d5519",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 19
+      },
+      "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "281c095c_597a9b19",
         "filename": "components/autofill/content/renderer/devtools_page_analyser.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-22T11:21:58Z",
       "side": 1,
       "message": "Can we do it traversal only when DevTools is open? DOM traversal could be pretty expensive.",
+      "range": {
+        "startLine": 94,
+        "startChar": 27,
+        "endLine": 94,
+        "endChar": 45
+      },
+      "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "138c1411_30f481e6",
+        "filename": "components/autofill/content/renderer/devtools_page_analyser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-22T12:42:11Z",
+      "side": 1,
+      "message": "It should be possible -- the reason I haven\u0027t done so yet, however, is because it would have different behaviour to all other kinds of browser-sent warning messages (it would require the page to be refreshed to see the warnings, which might not be what the user expects).\n\nHowever, it could be that it could also be triggered when the DevTools are opened for the first time, which would lessen the load when it is not needed: I\u0027ll look into that.",
+      "parentUuid": "281c095c_597a9b19",
       "range": {
         "startLine": 94,
         "startChar": 27,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "19376fad_11e538e4",
+        "filename": "components/autofill/content/renderer/devtools_page_analyser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-22T12:42:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6da9025_ab34b593",
+      "range": {
+        "startLine": 100,
+        "startChar": 9,
+        "endLine": 100,
+        "endChar": 22
+      },
+      "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a4431e1_d1161fa0",
         "filename": "components/autofill/content/renderer/devtools_page_analyser.cc",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "744096d0_c58098e7",
+        "filename": "components/autofill/content/renderer/devtools_page_analyser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-22T12:42:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a4431e1_d1161fa0",
+      "range": {
+        "startLine": 136,
+        "startChar": 9,
+        "endLine": 136,
+        "endChar": 25
+      },
+      "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ea7397a_cc4c994f",
         "filename": "components/autofill/content/renderer/devtools_page_analyser.cc",
         "patchSetId": 10
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-22T11:21:58Z",
       "side": 1,
       "message": "Is it possible here to use const blink::WebNode\u0026 ?",
+      "range": {
+        "startLine": 144,
+        "startChar": 11,
+        "endLine": 144,
+        "endChar": 25
+      },
+      "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cbf7b14_bd32eb58",
+        "filename": "components/autofill/content/renderer/devtools_page_analyser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-22T12:42:11Z",
+      "side": 1,
+      "message": "WebNode::LastChild() constructs a new WebNode, so I think we actually need to assign it here.",
+      "parentUuid": "3ea7397a_cc4c994f",
       "range": {
         "startLine": 144,
         "startChar": 11,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ad258a63_abdf7aaa",
+        "filename": "components/autofill/content/renderer/devtools_page_analyser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-22T12:42:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "897eef36_8bd9ca1e",
+      "range": {
+        "startLine": 245,
+        "startChar": 9,
+        "endLine": 245,
+        "endChar": 22
+      },
+      "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87f3c4a4_9f08438b",
         "filename": "components/autofill/content/renderer/devtools_page_analyser.cc",
         "patchSetId": 10
@@ -160,6 +304,30 @@
       "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba8c528d_9eda1672",
+        "filename": "components/autofill/content/renderer/devtools_page_analyser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-22T12:42:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f3c4a4_9f08438b",
+      "range": {
+        "startLine": 310,
+        "startChar": 32,
+        "endLine": 310,
+        "endChar": 42
+      },
+      "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "0e46e0bf_7fd2a22a",
+        "filename": "components/autofill/content/renderer/devtools_page_analyser.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-22T12:42:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60383699_390f0c88",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 26
+      },
+      "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcb2af0d_32597e41",
         "filename": "components/autofill/content/renderer/devtools_page_analyser.h",
         "patchSetId": 10
@@ -206,6 +398,30 @@
       "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e8ed08_39524745",
+        "filename": "components/autofill/content/renderer/devtools_page_analyser.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-22T12:42:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcb2af0d_32597e41",
+      "range": {
+        "startLine": 23,
+        "startChar": 27,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -252,6 +468,54 @@
       "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a403a7_9571fada",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-22T12:42:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7721c4_2e973bbe",
+      "range": {
+        "startLine": 318,
+        "startChar": 2,
+        "endLine": 318,
+        "endChar": 22
+      },
+      "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "14181c1b_2ae5b95d",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-22T12:42:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "371c7e00_6ee79205",
+      "range": {
+        "startLine": 318,
+        "startChar": 23,
+        "endLine": 318,
+        "endChar": 45
+      },
+      "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
