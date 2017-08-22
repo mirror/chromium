@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b03e44b1_b6fc7d0f",
+        "filename": "services/catalog/entry.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-08-22T17:52:46Z",
+      "side": 1,
+      "message": "where are these keys documented? does this also need to be updated?",
+      "range": {
+        "startLine": 47,
+        "startChar": 21,
+        "endLine": 47,
+        "endChar": 33
+      },
+      "revId": "fea8a04cba6860f722c21cfee01daa2fa12e9c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
