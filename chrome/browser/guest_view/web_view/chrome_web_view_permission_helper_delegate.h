@@ -55,7 +55,6 @@ class ChromeWebViewPermissionHelperDelegate :
   // content::WebContentsObserver implementation.
   bool OnMessageReceived(const IPC::Message& message,
                          content::RenderFrameHost* render_frame_host) override;
-  bool OnMessageReceived(const IPC::Message& message) override;
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
 
  private:
