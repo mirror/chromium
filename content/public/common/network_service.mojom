@@ -11,6 +11,12 @@ import "url/mojo/url.mojom";
 
 // Parameters for constructing a network context.
 struct NetworkContextParams {
+  // Name to use to identify the context in memory/debugging tools.
+  std::string context_name = "unknown";
+
+  // Whether brotli content-encoding should be enabled for HTTPS responses.
+  bool enable_brotli = true;
+
   // QUIC user agent.
   string quic_user_agent_id;
 
