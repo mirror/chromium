@@ -25,6 +25,8 @@ static_library("browser") {
     "bookmark_node_data_mac.cc",
     "bookmark_pasteboard_helper_mac.h",
     "bookmark_pasteboard_helper_mac.mm",
+    "bookmark_reordering_features.cc",
+    "bookmark_reordering_features.h",
     "bookmark_storage.cc",
     "bookmark_storage.h",
     "bookmark_undo_delegate.h",

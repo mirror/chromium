@@ -57,6 +57,10 @@ extern const char kCaptivePortalDescription[];
 extern const char kInProductHelpDemoModeName[];
 extern const char kInProductHelpDemoModeDescription[];
 
+// Title and description for the flag to enable bookmark reordering UI.
+extern const char kBookmarkReorderingName[];
+extern const char kBookmarkReorderingDescription[];
+
 }  // namespace flag_descriptions
 
 #endif  // IOS_CHROME_BROWSER_IOS_CHROME_FLAG_DESCRIPTIONS_H_
