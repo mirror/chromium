@@ -16,6 +16,8 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
 
     /** @type {?Accessibility.AXBreadcrumb} */
     this._preselectedBreadcrumb = null;
+    /** @type {?Accessibility.AXBreadcrumb} */
+    this._inspectedNodeBreadcrumb = null;
 
     this._selectedByUser = true;
 
@@ -65,14 +67,14 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
       depth++;
     }
 
-    var inspectedNodeBreadcrumb = breadcrumb;
-    inspectedNodeBreadcrumb.setPreselected(true, this._selectedByUser);
+    this._inspectedNodeBreadcrumb = breadcrumb;
+    this._inspectedNodeBreadcrumb.setPreselected(true, this._selectedByUser);
 
-    this._setPreselectedBreadcrumb(inspectedNodeBreadcrumb);
+    this._setPreselectedBreadcrumb(this._inspectedNodeBreadcrumb);
 
     for (var child of axNode.children()) {
       var childBreadcrumb = new Accessibility.AXBreadcrumb(child, depth, false);
-      inspectedNodeBreadcrumb.appendChild(childBreadcrumb);
+      this._inspectedNodeBreadcrumb.appendChild(childBreadcrumb);
     }
 
     this._selectedByUser = false;
@@ -147,10 +149,12 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
       return;
     if (this._preselectedBreadcrumb)
       this._preselectedBreadcrumb.setPreselected(false, this._selectedByUser);
-    this._preselectedBreadcrumb = breadcrumb;
-    if (this._preselectedBreadcrumb)
-      this._preselectedBreadcrumb.setPreselected(true, this._selectedByUser);
-    else if (this._selectedByUser)
+    if (breadcrumb)
+      this._preselectedBreadcrumb = breadcrumb;
+    else
+      this._preselectedBreadcrumb = this._inspectedNodeBreadcrumb;
+    this._preselectedBreadcrumb.setPreselected(true, this._selectedByUser);
+    if (!breadcrumb && this._selectedByUser)
       SDK.OverlayModel.hideDOMNodeHighlight();
   }
 
@@ -171,7 +175,7 @@ Accessibility.AXBreadcrumbsPane = class extends Accessibility.AccessibilitySubPa
       return;
     }
     var breadcrumb = breadcrumbElement.breadcrumb;
-    if (breadcrumb.preselected() || breadcrumb.inspected() || !breadcrumb.isDOMNode())
+    if (!breadcrumb.isDOMNode())
       return;
     this._setHoveredBreadcrumb(breadcrumb);
   }
