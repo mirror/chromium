@@ -906,6 +906,17 @@ bool TaskQueueImpl::HasPendingImmediateWork() {
   return !immediate_incoming_queue().empty();
 }
 
+void TaskQueueImpl::SetOnTaskStartedHandler(
+    TaskQueueImpl::OnTaskStartedHandler handler) {
+  main_thread_only().on_task_started_handler = std::move(handler);
+}
+
+void TaskQueueImpl::OnTaskStarted(const TaskQueue::Task& task,
+                                  base::TimeTicks start) {
+  if (!main_thread_only().on_task_started_handler.is_null())
+    main_thread_only().on_task_started_handler.Run(task, start);
+}
+
 void TaskQueueImpl::SetOnTaskCompletedHandler(
     TaskQueueImpl::OnTaskCompletedHandler handler) {
   main_thread_only().on_task_completed_handler = std::move(handler);
@@ -918,9 +929,19 @@ void TaskQueueImpl::OnTaskCompleted(const TaskQueue::Task& task,
     main_thread_only().on_task_completed_handler.Run(task, start, end);
 }
 
+bool TaskQueueImpl::RequiresTaskTiming() const {
+  return (!main_thread_only().on_task_started_handler.is_null() ||
+          !main_thread_only().on_task_completed_handler.is_null()) &&
+         !main_thread_only().force_skip_require_timing_for_test_;
+}
+
 void TaskQueueImpl::SetQueueEnabledForTest(bool enabled) {
   main_thread_only().is_enabled_for_test = enabled;
   EnableOrDisableWithSelector(IsQueueEnabled());
+}
+
+void TaskQueueImpl::ForceSkipRequireTimingForTest(bool force_skip) {
+  main_thread_only().force_skip_require_timing_for_test_ = force_skip;
 }
 
 }  // namespace internal
