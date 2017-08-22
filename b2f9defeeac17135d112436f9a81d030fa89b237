@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23330d9b_843f2d58",
+        "filename": "content/browser/appcache/appcache_update_job_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T19:00:10Z",
+      "side": 1,
+      "message": "where are these notify methods used?",
+      "revId": "b2f9defeeac17135d112436f9a81d030fa89b237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e506e5c7_4d743111",
+        "filename": "content/browser/appcache/appcache_update_job_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T19:00:10Z",
+      "side": 1,
+      "message": "how is this value set?",
+      "revId": "b2f9defeeac17135d112436f9a81d030fa89b237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866ae537_4df699f4",
+        "filename": "content/browser/appcache/appcache_update_job_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T19:00:10Z",
+      "side": 1,
+      "message": "nit: comment isn\u0027t really needed",
+      "revId": "b2f9defeeac17135d112436f9a81d030fa89b237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd65f34_8998cb66",
+        "filename": "content/browser/appcache/appcache_update_job_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T19:00:10Z",
+      "side": 1,
+      "message": "Maybe comment that  TestBrowserThreadBundle dtor will guarantees execution of all posted tasks prior the io thread shutdown, so the unretained pointer is safe.",
+      "revId": "b2f9defeeac17135d112436f9a81d030fa89b237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d692856_c86fd3de",
+        "filename": "content/browser/appcache/appcache_update_job_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2989,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T19:00:10Z",
+      "side": 1,
+      "message": "maybe make the sequencing here and elsewhere more obvious by...\n\n    base::ThreadTaskRunnerHandle::Get()-\u003ePostTask(\n        FROM_HERE, base::BindOnce(\u0026AppCacheUpdateJobTest::UpdateFinishedUnwound,\n                                  base::Unretained(this)));",
+      "range": {
+        "startLine": 2989,
+        "startChar": 4,
+        "endLine": 2989,
+        "endChar": 18
+      },
+      "revId": "b2f9defeeac17135d112436f9a81d030fa89b237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c77c8a_4f174d44",
+        "filename": "content/browser/appcache/appcache_update_job_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3978,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T19:00:10Z",
+      "side": 1,
+      "message": "Should we split these out further? As coded the three tests run concurrently which could be confusing and also they could be fighting values in data members? To be safe, i\u0027d vote for a top level TEST_P for each case.",
+      "revId": "b2f9defeeac17135d112436f9a81d030fa89b237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
