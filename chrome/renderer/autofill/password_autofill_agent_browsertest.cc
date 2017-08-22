@@ -3169,4 +3169,19 @@ TEST_F(PasswordAutofillAgentTest,
   EXPECT_FALSE(GetCalledShowManualFallbackSuggestion());
 }
 
+TEST_F(PasswordAutofillAgentTest,
+       UpdateSuggestionsIfNewerCredentialsAreSupplied) {
+  // Supply old fill data
+  password_autofill_agent_->FillPasswordForm(0, fill_data_);
+  // The username and password should have been autocompleted.
+  CheckTextFieldsState(kAliceUsername, true, kAlicePassword, true);
+
+  // Change fill data
+  fill_data_.password_field.value = ASCIIToUTF16("a-changed-password");
+  // Supply changed fill data
+  password_autofill_agent_->FillPasswordForm(1 /* New key means new data */,
+                                             fill_data_);
+  CheckTextFieldsState(kAliceUsername, true, "a-changed-password", true);
+}
+
 }  // namespace autofill
