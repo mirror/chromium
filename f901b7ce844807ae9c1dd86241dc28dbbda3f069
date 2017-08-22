@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9602ca7_387977dd",
+        "filename": "ash/link_handler_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-22T19:46:17Z",
+      "side": 1,
+      "message": "nit: \u003d default; ?",
+      "revId": "f901b7ce844807ae9c1dd86241dc28dbbda3f069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89e8c3c2_3d11f6a4",
+        "filename": "ash/link_handler_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-22T19:46:17Z",
+      "side": 1,
+      "message": "same",
+      "revId": "f901b7ce844807ae9c1dd86241dc28dbbda3f069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d20dcc46_f85cf3de",
+        "filename": "ash/public/interfaces/link_handler.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-22T19:46:17Z",
+      "side": 1,
+      "message": "sort?",
+      "revId": "f901b7ce844807ae9c1dd86241dc28dbbda3f069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73fe9486_ec4b49eb",
+        "filename": "ash/shell.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-22T19:46:17Z",
+      "side": 1,
+      "message": "base::MakeUnique\u003c\u003e?",
+      "revId": "f901b7ce844807ae9c1dd86241dc28dbbda3f069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6fa1329_640dff1c",
+        "filename": "chrome/browser/renderer_context_menu/open_with_menu_factory_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-22T19:46:17Z",
+      "side": 1,
+      "message": "I tested your CL on my Chromebook with the link_url_ fix. It worked mostly well, but sometimes (not always) I saw empty items in the menu. I needed to right-click the same link 2-3 times to properly show app names and icons.\n\nSo there seems to be a code path where this callback is not called at all. Can you take a look at the ash or component code again?\n\nScreenshots (please do not share externally):\nhttps://drive.google.com/open?id\u003d0B0PiDA6D07IvNWpfbHJvb2w4NnM (empty items)\nhttps://drive.google.com/open?id\u003d0B0PiDA6D07IvR2paZWVpR3k2OFU (after 2-3 right clicks)",
+      "revId": "f901b7ce844807ae9c1dd86241dc28dbbda3f069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
