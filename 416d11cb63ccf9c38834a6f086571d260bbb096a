@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9f9da4a_030bf376",
+        "filename": "chrome/browser/chrome_browser_main_android.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-22T03:01:20Z",
+      "side": 1,
+      "message": "Many of the previous CL iterations have the same issue, but I forgot to ask about it. What\u0027s the lifetime of ChildProcessCrashObserver vs. g_browser_process-\u003elocal_state()? Is it possible for ChildProcessCrashObserver to call the callback that wraps IncreaseCrashCount() after the object g_browser_process-\u003elocal_state() points to has been destroyed?",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cc54ede_66cc5963",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-22T03:01:20Z",
+      "side": 1,
+      "message": "So if |increase_crash_cb| becames a base::Closure, then you need to write a small adaptor and use it here, with |increase_crash_cb_| remaining as a base::Callback\u003cvoid(bool)\u003e.\n\nbase::Bind(\u0026IncreaseCrashHelper, increase_crash_cb);",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6fd4e2c_9c91214b",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-22T03:01:20Z",
+      "side": 1,
+      "message": "Can you mention why you added this explicit shutdown behavior?",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "073443fc_7a868dc2",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-22T03:01:20Z",
+      "side": 1,
+      "message": "Didn\u0027t think of this earlier, but it might be a nicer interface to take a base::Closure instead, with the contract being that ChildProcessCrashObserver will only call the base::Closure when it determines that the closure needs to be called. See other comments that help explain what would change as a result.",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ab8cc8d_8e3a082c",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-22T03:01:20Z",
+      "side": 1,
+      "message": "Just: increase_crash_count \u003d is_running || is_paused;",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9a4ffb_d4d31bd0",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-22T03:01:20Z",
+      "side": 1,
+      "message": "Document what the return value means. Since it does not mean success or failure.",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67fe9456_bc841993",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-22T03:01:20Z",
+      "side": 1,
+      "message": "If ChildProcessCrashObserver can take a base::Closure, then you can just remove this and assume IncreaseCrashCount() would only get called if it was set to true.",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c997ed67_ba2188eb",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-22T03:01:20Z",
+      "side": 1,
+      "message": "nit: Probably don\u0027t need this, since you are already in the metrics namespace. See the function above for examples. Same on the next line.",
+      "range": {
+        "startLine": 173,
+        "startChar": 30,
+        "endLine": 173,
+        "endChar": 39
+      },
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aca65a9_adc132ff",
+        "filename": "components/metrics/stability_metrics_helper.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-22T03:01:20Z",
+      "side": 1,
+      "message": "style: Capitalize the \"i\" in increase. If you are not sure of all the style guide rules, look around in the existing code and try to blend in.",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b509b5c_82465e4d",
+        "filename": "content/shell/browser/shell_browser_main_parts.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-22T03:01:20Z",
+      "side": 1,
+      "message": "If ChildProcessCrashObserver can take a base::Closure, then you can just pass in base::Bind(\u0026base::DoNothing) here.",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
