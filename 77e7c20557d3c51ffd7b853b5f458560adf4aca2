@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "04df4038_c3a0f273",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-22T00:27:52Z",
+      "side": 1,
+      "message": "I was thinking this was a better temporary location, since it provides better isolation from content/, and there\u0027s really nothing like it in content/public/common (And there\u0027s only one unittest file in there...), but I\u0027ve moved it all there.  Tell me if you\u0027d rather the cc files be in content/common/.",
+      "parentUuid": "c57a2e01_041e46f4",
+      "revId": "77e7c20557d3c51ffd7b853b5f458560adf4aca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "908b2cdf_d1a01a3d",
         "filename": "components/loader/simple_url_loader.h",
         "patchSetId": 25
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ab43895c_2edc2be7",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-22T00:27:52Z",
+      "side": 1,
+      "message": "Done, though I\u0027m not convinced that gets us anything, other than a bigger cc file.",
+      "parentUuid": "908b2cdf_d1a01a3d",
+      "revId": "77e7c20557d3c51ffd7b853b5f458560adf4aca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb34612f_731e0051",
         "filename": "components/loader/simple_url_loader.h",
         "patchSetId": 25
@@ -50,6 +86,24 @@
       "revId": "77e7c20557d3c51ffd7b853b5f458560adf4aca2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e55f8cea_3c3eb948",
+        "filename": "components/loader/simple_url_loader.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-22T00:27:52Z",
+      "side": 1,
+      "message": "Makes sense, done.",
+      "parentUuid": "eb34612f_731e0051",
+      "revId": "77e7c20557d3c51ffd7b853b5f458560adf4aca2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
