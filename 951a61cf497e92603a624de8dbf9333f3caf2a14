@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ef0e61f_3969af66",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T21:22:35Z",
+      "side": 1,
+      "message": "Should we only do this for the worker context, and not the shared main thread context (which won\u0027t use raster, at least not in the short term)?",
+      "revId": "951a61cf497e92603a624de8dbf9333f3caf2a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a419ce_259be0c1",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 3710,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T21:22:35Z",
+      "side": 1,
+      "message": "Should we return false if we request enable_oop_rasterization, but features().chromium_raster_transport is false?",
+      "revId": "951a61cf497e92603a624de8dbf9333f3caf2a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4038c2_59bd68d0",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 19939,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T21:22:35Z",
+      "side": 1,
+      "message": "We still need to fail if we didn\u0027t request enable_oop_rasterization in the attribs, because gr_context_ will be null.",
+      "revId": "951a61cf497e92603a624de8dbf9333f3caf2a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59350ab5_c02d1b01",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 20068,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T21:22:35Z",
+      "side": 1,
+      "message": "nit: would it be useful to hoist this out of the loop?",
+      "revId": "951a61cf497e92603a624de8dbf9333f3caf2a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0999a8a_f630096f",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T21:22:35Z",
+      "side": 1,
+      "message": "nit: NOTIMPLEMENTED() / TODO?\n\nWe should probably fail creation of the passthrough decoder in the mean time, if oop raster is requested",
+      "revId": "951a61cf497e92603a624de8dbf9333f3caf2a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
