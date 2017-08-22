@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "581dffef_082a601c",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-22T04:50:31Z",
+      "side": 1,
+      "message": "looks like this whole function isn\u0027t needed any more.",
+      "revId": "f36afc7615e2fe3eebbd5ea51dee6c2999e17042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
