@@ -202,6 +202,7 @@ const CGFloat kMenuWidth = 264;
     self.navigationController.navigationBar.tintColor = UIColor.blackColor;
     self.navigationController.navigationBar.backgroundColor =
         bookmark_utils_ios::mainBackgroundColor();
+    self.navigationController.navigationBar.translucent = NO;
   } else {
     // Set up old UI view.
     LayoutRect menuLayout =
