@@ -9,6 +9,8 @@
 #include <unistd.h>
 #endif
 
+#include <array>
+
 #include "base/command_line.h"
 #include "base/memory/ref_counted.h"
 #include "base/path_service.h"
@@ -36,6 +38,9 @@
 #endif
 
 namespace {
+
+constexpr std::array<const char*, 2> kNonPortNonDomainWildcardSchemes{
+    {extensions::kExtensionScheme, chrome::kChromeSearchScheme}};
 
 bool IsCrosPythonProcess() {
 #if defined(OS_CHROMEOS)
@@ -81,8 +86,9 @@ void ChromeTestSuite::Initialize() {
   // values for DIR_EXE and DIR_MODULE.
   content::ContentTestSuiteBase::Initialize();
 
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
-      extensions::kExtensionScheme);
+  ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(
+      kNonPortNonDomainWildcardSchemes.data(),
+      kNonPortNonDomainWildcardSchemes.size());
 
 #if defined(OS_MACOSX)
   // Look in the framework bundle for resources.
