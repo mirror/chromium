@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "c9229838_8ed394a5",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 2270,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-22T20:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffadd805_c78992f9",
+      "range": {
+        "startLine": 2270,
+        "startChar": 23,
+        "endLine": 2270,
+        "endChar": 30
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2ea994b_8792d755",
         "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
         "patchSetId": 3
@@ -227,6 +251,30 @@
       "side": 1,
       "message": "It turns out there is a ukm.xml file that I need to use, added it to the changelist.\n\nLooking at other metrics in the file, they use the event name and a less complicated metric name, so this matches the scheme in use as I understand it.",
       "parentUuid": "550b58c8_7a1158ad",
+      "range": {
+        "startLine": 15,
+        "startChar": 35,
+        "endLine": 15,
+        "endChar": 52
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "396bc24c_86f5ccca",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-22T20:18:26Z",
+      "side": 1,
+      "message": "I actually like how how Autofill does it https://codereview.chromium.org/2800853004/diff/260001/tools/metrics/ukm/ukm.xml\n\nWhere you have a Feature.Event and metrics under that.\n\nFor us it would be:\nOfflinePages.SavePageRequested\nAnd metric: RequestedFromBackground  or something like that.\n\nWDYT?\n\nThis leaves a lot of space of adding offline pages UKMs later on and they can be all grouped and attributed to the OfflinePages feature.\n\nMetrics are already in context and scope of an event, so there is no need to further add names to it.",
+      "parentUuid": "26181ba1_628064ab",
       "range": {
         "startLine": 15,
         "startChar": 35,
@@ -437,6 +485,30 @@
       "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e658226_68d98362",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-22T20:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9ce83f5_86e177d2",
+      "range": {
+        "startLine": 8,
+        "startChar": 40,
+        "endLine": 8,
+        "endChar": 50
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
