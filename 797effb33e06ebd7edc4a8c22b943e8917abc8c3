@@ -16,6 +16,24 @@
       "revId": "797effb33e06ebd7edc4a8c22b943e8917abc8c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "320b360d_0bfedf39",
+        "filename": "chrome/browser/renderer_host/chrome_render_message_filter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-08-22T15:38:38Z",
+      "side": 1,
+      "message": "I just moved the code one layer up from here (https://cs.chromium.org/chromium/src/chrome/browser/net/predictor.cc?rcl\u003dc0b1dfd030fe8cafdde5051fe38662648a9eb35f\u0026l\u003d691).\n\nA scheme and a port don\u0027t really matter in this case because only a hostname is used for the DNS resolution. We use an interface that (mistakenly) accepts GURLs so that\u0027s why we need this conversion. It\u0027d be nice thing to fix given that GURL objects are heavy though.",
+      "parentUuid": "414941dc_d070e94d",
+      "revId": "797effb33e06ebd7edc4a8c22b943e8917abc8c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
