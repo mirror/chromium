@@ -34,6 +34,24 @@
       "revId": "526f42190852d12822b9e05ffb24184de1f00138",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7093ef0c_ff820452",
+        "filename": "chrome/android/webapk/shell_apk/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002088
+      },
+      "writtenOn": "2017-08-22T18:01:41Z",
+      "side": 1,
+      "message": "Looks like I hadn\u0027t tested this enough. While this syntax works (on the server, at least) in isolation, when it\u0027s nested in the {{#intent_filters}}{{/intent_filters}} tags, mustache doesn\u0027t like it so much. In particular, the {{scope_url_scheme}}, {{scope_url_host}}, etc, get replaced only by a single value instead of a value per intent filter.\n\nI think we may have to do it the simpler, nicer-looking way, and just be extra careful to make sure that if we have to roll back the server, we also roll back the Shell at the same time.",
+      "parentUuid": "bb4dbeb8_dc68f939",
+      "revId": "526f42190852d12822b9e05ffb24184de1f00138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
