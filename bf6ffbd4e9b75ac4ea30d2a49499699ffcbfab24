@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33e6910d_e091f588",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-22T04:01:17Z",
+      "side": 1,
+      "message": "This already looks good, making this code run in the constructor for symmetry would be even better, but this is not critical.",
+      "revId": "bf6ffbd4e9b75ac4ea30d2a49499699ffcbfab24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b863d9_982c95c3",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-22T04:01:17Z",
+      "side": 1,
+      "message": "Although you return error, you are setting up an override. Please make this check above (around line 624) and bail out in case of this error.",
+      "revId": "bf6ffbd4e9b75ac4ea30d2a49499699ffcbfab24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
