@@ -104,6 +104,24 @@
       "revId": "aa398ac52ff2a90decf62b8c637939e4a3c9a5ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef29d83c_bc2eddc0",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-22T07:04:51Z",
+      "side": 1,
+      "message": "As per offline discussion, we decided to drop SetDeferCallbacks() and instead rely on FakeFileSystemProvider\u0027s guarantee not to invoke callbacks immediately for simplicity.",
+      "parentUuid": "7f856868_1ac3e1b1",
+      "revId": "aa398ac52ff2a90decf62b8c637939e4a3c9a5ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
