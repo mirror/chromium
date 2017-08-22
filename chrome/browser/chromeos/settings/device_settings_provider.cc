@@ -21,6 +21,7 @@
 #include "chrome/browser/chromeos/ownership/owner_settings_service_chromeos.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/policy/device_local_account.h"
+#include "chrome/browser/chromeos/policy/device_off_hours_controller.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/chromeos/settings/device_settings_cache.h"
 #include "chrome/browser/metrics/metrics_reporting_state.h"
@@ -100,6 +101,7 @@ const char* const kKnownSettings[] = {
     kVariationsRestrictParameter,
     kDeviceLoginScreenLocales,
     kDeviceLoginScreenInputMethods,
+    kDeviceOffHours,
 };
 
 void DecodeLoginPolicies(
@@ -580,6 +582,16 @@ void DecodeLogUploadPolicies(const em::ChromeDeviceSettingsProto& policy,
   }
 }
 
+void DecodeOffHoursPolicy(const em::ChromeDeviceSettingsProto& policy,
+                          PrefValueMap* new_values_cache) {
+  if (!policy.has_device_off_hours())
+    return;
+  auto off_hours = policy::DeviceOffHoursController::ConvertToValue(
+      policy.device_off_hours());
+  if (off_hours)
+    new_values_cache->SetValue(kDeviceOffHours, std::move(off_hours));
+}
+
 void DecodeDeviceState(const em::PolicyData& policy_data,
                        PrefValueMap* new_values_cache) {
   if (!policy_data.has_device_state())
@@ -771,6 +783,7 @@ void DeviceSettingsProvider::UpdateValuesCache(
   DecodeHeartbeatPolicies(settings, &new_values_cache);
   DecodeGenericPolicies(settings, &new_values_cache);
   DecodeLogUploadPolicies(settings, &new_values_cache);
+  DecodeOffHoursPolicy(settings, &new_values_cache);
   DecodeDeviceState(policy_data, &new_values_cache);
 
   // Collect all notifications but send them only after we have swapped the
