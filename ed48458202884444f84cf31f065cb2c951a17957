@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "95ca1929_3a16d080",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-22T11:31:59Z",
+      "side": 1,
+      "message": "remove the trailing spaces?",
+      "revId": "ed48458202884444f84cf31f065cb2c951a17957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad360718_df2f8769",
         "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
         "patchSetId": 5
@@ -13,6 +30,40 @@
       "writtenOn": "2017-08-22T11:26:44Z",
       "side": 1,
       "message": "This method uses url::GetCORSEnabledSchemes() instead of SchemeRegistry\u0027s GetURLSchemesRegistry().\nCurrently they are the same, but I\u0027m afraid this can be inconsistent with other SchemeRegistry methods in the future. (e.g. what if we modify GetURLSchemesRegistry in the future?)\n\nThe rest of the logic is also duplicated between this and SchemeRegistry::ListOfCORSEnabledURLSchemes(), and actually these two are slightly different (as exposed as the test expectation diffs).\n\nHow about just calling SchemeRegistry::ListOfCORSEnabledURLSchemes() to avoid the inconsistencies?",
+      "revId": "ed48458202884444f84cf31f065cb2c951a17957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39322fed_8c86691f",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-22T11:31:59Z",
+      "side": 1,
+      "message": "SchemeRegistry::ListOfCORSEnabledURLSchemes is preserved intentionally?",
+      "revId": "ed48458202884444f84cf31f065cb2c951a17957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd7cb9a_678af6df",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-22T11:31:59Z",
+      "side": 1,
+      "message": "this is touching std::string directly but SchemeRegistry.cpp has been also. i think this is acceptable.",
       "revId": "ed48458202884444f84cf31f065cb2c951a17957",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
