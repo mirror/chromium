@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "60c70695_0564e482",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-22T20:32:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3df0a53a_aafcbe81",
+      "revId": "8e7002308d76400ee2bec94d5cea88abc91e7ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd65f79b_1ef45c41",
         "filename": "content/browser/renderer_host/overscroll_controller.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "35cda5fd_5a64978d",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-22T20:32:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd65f79b_1ef45c41",
+      "range": {
+        "startLine": 267,
+        "startChar": 26,
+        "endLine": 267,
+        "endChar": 27
+      },
+      "revId": "8e7002308d76400ee2bec94d5cea88abc91e7ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48487ffb_cebabb4f",
         "filename": "content/browser/renderer_host/overscroll_controller.cc",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2017-08-21T20:15:40Z",
       "side": 1,
       "message": "This is unclear where why you are allowing GSE to reset the state on send.",
+      "range": {
+        "startLine": 278,
+        "startChar": 14,
+        "endLine": 278,
+        "endChar": 40
+      },
+      "revId": "8e7002308d76400ee2bec94d5cea88abc91e7ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20430a3e_eb7e5438",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-22T20:32:17Z",
+      "side": 1,
+      "message": "My understanding is we need to reset the state such that |OverscrollController| won\u0027t intercept following events (and this GSE?).\n\nOr are you suggesting we shouldn\u0027t do this on send?\n\nThe original code can be tracked back to:\nhttps://chromium.googlesource.com/chromium/src/+/a414164f75a572087dc8245db905411f9098328d",
+      "parentUuid": "48487ffb_cebabb4f",
       "range": {
         "startLine": 278,
         "startChar": 14,
@@ -85,6 +151,30 @@
       "revId": "8e7002308d76400ee2bec94d5cea88abc91e7ad9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a72c8325_0712e0dc",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-22T20:32:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b3d7aa1_0806b276",
+      "range": {
+        "startLine": 296,
+        "startChar": 11,
+        "endLine": 296,
+        "endChar": 12
+      },
+      "revId": "8e7002308d76400ee2bec94d5cea88abc91e7ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
