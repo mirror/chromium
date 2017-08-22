@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fc85f04_ddae1ff2",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T07:47:56Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s possible for a web contents not to have a RenderFrameHost (i.e. the null check below is not necessary)\n\nI\u0027ll try to get this clarified in the content public API.",
+      "revId": "e2f0df60478fc2bfffc62097473c7af58726d7b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918ac610_0679b0ca",
+        "filename": "third_party/WebKit/public/web/window_features.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T07:47:56Z",
+      "side": 1,
+      "message": "Add a brief comment describing this interface and which way the information flows (copying the legacy IPC comment is probably sufficient).\n\nAlso, please also document that this is main frame only... I\u0027d like a better way to express this in the future, but for now, this is what we have.",
+      "revId": "e2f0df60478fc2bfffc62097473c7af58726d7b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
