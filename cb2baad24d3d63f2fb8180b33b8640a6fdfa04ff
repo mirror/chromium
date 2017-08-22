@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a34cc6c_2097c2df",
+        "filename": "media/capture/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-22T00:50:32Z",
+      "side": 1,
+      "message": "FWIW, I may end up moving most of the media/capture/content/* files into components/viz/service/... at some point. (Part of my Q3 project to move tab/desktop capture into the VIZ process for Mus+Mustash.)",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 35
+      },
+      "revId": "cb2baad24d3d63f2fb8180b33b8640a6fdfa04ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
