@@ -347,6 +347,30 @@
     },
     {
       "key": {
+        "uuid": "9d1b1950_05f5dc36",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T16:34:38Z",
+      "side": 1,
+      "message": "No, you shouldn\u0027t use this. That only applies for API functions which return asynchronous values.",
+      "parentUuid": "3d4b5211_54b4b243",
+      "range": {
+        "startLine": 60,
+        "startChar": 38,
+        "endLine": 60,
+        "endChar": 62
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4dcadd9_8247342b",
         "filename": "components/multidevice/service/multidevice_service_unittest.cc",
         "patchSetId": 26
