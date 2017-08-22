@@ -394,6 +394,17 @@ void NavigationHandleImpl::CancelDeferredNavigation(
   CancelDeferredNavigationInternal(result);
 }
 
+void NavigationHandleImpl::CancelDeferredNavigationWithErrorURL(
+    NavigationThrottle* cancelling_throttle,
+    NavigationThrottle::ThrottleCheckResult result,
+    int net_error,
+    const GURL& error_page_url) {
+  DCHECK(cancelling_throttle);
+  // TODO(csharrison): Convert to DCHECK when crbug.com/736249 is resolved.
+  CHECK_EQ(cancelling_throttle, GetDeferringThrottle());
+  CancelDeferredNavigationInternal(result);
+}
+
 void NavigationHandleImpl::RegisterThrottleForTesting(
     std::unique_ptr<NavigationThrottle> navigation_throttle) {
   throttles_.push_back(std::move(navigation_throttle));
