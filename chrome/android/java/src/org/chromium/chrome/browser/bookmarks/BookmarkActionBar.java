@@ -143,13 +143,16 @@ public class BookmarkActionBar extends SelectableListToolbar<BookmarkId>
     public void onFolderStateSet(BookmarkId folder) {
         mCurrentFolder = mDelegate.getModel().getBookmarkById(folder);
 
-        getMenu().findItem(R.id.search_menu_id).setVisible(true);
+        getMenu()
+                .findItem(R.id.search_menu_id)
+                .setVisible(!mDelegate.getModel().getChildIDs(folder, false, true).isEmpty());
         getMenu().findItem(R.id.edit_menu_id).setVisible(mCurrentFolder.isEditable());
 
         // If this is the root folder, we can't go up anymore.
         if (folder.equals(mDelegate.getModel().getRootFolderId())) {
             setTitle(R.string.bookmarks);
             setNavigationButton(NAVIGATION_BUTTON_NONE);
+            getMenu().findItem(R.id.search_menu_id).setVisible(true);
             return;
         }
 

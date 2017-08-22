@@ -88,4 +88,9 @@ public class HistorySheetContent implements BottomSheetContent {
     public boolean applyDefaultTopPadding() {
         return false;
     }
+
+    @Override
+    public void hideSearchIconIfNoContent() {
+        mToolbarView.onDataChanged(mHistoryManager.getAdapter().getItemCount());
+    }
 }

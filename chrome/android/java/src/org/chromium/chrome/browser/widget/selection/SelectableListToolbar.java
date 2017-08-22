@@ -414,7 +414,7 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
      * Called when the data in the selectable list this toolbar is associated with changes.
      * @param numItems The number of items in the selectable list.
      */
-    protected void onDataChanged(int numItems) {
+    public void onDataChanged(int numItems) {
         if (mHasSearchView) {
             getMenu().findItem(mSearchMenuItemId).setVisible(
                     !mIsSelectionEnabled && !mIsSearching && numItems != 0);
