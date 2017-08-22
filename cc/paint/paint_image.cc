@@ -49,7 +49,7 @@ const sk_sp<SkImage>& PaintImage::GetSkImage() const {
         nullptr, nullptr, SkImage::BitDepth::kU8, SkColorSpace::MakeSRGB());
   } else if (paint_image_generator_) {
     cached_sk_image_ = SkImage::MakeFromGenerator(
-        base::MakeUnique<SkiaPaintImageGenerator>(paint_image_generator_));
+        std::make_unique<SkiaPaintImageGenerator>(paint_image_generator_));
   }
   return cached_sk_image_;
 }

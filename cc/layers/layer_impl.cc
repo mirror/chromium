@@ -383,12 +383,12 @@ std::unique_ptr<base::DictionaryValue> LayerImpl::LayerTreeAsJson() {
   result->SetInteger("LayerId", id());
   result->SetString("LayerType", LayerTypeAsString());
 
-  auto list = base::MakeUnique<base::ListValue>();
+  auto list = std::make_unique<base::ListValue>();
   list->AppendInteger(bounds().width());
   list->AppendInteger(bounds().height());
   result->Set("Bounds", std::move(list));
 
-  list = base::MakeUnique<base::ListValue>();
+  list = std::make_unique<base::ListValue>();
   list->AppendDouble(position_.x());
   list->AppendDouble(position_.y());
   result->Set("Position", std::move(list));
@@ -396,7 +396,7 @@ std::unique_ptr<base::DictionaryValue> LayerImpl::LayerTreeAsJson() {
   const gfx::Transform& gfx_transform = test_properties()->transform;
   double transform[16];
   gfx_transform.matrix().asColMajord(transform);
-  list = base::MakeUnique<base::ListValue>();
+  list = std::make_unique<base::ListValue>();
   for (int i = 0; i < 16; ++i)
     list->AppendDouble(transform[i]);
   result->Set("Transform", std::move(list));
@@ -415,7 +415,7 @@ std::unique_ptr<base::DictionaryValue> LayerImpl::LayerTreeAsJson() {
     result->Set("TouchRegion", std::move(region));
   }
 
-  list = base::MakeUnique<base::ListValue>();
+  list = std::make_unique<base::ListValue>();
   for (size_t i = 0; i < test_properties()->children.size(); ++i)
     list->Append(test_properties()->children[i]->LayerTreeAsJson());
   result->Set("Children", std::move(list));

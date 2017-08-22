@@ -218,7 +218,7 @@ void DirectRenderer::DecideRenderPassAllocationsForFrame(
   for (auto& pass : render_passes_in_draw_order) {
     auto& resource = render_pass_textures_[pass->id];
     if (!resource)
-      resource = base::MakeUnique<ScopedResource>(resource_provider_);
+      resource = std::make_unique<ScopedResource>(resource_provider_);
   }
 }
 
