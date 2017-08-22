@@ -1,0 +1,312 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10966a6a_1a5c5dcb",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T14:17:45Z",
+      "side": 1,
+      "message": "Why the 1.f, instead of M_PI / 180.f?",
+      "range": {
+        "startLine": 21,
+        "startChar": 26,
+        "endLine": 21,
+        "endChar": 27
+      },
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6da1c71_146ffa3c",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T14:17:45Z",
+      "side": 1,
+      "message": "Why have the intermediate variables tan_, instead of just calling tan() here?",
+      "range": {
+        "startLine": 36,
+        "startChar": 32,
+        "endLine": 36,
+        "endChar": 40
+      },
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a803ba9_7386424b",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T14:17:45Z",
+      "side": 1,
+      "message": "Blank line before this to keep your blocks of variables readable?",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48dc7ceb_0b7b16aa",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T14:17:45Z",
+      "side": 1,
+      "message": "Possibly explicitly indicate degrees?",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f5a2ee_d7deea3f",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T14:17:45Z",
+      "side": 1,
+      "message": "s/with in/within/",
+      "range": {
+        "startLine": 27,
+        "startChar": 63,
+        "endLine": 27,
+        "endChar": 70
+      },
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feeb0aee_6a386bf3",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T14:17:45Z",
+      "side": 1,
+      "message": "space after visual",
+      "range": {
+        "startLine": 59,
+        "startChar": 55,
+        "endLine": 59,
+        "endChar": 56
+      },
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8584110_a72b9e27",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T14:17:45Z",
+      "side": 1,
+      "message": "When would this case happen?  WebVR splash screen?",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c19fe43_f8ea99ef",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T14:17:45Z",
+      "side": 1,
+      "message": "Why not put these right after viewport_aware()?",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f7539d_7c745b24",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T14:17:45Z",
+      "side": 1,
+      "message": "Instead of \"Y axis rotation\", maybe say \"when the element is too far to the left or right where the head is pointing\", just to be more clear about the intent?",
+      "range": {
+        "startLine": 257,
+        "startChar": 45,
+        "endLine": 257,
+        "endChar": 60
+      },
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19a4120_05a95b04",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T14:17:45Z",
+      "side": 1,
+      "message": "AdjustPositionForHeadPose() ?",
+      "range": {
+        "startLine": 259,
+        "startChar": 15,
+        "endLine": 259,
+        "endChar": 29
+      },
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8a234a_054d05bf",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T14:17:45Z",
+      "side": 1,
+      "message": "Two separate DCHECKs so you know which one fails?",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84455e55_e99f4361",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T14:17:45Z",
+      "side": 1,
+      "message": "Can degrees be negative?  Is clockwise implying always positive, or just indicating which direction is positive?",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2604a52f_78780125",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T14:17:45Z",
+      "side": 1,
+      "message": "Why does this have to be a class member?",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255c2eee_f0cf5b2e",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T14:17:45Z",
+      "side": 1,
+      "message": "What about replacing the if() with a EXPECT_FLOAT_EQ() call, and renaming the function void CheckMatricesNearlyEqual()?",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f1080c_fbeb4bad",
+        "filename": "chrome/browser/vr/ui_renderer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T14:17:45Z",
+      "side": 1,
+      "message": "Please include a good comment on when this method is used.",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9087844f_573def6d",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T14:17:45Z",
+      "side": 1,
+      "message": "Since this method has to build the list anyway, why not get rid of it, and force users to just call GetViewportAwareElements()?  They can get the list of elements, and process it if its size isn\u0027t 0.",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
