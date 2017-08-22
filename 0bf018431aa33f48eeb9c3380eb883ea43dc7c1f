@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6967470_6dd74250",
+        "filename": "chromecast/browser/cast_browser_main_parts.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2017-08-22T22:45:10Z",
+      "side": 1,
+      "message": "D\u0027oh, I saw the option name but not the ifdef guard. Done.",
+      "parentUuid": "e9f058a6_c5a3ff38",
+      "range": {
+        "startLine": 226,
+        "startChar": 40,
+        "endLine": 226,
+        "endChar": 0
+      },
+      "revId": "0bf018431aa33f48eeb9c3380eb883ea43dc7c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b3eb467_61093a48",
         "filename": "chromecast/browser/cast_web_contents_manager.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d0de169e_a4290d28",
+        "filename": "chromecast/browser/cast_web_contents_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2017-08-22T22:45:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b3eb467_61093a48",
+      "range": {
+        "startLine": 41,
+        "startChar": 27,
+        "endLine": 41,
+        "endChar": 37
+      },
+      "revId": "0bf018431aa33f48eeb9c3380eb883ea43dc7c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4cb210b_e515cfc6",
         "filename": "chromecast/browser/cast_web_contents_manager.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-17T17:41:48Z",
       "side": 1,
       "message": "\"WebContents\" is a little vague here. When looking at logs it might be helpful to know which WebContents is being deleted. Could we make this more identifiable? Similarily, it would be helpful to know when the WebContents is actually deleted.",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 27
+      },
+      "revId": "0bf018431aa33f48eeb9c3380eb883ea43dc7c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26131364_9446606e",
+        "filename": "chromecast/browser/cast_web_contents_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2017-08-22T22:45:10Z",
+      "side": 1,
+      "message": "Added WebContents URL to the logs.",
+      "parentUuid": "b4cb210b_e515cfc6",
       "range": {
         "startLine": 49,
         "startChar": 16,
@@ -106,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "31014721_b02a51e8",
+        "filename": "chromecast/browser/cast_web_contents_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2017-08-22T22:45:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3f4be12_ac8a366e",
+      "revId": "0bf018431aa33f48eeb9c3380eb883ea43dc7c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aebfa36_131eaee0",
         "filename": "chromecast/browser/cast_web_contents_manager.h",
         "patchSetId": 1
@@ -126,6 +216,30 @@
       "revId": "0bf018431aa33f48eeb9c3380eb883ea43dc7c1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b5209b_9ea0dbfc",
+        "filename": "chromecast/browser/cast_web_contents_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1186127
+      },
+      "writtenOn": "2017-08-22T22:45:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aebfa36_131eaee0",
+      "range": {
+        "startLine": 6,
+        "startChar": 50,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "0bf018431aa33f48eeb9c3380eb883ea43dc7c1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
