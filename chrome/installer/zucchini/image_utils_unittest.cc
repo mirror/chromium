@@ -71,4 +71,26 @@ TEST(ImageUtilsTest, UnmarkIndex) {
   EXPECT_EQ(offset_t(0x0000BEEF), UnmarkIndex(0x8000BEEF));
 }
 
+TEST(ImageUtilsTest, RangeIsBounded) {
+  // Basic tests.
+  EXPECT_TRUE(RangeIsBounded<uint8_t>(0U, 0U, 10U));
+  EXPECT_TRUE(RangeIsBounded<uint8_t>(0U, 9U, 10U));
+  EXPECT_FALSE(RangeIsBounded<uint8_t>(1U, 9U, 10U));
+  EXPECT_TRUE(RangeIsBounded<uint8_t>(8U, 1U, 10U));
+  EXPECT_TRUE(RangeIsBounded<uint8_t>(8U, 2U, 10U));
+  EXPECT_TRUE(RangeIsBounded<uint8_t>(9U, 0U, 10U));
+  EXPECT_FALSE(RangeIsBounded<uint8_t>(100U, 0U, 10U));
+  EXPECT_FALSE(RangeIsBounded<uint8_t>(100U, 1U, 10U));
+
+  // Test at boundary of overflow.
+  EXPECT_TRUE(RangeIsBounded<uint8_t>(42U, 137U, 255U));
+  EXPECT_TRUE(RangeIsBounded<uint8_t>(0U, 254U, 255U));
+  EXPECT_FALSE(RangeIsBounded<uint8_t>(0U, 255U, 255U));
+  EXPECT_FALSE(RangeIsBounded<uint8_t>(1U, 254U, 255U));
+  EXPECT_TRUE(RangeIsBounded<uint8_t>(254U, 0U, 255U));
+  EXPECT_FALSE(RangeIsBounded<uint8_t>(254U, 1U, 255U));
+  EXPECT_FALSE(RangeIsBounded<uint8_t>(255U, 0U, 255U));
+  EXPECT_FALSE(RangeIsBounded<uint8_t>(255U, 3U, 255U));
+}
+
 }  // namespace zucchini
