@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "037428ce_1c37fc75",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-22T15:59:41Z",
+      "side": 1,
+      "message": "Could you link the revision this was introduced in here (just mention the r123456 type rev)",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 41
+      },
+      "revId": "f8c5ae3cc84c65a81f36f51a05bc85bf7cc0715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc7396e_c915ef04",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManagerTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-22T15:59:41Z",
+      "side": 1,
+      "message": "Please make these SimTests. See ScrollbarsTest.cpp or other places for examples.\n\nAlso, you don\u0027t have any ScrollManagerTests. I\u0027d rename this file to ScrollBoundaryBehaviorTest and merge these two classes.",
+      "range": {
+        "startLine": 16,
+        "startChar": 33,
+        "endLine": 16,
+        "endChar": 48
+      },
+      "revId": "f8c5ae3cc84c65a81f36f51a05bc85bf7cc0715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a296305_ae417807",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManagerTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-22T15:59:41Z",
+      "side": 1,
+      "message": "IMHO, these would be clearer as private member functions in ScrollBoundaryBehaviorTest that create, initialize, and return a WebGestureEvent, rather than a derived class.",
+      "range": {
+        "startLine": 29,
+        "startChar": 34,
+        "endLine": 29,
+        "endChar": 49
+      },
+      "revId": "f8c5ae3cc84c65a81f36f51a05bc85bf7cc0715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1aa1d44_d3eccf4f",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManagerTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-22T15:59:41Z",
+      "side": 1,
+      "message": "You should set the source_device on these events as well.",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 16
+      },
+      "revId": "f8c5ae3cc84c65a81f36f51a05bc85bf7cc0715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08799f05_a1257a6d",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManagerTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-22T15:59:41Z",
+      "side": 1,
+      "message": "ScrollEnd should have location as well.",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 18
+      },
+      "revId": "f8c5ae3cc84c65a81f36f51a05bc85bf7cc0715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08af8a99_cbac0787",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManagerTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-22T15:59:41Z",
+      "side": 1,
+      "message": "This will cause you to have a small amount of viewport scrolling (since default body margin is 8px). I\u0027d either add \u003cstyle\u003e body { margin: 0; } \u003c/style\u003e or make the viewport wider than 300px.",
+      "range": {
+        "startLine": 90,
+        "startChar": 10,
+        "endLine": 90,
+        "endChar": 71
+      },
+      "revId": "f8c5ae3cc84c65a81f36f51a05bc85bf7cc0715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e07b555_5015023f",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManagerTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-22T15:59:41Z",
+      "side": 1,
+      "message": "\"scroll is up and left\" seems less ambiguous to me. Gesture direction depends on device and settings and can be ambiguous if you mean scroll direction or finger direction.",
+      "range": {
+        "startLine": 101,
+        "startChar": 63,
+        "endLine": 102,
+        "endChar": 25
+      },
+      "revId": "f8c5ae3cc84c65a81f36f51a05bc85bf7cc0715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a767429_99e53f48",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManagerTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-22T15:59:41Z",
+      "side": 1,
+      "message": "Please make it so that positive scroll is down-right. I realize the gesture event stores the negatives of that (it stores \"finger delta\", so finger moving left causes scrolling right) - IMHO it was a mistake made long ago to store it that way in the gesture events (we assumed Gesture \u003d\u003d Touch which isn\u0027t the case any more). You can just negate the values in your helper builders.",
+      "range": {
+        "startLine": 123,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 23
+      },
+      "revId": "f8c5ae3cc84c65a81f36f51a05bc85bf7cc0715f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
