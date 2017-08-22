@@ -2102,6 +2102,9 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
       </message>
 
       <!-- Content blocking strings -->
+      <message name="IDS_MANAGE" desc="Text for a button on permission bubbles, which navigate to more detailed content settings page where users can manage that particular setting.">
+        Manage
+      </message>
       <message name="IDS_AUTOMATIC_DOWNLOADS_TAB_LABEL" desc="Header for multiple automatic downloads page on Content Settings dialog">
         Automatic Downloads
       </message>
@@ -2119,9 +2122,6 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
       </message>
       <message name="IDS_BLOCKED_DOWNLOAD_UNBLOCK" desc="Radio button to unblock automatic downloads">
         Always allow <ph name="HOST">$1<ex>example.com</ex></ph> to download multiple files
-      </message>
-      <message name="IDS_BLOCKED_DOWNLOADS_LINK" desc="Link to downloads section of content blocking management dialog, displayed in bubble when a page tries to download files automatically.">
-        Manage download settings...
       </message>
       <message name="IDS_BLOCKED_DOWNLOAD_TITLE" desc="Title for the page action when an automatic download was blocked">
         This site attempted to download multiple files automatically.
@@ -2144,9 +2144,6 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
       </message>
       <message name="IDS_ACCESSED_COOKIES_TITLE" desc="Tooltip and bubble info header text when a page wrote cookies or other site data.">
         This page set cookies.
-      </message>
-      <message name="IDS_BLOCKED_COOKIES_LINK" desc="Link to cookie section of content blocking management dialog, displayed in bubble when a page tries to write cookies or other site data.">
-        Manage cookie blocking...
       </message>
       <message name="IDS_BLOCKED_COOKIES_INFO" desc="Info link to a dialog showing the blocked/allowed cookies, displayed in bubble when a page tries to write cookies or other site data.">
         Show cookies and other site data...
@@ -2172,9 +2169,6 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
       <message name="IDS_BLOCKED_IMAGES_NO_ACTION" desc="Radio button choice to continue blocking a site from showing images, displayed in bubble when a page tries to display images.">
         Continue blocking images
       </message>
-      <message name="IDS_BLOCKED_IMAGES_LINK" desc="Link to images section of content blocking management dialog, displayed in bubble when a page tries to display images.">
-        Manage image blocking...
-      </message>
       <message name="IDS_BLOCKED_POPUPS_TOOLTIP" desc="Tooltip text when a page is not allowed to display popups.">
         Pop-ups were blocked on this page.
       </message>
@@ -2186,9 +2180,6 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
       </message>
       <message name="IDS_BLOCKED_POPUPS_NO_ACTION" desc="Radio button choice to continue blocking a site from showing popups, displayed in bubble when a page tries to display popups.">
         Continue blocking pop-ups
-      </message>
-      <message name="IDS_BLOCKED_POPUPS_LINK" desc="Link to popups section of content blocking management dialog, displayed in bubble when a page tries to display popups.">
-        Manage pop-up blocking...
       </message>
       <message name="IDS_BLOCKED_MEDIASTREAM_MIC_AND_CAMERA_ALLOW" desc="Radio button choice to allow a site to access microphone and camera, displayed in bubble when a page tries to access microphone and camera.">
         Always allow <ph name="HOST">$1<ex>mail.google.com</ex></ph> to access your camera and microphone
@@ -2250,9 +2241,6 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
       <message name="IDS_BLOCKED_JAVASCRIPT_NO_ACTION" desc="Radio button choice to continue blocking a site from running JavaScript, displayed in bubble when a page tries to run JavaScript.">
         Continue blocking JavaScript
       </message>
-      <message name="IDS_BLOCKED_JAVASCRIPT_LINK" desc="Link to JavaScript section of content blocking management dialog, displayed in bubble when a page tries to run JavaScript.">
-        Manage JavaScript blocking...
-      </message>
       <message name="IDS_BLOCKED_PLUGINS_TITLE" desc="Bubble info header text when a page is not allowed to display plugins.">
         The following plugins were blocked on this page:
       </message>
@@ -2269,9 +2257,6 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
       </if>
       <message name="IDS_BLOCKED_PLUGINS_NO_ACTION" desc="Radio button choice to continue blocking a site from using plugins, displayed in bubble when a page tries to use plugins.">
         Continue blocking plugins
-      </message>
-      <message name="IDS_BLOCKED_PLUGINS_LINK" desc="Link to plugins section of content blocking management dialog, displayed in bubble when a page tries to display plugins.">
-        Manage plugin blocking...
       </message>
       <message name="IDS_BLOCKED_PLUGINS_LOAD_ALL" desc="Button to load all blocked plugins on a page, displayed in bubble when a page tries to display plugins.">
         Run all plugins this time
@@ -5145,9 +5130,6 @@ Keep your key file in a safe place. You will need it to create new versions of y
       <message name="IDS_ALLOWED_PPAPI_BROKER_BLOCK" desc="Radio button to block the Pepper broker">
         Always block unsandboxed plugins on <ph name="HOST">$1<ex>example.com</ex></ph>
       </message>
-      <message name="IDS_PPAPI_BROKER_BUBBLE_MANAGE_LINK" desc="Link title to manage Pepper broker settings">
-        Manage unsandboxed plugin blocking...
-      </message>
 
       <!-- Blocked Displaying/Running Insecure Content info bar -->
       <message name="IDS_BLOCKED_DISPLAYING_INSECURE_CONTENT" desc="Message shown when a website has asked Chrome to display mixed content.  The message is followed by a learn more link and an allow button.">
@@ -6093,9 +6075,6 @@ I don't think this site should be blocked!
       <message name="IDS_HANDLERS_DONOTALLOW_RADIO" desc="A radio button in the Content Settings dialog for preventing sites from registering themselves as handlers for protocols.">
         Do not allow any site to handle protocols
       </message>
-    <message name="IDS_HANDLERS_BUBBLE_MANAGE_LINK" desc="Link on the register protocol handler bubble that opens up the Content Settings management dialog.">
-      Manage handler settings...
-    </message>
     <message name="IDS_HANDLERS_TYPE_COLUMN_HEADER" desc="Header on the settings page for the column showing handler protocols.">
         Type
     </message>
@@ -10182,9 +10161,6 @@ Please help our engineers fix this problem. Tell us what happened right before y
       <message name="IDS_GEOLOCATION_BUBBLE_CLEAR_LINK" desc="Link on the geolocation bubble that resets the list of allowed and blocked sites.">
         Clear these settings for future visits
       </message>
-      <message name="IDS_GEOLOCATION_BUBBLE_MANAGE_LINK" desc="Link on the geolocation bubble that opens up the Content Settings management dialog.">
-        Manage location settings...
-      </message>
       <message name="IDS_GEOLOCATION_ALLOWED_TOOLTIP" desc="Location bar icon tooltip text when a page is allowed to use geolocation.">
         This page is tracking your location.
       </message>
@@ -10231,9 +10207,6 @@ Please help our engineers fix this problem. Tell us what happened right before y
       <message name="IDS_MIDI_SYSEX_BUBBLE_CLEAR_LINK" desc="Link on the MIDI bubble that resets the list of allowed and blocked sites.">
         Clear these settings for future visits
       </message>
-      <message name="IDS_MIDI_SYSEX_BUBBLE_MANAGE_LINK" desc="Link on the MIDI bubble that opens up the Content Settings management dialog.">
-        Manage MIDI settings...
-      </message>
 
       <!-- Protocol Handler -->
       <message name="IDS_REGISTER_PROTOCOL_HANDLER_TOOLTIP" desc="Location bar icon tooltip text when a page wants to use registerProtocolHandler.">
@@ -10241,15 +10214,6 @@ Please help our engineers fix this problem. Tell us what happened right before y
       </message>
 
       <!-- Media Stream -->
-      <message name="IDS_MEDIASTREAM_BUBBLE_MANAGE_LINK" desc="Link on the media (camera and microphone) bubble that opens up the Content Settings management dialog for media settings.">
-        Manage media settings...
-      </message>
-      <message name="IDS_MEDIASTREAM_MICROPHONE_BUBBLE_MANAGE_LINK" desc="Link on the microphone bubble that opens up the Content Settings management dialog for microphone settings.">
-        Manage microphone settings...
-      </message>
-      <message name="IDS_MEDIASTREAM_CAMERA_BUBBLE_MANAGE_LINK" desc="Link on the camera bubble that opens up the Content Settings management dialog for camera settings.">
-        Manage camera settings...
-      </message>
       <message name="IDS_MICROPHONE_CAMERA_ALLOWED" desc="Status text that is used as location bar icon tooltip text and as media settings bubble status text when a page is allowed to use the camera and microphone.">
         This page is accessing your camera and microphone.
       </message>
