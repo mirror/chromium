@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e32e325a_29f2978f",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T20:40:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ab11297_8038749f",
+      "range": {
+        "startLine": 25,
+        "startChar": 42,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "28cd2a066534fa5e8495633ccea47d586a7b22ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "815ebd46_2eb902c2",
         "filename": "chrome/browser/vr/elements/ui_element.h",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "33151a96_46efc46d",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T20:40:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "815ebd46_2eb902c2",
+      "range": {
+        "startLine": 259,
+        "startChar": 15,
+        "endLine": 259,
+        "endChar": 40
+      },
+      "revId": "28cd2a066534fa5e8495633ccea47d586a7b22ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1738ce2_4ce9c319",
         "filename": "chrome/browser/vr/elements/viewport_aware_root.h",
         "patchSetId": 11
@@ -68,6 +116,30 @@
       "revId": "28cd2a066534fa5e8495633ccea47d586a7b22ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff712b7_2928da5d",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T20:40:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1738ce2_4ce9c319",
+      "range": {
+        "startLine": 24,
+        "startChar": 55,
+        "endLine": 24,
+        "endChar": 64
+      },
+      "revId": "28cd2a066534fa5e8495633ccea47d586a7b22ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

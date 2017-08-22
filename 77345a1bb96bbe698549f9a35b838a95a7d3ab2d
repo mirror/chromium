@@ -606,6 +606,24 @@
     },
     {
       "key": {
+        "uuid": "9fa7f6fd_f9974f97",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T20:40:16Z",
+      "side": 1,
+      "message": "Probably makes more sense to check on matrix. So reverted it back to original one.",
+      "parentUuid": "431f0282_e0e2bc58",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27f1080c_fbeb4bad",
         "filename": "chrome/browser/vr/ui_renderer.h",
         "patchSetId": 10

@@ -390,6 +390,24 @@
     },
     {
       "key": {
+        "uuid": "8a3b83a5_6b8b408a",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T20:40:16Z",
+      "side": 1,
+      "message": "Good catch. I was wrong about the undefined behavior. Sorry for confusion.\nIt probably make sense to keep it here though. This keeps consistent with all other derived class in this folder.",
+      "parentUuid": "0dc65cfc_1907ba85",
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45452939_46bb6215",
         "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
         "patchSetId": 9
