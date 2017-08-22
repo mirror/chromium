@@ -262,6 +262,10 @@ def main():
   parser.add_argument(
       '--tool-args', nargs='*',
       help='optional arguments passed to the tool')
+  parser.add_argument(
+      '--resource-dir', nargs='?',
+      help='optional path for clang resource directory')
+
   args = parser.parse_args(argv)
 
   os.environ['PATH'] = '%s%s%s' % (
@@ -270,6 +274,11 @@ def main():
           '../../../third_party/llvm-build/Release+Asserts/bin')),
       os.pathsep,
       os.environ['PATH'])
+
+  if args.resource_dir:
+    if not args.tool_args:
+      args.tool_args = []
+    args.tool_args += ['--extra-arg', '-resource-dir=%s' % args.resource_dir]
 
   if args.generate_compdb:
     with open(os.path.join(args.p, 'compile_commands.json'), 'w') as f:
