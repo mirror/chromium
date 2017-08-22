@@ -219,6 +219,11 @@ bool ServiceWorkerNetworkProvider::IsControlledByServiceWorker() const {
   return context() && context()->controller();
 }
 
+mojom::ServiceWorkerWorkerClientRequest
+ServiceWorkerNetworkProvider::CreateWorkerClientRequest() {
+  return context_->CreateWorkerClientRequest();
+}
+
 // Creates an invalid instance (provider_id() returns
 // kInvalidServiceWorkerProviderId).
 ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider() {}

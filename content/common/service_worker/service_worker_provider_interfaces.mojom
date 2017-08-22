@@ -4,10 +4,20 @@
 
 module content.mojom;
 
+// A renderer-side interface that is registered by BindWorkerFetchContext for
+// the browser to notify the renderer process when there's a controller change.
+interface ServiceWorkerWorkerClient {
+  // Called when the ServiceWorkerWorkerClient (which is a dedicated worker or
+  // a shared worker) is controlled by a new service worker.
+  SetControllerServiceWorker(int64 controller_version_id);
+};
+
 // mojom::ServiceWorkerProviderHost is a browser-side interface. The renderer
 // uses this interface to request the browser to do operations involving service
 // worker registrations.
 interface ServiceWorkerProviderHost {
+  BindWorkerFetchContext(ServiceWorkerWorkerClient client);
+
   // TODO(shimazu): implement them.
   // register() => ();
   // getRegistation() => ();
