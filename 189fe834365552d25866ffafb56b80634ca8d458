@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "f67edb4f_5b13ad76",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-22T13:57:12Z",
+      "side": 1,
+      "message": "The thing is, I actually think it *is* called twice, in browser tests, and the pointer check fails there (if I didn\u0027t make an error while implementing it). WDYT?",
+      "parentUuid": "8422593e_baa25cb0",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c48f4847_200d001d",
         "filename": "components/content_settings/core/common/content_settings_pattern.cc",
         "patchSetId": 15
