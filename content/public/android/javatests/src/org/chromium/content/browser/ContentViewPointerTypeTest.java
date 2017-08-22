@@ -4,10 +4,11 @@
 
 package org.chromium.content.browser;
 
-import android.graphics.Rect;
 import android.os.SystemClock;
+import android.support.test.filters.SmallTest;
 import android.view.InputDevice;
 import android.view.MotionEvent;
+import android.view.ViewGroup;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,11 +16,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.chromium.base.test.util.DisabledTest;
+import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.blink_public.web.WebCursorInfoType;
 import org.chromium.content.browser.test.ContentJUnit4ClassRunner;
-import org.chromium.content.browser.test.util.DOMUtils;
 import org.chromium.content_shell.ShellViewAndroidDelegate.OnCursorUpdateHelper;
 import org.chromium.content_shell_apk.ContentShellActivityTestRule;
 
@@ -31,11 +31,12 @@ public class ContentViewPointerTypeTest {
     @Rule
     public ContentShellActivityTestRule mActivityTestRule = new ContentShellActivityTestRule();
 
-    private static final String CURSOR_PAGE = UrlUtils.encodeHtmlDataUri("<html>"
-            + "<body><a id=\"hand\" href=\"about:blank\">pointer</a>"
-            + "<span id=\"text\">text</span>"
-            + "<span id=\"help\" style=\"cursor:help;\">help</span></body>"
-            + "</html>");
+    private static final String CURSOR_PAGE = UrlUtils.encodeHtmlDataUri("<html><body>"
+            + "<style> div {height:33%; width:100%;} </style>"
+            + "<div style=\"cursor:pointer;\"></div>"
+            + "<div style=\"cursor:text;\"></div>"
+            + "<div style=\"cursor:help;\"></div>"
+            + "</body></html>");
 
     @Before
     public void setUp() throws Exception {
@@ -72,10 +73,13 @@ public class ContentViewPointerTypeTest {
         });
     }
 
-    private void checkPointerTypeForNode(final String nodeId, final int type) throws Throwable {
-        Rect rect = DOMUtils.getNodeBounds(mActivityTestRule.getWebContents(), nodeId);
-        float x = (float) (rect.left + rect.right) / 2.0f;
-        float y = (float) (rect.top + rect.bottom) / 2.0f;
+    private void checkPointerTypeForNode(final int order, final int type) throws Throwable {
+        ViewGroup contentView = mActivityTestRule.getContentViewCore().getContainerView();
+        int viewWidth = contentView.getWidth();
+        int viewHeight = contentView.getHeight();
+
+        float x = (float) viewWidth / 2.0f;
+        float y = ((float) viewHeight / 6.0f) + ((float) viewHeight / 3.0f) * (float) order;
 
         OnCursorUpdateHelper onCursorUpdateHelper = mActivityTestRule.getOnCursorUpdateHelper();
         int onCursorUpdateCount = onCursorUpdateHelper.getCallCount();
@@ -85,12 +89,11 @@ public class ContentViewPointerTypeTest {
     }
 
     @Test
-    //@SmallTest
-    //@Feature({"Main"})
-    @DisabledTest(message = "crbug.com/755112")
+    @SmallTest
+    @Feature({"Main"})
     public void testPointerType() throws Throwable {
-        checkPointerTypeForNode("hand", WebCursorInfoType.TYPE_HAND);
-        checkPointerTypeForNode("text", WebCursorInfoType.TYPE_I_BEAM);
-        checkPointerTypeForNode("help", WebCursorInfoType.TYPE_HELP);
+        checkPointerTypeForNode(0, WebCursorInfoType.TYPE_HAND);
+        checkPointerTypeForNode(1, WebCursorInfoType.TYPE_I_BEAM);
+        checkPointerTypeForNode(2, WebCursorInfoType.TYPE_HELP);
     }
 }
