@@ -3001,7 +3001,10 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   registry_->AddInterface(
       base::Bind(&media::WatchTimeRecorder::CreateWatchTimeRecorderProvider));
 
-  registry_->AddInterface(base::Bind(&media::VideoDecodeStatsRecorder::Create));
+  registry_->AddInterface(base::Bind(&media::VideoDecodeStatsRecorder::Create,
+      BrowserMainLoop::GetInstance()
+          ? BrowserMainLoop::GetInstance()->media_capabilities_database()
+          : nullptr));
 }
 
 void RenderFrameHostImpl::ResetWaitingState() {

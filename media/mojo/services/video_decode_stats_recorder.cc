@@ -3,12 +3,31 @@
 // found in the LICENSE file.
 
 #include "media/mojo/services/video_decode_stats_recorder.h"
+
 #include "base/memory/ptr_util.h"
+#include "media/mojo/services/media_capabilities_database.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
 #include "base/logging.h"
 
 namespace media {
+
+namespace {
+
+void Read(bool success, std::unique_ptr<MediaCapabilitiesDatabase::Info> info) {
+  LOG(INFO) << "success: " << success;
+  LOG(INFO) << "info: " << info.get();
+  if (info) {
+    LOG(INFO) << "decoded: " << info->frames_decoded;
+    LOG(INFO) << "dropped: " << info->frames_dropped;
+  }
+}
+
+}
+
+
+VideoDecodeStatsRecorder::VideoDecodeStatsRecorder(MediaCapabilitiesDatabase* database)
+  : database_(database) {}
 
 VideoDecodeStatsRecorder::~VideoDecodeStatsRecorder() {
   DVLOG(2) << __func__ << " Finalize for IPC disconnect";
@@ -17,8 +36,9 @@ VideoDecodeStatsRecorder::~VideoDecodeStatsRecorder() {
 
 // static
 void VideoDecodeStatsRecorder::Create(
+    MediaCapabilitiesDatabase* database,
     mojom::VideoDecodeStatsRecorderRequest request) {
-  mojo::MakeStrongBinding(base::MakeUnique<VideoDecodeStatsRecorder>(),
+  mojo::MakeStrongBinding(base::MakeUnique<VideoDecodeStatsRecorder>(database),
                           std::move(request));
 }
 
@@ -64,7 +84,13 @@ void VideoDecodeStatsRecorder::FinalizeRecord() {
            << " size:" << natural_size_.ToString() << " fps:" << frames_per_sec_
            << " decoded:" << frames_decoded_ << " dropped:" << frames_dropped_;
 
-  // TODO(chcunningham): Save everything to DB.
+  database_->AppendInfoToEntry(
+      MediaCapabilitiesDatabase::Entry(profile_, natural_size_, frames_per_sec_),
+      MediaCapabilitiesDatabase::Info(frames_decoded_, frames_dropped_));
+
+  database_->GetInfo(
+      MediaCapabilitiesDatabase::Entry(profile_, natural_size_, frames_per_sec_),
+      base::BindOnce(&Read));
 }
 
 }  // namespace media

@@ -47,6 +47,7 @@ class GpuChannelEstablishFactory;
 namespace media {
 class AudioManager;
 class AudioSystem;
+class MediaCapabilitiesDatabase;
 #if defined(OS_WIN)
 class SystemMessageWindowWin;
 #elif defined(OS_LINUX) && defined(USE_UDEV)
@@ -163,6 +164,10 @@ class CONTENT_EXPORT BrowserMainLoop {
     return discardable_shared_memory_manager_.get();
   }
   midi::MidiService* midi_service() const { return midi_service_.get(); }
+
+  media::MediaCapabilitiesDatabase* media_capabilities_database() const {
+    return media_capabilities_database_.get();
+  }
 
   bool is_tracing_startup_for_duration() const {
     return is_tracing_startup_for_duration_;
@@ -360,6 +365,8 @@ class CONTENT_EXPORT BrowserMainLoop {
   scoped_refptr<SaveFileManager> save_file_manager_;
   std::unique_ptr<memory_instrumentation::CoordinatorImpl>
       memory_instrumentation_coordinator_;
+  std::unique_ptr<media::MediaCapabilitiesDatabase> media_capabilities_database_;
+
 #if !defined(OS_ANDROID)
   std::unique_ptr<viz::HostFrameSinkManager> host_frame_sink_manager_;
   // This is owned here so that SurfaceManager will be accessible in process
