@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "84cb05bb_b3991c99",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskUnitTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-22T17:22:03Z",
+      "side": 1,
+      "message": "LOW_BATTERY_LEVEL should be less than 50",
+      "revId": "614d4207e7426b7f254c1e57707399997a038c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7ec1b80_a4b21c74",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskUnitTest.java",
         "patchSetId": 2
