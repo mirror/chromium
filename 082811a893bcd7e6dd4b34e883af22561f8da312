@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9e6cc31b_f0c77246",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T03:32:22Z",
+      "side": 1,
+      "message": "hah, I don\u0027t frequently see regexes and readability together, though these three are pretty easy to understand. I can live with these inline, but I think it\u0027s a deviation from how we handle regexes in much of the rest of build/android/ and certainly in devil.",
+      "parentUuid": "3b0eca1b_4e1d35ba",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf9a4c50_7a514e8f",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 2
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "78a6cc50_8d36c248",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T03:32:22Z",
+      "side": 1,
+      "message": "oh, nice. doing this sgtm, then.",
+      "parentUuid": "f8c48131_a379c313",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43014544_3d127308",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 2
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "We could, but this is faster \u0026 less code (faster because it is all done in a single RunShellCommand()",
       "parentUuid": "43014544_3d127308",
+      "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c5b06d8_dc54f4a8",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T03:32:22Z",
+      "side": 1,
+      "message": "I guess the concern is when this stops working, though I do hope to not see the day when we need four dex files.",
+      "parentUuid": "5cd1476a_ff11a9be",
       "revId": "082811a893bcd7e6dd4b34e883af22561f8da312",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

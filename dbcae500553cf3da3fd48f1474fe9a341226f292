@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40c8800c_8e30430d",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T03:32:22Z",
+      "side": 1,
+      "message": "ah, that\u0027s what the \\s* are for. awful_wrapping indeed :)",
+      "revId": "dbcae500553cf3da3fd48f1474fe9a341226f292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0e31bad4_88d5c540",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T03:32:22Z",
+      "side": 1,
+      "message": "Haha, let\u0027s hope.",
+      "revId": "dbcae500553cf3da3fd48f1474fe9a341226f292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
