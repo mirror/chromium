@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f29d7fa3_aceeacd7",
+        "filename": "content/browser/devtools/protocol/devtools_download_manager_delegate.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-22T07:23:22Z",
+      "side": 1,
+      "message": "Maybe I\u0027m overthinking it, but in this case we allow taking over a different manager delegate. If put in the constructor this would not be possible. Also, we\u0027d need to plumb the download manager intro the GetInstance method.",
+      "parentUuid": "33e6910d_e091f588",
+      "revId": "bf6ffbd4e9b75ac4ea30d2a49499699ffcbfab24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04b863d9_982c95c3",
         "filename": "content/browser/devtools/protocol/page_handler.cc",
         "patchSetId": 26
@@ -33,6 +51,24 @@
       "revId": "bf6ffbd4e9b75ac4ea30d2a49499699ffcbfab24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a3d402_716b6ba6",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-08-22T07:23:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04b863d9_982c95c3",
+      "revId": "bf6ffbd4e9b75ac4ea30d2a49499699ffcbfab24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
