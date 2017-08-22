@@ -307,6 +307,15 @@ std::unique_ptr<PrerenderHandle> PrerenderManager::AddPrerenderForOffline(
                       session_storage_namespace);
 }
 
+std::unique_ptr<PrerenderHandle> PrerenderManager::AddPrerenderForRedirectsWalk(
+    const GURL& url,
+    const GURL& expected_redirect_endpoint,
+    content::SessionStorageNamespace* session_storage_namespace) {
+  return AddPrerender(ORIGIN_REDIRECTS_WALK, url, content::Referrer(),
+                      gfx::Rect(), session_storage_namespace,
+                      expected_redirect_endpoint);
+}
+
 void PrerenderManager::CancelAllPrerenders() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   while (!active_prerenders_.empty()) {
@@ -891,7 +900,8 @@ std::unique_ptr<PrerenderHandle> PrerenderManager::AddPrerender(
     const GURL& url_arg,
     const content::Referrer& referrer,
     const gfx::Rect& bounds,
-    SessionStorageNamespace* session_storage_namespace) {
+    SessionStorageNamespace* session_storage_namespace,
+    const GURL& expected_redirect_endpoint) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   // Allow only Requests for offlining on low end devices, the lifetime of
@@ -994,6 +1004,11 @@ std::unique_ptr<PrerenderHandle> PrerenderManager::AddPrerender(
   std::unique_ptr<PrerenderContents> prerender_contents =
       CreatePrerenderContents(url, referrer, origin);
   DCHECK(prerender_contents);
+
+  if (origin == Origin::ORIGIN_REDIRECTS_WALK)
+    prerender_contents->set_expected_redirect_endpoint(
+        expected_redirect_endpoint);
+
   PrerenderContents* prerender_contents_ptr = prerender_contents.get();
   if (IsNoStatePrefetch(origin))
     prerender_contents_ptr->SetPrerenderMode(PREFETCH_ONLY);

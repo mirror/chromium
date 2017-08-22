@@ -17,12 +17,11 @@
 #include "content/public/browser/web_contents.h"
 #include "jni/ExternalPrerenderHandler_jni.h"
 
-using base::android::ConvertJavaStringToUTF16;
-using base::android::JavaParamRef;
-
 namespace prerender {
 
 namespace {
+using base::android::ConvertJavaStringToUTF16;
+using base::android::JavaParamRef;
 
 bool CheckAndConvertParams(JNIEnv* env,
                            const JavaParamRef<jobject>& jprofile,
@@ -62,11 +61,13 @@ ExternalPrerenderHandlerAndroid::AddPrerender(
     jint bottom,
     jint right,
     jboolean forced_prerender) {
-  Profile* profile = ProfileAndroid::FromProfileAndroid(jprofile);
-
-  GURL url = GURL(ConvertJavaStringToUTF16(env, jurl));
-  if (!url.is_valid())
+  GURL url;
+  PrerenderManager* prerender_manager;
+  content::WebContents* web_contents;
+  if (!CheckAndConvertParams(env, jprofile, jurl, jweb_contents, &url,
+                             &prerender_manager, &web_contents))
     return nullptr;
+
   content::Referrer referrer;
   if (!jreferrer.is_null()) {
     GURL referrer_url(ConvertJavaStringToUTF16(env, jreferrer));
@@ -76,13 +77,6 @@ ExternalPrerenderHandlerAndroid::AddPrerender(
     }
   }
 
-  PrerenderManager* prerender_manager =
-      PrerenderManagerFactory::GetForBrowserContext(profile);
-  if (!prerender_manager)
-    return nullptr;
-
-  content::WebContents* web_contents =
-      content::WebContents::FromJavaWebContents(jweb_contents);
   if (prerender_handle_)
     prerender_handle_->OnNavigateAway();
 
@@ -102,9 +96,53 @@ ExternalPrerenderHandlerAndroid::AddPrerender(
   if (!prerender_handle_) {
     return nullptr;
   } else {
-    return prerender_handle_
-        ->contents()->prerender_contents()->GetJavaWebContents();
+    return prerender_handle_->contents()
+        ->prerender_contents()
+        ->GetJavaWebContents();
   }
+}
+
+jboolean ExternalPrerenderHandlerAndroid::StartRedirectWalk(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jobject>& jprofile,
+    const JavaParamRef<jobject>& jweb_contents,
+    const JavaParamRef<jstring>& jurl,
+    const JavaParamRef<jstring>& jexpected_redirect_endpoint,
+    const JavaParamRef<jstring>& jreferrer) {
+  // We only have a single PrerenderHandle, and starting a new redirect
+  // walk from here would effectively cancel the existing one. Return false
+  // to tell the client to use a fallback mechanism.
+  if (prerender_handle_ && prerender_handle_->IsPrerendering())
+    return false;
+  else
+    prerender_handle_ = nullptr;
+
+  GURL url;
+  PrerenderManager* prerender_manager;
+  content::WebContents* web_contents;
+  if (!CheckAndConvertParams(env, jprofile, jurl, jweb_contents, &url,
+                             &prerender_manager, &web_contents))
+    return false;
+
+  GURL expected_redirect_endpoint = GURL(ConvertJavaStringToUTF16(env, jurl));
+  if (!expected_redirect_endpoint.is_valid())
+    return false;
+
+  content::Referrer referrer;
+  if (!jreferrer.is_null()) {
+    GURL referrer_url(ConvertJavaStringToUTF16(env, jreferrer));
+    if (referrer_url.is_valid()) {
+      referrer =
+          content::Referrer(referrer_url, blink::kWebReferrerPolicyDefault);
+    }
+  }
+
+  redirects_walk_handle_ = prerender_manager->AddPrerenderForRedirectsWalk(
+      url, expected_redirect_endpoint,
+      web_contents->GetController().GetDefaultSessionStorageNamespace());
+  // TODO(lizeb): Reset the handle at some point.
+  return !!redirects_walk_handle_;
 }
 
 void ExternalPrerenderHandlerAndroid::CancelCurrentPrerender(

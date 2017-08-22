@@ -81,6 +81,24 @@ public class ExternalPrerenderHandler {
     }
 
     /**
+     * Start a redirect walk, from the provided URL until the expected end of the redirect chain.
+     *
+     *
+     * @param profile The profile to use for the prerender.
+     * @param url Start of the redirect chain.
+     * @param expectedRedirectEndpoint Expected end of the redirect chain.
+     * @param referrer The referrer for the prerender request.
+     *                            connection.
+     * @return true of the walk has started, false otherwise.
+     */
+    public boolean startRedirectWalk(
+            Profile profile, String url, String expectedRedirectEndpoint, String referrer) {
+        WebContents webContents = WebContentsFactory.createWebContents(false, false);
+        return nativeStartRedirectWalk(mNativeExternalPrerenderHandler, profile, webContents, url,
+                expectedRedirectEndpoint, referrer);
+    }
+
+    /**
      * Cancel the current prerender action on this {@link ExternalPrerenderHandler}.
      */
     public void cancelCurrentPrerender() {
@@ -159,6 +177,9 @@ public class ExternalPrerenderHandler {
             long nativeExternalPrerenderHandlerAndroid, Profile profile,
             WebContents webContents, String url, String referrer,
             int top, int left, int bottom, int right, boolean prerenderOnCellular);
+    private static native boolean nativeStartRedirectWalk(
+            long nativeExternalPrerenderHandlerAndroid, Profile profile, WebContents webContents,
+            String url, String expectedRedirectEndpoint, String referrer);
     private static native boolean nativeHasPrerenderedUrl(
             Profile profile, String url, WebContents webContents);
     private static native boolean nativeHasPrerenderedAndFinishedLoadingUrl(

@@ -793,6 +793,11 @@ void PrerenderContents::AddIdleResource(
   idle_resources_.push_back(throttle);
 }
 
+void PrerenderContents::OnRedirectsWalkDone(bool success) {
+  Destroy(success ? FinalStatus::FINAL_STATUS_REDIRECT_WALK_SUCCESS
+                  : FinalStatus::FINAL_STATUS_REDIRECT_WALK_FAILURE);
+}
+
 void PrerenderContents::AddNetworkBytes(int64_t bytes) {
   network_bytes_ += bytes;
   for (Observer& observer : observer_list_)

@@ -40,6 +40,19 @@ class ExternalPrerenderHandlerAndroid {
       jint right,
       jboolean forced_prerender);
 
+  // Start a redirect walk. Takes an expected redirect endpoint for cancellation
+  // and statistics.
+  // Returns true if the redirect walk has started. Will return false when a
+  // walk is still on-going.
+  jboolean StartRedirectWalk(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      const base::android::JavaParamRef<jobject>& jprofile,
+      const base::android::JavaParamRef<jobject>& jweb_contents,
+      const base::android::JavaParamRef<jstring>& jurl,
+      const base::android::JavaParamRef<jstring>& jexpected_redirect_endpoint,
+      const base::android::JavaParamRef<jstring>& jreferrer);
+
   // Cancel the prerender associated with the prerender_handle_
   void CancelCurrentPrerender(
       JNIEnv* env,
@@ -61,10 +74,11 @@ class ExternalPrerenderHandlerAndroid {
  private:
   virtual ~ExternalPrerenderHandlerAndroid();
   std::unique_ptr<prerender::PrerenderHandle> prerender_handle_;
+  std::unique_ptr<prerender::PrerenderHandle> redirects_walk_handle_;
 
   DISALLOW_COPY_AND_ASSIGN(ExternalPrerenderHandlerAndroid);
 };
 
-} // namespace prerender
+}  // namespace prerender
 
 #endif  // CHROME_BROWSER_PRERENDER_EXTERNAL_PRERENDER_HANDLER_ANDROID_H_
