@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6e8915c_c241e45e",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-08-22T20:38:50Z",
+      "side": 1,
+      "message": "I\u0027m curious about the size choice.\nIt seems like uint8x16_t is the largest SIMD type for 8bits. So we\u0027re trying to do this as wide as possible while using SIMD. That makes sense to me. It is probably the most likely to map to a single opcode when reading/writing.\n\nBut I would also imagine that the cache size is 64 bytes, rather than 16. We might benefit from working on whole cache lines per loop iteration.\n\nThat might diverge further from the code zlib already had. But what if we read/wrote 4x uint8x16_t per loop iteration?\n\nMaybe it won\u0027t matter at all because the loop contents are small enough that it is memory-access-bound. If so, not doing 4x will be the same speed and produce smaller code.",
+      "range": {
+        "startLine": 19,
+        "startChar": 36,
+        "endLine": 19,
+        "endChar": 53
+      },
+      "revId": "c8a4b32e20d414e9adedde4acc2f662bc3c654a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
