@@ -1,0 +1,348 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b64471e_d472f8db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:47:52Z",
+      "side": 1,
+      "message": "what is the frame_index for a static image? 0?",
+      "range": {
+        "startLine": 21,
+        "startChar": 18,
+        "endLine": 21,
+        "endChar": 62
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0878308f_398578c0",
+        "filename": "cc/paint/draw_image.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:47:52Z",
+      "side": 1,
+      "message": "Don\u0027t expose this from draw image please.",
+      "range": {
+        "startLine": 55,
+        "startChar": 23,
+        "endLine": 55,
+        "endChar": 32
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96002de1_6096a6a1",
+        "filename": "cc/paint/draw_image.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:47:52Z",
+      "side": 1,
+      "message": "GetKeyForCurrentFrame as a shorthand?",
+      "range": {
+        "startLine": 56,
+        "startChar": 24,
+        "endLine": 56,
+        "endChar": 66
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce823f8_4ea5e2d1",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:47:52Z",
+      "side": 1,
+      "message": "nit: move FrameKey definitions to be after PaintImage please",
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa5ab00_699f3c76",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:47:52Z",
+      "side": 1,
+      "message": "Subset rect?",
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0517115c_2941becd",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:47:52Z",
+      "side": 1,
+      "message": "This function needs comments",
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb30c22_6163fd69",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:47:52Z",
+      "side": 1,
+      "message": "Should this just be named Id and expose a stable id as one of the parameters? so then s/FrameKey/Id/ everywhere, it\u0027s just the id is now a pod object instead of an int.",
+      "range": {
+        "startLine": 38,
+        "startChar": 24,
+        "endLine": 38,
+        "endChar": 32
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7a2b6e_ed8bf5ad",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:47:52Z",
+      "side": 1,
+      "message": "this is ambiguous if you consider GetKeyForFrame... what frame is this? current frame index?",
+      "range": {
+        "startLine": 98,
+        "startChar": 9,
+        "endLine": 98,
+        "endChar": 20
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37b4243_c1274392",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:47:52Z",
+      "side": 1,
+      "message": "Since you had this on draw image as a frame key, this is used for all images.",
+      "range": {
+        "startLine": 130,
+        "startChar": 57,
+        "endLine": 131,
+        "endChar": 11
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b959f02_b4ae8a33",
+        "filename": "cc/paint/paint_image_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:47:52Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this depend on the frame_index somehow?",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "214dc6c7_351b2c5b",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:47:52Z",
+      "side": 1,
+      "message": "duration_sec.. of course duration_ms is probably more common, but you\u0027d have to convert wherever you get this information.",
+      "range": {
+        "startLine": 28,
+        "startChar": 38,
+        "endLine": 28,
+        "endChar": 46
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8a7d85_55f94c7d",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:47:52Z",
+      "side": 1,
+      "message": "Should this be base::TimeDelta?",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 19
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd57688a_3a7e263f",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:47:52Z",
+      "side": 1,
+      "message": "Why not just say \"Returns a content id for a frame, which uniquely identifies this frame. Repeated queries for the same frame will return the same content id\"",
+      "range": {
+        "startLine": 72,
+        "startChar": 1,
+        "endLine": 75,
+        "endChar": 75
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc88a2ff_0f0e5e83",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:47:52Z",
+      "side": 1,
+      "message": "\u003d {FrameMetadata()} and remove the first ctor?",
+      "range": {
+        "startLine": 84,
+        "startChar": 55,
+        "endLine": 84,
+        "endChar": 57
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb8e3970_f25e7300",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:47:52Z",
+      "side": 1,
+      "message": "not really an id",
+      "range": {
+        "startLine": 1072,
+        "startChar": 10,
+        "endLine": 1072,
+        "endChar": 12
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f049e6c4_6c5a41b3",
+        "filename": "cc/tiles/software_image_decode_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:47:52Z",
+      "side": 1,
+      "message": "Update the comment.",
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
