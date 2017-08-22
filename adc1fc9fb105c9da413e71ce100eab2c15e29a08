@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1d56106_893c8cc9",
+        "filename": "ios/web_view/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-22T16:58:49Z",
+      "side": 1,
+      "message": "This header is not in the CL. Please remove reference or add file.",
+      "range": {
+        "startLine": 15,
+        "startChar": 12,
+        "endLine": 15,
+        "endChar": 33
+      },
+      "revId": "adc1fc9fb105c9da413e71ce100eab2c15e29a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c331433_fcd5092f",
+        "filename": "ios/web_view/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-22T16:58:49Z",
+      "side": 1,
+      "message": "Since this can now either include cronet or not, we should rename it to |ios_web_view_package_copy|",
+      "range": {
+        "startLine": 244,
+        "startChar": 8,
+        "endLine": 244,
+        "endChar": 40
+      },
+      "revId": "adc1fc9fb105c9da413e71ce100eab2c15e29a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb92726_43fbb45e",
+        "filename": "ios/web_view/features.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-22T16:58:49Z",
+      "side": 1,
+      "message": "WDYT about leaving the comment, but changing the flag name to just |enable_sync|?",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "adc1fc9fb105c9da413e71ce100eab2c15e29a08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
