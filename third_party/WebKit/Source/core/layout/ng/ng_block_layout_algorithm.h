@@ -43,10 +43,11 @@ bool MaybeUpdateFragmentBfcOffset(const NGConstraintSpace&,
 // Positions pending floats starting from {@origin_block_offset} and relative
 // to container's BFC offset.
 void PositionPendingFloats(
+    const NGConstraintSpace&,
     LayoutUnit origin_block_offset,
     NGFragmentBuilder* container_builder,
     Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats,
-    NGConstraintSpace* space);
+    NGExclusionSpace*);
 
 // A class for general block layout (e.g. a <div> with no special style).
 // Lays out the children in sequence.
@@ -167,6 +168,16 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
       const NGBoxStrut& child_margins,
       const WTF::Optional<NGLogicalOffset>& known_fragment_offset);
 
+  NGExclusionSpace* MutableExclusionSpace() {
+    DCHECK(exclusion_space_);
+    return exclusion_space_.get();
+  }
+
+  const NGExclusionSpace& ExclusionSpace() const {
+    DCHECK(exclusion_space_);
+    return *exclusion_space_;
+  }
+
   NGLogicalSize child_available_size_;
   NGLogicalSize child_percentage_size_;
 
@@ -176,6 +187,7 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
 
   bool abort_when_bfc_resolved_;
 
+  std::unique_ptr<NGExclusionSpace> exclusion_space_;
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
 };
 
