@@ -49,6 +49,8 @@
 @synthesize firstTimeWithImage = _firstTimeWithImage;
 @synthesize readLaterAction = _readLaterAction;
 @synthesize commandHandler = _commandHandler;
+@synthesize score = _score;
+@synthesize fetchDate = _fetchDate;
 
 - (instancetype)initWithType:(NSInteger)type
                        title:(NSString*)title
