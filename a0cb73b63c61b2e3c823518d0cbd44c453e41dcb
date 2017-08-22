@@ -16,6 +16,24 @@
       "revId": "a0cb73b63c61b2e3c823518d0cbd44c453e41dcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f00e5fe8_cba830b5",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-22T07:50:06Z",
+      "side": 1,
+      "message": "Right. Are you ok with me adjusting the test expectations? The new ordering [http, https, data, chrome] seems more natural than the previous one [http, data, chrome, https] to me.",
+      "parentUuid": "f855f9d8_53b0f695",
+      "revId": "a0cb73b63c61b2e3c823518d0cbd44c453e41dcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
