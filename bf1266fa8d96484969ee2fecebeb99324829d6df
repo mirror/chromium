@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a271b0fb_c21f9adf",
+        "filename": "chrome/browser/chromeos/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 2034,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-22T16:05:33Z",
+      "side": 1,
+      "message": "Please, add comments about the args. I.e.that first one if generated file name, others are for python path.",
+      "range": {
+        "startLine": 2031,
+        "startChar": 0,
+        "endLine": 2034,
+        "endChar": 26
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c795f009_072258a2",
+        "filename": "chrome/browser/chromeos/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 2054,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-22T16:05:33Z",
+      "side": 1,
+      "message": "Do you still need this dependencies? I can\u0027t find where are they used.",
+      "range": {
+        "startLine": 2053,
+        "startChar": 0,
+        "endLine": 2054,
+        "endChar": 24
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c57d5a1_3866e411",
+        "filename": "chrome/browser/chromeos/policy/device_policy_remover.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-22T16:05:33Z",
+      "side": 1,
+      "message": "I\u0027d better explicitly say here that it creates a new proto that is returned.\nSomething like \u0027returns a proto with cleared |policies_to_clear| field.\n\nAlso, it should be mentioned what is the format of |policies_to_clear| strings.",
+      "range": {
+        "startLine": 15,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 50
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df7ed5d0_df69af12",
+        "filename": "chrome/browser/chromeos/policy/device_policy_remover.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-22T16:05:33Z",
+      "side": 1,
+      "message": "RemovePolicies ?",
+      "range": {
+        "startLine": 18,
+        "startChar": 49,
+        "endLine": 18,
+        "endChar": 62
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7dfd40_09a5fdb4",
+        "filename": "chrome/browser/chromeos/policy/device_policy_remover.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-22T16:05:33Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 20,
+        "startChar": 45,
+        "endLine": 20,
+        "endChar": 50
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06dd8052_771d735d",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-22T16:05:33Z",
+      "side": 1,
+      "message": "removes?",
+      "range": {
+        "startLine": 5,
+        "startChar": 25,
+        "endLine": 5,
+        "endChar": 30
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
