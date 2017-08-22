@@ -2436,12 +2436,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 #pragma mark - SettingsNavigationControllerDelegate
 
 - (void)closeSettings {
-  [self closeSettingsUI];
-}
-
-// Handle a close settings and open URL command.
-- (void)closeSettingsAndOpenUrl:(OpenUrlCommand*)command {
-  [self closeSettingsUIAndOpenURL:command];
+  NOTREACHED();
 }
 
 - (void)closeSettingsAndOpenNewIncognitoTab {
