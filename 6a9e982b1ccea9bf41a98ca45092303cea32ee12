@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abc779b3_7052515a",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-22T07:44:18Z",
+      "side": 1,
+      "message": "As explained here, in general, you need to add a new entry at the end of the definition instead of inserting it somewhere in the middle.",
+      "range": {
+        "startLine": 1166,
+        "startChar": 0,
+        "endLine": 1166,
+        "endChar": 56
+      },
+      "revId": "6a9e982b1ccea9bf41a98ca45092303cea32ee12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
