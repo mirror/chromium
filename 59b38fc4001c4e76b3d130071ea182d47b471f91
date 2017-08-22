@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c346e6fd_a11bbbd6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 80873,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-08-22T19:18:16Z",
+      "side": 1,
+      "message": "Make sure to mention adding that metric as well in the CL description.",
+      "range": {
+        "startLine": 80873,
+        "startChar": 0,
+        "endLine": 80873,
+        "endChar": 61
+      },
+      "revId": "59b38fc4001c4e76b3d130071ea182d47b471f91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
