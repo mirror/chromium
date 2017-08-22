@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f1d12eb_414fa842",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-22T10:08:30Z",
+      "side": 1,
+      "message": "since these strings are being moved, i\u0027d rather we remove the IDS_OPTIONS_WALLPAPER_* equivalents in this CL, instead of copying these strings and deleting the old ones later. but it\u0027s really up to you",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 112
+      },
+      "revId": "502576e773d1c66f75f1e0d72ea0e1f0b909a307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70211fda_4f980f24",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4194,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-22T10:08:30Z",
+      "side": 1,
+      "message": "nit: let\u0027s clarify that this is for the extensions WebUI, e.g. \"Extensions page: Kiosk apps\"",
+      "range": {
+        "startLine": 4194,
+        "startChar": 7,
+        "endLine": 4194,
+        "endChar": 18
+      },
+      "revId": "502576e773d1c66f75f1e0d72ea0e1f0b909a307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a692a4_6c25ba6e",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4229,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-22T10:08:30Z",
+      "side": 1,
+      "message": "nit: \"Keyboard shortcuts overlay\" or something (Options had a \"keyboard overlay\")",
+      "range": {
+        "startLine": 4229,
+        "startChar": 7,
+        "endLine": 4229,
+        "endChar": 23
+      },
+      "revId": "502576e773d1c66f75f1e0d72ea0e1f0b909a307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
