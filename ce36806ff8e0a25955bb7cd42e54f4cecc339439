@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "b551474b_e723e435",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T08:14:36Z",
+      "side": 1,
+      "message": "I still don\u0027t understand why this is needed. SharedWorker and Worker don\u0027t have their own ServiceWorkerProviderContext which keeps |controller| which the browser process sends SetController IPCs to? Seems like that would be a more sane/straightforward design than having the Document\u0027s ProviderContext propagate the controller to a separate interface for Worker clients.",
+      "revId": "ce36806ff8e0a25955bb7cd42e54f4cecc339439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a43614aa_40bc3861",
         "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
         "patchSetId": 21
