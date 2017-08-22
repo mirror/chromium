@@ -2,19 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CSSPropertyAPIVariable_h
-#define CSSPropertyAPIVariable_h
+#ifndef CSSPropertyAPIApplyAtRule_h
+#define CSSPropertyAPIApplyAtRule_h
 
 #include "core/css/properties/CSSPropertyAPI.h"
 
 namespace blink {
 
-class CSSPropertyAPIVariable : public CSSPropertyAPI {
+class CSSPropertyAPIApplyAtRule : public CSSPropertyAPI {
  public:
-  bool IsInheritedProperty() const override { return true; }
   bool IsProperty() const override { return false; }
 };
 
 }  // namespace blink
 
-#endif  // CSSPropertyAPIVariable_h
+#endif  // CSSPropertyAPIApplyAtRule_h
