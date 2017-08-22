@@ -177,6 +177,29 @@
     },
     {
       "key": {
+        "uuid": "acd3dc96_2fd54f63",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-22T16:57:08Z",
+      "side": 1,
+      "message": "if (shared_transaction-\u003eIsEmpty())\n  Swap then and else below.",
+      "range": {
+        "startLine": 670,
+        "startChar": 1,
+        "endLine": 670,
+        "endChar": 37
+      },
+      "revId": "7251dcedf6ea09212e4c1894bfbe0b2c050cd01b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c592af29_95d8ec81",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
         "patchSetId": 11

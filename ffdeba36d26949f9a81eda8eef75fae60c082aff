@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d58f16fe_52aae611",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-22T16:57:08Z",
+      "side": 1,
+      "message": "Nit: No braces here for consistency. (Personally, I prefer them ;-))",
+      "range": {
+        "startLine": 646,
+        "startChar": 62,
+        "endLine": 648,
+        "endChar": 3
+      },
+      "revId": "ffdeba36d26949f9a81eda8eef75fae60c082aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae214e02_03aa02c3",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-22T16:57:08Z",
+      "side": 1,
+      "message": "Braces required here for both the if and else branches as if one has them, the other must as well.\n\nThe first clause is multiline (hence why I prefer them. No need to remember these rules if we always use braces).",
+      "range": {
+        "startLine": 650,
+        "startChar": 0,
+        "endLine": 662,
+        "endChar": 51
+      },
+      "revId": "ffdeba36d26949f9a81eda8eef75fae60c082aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb54ed23_f96d24b5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-22T16:57:08Z",
+      "side": 1,
+      "message": "This should be LockRequired. This makes it look like this will acquire a lock as part of the call.\n\nApply to the rest of the calls.",
+      "range": {
+        "startLine": 141,
+        "startChar": 22,
+        "endLine": 141,
+        "endChar": 30
+      },
+      "revId": "ffdeba36d26949f9a81eda8eef75fae60c082aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
