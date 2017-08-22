@@ -57,6 +57,30 @@
       "revId": "5819e64ac263e30c62fe1e2b3ebb565665ad3035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51502934_24ea3581",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7119,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-22T21:47:04Z",
+      "side": 0,
+      "message": "Good catch; went back to INTERNAL.",
+      "parentUuid": "acbb81a7_379232a7",
+      "range": {
+        "startLine": 7119,
+        "startChar": 6,
+        "endLine": 7119,
+        "endChar": 27
+      },
+      "revId": "5819e64ac263e30c62fe1e2b3ebb565665ad3035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
