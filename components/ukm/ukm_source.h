@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "services/metrics/public/cpp/ukm_source_id.h"
 #include "url/gurl.h"
 
@@ -41,6 +42,11 @@ class UkmSource {
   // Serializes the members of the class into the supplied proto.
   void PopulateProto(Source* proto_source) const;
 
+#if defined(OS_ANDROID)
+  // Sets the current "custom tab" state. This can be called from any thread.
+  static void SetCustomTabVisible(bool visible);
+#endif
+
  private:
   ukm::SourceId id_;
 
@@ -50,6 +56,13 @@ class UkmSource {
   // The initial URL for this source. Only set if different from |url_| (i.e. if
   // the URL changed over the lifetime of this source).
   GURL initial_url_;
+
+#if defined(OS_ANDROID)
+  // A flag indicating if metric was collected in a custom tab. This is set
+  // automatically when the object is created and so represents the state when
+  // the metric was created. -1/0/1 => unset/false/true
+  const int custom_tab_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(UkmSource);
 };
