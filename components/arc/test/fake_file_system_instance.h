@@ -117,6 +117,11 @@ class FakeFileSystemInstance : public mojom::FileSystemInstance {
   // Returns true if Init() has been called.
   bool InitCalled();
 
+  // If called with true, callbacks to FileSystemInstance functions are deferred
+  // until this function is called again with false.
+  // This is useful to simulate time-consuming operations.
+  void SetDeferCallbacks(bool defer_callbacks);
+
   // Adds a file accessible by content URL based methods.
   void AddFile(const File& file);
 
@@ -167,6 +172,8 @@ class FakeFileSystemInstance : public mojom::FileSystemInstance {
   // documents providers.
   using RootKey = std::pair<std::string, std::string>;
 
+  void ScheduleCallback(base::OnceClosure closure);
+
   THREAD_CHECKER(thread_checker_);
 
   base::ScopedTempDir temp_dir_;
@@ -190,6 +197,9 @@ class FakeFileSystemInstance : public mojom::FileSystemInstance {
 
   // Mapping from a watcher ID to a document key.
   std::map<int64_t, DocumentKey> watcher_to_document_;
+
+  bool defer_callbacks_ = false;
+  std::vector<base::OnceClosure> pending_closures_;
 
   int64_t next_watcher_id_ = 1;
   int get_child_documents_count_ = 0;
