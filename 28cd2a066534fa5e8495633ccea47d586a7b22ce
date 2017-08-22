@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ab11297_8038749f",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-22T16:59:26Z",
+      "side": 1,
+      "message": "Nit: space",
+      "range": {
+        "startLine": 25,
+        "startChar": 42,
+        "endLine": 25,
+        "endChar": 44
+      },
+      "revId": "28cd2a066534fa5e8495633ccea47d586a7b22ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "815ebd46_2eb902c2",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-22T16:59:26Z",
+      "side": 1,
+      "message": "I still think this should not say position since it is actually changing the rotation in this change.",
+      "range": {
+        "startLine": 259,
+        "startChar": 15,
+        "endLine": 259,
+        "endChar": 40
+      },
+      "revId": "28cd2a066534fa5e8495633ccea47d586a7b22ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

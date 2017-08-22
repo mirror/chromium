@@ -354,6 +354,24 @@
     },
     {
       "key": {
+        "uuid": "38e609d0_55e2aaf9",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-22T16:59:26Z",
+      "side": 1,
+      "message": "Ah, interesting. Learned something new!",
+      "parentUuid": "84241055_2caf0297",
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45452939_46bb6215",
         "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
         "patchSetId": 9
@@ -515,6 +533,30 @@
       "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5cee8b_84e59115",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-22T16:59:26Z",
+      "side": 1,
+      "message": "Ha, interesting. Learned something new again!",
+      "parentUuid": "2de50eb0_aec92019",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 11
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
