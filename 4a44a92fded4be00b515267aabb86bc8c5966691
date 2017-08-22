@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d8e81fc_6b082f10",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-22T05:02:31Z",
+      "side": 1,
+      "message": "Should this be in https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/properties/CSSPropertyBackgroundUtils.h? Unless we expect ConsumePrefixedBackgroundBox to be used outside of css/properties, we should keep the helper functions in the properties directory.",
+      "revId": "4a44a92fded4be00b515267aabb86bc8c5966691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
