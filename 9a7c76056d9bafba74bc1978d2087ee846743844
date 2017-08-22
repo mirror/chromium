@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb143d1e_bff05b1c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-22T15:08:23Z",
+      "side": 1,
+      "message": "This method is a bit confusing to me. It assumes that each content has a search icon and feels like it should return whether or not the icon should be hidden.\n\nIIRC the problem was that something was setting the search icon to be visible. Where was that happening? In any case, it appears you need this only to be called from the content controller\u0027s sheet observer. Why not add observers to the bookmarks/downloads manager and remove the need for this?",
+      "range": {
+        "startLine": 307,
+        "startChar": 13,
+        "endLine": 307,
+        "endChar": 38
+      },
+      "revId": "9a7c76056d9bafba74bc1978d2087ee846743844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
