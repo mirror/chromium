@@ -113,6 +113,7 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
     private TintedImageButton mClearTextButton;
     private SearchDelegate mSearchDelegate;
     private boolean mIsLightTheme = true;
+    private boolean mSelectableListHasItems;
 
     protected NumberRollView mNumberRollView;
     private DrawerLayout mDrawerLayout;
@@ -416,8 +417,10 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
      */
     protected void onDataChanged(int numItems) {
         if (mHasSearchView) {
-            getMenu().findItem(mSearchMenuItemId).setVisible(
-                    !mIsSelectionEnabled && !mIsSearching && numItems != 0);
+            getMenu()
+                    .findItem(mSearchMenuItemId)
+                    .setVisible(!mIsSelectionEnabled && !mIsSearching
+                            && (mSelectableListHasItems = numItems != 0));
         }
     }
 
@@ -518,7 +521,10 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
     protected void showNormalView() {
         getMenu().setGroupVisible(mNormalGroupResId, true);
         getMenu().setGroupVisible(mSelectedGroupResId, false);
-        if (mHasSearchView) mSearchView.setVisibility(View.GONE);
+        if (mHasSearchView) {
+            mSearchView.setVisibility(View.GONE);
+            getMenu().findItem(mSearchMenuItemId).setVisible(mSelectableListHasItems);
+        }
 
         setNavigationButton(NAVIGATION_BUTTON_MENU);
         setBackgroundColor(mNormalBackgroundColor);

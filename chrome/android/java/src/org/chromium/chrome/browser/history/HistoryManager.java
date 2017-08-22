@@ -466,4 +466,9 @@ public class HistoryManager implements OnMenuItemClickListener, SignInStateObser
     public void onDismissNoAction(Object actionData) {
         // Handler for the link copied snackbar. Do nothing.
     }
+
+    /** @return The number of items in the {@link HistoryAdapter}. */
+    public int getAdapterItemCount() {
+        return mHistoryAdapter.getItemCount();
+    }
 }
