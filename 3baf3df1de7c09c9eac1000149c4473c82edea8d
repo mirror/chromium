@@ -16,6 +16,23 @@
       "revId": "3baf3df1de7c09c9eac1000149c4473c82edea8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da7dff8_eed52db8",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-22T21:37:00Z",
+      "side": 1,
+      "message": "Is it always the case that SetAlwaysOpenPdfExternallyForTests() and ChromePluginServiceFilter::GetInstance()-\u003eRegisterResourceContext() will be called together? Maybe group the two together into a helper method. Then instead of wrapping the entire method in a #if block, only wrap the implementation. That way, you can do the same thing as what you have now, but only use 1 line in each of the tests without any #ifs.",
+      "revId": "3baf3df1de7c09c9eac1000149c4473c82edea8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
