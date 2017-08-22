@@ -16,6 +16,24 @@
       "revId": "6df2982eb748ec3c3c0dc3101631d179a73269ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16060bc2_d4e69c54",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-22T21:07:32Z",
+      "side": 1,
+      "message": "Added DCHECK, and changed params to just be SurfaceInfo!",
+      "parentUuid": "157d41e2_2519eec9",
+      "revId": "6df2982eb748ec3c3c0dc3101631d179a73269ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
