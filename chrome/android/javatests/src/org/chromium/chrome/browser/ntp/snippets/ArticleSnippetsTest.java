@@ -116,7 +116,7 @@ public class ArticleSnippetsTest {
 
     private FrameLayout mContentView;
     private SnippetArticleViewHolder mSuggestion;
-    private SignInPromo.ViewHolder mSigninPromo;
+    private SignInPromo.GenericPromoViewHolder mSigninPromo;
 
     private UiConfig mUiConfig;
 
@@ -280,7 +280,8 @@ public class ArticleSnippetsTest {
             mRecyclerView.init(mUiConfig, contextMenuManager);
             mRecyclerView.setAdapter(mAdapter);
 
-            mSigninPromo = new SignInPromo.ViewHolder(mRecyclerView, contextMenuManager, mUiConfig);
+            mSigninPromo = new SignInPromo.GenericPromoViewHolder(
+                    mRecyclerView, contextMenuManager, mUiConfig);
             mSigninPromo.onBindViewHolder(new SignInPromo(mUiDelegate));
             mContentView.addView(mSigninPromo.itemView);
         });
