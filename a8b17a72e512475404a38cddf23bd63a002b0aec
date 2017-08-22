@@ -184,6 +184,23 @@
     },
     {
       "key": {
+        "uuid": "2efb871e_20ca150b",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-22T17:02:48Z",
+      "side": 1,
+      "message": "This should be `+` not `^`.",
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76339628_406a8032",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 7
