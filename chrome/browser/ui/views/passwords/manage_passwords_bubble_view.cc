@@ -110,10 +110,10 @@ void BuildColumnSet(views::GridLayout* layout, ColumnSetType type) {
       break;
     case DOUBLE_VIEW_COLUMN_SET:
       column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
-                            views::GridLayout::USE_PREF, 0, 0);
+                            views::GridLayout::FIXED, 0, 0);
       column_set->AddPaddingColumn(0, column_divider);
       column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
-                            views::GridLayout::USE_PREF, 0, 0);
+                            views::GridLayout::FIXED, 0, 0);
       break;
     case DOUBLE_BUTTON_COLUMN_SET:
       column_set->AddColumn(views::GridLayout::TRAILING,
