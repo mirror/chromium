@@ -74,7 +74,7 @@ class STORAGE_EXPORT FileSystemBackend {
   // doesn't exist.
   virtual void ResolveURL(const FileSystemURL& url,
                           OpenFileSystemMode mode,
-                          const OpenFileSystemCallback& callback) = 0;
+                          OpenFileSystemCallback callback) = 0;
 
   // Returns the specialized AsyncFileUtil for this backend.
   virtual AsyncFileUtil* GetAsyncFileUtil(FileSystemType type) = 0;
