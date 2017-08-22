@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "660e41ab_a7c1a998",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-22T22:25:59Z",
+      "side": 1,
+      "message": "nit: UMA_HISTOGRAM_* macros expand to a fair bit of code, so please move the macro outside of the if/else stmt.  Instead, just set the value that will be recorded in the if/else.",
+      "range": {
+        "startLine": 147,
+        "startChar": 50,
+        "endLine": 147,
+        "endChar": 0
+      },
+      "revId": "4696d0a580acef0e8a645ffa21c3237f548c8db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d016d7_267f7c30",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-22T22:25:59Z",
+      "side": 1,
+      "message": "nit: Please document that this enum should be treated as append-only.",
+      "range": {
+        "startLine": 12,
+        "startChar": 38,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "4696d0a580acef0e8a645ffa21c3237f548c8db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3ad351_0ce5acd7",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-22T22:25:59Z",
+      "side": 1,
+      "message": "nit: \"UMAIOSNTPI\" is a bit hard to parse.  Unless there\u0027s a strong style-guide argument against, I\u0027d name this something like \"UmaIosNtpImpression\".  (Actually, I\u0027d probably drop the \"Uma\" prefix as well, but that\u0027s perhaps more of a personal preference.)",
+      "range": {
+        "startLine": 13,
+        "startChar": 50,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "4696d0a580acef0e8a645ffa21c3237f548c8db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38a3167_252576e5",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-22T22:25:59Z",
+      "side": 1,
+      "message": "nit: Please make this an enum class, or else follow the style guide\u0027s best practice on enum names.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 4
+      },
+      "revId": "4696d0a580acef0e8a645ffa21c3237f548c8db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f018e110_ae11a4ea",
         "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h",
         "patchSetId": 1
@@ -18,6 +110,115 @@
         "startChar": 2,
         "endLine": 19,
         "endChar": 33
+      },
+      "revId": "4696d0a580acef0e8a645ffa21c3237f548c8db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d904285_bbe53b83",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-22T22:25:59Z",
+      "side": 1,
+      "message": "nit: I\u0027d name this \"COUNT\" rather than \"MAX\" -- \"MAX\" is typically used as an alias for the last entry in an enum; \"COUNT\" for the number of entries in the enum.",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 10
+      },
+      "revId": "4696d0a580acef0e8a645ffa21c3237f548c8db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4fbb8c2_306bf4f2",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-22T22:25:59Z",
+      "side": 1,
+      "message": "nit: I\u0027d drop the \"ENUM_\" part of the \"ENUM_MAX\" name.",
+      "revId": "4696d0a580acef0e8a645ffa21c3237f548c8db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c5ec13_a71fe2ba",
+        "filename": "ios/clean/chrome/browser/ui/ntp/ntp_home_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-22T22:25:59Z",
+      "side": 1,
+      "message": "Same comment as before.  Though, actually, since this histogram is recorded from several different places, I\u0027d recommend providing a simple wrapper function along the lines of RecordImpression(ntp_home::REMOTE_SUGGESTIONS);",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 50
+      },
+      "revId": "4696d0a580acef0e8a645ffa21c3237f548c8db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d84516b_3a2ab482",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21090,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-22T22:25:59Z",
+      "side": 1,
+      "message": "nit: There\u0027s not much value to providing a \u003csummary\u003e for \u003cenum\u003e elements, as these aren\u0027t really shown on the dashboard.  I\u0027d omit this line.",
+      "range": {
+        "startLine": 21090,
+        "startChar": 43,
+        "endLine": 21090,
+        "endChar": 0
+      },
+      "revId": "4696d0a580acef0e8a645ffa21c3237f548c8db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc6abc4_603f4957",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28253,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-22T22:25:59Z",
+      "side": 1,
+      "message": "nit: I\u0027d rephrase this to something like \"The number of NTP impressions on iOS, split by NTP type (local vs. remote).\"  Of course, feel free to improve on my phrasing \u003d)",
+      "range": {
+        "startLine": 28252,
+        "startChar": 4,
+        "endLine": 28253,
+        "endChar": 27
       },
       "revId": "4696d0a580acef0e8a645ffa21c3237f548c8db9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
