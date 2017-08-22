@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "925033ba_715831d5",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-22T18:37:24Z",
+      "side": 0,
+      "message": "why was this check removed? If local  blacklist is disabled, then we probably do not want to  show previews.",
+      "range": {
+        "startLine": 345,
+        "startChar": 21,
+        "endLine": 345,
+        "endChar": 56
+      },
+      "revId": "ed55bb1319e75c1a8b3c39d26b107517ee0e1794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
