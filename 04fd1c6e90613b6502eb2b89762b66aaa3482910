@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "88614182_411f30eb",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1316,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-22T18:00:59Z",
+      "side": 1,
+      "message": "Re-ordered call sites to allow this to just be a DCHECK. good call.",
+      "parentUuid": "63361f46_7752f69d",
+      "range": {
+        "startLine": 1316,
+        "startChar": 4,
+        "endLine": 1316,
+        "endChar": 39
+      },
+      "revId": "04fd1c6e90613b6502eb2b89762b66aaa3482910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8df02dc3_e9274a41",
         "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.cc",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-21T16:13:21Z",
       "side": 1,
       "message": "xD",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 4
+      },
+      "revId": "04fd1c6e90613b6502eb2b89762b66aaa3482910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314bf211_99b45e18",
+        "filename": "content/common/sandbox_linux/sandbox_seccomp_bpf_linux.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-08-22T18:00:59Z",
+      "side": 1,
+      "message": "removed :/",
+      "parentUuid": "8df02dc3_e9274a41",
       "range": {
         "startLine": 134,
         "startChar": 2,
