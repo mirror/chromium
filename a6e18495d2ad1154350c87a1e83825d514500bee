@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f5108471_63e0c3e6",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-22T09:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b114521_6e905afd",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 9
+      },
+      "revId": "a6e18495d2ad1154350c87a1e83825d514500bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb08b6fd_cd01fced",
         "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "a6e18495d2ad1154350c87a1e83825d514500bee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a9192e_8a0c93ca",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-22T09:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb08b6fd_cd01fced",
+      "range": {
+        "startLine": 22,
+        "startChar": 15,
+        "endLine": 22,
+        "endChar": 27
+      },
+      "revId": "a6e18495d2ad1154350c87a1e83825d514500bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c7d9f78b_deccb92d",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-22T09:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b77fd626_f86786cc",
+      "range": {
+        "startLine": 37,
+        "startChar": 20,
+        "endLine": 37,
+        "endChar": 22
+      },
+      "revId": "a6e18495d2ad1154350c87a1e83825d514500bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04a041a0_370fa180",
         "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
         "patchSetId": 13
@@ -91,6 +163,30 @@
       "revId": "a6e18495d2ad1154350c87a1e83825d514500bee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9758f0e_5d0db251",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-22T09:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04a041a0_370fa180",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 26
+      },
+      "revId": "a6e18495d2ad1154350c87a1e83825d514500bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
