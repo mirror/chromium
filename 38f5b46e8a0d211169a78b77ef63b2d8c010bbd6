@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50dd8292_f31e0adb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-08-22T10:11:59Z",
+      "side": 1,
+      "message": "add a space after [CrOS]",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b940de0a_2f55c7f9",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-08-22T10:11:59Z",
+      "side": 1,
+      "message": "this struct shall not be in namespace base",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 14
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
