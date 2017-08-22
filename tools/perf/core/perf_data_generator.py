@@ -701,8 +701,6 @@ def ShouldBenchmarkBeScheduled(benchmark, platform):
   return True
 
 
-# TODO(rnephew): Remove when no tests disable using
-# expectations.PermanentlyDisableBenchmark()
 def ShouldBenchmarksBeScheduledViaStoryExpectations(
     benchmark, name, os_name, browser_name):
   # StoryExpectations uses finder_options.browser_type, platform.GetOSName,
@@ -753,7 +751,13 @@ def ShouldBenchmarksBeScheduledViaStoryExpectations(
   device_type_name = ANDROID_BOT_TO_DEVICE_TYPE_MAP.get(name)
   os_name = sanitize_os_name(os_name)
   e = ExpectationData(browser_name, os_name, device_type_name)
-  return not benchmark().GetExpectations().IsBenchmarkDisabled(e, e)
+
+  # TODO(rnephew): Remove when no tests disable using
+  # expectations.PermanentlyDisableBenchmark()
+  b = benchmark()
+  if b.GetExpectations().IsBenchmarkDisabled(e, e):
+    return False
+  return any(t.ShouldDisable(e, e) for t in b.SUPPORTED_PLATFORMS)
 
 
 def generate_telemetry_tests(name, tester_config, benchmarks,
