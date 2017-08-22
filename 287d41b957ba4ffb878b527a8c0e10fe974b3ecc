@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f62f78d9_93c7c793",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T20:18:37Z",
+      "side": 1,
+      "message": "nit: A comment like \"Constants used to log UMA enum histogram, must stay in sync with ___\" provides a bit more context\n\nAlso, we typically don\u0027t use enums for recording histograms in Java, but rather define static final ints, e.g.:\n\nprivate static final int PASSWORD_ENTRY_ACTION_VIEWED \u003d 0;\nprivate static final int PASSWORD_ENTRY_ACTION_DELETED \u003d 1;\nprivate static final int PASSWORD_ENTRY_ACTION_CANCELLED \u003d 2;\nprivate static final int PASSWORD_ENTRY_ACTION_BOUNDARY \u003d 3;",
+      "range": {
+        "startLine": 40,
+        "startChar": 34,
+        "endLine": 40,
+        "endChar": 76
+      },
+      "revId": "287d41b957ba4ffb878b527a8c0e10fe974b3ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd8e843_70b88cad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T20:18:37Z",
+      "side": 1,
+      "message": "We have presubmit scripts that will find histograms missing from histograms.xml, but they don\u0027t work if the histogram is logged using String concatenation. I think that for the sake of code simplicity that is OK in this case, but wanted to point it out.",
+      "range": {
+        "startLine": 253,
+        "startChar": 58,
+        "endLine": 253,
+        "endChar": 86
+      },
+      "revId": "287d41b957ba4ffb878b527a8c0e10fe974b3ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
