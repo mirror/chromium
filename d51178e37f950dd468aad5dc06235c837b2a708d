@@ -16,6 +16,23 @@
       "revId": "d51178e37f950dd468aad5dc06235c837b2a708d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62789f1_feec5017",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-22T17:49:08Z",
+      "side": 1,
+      "message": "nit: move \"bool needs_blending \u003d true;\" just below l.700 and set it to false just below l.704 instead of doing another unnecessary rect Contains check here.",
+      "revId": "d51178e37f950dd468aad5dc06235c837b2a708d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
