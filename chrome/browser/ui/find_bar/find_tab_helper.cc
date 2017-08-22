@@ -18,6 +18,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/stop_find_action.h"
 #include "third_party/WebKit/public/web/WebFindOptions.h"
+#include "ui/display/screen.h"
 #include "ui/gfx/geometry/rect_f.h"
 
 using blink::WebFindOptions;
@@ -168,7 +169,13 @@ void FindTabHelper::HandleFindReply(int request_id,
     if (active_match_ordinal == -1)
       active_match_ordinal = last_search_result_.active_match_ordinal();
 
+#if defined(OS_WIN) || defined(OS_LINUX)
+    gfx::Rect selection = display::Screen::GetScreen()->ScreenToDIPRectInWindow(
+        web_contents()->GetNativeView(), selection_rect);
+#else
     gfx::Rect selection = selection_rect;
+#endif
+
     if (final_update && active_match_ordinal == 0)
       selection = gfx::Rect();
     else if (selection_rect.IsEmpty())
