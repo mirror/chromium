@@ -1489,8 +1489,6 @@ class CONTENT_EXPORT RenderFrameImpl
   PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
       custom_url_loader_factory_;
 
-  scoped_refptr<ChildURLLoaderFactoryGetter> url_loader_factory_getter_;
-
   // AndroidOverlay routing token from the browser, if we have one yet.
   base::Optional<base::UnguessableToken> overlay_routing_token_;
 
