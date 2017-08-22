@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaedeb7a_656fbaac",
+        "filename": "third_party/WebKit/Source/platform/LongTaskDetector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-22T14:59:40Z",
+      "side": 1,
+      "message": "nit: \"*long_task_detector\" is equivalent (you can dereference a Persistent diretcly)",
+      "revId": "8799b004d756937080b1090361a2309f21e58e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e446ff68_2d9fe6fe",
+        "filename": "third_party/WebKit/Source/platform/LongTaskDetector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-22T14:59:40Z",
+      "side": 1,
+      "message": "nit: prefer \"const auto\u0026\" where no mutation is intended",
+      "revId": "8799b004d756937080b1090361a2309f21e58e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3358aed7_7a034eb7",
+        "filename": "third_party/WebKit/Source/platform/LongTaskDetector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-22T14:59:40Z",
+      "side": 1,
+      "message": "nit: would you ever not want to override this? if not, pure virtual (\u003d 0;)",
+      "revId": "8799b004d756937080b1090361a2309f21e58e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d59e701_79d51d74",
+        "filename": "third_party/WebKit/Source/platform/LongTaskDetector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-22T14:59:40Z",
+      "side": 1,
+      "message": "doesn\u0027t need finalization; use GarbageCollected\u003cLongTaskDetector\u003e",
+      "revId": "8799b004d756937080b1090361a2309f21e58e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739fef7c_e8d83fee",
+        "filename": "third_party/WebKit/Source/platform/LongTaskDetectorTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-22T14:59:40Z",
+      "side": 1,
+      "message": "nit: doesn\u0027t need to be finalized",
+      "revId": "8799b004d756937080b1090361a2309f21e58e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b358c6_a757142f",
+        "filename": "third_party/WebKit/Source/platform/LongTaskDetectorTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-22T14:59:40Z",
+      "side": 1,
+      "message": "nit: \"override\" instead of \"virtual\" when intending to override a virtual function",
+      "revId": "8799b004d756937080b1090361a2309f21e58e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
