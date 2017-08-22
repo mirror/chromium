@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27614873_d6b43225",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-08-22T02:24:52Z",
+      "side": 1,
+      "message": "Here we\u0027re already O(n^2) for every table, which I fear will have noticeable perf regressions in the wild. Joy, can you add a TODO saying that we have to improve on that runtime before we ship? You can summarize and maybe point to Morten and my discussion at https://chromium-review.googlesource.com/c/chromium/src/+/602506/18/third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+      "revId": "e6e9eb60e839d08914313d70b27ac28d50423a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b342508_2b92f383",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-08-22T02:24:52Z",
+      "side": 1,
+      "message": "This is only called by LayoutTable? If so add it to the private section. And it\u0027s only ever set to true? If so remove the function parameter.",
+      "revId": "e6e9eb60e839d08914313d70b27ac28d50423a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02806c4_f76096ce",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-08-22T02:24:52Z",
+      "side": 1,
+      "message": "But on that last note, is there anything that prevents us from setting it to false in LayoutTable::UpdateColumnCache()? If we could, then add a TODO saying that we have an optimization opportunity to set this to false there.",
+      "revId": "e6e9eb60e839d08914313d70b27ac28d50423a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
