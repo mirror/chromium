@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34a843b2_0c60b1a9",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T08:27:03Z",
+      "side": 1,
+      "message": "nit: kNonWildcardDomainNonPortSchemes, to be consistent with how ContentSettingsPattern calls this",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e2927f0_25fecbc0",
+        "filename": "chrome/test/base/chrome_test_suite.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T08:27:03Z",
+      "side": 1,
+      "message": "nit: This should go above the \"#ifdef CHROMEOS\" part",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb568a1_1cd0312e",
+        "filename": "chrome/test/base/chrome_test_suite.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T08:27:03Z",
+      "side": 1,
+      "message": "Also here, kNonWildcardDomainNonPortSchemes for consistency",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935e970f_86db7053",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T08:27:03Z",
+      "side": 1,
+      "message": "Also here, name consistently.\n\nGlobal variables shouldn\u0027t have the trailing underscore in the name. (Instead, I think they should have a leading \"g_\".)",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8717bd2_5088a667",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T08:27:03Z",
+      "side": 1,
+      "message": "Also check that the non_port_non_domain_wildcard_schemes_ is either null or \u003d\u003d schemes?\n\nAnd again, I don\u0027t quite see why the array has to be non-empty.",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c48f4847_200d001d",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T08:27:03Z",
+      "side": 1,
+      "message": "Any reason for using strcmp over \u003d\u003d?",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a84c7b_901d13db",
+        "filename": "components/content_settings/core/common/content_settings_pattern.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T08:27:03Z",
+      "side": 1,
+      "message": "Why can\u0027t schemes be empty?",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e0b7c5_3e4e90ff",
+        "filename": "components/content_settings/core/common/content_settings_pattern.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T08:27:03Z",
+      "side": 1,
+      "message": "s/length/count/ ? IMO that\u0027ll have less potential for confusion",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0635c44_6959a2a0",
+        "filename": "components/content_settings/core/common/content_settings_pattern_parser_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T08:27:03Z",
+      "side": 1,
+      "message": "Maybe use \"/local-ntp.html\" as the path?",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea2d9fd_c18a89cb",
+        "filename": "components/test/components_test_suite.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T08:27:03Z",
+      "side": 1,
+      "message": "Also mention the constant for chrome-search?",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e94d888_3376cec3",
+        "filename": "components/test/components_test_suite.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T08:27:03Z",
+      "side": 1,
+      "message": "Aand once more :)",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a199dc_f9ea887d",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T08:27:03Z",
+      "side": 1,
+      "message": "This will violate those DCHECKs that the array is non-empty",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
