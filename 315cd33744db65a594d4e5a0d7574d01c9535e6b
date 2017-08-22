@@ -16,6 +16,24 @@
       "revId": "315cd33744db65a594d4e5a0d7574d01c9535e6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "368c37fa_5b7b401e",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewPointerTypeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-08-22T15:05:50Z",
+      "side": 1,
+      "message": "The location to move the cursor based on DOMUtils.getNodeBounds() is not correctly in some devices. It is because it does not denote the Android UI coordinate, but the CSS coordinate.",
+      "parentUuid": "f2b4d651_4a9ad5a6",
+      "revId": "315cd33744db65a594d4e5a0d7574d01c9535e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
