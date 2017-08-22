@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a37339ab_ec5296f3",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-22T11:45:50Z",
+      "side": 1,
+      "message": "That\u0027s correct - the URLLoader may be running in a less trusted process (Network is less trusted than browser, but even more than that, it could be running a ServiceWorker in a process that can run JS).\n\nI also have a test to make sure we fail the request in this case, which doesn\u0027t work with DCHECKs.",
+      "parentUuid": "0ba0062c_3379d55f",
+      "revId": "7c4acd6a2f5645cc68edb1c8aa9266e9ebecc207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "862215ce_97f33b06",
         "filename": "content/public/common/simple_url_loader.h",
         "patchSetId": 27
