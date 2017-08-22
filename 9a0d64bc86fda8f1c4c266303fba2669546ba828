@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9de759ff_c941281b",
+        "filename": "extensions/browser/api/file_handlers/app_file_handler_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-22T08:40:18Z",
+      "side": 1,
+      "message": "Is MayBlock the thing that makes I/O allowed? I think so from the docs... just checking.",
+      "range": {
+        "startLine": 175,
+        "startChar": 55,
+        "endLine": 175,
+        "endChar": 71
+      },
+      "revId": "9a0d64bc86fda8f1c4c266303fba2669546ba828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
