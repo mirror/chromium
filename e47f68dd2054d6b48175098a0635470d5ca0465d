@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed10b1bf_e59d7dd8",
+        "filename": "tools/vim/chromium.ycm_extra_conf.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-22T00:05:54Z",
+      "side": 1,
+      "message": "nit: I believe it is legal for -I to be used in this way, as well.",
+      "revId": "e47f68dd2054d6b48175098a0635470d5ca0465d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
