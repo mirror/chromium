@@ -16,6 +16,24 @@
       "revId": "1e49967422d35b05b902f5eb6bcf1f4f517dd7b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d281356d_0ffeec70",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-22T10:44:47Z",
+      "side": 0,
+      "message": "This is no longer needed as the history is never replaced in a Tab. Instead a new Tab object is created. This is already mentioned in the commit message:\n\n\u003e Remove old NavigationManagerImpl API to reset the session controller, remove use of NavigationManagerImpl API in favour of the new public NavigationManager API, remove Tab -didReplaceSessionHistory (no tab has its history replaced anymore, instead a new tab is created).",
+      "parentUuid": "1d6d1cb8_89ba3287",
+      "revId": "1e49967422d35b05b902f5eb6bcf1f4f517dd7b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

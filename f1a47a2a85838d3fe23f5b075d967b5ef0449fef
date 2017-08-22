@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a61b9c45_8838df0b",
+        "filename": "ios/chrome/browser/sessions/session_util.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-22T10:44:47Z",
+      "side": 1,
+      "message": "A definition of \"sessions::SerializedNavigationEntry\" is required to be able to use a \"std::vector\u003csessions::SerializedNavigationEntry\u003e\".\n\nHowever it is better to include \"components/sessions/core/serialized_navigation_entry.h\" (which is the file that really declare the type), so I\u0027ve updated the code.",
+      "parentUuid": "37d2ec2b_9ebd06bf",
+      "range": {
+        "startLine": 10,
+        "startChar": 35,
+        "endLine": 10,
+        "endChar": 50
+      },
+      "revId": "f1a47a2a85838d3fe23f5b075d967b5ef0449fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2a55966_6c2d53cc",
         "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
         "patchSetId": 15
@@ -39,6 +63,24 @@
       "revId": "f1a47a2a85838d3fe23f5b075d967b5ef0449fef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1c469d_e395cb70",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 1922,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-22T10:44:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2a55966_6c2d53cc",
+      "revId": "f1a47a2a85838d3fe23f5b075d967b5ef0449fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
