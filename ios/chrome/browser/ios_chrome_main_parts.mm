@@ -12,6 +12,7 @@
 #include "base/metrics/user_metrics.h"
 #include "base/path_service.h"
 #include "base/sequenced_task_runner.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/time/default_tick_clock.h"
 #include "components/content_settings/core/browser/cookie_settings.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
@@ -94,11 +95,14 @@ void IOSChromeMainParts::PreCreateThreads() {
   // components used to handle those tasks are not yet available. This work
   // should be deferred to PreMainMessageLoopRunImpl.
 
+  // The initial read is done asynchronously, thus use USER_VISIBLE priority.
+  scoped_refptr<base::SequencedTaskRunner> local_state_task_runner =
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+
   base::FilePath local_state_path;
   CHECK(PathService::Get(ios::FILE_LOCAL_STATE, &local_state_path));
-  scoped_refptr<base::SequencedTaskRunner> local_state_task_runner =
-      JsonPrefStore::GetTaskRunnerForFile(local_state_path,
-                                          web::WebThread::GetBlockingPool());
   application_context_.reset(new ApplicationContextImpl(
       local_state_task_runner.get(), parsed_command_line_,
       l10n_util::GetLocaleOverride()));
