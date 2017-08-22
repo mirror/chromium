@@ -18,7 +18,8 @@ AudioWorklet* AudioWorklet::Create(LocalFrame* frame) {
   return new AudioWorklet(frame);
 }
 
-AudioWorklet::AudioWorklet(LocalFrame* frame) : Worklet(frame) {}
+AudioWorklet::AudioWorklet(LocalFrame* frame)
+    : Worklet(frame) {}
 
 AudioWorklet::~AudioWorklet() {
   contexts_.clear();

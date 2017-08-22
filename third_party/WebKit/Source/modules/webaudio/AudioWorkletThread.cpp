@@ -7,6 +7,7 @@
 #include <memory>
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/WorkerBackingThread.h"
+#include "modules/webaudio/AudioWorklet.h"
 #include "modules/webaudio/AudioWorkletGlobalScope.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
@@ -62,12 +63,17 @@ void AudioWorkletThread::CollectAllGarbage() {
 
 void AudioWorkletThread::EnsureSharedBackingThread() {
   DCHECK(IsMainThread());
-  WorkletThreadHolder<AudioWorkletThread>::EnsureInstance("AudioWorkletThread");
+  if (!s_backing_thread_)
+    s_backing_thread_ = Platform::Current()->CreateWebAudioThread();
+
+  WorkletThreadHolder<AudioWorkletThread>::EnsureInstance(
+      s_backing_thread_.get());
 }
 
 void AudioWorkletThread::ClearSharedBackingThread() {
   DCHECK(IsMainThread());
   WorkletThreadHolder<AudioWorkletThread>::ClearInstance();
+  s_backing_thread_.reset();
 }
 
 WebThread* AudioWorkletThread::GetSharedBackingThread() {
