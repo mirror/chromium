@@ -247,8 +247,11 @@ void DownloadController::AcquireFileAccessPermission(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   WebContents* web_contents = web_contents_getter.Run();
-  if (vr::VrTabHelper::IsInVr(web_contents))
+  if (vr::VrTabHelper::IsInVr(web_contents)) {
+    vr::VrTabHelper::UISuppressed(
+        vr::UiSuppressedElement::kFileAccessPermission);
     return;
+  }
 
   if (HasFileAccessPermission()) {
     BrowserThread::PostTask(
