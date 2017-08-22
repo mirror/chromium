@@ -16,8 +16,12 @@
 #include "build/build_config.h"
 #include "content/browser/bad_message.h"
 #include "content/common/database_messages.h"
+#include "content/public/browser/render_process_host.h"
+#include "content/public/common/bind_interface_helpers.h"
 #include "content/public/common/origin_util.h"
 #include "content/public/common/result_codes.h"
+#include "content/public/common/service_manager_connection.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "storage/browser/database/database_util.h"
 #include "storage/browser/database/vfs_backend.h"
 #include "storage/browser/quota/quota_manager.h"
@@ -49,8 +53,10 @@ bool IsOriginValid(const url::Origin& origin) {
 }  // namespace
 
 DatabaseMessageFilter::DatabaseMessageFilter(
+    int process_id,
     storage::DatabaseTracker* db_tracker)
     : BrowserMessageFilter(DatabaseMsgStart),
+      process_id_(process_id),
       db_tracker_(db_tracker),
       observer_added_(false) {
   DCHECK(db_tracker_.get());
@@ -63,6 +69,9 @@ void DatabaseMessageFilter::OnChannelClosing() {
         FROM_HERE,
         base::BindOnce(&DatabaseMessageFilter::RemoveObserver, this));
   }
+  db_tracker_->task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&DatabaseMessageFilter::CloseOnDatabaseTracker, this));
 }
 
 void DatabaseMessageFilter::AddObserver() {
@@ -338,7 +347,8 @@ void DatabaseMessageFilter::OnDatabaseOpened(
                               estimated_size, &database_size);
 
   database_connections_.AddConnection(origin_identifier, database_name);
-  Send(new DatabaseMsg_UpdateSize(origin, database_name, database_size));
+
+  GetWebDatabase().UpdateSize(origin, database_name, database_size);
 }
 
 void DatabaseMessageFilter::OnDatabaseModified(
@@ -407,20 +417,46 @@ void DatabaseMessageFilter::OnDatabaseSizeChanged(
     const base::string16& database_name,
     int64_t database_size) {
   DCHECK(db_tracker_->task_runner()->RunsTasksInCurrentSequence());
-  if (database_connections_.IsOriginUsed(origin_identifier)) {
-    Send(new DatabaseMsg_UpdateSize(
-        url::Origin(storage::GetOriginFromIdentifier(origin_identifier)),
-        database_name, database_size));
+  if (!database_connections_.IsOriginUsed(origin_identifier)) {
+    return;
   }
+
+  GetWebDatabase().UpdateSize(
+      url::Origin(storage::GetOriginFromIdentifier(origin_identifier)),
+      database_name, database_size);
 }
 
 void DatabaseMessageFilter::OnDatabaseScheduledForDeletion(
     const std::string& origin_identifier,
     const base::string16& database_name) {
   DCHECK(db_tracker_->task_runner()->RunsTasksInCurrentSequence());
-  Send(new DatabaseMsg_CloseImmediately(
+
+  GetWebDatabase().CloseImmediately(
       url::Origin(storage::GetOriginFromIdentifier(origin_identifier)),
-      database_name));
+      database_name);
+}
+
+void DatabaseMessageFilter::CloseOnDatabaseTracker() {
+  DCHECK(db_tracker_->task_runner()->RunsTasksInCurrentSequence());
+  database_provider_.reset();
+}
+
+content::mojom::WebDatabase& DatabaseMessageFilter::GetWebDatabase() {
+  DCHECK(db_tracker_->task_runner()->RunsTasksInCurrentSequence());
+  if (!database_provider_) {
+    // The interface binding needs to occur on the UI thread, as we can
+    // only call RenderProcessHost::FromID() on the UI thread.
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(
+            [](int process_id, content::mojom::WebDatabaseRequest request) {
+              RenderProcessHost* host = RenderProcessHost::FromID(process_id);
+              DCHECK(host);
+              content::BindInterface(host, std::move(request));
+            },
+            process_id_, mojo::MakeRequest(&database_provider_)));
+  }
+  return *database_provider_;
 }
 
 }  // namespace content
