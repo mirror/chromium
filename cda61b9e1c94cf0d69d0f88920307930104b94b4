@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c8bec6de_e48c9d82",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1166204
+      },
+      "writtenOn": "2017-08-22T15:01:42Z",
+      "side": 1,
+      "message": "This is a fair question. I did this because I am not completely with the codebase, so I would rather have an additional condition to make sure that the callback is never called.\n\nTo be more specific, I am not 100% sure why resetting the token_fetcher_ guarantees that AccessTokenAvailable is not called. What about the case where the destructor of AccessTokenFetcher and the AccessTokenFetcher::OnGetTokenSuccess (which calls ContextualSuggestionsService::AccessTokenAvailable) are in a race condition? \n\nNote that I removed this flag. I trust your judgement on this one and testing the code without the flag seems positive.",
+      "parentUuid": "c2051bbf_72cbcde6",
+      "range": {
+        "startLine": 260,
+        "startChar": 28,
+        "endLine": 260,
+        "endChar": 0
+      },
+      "revId": "cda61b9e1c94cf0d69d0f88920307930104b94b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea7a6ed1_0b72894f",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "cda61b9e1c94cf0d69d0f88920307930104b94b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789a6d54_14fdcaf5",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1166204
+      },
+      "writtenOn": "2017-08-22T15:01:42Z",
+      "side": 1,
+      "message": "Renamed and rephrased the comment.",
+      "parentUuid": "ea7a6ed1_0b72894f",
+      "range": {
+        "startLine": 64,
+        "startChar": 19,
+        "endLine": 64,
+        "endChar": 26
+      },
+      "revId": "cda61b9e1c94cf0d69d0f88920307930104b94b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7b1dd6c8_68826a46",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1166204
+      },
+      "writtenOn": "2017-08-22T15:01:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cab67d52_e3208027",
+      "range": {
+        "startLine": 120,
+        "startChar": 7,
+        "endLine": 120,
+        "endChar": 27
+      },
+      "revId": "cda61b9e1c94cf0d69d0f88920307930104b94b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e15a7ba_da10ecf3",
         "filename": "components/omnibox/browser/zero_suggest_provider.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "cda61b9e1c94cf0d69d0f88920307930104b94b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a06c00d_1b540cf2",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1166204
+      },
+      "writtenOn": "2017-08-22T15:01:42Z",
+      "side": 1,
+      "message": "Removed, based on the comment in contextual_suggestions_service.cc",
+      "parentUuid": "6e15a7ba_da10ecf3",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 49
+      },
+      "revId": "cda61b9e1c94cf0d69d0f88920307930104b94b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
