@@ -566,6 +566,35 @@ bool IsOnAccessControlResponseHeaderWhitelist(const WebString& name) {
   return allowed_cross_origin_response_headers.Contains(name);
 }
 
+bool IsCORSEnabledRequestMode(WebURLRequest::FetchRequestMode mode) {
+  return mode == WebURLRequest::kFetchRequestModeCORS ||
+         mode == WebURLRequest::kFetchRequestModeCORSWithForcedPreflight;
+}
+
+// No-CORS requests are allowed for all these contexts, and plugin contexts with
+// private permission when we set ServiceWorkerMode to None in
+// PepperURLLoaderHost.
+bool IsNoCORSAllowedContext(
+    WebURLRequest::RequestContext context,
+    WebURLRequest::ServiceWorkerMode service_worker_mode) {
+  switch (context) {
+    case WebURLRequest::kRequestContextAudio:
+    case WebURLRequest::kRequestContextVideo:
+    case WebURLRequest::kRequestContextObject:
+    case WebURLRequest::kRequestContextFavicon:
+    case WebURLRequest::kRequestContextImage:
+    case WebURLRequest::kRequestContextScript:
+    case WebURLRequest::kRequestContextWorker:
+    case WebURLRequest::kRequestContextSharedWorker:
+    case WebURLRequest::kRequestContextFetch:
+      return true;
+    case WebURLRequest::kRequestContextPlugin:
+      return service_worker_mode == WebURLRequest::ServiceWorkerMode::kNone;
+    default:
+      return false;
+  }
+}
+
 }  // namespace WebCORS
 
 }  // namespace blink
