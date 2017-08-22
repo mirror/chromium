@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "078eae32_101c88b0",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-22T23:34:55Z",
+      "side": 1,
+      "message": "Discussed some with Enne and Khushal...\n\nThe maps here are used only in the method LayerTreeImpl::UpdatePropertyTreeAnimationFromMainThread.\n\nThey are used to apply current element animation\nstate on top of the *pending* property tree copied from\nthe main thread, and is called by\nLayerTreeHost::FinishCommitOnImplThread.\n\nHowever, the *active* property tree nodes will always have the\nsame transform, opacity or filter value as their corresponding\n*pending* tree nodes, because an activation has always occurred\nbefore this commit. (*)\n\nTherefore, I think the element_id_to_transform_animations_ etc\nmaps cam be removed, and UpdatePropertyTreeAnimationFromMainThread\ncan be moved to LayerTreeHostImpl and written like this:\n\nfor (pending_it in pending_property_tree().element_id_to_transform_node_index)\n  if (pending_it.second-\u003eis_currently_animating) {\n    if (active_node \u003d active_property_tree().element_id_to_transform_node_index[pending_it.first]) {\n      pending_it-\u003esecond.transform \u003d active_node.transform;\n    }\n  }\n}\n\netc.\n\nI did something similar in this CL: https://codereview.chromium.org/2877033002.\nSee method LayerTreeHostImpl::PushScrollbarOpacitiesFromActiveToPending.\n\n(*) Credit to Khushal and Enne for long discussion about whether this statement\nis correct.",
+      "revId": "d2e453041f4a6736f16fc2ffd665c6b209d00f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
