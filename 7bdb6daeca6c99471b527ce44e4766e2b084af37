@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "142068c2_289a837a",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-22T20:44:13Z",
+      "side": 1,
+      "message": "Please reference https://w3c.github.io/accelerometer/#model instead.",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 108,
+        "endChar": 36
+      },
+      "revId": "7bdb6daeca6c99471b527ce44e4766e2b084af37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c653e1fc_26f52bdf",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-22T20:44:13Z",
+      "side": 1,
+      "message": "Please reference https://w3c.github.io/gyroscope/#model instead. This is incorrect as in the DeviceOrientationEvent model (https://w3c.github.io/deviceorientation/spec-source-orientation.html#deviceorientation) alpha is rotation around the z-axis, beta around the x-axis and gamma around the y-axis.",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 17
+      },
+      "revId": "7bdb6daeca6c99471b527ce44e4766e2b084af37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
