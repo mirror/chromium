@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f44a064f_18e7bc0b",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-08-22T01:25:07Z",
+      "side": 1,
+      "message": "thanks for the suggestion!",
+      "parentUuid": "98a2c928_4aa77052",
+      "range": {
+        "startLine": 592,
+        "startChar": 6,
+        "endLine": 592,
+        "endChar": 51
+      },
+      "revId": "458f64403c400934adc5e99b8ad1e01b5695cfb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b387bcad_d3a7fae8",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a642f933_d062cdbe",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 82456,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-08-22T01:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b387bcad_d3a7fae8",
+      "range": {
+        "startLine": 82456,
+        "startChar": 34,
+        "endLine": 82456,
+        "endChar": 0
+      },
+      "revId": "458f64403c400934adc5e99b8ad1e01b5695cfb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9969cb41_5da015f9",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -92,6 +140,30 @@
       "revId": "458f64403c400934adc5e99b8ad1e01b5695cfb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3174ba6_166cc7de",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 82461,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-08-22T01:25:07Z",
+      "side": 1,
+      "message": "added in enums.xml",
+      "parentUuid": "9969cb41_5da015f9",
+      "range": {
+        "startLine": 82461,
+        "startChar": 57,
+        "endLine": 82461,
+        "endChar": 0
+      },
+      "revId": "458f64403c400934adc5e99b8ad1e01b5695cfb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
