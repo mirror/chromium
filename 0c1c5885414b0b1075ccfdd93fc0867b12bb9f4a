@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fb0f1bd3_ecf46680",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-22T18:23:16Z",
+      "side": 1,
+      "message": "Under normal conditions on other platforms, we *never* intentionally include invalid handles at this layer. i.e. if some bindings want to send a notion of \"invalid handle\", they simply don\u0027t attach any actual platform handle at all, and the distinction of an invalid handle is communicated at the bindings layer inside message data. The only way for invalid handles to be attached is for something to go wrong unexpectedly.",
+      "parentUuid": "52b4025f_88ebecb0",
+      "revId": "0c1c5885414b0b1075ccfdd93fc0867b12bb9f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "679f6845_e60d9850",
         "filename": "mojo/edk/system/channel_fuchsia.cc",
         "patchSetId": 4
@@ -65,6 +83,24 @@
       "writtenOn": "2017-08-21T22:07:06Z",
       "side": 1,
       "message": "Should we return false here if WrapPlatformHandles() returns a !is_valid() handle?",
+      "revId": "0c1c5885414b0b1075ccfdd93fc0867b12bb9f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41355c17_092aa937",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-22T18:23:16Z",
+      "side": 1,
+      "message": "Seems reasonable to me.",
+      "parentUuid": "679f6845_e60d9850",
       "revId": "0c1c5885414b0b1075ccfdd93fc0867b12bb9f4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
