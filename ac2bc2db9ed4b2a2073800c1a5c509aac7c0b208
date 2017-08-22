@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8d85a00_b0a577bb",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-22T17:12:21Z",
+      "side": 1,
+      "message": "The disabled state is actually no longer being added since we choose to use a shell API to pass the settings pref.",
+      "parentUuid": "d00ebdb5_97cab533",
+      "revId": "ac2bc2db9ed4b2a2073800c1a5c509aac7c0b208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee6c83fd_17e483fa",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 1
