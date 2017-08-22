@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "fb7b2539_1a463205",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-22T11:40:17Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t read Hiroshige\u0027s comment before sending mine as the time was close.\n\nI think the direction we should take is that we remove cors_enabled_schemes and let ShouldTreatURLSchemeAsCORSEnabled() also pass through to url::.\n\nI\u0027ve removed the registration method in\nhttps://chromium.googlesource.com/chromium/src/+/8c77cce680a72f3d3800bd7ba6f9a60d141ac0dd%5E%21/#F0\nbut I agree that it\u0027s still not so clear that it\u0027s expected to be stable. We could add some note for now.",
+      "parentUuid": "39322fed_8c86691f",
+      "revId": "ed48458202884444f84cf31f065cb2c951a17957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fd7cb9a_678af6df",
         "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
         "patchSetId": 5
