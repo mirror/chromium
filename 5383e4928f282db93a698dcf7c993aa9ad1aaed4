@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ac2abc4_aaa5d963",
+        "filename": "ios/chrome/browser/passwords/credential_manager.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T16:13:29Z",
+      "side": 1,
+      "message": "No need for \"using\" here, because the code is already inside credential_manager namespace",
+      "range": {
+        "startLine": 10,
+        "startChar": 6,
+        "endLine": 10,
+        "endChar": 22
+      },
+      "revId": "5383e4928f282db93a698dcf7c993aa9ad1aaed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "014930a4_f65c8ded",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T16:13:29Z",
+      "side": 1,
+      "message": "Please explain the purpose of these keys, how they should be used and what is the structure of the dictionary where these constants are keys.",
+      "range": {
+        "startLine": 13,
+        "startChar": 20,
+        "endLine": 13,
+        "endChar": 21
+      },
+      "revId": "5383e4928f282db93a698dcf7c993aa9ad1aaed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a068e1a_3b440651",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T16:13:29Z",
+      "side": 1,
+      "message": "These should be extern and defined in the implementation file.",
+      "range": {
+        "startLine": 14,
+        "startChar": 15,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "5383e4928f282db93a698dcf7c993aa9ad1aaed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32d84a1c_ff4c4a87",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T16:13:29Z",
+      "side": 1,
+      "message": "No need for \"using\"",
+      "range": {
+        "startLine": 10,
+        "startChar": 24,
+        "endLine": 10,
+        "endChar": 46
+      },
+      "revId": "5383e4928f282db93a698dcf7c993aa9ad1aaed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0d772d_f956d7ea",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T16:13:29Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 15,
+        "startChar": 24,
+        "endLine": 15,
+        "endChar": 38
+      },
+      "revId": "5383e4928f282db93a698dcf7c993aa9ad1aaed4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
