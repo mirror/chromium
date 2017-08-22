@@ -227,4 +227,28 @@ id ExecuteJavaScript(NSString* javascript,
              @"Failed waiting for incognito tab count to become %" PRIuNS,
              count);
 }
+
++ (void)waitForWebViewContainingBlockedImage:(std::string)image_id {
+  GREYCondition* condition = [GREYCondition
+      conditionWithName:@"Wait for web view blocked image"
+                  block:^BOOL {
+                    return web::test::IsWebViewContainingImage(
+                        image_id, chrome_test_util::GetCurrentWebState(),
+                        web::test::IMAGE_STATE_BLOCKED);
+                  }];
+  GREYAssert([condition waitWithTimeout:testing::kWaitForUIElementTimeout],
+             @"Failed waiting for web view blocked image %s", image_id.c_str());
+}
+
++ (void)waitForWebViewContainingLoadedImage:(std::string)image_id {
+  GREYCondition* condition = [GREYCondition
+      conditionWithName:@"Wait for web view blocked image"
+                  block:^BOOL {
+                    return web::test::IsWebViewContainingImage(
+                        image_id, chrome_test_util::GetCurrentWebState(),
+                        web::test::IMAGE_STATE_LOADED);
+                  }];
+  GREYAssert([condition waitWithTimeout:testing::kWaitForUIElementTimeout],
+             @"Failed waiting for web view loaded image %s", image_id.c_str());
+}
 @end
