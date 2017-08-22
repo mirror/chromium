@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08a176a8_95e63afe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/FeedbackCollector.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-22T18:10:25Z",
+      "side": 1,
+      "message": "To ensure you don\u0027t break downstream code, I\u0027d probably keep the old method around for now to ensure that you can safely roll this in while you update it, and just make the old one @Deprecated",
+      "range": {
+        "startLine": 131,
+        "startChar": 36,
+        "endLine": 131,
+        "endChar": 73
+      },
+      "revId": "974c22d3a130a0623690ec112c68fb3b2b465fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e562c300_067d100b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feedback/FeedbackCollector.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-22T18:10:25Z",
+      "side": 1,
+      "message": "Optional: Move the return statement to make this early-out a single line?",
+      "revId": "974c22d3a130a0623690ec112c68fb3b2b465fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8ac420_ea78e23f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feedback/FeedbackCollectorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-22T18:10:25Z",
+      "side": 1,
+      "message": "I think this requires you to be on the main thread?",
+      "range": {
+        "startLine": 226,
+        "startChar": 16,
+        "endLine": 226,
+        "endChar": 40
+      },
+      "revId": "974c22d3a130a0623690ec112c68fb3b2b465fc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
