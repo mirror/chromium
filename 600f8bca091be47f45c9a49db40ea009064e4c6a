@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "aa9dbd27_2a768875",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-22T21:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3dda023_9b426604",
+      "range": {
+        "startLine": 33,
+        "startChar": 31,
+        "endLine": 33,
+        "endChar": 46
+      },
+      "revId": "600f8bca091be47f45c9a49db40ea009064e4c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b64100f_70045368",
         "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
         "patchSetId": 11
@@ -68,6 +92,30 @@
       "revId": "600f8bca091be47f45c9a49db40ea009064e4c6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c4ec3b5_7852583e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-22T21:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b64100f_70045368",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 16
+      },
+      "revId": "600f8bca091be47f45c9a49db40ea009064e4c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "c1aff586_845516a0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-22T21:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72483a0d_0644e382",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 33
+      },
+      "revId": "600f8bca091be47f45c9a49db40ea009064e4c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bec5fdfb_c255cc9d",
         "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
         "patchSetId": 11
@@ -105,6 +177,30 @@
       "writtenOn": "2017-08-22T21:11:46Z",
       "side": 1,
       "message": "Is this branch never taken? There\u0027s a DCHECK(sequence) right after we call GetWork()",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "600f8bca091be47f45c9a49db40ea009064e4c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422a3dfb_6ba599d4",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-22T21:32:01Z",
+      "side": 1,
+      "message": "It shouldn\u0027t ever get taken. Do you think I should move the DCHECK here and do DCHECK(!transaction-\u003eIsEmpty())",
+      "parentUuid": "bec5fdfb_c255cc9d",
       "range": {
         "startLine": 87,
         "startChar": 0,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "f1a9f7ca_05175386",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-22T21:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93c65b61_2fd32579",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 32
+      },
+      "revId": "600f8bca091be47f45c9a49db40ea009064e4c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d308cac_9c52c024",
         "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
         "patchSetId": 11
@@ -160,6 +280,30 @@
       "revId": "600f8bca091be47f45c9a49db40ea009064e4c6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac2497b7_ab64e69c",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-22T21:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d308cac_9c52c024",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 11
+      },
+      "revId": "600f8bca091be47f45c9a49db40ea009064e4c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "262e0552_402b4165",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-22T21:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d8ef5d3_4ba52901",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 17
+      },
+      "revId": "600f8bca091be47f45c9a49db40ea009064e4c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85bce26a_f4ee2f67",
         "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
         "patchSetId": 11
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "021d47e2_75e8d3e6",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-22T21:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85bce26a_f4ee2f67",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 17
+      },
+      "revId": "600f8bca091be47f45c9a49db40ea009064e4c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48ddcd3c_b43a13ea",
         "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
         "patchSetId": 11
@@ -229,6 +421,30 @@
       "revId": "600f8bca091be47f45c9a49db40ea009064e4c6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e04de483_141170aa",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-22T21:32:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48ddcd3c_b43a13ea",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 35
+      },
+      "revId": "600f8bca091be47f45c9a49db40ea009064e4c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
