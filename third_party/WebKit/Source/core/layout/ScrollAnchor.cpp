@@ -4,6 +4,8 @@
 
 #include "core/layout/ScrollAnchor.h"
 
+#include "core/dom/ExecutionContextTask.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
 #include "core/layout/LayoutBlockFlow.h"
@@ -16,6 +18,28 @@
 namespace blink {
 
 using Corner = ScrollAnchor::Corner;
+
+static void setDebugAttr(Element* element, int seqNum) {
+  element->setAttribute("data-scrollanchor",
+                        AtomicString(String::format("%d", seqNum)),
+                        ASSERT_NO_EXCEPTION);
+}
+
+static void writeDebugInfo(IntSize adjustment, LayoutObject* layoutObject) {
+  static int seqNum = 0;
+  WTF_CREATE_SCOPED_LOGGER(logger, "[%d] adjust by %d for %s", ++seqNum,
+                           adjustment.height(),
+                           layoutObject->debugName().utf8().data());
+
+  Node* node = layoutObject->node();
+  while (!node->isElementNode())
+    node = node->parentNode();
+  // ScrollAnchor can't write directly to the DOM due to lifecycle assertions.
+  node->document().postTask(
+      TaskType::Unthrottled, BLINK_FROM_HERE,
+      createSameThreadTask(&setDebugAttr, wrapPersistent(toElement(node)),
+                           seqNum));
+}
 
 ScrollAnchor::ScrollAnchor()
     : anchor_object_(nullptr),
@@ -313,6 +337,7 @@ void ScrollAnchor::Adjust() {
 
   scroller_->SetScrollOffset(
       scroller_->GetScrollOffset() + FloatSize(adjustment), kAnchoringScroll);
+  writeDebugInfo(adjustment, m_anchorObject);
 
   // Update UMA metric.
   DEFINE_STATIC_LOCAL(EnumerationHistogram, adjusted_offset_histogram,
