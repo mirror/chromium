@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4dfa950b_9ffac97b",
+        "filename": "chrome/browser/resources/settings/settings_vars_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-22T22:45:26Z",
+      "side": 1,
+      "message": "Intended for a separate CL. That will be a large-ish mechanical change. It would burden/obfuscate this CL to do that here.",
+      "parentUuid": "bc83d2af_1178dbd1",
+      "revId": "14038ce80adc428bbfac3ab46457edf26404e7f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "918f072e_7e009947",
         "filename": "chrome/browser/resources/settings/settings_vars_css.html",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-22T22:37:40Z",
       "side": 1,
       "message": "can we just change the current --settings-row-xx-min-height usages to use --cr-section-xx-min-height directly?",
+      "revId": "14038ce80adc428bbfac3ab46457edf26404e7f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc252e6e_479a95a1",
+        "filename": "chrome/browser/resources/settings/settings_vars_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-22T22:45:26Z",
+      "side": 1,
+      "message": "Intended for a separate CL. That will be a large-ish mechanical change. It would burden/obfuscate this CL to do that here.",
+      "parentUuid": "918f072e_7e009947",
       "revId": "14038ce80adc428bbfac3ab46457edf26404e7f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
