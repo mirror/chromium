@@ -4,8 +4,12 @@
 
 mojom = "//components/arc/common/video_common.mojom"
 public_headers = [
+  "//media/base/video_codecs.h",
   "//components/arc/video_accelerator/video_accelerator.h",
   "//ui/gfx/geometry/size.h",
+]
+public_deps = [
+  "//media",
 ]
 traits_headers =
     [ "//components/arc/video_accelerator/video_accelerator_struct_traits.h" ]
@@ -13,6 +17,7 @@ sources = [
   "//components/arc/video_accelerator/video_accelerator_struct_traits.cc",
 ]
 type_mappings = [
+  "arc.mojom.VideoCodecProfile=media::VideoCodecProfile",
   "arc.mojom.VideoFramePlane=arc::VideoFramePlane[move_only]",
   "arc.mojom.Size=gfx::Size",
 ]
