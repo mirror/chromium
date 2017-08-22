@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeeeb595_4982f443",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-22T22:11:46Z",
+      "side": 1,
+      "message": "You don\u0027t need the comment both here and on the method definition. I would keep the other one.",
+      "range": {
+        "startLine": 45,
+        "startChar": 51,
+        "endLine": 45,
+        "endChar": 76
+      },
+      "revId": "75a6e767f5a986b058dea94af06a1d56e8593baa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
