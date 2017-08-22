@@ -35,8 +35,8 @@ class WebIDBFactoryImpl::IOThreadHelper {
   DatabaseCallbacksAssociatedPtrInfo GetDatabaseCallbacksProxy(
       std::unique_ptr<IndexedDBDatabaseCallbacksImpl> callbacks);
 
-  void GetDatabaseNames(std::unique_ptr<IndexedDBCallbacksImpl> callbacks,
-                        const url::Origin& origin);
+  void GetDatabaseInfo(std::unique_ptr<IndexedDBCallbacksImpl> callbacks,
+                       const url::Origin& origin);
   void Open(const base::string16& name,
             int64_t version,
             int64_t transaction_id,
@@ -65,14 +65,14 @@ WebIDBFactoryImpl::~WebIDBFactoryImpl() {
   io_runner_->DeleteSoon(FROM_HERE, io_helper_);
 }
 
-void WebIDBFactoryImpl::GetDatabaseNames(WebIDBCallbacks* callbacks,
-                                         const WebSecurityOrigin& origin) {
+void WebIDBFactoryImpl::GetDatabaseInfo(WebIDBCallbacks* callbacks,
+                                        const WebSecurityOrigin& origin) {
   auto callbacks_impl = base::MakeUnique<IndexedDBCallbacksImpl>(
       base::WrapUnique(callbacks), IndexedDBCallbacksImpl::kNoTransaction,
       nullptr, io_runner_);
   io_runner_->PostTask(
       FROM_HERE,
-      base::BindOnce(&IOThreadHelper::GetDatabaseNames,
+      base::BindOnce(&IOThreadHelper::GetDatabaseInfo,
                      base::Unretained(io_helper_),
                      base::Passed(&callbacks_impl), url::Origin(origin)));
 }
@@ -139,11 +139,11 @@ WebIDBFactoryImpl::IOThreadHelper::GetDatabaseCallbacksProxy(
   return ptr_info;
 }
 
-void WebIDBFactoryImpl::IOThreadHelper::GetDatabaseNames(
+void WebIDBFactoryImpl::IOThreadHelper::GetDatabaseInfo(
     std::unique_ptr<IndexedDBCallbacksImpl> callbacks,
     const url::Origin& origin) {
-  GetService()->GetDatabaseNames(GetCallbacksProxy(std::move(callbacks)),
-                                 origin);
+  GetService()->GetDatabaseInfo(GetCallbacksProxy(std::move(callbacks)),
+                                origin);
 }
 
 void WebIDBFactoryImpl::IOThreadHelper::Open(

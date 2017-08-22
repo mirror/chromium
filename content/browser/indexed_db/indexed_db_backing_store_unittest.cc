@@ -1258,7 +1258,7 @@ TEST_F(IndexedDBBackingStoreTest, CreateDatabase) {
   RunAllBlockingPoolTasksUntilIdle();
 }
 
-TEST_F(IndexedDBBackingStoreTest, GetDatabaseNames) {
+TEST_F(IndexedDBBackingStoreTest, GetDatabasesInfo) {
   idb_context_->TaskRunner()->PostTask(
       FROM_HERE, base::BindOnce(
                      [](IndexedDBBackingStore* backing_store) {
@@ -1284,11 +1284,13 @@ TEST_F(IndexedDBBackingStoreTest, GetDatabaseNames) {
                        EXPECT_TRUE(s.ok());
                        EXPECT_GT(db2_id, db1_id);
 
-                       std::vector<base::string16> names =
-                           backing_store->GetDatabaseNames(&s);
+                       std::vector<IndexedDBDatabaseInfo> databases_info =
+                           backing_store->GetDatabasesInfo(&s);
                        EXPECT_TRUE(s.ok());
-                       ASSERT_EQ(1U, names.size());
-                       EXPECT_EQ(db1_name, names[0]);
+                       ASSERT_EQ(1U, databases_info.size());
+                       EXPECT_EQ(db1_name, databases_info[0].name);
+                       EXPECT_EQ(db1_version, databases_info[0].version);
+                       EXPECT_EQ(db1_id, databases_info[0].id);
                      },
                      base::Unretained(backing_store())));
   RunAllBlockingPoolTasksUntilIdle();
