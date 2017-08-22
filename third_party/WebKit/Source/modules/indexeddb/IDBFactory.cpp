@@ -63,13 +63,12 @@ static bool IsContextValid(ExecutionContext* context) {
   return true;
 }
 
-IDBRequest* IDBFactory::GetDatabaseNames(ScriptState* script_state,
+IDBRequest* IDBFactory::getDatabasesInfo(ScriptState* script_state,
                                          ExceptionState& exception_state) {
   IDB_TRACE("IDBFactory::getDatabaseNamesRequestSetup");
   IDBRequest::AsyncTraceState metrics("IDBFactory::getDatabaseNames");
   IDBRequest* request = IDBRequest::Create(script_state, IDBAny::CreateNull(),
                                            nullptr, std::move(metrics));
-  // TODO(jsbell): Used only by inspector; remove unneeded checks/exceptions?
   if (!IsContextValid(ExecutionContext::From(script_state)))
     return nullptr;
   if (!ExecutionContext::From(script_state)
@@ -88,7 +87,7 @@ IDBRequest* IDBFactory::GetDatabaseNames(ScriptState* script_state,
     return request;
   }
 
-  Platform::Current()->IdbFactory()->GetDatabaseNames(
+  Platform::Current()->IdbFactory()->GetDatabasesInfo(
       request->CreateWebCallbacks().release(),
       WebSecurityOrigin(
           ExecutionContext::From(script_state)->GetSecurityOrigin()));

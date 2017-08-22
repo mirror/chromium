@@ -89,4 +89,16 @@ bool IndexedDBDatabaseMetadata::operator==(
          object_stores == other.object_stores;
 }
 
+IndexedDBDatabaseInfo::IndexedDBDatabaseInfo() = default;
+
+IndexedDBDatabaseInfo::IndexedDBDatabaseInfo(const base::string16& name,
+                                             int64_t id,
+                                             int64_t version)
+    : name(name), id(id), version(version) {}
+
+IndexedDBDatabaseInfo::~IndexedDBDatabaseInfo() = default;
+
+IndexedDBDatabaseInfo& IndexedDBDatabaseInfo::operator=(
+    const IndexedDBDatabaseInfo& other) = default;
+
 }  // namespace content

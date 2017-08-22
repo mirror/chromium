@@ -28,6 +28,13 @@
 [
     Exposed=(Window,Worker)
 ] interface IDBFactory {
+    [
+      CallWith=ScriptState,
+      RaisesException,
+      RuntimeEnabled=IDBDatabaseInfo,
+      Measure
+    ] IDBRequest getDatabasesInfo();
+
     [NewObject, CallWith=ScriptState, RaisesException] IDBOpenDBRequest open(DOMString name,
                                                                              [EnforceRange] optional unsigned long long version);
     [NewObject, CallWith=ScriptState, RaisesException] IDBOpenDBRequest deleteDatabase(DOMString name);
