@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "22db3842_35eaf6c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-22T21:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8db64a0e_f678df37",
+      "range": {
+        "startLine": 7,
+        "startChar": 45,
+        "endLine": 7,
+        "endChar": 46
+      },
+      "revId": "3e672e33bf46aaf07219144a3a32e12c8949dba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f19981e_b9be9709",
         "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "3e672e33bf46aaf07219144a3a32e12c8949dba8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53da5ad_f56683fb",
+        "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2568,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-22T21:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f19981e_b9be9709",
+      "range": {
+        "startLine": 2568,
+        "startChar": 36,
+        "endLine": 2568,
+        "endChar": 45
+      },
+      "revId": "3e672e33bf46aaf07219144a3a32e12c8949dba8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
