@@ -16,6 +16,24 @@
       "revId": "330f5e14d2b1e3ac27cd3f11272f20e13b013474",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e64296dc_d5baf2c4",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-22T20:39:10Z",
+      "side": 0,
+      "message": "Works as expected in my local testing, too bad there\u0027s no regression test.",
+      "parentUuid": "0a8ffaea_b86b62b5",
+      "revId": "330f5e14d2b1e3ac27cd3f11272f20e13b013474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

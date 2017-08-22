@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "2b6a8c5f_a88a1343",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-22T20:39:10Z",
+      "side": 1,
+      "message": "Nope; this was leftover from earlier changes; removed.",
+      "parentUuid": "a2cc8fc8_bb3c406c",
+      "revId": "a96d63357e49f70cc5150c0736ef619690678af4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc536d92_713b553b",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-22T20:39:10Z",
+      "side": 1,
+      "message": "Removed this one too.",
+      "revId": "a96d63357e49f70cc5150c0736ef619690678af4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3538bc5_3c746d6a",
         "filename": "ash/app_list/test_app_list_presenter_impl.h",
         "patchSetId": 6
@@ -36,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "4101b1f9_6fc5779a",
+        "filename": "ash/app_list/test_app_list_presenter_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-22T20:39:10Z",
+      "side": 1,
+      "message": "Hmm, I guess it should be used for the ash_unittests target? Done.",
+      "parentUuid": "b3538bc5_3c746d6a",
+      "revId": "a96d63357e49f70cc5150c0736ef619690678af4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35b48479_e2f4476d",
         "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
         "patchSetId": 6
@@ -47,6 +100,24 @@
       "writtenOn": "2017-08-22T20:19:27Z",
       "side": 1,
       "message": "needed? you have to spin twice?",
+      "revId": "a96d63357e49f70cc5150c0736ef619690678af4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6153601a_2277c58e",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1210,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-22T20:39:10Z",
+      "side": 1,
+      "message": "Nope, also leftover from earlier changes and now removed, thanks.",
+      "parentUuid": "35b48479_e2f4476d",
       "revId": "a96d63357e49f70cc5150c0736ef619690678af4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
