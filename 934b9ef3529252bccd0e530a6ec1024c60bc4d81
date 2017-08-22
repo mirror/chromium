@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d28de711_f31cef1d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-22T16:49:21Z",
+      "side": 1,
+      "message": "Follow CL description format:\nhttps://www.chromium.org/developers/contributing-code#TOC-Writing-commit-descriptions\n\nSingle line summary at the top. Try to wrap lines at 80 chars",
+      "revId": "934b9ef3529252bccd0e530a6ec1024c60bc4d81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

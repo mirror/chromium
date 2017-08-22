@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76853491_410902f0",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewPointerTypeTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-22T16:49:21Z",
+      "side": 0,
+      "message": "you can convert from css to physical pixel by multiplying by multiplying page scale and screen density: https://cs.chromium.org/chromium/src/content/public/android/java/src/org/chromium/content/browser/RenderCoordinates.java?rcl\u003dfdbe4a55c39ed04e2844352836a4321ba2866342\u0026l\u003d425\n\nAnd you can get a RenderCoordinates object from ContentViewCore.\n\nI think new way of just using , \"1,2,3\" rather than node names is harder to read, so should try to stick with old code if possible",
+      "revId": "cf5350e045f71a03002955968ef240ce806d3e4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
