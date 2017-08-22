@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "97eb267b_9f113194",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-22T16:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f1d12eb_414fa842",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 112
+      },
+      "revId": "502576e773d1c66f75f1e0d72ea0e1f0b909a307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70211fda_4f980f24",
         "filename": "chrome/app/chromeos_strings.grdp",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0ec424f7_cc6115a7",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4194,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-22T16:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70211fda_4f980f24",
+      "range": {
+        "startLine": 4194,
+        "startChar": 7,
+        "endLine": 4194,
+        "endChar": 18
+      },
+      "revId": "502576e773d1c66f75f1e0d72ea0e1f0b909a307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46a692a4_6c25ba6e",
         "filename": "chrome/app/chromeos_strings.grdp",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-22T10:08:30Z",
       "side": 1,
       "message": "nit: \"Keyboard shortcuts overlay\" or something (Options had a \"keyboard overlay\")",
+      "range": {
+        "startLine": 4229,
+        "startChar": 7,
+        "endLine": 4229,
+        "endChar": 23
+      },
+      "revId": "502576e773d1c66f75f1e0d72ea0e1f0b909a307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653e4df6_e3e0a082",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4229,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-22T16:15:01Z",
+      "side": 1,
+      "message": "-\u003e \u0027Keyboard overlay UI\u0027 to match the class/file that uses these.",
+      "parentUuid": "46a692a4_6c25ba6e",
       "range": {
         "startLine": 4229,
         "startChar": 7,
