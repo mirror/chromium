@@ -81,6 +81,24 @@
       "revId": "488a03d3bd12ecb1cf53cb3209a195c0867cc3ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c781d8a0_784e8892",
+        "filename": "third_party/WebKit/Source/modules/csspaint/ContextAttributes.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-22T14:53:37Z",
+      "side": 1,
+      "message": "I don\u0027t believe we support making a dictionary RuntimeEnabled (and it\u0027s not clear what that would mean -- the existence of the dictionary IDL type doesn\u0027t expose anything to the web).\n\nRather, I\u0027d expect the IDL methods which use the dictionary to be RuntimeEnabled. (Having a member be runtime-enabled, on the other hand, may be useful if you want to be able to call the method but only conditionally accept a particular dictionary member.)\n\nOddly, this CL doesn\u0027t seem to actually use this IDL dictionary as an IDL dictionary anywhere (it is never populated from script nor returned to script AFAICT). Instead, it seems to still be populated by a manual read of the \"alpha\" property on the constructor. Am I correct to assume that will be in a follow-up patch?",
+      "parentUuid": "ac38d4f7_2109c388",
+      "revId": "488a03d3bd12ecb1cf53cb3209a195c0867cc3ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
