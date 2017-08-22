@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3876ea83_b80caca1",
+        "filename": "content/browser/appcache/appcache_update_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-22T20:08:26Z",
+      "side": 1,
+      "message": "Cut paste. Removed",
+      "parentUuid": "037b7e82_a54fb46e",
+      "revId": "5a559ce31a6f2cb6c93c63f218e4dd02caa4cf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2b16430_349be6ca",
         "filename": "content/browser/appcache/appcache_update_job_unittest.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "dae6ff92_c928221a",
+        "filename": "content/browser/appcache/appcache_update_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-22T20:08:26Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "b2b16430_349be6ca",
+      "revId": "5a559ce31a6f2cb6c93c63f218e4dd02caa4cf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8ecd9b5_1846afaa",
         "filename": "content/browser/appcache/appcache_update_job_unittest.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-22T19:00:10Z",
       "side": 1,
       "message": "should we wait until the VerifyHeadersAndDeleteUpdate happens",
+      "revId": "5a559ce31a6f2cb6c93c63f218e4dd02caa4cf93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c0ee9c_169ed7d8",
+        "filename": "content/browser/appcache/appcache_update_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3233,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-22T20:08:26Z",
+      "side": 1,
+      "message": "It automatically does. Because UpdateFinished() posts a task. So our task will be ahead of it",
+      "parentUuid": "d8ecd9b5_1846afaa",
       "revId": "5a559ce31a6f2cb6c93c63f218e4dd02caa4cf93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
