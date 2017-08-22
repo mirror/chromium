@@ -477,9 +477,11 @@ TEST_F(AppListViewFullscreenTest, MultiplePagesAlwaysReinitializeOnFirstPage) {
   ASSERT_EQ(view_->GetAppsPaginationModel()->selected_page(), 0);
 }
 
+// TODO(weidong): Remove expand arrow corresponding tests in StartPageView.
+// http://crbug.com/757704.
 // Tests the focus change in search box view and start page view triggered by
 // tab key.
-TEST_F(AppListViewFullscreenTest, StartPageTabFocusTest) {
+TEST_F(AppListViewFullscreenTest, DISABLED_StartPageTabFocusTest) {
   constexpr size_t apps_num = 5u;
   InitializeStartPageView(apps_num);
   ui::KeyEvent tab(ui::ET_KEY_PRESSED, ui::VKEY_TAB, ui::EF_NONE);
@@ -488,7 +490,7 @@ TEST_F(AppListViewFullscreenTest, StartPageTabFocusTest) {
 
 // Tests the focus change in search box view and start page view triggered by
 // shift+tab key.
-TEST_F(AppListViewFullscreenTest, StartPageShiftTabFocusTest) {
+TEST_F(AppListViewFullscreenTest, DISABLED_StartPageShiftTabFocusTest) {
   constexpr size_t apps_num = 5u;
   InitializeStartPageView(apps_num);
   ui::KeyEvent shift_tab(ui::ET_KEY_PRESSED, ui::VKEY_TAB, ui::EF_SHIFT_DOWN);
@@ -497,7 +499,7 @@ TEST_F(AppListViewFullscreenTest, StartPageShiftTabFocusTest) {
 
 // Tests the focus change in search box view and start page view triggered by
 // right arrow key.
-TEST_F(AppListViewFullscreenTest, StartPageRightArrowFocusTest) {
+TEST_F(AppListViewFullscreenTest, DISABLED_StartPageRightArrowFocusTest) {
   constexpr size_t apps_num = 5u;
   InitializeStartPageView(apps_num);
   ui::KeyEvent right(ui::ET_KEY_PRESSED, ui::VKEY_RIGHT, ui::EF_NONE);
@@ -506,7 +508,7 @@ TEST_F(AppListViewFullscreenTest, StartPageRightArrowFocusTest) {
 
 // Tests the focus change in search box view and start page view triggered by
 // left arrow key.
-TEST_F(AppListViewFullscreenTest, StartPageLeftArrowFocusTest) {
+TEST_F(AppListViewFullscreenTest, DISABLED_StartPageLeftArrowFocusTest) {
   constexpr size_t apps_num = 5u;
   InitializeStartPageView(apps_num);
   ui::KeyEvent left(ui::ET_KEY_PRESSED, ui::VKEY_LEFT, ui::EF_NONE);
@@ -515,7 +517,7 @@ TEST_F(AppListViewFullscreenTest, StartPageLeftArrowFocusTest) {
 
 // Tests the focus change in search box view and start page view triggered by
 // down arrow key.
-TEST_F(AppListViewFullscreenTest, StartPageDownArrowFocusTest) {
+TEST_F(AppListViewFullscreenTest, DISABLED_StartPageDownArrowFocusTest) {
   constexpr size_t apps_num = 5u;
   InitializeStartPageView(apps_num);
 
@@ -551,7 +553,7 @@ TEST_F(AppListViewFullscreenTest, StartPageDownArrowFocusTest) {
 
 // Tests the focus change in search box view and start page view triggered by
 // up arrow key.
-TEST_F(AppListViewFullscreenTest, StartPageUpArrowFocusTest) {
+TEST_F(AppListViewFullscreenTest, DISABLED_StartPageUpArrowFocusTest) {
   constexpr size_t apps_num = 5u;
   InitializeStartPageView(apps_num);
 
