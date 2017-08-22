@@ -86,6 +86,7 @@ class CORE_EXPORT CSSPrimitiveValue : public CSSValue {
     kViewportMax,
     kRems,
     kChs,
+    kQuarterMillimeters,
     kUserUnits,  // The SVG term for unitless lengths
     // Angle units
     kDegrees,
