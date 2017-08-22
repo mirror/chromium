@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae57137c_245243c3",
+        "filename": "build/android/pylib/android/logcat_symbolizer.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T20:30:49Z",
+      "side": 1,
+      "message": "nit: just THREADTIME_RE",
+      "revId": "0ff1971aa8de6909d7ac351d277328d4293ff845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
