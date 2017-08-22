@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d19d2601_e366be3c",
+        "filename": "ash/system/ime_menu/ime_menu_tray.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-22T16:33:06Z",
+      "side": 1,
+      "message": "How come you\u0027re not using Prepend, and similarly how come you don\u0027t add to aura::End? I think this code should match what happens with menus, and that is what menus do.",
+      "range": {
+        "startLine": 509,
+        "startChar": 16,
+        "endLine": 509,
+        "endChar": 19
+      },
+      "revId": "867ece11e18aac26c8948a857e7e8ddffaf034a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1426e763_24a1984a",
+        "filename": "ash/system/tray/system_tray_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-22T16:33:06Z",
+      "side": 1,
+      "message": "Document where override comes from (as you do on line 71). Both overrides come from View, so I would group them together.",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 37
+      },
+      "revId": "867ece11e18aac26c8948a857e7e8ddffaf034a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aac6ee0_7dd41377",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-22T16:33:06Z",
+      "side": 1,
+      "message": "Please add descriptions for classes and non-obvious members.",
+      "range": {
+        "startLine": 176,
+        "startChar": 2,
+        "endLine": 176,
+        "endChar": 27
+      },
+      "revId": "867ece11e18aac26c8948a857e7e8ddffaf034a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
