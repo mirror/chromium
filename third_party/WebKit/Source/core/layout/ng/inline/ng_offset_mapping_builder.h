@@ -32,9 +32,14 @@ class CORE_EXPORT NGOffsetMappingBuilder {
   using AnnotationType =
       std::pair<const LayoutText*, const NGPhysicalTextFragment*>;
 
-  // Associate the offset mapping with a simple annotation with the given node
-  // as its value.
+  // Annotate the entire offset mapping with the given node.
   void Annotate(const LayoutText*);
+
+  // Annotation the offset mapping in the specified range with the given text
+  // fragment.
+  void AnnotateRange(unsigned start,
+                     unsigned end,
+                     const NGPhysicalTextFragment*);
 
   // Append an identity offset mapping of the specified length with null
   // annotation to the builder.
