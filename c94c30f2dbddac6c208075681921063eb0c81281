@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f3c4a634_8ca3a266",
+        "filename": "base/debug/task_annotator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-22T14:56:28Z",
+      "side": 1,
+      "message": "These sorts of comments are unusual, but if you do want to keep them to ease future removal, you should probably also mention 744734 in the OS_ANDROID blocks below to tie them all together.",
+      "range": {
+        "startLine": 11,
+        "startChar": 47,
+        "endLine": 11,
+        "endChar": 62
+      },
+      "revId": "c94c30f2dbddac6c208075681921063eb0c81281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b51d466_74b99264",
         "filename": "base/metrics/statistics_recorder.cc",
         "patchSetId": 9
