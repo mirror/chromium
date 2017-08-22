@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "cf93455f_3d59da41",
+        "filename": "ui/aura/local/layer_tree_frame_sink_local.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-22T21:37:04Z",
+      "side": 1,
+      "message": "You are right this is not right...moving to OnFirstSurfaceActivation.",
+      "range": {
+        "startLine": 91,
+        "startChar": 34,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "6df2982eb748ec3c3c0dc3101631d179a73269ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "157d41e2_2519eec9",
         "filename": "ui/aura/local/window_port_local.cc",
         "patchSetId": 3
