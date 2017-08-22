@@ -413,18 +413,8 @@ bool NavigationScheduler::MustReplaceCurrentItem(LocalFrame* target_frame) {
   // Non-user navigation before the page has finished firing onload should not
   // create a new back/forward item. See https://webkit.org/b/42861 for the
   // original motivation for this.
-  if (!target_frame->GetDocument()->LoadEventFinished() &&
-      !UserGestureIndicator::ProcessingUserGesture())
-    return true;
-
-  // Navigation of a subframe during loading of an ancestor frame does not
-  // create a new back/forward item. The definition of "during load" is any time
-  // before all handlers for the load event have been run. See
-  // https://bugs.webkit.org/show_bug.cgi?id=14957 for the original motivation
-  // for this.
-  Frame* parent_frame = target_frame->Tree().Parent();
-  return parent_frame && parent_frame->IsLocalFrame() &&
-         !ToLocalFrame(parent_frame)->Loader().AllAncestorsAreComplete();
+  return !target_frame->GetDocument()->LoadEventFinished() &&
+         !UserGestureIndicator::ProcessingUserGesture();
 }
 
 void NavigationScheduler::ScheduleFrameNavigation(Document* origin_document,

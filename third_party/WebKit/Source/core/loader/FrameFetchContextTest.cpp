@@ -1181,7 +1181,7 @@ TEST_F(FrameFetchContextTest, DefersLoadingWhenDetached) {
 }
 
 TEST_F(FrameFetchContextTest, IsLoadCompleteWhenDetached_1) {
-  document->open();
+  document->GetFrame()->SetIsLoading(true);
   EXPECT_FALSE(fetch_context->IsLoadComplete());
 
   dummy_page_holder = nullptr;
