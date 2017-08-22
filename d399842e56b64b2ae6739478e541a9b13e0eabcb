@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "00ce4e2e_e89580a6",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-22T00:41:05Z",
+      "side": 1,
+      "message": "Yeah, I want to separate semantics analysis from building IRs. That said I\u0027m fine with having check here for now. We have a refactoring plan from the scratch and peria@ is now working on the refactoring. IIUC peria@ and I are on the same page :)",
+      "parentUuid": "7b0e869e_59409496",
+      "revId": "d399842e56b64b2ae6739478e541a9b13e0eabcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a85aaf21_934a6462",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_interface.py",
         "patchSetId": 7

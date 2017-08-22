@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "3e196ea8_0d4a9df2",
+        "filename": "third_party/WebKit/Source/core/html/HTMLAllCollection.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-22T00:41:05Z",
+      "side": 1,
+      "message": "+1 to get API owners approval or separate CL into two (implementing LegacyUnenumerableNamedPropertes and web-exposed changes).",
+      "parentUuid": "2c1627f6_d49b8ef7",
+      "revId": "6189bae5ecf843c7708990812af76eeeba0a1a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e0b599e_d3b86fa5",
         "filename": "third_party/WebKit/Source/core/html/HTMLCollection.idl",
         "patchSetId": 8
