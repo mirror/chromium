@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "78dc5cfc_5dcbdf88",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-08-22T23:26:40Z",
+      "side": 1,
+      "message": "Hosie",
+      "revId": "c8a4b32e20d414e9adedde4acc2f662bc3c654a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6e8915c_c241e45e",
         "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
         "patchSetId": 3
@@ -13,6 +30,30 @@
       "writtenOn": "2017-08-22T20:38:50Z",
       "side": 1,
       "message": "I\u0027m curious about the size choice.\nIt seems like uint8x16_t is the largest SIMD type for 8bits. So we\u0027re trying to do this as wide as possible while using SIMD. That makes sense to me. It is probably the most likely to map to a single opcode when reading/writing.\n\nBut I would also imagine that the cache size is 64 bytes, rather than 16. We might benefit from working on whole cache lines per loop iteration.\n\nThat might diverge further from the code zlib already had. But what if we read/wrote 4x uint8x16_t per loop iteration?\n\nMaybe it won\u0027t matter at all because the loop contents are small enough that it is memory-access-bound. If so, not doing 4x will be the same speed and produce smaller code.",
+      "range": {
+        "startLine": 19,
+        "startChar": 36,
+        "endLine": 19,
+        "endChar": 53
+      },
+      "revId": "c8a4b32e20d414e9adedde4acc2f662bc3c654a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a77551c0_d131b312",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1240200
+      },
+      "writtenOn": "2017-08-22T23:26:40Z",
+      "side": 1,
+      "message": "I tried a few sizes and 16 bytes worked out the fastest in the general[*] case.  The data isn\u0027t aligned, so large loads and stores might promote extra cache fetches for data that isn\u0027t needed.\n\n[*] The \"general case\" probably isn\u0027t that general.  Specifically for the size of the chunk I think I tried a bunch of PNGs and a few other files, but found the rolloff so pronounced that I stopped investigating.  It was a long time ago (in another life, one might say).",
+      "parentUuid": "e6e8915c_c241e45e",
       "range": {
         "startLine": 19,
         "startChar": 36,
