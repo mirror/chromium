@@ -54,11 +54,18 @@ class DrmOverlayManager : public OverlayManagerOzone {
   GpuThreadAdapter* proxy_;               // Not owned.
   DrmWindowHostManager* window_manager_;  // Not owned.
 
-  // List of all OverlaySurfaceCandidate instances which have been validated in
-  // GPU side.  Value is set to true if we are waiting for validation results
-  // from GPU.
-  base::MRUCache<std::vector<OverlaySurfaceCandidate>,
-                 std::vector<OverlayStatus>>
+  // Value for the request cache, that keeps track of how many times a
+  // specific validation has been requested, if there is a GPU validation
+  // in flight, and at last the result of the validation.
+  struct OverlayValidationCacheValue {
+    OverlayValidationCacheValue() : request_num(0) {}
+    int request_num;
+    std::vector<OverlayStatus> status;
+  };
+
+  // List of all OverlaySurfaceCandidate instances which have been requested
+  // for validation and/or validated.
+  base::MRUCache<OverlaySurfaceCandidateList, OverlayValidationCacheValue>
       cache_;
 
   DISALLOW_COPY_AND_ASSIGN(DrmOverlayManager);
