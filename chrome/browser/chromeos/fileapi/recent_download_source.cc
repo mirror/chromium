@@ -25,45 +25,48 @@ namespace chromeos {
 namespace {
 
 void OnReadDirectoryOnIOThread(
-    const storage::FileSystemOperation::ReadDirectoryCallback& callback,
+    storage::FileSystemOperation::ReadDirectoryCallback callback,
     base::File::Error result,
-    const storage::FileSystemOperation::FileEntryList& entries,
+    storage::FileSystemOperation::FileEntryList entries,
     bool has_more) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(callback, result, entries, has_more));
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(std::move(callback), result, entries, has_more));
 }
 
 void ReadDirectoryOnIOThread(
     scoped_refptr<storage::FileSystemContext> file_system_context,
     const storage::FileSystemURL& url,
-    const storage::FileSystemOperation::ReadDirectoryCallback& callback) {
+    storage::FileSystemOperation::ReadDirectoryCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   file_system_context->operation_runner()->ReadDirectory(
-      url, base::Bind(&OnReadDirectoryOnIOThread, callback));
+      url,
+      base::BindRepeating(&OnReadDirectoryOnIOThread, std::move(callback)));
 }
 
 void OnGetMetadataOnIOThread(
-    const storage::FileSystemOperation::GetMetadataCallback& callback,
+    storage::FileSystemOperation::GetMetadataCallback callback,
     base::File::Error result,
     const base::File::Info& info) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(callback, result, info));
+                          base::BindOnce(std::move(callback), result, info));
 }
 
 void GetMetadataOnIOThread(
     scoped_refptr<storage::FileSystemContext> file_system_context,
     const storage::FileSystemURL& url,
     int fields,
-    const storage::FileSystemOperation::GetMetadataCallback& callback) {
+    storage::FileSystemOperation::GetMetadataCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   file_system_context->operation_runner()->GetMetadata(
-      url, fields, base::Bind(&OnGetMetadataOnIOThread, callback));
+      url, fields,
+      base::BindOnce(&OnGetMetadataOnIOThread, std::move(callback)));
 }
 
 }  // namespace
@@ -117,16 +120,17 @@ void RecentDownloadSource::ScanDirectory(const base::FilePath& path) {
   ++inflight_readdirs_;
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&ReadDirectoryOnIOThread,
-                     make_scoped_refptr(context_.file_system_context()), url,
-                     base::Bind(&RecentDownloadSource::OnReadDirectory,
-                                weak_ptr_factory_.GetWeakPtr(), path)));
+      base::BindOnce(
+          &ReadDirectoryOnIOThread,
+          make_scoped_refptr(context_.file_system_context()), url,
+          base::BindRepeating(&RecentDownloadSource::OnReadDirectory,
+                              weak_ptr_factory_.GetWeakPtr(), path)));
 }
 
 void RecentDownloadSource::OnReadDirectory(
     const base::FilePath& path,
     base::File::Error result,
-    const storage::FileSystemOperation::FileEntryList& entries,
+    storage::FileSystemOperation::FileEntryList entries,
     bool has_more) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(context_.is_valid());

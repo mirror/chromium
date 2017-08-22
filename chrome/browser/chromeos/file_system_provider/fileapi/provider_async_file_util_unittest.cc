@@ -52,8 +52,7 @@ class EventLogger {
     result_.reset(new base::File::Error(error));
   }
 
-  void OnCreateOrOpen(base::File file,
-                      const base::Closure& on_close_callback) {
+  void OnCreateOrOpen(base::File file, base::OnceClosure on_close_callback) {
     if (file.IsValid())
       result_.reset(new base::File::Error(base::File::FILE_OK));
 
@@ -70,7 +69,7 @@ class EventLogger {
   }
 
   void OnReadDirectory(base::File::Error error,
-                       const storage::AsyncFileUtil::EntryList& file_list,
+                       storage::AsyncFileUtil::EntryList file_list,
                        bool has_more) {
     result_.reset(new base::File::Error(error));
   }
@@ -79,7 +78,7 @@ class EventLogger {
       base::File::Error error,
       const base::File::Info& file_info,
       const base::FilePath& platform_path,
-      const scoped_refptr<storage::ShareableFileReference>& file_ref) {
+      scoped_refptr<storage::ShareableFileReference> file_ref) {
     result_.reset(new base::File::Error(error));
   }
 
@@ -405,10 +404,9 @@ TEST_F(FileSystemProviderProviderAsyncFileUtilTest, CreateSnapshotFile) {
   EventLogger logger;
 
   async_file_util_->CreateSnapshotFile(
-      CreateOperationContext(),
-      file_url_,
-      base::Bind(&EventLogger::OnCreateSnapshotFile,
-                 base::Unretained(&logger)));
+      CreateOperationContext(), file_url_,
+      base::BindOnce(&EventLogger::OnCreateSnapshotFile,
+                     base::Unretained(&logger)));
 
   ASSERT_TRUE(logger.result());
   EXPECT_EQ(base::File::FILE_ERROR_INVALID_OPERATION, *logger.result());

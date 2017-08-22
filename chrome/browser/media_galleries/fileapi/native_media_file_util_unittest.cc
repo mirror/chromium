@@ -22,6 +22,7 @@
 #include "base/time/time.h"
 #include "chrome/browser/media_galleries/fileapi/media_file_system_backend.h"
 #include "content/public/test/test_browser_thread.h"
+#include "storage/browser/blob/shareable_file_reference.h"
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "storage/browser/fileapi/file_system_backend.h"
 #include "storage/browser/fileapi/file_system_context.h"
@@ -89,7 +90,7 @@ void ExpectMetadataEqHelper(const std::string& test_name,
 void DidReadDirectory(std::set<base::FilePath::StringType>* content,
                       bool* completed,
                       base::File::Error error,
-                      const FileEntryList& file_list,
+                      FileEntryList file_list,
                       bool has_more) {
   EXPECT_TRUE(!*completed);
   *completed = !has_more;
@@ -236,7 +237,7 @@ TEST_F(NativeMediaFileUtilTest, ReadDirectoryFiltering) {
   FileSystemURL url = CreateURL(FPL(""));
   bool completed = false;
   operation_runner()->ReadDirectory(
-      url, base::Bind(&DidReadDirectory, &content, &completed));
+      url, base::BindRepeating(&DidReadDirectory, &content, &completed));
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(completed);
   EXPECT_EQ(6u, content.size());
@@ -544,12 +545,11 @@ TEST_F(NativeMediaFileUtilTest, RemoveFileFiltering) {
   }
 }
 
-void CreateSnapshotCallback(
-    base::File::Error* error,
-    base::File::Error result,
-    const base::File::Info&,
-    const base::FilePath&,
-    const scoped_refptr<storage::ShareableFileReference>&) {
+void CreateSnapshotCallback(base::File::Error* error,
+                            base::File::Error result,
+                            const base::File::Info&,
+                            const base::FilePath&,
+                            scoped_refptr<storage::ShareableFileReference>) {
   *error = result;
 }
 
@@ -570,8 +570,8 @@ TEST_F(NativeMediaFileUtilTest, CreateSnapshot) {
     else
       expected_error = base::File::FILE_ERROR_SECURITY;
     error = base::File::FILE_ERROR_FAILED;
-    operation_runner()->CreateSnapshotFile(url,
-        base::Bind(CreateSnapshotCallback, &error));
+    operation_runner()->CreateSnapshotFile(
+        url, base::BindOnce(&CreateSnapshotCallback, &error));
     base::RunLoop().RunUntilIdle();
     ASSERT_EQ(expected_error, error);
   }

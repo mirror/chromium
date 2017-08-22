@@ -58,8 +58,7 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
   ~ArcDocumentsProviderRoot() override;
 
   // Queries information of a file just like AsyncFileUtil.GetFileInfo().
-  void GetFileInfo(const base::FilePath& path,
-                   const GetFileInfoCallback& callback);
+  void GetFileInfo(const base::FilePath& path, GetFileInfoCallback callback);
 
   // Queries a list of files under a directory just like
   // AsyncFileUtil.ReadDirectory().
@@ -109,12 +108,11 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
   //      dangling watchers.
   void AddWatcher(const base::FilePath& path,
                   const WatcherCallback& watcher_callback,
-                  const StatusCallback& callback);
+                  StatusCallback callback);
 
   // Uninstalls a document watcher.
   // See the documentation of AddWatcher() above.
-  void RemoveWatcher(const base::FilePath& path,
-                     const StatusCallback& callback);
+  void RemoveWatcher(const base::FilePath& path, StatusCallback callback);
 
   // Resolves a file path into a content:// URL pointing to the file
   // on DocumentsProvider. Returns URL that can be passed to
@@ -149,9 +147,9 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
       base::Callback<void(base::File::Error error,
                           const NameToThinDocumentMap& mapping)>;
 
-  void GetFileInfoWithDocumentId(const GetFileInfoCallback& callback,
+  void GetFileInfoWithDocumentId(GetFileInfoCallback callback,
                                  const std::string& document_id);
-  void GetFileInfoWithDocument(const GetFileInfoCallback& callback,
+  void GetFileInfoWithDocument(GetFileInfoCallback callback,
                                mojom::DocumentPtr document);
 
   void ReadDirectoryWithDocumentId(ReadDirectoryCallback callback,
@@ -170,7 +168,7 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
                       int64_t watcher_id);
   void OnWatcherAddedButRemoved(bool success);
 
-  void OnWatcherRemoved(const StatusCallback& callback, bool success);
+  void OnWatcherRemoved(StatusCallback callback, bool success);
 
   // Returns true if the specified watcher request has been canceled.
   // This function should be called only while the request is in-flight.

@@ -89,12 +89,12 @@ void BoolCallbackAsFileErrorCallback(
 void PrepareFileAfterCheckExistOnIOThread(
     scoped_refptr<storage::FileSystemContext> file_system_context,
     const storage::FileSystemURL& url,
-    const storage::FileSystemOperation::StatusCallback& callback,
+    storage::FileSystemOperation::StatusCallback callback,
     base::File::Error error) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   if (error != base::File::FILE_ERROR_NOT_FOUND) {
-    callback.Run(error);
+    std::move(callback).Run(error);
     return;
   }
 
@@ -104,7 +104,8 @@ void PrepareFileAfterCheckExistOnIOThread(
   //
   // Note that the preceding call to FileExists is necessary for handling
   // read only filesystems that blindly rejects handling CreateFile().
-  file_system_context->operation_runner()->CreateFile(url, false, callback);
+  file_system_context->operation_runner()->CreateFile(url, false,
+                                                      std::move(callback));
 }
 
 // Checks whether a file exists at the given |url|, and try creating it if it

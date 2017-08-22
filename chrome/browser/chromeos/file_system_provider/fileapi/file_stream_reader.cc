@@ -38,9 +38,8 @@ class FileStreamReader::OperationRunner
 
   // Opens a file for reading and calls the completion callback. Must be called
   // on UI thread.
-  void OpenFileOnUIThread(
-      const storage::FileSystemURL& url,
-      const storage::AsyncFileUtil::StatusCallback& callback) {
+  void OpenFileOnUIThread(const storage::FileSystemURL& url,
+                          storage::AsyncFileUtil::StatusCallback callback) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
     DCHECK(abort_callback_.is_null());
 
@@ -48,7 +47,7 @@ class FileStreamReader::OperationRunner
     if (!parser.Parse()) {
       BrowserThread::PostTask(
           BrowserThread::IO, FROM_HERE,
-          base::BindOnce(callback, base::File::FILE_ERROR_SECURITY));
+          base::BindOnce(std::move(callback), base::File::FILE_ERROR_SECURITY));
       return;
     }
 
@@ -56,8 +55,8 @@ class FileStreamReader::OperationRunner
     file_path_ = parser.file_path();
     file_opener_.reset(new ScopedFileOpener(
         parser.file_system(), parser.file_path(), OPEN_FILE_MODE_READ,
-        base::Bind(&OperationRunner::OnOpenFileCompletedOnUIThread, this,
-                   callback)));
+        base::BindOnce(&OperationRunner::OnOpenFileCompletedOnUIThread, this,
+                       std::move(callback))));
   }
 
   // Requests reading contents of a file. |callback| will always run eventually.
@@ -68,31 +67,29 @@ class FileStreamReader::OperationRunner
       scoped_refptr<net::IOBuffer> buffer,
       int64_t offset,
       int length,
-      const ProvidedFileSystemInterface::ReadChunkReceivedCallback& callback) {
+      ProvidedFileSystemInterface::ReadChunkReceivedCallback callback) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
     DCHECK(abort_callback_.is_null());
 
     // If the file system got unmounted, then abort the reading operation.
     if (!file_system_.get()) {
-      BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                              base::BindOnce(callback, 0, false /* has_more */,
-                                             base::File::FILE_ERROR_ABORT));
+      BrowserThread::PostTask(
+          BrowserThread::IO, FROM_HERE,
+          base::BindOnce(std::move(callback), 0, false /* has_more */,
+                         base::File::FILE_ERROR_ABORT));
       return;
     }
 
     abort_callback_ = file_system_->ReadFile(
-        file_handle_,
-        buffer.get(),
-        offset,
-        length,
-        base::Bind(
-            &OperationRunner::OnReadFileCompletedOnUIThread, this, callback));
+        file_handle_, buffer.get(), offset, length,
+        base::BindRepeating(&OperationRunner::OnReadFileCompletedOnUIThread,
+                            this, std::move(callback)));
   }
 
   // Requests metadata of a file. |callback| will always run eventually.
   // Must be called on UI thread.
   void GetMetadataOnUIThread(
-      const ProvidedFileSystemInterface::GetMetadataCallback& callback) {
+      ProvidedFileSystemInterface::GetMetadataCallback callback) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
     DCHECK(abort_callback_.is_null());
 
@@ -100,7 +97,7 @@ class FileStreamReader::OperationRunner
     if (!file_system_.get()) {
       BrowserThread::PostTask(
           BrowserThread::IO, FROM_HERE,
-          base::BindOnce(callback,
+          base::BindOnce(std::move(callback),
                          base::Passed(base::WrapUnique<EntryMetadata>(NULL)),
                          base::File::FILE_ERROR_ABORT));
       return;
@@ -110,8 +107,8 @@ class FileStreamReader::OperationRunner
         file_path_,
         ProvidedFileSystemInterface::METADATA_FIELD_SIZE |
             ProvidedFileSystemInterface::METADATA_FIELD_MODIFICATION_TIME,
-        base::Bind(&OperationRunner::OnGetMetadataCompletedOnUIThread, this,
-                   callback));
+        base::BindOnce(&OperationRunner::OnGetMetadataCompletedOnUIThread, this,
+                       std::move(callback)));
   }
 
   // Aborts the most recent operation (if exists) and closes a file if opened.
@@ -139,7 +136,7 @@ class FileStreamReader::OperationRunner
   // Remembers a file handle for further operations and forwards the result to
   // the IO thread.
   void OnOpenFileCompletedOnUIThread(
-      const storage::AsyncFileUtil::StatusCallback& callback,
+      storage::AsyncFileUtil::StatusCallback callback,
       int file_handle,
       base::File::Error result) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -149,12 +146,12 @@ class FileStreamReader::OperationRunner
       file_handle_ = file_handle;
 
     BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                            base::BindOnce(callback, result));
+                            base::BindOnce(std::move(callback), result));
   }
 
   // Forwards a metadata to the IO thread.
   void OnGetMetadataCompletedOnUIThread(
-      const ProvidedFileSystemInterface::GetMetadataCallback& callback,
+      ProvidedFileSystemInterface::GetMetadataCallback callback,
       std::unique_ptr<EntryMetadata> metadata,
       base::File::Error result) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -162,12 +159,12 @@ class FileStreamReader::OperationRunner
 
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(callback, base::Passed(&metadata), result));
+        base::BindOnce(std::move(callback), base::Passed(&metadata), result));
   }
 
   // Forwards a response of reading from a file to the IO thread.
   void OnReadFileCompletedOnUIThread(
-      const ProvidedFileSystemInterface::ReadChunkReceivedCallback&
+      ProvidedFileSystemInterface::ReadChunkReceivedCallback
           chunk_received_callback,
       int chunk_length,
       bool has_more,
@@ -177,7 +174,7 @@ class FileStreamReader::OperationRunner
       abort_callback_ = AbortCallback();
 
     BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                            base::BindOnce(chunk_received_callback,
+                            base::BindOnce(std::move(chunk_received_callback),
                                            chunk_length, has_more, result));
   }
 

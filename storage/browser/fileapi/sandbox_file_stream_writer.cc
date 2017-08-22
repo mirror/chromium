@@ -74,8 +74,8 @@ int SandboxFileStreamWriter::Write(
       &SandboxFileStreamWriter::DidInitializeForWrite,
       weak_factory_.GetWeakPtr(), base::RetainedRef(buf), buf_len, callback);
   file_system_context_->operation_runner()->CreateSnapshotFile(
-      url_, base::Bind(&SandboxFileStreamWriter::DidCreateSnapshotFile,
-                       weak_factory_.GetWeakPtr(), write_task));
+      url_, base::BindOnce(&SandboxFileStreamWriter::DidCreateSnapshotFile,
+                           weak_factory_.GetWeakPtr(), write_task));
   return net::ERR_IO_PENDING;
 }
 
@@ -118,7 +118,7 @@ void SandboxFileStreamWriter::DidCreateSnapshotFile(
     base::File::Error file_error,
     const base::File::Info& file_info,
     const base::FilePath& platform_path,
-    const scoped_refptr<storage::ShareableFileReference>& file_ref) {
+    scoped_refptr<storage::ShareableFileReference> file_ref) {
   DCHECK(!file_ref.get());
 
   if (CancelIfRequested())

@@ -20,6 +20,9 @@ namespace chromeos {
 namespace file_system_provider {
 namespace {
 
+using CopyableOpenFileCallback =
+    base::RepeatingCallback<void(int file_handle, base::File::Error result)>;
+
 class TestingProvidedFileSystem : public FakeProvidedFileSystem {
  public:
   TestingProvidedFileSystem()
@@ -29,30 +32,29 @@ class TestingProvidedFileSystem : public FakeProvidedFileSystem {
 
   AbortCallback OpenFile(const base::FilePath& file_path,
                          OpenFileMode mode,
-                         const OpenFileCallback& callback) override {
-    open_callback_ = callback;
+                         OpenFileCallback callback) override {
+    open_callback_ = base::AdaptCallbackForRepeating(std::move(callback));
     return base::Bind(&TestingProvidedFileSystem::AbortOpen,
                       base::Unretained(this));
   }
 
   AbortCallback CloseFile(
       int file_handle,
-      const storage::AsyncFileUtil::StatusCallback& callback) override {
+      storage::AsyncFileUtil::StatusCallback callback) override {
     close_requests_.push_back(file_handle);
-    callback.Run(base::File::FILE_OK);
+    std::move(callback).Run(base::File::FILE_OK);
     return AbortCallback();
   }
 
-  const OpenFileCallback& open_callback() const { return open_callback_; }
+  OpenFileCallback open_callback() const { return open_callback_; }
   const std::vector<int> close_requests() const { return close_requests_; }
 
  private:
-  OpenFileCallback open_callback_;
+  CopyableOpenFileCallback open_callback_;
   std::vector<int> close_requests_;
 
   void AbortOpen() {
-    open_callback_.Run(0, base::File::FILE_ERROR_ABORT);
-    open_callback_ = OpenFileCallback();
+    std::move(open_callback_).Run(0, base::File::FILE_ERROR_ABORT);
   }
 };
 
@@ -94,10 +96,11 @@ TEST(ScopedFileOpenerTest, CloseWhileOpening) {
     base::RunLoop().RunUntilIdle();
     ASSERT_FALSE(file_system.open_callback().is_null());
     // Complete opening asynchronously, so after trying to abort.
-    const ProvidedFileSystemInterface::OpenFileCallback open_callback =
+    ProvidedFileSystemInterface::OpenFileCallback open_callback =
         file_system.open_callback();
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(open_callback, 123, base::File::FILE_OK));
+        FROM_HERE,
+        base::BindOnce(std::move(open_callback), 123, base::File::FILE_OK));
   }
 
   // Wait until the open callback is called asynchonously.

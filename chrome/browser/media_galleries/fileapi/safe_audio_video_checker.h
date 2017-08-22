@@ -23,7 +23,7 @@ class SafeAudioVideoChecker
   // Takes responsibility for closing |file|.
   SafeAudioVideoChecker(
       base::File file,
-      const storage::CopyOrMoveFileValidator::ResultCallback& callback);
+      storage::CopyOrMoveFileValidator::ResultCallback callback);
 
   // Check the file: must be called on the IO thread.
   void Start();
@@ -45,7 +45,7 @@ class SafeAudioVideoChecker
       utility_process_mojo_client_;
 
   // Report the check result to |callback_|.
-  const storage::CopyOrMoveFileValidator::ResultCallback callback_;
+  storage::CopyOrMoveFileValidator::ResultCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(SafeAudioVideoChecker);
 };

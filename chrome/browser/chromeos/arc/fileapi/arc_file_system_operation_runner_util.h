@@ -16,17 +16,15 @@ namespace arc {
 
 namespace file_system_operation_runner_util {
 
-using GetFileSizeCallback = ArcFileSystemOperationRunner::GetFileSizeCallback;
+using GetFileSizeCallback = base::OnceCallback<void(int64_t)>;
 using OpenFileToReadCallback =
     ArcFileSystemOperationRunner::OpenFileToReadCallback;
 
 // Utility functions to post a task to run ArcFileSystemOperationRunner methods.
 // These functions must be called on the IO thread. Callbacks and observers will
 // be called on the IO thread.
-void GetFileSizeOnIOThread(const GURL& url,
-                           const GetFileSizeCallback& callback);
-void OpenFileToReadOnIOThread(const GURL& url,
-                              const OpenFileToReadCallback& callback);
+void GetFileSizeOnIOThread(const GURL& url, GetFileSizeCallback callback);
+void OpenFileToReadOnIOThread(const GURL& url, OpenFileToReadCallback callback);
 
 }  // namespace file_system_operation_runner_util
 }  // namespace arc

@@ -88,10 +88,10 @@ void ArcContentFileSystemFileStreamReader::ReadInternal(
   DCHECK(file_->IsValid());
   base::PostTaskAndReplyWithResult(
       task_runner_.get(), FROM_HERE,
-      base::Bind(&ReadFile, file_.get(), make_scoped_refptr(buffer),
-                 buffer_length),
-      base::Bind(&ArcContentFileSystemFileStreamReader::OnRead,
-                 weak_ptr_factory_.GetWeakPtr(), callback));
+      base::BindOnce(&ReadFile, file_.get(), make_scoped_refptr(buffer),
+                     buffer_length),
+      base::BindOnce(&ArcContentFileSystemFileStreamReader::OnRead,
+                     weak_ptr_factory_.GetWeakPtr(), callback));
 }
 
 void ArcContentFileSystemFileStreamReader::OnRead(

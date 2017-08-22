@@ -96,13 +96,13 @@ ArcDocumentsProviderRoot::~ArcDocumentsProviderRoot() {
   runner_->RemoveObserver(this);
 }
 
-void ArcDocumentsProviderRoot::GetFileInfo(
-    const base::FilePath& path,
-    const GetFileInfoCallback& callback) {
+void ArcDocumentsProviderRoot::GetFileInfo(const base::FilePath& path,
+                                           GetFileInfoCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   ResolveToDocumentId(
-      path, base::Bind(&ArcDocumentsProviderRoot::GetFileInfoWithDocumentId,
-                       weak_ptr_factory_.GetWeakPtr(), callback));
+      path,
+      base::Bind(&ArcDocumentsProviderRoot::GetFileInfoWithDocumentId,
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)));
 }
 
 void ArcDocumentsProviderRoot::ReadDirectory(const base::FilePath& path,
@@ -117,10 +117,10 @@ void ArcDocumentsProviderRoot::ReadDirectory(const base::FilePath& path,
 void ArcDocumentsProviderRoot::AddWatcher(
     const base::FilePath& path,
     const WatcherCallback& watcher_callback,
-    const StatusCallback& callback) {
+    StatusCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (path_to_watcher_data_.count(path)) {
-    callback.Run(base::File::FILE_ERROR_FAILED);
+    std::move(callback).Run(base::File::FILE_ERROR_FAILED);
     return;
   }
   uint64_t watcher_request_id = next_watcher_request_id_++;
@@ -136,15 +136,15 @@ void ArcDocumentsProviderRoot::AddWatcher(
   // TODO(crbug.com/698624): Remove this hack. It was introduced because Files
   // app freezes until AddWatcher() finishes, but it should be handled in Files
   // app rather than here.
-  callback.Run(base::File::FILE_OK);
+  std::move(callback).Run(base::File::FILE_OK);
 }
 
 void ArcDocumentsProviderRoot::RemoveWatcher(const base::FilePath& path,
-                                             const StatusCallback& callback) {
+                                             StatusCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   auto iter = path_to_watcher_data_.find(path);
   if (iter == path_to_watcher_data_.end()) {
-    callback.Run(base::File::FILE_ERROR_FAILED);
+    std::move(callback).Run(base::File::FILE_ERROR_FAILED);
     return;
   }
   int64_t watcher_id = iter->second.id;
@@ -152,7 +152,7 @@ void ArcDocumentsProviderRoot::RemoveWatcher(const base::FilePath& path,
   if (watcher_id == kInvalidWatcherId) {
     // This is an invalid watcher. No need to send a request to the remote
     // service.
-    callback.Run(base::File::FILE_OK);
+    std::move(callback).Run(base::File::FILE_OK);
     return;
   }
   runner_->RemoveWatcher(watcher_id,
@@ -183,11 +183,12 @@ void ArcDocumentsProviderRoot::OnWatchersCleared() {
 }
 
 void ArcDocumentsProviderRoot::GetFileInfoWithDocumentId(
-    const GetFileInfoCallback& callback,
+    GetFileInfoCallback callback,
     const std::string& document_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (document_id.empty()) {
-    callback.Run(base::File::FILE_ERROR_NOT_FOUND, base::File::Info());
+    std::move(callback).Run(base::File::FILE_ERROR_NOT_FOUND,
+                            base::File::Info());
     return;
   }
   // Specially handle the root directory since Files app does not update the
@@ -200,21 +201,22 @@ void ArcDocumentsProviderRoot::GetFileInfoWithDocumentId(
     info.is_symbolic_link = false;
     info.last_modified = info.last_accessed = info.creation_time =
         base::Time::UnixEpoch();  // arbitrary
-    callback.Run(base::File::FILE_OK, info);
+    std::move(callback).Run(base::File::FILE_OK, info);
     return;
   }
   runner_->GetDocument(
       authority_, document_id,
       base::Bind(&ArcDocumentsProviderRoot::GetFileInfoWithDocument,
-                 weak_ptr_factory_.GetWeakPtr(), callback));
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)));
 }
 
 void ArcDocumentsProviderRoot::GetFileInfoWithDocument(
-    const GetFileInfoCallback& callback,
+    GetFileInfoCallback callback,
     mojom::DocumentPtr document) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (document.is_null()) {
-    callback.Run(base::File::FILE_ERROR_NOT_FOUND, base::File::Info());
+    std::move(callback).Run(base::File::FILE_ERROR_NOT_FOUND,
+                            base::File::Info());
     return;
   }
   base::File::Info info;
@@ -223,7 +225,7 @@ void ArcDocumentsProviderRoot::GetFileInfoWithDocument(
   info.is_symbolic_link = false;
   info.last_modified = info.last_accessed = info.creation_time =
       base::Time::FromJavaTime(document->last_modified);
-  callback.Run(base::File::FILE_OK, info);
+  std::move(callback).Run(base::File::FILE_OK, info);
 }
 
 void ArcDocumentsProviderRoot::ReadDirectoryWithDocumentId(
@@ -236,7 +238,7 @@ void ArcDocumentsProviderRoot::ReadDirectoryWithDocumentId(
   }
   ReadDirectoryInternal(
       document_id, true /* force_refresh */,
-      base::Bind(
+      base::BindRepeating(
           &ArcDocumentsProviderRoot::ReadDirectoryWithNameToThinDocumentMap,
           weak_ptr_factory_.GetWeakPtr(), base::Passed(std::move(callback))));
 }
@@ -306,10 +308,11 @@ void ArcDocumentsProviderRoot::OnWatcherAddedButRemoved(bool success) {
   // Ignore |success|.
 }
 
-void ArcDocumentsProviderRoot::OnWatcherRemoved(const StatusCallback& callback,
+void ArcDocumentsProviderRoot::OnWatcherRemoved(StatusCallback callback,
                                                 bool success) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  callback.Run(success ? base::File::FILE_OK : base::File::FILE_ERROR_FAILED);
+  std::move(callback).Run(success ? base::File::FILE_OK
+                                  : base::File::FILE_ERROR_FAILED);
 }
 
 bool ArcDocumentsProviderRoot::IsWatcherInflightRequestCanceled(

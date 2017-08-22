@@ -339,8 +339,8 @@ class RemovePluginPrivateDataTester {
     async_file_util->CreateOrOpen(
         std::move(operation_context), clearkey_file_,
         base::File::FLAG_OPEN | base::File::FLAG_WRITE,
-        base::Bind(&RemovePluginPrivateDataTester::OnFileOpened,
-                   base::Unretained(this), &file, &await_completion));
+        base::BindOnce(&RemovePluginPrivateDataTester::OnFileOpened,
+                       base::Unretained(this), &file, &await_completion));
     await_completion.BlockUntilNotified();
     return file;
   }
@@ -452,7 +452,7 @@ class RemovePluginPrivateDataTester {
   void OnFileOpened(base::File* file_result,
                     AwaitCompletionHelper* await_completion,
                     base::File file,
-                    const base::Closure& on_close_callback) {
+                    base::OnceClosure on_close_callback) {
     *file_result = std::move(file);
     await_completion->Notify();
   }

@@ -7,6 +7,7 @@
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/run_loop.h"
+#include "storage/browser/blob/shareable_file_reference.h"
 #include "storage/browser/fileapi/file_system_backend.h"
 #include "storage/browser/fileapi/file_system_context.h"
 #include "storage/browser/fileapi/file_system_operation_runner.h"
@@ -52,7 +53,7 @@ void CreateSnapshotFileCallback(
     base::File::Error result,
     const base::File::Info& file_info,
     const base::FilePath& platform_path,
-    const scoped_refptr<storage::ShareableFileReference>& file_ref) {
+    scoped_refptr<storage::ShareableFileReference> file_ref) {
   DCHECK(!file_ref.get());
   *result_out = result;
   if (platform_path_out)
@@ -64,7 +65,7 @@ void ReadDirectoryCallback(base::RunLoop* run_loop,
                            base::File::Error* result_out,
                            FileEntryList* entries_out,
                            base::File::Error result,
-                           const FileEntryList& entries,
+                           FileEntryList entries,
                            bool has_more) {
   *result_out = result;
   entries_out->insert(entries_out->end(), entries.begin(), entries.end());
@@ -146,7 +147,8 @@ base::File::Error AsyncFileTestHelper::ReadDirectory(
   entries->clear();
   base::RunLoop run_loop;
   context->operation_runner()->ReadDirectory(
-      url, base::Bind(&ReadDirectoryCallback, &run_loop, &result, entries));
+      url,
+      base::BindRepeating(&ReadDirectoryCallback, &run_loop, &result, entries));
   run_loop.Run();
   return result;
 }
@@ -228,8 +230,8 @@ base::File::Error AsyncFileTestHelper::GetPlatformPath(
   base::File::Error result = base::File::FILE_ERROR_FAILED;
   base::RunLoop run_loop;
   context->operation_runner()->CreateSnapshotFile(
-      url, base::Bind(&CreateSnapshotFileCallback, &run_loop, &result,
-                      platform_path));
+      url, base::BindOnce(&CreateSnapshotFileCallback, &run_loop, &result,
+                          platform_path));
   run_loop.Run();
   return result;
 }

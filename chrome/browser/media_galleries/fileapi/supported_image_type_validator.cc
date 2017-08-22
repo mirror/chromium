@@ -54,8 +54,8 @@ class ImageDecoderDelegateAdapter : public ImageDecoder::ImageRequest {
  public:
   ImageDecoderDelegateAdapter(
       std::unique_ptr<std::string> data,
-      const storage::CopyOrMoveFileValidator::ResultCallback& callback)
-      : data_(std::move(data)), callback_(callback) {
+      storage::CopyOrMoveFileValidator::ResultCallback callback)
+      : data_(std::move(data)), callback_(std::move(callback)) {
     DCHECK(data_);
   }
 
@@ -65,12 +65,12 @@ class ImageDecoderDelegateAdapter : public ImageDecoder::ImageRequest {
 
   // ImageDecoder::ImageRequest methods.
   void OnImageDecoded(const SkBitmap& /*decoded_image*/) override {
-    callback_.Run(base::File::FILE_OK);
+    std::move(callback_).Run(base::File::FILE_OK);
     delete this;
   }
 
   void OnDecodeImageFailed() override {
-    callback_.Run(base::File::FILE_ERROR_SECURITY);
+    std::move(callback_).Run(base::File::FILE_ERROR_SECURITY);
     delete this;
   }
 
@@ -100,17 +100,15 @@ bool SupportedImageTypeValidator::SupportsFileType(const base::FilePath& path) {
 }
 
 void SupportedImageTypeValidator::StartPreWriteValidation(
-    const ResultCallback& result_callback) {
+    ResultCallback result_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(callback_.is_null());
-  callback_ = result_callback;
+  callback_ = std::move(result_callback);
 
   BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::FILE,
-      FROM_HERE,
-      base::Bind(&ReadOnFileThread, path_),
-      base::Bind(&SupportedImageTypeValidator::OnFileOpen,
-                 weak_factory_.GetWeakPtr()));
+      BrowserThread::FILE, FROM_HERE, base::BindOnce(&ReadOnFileThread, path_),
+      base::BindOnce(&SupportedImageTypeValidator::OnFileOpen,
+                     weak_factory_.GetWeakPtr()));
 }
 
 SupportedImageTypeValidator::SupportedImageTypeValidator(
@@ -122,13 +120,14 @@ SupportedImageTypeValidator::SupportedImageTypeValidator(
 void SupportedImageTypeValidator::OnFileOpen(
     std::unique_ptr<std::string> data) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK(callback_);
   if (!data.get()) {
-    callback_.Run(base::File::FILE_ERROR_SECURITY);
+    std::move(callback_).Run(base::File::FILE_ERROR_SECURITY);
     return;
   }
 
   // |adapter| will delete itself after a completion message is received.
   ImageDecoderDelegateAdapter* adapter =
-      new ImageDecoderDelegateAdapter(std::move(data), callback_);
+      new ImageDecoderDelegateAdapter(std::move(data), std::move(callback_));
   ImageDecoder::Start(adapter, adapter->data());
 }

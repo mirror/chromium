@@ -539,7 +539,7 @@ void ConvertSelectedFileInfoListToFileChooserFileInfoList(
 void CheckIfDirectoryExists(
     scoped_refptr<storage::FileSystemContext> file_system_context,
     const base::FilePath& directory_path,
-    const storage::FileSystemOperationRunner::StatusCallback& callback) {
+    storage::FileSystemOperationRunner::StatusCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   storage::ExternalFileSystemBackend* const backend =
@@ -553,14 +553,15 @@ void CheckIfDirectoryExists(
       base::BindOnce(base::IgnoreResult(
                          &storage::FileSystemOperationRunner::DirectoryExists),
                      file_system_context->operation_runner()->AsWeakPtr(),
-                     internal_url, google_apis::CreateRelayCallback(callback)));
+                     internal_url,
+                     google_apis::CreateRelayCallback(std::move(callback))));
 }
 
 void GetMetadataForPath(
     scoped_refptr<storage::FileSystemContext> file_system_context,
     const base::FilePath& entry_path,
     int fields,
-    const storage::FileSystemOperationRunner::GetMetadataCallback& callback) {
+    storage::FileSystemOperationRunner::GetMetadataCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   storage::ExternalFileSystemBackend* const backend =
@@ -574,7 +575,7 @@ void GetMetadataForPath(
       base::BindOnce(
           base::IgnoreResult(&storage::FileSystemOperationRunner::GetMetadata),
           file_system_context->operation_runner()->AsWeakPtr(), internal_url,
-          fields, google_apis::CreateRelayCallback(callback)));
+          fields, google_apis::CreateRelayCallback(std::move(callback))));
 }
 
 storage::FileSystemURL CreateIsolatedURLFromVirtualPath(

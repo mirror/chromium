@@ -77,6 +77,7 @@
 #include "extensions/common/manifest_handlers/options_page_info.h"
 #include "extensions/common/manifest_url_handlers.h"
 #include "extensions/common/permissions/permissions_data.h"
+#include "storage/browser/blob/shareable_file_reference.h"
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "storage/browser/fileapi/file_system_context.h"
 #include "storage/browser/fileapi/file_system_operation.h"
@@ -1099,16 +1100,16 @@ void DeveloperPrivateLoadDirectoryFunction::ReadDirectoryByFileSystemAPI(
   storage::FileSystemURL url = context_->CrackURL(project_url);
 
   context_->operation_runner()->ReadDirectory(
-      url, base::Bind(&DeveloperPrivateLoadDirectoryFunction::
-                      ReadDirectoryByFileSystemAPICb,
-                      this, project_path, destination_path));
+      url, base::BindRepeating(&DeveloperPrivateLoadDirectoryFunction::
+                                   ReadDirectoryByFileSystemAPICb,
+                               this, project_path, destination_path));
 }
 
 void DeveloperPrivateLoadDirectoryFunction::ReadDirectoryByFileSystemAPICb(
     const base::FilePath& project_path,
     const base::FilePath& destination_path,
     base::File::Error status,
-    const storage::FileSystemOperation::FileEntryList& file_list,
+    storage::FileSystemOperation::FileEntryList file_list,
     bool has_more) {
   if (status != base::File::FILE_OK) {
     DLOG(ERROR) << "Error in copying files from sync filesystem.";
@@ -1139,10 +1140,9 @@ void DeveloperPrivateLoadDirectoryFunction::ReadDirectoryByFileSystemAPICb(
     target_path = target_path.Append(file_list[i].name);
 
     context_->operation_runner()->CreateSnapshotFile(
-        url,
-        base::Bind(&DeveloperPrivateLoadDirectoryFunction::SnapshotFileCallback,
-            this,
-            target_path));
+        url, base::BindOnce(
+                 &DeveloperPrivateLoadDirectoryFunction::SnapshotFileCallback,
+                 this, target_path));
   }
 
   if (!has_more) {
@@ -1163,7 +1163,7 @@ void DeveloperPrivateLoadDirectoryFunction::SnapshotFileCallback(
     base::File::Error result,
     const base::File::Info& file_info,
     const base::FilePath& src_path,
-    const scoped_refptr<storage::ShareableFileReference>& file_ref) {
+    scoped_refptr<storage::ShareableFileReference> file_ref) {
   if (result != base::File::FILE_OK) {
     SetError("Error in copying files from sync filesystem.");
     success_ = false;
