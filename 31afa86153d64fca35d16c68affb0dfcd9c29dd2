@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3b81097_3959ecb8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-22T16:12:02Z",
+      "side": 1,
+      "message": "@kojii, see comments below.",
+      "range": {
+        "startLine": 732,
+        "startChar": 24,
+        "endLine": 732,
+        "endChar": 51
+      },
+      "revId": "31afa86153d64fca35d16c68affb0dfcd9c29dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b1f298_63be7d70",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-22T16:12:02Z",
+      "side": 1,
+      "message": "what was a testcase for this? I think all that I need to do is add a seen_floats_ flag, and go into a slow mode which backtracks over each item, and potentially removes from the NGExclusionSpace.",
+      "range": {
+        "startLine": 737,
+        "startChar": 4,
+        "endLine": 737,
+        "endChar": 47
+      },
+      "revId": "31afa86153d64fca35d16c68affb0dfcd9c29dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5271c4_7ef7d571",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-08-22T16:12:02Z",
+      "side": 1,
+      "message": "this should be pretty easy just being:\nline_.exclusion_space \u003d WTF::MakeUnique\u003cNGExclusionSpace\u003e(initial_exclusion_space);\n\ni think",
+      "range": {
+        "startLine": 739,
+        "startChar": 3,
+        "endLine": 739,
+        "endChar": 63
+      },
+      "revId": "31afa86153d64fca35d16c68affb0dfcd9c29dd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
