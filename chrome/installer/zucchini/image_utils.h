@@ -5,6 +5,7 @@
 #ifndef CHROME_INSTALLER_ZUCCHINI_IMAGE_UTILS_H_
 #define CHROME_INSTALLER_ZUCCHINI_IMAGE_UTILS_H_
 
+#include <stddef.h>
 #include <stdint.h>
 
 #include "base/numerics/safe_conversions.h"
@@ -17,6 +18,7 @@ namespace zucchini {
 // offset_t is used to describe an offset in an image.
 // Files bigger than 4GB are not supported.
 using offset_t = uint32_t;
+constexpr offset_t kOffsetBound = static_cast<offset_t>(-1);
 
 // Used to uniquely identify a reference type.
 // Strongly typed objects are used to avoid ambiguitees with PoolTag.
@@ -101,6 +103,13 @@ constexpr inline offset_t MarkIndex(offset_t value) {
 }
 constexpr inline offset_t UnmarkIndex(offset_t value) {
   return value & ~(offset_t(1) << kIndexMarkBitPosition);
+}
+
+// Safely determines whether [begin, begin + size) is in [0, bound). Note
+// that the special case [bound, 0) is not considered to be in [0, bound).
+template <typename T>
+bool RangeIsBounded(T begin, T size, size_t bound) {
+  return begin < bound && size <= bound - begin;
 }
 
 // Constant as placeholder for non-existing offset for an index.
