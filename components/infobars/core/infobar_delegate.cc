@@ -62,15 +62,24 @@ bool InfoBarDelegate::EqualsDelegate(InfoBarDelegate* delegate) const {
   return false;
 }
 
+void InfoBarDelegate::OnNavigation(const GURL& url) {
+  if (launch_url_.is_empty()) {
+    launch_url_ = url;
+  } else {
+    navigated_away_from_launch_url_ = !launch_url_.EqualsIgnoringRef(url);
+  }
+}
+
 bool InfoBarDelegate::ShouldExpire(const NavigationDetails& details) const {
-  return details.is_navigation_to_different_page &&
-      !details.did_replace_entry &&
-      // This next condition ensures a navigation that passes the above
-      // conditions doesn't dismiss infobars added while that navigation was
-      // already in process.  We carve out an exception for reloads since we
-      // want reloads to dismiss infobars, but they will have unchanged entry
-      // IDs.
-      ((nav_entry_id_ != details.entry_id) || details.is_reload);
+  return navigated_away_from_launch_url_ &&
+         details.is_navigation_to_different_page &&
+         !details.did_replace_entry &&
+         // This next condition ensures a navigation that passes the above
+         // conditions doesn't dismiss infobars added while that navigation was
+         // already in process.  We carve out an exception for reloads since we
+         // want reloads to dismiss infobars, but they will have unchanged entry
+         // IDs.
+         ((nav_entry_id_ != details.entry_id) || details.is_reload);
 }
 
 void InfoBarDelegate::InfoBarDismissed() {
@@ -137,7 +146,9 @@ InfoBarDelegate::AsOfflinePageInfoBarDelegate() {
 }
 #endif
 
-InfoBarDelegate::InfoBarDelegate() : nav_entry_id_(0) {
-}
+InfoBarDelegate::InfoBarDelegate()
+    : nav_entry_id_(0),
+      launch_url_(GURL()),
+      navigated_away_from_launch_url_(false) {}
 
 }  // namespace infobars
