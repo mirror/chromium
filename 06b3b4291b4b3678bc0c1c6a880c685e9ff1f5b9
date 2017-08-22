@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f45e508_2a96dd7b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "This CL does not fully support enabling/disabling, can you update the description to better describe the impl. Initially the browser-side caches only the keys, when a second renderer opens a connection, the browser-side switches to key and value caching. Switching back to key only caching when a 2nd renderer closes its connection is not yet implemented.",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2457157f_bdda9ea0",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "it seems unusual to return void, please split the return out to a new line",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94fce91_e766a771",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "ditto two lines to return no value",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ab6d88_fd450023",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "Not for this CL but... this looks like it might be a pre-existing bug, but why is it safe to assume the initial import is done? I wonder if this predates persisting SessionStorage?",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d502c4_514c4f8c",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "Hmmm... I think there\u0027s a possible race here when we have keys_only? The \u0027actual shallow copy\u0027 referred to in the comment refers to updating the database to reflect the clone. If a caller tries to extract value prior to that database operation happening, we won\u0027t find the area\u0027s data in the database in backing_-\u003eReadAllValues and we\u0027ll get an empty map back.\n\nI\u0027m not sure what do do about that? One idea is the carry forward into the clone the original\u0027s persistent_namespace_id and to use that to ReadAllValues from the database iff destination_persistent_namespace_id has not yet been created?",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38c88e0b_6ca76ec1",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "wdyt about doing this for LowEndDevices() on any platform?",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61fe9623_1d0a94e3",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "why not swap modes with uncommitted changes?",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc5546f_b291c71d",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "ah... that\u0027s why, makes sense",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69b8249d_9ee5657b",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "It\u0027s possible for the changes in the commit_batch_in_flight_ have already be written to the database and are reflected in the map returned by ReadAllValues(). I think that\u0027s ok, but just want to note it. Can you leave a comment here describing that?",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b38e3a79_c80d275f",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "i think you can remove this comment",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e8d108_900dc76e",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "style nit: maybe lose the {}\u0027s and the comment might not be needed\n\n// Null value means remove item.\nif (item.second.is_null())\n  map-\u003eerase(item.first);\nelse\n  (*map)[item.first] \u003d item.second;",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da63fe51_a323048e",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "I see why this is done here, but it\u0027s not obvious. A comment here explaining that transitioning between keys_only and keys_and_values is deferred when there are uncommited changes would be good.",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

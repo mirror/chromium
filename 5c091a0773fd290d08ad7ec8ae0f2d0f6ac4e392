@@ -1,0 +1,526 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8677b552_bcf9971f",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "especially if this is hardcoded for !OS_ANDROID, it would be good to not send client_values in those cases",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9803fb3f_a311f637",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "its not real obvious why this isn\u0027t initialized to UNLOADED, i see it\u0027s being reset in the ctor body if needed, but for readability, i\u0027d suggest putting the conditional logic here and not resetting the value down below\n\n    directory.empty()\n              ? LOAD_STATE_KEYS_AND_VALUES\n              : LOAD_STATE_UNLOADED",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21d4eaf4_26a9f183",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "759eda3e_a956d200",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "i wonder if we can restructure this for readability and make this big comment less necessary?\n\nif (loadstate \u003d\u003d LOAD_STATE_KEYS_AND_VALUES) {\n  ExtractValues();\n  return;\n}\n\nReadValuesAndApplyUncommittedChanges(map);\nif (loadstate \u003d\u003d desired_loadstate)\n  return;\nif (desiredloadstate \u003d\u003d KEYSONLY)\n  map-\u003eTakeKeys\nelse\n  map-\u003eTakeKeysAndValues()\nloadstate \u003d desired_loadstate;\n\n\nPast the ExtractValues early return block, that looks a lot like the LoadMap() method with the addition of an early return for  the map already being loaded as desired and adjustments to the DCHECH about when it\u0027s expected to be called. DCHECK(IsMapReloadNeeded() || map \u0026\u0026 loadstate \u003d\u003d keysonly). Actually, maybe that could just be an early return condition at the top of the load map method.\n\nMaybe we change it to LoadMapIfNeeded(map)\n\nif (!IsMapReloadedNeeded() \u0026\u0026 !map)\n  return;\n\nThat way we could unconditionally call LoadMapIfNeeded(nullptr) at the top of most of methods. The area.ExtractValues method is a little different, but not by much.",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3633114_034c84ed",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "there\u0027s already DCHECK in the GetItem() method, consider deleting this one",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f922db_bcdbe6c7",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "nit: The desired",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306b4a4b_cf65b009",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "readability: it might be nice to compose this comparison in terms of the current desired_state !\u003d new_state",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f803cf1_853a6c4c",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "\"disabled\" is not a term that is elsewhere in this class so the meaning is not clear",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e5e5b6_53ce01bb",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "The behavior of this method was not very clear to me. It \"does the right thing\", but it\u0027s hard to articulate what that is? My motivation for suggesting a different way of thinking about the problem (3 states with transitions from state to state) was to prod some thinking towards making the logic more clear.\n\nThis method as coded always tries to reduce the memory used, maybe call it PruneMapIfPossible() or ReduceMemoryUseIfPossible(), or something that indicates trimming the size down, UnloadMapIfDesired()?",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8caee589_cbb2b6ee",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "comment not needed",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ddeb9bf_be424b02",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "please move this comment to where the early return for HasUncommittedChanges is",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8595017e_663c1aa2",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "after renaming to describe the \u0027shrinking\u0027 nature of the method, this comment isn\u0027t needed",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8138866_5a161ccf",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "this comment isn\u0027t needed, the simple one line statement below is clear enough",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3ee847_5094b105",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "this dcheck isn\u0027t needed, unittests should provide this flavor of assurance",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2820b2ee_4db420ee",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "comment probably not needed",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd79471_78509fd2",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "does it make sense to ReadValues if there\u0027s no backing_, can we DCHECK(backing_) instead?",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd576305_f0909e2e",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "to keep the uma histogram timings consistent before and after the CL, i think we should put the timings in here, around the call to the db-\u003eReadAllValues()",
+      "range": {
+        "startLine": 542,
+        "startChar": 17,
+        "endLine": 542,
+        "endChar": 18
+      },
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a1f48f_d6986c09",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "this comment isn\u0027t needed, especially after renaming the method",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d5a2f7d_194a018c",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "It looks like can commit_batch_in_flight can\u0027t be greater than 1 anymore, is that right? If so, we probably don\u0027t need the data member at all, if (commit_batch_in_flight) is a good test for this condition.\n\nI think the constraint of only one batch in flight can result in data loss in some case? I think the code in DOMStorageArea::ShallowCopy depend on this, and namespace-\u003eFlush() also? We should probably have a queue to be safe (in which case the unretained rawptr to the batch in flight in the CommitChange() method is helpful to avoid needing a thread-safe queue).",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aacb637_da6e6d76",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "unretained ptr isnt needed since the value is stashed in a data member, CommitChanges() method can reference  commit_batch_in_flight_ directly\nif we need a queue, there\u0027s good reason for the rawptr",
+      "range": {
+        "startLine": 645,
+        "startChar": 38,
+        "endLine": 645,
+        "endChar": 61
+      },
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75571578_b477f8c0",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "once the method name is more descriptive, consider removing this comment",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c0eddb_2d570809",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "This always loads the map to the desired state, maybe call it LoadMap(optional_read_values) or LoadMapIfNeeded per later comments.",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b39efc_1bacb568",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "Maybe call this method ReadValuesAndApplyUncommittedChanges(), then the comment is not needed",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05105b7e_1607f91c",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "Maybe call this ShrinkMapIfPossible() or DecreaseMapIfPossible() or UnloadMapIfDesired(), something to indicates the map may get smaller.",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4284c61_5213db24",
+        "filename": "content/browser/dom_storage/dom_storage_area.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "i think we need a queue here",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c996706_ad486adf",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "this works, but it does incur an extra memcpy, an extra param would help avoid that and also puts the value closer to the if keys_only branching logic where it matters",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57825c84_e96d0cd4",
+        "filename": "content/browser/dom_storage/dom_storage_namespace.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "i think we can remove this todo, the contextImpl does cleanup as needed",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5871c6_e9b89193",
+        "filename": "content/common/dom_storage/dom_storage_map.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "naming nit: memory_used_ might be more consistent with bytes_used_",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d6d1e3_f426f4cc",
+        "filename": "content/common/dom_storage/dom_storage_map.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "maybe sum both values in this loop since everything needed is right here\nstorage_used_ +\u003d size_of_item(item.first, item.second);",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1282a46_384ae3e4",
+        "filename": "content/common/dom_storage/dom_storage_map.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-22T02:22:49Z",
+      "side": 1,
+      "message": "not sure it helps much, but storage_used might be be another naming option",
+      "revId": "5c091a0773fd290d08ad7ec8ae0f2d0f6ac4e392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
