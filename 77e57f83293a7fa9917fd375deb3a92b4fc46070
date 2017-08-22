@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "01d0093c_30c77804",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/page/page-lifecycleEvents-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-22T23:01:33Z",
+      "side": 1,
+      "message": "What does this mean? We need description somewhere.",
+      "range": {
+        "startLine": 2,
+        "startChar": 29,
+        "endLine": 2,
+        "endChar": 42
+      },
+      "revId": "77e57f83293a7fa9917fd375deb3a92b4fc46070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08fd91a1_b1323021",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/page/page-lifecycleEvents.js",
         "patchSetId": 3
