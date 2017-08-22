@@ -16,6 +16,24 @@
       "revId": "883fbb405a8bf9782fab7fc02ec54a44f273c0ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75413b34_4422a4d6",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-08-22T15:11:38Z",
+      "side": 1,
+      "message": "** Sorry,  !(requesting !\u003d embedding \u0026\u0026 setting \u003d\u003d ALLOW)",
+      "parentUuid": "a68f6210_27940406",
+      "revId": "883fbb405a8bf9782fab7fc02ec54a44f273c0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
