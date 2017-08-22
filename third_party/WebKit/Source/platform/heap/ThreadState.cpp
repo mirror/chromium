@@ -108,6 +108,7 @@ ThreadState::ThreadState()
       persistent_region_(WTF::MakeUnique<PersistentRegion>()),
       start_of_stack_(reinterpret_cast<intptr_t*>(WTF::GetStackStart())),
       end_of_stack_(reinterpret_cast<intptr_t*>(WTF::GetStackStart())),
+      incremental_marking_(false),
       safe_point_scope_marker_(nullptr),
       sweep_forbidden_(false),
       no_allocation_count_(0),
