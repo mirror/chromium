@@ -45,8 +45,8 @@ class MediaSessionServiceMock {
     this.bindingSet_ = new mojo.BindingSet(
         blink.mojom.MediaSessionService);
 
-    this.interceptor_ =
-        new MojoInterfaceInterceptor(blink.mojom.MediaSessionService.name);
+    this.interceptor_ = new MojoInterfaceInterceptor({
+        interfaceName: blink.mojom.MediaSessionService.name });
     this.interceptor_.oninterfacerequest =
         e => this.bindingSet_.addBinding(this, e.handle);
     this.interceptor_.start();

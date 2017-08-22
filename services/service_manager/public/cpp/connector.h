@@ -55,6 +55,17 @@ class SERVICE_MANAGER_PUBLIC_CPP_EXPORT Connector {
       connector_->OverrideBinderForTesting(service_name, interface_name,
                                            binder);
     }
+
+    bool HasBinderOverrideForName(const std::string& service_name,
+                                  const std::string& interface_name) {
+      return connector_->HasBinderOverrideForName(service_name, interface_name);
+    }
+
+    void ClearBinderOverrideForName(const std::string& service_name,
+                                    const std::string& interface_name) {
+      connector_->ClearBinderOverrideForName(service_name, interface_name);
+    }
+
     void ClearBinderOverrides() { connector_->ClearBinderOverrides(); }
 
     // Register a callback to be run with the result of an attempt to start a
@@ -136,6 +147,10 @@ class SERVICE_MANAGER_PUBLIC_CPP_EXPORT Connector {
   void OverrideBinderForTesting(const std::string& service_name,
                                 const std::string& interface_name,
                                 const TestApi::Binder& binder);
+  bool HasBinderOverrideForName(const std::string& service_name,
+                                const std::string& interface_name);
+  void ClearBinderOverrideForName(const std::string& service_name,
+                                  const std::string& interface_name);
   void ClearBinderOverrides();
   void SetStartServiceCallback(const StartServiceCallback& callback);
   void ResetStartServiceCallback();

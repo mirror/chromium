@@ -124,8 +124,8 @@ class MockVRService {
     this.bindingSet_ = new mojo.BindingSet(device.mojom.VRService);
     this.mockVRDisplays_ = [];
 
-    this.interceptor_ =
-        new MojoInterfaceInterceptor(device.mojom.VRService.name);
+    this.interceptor_ = new MojoInterfaceInterceptor({
+        interfaceName: device.mojom.VRService.name });
     this.interceptor_.oninterfacerequest =
         e => this.bindingSet_.addBinding(this, e.handle);
     this.interceptor_.start();

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<script src="file:///gen/layout_test_data/mojo/public/js/mojo_bindings.js"></script>
+<script src="file:///gen/content/test/data/mojo_layouttest_test.mojom.js"></script>
+<script>
+
+async_test(t => {
+  class TestHelperImpl {
+    constructor() {
+      this.binding_ =
+          new mojo.Binding(content.mojom.MojoLayoutTestHelper, this);
+    }
+    bindRequest(request) { this.binding_.bind(request); }
+    async reverse(message) {
+      return { reversed: message.split('').reverse().join('') };
+    }
+  }
+
+  let helperImpl = new TestHelperImpl;
+  let interceptor = new MojoInterfaceInterceptor({
+      serviceName: 'layout_test_helper_service',
+      interfaceName: content.mojom.MojoLayoutTestHelper.name });
+  interceptor.oninterfacerequest = e => {
+    helperImpl.bindRequest(e.handle);
+  };
+  interceptor.start();
+
+  let worker = new Worker('resources/check-helper-service.js');
+  worker.onmessage = e => {
+    if (e.data == 'PASS')
+      t.done();
+  };
+}, "can provide a service to a worker through the connector");
+
+</script>

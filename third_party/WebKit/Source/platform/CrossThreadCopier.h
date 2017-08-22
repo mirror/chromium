@@ -258,6 +258,15 @@ struct CrossThreadCopier<mojo::InterfaceRequest<Interface>> {
   }
 };
 
+template <>
+struct CrossThreadCopier<mojo::ScopedMessagePipeHandle> {
+  STATIC_ONLY(CrossThreadCopier);
+  using Type = mojo::ScopedMessagePipeHandle;
+  static Type Copy(Type handle) {
+    return handle;  // This is in fact a move.
+  }
+};
+
 }  // namespace blink
 
 #endif  // CrossThreadCopier_h

@@ -23,9 +23,10 @@ whenPageIsPopulatedForTest = function() {
 
 function initialize() {
   uiHandler = new mojom.SiteEngagementDetailsProviderPtr;
-  Mojo.bindInterface(
-      mojom.SiteEngagementDetailsProvider.name,
-      mojo.makeRequest(uiHandler).handle);
+  Mojo.bindInterface({
+    interfaceName: mojom.SiteEngagementDetailsProvider.name,
+    handle: mojo.makeRequest(uiHandler).handle
+  });
 
   var engagementTableBody = $('engagement-table-body');
   var updateInterval = null;

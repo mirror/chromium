@@ -4,7 +4,7 @@
 
 [
     ActiveScriptWrappable,
-    Constructor(DOMString interfaceName),
+    Constructor(MojoInterfaceInterceptorInit initDict),
     ConstructorCallWith=ScriptState,
     DependentLifetime,
     Exposed=(Window,Worker),

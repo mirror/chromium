@@ -11,11 +11,11 @@
 
 namespace blink {
 
+class MojoBindInterfaceOptions;
 class MojoCreateDataPipeOptions;
 class MojoCreateDataPipeResult;
 class MojoCreateMessagePipeResult;
 class MojoCreateSharedBufferResult;
-class MojoHandle;
 class ScriptState;
 
 class Mojo final : public GarbageCollected<Mojo>, public ScriptWrappable {
@@ -52,9 +52,7 @@ class Mojo final : public GarbageCollected<Mojo>, public ScriptWrappable {
   static void createSharedBuffer(unsigned num_bytes,
                                  MojoCreateSharedBufferResult&);
 
-  static void bindInterface(ScriptState*,
-                            const String& interface_name,
-                            MojoHandle*);
+  static void bindInterface(ScriptState*, const MojoBindInterfaceOptions&);
 
   DEFINE_INLINE_TRACE() {}
 };

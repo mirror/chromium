@@ -9,6 +9,7 @@
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
+#include "core/mojo/MojoBindInterfaceOptions.h"
 #include "core/mojo/MojoCreateDataPipeOptions.h"
 #include "core/mojo/MojoCreateDataPipeResult.h"
 #include "core/mojo/MojoCreateMessagePipeResult.h"
@@ -19,7 +20,10 @@
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/wtf/text/StringUTF8Adaptor.h"
+#include "public/platform/Platform.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
+#include "services/service_manager/public/interfaces/constants.mojom-blink.h"
 
 namespace blink {
 
@@ -78,17 +82,28 @@ void Mojo::createSharedBuffer(unsigned num_bytes,
 
 // static
 void Mojo::bindInterface(ScriptState* script_state,
-                         const String& interface_name,
-                         MojoHandle* request_handle) {
-  std::string name =
-      StringUTF8Adaptor(interface_name).AsStringPiece().as_string();
+                         const MojoBindInterfaceOptions& options) {
+  std::string interface_name =
+      StringUTF8Adaptor(options.interfaceName()).AsStringPiece().as_string();
   auto handle =
-      mojo::ScopedMessagePipeHandle::From(request_handle->TakeHandle());
+      mojo::ScopedMessagePipeHandle::From(options.handle()->TakeHandle());
+
+  if (options.hasServiceName()) {
+    std::string service_name =
+        StringUTF8Adaptor(options.serviceName()).AsStringPiece().as_string();
+
+    Platform::Current()->GetConnector()->BindInterface(
+        service_manager::Identity(service_name,
+                                  service_manager::mojom::kInheritUserID),
+        interface_name, std::move(handle));
+    return;
+  }
 
   ExecutionContext* context = ExecutionContext::From(script_state);
   if (context->IsWorkerGlobalScope()) {
     WorkerThread* thread = ToWorkerGlobalScope(context)->GetThread();
-    thread->GetInterfaceProvider().GetInterface(name, std::move(handle));
+    thread->GetInterfaceProvider().GetInterface(interface_name,
+                                                std::move(handle));
     return;
   }
 
@@ -96,7 +111,7 @@ void Mojo::bindInterface(ScriptState* script_state,
   if (!frame)
     return;  // |handle| will be destroyed, closing the pipe.
 
-  frame->Client()->GetInterfaceProvider()->GetInterface(name,
+  frame->Client()->GetInterfaceProvider()->GetInterface(interface_name,
                                                         std::move(handle));
 }
 

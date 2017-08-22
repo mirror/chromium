@@ -111,10 +111,12 @@ void MojoFacade::GetMessageNameAndArguments(
 
 std::unique_ptr<base::Value> MojoFacade::HandleMojoBindInterface(
     const base::DictionaryValue* args) {
+  const base::DictionaryValue* options = nullptr;
+  CHECK(args->GetDictionary("options", &options));
   const base::Value* interface_name_as_value = nullptr;
-  CHECK(args->Get("interfaceName", &interface_name_as_value));
+  CHECK(options->Get("interfaceName", &interface_name_as_value));
   int raw_handle = 0;
-  CHECK(args->GetInteger("requestHandle", &raw_handle));
+  CHECK(options->GetInteger("handle", &raw_handle));
 
   mojo::ScopedMessagePipeHandle handle(
       static_cast<mojo::MessagePipeHandle>(raw_handle));

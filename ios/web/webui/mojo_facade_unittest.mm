@@ -110,8 +110,10 @@ TEST_F(MojoFacadeTest, BindInterface) {
   NSDictionary* connect = @{
     @"name" : @"Mojo.bindInterface",
     @"args" : @{
-      @"interfaceName" : @"::TestUIHandlerMojo",
-      @"requestHandle" : @(handle0),
+      @"options" : @{
+        @"interfaceName" : @"::TestUIHandlerMojo",
+        @"handle" : @(handle0),
+      },
     },
   };
 
