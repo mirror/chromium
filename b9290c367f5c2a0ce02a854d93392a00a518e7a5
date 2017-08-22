@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61487ff6_d2ad765c",
+        "filename": "chrome/browser/content_settings/sound_content_setting_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-22T00:36:01Z",
+      "side": 1,
+      "message": "nit:\n\n  #endif  // defined(OS_ANDROID)",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 6
+      },
+      "revId": "b9290c367f5c2a0ce02a854d93392a00a518e7a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
