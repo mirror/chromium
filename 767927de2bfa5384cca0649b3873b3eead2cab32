@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6979596_b169a990",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-22T17:41:00Z",
+      "side": 1,
+      "message": "Actually, \"The sections in the image are sorted by their starting address (RVAs), rather than alphabetically.\", so this is unnecessary. Maybe comment and add a check that they are indeed sorted.",
+      "range": {
+        "startLine": 283,
+        "startChar": 7,
+        "endLine": 283,
+        "endChar": 11
+      },
+      "revId": "767927de2bfa5384cca0649b3873b3eead2cab32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15692570_bb361216",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-22T17:41:00Z",
+      "side": 1,
+      "message": "This seems  currently unused. Can you add a comment for what it will be used for?",
+      "range": {
+        "startLine": 21,
+        "startChar": 19,
+        "endLine": 21,
+        "endChar": 32
+      },
+      "revId": "767927de2bfa5384cca0649b3873b3eead2cab32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ef8ca4_3cbfb878",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-22T17:41:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure image_utils is the right place for this function.\nWe might want to introduce \"algorithm.h\" for generic functions.\nAlternatively, this could be a method of BufferRegion, but that would make it less generic.",
+      "range": {
+        "startLine": 111,
+        "startChar": 5,
+        "endLine": 111,
+        "endChar": 19
+      },
+      "revId": "767927de2bfa5384cca0649b3873b3eead2cab32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
