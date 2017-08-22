@@ -24,6 +24,7 @@
 #include "base/task_scheduler/task_tracker.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/platform_thread.h"
+#include "base/threading/scoped_blocking_call.h"
 #include "base/threading/thread_local.h"
 #include "base/threading/thread_restrictions.h"
 
@@ -139,7 +140,8 @@ bool ContainsWorker(const std::vector<scoped_refptr<SchedulerWorker>>& workers,
 }  // namespace
 
 class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
-    : public SchedulerWorker::Delegate {
+    : public SchedulerWorker::Delegate,
+      public BlockingObserver {
  public:
   // |outer| owns the worker for which this delegate is constructed.
   SchedulerWorkerDelegateImpl(SchedulerWorkerPoolImpl* outer);
@@ -155,19 +157,23 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
 
   // Sets |is_on_idle_workers_stack_| to be true and DCHECKS that |worker|
   // is indeed on the idle workers stack.
-  void SetIsOnIdleWorkersStack(SchedulerWorker* worker);
+  void SetIsOnIdleWorkersStackWithLock(SchedulerWorker* worker);
 
   // Sets |is_on_idle_workers_stack_| to be false and DCHECKS that |worker|
   // isn't on the idle workers stack.
-  void UnsetIsOnIdleWorkersStack(SchedulerWorker* worker);
+  void UnSetIsOnIdleWorkersStackWithLock(SchedulerWorker* worker);
 
 // DCHECKs that |worker| is on the idle workers stack and
 // |is_on_idle_workers_stack_| is true.
 #if DCHECK_IS_ON()
-  void AssertIsOnIdleWorkersStack(SchedulerWorker* worker) const;
+  void AssertIsOnIdleWorkersStackWithLock(SchedulerWorker* worker) const;
 #else
-  void AssertIsOnIdleWorkersStack(SchedulerWorker* worker) const {}
+  void AssertIsOnIdleWorkersStackWithLock(SchedulerWorker* worker) const {}
 #endif
+
+  // BlockingObserver:
+  void BlockingScopeEntered(BlockingType blocking_type) override;
+  void BlockingScopeExited(BlockingType blocking_type) override;
 
  private:
   // Returns true if |worker| is allowed to cleanup and remove itself from the
@@ -175,7 +181,10 @@ class SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl
   bool CanCleanup(SchedulerWorker* worker);
 
   // Calls cleanup on |worker| and removes it from the pool.
-  void Cleanup(SchedulerWorker* worker);
+  void CleanupWithLock(SchedulerWorker* worker);
+
+  // Called in GetWork() when a worker becomes idle.
+  void OnWorkerBecomesIdleWithLock(SchedulerWorker* worker);
 
   SchedulerWorkerPoolImpl* outer_;
 
@@ -247,6 +256,7 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
   DCHECK(workers_.empty());
 
   worker_capacity_ = params.max_threads();
+  initial_worker_capacity_ = worker_capacity_;
   suggested_reclaim_time_ = params.suggested_reclaim_time();
   backward_compatibility_ = params.backward_compatibility();
 
@@ -257,7 +267,7 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
   workers_.reserve(num_initial_workers);
 
   for (int index = 0; index < num_initial_workers; ++index) {
-    SchedulerWorker* worker = CreateRegisterAndStartSchedulerWorker();
+    SchedulerWorker* worker = CreateRegisterAndStartSchedulerWorkerWithLock();
 
     // CHECK that the first worker can be started (assume that failure means
     // that threads can't be created on this machine).
@@ -267,11 +277,11 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
       SchedulerWorkerDelegateImpl* delegate =
           static_cast<SchedulerWorkerDelegateImpl*>(worker->delegate());
       if (index < num_wake_ups_before_start_) {
-        delegate->UnsetIsOnIdleWorkersStack(worker);
+        delegate->UnSetIsOnIdleWorkersStackWithLock(worker);
         worker->WakeUp();
       } else {
         idle_workers_stack_.Push(worker);
-        delegate->AssertIsOnIdleWorkersStack(worker);
+        delegate->AssertIsOnIdleWorkersStackWithLock(worker);
       }
     }
   }
@@ -358,22 +368,24 @@ void SchedulerWorkerPoolImpl::GetHistograms(
   histograms->push_back(num_tasks_between_waits_histogram_);
 }
 
-// TODO(jeffreyhe): Add and return an |initial_worker_capacity_| member when
-// worker capacity becomes dynamic.
 int SchedulerWorkerPoolImpl::GetMaxConcurrentTasksDeprecated() const {
 #if DCHECK_IS_ON()
   AutoSchedulerLock auto_lock(lock_);
-  DCHECK_NE(worker_capacity_, 0U) << "GetMaxConcurrentTasksDeprecated() should "
-                                     "only be called after the worker pool has "
-                                     "started.";
+  DCHECK_NE(initial_worker_capacity_, 0U)
+      << "GetMaxConcurrentTasksDeprecated() should only be called after the "
+      << "worker pool has started.";
 #endif
-  return worker_capacity_;
+  return initial_worker_capacity_;
+}
+
+void SchedulerWorkerPoolImpl::WaitForWorkersIdleForTesting(size_t n) {
+  AutoSchedulerLock auto_lock(lock_);
+  WaitForWorkersIdleWithLockForTesting(n);
 }
 
 void SchedulerWorkerPoolImpl::WaitForAllWorkersIdleForTesting() {
   AutoSchedulerLock auto_lock(lock_);
-  while (idle_workers_stack_.Size() < workers_.size())
-    idle_workers_stack_cv_for_testing_->Wait();
+  WaitForWorkersIdleWithLockForTesting(workers_.size());
 }
 
 void SchedulerWorkerPoolImpl::JoinForTesting() {
@@ -418,6 +430,11 @@ size_t SchedulerWorkerPoolImpl::GetWorkerCapacityForTesting() {
   return worker_capacity_;
 }
 
+size_t SchedulerWorkerPoolImpl::NumberOfIdleWorkersForTesting() {
+  AutoSchedulerLock auto_lock(lock_);
+  return idle_workers_stack_.Size();
+}
+
 SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
     SchedulerWorkerDelegateImpl(SchedulerWorkerPoolImpl* outer)
     : outer_(outer) {}
@@ -439,6 +456,8 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainEntry(
   PlatformThread::SetName(
       StringPrintf("TaskScheduler%sWorker", outer_->name_.c_str()));
 
+  SetBlockingObserverForCurrentThread(this);
+
   DCHECK(!tls_current_worker_pool.Get().Get());
   tls_current_worker_pool.Get().Set(outer_);
 }
@@ -458,7 +477,7 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
               outer_->idle_workers_stack_.Contains(worker));
     if (is_on_idle_workers_stack_) {
       if (CanCleanup(worker))
-        Cleanup(worker);
+        CleanupWithLock(worker);
 
       // Since we got here from timing out from the WaitableEvent rather than
       // waking up and completing tasks, we expect to have completed 0 tasks
@@ -469,7 +488,13 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
       DCHECK_EQ(num_tasks_since_last_wait_, 0U);
       outer_->num_tasks_between_waits_histogram_->Add(
           num_tasks_since_last_wait_);
+      return nullptr;
+    }
 
+    // If not enough workers are idle, deny work to this worker.
+    if (outer_->NumberOfWorkersThatCantRunTasksWithLock() >
+        outer_->idle_workers_stack_.Size()) {
+      OnWorkerBecomesIdleWithLock(worker);
       return nullptr;
     }
   }
@@ -493,17 +518,7 @@ SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::GetWork(
       //    No thread runs the Sequence inserted in step 2.
       AutoSchedulerLock auto_lock(outer_->lock_);
 
-      // Record the TaskScheduler.NumTasksBetweenWaits histogram. After
-      // returning nullptr, the SchedulerWorker will perform a wait on its
-      // WaitableEvent, so we record how many tasks were ran since the last wait
-      // here.
-      outer_->num_tasks_between_waits_histogram_->Add(
-          num_tasks_since_last_wait_);
-      num_tasks_since_last_wait_ = 0;
-
-      outer_->AddToIdleWorkersStack(worker);
-      SetIsOnIdleWorkersStack(worker);
-
+      OnWorkerBecomesIdleWithLock(worker);
       return nullptr;
     }
     sequence = shared_transaction->PopSequence();
@@ -540,23 +555,36 @@ TimeDelta SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
 
 bool SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::CanCleanup(
     SchedulerWorker* worker) {
-  return worker != outer_->PeekAtIdleWorkersStack() &&
+  return worker != outer_->PeekAtIdleWorkersStackWithLock() &&
          outer_->CanWorkerCleanupForTesting();
 }
 
-void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::Cleanup(
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::CleanupWithLock(
     SchedulerWorker* worker) {
   outer_->lock_.AssertAcquired();
   outer_->num_tasks_before_detach_histogram_->Add(num_tasks_since_last_detach_);
   outer_->cleanup_timestamps_.push(TimeTicks::Now());
   worker->Cleanup();
-  outer_->RemoveFromIdleWorkersStack(worker);
+  outer_->RemoveFromIdleWorkersStackWithLock(worker);
 
   // Remove the worker from |workers_|.
   auto worker_iter =
       std::find(outer_->workers_.begin(), outer_->workers_.end(), worker);
   DCHECK(worker_iter != outer_->workers_.end());
   outer_->workers_.erase(worker_iter);
+}
+
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
+    OnWorkerBecomesIdleWithLock(SchedulerWorker* worker) {
+  outer_->lock_.AssertAcquired();
+  // Record the TaskScheduler.NumTasksBetweenWaits histogram. After GetWork()
+  // returns nullptr, the SchedulerWorker will perform a wait on its
+  // WaitableEvent, so we record how many tasks were ran since the last wait
+  // here.
+  outer_->num_tasks_between_waits_histogram_->Add(num_tasks_since_last_wait_);
+  num_tasks_since_last_wait_ = 0;
+  outer_->AddToIdleWorkersStackWithLock(worker);
+  SetIsOnIdleWorkersStackWithLock(worker);
 }
 
 void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainExit(
@@ -577,7 +605,7 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::OnMainExit(
 }
 
 void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
-    SetIsOnIdleWorkersStack(SchedulerWorker* worker) {
+    SetIsOnIdleWorkersStackWithLock(SchedulerWorker* worker) {
   outer_->lock_.AssertAcquired();
   DCHECK(!is_on_idle_workers_stack_);
   DCHECK(outer_->idle_workers_stack_.Contains(worker));
@@ -585,7 +613,7 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
 }
 
 void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
-    UnsetIsOnIdleWorkersStack(SchedulerWorker* worker) {
+    UnSetIsOnIdleWorkersStackWithLock(SchedulerWorker* worker) {
   outer_->lock_.AssertAcquired();
   DCHECK(is_on_idle_workers_stack_);
   DCHECK(!outer_->idle_workers_stack_.Contains(worker));
@@ -594,46 +622,106 @@ void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
 
 #if DCHECK_IS_ON()
 void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::
-    AssertIsOnIdleWorkersStack(SchedulerWorker* worker) const {
+    AssertIsOnIdleWorkersStackWithLock(SchedulerWorker* worker) const {
   outer_->lock_.AssertAcquired();
   DCHECK(is_on_idle_workers_stack_);
   DCHECK(outer_->idle_workers_stack_.Contains(worker));
 }
 #endif
 
-void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
-  SchedulerWorker* worker = nullptr;
+// TODO(crbug.com/757475): Support BlockingType::MAY_BLOCK.
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::BlockingScopeEntered(
+    BlockingType blocking_type) {
+  if (blocking_type != BlockingType::WILL_BLOCK)
+    return;
+  std::unique_ptr<PriorityQueue::Transaction> shared_transaction(
+      outer_->shared_priority_queue_.BeginTransaction());
+  AutoSchedulerLock auto_lock(outer_->lock_);
 
-  AutoSchedulerLock auto_lock(lock_);
+  ++outer_->worker_capacity_;
+
+  // If the number of workers was less than the old worker capacity, PostTask
+  // would've handled creating extra workers during WakeUpOneWorker. Therefore,
+  // we don't need to do anything here.
+  if (outer_->workers_.size() < outer_->worker_capacity_ - 1) {
+    return;
+  }
+
+  if (!shared_transaction->IsEmpty())
+    // We may create extra workers in this case: |workers.size()| was equal to
+    // the old |worker_capacity_|, we had multiple ScopedBlockingCalls in
+    // parallel and we had work on the PQ.
+    //
+    // Suppose there was exactly one Sequence on the PQ. It's possbile one
+    // ScopedBlockingCall creates a worker, but before that worker picks the
+    // work off the PQ, another ScopedBlockingCall occurs, sees there's work on
+    // the PQ, and creates its own worker. Here, we ended up creating two
+    // workers to deal with one task.
+    outer_->WakeUpOneWorkerWithLock();
+  else
+    outer_->MaintainAtLeastOneIdleWorkerWithLock();
+}
+
+// TODO(crbug.com/757475): Support BlockingType::MAY_BLOCK.
+void SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl::BlockingScopeExited(
+    BlockingType blocking_type) {
+  if (blocking_type != BlockingType::WILL_BLOCK)
+    return;
+  AutoSchedulerLock auto_lock(outer_->lock_);
+  --outer_->worker_capacity_;
+}
+
+void SchedulerWorkerPoolImpl::WaitForWorkersIdleWithLockForTesting(size_t n) {
+  lock_.AssertAcquired();
+  while (idle_workers_stack_.Size() < n)
+    idle_workers_stack_cv_for_testing_->Wait();
+}
+
+void SchedulerWorkerPoolImpl::WakeUpOneWorkerWithLock() {
+  lock_.AssertAcquired();
 
   if (workers_.empty()) {
     ++num_wake_ups_before_start_;
     return;
   }
 
-  // Add a new worker if we're below capacity and there are no idle workers.
-  if (idle_workers_stack_.IsEmpty() && workers_.size() < worker_capacity_)
-    worker = CreateRegisterAndStartSchedulerWorker();
-  else
-    worker = idle_workers_stack_.Pop();
+  // Ensure that there is one worker that can run tasks on top of the idle
+  // stack, capacity permitting.
+  MaintainAtLeastOneIdleWorkerWithLock();
 
-  if (worker) {
-    SchedulerWorkerDelegateImpl* delegate =
-        static_cast<SchedulerWorkerDelegateImpl*>(worker->delegate());
-    delegate->UnsetIsOnIdleWorkersStack(worker);
-    worker->WakeUp();
+  // If the worker on top of the idle stack can run tasks, wake it up.
+  if (NumberOfWorkersThatCantRunTasksWithLock() < idle_workers_stack_.Size()) {
+    SchedulerWorker* worker = idle_workers_stack_.Pop();
+    if (worker) {
+      SchedulerWorkerDelegateImpl* delegate =
+          static_cast<SchedulerWorkerDelegateImpl*>(worker->delegate());
+      delegate->UnSetIsOnIdleWorkersStackWithLock(worker);
+      worker->WakeUp();
+    }
   }
 
-  // Try to keep at least one idle worker at all times for better
-  // responsiveness.
+  // Ensure that there is one worker that can run tasks on top of the idle
+  // stack, capacity permitting.
+  MaintainAtLeastOneIdleWorkerWithLock();
+}
+
+void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
+  AutoSchedulerLock auto_lock(lock_);
+  WakeUpOneWorkerWithLock();
+}
+
+void SchedulerWorkerPoolImpl::MaintainAtLeastOneIdleWorkerWithLock() {
+  lock_.AssertAcquired();
+
   if (idle_workers_stack_.IsEmpty() && workers_.size() < worker_capacity_) {
-    SchedulerWorker* new_worker = CreateRegisterAndStartSchedulerWorker();
+    SchedulerWorker* new_worker =
+        CreateRegisterAndStartSchedulerWorkerWithLock();
     if (new_worker)
       idle_workers_stack_.Push(new_worker);
   }
 }
 
-void SchedulerWorkerPoolImpl::AddToIdleWorkersStack(
+void SchedulerWorkerPoolImpl::AddToIdleWorkersStackWithLock(
     SchedulerWorker* worker) {
   lock_.AssertAcquired();
 
@@ -642,16 +730,16 @@ void SchedulerWorkerPoolImpl::AddToIdleWorkersStack(
 
   DCHECK_LE(idle_workers_stack_.Size(), workers_.size());
 
-  if (idle_workers_stack_.Size() == workers_.size())
-    idle_workers_stack_cv_for_testing_->Broadcast();
+  idle_workers_stack_cv_for_testing_->Broadcast();
 }
 
-const SchedulerWorker* SchedulerWorkerPoolImpl::PeekAtIdleWorkersStack() const {
+const SchedulerWorker* SchedulerWorkerPoolImpl::PeekAtIdleWorkersStackWithLock()
+    const {
   lock_.AssertAcquired();
   return idle_workers_stack_.Peek();
 }
 
-void SchedulerWorkerPoolImpl::RemoveFromIdleWorkersStack(
+void SchedulerWorkerPoolImpl::RemoveFromIdleWorkersStackWithLock(
     SchedulerWorker* worker) {
   lock_.AssertAcquired();
   idle_workers_stack_.Remove(worker);
@@ -662,7 +750,7 @@ bool SchedulerWorkerPoolImpl::CanWorkerCleanupForTesting() {
 }
 
 SchedulerWorker*
-SchedulerWorkerPoolImpl::CreateRegisterAndStartSchedulerWorker() {
+SchedulerWorkerPoolImpl::CreateRegisterAndStartSchedulerWorkerWithLock() {
   lock_.AssertAcquired();
 
   DCHECK_LT(workers_.size(), worker_capacity_);
@@ -678,6 +766,7 @@ SchedulerWorkerPoolImpl::CreateRegisterAndStartSchedulerWorker() {
     return nullptr;
 
   workers_.push_back(worker);
+  DCHECK_LE(workers_.size(), worker_capacity_);
 
   if (!cleanup_timestamps_.empty()) {
     detach_duration_histogram_->AddTime(TimeTicks::Now() -
@@ -685,6 +774,12 @@ SchedulerWorkerPoolImpl::CreateRegisterAndStartSchedulerWorker() {
     cleanup_timestamps_.pop();
   }
   return worker.get();
+}
+
+size_t SchedulerWorkerPoolImpl::NumberOfWorkersThatCantRunTasksWithLock()
+    const {
+  lock_.AssertAcquired();
+  return std::max<int>(0, workers_.size() - worker_capacity_);
 }
 
 }  // namespace internal
