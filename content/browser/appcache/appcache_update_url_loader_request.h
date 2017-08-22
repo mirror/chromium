@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "content/browser/appcache/appcache_update_request_base.h"
+#include "content/common/content_export.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/url_loader.mojom.h"
@@ -31,7 +32,7 @@ struct ResourceRequest;
 // URLLoaderClient subclass for the UpdateRequestBase class. Provides
 // functionality to update the AppCache using functionality provided by the
 // network URL loader.
-class AppCacheUpdateJob::UpdateURLLoaderRequest
+class CONTENT_EXPORT AppCacheUpdateJob::UpdateURLLoaderRequest
     : public AppCacheUpdateJob::UpdateRequestBase,
       public mojom::URLLoaderClient {
  public:
@@ -84,6 +85,7 @@ class AppCacheUpdateJob::UpdateURLLoaderRequest
   void MaybeStartReading();
 
   friend class AppCacheUpdateJob::UpdateRequestBase;
+  friend class AppCacheUpdateJobTest;
 
   URLFetcher* fetcher_;
   // Used to retrieve the network URLLoader interface to issue network
