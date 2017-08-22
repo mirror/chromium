@@ -2,10 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_BACKGROUND_FETCH_REQUEST_INFO_H_
-#define CONTENT_BROWSER_BACKGROUND_FETCH_REQUEST_INFO_H_
+#ifndef CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_REQUEST_INFO_H_
+#define CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_REQUEST_INFO_H_
 
+#include <map>
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "base/files/file_path.h"
@@ -22,6 +24,7 @@
 
 namespace content {
 
+struct BackgroundFetchResponse;
 class DownloadItem;
 
 // Simple class to encapsulate the components of a fetch request.
@@ -30,21 +33,33 @@ class DownloadItem;
 class CONTENT_EXPORT BackgroundFetchRequestInfo
     : public base::RefCountedDeleteOnSequence<BackgroundFetchRequestInfo> {
  public:
+  // Failures that happen after the download has already started.
+  enum FailureReason {
+    NONE,
+
+    // Used when the download has been aborted after reaching a threshold where
+    // it was decided it is not worth attempting to start again. This could be
+    // either due to a specific number of failed retry attempts or a specific
+    // number of wasted bytes due to the download restarting.
+    NETWORK,
+
+    // Used when the download was not completed before the timeout.
+    TIMEDOUT,
+
+    // Used when the failure reason is unknown.
+    UNKNOWN,
+  };
+
   BackgroundFetchRequestInfo(int request_index,
                              const ServiceWorkerFetchRequest& fetch_request);
 
-  // Populates the cached state for the in-progress |download_item|.
-  void PopulateDownloadStateOnUI(
-      DownloadItem* download_item,
-      DownloadInterruptReason download_interrupt_reason);
+  // Populates the cached state for the in-progress download.
+  void PopulateWithResponse(
+      std::unique_ptr<const BackgroundFetchResponse> response);
 
-  void SetDownloadStatePopulated();
+  void SetPathAndSize(const base::FilePath& path, uint64_t size);
 
-  // Populates the response portion of this object from the information made
-  // available in the |download_item|.
-  void PopulateResponseFromDownloadItemOnUI(DownloadItem* download_item);
-
-  void SetResponseDataPopulated();
+  void SetFailureReason(FailureReason reason);
 
   // Returns the index of this request within a Background Fetch registration.
   int request_index() const { return request_index_; }
@@ -111,6 +126,7 @@ class CONTENT_EXPORT BackgroundFetchRequestInfo
   base::FilePath file_path_;
   int64_t file_size_ = 0;
   base::Time response_time_;
+  FailureReason failure_reason_ = FailureReason::NONE;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
@@ -119,4 +135,4 @@ class CONTENT_EXPORT BackgroundFetchRequestInfo
 
 }  // namespace content
 
-#endif  // CONTENT_BROWSER_BACKGROUND_FETCH_REQUEST_INFO_H_
+#endif  // CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_REQUEST_INFO_H_
