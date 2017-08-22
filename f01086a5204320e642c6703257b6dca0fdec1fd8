@@ -22,6 +22,30 @@
       "revId": "f01086a5204320e642c6703257b6dca0fdec1fd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfafca97_e5bb4407",
+        "filename": "headless/lib/browser/headless_content_browser_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-08-22T18:31:35Z",
+      "side": 0,
+      "message": "Normally, the \"TEMPLATE\" manifest is the skeleton file that meant to be customized. Once we instantiate it, it is better to use the actual name. The comparable cases are https://cs.chromium.org/chromium/src/content/shell/shell_resources.grd?l\u003d15 and https://cs.chromium.org/chromium/src/chrome/browser/browser_resources.grd?l\u003d654",
+      "parentUuid": "8bdf8389_5bea4601",
+      "range": {
+        "startLine": 158,
+        "startChar": 10,
+        "endLine": 158,
+        "endChar": 56
+      },
+      "revId": "f01086a5204320e642c6703257b6dca0fdec1fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
