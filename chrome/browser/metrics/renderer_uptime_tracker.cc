@@ -49,6 +49,15 @@ void RendererUptimeTracker::OnRendererStarted(int pid) {
   info_map_[pid] = RendererInfo{base::TimeTicks::Now(), 0};
 }
 
+base::TimeDelta RendererUptimeTracker::GetProcessUptime(int pid) {
+  auto it = info_map_.find(pid);
+  // The pid may not exist when process fails to start up or when process is
+  // terminated without reuse.
+  if (it == info_map_.end())
+    return base::TimeDelta();
+  return base::TimeTicks::Now() - it->second.launched_at_;
+}
+
 void RendererUptimeTracker::OnRendererTerminated(int pid) {
   auto it = info_map_.find(pid);
   // The pid may not exist when process fails to start up or when process is

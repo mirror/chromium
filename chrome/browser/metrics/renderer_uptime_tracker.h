@@ -31,6 +31,9 @@ class RendererUptimeTracker : public content::NotificationObserver {
                const content::NotificationSource& source,
                const content::NotificationDetails& details) override;
 
+  // Retrieve the uptime for the given process |pid|.
+  base::TimeDelta GetProcessUptime(int pid);
+
  private:
   RendererUptimeTracker();
   ~RendererUptimeTracker() override;
