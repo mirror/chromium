@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1d33193e_2ae43ca2",
+        "filename": "chrome/browser/chrome_browser_main_android.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-22T17:51:00Z",
+      "side": 1,
+      "message": "g_browser_process-\u003elocal_state() is available till shutdown, it should have same lifetime as g_browser_process.\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/browser_shutdown.cc?l\u003d167",
+      "parentUuid": "c9f9da4a_030bf376",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cc54ede_66cc5963",
         "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
         "patchSetId": 21
@@ -33,6 +51,24 @@
       "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee6cf01_7f8a1163",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-22T17:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cc54ede_66cc5963",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0e6d4e6e_611efc03",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-22T17:51:00Z",
+      "side": 1,
+      "message": "I don\u0027t it\u0027s necessary here. I was referring other code and some of them have it.",
+      "parentUuid": "b6fd4e2c_9c91214b",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "073443fc_7a868dc2",
         "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
         "patchSetId": 21
@@ -67,6 +121,24 @@
       "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ba56a2_393cd642",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-22T17:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "073443fc_7a868dc2",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f15f2c02_159bcc75",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-22T17:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ab8cc8d_8e3a082c",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea9a4ffb_d4d31bd0",
         "filename": "components/crash/content/browser/crash_dump_manager_android.h",
         "patchSetId": 21
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "153bd0ff_cae26498",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-22T17:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea9a4ffb_d4d31bd0",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67fe9456_bc841993",
         "filename": "components/metrics/stability_metrics_helper.cc",
         "patchSetId": 21
@@ -118,6 +226,24 @@
       "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5eea85_4af89310",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-22T17:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67fe9456_bc841993",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +270,30 @@
     },
     {
       "key": {
+        "uuid": "15e15e81_0a2c853c",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-22T17:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c997ed67_ba2188eb",
+      "range": {
+        "startLine": 173,
+        "startChar": 30,
+        "endLine": 173,
+        "endChar": 39
+      },
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aca65a9_adc132ff",
         "filename": "components/metrics/stability_metrics_helper.h",
         "patchSetId": 21
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "9dd1eb84_8d177bd4",
+        "filename": "components/metrics/stability_metrics_helper.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-22T17:51:00Z",
+      "side": 1,
+      "message": "Done. I was writing Java for a while and haven\u0027t changed my mind back to C++..",
+      "parentUuid": "1aca65a9_adc132ff",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b509b5c_82465e4d",
         "filename": "content/shell/browser/shell_browser_main_parts.cc",
         "patchSetId": 21
@@ -175,6 +343,24 @@
       "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd29cb2_65e055e5",
+        "filename": "content/shell/browser/shell_browser_main_parts.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-22T17:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b509b5c_82465e4d",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
