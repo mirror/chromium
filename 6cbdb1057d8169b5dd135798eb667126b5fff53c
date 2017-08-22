@@ -70,6 +70,24 @@
       "revId": "6cbdb1057d8169b5dd135798eb667126b5fff53c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "368aeee5_eadab1ee",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-08-22T16:51:13Z",
+      "side": 1,
+      "message": "Per offline discussion, \u003caudio\u003e preload is also set to metadata.",
+      "parentUuid": "28873ab6_bb8108f2",
+      "revId": "6cbdb1057d8169b5dd135798eb667126b5fff53c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
