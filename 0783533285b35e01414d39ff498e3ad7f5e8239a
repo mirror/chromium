@@ -34,6 +34,24 @@
       "revId": "0783533285b35e01414d39ff498e3ad7f5e8239a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558c9953_047cbaaa",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-22T18:58:08Z",
+      "side": 1,
+      "message": "The default color is static public const, so I can access it in anonymous namespace.",
+      "parentUuid": "a4d27ab9_c97a20ff",
+      "revId": "0783533285b35e01414d39ff498e3ad7f5e8239a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
