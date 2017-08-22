@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5c96d4a8_84869dd2",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-22T19:42:59Z",
+      "side": 1,
+      "message": "I agree, but then link to the directory containing the source for chrome://safe-browsing instead of the page itself.",
+      "parentUuid": "e45692ba_8c30b690",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89170e49_3c3afdb1",
         "filename": "docs/webui_infrastructure.md",
         "patchSetId": 8
@@ -319,6 +343,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "d22d7831_080485fc",
+      "range": {
+        "startLine": 129,
+        "startChar": 1,
+        "endLine": 129,
+        "endChar": 2
+      },
+      "revId": "82b405284d9c5580cfa8796b44646cc13f03c96c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ba564a9_ec70f1e4",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-22T19:42:59Z",
+      "side": 1,
+      "message": "I still see whitespace before #includes.",
+      "parentUuid": "d3bf939a_9f50110e",
       "range": {
         "startLine": 129,
         "startChar": 1,
