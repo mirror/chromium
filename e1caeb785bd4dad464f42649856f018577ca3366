@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05d31b1d_da4aa22c",
+        "filename": "chrome/browser/browser_process_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-22T23:37:16Z",
+      "side": 1,
+      "message": "This comment is *really* easy to miss. How about explicitly destroying system_network_context_manager_ in the destructor (system_network_context_manager_.reset()) and moving this comment to the destructor?",
+      "range": {
+        "startLine": 220,
+        "startChar": 2,
+        "endLine": 222,
+        "endChar": 17
+      },
+      "revId": "e1caeb785bd4dad464f42649856f018577ca3366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
