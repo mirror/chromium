@@ -35,4 +35,13 @@ void TextSuggestionHostMojoImplAndroid::ShowSpellCheckSuggestionMenu(
                                                       marked_text, suggestions);
 }
 
+void TextSuggestionHostMojoImplAndroid::ShowTextSuggestionMenu(
+    double caret_x,
+    double caret_y,
+    const std::string& marked_text,
+    std::vector<blink::mojom::TextSuggestionPtr> suggestions) {
+  text_suggestion_host_->ShowTextSuggestionMenu(caret_x, caret_y, marked_text,
+                                                suggestions);
+}
+
 }  // namespace content

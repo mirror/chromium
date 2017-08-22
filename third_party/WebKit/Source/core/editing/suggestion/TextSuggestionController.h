@@ -16,6 +16,7 @@
 namespace blink {
 
 class Document;
+class DocumentMarker;
 class LocalFrame;
 
 // This class handles functionality related to displaying a menu of text
@@ -33,13 +34,13 @@ class CORE_EXPORT TextSuggestionController final
 
   bool IsMenuOpen() const;
 
-  void HandlePotentialMisspelledWordTap(
-      const PositionInFlatTree& caret_position);
+  void HandlePotentialSuggestionTap(const PositionInFlatTree& caret_position);
 
   void ApplySpellCheckSuggestion(const String& suggestion);
+  void ApplyTextSuggestion(int32_t marker_tag, uint32_t suggestion_index);
   void DeleteActiveSuggestionRange();
   void NewWordAddedToDictionary(const String& word);
-  void SpellCheckMenuTimeoutCallback();
+  void SuggestionMenuTimeoutCallback(size_t max_number_of_suggestions);
   void SuggestionMenuClosed();
 
   DECLARE_TRACE();
@@ -56,7 +57,13 @@ class CORE_EXPORT TextSuggestionController final
       DocumentMarker::MarkerTypes) const;
 
   void AttemptToDeleteActiveSuggestionRange();
-  void ReplaceSpellingMarkerTouchingSelectionWithText(const String&);
+  void ShowSpellCheckMenu(
+      const std::pair<Node*, DocumentMarker*>& node_spelling_marker_pair);
+  void ShowSuggestionMenu(
+      const HeapVector<std::pair<Member<Node>, Member<DocumentMarker>>>&
+          node_suggestion_marker_pairs,
+      size_t max_number_of_suggestions);
+  void ReplaceActiveSuggestionRange(const String&);
   void ReplaceRangeWithText(const EphemeralRange&, const String& replacement);
 
   bool is_suggestion_menu_open_;

@@ -27,11 +27,11 @@ import java.util.concurrent.TimeoutException;
 /**
  * Integration tests for the text suggestion menu.
  */
-public class TextSuggestionMenuTest extends ChromeActivityTestCaseBase<ChromeActivity> {
+public class SpellCheckMenuTest extends ChromeActivityTestCaseBase<ChromeActivity> {
     private static final String URL =
             "data:text/html, <div contenteditable id=\"div\">iuvwneaoanls</div>";
 
-    public TextSuggestionMenuTest() {
+    public SpellCheckMenuTest() {
         super(ChromeActivity.class);
     }
 

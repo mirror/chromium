@@ -21,8 +21,9 @@ TEST_F(TextSuggestionControllerTest, ApplySpellCheckSuggestion) {
   Element* div = GetDocument().QuerySelector("div");
   Node* text = div->firstChild();
 
-  GetDocument().Markers().AddSpellingMarker(
-      EphemeralRange(Position(text, 0), Position(text, 8)));
+  GetDocument().Markers().AddActiveSuggestionMarker(
+      EphemeralRange(Position(text, 0), Position(text, 8)), Color::kBlack,
+      StyleableMarker::Thickness::kThin, Color::kBlack);
   // Select immediately before misspelling
   GetDocument().GetFrame()->Selection().SetSelection(
       SelectionInDOMTree::Builder()
@@ -34,6 +35,103 @@ TEST_F(TextSuggestionControllerTest, ApplySpellCheckSuggestion) {
       .ApplySpellCheckSuggestion("spellcheck");
 
   EXPECT_EQ("spellcheck", text->textContent());
+}
+
+TEST_F(TextSuggestionControllerTest, ApplyTextSuggestion) {
+  SetBodyContent(
+      "<div contenteditable>"
+      "word1 word2 word3 word4"
+      "</div>");
+  Element* div = GetDocument().QuerySelector("div");
+  Node* text = div->firstChild();
+
+  // Add marker on "word1". This marker should *not* be cleared by the
+  // replace operation.
+  GetDocument().Markers().AddSuggestionMarker(
+      EphemeralRange(Position(text, 0), Position(text, 5)),
+      Vector<String>({"marker1"}), Color::kBlack, Color::kBlack,
+      StyleableMarker::Thickness::kThick, Color::kBlack);
+
+  // Add marker on "word1 word2 word3 word4". This marker should *not* be
+  // cleared by the replace operation.
+  GetDocument().Markers().AddSuggestionMarker(
+      EphemeralRange(Position(text, 0), Position(text, 23)),
+      Vector<String>({"marker2"}), Color::kBlack, Color::kBlack,
+      StyleableMarker::Thickness::kThick, Color::kBlack);
+
+  // Add marker on "word2 word3". This marker should *not* be cleared by the
+  // replace operation.
+  GetDocument().Markers().AddSuggestionMarker(
+      EphemeralRange(Position(text, 6), Position(text, 17)),
+      Vector<String>({"marker3"}), Color::kBlack, Color::kBlack,
+      StyleableMarker::Thickness::kThick, Color::kBlack);
+
+  // Add marker on "word4". This marker should *not* be cleared by the
+  // replace operation.
+  GetDocument().Markers().AddSuggestionMarker(
+      EphemeralRange(Position(text, 18), Position(text, 23)),
+      Vector<String>({"marker4"}), Color::kBlack, Color::kBlack,
+      StyleableMarker::Thickness::kThick, Color::kBlack);
+
+  // Add marker on "word1 word2". This marker should be cleared by the
+  // replace operation.
+  GetDocument().Markers().AddSuggestionMarker(
+      EphemeralRange(Position(text, 0), Position(text, 11)),
+      Vector<String>({"marker5"}), Color::kBlack, Color::kBlack,
+      StyleableMarker::Thickness::kThick, Color::kBlack);
+
+  // Add marker on "word3 word4". This marker should be cleared by the
+  // replace operation.
+  GetDocument().Markers().AddSuggestionMarker(
+      EphemeralRange(Position(text, 12), Position(text, 23)),
+      Vector<String>({"marker6"}), Color::kBlack, Color::kBlack,
+      StyleableMarker::Thickness::kThick, Color::kBlack);
+
+  // Select immediately before word2.
+  GetDocument().GetFrame()->Selection().SetSelection(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(Position(text, 6), Position(text, 6))
+          .Build());
+
+  // Replace "word2 word3" with "marker3" (marker should have tag 3; tags start
+  // from 1, not 0).
+  GetDocument().GetFrame()->GetTextSuggestionController().ApplyTextSuggestion(
+      3, 0);
+
+  // This returns the markers sorted by start offset; we need them sorted by
+  // start *and* end offset, since we have multiple markers starting at 0.
+  DocumentMarkerVector markers = GetDocument().Markers().MarkersFor(text);
+  std::sort(markers.begin(), markers.end(),
+            [](const DocumentMarker* marker1, const DocumentMarker* marker2) {
+              if (marker1->StartOffset() != marker2->StartOffset())
+                return marker1->StartOffset() < marker2->StartOffset();
+              return marker1->EndOffset() < marker2->EndOffset();
+            });
+
+  EXPECT_EQ(4u, markers.size());
+
+  // marker1
+  EXPECT_EQ(0u, markers[0]->StartOffset());
+  EXPECT_EQ(5u, markers[0]->EndOffset());
+
+  // marker2
+  EXPECT_EQ(0u, markers[1]->StartOffset());
+  EXPECT_EQ(19u, markers[1]->EndOffset());
+
+  // marker3
+  EXPECT_EQ(6u, markers[2]->StartOffset());
+  EXPECT_EQ(13u, markers[2]->EndOffset());
+
+  const SuggestionMarker* const suggestion_marker =
+      ToSuggestionMarker(markers[2]);
+  EXPECT_EQ(1u, suggestion_marker->Suggestions().size());
+  EXPECT_EQ(String("word2 word3"), suggestion_marker->Suggestions()[0]);
+
+  // marker4
+  EXPECT_EQ(14u, markers[3]->StartOffset());
+  EXPECT_EQ(19u, markers[3]->EndOffset());
+
+  // marker5 and marker6 should've been cleared
 }
 
 TEST_F(TextSuggestionControllerTest, DeleteActiveSuggestionRange_DeleteAtEnd) {

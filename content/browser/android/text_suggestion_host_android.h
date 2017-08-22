@@ -39,6 +39,12 @@ class TextSuggestionHostAndroid : public RenderWidgetHostConnector,
       JNIEnv*,
       const base::android::JavaParamRef<jobject>&,
       const base::android::JavaParamRef<jstring>& replacement);
+  // Called from the Java text suggestion menu to have Blink apply a text
+  // suggestion.
+  void ApplyTextSuggestion(JNIEnv*,
+                           const base::android::JavaParamRef<jobject>&,
+                           int marker_tag,
+                           int suggestion_index);
   // Called from the Java text suggestion menu to have Blink delete the
   // currently highlighted region of text that the open suggestion menu pertains
   // to.
@@ -56,13 +62,20 @@ class TextSuggestionHostAndroid : public RenderWidgetHostConnector,
   // can re-show the insertion caret and remove the suggestion range highlight.
   void SuggestionMenuClosed(JNIEnv*,
                             const base::android::JavaParamRef<jobject>&);
-  // Called from Blink to tell the Java TextSuggestionHost to open the text
-  // suggestion menu.
+  // Called from Blink to tell the Java TextSuggestionHost to open the spell
+  // check suggestion menu.
   void ShowSpellCheckSuggestionMenu(
       double caret_x,
       double caret_y,
       const std::string& marked_text,
       const std::vector<blink::mojom::SpellCheckSuggestionPtr>& suggestions);
+  // Called from Blink to tell the Java TextSuggestionHost to open the text
+  // suggestion menu.
+  void ShowTextSuggestionMenu(
+      double caret_x,
+      double caret_y,
+      const std::string& marked_text,
+      const std::vector<blink::mojom::TextSuggestionPtr>& suggestions);
 
   // Called by browser-side code in response to an input event to stop the
   // spell check menu timer and close the suggestion menu (if open).

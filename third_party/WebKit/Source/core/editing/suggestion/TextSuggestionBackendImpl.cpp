@@ -28,6 +28,12 @@ void TextSuggestionBackendImpl::ApplySpellCheckSuggestion(
     frame_->GetTextSuggestionController().ApplySpellCheckSuggestion(suggestion);
 }
 
+void TextSuggestionBackendImpl::ApplyTextSuggestion(int32_t marker_tag,
+                                                    int32_t suggestion_index) {
+  frame_->GetTextSuggestionController().ApplyTextSuggestion(marker_tag,
+                                                            suggestion_index);
+}
+
 void TextSuggestionBackendImpl::DeleteActiveSuggestionRange() {
   if (frame_)
     frame_->GetTextSuggestionController().DeleteActiveSuggestionRange();
@@ -39,9 +45,12 @@ void TextSuggestionBackendImpl::NewWordAddedToDictionary(
     frame_->GetTextSuggestionController().NewWordAddedToDictionary(word);
 }
 
-void TextSuggestionBackendImpl::SpellCheckMenuTimeoutCallback() {
-  if (frame_)
-    frame_->GetTextSuggestionController().SpellCheckMenuTimeoutCallback();
+void TextSuggestionBackendImpl::SuggestionMenuTimeoutCallback(
+    int32_t max_number_of_suggestions) {
+  if (frame_) {
+    frame_->GetTextSuggestionController().SuggestionMenuTimeoutCallback(
+        max_number_of_suggestions);
+  }
 }
 
 void TextSuggestionBackendImpl::SuggestionMenuClosed() {

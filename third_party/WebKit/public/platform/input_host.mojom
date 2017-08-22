@@ -8,7 +8,24 @@ struct SpellCheckSuggestion {
   string suggestion;
 };
 
+struct TextSuggestion {
+  int32 marker_tag;
+  int32 suggestion_index;
+  string prefix;
+  string suggestion;
+  string suffix;
+};
+
 interface TextSuggestionHost {
   StartSpellCheckMenuTimer();
-  ShowSpellCheckSuggestionMenu(double caret_x, double caret_y, string marked_text, array<SpellCheckSuggestion> suggestions);
+  ShowSpellCheckSuggestionMenu(
+    double caret_x,
+    double caret_y,
+    string marked_text,
+    array<SpellCheckSuggestion> suggestions);
+  ShowTextSuggestionMenu(
+    double caret_x,
+    double caret_y,
+    string marked_text,
+    array<TextSuggestion> suggestions);
 };

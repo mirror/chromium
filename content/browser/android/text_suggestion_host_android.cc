@@ -18,11 +18,19 @@
 
 using base::android::AttachCurrentThread;
 using base::android::ConvertUTF8ToJavaString;
+using base::android::GetClass;
 using base::android::JavaParamRef;
+using base::android::MethodID;
 using base::android::ScopedJavaLocalRef;
 using base::android::ToJavaArrayOfStrings;
 
 namespace content {
+
+namespace {
+
+const int kMaxNumberOfSuggestions = 5;
+
+}  // namespace
 
 jlong Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
@@ -80,6 +88,18 @@ void TextSuggestionHostAndroid::ApplySpellCheckSuggestion(
       ConvertJavaStringToUTF8(env, replacement));
 }
 
+void TextSuggestionHostAndroid::ApplyTextSuggestion(
+    JNIEnv*,
+    const JavaParamRef<jobject>&,
+    int marker_tag,
+    int suggestion_index) {
+  const blink::mojom::TextSuggestionBackendPtr& text_suggestion_backend =
+      GetTextSuggestionBackend();
+  if (!text_suggestion_backend)
+    return;
+  text_suggestion_backend->ApplyTextSuggestion(marker_tag, suggestion_index);
+}
+
 void TextSuggestionHostAndroid::DeleteActiveSuggestionRange(
     JNIEnv*,
     const JavaParamRef<jobject>&) {
@@ -128,6 +148,40 @@ void TextSuggestionHostAndroid::ShowSpellCheckSuggestionMenu(
   Java_TextSuggestionHost_showSpellCheckSuggestionMenu(
       env, obj, caret_x, caret_y, ConvertUTF8ToJavaString(env, marked_text),
       ToJavaArrayOfStrings(env, suggestion_strings));
+}
+
+void TextSuggestionHostAndroid::ShowTextSuggestionMenu(
+    double caret_x,
+    double caret_y,
+    const std::string& marked_text,
+    const std::vector<blink::mojom::TextSuggestionPtr>& suggestions) {
+  JNIEnv* env = AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> obj = java_text_suggestion_host_.get(env);
+
+  ScopedJavaLocalRef<jclass> clazz =
+      GetClass(env, "org/chromium/content/browser/input/SuggestionInfo");
+  jmethodID constructor = MethodID::Get<MethodID::TYPE_INSTANCE>(
+      env, clazz.obj(), "<init>",
+      "(IILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+  ScopedJavaLocalRef<jobjectArray> suggestion_infos_for_java(
+      env, env->NewObjectArray(suggestions.size(), clazz.obj(), nullptr));
+
+  for (size_t i = 0; i < suggestions.size(); i++) {
+    const blink::mojom::TextSuggestionPtr& suggestion_ptr = suggestions[i];
+    ScopedJavaLocalRef<jobject> suggestion_info_for_java(
+        env, env->NewObject(
+                 clazz.obj(), constructor, suggestion_ptr->marker_tag,
+                 suggestion_ptr->suggestion_index,
+                 ConvertUTF8ToJavaString(env, suggestion_ptr->prefix).obj(),
+                 ConvertUTF8ToJavaString(env, suggestion_ptr->suggestion).obj(),
+                 ConvertUTF8ToJavaString(env, suggestion_ptr->suffix).obj()));
+    env->SetObjectArrayElement(suggestion_infos_for_java.obj(), i,
+                               suggestion_info_for_java.obj());
+  }
+
+  Java_TextSuggestionHost_showTextSuggestionMenu(
+      env, obj, caret_x, caret_y, ConvertUTF8ToJavaString(env, marked_text),
+      suggestion_infos_for_java);
 }
 
 void TextSuggestionHostAndroid::StartSpellCheckMenuTimer() {
@@ -192,7 +246,8 @@ void TextSuggestionHostAndroid::OnSpellCheckMenuTimeout() {
       GetTextSuggestionBackend();
   if (!text_suggestion_backend)
     return;
-  text_suggestion_backend->SpellCheckMenuTimeoutCallback();
+  text_suggestion_backend->SuggestionMenuTimeoutCallback(
+      kMaxNumberOfSuggestions);
 }
 
 }  // namespace content

@@ -6,6 +6,7 @@ package org.chromium.content.browser.input;
 
 import android.annotation.SuppressLint;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.CharacterStyle;
+import android.text.style.SuggestionSpan;
 import android.text.style.UnderlineSpan;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
@@ -42,6 +44,8 @@ import org.chromium.ui.base.ViewUtils;
 import org.chromium.ui.base.ime.TextInputType;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +74,8 @@ import java.util.List;
 public class ImeAdapter {
     private static final String TAG = "cr_Ime";
     private static final boolean DEBUG_LOGS = false;
+
+    private static final float SUGGESTION_HIGHLIGHT_BACKGROUND_TRANSPARENCY = 0.4f;
 
     public static final int COMPOSITION_KEY_CODE = 229;
     private static final int IME_FLAG_NO_PERSONALIZED_LEARNING = 0x1000000;
@@ -890,6 +896,43 @@ public class ImeAdapter {
             } else if (span instanceof UnderlineSpan) {
                 nativeAppendUnderlineSpan(imeTextSpans, spannableString.getSpanStart(span),
                         spannableString.getSpanEnd(span));
+            } else if (span instanceof SuggestionSpan) {
+                final SuggestionSpan suggestionSpan = (SuggestionSpan) span;
+                final boolean isAutoCorrectionSpan =
+                        (suggestionSpan.getFlags() & SuggestionSpan.FLAG_AUTO_CORRECTION) != 0;
+                if (isAutoCorrectionSpan) {
+                    // This is used e.g. by Samsung's IME to flash a blue background on a word being
+                    // replaced by an autocorrect suggestion. We don't currently support this.
+                    return;
+                }
+
+                final boolean isMisspellingSpan =
+                        (suggestionSpan.getFlags() & SuggestionSpan.FLAG_MISSPELLED) != 0;
+                if (isMisspellingSpan) {
+                    // TODO(rlanday): add support for misspelling spans
+                    return;
+                }
+
+                int underlineColor;
+                try {
+                    Method getUnderlineColorMethod =
+                            SuggestionSpan.class.getMethod("getUnderlineColor");
+                    underlineColor = (int) getUnderlineColorMethod.invoke(suggestionSpan);
+                } catch (IllegalAccessException | InvocationTargetException
+                        | NoSuchMethodException e) {
+                    return;
+                }
+
+                // From Android's Editor.java
+                final int newAlpha = (int) (Color.alpha(underlineColor)
+                        * SUGGESTION_HIGHLIGHT_BACKGROUND_TRANSPARENCY);
+                final int suggestionHighlightColor =
+                        (underlineColor & 0x00FFFFFF) + (newAlpha << 24);
+
+                nativeAppendSuggestionSpan(imeTextSpans,
+                        spannableString.getSpanStart(suggestionSpan),
+                        spannableString.getSpanEnd(suggestionSpan), underlineColor,
+                        suggestionHighlightColor, suggestionSpan.getSuggestions());
             }
         }
     }
@@ -921,6 +964,8 @@ public class ImeAdapter {
     private static native void nativeAppendUnderlineSpan(long spanPtr, int start, int end);
     private static native void nativeAppendBackgroundColorSpan(
             long spanPtr, int start, int end, int backgroundColor);
+    private static native void nativeAppendSuggestionSpan(long spanPtr, int start, int end,
+            int underlineColor, int suggestionHighlightColor, String[] suggestions);
     private native void nativeSetComposingText(long nativeImeAdapterAndroid, CharSequence text,
             String textStr, int newCursorPosition);
     private native void nativeCommitText(
