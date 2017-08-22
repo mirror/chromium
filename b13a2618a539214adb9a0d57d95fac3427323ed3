@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b8bbbb8_7138c698",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-22T07:42:06Z",
+      "side": 1,
+      "message": "This make s file_table_list depend on file_grid, which should be added to .gyp file.\nHowever, since file_grid depends on file_table_list, it causes cyclic dependency.",
+      "range": {
+        "startLine": 512,
+        "startChar": 47,
+        "endLine": 512,
+        "endChar": 75
+      },
+      "revId": "b13a2618a539214adb9a0d57d95fac3427323ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
