@@ -34,6 +34,24 @@
       "revId": "1e49967422d35b05b902f5eb6bcf1f4f517dd7b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de0a3b89_35a0f13c",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-22T16:28:50Z",
+      "side": 0,
+      "message": "Sorry, I read the description at the start and only went back to check the bug list not to re-read the text. (Thank you for adding the bug to the bug list.)",
+      "parentUuid": "d281356d_0ffeec70",
+      "revId": "1e49967422d35b05b902f5eb6bcf1f4f517dd7b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

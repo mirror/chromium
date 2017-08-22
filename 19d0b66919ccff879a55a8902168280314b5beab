@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bcb8fcd_5bf4fd8d",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 1927,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-22T16:28:50Z",
+      "side": 1,
+      "message": "I believe this should also be an EXPECT since the restoration is the thing being tested with |Restore|.",
+      "range": {
+        "startLine": 1927,
+        "startChar": 2,
+        "endLine": 1927,
+        "endChar": 11
+      },
+      "revId": "19d0b66919ccff879a55a8902168280314b5beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
