@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fe0fc0e_cebf63e3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewHighlighter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-22T23:28:41Z",
+      "side": 1,
+      "message": "May be this is safer (also in the function below). Let me know.",
+      "range": {
+        "startLine": 50,
+        "startChar": 1,
+        "endLine": 50,
+        "endChar": 2
+      },
+      "revId": "c3c3db9ba748c68383bd98a1dda89c7b82042940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
