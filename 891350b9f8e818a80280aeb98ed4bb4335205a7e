@@ -34,6 +34,29 @@
       "revId": "891350b9f8e818a80280aeb98ed4bb4335205a7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c70e3af_01a548d1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 6566,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-22T19:21:59Z",
+      "side": 1,
+      "message": "add base\u003d\"true\" to indicate that this histogram only exists as a base for other histograms.",
+      "range": {
+        "startLine": 6566,
+        "startChar": 41,
+        "endLine": 6566,
+        "endChar": 42
+      },
+      "revId": "891350b9f8e818a80280aeb98ed4bb4335205a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
