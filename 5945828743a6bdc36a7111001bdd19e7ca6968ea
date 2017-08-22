@@ -33,6 +33,24 @@
       "revId": "5945828743a6bdc36a7111001bdd19e7ca6968ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc2c4bb_cb911da8",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-08-22T00:58:56Z",
+      "side": 1,
+      "message": "Yes, Impl thread is only for Layer tree. Dropped.",
+      "parentUuid": "e9948af6_91d908d1",
+      "revId": "5945828743a6bdc36a7111001bdd19e7ca6968ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
