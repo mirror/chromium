@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2ad5dbac_a7721639",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/NotifyInfoBar.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T12:35:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d64b74cf_b9a7327b",
+      "range": {
+        "startLine": 26,
+        "startChar": 57,
+        "endLine": 26,
+        "endChar": 62
+      },
+      "revId": "c4938a71d36806cc6859969ded7fa46965cefefc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ecdedb4_bc2e94b4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/NotifyInfoBarDelegate.java",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a2723e36_c858e526",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/NotifyInfoBarDelegate.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T12:35:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ecdedb4_bc2e94b4",
+      "range": {
+        "startLine": 14,
+        "startChar": 19,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "c4938a71d36806cc6859969ded7fa46965cefefc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c833bfc_b0f3be50",
         "filename": "chrome/browser/ui/android/infobars/notify_infobar_delegate_android.cc",
         "patchSetId": 11
@@ -62,6 +110,24 @@
       "revId": "c4938a71d36806cc6859969ded7fa46965cefefc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfee75d_51fa2c2d",
+        "filename": "chrome/browser/ui/android/infobars/notify_infobar_delegate_android.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T12:35:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c833bfc_b0f3be50",
+      "revId": "c4938a71d36806cc6859969ded7fa46965cefefc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "f1ea9726_e8cfa247",
+        "filename": "chrome/browser/ui/framebust_block_infobar_delegate.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T12:35:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d983ab02_eb8caa9f",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 48,
+        "endChar": 18
+      },
+      "revId": "c4938a71d36806cc6859969ded7fa46965cefefc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "382de1b6_299e3325",
         "filename": "components/infobars/core/notify_infobar_delegate.h",
         "patchSetId": 11
@@ -108,6 +198,30 @@
       "revId": "c4938a71d36806cc6859969ded7fa46965cefefc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1be21c8b_5df6efaa",
+        "filename": "components/infobars/core/notify_infobar_delegate.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T12:35:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "382de1b6_299e3325",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 7
+      },
+      "revId": "c4938a71d36806cc6859969ded7fa46965cefefc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
