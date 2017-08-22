@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5a18940_b2c43cd4",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5402,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T08:05:52Z",
+      "side": 1,
+      "message": "Any chance we can get rid of this too, since OpenURL() does this now too?",
+      "revId": "619e7769f299c24a85d7f891ec78032d15f394d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
