@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24bd5fd4_d7f077c1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuItemDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-22T23:34:19Z",
+      "side": 1,
+      "message": "Can you add this to our constants? https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java?rcl\u003d9a9a3dc7cef94d76f4d81bc1158b058f5ada26a2\u0026l\u003d38",
+      "range": {
+        "startLine": 223,
+        "startChar": 50,
+        "endLine": 223,
+        "endChar": 65
+      },
+      "revId": "32d5118cad2bc6e1290ff33178357fbd92ecf0ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
