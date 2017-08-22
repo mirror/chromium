@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c38dbdb_9092a9db",
+        "filename": "chrome/browser/feedback/feedback_util.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-22T01:04:50Z",
+      "side": 1,
+      "message": "SendSysLogFeedbackCallback is already not used outside Chrome OS, it\u0027s defined in feedback_util_chromeos.h. Replacing it with extensions::FeedbackService::SendFeedbackCallback seems a bit awkward to me. I don\u0027t think we should include feedback_service.h in feedback_util_chromeos.h, nor is it possible to forward declare a using statement without defining it.\n\nDid I misunderstood your request?",
+      "parentUuid": "c6528f01_d5492ee7",
+      "range": {
+        "startLine": 33,
+        "startChar": 10,
+        "endLine": 33,
+        "endChar": 36
+      },
+      "revId": "3cd0ca3a75613b00f6d0e737e716e345f2201461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81313b14_39fc14ba",
         "filename": "components/feedback/BUILD.gn",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "3cd0ca3a75613b00f6d0e737e716e345f2201461",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3acf24_3aac120c",
+        "filename": "components/feedback/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-22T01:04:50Z",
+      "side": 1,
+      "message": "Thanks for catching that. Done.",
+      "parentUuid": "81313b14_39fc14ba",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 47
+      },
+      "revId": "3cd0ca3a75613b00f6d0e737e716e345f2201461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3383d3f2_b55752b6",
+        "filename": "components/feedback/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-22T01:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e5f706d_6162dd6f",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "3cd0ca3a75613b00f6d0e737e716e345f2201461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18c43191_493b6349",
         "filename": "components/feedback/DEPS",
         "patchSetId": 15
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "aaf22c61_85581673",
+        "filename": "components/feedback/DEPS",
+        "patchSetId": 15
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-22T01:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18c43191_493b6349",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 23
+      },
+      "revId": "3cd0ca3a75613b00f6d0e737e716e345f2201461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33c97893_43f27cad",
         "filename": "components/feedback/DEPS",
         "patchSetId": 15
@@ -114,6 +210,30 @@
       "revId": "3cd0ca3a75613b00f6d0e737e716e345f2201461",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133fdd4b_1d77b552",
+        "filename": "components/feedback/DEPS",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-22T01:04:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33c97893_43f27cad",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 22
+      },
+      "revId": "3cd0ca3a75613b00f6d0e737e716e345f2201461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
