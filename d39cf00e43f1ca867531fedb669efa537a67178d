@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b20341c6_211abb27",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-22T04:26:34Z",
+      "side": 1,
+      "message": "Call GetMainFrame() directly on target_contents.",
+      "range": {
+        "startLine": 180,
+        "startChar": 39,
+        "endLine": 180,
+        "endChar": 74
+      },
+      "revId": "d39cf00e43f1ca867531fedb669efa537a67178d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "109aeeb5_a11789bc",
+        "filename": "chrome/renderer/chrome_render_frame_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-22T04:26:34Z",
+      "side": 1,
+      "message": "Comment on what interface this is implementing and separate this out.",
+      "revId": "d39cf00e43f1ca867531fedb669efa537a67178d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0475f474_2c901371",
+        "filename": "chrome/renderer/chrome_render_view_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-22T04:26:34Z",
+      "side": 1,
+      "message": "Are these still needed?",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 64
+      },
+      "revId": "d39cf00e43f1ca867531fedb669efa537a67178d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
