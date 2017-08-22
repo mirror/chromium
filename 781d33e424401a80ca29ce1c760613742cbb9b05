@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e80f85b_0ee6553c",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-22T14:46:46Z",
+      "side": 1,
+      "message": "Nit: how about: \"should be called very early, before any threads have been started.\"",
+      "range": {
+        "startLine": 195,
+        "startChar": 27,
+        "endLine": 195,
+        "endChar": 33
+      },
+      "revId": "781d33e424401a80ca29ce1c760613742cbb9b05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87927118_676c6ab5",
+        "filename": "base/metrics/statistics_recorder.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-22T14:46:46Z",
+      "side": 1,
+      "message": "Nit: \"describe a way to use this functionality\" doesn\u0027t seem like the right thing to put here. I was thinking something more like: \"TODO(iburak): This is not yet hooked up to histogram recording infrastructure.\"",
+      "range": {
+        "startLine": 198,
+        "startChar": 19,
+        "endLine": 198,
+        "endChar": 27
+      },
+      "revId": "781d33e424401a80ca29ce1c760613742cbb9b05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57fbf3f_92979915",
+        "filename": "components/metrics/expired_histograms_checker.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-22T14:46:46Z",
+      "side": 1,
+      "message": "List methods in .cc in same order as .h - i.e. move the dtor right below the ctor.",
+      "range": {
+        "startLine": 21,
+        "startChar": 56,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "781d33e424401a80ca29ce1c760613742cbb9b05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7edc967e_f8abcd38",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-22T14:46:46Z",
+      "side": 1,
+      "message": "Can you mark this class final?\n\n\"class ExpiredHistogramChecker final : \"",
+      "range": {
+        "startLine": 15,
+        "startChar": 30,
+        "endLine": 15,
+        "endChar": 31
+      },
+      "revId": "781d33e424401a80ca29ce1c760613742cbb9b05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346e2baa_b0c96b13",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-22T14:46:46Z",
+      "side": 1,
+      "message": "The input array must be sorted, right? Please add a comment above the ctor mentioning this.",
+      "range": {
+        "startLine": 17,
+        "startChar": 43,
+        "endLine": 17,
+        "endChar": 48
+      },
+      "revId": "781d33e424401a80ca29ce1c760613742cbb9b05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
