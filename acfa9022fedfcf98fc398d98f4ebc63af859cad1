@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "464c28d2_7e9c788d",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 37441,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-22T22:14:25Z",
+      "side": 1,
+      "message": "nit: \"Should not flip\" and \"Should flip\"",
+      "range": {
+        "startLine": 37440,
+        "startChar": 0,
+        "endLine": 37441,
+        "endChar": 38
+      },
+      "revId": "acfa9022fedfcf98fc398d98f4ebc63af859cad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35037c34_07505521",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 19649,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-22T22:14:25Z",
+      "side": 1,
+      "message": "nit: s/If/Whether",
+      "range": {
+        "startLine": 19649,
+        "startChar": 4,
+        "endLine": 19649,
+        "endChar": 6
+      },
+      "revId": "acfa9022fedfcf98fc398d98f4ebc63af859cad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
