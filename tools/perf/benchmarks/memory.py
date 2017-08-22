@@ -82,6 +82,7 @@ class _MemoryInfra(perf_benchmark.PerfBenchmark):
 class MemoryBenchmarkTrivialSitesDesktop(_MemoryInfra):
   """Measure memory usage on trivial sites."""
   options = {'pageset_repeat': 5}
+  SUPPORTED_PLATFORMS = [story.expectations.ALL_DESKTOP]
 
   def CreateStorySet(self, options):
     return page_sets.TrivialSitesStorySet(wait_in_seconds=0,
@@ -105,8 +106,7 @@ class MemoryBenchmarkTrivialSitesDesktop(_MemoryInfra):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        self.PermanentlyDisableBenchmark(
-            [story.expectations.ALL_MOBILE], 'Desktop Benchmark')
+        pass
     return StoryExpectations()
 
 
@@ -119,6 +119,7 @@ class MemoryBenchmarkTop10Mobile(_MemoryInfra):
   """
   page_set = page_sets.MemoryTop10Mobile
   options = {'pageset_repeat': 5}
+  SUPPORTED_PLATFORMS = [story.expectations.ALL_MOBILE]
 
   @classmethod
   def Name(cls):
@@ -131,8 +132,7 @@ class MemoryBenchmarkTop10Mobile(_MemoryInfra):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        self.PermanentlyDisableBenchmark(
-            [story.expectations.ALL_DESKTOP], 'Mobile Benchmark')
+        pass
     return StoryExpectations()
 
 
@@ -198,6 +198,10 @@ class MemoryLongRunningIdleGmailBackground(_MemoryV8Benchmark):
   """Use (recorded) real world web sites and measure memory consumption
   of long running idle Gmail page """
   page_set = page_sets.LongRunningIdleGmailBackgroundPageSet
+  SUPPORTED_PLATFORMS = [
+      story.expectations.ANDROID_NOT_WEBVIEW, # Requires tabs.
+      story.expectations.ALL_DESKTOP
+  ]
 
   @classmethod
   def Name(cls):
@@ -210,7 +214,5 @@ class MemoryLongRunningIdleGmailBackground(_MemoryV8Benchmark):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        self.PermanentlyDisableBenchmark(
-            [story.expectations.ANDROID_WEBVIEW],
-            'Browser must have tabs. crbug.com/612210')
+        pass
     return StoryExpectations()
