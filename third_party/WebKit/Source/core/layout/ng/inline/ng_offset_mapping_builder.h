@@ -13,6 +13,7 @@ namespace blink {
 
 class LayoutText;
 class NGOffsetMappingResult;
+class NGPhysicalTextFragment;
 
 // This is the helper class for constructing the DOM-to-TextContent offset
 // mapping. It holds an offset mapping, and provides APIs to modify the mapping
@@ -24,6 +25,12 @@ class CORE_EXPORT NGOffsetMappingBuilder {
 
  public:
   NGOffsetMappingBuilder();
+
+  // We can safely store raw pointers in this class, because the class can only
+  // be used with clean layout, and hence, cannot possibly out-live any
+  // LayoutText or NGPhysicalTextFragment.
+  using AnnotationType =
+      std::pair<const LayoutText*, const NGPhysicalTextFragment*>;
 
   // Associate the offset mapping with a simple annotation with the given node
   // as its value.
@@ -64,7 +71,7 @@ class CORE_EXPORT NGOffsetMappingBuilder {
 
   // Exposed for testing only.
   Vector<unsigned> DumpOffsetMappingForTesting() const;
-  Vector<const LayoutText*> DumpAnnotationForTesting() const;
+  Vector<AnnotationType> DumpAnnotationForTesting() const;
 
  private:
   // A mock implementation of the offset mapping builder that stores the mapping
@@ -74,7 +81,7 @@ class CORE_EXPORT NGOffsetMappingBuilder {
 
   // A mock implementation that stores the annotation value of all offsets in
   // the plain way. It will be replaced by a real implementation for efficiency.
-  Vector<const LayoutText*> annotation_;
+  Vector<AnnotationType> annotation_;
 
   DISALLOW_COPY_AND_ASSIGN(NGOffsetMappingBuilder);
 };

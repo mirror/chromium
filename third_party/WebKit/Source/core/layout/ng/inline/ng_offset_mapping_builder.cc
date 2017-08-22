@@ -11,6 +11,8 @@ namespace blink {
 
 namespace {
 
+using AnnotationType = NGOffsetMappingBuilder::AnnotationType;
+
 // Returns the type of a unit-length simple offset mapping.
 NGOffsetMappingUnitType GetUnitLengthMappingType(unsigned value) {
   if (value == 0u)
@@ -23,7 +25,7 @@ NGOffsetMappingUnitType GetUnitLengthMappingType(unsigned value) {
 // Finds the offset mapping unit starting from index |start|.
 std::pair<NGOffsetMappingUnitType, unsigned> GetMappingUnitTypeAndEnd(
     const Vector<unsigned>& mapping,
-    const Vector<const LayoutText*>& annotation,
+    const Vector<AnnotationType>& annotation,
     unsigned start) {
   DCHECK_LT(start + 1, mapping.size());
   NGOffsetMappingUnitType type =
@@ -41,6 +43,13 @@ std::pair<NGOffsetMappingUnitType, unsigned> GetMappingUnitTypeAndEnd(
       break;
   }
   return std::make_pair(type, end);
+}
+
+AnnotationType CompositeAnnotations(const AnnotationType& left_hand_side,
+                                    const AnnotationType& right_hand_side) {
+  DCHECK(!left_hand_side.second);
+  DCHECK(!right_hand_side.first);
+  return AnnotationType(left_hand_side.first, right_hand_side.second);
 }
 
 }  // namespace
@@ -83,7 +92,8 @@ void NGOffsetMappingBuilder::CollapseTrailingSpace(unsigned skip_length) {
 }
 
 void NGOffsetMappingBuilder::Annotate(const LayoutText* layout_object) {
-  std::fill(annotation_.begin(), annotation_.end(), layout_object);
+  for (AnnotationType& annotation : annotation_)
+    annotation.first = layout_object;
 }
 
 void NGOffsetMappingBuilder::Concatenate(const NGOffsetMappingBuilder& other) {
@@ -98,6 +108,11 @@ void NGOffsetMappingBuilder::Concatenate(const NGOffsetMappingBuilder& other) {
 void NGOffsetMappingBuilder::Composite(const NGOffsetMappingBuilder& other) {
   DCHECK(!mapping_.IsEmpty());
   DCHECK_EQ(mapping_.back() + 1, other.mapping_.size());
+  for (unsigned i = 0; i < annotation_.size(); ++i) {
+    if (mapping_[i] < other.annotation_.size())
+      annotation_[i] =
+          CompositeAnnotations(annotation_[i], other.annotation_[mapping_[i]]);
+  }
   for (unsigned i = 0; i < mapping_.size(); ++i)
     mapping_[i] = other.mapping_[mapping_[i]];
 }
@@ -110,18 +125,18 @@ NGOffsetMappingResult NGOffsetMappingBuilder::Build() const {
   unsigned inline_start = 0;
   unsigned unit_range_start = 0;
   for (unsigned start = 0; start + 1 < mapping_.size();) {
-    if (annotation_[start] != current_node) {
+    if (annotation_[start].first != current_node) {
       if (current_node) {
         ranges.insert(current_node,
                       std::make_pair(unit_range_start, units.size()));
       }
-      current_node = annotation_[start];
+      current_node = annotation_[start].first;
       inline_start = start;
       unit_range_start = units.size();
     }
 
-    if (!annotation_[start]) {
-      // Only extra characters are not annotated.
+    if (!annotation_[start].first) {
+      // Only extra characters are not annotated with an owner node.
       DCHECK_EQ(mapping_[start] + 1, mapping_[start + 1]);
       ++start;
       continue;
@@ -130,12 +145,13 @@ NGOffsetMappingResult NGOffsetMappingBuilder::Build() const {
     auto type_and_end = GetMappingUnitTypeAndEnd(mapping_, annotation_, start);
     NGOffsetMappingUnitType type = type_and_end.first;
     unsigned end = type_and_end.second;
+    const NGPhysicalTextFragment* fragment = annotation_[start].second;
     unsigned dom_start = start - inline_start + current_node->TextStartOffset();
     unsigned dom_end = end - inline_start + current_node->TextStartOffset();
     unsigned text_content_start = mapping_[start];
     unsigned text_content_end = mapping_[end];
-    units.emplace_back(type, current_node, dom_start, dom_end,
-                       text_content_start, text_content_end);
+    units.emplace_back(type, current_node, std::move(fragment), dom_start,
+                       dom_end, text_content_start, text_content_end);
 
     start = end;
   }
@@ -149,7 +165,7 @@ Vector<unsigned> NGOffsetMappingBuilder::DumpOffsetMappingForTesting() const {
   return mapping_;
 }
 
-Vector<const LayoutText*> NGOffsetMappingBuilder::DumpAnnotationForTesting()
+Vector<AnnotationType> NGOffsetMappingBuilder::DumpAnnotationForTesting()
     const {
   return annotation_;
 }
