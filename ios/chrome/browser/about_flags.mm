@@ -280,15 +280,6 @@ void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
     command_line->AppendSwitch(switches::kDisableSigninPromo);
   }
 
-  // Populate command line flag for Bookmark reordering.
-  NSString* enableBookmarkReordering =
-      [defaults stringForKey:@"EnableBookmarkReordering"];
-  if ([enableBookmarkReordering isEqualToString:@"Enabled"]) {
-    command_line->AppendSwitch(switches::kEnableBookmarkReordering);
-  } else if ([enableBookmarkReordering isEqualToString:@"Disabled"]) {
-    command_line->AppendSwitch(switches::kDisableBookmarkReordering);
-  }
-
   // Populate command line flag for 3rd party keyboard omnibox workaround.
   NSString* enableThirdPartyKeyboardWorkaround =
       [defaults stringForKey:@"EnableThirdPartyKeyboardWorkaround"];

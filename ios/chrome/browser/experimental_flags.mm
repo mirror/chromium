@@ -211,15 +211,8 @@ bool IsSigninPromoEnabled() {
 }
 
 bool IsBookmarkReorderingEnabled() {
-  // Check if the experimental flag is forced on or off.
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(switches::kEnableBookmarkReordering))
-    // Enabled only on iPhone for now.
-    return true && (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
-  if (command_line->HasSwitch(switches::kDisableBookmarkReordering))
-    return false;
-
-  // By default, disable it.
+  // TODO(crbug.com/695749): Remove this function and use the flag from
+  // chrome://flags
   return false;
 }
 
