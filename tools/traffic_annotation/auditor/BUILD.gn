@@ -68,6 +68,33 @@ executable("traffic_annotation_auditor") {
   sources = [
     "traffic_annotation_auditor_ui.cc",
   ]
+  data = [
+    "tests/extractor_outputs/bad_call.txt",
+    "tests/extractor_outputs/bad_syntax_annotation1.txt",
+    "tests/extractor_outputs/bad_syntax_annotation2.txt",
+    "tests/extractor_outputs/bad_syntax_annotation3.txt",
+    "tests/extractor_outputs/bad_syntax_annotation4.txt",
+    "tests/extractor_outputs/fatal_annotation1.txt",
+    "tests/extractor_outputs/fatal_annotation2.txt",
+    "tests/extractor_outputs/fatal_annotation3.txt",
+    "tests/extractor_outputs/good_branched_completing_annotation.txt",
+    "tests/extractor_outputs/good_call.txt",
+    "tests/extractor_outputs/good_complete_annotation.txt",
+    "tests/extractor_outputs/good_completing_annotation.txt",
+    "tests/extractor_outputs/good_partial_annotation.txt",
+    "tests/extractor_outputs/good_test_annotation.txt",
+    "tests/extractor_outputs/missing_annotation.txt",
+    "tests/extractor_outputs/no_annotation.txt",
+    "tests/git_list.txt",
+    "tests/gn_list_negative.txt",
+    "tests/gn_list_positive.txt",
+    "tests/irrelevant_file_content.cc",
+    "tests/irrelevant_file_content.mm",
+    "tests/irrelevant_file_name.txt",
+    "tests/relevant_file_name_and_content.cc",
+    "tests/relevant_file_name_and_content.mm",
+    "white_list.txt",
+  ]
 
   deps = [
     ":auditor_sources",
