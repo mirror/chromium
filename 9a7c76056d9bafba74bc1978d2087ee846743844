@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "b186b98f_99c62756",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkActionBar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T15:10:12Z",
+      "side": 1,
+      "message": "Bookmarks is an odd case in that there is always at least one folder (\"Mobile bookmarks\") so it can\u0027t really be empty. I think we should just leave this as #setVisible(true) for now since it will be data intensive to determine if any of the folders contain non-folder bookmarks. As a P3 follow up at some point in the future we can look at a way to easily determine if there are any bookmarked pages.",
+      "range": {
+        "startLine": 148,
+        "startChar": 39,
+        "endLine": 148,
+        "endChar": 47
+      },
+      "revId": "9a7c76056d9bafba74bc1978d2087ee846743844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88dd363a_cfc952a3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadManagerUi.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T15:10:12Z",
+      "side": 1,
+      "message": "Public methods need JavaDocs.\n\nRather than exposing the adapter, we should expose the limited data needed (the total item count).",
+      "range": {
+        "startLine": 508,
+        "startChar": 34,
+        "endLine": 508,
+        "endChar": 44
+      },
+      "revId": "9a7c76056d9bafba74bc1978d2087ee846743844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb143d1e_bff05b1c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 4
@@ -19,6 +65,46 @@
         "endLine": 307,
         "endChar": 38
       },
+      "revId": "9a7c76056d9bafba74bc1978d2087ee846743844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1db857_539fd652",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T15:10:12Z",
+      "side": 1,
+      "message": "BottomSheetContentController shouldn\u0027t be aware of the specifics of the content being shown.\n\nCan we debug why the search icon is being shown again when sheet content is changed? I suspect that it\u0027s because we show the normal view when redisplaying sheet content. SelectableListToolbar#showNormalView() calls getMenu().setGroupVisible(mNormalGroupResId, true). Looking at the Android implementation, I believe #setGroupVisible() loops through the menu items and sets all of them to visible.\n\nIf that\u0027s the root cause, we should update the #updateNormalView methods in HistoryManagerToolbar and DownloadManagerToolbar to update the search icon visibility based on whether there are any items being shown.",
+      "range": {
+        "startLine": 342,
+        "startChar": 19,
+        "endLine": 342,
+        "endChar": 44
+      },
+      "revId": "9a7c76056d9bafba74bc1978d2087ee846743844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe307cb_6a13eb1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T15:10:12Z",
+      "side": 1,
+      "message": "Rather than exposing the onDataChanged method, let\u0027s create a new method called something like \"updateButtonVisibility(int numItems)\" that can be called from this method and from other callers who need to update toolbar button visibility. That would also allow sub-classes to update visibility of other icons (e.g. the info toggle) as needed by overriding updateButtonVisibility.",
       "revId": "9a7c76056d9bafba74bc1978d2087ee846743844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
