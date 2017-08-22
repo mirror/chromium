@@ -50,6 +50,7 @@ static_library("zucchini_lib") {
     "zucchini.h",
     "zucchini_apply.cc",
     "zucchini_apply.h",
+    "zucchini_file_io.cc",
     "zucchini_gen.cc",
     "zucchini_gen.h",
   ]
