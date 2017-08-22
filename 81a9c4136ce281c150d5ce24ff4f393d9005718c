@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d3fbd8d_ac1401b6",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1160139
+      },
+      "writtenOn": "2017-08-22T15:35:52Z",
+      "side": 1,
+      "message": "nit: if the file will not be compiled for aarch64, the conditional can be removed?",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 25
+      },
+      "revId": "81a9c4136ce281c150d5ce24ff4f393d9005718c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "541aa357_5ce2c90b",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1160139
+      },
+      "writtenOn": "2017-08-22T15:35:52Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 96,
+        "startChar": 26,
+        "endLine": 96,
+        "endChar": 50
+      },
+      "revId": "81a9c4136ce281c150d5ce24ff4f393d9005718c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
