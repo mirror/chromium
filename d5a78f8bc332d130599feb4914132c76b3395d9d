@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff450a9a_6640c7e5",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:06:03Z",
+      "side": 0,
+      "message": "This seems to lose test coverage as it\u0027s no longer exercising what happens when there is no external reference to version. Why was this change made?",
+      "revId": "d5a78f8bc332d130599feb4914132c76b3395d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

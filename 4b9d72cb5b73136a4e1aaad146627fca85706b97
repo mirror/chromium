@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cd1b11a2_d1a1d729",
+        "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:06:03Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand why this change allowed us to progress to START_WORKER_MESSAGE_SENT. Can you explain (not a big deal, just want to know).\n\nCould we add an EXPECT_EQ(STOPPED, worker-\u003estatus()) at the end too?",
+      "revId": "4b9d72cb5b73136a4e1aaad146627fca85706b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb2cabb6_e61a34ce",
         "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
         "patchSetId": 7

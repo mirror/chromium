@@ -1,0 +1,220 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a05256a9_d917daaf",
+        "filename": "content/browser/service_worker/embedded_worker_test_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:06:03Z",
+      "side": 1,
+      "message": "any reason not to put thsi in the unnamed namespace?",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad11016_efe24989",
+        "filename": "content/browser/service_worker/embedded_worker_test_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:06:03Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c682566_cf801741",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:06:03Z",
+      "side": 1,
+      "message": "Is this test really exercising a path that could crash now? Seems to be testing successful restart.",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59edac70_cd79f5a9",
+        "filename": "content/public/test/mock_render_process_host.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:06:03Z",
+      "side": 1,
+      "message": "I think this is disallowed by the style guide. We only allow protected: for test classes (the TEST_F stuff)",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 10
+      },
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c60367c_72ea103b",
+        "filename": "content/renderer/render_thread_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:06:03Z",
+      "side": 1,
+      "message": "blink -\u003e Blink\n\nadd \"for UMA\"",
+      "range": {
+        "startLine": 659,
+        "startChar": 25,
+        "endLine": 659,
+        "endChar": 30
+      },
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0ba9a9_f8455df7",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:06:03Z",
+      "side": 1,
+      "message": "I found your comment in the code review easier to understand. I\u0027d write this something like that in the class docu (suggested in the .h file)",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2beb8d8d_7c722f86",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:06:03Z",
+      "side": 1,
+      "message": "This TODO could also be moved up there.",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147800fa_3c5aca34",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:06:03Z",
+      "side": 1,
+      "message": "// Destroys |this|.",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8da4f241_abf441ab",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:06:03Z",
+      "side": 1,
+      "message": "// Destroys |this| if |temporal_self_| still owns this (i.e., StartWorker() was not yet called).",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638b5da9_2e75725a",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:06:03Z",
+      "side": 1,
+      "message": "Could we move the lifetime documentation up here? That way it\u0027s not spread out in Create() header file, the ctor, and the Create() impl file.\n\nEmbeddedWorkerInstanceClientImpl is created in order to start a service worker, and lives as long as the service worker is running. This class deletes itself when the worker stops (or if start failed). The ownership graph is a cycle like this:\nEmbeddedWorkerInstanceClientImpl -(owns)-\u003e WorkerWrapper -(owns)-\u003e WebEmbeddedWorkerInstance -(owns)-\u003e ServiceWorkerContextClient -(owns)-\u003e EmbeddedWorkerInstanceClientImpl. Therefore, an instance can delete itself by releasing its WorkerWrapper.\n\nSince starting/stopping service workers is initiated by the browser process, the browser process effectively controls the lifetime of this class.",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f2e9f9_19a882d0",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:06:03Z",
+      "side": 1,
+      "message": "I think we can simplify this if we move docu to the class-level. Then it\u0027s just something like\n\n\"Creates a new EmbeddedWorkerInstanceClientImpl instance bound to |request|. The instance destroys itself when needed, see the class documentation.\"\n\nIs \"bound to |request|\" the right terminology?",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b561a9e5_d8adff9c",
+        "filename": "content/test/mock_render_process_host_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:06:03Z",
+      "side": 1,
+      "message": "Could this function just be added to MockRenderProcessHost, then this class isn\u0027t needed?",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
