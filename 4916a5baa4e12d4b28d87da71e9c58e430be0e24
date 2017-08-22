@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cb18c80_a372ec9f",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-22T16:42:08Z",
+      "side": 1,
+      "message": "Mike, what is the current status of \"Drop the runtime-enabled check in M60\" ?\nIf there is no need for it, I would be able to remove the changes I made in \n* content/child/runtime_features.cc\n* content/public/common/content_features.h\n* content/public/common/content_features.cc",
+      "revId": "4916a5baa4e12d4b28d87da71e9c58e430be0e24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

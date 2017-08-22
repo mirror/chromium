@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02f3bffd_a4cd2de3",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-08-22T16:42:08Z",
+      "side": 0,
+      "message": "I made a mistake here by copy-pasting existing code. In the redirect case, there is no need to create a navigation handle. It was already created in WillStartRequest.",
+      "range": {
+        "startLine": 603,
+        "startChar": 4,
+        "endLine": 603,
+        "endChar": 26
+      },
+      "revId": "6464d972c7aa90709c923d36b22b2370973a9a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
