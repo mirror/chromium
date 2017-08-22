@@ -55,6 +55,9 @@ class GURL;
 // Command handler for the accessibility custom actions.
 @property(nonatomic, weak) id<ContentSuggestionsGestureCommands> commandHandler;
 
+@property(nonatomic, assign) float score;
+@property(nonatomic, assign) base::Time fetchDate;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_CONTENT_SUGGESTIONS_CELLS_CONTENT_SUGGESTIONS_ITEM_H_

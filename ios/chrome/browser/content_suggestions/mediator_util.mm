@@ -72,6 +72,9 @@ ContentSuggestionsItem* ConvertSuggestion(
       contentSuggestion.id().id_within_category();
   suggestion.suggestionIdentifier.sectionInfo = sectionInfo;
 
+  suggestion.score = contentSuggestion.score();
+  suggestion.fetchDate = contentSuggestion.fetch_date();
+
   if (category.IsKnownCategory(ntp_snippets::KnownCategories::READING_LIST)) {
     suggestion.faviconURL =
         contentSuggestion.reading_list_suggestion_extra()->favicon_page_url;
