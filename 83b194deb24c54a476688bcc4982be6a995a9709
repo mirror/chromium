@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5fb76fda_df149b16",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-22T03:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7379ddd_8bb4ebe4",
+      "revId": "83b194deb24c54a476688bcc4982be6a995a9709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca840468_fffc59a8",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaper.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "83b194deb24c54a476688bcc4982be6a995a9709",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5cb9c17_1702cfd9",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-22T03:20:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca840468_fffc59a8",
+      "revId": "83b194deb24c54a476688bcc4982be6a995a9709",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
