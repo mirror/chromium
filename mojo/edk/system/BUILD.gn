@@ -7,6 +7,7 @@ import("//testing/test.gni")
 import("../../../mojo/public/tools/bindings/mojom.gni")
 
 if (is_android) {
+  import("//base/android/jni_generator/jni_exception_list.gni")
   import("//build/config/android/config.gni")
   import("//build/config/android/rules.gni")
 }
@@ -110,9 +111,16 @@ component("system") {
                             # which is uninteresting.
   }
 
+  if (is_android) {
+    deps += [
+      "//mojo/edk/system/android:parcelable_java_support",
+      "//mojo/edk/system/android:parcelable_support",
+    ]
+  }
+
   # Use target_os == "chromeos" instead of is_chromeos because we need to
   # build NaCl targets (i.e. IRT) for ChromeOS the same as the rest of ChromeOS.
-  if (is_android || target_os == "chromeos") {
+  if (target_os == "chromeos") {
     defines += [ "MOJO_EDK_LEGACY_PROTOCOL" ]
   }
 
@@ -191,7 +199,10 @@ test("mojo_system_unittests") {
   ]
 
   if (is_android) {
-    deps += [ "//mojo/edk/test:test_support_java" ]
+    deps += [
+      "//mojo/edk/system/android:parcelable_java_support",
+      "//mojo/edk/test:test_support_java",
+    ]
   }
 
   allow_circular_includes_from = [ "//mojo/edk/embedder:embedder_unittests" ]

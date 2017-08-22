@@ -20,6 +20,13 @@ static_library("test_support") {
     ]
   }
 
+  if (is_android) {
+    sources += [
+      "android/parcelable_utils.cc",
+      "android/parcelable_utils.h",
+    ]
+  }
+
   if (is_fuchsia) {
     sources += [ "test_utils_fuchsia.cc" ]
   } else {
@@ -35,7 +42,10 @@ static_library("test_support") {
   ]
 
   if (is_android) {
-    deps += [ ":test_support_jni_headers" ]
+    deps += [
+      ":test_support_jni_headers",
+      "//mojo/edk/system/android:parcelable_support",
+    ]
   }
 }
 
@@ -144,6 +154,7 @@ if (is_android) {
     jni_package = "mojo/edk"
     sources = [
       "android/java/src/org/chromium/mojo/edk/MultiprocessTestLauncherDelegate.java",
+      "android/java/src/org/chromium/mojo/edk/MultiprocessTestServiceHelper.java",
     ]
   }
 

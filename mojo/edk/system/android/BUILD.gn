@@ -1,0 +1,58 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+if (is_android) {
+  import("//build/config/android/config.gni")
+  import("//build/config/android/rules.gni")
+
+  generate_jni("parcelable_support_jni_headers") {
+    jni_package = "mojo/edk"
+    sources = [
+      "java/src/org/chromium/mojo/edk/ParcelableChannelClient.java",
+      "java/src/org/chromium/mojo/edk/ParcelableChannelClientProxy.java",
+      "java/src/org/chromium/mojo/edk/ParcelableChannelServer.java",
+    ]
+  }
+
+  static_library("parcelable_support") {
+    sources = [
+      "parcelable_channel_client.h",
+      "parcelable_channel_client_impl.cc",
+      "parcelable_channel_client_impl.h",
+      "parcelable_channel_client_proxy.cc",
+      "parcelable_channel_client_proxy.h",
+      "parcelable_channel_server.cc",
+      "parcelable_channel_server.h",
+    ]
+
+    deps = [
+      ":parcelable_java_aidl",
+      ":parcelable_support_jni_headers",
+      "//base",
+    ]
+  }
+
+  android_library("parcelable_java_support") {
+    deps = [
+      "//base:base_java",
+      "//third_party/android_tools:android_support_annotations_java",
+      "//third_party/jsr-305:jsr_305_javalib",
+    ]
+    srcjar_deps = [ ":parcelable_java_aidl" ]
+    java_files = [
+      "java/src/org/chromium/mojo/edk/ParcelableChannelClient.java",
+      "java/src/org/chromium/mojo/edk/ParcelableChannelClientProxy.java",
+      "java/src/org/chromium/mojo/edk/ParcelableChannelServer.java",
+      "java/src/org/chromium/mojo/edk/ParcelableWrapper.java",
+    ]
+  }
+
+  android_aidl("parcelable_java_aidl") {
+    import_include = [ "java/src" ]
+    sources = [
+      "java/src/org/chromium/mojo/edk/IParcelableChannel.aidl",
+      "java/src/org/chromium/mojo/edk/IParcelableChannelProvider.aidl",
+    ]
+  }
+}

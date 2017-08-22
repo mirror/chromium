@@ -11,6 +11,13 @@
 #include "mojo/edk/embedder/transport_protocol.h"
 #include "mojo/edk/system/system_impl_export.h"
 
+#if defined(OS_ANDROID)
+#include "base/android/scoped_java_ref.h"
+#include "mojo/edk/embedder/parcelable_channel.h"
+#include "mojo/edk/system/android/parcelable_channel_client.h"
+#include "mojo/edk/system/android/parcelable_channel_server.h"
+#endif
+
 namespace mojo {
 namespace edk {
 
@@ -28,9 +35,22 @@ class MOJO_SYSTEM_IMPL_EXPORT ConnectionParams {
 
   ScopedPlatformHandle TakeChannelHandle();
 
+#if defined(OS_ANDROID)
+  void SetParcelableChannel(ParcelableChannel channel);
+
+  ParcelableChannel TakeParcelableChannel();
+
+  std::unique_ptr<ParcelableChannelClient> TakeParcelableChannelClient();
+  std::unique_ptr<ParcelableChannelServer> TakeParcelableChannelServer();
+#endif
+
  private:
   TransportProtocol protocol_;
   ScopedPlatformHandle channel_;
+
+#if defined(OS_ANDROID)
+  ParcelableChannel parcelable_channel_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(ConnectionParams);
 };

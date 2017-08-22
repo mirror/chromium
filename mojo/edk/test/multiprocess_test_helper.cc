@@ -38,6 +38,7 @@
 #elif defined(OS_ANDROID)
 #include "base/test/multiprocess_test_android.h"
 #include "mojo/edk/jni/MultiprocessTestLauncherDelegate_jni.h"
+#include "mojo/edk/jni/MultiprocessTestServiceHelper_jni.h"
 #endif
 
 namespace mojo {
@@ -178,13 +179,14 @@ ScopedMessagePipeHandle MultiprocessTestHelper::StartChildWithExtraSwitch(
   }
 
 #if defined(OS_ANDROID)
+  ParcelableChannel parcelable_channel =
+      ParcelableChannel::CreateForParentProcess();
+
   JNIEnv* env = base::android::AttachCurrentThread();
-  // TODO(crbug.com/699311): create the parcelable channel and pass them to the
-  // MultiprocessTestLauncherDelegate (so they are passed to the child process)
-  // pass them also in the ConnectionParams below.
   test_child_ = base::SpawnMultiProcessTestChildWithDelegate(
       test_child_main, command_line, options,
-      Java_MultiprocessTestLauncherDelegate_create(env, nullptr));
+      Java_MultiprocessTestLauncherDelegate_create(
+          env, parcelable_channel.GetIBindersForClientProcess()));
 #else
   test_child_ =
       base::SpawnMultiProcessTestChild(test_child_main, command_line, options);
@@ -195,10 +197,14 @@ ScopedMessagePipeHandle MultiprocessTestHelper::StartChildWithExtraSwitch(
   if (launch_type == LaunchType::CHILD ||
       launch_type == LaunchType::NAMED_CHILD) {
     DCHECK(server_handle.is_valid());
-    child_invitation.Send(
-        test_child_.Handle(),
-        ConnectionParams(TransportProtocol::kLegacy, std::move(server_handle)),
-        process_error_callback_);
+    ConnectionParams connection_params(TransportProtocol::kVersion0,
+                                       std::move(server_handle));
+#if defined(OS_ANDROID)
+    connection_params.SetParcelableChannel(std::move(parcelable_channel));
+#endif
+
+    child_invitation.Send(test_child_.Handle(), std::move(connection_params),
+                          process_error_callback_);
   }
 
   CHECK(test_child_.IsValid());
@@ -240,8 +246,18 @@ void MultiprocessTestHelper::ChildSetup() {
       invitation = IncomingBrokerClientInvitation::Accept(ConnectionParams(
           TransportProtocol::kLegacy, CreateClientHandle(named_pipe)));
     } else {
+#if defined(OS_ANDROID)
+      base::android::ScopedJavaLocalRef<jobjectArray> ibinders =
+          Java_MultiprocessTestServiceHelper_getParcelableChannelIBinders(
+              base::android::AttachCurrentThread());
+      ParcelableChannel parcelable_channel =
+          ParcelableChannel::CreateForChildProcess(ibinders);
+      invitation = IncomingBrokerClientInvitation::AcceptFromCommandLine(
+          TransportProtocol::kVersion0, std::move(parcelable_channel));
+#else
       invitation = IncomingBrokerClientInvitation::AcceptFromCommandLine(
           TransportProtocol::kLegacy);
+#endif
     }
     primordial_pipe = invitation->ExtractMessagePipe(kTestChildMessagePipeName);
   } else {
@@ -249,10 +265,14 @@ void MultiprocessTestHelper::ChildSetup() {
       primordial_pipe = g_child_peer_connection.Get().Connect(ConnectionParams(
           TransportProtocol::kLegacy, CreateClientHandle(named_pipe)));
     } else {
-      primordial_pipe = g_child_peer_connection.Get().Connect(ConnectionParams(
-          TransportProtocol::kLegacy,
+      ConnectionParams connection_params(
+          TransportProtocol::kVersion0,
           PlatformChannelPair::PassClientHandleFromParentProcess(
-              *base::CommandLine::ForCurrentProcess())));
+              *base::CommandLine::ForCurrentProcess()));
+#if defined(OS_ANDROID)
+#endif
+      primordial_pipe =
+          g_child_peer_connection.Get().Connect(std::move(connection_params));
     }
   }
 }

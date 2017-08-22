@@ -126,6 +126,28 @@ class MOJO_SYSTEM_IMPL_EXPORT Channel
     };
     static_assert(sizeof(HandleEntry) == 4,
                   "sizeof(HandleEntry) must be 4 bytes");
+#elif defined(OS_ANDROID)
+    struct ParcelableEntry {
+      // Index of the parcelable in the original vector of PlatformHandles.
+      uint16_t index;
+
+      // The ID of a parcelable sent through the side channel.
+      uint32_t id;
+    };
+    static_assert(sizeof(ParcelableEntry) == 6,
+                  "sizeof(ParcelableEntry) must be 6 bytes");
+
+    // Structure of the extra header field when present on Android.
+    struct ParcelableExtraHeader {
+      // Actual number of parcelables encoded in the extra header.
+      uint16_t num_parcelables;
+
+      // Array of parcelable IDs. If |num_ports| > 0, |entries[0]| through
+      // to |entries[num_ports-1]| inclusive are valid.
+      ParcelableEntry entries[0];
+    };
+    static_assert(sizeof(ParcelableExtraHeader) == 2,
+                  "sizeof(ParcelableExtraHeader) must be 2 bytes");
 #endif
 #pragma pack(pop)
 
@@ -186,6 +208,12 @@ class MOJO_SYSTEM_IMPL_EXPORT Channel
     // such as Mach ports, will be removed.
     ScopedPlatformHandleVectorPtr TakeHandlesForTransport();
 
+#if defined(OS_ANDROID)
+    using IDAndParcelableVector = std::vector<
+        std::pair<uint32_t, base::android::ScopedJavaLocalRef<jobject>>>;
+    IDAndParcelableVector TakeParcelablesForTransport();
+#endif
+
 #if defined(OS_WIN)
     // Prepares the handles in this message for use in a different process.
     // Upon calling this the handles should belong to |from_process|; after the
@@ -222,6 +250,10 @@ class MOJO_SYSTEM_IMPL_EXPORT Channel
 #elif defined(OS_MACOSX) && !defined(OS_IOS)
     // On OSX, handles are serialised into the extra header section.
     MachPortsExtraHeader* mach_ports_header_ = nullptr;
+#elif defined(OS_ANDROID)
+    // On Android, handles for parcelable are sent on a side channel, IDs are
+    // sent on the main channel.
+    ParcelableExtraHeader* parcelable_header_ = nullptr;
 #endif
 
     DISALLOW_COPY_AND_ASSIGN(Message);

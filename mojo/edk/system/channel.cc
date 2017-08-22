@@ -23,6 +23,8 @@
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
 #include "base/mac/mach_logging.h"
+#elif defined(OS_ANDROID)
+#include "base/rand_util.h"
 #elif defined(OS_WIN)
 #include "base/win/win_util.h"
 #endif
@@ -104,6 +106,11 @@ Channel::Message::Message(size_t capacity,
     extra_header_size =
         sizeof(MachPortsExtraHeader) + (max_handles * sizeof(MachPortsEntry));
   }
+#elif defined(OS_ANDROID)
+  if (max_handles) {
+    extra_header_size =
+        sizeof(ParcelableExtraHeader) + (max_handles * sizeof(ParcelableEntry));
+  }
 #endif
   // Pad extra header data to be aliged to |kChannelMessageAlignment| bytes.
   if (!IsAlignedForChannelMessage(extra_header_size)) {
@@ -155,6 +162,12 @@ Channel::Message::Message(size_t capacity,
       mach_ports_header_->entries[i] =
           {0, static_cast<uint32_t>(MACH_PORT_NULL)};
     }
+#elif defined(OS_ANDROID)
+    parcelable_header_ =
+        reinterpret_cast<ParcelableExtraHeader*>(mutable_extra_header());
+    parcelable_header_->num_parcelables = 0;
+    memset(parcelable_header_->entries, 0,
+           sizeof(ParcelableEntry) * max_handles_);
 #endif
   }
 }
@@ -215,6 +228,14 @@ Channel::MessagePtr Channel::Message::Deserialize(const void* data,
           ? 0
           : (extra_header_size - sizeof(MachPortsExtraHeader)) /
                 sizeof(MachPortsEntry);
+#elif defined(OS_ANDROID)
+  if (extra_header_size < sizeof(ParcelableExtraHeader)) {
+    DLOG(ERROR) << "Decoding invalid message: " << extra_header_size << " < "
+                << sizeof(ParcelableExtraHeader);
+    return nullptr;
+  }
+  uint32_t max_handles = (extra_header_size - sizeof(ParcelableExtraHeader)) /
+                         sizeof(ParcelableEntry);
 #else
   const uint32_t max_handles = 0;
 #endif  // defined(OS_WIN)
@@ -411,6 +432,23 @@ void Channel::Message::SetHandles(ScopedPlatformHandleVectorPtr new_handles) {
     mach_ports_header_->num_ports = static_cast<uint16_t>(mach_port_index);
   }
 #endif
+
+#if defined(OS_ANDROID)
+  size_t parcelable_index = 0;
+  if (parcelable_header_) {
+    memset(parcelable_header_->entries, 0,
+           sizeof(ParcelableEntry) * max_handles_);
+    for (size_t i = 0; i < handle_vector_->size(); i++) {
+      if ((*handle_vector_)[i].type == PlatformHandle::Type::PARCELABLE) {
+        parcelable_header_->entries[parcelable_index].index = i;
+        parcelable_header_->entries[parcelable_index].id = i;
+        parcelable_index++;
+      }
+    }
+    parcelable_header_->num_parcelables =
+        static_cast<uint16_t>(parcelable_index);
+  }
+#endif
 }
 
 ScopedPlatformHandleVectorPtr Channel::Message::TakeHandles() {
@@ -450,10 +488,49 @@ ScopedPlatformHandleVectorPtr Channel::Message::TakeHandlesForTransport() {
     }
   }
   return std::move(handle_vector_);
+#elif defined(OS_ANDROID)
+  if (handle_vector_) {
+    for (auto it = handle_vector_->begin(); it != handle_vector_->end();) {
+      if (it->type == PlatformHandle::Type::PARCELABLE) {
+        it = handle_vector_->erase(it);
+      } else {
+        ++it;
+      }
+    }
+  }
+  return std::move(handle_vector_);
 #else
   return std::move(handle_vector_);
 #endif
 }
+
+#if defined(OS_ANDROID)
+Channel::Message::IDAndParcelableVector
+Channel::Message::TakeParcelablesForTransport() {
+  IDAndParcelableVector ids_and_parcelables;
+  if (parcelable_header_) {
+    memset(parcelable_header_->entries, 0,
+           sizeof(ParcelableEntry) * max_handles_);
+    size_t parcelable_index = 0;
+    for (auto iter = handle_vector_->begin(); iter != handle_vector_->end();
+         ++iter) {
+      if (iter->type == PlatformHandle::Type::PARCELABLE) {
+        uint32_t parcelable_id = static_cast<uint32_t>(base::RandUint64());
+        parcelable_header_->entries[parcelable_index].index = parcelable_index;
+        parcelable_header_->entries[parcelable_index].id = parcelable_id;
+        parcelable_index++;
+        ids_and_parcelables.push_back(std::make_pair(
+            parcelable_id,
+            base::android::ScopedJavaLocalRef<jobject>(iter->parcelable)));
+      }
+    }
+    parcelable_header_->num_parcelables =
+        static_cast<uint16_t>(parcelable_index);
+  }
+
+  return ids_and_parcelables;
+}
+#endif
 
 #if defined(OS_WIN)
 // static

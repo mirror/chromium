@@ -121,6 +121,19 @@ ports::ScopedEvent DeserializeEventMessage(
   return std::move(message_event);
 }
 
+// Returns a ConnectionParams identical to |connection_params| but for its
+// platform handle which is replaced by |platform_handle|.
+ConnectionParams ReplacePlatformHandle(ConnectionParams connection_params,
+                                       ScopedPlatformHandle platform_handle) {
+  ConnectionParams new_connection_params(connection_params.protocol(),
+                                         std::move(platform_handle));
+#if defined(OS_ANDROID)
+  new_connection_params.SetParcelableChannel(
+      connection_params.TakeParcelableChannel());
+#endif
+  return new_connection_params;
+}
+
 // Used by NodeController to watch for shutdown. Since no IO can happen once
 // the IO thread is killed, the NodeController can cleanly drop all its peers
 // at that time.
@@ -246,8 +259,8 @@ void NodeController::AcceptBrokerClientInvitation(
     CancelPendingPortMerges();
     return;
   }
-  connection_params = ConnectionParams(connection_params.protocol(),
-                                       std::move(platform_handle));
+  connection_params = ReplacePlatformHandle(std::move(connection_params),
+                                            std::move(platform_handle));
 #endif
 
   io_task_runner_->PostTask(
@@ -382,10 +395,11 @@ void NodeController::SendBrokerClientInvitationOnIOThread(
   CHECK(channel_ok);
 #endif  // defined(OS_WIN)
 
-  scoped_refptr<NodeChannel> channel = NodeChannel::Create(
-      this,
-      ConnectionParams(connection_params.protocol(), std::move(server_handle)),
-      io_task_runner_, process_error_callback);
+  scoped_refptr<NodeChannel> channel =
+      NodeChannel::Create(this,
+                          ReplacePlatformHandle(std::move(connection_params),
+                                                std::move(server_handle)),
+                          io_task_runner_, process_error_callback);
 
 #else  // !defined(OS_MACOSX) && !defined(OS_NACL)
   scoped_refptr<NodeChannel> channel =

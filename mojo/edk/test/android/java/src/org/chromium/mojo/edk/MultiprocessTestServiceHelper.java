@@ -6,6 +6,9 @@ package org.chromium.mojo.edk;
 
 import android.os.IBinder;
 
+import org.chromium.base.annotations.CalledByNative;
+import org.chromium.base.annotations.JNINamespace;
+
 import java.util.List;
 
 /**
@@ -13,6 +16,7 @@ import java.util.List;
  * TODO(jcivelli): make the native code retrieve the client interfaces to set up the parcelable
  * channels.
  */
+@JNINamespace("mojo::edk")
 public class MultiprocessTestServiceHelper {
     private static List<IBinder> sClientInterfaces;
 
@@ -20,6 +24,11 @@ public class MultiprocessTestServiceHelper {
     public static void initializeMultiprocessTestService(List<IBinder> clientInterfaces) {
         assert sClientInterfaces == null;
         sClientInterfaces = clientInterfaces;
+    }
+
+    @CalledByNative
+    private static IBinder[] getParcelableChannelIBinders() {
+        return sClientInterfaces.toArray(new IBinder[0]);
     }
 
     // Prevent instantiation.
