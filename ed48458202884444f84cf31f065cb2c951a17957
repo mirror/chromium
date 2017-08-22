@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db2fbfed_98894d52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-22T12:16:25Z",
+      "side": 1,
+      "message": "Gone.",
+      "parentUuid": "95ca1929_3a16d080",
+      "revId": "ed48458202884444f84cf31f065cb2c951a17957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad360718_df2f8769",
         "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
         "patchSetId": 5
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "044307fa_182e7463",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-22T12:16:25Z",
+      "side": 1,
+      "message": "Sorry, I missed SchemeRegistry::ListOfCORSEnabledURLSchemes() somehow. I puzzled out which pieces I would need incrementally over the last two months and am now trying to land them in coherent CLs.\n\nI delegated the call to SchemeRegistry::ListOfCORSEnabledURLSchemes. \n\nRegarding Takeshi\u0027s last comment: I am not quite sure if you are asking me for some more changes (i.e. adding a note) in this particular CL, so please elaborate a bit if so :-)",
+      "parentUuid": "fb7b2539_1a463205",
+      "revId": "ed48458202884444f84cf31f065cb2c951a17957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fd7cb9a_678af6df",
         "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
         "patchSetId": 5
@@ -85,6 +121,24 @@
       "revId": "ed48458202884444f84cf31f065cb2c951a17957",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01f8f1a_45be622d",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-22T12:16:25Z",
+      "side": 1,
+      "message": "Now using SchemeRegistry::ListOfCORSEnabledURLSchemes() instead.",
+      "parentUuid": "0fd7cb9a_678af6df",
+      "revId": "ed48458202884444f84cf31f065cb2c951a17957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
