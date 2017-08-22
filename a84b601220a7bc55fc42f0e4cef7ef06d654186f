@@ -22,6 +22,30 @@
       "revId": "a84b601220a7bc55fc42f0e4cef7ef06d654186f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62990101_7ab76b8e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelSelectorImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-22T05:17:59Z",
+      "side": 1,
+      "message": "\u003e Do we want to update oldTab\u0027s importance here as well?  I think this could happen if you have an incognito tab but still select an empty non-incognito tab stack (and therefore have no tab selected).\n\nif we do that, then what about...\n\nrequestToShowTab(null, ...) -\u003e assume mVisibleTab.needsReload() is false so line 340 block -\u003e set mVisibleTab to NORMAL and early out here\nthen requestToShowTab(mVisibleTab, ...) -\u003e early out in on line 365 below. now that tab is incorrectly stuck in NORMAL\n\nDid something even more complicated instead.\n\nOverall, this method is super complicated, and I\u0027m clearly not helping. But I think it\u0027s odd that requestToShowTab(null) may or may not set mVisibleTab to null.",
+      "parentUuid": "be79471e_e4057d27",
+      "range": {
+        "startLine": 355,
+        "startChar": 8,
+        "endLine": 358,
+        "endChar": 9
+      },
+      "revId": "a84b601220a7bc55fc42f0e4cef7ef06d654186f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
