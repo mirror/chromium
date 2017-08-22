@@ -926,21 +926,10 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
   // Complete main job now.
   base::RunLoop().RunUntilIdle();
 
-  // Invoke OnRequestComplete() which should not delete |job_controller_| from
-  // |factory_| because alt job is yet to finish.
+  // Resetting |request_| will delete |job_controller_| from |factory_|, even
+  // though the alt job has not finished.
   request_.reset();
-  ASSERT_FALSE(HttpStreamFactoryImplPeer::IsJobControllerDeleted(factory_));
-  EXPECT_FALSE(job_controller_->main_job());
-  EXPECT_TRUE(job_controller_->alternative_job());
-
-  // Make |alternative_job| succeed.
-  HttpStream* http_stream =
-      new HttpBasicStream(base::MakeUnique<ClientSocketHandle>(), false, false);
-  job_factory_.alternative_job()->SetStream(http_stream);
-  // This should not call request_delegate_::OnStreamReady.
-  job_controller_->OnStreamReady(job_factory_.alternative_job(), SSLConfig());
-  // Make sure that controller does not leak.
-  EXPECT_TRUE(HttpStreamFactoryImplPeer::IsJobControllerDeleted(factory_));
+  ASSERT_TRUE(HttpStreamFactoryImplPeer::IsJobControllerDeleted(factory_));
 }
 
 TEST_F(HttpStreamFactoryImplJobControllerTest,
