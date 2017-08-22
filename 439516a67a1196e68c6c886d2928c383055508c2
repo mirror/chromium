@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd6a701f_ef02d5ea",
+        "filename": "remoting/webapp/base/js/chromoting_event.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-22T17:25:21Z",
+      "side": 1,
+      "message": "announced",
+      "range": {
+        "startLine": 303,
+        "startChar": 31,
+        "endLine": 303,
+        "endChar": 39
+      },
+      "revId": "439516a67a1196e68c6c886d2928c383055508c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7a7a85_0a11a7a8",
+        "filename": "remoting/webapp/crd/js/butter_bar_unittest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-22T17:25:21Z",
+      "side": 1,
+      "message": "Can this be made a member function to avoid a global logWriterSpy?",
+      "range": {
+        "startLine": 11,
+        "startChar": 65,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "439516a67a1196e68c6c886d2928c383055508c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59396e11_55835be0",
+        "filename": "remoting/webapp/crd/js/butter_bar_unittest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-22T17:25:21Z",
+      "side": 1,
+      "message": "I did this differently in my changes to butter_bar.js, by mocking l10n.localizeElementFromTag instead. I don\u0027t think it makes much difference TBH, but it feels a bit cleaner to mock at a higher level.",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "439516a67a1196e68c6c886d2928c383055508c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e5d37b8_c447683c",
+        "filename": "remoting/webapp/crd/js/butter_bar_unittest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-22T17:25:21Z",
+      "side": 1,
+      "message": "You could pull these out at file scope to avoid declaring them multiple times, or even use destructuring to declare the enum values directly.",
+      "range": {
+        "startLine": 110,
+        "startChar": 80,
+        "endLine": 110,
+        "endChar": 0
+      },
+      "revId": "439516a67a1196e68c6c886d2928c383055508c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
