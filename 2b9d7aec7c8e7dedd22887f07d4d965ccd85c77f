@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "219654ea_5ef2b6ba",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-22T22:59:14Z",
+      "side": 1,
+      "message": "Marking this as done. Feel free to add new comments if there\u0027s still question.",
+      "parentUuid": "eb96aea7_004d31e6",
+      "revId": "2b9d7aec7c8e7dedd22887f07d4d965ccd85c77f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "895bda0a_11101a04",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 1
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "4e184ca9_57b67af3",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-22T22:59:14Z",
+      "side": 1,
+      "message": "Refactored as suggested. Also modified the counterpart (create_or_update_pr_from_cl).",
+      "parentUuid": "21c93c14_4b398830",
+      "revId": "2b9d7aec7c8e7dedd22887f07d4d965ccd85c77f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ee0d5ed_070771e3",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 1
@@ -86,6 +122,24 @@
       "revId": "2b9d7aec7c8e7dedd22887f07d4d965ccd85c77f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1d2913_524438ae",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-22T22:59:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ee0d5ed_070771e3",
+      "revId": "2b9d7aec7c8e7dedd22887f07d4d965ccd85c77f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
