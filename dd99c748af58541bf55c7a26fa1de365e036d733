@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "d5c473ab_df8ba8a5",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-22T21:39:07Z",
+      "side": 1,
+      "message": "I still would like to test that the histogram does not contain any of our metrics at the beginning. Although it is not mandatory, testing the initial zero count seems a common practice (https://cs.chromium.org/search/?q\u003dnometrics+file:%5Esrc/chrome/browser/page_load_metrics/observers/+package:%5Echromium$\u0026type\u003dcs).\n\nFor example, you can write a NoMetric similar to this https://cs.chromium.org/chromium/src/chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer_unittest.cc?l\u003d44",
+      "parentUuid": "ed3989c5_9114ebfa",
+      "range": {
+        "startLine": 139,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 69
+      },
+      "revId": "dd99c748af58541bf55c7a26fa1de365e036d733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd06554e_65084796",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
         "patchSetId": 9
