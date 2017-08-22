@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a39eb85b_7139a506",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-22T18:54:12Z",
+      "side": 1,
+      "message": "nit: \"cr_\" is not necessary. It\u0027s added automatically.",
+      "range": {
+        "startLine": 34,
+        "startChar": 39,
+        "endLine": 34,
+        "endChar": 42
+      },
+      "revId": "28c5181e3e940c27bab63d4db5a6e58246ba1d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
