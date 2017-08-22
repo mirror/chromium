@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4b23195_2f8c3519",
+        "filename": "tools/accessibility/rebase_dump_accessibility_tree_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-22T06:37:16Z",
+      "side": 1,
+      "message": "nit: since this is a continuation of the previous line, I\u0027d either indent\n4 spaces, or line it up with the \u0027 after the left paren.",
+      "revId": "565da2db4d0e8084408273b2dc821fef9519ecf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
