@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1136832d_ab6aa262",
+        "filename": "content/renderer/media/renderer_webmediaplayer_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1139794
+      },
+      "writtenOn": "2017-08-22T21:00:07Z",
+      "side": 1,
+      "message": "Did you mean to put semicolon instead of coma between the assignments? It would certainly be more clear.\n\nIn general comma has lower priority than assignment, so most likely the code will do what is expected, but is certainly not easy to read.",
+      "range": {
+        "startLine": 241,
+        "startChar": 48,
+        "endLine": 241,
+        "endChar": 49
+      },
+      "revId": "83c2544d276cad4341da42aed3e240489183f611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
