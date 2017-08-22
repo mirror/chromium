@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "244227ed_f42588eb",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 2441,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-08-22T13:12:39Z",
+      "side": 1,
+      "message": "Random off-topic question to Greg: Shouldn\u0027t a \"unittest\" not do system modification? I wish we had a better naming convention to differentiate between unit tests and smoke tests.",
+      "range": {
+        "startLine": 2441,
+        "startChar": 17,
+        "endLine": 2441,
+        "endChar": 41
+      },
+      "revId": "e07d6e00b95fe2340fb839e54be429b7c2d5dbea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
