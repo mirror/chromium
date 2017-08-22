@@ -51,16 +51,15 @@ class LayerTreeHostPixelResourceTest : public LayerTreePixelTest {
   };
 
  protected:
-  unsigned draw_texture_target_;
-  RasterBufferProviderType raster_buffer_provider_type_;
-  ResourceProvider::TextureHint texture_hint_;
-  Layer::LayerMaskType mask_type_;
-  bool initialized_;
+  RasterBufferProviderType raster_buffer_provider_type_ =
+      RASTER_BUFFER_PROVIDER_TYPE_BITMAP;
+  Layer::LayerMaskType mask_type_ = Layer::SINGLE_TEXTURE_MASK;
+  bool initialized_ = false;
 
   void InitializeFromTestCase(PixelResourceTestCase test_case);
 
  private:
-  PixelResourceTestCase test_case_;
+  PixelResourceTestCase test_case_ = SOFTWARE;
 };
 
 #define INSTANTIATE_PIXEL_RESOURCE_TEST_CASE_P(framework_name)                 \
