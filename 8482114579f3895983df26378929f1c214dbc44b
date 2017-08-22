@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aecaabe_3aaeeb48",
+        "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T09:50:33Z",
+      "side": 1,
+      "message": "Oops, I will make a similar change to the other SWFetchEventDispatcher to ensure that this one doesn\u0027t outlive version_.",
+      "revId": "8482114579f3895983df26378929f1c214dbc44b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
