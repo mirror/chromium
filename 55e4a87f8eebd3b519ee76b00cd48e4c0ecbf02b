@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39aecc65_898fa5c1",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-22T16:51:35Z",
+      "side": 1,
+      "message": "Is this really equivalent to DCHECK(!IsRenderingThread())?",
+      "revId": "55e4a87f8eebd3b519ee76b00cd48e4c0ecbf02b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77766da4_d3300a8e",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-22T16:51:35Z",
+      "side": 1,
+      "message": "Do you have to create this weak ptr every single time?",
+      "revId": "55e4a87f8eebd3b519ee76b00cd48e4c0ecbf02b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "139f66f4_f6adc552",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-22T16:51:35Z",
+      "side": 1,
+      "message": "Is this really equivalent to DCHECK(IsRenderingThread())?",
+      "revId": "55e4a87f8eebd3b519ee76b00cd48e4c0ecbf02b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
