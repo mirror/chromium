@@ -22,6 +22,30 @@
       "revId": "7bdef5c16789995a5f8ebcefe883d553d6e899ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15168abf_200059b4",
+        "filename": "chrome/browser/chromeos/fileapi/recent_drive_source.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-22T05:30:25Z",
+      "side": 1,
+      "message": "Sounds good, done. Please note that now Params is not copyable because of OnceCallback.",
+      "parentUuid": "c6b29a20_2295813d",
+      "range": {
+        "startLine": 43,
+        "startChar": 37,
+        "endLine": 43,
+        "endChar": 59
+      },
+      "revId": "7bdef5c16789995a5f8ebcefe883d553d6e899ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
