@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50866eb6_8d1c5c09",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-22T14:12:33Z",
+      "side": 1,
+      "message": "can you update the help texts as well please?",
+      "revId": "0178b865954d239daceefbd62bbbbd57e5243f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
