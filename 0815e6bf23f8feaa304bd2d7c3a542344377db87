@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00aaf402_a5a156e1",
+        "filename": "ui/chromeos/touch_accessibility_enabler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-22T18:55:59Z",
+      "side": 1,
+      "message": "just fyi: adding/removing pre target handler on the fly may change the order of target handlers, so please be careful. It looks ok to me though.",
+      "revId": "0815e6bf23f8feaa304bd2d7c3a542344377db87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
