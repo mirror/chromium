@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24bca568_99625e70",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-22T13:18:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20083e1b_d347a804",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 47
+      },
+      "revId": "ad53a721c5f619cc139daa005538e8bcd3ae7e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52f0d68f_6917e519",
         "filename": "components/policy/core/common/cloud/cloud_policy_manager.h",
         "patchSetId": 20
@@ -45,6 +69,30 @@
       "revId": "ad53a721c5f619cc139daa005538e8bcd3ae7e6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693163b7_8c184ca7",
+        "filename": "components/policy/core/common/cloud/cloud_policy_manager.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-08-22T13:18:26Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "52f0d68f_6917e519",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 64
+      },
+      "revId": "ad53a721c5f619cc139daa005538e8bcd3ae7e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
