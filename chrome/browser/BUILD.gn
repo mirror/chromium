@@ -2197,22 +2197,17 @@ split_static_library("browser") {
 
   if (enable_offline_pages) {
     sources += [
-      "android/offline_pages/downloads/offline_page_download_bridge.cc",
-      "android/offline_pages/downloads/offline_page_download_bridge.h",
-      "android/offline_pages/downloads/offline_page_infobar_delegate.cc",
-      "android/offline_pages/downloads/offline_page_infobar_delegate.h",
-      "android/offline_pages/downloads/offline_page_notification_bridge.cc",
-      "android/offline_pages/downloads/offline_page_notification_bridge.h",
-      "android/offline_pages/downloads/resource_throttle.cc",
-      "android/offline_pages/downloads/resource_throttle.h",
       "offline_pages/background_loader_offliner.cc",
       "offline_pages/background_loader_offliner.h",
+      "offline_pages/downloads/resource_throttle.cc",
+      "offline_pages/downloads/resource_throttle.h",
       "offline_pages/offline_page_bookmark_observer.cc",
       "offline_pages/offline_page_bookmark_observer.h",
       "offline_pages/offline_page_info_handler.cc",
       "offline_pages/offline_page_info_handler.h",
       "offline_pages/offline_page_mhtml_archiver.cc",
       "offline_pages/offline_page_mhtml_archiver.h",
+      "offline_pages/offline_page_model_factory.cc",
       "offline_pages/offline_page_model_factory.h",
       "offline_pages/offline_page_request_interceptor.cc",
       "offline_pages/offline_page_request_interceptor.h",
@@ -2256,11 +2251,16 @@ split_static_library("browser") {
         "offline_pages/android/cct_origin_observer.h",
         "offline_pages/android/cct_request_observer.cc",
         "offline_pages/android/cct_request_observer.h",
+        "offline_pages/android/downloads/offline_page_download_bridge.cc",
+        "offline_pages/android/downloads/offline_page_download_bridge.h",
+        "offline_pages/android/downloads/offline_page_infobar_delegate.cc",
+        "offline_pages/android/downloads/offline_page_infobar_delegate.h",
+        "offline_pages/android/downloads/offline_page_notification_bridge.cc",
+        "offline_pages/android/downloads/offline_page_notification_bridge.h",
         "offline_pages/android/load_termination_listener_impl.cc",
         "offline_pages/android/load_termination_listener_impl.h",
         "offline_pages/android/offline_page_bridge.cc",
         "offline_pages/android/offline_page_bridge.h",
-        "offline_pages/android/offline_page_model_factory.cc",
         "offline_pages/android/offline_page_utils_android.cc",
         "offline_pages/android/prefetch_background_task_android.cc",
         "offline_pages/android/prefetch_background_task_android.h",
@@ -2280,17 +2280,17 @@ split_static_library("browser") {
       "//components/offline_pages/core/renovations",
       "//components/offline_pages/core/request_header:request_header",
     ]
-  }
 
-  # Used to build test harness locally. The harness is used manually to
-  # produce multiple offline pages to evaluate quality of the snapshots.
-  if (enable_offline_pages_harness) {
-    sources += [
-      "android/offline_pages/evaluation/evaluation_test_scheduler.cc",
-      "android/offline_pages/evaluation/evaluation_test_scheduler.h",
-      "android/offline_pages/evaluation/offline_page_evaluation_bridge.cc",
-      "android/offline_pages/evaluation/offline_page_evaluation_bridge.h",
-    ]
+    # Used to build test harness locally. The harness is used manually to
+    # produce multiple offline pages to evaluate quality of the snapshots.
+    if (enable_offline_pages_harness) {
+      sources += [
+        "offline_pages/android/evaluation/evaluation_test_scheduler.cc",
+        "offline_pages/android/evaluation/evaluation_test_scheduler.h",
+        "offline_pages/android/evaluation/offline_page_evaluation_bridge.cc",
+        "offline_pages/android/evaluation/offline_page_evaluation_bridge.h",
+      ]
+    }
   }
 
   if (enable_hotwording) {
