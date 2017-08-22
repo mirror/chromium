@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8bf2a95_e2b2848a",
+        "filename": "ash/system/power/tray_power.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-22T16:17:38Z",
+      "side": 1,
+      "message": "optional: If there are going to be a lot of notifications converted this way I wonder if the code would be shorter if you introduced a utility function to help. These call sites are long and verbose and duplicate a lot of parameters. Would it work to add a utility function somewhere in src/ash that internally checked IsNewStyleNotification and called the right version? Or are there too many differences at each call site?",
+      "revId": "571e0f5632b9162859a9418f8d21eff1de3d6668",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
