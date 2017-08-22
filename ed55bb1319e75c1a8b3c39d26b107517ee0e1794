@@ -22,6 +22,30 @@
       "revId": "ed55bb1319e75c1a8b3c39d26b107517ee0e1794",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7a9660_4e9aab42",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-08-22T20:21:53Z",
+      "side": 0,
+      "message": "This are_previews_disabled parameter was only used for old path so removing the parameter now.\n\nThis blacklist enabled check is in DRPConfig::ShouldAcceptServerPreviews() for the active code path.",
+      "parentUuid": "925033ba_715831d5",
+      "range": {
+        "startLine": 345,
+        "startChar": 21,
+        "endLine": 345,
+        "endChar": 56
+      },
+      "revId": "ed55bb1319e75c1a8b3c39d26b107517ee0e1794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

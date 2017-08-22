@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e65a5f2_7e38337a",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-08-22T20:21:53Z",
+      "side": 1,
+      "message": "There is no control group now with the DataReductionProxyDecidesTransform feature path.",
+      "parentUuid": "f4ba066a_461e41af",
+      "range": {
+        "startLine": 156,
+        "startChar": 53,
+        "endLine": 156,
+        "endChar": 67
+      },
+      "revId": "c25f377c539edfff14b5d5a6de60d251b14c6ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80b7401e_799d120c",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "c25f377c539edfff14b5d5a6de60d251b14c6ce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f3a606f_9290a9db",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-08-22T20:21:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80b7401e_799d120c",
+      "range": {
+        "startLine": 356,
+        "startChar": 18,
+        "endLine": 356,
+        "endChar": 29
+      },
+      "revId": "c25f377c539edfff14b5d5a6de60d251b14c6ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
