@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4c4c9eb_1243aa3c",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-22T22:51:16Z",
+      "side": 1,
+      "message": "nit: Update comments of why Window::SetBoundsInScreen() could not be used and mention the bug.",
+      "revId": "fa5adbc4bdf77d32a5046adbada12e2b09c852bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
