@@ -1,0 +1,36 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+source_set("webagents") {
+  sources = [
+    "agent.cc",
+    "agent.h",
+    "character_data.cc",
+    "character_data.h",
+    "document.cc",
+    "document.h",
+    "element.cc",
+    "element.h",
+    "event_target.cc",
+    "event_target.h",
+    "frame.cc",
+    "frame.h",
+    "html_element.cc",
+    "html_element.h",
+    "html_head_element.cc",
+    "html_head_element.h",
+    "html_input_element.cc",
+    "html_input_element.h",
+    "html_meta_element.cc",
+    "html_meta_element.h",
+    "node.cc",
+    "node.h",
+    "text.cc",
+    "text.h",
+  ]
+  deps = [
+    "//third_party/WebKit/Source/core",
+    "//third_party/WebKit/Source/platform",
+  ]
+}
