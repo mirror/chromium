@@ -47,7 +47,8 @@ void ChromeLanguageDetectionClient::BindContentTranslateDriver(
   if (!instance)
     return;
 
-  instance->binding_.Bind(std::move(request));
+  if (!instance->binding_.is_bound())
+    instance->binding_.Bind(std::move(request));
 }
 
 // translate::mojom::ContentTranslateDriver implementation.
