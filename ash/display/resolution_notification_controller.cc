@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "ash/resources/grit/ash_resources.h"
+#include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/system_notifier.h"
@@ -257,16 +258,33 @@ void ResolutionNotificationController::CreateOrUpdateNotification(
                 base::UTF8ToUTF16(
                     change_info_->current_resolution->size().ToString()));
 
-  ui::ResourceBundle& bundle = ui::ResourceBundle::GetSharedInstance();
-  std::unique_ptr<Notification> notification(new Notification(
-      message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId, message,
-      timeout_message, bundle.GetImageNamed(IDR_AURA_NOTIFICATION_DISPLAY),
-      base::string16() /* display_source */, GURL(),
-      message_center::NotifierId(
-          message_center::NotifierId::SYSTEM_COMPONENT,
-          system_notifier::kNotifierDisplayResolutionChange),
-      data, new ResolutionChangeNotificationDelegate(
-                this, change_info_->timeout_count > 0)));
+  std::unique_ptr<Notification> notification;
+  if (message_center::MessageCenter::IsNewStyleNotificationEnabled()) {
+    notification = Notification::CreateSystemNotification(
+        message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId, message,
+        timeout_message, gfx::Image(), base::string16() /* display_source */,
+        GURL(),
+        message_center::NotifierId(
+            message_center::NotifierId::SYSTEM_COMPONENT,
+            system_notifier::kNotifierDisplayResolutionChange),
+        data,
+        new ResolutionChangeNotificationDelegate(
+            this, change_info_->timeout_count > 0),
+        kNotificationScreenIcon,
+        message_center::SystemNotificationWarningLevel::NORMAL);
+  } else {
+    ui::ResourceBundle& bundle = ui::ResourceBundle::GetSharedInstance();
+    notification = base::MakeUnique<Notification>(
+        message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId, message,
+        timeout_message, bundle.GetImageNamed(IDR_AURA_NOTIFICATION_DISPLAY),
+        base::string16() /* display_source */, GURL(),
+        message_center::NotifierId(
+            message_center::NotifierId::SYSTEM_COMPONENT,
+            system_notifier::kNotifierDisplayResolutionChange),
+        data,
+        new ResolutionChangeNotificationDelegate(
+            this, change_info_->timeout_count > 0));
+  }
   notification->SetSystemPriority();
   message_center->AddNotification(std::move(notification));
 }
