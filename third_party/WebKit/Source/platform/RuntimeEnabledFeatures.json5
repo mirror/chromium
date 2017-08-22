@@ -687,6 +687,9 @@
       status: "stable",
     },
     {
+      name: "ModuleScriptsDynamicImport",
+    },
+    {
       name: "MojoBlobs",
     },
     {

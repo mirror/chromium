@@ -3239,6 +3239,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kModuleScriptsDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kModuleScripts)},
 
+    {"enable-module-scripts-dynamic-import",
+     flag_descriptions::kModuleScriptsDynamicImportName,
+     flag_descriptions::kModuleScriptsDynamicImportDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kModuleScriptsDynamicImport)},
+
     {"network-service", flag_descriptions::kEnableNetworkServiceName,
      flag_descriptions::kEnableNetworkServiceDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kNetworkService)},
