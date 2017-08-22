@@ -9,6 +9,7 @@
 #include "cc/paint/paint_image_generator.h"
 #include "cc/paint/paint_record.h"
 #include "cc/paint/skia_paint_image_generator.h"
+#include "components/viz/common/resources/resource_format_utils.h"
 #include "ui/gfx/skia_util.h"
 
 namespace cc {
@@ -52,6 +53,50 @@ const sk_sp<SkImage>& PaintImage::GetSkImage() const {
         base::MakeUnique<SkiaPaintImageGenerator>(paint_image_generator_));
   }
   return cached_sk_image_;
+}
+
+gfx::Size PaintImage::GetSupportedDecodeSize(
+    const gfx::Size& requested_size) const {
+  // TODO(vmpstr): For now, we ignore the requested size and just return the
+  // available image size.
+  return gfx::Size(width(), height());
+}
+
+size_t PaintImage::GetRequiredDecodeSizeBytes(
+    const gfx::Size& size,
+    viz::ResourceFormat format) const {
+  DCHECK(GetSupportedDecodeSize(size) == size);
+  auto info = SkImageInfo::Make(size.width(), size.height(),
+                                viz::ResourceFormatToClosestSkColorType(format),
+                                kPremul_SkAlphaType);
+  return info.minRowBytes() * info.height();
+}
+
+bool PaintImage::Decode(void* memory,
+                        const gfx::Size& size,
+                        viz::ResourceFormat format,
+                        const base::Optional<gfx::ColorSpace>& color_space,
+                        SkImageInfo* decoded_info) const {
+  SkImageInfo local_info;
+  SkImageInfo* info = decoded_info ? decoded_info : &local_info;
+  *info = SkImageInfo::Make(size.width(), size.height(),
+                            viz::ResourceFormatToClosestSkColorType(format),
+                            kPremul_SkAlphaType);
+  auto image = GetSkImage();
+  DCHECK(image);
+  sk_sp<SkColorSpace> target_color_space;
+  if (color_space)
+    target_color_space = color_space->ToSkColorSpace();
+
+  if (target_color_space) {
+    image = image->makeColorSpace(target_color_space,
+                                  SkTransferFunctionBehavior::kIgnore);
+    if (!image)
+      return false;
+    *info = info->makeColorSpace(target_color_space);
+  }
+  return image->readPixels(*info, memory, info->minRowBytes(), 0, 0,
+                           SkImage::kDisallow_CachingHint);
 }
 
 }  // namespace cc
