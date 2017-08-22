@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "8097e8bd_8a0322cc",
+        "filename": "ios/chrome/test/perf/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-22T17:00:48Z",
+      "side": 1,
+      "message": "should we create something other than eg_tests for this? Maybe eg_tests makes sense because that\u0027s what it is. I was just wondering if we should have \"perf_eg_tests\"? More question, than suggestion.",
+      "range": {
+        "startLine": 5,
+        "startChar": 12,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "1956a80087f91469bd5d6e9b6ebed81d321d965b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4247bee2_1c70d39c",
         "filename": "ios/chrome/test/perf/chrome_perf_egtests.mm",
         "patchSetId": 2
@@ -30,6 +53,29 @@
       "writtenOn": "2017-08-21T11:34:04Z",
       "side": 1,
       "message": "This comment refers to the reading list.",
+      "revId": "1956a80087f91469bd5d6e9b6ebed81d321d965b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23eee421_1807a753",
+        "filename": "ios/chrome/test/perf/chrome_perf_egtests.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-22T17:00:48Z",
+      "side": 1,
+      "message": "Is this base class okay for perf tests, given the other setup that it does? It does things to make one tab open, where previous state could affect it.",
+      "range": {
+        "startLine": 16,
+        "startChar": 32,
+        "endLine": 16,
+        "endChar": 46
+      },
       "revId": "1956a80087f91469bd5d6e9b6ebed81d321d965b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
