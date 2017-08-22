@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79e7993f_34cb917d",
+        "filename": "third_party/WebKit/Source/platform/heap/Visitor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-22T12:28:42Z",
+      "side": 1,
+      "message": "Similar to wrapper tracing, this is safe and we should thus separate it from the unsafe Trace(const T*) call.\n\nThis will make using codesearch for Trace(const T*) viable again.",
+      "range": {
+        "startLine": 164,
+        "startChar": 7,
+        "endLine": 164,
+        "endChar": 29
+      },
+      "revId": "325a0b7d85fcc6b489050b8bb3bac70a0688baa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
