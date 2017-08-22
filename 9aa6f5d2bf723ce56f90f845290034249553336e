@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "121906c8_bd9feb19",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T19:40:37Z",
+      "side": 1,
+      "message": "_Command seems quite a bit less easily readable than the previous implementation of Run. Is having wrapper-specific commands worth it? Could those commands instead require an output directory argument?",
+      "revId": "9aa6f5d2bf723ce56f90f845290034249553336e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49d3aef2_b8cc2558",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T19:40:37Z",
+      "side": 1,
+      "message": "nit: you had these broken into helper functions for categories previously; retaining that would be nice here.",
+      "revId": "9aa6f5d2bf723ce56f90f845290034249553336e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698569ff_3b3718f9",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T19:40:37Z",
+      "side": 1,
+      "message": "I\u0027m surprised that this logic isn\u0027t integrated into _Command itself w/ something like set_defaults, which is how this kind of think is frequently implemented: https://codesearch.chromium.org/search/?q\u003dset_defaults+file:%5C.py\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "9aa6f5d2bf723ce56f90f845290034249553336e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
