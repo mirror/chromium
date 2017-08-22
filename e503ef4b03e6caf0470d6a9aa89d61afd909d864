@@ -22,6 +22,30 @@
       "revId": "e503ef4b03e6caf0470d6a9aa89d61afd909d864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0384275_3f448af2",
+        "filename": "chrome/android/webapk/shell_apk/bound_manifest_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002088
+      },
+      "writtenOn": "2017-08-22T19:00:18Z",
+      "side": 1,
+      "message": "good question! I don\u0027t know as much about how the client configs work, but I just tried building this and the : did not get escaped.\n\nOn the server we definitely do not escape this value, and have tests that verify that.",
+      "parentUuid": "b5e54350_f679d447",
+      "range": {
+        "startLine": 7,
+        "startChar": 28,
+        "endLine": 7,
+        "endChar": 46
+      },
+      "revId": "e503ef4b03e6caf0470d6a9aa89d61afd909d864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
