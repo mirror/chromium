@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c65d9cb9_c9569726",
+        "filename": "chrome/android/java/res/values/colors.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T20:09:09Z",
+      "side": 1,
+      "message": "modern_primary_color is used as the background for several things (toolbar, list UIs) so I think using modern_primary_background is a bit confusing. Maybe we can this modern_light_grey or something like that (we can revisit the name later when we have an official material color palette name to reference and can call it something like material_grey_###)?",
+      "range": {
+        "startLine": 153,
+        "startChar": 17,
+        "endLine": 153,
+        "endChar": 42
+      },
+      "revId": "d2fc22b7d1825b3e0e00c74dd8925fdd21cd43a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
