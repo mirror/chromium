@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "378576a9_ec9b5f07",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-22T15:50:03Z",
+      "side": 1,
+      "message": "Don\u0027t we need to exit CCT here? Shouldn\u0027t we shutdownVr()?",
+      "range": {
+        "startLine": 951,
+        "startChar": 16,
+        "endLine": 951,
+        "endChar": 30
+      },
+      "revId": "cd28c8465ca4b591084abfcfd72c0901e7c1712b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd873a7a_fd4d8dc7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-22T15:50:03Z",
+      "side": 1,
+      "message": "Don\u0027t we need to exit CCT here? Shouldn\u0027t we shutdownVr()?",
+      "range": {
+        "startLine": 1100,
+        "startChar": 12,
+        "endLine": 1100,
+        "endChar": 48
+      },
+      "revId": "cd28c8465ca4b591084abfcfd72c0901e7c1712b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
