@@ -355,10 +355,8 @@ template &lt;typename T&gt;<br/>void Function(T&amp;&amp; t) { ... }</code></td>
 
 <h2 id="whitelist"><a name="core-whitelist-14"></a>C++14 Allowed Features</h2>
 
-<p>Nothing yet. Suggest something!</p>
-<!--<p>The following features are currently allowed.</p>-->
+<p>The following features are currently allowed.</p>
 
-<!--
 <table id="whitelist_lang_list_14" class="unlined striped">
 <tbody>
 
@@ -370,9 +368,16 @@ template &lt;typename T&gt;<br/>void Function(T&amp;&amp; t) { ... }</code></td>
 <th style='width:240px;'>Notes and Discussion Thread</th>
 </tr>
 
+<tr>
+<td>Generic lambdas</td>
+<td><code>[](const auto&amp; x) { <i>...</i> }</code></td>
+<td>Allows lambda argument types to be deduced using <code>auto</code> (according to the rules that apply to templates).</td>
+<td><a href="http://en.cppreference.com/w/cpp/language/lambda">lambda expressions</a></td>
+<td><a href="https://groups.google.com/a/chromium.org/d/msg/cxx/ow7hmdDm4yw/EDEvBRi_BQAJ">Discussion thread</a>, <a href="https://groups.google.com/a/chromium.org/d/msg/cxx/4WbKn7gDW18/GBRUHYHqBgAJ">Discussion thread</a></td>
+</tr>
+
 </tbody>
 </table>
--->
 
 <h2 id="whitelist"><a name="library-whitelist"></a>C++11 Allowed Library Features</h2>
 
@@ -946,14 +951,6 @@ for printing or reading in this format. Still seems useful in minor ways.</td>
 <td>Allows the return type of a function to be automatically deduced from its return statements, according to either template or <code>decltype</code> rules.</td>
 <td><a href="http://en.cppreference.com/w/cpp/language/function#Return_type_deduction">Return type deduction</a></td>
 <td>Likely to be primarily useful in abstract template code.</td>
-</tr>
-
-<tr>
-<td>Generic lambdas</td>
-<td><code>[](const auto&amp; x) { <i>...</i> }</code></td>
-<td>Allows lambda argument types to be deduced using <code>auto</code> (according to the rules that apply to templates).</td>
-<td><a href="http://en.cppreference.com/w/cpp/language/lambda">lambda expressions</a></td>
-<td></td>
 </tr>
 
 <tr>

@@ -503,11 +503,9 @@ ArrayBufferArray SerializedScriptValue::ExtractNonSharedArrayBuffers(
   ArrayBufferArray result;
   // Partition array_buffers into [shared..., non_shared...], maintaining
   // relative ordering of elements with the same predicate value.
-  auto non_shared_begin =
-      std::stable_partition(array_buffers.begin(), array_buffers.end(),
-                            [](Member<DOMArrayBufferBase>& array_buffer) {
-                              return array_buffer->IsShared();
-                            });
+  auto non_shared_begin = std::stable_partition(
+      array_buffers.begin(), array_buffers.end(),
+      [](const auto& array_buffer) { return array_buffer->IsShared(); });
   // Copy the non-shared array buffers into result, and remove them from
   // array_buffers.
   result.AppendRange(non_shared_begin, array_buffers.end());
