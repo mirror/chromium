@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "e06400b9_b2693bec",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-22T21:03:16Z",
+      "side": 1,
+      "message": "Great, done. For the record, I wasn\u0027t aware of CreateTestWebContents() before Duc pointed it out :). Happy to clean it up, but I\u0027m leaving the other TabManager unittests alone for now.",
+      "parentUuid": "af2633e0_2cbd787d",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "208ee232_89b59a26",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
         "patchSetId": 6
@@ -519,6 +543,30 @@
       "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70a261c9_9c7830c7",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-22T21:03:16Z",
+      "side": 1,
+      "message": "Addressed the visibility concerns in SetForegroundAndBackgroundTabs().",
+      "parentUuid": "ebdad6eb_77011649",
+      "range": {
+        "startLine": 208,
+        "startChar": 33,
+        "endLine": 208,
+        "endChar": 37
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
