@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b28ae7af_864f9f98",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-22T08:15:00Z",
+      "side": 1,
+      "message": "Regarding the performance complexity of ColElementAtAbsoluteColumn(). Yes, you\u0027re right. O(n). But that\u0027s bad enough if you loop through all the columns and call that method (which is a pretty natural thing to do). Like in AdjustWidthsForCollapsedColumns(), which calls ColElementAtAbsoluteColumn() (via IsAbsoluteColumnCollapsed()). Then we get O(n^2) (or potentially worse, with the effective-to-absolute conversion), and this was my concern. Sorry about the confusion.\n\nSo I think it\u0027d be worthwhile with a long-term solution that makes ColElementAtAbsoluteColumn() O(1) - a simple Vector lookup. ColElementAtAbsoluteColumn() is already called at many places in the code, and one can only wonder what the cost is.",
+      "parentUuid": "392ee5ba_e9761ca4",
+      "revId": "b4151c7c91c142c7a25f633bd8853db54450619e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f41757d7_1957edf3",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
         "patchSetId": 18
