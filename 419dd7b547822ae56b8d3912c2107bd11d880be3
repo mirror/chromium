@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3efa58d_c6ce27d6",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-22T08:30:25Z",
+      "side": 1,
+      "message": "Can we delay instantiating BlinkLeakDetector until prepareAndGCForLeakDetection gets called?",
+      "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f25daeed_8aff2982",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-22T08:30:25Z",
+      "side": 1,
+      "message": "Add explicit.",
+      "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794c11f6_47204556",
+        "filename": "third_party/WebKit/Source/core/leak_detector/BlinkLeakDetector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-22T08:30:25Z",
+      "side": 1,
+      "message": "This will cause a memory leak!! :D\n\nThere is a reference cycle:\n\n  WebLeakDetectorImpl -(Persistent)-\u003e BlinkLeakDetector -(std::unique_ptr)-\u003e WebLeakDetectorImpl\n\nSo you need to keep using a raw pointer. A better solution would be to move BlinkLeakDetectorClient to Oilpan and use Member\u003cBlinkLeakDetectorClient\u003e here.",
+      "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
