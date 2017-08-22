@@ -180,7 +180,7 @@ TEST_F(TabManagerStatsCollectorTest,
 
   const base::TimeDelta kEQT = base::TimeDelta::FromMilliseconds(1);
   web_contents()->WasShown();
-  ASSERT_FALSE(tab_manager->IsLoadingBackgroundTabs());
+  ASSERT_FALSE(stats_collector->is_in_background_tab_opening_session());
 
   // No metrics recorded because there is no background tab loading.
   stats_collector->RecordExpectedTaskQueueingDuration(web_contents(), kEQT);
@@ -192,7 +192,7 @@ TEST_F(TabManagerStatsCollectorTest,
   // Create a tab loading in background.
   std::unique_ptr<WebContents> contents =
       CreateTabLoadingInBackground(tab_manager);
-  ASSERT_TRUE(tab_manager->IsLoadingBackgroundTabs());
+  ASSERT_TRUE(stats_collector->is_in_background_tab_opening_session());
 
   // No metrics recorded because the tab is background.
   web_contents()->WasHidden();
@@ -211,7 +211,7 @@ TEST_F(TabManagerStatsCollectorTest,
 
   // Stop background tab loading.
   tab_manager->GetWebContentsData(contents.get())->DidStopLoading();
-  ASSERT_FALSE(tab_manager->IsLoadingBackgroundTabs());
+  ASSERT_FALSE(stats_collector->is_in_background_tab_opening_session());
 
   // No metrics recorded because there is no background tab loading.
   stats_collector->RecordExpectedTaskQueueingDuration(web_contents(), kEQT);
