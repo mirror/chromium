@@ -89,9 +89,10 @@ void InitPasswordFormFillData(
 }
 
 PasswordFormFillData ClearPasswordValues(const PasswordFormFillData& data) {
+  if (!data.wait_for_username)
+    return data;
   PasswordFormFillData result(data);
-  if (result.wait_for_username)
-    result.password_field.value.clear();
+  result.password_field.value.clear();
   for (auto& credentials : result.additional_logins)
     credentials.second.password.clear();
   return result;
