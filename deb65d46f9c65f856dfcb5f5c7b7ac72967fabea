@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5fee13f_5da8962d",
+        "filename": "third_party/WebKit/Source/platform/heap/Member.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-22T19:45:05Z",
+      "side": 1,
+      "message": "Looking up the page is cheaper than ThreadState. This requires setting the bit on all pages at the start of incremental marking.\n\nV8 has a similar mechanism.",
+      "range": {
+        "startLine": 249,
+        "startChar": 35,
+        "endLine": 249,
+        "endChar": 49
+      },
+      "revId": "deb65d46f9c65f856dfcb5f5c7b7ac72967fabea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
