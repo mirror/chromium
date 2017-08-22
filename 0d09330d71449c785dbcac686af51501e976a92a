@@ -318,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "14965b8f_bb0060ed",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-22T09:00:44Z",
+      "side": 1,
+      "message": "Should we log an error returned by audio_client_-\u003eGetService() in case obtaining |audio_clock| fails [1]? maybe even add a stat for it?\n\n[1] https://cs.chromium.org/chromium/src/media/audio/win/audio_low_latency_input_win.cc?q\u003daudio_client_\u0026dr\u003dC\u0026l\u003d382",
+      "parentUuid": "1553d211_93869b80",
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2935730_d6be0e67",
         "filename": "media/base/audio_parameters.h",
         "patchSetId": 4
