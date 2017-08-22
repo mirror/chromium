@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "870e94cf_18e2c02c",
+        "filename": "ios/chrome/browser/ui/history/history_collection_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-22T14:05:08Z",
+      "side": 1,
+      "message": "nit: you can use std::make_unique\u003c\u003e here\n\n  _browsingHistoryDriver \u003d std::make_unique\u003cIOSBrowsingHistoryDriver\u003e(\n      browserState, self);\n  _browsingHistoryService \u003d std::make_unique\u003cBrowsingHistoryService\u003e(\n      _browsingHistoryDriver.get(),\n      ios::HistoryServiceFactory::GetForBrowserState(\n          browserState, ServiceAccessType::EXPLICIT_ACCESS),\n      IOSChromeProfileSyncServiceFactory::GetForBrowserState(browserState)));",
+      "revId": "5454d4dc0f68cff38504a64e78b4042182ceee81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
