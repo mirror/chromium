@@ -179,6 +179,30 @@
     },
     {
       "key": {
+        "uuid": "c30f6b4b_fb18aded",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-22T15:02:46Z",
+      "side": 1,
+      "message": "\"The VCS and JobService are run in a separate process, attributed to the WebView package\"\n\n(that separate process is a WebView package process, so I would say that it is \"connected to the WebView package process\", also there can be more than one WebView package processes)",
+      "parentUuid": "2f5582c0_a1db0cfe",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "7b067fa8cb74ed8c9b689a339866d907650c1b33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5382a60e_e607e7c1",
         "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewChromiumFactoryProvider.java",
         "patchSetId": 7

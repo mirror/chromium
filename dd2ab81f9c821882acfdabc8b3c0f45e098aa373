@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "baeaa4b5_9143cdfb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-08-22T15:02:46Z",
+      "side": 1,
+      "message": "Sorry for yet another comment on the same stuff...\n\nplease replace the handler sentence with:\n\"The VCS stores the seed, passed via IPC, in the WebView package data directory.\"\n(there is no other reference to a handler so that sentence is probably just confusing).",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 80
+      },
+      "revId": "dd2ab81f9c821882acfdabc8b3c0f45e098aa373",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1912cfff_d803eca1",
         "filename": "android_webview/java/src/org/chromium/android_webview/variations/AwVariationsConfigurationService.java",
         "patchSetId": 18
