@@ -645,7 +645,8 @@ Document::Document(const DocumentInit& initializer,
       would_load_reason_(WouldLoadReason::kInvalid),
       password_count_(0),
       logged_field_edit_(false),
-      engagement_level_(mojom::blink::EngagementLevel::NONE) {
+      engagement_level_(mojom::blink::EngagementLevel::NONE),
+      cookie_map_(new CookieMap) {
   if (frame_) {
     DCHECK(frame_->GetPage());
     ProvideContextFeaturesToDocumentFrom(*this, *frame_->GetPage());
@@ -1428,7 +1429,7 @@ void Document::SetReadyState(DocumentReadyState ready_state) {
   DispatchEvent(Event::Create(EventTypeNames::readystatechange));
 }
 
-bool Document::IsLoadCompleted() {
+bool Document::IsLoadCompleted() const {
   return ready_state_ == kComplete;
 }
 
@@ -3211,6 +3212,7 @@ void Document::CheckCompleted() {
   if (LoadEventStillNeeded())
     ImplicitClose();
 
+  cookie_map_->clear();
   // The readystatechanged or load event may have disconnected this frame.
   if (!frame_ || !frame_->IsAttached())
     return;
@@ -4938,7 +4940,17 @@ String Document::cookie(ExceptionState& exception_state) const {
   if (cookie_url.IsEmpty())
     return String();
 
-  return Cookies(this, cookie_url);
+  if (!IsLoadCompleted()) {
+    CookieMap::iterator iter = cookie_map_->find(cookie_url);
+    if (iter != cookie_map_->end()) {
+      return iter->value;
+    }
+  }
+  String cookies_string = Cookies(this, cookie_url);
+  if (!IsLoadCompleted())
+    cookie_map_->Set(cookie_url, cookies_string);
+
+  return cookies_string;
 }
 
 void Document::setCookie(const String& value, ExceptionState& exception_state) {
@@ -4971,6 +4983,11 @@ void Document::setCookie(const String& value, ExceptionState& exception_state) {
   KURL cookie_url = this->CookieURL();
   if (cookie_url.IsEmpty())
     return;
+
+  CookieMap::iterator iter = cookie_map_->find(cookie_url);
+  if (iter != cookie_map_->end()) {
+    cookie_map_->erase(iter);
+  }
 
   SetCookies(this, cookie_url, value);
 }

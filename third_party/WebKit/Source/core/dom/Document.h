@@ -697,7 +697,7 @@ class CORE_EXPORT Document : public ContainerNode,
   enum DocumentReadyState { kLoading, kInteractive, kComplete };
 
   void SetReadyState(DocumentReadyState);
-  bool IsLoadCompleted();
+  bool IsLoadCompleted() const;
 
   enum ParsingState { kParsing, kInDOMContentLoaded, kFinishedParsing };
   void SetParsingState(ParsingState);
@@ -1726,6 +1726,9 @@ class CORE_EXPORT Document : public ContainerNode,
   bool has_high_media_engagement_;
 
   std::unique_ptr<DocumentOutliveTimeReporter> document_outlive_time_reporter_;
+
+  using CookieMap = HashMap<KURL, String>;
+  std::unique_ptr<CookieMap> cookie_map_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;
