@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "57ec1fb2_97cde0de",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-22T21:42:30Z",
+      "side": 1,
+      "message": "Yes. Move the DCHECK here and then comment why we never expect an empty GetWork() (e.g. there is a 1:1 correspondence between a call to SubmitThreadpoolWork() and GetWork())",
+      "parentUuid": "422a3dfb_6ba599d4",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "600f8bca091be47f45c9a49db40ea009064e4c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93c65b61_2fd32579",
         "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
         "patchSetId": 11

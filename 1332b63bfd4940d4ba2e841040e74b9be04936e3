@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c4c3bff_e35819ec",
+        "filename": "base/task_scheduler/scheduler_worker_pool_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-22T21:42:30Z",
+      "side": 1,
+      "message": "Trailing commas are fine in C++ and each enum value should have one.",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 3
+      },
+      "revId": "1332b63bfd4940d4ba2e841040e74b9be04936e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
