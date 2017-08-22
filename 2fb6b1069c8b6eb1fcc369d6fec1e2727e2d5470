@@ -151,6 +151,30 @@
     },
     {
       "key": {
+        "uuid": "e9738e20_5fc16146",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:59:37Z",
+      "side": 1,
+      "message": "I thought all the \"Web\" stuff that can be included by both inside Blink and outside Blink use \"-shared.h\" as in this patch.",
+      "parentUuid": "243caea4_91bf344f",
+      "range": {
+        "startLine": 35,
+        "startChar": 73,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d50652a_58d4cff0",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
         "patchSetId": 6
