@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "121f562a_22e844e2",
+        "filename": "media/blink/webmediaplayer_params.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T19:46:45Z",
+      "side": 1,
+      "message": "Maybe worth having a type defined. Something like:\n`using CreateSubmitterCallback \u003d base::Callback\u003cstd::unique_ptr\u003cblink::WebVideo...\u003e;`",
+      "revId": "d7ce1b7ffb63f070ce7dafba25311e68f1e27d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f921384d_8214a91c",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T19:46:45Z",
+      "side": 1,
+      "message": "I guess you could directly make the call here too?",
+      "revId": "d7ce1b7ffb63f070ce7dafba25311e68f1e27d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12338077_45020f76",
+        "filename": "third_party/WebKit/Source/platform/exported/WebSurfaceLayerBridge.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T19:46:45Z",
+      "side": 1,
+      "message": "nit: not super important but it\u0027s a bit confusing to have the Web* class take parameters in the reverse order compared to the implementation one.",
+      "revId": "d7ce1b7ffb63f070ce7dafba25311e68f1e27d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551db850_9c3ffebb",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameResourceProvider.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T19:46:45Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "revId": "d7ce1b7ffb63f070ce7dafba25311e68f1e27d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d2a34f_5d8fa706",
+        "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T19:46:45Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "revId": "d7ce1b7ffb63f070ce7dafba25311e68f1e27d2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d42f19a7_4c7ffb7c",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T19:46:45Z",
+      "side": 0,
+      "message": "Why is it no longer const?",
+      "range": {
+        "startLine": 239,
+        "startChar": 47,
+        "endLine": 239,
+        "endChar": 52
+      },
+      "revId": "5db2b77ad8e5142c4efaefbeefefda34bee2e3f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
