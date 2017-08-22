@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "306848f2_34828829",
+        "filename": "chrome/browser/chrome_browser_main_android.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-22T23:43:21Z",
+      "side": 1,
+      "message": "Yes, since BrowserProcessImpl\u0027s |local_state_| member is a unique_ptr, they share the same lifetime.\n\nShutdownPreThreadsStop() is not used on Android though. I see ShutdownPostThreadsStop() in the same file which is similarly non-Android, and it deletes |g_browser_process|. I don\u0027t see any other place that deletes |g_browser_process|, so I\u0027m wondering if Chrome on Android even has a concept of shutdown. Does it just get killed by the OS instead?\n\nCrashDumpObserver OTOH, is a LazyInstance and can potentially outlive |g_browser_process|. Or maybe because desktop style shutdown does not happen on Android, then this is probably ok. I guess it all depends on how shutdown works on Android. Please check make sure.",
+      "parentUuid": "1d33193e_2ae43ca2",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cc54ede_66cc5963",
         "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
         "patchSetId": 21
