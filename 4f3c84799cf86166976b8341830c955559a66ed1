@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07246709_0c81991d",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-08-22T00:39:38Z",
+      "side": 1,
+      "message": "Does this need to run if \"!frame-\u003eView()\"?",
+      "revId": "4f3c84799cf86166976b8341830c955559a66ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9e820f_38218b78",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2043,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-08-22T00:39:38Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "4f3c84799cf86166976b8341830c955559a66ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
