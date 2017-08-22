@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a8ffaea_b86b62b5",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-22T20:19:27Z",
+      "side": 0,
+      "message": "Just double-checking: This code was recently added to fix https://bugs.chromium.org/p/chromium/issues/detail?id\u003d757128 - that\u0027s not going to regress, right?",
+      "revId": "330f5e14d2b1e3ac27cd3f11272f20e13b013474",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
