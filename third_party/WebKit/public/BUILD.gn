@@ -384,6 +384,7 @@ source_set("blink_headers") {
     "platform/modules/indexeddb/WebIDBDatabaseCallbacks.h",
     "platform/modules/indexeddb/WebIDBDatabaseError.h",
     "platform/modules/indexeddb/WebIDBDatabaseException.h",
+    "platform/modules/indexeddb/WebIDBDatabaseInfo.h",
     "platform/modules/indexeddb/WebIDBFactory.h",
     "platform/modules/indexeddb/WebIDBKey.h",
     "platform/modules/indexeddb/WebIDBKeyPath.h",

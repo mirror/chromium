@@ -507,6 +507,10 @@
       status: "stable",
     },
     {
+      name: "IDBDatabaseInfo",
+      status: "experimental",
+    },
+    {
       name: "IDBObserver",
       status: "experimental",
     },

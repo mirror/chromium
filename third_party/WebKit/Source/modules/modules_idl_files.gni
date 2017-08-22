@@ -446,6 +446,7 @@ modules_dictionary_idl_files =
                     "imagecapture/ConstrainPoint2DParameters.idl",
                     "imagecapture/Point2D.idl",
                     "imagecapture/PhotoSettings.idl",
+                    "indexeddb/IDBDatabaseInfo.idl",
                     "indexeddb/IDBIndexParameters.idl",
                     "indexeddb/IDBObjectStoreParameters.idl",
                     "indexeddb/IDBObserverInit.idl",

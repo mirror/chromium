@@ -28,7 +28,9 @@
 
 #include "modules/indexeddb/WebIDBCallbacksImpl.h"
 
+#include <algorithm>
 #include <memory>
+
 #include "core/dom/DOMException.h"
 #include "core/probe/CoreProbes.h"
 #include "modules/IndexedDBNames.h"
@@ -40,6 +42,7 @@
 #include "public/platform/modules/indexeddb/WebIDBCursor.h"
 #include "public/platform/modules/indexeddb/WebIDBDatabase.h"
 #include "public/platform/modules/indexeddb/WebIDBDatabaseError.h"
+#include "public/platform/modules/indexeddb/WebIDBDatabaseInfo.h"
 #include "public/platform/modules/indexeddb/WebIDBKey.h"
 #include "public/platform/modules/indexeddb/WebIDBValue.h"
 
@@ -85,18 +88,20 @@ void WebIDBCallbacksImpl::OnError(const WebIDBDatabaseError& error) {
 }
 
 void WebIDBCallbacksImpl::OnSuccess(
-    const WebVector<WebString>& web_string_list) {
+    const WebVector<WebIDBDatabaseInfo>& database_info_list) {
   if (!request_)
     return;
 
-  Vector<String> string_list;
-  for (size_t i = 0; i < web_string_list.size(); ++i)
-    string_list.push_back(web_string_list[i]);
+  Vector<WebIDBDatabaseInfo> databases_info;
+  databases_info.ReserveInitialCapacity(database_info_list.size());
+  std::copy(database_info_list.begin(), database_info_list.end(),
+            std::back_inserter(databases_info));
+
   probe::AsyncTask async_task(request_->GetExecutionContext(), this, "success");
 #if DCHECK_IS_ON()
   DCHECK(!request_->TransactionHasQueuedResults());
 #endif  // DCHECK_IS_ON()
-  request_->EnqueueResponse(string_list);
+  request_->EnqueueResponse(databases_info);
 }
 
 void WebIDBCallbacksImpl::OnSuccess(WebIDBCursor* cursor,
