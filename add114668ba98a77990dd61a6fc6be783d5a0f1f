@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fffc833a_0a50be1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-22T21:10:08Z",
+      "side": 1,
+      "message": "Also note that we are excluding hosted apps in the CL description.",
+      "range": {
+        "startLine": 12,
+        "startChar": 7,
+        "endLine": 12,
+        "endChar": 8
+      },
+      "revId": "add114668ba98a77990dd61a6fc6be783d5a0f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b98425f_54088a58",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-22T21:10:08Z",
+      "side": 1,
+      "message": "nit: This check isn\u0027t necessary? The next loop will naturally not do anything.",
+      "range": {
+        "startLine": 228,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 30
+      },
+      "revId": "add114668ba98a77990dd61a6fc6be783d5a0f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d8a459_9fdfef21",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-22T21:10:08Z",
+      "side": 1,
+      "message": "nit: also note that hosted apps are excluded.",
+      "range": {
+        "startLine": 59,
+        "startChar": 17,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "add114668ba98a77990dd61a6fc6be783d5a0f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d6986c_acee96f1",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-22T21:10:08Z",
+      "side": 1,
+      "message": "nit: auto dir \u003d base::MakeUnique\u003cTestExtensionDir\u003e();",
+      "range": {
+        "startLine": 294,
+        "startChar": 38,
+        "endLine": 294,
+        "endChar": 41
+      },
+      "revId": "add114668ba98a77990dd61a6fc6be783d5a0f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a6e0c50_b56e87f9",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-22T21:10:08Z",
+      "side": 1,
+      "message": "nitty nit: I find the following more readable:\n\ndir-\u003eWriteManifestWithSingleQuotes(base::StringPrintf(\n    \"{\n    \"  \u0027name\u0027: %s,\"\n    \"  \u0027version\u0027: \u00271\u0027,\"\n    \"  \u0027background\u0027: {\u0027page\u0027: \u0027bg.html\u0027},\"\n    \"  \u0027manifest_version\u0027: 2\"\n    \"}\", name));\ndir-\u003eWriteFile ...",
+      "range": {
+        "startLine": 296,
+        "startChar": 4,
+        "endLine": 296,
+        "endChar": 21
+      },
+      "revId": "add114668ba98a77990dd61a6fc6be783d5a0f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77efdfa7_fc84e311",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-22T21:10:08Z",
+      "side": 1,
+      "message": "Wrap it with ENABLE_EXTENSIONS",
+      "range": {
+        "startLine": 336,
+        "startChar": 0,
+        "endLine": 336,
+        "endChar": 60
+      },
+      "revId": "add114668ba98a77990dd61a6fc6be783d5a0f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3068dae_23c189fe",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-22T21:10:08Z",
+      "side": 1,
+      "message": "s/\"about:blank\"/kAboutBlankURL",
+      "range": {
+        "startLine": 391,
+        "startChar": 0,
+        "endLine": 391,
+        "endChar": 27
+      },
+      "revId": "add114668ba98a77990dd61a6fc6be783d5a0f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91606795_511944a7",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-22T21:10:08Z",
+      "side": 1,
+      "message": "\"it combines multiple\" -\u003e \"this test combines multiple\", to avoid any chance of ambiguity whether it is referring to --site-per-process.",
+      "range": {
+        "startLine": 468,
+        "startChar": 20,
+        "endLine": 468,
+        "endChar": 23
+      },
+      "revId": "add114668ba98a77990dd61a6fc6be783d5a0f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
