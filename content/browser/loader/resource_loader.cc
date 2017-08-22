@@ -447,11 +447,14 @@ void ResourceLoader::OnCertificateRequested(
 void ResourceLoader::OnSSLCertificateError(net::URLRequest* request,
                                            const net::SSLInfo& ssl_info,
                                            bool fatal) {
-  ResourceRequestInfoImpl* info = GetRequestInfo();
+  // TODO: This is for testing the CL locally.
+  CancelSSLRequest(net::ERR_CERT_DATE_INVALID, &ssl_info);
+  // ResourceRequestInfoImpl* info = GetRequestInfo();
 
-  SSLManager::OnSSLCertificateError(
-      weak_ptr_factory_.GetWeakPtr(), info->GetResourceType(), request_->url(),
-      info->GetWebContentsGetterForRequest(), ssl_info, fatal);
+  // SSLManager::OnSSLCertificateError(
+  //     weak_ptr_factory_.GetWeakPtr(), info->GetResourceType(),
+  //     request_->url(), info->GetWebContentsGetterForRequest(), ssl_info,
+  //     fatal);
 }
 
 void ResourceLoader::OnResponseStarted(net::URLRequest* unused) {
