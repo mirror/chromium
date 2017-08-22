@@ -16,6 +16,24 @@
       "revId": "52cb90cc2254d93ef295fb09bb3efeacba8733b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce075df_bd395181",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-22T00:58:01Z",
+      "side": 1,
+      "message": "Thanks. Done. As per discussion, the UpdateJob tests had to change to use a TestBrowserThredBundle",
+      "parentUuid": "eac2b577_9cd9332d",
+      "revId": "52cb90cc2254d93ef295fb09bb3efeacba8733b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
