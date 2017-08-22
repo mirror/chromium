@@ -46,6 +46,30 @@
       "revId": "48d5fd4eebb94839193bc676093192abf7d16d6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04483f6c_1ea04819",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3352,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-22T19:42:38Z",
+      "side": 1,
+      "message": "Is there really a need to have the other platforms be behind the same flag? The complex part here is the windows specific code, which I get wanting to put behind a flag. Why not just turn the boolean in for the other platforms?",
+      "parentUuid": "84daa28b_1ba935f0",
+      "range": {
+        "startLine": 3352,
+        "startChar": 4,
+        "endLine": 3352,
+        "endChar": 33
+      },
+      "revId": "48d5fd4eebb94839193bc676093192abf7d16d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
