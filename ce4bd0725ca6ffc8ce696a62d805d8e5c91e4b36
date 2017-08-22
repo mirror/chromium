@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99dfe6c4_e7cdf303",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-22T13:29:23Z",
+      "side": 1,
+      "message": "#shouldShowPromo checks if the Finch flag is enabled and if the impression cap was reached for a particular AccessPoint. In this case, there is no impression cap so it merely checks if the Finch flag is enabled. Its general purpose is to decide if the \"Continue as\" promo should have been shown, regardless of it having been dismissed or the user being signed in/signin not being allowed. It is the deciding condition whether several observers (ProfileDataCache.Observer, AccountsChangeObserver) should be registered and whether certain objects related to the \"Continue as\" signin promos should be created (the SigninPromoController, ProfileDataCache etc). \n\nAdding the condition that singin is allowed/user is not signed in would mess up the logic behind the promos in Bookmarks. In BookmarkPromoHeader (https://goo.gl/xP7jMa) #shouldShowPromos decides whether there exists the possibility for the promo to be shown. What I mean by possibility is: even if the user is signed in, we should still initialize the SigninPromoController and register the observers due to the fact that the account may be removed from the device thus having to show the promo immediately.   \n\nRegarding dismissal, so far in Bookmarks we have treated the recording of dismissal \"near\" the place where the recording of the dismissal of the regular promo was done. Adding dismissal in #shouldShowPromo would mean however that we have to do 2 different checks here. ChromePreferenceManager#getNewTabPageSigninPromoDismissed() returns whether the appropriate promo was dismissed and moving the condition in #shouldShowPromo would mean that we would have to do an extra check to figure out which dismissal we need to verify - the old,regular promo or the \"Continue as\" promo - so I don\u0027t know if moving it there would increase readability.\n\nGiven that #shouldShowPromo in this case only checks the Finch flag, I decided to replace every call here with ChromeFeatureList.isEnabled(...) to provide a more clear idea of what is actually checked in the condition. Sorry for the confusion. I\u0027ll also rename this method in a future CL which will modify the \"old\" and \"new\" naming that we\u0027ve used so far across Settings, Bookmarks and Recent Tabs. \n\nIf you think that it would be more appropriate to add the previously discussed conditions in #shouldShowPromo, please let me know and I will modify it :)",
+      "parentUuid": "db654142_742c6f5d",
+      "range": {
+        "startLine": 84,
+        "startChar": 38,
+        "endLine": 84,
+        "endChar": 53
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c84af273_74e02af9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-21T17:23:13Z",
       "side": 1,
       "message": "\"new\" and \"old\" is relative, the new one will be old at the next reskinning. isn\u0027t there a more descriptive way to caracterise it? \"ContinueAsPromo\"? or something like that?",
+      "range": {
+        "startLine": 302,
+        "startChar": 25,
+        "endLine": 302,
+        "endChar": 43
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0213726c_77733866",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-22T13:29:23Z",
+      "side": 1,
+      "message": "We came up with PersonalizedPromo instead of NewPromo and GenericPromo instead of OldPromo. Do these sound like a good alternative?",
+      "parentUuid": "c84af273_74e02af9",
       "range": {
         "startLine": 302,
         "startChar": 25,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "84c172ae_0c48c514",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-22T13:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37d12af3_e99af0fa",
+      "range": {
+        "startLine": 340,
+        "startChar": 17,
+        "endLine": 340,
+        "endChar": 38
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2926ed45_0256ccea",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d68bf263_be8adae2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-22T13:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2926ed45_0256ccea",
+      "range": {
+        "startLine": 354,
+        "startChar": 17,
+        "endLine": 354,
+        "endChar": 32
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "676a1229_17d3f63f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-22T13:29:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "966d117b_d9b10740",
+      "range": {
+        "startLine": 360,
+        "startChar": 20,
+        "endLine": 360,
+        "endChar": 56
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12ad5bff_1dc156dd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-21T17:23:13Z",
       "side": 1,
       "message": "Why change the name of the pref?",
+      "range": {
+        "startLine": 361,
+        "startChar": 18,
+        "endLine": 361,
+        "endChar": 48
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f2b23d_33e7749a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-22T13:29:23Z",
+      "side": 1,
+      "message": "When wiring the promo in Bookmarks, Eli said that we should show the new promo to the user even if the old promo had been previously dismissed. I\u0027ve adapted the same philosophy here, thus needing another preference key. I am not sure that I understood your question though. I needed to rename the old preference key just to differentiate between the key for the old promos and the \"Continue as\" promos. Did I miss something?",
+      "parentUuid": "12ad5bff_1dc156dd",
       "range": {
         "startLine": 361,
         "startChar": 18,
