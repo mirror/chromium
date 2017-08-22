@@ -4,8 +4,6 @@
 
 package org.chromium.chrome.browser.webapps;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
 
 import org.junit.After;
@@ -29,6 +27,7 @@ import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
 import org.chromium.chrome.test.util.browser.WebappTestPage;
 import org.chromium.content_public.common.ScreenOrientationValues;
 import org.chromium.net.test.EmbeddedTestServer;
+import org.chromium.net.test.EmbeddedTestServerRule;
 import org.chromium.webapk.lib.client.WebApkVersion;
 
 import java.util.HashMap;
@@ -44,6 +43,9 @@ import java.util.Map;
 public class WebApkUpdateManagerTest {
     @Rule
     public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();
+
+    @Rule
+    public EmbeddedTestServerRule mTestServerRule = new EmbeddedTestServerRule();
 
     private static final String WEBAPK_PACKAGE = "test.package";
     private static final String WEBAPK_ID = "webapk_id";
@@ -63,7 +65,6 @@ public class WebApkUpdateManagerTest {
     private static final long WEBAPK_THEME_COLOR = 2147483648L;
     private static final long WEBAPK_BACKGROUND_COLOR = 2147483648L;
 
-    private EmbeddedTestServer mTestServer;
     private Tab mTab;
 
     /**
@@ -112,7 +113,7 @@ public class WebApkUpdateManagerTest {
 
     public CreationData defaultCreationData(EmbeddedTestServer server) {
         CreationData creationData = new CreationData();
-        creationData.manifestUrl = mTestServer.getURL(WEBAPK_MANIFEST_URL);
+        creationData.manifestUrl = mTestServerRule.getServer().getURL(WEBAPK_MANIFEST_URL);
         creationData.startUrl = server.getURL(WEBAPK_START_URL);
         creationData.scope = server.getURL(WEBAPK_SCOPE_URL);
         creationData.name = WEBAPK_NAME;
@@ -133,8 +134,6 @@ public class WebApkUpdateManagerTest {
     public void setUp() throws Exception {
         mActivityTestRule.startMainActivityOnBlankPage();
         RecordHistogram.setDisabledForTests(true);
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        mTestServer = EmbeddedTestServer.createAndStartServer(context);
         mTab = mActivityTestRule.getActivity().getActivityTab();
 
         TestFetchStorageCallback callback = new TestFetchStorageCallback();
@@ -144,7 +143,6 @@ public class WebApkUpdateManagerTest {
 
     @After
     public void tearDown() throws Exception {
-        mTestServer.stopAndDestroyServer();
         RecordHistogram.setDisabledForTests(false);
     }
 
@@ -182,12 +180,12 @@ public class WebApkUpdateManagerTest {
     @Feature({"WebApk"})
     public void testCanonicalUrlsIdenticalShouldNotUpgrade() throws Exception {
         // URL canonicalization should replace "%74" with 't'.
-        CreationData creationData = defaultCreationData(mTestServer);
-        creationData.startUrl = mTestServer.getURL(
+        CreationData creationData = defaultCreationData(mTestServerRule.getServer());
+        creationData.startUrl = mTestServerRule.getServer().getURL(
                 "/chrome/test/data/banners/manifest_%74est_page.html");
 
         WebappTestPage.navigateToPageWithServiceWorkerAndManifest(
-                mTestServer, mTab, WEBAPK_MANIFEST_URL);
+                mTestServerRule.getServer(), mTab, WEBAPK_MANIFEST_URL);
         Assert.assertFalse(checkUpdateNeeded(creationData));
     }
 
@@ -199,12 +197,12 @@ public class WebApkUpdateManagerTest {
     @Feature({"WebApk"})
     public void testCanonicalUrlsDifferentShouldUpgrade() throws Exception {
         // URL canonicalization should replace "%62" with 'b'.
-        CreationData creationData = defaultCreationData(mTestServer);
-        creationData.startUrl = mTestServer.getURL(
+        CreationData creationData = defaultCreationData(mTestServerRule.getServer());
+        creationData.startUrl = mTestServerRule.getServer().getURL(
                 "/chrome/test/data/banners/manifest_%62est_page.html");
 
         WebappTestPage.navigateToPageWithServiceWorkerAndManifest(
-                mTestServer, mTab, WEBAPK_MANIFEST_URL);
+                mTestServerRule.getServer(), mTab, WEBAPK_MANIFEST_URL);
         Assert.assertTrue(checkUpdateNeeded(creationData));
     }
 }
