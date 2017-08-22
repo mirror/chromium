@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95d0cf8c_fdf0565b",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-22T21:10:00Z",
+      "side": 1,
+      "message": "It appears that this newly added case also strips https://, which seems to contradict the CL description.\n\nThe below case also strips https.\n\n\nIt would seem impossible for both the cases in line 55 and line 57 to pass, But the trybots pass... not sure why.",
+      "revId": "e53f344b6b85236da31c69c890c59ff4b3e1f78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
