@@ -14,6 +14,9 @@
 
 namespace ash {
 
+// static
+const char TrayContainer::kViewClassName[] = "TrayContainerView";
+
 TrayContainer::TrayContainer(Shelf* shelf) : shelf_(shelf) {
   DCHECK(shelf_);
 
@@ -21,6 +24,10 @@ TrayContainer::TrayContainer(Shelf* shelf) : shelf_(shelf) {
 }
 
 TrayContainer::~TrayContainer() {}
+
+const char* TrayContainer::GetClassName() const {
+  return kViewClassName;
+}
 
 void TrayContainer::UpdateAfterShelfAlignmentChange() {
   UpdateLayout();

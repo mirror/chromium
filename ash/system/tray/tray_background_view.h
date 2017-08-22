@@ -33,6 +33,9 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
  public:
   static const char kViewClassName[];
 
+  bool checking_ = false;
+  void set_checking(bool value) { checking_ = value; }
+
   explicit TrayBackgroundView(Shelf* shelf);
   ~TrayBackgroundView() override;
 
@@ -123,6 +126,12 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   // |close_bubble| is set.
   void AnimateToTargetBounds(const gfx::Rect& target_bounds, bool close_bubble);
 
+  // Helper function that calculates background bounds relative to local bounds
+  // based on background insets returned from GetBackgroundInsets().
+  gfx::Rect GetBackgroundBounds() const;
+
+  views::PaintInfo::ScaleType GetPaintScaleType() const override;
+
  protected:
   // ActionableView:
   std::unique_ptr<views::InkDropMask> CreateInkDropMask() const override;
@@ -150,10 +159,6 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
 
   // Helper function that calculates background insets relative to local bounds.
   gfx::Insets GetBackgroundInsets() const;
-
-  // Helper function that calculates background bounds relative to local bounds
-  // based on background insets returned from GetBackgroundInsets().
-  gfx::Rect GetBackgroundBounds() const;
 
   // The shelf containing the system tray for this view.
   Shelf* shelf_;

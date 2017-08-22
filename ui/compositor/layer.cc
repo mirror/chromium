@@ -467,6 +467,7 @@ void Layer::SetMaskLayer(Layer* layer_mask) {
   // We need to reference the linked object so that it can properly break the
   // link to us when it gets deleted.
   if (layer_mask) {
+    layer_mask->SetSubpixelPositionOffset(subpixel_position_offset_);
     layer_mask->layer_mask_back_link_ = this;
     layer_mask->OnDeviceScaleFactorChanged(device_scale_factor_);
   }

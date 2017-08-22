@@ -115,12 +115,14 @@ class TrayBackground : public views::Background {
   void Paint(gfx::Canvas* canvas, views::View* view) const override {
     cc::PaintFlags background_flags;
     background_flags.setAntiAlias(true);
-    background_flags.setColor(color_);
-    gfx::Insets insets = GetMirroredBackgroundInsets(
-        tray_background_view_->shelf()->IsHorizontalAlignment());
-    gfx::Rect bounds = view->GetLocalBounds();
-    bounds.Inset(insets);
-    canvas->DrawRoundRect(bounds, kTrayRoundedBorderRadius, background_flags);
+    if (tray_background_view_->checking_)
+      background_flags.setColor(SK_ColorBLUE);
+    else
+      background_flags.setColor(color_);
+    const float dsf = canvas->UndoDeviceScaleFactor();
+    canvas->DrawRoundRect(
+        gfx::ScaleToEnclosingRect(tray_background_view_->GetBackgroundBounds(), dsf),
+        kTrayRoundedBorderRadius * dsf, background_flags);
   }
 
   // Reference to the TrayBackgroundView for which this is a background.
@@ -170,8 +172,9 @@ TrayBackgroundView::TrayBackgroundView(Shelf* shelf)
 
   SetLayoutManager(new views::FillLayout);
 
-  tray_container_->SetBackground(
-      std::unique_ptr<views::Background>(background_));
+  // tray_container_->SetBackground(
+      // std::unique_ptr<views::Background>(background_));
+  SetBackground(std::unique_ptr<views::Background>(background_));
   AddChildView(tray_container_);
 
   tray_event_filter_.reset(new TrayEventFilter);
@@ -288,6 +291,10 @@ std::unique_ptr<views::InkDropRipple> TrayBackgroundView::CreateInkDropRipple()
       GetInkDropBaseColor(), ink_drop_visible_opacity());
 }
 
+views::PaintInfo::ScaleType TrayBackgroundView::GetPaintScaleType() const {
+  return views::PaintInfo::ScaleType::kUniformScaling;
+}
+
 std::unique_ptr<views::InkDropHighlight>
 TrayBackgroundView::CreateInkDropHighlight() const {
   gfx::Rect bounds = GetBackgroundBounds();
@@ -300,11 +307,12 @@ TrayBackgroundView::CreateInkDropHighlight() const {
   const int icon_size = kTrayIconSize + 2 * kTrayImageItemPadding;
   bounds.set_width(bounds.width() + 2 * icon_size);
   bounds.set_height(bounds.height() + 2 * icon_size);
+  SkColor color = checking_ ? SK_ColorYELLOW : GetInkDropBaseColor();
   std::unique_ptr<views::InkDropHighlight> highlight(
       new views::InkDropHighlight(bounds.size(), 0,
-                                  gfx::RectF(bounds).CenterPoint(),
-                                  GetInkDropBaseColor()));
-  highlight->set_visible_opacity(kTrayPopupInkDropHighlightOpacity);
+                                  gfx::RectF(bounds).CenterPoint(), color));
+  highlight->set_visible_opacity(
+      checking_ ? 0.5 : kTrayPopupInkDropHighlightOpacity);
   return highlight;
 }
 

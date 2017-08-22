@@ -15,10 +15,14 @@ class Shelf;
 // auto-resizes the widget when necessary.
 class TrayContainer : public views::View {
  public:
+  static const char kViewClassName[];
+
   explicit TrayContainer(Shelf* shelf);
   ~TrayContainer() override;
 
   void UpdateAfterShelfAlignmentChange();
+
+  const char* GetClassName() const override;
 
   void SetMargin(int main_axis_margin, int cross_axis_margin);
 

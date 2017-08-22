@@ -49,6 +49,8 @@ class ASH_EXPORT WebNotificationTray
       public base::SupportsWeakPtr<WebNotificationTray>,
       public ui::SimpleMenuModel::Delegate {
  public:
+  static const char kViewClassName[];
+
   WebNotificationTray(Shelf* shelf,
                       aura::Window* status_area_window,
                       SystemTray* system_tray);
@@ -110,6 +112,9 @@ class ASH_EXPORT WebNotificationTray
   bool IsCommandIdChecked(int command_id) const override;
   bool IsCommandIdEnabled(int command_id) const override;
   void ExecuteCommand(int command_id, int event_flags) override;
+
+  // Overriden from views::View
+  const char* GetClassName() const override;
 
   message_center::MessageCenter* message_center() const;
 

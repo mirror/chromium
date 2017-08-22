@@ -260,6 +260,9 @@ class WebNotificationLabel : public WebNotificationItem {
   DISALLOW_COPY_AND_ASSIGN(WebNotificationLabel);
 };
 
+// static
+const char WebNotificationTray::kViewClassName[] = "WebNotificationTrayView";
+
 WebNotificationTray::WebNotificationTray(Shelf* shelf,
                                          aura::Window* status_area_window,
                                          SystemTray* system_tray)
@@ -271,6 +274,9 @@ WebNotificationTray::WebNotificationTray(Shelf* shelf,
   DCHECK(shelf);
   DCHECK(status_area_window_);
   DCHECK(system_tray_);
+
+  set_checking(true);
+  // SetBackground(views::CreateSolidBackground(SK_ColorGREEN));
 
   SetInkDropMode(InkDropMode::ON);
   gfx::ImageSkia bell_image =
@@ -494,6 +500,10 @@ void WebNotificationTray::ExecuteCommand(int command_id, int event_flags) {
                                    ? base::TimeDelta::FromDays(1)
                                    : base::TimeDelta::FromHours(1);
   message_center()->EnterQuietModeWithExpire(expires_in);
+}
+
+const char* WebNotificationTray::GetClassName() const {
+  return kViewClassName;
 }
 
 void WebNotificationTray::OnMessageCenterTrayChanged() {
