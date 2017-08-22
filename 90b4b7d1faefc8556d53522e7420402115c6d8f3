@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eacc85b4_1d7a31a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-22T22:25:21Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "6b64471e_d472f8db",
+      "range": {
+        "startLine": 21,
+        "startChar": 18,
+        "endLine": 21,
+        "endChar": 62
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0878308f_398578c0",
         "filename": "cc/paint/draw_image.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25fce29_043ea2db",
+        "filename": "cc/paint/draw_image.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-22T22:25:21Z",
+      "side": 1,
+      "message": "Eventually I plan to add frame_index_ to draw_image, when cc starts deciding the current frame to use. Which is why I wanted it to be on DrawImage instead of callers using the index from PaintImage directly.",
+      "parentUuid": "0878308f_398578c0",
+      "range": {
+        "startLine": 55,
+        "startChar": 23,
+        "endLine": 55,
+        "endChar": 32
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c336d134_9796a09b",
+        "filename": "cc/paint/draw_image.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-22T22:25:21Z",
+      "side": 1,
+      "message": "When cc is animating the image, PaintImage won\u0027t have the current_frame. So I want to avoid adding an API to it along the lines of current frame.",
+      "parentUuid": "96002de1_6096a6a1",
+      "range": {
+        "startLine": 56,
+        "startChar": 24,
+        "endLine": 56,
+        "endChar": 66
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ce823f8_4ea5e2d1",
         "filename": "cc/paint/paint_image.cc",
         "patchSetId": 5
@@ -85,6 +157,24 @@
       "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9588600_954f11d4",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-22T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ce823f8_4ea5e2d1",
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "889df2bc_f06c73fa",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-22T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fa5ab00_699f3c76",
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0517115c_2941becd",
         "filename": "cc/paint/paint_image.cc",
         "patchSetId": 5
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "9b22b893_83226fd2",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-22T22:25:21Z",
+      "side": 1,
+      "message": "I added a comment to ContentId as well in PaintImage. Is there something else I could add here?",
+      "parentUuid": "0517115c_2941becd",
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efb30c22_6163fd69",
         "filename": "cc/paint/paint_image.h",
         "patchSetId": 5
@@ -133,6 +259,30 @@
       "writtenOn": "2017-08-22T20:47:52Z",
       "side": 1,
       "message": "Should this just be named Id and expose a stable id as one of the parameters? so then s/FrameKey/Id/ everywhere, it\u0027s just the id is now a pod object instead of an int.",
+      "range": {
+        "startLine": 38,
+        "startChar": 24,
+        "endLine": 38,
+        "endChar": 32
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61bcb3c3_6e624fa1",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-22T22:25:21Z",
+      "side": 1,
+      "message": "In terms of naming, its a bit confusing if we use Id interchangeably for a monotonically increasing id and a pod object like this. So I was trying to keep it consistent with other similar use-cases, like caches keys for the decode caches.",
+      "parentUuid": "efb30c22_6163fd69",
       "range": {
         "startLine": 38,
         "startChar": 24,
@@ -168,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "d0d41c3f_98ef08a0",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-22T22:25:21Z",
+      "side": 1,
+      "message": "Could I word the comment on |frame_index_| to clarify this better? My intention is to make the frame_index_ optional on PaintImage. The caller can specify it, if its decided at record time. Or cc can select it at playback time, if unspecified.",
+      "parentUuid": "ea7a2b6e_ed8bf5ad",
+      "range": {
+        "startLine": 98,
+        "startChar": 9,
+        "endLine": 98,
+        "endChar": 20
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f37b4243_c1274392",
         "filename": "cc/paint/paint_image.h",
         "patchSetId": 5
@@ -188,6 +362,30 @@
       "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73671545_eb328b0c",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-22T22:25:21Z",
+      "side": 1,
+      "message": "Updated the comment.",
+      "parentUuid": "f37b4243_c1274392",
+      "range": {
+        "startLine": 130,
+        "startChar": 57,
+        "endLine": 131,
+        "endChar": 11
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "a4e3b7e6_a716a247",
+        "filename": "cc/paint/paint_image_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-22T22:25:21Z",
+      "side": 1,
+      "message": "Not for the default case. Sub-classes can override this function if it is different based on the frame index.",
+      "parentUuid": "2b959f02_b4ae8a33",
+      "range": {
+        "startLine": 22,
+        "startChar": 9,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "214dc6c7_351b2c5b",
         "filename": "cc/paint/paint_image_generator.h",
         "patchSetId": 5
@@ -234,6 +456,30 @@
       "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd7ccd82_e2b1ecdf",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-22T22:25:21Z",
+      "side": 1,
+      "message": "Changed it to TimeDelta. That\u0027s much clearer.",
+      "parentUuid": "214dc6c7_351b2c5b",
+      "range": {
+        "startLine": 28,
+        "startChar": 38,
+        "endLine": 28,
+        "endChar": 46
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "6e27388e_106d6bb1",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-22T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da8a7d85_55f94c7d",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 19
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd57688a_3a7e263f",
         "filename": "cc/paint/paint_image_generator.h",
         "patchSetId": 5
@@ -280,6 +550,30 @@
       "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab7aa7b7_a1eb923c",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-22T22:25:21Z",
+      "side": 1,
+      "message": "Because repeated queries for the same frame could provide different output for partial frames.",
+      "parentUuid": "dd57688a_3a7e263f",
+      "range": {
+        "startLine": 72,
+        "startChar": 1,
+        "endLine": 75,
+        "endChar": 75
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -306,6 +600,30 @@
     },
     {
       "key": {
+        "uuid": "e39cf494_e1291f3a",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-22T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc88a2ff_0f0e5e83",
+      "range": {
+        "startLine": 84,
+        "startChar": 55,
+        "endLine": 84,
+        "endChar": 57
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb8e3970_f25e7300",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 5
@@ -329,6 +647,30 @@
     },
     {
       "key": {
+        "uuid": "96414354_82684181",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-22T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb8e3970_f25e7300",
+      "range": {
+        "startLine": 1072,
+        "startChar": 10,
+        "endLine": 1072,
+        "endChar": 12
+      },
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f049e6c4_6c5a41b3",
         "filename": "cc/tiles/software_image_decode_cache.h",
         "patchSetId": 5
@@ -343,6 +685,24 @@
       "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "090fb26a_a44b6ad4",
+        "filename": "cc/tiles/software_image_decode_cache.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-22T22:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f049e6c4_6c5a41b3",
+      "revId": "90b4b7d1faefc8556d53522e7420402115c6d8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
