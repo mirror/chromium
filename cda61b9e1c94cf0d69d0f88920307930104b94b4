@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d3ad7fc3_2f0a5179",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-22T19:00:19Z",
+      "side": 1,
+      "message": "\u003e This is a fair question. I did this because I am not completely with the codebase, so I would rather have an additional condition to make sure that the callback is never called.\n\u003e \n\u003e To be more specific, I am not 100% sure why resetting the token_fetcher_ guarantees that AccessTokenAvailable is not called. What about the case where the destructor of AccessTokenFetcher and the AccessTokenFetcher::OnGetTokenSuccess (which calls ContextualSuggestionsService::AccessTokenAvailable) are in a race condition? \n\nI\u0027m not too worried.  All this runs on the main (UI) thread, which means these events are serialized.  I cannot imagine AccessTokenFetcher::OnGetTokenSuccess being called after the destructor runs.  (How would it be scheduled?)\n\nWell, let\u0027s submit this simple version and see if we see any additional reports.  If so, then we\u0027ll do something better.\n\n\u003e Note that I removed this flag. I trust your judgement on this one and testing the code without the flag seems positive.",
+      "parentUuid": "c8bec6de_e48c9d82",
+      "range": {
+        "startLine": 260,
+        "startChar": 28,
+        "endLine": 260,
+        "endChar": 0
+      },
+      "revId": "cda61b9e1c94cf0d69d0f88920307930104b94b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea7a6ed1_0b72894f",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 6
