@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f8981b25_4118a42f",
+        "filename": "base/debug/activity_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-22T20:05:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "813cb48c_d140ddd4",
+      "range": {
+        "startLine": 732,
+        "startChar": 2,
+        "endLine": 732,
+        "endChar": 7
+      },
+      "revId": "6f5b667f5b0ab48b47e5567909f80222f5504bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c163656_5867fcc4",
         "filename": "base/debug/activity_tracker.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-22T19:53:12Z",
       "side": 1,
       "message": "can this be \"const\"?",
+      "range": {
+        "startLine": 747,
+        "startChar": 2,
+        "endLine": 747,
+        "endChar": 20
+      },
+      "revId": "6f5b667f5b0ab48b47e5567909f80222f5504bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ffd68b_9e83e631",
+        "filename": "base/debug/activity_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-22T20:05:53Z",
+      "side": 1,
+      "message": "It can, but the #if gets a little ugly around the member initialization. Have done so with minimal ugly by my eye. Feast yours, or advise on better ways to do this !ugly.",
+      "parentUuid": "4c163656_5867fcc4",
       "range": {
         "startLine": 747,
         "startChar": 2,
