@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b85f365_51e27827",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-22T19:02:23Z",
+      "side": 1,
+      "message": "nit: const SelectionForUndoStep\u0026",
+      "revId": "c1960538a3d2f603298f10ebff7f2b619c217149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7803a558_e70352f8",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-22T19:02:23Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of SelectionForUndoStep::IsNonOrphanedCaretOrRange(), because \nthis, unlike the selection type, is not an intrinsic property.\n\nThe two DCHECKs above this line are also pretty weird. \n\nSo, together, these lines should be rewritten as:\n\nif (selection.IsNone() || !selection.IsValidFor(GetDocument())) {\n  // TODO(editing-dev): some triage comment if this is due to some bug.\n  NOTREACHED(); // or DCHECK(!selection.IsNone())\n  return;\n}",
+      "revId": "c1960538a3d2f603298f10ebff7f2b619c217149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9665347b_ee3ec093",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-22T19:02:23Z",
+      "side": 1,
+      "message": "It seems easier if we do:\n\nconst VisibleSelection\u0026 visible_selection \u003d CreateVisibleSelection(selection);\nconst VisiblePosition\u0026 visible_start \u003d visible_selection.VisibleStart();\nconst VisiblePosition\u0026 visible_end \u003d visible_selection.VisibleEnd();",
+      "revId": "c1960538a3d2f603298f10ebff7f2b619c217149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05fc3262_77059485",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1103,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-22T19:02:23Z",
+      "side": 1,
+      "message": "This is quite some code duplication due to removal of EndingVisibleSelection()...\n\nI think the use of EndingVisibleSelection() inside editing commands is legit. It can still be a useful shorthand when an editing command needs canonicalization.\n\nSo it seems fine as long as the use is restricted in editing commands. Instead of removing this function, we should make it protected member of CompositeEditCommand instead.",
+      "range": {
+        "startLine": 1100,
+        "startChar": 0,
+        "endLine": 1103,
+        "endChar": 73
+      },
+      "revId": "c1960538a3d2f603298f10ebff7f2b619c217149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5201f16_0a86950b",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1149,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-22T19:02:23Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "c1960538a3d2f603298f10ebff7f2b619c217149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981ba58c_9725cb25",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-22T19:02:23Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "c1960538a3d2f603298f10ebff7f2b619c217149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60fb3ef6_bbd7b7c8",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1533,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-22T19:02:23Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "c1960538a3d2f603298f10ebff7f2b619c217149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f392bd09_2e9cfb4e",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1540,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-22T19:02:23Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "c1960538a3d2f603298f10ebff7f2b619c217149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84771726_af83c43f",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1572,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-22T19:02:23Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "c1960538a3d2f603298f10ebff7f2b619c217149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6eed892_dd61769b",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1613,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-22T19:02:23Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "c1960538a3d2f603298f10ebff7f2b619c217149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463c5afd_22f59116",
+        "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-22T19:02:23Z",
+      "side": 1,
+      "message": "This is not an intrinsic property of SelectionForUndoStep, since its return value can change due to DOM changes.\n\nA better way is to check\n\n!IsNone() \u0026\u0026 IsValidFor(GetDocument())",
+      "revId": "c1960538a3d2f603298f10ebff7f2b619c217149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
