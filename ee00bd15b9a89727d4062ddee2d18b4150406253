@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c4cd7e6_21d1169a",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-22T18:27:41Z",
+      "side": 1,
+      "message": "Can you make this have a StandardOnboardingTabsParams, that way I don\u0027t have to worry about possible slicing and warnings that the superclass doesn\u0027t have a virtual destructor. It also means Win10FromStandardOnboardingTabParams becomes much simpler.",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 72
+      },
+      "revId": "ee00bd15b9a89727d4062ddee2d18b4150406253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
