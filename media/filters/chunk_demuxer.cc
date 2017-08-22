@@ -621,8 +621,10 @@ ChunkDemuxer::Status ChunkDemuxer::AddId(const std::string& id,
            << " codecs=" << codecs;
   base::AutoLock auto_lock(lock_);
 
-  if ((state_ != WAITING_FOR_INIT && state_ != INITIALIZING) || IsValidId(id))
+  if ((state_ != WAITING_FOR_INIT && state_ != INITIALIZING) || IsValidId(id)) {
+    LOG(ERROR) << " state:" << state_ << " validID?:" << IsValidId(id);
     return kReachedIdLimit;
+  }
 
   std::vector<std::string> parsed_codec_ids;
   media::SplitCodecsToVector(codecs, &parsed_codec_ids, false);
