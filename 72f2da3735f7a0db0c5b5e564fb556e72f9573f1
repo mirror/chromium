@@ -16,6 +16,227 @@
       "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc517fc_1c487247",
+        "filename": "gpu/command_buffer/client/context_support.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T00:24:32Z",
+      "side": 1,
+      "message": "Do we need this any more, as opposed to doing ShallowFlushCHROMIUM?\n\nOtherwise, please fix comment (applies to all streams).",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c4a0cb_005df378",
+        "filename": "gpu/command_buffer/client/gpu_control.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T00:24:32Z",
+      "side": 1,
+      "message": "Do we still need this?",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c67d1eb_0c304f0a",
+        "filename": "gpu/command_buffer/client/gpu_control.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T00:24:32Z",
+      "side": 1,
+      "message": "Ditto, do we still need this / Please fix comment otherwise.",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d428e3d7_26847ec4",
+        "filename": "gpu/command_buffer/service/scheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T00:24:32Z",
+      "side": 1,
+      "message": "nit: consider passing \u0027std::vector\u003cSyncToken\u003e sync_token_fences\u0027 and using std::move at the callsite (and the implementation) to avoid copies.",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698e3bc6_49ee901a",
+        "filename": "gpu/command_buffer/service/scheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T00:24:32Z",
+      "side": 1,
+      "message": "nit: please add move-assignment operator (rule-of-3).",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87671b5_ccd708e0",
+        "filename": "gpu/ipc/client/gpu_channel_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T00:24:32Z",
+      "side": 1,
+      "message": "nit: std::move(flush_list_)",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b0a8f8_11bbde54",
+        "filename": "gpu/ipc/client/gpu_channel_host.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T00:24:32Z",
+      "side": 1,
+      "message": "nit: use std::vector\u003cui::LatencyInfo\u003e latency_info / std::vector\u003cSyncToken\u003e sync_token_fences, and use std::move at the callsites and std::make_move_iterator in the implementation?",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ee1ae4_29f34585",
+        "filename": "gpu/ipc/common/flush_params.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T00:24:32Z",
+      "side": 1,
+      "message": "nit: please add copy-assign operator (rule-of-3), and strongly suggest making this movable (move constructor + move-assign operator) since this goes into a container.",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d8308e_5fc1e782",
+        "filename": "gpu/ipc/common/gpu_messages.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T00:24:32Z",
+      "side": 1,
+      "message": "nit: please add comment that this isn\u0027t sent from the clients, but is an implementation detail of the service-side. Maybe consider moving the comments about the parameters to FlushParams field documentation.",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff4aecd_f87223ee",
+        "filename": "gpu/ipc/service/gpu_channel.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T00:24:32Z",
+      "side": 1,
+      "message": "nit: I believe you can std::get\u003c0\u003e(std::move(params)) which will let you have flush_list be a std::vector\u003cFlushParams\u003e (using move), which lets you have auto\u0026 flush_info below, which lets you std::move(flush_info.sync_token_fences).",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17aaa5e6_4e01232b",
+        "filename": "gpu/ipc/service/gpu_channel.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T00:24:32Z",
+      "side": 1,
+      "message": "Could we remove sync_token_fences from GpuCommandBufferMsg_AsyncFlush, since it\u0027s not used by the handler? (see also below).\nAlso, std::move(flush_info.latency_info), assuming we can do the above.",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c77e3e_08a7f2a7",
+        "filename": "gpu/ipc/service/gpu_channel.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T00:24:32Z",
+      "side": 1,
+      "message": "This shouldn\u0027t happen any more, right? Could we consider it a error if sent from the client, which will let us simplify the code below (sync_token_fences always empty)?",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "672e0460_158ac889",
+        "filename": "gpu/ipc/service/gpu_channel.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T00:24:32Z",
+      "side": 1,
+      "message": "nit: std::move(sync_token_fences)",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
