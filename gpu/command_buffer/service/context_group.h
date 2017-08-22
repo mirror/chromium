@@ -234,6 +234,8 @@ class GPU_EXPORT ContextGroup : public base::RefCounted<ContextGroup> {
 
   const GpuFeatureInfo& gpu_feature_info() const { return gpu_feature_info_; }
 
+  const GpuPreferences& gpu_preferecnes() const { return gpu_preferences_; }
+
  private:
   friend class base::RefCounted<ContextGroup>;
   ~ContextGroup();
