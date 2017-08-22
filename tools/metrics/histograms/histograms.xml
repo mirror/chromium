@@ -41960,6 +41960,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Net.RedirectChainLength" units="urls">
+  <owner>csharrison@chromium.org</owner>
+  <owner>rsleevi@chromium.org</owner>
+  <summary>
+    On a successful redirect, the number of redirects that were previously
+    processed. For example, on the first redirect, the value will be 0, and for
+    a load that processed four redirects, there will be counts of 0, 1, 2, and
+    3.
+  </summary>
+</histogram>
+
 <histogram name="Net.RedirectWithUnadvertisedContentEncoding" enum="Boolean">
   <owner>eustas@chromium.org</owner>
   <summary>
