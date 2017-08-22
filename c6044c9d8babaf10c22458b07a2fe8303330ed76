@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "af2633e0_2cbd787d",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-22T20:09:38Z",
+      "side": 1,
+      "message": "The original author of TabManager unit test probably wasn\u0027t aware of CreateTestWebContents() at all. :)\n\nI think it\u0027s OK to do it in this patch. I am not saying the previous one is wrong, it\u0027s just sometimes we don\u0027t go through the test harness code to see what methods we can reuse. So let\u0027s reduce some tiny duplication here by using CreateTestWebContents(). :)",
+      "parentUuid": "d1f36d49_b9a3845a",
+      "range": {
+        "startLine": 37,
+        "startChar": 15,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "208ee232_89b59a26",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
         "patchSetId": 6
@@ -462,6 +486,30 @@
       "side": 1,
       "message": "What is the visibility of tab1 and tab2 at this point, after SetForegroundAndBackgroundTabs()? I assume tab1 is foreground (shown) and tab2 is background (hidden), right?",
       "parentUuid": "7039b7b1_d84a3972",
+      "range": {
+        "startLine": 208,
+        "startChar": 33,
+        "endLine": 208,
+        "endChar": 37
+      },
+      "revId": "c6044c9d8babaf10c22458b07a2fe8303330ed76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebdad6eb_77011649",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-22T20:09:38Z",
+      "side": 1,
+      "message": "I tried to address this in another comment.",
+      "parentUuid": "faaa596f_73af5fc0",
       "range": {
         "startLine": 208,
         "startChar": 33,
