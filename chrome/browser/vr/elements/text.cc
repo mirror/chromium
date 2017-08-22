@@ -18,10 +18,14 @@ namespace vr {
 
 class TextTexture : public UiTexture {
  public:
-  TextTexture(int resource_id, float font_height, float text_width)
+  TextTexture(int resource_id,
+              float font_height,
+              float text_width,
+              SkColor ColorScheme::*const data_field)
       : resource_id_(resource_id),
         font_height_(font_height),
-        text_width_(text_width) {}
+        text_width_(text_width),
+        data_field_(data_field) {}
   ~TextTexture() override {}
 
   void OnSetMode() override { set_dirty(); }
@@ -40,6 +44,8 @@ class TextTexture : public UiTexture {
   // These widths are in meters.
   float font_height_;
   float text_width_;
+  // Text color data field in ColorScheme.
+  SkColor ColorScheme::*const data_field_;
 
   DISALLOW_COPY_AND_ASSIGN(TextTexture);
 };
@@ -47,11 +53,13 @@ class TextTexture : public UiTexture {
 Text::Text(int maximum_width_pixels,
            float font_height_meters,
            float text_width_meters,
+           SkColor ColorScheme::*const data_field,
            int resource_id)
     : TexturedElement(maximum_width_pixels),
       texture_(base::MakeUnique<TextTexture>(resource_id,
                                              font_height_meters,
-                                             text_width_meters)) {}
+                                             text_width_meters,
+                                             data_field)) {}
 Text::~Text() {}
 
 UiTexture* Text::GetTexture() const {
@@ -73,7 +81,7 @@ void TextTexture::Draw(SkCanvas* sk_canvas, const gfx::Size& texture_size) {
   std::vector<std::unique_ptr<gfx::RenderText>> lines =
       // TODO(vollick): if this subsumes all text, then we should probably move
       // this function into this class.
-      PrepareDrawStringRect(text, fonts, color_scheme().world_background_text,
+      PrepareDrawStringRect(text, fonts, (color_scheme()).*data_field_,
                             &text_bounds, kTextAlignmentCenter,
                             kWrappingBehaviorWrap);
   // Draw the text.
