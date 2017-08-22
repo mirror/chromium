@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "93640636_c8b06686",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-22T15:29:19Z",
+      "side": 1,
+      "message": "Okay, fair enough. Will undo this change to CanCleanup.",
+      "parentUuid": "c9681794_b4a8b6b9",
+      "revId": "8b0cb19767b99f04033ee7cc3dc11f5af842b4e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01a17760_bbb3faab",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 8
