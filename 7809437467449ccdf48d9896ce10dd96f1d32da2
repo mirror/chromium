@@ -278,6 +278,24 @@
     },
     {
       "key": {
+        "uuid": "ca9680ec_c18ef5d5",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T07:26:09Z",
+      "side": 1,
+      "message": "(Sorry to be clear, it\u0027s OK for these to be DCHECKs, and for if (!rfh) { /* problems getting the salt so return an empty buffer */ } to be the error handling)",
+      "parentUuid": "e310f19f_514fc5b8",
+      "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45f09a95_9d2177bd",
         "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
         "patchSetId": 3
