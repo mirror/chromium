@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03730bdc_39f5bb79",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T21:21:21Z",
+      "side": 1,
+      "message": "I think what you\u0027ve done in this patch set is much better.\n\nFWIW, our animation_player uses cc::MathUtil::ApproximatelyEqual(), and does something exactly like what you do below in its tests:\n\nbool ApproximatelyEqual(const gfx::SizeF\u0026 lhs, const gfx::SizeF\u0026 rhs) {\n  return MathUtil::ApproximatelyEqual(lhs.width(), rhs.width(), kTolerance) \u0026\u0026\n         MathUtil::ApproximatelyEqual(lhs.width(), rhs.width(), kTolerance);\n}",
+      "revId": "4d8b10d3276f4abf8ee6226753b2c06bc1472067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
