@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "931b7c51_ba6ba769",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-22T16:59:29Z",
+      "side": 1,
+      "message": "Use the type instead of auto please - it\u0027s hard to tell what the type is from this code.",
+      "revId": "a313c8fa470c6477cb0e9973e671b5da676b31b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
