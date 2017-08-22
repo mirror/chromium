@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bbf565c_828d697b",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 4
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T20:35:26Z",
+      "side": 1,
+      "message": "Put this in its own mixin, then pull it in to android bots that use minimal_symbols.",
+      "revId": "3067eeab2a00cee524f2cd0a9a444f8db88c9573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
