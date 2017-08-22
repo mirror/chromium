@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "161ac630_22cd0369",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-22T18:58:24Z",
+      "side": 1,
+      "message": "This makes sense.",
+      "parentUuid": "307de4a6_e1092746",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 22
+      },
+      "revId": "914540049ccf2b5aeb7398452d469aff7062911b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "946299dc_23b4c200",
         "filename": "chrome/browser/ui/startup/startup_tab_provider.h",
         "patchSetId": 4
