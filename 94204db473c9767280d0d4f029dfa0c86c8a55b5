@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "875bcf55_0e2ee22e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-22T01:53:54Z",
+      "side": 1,
+      "message": "nit: Please remove a trailing whitespace.",
+      "revId": "94204db473c9767280d0d4f029dfa0c86c8a55b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160ddc44_fb31f771",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-22T01:53:54Z",
+      "side": 1,
+      "message": "We should use IsPlainTextEditablePosition(), not exist yet, instead of\nIsEditablePoition().\n\nenum EditableLevel { kEditable, kRichlyEditable };\nstatic bool HasEditableLevel(const Node\u0026 node, EditableLevel)\n\ndoesn\u0027t support this case.\n\nI think Editable, RichlyEditable, etc. are confusing. It is better\nto use user-modify termes directly, e.g. ReadWrite, ReadOnly, ReadWritePlaintextOnly.",
+      "revId": "94204db473c9767280d0d4f029dfa0c86c8a55b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
