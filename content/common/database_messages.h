@@ -13,28 +13,6 @@
 
 #define IPC_MESSAGE_START DatabaseMsgStart
 
-// Database messages sent from the browser to the renderer.
-
-// Notifies the child process of the new database size
-IPC_MESSAGE_CONTROL3(DatabaseMsg_UpdateSize,
-                     url::Origin /* the origin */,
-                     base::string16 /* the database name */,
-                     int64_t /* the new database size */)
-
-// Notifies the child process of the new space available
-IPC_MESSAGE_CONTROL2(DatabaseMsg_UpdateSpaceAvailable,
-                     url::Origin /* the origin */,
-                     int64_t /* space available to origin */)
-
-// Notifies the child process to reset it's cached value for the origin.
-IPC_MESSAGE_CONTROL1(DatabaseMsg_ResetSpaceAvailable,
-                     url::Origin /* the origin */)
-
-// Asks the child process to close a database immediately
-IPC_MESSAGE_CONTROL2(DatabaseMsg_CloseImmediately,
-                     url::Origin /* the origin */,
-                     base::string16 /* the database name */)
-
 // Database messages sent from the renderer to the browser.
 
 // Asks the browser process to open a DB file with the given name.

@@ -15,6 +15,8 @@
 #include "storage/common/database/database_connections.h"
 #include "storage/common/quota/quota_types.h"
 
+#include "content/common/database.mojom.h"
+
 namespace url {
 class Origin;
 }  // namespace url
@@ -24,7 +26,8 @@ namespace content {
 class DatabaseMessageFilter : public BrowserMessageFilter,
                               public storage::DatabaseTracker::Observer {
  public:
-  explicit DatabaseMessageFilter(storage::DatabaseTracker* db_tracker);
+  explicit DatabaseMessageFilter(int process_id,
+                                 storage::DatabaseTracker* db_tracker);
 
   // BrowserMessageFilter implementation.
   void OnChannelClosing() override;
@@ -93,6 +96,10 @@ class DatabaseMessageFilter : public BrowserMessageFilter,
                           IPC::Message* reply_msg,
                           int reschedule_count);
 
+  void InitializeOnDatabaseTracker(content::mojom::WebDatabasePtrInfo);
+
+  void CloseOnDatabaseTracker();
+
   // The database tracker for the current browser context.
   scoped_refptr<storage::DatabaseTracker> db_tracker_;
 
@@ -102,6 +109,9 @@ class DatabaseMessageFilter : public BrowserMessageFilter,
 
   // Keeps track of all DB connections opened by this renderer
   storage::DatabaseConnections database_connections_;
+
+  // TODO
+  content::mojom::WebDatabasePtr database_provider_;
 };
 
 }  // namespace content
