@@ -169,7 +169,7 @@ class CannedSyncableFileSystem
 
   // Operation methods body.
   // They can be also called directly if the caller is already on IO thread.
-  void DoOpenFileSystem(const OpenFileSystemCallback& callback);
+  void DoOpenFileSystem(OpenFileSystemCallback callback);
   void DoCreateDirectory(const storage::FileSystemURL& url,
                          const StatusCallback& callback);
   void DoCreateFile(const storage::FileSystemURL& url,
