@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f236ec1a_9c2efe8b",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T17:31:55Z",
+      "side": 1,
+      "message": "Very very slightly. :)",
+      "parentUuid": "a7f472e3_92ee2232",
+      "range": {
+        "startLine": 21,
+        "startChar": 26,
+        "endLine": 21,
+        "endChar": 27
+      },
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6da1c71_146ffa3c",
         "filename": "chrome/browser/android/vr_shell/gvr_util.cc",
         "patchSetId": 10
@@ -558,6 +582,24 @@
       "side": 1,
       "message": "I believe EXPECT_FLOAT_EQ is too accurate. We need larger tolerance.\nChanged to EXPECT_TRUE instead.",
       "parentUuid": "255c2eee_f0cf5b2e",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431f0282_e0e2bc58",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T17:31:55Z",
+      "side": 1,
+      "message": "There is EXPECT_NEAR(), that does this check with a specified tolerance.  But as mentioned, maybe it makes sense to return to having the EXPECT on the entire matrix comparison, as it probably isn\u0027t helping much to fail mid-comparison.  Sorry about that suggesiton.",
+      "parentUuid": "36f17dae_2e45bdbd",
       "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

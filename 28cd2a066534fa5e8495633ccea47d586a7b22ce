@@ -68,6 +68,23 @@
       "revId": "28cd2a066534fa5e8495633ccea47d586a7b22ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "104f9efa_e959124c",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T17:31:55Z",
+      "side": 1,
+      "message": "As per the lunch chat, if you (and Tibor) preferred this the old way, that\u0027s cool too.",
+      "revId": "28cd2a066534fa5e8495633ccea47d586a7b22ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
