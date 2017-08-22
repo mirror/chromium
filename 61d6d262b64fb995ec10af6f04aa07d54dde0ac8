@@ -22,6 +22,30 @@
       "revId": "61d6d262b64fb995ec10af6f04aa07d54dde0ac8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "295d0397_c50d2343",
+        "filename": "cc/output/direct_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-22T02:36:37Z",
+      "side": 1,
+      "message": "Done. Also move the following part up.\nif (current_frame()-\u003eComputeScissorRectForRenderPass().IsEmpty())\n    return false;",
+      "parentUuid": "996436e8_97bc4ed1",
+      "range": {
+        "startLine": 632,
+        "startChar": 2,
+        "endLine": 637,
+        "endChar": 3
+      },
+      "revId": "61d6d262b64fb995ec10af6f04aa07d54dde0ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
