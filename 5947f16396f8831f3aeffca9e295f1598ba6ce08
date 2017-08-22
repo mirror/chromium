@@ -45,6 +45,30 @@
       "revId": "5947f16396f8831f3aeffca9e295f1598ba6ce08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "540f4592_8d429cc7",
+        "filename": "content/shell/browser/shell_url_request_context_getter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-22T21:32:24Z",
+      "side": 1,
+      "message": "Did you mean \nif (shut_down_) return nullptr;\n?",
+      "parentUuid": "8c56a3d8_a07e3dfa",
+      "range": {
+        "startLine": 122,
+        "startChar": 7,
+        "endLine": 122,
+        "endChar": 28
+      },
+      "revId": "5947f16396f8831f3aeffca9e295f1598ba6ce08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
