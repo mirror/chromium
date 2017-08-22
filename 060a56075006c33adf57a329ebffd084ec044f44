@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "894a7331_d667df92",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-22T22:27:11Z",
+      "side": 1,
+      "message": "I\u0027ve added a comment to ThrottlingURLLoader. I experimented with passing along the connection error to |forwarding_client_| however this turned out to be much more complex as there is no (and I cannot add) a method in the mojom::URLLoaderClient interface for reporting a connection error.",
+      "parentUuid": "eb08c74a_2f94d40d",
+      "revId": "060a56075006c33adf57a329ebffd084ec044f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8df06717_45139f31",
         "filename": "content/common/throttling_url_loader.cc",
         "patchSetId": 4
