@@ -117,6 +117,30 @@
       "revId": "7900fa8ff56f42ca2aae627ca2e6c138d73f4654",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f0e6cb_1791b7e4",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_collection_view.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-22T11:13:34Z",
+      "side": 1,
+      "message": "This is a temporary fix for M61. I\u0027m working on a better fix that would work on iOS 9, 10 and 11.",
+      "parentUuid": "e77ccf49_fc42b2c6",
+      "range": {
+        "startLine": 740,
+        "startChar": 0,
+        "endLine": 740,
+        "endChar": 48
+      },
+      "revId": "7900fa8ff56f42ca2aae627ca2e6c138d73f4654",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
