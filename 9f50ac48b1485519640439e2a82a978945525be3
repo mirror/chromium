@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65ef8fa8_755672cb",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 4
+      },
+      "lineNbr": 1188,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-22T01:19:33Z",
+      "side": 1,
+      "message": "Optional: might be able to mark these as 648274.",
+      "revId": "9f50ac48b1485519640439e2a82a978945525be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
