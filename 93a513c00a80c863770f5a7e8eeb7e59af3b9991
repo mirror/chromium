@@ -16,6 +16,24 @@
       "revId": "93a513c00a80c863770f5a7e8eeb7e59af3b9991",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca2dc26_05ee5785",
+        "filename": "tools/perf/core/perf_data_generator_unittest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-22T21:37:28Z",
+      "side": 1,
+      "message": "We still use PermanentlyDisableBenchmark (though the name is going to be switched here soon to either bet TemporarilyDisableBenchmark or just DisableBenchmark). We still have some tests that are disabled using PermanentlyDisableBenchmark because we want the whole test disabled, but we dont want to mark it as unsupported platforms.\n\nBecause of that, I think the tests should stay for now. When the refactoring around PermanentlyDisable vs. the new name happens, then the tests will be changed.",
+      "parentUuid": "542f1b37_5a45439f",
+      "revId": "93a513c00a80c863770f5a7e8eeb7e59af3b9991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
