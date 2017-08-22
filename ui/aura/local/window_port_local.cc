@@ -65,6 +65,14 @@ WindowPortLocal::~WindowPortLocal() {}
 void WindowPortLocal::OnPreInit(Window* window) {}
 
 void WindowPortLocal::OnDeviceScaleFactorChanged(float device_scale_factor) {
+  if (last_device_scale_factor_ != device_scale_factor &&
+      local_surface_id_.is_valid()) {
+    last_device_scale_factor_ = device_scale_factor;
+    local_surface_id_ = local_surface_id_allocator_.GenerateId();
+    if (frame_sink_)
+      frame_sink_->SetLocalSurfaceId(local_surface_id_);
+  }
+
   ScopedCursorHider hider(window_);
   if (window_->delegate())
     window_->delegate()->OnDeviceScaleFactorChanged(device_scale_factor);
@@ -80,7 +88,15 @@ void WindowPortLocal::OnWillMoveChild(size_t current_index, size_t dest_index) {
 void WindowPortLocal::OnVisibilityChanged(bool visible) {}
 
 void WindowPortLocal::OnDidChangeBounds(const gfx::Rect& old_bounds,
-                                        const gfx::Rect& new_bounds) {}
+                                        const gfx::Rect& new_bounds) {
+  if (last_size_in_pixels_ != new_bounds.size() &&
+      local_surface_id_.is_valid()) {
+    last_size_in_pixels_ = new_bounds.size();
+    local_surface_id_ = local_surface_id_allocator_.GenerateId();
+    if (frame_sink_)
+      frame_sink_->SetLocalSurfaceId(local_surface_id_);
+  }
+}
 
 void WindowPortLocal::OnDidChangeTransform(
     const gfx::Transform& old_transform,
@@ -102,10 +118,13 @@ WindowPortLocal::CreateLayerTreeFrameSink() {
   auto* context_factory_private =
       aura::Env::GetInstance()->context_factory_private();
   frame_sink_id_ = context_factory_private->AllocateFrameSinkId();
+  local_surface_id_ = local_surface_id_allocator_.GenerateId();
   auto frame_sink = base::MakeUnique<LayerTreeFrameSinkLocal>(
       frame_sink_id_, context_factory_private->GetHostFrameSinkManager());
   frame_sink->SetSurfaceChangedCallback(base::Bind(
       &WindowPortLocal::OnSurfaceChanged, weak_factory_.GetWeakPtr()));
+  frame_sink_ = frame_sink->GetWeakPtr();
+  frame_sink_->SetLocalSurfaceId(local_surface_id_);
   if (window_->GetRootWindow())
     window_->layer()->GetCompositor()->AddFrameSink(frame_sink_id_);
   return std::move(frame_sink);
@@ -113,6 +132,12 @@ WindowPortLocal::CreateLayerTreeFrameSink() {
 
 viz::SurfaceId WindowPortLocal::GetSurfaceId() const {
   return viz::SurfaceId(frame_sink_id_, local_surface_id_);
+}
+
+const viz::LocalSurfaceId& WindowPortLocal::GetLocalSurfaceId() {
+  if (!local_surface_id_.is_valid())
+    local_surface_id_ = local_surface_id_allocator_.GenerateId();
+  return local_surface_id_;
 }
 
 void WindowPortLocal::OnWindowAddedToRootWindow() {
