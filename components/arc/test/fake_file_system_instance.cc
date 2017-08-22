@@ -103,6 +103,16 @@ bool FakeFileSystemInstance::InitCalled() {
   return host_.is_bound();
 }
 
+void FakeFileSystemInstance::SetDeferCallbacks(bool defer_callbacks) {
+  defer_callbacks_ = defer_callbacks;
+  if (!defer_callbacks_) {
+    std::vector<base::OnceClosure> pending_closures;
+    std::swap(pending_closures, pending_closures_);
+    for (auto& closure : pending_closures)
+      std::move(closure).Run();
+  }
+}
+
 void FakeFileSystemInstance::AddFile(const File& file) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_EQ(0u, files_.count(std::string(file.url)));
@@ -153,15 +163,13 @@ void FakeFileSystemInstance::AddWatcher(const std::string& authority,
   DocumentKey key(authority, document_id);
   auto iter = documents_.find(key);
   if (iter == documents_.end()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  base::Bind(callback, -1));
+    ScheduleCallback(base::BindOnce(callback, -1));
     return;
   }
   int64_t watcher_id = next_watcher_id_++;
   document_to_watchers_[key].insert(watcher_id);
   watcher_to_document_.insert(std::make_pair(watcher_id, key));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(callback, watcher_id));
+  ScheduleCallback(base::BindOnce(callback, watcher_id));
 }
 
 void FakeFileSystemInstance::GetFileSize(const std::string& url,
@@ -169,13 +177,11 @@ void FakeFileSystemInstance::GetFileSize(const std::string& url,
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   auto iter = files_.find(url);
   if (iter == files_.end()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  base::Bind(callback, -1));
+    ScheduleCallback(base::BindOnce(callback, -1));
     return;
   }
   const File& file = iter->second;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(callback, file.content.size()));
+  ScheduleCallback(base::BindOnce(callback, file.content.size()));
 }
 
 void FakeFileSystemInstance::GetMimeType(const std::string& url,
@@ -183,13 +189,11 @@ void FakeFileSystemInstance::GetMimeType(const std::string& url,
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   auto iter = files_.find(url);
   if (iter == files_.end()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(callback, base::nullopt));
+    ScheduleCallback(base::BindOnce(callback, base::nullopt));
     return;
   }
   const File& file = iter->second;
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(callback, file.mime_type));
+  ScheduleCallback(base::BindOnce(callback, file.mime_type));
 }
 
 void FakeFileSystemInstance::OpenFileToRead(
@@ -198,8 +202,8 @@ void FakeFileSystemInstance::OpenFileToRead(
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   auto iter = files_.find(url);
   if (iter == files_.end()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, base::Passed(mojo::ScopedHandle())));
+    ScheduleCallback(
+        base::BindOnce(callback, base::Passed(mojo::ScopedHandle())));
     return;
   }
   const File& file = iter->second;
@@ -213,9 +217,9 @@ void FakeFileSystemInstance::OpenFileToRead(
   MojoResult result = mojo::edk::CreatePlatformHandleWrapper(
       std::move(platform_handle), &wrapped_handle);
   DCHECK_EQ(MOJO_RESULT_OK, result);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(callback, base::Passed(mojo::ScopedHandle(
-                                          mojo::Handle(wrapped_handle)))));
+  ScheduleCallback(base::BindOnce(
+      callback,
+      base::Passed(mojo::ScopedHandle(mojo::Handle(wrapped_handle)))));
 }
 
 void FakeFileSystemInstance::GetDocument(const std::string& authority,
@@ -224,13 +228,12 @@ void FakeFileSystemInstance::GetDocument(const std::string& authority,
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   auto iter = documents_.find(DocumentKey(authority, document_id));
   if (iter == documents_.end()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, base::Passed(mojom::DocumentPtr())));
+    ScheduleCallback(
+        base::BindOnce(callback, base::Passed(mojom::DocumentPtr())));
     return;
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::Bind(callback, base::Passed(MakeDocument(iter->second))));
+  ScheduleCallback(
+      base::BindOnce(callback, base::Passed(MakeDocument(iter->second))));
 }
 
 void FakeFileSystemInstance::GetChildDocuments(
@@ -242,8 +245,7 @@ void FakeFileSystemInstance::GetChildDocuments(
   auto child_iter =
       child_documents_.find(DocumentKey(authority, parent_document_id));
   if (child_iter == child_documents_.end()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, base::nullopt));
+    ScheduleCallback(base::BindOnce(callback, base::nullopt));
     return;
   }
   std::vector<mojom::DocumentPtr> children;
@@ -252,10 +254,8 @@ void FakeFileSystemInstance::GetChildDocuments(
     DCHECK(doc_iter != documents_.end());
     children.emplace_back(MakeDocument(doc_iter->second));
   }
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::Bind(callback,
-                 base::Passed(base::make_optional(std::move(children)))));
+  ScheduleCallback(base::BindOnce(
+      callback, base::Passed(base::make_optional(std::move(children)))));
 }
 
 void FakeFileSystemInstance::GetRecentDocuments(
@@ -265,15 +265,13 @@ void FakeFileSystemInstance::GetRecentDocuments(
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   auto recent_iter = recent_documents_.find(RootKey(authority, root_id));
   if (recent_iter == recent_documents_.end()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(callback, base::nullopt));
+    ScheduleCallback(base::BindOnce(callback, base::nullopt));
     return;
   }
   std::vector<mojom::DocumentPtr> recents;
   for (const Document& document : recent_iter->second)
     recents.emplace_back(MakeDocument(document));
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
+  ScheduleCallback(
       base::BindOnce(callback, base::make_optional(std::move(recents))));
 }
 
@@ -290,20 +288,26 @@ void FakeFileSystemInstance::RemoveWatcher(
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   auto iter = watcher_to_document_.find(watcher_id);
   if (iter == watcher_to_document_.end()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                  base::Bind(callback, false));
+    ScheduleCallback(base::BindOnce(callback, false));
     return;
   }
   document_to_watchers_[iter->second].erase(watcher_id);
   watcher_to_document_.erase(iter);
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(callback, true));
+  ScheduleCallback(base::BindOnce(callback, true));
 }
 
 void FakeFileSystemInstance::RequestMediaScan(
     const std::vector<std::string>& paths) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   // Do nothing and pretend we scaned them.
+}
+
+void FakeFileSystemInstance::ScheduleCallback(base::OnceClosure closure) {
+  if (defer_callbacks_)
+    pending_closures_.emplace_back(std::move(closure));
+  else
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                  std::move(closure));
 }
 
 }  // namespace arc

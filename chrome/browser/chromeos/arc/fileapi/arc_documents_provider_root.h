@@ -206,7 +206,6 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
                              const ReadDirectoryInternalCallback& callback);
   void ReadDirectoryInternalWithChildDocuments(
       const std::string& document_id,
-      const ReadDirectoryInternalCallback& callback,
       base::Optional<std::vector<mojom::DocumentPtr>> maybe_children);
 
   // Clears a directory cache.
@@ -224,6 +223,11 @@ class ArcDocumentsProviderRoot : public ArcFileSystemOperationRunner::Observer {
 
   // Cache of directory contents. Keys are document IDs of directories.
   std::map<std::string, DirectoryCache> directory_cache_;
+
+  // Map from a document ID to callbacks pending for ReadDirectoryInternal()
+  // calls.
+  std::map<std::string, std::vector<ReadDirectoryInternalCallback>>
+      pending_callbacks_map_;
 
   // Map from a file path to a watcher data.
   //
