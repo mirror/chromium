@@ -46,7 +46,6 @@ class Top10MobilePage(page_module.Page):
         url=url, page_set=page_set, credentials_path='data/credentials.json',
         shared_page_state_class=shared_page_state.SharedMobilePageState,
         cache_temperature=cache_temperature, name=url)
-    self.archive_data_file = 'data/top_10_mobile.json'
 
 
 class Top10MobilePageSet(story.StorySet):
