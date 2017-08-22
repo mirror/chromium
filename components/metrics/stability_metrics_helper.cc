@@ -164,6 +164,12 @@ void StabilityMetricsHelper::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterInt64Pref(prefs::kUninstallMetricsPageLoadCount, 0);
 }
 
+// static
+void StabilityMetricsHelper::IncreaseCrashCount(PrefService* local_state) {
+  int value = local_state->GetInteger(prefs::kStabilityRendererCrashCount);
+  local_state->SetInteger(prefs::kStabilityRendererCrashCount, value + 1);
+}
+
 void StabilityMetricsHelper::BrowserChildProcessCrashed() {
   IncrementPrefValue(prefs::kStabilityChildProcessCrashCount);
 }
@@ -189,6 +195,10 @@ void StabilityMetricsHelper::LogRendererCrash(bool was_extension_process,
     case base::TERMINATION_STATUS_ABNORMAL_TERMINATION:
     case base::TERMINATION_STATUS_OOM:
       if (was_extension_process) {
+#if defined(OS_ANDROID)
+        // was_extension_process is disabled for Android
+        NOTREACHED();
+#endif
         IncrementPrefValue(prefs::kStabilityExtensionRendererCrashCount);
 
         UMA_HISTOGRAM_SPARSE_SLOWLY("CrashExitCodes.Extension",

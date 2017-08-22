@@ -48,6 +48,9 @@ class StabilityMetricsHelper {
   // Registers local state prefs used by this class.
   static void RegisterPrefs(PrefRegistrySimple* registry);
 
+  // Records a browser child process crash in stability proto.
+  static void IncreaseCrashCount(PrefService* local_state);
+
  private:
   // Increment an Integer pref value specified by |path|.
   void IncrementPrefValue(const char* path);
