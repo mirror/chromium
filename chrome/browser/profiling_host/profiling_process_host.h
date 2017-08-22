@@ -5,8 +5,10 @@
 #ifndef CHROME_BROWSER_PROFILING_HOST_PROFILING_PROCESS_HOST_H_
 #define CHROME_BROWSER_PROFILING_HOST_PROFILING_PROCESS_HOST_H_
 
+#include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/singleton.h"
+#include "base/optional.h"
 #include "base/process/process.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_features.h"
@@ -67,9 +69,11 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
   // Returns a pointer to the current global profiling process host.
   static ProfilingProcessHost* GetInstance();
 
-  // Sends a message to the profiling process that it dump the given process'
-  // memory data to the given file.
-  void RequestProcessDump(base::ProcessId pid, const base::FilePath& dest);
+  // Sends a message to the profiling process to dump the given process's
+  // memory data to the given file. |on_finished_callback| will be called on the
+  // UI thread on completion.
+  using RequestProcessDumpCallback = base::Callback<void(bool)>;
+  void RequestProcessDump(base::ProcessId pid, const base::FilePath& dest, base::Optional<RequestProcessDumpCallback> finished_callback);
 
  private:
   friend struct base::DefaultSingletonTraits<ProfilingProcessHost>;

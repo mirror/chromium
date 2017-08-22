@@ -169,8 +169,7 @@ ProfilingProcessHost* ProfilingProcessHost::GetInstance() {
       base::LeakySingletonTraits<ProfilingProcessHost>>::get();
 }
 
-void ProfilingProcessHost::RequestProcessDump(base::ProcessId pid,
-                                              const base::FilePath& dest) {
+  void ProfilingProcessHost::RequestProcessDump(base::ProcessId pid, const base::FilePath& dest, base::Optional<RequestProcessDumpCallback> finished_callback) {
   if (!connector_) {
     LOG(ERROR)
         << "Requesting process dump when profiling process hasn't started.";

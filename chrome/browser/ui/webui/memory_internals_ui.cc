@@ -266,7 +266,7 @@ void MemoryInternalsDOMHandler::FileSelected(const base::FilePath& path,
                                              void* params) {
   // The PID to dump was stashed in the params.
   int pid = reinterpret_cast<intptr_t>(params);
-  profiling::ProfilingProcessHost::GetInstance()->RequestProcessDump(pid, path);
+  profiling::ProfilingProcessHost::GetInstance()->RequestProcessDump(pid, path, base::nullopt);
   select_file_dialog_ = nullptr;
 }
 
