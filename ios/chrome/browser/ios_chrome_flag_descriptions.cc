@@ -64,4 +64,9 @@ const char kInProductHelpDemoModeDescription[] =
     "an individual promotion causes that promotion but no other promotions to "
     "occur.";
 
+const char kBookmarkReorderingName[] = "Bookmark Reordering";
+const char kBookmarkReorderingDescription[] =
+    "When enabled, change the bookmark UI which will support bookmark "
+    "reordering.";
+
 }  // namespace flag_descriptions
