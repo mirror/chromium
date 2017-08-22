@@ -110,4 +110,8 @@ void BlinkLeakDetector::TimerFiredGC(TimerBase*) {
   // Note: Oilpan precise GC is scheduled at the end of the event loop.
 }
 
+DEFINE_TRACE(BlinkLeakDetector) {
+  visitor->Trace(frame_);
+}
+
 }  // namespace blink

@@ -47,7 +47,7 @@ class WebLeakDetectorImpl final : public WebLeakDetector,
  public:
   explicit WebLeakDetectorImpl(WebLeakDetectorClient* client,
                                WebFrame* webframe)
-      : client_(client), detector_(this, webframe) {
+      : client_(client), detector_(new BlinkLeakDetector(this, webframe)) {
     DCHECK(client_);
   }
 
@@ -61,15 +61,15 @@ class WebLeakDetectorImpl final : public WebLeakDetector,
 
  private:
   WebLeakDetectorClient* client_;
-  BlinkLeakDetector detector_;
+  Persistent<BlinkLeakDetector> detector_;
 };
 
 void WebLeakDetectorImpl::PrepareForLeakDetection() {
-  detector_.PrepareForLeakDetection();
+  detector_->PrepareForLeakDetection();
 }
 
 void WebLeakDetectorImpl::CollectGarbageAndReport() {
-  detector_.CollectGarbage();
+  detector_->CollectGarbage();
 }
 
 void WebLeakDetectorImpl::OnLeakDetectionComplete() {
