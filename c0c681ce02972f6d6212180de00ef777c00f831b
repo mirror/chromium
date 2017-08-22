@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "509a3d06_5bfefabf",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-08-22T22:28:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae7b4e6d_08531954",
+      "revId": "c0c681ce02972f6d6212180de00ef777c00f831b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43db8d0d_59066cbc",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-22T21:39:54Z",
       "side": 1,
       "message": "I wonder if the instrumentation can be done with our probes framework rather than introducing more observer flavors?",
+      "revId": "c0c681ce02972f6d6212180de00ef777c00f831b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "941f2eb9_229c61fd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-08-22T22:28:31Z",
+      "side": 1,
+      "message": "Do you mean using ProbeBase? I\u0027m not familiar with that, what would be the benefit in this particular case?",
+      "parentUuid": "43db8d0d_59066cbc",
       "revId": "c0c681ce02972f6d6212180de00ef777c00f831b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "c0c681ce02972f6d6212180de00ef777c00f831b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a5280a_c8585ffc",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-08-22T22:28:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4685e1f_63b1e9e7",
+      "revId": "c0c681ce02972f6d6212180de00ef777c00f831b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
