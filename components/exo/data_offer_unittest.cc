@@ -16,48 +16,13 @@
 #include "components/exo/data_device.h"
 #include "components/exo/data_offer_delegate.h"
 #include "components/exo/test/exo_test_base.h"
+#include "components/exo/test/test_data_offer_delegate.h"
 #include "ui/base/dragdrop/os_exchange_data.h"
 
 namespace exo {
 namespace {
 
 using DataOfferTest = test::ExoTestBase;
-
-class TestDataOfferDelegate : public DataOfferDelegate {
- public:
-  TestDataOfferDelegate() : dnd_action_(DndAction::kNone) {}
-
-  // Called at the top of the data device's destructor, to give observers a
-  // chance to remove themselves.
-  void OnDataOfferDestroying(DataOffer* offer) override {}
-
-  // Called when |mime_type| is offered by the client.
-  void OnOffer(const std::string& mime_type) override {
-    mime_types_.push_back(mime_type);
-  }
-
-  // Called when possible |source_actions| is offered by the client.
-  void OnSourceActions(
-      const base::flat_set<DndAction>& source_actions) override {
-    source_actions_ = source_actions;
-  }
-
-  // Called when current |action| is offered by the client.
-  void OnAction(DndAction dnd_action) override { dnd_action_ = dnd_action; }
-
-  const std::vector<std::string>& mime_types() const { return mime_types_; }
-  const base::flat_set<DndAction>& source_actions() const {
-    return source_actions_;
-  }
-  DndAction dnd_action() const { return dnd_action_; }
-
- private:
-  std::vector<std::string> mime_types_;
-  base::flat_set<DndAction> source_actions_;
-  DndAction dnd_action_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestDataOfferDelegate);
-};
 
 TEST_F(DataOfferTest, SendEvents) {
   ui::OSExchangeData data;

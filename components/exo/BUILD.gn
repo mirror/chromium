@@ -107,6 +107,8 @@ source_set("test_support") {
     "test/exo_test_base.h",
     "test/exo_test_helper.cc",
     "test/exo_test_helper.h",
+    "test/test_data_offer_delegate.cc",
+    "test/test_data_offer_delegate.h",
   ]
 
   deps = [
@@ -130,6 +132,7 @@ source_set("unit_tests") {
 
   sources = [
     "buffer_unittest.cc",
+    "data_device_unittest.cc",
     "data_offer_unittest.cc",
     "display_unittest.cc",
     "keyboard_unittest.cc",
