@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3907885b_0c0fb331",
+        "filename": "content/child/child_url_loader_factory_getter.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cedda86_fc5f1ce6",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3df96a5_bd3e78a1",
         "filename": "content/child/service_worker/service_worker_network_provider.cc",
         "patchSetId": 26
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-21T15:59:00Z",
       "side": 1,
       "message": "thanks for the comments, much more understandable for me",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "884acd2a_e490ddd2",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e3df96a5_bd3e78a1",
       "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a2a4822b_d083cc68",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de2558d0_50d2c7e9",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ac47b15_4b24d7a8",
         "filename": "content/child/service_worker/service_worker_network_provider.cc",
         "patchSetId": 26
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f978b7fd_c3ec0ed4",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ac47b15_4b24d7a8",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a6da59d_154902e0",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 26
@@ -84,6 +156,24 @@
       "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f99ea19_4386a36f",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a6da59d_154902e0",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "110366b1_39a7cfc4",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d99afc2_1373a122",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 16
+      },
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33e3a686_ef144620",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 26
@@ -124,6 +238,24 @@
       "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11da8880_972b729d",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33e3a686_ef144620",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "afe25760_b5dcefaa",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9d924b1_ea9f9f37",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7224856_00a64d35",
         "filename": "content/child/service_worker/service_worker_provider_context.h",
         "patchSetId": 26
@@ -158,6 +308,24 @@
       "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4806d4_f32d092b",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7224856_00a64d35",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "09eb89e9_8f3555ae",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a863dc3_33bc1eda",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba2424c4_6b99b317",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 26
@@ -195,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "a101281d_744976cb",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ba2424c4_6b99b317",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "580d366d_c7811f11",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 26
@@ -206,6 +410,30 @@
       "writtenOn": "2017-08-22T07:16:56Z",
       "side": 1,
       "message": "The lifetimes of SWEventDispatcher and SWSubresourceLoaderFactory/SubresourceLoader are matching? \nSWSubresourceLoader seems independent of SWProviderContext/SWNetworkProvider, so passing a raw pointer feels a bit scaring.",
+      "range": {
+        "startLine": 367,
+        "startChar": 41,
+        "endLine": 367,
+        "endChar": 57
+      },
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb9b514_d4f5125b",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Hmm... introduced scoped_refptr\u003cServiceWorkerEventDispatcherHolder\u003e.",
+      "parentUuid": "580d366d_c7811f11",
       "range": {
         "startLine": 367,
         "startChar": 41,
@@ -235,6 +463,24 @@
     },
     {
       "key": {
+        "uuid": "7d6c0d3f_8dfdb9ab",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2aad5f5_40718a74",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17539002_90ec99c1",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 26
@@ -252,6 +498,24 @@
     },
     {
       "key": {
+        "uuid": "8a3fbd1d_e5cf31f7",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17539002_90ec99c1",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daab71e6_06073231",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 26
@@ -263,6 +527,24 @@
       "writtenOn": "2017-08-21T15:59:00Z",
       "side": 1,
       "message": "I see, that seems to make sense then.",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "38e5726d_bc3260c2",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "daab71e6_06073231",
       "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -286,6 +568,24 @@
     },
     {
       "key": {
+        "uuid": "ae8ca016_0e992ec9",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "It\u0027s needed because SubresourceLoader implements SWFetchResponseCallback. I removed the forward decl below.",
+      "parentUuid": "34204f96_4f774d6f",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85b02ea2_540eb2b2",
         "filename": "content/child/service_worker/service_worker_subresource_loader.h",
         "patchSetId": 26
@@ -297,6 +597,24 @@
       "writtenOn": "2017-08-21T15:59:00Z",
       "side": 1,
       "message": "since this is just supposed to be the origin, could it be url::Origin or url::SchemeHostPort?",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b3d8e2_2b4d5b07",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "It can, but it\u0027d add extra, unnecessary parsing cost.",
+      "parentUuid": "85b02ea2_540eb2b2",
       "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -320,6 +638,24 @@
     },
     {
       "key": {
+        "uuid": "a84ead23_1126bb46",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "As we chatted offline let me keep this as is for now, but I can make a follow-up patch if it starts to look cumbersome.",
+      "parentUuid": "47f1fc2d_192f47ec",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30fcb43a_070919a6",
         "filename": "content/child/service_worker/service_worker_subresource_loader.h",
         "patchSetId": 26
@@ -334,6 +670,24 @@
       "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49aa5aaf_c0550a0e",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "I actually removed this method, as it doesn\u0027t seem to add much value over just using the ctor.",
+      "parentUuid": "30fcb43a_070919a6",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -360,6 +714,30 @@
     },
     {
       "key": {
+        "uuid": "91ff663a_f2f8366c",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "111a84d7_18ad75d1",
+      "range": {
+        "startLine": 170,
+        "startChar": 56,
+        "endLine": 170,
+        "endChar": 61
+      },
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b65bebe4_117b83f1",
         "filename": "content/child/service_worker/service_worker_subresource_loader.h",
         "patchSetId": 26
@@ -377,6 +755,24 @@
     },
     {
       "key": {
+        "uuid": "cf9ed9f4_ca225cb2",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "b65bebe4_117b83f1",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c061a9a6_5c374626",
         "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
         "patchSetId": 26
@@ -388,6 +784,24 @@
       "writtenOn": "2017-08-21T15:59:00Z",
       "side": 1,
       "message": "just curious: any reason to put this here instead of in the class?",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c649ce_9f34af96",
+        "filename": "content/child/service_worker/service_worker_subresource_loader_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T08:44:11Z",
+      "side": 1,
+      "message": "Just because we only have one test yet (YAGNI). Because I have a TODO to add more tests I did it now :)",
+      "parentUuid": "c061a9a6_5c374626",
       "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
