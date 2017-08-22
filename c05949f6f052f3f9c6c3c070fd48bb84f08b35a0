@@ -22,6 +22,30 @@
       "revId": "c05949f6f052f3f9c6c3c070fd48bb84f08b35a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc0703b_4445ef00",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-22T17:03:54Z",
+      "side": 1,
+      "message": "Resolving this because N/A (this code deleted).",
+      "parentUuid": "5a09e614_8d6351d4",
+      "range": {
+        "startLine": 262,
+        "startChar": 2,
+        "endLine": 266,
+        "endChar": 75
+      },
+      "revId": "c05949f6f052f3f9c6c3c070fd48bb84f08b35a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
