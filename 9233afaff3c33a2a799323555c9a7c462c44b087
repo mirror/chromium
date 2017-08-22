@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7730ed3_39c62112",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-22T07:47:40Z",
+      "side": 1,
+      "message": "DCHECK(!(worklet_backing_thread_ \u0026\u0026 worklet_backing_thread_-\u003eIsCurrentThread()));",
+      "revId": "9233afaff3c33a2a799323555c9a7c462c44b087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94210153_ceb30f77",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-22T07:47:40Z",
+      "side": 1,
+      "message": "Stop() just nulls |worklet_backing_thread_| pointer, it does not guarantee that there are no outstanding RequestRender() calls posted to the worklet thread.\n\nSo Unretained does not safe here, it may result in RequestRender() call on already deleted AudioDestination. I would recommend to use WTF version of a weak pointer to AudioDestination instead.",
+      "revId": "9233afaff3c33a2a799323555c9a7c462c44b087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a87a901_881fb28e",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-22T07:47:40Z",
+      "side": 1,
+      "message": "DCHECK(!worklet_backing_thread_ || worklet_backing_thread_-\u003eIsCurrentThread());\n?",
+      "revId": "9233afaff3c33a2a799323555c9a7c462c44b087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122da935_b2a3d29e",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-22T07:47:40Z",
+      "side": 1,
+      "message": "WebThread must be provided during Start to use this. No need to refer to the feature.",
+      "revId": "9233afaff3c33a2a799323555c9a7c462c44b087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234f877d_fce087ca",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-22T07:47:40Z",
+      "side": 1,
+      "message": "Why do we need separate Start() and StartWithWorkletThread()?\nHow about just Start(WebThread* worklet_backing_thread)?\nand the contract would be that two-thread model is used when |worklet_backing_thread| is not null?\nThe two methods are just copy-paste with the only difference that one of them initializes the thread.",
+      "revId": "9233afaff3c33a2a799323555c9a7c462c44b087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a4b2d7_e747cc60",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-08-22T07:47:40Z",
+      "side": 1,
+      "message": "No need to mention AudioWorklet feature in the code of this CL at all: two-thread model is used if the thread was provided during Start().",
+      "revId": "9233afaff3c33a2a799323555c9a7c462c44b087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
