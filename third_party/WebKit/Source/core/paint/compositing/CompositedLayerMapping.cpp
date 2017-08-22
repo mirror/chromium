@@ -694,11 +694,6 @@ bool CompositedLayerMapping::UpdateGraphicsLayerConfiguration() {
   if (layer_config_changed)
     UpdateInternalHierarchy();
 
-  if (scrolling_config_changed) {
-    if (layout_object.View())
-      compositor->ScrollingLayerDidChange(&owning_layer_);
-  }
-
   // A mask layer is not part of the hierarchy proper, it's an auxiliary layer
   // that's plugged into another GraphicsLayer that is part of the hierarchy.
   // It has no parent or child GraphicsLayer. For that reason, we process it
