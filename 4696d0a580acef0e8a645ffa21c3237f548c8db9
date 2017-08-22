@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f018e110_ae11a4ea",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-22T22:14:30Z",
+      "side": 1,
+      "message": "nit: // Enum end marker.",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "4696d0a580acef0e8a645ffa21c3237f548c8db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
