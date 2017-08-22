@@ -141,6 +141,13 @@ void ViewAndroid::AddChild(ViewAndroid* child) {
     child->OnPhysicalBackingSizeChanged(physical_size_);
 }
 
+void ViewAndroid::OnAttachedToWindow() {
+  if (client_)
+    client_->OnAttachedToWindow();
+  for (auto* child : children_)
+    child->OnAttachedToWindow();
+}
+
 // static
 bool ViewAndroid::RootPathHasEventForwarder(ViewAndroid* view) {
   while (view) {
@@ -237,6 +244,13 @@ void ViewAndroid::RemoveChild(ViewAndroid* child) {
   DCHECK(it != children_.end());
   children_.erase(it);
   child->parent_ = nullptr;
+}
+
+void ViewAndroid::OnDetachedFromWindow() {
+  if (client_)
+    client_->OnDetachedFromWindow();
+  for (auto* child : children_)
+    child->OnDetachedFromWindow();
 }
 
 WindowAndroid* ViewAndroid::GetWindowAndroid() const {

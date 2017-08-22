@@ -278,6 +278,16 @@ WindowAndroid* WindowAndroid::GetWindowAndroid() const {
   return const_cast<WindowAndroid*>(this);
 }
 
+void WindowAndroid::AddChild(ViewAndroid* child) {
+  ViewAndroid::AddChild(child);
+  child->OnAttachedToWindow();
+}
+
+void WindowAndroid::RemoveChild(ViewAndroid* child) {
+  ViewAndroid::RemoveChild(child);
+  child->OnDetachedFromWindow();
+}
+
 ScopedJavaLocalRef<jobject> WindowAndroid::GetWindowToken() {
   JNIEnv* env = AttachCurrentThread();
   return Java_WindowAndroid_getWindowToken(env, GetJavaObject());

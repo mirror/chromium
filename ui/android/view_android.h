@@ -132,7 +132,9 @@ class UI_ANDROID_EXPORT ViewAndroid {
   base::android::ScopedJavaLocalRef<jobject> GetEventForwarder();
 
   // Adds a child to this view.
-  void AddChild(ViewAndroid* child);
+  virtual void AddChild(ViewAndroid* child);
+  void OnAttachedToWindow();
+  void OnDetachedFromWindow();
 
   // Moves the give child ViewAndroid to the front of the list so that it can be
   // the first responder of events.
@@ -176,6 +178,7 @@ class UI_ANDROID_EXPORT ViewAndroid {
 
  protected:
   ViewAndroid* parent_;
+  virtual void RemoveChild(ViewAndroid* child);
 
  private:
   friend class EventForwarder;
@@ -185,8 +188,6 @@ class UI_ANDROID_EXPORT ViewAndroid {
   bool OnTouchEvent(const MotionEventAndroid& event, bool for_touch_handle);
   bool OnMouseEvent(const MotionEventAndroid& event);
   bool OnMouseWheelEvent(const MotionEventAndroid& event);
-
-  void RemoveChild(ViewAndroid* child);
 
   template <typename E>
   using ViewClientCallback =

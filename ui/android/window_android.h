@@ -84,6 +84,8 @@ class UI_ANDROID_EXPORT WindowAndroid : public ViewAndroid {
   static WindowAndroid* CreateForTesting();
   void DestroyForTesting();
 
+  void AddChild(ViewAndroid* child) override;
+
   // Return the window token for this window, if one exists.
   base::android::ScopedJavaLocalRef<jobject> GetWindowToken();
 
@@ -99,6 +101,7 @@ class UI_ANDROID_EXPORT WindowAndroid : public ViewAndroid {
 
   // ViewAndroid overrides.
   WindowAndroid* GetWindowAndroid() const override;
+  void RemoveChild(ViewAndroid* child) override;
 
   // The ID of the display that this window belongs to.
   int display_id() const { return display_id_; }
