@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d628334b_114c27f2",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-22T15:57:15Z",
+      "side": 1,
+      "message": "Thanks for the feedback! I will split the change out of this CL. AudioWorkletThread will have std::unique_ptr\u003cWebThread\u003e then.",
+      "parentUuid": "afd264cc_ef0f20f7",
+      "revId": "9233afaff3c33a2a799323555c9a7c462c44b087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7730ed3_39c62112",
         "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fdaa0527_25df9c57",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-22T15:57:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7730ed3_39c62112",
+      "revId": "9233afaff3c33a2a799323555c9a7c462c44b087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94210153_ceb30f77",
         "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
         "patchSetId": 9
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-22T07:47:40Z",
       "side": 1,
       "message": "Stop() just nulls |worklet_backing_thread_| pointer, it does not guarantee that there are no outstanding RequestRender() calls posted to the worklet thread.\n\nSo Unretained does not safe here, it may result in RequestRender() call on already deleted AudioDestination. I would recommend to use WTF version of a weak pointer to AudioDestination instead.",
+      "revId": "9233afaff3c33a2a799323555c9a7c462c44b087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e5ebc6_00b942d8",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-22T15:57:15Z",
+      "side": 1,
+      "message": "I tried to use the weak pointer to AudioDestination here, but not sure how it can solve the case when AudioDestination is deleted.\n\nI believe the weak pointer gets evaluated when |CrossThreadBind| is executed. So when the task scheduler actually runs the posted task, the passed pointer might be already null.\n\nThis is my first time to use the weak pointer within the WebAudio (I believe it is generally discouraged over Oilpan), so I might be missing something.\n\nnhiroki@ Could you take a look at WeakPtr usage here?",
+      "parentUuid": "94210153_ceb30f77",
       "revId": "9233afaff3c33a2a799323555c9a7c462c44b087",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "803b730d_e019332b",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-22T15:57:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a87a901_881fb28e",
+      "revId": "9233afaff3c33a2a799323555c9a7c462c44b087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "122da935_b2a3d29e",
         "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.h",
         "patchSetId": 9
@@ -84,6 +156,24 @@
       "revId": "9233afaff3c33a2a799323555c9a7c462c44b087",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b5cf57_98ba2808",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-22T15:57:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "122da935_b2a3d29e",
+      "revId": "9233afaff3c33a2a799323555c9a7c462c44b087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "3df5f774_fa075c87",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-22T15:57:15Z",
+      "side": 1,
+      "message": "The reasoning behind this duplication was to make the code explicit about this is \"experimental\" feature. At some point, this was the one method with the thread argument before.\n\nAlso I would like to keep this CL as simple as possible for the M61 merge. The refactoring can be done in the different CL.",
+      "parentUuid": "234f877d_fce087ca",
+      "revId": "9233afaff3c33a2a799323555c9a7c462c44b087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4a4b2d7_e747cc60",
         "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.h",
         "patchSetId": 9
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-22T07:47:40Z",
       "side": 1,
       "message": "No need to mention AudioWorklet feature in the code of this CL at all: two-thread model is used if the thread was provided during Start().",
+      "revId": "9233afaff3c33a2a799323555c9a7c462c44b087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0abca69e_9b8323d3",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-22T15:57:15Z",
+      "side": 1,
+      "message": "Hmm. I rather want to keep this comment. This summarizes how dual-thread model works. Also I also mentioned that this CL won\u0027t merge Start() and StartWithWorkletThread() methods.",
+      "parentUuid": "f4a4b2d7_e747cc60",
       "revId": "9233afaff3c33a2a799323555c9a7c462c44b087",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
