@@ -249,7 +249,7 @@ void AudioOutputDeviceTest::CreateStream() {
   // https://crbug.com/640840.
   audio_device_->OnStreamCreated(
       duplicated_memory_handle,
-      SyncSocket::UnwrapHandle(audio_device_socket_descriptor), kMemorySize);
+      SyncSocket::UnwrapHandle(audio_device_socket_descriptor));
   base::RunLoop().RunUntilIdle();
 }
 
