@@ -116,6 +116,30 @@
       "revId": "d08534d6e50e31f842a988e0d594a161a35a4bdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5071735c_0e8b92ff",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-08-22T04:12:53Z",
+      "side": 1,
+      "message": "It looks like \u0027Has\u0027 I introduced was as same as existing \u0027ContainsWrapper\u0027. I adopted the latter.",
+      "parentUuid": "81512343_3f85b8ca",
+      "range": {
+        "startLine": 322,
+        "startChar": 23,
+        "endLine": 322,
+        "endChar": 26
+      },
+      "revId": "d08534d6e50e31f842a988e0d594a161a35a4bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
