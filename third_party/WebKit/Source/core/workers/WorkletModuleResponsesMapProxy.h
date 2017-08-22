@@ -15,8 +15,6 @@
 
 namespace blink {
 
-class ModuleScriptCreationParams;
-
 // WorkletModuleResponsesMapProxy serves as a proxy to talk to
 // WorkletModuleResponsesMap on the main thread (outside_settings) from
 // WorkletGlobalScope on the worklet context thread (inside_settings). The
@@ -32,9 +30,7 @@ class CORE_EXPORT WorkletModuleResponsesMapProxy
       RefPtr<WebTaskRunner> outside_settings_task_runner,
       RefPtr<WebTaskRunner> inside_settings_task_runner);
 
-  void ReadEntry(const KURL&, Client*);
-  void UpdateEntry(const KURL&, const ModuleScriptCreationParams&);
-  void InvalidateEntry(const KURL&);
+  void ReadEntry(const FetchParameters&, Client*);
 
   DECLARE_TRACE();
 
@@ -44,7 +40,8 @@ class CORE_EXPORT WorkletModuleResponsesMapProxy
       RefPtr<WebTaskRunner> outside_settings_task_runner,
       RefPtr<WebTaskRunner> inside_settings_task_runner);
 
-  void ReadEntryOnMainThread(const KURL&, Client*);
+  void ReadEntryOnMainThread(std::unique_ptr<CrossThreadFetchParametersData>,
+                             Client*);
 
   CrossThreadPersistent<WorkletModuleResponsesMap> module_responses_map_;
   RefPtr<WebTaskRunner> outside_settings_task_runner_;
