@@ -45,6 +45,10 @@
 #include "net/base/filename_util.h"
 #include "url/url_util.h"
 
+#if defined(OS_CHROMEOS)
+#include "components/arc/arc_util.h"
+#endif  // defined(OS_CHROMEOS)
+
 namespace extensions {
 
 namespace keys = manifest_keys;
@@ -601,6 +605,14 @@ bool Extension::LoadAppFeatures(base::string16* error) {
     *error = base::ASCIIToUTF16(errors::kInvalidDisplayInLauncher);
     return false;
   }
+#if defined(OS_CHROMEOS)
+  if (!arc::IsWebstoreSearchEnabled() &&
+      manifest_->extension_id() == extensions::kWebStoreAppId) {
+    // The Chrome Webstore app should not show up in the Chrome OS launcher when
+    // ARC is enabled on the device.
+    display_in_launcher_ = false;
+  }
+#endif  // defined(OS_CHROMEOS)
   if (manifest_->HasKey(keys::kDisplayInNewTabPage)) {
     if (!manifest_->GetBoolean(keys::kDisplayInNewTabPage,
                                &display_in_new_tab_page_)) {
