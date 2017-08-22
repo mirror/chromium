@@ -56,6 +56,7 @@ class Connector;
 
 namespace content {
 class BlinkInterfaceProviderImpl;
+class ChildURLLoaderFactoryGetter;
 class LocalStorageCachedAreas;
 class PlatformEventObserverBase;
 class QuotaMessageFilter;
@@ -251,6 +252,11 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>
   CreateNetworkURLLoaderFactory();
 
+  // Returns non-null.
+  // It is invalid to call this in an incomplete env where
+  // RenderThreadImpl::current() returns nullptr (e.g. in some tests).
+  ChildURLLoaderFactoryGetter* GetDefaultURLLoaderFactoryGetter();
+
  private:
   bool CheckPreparsedJsCachingEnabled() const;
 
@@ -317,6 +323,7 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
 
   std::unique_ptr<BlinkInterfaceProviderImpl> blink_interface_provider_;
 
+  scoped_refptr<ChildURLLoaderFactoryGetter> url_loader_factory_getter_;
   PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory> url_loader_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(RendererBlinkPlatformImpl);

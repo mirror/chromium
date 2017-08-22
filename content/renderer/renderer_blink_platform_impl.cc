@@ -26,6 +26,7 @@
 #include "build/build_config.h"
 #include "components/url_formatter/url_formatter.h"
 #include "content/child/blob_storage/webblobregistry_impl.h"
+#include "content/child/child_url_loader_factory_getter.h"
 #include "content/child/database_util.h"
 #include "content/child/file_info_util.h"
 #include "content/child/fileapi/webfilesystem_impl.h"
@@ -197,6 +198,15 @@ media::AudioParameters GetAudioHardwareParams() {
       .output_params();
 }
 
+mojom::URLLoaderFactoryPtr GetBlobURLLoaderFactoryGetter() {
+  mojom::URLLoaderFactoryPtr blob_loader_factory;
+  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
+    RenderThreadImpl::current()->GetRendererHost()->GetBlobURLLoaderFactory(
+        mojo::MakeRequest(&blob_loader_factory));
+  }
+  return blob_loader_factory;
+}
+
 }  // namespace
 
 //------------------------------------------------------------------------------
@@ -324,6 +334,17 @@ std::unique_ptr<blink::WebURLLoader> RendererBlinkPlatformImpl::CreateURLLoader(
   return base::MakeUnique<WebURLLoaderImpl>(
       child_thread ? child_thread->resource_dispatcher() : nullptr, task_runner,
       url_loader_factory_.get());
+}
+
+ChildURLLoaderFactoryGetter*
+RendererBlinkPlatformImpl::GetDefaultURLLoaderFactoryGetter() {
+  if (!url_loader_factory_getter_) {
+    url_loader_factory_getter_ =
+        base::MakeRefCounted<ChildURLLoaderFactoryGetter>(
+            CreateNetworkURLLoaderFactory(),
+            base::BindOnce(&GetBlobURLLoaderFactoryGetter));
+  }
+  return url_loader_factory_getter_.get();
 }
 
 PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory>

@@ -111,6 +111,12 @@ void ServiceWorkerProviderContext::SetController(
   DCHECK(state);
   DCHECK(!state->controller ||
          state->controller->handle_id() != kInvalidServiceWorkerHandleId);
+
+  if (controller) {
+    for (const auto& pair : worker_clients_) {
+      pair.second->SetControllerServiceWorker(controller->version_id());
+    }
+  }
   state->controller = std::move(controller);
   state->used_features = used_features;
   if (event_dispatcher_ptr_info.is_valid())
@@ -140,6 +146,30 @@ void ServiceWorkerProviderContext::CountFeature(uint32_t feature) {
 const std::set<uint32_t>& ServiceWorkerProviderContext::used_features() const {
   DCHECK(controllee_state_);
   return controllee_state_->used_features;
+}
+
+mojom::ServiceWorkerWorkerClientRequest
+ServiceWorkerProviderContext::CreateWorkerClientRequest() {
+  mojom::ServiceWorkerWorkerClientPtr client;
+  mojom::ServiceWorkerWorkerClientRequest request = mojo::MakeRequest(&client);
+
+  client.set_connection_error_handler(base::BindOnce(
+      &ServiceWorkerProviderContext::UnregisterWorkerFetchContext,
+      base::Unretained(this), client.get()));
+
+  auto result = worker_clients_.insert(
+      std::make_pair<mojom::ServiceWorkerWorkerClient*,
+                     mojom::ServiceWorkerWorkerClientPtr>(client.get(),
+                                                          std::move(client)));
+  DCHECK(result.second);
+
+  return request;
+}
+
+void ServiceWorkerProviderContext::UnregisterWorkerFetchContext(
+    mojom::ServiceWorkerWorkerClient* client) {
+  DCHECK(worker_clients_.count(client));
+  worker_clients_.erase(client);
 }
 
 void ServiceWorkerProviderContext::OnNetworkProviderDestroyed() {
