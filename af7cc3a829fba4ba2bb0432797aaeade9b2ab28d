@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3502353c_d0f4f496",
+        "filename": "content/browser/renderer_host/media/service_video_capture_device_launcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-08-22T18:59:04Z",
+      "side": 1,
+      "message": "As we discussed offline, having two callbacks here would help with readability rather than having the sequenced oncecallbacks. WDYT?",
+      "revId": "af7cc3a829fba4ba2bb0432797aaeade9b2ab28d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
