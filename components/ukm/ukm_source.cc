@@ -4,6 +4,7 @@
 
 #include "components/ukm/ukm_source.h"
 
+#include "base/atomicops.h"
 #include "base/hash.h"
 #include "components/metrics/proto/ukm/source.pb.h"
 
@@ -25,9 +26,25 @@ std::string GetShortenedURL(const GURL& url) {
   return url.spec();
 }
 
+#if defined(OS_ANDROID)
+base::subtle::Atomic32 g_custom_tab = -1;
+#endif
+
 }  // namespace
 
-UkmSource::UkmSource() = default;
+#if defined(OS_ANDROID)
+// static
+void UmkSource::SetCustomTabVisible(bool visible) {
+  base::subtle::NoBarrier_Store(&g_custom_tab, visible ? 1 : 0);
+}
+#endif
+
+UkmSource::UkmSource()
+#if defined(OS_ANDROID)
+    : custom_tab_(base::subtle::NoBarrier_Load(&g_custom_tab))
+#endif
+{
+}
 
 UkmSource::~UkmSource() = default;
 
@@ -49,6 +66,11 @@ void UkmSource::PopulateProto(Source* proto_source) const {
   proto_source->set_url(GetShortenedURL(url_));
   if (!initial_url_.is_empty())
     proto_source->set_initial_url(GetShortenedURL(initial_url_));
+
+#if defined(OS_ANDROID)
+  if (custom_tab_ >= 0)
+    proto_source->set_custom_tab(!!custom_tab_);
+#endif
 }
 
 }  // namespace ukm
