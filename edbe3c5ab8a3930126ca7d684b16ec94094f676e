@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9357e5a4_57b345d2",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-22T00:05:06Z",
+      "side": 1,
+      "message": "Should this now apply to all display types?",
+      "revId": "edbe3c5ab8a3930126ca7d684b16ec94094f676e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c4470a5_f8b9dc0f",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-22T00:05:06Z",
+      "side": 1,
+      "message": "Perhaps this (and the other SetMaxLines(0) call) should have comments explaining what they\u0027re doing, eg. \"Allow an unlimited number of lines of text for the title\"? (I\u0027m not sure that\u0027s true/intended, and should maybe qualify that the number of lines is actually limited by the available screen/window/view height?)",
+      "revId": "edbe3c5ab8a3930126ca7d684b16ec94094f676e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82bb5554_d865838c",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-22T00:05:06Z",
+      "side": 1,
+      "message": "Why do we need to multiply this by 2? If we already set max lines to 2, shouldn\u0027t the title\u0027s preferred size reflect that? If GetPreferredSize does yield min(\u003crequired height\u003e, \u003cheight of two lines\u003e), then will this layout correctly? (ie. will an item with a one-line title layout correctly next to an item with a two-line title?). Can you post screenshots of the old/new behavior on the bug or CL desc?",
+      "revId": "edbe3c5ab8a3930126ca7d684b16ec94094f676e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80660bc_07cc8a91",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-22T00:05:06Z",
+      "side": 1,
+      "message": "Hmm, I\u0027m not sure this is right:\n1) Shouldn\u0027t the label be considered multi-line if the max lines is \u003e 1?\n2) Should the label change to single or multi-line for 0? Or leave that alone?\n3) This seems to bypass the code and checks in SetMultiLine...\nPerhaps we should leave calling SetMultiLine to the callers?",
+      "revId": "edbe3c5ab8a3930126ca7d684b16ec94094f676e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cf31a1d_0f115c88",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-22T00:05:06Z",
+      "side": 1,
+      "message": "Should this also enforce ELIDE_TAIL when |multi_line() \u003d\u003d true|?\nShould this allow NO_ELIDE in those cases?",
+      "revId": "edbe3c5ab8a3930126ca7d684b16ec94094f676e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ec5000_19e38d3c",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-22T00:05:06Z",
+      "side": 1,
+      "message": "Should this codepath respect |max_lines_|? (rendering multi-line labels when RenderText doesn\u0027t support multi-line, ie. RenderTextMac)",
+      "revId": "edbe3c5ab8a3930126ca7d684b16ec94094f676e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
