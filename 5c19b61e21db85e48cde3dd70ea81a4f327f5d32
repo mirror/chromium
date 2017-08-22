@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cded4af8_c55c2868",
+        "filename": "chrome/browser/policy/policy_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1528,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-22T10:21:37Z",
+      "side": 1,
+      "message": "Please also correct the documentation of the ExtensionInstallBlacklist admin policy: currently it says \"Extensions already installed will be removed if blacklisted\", while it should say, IIUC, something like:\n\n  Extensions already installed are, when blacklisted, disabled without a way for the user to enable them. Once an extension disabled due to the blacklist is removed from it, it gets automatically re-enabled back.\n\nIt\u0027s also a bit unfortunate that the behavior here is so much different from the scenario with removing an extension from ExtensionInstallForcelist - the extension actually gets wiped away in that case. But, I guess, this inconsistency should not affect anyone seriously...",
+      "range": {
+        "startLine": 1528,
+        "startChar": 13,
+        "endLine": 1528,
+        "endChar": 32
+      },
+      "revId": "5c19b61e21db85e48cde3dd70ea81a4f327f5d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
