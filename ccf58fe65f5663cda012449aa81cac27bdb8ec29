@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62691c66_f4aac44d",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1628,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-22T15:59:13Z",
+      "side": 1,
+      "message": "Why do you need to compare this? My feeling that each key is sent only once. Am I wrong?",
+      "range": {
+        "startLine": 1628,
+        "startChar": 50,
+        "endLine": 1628,
+        "endChar": 60
+      },
+      "revId": "ccf58fe65f5663cda012449aa81cac27bdb8ec29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc86495_7f40393d",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-22T15:59:13Z",
+      "side": 1,
+      "message": "It looks like part of another fix, am I wrong? If yes it\u0027s better to have in separate CL.",
+      "range": {
+        "startLine": 462,
+        "startChar": 21,
+        "endLine": 462,
+        "endChar": 39
+      },
+      "revId": "ccf58fe65f5663cda012449aa81cac27bdb8ec29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
