@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8152a84_e9dce5b5",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-22T13:03:34Z",
+      "side": 1,
+      "message": "Nit: Perhaps sort these alphabetically? They look a bit random at the moment. :)",
+      "revId": "0d9651fe8dfc40df349deedbc3773435959d6f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ed9c30_4c4bce2b",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-22T13:03:34Z",
+      "side": 1,
+      "message": "Please add a comment here, as the name is a little ambiguous if you\u0027re not deep into Fetch.",
+      "revId": "0d9651fe8dfc40df349deedbc3773435959d6f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
