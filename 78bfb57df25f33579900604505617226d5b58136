@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "575e5732_37b18449",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T01:32:38Z",
+      "side": 1,
+      "message": "These 2 lines is code duplication, but the code will move to SadTabHelper, so creating a utility method here will be unnecessary churn.",
+      "range": {
+        "startLine": 1234,
+        "startChar": 19,
+        "endLine": 1234,
+        "endChar": 39
+      },
+      "revId": "78bfb57df25f33579900604505617226d5b58136",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
