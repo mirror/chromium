@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "502bd081_cf39f35d",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_misc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-22T10:38:37Z",
+      "side": 1,
+      "message": "Added comments. This behavior is exactly what I intended; the set of files returned with some restriction is a subset of what would be returned without restriction. Anyway, the maximum number of files returned from RecentModel is large enough.",
+      "parentUuid": "a6f13e4c_c14daae4",
+      "revId": "22d64b01232655a39cf5cd679945a7843542146a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05fdd581_ddb4a3e4",
         "filename": "chrome/common/extensions/api/file_manager_private.idl",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "310f83e0_73438573",
+        "filename": "chrome/common/extensions/api/file_manager_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-22T10:38:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05fdd581_ddb4a3e4",
+      "range": {
+        "startLine": 200,
+        "startChar": 2,
+        "endLine": 200,
+        "endChar": 15
+      },
+      "revId": "22d64b01232655a39cf5cd679945a7843542146a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f42d93c_3035aee6",
         "filename": "chrome/common/extensions/api/file_manager_private.idl",
         "patchSetId": 4
@@ -62,6 +104,30 @@
       "revId": "22d64b01232655a39cf5cd679945a7843542146a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3dd791c_98f33942",
+        "filename": "chrome/common/extensions/api/file_manager_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-22T10:38:37Z",
+      "side": 1,
+      "message": "It\u0027s used to restrict sources when Files app is launched with parameters such as open-as dialog. This constant reflects AllowedPaths already used in Files app:\nhttps://cs.chromium.org/chromium/src/ui/file_manager/file_manager/foreground/js/file_manager.js?rcl\u003d816c5e63c869a200146fa3c7bff8c3fb776fd381\u0026l\u003d854\n\nFYI, I considered using the same constants, but it\u0027s originally from ui/shell_dialogs/select_file_dialog.h, so I thought it\u0027s not appropriate to reuse in Recent API.\nhttps://cs.chromium.org/chromium/src/ui/shell_dialogs/select_file_dialog.h?rcl\u003d816c5e63c869a200146fa3c7bff8c3fb776fd381\u0026l\u003d141",
+      "parentUuid": "6f42d93c_3035aee6",
+      "range": {
+        "startLine": 1003,
+        "startChar": 29,
+        "endLine": 1003,
+        "endChar": 46
+      },
+      "revId": "22d64b01232655a39cf5cd679945a7843542146a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
