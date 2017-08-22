@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "439623a0_6a8fe1a4",
+        "filename": "components/autofill/strings/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T01:15:16Z",
+      "side": 1,
+      "message": "Since these are just the android-only strings that are split out, I think it would make more sense to not output .h/.pak files in the .grd, and also just assert(is_android) here, or even just move these targets into the android subdirectory of //components/autofill",
+      "revId": "71e0ba99ee6c6aeeb19a8675271d50b4db793e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ccbd622_d7c40464",
+        "filename": "components/autofill_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T01:15:16Z",
+      "side": 1,
+      "message": "Probably worth moving fixes to existing .grdp files to a separate change.",
+      "revId": "71e0ba99ee6c6aeeb19a8675271d50b4db793e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fbbde00_aaf7c18e",
+        "filename": "components/web_contents_delegate_android/strings/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T01:15:16Z",
+      "side": 1,
+      "message": "What\u0027s the point of this group?",
+      "revId": "71e0ba99ee6c6aeeb19a8675271d50b4db793e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
