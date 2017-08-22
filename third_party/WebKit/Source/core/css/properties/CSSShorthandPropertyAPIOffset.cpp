@@ -8,6 +8,8 @@
 #include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSParserLocalContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
+#include "core/css/properties/CSSPropertyAPIOffsetAnchor.h"
+#include "core/css/properties/CSSPropertyAPIOffsetPosition.h"
 #include "core/css/properties/CSSPropertyOffsetPathUtils.h"
 #include "core/css/properties/CSSPropertyOffsetRotateUtils.h"
 #include "platform/RuntimeEnabledFeatures.h"
@@ -25,9 +27,9 @@ bool CSSShorthandPropertyAPIOffset::ParseShorthand(
   // once all of the ParseSingleValue implementations have been moved to the
   // CSSPropertyAPIs, and the base CSSPropertyAPI::ParseSingleValue contains
   // no functionality.
+  constexpr CSSPropertyAPIOffsetPosition api;
   const CSSValue* offset_position =
-      CSSPropertyAPI::Get(CSSPropertyOffsetPosition)
-          .ParseSingleValue(CSSPropertyInvalid, range, context,
+          api.ParseSingleValue(CSSPropertyInvalid, range, context,
                             CSSParserLocalContext());
   const CSSValue* offset_path =
       CSSPropertyOffsetPathUtils::ConsumeOffsetPath(range, context);
@@ -45,8 +47,8 @@ bool CSSShorthandPropertyAPIOffset::ParseShorthand(
   }
   const CSSValue* offset_anchor = nullptr;
   if (CSSPropertyParserHelpers::ConsumeSlashIncludingWhitespace(range)) {
-    offset_anchor = CSSPropertyAPI::Get(CSSPropertyOffsetAnchor)
-                        .ParseSingleValue(CSSPropertyInvalid, range, context,
+    constexpr CSSPropertyAPIOffsetAnchor anchor_api;
+    offset_anchor = anchor_api.ParseSingleValue(CSSPropertyInvalid, range, context,
                                           CSSParserLocalContext());
     if (!offset_anchor)
       return false;
