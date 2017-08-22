@@ -562,6 +562,24 @@ void StyleAdjuster::AdjustComputedStyle(
       style.SetJustifyItems(parent_style.JustifyItems());
   }
 
+  // Calculate the ancestor overflow object information. The root ancestor
+  // overflow object is the document object. Underneath that any element with a
+  // non-visible overflow specifies a new ancestor overflow object, except for
+  // <html> and <body>.
+  //
+  // Since the document object itself never passes through the style adjuster,
+  // we use the <html> element to set the root ancestor overflow object.
+  if (isHTMLHtmlElement(element)) {
+    style.SetAncestorOverflowNode(element->GetDocument());
+  } else if (style.OverflowX() != EOverflow::kVisible ||
+             style.OverflowY() != EOverflow::kVisible) {
+    if (isHTMLBodyElement(element)) {
+      style.SetAncestorOverflowNode(element->GetDocument());
+    } else {
+      style.SetAncestorOverflowNode(element);
+    }
+  }
+
   AdjustEffectiveTouchAction(style, parent_style, element);
 }
 }  // namespace blink
