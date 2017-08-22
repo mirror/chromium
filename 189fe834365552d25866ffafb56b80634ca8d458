@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "7f2e7983_949e36e3",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T12:15:54Z",
+      "side": 1,
+      "message": "Not sure if there\u0027s an \"official\" source, but it\u0027s fairly common practice at least:\nhttps://cs.chromium.org/search/?q\u003d%5Cbg_+file:chrome\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "8b4a4298_7322bdec",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8717bd2_5088a667",
         "filename": "components/content_settings/core/common/content_settings_pattern.cc",
         "patchSetId": 15
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "\u003e Also check that the non_port_non_domain_wildcard_schemes_ is either null or \u003d\u003d schemes?\n\nIs there an easier way than writing a loop?\n\n\u003e And again, I don\u0027t quite see why the array has to be non-empty.\n\nFixed.",
       "parentUuid": "a8717bd2_5088a667",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8422593e_baa25cb0",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T12:15:54Z",
+      "side": 1,
+      "message": "\u003e \u003e Also check that the non_port_non_domain_wildcard_schemes_ is either null or \u003d\u003d schemes?\n\u003e \n\u003e Is there an easier way than writing a loop?\n\nNo need to deep-compare the actual arrays; just comparing the pointers is enough, given that everything is const.\n(IMO the reason for the original DCHECK is just to ensure that this method isn\u0027t called twice.)",
+      "parentUuid": "cab29d6b_8ae180ef",
       "revId": "189fe834365552d25866ffafb56b80634ca8d458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -311,6 +347,24 @@
       "side": 1,
       "message": "IIRC, the GURL that is passed from the Local NTP is actually \"chrome-search://local-ntp/\" during runtime, but I\u0027m not 100% sure. It should not matter for this test anyway.",
       "parentUuid": "a0635c44_6959a2a0",
+      "revId": "189fe834365552d25866ffafb56b80634ca8d458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7de87df_159bcee1",
+        "filename": "components/content_settings/core/common/content_settings_pattern_parser_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T12:15:54Z",
+      "side": 1,
+      "message": "Ah, it\u0027s possible only the origin gets passed here? But then it\u0027s kinda weird that there even is a path. Anyway, agreed that it doesn\u0027t really matter.",
+      "parentUuid": "75cd19ec_ed71e3b2",
       "revId": "189fe834365552d25866ffafb56b80634ca8d458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
