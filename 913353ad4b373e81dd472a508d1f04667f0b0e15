@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bc787ef_239503ac",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-22T07:32:44Z",
+      "side": 1,
+      "message": "const",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2dc5876_0939b1a7",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-22T07:32:44Z",
+      "side": 1,
+      "message": "Should we make ScriptState::Scope here because we use v8 APIs?",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b63039_ccec83a8",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-22T07:32:44Z",
+      "side": 1,
+      "message": "Can you add a crbug link?",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6463752_081f662e",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-22T07:32:44Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "801e455e_67e62f7f",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-22T07:32:44Z",
+      "side": 1,
+      "message": "Can we consolidate these \"if (module_script)\" blocks into one?",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e15c8b47_e246600f",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-22T07:32:44Z",
+      "side": 1,
+      "message": "Does TreeClient need to be an inner class of DynamicModuleResolver? Can we move this to anon namespace in DynamicModuleResolver.cpp?",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8520c230_1dcc4f0b",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-22T07:32:44Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4fe5db6_ddb537db",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-22T07:32:44Z",
+      "side": 1,
+      "message": "default?",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef076165_3df552a9",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-22T07:32:44Z",
+      "side": 1,
+      "message": "Can you make these functions \u0027const\u0027?",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84071e40_7ec1aff1",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-22T07:32:44Z",
+      "side": 1,
+      "message": "ditto (const)",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
