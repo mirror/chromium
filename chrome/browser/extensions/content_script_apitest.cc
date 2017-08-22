@@ -432,6 +432,23 @@ IN_PROC_BROWSER_TEST_F(ExtensionApiTestWithManagementPolicy,
   ASSERT_TRUE(RunExtensionTest("content_scripts/policy")) << message_;
 }
 
+IN_PROC_BROWSER_TEST_F(ExtensionApiTestWithManagementPolicy,
+                       ContentScriptPolicyByExtensionId) {
+  // Set enterprise policy to block injection of specified extension to policy
+  // specified host.
+  const char kExtensionId[] = "pjhklakophafeofpbnaijbngpjpgkehi";
+  {
+    ExtensionManagementPolicyUpdater pref(&policy_provider_);
+    pref.AddRuntimeBlockedHost(kExtensionId, "*://example.com");
+  }
+  // Some policy updating operations are performed asynchronuosly. Wait for them
+  // to complete before installing extension.
+  base::RunLoop().RunUntilIdle();
+  ASSERT_TRUE(StartEmbeddedTestServer());
+  EXPECT_TRUE(RunExtensionTest("content_scripts/policy")) << message_;
+  EXPECT_EQ(kExtensionId, last_loaded_extension_id());
+}
+
 IN_PROC_BROWSER_TEST_P(ContentScriptApiTest, ContentScriptBypassPageCSP) {
   ASSERT_TRUE(StartEmbeddedTestServer());
   ASSERT_TRUE(RunExtensionTest("content_scripts/bypass_page_csp")) << message_;

@@ -9,6 +9,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/values.h"
 #include "chrome/browser/extensions/api/permissions/permissions_api_helpers.h"
+#include "chrome/browser/extensions/extension_management.h"
 #include "chrome/browser/extensions/scripting_permissions_modifier.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/extensions/api/permissions.h"
@@ -221,7 +222,7 @@ void PermissionsUpdater::InitializePermissions(const Extension* extension) {
   const PermissionSet* bounded_active = nullptr;
   // If |extension| is a transient dummy extension, we do not want to look for
   // it in preferences.
-  if (init_flag_ & INIT_FLAG_TRANSIENT) {
+  if (IsTransientExtension(extension)) {
     bounded_active = &extension->permissions_data()->active_permissions();
   } else {
     std::unique_ptr<const PermissionSet> active_permissions =
@@ -242,6 +243,18 @@ void PermissionsUpdater::InitializePermissions(const Extension* extension) {
   if (g_delegate)
     g_delegate->InitializePermissions(extension, &granted_permissions);
 
+  if (!IsTransientExtension(extension)) {
+    // Apply per-extension policy if set.
+    extensions::ExtensionManagement* management =
+        extensions::ExtensionManagementFactory::GetForBrowserContext(
+            browser_context_);
+    if (!management->UsesDefaultRuntimeHostRestrictions(extension)) {
+      SetPolicyHostRestrictions(extension,
+                                management->GetRuntimeBlockedHosts(extension),
+                                management->GetRuntimeAllowedHosts(extension));
+    }
+  }
+
   SetPermissions(extension, std::move(granted_permissions),
                  std::move(withheld_permissions));
 }
@@ -259,7 +272,7 @@ void PermissionsUpdater::SetPermissions(
     extension->permissions_data()->SetActivePermissions(std::move(active));
   }
 
-  if ((init_flag_ & INIT_FLAG_TRANSIENT) == 0) {
+  if (!IsTransientExtension(extension)) {
     ExtensionPrefs::Get(browser_context_)
         ->SetActivePermissions(extension->id(), active_weak);
   }
@@ -372,6 +385,10 @@ void PermissionsUpdater::NotifyDefaultPolicyHostRestrictionsUpdated(
       host->Send(new ExtensionMsg_UpdateDefaultPolicyHostRestrictions(params));
     }
   }
+}
+
+bool PermissionsUpdater::IsTransientExtension(const Extension* extension) {
+  return (init_flag_ & INIT_FLAG_TRANSIENT) && extension->public_key().empty();
 }
 
 }  // namespace extensions

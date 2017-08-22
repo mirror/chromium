@@ -148,6 +148,11 @@ class PermissionsUpdater {
       const URLPatternSet& default_runtime_blocked_hosts,
       const URLPatternSet& default_runtime_allowed_hosts);
 
+  // If "key" is set in extension manifest we treat it as a non-transient even
+  // when created with INIT_FLAG_TRANSIENT. This is used in tests to get into
+  // non-INIT_FLAG_TRANSIENT branches even with unpacked extension.
+  bool IsTransientExtension(const Extension* extension);
+
   // The associated BrowserContext.
   content::BrowserContext* browser_context_;
 
