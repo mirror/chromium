@@ -19,6 +19,7 @@
 #include "components/viz/client/client_shared_bitmap_manager.h"
 #include "content/child/blink_platform_impl.h"
 #include "content/common/content_export.h"
+#include "content/common/origin_trials/trial_policy_impl.h"
 #include "content/common/possibly_associated_interface_ptr.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "content/renderer/origin_trials/web_trial_token_validator_impl.h"
@@ -35,6 +36,7 @@ namespace blink {
 namespace scheduler {
 class RendererScheduler;
 }
+class TrialPolicy;
 class WebCanvasCaptureHandler;
 class WebGraphicsContext3DProvider;
 class WebMediaPlayer;
@@ -211,7 +213,8 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
                     const blink::WebString& sample) override;
   void RecordRapporURL(const char* metric, const blink::WebURL& url) override;
 
-  blink::WebTrialTokenValidator* TrialTokenValidator() override;
+  std::unique_ptr<blink::WebTrialTokenValidator> TrialTokenValidator() override;
+  std::unique_ptr<blink::TrialPolicy> OriginTrialPolicy() override;
   void WorkerContextCreated(const v8::Local<v8::Context>& worker) override;
 
   // Set the PlatformEventObserverBase in |platform_event_observers_| associated
@@ -310,8 +313,6 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
 
   blink::scheduler::RendererScheduler* renderer_scheduler_;  // NOT OWNED
   TopLevelBlameContext top_level_blame_context_;
-
-  WebTrialTokenValidatorImpl trial_token_validator_;
 
   std::unique_ptr<LocalStorageCachedAreas> local_storage_cached_areas_;
 
