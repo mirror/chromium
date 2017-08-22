@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "988e2d85_e558ae51",
+        "filename": "chrome/android/webapk/shell_apk/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-22T14:58:41Z",
+      "side": 1,
+      "message": "is this necessary? can we keep it simpler by just switching over to the new version (i.e. ensuring the default of scope_url_path_type is android:pathPrefix?)\n\nAlso, does this need a shell version bump if we\u0027re byte-for-byte identical? Oh I guess you need some way to roll it out?",
+      "revId": "526f42190852d12822b9e05ffb24184de1f00138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
