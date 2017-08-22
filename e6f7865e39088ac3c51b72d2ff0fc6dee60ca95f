@@ -34,6 +34,24 @@
       "revId": "e6f7865e39088ac3c51b72d2ff0fc6dee60ca95f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca5b1be_2ca1b802",
+        "filename": "ui/gl/init/gl_factory_ozone.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-22T17:57:25Z",
+      "side": 1,
+      "message": "Thanks for the advice. I\u0027ll address this in a follow up CL.",
+      "parentUuid": "07d15afa_30c1c37f",
+      "revId": "e6f7865e39088ac3c51b72d2ff0fc6dee60ca95f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
