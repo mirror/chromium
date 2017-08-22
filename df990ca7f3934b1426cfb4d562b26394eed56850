@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c8d1a387_b36a76ce",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-22T20:39:34Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "eef496aa_3360282e",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 45
+      },
+      "revId": "df990ca7f3934b1426cfb4d562b26394eed56850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6288ec3c_901cd0ca",
         "filename": "chrome/installer/zucchini/disassembler_win32.h",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-22T10:55:24Z",
       "side": 1,
       "message": "if you can\u0027t use the enum hack for this, please move initialization into the .cc file where you define the value\u0027s storage.",
+      "revId": "df990ca7f3934b1426cfb4d562b26394eed56850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fca6138_287f2e88",
+        "filename": "chrome/installer/zucchini/disassembler_win32.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-22T20:39:34Z",
+      "side": 1,
+      "message": "If I do that I\u0027d get the following error for the .h:\n  declaration of constexpr static data member \u0027kExeType\u0027 requires an initializer\nGetting rid of \"static\" doesn\u0027t work. A solution is to change this to \"const\". Judging that most other variables are defined in the .h file, I think it\u0027s more readable to leave as-is?",
+      "parentUuid": "6288ec3c_901cd0ca",
       "revId": "df990ca7f3934b1426cfb4d562b26394eed56850",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -62,6 +104,30 @@
       "revId": "df990ca7f3934b1426cfb4d562b26394eed56850",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10f7852a_f92fc2f4",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-22T20:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60e263eb_2d7d1665",
+      "range": {
+        "startLine": 39,
+        "startChar": 13,
+        "endLine": 39,
+        "endChar": 14
+      },
+      "revId": "df990ca7f3934b1426cfb4d562b26394eed56850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

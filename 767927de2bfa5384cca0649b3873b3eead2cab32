@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1716f61d_f92830cd",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-22T20:39:34Z",
+      "side": 1,
+      "message": "We treat all input as untrusted and need validation. This goes with sortedness of sections by RVAs. Two options are:\n- Hard rule: Require sections to be sorted by RVA, and if not, then PE file is invalid.\n- Sort rule: Don\u0027t trust sections to be sorted, but forgive violations.\n\nI\u0027m inclined to go with the second option since once we do our own sorting, we don\u0027t really care whether sections are sorted or not.  What do you think?\n\nMeanwhile adding comments, check, and warnings.",
+      "parentUuid": "f6979596_b169a990",
+      "range": {
+        "startLine": 283,
+        "startChar": 7,
+        "endLine": 283,
+        "endChar": 11
+      },
+      "revId": "767927de2bfa5384cca0649b3873b3eead2cab32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15692570_bb361216",
         "filename": "chrome/installer/zucchini/image_utils.h",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4ed575f6_329e7ad9",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-22T20:39:34Z",
+      "side": 1,
+      "message": "I\u0027ll need it later. Removing for now.",
+      "parentUuid": "15692570_bb361216",
+      "range": {
+        "startLine": 21,
+        "startChar": 19,
+        "endLine": 21,
+        "endChar": 32
+      },
+      "revId": "767927de2bfa5384cca0649b3873b3eead2cab32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2ef8ca4_3cbfb878",
         "filename": "chrome/installer/zucchini/image_utils.h",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "767927de2bfa5384cca0649b3873b3eead2cab32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cca68a3_9ac26b17",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-22T20:39:34Z",
+      "side": 1,
+      "message": "Moved to \"algorithm.h\", which we will add eventually anyway. Also moving unit tests.",
+      "parentUuid": "e2ef8ca4_3cbfb878",
+      "range": {
+        "startLine": 111,
+        "startChar": 5,
+        "endLine": 111,
+        "endChar": 19
+      },
+      "revId": "767927de2bfa5384cca0649b3873b3eead2cab32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
