@@ -92,4 +92,51 @@ TEST(MojoGURLStructTraitsTest, Basic) {
   EXPECT_FALSE(output.unique());
 }
 
+class CronetEngineImpl : public mojom::CronetEngine {
+ public:
+  explicit CronetEngineImpl(mojo::InterfaceRequest<mojom::CronetEngine> request)
+      : binding_(this, std::move(request)) {}
+
+  // CronetEngine:
+  void StartNetLog(const std::string& file) override {
+    DLOG(ERROR) << "Start " << file;
+  }
+
+  void GetDefaultUserAgent(GetDefaultUserAgentCallback callback) override {
+    DLOG(ERROR) << "GetDefaultUserAgent";
+    std::move(callback).Run("User_Agent");
+  }
+
+  void SyncCount(int16_t count, SyncCountCallback callback) override {
+    DLOG(ERROR) << "SyncCount: " << count;
+    std::move(callback).Run();
+  }
+
+  void DoStuffSync(DoStuffSyncCallback callback) override {
+    DLOG(ERROR) << "DoStuffSync";
+    std::move(callback).Run();
+  }
+
+ private:
+  mojo::Binding<CronetEngine> binding_;
+};
+
+void OnGetGetDefaultUserAgent(const std::string& agent) {
+  LOG(ERROR) << "User Anget was: " << agent;
+}
+
+// Mojo version of chrome IPC test in url/ipc/url_param_traits_unittest.cc.
+TEST(CronetEngineTest, Basic) {
+  base::MessageLoop message_loop;
+
+  mojom::CronetEnginePtr cronet_engine;
+  CronetEngineImpl impl(MakeRequest(&cronet_engine));
+
+  cronet_engine->StartNetLog("zhopa");
+  cronet_engine->SyncCount(1);
+  cronet_engine->GetDefaultUserAgent(base::Bind(&OnGetGetDefaultUserAgent));
+  cronet_engine->SyncCount(2);
+  cronet_engine->DoStuffSync();
+}
+
 }  // namespace url
