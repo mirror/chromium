@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "905a0ea8_4e2e0e99",
+        "filename": "chrome/browser/net/system_network_context_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-22T22:03:10Z",
+      "side": 1,
+      "message": "nit, suggestion (since not part of this CL): \"This NetworkContext\" is a bit confusing in the context of an object that isn\u0027t an NC, but just manages an NC.",
+      "range": {
+        "startLine": 14,
+        "startChar": 32,
+        "endLine": 14,
+        "endChar": 46
+      },
+      "revId": "6a6667b6f3222db8e0937a6e87c9930ae81965fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
