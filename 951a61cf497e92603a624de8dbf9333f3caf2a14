@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ef970045_a48fab99",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-22T23:24:18Z",
+      "side": 1,
+      "message": "Done, thanks for pointing this out!",
+      "parentUuid": "8ef0e61f_3969af66",
+      "revId": "951a61cf497e92603a624de8dbf9333f3caf2a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86a419ce_259be0c1",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 16
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-22T21:22:35Z",
       "side": 1,
       "message": "Should we return false if we request enable_oop_rasterization, but features().chromium_raster_transport is false?",
+      "revId": "951a61cf497e92603a624de8dbf9333f3caf2a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8773fa5_a76c69e3",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 3710,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-22T23:24:18Z",
+      "side": 1,
+      "message": "I can do that, but I also need to then make RenderThreadImpl\u0027s enabling match FeatureInfo\u0027s enabling, or renderers will not be able to create command buffers with oop raster attrib turned on but feature turned off.\n\nI think that seems reasonable though, because then we\u0027re not in a state where we\u0027re requesting oop raster and not getting it unexpectedly.",
+      "parentUuid": "86a419ce_259be0c1",
       "revId": "951a61cf497e92603a624de8dbf9333f3caf2a14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4e3d80fc_b4fc0a17",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 19939,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-22T23:24:18Z",
+      "side": 1,
+      "message": "Done.  The other two entry points check for !sk_surface_, which covers them for a null GrContext, so left them as-is.",
+      "parentUuid": "3d4038c2_59bd68d0",
+      "revId": "951a61cf497e92603a624de8dbf9333f3caf2a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59350ab5_c02d1b01",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 16
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "21eea050_253facd2",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 20068,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-22T23:24:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59350ab5_c02d1b01",
+      "revId": "951a61cf497e92603a624de8dbf9333f3caf2a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0999a8a_f630096f",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
         "patchSetId": 16
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-22T21:22:35Z",
       "side": 1,
       "message": "nit: NOTIMPLEMENTED() / TODO?\n\nWe should probably fail creation of the passthrough decoder in the mean time, if oop raster is requested",
+      "revId": "951a61cf497e92603a624de8dbf9333f3caf2a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ebbf83a_65f69e51",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-22T23:24:18Z",
+      "side": 1,
+      "message": "Added both.  Also failed initialization if the creation attrib for oop rasterization is true.",
+      "parentUuid": "f0999a8a_f630096f",
       "revId": "951a61cf497e92603a624de8dbf9333f3caf2a14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
