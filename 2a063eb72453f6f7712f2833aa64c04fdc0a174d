@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7feb0429_d0d73ece",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1528,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T22:57:06Z",
+      "side": 1,
+      "message": "Please leave the kMultiDeviceName and related fields alone for now. I realize that this creates an inconsistency in the capitalization of variables, but I\u0027m not sure what could break if we commit this change.\n\nSame with other files.",
+      "range": {
+        "startLine": 1528,
+        "startChar": 39,
+        "endLine": 1528,
+        "endChar": 55
+      },
+      "revId": "2a063eb72453f6f7712f2833aa64c04fdc0a174d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
