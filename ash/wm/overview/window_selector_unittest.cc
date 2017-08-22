@@ -966,10 +966,6 @@ TEST_F(WindowSelectorTest, FullscreenWindowTabletMode) {
 
 // Tests that beginning window selection hides the app list.
 TEST_F(WindowSelectorTest, SelectingHidesAppList) {
-  // TODO: fails in mash because of AppListPresenter. http://crbug.com/696028.
-  if (Shell::GetAshConfig() == Config::MASH)
-    return;
-
   gfx::Rect bounds(0, 0, 400, 400);
   std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
   std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
@@ -977,8 +973,8 @@ TEST_F(WindowSelectorTest, SelectingHidesAppList) {
   // The tested behavior relies on the app list presenter delegate.
   TestAppListViewPresenterImpl app_list_presenter_impl;
 
-  app_list_presenter_impl.Show(
-      display::Screen::GetScreen()->GetPrimaryDisplay().id());
+  app_list_presenter_impl.Show(GetPrimaryDisplay().id());
+  RunAllPendingInMessageLoop();
   EXPECT_TRUE(app_list_presenter_impl.IsVisible());
 
   ToggleOverview();

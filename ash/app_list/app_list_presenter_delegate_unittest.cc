@@ -21,6 +21,7 @@
 #include "base/test/scoped_feature_list.h"
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_switches.h"
+#include "ui/app_list/presenter/app_list.h"
 #include "ui/app_list/views/app_list_main_view.h"
 #include "ui/app_list/views/app_list_view.h"
 #include "ui/app_list/views/search_box_view.h"
@@ -55,7 +56,7 @@ class AppListPresenterDelegateTest : public AshTestBase,
   ~AppListPresenterDelegateTest() override {}
 
   app_list::AppListPresenterImpl* app_list_presenter_impl() {
-    return &app_list_presenter_impl_;
+    return app_list_presenter_impl_.get();
   }
 
   // testing::Test:
@@ -69,6 +70,8 @@ class AppListPresenterDelegateTest : public AshTestBase,
 
     // Make the display big enough to hold the app list.
     UpdateDisplay("1024x768");
+
+    app_list_presenter_impl_ = base::MakeUnique<TestAppListViewPresenterImpl>();
   }
 
   void EnableFullscreenAppList() {
@@ -77,7 +80,7 @@ class AppListPresenterDelegateTest : public AshTestBase,
   }
 
  private:
-  TestAppListViewPresenterImpl app_list_presenter_impl_;
+  std::unique_ptr<TestAppListViewPresenterImpl> app_list_presenter_impl_;
   base::test::ScopedFeatureList scoped_feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListPresenterDelegateTest);
@@ -93,7 +96,7 @@ class FullscreenAppListPresenterDelegateTest
   ~FullscreenAppListPresenterDelegateTest() override {}
 
   app_list::AppListPresenterImpl* app_list_presenter_impl() {
-    return &app_list_presenter_impl_;
+    return app_list_presenter_impl_.get();
   }
 
   // testing::Test:
@@ -105,24 +108,26 @@ class FullscreenAppListPresenterDelegateTest
 
     // Make the display big enough to hold the app list.
     UpdateDisplay("1024x768");
+
+    app_list_presenter_impl_ = base::MakeUnique<TestAppListViewPresenterImpl>();
   }
 
   // Whether to run the test with mouse or gesture events.
   bool TestMouseEventParam() { return GetParam(); }
 
   gfx::Point GetPointOutsideSearchbox() {
-    return app_list_presenter_impl()->GetView()->GetBoundsInScreen().origin();
+    return app_list_presenter_impl_->GetView()->GetBoundsInScreen().origin();
   }
 
   gfx::Point GetPointInsideSearchbox() {
-    return app_list_presenter_impl_.GetView()
+    return app_list_presenter_impl_->GetView()
         ->search_box_view()
         ->GetBoundsInScreen()
         .CenterPoint();
   }
 
  private:
-  TestAppListViewPresenterImpl app_list_presenter_impl_;
+  std::unique_ptr<TestAppListViewPresenterImpl> app_list_presenter_impl_;
   base::test::ScopedFeatureList scoped_feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(FullscreenAppListPresenterDelegateTest);
@@ -206,20 +211,16 @@ TEST_F(AppListPresenterDelegateTest, TapOutsideBubbleClosesBubble) {
   EXPECT_FALSE(app_list_presenter_impl()->GetTargetVisibility());
 }
 
-// Tests opening the app list on a non-primary display, then deleting the
-// display.
+// Tests opening the app list on a secondary display, then deleting the display.
 TEST_P(AppListPresenterDelegateTest, NonPrimaryDisplay) {
   // Set up a screen with two displays (horizontally adjacent).
   UpdateDisplay("1024x768,1024x768");
 
   aura::Window::Windows root_windows = Shell::GetAllRootWindows();
   ASSERT_EQ(2u, root_windows.size());
-  aura::Window* secondary_root = root_windows[1];
-  EXPECT_EQ("1024,0 1024x768", secondary_root->GetBoundsInScreen().ToString());
+  ASSERT_EQ("1024,0 1024x768", root_windows[1]->GetBoundsInScreen().ToString());
 
-  app_list_presenter_impl()->Show(display::Screen::GetScreen()
-                                      ->GetDisplayNearestWindow(secondary_root)
-                                      .id());
+  app_list_presenter_impl()->Show(GetSecondaryDisplay().id());
   EXPECT_TRUE(app_list_presenter_impl()->GetTargetVisibility());
 
   // Remove the secondary display. Shouldn't crash (http://crbug.com/368990).
@@ -229,8 +230,7 @@ TEST_P(AppListPresenterDelegateTest, NonPrimaryDisplay) {
   EXPECT_FALSE(app_list_presenter_impl()->GetTargetVisibility());
 }
 
-// Tests opening the app list on a tiny display that is too small to contain
-// it.
+// Tests opening the app list on a tiny display that is too small to contain it.
 TEST_F(AppListPresenterDelegateTest, TinyDisplay) {
   // Set up a screen with a tiny display (height smaller than the app list).
   UpdateDisplay("400x300");
@@ -512,6 +512,7 @@ TEST_F(FullscreenAppListPresenterDelegateTest,
 TEST_F(FullscreenAppListPresenterDelegateTest,
        ShelfBackgroundIsHiddenWhenAppListIsShown) {
   app_list_presenter_impl()->Show(GetPrimaryDisplayId());
+  RunAllPendingInMessageLoop();
   ShelfLayoutManager* shelf_layout_manager =
       Shelf::ForWindow(Shell::GetRootWindowForDisplayId(GetPrimaryDisplayId()))
           ->shelf_layout_manager();
@@ -746,6 +747,7 @@ TEST_F(AppListPresenterDelegateTest,
 
   // Show the app list, the shelf background should be transparent.
   app_list_presenter_impl()->Show(GetPrimaryDisplayId());
+  RunAllPendingInMessageLoop();
   ShelfLayoutManager* shelf_layout_manager =
       GetPrimaryShelf()->shelf_layout_manager();
   EXPECT_EQ(shelf_layout_manager->GetShelfBackgroundType(),

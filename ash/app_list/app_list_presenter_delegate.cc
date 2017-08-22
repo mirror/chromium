@@ -144,18 +144,12 @@ void AppListPresenterDelegate::Init(app_list::AppListView* view,
 
 void AppListPresenterDelegate::OnShown(int64_t display_id) {
   is_visible_ = true;
-  aura::Window* root_window = Shell::GetRootWindowForDisplayId(display_id);
-  Shell::Get()->NotifyAppListVisibilityChanged(is_visible_, root_window);
 }
 
 void AppListPresenterDelegate::OnDismissed() {
   DCHECK(is_visible_);
   DCHECK(view_);
-
   is_visible_ = false;
-  aura::Window* root_window =
-      RootWindowController::ForTargetRootWindow()->GetRootWindow();
-  Shell::Get()->NotifyAppListVisibilityChanged(is_visible_, root_window);
 }
 
 void AppListPresenterDelegate::UpdateBounds() {
