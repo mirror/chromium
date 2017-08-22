@@ -234,6 +234,30 @@
       "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d9df7ea_f518e27a",
+        "filename": "ios/chrome/browser/ios_chrome_main_parts.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-22T14:42:15Z",
+      "side": 1,
+      "message": "I\u0027ve double-checked and the local preferences are indeed loaded synchronously, so changed this to BACKGROUND (and copied the comment from BrowsingProcessImpl initialisation).",
+      "parentUuid": "4174c29b_bedb206d",
+      "range": {
+        "startLine": 101,
+        "startChar": 49,
+        "endLine": 101,
+        "endChar": 61
+      },
+      "revId": "8386bb5bf743b554903e2491798972fa269cd8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
