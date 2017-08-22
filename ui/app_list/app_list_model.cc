@@ -22,6 +22,7 @@ AppListModel::AppListModel()
       results_(new SearchResults),
       status_(STATUS_NORMAL),
       state_(INVALID_STATE),
+      state_fullscreen_(AppListView::CLOSED),
       folders_enabled_(false),
       custom_launcher_page_enabled_(true),
       search_engine_is_google_(false) {
@@ -59,6 +60,10 @@ void AppListModel::SetState(State state) {
 
   for (auto& observer : observers_)
     observer.OnAppListModelStateChanged(old_state, state_);
+}
+
+void AppListModel::SetStateFullscreen(AppListView::AppListState state) {
+  state_fullscreen_ = state;
 }
 
 AppListItem* AppListModel::FindItem(const std::string& id) {

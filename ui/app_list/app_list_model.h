@@ -17,6 +17,7 @@
 #include "ui/app_list/app_list_item_list.h"
 #include "ui/app_list/app_list_item_list_observer.h"
 #include "ui/app_list/search_result.h"
+#include "ui/app_list/views/app_list_view.h"
 #include "ui/base/models/list_model.h"
 
 namespace app_list {
@@ -65,6 +66,10 @@ class APP_LIST_EXPORT AppListModel : public AppListItemListObserver {
 
   void SetState(State state);
   State state() { return state_; }
+
+  // Controlled by AppListView.
+  void SetStateFullscreen(AppListView::AppListState state);
+  AppListView::AppListState state_fullscreen() { return state_fullscreen_; }
 
   // Finds the item matching |id|.
   AppListItem* FindItem(const std::string& id);
@@ -224,6 +229,8 @@ class APP_LIST_EXPORT AppListModel : public AppListItemListObserver {
 
   Status status_;
   State state_;
+  // The current AppListView state. Controlled by the AppListView.
+  AppListView::AppListState state_fullscreen_;
   base::ObserverList<AppListModelObserver, true> observers_;
   bool folders_enabled_;
   bool custom_launcher_page_enabled_;

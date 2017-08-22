@@ -24,7 +24,7 @@ namespace {
 
 // Maximum time (in milliseconds) to wait to the search providers to finish.
 constexpr int kStopTimeMS = 1500;
-}
+}  // namespace
 
 namespace app_list {
 
@@ -33,8 +33,7 @@ SearchController::SearchController(SearchBoxModel* search_box,
                                    History* history)
     : search_box_(search_box), mixer_(new Mixer(results)), history_(history) {}
 
-SearchController::~SearchController() {
-}
+SearchController::~SearchController() {}
 
 void SearchController::Start() {
   Stop();
@@ -53,10 +52,9 @@ void SearchController::Start() {
 
   OnResultsChanged();
 
-  stop_timer_.Start(FROM_HERE,
-                    base::TimeDelta::FromMilliseconds(kStopTimeMS),
-                    base::Bind(&SearchController::Stop,
-                               base::Unretained(this)));
+  stop_timer_.Start(
+      FROM_HERE, base::TimeDelta::FromMilliseconds(kStopTimeMS),
+      base::Bind(&SearchController::Stop, base::Unretained(this)));
 }
 
 void SearchController::Stop() {

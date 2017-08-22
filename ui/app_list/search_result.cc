@@ -6,6 +6,7 @@
 
 #include <map>
 
+#include "base/metrics/histogram_macros.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/search/tokenized_string.h"
@@ -138,6 +139,11 @@ void SearchResult::UpdateFromMatch(const TokenizedString& title,
 }
 
 void SearchResult::Open(int event_flags) {}
+
+void SearchResult::RecordOpenForUMA() {
+  UMA_HISTOGRAM_BOOLEAN("aaa.test_search_result_recorder", display_type_,
+                        DISPLAY_TYPE_LAST);
+}
 
 void SearchResult::InvokeAction(int action_index, int event_flags) {}
 

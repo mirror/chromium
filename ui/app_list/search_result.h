@@ -215,6 +215,8 @@ class APP_LIST_EXPORT SearchResult {
   // Opens the result. Clients should use AppListViewDelegate::OpenSearchResult.
   virtual void Open(int event_flags);
 
+  void RecordOpenForUMA();
+
   gfx::ImageSkia icon_;
   gfx::ImageSkia badge_icon_;
 

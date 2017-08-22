@@ -1071,6 +1071,9 @@ void AppListView::SetState(AppListState new_state) {
   }
   StartAnimationForState(new_state_override);
   RecordStateTransitionForUma(new_state_override);
+  // Notify the model of the state change.
+  app_list_main_view_->contents_view()->OnFullscreenStateChanged(
+      new_state_override);
   app_list_state_ = new_state_override;
 }
 
