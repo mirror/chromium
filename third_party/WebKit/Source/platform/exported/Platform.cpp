@@ -34,6 +34,7 @@
 
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/memory_dump_manager.h"
+#include "common/origin_trials/trial_policy.h"
 #include "platform/FontFamilyNames.h"
 #include "platform/Histogram.h"
 #include "platform/InstanceCountersMemoryDumpProvider.h"
@@ -61,6 +62,7 @@
 #include "public/platform/WebSocketHandshakeThrottle.h"
 #include "public/platform/WebStorageNamespace.h"
 #include "public/platform/WebThread.h"
+#include "public/platform/WebTrialTokenValidator.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerCacheStorage.h"
 #include "public/platform/modules/webmidi/WebMIDIAccessor.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -271,6 +273,13 @@ Platform::CreateWebSocketHandshakeThrottle() {
 std::unique_ptr<WebImageCaptureFrameGrabber>
 Platform::CreateImageCaptureFrameGrabber() {
   return nullptr;
+}
+
+std::unique_ptr<WebTrialTokenValidator> Platform::TrialTokenValidator() {
+  return std::unique_ptr<WebTrialTokenValidator>{};
+}
+std::unique_ptr<TrialPolicy> Platform::OriginTrialPolicy() {
+  return std::unique_ptr<TrialPolicy>{};
 }
 
 std::unique_ptr<WebFeaturePolicy> Platform::CreateFeaturePolicy(
