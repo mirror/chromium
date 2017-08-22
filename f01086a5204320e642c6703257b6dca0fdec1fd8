@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bdf8389_5bea4601",
+        "filename": "headless/lib/browser/headless_content_browser_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-22T11:53:12Z",
+      "side": 0,
+      "message": "Any particular reason for removing the world \"template\" here? I think it is still useful to highlight the fact that we edit the manifest before passing it on here.",
+      "range": {
+        "startLine": 158,
+        "startChar": 10,
+        "endLine": 158,
+        "endChar": 56
+      },
+      "revId": "f01086a5204320e642c6703257b6dca0fdec1fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
