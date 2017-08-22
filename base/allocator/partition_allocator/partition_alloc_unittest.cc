@@ -13,6 +13,7 @@
 #include "base/allocator/partition_allocator/address_space_randomization.h"
 #include "base/bit_cast.h"
 #include "base/bits.h"
+#include "base/process/process_metrics.h"
 #include "base/sys_info.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -375,6 +376,47 @@ TEST(PageAllocatorTest, ReserveAddressSpace) {
   // We couldn't fail. Make sure reservation is still there.
   EXPECT_FALSE(
       base::ReserveAddressSpace(kEasyAllocSize, kPageAllocationGranularity));
+}
+
+void DoReserve() {
+  static constexpr size_t kMB = 1024 * 1024;
+  for (size_t size = 512 * kMB; size >= 32 * kMB; size -= 16 * kMB) {
+    static const size_t kAlignment = 64 << 10;  // 64K (wasm page size)
+    if (base::ReserveAddressSpace(size, kAlignment)) {
+      LOG(ERROR) << "Successfully Reserved: " << size;
+      break;
+    }
+  }
+}
+
+TEST(PageAllocTest, ReserveAddressSpaceMemUsage) {
+  // Prime the system once to remove possible noise from doing a large
+  // allocation.
+  DoReserve();
+  ReleaseReservation();
+
+  // Do actual test.
+  std::unique_ptr<ProcessMetrics> metrics =
+      ProcessMetrics::CreateCurrentProcessMetrics();
+  size_t baseline_private_bytes;
+  ASSERT_TRUE(metrics->GetMemoryBytes(&baseline_private_bytes, nullptr));
+  LOG(ERROR) << "Usage before reserve " << baseline_private_bytes;
+
+  size_t reserved_private_bytes;
+  DoReserve();
+  ASSERT_TRUE(metrics->GetMemoryBytes(&reserved_private_bytes, nullptr));
+  LOG(ERROR) << "Usage  after reserve " << reserved_private_bytes;
+
+  size_t released_private_bytes;
+  ReleaseReservation();
+  ASSERT_TRUE(metrics->GetMemoryBytes(&released_private_bytes, nullptr));
+  LOG(ERROR) << "Usage  after release " << released_private_bytes;
+
+  static constexpr size_t k1Mb = 1024 * 1024;
+  ASSERT_LT(released_private_bytes - baseline_private_bytes, k1Mb)
+      << "Unexpected divergent. Is test sane?";
+  ASSERT_LT(reserved_private_bytes - baseline_private_bytes, k1Mb)
+      << "Unexpected memory usage. Uh oh.";
 }
 
 // Check that the most basic of allocate / free pairs work.
