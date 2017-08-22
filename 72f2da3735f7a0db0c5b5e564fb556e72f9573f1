@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48e917da_8be8f49c",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T00:39:42Z",
+      "side": 1,
+      "message": "Sorry, forgot to come back and reply to this.\nThat seems fine, fewer Flush\u0027es. The only potential benefit to this is if sending early would help avoiding the round-trip with the shared memory flush id CL, but maybe we should reevaluate then, because it\u0027s not clear it would happen \"early enough\".\n\nDoes that mean we can remove RasterBufferProvider::Flush entirely?",
+      "parentUuid": "51952cdd_4b1aaf61",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fc517fc_1c487247",
         "filename": "gpu/command_buffer/client/context_support.h",
         "patchSetId": 11
