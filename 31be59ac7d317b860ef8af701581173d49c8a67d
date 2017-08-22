@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "152427de_cbbcec34",
+        "filename": "chrome/browser/component_updater/pnacl_component_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-08-22T21:06:00Z",
+      "side": 1,
+      "message": "Maybe in a different CL, but the presence of this namespace here is odd.",
+      "range": {
+        "startLine": 259,
+        "startChar": 10,
+        "endLine": 259,
+        "endChar": 16
+      },
+      "revId": "31be59ac7d317b860ef8af701581173d49c8a67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
