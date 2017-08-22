@@ -16,6 +16,24 @@
       "revId": "142ce745a53abb26b2624ec4ffb01f3042ac92dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b32c0378_46f10a1e",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-22T07:40:19Z",
+      "side": 1,
+      "message": "Ohh, good point, I didn\u0027t realize the two code paths ended up with the same code. It was adjusting to vertical baseline originally based on a wrong assumption.\n\nUnified them, and removed IsHorizontalMode.",
+      "parentUuid": "b631bc5d_8d11fcd1",
+      "revId": "142ce745a53abb26b2624ec4ffb01f3042ac92dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
