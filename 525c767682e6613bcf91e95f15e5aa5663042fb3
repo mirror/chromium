@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8703d73c_c9143f07",
+        "filename": "chrome/browser/media/router/media_router_dialog_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-22T21:49:10Z",
+      "side": 1,
+      "message": "Maybe the error message returned should say \u0027dialog already exists\u0027 as well?",
+      "revId": "525c767682e6613bcf91e95f15e5aa5663042fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72adc3e9_45e6fd0e",
+        "filename": "chrome/browser/media/router/media_router_dialog_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-22T21:49:10Z",
+      "side": 1,
+      "message": "Nit: Use base::MakeUnique()",
+      "revId": "525c767682e6613bcf91e95f15e5aa5663042fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb436a49_a8988fb5",
+        "filename": "chrome/browser/media/router/presentation_service_delegate_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-22T21:49:10Z",
+      "side": 1,
+      "message": "Given we already log in MRDC when ShowMediaRouterDialogForPresentation() fails, this log might be redundant.",
+      "revId": "525c767682e6613bcf91e95f15e5aa5663042fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb798e4_ff3ad1b3",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-22T21:49:10Z",
+      "side": 1,
+      "message": "Nit: Use base::MakeUnique here and below",
+      "revId": "525c767682e6613bcf91e95f15e5aa5663042fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
