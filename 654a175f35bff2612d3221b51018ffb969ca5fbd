@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2bcd81c_8b2eeca2",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-22T18:19:22Z",
+      "side": 1,
+      "message": "This Layout call is necessary because AppsGridView now depends on AppListView\u0027s state while its bounds remain the same? If so, maybe we should put it in AppListView::StateState and only do it when state changes?",
+      "revId": "654a175f35bff2612d3221b51018ffb969ca5fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0de896e_a6b894df",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-22T18:19:22Z",
+      "side": 1,
+      "message": "Similarly, AppsGridView now depends on |is_in_drag_| flag. Maybe we should have SetIsInDrag method and call the Layout there when the flag changes.",
+      "revId": "654a175f35bff2612d3221b51018ffb969ca5fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ca1cc3_c8036600",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-22T18:19:22Z",
+      "side": 1,
+      "message": "Add the TODO and bug for all DISABLED_ tests to make it clear that there are future works.",
+      "revId": "654a175f35bff2612d3221b51018ffb969ca5fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43dc294f_fcce35aa",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-22T18:19:22Z",
+      "side": 1,
+      "message": "Instead of mixing layout and SetVisible calls, can we have a dedicated method that updates control visibility when app_list_state or is_in_drag changes? e.g. creating a UpdateControlVisibility(app_list_state, is_in_drag) and call it from AppListView when they change. We can remove the SetVisible call here.",
+      "revId": "654a175f35bff2612d3221b51018ffb969ca5fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
