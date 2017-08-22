@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "9579ed37_62b0e16f",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-22T20:38:08Z",
+      "side": 1,
+      "message": "I\u0027m saying DispatchEventAndResetState is called when the event is being sent during the filter phase...\nSo won\u0027t enabling your gesture event queue always sending them immediately breaks this for Gesture scroll end no?\n\nIt is sent here:\nhttps://cs.chromium.org/chromium/src/content/browser/renderer_host/render_widget_host_view_aura.cc?sq\u003dpackage:chromium\u0026l\u003d1111",
+      "parentUuid": "20430a3e_eb7e5438",
+      "range": {
+        "startLine": 278,
+        "startChar": 14,
+        "endLine": 278,
+        "endChar": 40
+      },
+      "revId": "8e7002308d76400ee2bec94d5cea88abc91e7ad9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b3d7aa1_0806b276",
         "filename": "content/browser/renderer_host/overscroll_controller.cc",
         "patchSetId": 4
