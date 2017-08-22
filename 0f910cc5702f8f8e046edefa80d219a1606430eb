@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2eea5f1b_56f0ffdf",
+        "filename": "chrome/installer/zucchini/zucchini.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-22T21:50:49Z",
+      "side": 1,
+      "message": "I did this, and created new gn target.",
+      "parentUuid": "7eabb6cc_5804894e",
+      "revId": "0f910cc5702f8f8e046edefa80d219a1606430eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ddb9210_babf784d",
         "filename": "chrome/installer/zucchini/zucchini_file_io.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-22T19:53:48Z",
       "side": 1,
       "message": "you could do the DeleteOnClose trick here with something like this:\n\n  base::File target_file(new_path, CREATE_ALWAYS|READ|WRITE|SHARE_DELETE|CAN_DELETE_ON_CLOSE);\n  if (!target_file.IsValid()) {\n    LOG(ERROR) \u003c\u003c \"Something witty.\";\n    return status::kSomethingAboutNotCreatingTargetFile;\n  }\n#if defined(OS_WIN)\n  // Tell the OS to delete the file when all handles are closed.\n  base::File target_file_handle(target_file.Duplicate());\n  bool will_delete_on_close \u003d target_file_handle.DeleteOnClose(true);\n  LOG_IF(ERROR, !will_delete_on_close)\n      \u003c\u003c \"Failed marking \\\"\" \u003c\u003c new_path.value() \u003c\u003c \"\\\" for delete-on-close.\";\n#endif\n  base::MemoryMappedFile new_file;\n  if (!new_file.Initialize(std::move(target_file), ...) {\n  ...\n#if defined(OS_WIN)\n  // Success, so keep the file.\n  if (will_delete_on_close \u0026\u0026 !target_file_handle.DeleteOnClose(false)) {\n    LOG(DFATAL) \u003c\u003c \"Failed preventing deletion of \\\"\" \u003c\u003c new_path.value()\n                \u003c\u003c \"\\\".\";\n    return status::kSomeStatusMeaningBadness;\n  }\n#endif\n  return result;",
+      "revId": "0f910cc5702f8f8e046edefa80d219a1606430eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f36d71d_cc7c4e06",
+        "filename": "chrome/installer/zucchini/zucchini_file_io.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-22T21:50:49Z",
+      "side": 1,
+      "message": "I moved this logic into MappedFileWriter.",
+      "parentUuid": "2ddb9210_babf784d",
       "revId": "0f910cc5702f8f8e046edefa80d219a1606430eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

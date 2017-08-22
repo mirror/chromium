@@ -140,6 +140,30 @@
       "revId": "69aaa78665b42574e68646dee073360034352638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06d2b203_4eac440c",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-22T21:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ff454f2_f19171f3",
+      "range": {
+        "startLine": 98,
+        "startChar": 14,
+        "endLine": 98,
+        "endChar": 39
+      },
+      "revId": "69aaa78665b42574e68646dee073360034352638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
