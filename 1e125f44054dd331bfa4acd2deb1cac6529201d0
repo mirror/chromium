@@ -149,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "9bb45fba_3e497d20",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T08:21:39Z",
+      "side": 1,
+      "message": "Do other platforms have their own way of handling I/O errors from reading mapped files? I don\u0027t like that every caller of this will need to spread their own special sauce around to handle the errors and delete the file. Can the exception handling be in zucchini lib in OS_WIN blocks?",
+      "parentUuid": "743e283c_cbc8ccdc",
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36b5c780_3f772493",
         "filename": "chrome/installer/setup/archive_patch_helper.h",
         "patchSetId": 4

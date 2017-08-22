@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dea96588_c7bb5f74",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T08:21:39Z",
+      "side": 1,
+      "message": "unused",
+      "revId": "69aaa78665b42574e68646dee073360034352638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df8344c_022fd5ef",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T08:21:39Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "69aaa78665b42574e68646dee073360034352638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b1ff64_f5e01493",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T08:21:39Z",
+      "side": 1,
+      "message": "i\u0027m afraid it\u0027s not going to be this easy. you need to only catch AV in the memory regions that correspond to the mapped files. we really don\u0027t want to swallow all exceptions here, as we\u0027ll never see any crashes at all (even for code bugs).  here is an example of how this is done in the LZMA reader:\n\nhttps://cs.chromium.org/chromium/src/chrome/installer/util/lzma_util.cc?q\u003d__except",
+      "range": {
+        "startLine": 98,
+        "startChar": 14,
+        "endLine": 98,
+        "endChar": 39
+      },
+      "revId": "69aaa78665b42574e68646dee073360034352638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
