@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43cc0e20_50d8d08f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-22T00:48:57Z",
+      "side": 1,
+      "message": "typo",
+      "revId": "5945828743a6bdc36a7111001bdd19e7ca6968ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9948af6_91d908d1",
+        "filename": "cc/resources/display_resource_provider.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-22T00:48:57Z",
+      "side": 1,
+      "message": "comment nit: I am not sure that the \"in practice, the impl thread\" part makes sense any more for the display resource provider.  Could drop the parentheses here?",
+      "revId": "5945828743a6bdc36a7111001bdd19e7ca6968ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
