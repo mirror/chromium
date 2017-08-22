@@ -33,7 +33,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_runner.h"
 #include "base/threading/platform_thread.h"
-#include "base/threading/thread_checker.h"
 #include "base/threading/thread_local_storage.h"
 
 namespace base {
@@ -730,6 +729,8 @@ class BASE_EXPORT ThreadActivityTracker {
   static size_t SizeForStackDepth(int stack_depth);
 
  private:
+  bool CalledOnValidThread();
+
   friend class ActivityTrackerTest;
 
   std::unique_ptr<ActivityUserData> CreateUserDataForActivity(
@@ -742,7 +743,9 @@ class BASE_EXPORT ThreadActivityTracker {
 
   bool valid_ = false;          // Tracks whether the data is valid or not.
 
-  base::ThreadChecker thread_checker_;
+#if DCHECK_IS_ON()
+  PlatformThreadRef thread_id_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(ThreadActivityTracker);
 };
