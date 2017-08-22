@@ -167,6 +167,24 @@
     },
     {
       "key": {
+        "uuid": "3ae23091_b62be2bf",
+        "filename": "chrome/installer/setup/archive_patch_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-22T14:41:05Z",
+      "side": 1,
+      "message": "I don\u0027t remember the details either :(.\n\nSince we were doing the patching OOP, one concern we had was that we had to ensure the file was deleted even if the utility process crashed or if the IPC broke in some way.\n\nIt would be nice if the code had a guarantee that it could clean everything up in the case of a failure.",
+      "parentUuid": "9bb45fba_3e497d20",
+      "revId": "1e125f44054dd331bfa4acd2deb1cac6529201d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36b5c780_3f772493",
         "filename": "chrome/installer/setup/archive_patch_helper.h",
         "patchSetId": 4
