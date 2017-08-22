@@ -501,13 +501,13 @@ void OfflinePageBridge::SelectPageForOnlineUrl(
       base::Bind(&SingleOfflinePageItemCallback, j_callback_ref));
 }
 
-void OfflinePageBridge::SavePage(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jobject>& j_callback_obj,
-    const JavaParamRef<jobject>& j_web_contents,
-    const JavaParamRef<jstring>& j_namespace,
-    const JavaParamRef<jstring>& j_client_id) {
+void OfflinePageBridge::SavePage(JNIEnv* env,
+                                 const JavaParamRef<jobject>& obj,
+                                 const JavaParamRef<jobject>& j_callback_obj,
+                                 const JavaParamRef<jobject>& j_web_contents,
+                                 const JavaParamRef<jstring>& j_namespace,
+                                 const JavaParamRef<jstring>& j_client_id,
+                                 const JavaParamRef<jstring>& j_origin) {
   DCHECK(j_callback_obj);
   DCHECK(j_web_contents);
 
@@ -528,6 +528,7 @@ void OfflinePageBridge::SavePage(
       ConvertJavaStringToUTF8(env, j_namespace);
   save_page_params.client_id.id = ConvertJavaStringToUTF8(env, j_client_id);
   save_page_params.is_background = false;
+  save_page_params.request_origin = ConvertJavaStringToUTF8(env, j_origin);
 
   offline_page_model_->SavePage(
       save_page_params, std::move(archiver),

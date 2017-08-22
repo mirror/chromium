@@ -324,11 +324,17 @@ public class OfflinePageBridge {
      */
     public void savePage(final WebContents webContents, final ClientId clientId,
             final SavePageCallback callback) {
+        savePage(webContents, clientId, new OfflinePageOrigin(), callback);
+    }
+
+    public void savePage(final WebContents webContents, final ClientId clientId,
+            final OfflinePageOrigin origin, final SavePageCallback callback) {
         assert mIsNativeOfflinePageModelLoaded;
         assert webContents != null;
+        assert origin != null;
 
         nativeSavePage(mNativeOfflinePageBridge, callback, webContents, clientId.getNamespace(),
-                clientId.getId());
+                clientId.getId(), origin.encodeAsJsonString());
     }
 
     /**
@@ -672,7 +678,7 @@ public class OfflinePageBridge {
             long nativeOfflinePageBridge, String onlineUrl, int tabId,
             Callback<OfflinePageItem> callback);
     private native void nativeSavePage(long nativeOfflinePageBridge, SavePageCallback callback,
-            WebContents webContents, String clientNamespace, String clientId);
+            WebContents webContents, String clientNamespace, String clientId, String origin);
     private native void nativeSavePageLater(long nativeOfflinePageBridge, String url,
             String clientNamespace, String clientId, boolean userRequested);
     private native String nativeGetOfflinePageHeaderForReload(
