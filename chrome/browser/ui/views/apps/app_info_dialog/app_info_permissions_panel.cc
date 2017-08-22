@@ -91,7 +91,6 @@ class BulletedPermissionsList : public views::View {
  public:
   BulletedPermissionsList() {
     layout_ = new views::GridLayout(this);
-    SetLayoutManager(layout_);
 
     // Create 3 columns: the bullet, the bullet text, and the revoke button.
     views::ColumnSet* column_set = layout_->AddColumnSet(kBulletColumnSetId);

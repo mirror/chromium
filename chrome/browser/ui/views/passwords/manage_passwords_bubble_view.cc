@@ -331,7 +331,6 @@ ManagePasswordsBubbleView::PendingView::PendingView(
 void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout() {
   views::GridLayout* layout = new views::GridLayout(this);
   layout->set_minimum_size(gfx::Size(kDesiredBubbleWidth, 0));
-  SetLayoutManager(layout);
 
   // Create the edit, save and never buttons.
   if (!edit_button_ &&
@@ -489,7 +488,6 @@ ManagePasswordsBubbleView::ManageView::ManageView(
     : parent_(parent) {
   views::GridLayout* layout = new views::GridLayout(this);
   layout->set_minimum_size(gfx::Size(kDesiredBubbleWidth, 0));
-  SetLayoutManager(layout);
   BuildColumnSet(layout, SINGLE_VIEW_COLUMN_SET);
   layout->StartRow(0, SINGLE_VIEW_COLUMN_SET);
 
@@ -582,7 +580,6 @@ ManagePasswordsBubbleView::SaveConfirmationView::SaveConfirmationView(
     : parent_(parent) {
   views::GridLayout* layout = new views::GridLayout(this);
   layout->set_minimum_size(gfx::Size(kDesiredBubbleWidth, 0));
-  SetLayoutManager(layout);
 
   views::StyledLabel* confirmation =
       new views::StyledLabel(parent_->model()->save_confirmation_text(), this);
@@ -656,7 +653,6 @@ ManagePasswordsBubbleView::SignInPromoView::SignInPromoView(
     : parent_(parent) {
   views::GridLayout* layout = new views::GridLayout(this);
   layout->set_minimum_size(gfx::Size(kDesiredBubbleWidth, 0));
-  SetLayoutManager(layout);
 
   signin_button_ = views::MdTextButton::CreateSecondaryUiBlueButton(
       this,
@@ -722,7 +718,6 @@ ManagePasswordsBubbleView::UpdatePendingView::UpdatePendingView(
   ChromeLayoutProvider* layout_provider = ChromeLayoutProvider::Get();
   views::GridLayout* layout = new views::GridLayout(this);
   layout->set_minimum_size(gfx::Size(kDesiredBubbleWidth, 0));
-  SetLayoutManager(layout);
 
   // Credential row.
   if (parent->model()->ShouldShowMultipleAccountUpdateUI()) {

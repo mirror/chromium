@@ -161,7 +161,6 @@ void TextExample::CreateExampleView(View* container) {
   text_view_ = new TextExampleView;
   text_view_->SetBorder(CreateSolidBorder(1, SK_ColorGRAY));
   GridLayout* layout = new GridLayout(container);
-  container->SetLayoutManager(layout);
   layout->AddPaddingRow(0, 8);
 
   ColumnSet* column_set = layout->AddColumnSet(0);
