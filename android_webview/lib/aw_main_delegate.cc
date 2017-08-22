@@ -148,6 +148,9 @@ bool AwMainDelegate::BasicStartupComplete(int* exit_code) {
   // WebView does not support AndroidOverlay yet for video overlays.
   CommandLineHelper::AddDisabledFeature(*cl, media::kUseAndroidOverlay.name);
 
+  CommandLineHelper::AddDisabledFeature(*cl,
+                                        media::kMediaDrmPersistentLicense.name);
+
   android_webview::RegisterPathProvider();
 
   safe_browsing_api_handler_.reset(
