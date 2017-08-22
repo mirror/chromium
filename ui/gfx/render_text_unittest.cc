@@ -625,6 +625,9 @@ TEST_P(RenderTextTest, SetStyles) {
   }
 }
 
+// TODO(mgiuca): Add a test for force_ltrs with the feature flag on/off.
+// DO NOT SUBMIT.
+
 TEST_P(RenderTextTest, ApplyStyles) {
   RenderText* render_text = GetRenderText();
   render_text->SetText(ASCIIToUTF16("012345678"));
@@ -1519,6 +1522,9 @@ TEST_P(RenderTextTest, GetDisplayTextDirection) {
       render_text->SetDirectionalityMode(DIRECTIONALITY_FORCE_RTL);
       EXPECT_EQ(render_text->GetDisplayTextDirection(),
                 base::i18n::RIGHT_TO_LEFT);
+      render_text->SetDirectionalityMode(DIRECTIONALITY_AS_URL);
+      EXPECT_EQ(render_text->GetDisplayTextDirection(),
+                base::i18n::LEFT_TO_RIGHT);
     }
   }
 
