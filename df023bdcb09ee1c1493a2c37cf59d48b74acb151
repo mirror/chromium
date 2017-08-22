@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "13bf39e5_21c7003d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/permissions/QuotaTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T21:02:03Z",
+      "side": 1,
+      "message": "I thought that was the point of the unnamed package access identifier... TIL, I guess.",
+      "parentUuid": "0b9f9c73_39d1203f",
+      "revId": "df023bdcb09ee1c1493a2c37cf59d48b74acb151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57f23855_85a83322",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeActivityTestRule.java",
         "patchSetId": 2
