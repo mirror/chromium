@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17c5ff55_0382366e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-22T06:42:02Z",
+      "side": 1,
+      "message": "This doesn\u0027t correctly iterate the text fragments laid out in this inline node.",
+      "revId": "e88593abd4422a8ef6728c909545ba4cbd16d288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
