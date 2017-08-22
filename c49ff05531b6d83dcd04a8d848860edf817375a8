@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bfe1400_686c677f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerCacheModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-22T21:47:42Z",
+      "side": 1,
+      "message": "There is a Common.Throttler primitive which handles this for you:\n\nthis._originsUpdated.add(origin);\nthis._throttler.schedule(() \u003d\u003e {\n  var promises \u003d this._originsUpdated.map(origin \u003d\u003e this._loadCahceNames(origin));\n  this._originsUpdated.clear();\n  return Promise.all(promises);\n});",
+      "revId": "c49ff05531b6d83dcd04a8d848860edf817375a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
