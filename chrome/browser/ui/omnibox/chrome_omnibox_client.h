@@ -7,10 +7,17 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/task/cancelable_task_tracker.h"
 #include "chrome/browser/autocomplete/chrome_autocomplete_scheme_classifier.h"
 #include "chrome/browser/bitmap_fetcher/bitmap_fetcher_service.h"
+#include "chrome/browser/favicon/favicon_service_factory.h"
 #include "chrome/common/search/instant_types.h"
+#include "components/favicon/core/favicon_service.h"
 #include "components/omnibox/browser/omnibox_client.h"
+
+namespace favicon_base {
+struct FaviconImageResult;
+}
 
 class ChromeOmniboxEditController;
 class GURL;
@@ -53,10 +60,11 @@ class ChromeOmniboxClient : public OmniboxClient {
   void OnInputStateChanged() override;
   void OnFocusChanged(OmniboxFocusState state,
                       OmniboxFocusChangeReason reason) override;
-  void OnResultChanged(const AutocompleteResult& result,
-                       bool default_match_changed,
-                       const base::Callback<void(const SkBitmap& bitmap)>&
-                           on_bitmap_fetched) override;
+  void OnResultChanged(
+      const AutocompleteResult& result,
+      bool default_match_changed,
+      const BitmapFetchedCallback& on_bitmap_fetched,
+      const MatchIconFetchedCallback& match_icon_fetched) override;
   void OnCurrentMatchChanged(const AutocompleteMatch& match) override;
   void OnTextChanged(const AutocompleteMatch& current_match,
                      bool user_input_in_progress,
@@ -83,10 +91,15 @@ class ChromeOmniboxClient : public OmniboxClient {
   void OnBitmapFetched(const BitmapFetchedCallback& callback,
                        const SkBitmap& bitmap);
 
+  void OnFaviconFetched(const MatchIconFetchedCallback& callback,
+                        size_t match_index,
+                        const favicon_base::FaviconImageResult& result);
+
   ChromeOmniboxEditController* controller_;
   Profile* profile_;
   ChromeAutocompleteSchemeClassifier scheme_classifier_;
-  BitmapFetcherService::RequestId request_id_;
+  BitmapFetcherService::RequestId answer_image_request_id_;
+  base::CancelableTaskTracker favicon_task_tracker_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeOmniboxClient);
 };

@@ -35,6 +35,8 @@ class OmniboxPopupViewMac;
 // Which row has the hovered highlight.
 - (NSInteger)highlightedRow;
 
+- (void)setMatchIcon:(NSImage*)icon forRow:(NSInteger)rowIndex;
+
 @end
 
 @interface OmniboxPopupTableController (TestingAPI)
@@ -101,6 +103,9 @@ class OmniboxPopupMatrixObserver {
 
 // Setup the NSTableView data source.
 - (void)setController:(OmniboxPopupTableController*)controller;
+
+// Sets a custom match icon.
+- (void)setMatchIcon:(NSImage*)icon forRow:(NSInteger)rowIndex;
 
 @end
 
