@@ -125,7 +125,6 @@ bool IsProfileChooser(profiles::BubbleViewMode mode) {
 // views added get auto-expanded to fill the full width of the bubble.
 views::GridLayout* CreateSingleColumnLayout(views::View* view, int width) {
   views::GridLayout* layout = new views::GridLayout(view);
-  view->SetLayoutManager(layout);
 
   views::ColumnSet* columns = layout->AddColumnSet(0);
   columns->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 0,
@@ -453,7 +452,6 @@ class TitleCard : public views::View {
                                          int width) {
     views::View* titled_view = new views::View();
     views::GridLayout* layout = new views::GridLayout(titled_view);
-    titled_view->SetLayoutManager(layout);
 
     ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
     const gfx::Insets dialog_insets =
@@ -1115,7 +1113,6 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
   BackgroundColorHoverButton* current_profile_card =
       new BackgroundColorHoverButton(this, base::string16());
   views::GridLayout* grid_layout = new views::GridLayout(current_profile_card);
-  current_profile_card->SetLayoutManager(grid_layout);
   views::ColumnSet* columns = grid_layout->AddColumnSet(0);
   // BackgroundColorHoverButton has already accounted for the left and right
   // margins.

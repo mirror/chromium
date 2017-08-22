@@ -37,7 +37,6 @@ ProgressBarExample::~ProgressBarExample() {
 
 void ProgressBarExample::CreateExampleView(View* container) {
   GridLayout* layout = new GridLayout(container);
-  container->SetLayoutManager(layout);
 
   ColumnSet* column_set = layout->AddColumnSet(0);
   column_set->AddColumn(GridLayout::TRAILING, GridLayout::CENTER, 0,
