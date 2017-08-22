@@ -76,6 +76,10 @@ struct Entry {
   // not yet complete.
   base::Time completion_time;
 
+  // Last time when the entry was checked for cleanup, default is
+  // |completion_time|.
+  base::Time last_cleanup_check_time;
+
   // Size of the download file in bytes, 0 if download is not successfully
   // completed.
   uint64_t bytes_downloaded;
