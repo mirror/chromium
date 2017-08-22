@@ -133,11 +133,6 @@ void BindFields(const EntryKernel& entry,
     entry.ref(static_cast<UniquePositionField>(i)).SerializeToString(&temp);
     statement->BindBlob(index++, temp.data(), temp.length());
   }
-  for (; i < ATTACHMENT_METADATA_FIELDS_END; ++i) {
-    std::string temp;
-    entry.ref(static_cast<AttachmentMetadataField>(i)).SerializeToString(&temp);
-    statement->BindBlob(index++, temp.data(), temp.length());
-  }
 }
 
 // Helper function that loads a number of shareable fields of the
@@ -221,10 +216,6 @@ std::unique_ptr<EntryKernel> UnpackEntry(sql::Statement* statement,
     kernel->mutable_ref(static_cast<UniquePositionField>(i)) =
         UniquePosition::FromProto(proto);
   }
-  int attachemnt_specifics_counts = 0;
-  UnpackProtoFields<sync_pb::AttachmentMetadata, AttachmentMetadataField>(
-      statement, kernel.get(), &i, ATTACHMENT_METADATA_FIELDS_END,
-      &attachemnt_specifics_counts);
 
   // Sanity check on positions.  We risk strange and rare crashes if our
   // assumptions about unique position values are broken.

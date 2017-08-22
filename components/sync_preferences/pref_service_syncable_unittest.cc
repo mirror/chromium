@@ -17,8 +17,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/scoped_user_pref_update.h"
-#include "components/sync/model/attachments/attachment_id.h"
-#include "components/sync/model/attachments/attachment_service_proxy_for_test.h"
 #include "components/sync/model/sync_change.h"
 #include "components/sync/model/sync_data.h"
 #include "components/sync/model/sync_error_factory_mock.h"
@@ -138,9 +136,7 @@ class PrefServiceSyncableTest : public testing::Test {
     pref_one->set_value(serialized);
     return syncer::SyncChange(
         FROM_HERE, type,
-        syncer::SyncData::CreateRemoteData(
-            id, entity, base::Time(), syncer::AttachmentIdList(),
-            syncer::AttachmentServiceProxyForTest::Create()));
+        syncer::SyncData::CreateRemoteData(id, entity, base::Time()));
   }
 
   void AddToRemoteDataList(const std::string& name,
@@ -153,10 +149,8 @@ class PrefServiceSyncableTest : public testing::Test {
     sync_pb::PreferenceSpecifics* pref_one = one.mutable_preference();
     pref_one->set_name(name);
     pref_one->set_value(serialized);
-    out->push_back(SyncData::CreateRemoteData(
-        ++next_pref_remote_sync_node_id_, one, base::Time(),
-        syncer::AttachmentIdList(),
-        syncer::AttachmentServiceProxyForTest::Create()));
+    out->push_back(SyncData::CreateRemoteData(++next_pref_remote_sync_node_id_,
+                                              one, base::Time()));
   }
 
   void InitWithSyncDataTakeOutput(const syncer::SyncDataList& initial_data,

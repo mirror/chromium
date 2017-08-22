@@ -36,7 +36,6 @@
 #include "chromeos/cryptohome/mock_homedir_methods.h"
 #include "chromeos/login/auth/key.h"
 #include "chromeos/login/auth/user_context.h"
-#include "components/sync/model/attachments/attachment_service_proxy_for_test.h"
 #include "components/sync/model/fake_sync_change_processor.h"
 #include "components/sync/model/sync_change.h"
 #include "components/sync/model/sync_error_factory_mock.h"
@@ -89,11 +88,7 @@ void SupervisedUsersSyncTestAdapter::AddChange(
   specifics.mutable_managed_user()->CopyFrom(proto);
 
   syncer::SyncData change_data = syncer::SyncData::CreateRemoteData(
-      ++next_sync_data_id_,
-      specifics,
-      base::Time(),
-      syncer::AttachmentIdList(),
-      syncer::AttachmentServiceProxyForTest::Create());
+      ++next_sync_data_id_, specifics, base::Time());
   syncer::SyncChange change(FROM_HERE,
                             update ? syncer::SyncChange::ACTION_UPDATE
                                    : syncer::SyncChange::ACTION_ADD,
