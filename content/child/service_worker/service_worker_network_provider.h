@@ -16,6 +16,7 @@
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker.mojom.h"
 #include "content/common/service_worker/service_worker_provider.mojom.h"
+#include "content/common/service_worker/service_worker_provider_interfaces.mojom.h"
 
 namespace blink {
 class WebLocalFrame;
@@ -72,6 +73,11 @@ class CONTENT_EXPORT ServiceWorkerNetworkProvider {
   }
 
   bool IsControlledByServiceWorker() const;
+
+  // Creates a ServiceWorkerWorkerClientRequest which can be used to bind with a
+  // WorkerFetchContextImpl in a (dedicated or shared) worker thread and receive
+  // SetControllerServiceWorker() method call from the browser process.
+  mojom::ServiceWorkerWorkerClientRequest CreateWorkerClientRequest();
 
  private:
   ServiceWorkerNetworkProvider();
