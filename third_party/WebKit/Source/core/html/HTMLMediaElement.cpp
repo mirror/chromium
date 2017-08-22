@@ -2223,10 +2223,13 @@ WebMediaPlayer::Preload HTMLMediaElement::PreloadType() const {
 
   // The spec does not define an invalid value default:
   // https://www.w3.org/Bugs/Public/show_bug.cgi?id=28950
+  if (RuntimeEnabledFeatures::PreloadDefaultIsMetadataEnabled()) {
+    UseCounter::Count(GetDocument(),
+                      WebFeature::kHTMLMediaElementPreloadMetadata);
+    return WebMediaPlayer::kPreloadMetaData;
+  }
 
-  // TODO(foolip): Try to make "metadata" the default preload state:
-  // https://crbug.com/310450
-  UseCounter::Count(GetDocument(), WebFeature::kHTMLMediaElementPreloadDefault);
+  UseCounter::Count(GetDocument(), WebFeature::kHTMLMediaElementPreloadAuto);
   return WebMediaPlayer::kPreloadAuto;
 }
 
