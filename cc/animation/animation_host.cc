@@ -494,15 +494,6 @@ bool AnimationHost::HasAnimationThatInflatesBounds(ElementId element_id) const {
              : false;
 }
 
-bool AnimationHost::FilterAnimationBoundsForBox(ElementId element_id,
-                                                const gfx::BoxF& box,
-                                                gfx::BoxF* bounds) const {
-  auto element_animations = GetElementAnimationsForElementId(element_id);
-  return element_animations
-             ? element_animations->FilterAnimationBoundsForBox(box, bounds)
-             : false;
-}
-
 bool AnimationHost::TransformAnimationBoundsForBox(ElementId element_id,
                                                    const gfx::BoxF& box,
                                                    gfx::BoxF* bounds) const {
