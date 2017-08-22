@@ -686,6 +686,7 @@ void SchedulerStateMachine::WillCommit(bool commit_has_no_updates) {
   last_commit_had_no_updates_ = commit_has_no_updates;
   begin_main_frame_state_ = BEGIN_MAIN_FRAME_STATE_IDLE;
   did_commit_during_frame_ = true;
+  last_begin_main_frame_was_aborted_ = false;
 
   if (!commit_has_no_updates) {
     // If there was a commit, the impl-side invalidations will be merged with
@@ -1155,18 +1156,20 @@ void SchedulerStateMachine::SetCriticalBeginMainFrameToActivateIsFast(
 }
 
 bool SchedulerStateMachine::ImplLatencyTakesPriority() const {
-  // Attempt to synchronize with the main thread if it has a scroll listener
-  // and is fast.
-  if (ScrollHandlerState::SCROLL_AFFECTS_SCROLL_HANDLER ==
-          scroll_handler_state_ &&
-      critical_begin_main_frame_to_activate_is_fast_)
+  // We only need to prioritize the impl thread in the case of accelerated
+  // gestures (smoothness) on the impl thread.
+  if (tree_priority_ != SMOOTHNESS_TAKES_PRIORITY)
     return false;
 
-  // Don't wait for the main thread if we are prioritizing smoothness.
-  if (SMOOTHNESS_TAKES_PRIORITY == tree_priority_)
-    return true;
+  // Attempt to synchronize with the main thread if it has a scroll listener, is
+  // is fast and is responding to the input updates with commit updates.
+  if (ScrollHandlerState::SCROLL_AFFECTS_SCROLL_HANDLER ==
+          scroll_handler_state_ &&
+      critical_begin_main_frame_to_activate_is_fast_ &&
+      !last_begin_main_frame_was_aborted_)
+    return false;
 
-  return false;
+  return true;
 }
 
 void SchedulerStateMachine::SetNeedsBeginMainFrame() {
@@ -1193,6 +1196,7 @@ void SchedulerStateMachine::BeginMainFrameAborted(CommitEarlyOutReason reason) {
   // If the main thread aborted, it doesn't matter if the  main thread missed
   // the last deadline since it didn't have an update anyway.
   main_thread_missed_last_deadline_ = false;
+  last_begin_main_frame_was_aborted_ = true;
 
   switch (reason) {
     case CommitEarlyOutReason::ABORTED_LAYER_TREE_FRAME_SINK_LOST:

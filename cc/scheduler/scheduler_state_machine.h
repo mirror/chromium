@@ -346,6 +346,7 @@ class CC_EXPORT SchedulerStateMachine {
   // started. Reset to true when we stop asking for begin frames.
   bool did_notify_begin_main_frame_not_sent_ = true;
   bool did_commit_during_frame_ = false;
+  bool last_begin_main_frame_was_aborted_ = false;
   bool did_invalidate_layer_tree_frame_sink_ = false;
   bool did_perform_impl_side_invalidation_ = false;
   bool did_prepare_tiles_ = false;
