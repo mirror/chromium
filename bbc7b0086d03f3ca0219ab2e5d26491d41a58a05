@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "52ba7abe_5d1890fd",
+        "filename": "chrome/browser/android/history/browsing_history_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-22T09:29:17Z",
+      "side": 1,
+      "message": "iOS only allows the user to see the history via settings (disconnected from a tab) or from a non-incognito tab. If navigation is done via settings, then the tab is open in the BrowserState associated to the tab open when settings where used (so either incognito or non-incognito). If open from a tab, then it is using the BrowserState of the tab (so non-incognito).\n\niOS never uses a global-like object to find the BrowserState, so there is no corresponding method and this does not affect iOS.",
+      "parentUuid": "98a4d3ca_e5c87058",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 14
+      },
+      "revId": "bbc7b0086d03f3ca0219ab2e5d26491d41a58a05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71da0ebb_7a24d491",
         "filename": "chrome/browser/android/history/browsing_history_bridge.cc",
         "patchSetId": 12
