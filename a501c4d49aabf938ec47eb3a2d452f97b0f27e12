@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d3439f1_0238a6b9",
+        "filename": "ui/views/controls/textfield/textfield_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-22T03:51:51Z",
+      "side": 1,
+      "message": "huh, interesting. I haven\u0027t seen this before, but it looks like you\u0027re not the first. (This is fine)",
+      "revId": "a501c4d49aabf938ec47eb3a2d452f97b0f27e12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
