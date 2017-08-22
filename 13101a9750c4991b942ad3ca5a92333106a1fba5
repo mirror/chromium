@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "addcc060_b4d67de0",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T18:34:15Z",
+      "side": 1,
+      "message": "You need a different define for a different component, otherwise if one includes the other it will do the wrong thing on Windows.",
+      "revId": "13101a9750c4991b942ad3ca5a92333106a1fba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9bc4d28_b7dd9619",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-22T18:34:15Z",
+      "side": 1,
+      "message": "Why do you need this dependency? I don\u0027t think you\u0027re using it (and I think would cause problems with the OOP raster CL)",
+      "revId": "13101a9750c4991b942ad3ca5a92333106a1fba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
