@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1de0de2c_f90da3f5",
+        "filename": "content/browser/background_fetch/background_fetch_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T16:55:27Z",
+      "side": 1,
+      "message": "Nit: would it make sense to store (move) the BackgroundFetchResponse directly as a member of this class?",
+      "range": {
+        "startLine": 29,
+        "startChar": 9,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "2ac65f5e0ca73bc693ebc119ec3606b5de000452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "572a53f9_62488aef",
+        "filename": "content/browser/background_fetch/background_fetch_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T16:55:27Z",
+      "side": 1,
+      "message": "Please move the declaration in the header into the \"Data associated with the in-progress download\" section if we\u0027re now getting this when the download starts.",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 12
+      },
+      "revId": "2ac65f5e0ca73bc693ebc119ec3606b5de000452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7edaeb91_2264d00e",
+        "filename": "content/browser/background_fetch/background_fetch_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T16:55:27Z",
+      "side": 1,
+      "message": "response_time_ used to mean the time at which the download completed. But it\u0027s only just starting here.",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 16
+      },
+      "revId": "2ac65f5e0ca73bc693ebc119ec3606b5de000452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "293f9f32_cc80222e",
+        "filename": "content/browser/background_fetch/background_fetch_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T16:55:27Z",
+      "side": 1,
+      "message": "Please delete download_state_populated_ and response_state_populated_ - they were only there to detect race conditions due to the members being written on the UI thread, and are no longer necessary now that everything is written on IO (which is great - thanks!)",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "2ac65f5e0ca73bc693ebc119ec3606b5de000452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
