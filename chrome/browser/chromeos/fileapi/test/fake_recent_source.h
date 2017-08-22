@@ -26,8 +26,7 @@ class FakeRecentSource : public RecentSource {
   void AddFile(const RecentFile& file);
 
   // RecentSource overrides:
-  void GetRecentFiles(RecentContext context,
-                      GetRecentFilesCallback callback) override;
+  void GetRecentFiles(Params context, GetRecentFilesCallback callback) override;
 
  private:
   std::vector<RecentFile> canned_files_;

@@ -20,7 +20,6 @@
 #include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root.h"
 #include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_root_map.h"
 #include "chrome/browser/chromeos/arc/fileapi/arc_documents_provider_util.h"
-#include "chrome/browser/chromeos/fileapi/recent_context.h"
 #include "chrome/browser/chromeos/fileapi/recent_file.h"
 #include "chrome/browser/profiles/profile.h"
 #include "components/arc/common/file_system.mojom.h"
@@ -76,7 +75,7 @@ class RecentArcMediaSource::MediaRoot {
   MediaRoot(const std::string& root_id, Profile* profile);
   ~MediaRoot();
 
-  void GetRecentFiles(RecentContext context, GetRecentFilesCallback callback);
+  void GetRecentFiles(Params params, GetRecentFilesCallback callback);
 
  private:
   void OnGetRecentDocuments(
@@ -97,7 +96,7 @@ class RecentArcMediaSource::MediaRoot {
   const base::FilePath relative_mount_path_;
 
   // Set at the beginning of GetRecentFiles().
-  RecentContext context_;
+  Params params_;
   GetRecentFilesCallback callback_;
 
   // Number of in-flight ReadDirectory() calls by ScanDirectory().
@@ -131,15 +130,15 @@ RecentArcMediaSource::MediaRoot::~MediaRoot() {
 }
 
 void RecentArcMediaSource::MediaRoot::GetRecentFiles(
-    RecentContext context,
+    Params params,
     GetRecentFilesCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(!context_.is_valid());
+  DCHECK(!params_.is_valid());
   DCHECK(callback_.is_null());
   DCHECK_EQ(0, num_inflight_readdirs_);
   DCHECK(document_id_to_file_.empty());
 
-  context_ = std::move(context);
+  params_ = std::move(params);
   callback_ = std::move(callback);
 
   auto* runner =
@@ -158,7 +157,7 @@ void RecentArcMediaSource::MediaRoot::GetRecentFiles(
 void RecentArcMediaSource::MediaRoot::OnGetRecentDocuments(
     base::Optional<std::vector<arc::mojom::DocumentPtr>> maybe_documents) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(context_.is_valid());
+  DCHECK(params_.is_valid());
   DCHECK(!callback_.is_null());
   DCHECK_EQ(0, num_inflight_readdirs_);
   DCHECK(document_id_to_file_.empty());
@@ -190,7 +189,7 @@ void RecentArcMediaSource::MediaRoot::OnGetRecentDocuments(
 void RecentArcMediaSource::MediaRoot::ScanDirectory(
     const base::FilePath& path) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(context_.is_valid());
+  DCHECK(params_.is_valid());
   DCHECK(!callback_.is_null());
 
   ++num_inflight_readdirs_;
@@ -224,7 +223,7 @@ void RecentArcMediaSource::MediaRoot::OnReadDirectory(
     base::File::Error result,
     std::vector<arc::ArcDocumentsProviderRoot::ThinFileInfo> files) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(context_.is_valid());
+  DCHECK(params_.is_valid());
   DCHECK(!callback_.is_null());
 
   for (const auto& file : files) {
@@ -257,7 +256,7 @@ void RecentArcMediaSource::MediaRoot::OnReadDirectory(
 
 void RecentArcMediaSource::MediaRoot::OnComplete() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(context_.is_valid());
+  DCHECK(params_.is_valid());
   DCHECK(!callback_.is_null());
   DCHECK_EQ(0, num_inflight_readdirs_);
 
@@ -269,7 +268,7 @@ void RecentArcMediaSource::MediaRoot::OnComplete() {
   }
   document_id_to_file_.clear();
 
-  context_ = RecentContext();
+  params_ = Params();
   GetRecentFilesCallback callback;
   std::swap(callback, callback_);
   std::move(callback).Run(std::move(files));
@@ -279,13 +278,13 @@ storage::FileSystemURL
 RecentArcMediaSource::MediaRoot::BuildDocumentsProviderUrl(
     const base::FilePath& path) const {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(context_.is_valid());
+  DCHECK(params_.is_valid());
 
   storage::ExternalMountPoints* mount_points =
       storage::ExternalMountPoints::GetSystemInstance();
 
   return mount_points->CreateExternalFileSystemURL(
-      context_.origin(), arc::kDocumentsProviderMountPointName,
+      params_.origin(), arc::kDocumentsProviderMountPointName,
       relative_mount_path_.Append(path));
 }
 
@@ -300,18 +299,18 @@ RecentArcMediaSource::~RecentArcMediaSource() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
-void RecentArcMediaSource::GetRecentFiles(RecentContext context,
+void RecentArcMediaSource::GetRecentFiles(Params params,
                                           GetRecentFilesCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(context.is_valid());
+  DCHECK(params.is_valid());
   DCHECK(!callback.is_null());
-  DCHECK(!context_.is_valid());
+  DCHECK(!params_.is_valid());
   DCHECK(callback_.is_null());
   DCHECK(build_start_time_.is_null());
   DCHECK_EQ(0, num_inflight_roots_);
   DCHECK(files_.empty());
 
-  context_ = std::move(context);
+  params_ = std::move(params);
   callback_ = std::move(callback);
 
   build_start_time_ = base::TimeTicks::Now();
@@ -324,15 +323,15 @@ void RecentArcMediaSource::GetRecentFiles(RecentContext context,
 
   for (auto& root : roots_) {
     root->GetRecentFiles(
-        context_, base::BindOnce(&RecentArcMediaSource::OnGetRecentFilesForRoot,
-                                 weak_ptr_factory_.GetWeakPtr()));
+        params_, base::BindOnce(&RecentArcMediaSource::OnGetRecentFilesForRoot,
+                                weak_ptr_factory_.GetWeakPtr()));
   }
 }
 
 void RecentArcMediaSource::OnGetRecentFilesForRoot(
     std::vector<RecentFile> files) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(context_.is_valid());
+  DCHECK(params_.is_valid());
   DCHECK(!callback_.is_null());
 
   files_.insert(files_.end(), std::make_move_iterator(files.begin()),
@@ -345,7 +344,7 @@ void RecentArcMediaSource::OnGetRecentFilesForRoot(
 
 void RecentArcMediaSource::OnComplete() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(context_.is_valid());
+  DCHECK(params_.is_valid());
   DCHECK(!callback_.is_null());
   DCHECK(!build_start_time_.is_null());
   DCHECK_EQ(0, num_inflight_roots_);
@@ -354,7 +353,7 @@ void RecentArcMediaSource::OnComplete() {
                       base::TimeTicks::Now() - build_start_time_);
   build_start_time_ = base::TimeTicks();
 
-  context_ = RecentContext();
+  params_ = Params();
   GetRecentFilesCallback callback;
   std::swap(callback, callback_);
   std::vector<RecentFile> files;

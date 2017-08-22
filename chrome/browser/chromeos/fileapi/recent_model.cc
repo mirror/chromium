@@ -15,12 +15,10 @@
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/fileapi/recent_arc_media_source.h"
-#include "chrome/browser/chromeos/fileapi/recent_context.h"
 #include "chrome/browser/chromeos/fileapi/recent_download_source.h"
 #include "chrome/browser/chromeos/fileapi/recent_drive_source.h"
 #include "chrome/browser/chromeos/fileapi/recent_file.h"
 #include "chrome/browser/chromeos/fileapi/recent_model_factory.h"
-#include "chrome/browser/chromeos/fileapi/recent_source.h"
 #include "content/public/browser/browser_thread.h"
 #include "storage/browser/fileapi/file_system_context.h"
 
@@ -105,7 +103,8 @@ void RecentModel::GetRecentFiles(
                                ? forced_cutoff_time_.value()
                                : base::Time::Now() - kCutoffTimeDelta;
 
-  RecentContext context(file_system_context, origin, max_files_, cutoff_time);
+  RecentSource::Params params(file_system_context, origin, max_files_,
+                              cutoff_time);
 
   num_inflight_sources_ = sources_.size();
   if (sources_.empty()) {
@@ -115,8 +114,8 @@ void RecentModel::GetRecentFiles(
 
   for (const auto& source : sources_) {
     source->GetRecentFiles(
-        context, base::BindOnce(&RecentModel::OnGetRecentFiles,
-                                weak_ptr_factory_.GetWeakPtr(), context));
+        params, base::BindOnce(&RecentModel::OnGetRecentFiles,
+                               weak_ptr_factory_.GetWeakPtr(), params));
   }
 }
 
@@ -128,18 +127,18 @@ void RecentModel::Shutdown() {
   sources_.clear();
 }
 
-void RecentModel::OnGetRecentFiles(const RecentContext& context,
+void RecentModel::OnGetRecentFiles(const RecentSource::Params& params,
                                    std::vector<RecentFile> files) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   DCHECK_LT(0, num_inflight_sources_);
 
   for (const auto& file : files) {
-    if (file.last_modified() >= context.cutoff_time())
+    if (file.last_modified() >= params.cutoff_time())
       intermediate_files_.emplace(file);
   }
 
-  while (intermediate_files_.size() > context.max_files())
+  while (intermediate_files_.size() > params.max_files())
     intermediate_files_.pop();
 
   --num_inflight_sources_;

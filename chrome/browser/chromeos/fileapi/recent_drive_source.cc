@@ -59,18 +59,18 @@ RecentDriveSource::~RecentDriveSource() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 }
 
-void RecentDriveSource::GetRecentFiles(RecentContext context,
+void RecentDriveSource::GetRecentFiles(Params params,
                                        GetRecentFilesCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(context.is_valid());
+  DCHECK(params.is_valid());
   DCHECK(!callback.is_null());
-  DCHECK(!context_.is_valid());
+  DCHECK(!params_.is_valid());
   DCHECK(callback_.is_null());
   DCHECK(files_.empty());
   DCHECK_EQ(0, num_inflight_stats_);
   DCHECK(build_start_time_.is_null());
 
-  context_ = std::move(context);
+  params_ = std::move(params);
   callback_ = std::move(callback);
 
   build_start_time_ = base::TimeTicks::Now();
@@ -85,7 +85,7 @@ void RecentDriveSource::GetRecentFiles(RecentContext context,
 
   file_system->SearchMetadata(
       "" /* query */, drive::SEARCH_METADATA_EXCLUDE_DIRECTORIES,
-      context_.max_files(), drive::MetadataSearchOrder::LAST_MODIFIED,
+      params_.max_files(), drive::MetadataSearchOrder::LAST_MODIFIED,
       base::Bind(&RecentDriveSource::OnSearchMetadata,
                  weak_ptr_factory_.GetWeakPtr()));
 }
@@ -94,7 +94,7 @@ void RecentDriveSource::OnSearchMetadata(
     drive::FileError error,
     std::unique_ptr<drive::MetadataSearchResultVector> results) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(context_.is_valid());
+  DCHECK(params_.is_valid());
   DCHECK(!callback_.is_null());
   DCHECK(files_.empty());
   DCHECK_EQ(0, num_inflight_stats_);
@@ -107,7 +107,7 @@ void RecentDriveSource::OnSearchMetadata(
 
   DCHECK(results.get());
 
-  std::string extension_id = context_.origin().host();
+  std::string extension_id = params_.origin().host();
 
   for (const auto& result : *results) {
     if (result.is_directory)
@@ -117,14 +117,14 @@ void RecentDriveSource::OnSearchMetadata(
         file_manager::util::ConvertDrivePathToRelativeFileSystemPath(
             profile_, extension_id, result.path);
     storage::FileSystemURL url =
-        context_.file_system_context()->CreateCrackedFileSystemURL(
-            context_.origin(), storage::kFileSystemTypeExternal, virtual_path);
+        params_.file_system_context()->CreateCrackedFileSystemURL(
+            params_.origin(), storage::kFileSystemTypeExternal, virtual_path);
     ++num_inflight_stats_;
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(
             &GetMetadataOnIOThread,
-            make_scoped_refptr(context_.file_system_context()), url,
+            make_scoped_refptr(params_.file_system_context()), url,
             storage::FileSystemOperation::GET_METADATA_FIELD_LAST_MODIFIED,
             base::Bind(&RecentDriveSource::OnGetMetadata,
                        weak_ptr_factory_.GetWeakPtr(), url)));
@@ -149,7 +149,7 @@ void RecentDriveSource::OnGetMetadata(const storage::FileSystemURL& url,
 
 void RecentDriveSource::OnComplete() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(context_.is_valid());
+  DCHECK(params_.is_valid());
   DCHECK(!callback_.is_null());
   DCHECK_EQ(0, num_inflight_stats_);
   DCHECK(!build_start_time_.is_null());
@@ -158,14 +158,14 @@ void RecentDriveSource::OnComplete() {
                       base::TimeTicks::Now() - build_start_time_);
   build_start_time_ = base::TimeTicks();
 
-  context_ = RecentContext();
+  params_ = Params();
 
   GetRecentFilesCallback callback;
   std::swap(callback, callback_);
   std::vector<RecentFile> files;
   std::swap(files, files_);
 
-  DCHECK(!context_.is_valid());
+  DCHECK(!params_.is_valid());
   DCHECK(callback_.is_null());
   DCHECK(files_.empty());
   DCHECK_EQ(0, num_inflight_stats_);
