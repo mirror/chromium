@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14e9bfe7_d733daa6",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T16:22:25Z",
+      "side": 1,
+      "message": "This is really scary to me, even if it works.  Can we consider other options?\n\nThe first thing that comes to mind is a bit of helper code in the color scheme:  An enum of colors (not all of them), and a corresponding switch-based getter, to look up color by ID.  Then you can just pass a color ID in here, and look it up in the current scheme when needed.  It\u0027d be a lot easier to grok.\n\nAlternatively, Text could take in a lambda that gets its color.  Could be either a constant, or, a color scheme lookup.",
+      "revId": "b18086802f3d7d12cd5b699652649f863f4eefc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c63c02_56afb4ac",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T16:22:25Z",
+      "side": 1,
+      "message": "This should be \u0027auto \u003d \u0027, as the type is explicitly visible here (we\u0027re doing this elsewhere).",
+      "revId": "b18086802f3d7d12cd5b699652649f863f4eefc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
