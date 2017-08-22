@@ -46,6 +46,30 @@
       "revId": "9b2cb18a53a4183e82455ebb71b3a6a0dc76e171",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "661899b2_d8b0764d",
+        "filename": "chrome/android/java/res/values/colors.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T16:35:54Z",
+      "side": 1,
+      "message": "We intend to only support a small set of greys to limit the number of colors we show to users, so it\u0027s likely there isn\u0027t a predefined style that matches exactly. The long term solution is for your UX designer to pick one of the accepted text styles in the go/clankstyles doc.",
+      "parentUuid": "1bb81d7b_13d0567e",
+      "range": {
+        "startLine": 212,
+        "startChar": 55,
+        "endLine": 212,
+        "endChar": 61
+      },
+      "revId": "9b2cb18a53a4183e82455ebb71b3a6a0dc76e171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
