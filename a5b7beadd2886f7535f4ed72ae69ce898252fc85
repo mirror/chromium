@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "25d9e304_7e61ac50",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-22T17:33:43Z",
+      "side": 1,
+      "message": "GLES2DecoderHelper is to be used by video decoders that run in the GPU process, for example it is used by MediaCodecVideoDecoder (https://cs.chromium.org/chromium/src/media/gpu/android/video_frame_factory_impl.cc?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d84), and it will be used to implement VdaVideoDecoder, which will be replacing GpuVideoDecoder.",
+      "parentUuid": "a82cbb06_8f523389",
+      "range": {
+        "startLine": 334,
+        "startChar": 34,
+        "endLine": 334,
+        "endChar": 51
+      },
+      "revId": "a5b7beadd2886f7535f4ed72ae69ce898252fc85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa540540_62579af7",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
         "patchSetId": 4
