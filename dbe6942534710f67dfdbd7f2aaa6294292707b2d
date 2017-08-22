@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3927c72_e5d9b2f1",
+        "filename": "ios/web/shell/test/earl_grey/shell_actions.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T21:06:16Z",
+      "side": 1,
+      "message": "Are there places where WebViewLongPressElementForContextMenu is called with false? Do we need this argument?",
+      "range": {
+        "startLine": 18,
+        "startChar": 45,
+        "endLine": 18,
+        "endChar": 55
+      },
+      "revId": "dbe6942534710f67dfdbd7f2aaa6294292707b2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
