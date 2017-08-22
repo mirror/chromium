@@ -91,6 +91,11 @@ class MOJO_SYSTEM_IMPL_EXPORT PlatformChannelPair {
   std::string PrepareToPassClientHandleToChildProcessAsString(
       HandlePassingInformation* handle_passing_info) const;
 
+  static void PrepareToPassHandleToChildProcess(
+      const PlatformHandle& handle,
+      base::CommandLine* command_line,
+      HandlePassingInformation* handle_passing_info);
+
   // To be called once the child process has been successfully launched, to do
   // any cleanup necessary.
   void ChildProcessLaunched();
