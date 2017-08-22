@@ -81,6 +81,24 @@
       "revId": "9128ada4cad92861b7f46d2cae24704b2a2d2a47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b84eb6_0c943d69",
+        "filename": "chrome/browser/ui/search/instant_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-22T07:43:59Z",
+      "side": 1,
+      "message": "\u003e Nope, we don\u0027t really handle that case. There\u0027s logic in BrowserInstantController that redirects to the local NTP, which then presumably gets handled as a \"navigation to NTP\" here.\n\u003e Do you think it\u0027s worth trying to explain that here?\n\nI think it would be better to drop the \"whenever\" part and simply enumerate the cases that it handles:\n\n// InstantController is responsible for updating the theme and most visited info\n// of the current tab when:\n//    * the user switches to an existing NTP tab, or\n//    * an open tab navigates to an NTP.",
+      "parentUuid": "1b8c1260_d9f323b1",
+      "revId": "9128ada4cad92861b7f46d2cae24704b2a2d2a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
