@@ -31,6 +31,7 @@ UI_BASE_EXPORT
 }
 
 @property(nonatomic) HoverState hoverState;
+@property(nonatomic) BOOL trackingEnabled;
 
 // Common initialization called from initWithFrame: and awakeFromNib.
 // Subclassers should call [super commonInit].
@@ -38,9 +39,6 @@ UI_BASE_EXPORT
 
 // Text that would be announced by screen readers.
 - (void)setAccessibilityTitle:(NSString*)accessibilityTitle;
-
-// Enables or disables the tracking for the button.
-- (void)setTrackingEnabled:(BOOL)enabled;
 
 // Checks to see whether the mouse is in the button's bounds and update
 // the image in case it gets out of sync.  This occurs to the close button
