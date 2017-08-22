@@ -189,18 +189,21 @@ gfx::RectF AXTree::RelativeToTreeBounds(const AXNode* node,
   while (node != nullptr) {
     if (node->data().transform)
       node->data().transform->TransformRect(&bounds);
-    auto* container = GetFromId(node->data().offset_container_id);
-    if (!container) {
-      if (node == root())
-        container = node->parent();
-      else
-        container = root();
-    }
+    const AXNode* container;
+
+    if (bounds.width() == 0 && bounds.height() == 0)
+      container = node->parent();
+    else
+      container = GetFromId(node->data().offset_container_id);
+    if (!container && container != root())
+      container = root();
     if (!container || container == node)
       break;
 
     gfx::RectF container_bounds = container->data().location;
     bounds.Offset(container_bounds.x(), container_bounds.y());
+    if (bounds.width() == 0 && bounds.height() == 0)
+      bounds.set_size(container_bounds.size());
 
     int scroll_x = 0;
     int scroll_y = 0;
