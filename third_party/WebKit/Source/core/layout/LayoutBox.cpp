@@ -4792,7 +4792,7 @@ LayoutRect LayoutBox::LocalCaretRect(InlineBox* box,
   // FIXME: ignoring :first-line, missing good reason to take care of
   const SimpleFontData* font_data = Style()->GetFont().PrimaryFont();
   LayoutUnit font_height =
-      LayoutUnit(font_data ? font_data->GetFontMetrics().Height() : 0);
+      LayoutUnit(font_data ? font_data->GetFontMetrics().FloatHeight() : 0);
   if (font_height > rect.Height() || (!IsAtomicInlineLevel() && !IsTable()))
     rect.SetHeight(font_height);
 

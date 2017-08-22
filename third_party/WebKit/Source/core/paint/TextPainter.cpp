@@ -114,9 +114,9 @@ void TextPainter::PaintEmphasisMarkForCombinedText() {
   DCHECK(combined_text_);
   TextRun placeholder_text_run(&kIdeographicFullStopCharacter, 1);
   FloatPoint emphasis_mark_text_origin(
-      text_bounds_.X().ToFloat(), text_bounds_.Y().ToFloat() +
-                                      font_data->GetFontMetrics().Ascent() +
-                                      emphasis_mark_offset_);
+      text_bounds_.X().ToFloat(),
+      text_bounds_.Y().ToFloat() + font_data->GetFontMetrics().FloatAscent() +
+          emphasis_mark_offset_);
   TextRunPaintInfo text_run_paint_info(placeholder_text_run);
   text_run_paint_info.bounds = FloatRect(text_bounds_);
   graphics_context_.ConcatCTM(Rotation(text_bounds_, kClockwise));
