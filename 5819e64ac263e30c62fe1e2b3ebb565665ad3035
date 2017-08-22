@@ -16,6 +16,47 @@
       "revId": "5819e64ac263e30c62fe1e2b3ebb565665ad3035",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0501d286_e3f8242f",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-22T20:37:08Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "abea4111_f167c6bd",
+      "revId": "5819e64ac263e30c62fe1e2b3ebb565665ad3035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "acbb81a7_379232a7",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7119,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-22T20:37:08Z",
+      "side": 0,
+      "message": "The manifest location was INTERNAL earlier and is now UNPACKED. Assuming that\u0027s ok.",
+      "range": {
+        "startLine": 7119,
+        "startChar": 6,
+        "endLine": 7119,
+        "endChar": 27
+      },
+      "revId": "5819e64ac263e30c62fe1e2b3ebb565665ad3035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
