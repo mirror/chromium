@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d8cc8786_1ecbc53d",
+        "filename": "cc/resources/video_resource_updater_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-08-22T18:28:19Z",
+      "side": 1,
+      "message": "That\u0027s true, but NV12 1 native texture case use different method to create video frame.\nCreateTestHardwareVideoFrame(\n      media::PIXEL_FORMAT_NV12, GL_TEXTURE_EXTERNAL_OES);\n\nSo I think it\u0027s not necessary to generalize this method. Do you want this method to have number of plane argument still? If so, let me do it.",
+      "parentUuid": "f7e62072_bd415f5f",
+      "revId": "7b462197d465b61debce3768a5aa2f7732dc6479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d0cddde_4d53656a",
         "filename": "cc/resources/video_resource_updater_unittest.cc",
         "patchSetId": 2
