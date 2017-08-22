@@ -1417,6 +1417,7 @@ namespace {
 class MockObserver : public TaskQueueManager::Observer {
  public:
   MOCK_METHOD0(OnTriedToExecuteBlockedTask, void());
+  MOCK_METHOD0(OnBeginNestedRunLoop, void());
 };
 
 }  // namespace
@@ -2913,6 +2914,86 @@ TEST_F(TaskQueueManagerTest, SetTimeDomainForDisabledQueue) {
   // Tidy up.
   runners_[0]->UnregisterTaskQueue();
   manager_->UnregisterTimeDomain(domain.get());
+}
+
+TEST_F(TaskQueueManagerTest, ProcessTasksWithoutTaskTimeObservers) {
+  Initialize(1u);
+  uint8_t startedCounter = 0;
+  uint8_t completedCounter = 0;
+  runners_[0]->GetTaskQueueImpl()->SetOnTaskStartedHandler(
+      base::Bind([](uint8_t* counter, const TaskQueue::Task& task,
+                    base::TimeTicks start) { ++(*counter); },
+                 &startedCounter));
+  runners_[0]->GetTaskQueueImpl()->SetOnTaskCompletedHandler(base::Bind(
+      [](uint8_t* counter, const TaskQueue::Task& task, base::TimeTicks start,
+         base::TimeTicks end) { ++(*counter); },
+      &completedCounter));
+  runners_[0]->GetTaskQueueImpl()->ForceSkipRequireTimingForTest(true);
+  std::vector<EnqueueOrder> run_order;
+  runners_[0]->PostTask(FROM_HERE, base::Bind(&TestTask, 1, &run_order));
+  runners_[0]->PostTask(FROM_HERE, base::Bind(&TestTask, 2, &run_order));
+  runners_[0]->PostTask(FROM_HERE, base::Bind(&TestTask, 3, &run_order));
+  test_task_runner_->RunUntilIdle();
+  EXPECT_EQ(startedCounter, 0u);
+  EXPECT_EQ(completedCounter, 0u);
+  EXPECT_THAT(run_order, ElementsAre(1, 2, 3));
+
+  runners_[0]->GetTaskQueueImpl()->ForceSkipRequireTimingForTest(false);
+  runners_[0]->PostTask(FROM_HERE, base::Bind(&TestTask, 4, &run_order));
+  runners_[0]->PostTask(FROM_HERE, base::Bind(&TestTask, 5, &run_order));
+  runners_[0]->PostTask(FROM_HERE, base::Bind(&TestTask, 6, &run_order));
+  test_task_runner_->RunUntilIdle();
+  EXPECT_EQ(startedCounter, 3u);
+  EXPECT_EQ(completedCounter, 3u);
+  EXPECT_THAT(run_order, ElementsAre(1, 2, 3, 4, 5, 6));
+}
+
+TEST_F(TaskQueueManagerTest, ProcessTasksWithTaskTimeObservers) {
+  Initialize(1u);
+  uint8_t startedCounter = 0;
+  uint8_t completedCounter = 0;
+  runners_[0]->GetTaskQueueImpl()->SetOnTaskStartedHandler(
+      base::Bind([](uint8_t* counter, const TaskQueue::Task& task,
+                    base::TimeTicks start) { ++(*counter); },
+                 &startedCounter));
+  runners_[0]->GetTaskQueueImpl()->SetOnTaskCompletedHandler(base::Bind(
+      [](uint8_t* counter, const TaskQueue::Task& task, base::TimeTicks start,
+         base::TimeTicks end) { ++(*counter); },
+      &completedCounter));
+  runners_[0]->GetTaskQueueImpl()->ForceSkipRequireTimingForTest(true);
+
+  manager_->AddTaskTimeObserver(&test_task_time_observer_);
+  std::vector<EnqueueOrder> run_order;
+  runners_[0]->PostTask(FROM_HERE, base::Bind(&TestTask, 1, &run_order));
+  runners_[0]->PostTask(FROM_HERE, base::Bind(&TestTask, 2, &run_order));
+  test_task_runner_->RunUntilIdle();
+  EXPECT_EQ(startedCounter, 2u);
+  EXPECT_EQ(completedCounter, 2u);
+  EXPECT_THAT(run_order, ElementsAre(1, 2));
+
+  runners_[0]->GetTaskQueueImpl()->ForceSkipRequireTimingForTest(false);
+  runners_[0]->PostTask(FROM_HERE, base::Bind(&TestTask, 3, &run_order));
+  runners_[0]->PostTask(FROM_HERE, base::Bind(&TestTask, 4, &run_order));
+  test_task_runner_->RunUntilIdle();
+  EXPECT_EQ(startedCounter, 4u);
+  EXPECT_EQ(completedCounter, 4u);
+  EXPECT_THAT(run_order, ElementsAre(1, 2, 3, 4));
+
+  manager_->RemoveTaskTimeObserver(&test_task_time_observer_);
+  runners_[0]->PostTask(FROM_HERE, base::Bind(&TestTask, 5, &run_order));
+  runners_[0]->PostTask(FROM_HERE, base::Bind(&TestTask, 6, &run_order));
+  test_task_runner_->RunUntilIdle();
+  EXPECT_EQ(startedCounter, 6u);
+  EXPECT_EQ(completedCounter, 6u);
+  EXPECT_THAT(run_order, ElementsAre(1, 2, 3, 4, 5, 6));
+
+  runners_[0]->GetTaskQueueImpl()->ForceSkipRequireTimingForTest(true);
+  runners_[0]->PostTask(FROM_HERE, base::Bind(&TestTask, 7, &run_order));
+  runners_[0]->PostTask(FROM_HERE, base::Bind(&TestTask, 8, &run_order));
+  test_task_runner_->RunUntilIdle();
+  EXPECT_EQ(startedCounter, 6u);
+  EXPECT_EQ(completedCounter, 6u);
+  EXPECT_THAT(run_order, ElementsAre(1, 2, 3, 4, 5, 6, 7, 8));
 }
 
 }  // namespace scheduler
