@@ -1,0 +1,215 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c48c8f08_ea6c6003",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3174,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-08-22T07:08:20Z",
+      "side": 1,
+      "message": "Is \"override\" the best description here? What about \"improved-accept-language-header\"?",
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6102dde_3f19a54c",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-08-22T07:08:20Z",
+      "side": 1,
+      "message": "This duplicates code. How about something like:\n\nconst string accept_languages \u003d \n  base::FeatureList::IsEnabled(features::kOverrideAcceptLanguageHeader) ?\n  ExpandLanguageList(last_pref_accept_language_) : last_pref_accept_language_;\n\nlast_http_accept_language_ \u003d net::HttpUtil::GenerateAcceptLanguageHeader(accept_languages);",
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a595cac_5281746b",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-08-22T07:08:20Z",
+      "side": 1,
+      "message": "It might not be worth it, but you could consider having an AcceptLanguageBuilder class that you feed languages to and it constructs the header. Thus it would encapsulate final_str and seen.",
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b36e3cfb_061fb024",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-08-22T07:08:20Z",
+      "side": 1,
+      "message": "Are you going to do this before submitting this patch?",
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21eb277f_e1371fc2",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-08-22T07:08:20Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 58,
+        "startChar": 23,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cca19f54_8c142a8c",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-08-22T07:08:20Z",
+      "side": 1,
+      "message": "use int",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 8
+      },
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "060f2524_14bc6d3e",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-08-22T07:08:20Z",
+      "side": 1,
+      "message": "Use for()",
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91fbdf57_aaeb1ad8",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-08-22T07:08:20Z",
+      "side": 1,
+      "message": "You could also handle the i \u003d\u003d 0 case explicitly:\n\nstring final_str(languages[0]);\nseen.insert(languages[0]);   // could also do this in the constructor of seen\nint i \u003d 1;\nwhile (i \u003c languages.size()) {\n if (seen.find(language) \u003d\u003d seen.end()) {\n   base::StringAppendF(\u0026final_str, \",%s\", language.c_str());\n   seen.insert(language);\n }\n ...\n}",
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d96b5c3_087daaaa",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-08-22T07:08:20Z",
+      "side": 1,
+      "message": "int",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 18
+      },
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c7ebfb_ce829033",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-08-22T07:08:20Z",
+      "side": 1,
+      "message": "consider splitting this out into a function such as GetLanguageBase()",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 76
+      },
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08056d0_9177b354",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-08-22T07:08:20Z",
+      "side": 1,
+      "message": "Why is this a static method rather than just a free-standing function?",
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
