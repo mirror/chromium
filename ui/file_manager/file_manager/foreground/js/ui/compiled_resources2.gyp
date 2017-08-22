@@ -208,6 +208,7 @@
         '../../../common/js/compiled_resources2.gyp:file_type',
         '../metadata/compiled_resources2.gyp:metadata_model',
         '<(DEPTH)/ui/webui/resources/js/cr/compiled_resources2.gyp:ui',
+        '<(DEPTH)/ui/webui/resources/js/cr/ui/compiled_resources2.gyp:grid',
         '<(DEPTH)/ui/webui/resources/js/cr/ui/compiled_resources2.gyp:list_selection_controller',
         '<(DEPTH)/ui/webui/resources/js/cr/ui/table/compiled_resources2.gyp:table_list',
         'file_list_selection_model',
