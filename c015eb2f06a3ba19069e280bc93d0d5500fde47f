@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "859ca59a_4bcbed74",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-22T16:45:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fbc59a8_0d1b9bc3",
+      "range": {
+        "startLine": 379,
+        "startChar": 28,
+        "endLine": 379,
+        "endChar": 42
+      },
+      "revId": "c015eb2f06a3ba19069e280bc93d0d5500fde47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff2c0c88_6fb7cb64",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "c015eb2f06a3ba19069e280bc93d0d5500fde47f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419794b2_96c8b30b",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-22T16:45:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff2c0c88_6fb7cb64",
+      "range": {
+        "startLine": 380,
+        "startChar": 6,
+        "endLine": 380,
+        "endChar": 30
+      },
+      "revId": "c015eb2f06a3ba19069e280bc93d0d5500fde47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
