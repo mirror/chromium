@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6517c99_38b00fe5",
+        "filename": "components/history/core/browser/browsing_history_service.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-22T17:16:05Z",
+      "side": 0,
+      "message": "Looks like dropping this null check was not safe, and caused crbug.com/757723 and crbug.com/757751.",
+      "revId": "f03bf8e4b1141991303b445875f92b41e95ec8a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
