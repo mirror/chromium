@@ -155,6 +155,7 @@ android_library("content_java") {
     "java/src/org/chromium/content/browser/WindowAndroidChangedObserver.java",
     "java/src/org/chromium/content/browser/accessibility/KitKatWebContentsAccessibility.java",
     "java/src/org/chromium/content/browser/accessibility/LollipopWebContentsAccessibility.java",
+    "java/src/org/chromium/content/browser/accessibility/OWebContentsAccessibility.java",
     "java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
     "java/src/org/chromium/content/browser/accessibility/captioning/CaptioningBridgeFactory.java",
     "java/src/org/chromium/content/browser/accessibility/captioning/CaptioningChangeDelegate.java",
