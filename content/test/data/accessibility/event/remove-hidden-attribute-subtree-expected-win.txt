@@ -1,3 +1,4 @@
 IA2_EVENT_TEXT_INSERTED on role=ROLE_SYSTEM_LIST new_text={'<obj>' start=2 end=3}
 EVENT_OBJECT_SHOW on role=ROLE_SYSTEM_LISTITEM
 EVENT_OBJECT_REORDER on role=ROLE_SYSTEM_LIST
+EVENT_OBJECT_FOCUS on role=ROLE_SYSTEM_DOCUMENT value="http://127.0.0.1:61797/accessibility/event/remove-hidden-attribute-subtree.html" FOCUSED,FOCUSABLE

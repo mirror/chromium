@@ -1,12 +1,16 @@
 rootWebArea
-++grid ariaColumnCount=5
+++grid
 ++++row selectable
 ++++++columnHeader selectable name='cell 2' ariaCellColumnIndex=2
 ++++++++staticText name='cell 2'
 ++++++++++inlineTextBox name='cell 2'
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
 ++++++columnHeader selectable name='cell 4' ariaCellColumnIndex=4
 ++++++++staticText name='cell 4'
 ++++++++++inlineTextBox name='cell 4'
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
 ++++++columnHeader selectable name='cell 5' ariaCellColumnIndex=5
 ++++++++staticText name='cell 5'
 ++++++++++inlineTextBox name='cell 5'
@@ -14,15 +18,24 @@ rootWebArea
 ++++++cell selectable name='cell 2' ariaCellColumnIndex=2
 ++++++++staticText name='cell 2'
 ++++++++++inlineTextBox name='cell 2'
-++++++cell selectable name='cell 3' ariaCellColumnIndex=3
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
+++++++cell selectable name='cell 3' ariaCellColumnIndex=4
 ++++++++staticText name='cell 3'
 ++++++++++inlineTextBox name='cell 3'
-++++++cell selectable name='cell 4' ariaCellColumnIndex=4
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
+++++++cell selectable name='cell 4' ariaCellColumnIndex=6
 ++++++++staticText name='cell 4'
 ++++++++++inlineTextBox name='cell 4'
-++++++cell selectable name='cell 5' ariaCellColumnIndex=5
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
+++++++cell selectable name='cell 5' ariaCellColumnIndex=8
 ++++++++staticText name='cell 5'
 ++++++++++inlineTextBox name='cell 5'
+++++column
+++++column
+++++column
 ++++column
 ++++column
 ++++column

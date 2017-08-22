@@ -34,21 +34,35 @@ AXRole: AXWebArea
         AXRole: AXGroup
             AXRole: AXTextField "Explicit Option 1"
             AXRole: AXTextField "Explicit Option 2"
+        AXRole: AXStaticText " "
+            AXRole: AXInlineTextBox " "
         AXRole: AXListBox
             AXRole: AXListBoxOption "Implicit Option 1"
             AXRole: AXListBoxOption "Implicit Option 2"
+        AXRole: AXStaticText " "
+            AXRole: AXInlineTextBox " "
         AXRole: AXGroup
             AXRole: AXMenuListPopup
                 AXRole: AXTextField "Explicit dropdown 1"
                 AXRole: AXTextField "Explicit dropdown 2"
+        AXRole: AXStaticText " "
+            AXRole: AXInlineTextBox " "
         AXRole: AXPopUpButton
             AXRole: AXMenuListPopup
                 AXRole: AXMenuListOption "Implicit dropdown 1"
                 AXRole: AXMenuListOption "Implicit dropdown 2"
+        AXRole: AXStaticText " "
+            AXRole: AXInlineTextBox " "
         AXRole: AXStatus
+        AXRole: AXStaticText " "
+            AXRole: AXInlineTextBox " "
         AXRole: AXProgressIndicator
+        AXRole: AXStaticText " "
+            AXRole: AXInlineTextBox " "
         AXRole: AXStatus
             AXRole: AXSliderThumb
+        AXRole: AXStaticText " "
+            AXRole: AXInlineTextBox " "
         AXRole: AXSlider
             AXRole: AXSliderThumb
     AXRole: AXParagraph

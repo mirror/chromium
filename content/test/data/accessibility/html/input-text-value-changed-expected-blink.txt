@@ -4,10 +4,14 @@ rootWebArea
 ++++++genericContainer
 ++++++++staticText name='aaYYYYbb'
 ++++++++++inlineTextBox name='aaYYYYbb'
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++textField
 ++++++genericContainer
 ++++++++staticText name='aa'
 ++++++++++inlineTextBox name='aa'
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++textField
 ++++++genericContainer
 ++++++++staticText name='After'
