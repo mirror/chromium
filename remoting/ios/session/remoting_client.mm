@@ -142,14 +142,20 @@ NSString* const kHostSessionPin = @"kHostSessionPin";
       });
 
   // TODO(nicholss): Add audio support to iOS.
-  base::WeakPtr<remoting::protocol::AudioStub> audioPlayer = nullptr;
+
+  std::unique_ptr<AudioPlayerIos> audioPlayer =
+      AudioPlayerIos::CreateAudioPlayer(network_task_runner_,
+                                        audio_task_runner_);
+
+  base::WeakPtr<remoting::protocol::AudioStub> audioConsumer =
+      audioPlayer.GetAudioConsumer();
 
   _displayHandler = [[GlDisplayHandler alloc] init];
   _displayHandler.delegate = self;
 
   _session.reset(new remoting::ChromotingSession(
       _sessonDelegate->GetWeakPtr(), [_displayHandler CreateCursorShapeStub],
-      [_displayHandler CreateVideoRenderer], audioPlayer, info,
+      [_displayHandler CreateVideoRenderer], audioConsumer, info,
       client_auth_config));
   _renderer = [_displayHandler CreateRendererProxy];
   _gestureInterpreter.reset(
