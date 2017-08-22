@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4717d7d_774eec88",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T16:38:24Z",
+      "side": 1,
+      "message": "Start at 0?  That way a struct which has been memset\u0027d will have a valid, uninitialized var.",
+      "range": {
+        "startLine": 27,
+        "startChar": 20,
+        "endLine": 27,
+        "endChar": 21
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08fa91ad_404f0106",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T16:38:24Z",
+      "side": 1,
+      "message": "The new style is to use constant style names for enum values:\nhttps://google.github.io/styleguide/cppguide.html#Enumerator_Names",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 15
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7522493f_1a20a1eb",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T16:38:24Z",
+      "side": 1,
+      "message": "Would a separate error state make things clearer?  A common practice is to have a separate error state and an \u0027error()\u0027 method which returns the error that occurred.",
+      "range": {
+        "startLine": 43,
+        "startChar": 38,
+        "endLine": 43,
+        "endChar": 51
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f908e15_897cd34f",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T16:38:24Z",
+      "side": 1,
+      "message": "Also:\n\n#include \u003cmemory\u003e\n#include \u003cstring\u003e\n#include \u003cvector\u003e",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6143b3c_5a0354ce",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T16:38:24Z",
+      "side": 1,
+      "message": "Can you add a ThreadChecker (https://cs.chromium.org/chromium/src/base/threading/thread_checker.h) or use this task runner to guarantee that calls below occur on the appropriate thread?",
+      "range": {
+        "startLine": 77,
+        "startChar": 43,
+        "endLine": 77,
+        "endChar": 60
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d82cba_cc807207",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T16:38:24Z",
+      "side": 1,
+      "message": "Can you add a comment on whether the object will remain valid after |error_callback_| is run?  One common problem with error handling occurs when an object is destroyed as part of the callback (since they are all called synchronously in this class) and someone attempts to touch a class member after the object is destroyed.\n\nIt is ok either way, but documenting it is important so you can make sure there are no difficult to find bugs in the error scenarios.",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 32
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68186869_c85757c3",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T16:38:24Z",
+      "side": 1,
+      "message": "You may also consider using base::ScopedTempDir (https://cs.chromium.org/chromium/src/base/files/scoped_temp_dir.h) which handles cleanup in the d\u0027tor for you.  You could use a ScopedTempDir for the download and then move the file out of the tempdir.  Feel free to disregard if you think the current logic is cleaner.",
+      "range": {
+        "startLine": 83,
+        "startChar": 17,
+        "endLine": 83,
+        "endChar": 31
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0e70dbb_020816ce",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T16:38:24Z",
+      "side": 1,
+      "message": "For simple data types, you can assign them in the class definition.  We used to rely on c\u0027tor initializer lists but are moving away from them for members which can be trivially assigned to.",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 27
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28fed1d4_44bc6c0c",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T16:38:24Z",
+      "side": 1,
+      "message": "Could this be moved into Init()?  We can safely delay creating it until later on and Init() could return an error if this method fails (it could return nullptr).",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 98,
+        "endChar": 62
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "330324a7_7e2671fc",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T16:38:24Z",
+      "side": 1,
+      "message": "Can you add a \u0027SetState()\u0027 method?  This is a nice way to enforce state machine transitions (The DCHECKs in each method are good but an additional method is useful to ensure all assignments are valid and enforce it at assignment time, but in a subseqeunt method call).",
+      "range": {
+        "startLine": 110,
+        "startChar": 2,
+        "endLine": 110,
+        "endChar": 23
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b5193fd_3cfcf920",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T16:38:24Z",
+      "side": 1,
+      "message": "nit: You can replace the concat with:\ntemp_filepath_ \u003d destination_filepath_.AddExtension(kTempFileExtension);\n\nI personally prefer this style as it is more explicit and marginally less error prone since it builds off of the destination path.",
+      "range": {
+        "startLine": 122,
+        "startChar": 44,
+        "endLine": 122,
+        "endChar": 46
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f130b859_6f82e1f7",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T16:38:24Z",
+      "side": 1,
+      "message": "If you bind |create_file_success_callback| to this method then you don\u0027t need to store it as a member in the class.  I think that is preferable as it is never cleared (even on success) in the current impl but it is only needed once to signal the Create action succeeded.",
+      "range": {
+        "startLine": 126,
+        "startChar": 45,
+        "endLine": 126,
+        "endChar": 63
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18a2781_d751a30d",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T16:38:24Z",
+      "side": 1,
+      "message": "The same pattern is used throughout the file for error handling.  Perhaps we can move error_callback.Run() into the Cancel() method.",
+      "range": {
+        "startLine": 224,
+        "startChar": 4,
+        "endLine": 225,
+        "endChar": 57
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
