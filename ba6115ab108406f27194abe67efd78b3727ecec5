@@ -65,6 +65,41 @@
     },
     {
       "key": {
+        "uuid": "a5d83f92_d6fd9141",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T09:12:54Z",
+      "side": 1,
+      "message": "nit:\n\n\u003e triggers ServiceWorkerURLRequestJob\u0027s dispatch failed behavior\n\ntriggers ServiceWorkerURLLoaderJob\u0027s dispatch failed behavior",
+      "parentUuid": "b03e3254_f96c233b",
+      "revId": "ba6115ab108406f27194abe67efd78b3727ecec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bb44f6_53cc6bea",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T09:12:54Z",
+      "side": 1,
+      "message": "nit: if (!callback) would work",
+      "revId": "ba6115ab108406f27194abe67efd78b3727ecec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59bb8626_f0705afc",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 4
