@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "684ebb6d_9ce000f6",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T16:28:09Z",
+      "side": 1,
+      "message": "nit: Do you want to move all vars to the top of this function? JS interpreter does this anyway (hoisting) and it\u0027s a good practice to have all vars in the top.",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 129,
+        "endChar": 16
+      },
+      "revId": "6dcf96ad4db53409faad52f5bdeea68f89e5fc6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1cf3c1_1c7ddc81",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T16:28:09Z",
+      "side": 1,
+      "message": "Can you use a better name than j? Perhaps tokenIndex ?",
+      "range": {
+        "startLine": 143,
+        "startChar": 16,
+        "endLine": 143,
+        "endChar": 17
+      },
+      "revId": "6dcf96ad4db53409faad52f5bdeea68f89e5fc6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
