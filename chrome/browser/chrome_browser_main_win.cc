@@ -80,6 +80,9 @@
 #include "ui/gfx/switches.h"
 #include "ui/strings/grit/app_locale_settings.h"
 
+// DO NOT SUBMIT
+#include "base/debug/debugger.h"
+
 namespace {
 
 typedef HRESULT (STDAPICALLTYPE* RegisterApplicationRestartProc)(
