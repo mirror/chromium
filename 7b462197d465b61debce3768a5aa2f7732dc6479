@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "6b4d8e5c_38a49c33",
+        "filename": "cc/resources/video_resource_updater_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-22T19:39:57Z",
+      "side": 1,
+      "message": "The semantics of numplanes and numtextures are different. Reusing numplanes value for numtextures just because they happen to be the same values for a specific usage is confusing.\n\nPlease update the function and pass num textures.",
+      "parentUuid": "d8cc8786_1ecbc53d",
+      "revId": "7b462197d465b61debce3768a5aa2f7732dc6479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d0cddde_4d53656a",
         "filename": "cc/resources/video_resource_updater_unittest.cc",
         "patchSetId": 2
