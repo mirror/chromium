@@ -32,7 +32,6 @@ void InfoBarManager::Observer::OnInfoBarReplaced(InfoBar* old_infobar,
 void InfoBarManager::Observer::OnManagerShuttingDown(InfoBarManager* manager) {
 }
 
-
 // InfoBarManager --------------------------------------------------------------
 
 InfoBar* InfoBarManager::AddInfoBar(std::unique_ptr<InfoBar> infobar) {
@@ -123,6 +122,7 @@ void InfoBarManager::OnNavigation(
   // delegate list.
   for (size_t i = infobars_.size(); i > 0; --i) {
     InfoBar* infobar = infobars_[i - 1];
+    infobar->delegate()->OnNavigation(details.navigation_entry_url);
     if (infobar->delegate()->ShouldExpire(details))
       RemoveInfoBar(infobar);
   }

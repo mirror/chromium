@@ -32,6 +32,7 @@ infobars::InfoBarDelegate::NavigationDetails
   navigation_details.is_reload =
       ui::PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_RELOAD);
   navigation_details.is_redirect = ui::PageTransitionIsRedirect(transition);
+  navigation_details.navigation_entry_url = details.entry->GetURL();
   return navigation_details;
 }
 
@@ -111,8 +112,9 @@ void InfoBarService::NavigationEntryCommitted(
       ui::PageTransitionCoreTypeIs(load_details.entry->GetTransitionType(),
                                    ui::PAGE_TRANSITION_RELOAD);
   ignore_next_reload_ = false;
-  if (!ignore)
+  if (!ignore) {
     OnNavigation(NavigationDetailsFromLoadCommittedDetails(load_details));
+  }
 }
 
 void InfoBarService::WebContentsDestroyed() {
