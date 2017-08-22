@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3edb6bc5_4fea19d1",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "Add a TODO to both of these functions to actually enroll/sync.",
+      "range": {
+        "startLine": 17,
+        "startChar": 21,
+        "endLine": 17,
+        "endChar": 39
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed5f0e7_de71843c",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f97475_15f80c42",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 59
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1365b5bf_dd56b427",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 56
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb440653_1af79d3f",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 64
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9e4b5d_79135f12",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 56
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75207d08_cf086d74",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 68
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8775f8_f1afe7f3",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "Just say \"the back-end\". The server used is an implementation detail of this service.",
+      "range": {
+        "startLine": 24,
+        "startChar": 19,
+        "endLine": 24,
+        "endChar": 37
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1fbc45d_0951779d",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "nit: Remove newlines before and after this.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 1
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38acfba_f8f60560",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 75
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32280d56_b02a7925",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN()",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 1
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad677e8_13388dc9",
+        "filename": "components/multidevice/service/multidevice_service.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "nit: Remove newline before this.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 1
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031c7f55_fb86ad60",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "We should still increment the counter in this case.\n\nInstead, can you log the number of successes and failures and verify that instead?",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 20
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "860a5896_9c6578f3",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "Rename to SetOnCallbackInvokedClosure() and add a comment explaining what this function is supposed to do.",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca04b4e_83ca8516",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "Initialize to nullptr, rename to on_callback_invoked_;",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 28
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00705aa0_9d1d07d3",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "nit: You don\u0027t need these ASSERT_FALSE/ASSERT_TRUEs.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 35
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc69b0b_89cf3c20",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "Rename GenerateDeviceSyncObservers() to AddDeviceSyncObservers() and do this within that function. Then, you can get rid of |observer_ptrs_| since it is not actually used outside this function anyway.",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 19
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59df5128_adbff58c",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:53:17Z",
+      "side": 1,
+      "message": "This function is identical to ForceSyncNow() except that the function called is different. Can you share code please?",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 25
+      },
+      "revId": "72a1f1df955bf9545dfd29e797fa632fcd7c7f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
