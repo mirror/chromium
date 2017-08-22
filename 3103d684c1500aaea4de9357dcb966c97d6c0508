@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5849a3a2_e6893270",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1747,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-22T22:17:24Z",
+      "side": 1,
+      "message": "Sanity check: This assumes PlzNavigate, right?  Should be fine-- it\u0027s on for 100% of Canary, correct?",
+      "revId": "3103d684c1500aaea4de9357dcb966c97d6c0508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
