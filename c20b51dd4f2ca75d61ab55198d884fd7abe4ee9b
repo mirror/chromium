@@ -22,6 +22,30 @@
       "revId": "c20b51dd4f2ca75d61ab55198d884fd7abe4ee9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeecb436_34c9d4ed",
+        "filename": "chrome/browser/sync/test/integration/two_client_apps_sync_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-22T03:47:16Z",
+      "side": 1,
+      "message": "This change is no longer needed, so I removed it. We no longer uninstall the Webstore since I found out that this would disable installing anything from it when it\u0027s open in a tab. We no simply overwrite its \"display_in_launcher\" property to be false on ARC devices.\n\nHowever, this approaches causes other test failures in sync tests. The \n\nASSERT_TRUE(AllProfilesHaveSameApps());\n\nfails even before the test starts. It complains that \"Apps for profile \u003c...\u003e  are not valid\". It seems that this change results in some zero-length string ordinals! https://cs.chromium.org/chromium/src/components/sync/base/ordinal.h?type\u003dcs\u0026q\u003dOrdinal%3CTraits%3E::IsValidOrdinalBytes\u0026sq\u003dpackage:chromium\u0026l\u003d354\n\nI have no idea what that means or where it is coming from. Could you please provide some guidance?",
+      "parentUuid": "91ef5c52_e747f0f2",
+      "range": {
+        "startLine": 51,
+        "startChar": 50,
+        "endLine": 51,
+        "endChar": 62
+      },
+      "revId": "c20b51dd4f2ca75d61ab55198d884fd7abe4ee9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
