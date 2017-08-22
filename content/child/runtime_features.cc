@@ -411,6 +411,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
       base::FeatureList::IsEnabled(
           media::kMediaEngagementBypassAutoplayPolicies));
 
+  WebRuntimeFeatures::EnableModernMediaControls(
+      base::FeatureList::IsEnabled(media::kUseModernMediaControls));
+
   // Enable explicitly enabled features, and then disable explicitly disabled
   // ones.
   if (command_line.HasSwitch(switches::kEnableBlinkFeatures)) {
