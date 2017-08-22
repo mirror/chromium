@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9b561cd_ba54b7a5",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-22T08:19:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f5b1024_fd2ab9c8",
+      "range": {
+        "startLine": 307,
+        "startChar": 2,
+        "endLine": 309,
+        "endChar": 11
+      },
+      "revId": "c5ec5d6d9d2bdfd9279b65cb5e397044019a045c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc607a68_0af3c043",
         "filename": "chrome/browser/password_manager/password_manager_interactive_uitest.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-22T06:25:37Z",
       "side": 1,
       "message": "Even if the feature is disabled, the test should run. You need to enable the feature explicitly. \nscoped_feature_list_.InitAndEnableFeature(password_manager::features::kEnableManualFallbackForSaving); or so. \n\nIf I were you, I would set the feature disabled by default and check whether the CL passes CQ. It is what we may need in the futute.",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 110,
+        "endChar": 11
+      },
+      "revId": "c5ec5d6d9d2bdfd9279b65cb5e397044019a045c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d78992_c824c7eb",
+        "filename": "chrome/browser/password_manager/password_manager_interactive_uitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-22T08:19:33Z",
+      "side": 1,
+      "message": "If I enable the feature via scoped_feature_list_ it will be unconditionally enabled for everything, even if somebody changes the default value. I am concerned that this could have side effects on other tests that would not test production code anymore.\n\nThe policy is to enable flags by default if the intent is to ship a feature such that tests are executed according to default setting.",
+      "parentUuid": "dc607a68_0af3c043",
       "range": {
         "startLine": 108,
         "startChar": 2,
@@ -68,6 +116,30 @@
       "revId": "c5ec5d6d9d2bdfd9279b65cb5e397044019a045c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47fd1dc5_d6c319bd",
+        "filename": "components/password_manager/core/common/password_manager_features.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-22T08:19:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d7c198e_80cd09ac",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 47
+      },
+      "revId": "c5ec5d6d9d2bdfd9279b65cb5e397044019a045c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
