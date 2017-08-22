@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cd313a8_2e5b6047",
+        "filename": "ios/chrome/browser/ui/authentication/signin_promo_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-22T13:58:26Z",
+      "side": 1,
+      "message": "Let\u0027s rename this to closeButtonConstraints as this is only for the close button.",
+      "range": {
+        "startLine": 133,
+        "startChar": 13,
+        "endLine": 133,
+        "endChar": 37
+      },
+      "revId": "4e85781ef08e0c041276f53280c847b14d51f158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
