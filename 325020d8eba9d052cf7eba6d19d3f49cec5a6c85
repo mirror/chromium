@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "cd041b35_2e961bd8",
+        "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-22T20:09:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e1a1b464_01314358",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf8343c5_31c1e854",
         "filename": "chrome/browser/media/router/mojo/media_route_controller.h",
         "patchSetId": 13
@@ -488,6 +506,24 @@
       "writtenOn": "2017-08-18T18:59:38Z",
       "side": 1,
       "message": "Would you mind adding a function comment:\n\n  /**\n   * Sends a command to open a file dialog and allow the user to choose a local\n   * media file.\n   */",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46203d4a_eb8cc3ac",
+        "filename": "chrome/browser/resources/media_router/media_router_browser_api.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-22T20:09:06Z",
+      "side": 1,
+      "message": "Please add this, thanks!",
+      "parentUuid": "1abed53a_e0fa23b2",
       "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
