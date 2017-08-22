@@ -504,4 +504,9 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
     public static void setProviderForTests(BackendProvider provider) {
         sProviderForTests = provider;
     }
+
+    /** @return The number of items in the {@link DownloadHistoryAdapter}. */
+    public int getAdapterItemCount() {
+        return mHistoryAdapter.getItemCount();
+    }
 }
