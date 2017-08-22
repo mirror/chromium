@@ -139,6 +139,46 @@
       "revId": "7f94d4264fc5e838e403c202d2a464cefa02347a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8cbeca6_ca553845",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 81005,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-22T23:18:47Z",
+      "side": 1,
+      "message": "nit: replace with ;\n\nAlso, please mention the name of the histogram that\u0027s being tracked separately",
+      "range": {
+        "startLine": 81005,
+        "startChar": 11,
+        "endLine": 81005,
+        "endChar": 16
+      },
+      "revId": "7f94d4264fc5e838e403c202d2a464cefa02347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79436121_15db99be",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 81108,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-22T23:18:47Z",
+      "side": 1,
+      "message": "Please mention the name of the histogram that\u0027s being tracked separately",
+      "revId": "7f94d4264fc5e838e403c202d2a464cefa02347a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
