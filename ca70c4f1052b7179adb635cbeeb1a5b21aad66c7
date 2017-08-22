@@ -22,6 +22,30 @@
       "revId": "ca70c4f1052b7179adb635cbeeb1a5b21aad66c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12bbdcbd_a736eb19",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2306,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-22T00:33:37Z",
+      "side": 1,
+      "message": "When the fading view changes, the results container doesn\u0027t necessarily need to exist. For example, the sheet may have been opened and then closed (somehow extremely early in this case). Most of the time, the container should be initialized by the time this happens. I could initialize the container here if it hasn\u0027t already been, but it might not be actually needed.",
+      "parentUuid": "e39d175b_2f27c6c0",
+      "range": {
+        "startLine": 2306,
+        "startChar": 44,
+        "endLine": 2306,
+        "endChar": 45
+      },
+      "revId": "ca70c4f1052b7179adb635cbeeb1a5b21aad66c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
