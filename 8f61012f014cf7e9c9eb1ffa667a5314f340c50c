@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27074c05_d8cf5610",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/AddToHomescreenManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-22T20:30:13Z",
+      "side": 1,
+      "message": "Nit: \"overridden\", \"observe\"",
+      "range": {
+        "startLine": 276,
+        "startChar": 20,
+        "endLine": 276,
+        "endChar": 29
+      },
+      "revId": "8f61012f014cf7e9c9eb1ffa667a5314f340c50c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf259d04_51c7eee3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebApkUpdateManagerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-22T20:30:13Z",
+      "side": 1,
+      "message": "This method can probably be refactored to not take a server argument and instead just call mTestServerRule.getServer() all the time.",
+      "range": {
+        "startLine": 114,
+        "startChar": 44,
+        "endLine": 114,
+        "endChar": 69
+      },
+      "revId": "8f61012f014cf7e9c9eb1ffa667a5314f340c50c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
