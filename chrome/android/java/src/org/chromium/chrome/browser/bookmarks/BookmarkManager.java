@@ -457,4 +457,9 @@ public class BookmarkManager implements BookmarkDelegate, SearchDelegate {
     public BookmarkActionBar getToolbarForTests() {
         return mToolbar;
     }
+
+    /** Returns the number of items in the {@link BookmarkItemsAdapter}. */
+    public int getAdapterItemCount() {
+        return mAdapter.getItemCount();
+    }
 }

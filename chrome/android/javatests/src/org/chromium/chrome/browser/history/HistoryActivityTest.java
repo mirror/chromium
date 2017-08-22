@@ -148,7 +148,7 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
 
         final HistoryActivity activity = getActivity();
         mHistoryManager = activity.getHistoryManagerForTests();
-        mAdapter = mHistoryManager.getAdapterForTests();
+        mAdapter = mHistoryManager.getAdapter();
         mTestObserver = new TestObserver();
         mHistoryManager.getSelectionDelegateForTests().addObserver(mTestObserver);
         mAdapter.registerAdapterDataObserver(mTestObserver);

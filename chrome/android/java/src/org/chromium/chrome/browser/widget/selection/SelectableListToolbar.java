@@ -122,7 +122,7 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
 
     private int mNavigationButton;
     private int mTitleResId;
-    private int mSearchMenuItemId;
+    protected int mSearchMenuItemId;
     private int mInfoMenuItemId;
     private int mNormalGroupResId;
     private int mSelectedGroupResId;
