@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a7f472e3_92ee2232",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "So it is more clear that we use 1 degree margin. And if we ever want to change the value, it is slightly easier.",
+      "parentUuid": "10966a6a_1a5c5dcb",
+      "range": {
+        "startLine": 21,
+        "startChar": 26,
+        "endLine": 21,
+        "endChar": 27
+      },
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6da1c71_146ffa3c",
         "filename": "chrome/browser/android/vr_shell/gvr_util.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-22T14:17:45Z",
       "side": 1,
       "message": "Why have the intermediate variables tan_, instead of just calling tan() here?",
+      "range": {
+        "startLine": 36,
+        "startChar": 32,
+        "endLine": 36,
+        "endChar": 40
+      },
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80998666_50122b28",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "good point. they were used more than once before. But it is not the case anymore. So removed the intermediate variables.",
+      "parentUuid": "b6da1c71_146ffa3c",
       "range": {
         "startLine": 36,
         "startChar": 32,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "da6ed0d3_2d317c91",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a803ba9_7386424b",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48dc7ceb_0b7b16aa",
         "filename": "chrome/browser/android/vr_shell/gvr_util.h",
         "patchSetId": 10
@@ -79,6 +145,24 @@
       "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1c4935_4c6a1cb1",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48dc7ceb_0b7b16aa",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "64efcea8_54f4d3a7",
+        "filename": "chrome/browser/android/vr_shell/gvr_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2f5a2ee_d7deea3f",
+      "range": {
+        "startLine": 27,
+        "startChar": 63,
+        "endLine": 27,
+        "endChar": 70
+      },
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "feeb0aee_6a386bf3",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 10
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "ef935d3d_8c7a3c53",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feeb0aee_6a386bf3",
+      "range": {
+        "startLine": 59,
+        "startChar": 55,
+        "endLine": 59,
+        "endChar": 56
+      },
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8584110_a72b9e27",
         "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
         "patchSetId": 10
@@ -139,6 +271,24 @@
       "writtenOn": "2017-08-22T14:17:45Z",
       "side": 1,
       "message": "When would this case happen?  WebVR splash screen?",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096f0c0e_870e971d",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "It will happen when we draw VrShell. There are some elements in VrShell are viewport aware. In this case, we draw in the same buffer as VrShell to improve performance.",
+      "parentUuid": "b8584110_a72b9e27",
       "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -159,6 +309,24 @@
       "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85642a54_7687922a",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c19fe43_f8ea99ef",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "2aa07c4a_0d409213",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7f7539d_7c745b24",
+      "range": {
+        "startLine": 257,
+        "startChar": 45,
+        "endLine": 257,
+        "endChar": 60
+      },
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d19a4120_05a95b04",
         "filename": "chrome/browser/vr/elements/ui_element.h",
         "patchSetId": 10
@@ -208,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "09bea397_43cae947",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d19a4120_05a95b04",
+      "range": {
+        "startLine": 259,
+        "startChar": 15,
+        "endLine": 259,
+        "endChar": 29
+      },
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b8a234a_054d05bf",
         "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
         "patchSetId": 10
@@ -225,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "8474916d_574fbe42",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b8a234a_054d05bf",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84455e55_e99f4361",
         "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
         "patchSetId": 10
@@ -236,6 +470,24 @@
       "writtenOn": "2017-08-22T14:17:45Z",
       "side": 1,
       "message": "Can degrees be negative?  Is clockwise implying always positive, or just indicating which direction is positive?",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ff9df08_3f387100",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "I believe ClockwiseAngle.. will return a value between 0~360.",
+      "parentUuid": "84455e55_e99f4361",
       "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -259,6 +511,24 @@
     },
     {
       "key": {
+        "uuid": "86b35276_a8ed22d0",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "I want to use it in test. perhaps there is a better way to do it?",
+      "parentUuid": "2604a52f_78780125",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "255c2eee_f0cf5b2e",
         "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
         "patchSetId": 10
@@ -270,6 +540,24 @@
       "writtenOn": "2017-08-22T14:17:45Z",
       "side": 1,
       "message": "What about replacing the if() with a EXPECT_FLOAT_EQ() call, and renaming the function void CheckMatricesNearlyEqual()?",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f17dae_2e45bdbd",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "I believe EXPECT_FLOAT_EQ is too accurate. We need larger tolerance.\nChanged to EXPECT_TRUE instead.",
+      "parentUuid": "255c2eee_f0cf5b2e",
       "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -293,6 +581,24 @@
     },
     {
       "key": {
+        "uuid": "8586f458_1356612a",
+        "filename": "chrome/browser/vr/ui_renderer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27f1080c_fbeb4bad",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9087844f_573def6d",
         "filename": "chrome/browser/vr/ui_scene.cc",
         "patchSetId": 10
@@ -307,6 +613,42 @@
       "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba8fcf0_b11dcdb7",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9087844f_573def6d",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a381173_d742ce88",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T15:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9087844f_573def6d",
+      "revId": "77345a1bb96bbe698549f9a35b838a95a7d3ab2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
