@@ -1000,16 +1000,6 @@ void TabManager::TabInsertedAt(TabStripModel* tab_strip_model,
                                content::WebContents* contents,
                                int index,
                                bool foreground) {
-  // Gets CoordinationUnitID for this WebContents and adds it to
-  // GRCTabSignalObserver.
-  if (grc_tab_signal_observer_) {
-    auto* tab_resource_coordinator =
-        ResourceCoordinatorWebContentsObserver::FromWebContents(contents)
-            ->tab_resource_coordinator();
-    grc_tab_signal_observer_->AssociateCoordinationUnitIDWithWebContents(
-        tab_resource_coordinator->id(), contents);
-  }
-
   // Only interested in background tabs, as foreground tabs get taken care of by
   // ActiveTabChanged.
   if (foreground)
@@ -1021,20 +1011,6 @@ void TabManager::TabInsertedAt(TabStripModel* tab_strip_model,
   // Re-setting time-to-purge every time a tab becomes inactive.
   GetWebContentsData(contents)->set_time_to_purge(
       GetTimeToPurge(min_time_to_purge_, max_time_to_purge_));
-}
-
-void TabManager::TabClosingAt(TabStripModel* tab_strip_model,
-                              content::WebContents* contents,
-                              int index) {
-  // Gets CoordinationUnitID for this WebContents and removes it from
-  // GRCTabSignalObserver.
-  if (!grc_tab_signal_observer_)
-    return;
-  auto* tab_resource_coordinator =
-      ResourceCoordinatorWebContentsObserver::FromWebContents(contents)
-          ->tab_resource_coordinator();
-  grc_tab_signal_observer_->RemoveCoordinationUnitID(
-      tab_resource_coordinator->id());
 }
 
 void TabManager::OnBrowserSetLastActive(Browser* browser) {

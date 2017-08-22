@@ -231,6 +231,10 @@ class TabManager : public TabStripModelObserver,
   // tabs are being loaded, in order to separate the two activities.
   bool IsLoadingBackgroundTabs() const;
 
+  GRCTabSignalObserver* grc_tab_signal_observer() {
+    return grc_tab_signal_observer_.get();
+  }
+
  private:
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, PurgeBackgroundRenderer);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ActivateTabResetPurgeState);
@@ -396,9 +400,6 @@ class TabManager : public TabStripModelObserver,
                      content::WebContents* contents,
                      int index,
                      bool foreground) override;
-  void TabClosingAt(TabStripModel* tab_strip_model,
-                    content::WebContents* contents,
-                    int index) override;
 
   // BrowserListObserver overrides.
   void OnBrowserSetLastActive(Browser* browser) override;
