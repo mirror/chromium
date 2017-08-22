@@ -55,7 +55,7 @@ class TestImageController : public ImageController {
     ImageDecodeRequestId request_id = next_image_request_id_++;
 
     decoded_images_.push_back(image);
-    decodes_requested_.insert(image.paint_image().unique_id());
+    decodes_requested_.insert(image.paint_image().stable_id());
     locked_images_.insert(request_id);
 
     // Post the callback asynchronously to match the behaviour in
@@ -112,14 +112,12 @@ class CheckerImageTrackerTest : public testing::Test,
         break;
     }
 
-    sk_sp<SkImage> image =
-        CreateDiscardableImage(gfx::Size(dimension, dimension));
+    auto generator = CreatePaintImageGenerator(gfx::Size(dimension, dimension));
     return DrawImage(PaintImageBuilder()
                          .set_id(PaintImage::GetNextId())
-                         .set_image(std::move(image))
+                         .set_paint_image_generator(std::move(generator))
                          .set_animation_type(animation)
                          .set_completion_state(completion)
-                         .set_frame_count(1)
                          .set_is_multipart(is_multipart)
                          .TakePaintImage(),
                      SkIRect::MakeWH(dimension, dimension),
@@ -321,10 +319,9 @@ TEST_F(CheckerImageTrackerTest, CancelsScheduledDecodes) {
 
   // Only the first image in the queue should have been decoded.
   EXPECT_EQ(image_controller_.decodes_requested().size(), 1U);
-  EXPECT_EQ(
-      image_controller_.decodes_requested().count(static_cast<PaintImage::Id>(
-          checkerable_image1.paint_image().unique_id())),
-      1U);
+  EXPECT_EQ(image_controller_.decodes_requested().count(
+                checkerable_image1.paint_image().stable_id()),
+            1U);
 
   // Rebuild the queue before the tracker is notified of decode completion,
   // removing the second image and adding a new one.
@@ -341,19 +338,17 @@ TEST_F(CheckerImageTrackerTest, CancelsScheduledDecodes) {
   // We still have only one decode because the tracker keeps only one decode
   // pending at a time.
   EXPECT_EQ(image_controller_.decodes_requested().size(), 1U);
-  EXPECT_EQ(
-      image_controller_.decodes_requested().count(static_cast<PaintImage::Id>(
-          checkerable_image1.paint_image().unique_id())),
-      1U);
+  EXPECT_EQ(image_controller_.decodes_requested().count(
+                checkerable_image1.paint_image().stable_id()),
+            1U);
 
   // Trigger completion for all decodes. Only 2 images should have been decoded
   // since the second image was cancelled.
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(image_controller_.decodes_requested().size(), 2U);
-  EXPECT_EQ(
-      image_controller_.decodes_requested().count(static_cast<PaintImage::Id>(
-          checkerable_image3.paint_image().unique_id())),
-      1U);
+  EXPECT_EQ(image_controller_.decodes_requested().count(
+                checkerable_image3.paint_image().stable_id()),
+            1U);
   EXPECT_EQ(image_controller_.num_of_locked_images(), 2);
 }
 
@@ -436,13 +431,13 @@ TEST_F(CheckerImageTrackerTest, CheckersOnlyStaticCompletedImages) {
   // be checkered.
   gfx::Size image_size = gfx::Size(partial_image.paint_image().width(),
                                    partial_image.paint_image().height());
-  DrawImage completed_paint_image =
-      DrawImage(PaintImageBuilder()
-                    .set_id(partial_image.paint_image().stable_id())
-                    .set_image(CreateDiscardableImage(image_size))
-                    .TakePaintImage(),
-                SkIRect::MakeWH(image_size.width(), image_size.height()),
-                kNone_SkFilterQuality, SkMatrix::I(), gfx::ColorSpace());
+  DrawImage completed_paint_image = DrawImage(
+      PaintImageBuilder()
+          .set_id(partial_image.paint_image().stable_id())
+          .set_paint_image_generator(CreatePaintImageGenerator(image_size))
+          .TakePaintImage(),
+      SkIRect::MakeWH(image_size.width(), image_size.height()),
+      kNone_SkFilterQuality, SkMatrix::I(), gfx::ColorSpace());
   EXPECT_FALSE(checker_image_tracker_->ShouldCheckerImage(
       completed_paint_image, WhichTree::PENDING_TREE));
 }
