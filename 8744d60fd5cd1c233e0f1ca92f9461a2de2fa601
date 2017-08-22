@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4d91ae4_3b3caa5e",
+        "filename": "base/process/process_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-22T18:30:00Z",
+      "side": 1,
+      "message": "If we\u0027re going to print stuff out before the wait, perhaps include TimeTicks::Now and |deadline|?\n\nnit: Also, if you want to print the process handle in hex, you can do it with cout \u003c\u003c std::hex and std::dec, for example. Do we care about printing the handle as hex, though?",
+      "revId": "8744d60fd5cd1c233e0f1ca92f9461a2de2fa601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
