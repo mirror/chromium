@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75bde5f4_4366c1f3",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-22T22:17:29Z",
+      "side": 1,
+      "message": "Please move the ternary statement outside of the base::RecordAction() invocation -- we have a script that parses the code searching for actions, and it\u0027s not great at handling more involved syntax.",
+      "range": {
+        "startLine": 490,
+        "startChar": 8,
+        "endLine": 491,
+        "endChar": 21
+      },
+      "revId": "88ed72162b0c4262d24cb77500d8319f6914b04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
