@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6622784_75d38bb6",
+        "filename": "chrome/browser/loader/safe_browsing_resource_throttle.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-22T19:21:21Z",
+      "side": 1,
+      "message": "nit: on",
+      "range": {
+        "startLine": 29,
+        "startChar": 60,
+        "endLine": 29,
+        "endChar": 62
+      },
+      "revId": "08fb3217ba6e2035f4d98983c1d704cb155144e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43022a7f_3476f37a",
+        "filename": "components/safe_browsing/features.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-22T19:21:21Z",
+      "side": 1,
+      "message": "I\u0027d prefer this to be true.\nIt basically means that this feature starts showing up on chrome://safe-browsing and would be helpful to debug any user reported issues when this experiment is turned on.",
+      "range": {
+        "startLine": 72,
+        "startChar": 25,
+        "endLine": 72,
+        "endChar": 30
+      },
+      "revId": "08fb3217ba6e2035f4d98983c1d704cb155144e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dfb7c8f_63ea13d1",
+        "filename": "components/safe_browsing/net_event_logger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-22T19:21:21Z",
+      "side": 1,
+      "message": "why do we ignore capture_mode?\nI have no idea what the right thing to do is here but I want to make sure that it is intentional.",
+      "range": {
+        "startLine": 27,
+        "startChar": 30,
+        "endLine": 27,
+        "endChar": 42
+      },
+      "revId": "08fb3217ba6e2035f4d98983c1d704cb155144e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09419a24_396c6197",
+        "filename": "components/safe_browsing/net_event_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-22T19:21:21Z",
+      "side": 1,
+      "message": "A comment on top about the purpose of this file would be useful.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "08fb3217ba6e2035f4d98983c1d704cb155144e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
