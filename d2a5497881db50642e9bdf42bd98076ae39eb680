@@ -22,6 +22,30 @@
       "revId": "d2a5497881db50642e9bdf42bd98076ae39eb680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0951990b_bfabb9f8",
+        "filename": "chrome/browser/ui/toolbar/toolbar_model_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-22T14:49:40Z",
+      "side": 1,
+      "message": "The last CL used ExtensionBuilder::SetLocation(Manifest::INTERNAL), which sets the extension\u0027s \"location\" (which is better thought of as \"install location\") to be \"internal\" (which is better thought of as \"regular user installation\").  This is because the default location for ExtensionBuilder is Manifest::UNPACKED (like a user loading an extension through chrome://extensions), but CreateActionExtension explicitly set the location.  Here, we\u0027re replacing test_util::CreateEmptyExtension(), which didn\u0027t explicitly set the location, so using the same default (UNPACKED) is keeping the same behavior.\n\n(Ideally, we might change the default some time, since I think INTERNAL is what most things probably want, but I\u0027d like to keep these changes mechanical for now.)\n\nSorry it\u0027s confusing - the unintuitive naming of Location and INTERNAL certainly doesn\u0027t help. :)",
+      "parentUuid": "fc58dbf9_b9c5d851",
+      "range": {
+        "startLine": 107,
+        "startChar": 11,
+        "endLine": 107,
+        "endChar": 21
+      },
+      "revId": "d2a5497881db50642e9bdf42bd98076ae39eb680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
