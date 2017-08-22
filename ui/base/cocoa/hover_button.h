@@ -33,6 +33,13 @@ UI_BASE_EXPORT
 @property(nonatomic) HoverState hoverState;
 @property(nonatomic) BOOL trackingEnabled;
 
+// An NSRect in the parent view's coordinate space representing the area which
+// the buton should be sensitive to for hover and hit testing. Default value is
+// NSZeroRect, which makes the hitbox equal to the view's frame. Subclasses may
+// override and return a different value. The MD download shelf uses this in
+// fullscreen to extend the close button's hitbox to the edges of the window.
+@property(readonly, nonatomic) NSRect hitbox;
+
 // Common initialization called from initWithFrame: and awakeFromNib.
 // Subclassers should call [super commonInit].
 - (void)commonInit;
