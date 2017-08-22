@@ -76,8 +76,8 @@ void ConfigFileWatcherTest::SetUp() {
   EXPECT_TRUE(base::CreateTemporaryFile(&config_file_));
 
   // Arrange to run |message_loop_| until no components depend on it.
-  scoped_refptr<AutoThreadTaskRunner> task_runner = new AutoThreadTaskRunner(
-      message_loop_.task_runner(), run_loop_.QuitClosure());
+  scoped_refptr<AutoThreadTaskRunner> task_runner =
+      new AutoThreadTaskRunner(run_loop_.QuitClosure());
 
   scoped_refptr<AutoThreadTaskRunner> io_task_runner =
       AutoThread::CreateWithType(

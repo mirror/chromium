@@ -17,8 +17,8 @@ TEST(ChromotingHostContextTest, StartAndStop) {
   base::RunLoop run_loop;
 
   std::unique_ptr<ChromotingHostContext> context =
-      ChromotingHostContext::Create(new AutoThreadTaskRunner(
-          message_loop.task_runner(), run_loop.QuitClosure()));
+      ChromotingHostContext::Create(
+          new AutoThreadTaskRunner(run_loop.QuitClosure()));
 
   EXPECT_TRUE(context);
   if (!context)

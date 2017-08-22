@@ -40,8 +40,7 @@ It2MeStandaloneHost::It2MeStandaloneHost()
     : scoped_task_environment_(
           base::test::ScopedTaskEnvironment::MainThreadType::UI),
       context_(ChromotingHostContext::Create(
-          new AutoThreadTaskRunner(base::ThreadTaskRunnerHandle::Get(),
-                                   run_loop_.QuitClosure()))),
+          new AutoThreadTaskRunner(run_loop_.QuitClosure()))),
       main_task_runner_(context_->file_task_runner()),
       factory_(main_task_runner_,
                context_->video_capture_task_runner(),

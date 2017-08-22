@@ -204,8 +204,8 @@ int It2MeNativeMessagingHostMain(int argc, char** argv) {
       new PipeMessagingChannel(std::move(read_file), std::move(write_file)));
 
   std::unique_ptr<ChromotingHostContext> context =
-      ChromotingHostContext::Create(new remoting::AutoThreadTaskRunner(
-          message_loop.task_runner(), run_loop.QuitClosure()));
+      ChromotingHostContext::Create(
+          new remoting::AutoThreadTaskRunner(run_loop.QuitClosure()));
   std::unique_ptr<PolicyWatcher> policy_watcher =
       PolicyWatcher::CreateWithTaskRunner(context->file_task_runner());
   std::unique_ptr<extensions::NativeMessageHost> host(

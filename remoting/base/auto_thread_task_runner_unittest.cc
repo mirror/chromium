@@ -23,16 +23,17 @@ namespace remoting {
 TEST(AutoThreadTaskRunnerTest, StartAndStop) {
   // Create a task runner.
   base::MessageLoop message_loop;
-  scoped_refptr<AutoThreadTaskRunner> task_runner = new AutoThreadTaskRunner(
-      message_loop.task_runner(), base::MessageLoop::QuitWhenIdleClosure());
+  base::RunLoop run_loop;
+  scoped_refptr<AutoThreadTaskRunner> task_runner =
+      new AutoThreadTaskRunner(run_loop.QuitWhenIdleClosure());
 
   // Post a task to make sure it is executed.
   bool success = false;
-  message_loop.task_runner()->PostTask(FROM_HERE,
-                                       base::Bind(&SetFlagTask, &success));
+  message_loop.task_runner()->PostTask(
+      FROM_HERE, base::Bind(&SetFlagTask, &success));
 
   task_runner = NULL;
-  base::RunLoop().Run();
+  run_loop.Run();
   EXPECT_TRUE(success);
 }
 

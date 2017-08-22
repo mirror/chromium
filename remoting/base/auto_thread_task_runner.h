@@ -19,11 +19,31 @@ namespace remoting {
 // when no more references remain.
 class AutoThreadTaskRunner : public base::SingleThreadTaskRunner {
  public:
-  // Constructs an instance of |AutoThreadTaskRunner| wrapping |task_runner|.
-  // |stop_task| is posted to |task_runner| when the last reference to
-  // the AutoThreadTaskRunner is dropped.
-  AutoThreadTaskRunner(scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-                       base::OnceClosure stop_task);
+  // Constructs an instance of |AutoThreadTaskRunner| wrapping the task runner
+  // on current thread. |stop_task| is posted to the task runner when the last
+  // reference to the AutoThreadTaskRunner is dropped.
+  explicit AutoThreadTaskRunner(base::OnceClosure stop_task);
+
+#if defined(OS_CHROMEOS)
+  // Makes a thin wrapper of a SingleThreadTaskRunner for Chrome OS only. We can
+  // only use system threads. So making a thin wrapper of an existing
+  // SingleThreadTaskRunner can reduce the platform inconsistency. When wrapping
+  // a SingleThreadTaskRunner, we usually cannot stop it, so the |stop_task| is
+  // always base::DoNothing.
+  //
+  // To ensure the underly thread can still execute tasks even after destructing
+  // of AutoThreadTaskRunner(), caller needs to ensure the correct
+  // base::RunLoop::QuitClosure() is posted to the |task_runner|, or the
+  // |task_runner| won't stop before the application stops.
+  //
+  // But components in Chromoting do not need to use AutoThreadTaskRunner in the
+  // first place, SingleThreadTaskRunner should be passed between components. So
+  // this wrapper is not necessary.
+  //
+  // TODO(zijiehe): Replace references of AutoThreadTaskRunner with
+  // SingleThreadTaskRunner in Chromoting.
+  AutoThreadTaskRunner(scoped_refptr<base::SingleThreadTaskRunner> task_runner);
+#endif
 
   // SingleThreadTaskRunner implementation
   bool PostDelayedTask(const tracked_objects::Location& from_here,
@@ -41,11 +61,11 @@ class AutoThreadTaskRunner : public base::SingleThreadTaskRunner {
  private:
   ~AutoThreadTaskRunner() override;
 
+  // The task runner on which AutoThreadTaskRunner is created.
+  const scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+
   // Task posted to |task_runner_| to notify the caller that it may be stopped.
   base::OnceClosure stop_task_;
-
-  // The wrapped task runner.
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(AutoThreadTaskRunner);
 };

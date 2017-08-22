@@ -24,6 +24,7 @@
 #include "google_apis/gaia/gaia_oauth_client.h"
 #include "net/base/file_stream.h"
 #include "net/base/network_interfaces.h"
+#include "remoting/base/auto_thread.h"
 #include "remoting/base/auto_thread_task_runner.h"
 #include "remoting/base/mock_oauth_client.h"
 #include "remoting/host/chromoting_host_context.h"
@@ -278,9 +279,6 @@ class Me2MeNativeMessagingHostTest : public testing::Test {
   std::unique_ptr<base::MessageLoop> test_message_loop_;
   std::unique_ptr<base::RunLoop> test_run_loop_;
 
-  std::unique_ptr<base::Thread> host_thread_;
-  std::unique_ptr<base::RunLoop> host_run_loop_;
-
   // Task runner of the host thread.
   scoped_refptr<AutoThreadTaskRunner> host_task_runner_;
   std::unique_ptr<NativeMessagingPipe> native_messaging_pipe_;
@@ -302,15 +300,12 @@ void Me2MeNativeMessagingHostTest::SetUp() {
   test_message_loop_.reset(new base::MessageLoop());
   test_run_loop_.reset(new base::RunLoop());
 
-  // Run the host on a dedicated thread.
-  host_thread_.reset(new base::Thread("host_thread"));
-  host_thread_->Start();
-
   // Arrange to run |test_message_loop_| until no components depend on it.
-  host_task_runner_ = new AutoThreadTaskRunner(
-      host_thread_->task_runner(),
-      base::Bind(&Me2MeNativeMessagingHostTest::ExitTest,
-                 base::Unretained(this)));
+  host_task_runner_ = remoting::AutoThread::Create(
+      "host_thread",
+      new AutoThreadTaskRunner(
+          base::Bind(&Me2MeNativeMessagingHostTest::ExitTest,
+                     base::Unretained(this))));
 
   host_task_runner_->PostTask(
       FROM_HERE,
@@ -349,8 +344,8 @@ void Me2MeNativeMessagingHostTest::StartHost() {
 
   std::unique_ptr<ChromotingHostContext> context =
       ChromotingHostContext::Create(new remoting::AutoThreadTaskRunner(
-          host_task_runner_, base::Bind(&Me2MeNativeMessagingHostTest::StopHost,
-                                        base::Unretained(this))));
+          base::Bind(&Me2MeNativeMessagingHostTest::StopHost,
+                     base::Unretained(this))));
 
   std::unique_ptr<remoting::Me2MeNativeMessagingHost> host(
       new Me2MeNativeMessagingHost(false, 0, std::move(context),

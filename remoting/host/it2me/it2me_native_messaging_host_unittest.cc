@@ -26,6 +26,7 @@
 #include "components/policy/core/common/mock_policy_service.h"
 #include "components/policy/policy_constants.h"
 #include "net/base/file_stream.h"
+#include "remoting/base/auto_thread.h"
 #include "remoting/base/auto_thread_task_runner.h"
 #include "remoting/host/chromoting_host_context.h"
 #include "remoting/host/native_messaging/log_message_handler.h"
@@ -229,9 +230,6 @@ class It2MeNativeMessagingHostTest : public testing::Test {
   std::unique_ptr<base::MessageLoop> test_message_loop_;
   std::unique_ptr<base::RunLoop> test_run_loop_;
 
-  std::unique_ptr<base::Thread> host_thread_;
-  std::unique_ptr<base::RunLoop> host_run_loop_;
-
   std::unique_ptr<base::RunLoop> policy_run_loop_;
 
   // Retain a raw pointer to |policy_loader_| in order to control the policy
@@ -249,14 +247,12 @@ void It2MeNativeMessagingHostTest::SetUp() {
   test_message_loop_.reset(new base::MessageLoop());
   test_run_loop_.reset(new base::RunLoop());
 
-  // Run the host on a dedicated thread.
-  host_thread_.reset(new base::Thread("host_thread"));
-  host_thread_->Start();
-
-  host_task_runner_ = new AutoThreadTaskRunner(
-      host_thread_->task_runner(),
-      base::Bind(&It2MeNativeMessagingHostTest::ExitTest,
-                 base::Unretained(this)));
+  // Arrange to run |test_message_loop_| until no components depend on it.
+  host_task_runner_ = remoting::AutoThread::Create(
+      "host_thread",
+      new AutoThreadTaskRunner(
+          base::Bind(&It2MeNativeMessagingHostTest::ExitTest,
+                     base::Unretained(this))));
 
   host_task_runner_->PostTask(
       FROM_HERE,
