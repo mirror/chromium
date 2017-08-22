@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef73230d_d9f0329e",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T21:14:09Z",
+      "side": 1,
+      "message": "Please ignore changes in this file for now.  We can\u0027t use any new eliding mechanism here until the Parsed states are adjusted during elision.  This is just to illustrate use and allow testing in VR.",
+      "revId": "494e5fc0eac8fa207a91887375100083891ba21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b882c72_0a9e31ad",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T21:14:09Z",
+      "side": 1,
+      "message": "This really concerns me.  I\u0027m rendering the elided URL as LTR, to ensure that spoofing can\u0027t happen (this is the correct AFAIK).  However, all the length checks done during elision don\u0027t specify LTR.  I believe that\u0027s a problem, but I don\u0027t know how big.",
+      "revId": "494e5fc0eac8fa207a91887375100083891ba21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b153750b_ebdefd84",
+        "filename": "components/url_formatter/elide_url.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T21:14:09Z",
+      "side": 1,
+      "message": "Naming is TBD on this method - I just picked a placeholder name.",
+      "revId": "494e5fc0eac8fa207a91887375100083891ba21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d8d1f3_87a78daf",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T21:14:09Z",
+      "side": 1,
+      "message": "This isn\u0027t like any of the existing tests that I saw, but I like it.  I wonder whether existing tests miss any odd cases, because they don\u0027t input odd widths.  For example, in current tests, how else can we explicitly test that http://google.com/foo does *not* elide to http://google.com... ?",
+      "revId": "494e5fc0eac8fa207a91887375100083891ba21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5785cab4_01dc56f1",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T21:14:09Z",
+      "side": 1,
+      "message": "I would not call this set of cases complete, but it\u0027s a start.",
+      "revId": "494e5fc0eac8fa207a91887375100083891ba21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
