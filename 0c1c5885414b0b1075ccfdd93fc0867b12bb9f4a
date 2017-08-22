@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "8ce7d91e_8a9a01d9",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-22T20:24:31Z",
+      "side": 1,
+      "message": "OK, that\u0027s handy to know. :)",
+      "parentUuid": "fb0f1bd3_ecf46680",
+      "revId": "0c1c5885414b0b1075ccfdd93fc0867b12bb9f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "679f6845_e60d9850",
         "filename": "mojo/edk/system/channel_fuchsia.cc",
         "patchSetId": 4
@@ -104,6 +122,24 @@
       "revId": "0c1c5885414b0b1075ccfdd93fc0867b12bb9f4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03110723_ef52e1f9",
+        "filename": "mojo/edk/system/channel_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-22T20:24:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41355c17_092aa937",
+      "revId": "0c1c5885414b0b1075ccfdd93fc0867b12bb9f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
