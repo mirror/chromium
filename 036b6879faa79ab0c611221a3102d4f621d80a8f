@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7461b478_c41da160",
+        "filename": "chrome/browser/chromeos/fileapi/recent_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-22T02:38:23Z",
+      "side": 1,
+      "message": "Hm, do we need this class? Wouldn\u0027t it be simpler to just pass these 4 arguments when needed?",
+      "revId": "036b6879faa79ab0c611221a3102d4f621d80a8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b96e538e_2e4ee3d7",
+        "filename": "chrome/browser/chromeos/fileapi/recent_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-22T02:38:23Z",
+      "side": 1,
+      "message": "According to this comment we shouldn\u0027t (though it\u0027s fine) include files with timestamp \u003d\u003d cutoff_time_, but we do include them in the downloads source. Could you either rephrase the comment or update the code?",
+      "range": {
+        "startLine": 51,
+        "startChar": 14,
+        "endLine": 51,
+        "endChar": 19
+      },
+      "revId": "036b6879faa79ab0c611221a3102d4f621d80a8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42374fe7_ebde42d7",
+        "filename": "chrome/browser/chromeos/fileapi/recent_download_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-22T02:38:23Z",
+      "side": 1,
+      "message": "See previous comment.",
+      "range": {
+        "startLine": 161,
+        "startChar": 26,
+        "endLine": 161,
+        "endChar": 27
+      },
+      "revId": "036b6879faa79ab0c611221a3102d4f621d80a8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0532517e_43dfb4d7",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-22T02:38:23Z",
+      "side": 1,
+      "message": "Caching may cause returning results not matching the cutoff criteria. Though it\u0027s unlikely to cause serious problems now, it could when changing the cache size in the future to much larger value. How about adding a comment explaining that?",
+      "revId": "036b6879faa79ab0c611221a3102d4f621d80a8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0deeb5df_c82df885",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-22T02:38:23Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 136,
+        "startChar": 29,
+        "endLine": 136,
+        "endChar": 30
+      },
+      "revId": "036b6879faa79ab0c611221a3102d4f621d80a8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
