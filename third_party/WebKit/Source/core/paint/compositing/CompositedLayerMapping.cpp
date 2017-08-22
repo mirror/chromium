@@ -519,6 +519,9 @@ bool CompositedLayerMapping::AncestorRoundedCornersWillClip(
       *nearest_clipping_ancestor, compositing_ancestor, zero_offset, true,
       LayerClipRecorder::kIncludeSelfForBorderRadius, rounded_rect_clips);
 
+  if (owning_layer_.HasCompositingDescendant() && rounded_rect_clips.size())
+    return true;
+
   for (auto clip_rect : rounded_rect_clips) {
     FloatRect inner_clip_rect = clip_rect.RadiusCenterRect();
     // The first condition catches cases where the child is certainly inside
