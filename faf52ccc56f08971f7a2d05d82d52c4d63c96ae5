@@ -593,6 +593,30 @@
       "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00df6b87_ae4112fd",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-22T21:03:59Z",
+      "side": 1,
+      "message": "Interesting enough. This pattern fails when we have 0.f and -0.f in it. An Android bot test failed with: \n../../chrome/browser/vr/elements/viewport_aware_root_unittest.cc:120: Failure\n      Expected: gfx::Point3F(-1.f, 0.f, 0.f).ToString()\n      Which is: \"-1.000000,0.000000,0.000000\"\nTo be equal to: scene.GetUiElementById(1)-\u003eGetCenter().ToString()\n      Which is: \"-1.000000,0.000000,-0.000000\"\n[  FAILED  ] ViewportAwareRoot.ChildElementsRepositioned (0 ms)\nwhile the same test works on linux.\n\nSo it is not a good one(not sure why the unittest for point3f decide to use it...). I have changed it to use Point3FAreNearlyEqual",
+      "parentUuid": "1e5cee8b_84e59115",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 11
+      },
+      "revId": "faf52ccc56f08971f7a2d05d82d52c4d63c96ae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
