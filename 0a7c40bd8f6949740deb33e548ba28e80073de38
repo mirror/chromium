@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e548254_d8bfcbc3",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-22T23:10:28Z",
+      "side": 1,
+      "message": "Nit: might be easier to understand if you had a variable |previous_virtual_address|.\nif (previous_virtual_address \u003e section.virtual_address)\n  ...\nprevious_virtual_address \u003d section.virtual_address;",
+      "range": {
+        "startLine": 267,
+        "startChar": 8,
+        "endLine": 267,
+        "endChar": 10
+      },
+      "revId": "0a7c40bd8f6949740deb33e548ba28e80073de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

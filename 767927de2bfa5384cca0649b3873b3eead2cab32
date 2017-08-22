@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "009bbeef_a01fa0c9",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-22T23:10:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1716f61d_f92830cd",
+      "range": {
+        "startLine": 283,
+        "startChar": 7,
+        "endLine": 283,
+        "endChar": 11
+      },
+      "revId": "767927de2bfa5384cca0649b3873b3eead2cab32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15692570_bb361216",
         "filename": "chrome/installer/zucchini/image_utils.h",
         "patchSetId": 8
