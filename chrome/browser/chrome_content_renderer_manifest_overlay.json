@@ -6,6 +6,7 @@
         "browser": [
           "chrome::mojom::ResourceUsageReporter",
           "chrome::mojom::SearchBouncer",
+          "content::mojom::Database",
           "spellcheck::mojom::SpellChecker",
           "profiling::mojom::MemlogClient"
         ]

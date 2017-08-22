@@ -705,9 +705,6 @@ void RenderThreadImpl::Init(
 
   blob_message_filter_ = new BlobMessageFilter(GetFileThreadTaskRunner());
   AddFilter(blob_message_filter_.get());
-  db_message_filter_ = new DBMessageFilter();
-  AddFilter(db_message_filter_.get());
-
   vc_manager_.reset(new VideoCaptureImplManager());
 
   browser_plugin_manager_.reset(new BrowserPluginManager());
@@ -766,6 +763,7 @@ void RenderThreadImpl::Init(
   registry->AddInterface(base::Bind(&EmbeddedWorkerInstanceClientImpl::Create,
                                     base::TimeTicks::Now(), GetIOTaskRunner()),
                          base::ThreadTaskRunnerHandle::Get());
+  registry->AddInterface(base::Bind(&DBMessageFilter::Create));
   GetServiceManagerConnection()->AddConnectionFilter(
       base::MakeUnique<SimpleConnectionFilterWithSourceInfo>(
           std::move(registry)));

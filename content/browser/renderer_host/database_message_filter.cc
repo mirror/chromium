@@ -26,6 +26,12 @@
 #include "third_party/sqlite/sqlite3.h"
 #include "url/origin.h"
 
+#include "base/bind_helpers.h"
+#include "content/public/browser/render_process_host.h"
+#include "content/public/common/bind_interface_helpers.h"
+#include "content/public/common/service_manager_connection.h"
+#include "services/service_manager/public/cpp/connector.h"
+
 #if defined(OS_POSIX)
 #include "base/file_descriptor_posix.h"
 #endif
@@ -49,20 +55,36 @@ bool IsOriginValid(const url::Origin& origin) {
 }  // namespace
 
 DatabaseMessageFilter::DatabaseMessageFilter(
+    int process_id,
     storage::DatabaseTracker* db_tracker)
     : BrowserMessageFilter(DatabaseMsgStart),
       db_tracker_(db_tracker),
       observer_added_(false) {
   DCHECK(db_tracker_.get());
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  // We need to bind on the db_tracker so we can call without context switching.
+  content::mojom::DatabasePtr provider;
+  RenderProcessHost* host = RenderProcessHost::FromID(process_id);
+  BindInterface(host, &provider);
+
+  db_tracker_->task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&DatabaseMessageFilter::InitializeOnDatabaseTracker, this,
+                     provider.PassInterface()));
 }
 
 void DatabaseMessageFilter::OnChannelClosing() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);  // Test
   if (observer_added_) {
     observer_added_ = false;
     db_tracker_->task_runner()->PostTask(
         FROM_HERE,
         base::BindOnce(&DatabaseMessageFilter::RemoveObserver, this));
   }
+  db_tracker_->task_runner()->PostTask(
+      FROM_HERE,
+      base::BindOnce(&DatabaseMessageFilter::CloseOnDatabaseTracker, this));
 }
 
 void DatabaseMessageFilter::AddObserver() {
@@ -338,7 +360,7 @@ void DatabaseMessageFilter::OnDatabaseOpened(
                               estimated_size, &database_size);
 
   database_connections_.AddConnection(origin_identifier, database_name);
-  Send(new DatabaseMsg_UpdateSize(origin, database_name, database_size));
+  database_provider_->UpdateSize(origin, database_name, database_size);
 }
 
 void DatabaseMessageFilter::OnDatabaseModified(
@@ -407,20 +429,30 @@ void DatabaseMessageFilter::OnDatabaseSizeChanged(
     const base::string16& database_name,
     int64_t database_size) {
   DCHECK(db_tracker_->task_runner()->RunsTasksInCurrentSequence());
-  if (database_connections_.IsOriginUsed(origin_identifier)) {
-    Send(new DatabaseMsg_UpdateSize(
-        url::Origin(storage::GetOriginFromIdentifier(origin_identifier)),
-        database_name, database_size));
+  if (!database_connections_.IsOriginUsed(origin_identifier)) {
+    return;
   }
+  database_provider_->UpdateSize(
+      url::Origin(storage::GetOriginFromIdentifier(origin_identifier)),
+      database_name, database_size);
 }
 
 void DatabaseMessageFilter::OnDatabaseScheduledForDeletion(
     const std::string& origin_identifier,
     const base::string16& database_name) {
   DCHECK(db_tracker_->task_runner()->RunsTasksInCurrentSequence());
-  Send(new DatabaseMsg_CloseImmediately(
+  database_provider_->CloseImmediately(
       url::Origin(storage::GetOriginFromIdentifier(origin_identifier)),
-      database_name));
+      database_name);
+}
+
+void DatabaseMessageFilter::InitializeOnDatabaseTracker(
+    content::mojom::DatabasePtrInfo provider) {
+  database_provider_.Bind(std::move(provider));
+}
+
+void DatabaseMessageFilter::CloseOnDatabaseTracker() {
+  database_provider_.reset();
 }
 
 }  // namespace content
