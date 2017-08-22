@@ -87,6 +87,23 @@
     },
     {
       "key": {
+        "uuid": "39538cb4_a4592ba2",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T09:04:09Z",
+      "side": 1,
+      "message": "Should this use parser_state and nonce rather than kNotParserInserted and empty_nonce?",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e15c8b47_e246600f",
         "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.h",
         "patchSetId": 7
