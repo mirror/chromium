@@ -31,17 +31,16 @@ namespace media {
 
 AudioDeviceThread::Callback::Callback(const AudioParameters& audio_parameters,
                                       base::SharedMemoryHandle memory,
-                                      int memory_length,
-                                      int total_segments)
+                                      size_t total_segments)
     : audio_parameters_(audio_parameters),
-      shared_memory_(memory, false),
-      memory_length_(memory_length),
+      memory_length_(memory.GetSize()),
       total_segments_(total_segments),
       // Avoid division by zero during construction.
-      segment_length_(memory_length_ /
-                      (total_segments_ ? total_segments_ : 1)) {
-  CHECK_GT(total_segments_, 0);
-  CHECK_EQ(memory_length_ % total_segments_, 0);
+      segment_length_(memory_length_ / (total_segments_ ? total_segments_ : 1)),
+      shared_memory_(memory, false) {
+  CHECK_GT(total_segments_, 0u);
+  CHECK_EQ(memory_length_ % total_segments_, 0u)
+      << memory_length_ << " " << total_segments_;
   thread_checker_.DetachFromThread();
 }
 
