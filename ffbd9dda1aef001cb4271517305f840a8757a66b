@@ -16,6 +16,24 @@
       "revId": "ffbd9dda1aef001cb4271517305f840a8757a66b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b7eeed_e3e6ca3f",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-22T21:53:46Z",
+      "side": 1,
+      "message": "Replaced with isfinite, as that also checks nans.",
+      "parentUuid": "4f2a76a1_183c0e87",
+      "revId": "ffbd9dda1aef001cb4271517305f840a8757a66b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
