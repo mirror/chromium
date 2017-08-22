@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c677e5bf_e0b1c4eb",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1438,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-22T21:06:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77dabf9a_70f6faa9",
+      "range": {
+        "startLine": 1438,
+        "startChar": 4,
+        "endLine": 1438,
+        "endChar": 10
+      },
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ee646a6_863a3349",
         "filename": "ios/chrome/browser/passwords/password_controller.h",
         "patchSetId": 3
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "1. Style Guide says \"Every non-trivial interface, public and private, should have an accompanying comment describing its purpose and how it fits into the larger picture.\". The fact that dispatcher is not retained is important piece of the information which is not obvious from the code and hence should be at least documented in the comments.\n2. Obj-C convention is that strong is default ownership.\n3. Ownership is a part of API contract for PasswordController and PasswordGenerationAgent. PasswordController has to know about PasswordGenerationAgent\u0027s API contract.",
       "parentUuid": "39740b09_439c5031",
+      "range": {
+        "startLine": 54,
+        "startChar": 37,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63cb9514_a3253963",
+        "filename": "ios/chrome/browser/passwords/password_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-22T21:06:21Z",
+      "side": 1,
+      "message": "Will start discussion about convention.",
+      "parentUuid": "c3e11faa_c5dd9395",
       "range": {
         "startLine": 54,
         "startChar": 37,
@@ -402,6 +450,24 @@
       "side": 1,
       "message": "I would argue that following Single Responsibility principle removes the complexity at various levels of the codebase. If there could be a dispatcher which is responsible only for \"settings command\", then we should not make another dispatcher responsible for handling settings in addition to many other things.\n\nThe code in this header already deviates from \"agreed design plan\", because of ApplicationSettingsCommands protocol, so seems like further deviations should not be an issue. \n\nMaking MainController/BVC  conform to 2 protocols instead of 1 does not add any additional complexity. Can you think about any other examples why moving Settings Commands to a separate protocol would be bad.",
       "parentUuid": "94b71f46_bce038a4",
+      "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2c3835_a295fc1f",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-22T21:06:21Z",
+      "side": 1,
+      "message": "We resolved offline.",
+      "parentUuid": "66de673c_2b0299a5",
       "revId": "5a3fd9e32cbd785ca6e2d392a5924e9520ea7400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
