@@ -1110,6 +1110,29 @@ BASE_EXPORT bool IsLoggingToFileEnabled();
 BASE_EXPORT std::wstring GetLogFileFullPath();
 #endif
 
+class BASE_EXPORT ScopedLogger {
+ public:
+  ScopedLogger(const char* format, ...);
+  ScopedLogger(ScopedLogger&&);
+  ~ScopedLogger();
+  void log(const char* format, ...);
+
+ private:
+  using PrintFunctionPtr = void (*)(const char* format, va_list args);
+
+  void init(const char* format, va_list args);
+  void writeNewlineIfNeeded();
+  void indent();
+  void print(const char* format, ...);
+  void printIndent();
+  static ScopedLogger*& current();
+
+  ScopedLogger* const m_parent;
+  bool m_multiline;
+  static PrintFunctionPtr m_printFunc;
+  DISALLOW_COPY_AND_ASSIGN(ScopedLogger);
+};
+
 }  // namespace logging
 
 // Note that "The behavior of a C++ program is undefined if it adds declarations

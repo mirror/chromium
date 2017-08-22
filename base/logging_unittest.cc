@@ -7,6 +7,7 @@
 #include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/strings/string_piece.h"
 
 #include "testing/gmock/include/gmock/gmock.h"
@@ -31,6 +32,7 @@ namespace logging {
 
 namespace {
 
+using ::base::Optional;
 using ::testing::Return;
 using ::testing::_;
 
@@ -536,6 +538,19 @@ TEST_F(LoggingTest, NestedLogAssertHandlers) {
   }
 
   LOG(FATAL) << "Last assert must be caught by handler_a again";
+}
+
+TEST_F(LoggingTest, ScopedLogger) {
+  ScopedLogger a("a1");
+  {
+    Optional<ScopedLogger> b("b1");
+    {
+      ScopedLogger c("c");
+      { ScopedLogger d("d %d %s", -1, "hello"); }
+    }
+    b->log("b2");
+  }
+  a.log("a2 %.1f", 0.5);
 }
 
 // Test that defining an operator<< for a type in a namespace doesn't prevent
