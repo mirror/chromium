@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cfaf7da_e0db09a2",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-22T20:51:16Z",
+      "side": 1,
+      "message": "should we also save the response and save the blob_ptr? do we want to delay the response? Or just drop this blob response?",
+      "range": {
+        "startLine": 1047,
+        "startChar": 0,
+        "endLine": 1047,
+        "endChar": 76
+      },
+      "revId": "53548098600ebc8133a19cc43e7548bcec2c0785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
