@@ -951,6 +951,11 @@
       status: "experimental",
     },
     {
+      name: "SensorExtraClasses",
+      depends_on: ["Sensor"],
+      status: "experimental",
+    },
+    {
       name: "ServerTiming",
       status: "experimental",
     },
