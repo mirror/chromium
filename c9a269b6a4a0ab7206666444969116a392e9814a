@@ -118,6 +118,30 @@
       "revId": "c9a269b6a4a0ab7206666444969116a392e9814a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e2e13b_06c7f49e",
+        "filename": "media/device_monitors/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-22T16:18:54Z",
+      "side": 1,
+      "message": "Thanks Suchit, you\u0027re clear to proceed here now. Thanks again for all your help thus far to clean up the build system.\n\nIf you change this to //media:test_support this is ready to submit.",
+      "parentUuid": "1b3444a4_7f9027ad",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 12
+      },
+      "revId": "c9a269b6a4a0ab7206666444969116a392e9814a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
