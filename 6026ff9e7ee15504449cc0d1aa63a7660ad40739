@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13fe0e2e_a2253fab",
+        "filename": "ios/chrome/browser/ssl/ios_captive_portal_blocking_page_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T21:16:55Z",
+      "side": 1,
+      "message": "ASSERT_TRUE, otherwise line 41 will crash the test.",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 13
+      },
+      "revId": "6026ff9e7ee15504449cc0d1aa63a7660ad40739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0a72a5_dd7eb222",
+        "filename": "ios/chrome/browser/ssl/ios_captive_portal_blocking_page_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T21:16:55Z",
+      "side": 1,
+      "message": "EXPECT_TRUE(kWaitForUIElementTimeout, testing::WaitUntilConditionOrTimeout(^{\n  return do_not_proceed_callback_called;\n}));\n\nbase::test::ios::WaitUntilCondition is pretty bad for testing because it DCHECKs. Sorry, I should have marked base::test::ios::WaitUntilCondition as deprecated.",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 13
+      },
+      "revId": "6026ff9e7ee15504449cc0d1aa63a7660ad40739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2bcaf6_79499464",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_coordinator_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T21:16:55Z",
+      "side": 1,
+      "message": "ScopedKeyWindow scoped_key_window;\nUIViewController* viewController \u003d [[UIViewController alloc] init];\n[scoped_key_window.Get() setRootViewController:viewController];",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 40
+      },
+      "revId": "6026ff9e7ee15504449cc0d1aa63a7660ad40739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa7c09b_61c8463f",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_coordinator_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T21:16:55Z",
+      "side": 1,
+      "message": "nit: EXPECT_FALSE(root_view_controller.presentedViewController);",
+      "range": {
+        "startLine": 38,
+        "startChar": 40,
+        "endLine": 38,
+        "endChar": 63
+      },
+      "revId": "6026ff9e7ee15504449cc0d1aa63a7660ad40739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4124548_0159ae8f",
+        "filename": "ios/chrome/browser/ui/captive_portal/captive_portal_login_coordinator_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T21:16:55Z",
+      "side": 1,
+      "message": "Please use WaitUntilConditionOrTimeout",
+      "range": {
+        "startLine": 44,
+        "startChar": 21,
+        "endLine": 44,
+        "endChar": 39
+      },
+      "revId": "6026ff9e7ee15504449cc0d1aa63a7660ad40739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
