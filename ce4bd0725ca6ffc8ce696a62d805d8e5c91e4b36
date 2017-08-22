@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "48b91379_a9028a82",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T15:30:27Z",
+      "side": 1,
+      "message": "\u003e #shouldShowPromo checks if the Finch flag is enabled and if the impression cap was reached for a particular AccessPoint. In this case, there is no impression cap so it merely checks if the Finch flag is enabled. Its general purpose is to decide if the \"Continue as\" promo should have been shown, regardless of it having been dismissed or the user being signed in/signin not being allowed. It is the deciding condition whether several observers (ProfileDataCache.Observer, AccountsChangeObserver) should be registered and whether certain objects related to the \"Continue as\" signin promos should be created (the SigninPromoController, ProfileDataCache etc). \n\u003e \n\u003e Adding the condition that singin is allowed/user is not signed in would mess up the logic behind the promos in Bookmarks. In BookmarkPromoHeader (https://goo.gl/xP7jMa) #shouldShowPromos decides whether there exists the possibility for the promo to be shown. What I mean by possibility is: even if the user is signed in, we should still initialize the SigninPromoController and register the observers due to the fact that the account may be removed from the device thus having to show the promo immediately.   \n\u003e \n\nIf this is the recommended behaviour for showing signin promos, shouldn\u0027t all the places using it do the same? For example here we do something similar with registering the SigninObserver as long as the user didn\u0027t explicitly dismiss the promo. Sounds like centralising it would ensure it is done everywhere the right way.\n\n\u003e Regarding dismissal, so far in Bookmarks we have treated the recording of dismissal \"near\" the place where the recording of the dismissal of the regular promo was done. Adding dismissal in #shouldShowPromo would mean however that we have to do 2 different checks here. ChromePreferenceManager#getNewTabPageSigninPromoDismissed() returns whether the appropriate promo was dismissed and moving the condition in #shouldShowPromo would mean that we would have to do an extra check to figure out which dismissal we need to verify - the old,regular promo or the \"Continue as\" promo - so I don\u0027t know if moving it there would increase readability.\n\u003e \n\nFair enough, I don\u0027t know how easy backing the old signin promo in bookmarks with the SigninPromoController would be, so letting embedders handle dismissal check is probably the pragmatic choice for the current CL.\n\n\u003e Given that #shouldShowPromo in this case only checks the Finch flag, I decided to replace every call here with ChromeFeatureList.isEnabled(...) to provide a more clear idea of what is actually checked in the condition. Sorry for the confusion. I\u0027ll also rename this method in a future CL which will modify the \"old\" and \"new\" naming that we\u0027ve used so far across Settings, Bookmarks and Recent Tabs. \n\u003e \n\nMaybe what you need is to split the method? have one that checks whether you should use the personalised promo or the generic one (existing code that wraps feature checks: SuggestionsConfig, FeatureUtilities), and a separate method that checks whether the personalised promo should not be shown because of the number of impressions, or whatever other check is meaningful there.\n\n\u003e If you think that it would be more appropriate to add the previously discussed conditions in #shouldShowPromo, please let me know and I will modify it :)",
+      "parentUuid": "99dfe6c4_e7cdf303",
+      "range": {
+        "startLine": 84,
+        "startChar": 38,
+        "endLine": 84,
+        "endChar": 53
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e9c86f5_ccda5055",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 2
@@ -83,6 +107,30 @@
       "writtenOn": "2017-08-22T13:41:24Z",
       "side": 1,
       "message": "This assert is redundant - next line will throw if the holder has a wrong type. The benefit isn\u0027t just line count - ClassCastException will contain info about actual type of holder (and assert will not).",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 56
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff40379_c14d64e1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T15:30:27Z",
+      "side": 1,
+      "message": "iirc Findbugs complains if you don\u0027t check the type above. the assert has no runtime cost and shuts up FindBugs effectively and in a very readable way.",
+      "parentUuid": "1e9c86f5_ccda5055",
       "range": {
         "startLine": 121,
         "startChar": 0,
@@ -164,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "bc33e831_e90adba0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T15:30:27Z",
+      "side": 1,
+      "message": "I suppose checking whether the controller is null would be enough?",
+      "parentUuid": "012fc39e_e85d7344",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 99
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c84af273_74e02af9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 2
@@ -208,6 +280,30 @@
       "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a05a15_eb1c512f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T15:30:27Z",
+      "side": 1,
+      "message": "Yup! sounds good",
+      "parentUuid": "0213726c_77733866",
+      "range": {
+        "startLine": 302,
+        "startChar": 25,
+        "endLine": 302,
+        "endChar": 43
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -433,6 +529,30 @@
       "side": 1,
       "message": "When wiring the promo in Bookmarks, Eli said that we should show the new promo to the user even if the old promo had been previously dismissed. I\u0027ve adapted the same philosophy here, thus needing another preference key. I am not sure that I understood your question though. I needed to rename the old preference key just to differentiate between the key for the old promos and the \"Continue as\" promos. Did I miss something?",
       "parentUuid": "12ad5bff_1dc156dd",
+      "range": {
+        "startLine": 361,
+        "startChar": 18,
+        "endLine": 361,
+        "endChar": 48
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1a5dbe_1f417eb8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T15:30:27Z",
+      "side": 1,
+      "message": "Hum okay... can you please ensure we take care of the cleanup then? File a bug to clear the preference and remove it from the code once Continue As launches completely? Feel free to assign me the bug and the todo. It would be nice too if the bug recorded that the pref switch is related to a product decision.",
+      "parentUuid": "b1f2b23d_33e7749a",
       "range": {
         "startLine": 361,
         "startChar": 18,
