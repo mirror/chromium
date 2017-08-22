@@ -1,8 +1,11 @@
 'use strict';
 
 // Returns an IndexedDB database name that is unique to the test case.
-function databaseName(testCase) {
-  return 'db' + self.location.pathname + '-' + testCase.name;
+function databaseName(testCase, suffix) {
+  let name = `db${self.location.pathname}-${testCase.name}`;
+  if (suffix)
+    name += `-${suffix}`;
+  return name;
 }
 
 // Creates an EventWatcher covering all the events that can be issued by
@@ -10,6 +13,15 @@ function databaseName(testCase) {
 function requestWatcher(testCase, request) {
   return new EventWatcher(testCase, request,
       ['abort', 'blocked', 'complete', 'error', 'success', 'upgradeneeded']);
+}
+
+// Deletes an IndexedDB database.
+//
+// Returns a promise that resolves to true if the deletion succeeds.
+function deleteNamedDatabase(testCase, databaseName) {
+  const request = indexedDB.deleteDatabase(databaseName);
+  const eventWatcher = requestWatcher(testCase, request);
+  return eventWatcher.wait_for('success').then(event => true);
 }
 
 // Migrates an IndexedDB database whose name is unique for the test case.
@@ -59,7 +71,7 @@ function migrateNamedDatabase(
       transaction.abort = () => {
         transaction._willBeAborted();
         transactionAbort();
-      }
+      };
       transaction._willBeAborted = () => {
         requestEventPromise = new Promise((resolve, reject) => {
           request.onerror = event => {
@@ -71,7 +83,7 @@ function migrateNamedDatabase(
               'versionchange transaction'));
         });
         shouldBeAborted = true;
-      }
+      };
 
       // If migration callback returns a promise, we'll wait for it to resolve.
       // This simplifies some tests.
@@ -115,10 +127,7 @@ function createDatabase(testCase, setupCallback) {
 // Returns a promise that resolves to an IndexedDB database. The caller must
 // close the database.
 function createNamedDatabase(testCase, databaseName, setupCallback) {
-  const request = indexedDB.deleteDatabase(databaseName);
-  const eventWatcher = requestWatcher(testCase, request);
-
-  return eventWatcher.wait_for('success').then(event =>
+  return deleteNamedDatabase(testCase, databaseName).then(() =>
       migrateNamedDatabase(testCase, databaseName, 1, setupCallback));
 }
 
@@ -144,6 +153,33 @@ function openNamedDatabase(testCase, databaseName, version) {
   return eventWatcher.wait_for('success').then(event => event.target.result);
 }
 
+// Gets information about the IndexedDB databases created by this test.
+//
+// Returns a promise that resolves to an array of IDBDatabaseInfo.
+function getTestDatabasesInfo(testCase) {
+  const namePrefix = databaseName(testCase);
+  const request = indexedDB.getDatabasesInfo();
+  const eventWatcher = requestWatcher(testCase, request);
+  return eventWatcher.wait_for('success').then(event => {
+    const infos = request.result;
+    console.log(infos);
+    return infos.filter((info) => {
+      return typeof(info.name) !== 'string' || info.name.startsWith(namePrefix);
+    });
+  });
+}
+
+// Removes all databases created by this test case.
+//
+// Returns a promise that resolves to true when the databases have been deleted.
+function deleteTestDatabases(testCase) {
+  return getTestDatabasesInfo(testCase).then(infos => {
+    return Promise.all(infos.map(info => {
+      return deleteNamedDatabase(testCase, info.name);
+    }));
+  }).then(() => true);
+}
+
 // The data in the 'books' object store records in the first example of the
 // IndexedDB specification.
 const BOOKS_RECORD_DATA = [
@@ -154,7 +190,7 @@ const BOOKS_RECORD_DATA = [
 
 // Creates a 'books' object store whose contents closely resembles the first
 // example in the IndexedDB specification.
-const createBooksStore = (testCase, database) => {
+function createBooksStore(testCase, database) {
   const store = database.createObjectStore('books',
       { keyPath: 'isbn', autoIncrement: true });
   store.createIndex('by_author', 'author');

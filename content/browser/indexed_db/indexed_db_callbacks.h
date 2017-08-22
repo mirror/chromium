@@ -32,6 +32,7 @@ class IndexedDBConnection;
 class IndexedDBCursor;
 class IndexedDBDatabase;
 struct IndexedDBDataLossInfo;
+struct IndexedDBDatabaseInfo;
 struct IndexedDBDatabaseMetadata;
 struct IndexedDBReturnValue;
 struct IndexedDBValue;
@@ -52,8 +53,8 @@ class CONTENT_EXPORT IndexedDBCallbacks
 
   virtual void OnError(const IndexedDBDatabaseError& error);
 
-  // IndexedDBFactory::GetDatabaseNames
-  virtual void OnSuccess(const std::vector<base::string16>& string);
+  // IndexedDBFactory::GetDatabasesInfo
+  virtual void OnSuccess(const std::vector<IndexedDBDatabaseInfo>& string);
 
   // IndexedDBFactory::Open / DeleteDatabase
   virtual void OnBlocked(int64_t existing_version);

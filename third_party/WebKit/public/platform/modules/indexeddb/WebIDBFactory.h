@@ -42,7 +42,7 @@ class WebIDBFactory {
  public:
   virtual ~WebIDBFactory() {}
 
-  virtual void GetDatabaseNames(WebIDBCallbacks*, const WebSecurityOrigin&) = 0;
+  virtual void GetDatabasesInfo(WebIDBCallbacks*, const WebSecurityOrigin&) = 0;
   virtual void Open(const WebString& name,
                     long long version,
                     long long transaction_id,

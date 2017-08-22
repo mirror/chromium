@@ -139,8 +139,8 @@ v8::Local<v8::Value> ToV8(const IDBAny* impl,
       return v8::Undefined(isolate);
     case IDBAny::kNullType:
       return v8::Null(isolate);
-    case IDBAny::kDOMStringListType:
-      return ToV8(impl->DomStringList(), creation_context, isolate);
+    case IDBAny::kIDBDatabaseInfoListType:
+      return ToV8(impl->IdbDatabaseInfoList(), creation_context, isolate);
     case IDBAny::kIDBCursorType:
       return ToV8(impl->IdbCursor(), creation_context, isolate);
     case IDBAny::kIDBCursorWithValueType:
