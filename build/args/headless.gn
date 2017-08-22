@@ -29,6 +29,12 @@ icu_use_data_file = false
 # to simplify deployment.
 v8_use_external_startup_data = false
 
+# No much point of playing video when nobody sees it so disable by default.
+disable_ffmpeg_video_decoders = true
+media_use_ffmpeg = false
+media_use_libvpx = false
+proprietary_codecs = false
+
 enable_nacl = false
 enable_print_preview = false
 enable_remoting = false
