@@ -39,6 +39,30 @@
       "revId": "8257f610ede498ea07f853db32bff67551aee554",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19117ea7_83609831",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2585,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-22T12:21:52Z",
+      "side": 1,
+      "message": "Right. Will fix.",
+      "parentUuid": "01472906_229a736b",
+      "range": {
+        "startLine": 2585,
+        "startChar": 8,
+        "endLine": 2585,
+        "endChar": 45
+      },
+      "revId": "8257f610ede498ea07f853db32bff67551aee554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
