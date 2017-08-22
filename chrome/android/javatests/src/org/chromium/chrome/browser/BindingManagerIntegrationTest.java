@@ -40,6 +40,7 @@ import org.chromium.content.browser.test.ChildProcessAllocatorSettings;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.TouchCommon;
+import org.chromium.content_public.browser.ChildProcessImportance;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.net.test.EmbeddedTestServer;
 import org.chromium.ui.base.DeviceFormFactor;
@@ -184,6 +185,7 @@ public class BindingManagerIntegrationTest {
             // trigger the load manually.
             tabs[1].show(TabSelectionType.FROM_USER);
             tabs[1].hide();
+            tabs[1].setImportance(ChildProcessImportance.NORMAL);
         });
         ChromeTabUtils.waitForTabPageLoaded(tabs[0], mTestServer.getURL(FILE_PATH));
         ChromeTabUtils.waitForTabPageLoaded(tabs[1], mTestServer.getURL(FILE_PATH));
@@ -251,6 +253,7 @@ public class BindingManagerIntegrationTest {
             // trigger the load manually.
             tabs[1].show(TabSelectionType.FROM_USER);
             tabs[1].hide();
+            tabs[1].setImportance(ChildProcessImportance.NORMAL);
         });
         ChromeTabUtils.waitForTabPageLoaded(tabs[0], mTestServer.getURL(FILE_PATH));
         ChromeTabUtils.waitForTabPageLoaded(tabs[1], mTestServer.getURL(FILE_PATH));
@@ -485,6 +488,7 @@ public class BindingManagerIntegrationTest {
             mBindingManager.assertIsInForeground(
                     tabs[1].getContentViewCore().getCurrentRenderProcessId());
             tabs[1].hide();
+            tabs[1].setImportance(ChildProcessImportance.NORMAL);
             mBindingManager.assertIsInBackground(
                     tabs[1].getContentViewCore().getCurrentRenderProcessId());
         });
