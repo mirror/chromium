@@ -1016,4 +1016,22 @@ void LayerImpl::EnsureValidPropertyTreeIndices() const {
   DCHECK(GetScrollTree().Node(scroll_tree_index()));
 }
 
+std::string LayerImpl::GetDebugName() const {
+  if (debug_info_) {
+    std::string str;
+    debug_info_->AppendAsTraceFormat(&str);
+
+    base::JSONReader reader;
+    std::unique_ptr<base::Value> val(reader.ReadToValue(str));
+
+    base::DictionaryValue* dict_val;
+    val->GetAsDictionary(&dict_val);
+
+    std::string layer_name;
+    if (dict_val->GetString("layer_name", &layer_name))
+      return layer_name;
+  }
+  return "unknown";
+}
+
 }  // namespace cc
