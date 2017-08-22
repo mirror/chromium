@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8432867d_66c35737",
+        "filename": "chromeos/components/tether/disconnect_tethering_operation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:49:57Z",
+      "side": 1,
+      "message": "After you log to UMA, make the start time null again.\n\nSame with other class.",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 44
+      },
+      "revId": "0647a3e8e16d7a399e23537b3bab1a38db394b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5716b589_dae20078",
+        "filename": "chromeos/components/tether/disconnect_tethering_operation_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:49:57Z",
+      "side": 1,
+      "message": "Make this const and move next to other const fields.\n\nSame with other class.",
+      "range": {
+        "startLine": 116,
+        "startChar": 18,
+        "endLine": 116,
+        "endChar": 52
+      },
+      "revId": "0647a3e8e16d7a399e23537b3bab1a38db394b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f389d103_f3cb1626",
+        "filename": "chromeos/components/tether/disconnect_tethering_operation_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:49:57Z",
+      "side": 1,
+      "message": "Use a constant in the anonymous namespace.\n\nSame with other class.",
+      "range": {
+        "startLine": 117,
+        "startChar": 35,
+        "endLine": 117,
+        "endChar": 36
+      },
+      "revId": "0647a3e8e16d7a399e23537b3bab1a38db394b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca305839_49b8d658",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:49:57Z",
+      "side": 1,
+      "message": "After you log to UMA, make the start time null again.",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 181,
+        "endChar": 54
+      },
+      "revId": "0647a3e8e16d7a399e23537b3bab1a38db394b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
