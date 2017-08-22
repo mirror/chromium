@@ -22,6 +22,30 @@
       "revId": "8dd332d796bc3bf50ac864511e41bab25ae193d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88538296_ce1742be",
+        "filename": "third_party/WebKit/public/platform/web_feature.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 1605,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-22T18:57:32Z",
+      "side": 1,
+      "message": "Done. Please check the new CL.",
+      "parentUuid": "3f7c8c36_4c3109d3",
+      "range": {
+        "startLine": 1605,
+        "startChar": 2,
+        "endLine": 1605,
+        "endChar": 40
+      },
+      "revId": "8dd332d796bc3bf50ac864511e41bab25ae193d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
