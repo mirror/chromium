@@ -118,6 +118,40 @@
       "revId": "066fd893c96a46175c4c6f7d6f518e0cf7834e13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa14bb5c_60b5bc4d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 3050,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T02:28:51Z",
+      "side": 1,
+      "message": "As we chatted offline eventually I want this code to use ChildURLLoaderFactoryGetter (as we Worker\u0027s CreateURLLoader may need more loader factory\u0027s in a future).  E.g. make ChildURLLoaderFactoryGetter an abstract class or overridable, and create worker version of FactoryGetter here (i.e. clones the existing ones and passes the PtrInfo to its ctor, and then the FactoryGetter can create the necessary loader factory when Get*LoaderFactory() is called on the worker thread).  If you think you can work on it could you try, or can you add a TODO to use that here (so we can make a follow-up)?\n\nAlso- regardless of whether we do this refactor now or not I like the common code (i.e. get the loader \u0026 clone it for Net and Blob) to be factored out somewhere so we don\u0027t need dup it.",
+      "revId": "066fd893c96a46175c4c6f7d6f518e0cf7834e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8886243b_cd4cb56f",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T02:28:51Z",
+      "side": 1,
+      "message": "Would we be able to try implementing the simplest clone in CORSURLLoaderFactory to see if it works?",
+      "revId": "066fd893c96a46175c4c6f7d6f518e0cf7834e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
