@@ -36,8 +36,6 @@ void AXWindowObjWrapper::GetChildren(
     std::vector<AXAuraObjWrapper*>* out_children) {
   aura::Window::Windows children = window_->children();
   for (size_t i = 0; i < children.size(); ++i) {
-    if (!children[i]->IsVisible())
-      continue;
     out_children->push_back(
         AXAuraObjCache::GetInstance()->GetOrCreate(children[i]));
   }
@@ -53,7 +51,11 @@ void AXWindowObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
   out_node_data->role = is_alert_ ? ui::AX_ROLE_ALERT : ui::AX_ROLE_WINDOW;
   out_node_data->AddStringAttribute(ui::AX_ATTR_NAME,
                                     base::UTF16ToUTF8(window_->GetTitle()));
-  out_node_data->location = gfx::RectF(window_->GetBoundsInScreen());
+  out_node_data->location = gfx::RectF(window_->bounds());
+  if (window_->parent()) {
+    out_node_data->offset_container_id =
+        AXAuraObjCache::GetInstance()->GetID(window_->parent());
+  }
 
   ui::AXTreeIDRegistry::AXTreeID child_ax_tree_id =
       window_->GetProperty(ui::kChildAXTreeID);
@@ -96,7 +98,7 @@ void AXWindowObjWrapper::OnWindowHierarchyChanged(
 void AXWindowObjWrapper::OnWindowBoundsChanged(aura::Window* window,
                                                const gfx::Rect& old_bounds,
                                                const gfx::Rect& new_bounds) {
-  if (window != window_ || !window->IsVisible())
+  if (window != window_)
     return;
 
   AXAuraObjCache::GetInstance()->FireEvent(this, ui::AX_EVENT_LOCATION_CHANGED);
@@ -112,7 +114,7 @@ void AXWindowObjWrapper::OnWindowBoundsChanged(aura::Window* window,
 void AXWindowObjWrapper::OnWindowPropertyChanged(aura::Window* window,
                                                  const void* key,
                                                  intptr_t old) {
-  if (window == window_ && key == ui::kChildAXTreeID && window->IsVisible()) {
+  if (window == window_ && key == ui::kChildAXTreeID) {
     AXAuraObjCache::GetInstance()->FireEvent(this,
                                              ui::AX_EVENT_CHILDREN_CHANGED);
   }
