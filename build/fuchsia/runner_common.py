@@ -168,10 +168,6 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args,
   autorun_file = tempfile.NamedTemporaryFile()
   autorun_file.write('#!/bin/sh\n')
   if _IsRunningOnBot():
-    # We drop to -smp 1 to avoid counterintuitive observations on the realtime
-    # clock, but keep the concurrency at the default of 4.
-    child_args.append('--test-launcher-jobs=4')
-
     # TODO(scottmg): Passed through for https://crbug.com/755282.
     autorun_file.write('export CHROME_HEADLESS=1\n')
 

@@ -24,6 +24,10 @@ DIR_SOURCE_ROOT = os.path.abspath(
 sys.path.append(os.path.join(DIR_SOURCE_ROOT, 'build', 'util', 'lib', 'common'))
 import chrome_test_server_spawner
 
+# We drop to -smp 1 to avoid counterintuitive observations on the realtime
+# clock, but keep the concurrency at the default of 4.
+TEST_CONCURRENCY = 4
+
 TEST_SERVER_SPAWNER_PORT = 5000
 
 def IsLocalPortAvailable(port):
@@ -155,7 +159,7 @@ def main():
   # Start test server spawner for tests that need it.
   if args.enable_test_server:
     spawning_server = chrome_test_server_spawner.SpawningServer(
-          TEST_SERVER_SPAWNER_PORT, PortForwarderNoop())
+          TEST_SERVER_SPAWNER_PORT, PortForwarderNoop(), TEST_CONCURRENCY)
     spawning_server.Start()
 
     # Generate test server config.
@@ -176,6 +180,8 @@ def main():
         os.path.join(args.output_directory, args.test_launcher_filter_file))
     runtime_deps.append(('test_filter_file', test_launcher_filter_file))
     child_args.append('--test-launcher-filter-file=/system/test_filter_file')
+
+  child_args.append('--test-launcher-jobs=%d' % TEST_CONCURRENCY)
 
   try:
     bootfs = BuildBootfs(args.output_directory, runtime_deps, args.exe_name,

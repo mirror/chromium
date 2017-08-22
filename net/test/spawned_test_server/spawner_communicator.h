@@ -72,7 +72,7 @@ class SpawnerCommunicator : public URLRequest::Delegate {
   bool StartServer(const std::string& arguments,
                    uint16_t* port) WARN_UNUSED_RESULT;
 
-  bool StopServer() WARN_UNUSED_RESULT;
+  bool StopServer(uint16_t port) WARN_UNUSED_RESULT;
 
  private:
   // Starts the IO thread. Called on the user thread.
