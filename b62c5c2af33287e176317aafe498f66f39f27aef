@@ -16,6 +16,24 @@
       "revId": "b62c5c2af33287e176317aafe498f66f39f27aef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d734aa_2811aecb",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-22T19:10:44Z",
+      "side": 0,
+      "message": "I can preserve |frames_to_render| if you want.",
+      "parentUuid": "1f5f2291_a6b5202b",
+      "revId": "b62c5c2af33287e176317aafe498f66f39f27aef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

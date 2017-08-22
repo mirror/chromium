@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68b92188_8684a453",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-22T19:10:44Z",
+      "side": 1,
+      "message": "First of all, checking on !IsRenderingThread() is not possible anymore since the rendering thread can change based on the flag.\n\nI followed the olka@\u0027s feedback on this, because these pointer/function checks are relatively cheaper than looking around other stuffs. In terms of preserving the meaning of check, I think this is good enough: it\u0027s asking to \"make sure this is not called from the worklet thread\")\n\nHowever, I would like to remove this check completely because this method cannot be called from the worklet thread at all. The most appropriate check here would be \"IsAudioDeviceThread()\" but we don\u0027t have the access to it in Blink. (and I think it\u0027s better that way)",
+      "parentUuid": "39aecc65_898fa5c1",
+      "revId": "55e4a87f8eebd3b519ee76b00cd48e4c0ecbf02b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77766da4_d3300a8e",
         "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "056b7c89_bf60ec94",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-22T19:10:44Z",
+      "side": 1,
+      "message": "What else can I do here? I can\u0027t use CrossThreadUnretained(), so this is the only way to get a pointer to |this| object.",
+      "parentUuid": "77766da4_d3300a8e",
+      "revId": "55e4a87f8eebd3b519ee76b00cd48e4c0ecbf02b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "139f66f4_f6adc552",
         "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-22T16:51:35Z",
       "side": 1,
       "message": "Is this really equivalent to DCHECK(IsRenderingThread())?",
+      "revId": "55e4a87f8eebd3b519ee76b00cd48e4c0ecbf02b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86e787f_55fc9be7",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-22T19:10:44Z",
+      "side": 1,
+      "message": "Because this method now can run on either of two threads: AudioDeviceThread and WebThread.\n\n1. AudioDeviceThread case: worklet_backing_thread must be null and that means the caller is AudioDeviceThread. So we continue.\n2. WebThread case: worklet_backing_thread is valid, so we check the actual caller is WebThread.\n\nThis check covers both cases appropriately. WDYT?",
+      "parentUuid": "139f66f4_f6adc552",
       "revId": "55e4a87f8eebd3b519ee76b00cd48e4c0ecbf02b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
