@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e711e72_2a8f8b4f",
+        "filename": "chrome/common/chrome_content_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T04:49:56Z",
+      "side": 1,
+      "message": "FWIW, this seems subtle. But maybe it\u0027s the best we can do?",
+      "revId": "ec6a5df394a4074467daaf3d41d43da3235ee979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
