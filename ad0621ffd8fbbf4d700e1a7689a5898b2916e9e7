@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "63a72f26_183010bd",
+        "filename": "build/android/pylib/base/test_collection.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T03:12:24Z",
+      "side": 1,
+      "message": "Is this called anywhere? Can we remove it?",
+      "revId": "ad0621ffd8fbbf4d700e1a7689a5898b2916e9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1623c6d_da31be8e",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T03:12:24Z",
+      "side": 1,
+      "message": "SKIPs should likely be logged differently.",
+      "revId": "ad0621ffd8fbbf4d700e1a7689a5898b2916e9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f594fa4_b088f1d3",
+        "filename": "build/android/pylib/local/device/local_device_test_run.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T03:12:24Z",
+      "side": 1,
+      "message": "super nit: \"estimated time remaining\"\n\n?",
+      "range": {
+        "startLine": 195,
+        "startChar": 48,
+        "endLine": 195,
+        "endChar": 52
+      },
+      "revId": "ad0621ffd8fbbf4d700e1a7689a5898b2916e9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74ff8ea2_63866464",
         "filename": "build/android/pylib/logging_ext/__init__.py",
         "patchSetId": 8
@@ -19,6 +76,24 @@
     },
     {
       "key": {
+        "uuid": "2c0a14d6_081b06d2",
+        "filename": "build/android/pylib/logging_ext/__init__.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T03:12:24Z",
+      "side": 1,
+      "message": "This gets you TEST_TIME, TEST_FAIL, and TEST_PASS by default.",
+      "parentUuid": "74ff8ea2_63866464",
+      "revId": "ad0621ffd8fbbf4d700e1a7689a5898b2916e9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e99eaa6d_ca8b3f5e",
         "filename": "build/android/pylib/logging_ext/__init__.py",
         "patchSetId": 8
@@ -30,6 +105,40 @@
       "writtenOn": "2017-08-22T01:01:56Z",
       "side": 1,
       "message": "Might make sense to combine this with SetLogLevel(). I don\u0027t think there will ever be a time when an app would want to change the logging level post-initialization, and combining the two will stop this module from having side-effects. Maybe call just call it \"Initialize(level)\"?",
+      "revId": "ad0621ffd8fbbf4d700e1a7689a5898b2916e9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f0d5ec_43a8286e",
+        "filename": "build/android/pylib/logging_ext/__init__.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T03:12:24Z",
+      "side": 1,
+      "message": "Kinda echoing Andrew\u0027s comment, I don\u0027t think we should call this at import time.",
+      "revId": "ad0621ffd8fbbf4d700e1a7689a5898b2916e9e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d517375_79f83a44",
+        "filename": "build/android/pylib/results/report_results.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-22T03:12:24Z",
+      "side": 1,
+      "message": "Logging the entire summary at this level looks kinda odd to me, tbh.",
       "revId": "ad0621ffd8fbbf4d700e1a7689a5898b2916e9e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
