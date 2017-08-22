@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aaed95b1_c85072d5",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3211,
+      "author": {
+        "id": 1148006
+      },
+      "writtenOn": "2017-08-22T09:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "482a98e7_f5cf1d2b",
+      "revId": "c5946e0eae6025639000dcb6616e327846ec289a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afd16d6d_14e42bb0",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-21T23:26:22Z",
       "side": 1,
       "message": "Why do you clear the cache?",
+      "revId": "c5946e0eae6025639000dcb6616e327846ec289a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde10a93_fbf76b2e",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3214,
+      "author": {
+        "id": 1148006
+      },
+      "writtenOn": "2017-08-22T09:00:33Z",
+      "side": 1,
+      "message": "Because cookie could be expired, cached cookie might be invalid. But pageloading time is limited, I presume cookie is still available during pageloading and clear it after page is completely loaded.",
+      "parentUuid": "afd16d6d_14e42bb0",
       "revId": "c5946e0eae6025639000dcb6616e327846ec289a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b5b855e0_c5b7a05d",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4954,
+      "author": {
+        "id": 1148006
+      },
+      "writtenOn": "2017-08-22T09:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaf78bde_cb775857",
+      "revId": "c5946e0eae6025639000dcb6616e327846ec289a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc509683_e4299cb6",
         "filename": "third_party/WebKit/Source/core/dom/Document.h",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-21T23:26:22Z",
       "side": 1,
       "message": "Why do we need a map?\n\nAlso, do not use a raw pointer.  It should be std::unique_ptr\u003cCookieMap\u003e",
+      "revId": "c5946e0eae6025639000dcb6616e327846ec289a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c3ad0b_644192fa",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1731,
+      "author": {
+        "id": 1148006
+      },
+      "writtenOn": "2017-08-22T09:00:33Z",
+      "side": 1,
+      "message": "I am not sure if one documeny only has one cookie. If yes, we can use a string to cache cookie.",
+      "parentUuid": "fc509683_e4299cb6",
       "revId": "c5946e0eae6025639000dcb6616e327846ec289a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
