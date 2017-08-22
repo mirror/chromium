@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a603d05c_bba3a939",
+        "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-22T20:20:24Z",
+      "side": 1,
+      "message": "I\u0027d like to write a test that tests that if you tap a piece of text with multiple suggestion markers, the logic for prioritizing the suggestions works properly. Is it OK to spin some of this off as a public method to make it easier to test?",
+      "revId": "1c9f17df7beb20502c0ba4a121da69d552f7959e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
