@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e1876cb_d1cf1f41",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 96581,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T09:51:12Z",
+      "side": 1,
+      "message": "s/, not baked-in/ from the network/ ?",
+      "revId": "f58971ebc8a8f1c2628e26223fdc787ee5ba72e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c365aa2_d7c6111f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 96582,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T09:51:12Z",
+      "side": 1,
+      "message": "Maybe popular_fetcher and popular_baked_in, so they have a common prefix?",
+      "range": {
+        "startLine": 96582,
+        "startChar": 74,
+        "endLine": 96582,
+        "endChar": 0
+      },
+      "revId": "f58971ebc8a8f1c2628e26223fdc787ee5ba72e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c1fd44_adc7835c",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 96594,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T09:51:12Z",
+      "side": 1,
+      "message": "I think if you mark this obsolete, then it will immediately stop showing up in the UMA dashboard? If so (isherman should be able to confirm), it might be best to just add a comment for now, and actually mark obsolete once M62 goes stable.",
+      "range": {
+        "startLine": 96594,
+        "startChar": 15,
+        "endLine": 96594,
+        "endChar": 0
+      },
+      "revId": "f58971ebc8a8f1c2628e26223fdc787ee5ba72e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
