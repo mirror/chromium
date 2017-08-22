@@ -16,6 +16,24 @@
       "revId": "23bba4d00a95fe8a303e723c22005a753a0c869d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53217cbd_25d3632f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-22T17:50:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a60ff51_0720792f",
+      "revId": "23bba4d00a95fe8a303e723c22005a753a0c869d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
