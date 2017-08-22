@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ba4a62a_dded8228",
+        "filename": "content/browser/service_worker/embedded_worker_test_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T09:44:13Z",
+      "side": 1,
+      "message": "It\u0027s for keeping the instance in EmbeddedWorkerTestHelper.",
+      "parentUuid": "a05256a9_d917daaf",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fad11016_efe24989",
         "filename": "content/browser/service_worker/embedded_worker_test_helper.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9603f6b8_150fa57a",
+        "filename": "content/browser/service_worker/embedded_worker_test_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T09:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fad11016_efe24989",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c682566_cf801741",
         "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd191672_39688250",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T09:44:13Z",
+      "side": 1,
+      "message": "StoppingBeforeDestruct and DeatchThenRestart seems enoguh as I replied to the previous comment, so let me remove this test.",
+      "parentUuid": "9c682566_cf801741",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "99460afe_4b419351",
+        "filename": "content/public/test/mock_render_process_host.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T09:44:13Z",
+      "side": 1,
+      "message": "Thanks! It\u0027s described at Access Control.\nhttps://google.github.io/styleguide/cppguide.html#Access_Control\nSo added a similar member to mock_render_process_host_impl instead.",
+      "parentUuid": "59edac70_cd79f5a9",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 10
+      },
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c60367c_72ea103b",
         "filename": "content/renderer/render_thread_impl.h",
         "patchSetId": 8
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "c891cd22_89050f74",
+        "filename": "content/renderer/render_thread_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T09:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c60367c_72ea103b",
+      "range": {
+        "startLine": 659,
+        "startChar": 25,
+        "endLine": 659,
+        "endChar": 30
+      },
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea0ba9a9_f8455df7",
         "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
         "patchSetId": 8
@@ -113,6 +215,24 @@
       "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655ec310_7add7b03",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T09:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea0ba9a9_f8455df7",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "e4a7c54d_7f48bf0b",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T09:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2beb8d8d_7c722f86",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "147800fa_3c5aca34",
         "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
         "patchSetId": 8
@@ -147,6 +285,24 @@
       "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4de9aa1f_7a421c6b",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T09:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "147800fa_3c5aca34",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "5ed15c07_44cde182",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T09:44:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8da4f241_abf441ab",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "638b5da9_2e75725a",
         "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.h",
         "patchSetId": 8
@@ -181,6 +355,24 @@
       "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a48d9040_464043c3",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T09:44:13Z",
+      "side": 1,
+      "message": "That totally makes sense:)\nUpdated.",
+      "parentUuid": "638b5da9_2e75725a",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -201,6 +393,24 @@
     },
     {
       "key": {
+        "uuid": "0dfb5501_f7738f12",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T09:44:13Z",
+      "side": 1,
+      "message": "I think it\u0027s correct. Thanks a lot for the documentation. Updated it.",
+      "parentUuid": "c6f2e9f9_19a882d0",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b561a9e5_d8adff9c",
         "filename": "content/test/mock_render_process_host_impl.h",
         "patchSetId": 8
@@ -215,6 +425,24 @@
       "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b335dd7_d9cf5ff4",
+        "filename": "content/test/mock_render_process_host_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T09:44:13Z",
+      "side": 1,
+      "message": "mojom::Renderer is actually a content-specific stuff, so we need this since we cannot expose mojom::RendererAssociatedRequest in content/public.",
+      "parentUuid": "b561a9e5_d8adff9c",
+      "revId": "0bb69e93a654732b2db372a0ad335008cb902ff1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

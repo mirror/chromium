@@ -16,6 +16,24 @@
       "revId": "d5a78f8bc332d130599feb4914132c76b3395d9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f2bdf14_8e3068f8",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T09:44:13Z",
+      "side": 0,
+      "message": "This crash used to happen because EWInstance::Detach() triggered sudden disconnection of the provider host and it invoked SWVersion destruction even though it was during Detach().\nThis patch changed the relationship between the pipes and the lifetime of SWProviderHost isn\u0027t bound with EWInstance, so EWInstance::Detach() no longer triggers destruction of SWVersion.\nThis seems to be just testing successful restart as you said, so removed it.",
+      "parentUuid": "ff450a9a_6640c7e5",
+      "revId": "d5a78f8bc332d130599feb4914132c76b3395d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
