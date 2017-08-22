@@ -3014,14 +3014,11 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
         base::Bind(&AuthenticatorImpl::Create, base::Unretained(this)));
   }
 
-  if (base::FeatureList::IsEnabled(features::kGenericSensor) &&
-      permission_manager) {
-    sensor_provider_proxy_.reset(
-        new SensorProviderProxyImpl(permission_manager, this));
-    registry_->AddInterface(
-        base::Bind(&SensorProviderProxyImpl::Bind,
-                   base::Unretained(sensor_provider_proxy_.get())));
-  }
+  sensor_provider_proxy_.reset(
+      new SensorProviderProxyImpl(permission_manager, this));
+  registry_->AddInterface(
+      base::Bind(&SensorProviderProxyImpl::Bind,
+                 base::Unretained(sensor_provider_proxy_.get())));
 
   registry_->AddInterface(
       base::Bind(&ForwardRequest<device::mojom::VibrationManager>,

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script src="../../resources/js-test.js"></script>
+<script>
+description('Tests adding a devicemotion event listener in an iframe, removing the iframe, and then adding a devicemotion event listener in the main frame.');
+
+var mockAccelerationX = 1;
+var mockAccelerationY = 2;
+var mockAccelerationZ = 3;
+
+var mockAccelerationIncludingGravityX = 4;
+var mockAccelerationIncludingGravityY = 5;
+var mockAccelerationIncludingGravityZ = 6;
+
+var mockRotationRateAlpha = 7;
+var mockRotationRateBeta = 8;
+var mockRotationRateGamma = 9;
+
+var mockInterval = 10;
+
+if (window.testRunner) {
+    testRunner.setMockDeviceMotion(true, mockAccelerationX, true, mockAccelerationY, true, mockAccelerationZ,
+                                   true, mockAccelerationIncludingGravityX, true, mockAccelerationIncludingGravityY, true, mockAccelerationIncludingGravityZ,
+                                   true, mockRotationRateAlpha, true, mockRotationRateBeta, true, mockRotationRateGamma,
+                                   mockInterval);
+    debug('TEST MODE enabled');
+} else
+    debug('This test can not be run without the TestRunner');
+
+var deviceMotionEvent;
+function checkMotion(event) {
+    deviceMotionEvent = event;
+    shouldBe('deviceMotionEvent.acceleration.x', 'mockAccelerationX');
+    shouldBe('deviceMotionEvent.acceleration.y', 'mockAccelerationY');
+    shouldBe('deviceMotionEvent.acceleration.z', 'mockAccelerationZ');
+
+    shouldBe('deviceMotionEvent.accelerationIncludingGravity.x', 'mockAccelerationIncludingGravityX');
+    shouldBe('deviceMotionEvent.accelerationIncludingGravity.y', 'mockAccelerationIncludingGravityY');
+    shouldBe('deviceMotionEvent.accelerationIncludingGravity.z', 'mockAccelerationIncludingGravityZ');
+
+    shouldBe('deviceMotionEvent.rotationRate.alpha', 'mockRotationRateAlpha');
+    shouldBe('deviceMotionEvent.rotationRate.beta', 'mockRotationRateBeta');
+    shouldBe('deviceMotionEvent.rotationRate.gamma', 'mockRotationRateGamma');
+
+    shouldBe('deviceMotionEvent.interval', 'mockInterval');
+}
+
+function childFrameListener(event) {
+  document.body.removeChild(childFrame);
+  setTimeout(function(){addListenerToMainFrame();}, 300);
+}
+
+function mainFrameListener(event) {
+    checkMotion(event);
+    finishJSTest();
+}
+
+function addListenerToMainFrame() {
+  window.addEventListener('devicemotion', mainFrameListener);
+}
+
+var childFrame = document.createElement('iframe');
+document.body.appendChild(childFrame);
+childFrame.contentWindow.addEventListener('devicemotion', childFrameListener);
+
+window.jsTestIsAsync = true;
+</script>
+</body>
+</html>
