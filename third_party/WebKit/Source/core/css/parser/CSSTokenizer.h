@@ -26,7 +26,7 @@ class CORE_EXPORT CSSTokenizer {
   DISALLOW_NEW();
 
  public:
-  CSSTokenizer(const String&);
+  CSSTokenizer(const String&, size_t offset = 0);
   CSSTokenizer(const String&, CSSParserObserverWrapper&);  // For the inspector
 
   CSSParserTokenRange TokenRange();
