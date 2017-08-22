@@ -62,7 +62,7 @@ class ScopedPortException;
 // fetched from spawner server or timed-out.
 class SpawnerCommunicator : public URLRequest::Delegate {
  public:
-  explicit SpawnerCommunicator(uint16_t port);
+  explicit SpawnerCommunicator();
   ~SpawnerCommunicator() override;
 
   // Starts an instance of the Python test server on the host/ machine.
@@ -120,13 +120,8 @@ class SpawnerCommunicator : public URLRequest::Delegate {
   // WaitableEvent to notify whether the communication is done.
   base::WaitableEvent event_;
 
-  // The local port used to communicate with the TestServer spawner. This is
-  // used to control the startup and shutdown of the Python TestServer running
-  // on the remote machine. On Android, this port will be redirected to the
-  // same port on the host machine.
-  const uint16_t port_;
-
-  // Helper to add |port_| to the list of the globally explicitly allowed ports.
+  // Helper to add spawner port to the list of the globally explicitly allowed
+  // ports.
   std::unique_ptr<ScopedPortException> allowed_port_;
 
   // The next ID to use for |cur_request_| (monotonically increasing).
