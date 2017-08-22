@@ -51,6 +51,24 @@
       "revId": "93a513c00a80c863770f5a7e8eeb7e59af3b9991",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0077555b_fdc4d9b7",
+        "filename": "tools/perf/core/perf_data_generator_unittest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-22T21:41:28Z",
+      "side": 1,
+      "message": "The other ShouldBenchmarkBeScheduled tests are defacto supported platforms tests, since it defaults to [ALL].",
+      "parentUuid": "a1ef74cf_055d0df1",
+      "revId": "93a513c00a80c863770f5a7e8eeb7e59af3b9991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
