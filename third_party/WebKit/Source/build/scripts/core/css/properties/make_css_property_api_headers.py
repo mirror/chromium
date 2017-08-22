@@ -62,6 +62,8 @@ class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
                 'methods_for_class': self.methods_for_classes[api_classname],
                 'is_interpolable': 'true' if property_['interpolable'] else 'false',
                 'is_inherited': 'true' if property_['inherited'] else 'false',
+                'separator': property_['separator'],
+                'is_repeated': 'true' if property_['separator'] else 'false',
             }
         return generate_property_api_h
 
