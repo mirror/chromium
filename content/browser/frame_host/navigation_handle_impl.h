@@ -177,6 +177,11 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   void Resume(NavigationThrottle* resuming_throttle);
   void CancelDeferredNavigation(NavigationThrottle* cancelling_throttle,
                                 NavigationThrottle::ThrottleCheckResult result);
+  void CancelDeferredNavigationWithErrorURL(
+      NavigationThrottle* cancelling_throttle,
+      NavigationThrottle::ThrottleCheckResult result,
+      int net_error,
+      const GURL& error_page_url);
 
   NavigationData* GetNavigationData() override;
 
