@@ -135,7 +135,7 @@ def DefaultPages(base_name):
       'pixel_background.html',
       base_name + '_SolidColorBackground',
       test_rect=[500, 500, 100, 100],
-      revision=1),
+      revision=2),
 
     PixelTestPage(
       'pixel_video_mp4.html',
@@ -484,12 +484,12 @@ def MacSpecificPages(base_name):
       'filter_effects.html',
       base_name + '_CSSFilterEffects',
       test_rect=[0, 0, 300, 300],
-      revision=5),
+      revision=6),
     PixelTestPage(
       'filter_effects.html',
       base_name + '_CSSFilterEffects_NoOverlays',
       test_rect=[0, 0, 300, 300],
-      revision=5,
+      revision=6,
       tolerance=10,
       browser_args=['--disable-mac-overlays']),
   ]
