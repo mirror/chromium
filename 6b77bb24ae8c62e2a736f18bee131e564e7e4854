@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "95307c25_131bece7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-22T16:45:58Z",
+      "side": 1,
+      "message": "If we\u0027re including follow-up CL info in the CL description, also sketch out the rearchitecture we\u0027ve agreed on for the network service \u0026 etc?",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 12
+      },
+      "revId": "6b77bb24ae8c62e2a736f18bee131e564e7e4854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33ee7701_fb1bad74",
         "filename": "content/browser/loader/navigation_resource_handler.cc",
         "patchSetId": 19
