@@ -18,17 +18,12 @@ class ClientImpl final : public GarbageCollectedFinalized<ClientImpl>,
   USING_GARBAGE_COLLECTED_MIXIN(ClientImpl);
 
  public:
-  enum class Result { kInitial, kOK, kNeedsFetching, kFailed };
+  enum class Result { kInitial, kOK, kFailed };
 
   void OnRead(const ModuleScriptCreationParams& params) override {
     ASSERT_EQ(Result::kInitial, result_);
     result_ = Result::kOK;
     params_.emplace(params);
-  }
-
-  void OnFetchNeeded() override {
-    ASSERT_EQ(Result::kInitial, result_);
-    result_ = Result::kNeedsFetching;
   }
 
   void OnFailed() override {
@@ -56,7 +51,7 @@ TEST(WorkletModuleResponsesMapTest, Basic) {
   // fetch a module script.
   ClientImpl* client1 = new ClientImpl;
   map->ReadOrCreateEntry(kUrl, client1);
-  EXPECT_EQ(ClientImpl::Result::kNeedsFetching, client1->GetResult());
+  EXPECT_EQ(ClientImpl::Result::kInitial, client1->GetResult());
   EXPECT_FALSE(client1->GetParams().has_value());
 
   // The entry is now being fetched. Following read calls should wait for the
@@ -88,7 +83,7 @@ TEST(WorkletModuleResponsesMapTest, Failure) {
   // fetch a module script.
   ClientImpl* client1 = new ClientImpl;
   map->ReadOrCreateEntry(kUrl, client1);
-  EXPECT_EQ(ClientImpl::Result::kNeedsFetching, client1->GetResult());
+  EXPECT_EQ(ClientImpl::Result::kInitial, client1->GetResult());
   EXPECT_FALSE(client1->GetParams().has_value());
 
   // The entry is now being fetched. Following read calls should wait for the
@@ -117,27 +112,27 @@ TEST(WorkletModuleResponsesMapTest, Isolation) {
   // An initial read call for |kUrl1| creates a placeholder entry and asks the
   // client to fetch a module script.
   ClientImpl* client1 = new ClientImpl;
-  map->ReadOrCreateEntry(kUrl1, client1);
-  EXPECT_EQ(ClientImpl::Result::kNeedsFetching, client1->GetResult());
+  map->ReadOrCreateEntry(FetchParameters(ResourceRequest(kUrl1)), client1);
+  EXPECT_EQ(ClientImpl::Result::kInitial, client1->GetResult());
   EXPECT_FALSE(client1->GetParams().has_value());
 
   // The entry is now being fetched. Following read calls for |kUrl1| should
   // wait for the completion.
   ClientImpl* client2 = new ClientImpl;
-  map->ReadOrCreateEntry(kUrl1, client2);
+  map->ReadOrCreateEntry(FetchParameters(ResourceRequest(kUrl1)), client2);
   EXPECT_EQ(ClientImpl::Result::kInitial, client2->GetResult());
 
   // An initial read call for |kUrl2| also creates a placeholder entry and asks
   // the client to fetch a module script.
   ClientImpl* client3 = new ClientImpl;
-  map->ReadOrCreateEntry(kUrl2, client3);
-  EXPECT_EQ(ClientImpl::Result::kNeedsFetching, client3->GetResult());
+  map->ReadOrCreateEntry(FetchParameters(ResourceRequest(kUrl2)), client3);
+  EXPECT_EQ(ClientImpl::Result::kInitial, client3->GetResult());
   EXPECT_FALSE(client3->GetParams().has_value());
 
   // The entry is now being fetched. Following read calls for |kUrl2| should
   // wait for the completion.
   ClientImpl* client4 = new ClientImpl;
-  map->ReadOrCreateEntry(kUrl2, client4);
+  map->ReadOrCreateEntry(FetchParameters(ResourceRequest(kUrl2)), client4);
   EXPECT_EQ(ClientImpl::Result::kInitial, client4->GetResult());
 
   // The read call for |kUrl2| should not affect the other entry for |kUrl1|.
@@ -189,7 +184,7 @@ TEST(WorkletModuleResponsesMapTest, Dispose) {
   // client to fetch a module script.
   ClientImpl* client1 = new ClientImpl;
   map->ReadOrCreateEntry(kUrl1, client1);
-  EXPECT_EQ(ClientImpl::Result::kNeedsFetching, client1->GetResult());
+  EXPECT_EQ(ClientImpl::Result::kInitial, client1->GetResult());
   EXPECT_FALSE(client1->GetParams().has_value());
 
   // The entry is now being fetched. Following read calls for |kUrl1| should
@@ -202,7 +197,7 @@ TEST(WorkletModuleResponsesMapTest, Dispose) {
   // the client to fetch a module script.
   ClientImpl* client3 = new ClientImpl;
   map->ReadOrCreateEntry(kUrl2, client3);
-  EXPECT_EQ(ClientImpl::Result::kNeedsFetching, client3->GetResult());
+  EXPECT_EQ(ClientImpl::Result::kInitial, client3->GetResult());
   EXPECT_FALSE(client3->GetParams().has_value());
 
   // The entry is now being fetched. Following read calls for |kUrl2| should
