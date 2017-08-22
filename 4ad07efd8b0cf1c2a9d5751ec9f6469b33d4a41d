@@ -69,6 +69,30 @@
       "revId": "4ad07efd8b0cf1c2a9d5751ec9f6469b33d4a41d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32bf11b_d4a4e41e",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-22T05:58:13Z",
+      "side": 1,
+      "message": "The RegisterNetworkBinders is called before setting up the mojo factory for NetworkService (which would also be called asynchronously)\n\nhttps://cs.chromium.org/chromium/src/content/utility/utility_service_factory.cc?rcl\u003d73a194e92d9714027cd0ca687a30e53ab2e771f8\u0026l\u003d113",
+      "parentUuid": "4a639111_63594efb",
+      "range": {
+        "startLine": 428,
+        "startChar": 2,
+        "endLine": 428,
+        "endChar": 22
+      },
+      "revId": "4ad07efd8b0cf1c2a9d5751ec9f6469b33d4a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
