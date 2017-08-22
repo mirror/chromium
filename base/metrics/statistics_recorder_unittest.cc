@@ -15,6 +15,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/persistent_histogram_allocator.h"
+#include "base/metrics/record_histogram_checker.h"
 #include "base/metrics/sparse_histogram.h"
 #include "base/values.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -35,6 +36,14 @@ class LogStateSaver {
   int old_min_log_level_;
 
   DISALLOW_COPY_AND_ASSIGN(LogStateSaver);
+};
+
+// Test implementation of RecordHistogramChecker interface.
+class OddRecordHistogramChecker : public base::RecordHistogramChecker {
+ public:
+  bool ShouldRecord(uint64_t histogram_hash) const override {
+    return histogram_hash % 2;
+  }
 };
 
 }  // namespace
@@ -713,6 +722,13 @@ TEST_P(StatisticsRecorderTest, ImportHistogramsTest) {
   EXPECT_EQ(3, snapshot->TotalCount());
   EXPECT_EQ(2, snapshot->GetCount(3));
   EXPECT_EQ(1, snapshot->GetCount(5));
+}
+
+TEST_P(StatisticsRecorderTest, RecordHistogramChecker) {
+  auto record_checker = std::make_unique<OddRecordHistogramChecker>();
+  base::StatisticsRecorder::SetRecordChecker(std::move(record_checker));
+  EXPECT_TRUE(base::StatisticsRecorder::ShouldRecordHistogram(1));
+  EXPECT_FALSE(base::StatisticsRecorder::ShouldRecordHistogram(2));
 }
 
 }  // namespace base
