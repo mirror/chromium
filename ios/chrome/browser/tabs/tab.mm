@@ -104,7 +104,6 @@
 #import "ios/chrome/browser/web/navigation_manager_util.h"
 #import "ios/chrome/browser/web/passkit_dialog_provider.h"
 #include "ios/chrome/browser/web/print_observer.h"
-#import "ios/chrome/browser/web/sad_tab_tab_helper.h"
 #import "ios/chrome/browser/web/tab_id_tab_helper.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/web/navigation/navigation_manager_impl.h"
@@ -322,9 +321,6 @@ class TabHistoryContext : public history::Context {
 // with new sessionID.
 - (void)didReplaceSessionHistory;
 
-// Called when the UIApplication's state becomes active.
-- (void)applicationDidBecomeActive;
-
 @end
 
 namespace {
@@ -467,12 +463,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     _webControllerSnapshotHelper = [[WebControllerSnapshotHelper alloc]
         initWithSnapshotManager:_snapshotManager
                             tab:self];
-
-    [[NSNotificationCenter defaultCenter]
-        addObserver:self
-           selector:@selector(applicationDidBecomeActive)
-               name:UIApplicationDidBecomeActiveNotification
-             object:nil];
   }
   return self;
 }
@@ -977,8 +967,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   self.passKitDialogProvider = nil;
   self.snapshotOverlayProvider = nil;
 
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-
   [passwordController_ detach];
   passwordController_ = nil;
   _tabInfoBarObserver.reset();
@@ -1218,20 +1206,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     return;
   }
   base::RecordAction(base::UserMetricsAction("MobilePageLoaded"));
-}
-
-- (void)applicationDidBecomeActive {
-  auto* sadTabTabHelper = SadTabTabHelper::FromWebState(self.webState);
-  if (!sadTabTabHelper->requires_reload_on_becoming_active())
-    return;
-  if (_visible) {
-    PagePlaceholderTabHelper::FromWebState(self.webState)
-        ->AddPlaceholderForNextNavigation();
-    self.webState->GetNavigationManager()->LoadIfNecessary();
-  } else {
-    sadTabTabHelper->set_requires_reload_on_becoming_visible(true);
-  }
-  sadTabTabHelper->set_requires_reload_on_becoming_active(false);
 }
 
 #pragma mark -
