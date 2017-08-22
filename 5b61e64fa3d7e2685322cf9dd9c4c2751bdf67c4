@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03453350_4b9876d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-22T18:22:05Z",
+      "side": 1,
+      "message": "Please put more information in the CL description.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "5b61e64fa3d7e2685322cf9dd9c4c2751bdf67c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa513b9_4d68ff63",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-22T18:22:05Z",
+      "side": 1,
+      "message": "This information comes from disk and thus can be corrupted. To avoid a crash when the data corrupted, please check that parsing \"scope\" returns non-null. If null is returned, then don\u0027t call \"onPamentAppCreated\". Instead, print an error message, e.g., Log.e(TAG, \"%s service worker scope is not a valid URI\", scope);",
+      "range": {
+        "startLine": 111,
+        "startChar": 24,
+        "endLine": 111,
+        "endChar": 58
+      },
+      "revId": "5b61e64fa3d7e2685322cf9dd9c4c2751bdf67c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
