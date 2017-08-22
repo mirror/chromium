@@ -48,6 +48,53 @@
     },
     {
       "key": {
+        "uuid": "7ec3d1c0_f9ccaeaf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-22T04:38:50Z",
+      "side": 1,
+      "message": "They can\u0027t if a foreground service is currently bound to the notification (the permanent property gets set internally).  Once stopForeground() is called they can dismiss it.",
+      "parentUuid": "e30bf868_6747abbb",
+      "range": {
+        "startLine": 108,
+        "startChar": 25,
+        "endLine": 108,
+        "endChar": 39
+      },
+      "revId": "ea8cc5db7a866fec76033076587351d5572870c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0385b24_14b0f919",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-22T04:38:50Z",
+      "side": 1,
+      "message": "This won\u0027t work if we\u0027re in the foreground.  Just confirming that\u0027s clear.",
+      "range": {
+        "startLine": 140,
+        "startChar": 23,
+        "endLine": 140,
+        "endChar": 55
+      },
+      "revId": "ea8cc5db7a866fec76033076587351d5572870c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d696f28_212f173a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 1
@@ -87,6 +134,29 @@
         "startChar": 27,
         "endLine": 165,
         "endChar": 52
+      },
+      "revId": "ea8cc5db7a866fec76033076587351d5572870c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b05d819_44bd289a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-22T04:38:50Z",
+      "side": 1,
+      "message": "We can\u0027t call this unless we\u0027re in the foreground.  IMO just check that your stuff all works on Android O :).",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 185,
+        "endChar": 37
       },
       "revId": "ea8cc5db7a866fec76033076587351d5572870c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
