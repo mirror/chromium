@@ -31,6 +31,9 @@
 #include "components/password_manager/core/common/credential_manager_types.h"
 #include "content/public/browser/navigation_handle.h"
 
+// TODO(cfroussios)
+#include <iostream>
+
 using password_manager::PasswordFormManager;
 
 int ManagePasswordsUIController::save_fallback_timeout_in_seconds_ = 90;
@@ -349,6 +352,8 @@ void ManagePasswordsUIController::NeverSavePassword() {
 }
 
 void ManagePasswordsUIController::SavePassword(const base::string16& username) {
+  std::cout << "ManagePasswordsUIController::SavePassword" << std::endl;
+
   DCHECK_EQ(password_manager::ui::PENDING_PASSWORD_STATE, GetState());
   if (passwords_data_.form_manager()->pending_credentials().username_value !=
       username) {

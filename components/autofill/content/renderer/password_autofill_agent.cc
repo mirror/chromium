@@ -1620,12 +1620,6 @@ void PasswordAutofillAgent::GetFillableElementFromFormData(
     blink::WebInputElement main_element =
         username_element.IsNull() ? password_element : username_element;
 
-    // We might have already filled this form if there are two <form> elements
-    // with identical markup.
-    if (web_input_to_password_info_.find(main_element) !=
-        web_input_to_password_info_.end())
-      continue;
-
     PasswordInfo password_info;
     password_info.fill_data = form_data;
     password_info.key = key;

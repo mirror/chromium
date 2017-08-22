@@ -457,6 +457,8 @@ void PasswordFormManager::Update(
   form_saver_->Update(pending_credentials_, best_matches_,
                       &more_credentials_to_update,
                       old_primary_key ? &old_primary_key.value() : nullptr);
+
+  password_manager_->UpdateFormManagers();
 }
 
 void PasswordFormManager::UpdateUsername(const base::string16& new_username) {
@@ -589,6 +591,8 @@ void PasswordFormManager::ProcessMatches(
     size_t filtered_count) {
   blacklisted_matches_.clear();
   new_blacklisted_.reset();
+
+  std::cout << "PasswordFormManager::ProcessMatches" << std::endl;
 
   std::unique_ptr<BrowserSavePasswordProgressLogger> logger;
   if (password_manager_util::IsLoggingActive(client_)) {

@@ -391,6 +391,8 @@ void PasswordManager::ProvisionallySavePassword(
 }
 
 void PasswordManager::UpdateFormManagers() {
+  std::cout << "PasswordManager::UpdateFormManagers" << std::endl;
+
   for (const auto& form_manager : pending_login_managers_) {
     form_manager->form_fetcher()->Fetch();
   }
