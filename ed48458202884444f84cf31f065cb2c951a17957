@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "e9028fb1_e78f26c2",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-22T12:52:09Z",
+      "side": 1,
+      "message": "Sorry for leaving confusing comment, Hiroshige, Daniel. I was hurried for some errands.\n\nGiven that you switched to SchemeRegistry::ListOfCORSEnabledURLSchemes(), you should just never mind my comment. Sorry!\n\nWhen I made the first comment, I was thinking that you, Daniel, intentionally switched to use url::GetCORSEnabledSchemes() given that we\u0027re going to move things to out of Blink but just forgot to remove SchemeRegistry::ListOfCORSEnabledURLSchemes().\n\nI\u0027ve been thinking that SchemeRegistry shouldn\u0027t treat anything other than what\u0027s in url::GetCORSEnabledSchemes() as CORS enabled. I tried to clarify that by removing SchemeRegistry::RegisterURLSchemeAsCORSEnabled() in the CL I cited though it\u0027s not sufficient. In the second comment, I wanted to tell that thought to Hiroshige but also say that I share the concern that even in short-term and with that future direction, it\u0027s not good to have WebCORS::ListOfCORSEnabledURLSchemes() depend directly on url::GetCORSEnabledSchemes() while leaving cors_enabled_schemes in SchemeRegistry. So, I suggested that we leave some comment around |cors_enabled_schemes| to explain that |cors_enabled_schemes| should be kept unchanged once filled with url::GetCORSEnabledSchemes().",
+      "parentUuid": "044307fa_182e7463",
+      "revId": "ed48458202884444f84cf31f065cb2c951a17957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fd7cb9a_678af6df",
         "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
         "patchSetId": 5
