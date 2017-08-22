@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2b4d651_4a9ad5a6",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewPointerTypeTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-22T14:01:34Z",
+      "side": 1,
+      "message": "what\u0027s wrong with the previous code here?",
+      "revId": "315cd33744db65a594d4e5a0d7574d01c9535e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
