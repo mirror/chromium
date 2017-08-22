@@ -22,10 +22,10 @@
 #include "content/browser/service_worker/service_worker_registration.h"
 #include "content/browser/service_worker/service_worker_test_utils.h"
 #include "content/common/service_worker/service_worker_utils.h"
-#include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_service.mojom.h"
 #include "content/public/test/test_utils.h"
+#include "content/test/mock_render_process_host_impl.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -1249,15 +1249,11 @@ TEST_F(ServiceWorkerStallInStoppingTest, DetachThenRestartNoCrash) {
   version_->stop_time_ = base::TimeTicks::Now() -
                          ServiceWorkerVersion::kStopWorkerTimeout -
                          base::TimeDelta::FromSeconds(1);
-  ServiceWorkerVersion* version = version_.get();
-  // Don't crash even if no one externally holds a reference to version.
-  // The provider host for the version holds a reference, but it
-  // could be destroyed during detach of the embedded worker instance.
-  version_ = nullptr;
-  version->timeout_timer_.user_task().Run();
+  // Don't crash during restarting.
+  version_->timeout_timer_.user_task().Run();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(SERVICE_WORKER_OK, status);
-  EXPECT_NE(SERVICE_WORKER_OK, start_status);
+  EXPECT_EQ(SERVICE_WORKER_OK, start_status);
   // No crash.
 }
 

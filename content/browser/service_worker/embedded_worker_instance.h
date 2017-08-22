@@ -298,7 +298,7 @@ class CONTENT_EXPORT EmbeddedWorkerInstance
   // process should not disconnect the pipe because other associated interfaces
   // may be using it. The renderer process will disconnect the pipe when
   // appropriate.
-  mojom::EmbeddedWorkerInstanceClientPtr client_;
+  mojom::EmbeddedWorkerInstanceClientAssociatedPtr client_;
 
   // Binding for EmbeddedWorkerInstanceHost, runs on IO thread.
   mojo::AssociatedBinding<EmbeddedWorkerInstanceHost> instance_host_binding_;
