@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1b68eb9c_8ac009ad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-22T13:41:24Z",
+      "side": 1,
+      "message": "Can you make these final, please?",
+      "range": {
+        "startLine": 72,
+        "startChar": 3,
+        "endLine": 74,
+        "endChar": 67
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db654142_742c6f5d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 2
@@ -49,6 +72,98 @@
     },
     {
       "key": {
+        "uuid": "1e9c86f5_ccda5055",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-22T13:41:24Z",
+      "side": 1,
+      "message": "This assert is redundant - next line will throw if the holder has a wrong type. The benefit isn\u0027t just line count - ClassCastException will contain info about actual type of holder (and assert will not).",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 56
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c5cd90_209657f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-22T13:41:24Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 52
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83128db2_6c453795",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-22T13:41:24Z",
+      "side": 1,
+      "message": "Can you please move this method next to onBindViewHolder?",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 73
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012fc39e_e85d7344",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-22T13:41:24Z",
+      "side": 1,
+      "message": "This check is a bit error-prone. For other access points shouldShowPromo also checks impression limit. So to understand that this line doesn\u0027t create leaks reader must know that NTP_CONTENT_SUGGESTIONS doesn\u0027t need impression check. If someone decides to add impression limit for NTP_CONTENT_SUGGESTIONS, he\u0027ll likely create a leak here. I\u0027d prefer checking some variable (ideally final) in both constructor and unregister. Can we use mSigninPromoController for that? If we can\u0027t use it, I think we should add a final boolean to SigninObserver, set it in constructor and check for it in unregister.",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 99
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c84af273_74e02af9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 2
@@ -89,6 +204,29 @@
         "startChar": 25,
         "endLine": 302,
         "endChar": 43
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65ae7304_f04e5590",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-22T13:41:24Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m not sure I understand. What are the benefits of putting this in a PartialBindCallback? From my point of view moving onResult implementation to NewPromoViewHolder.onBindViewHolder will make it more readable.",
+      "range": {
+        "startLine": 335,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 94
       },
       "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -237,6 +375,29 @@
     },
     {
       "key": {
+        "uuid": "1d13fedd_e1b4ff72",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-22T13:41:24Z",
+      "side": 1,
+      "message": "ChromePreferenceManager is a class that reads and writes preference without much processing. I think that such a class shouldn\u0027t know about SigninPromoController and have specialized logic for switching between two types of promos. Can we move this if to SignInPromo?",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 360,
+        "endChar": 95
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12ad5bff_1dc156dd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
         "patchSetId": 2
@@ -277,6 +438,29 @@
         "startChar": 18,
         "endLine": 361,
         "endChar": 48
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c63ee63_36bcf04c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-22T13:41:24Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 372,
+        "startChar": 0,
+        "endLine": 372,
+        "endChar": 95
       },
       "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
