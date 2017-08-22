@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8d943d5_48ae3381",
+        "filename": "testing/scripts/run_telemetry_benchmark_as_googletest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-22T00:59:59Z",
+      "side": 1,
+      "message": "There can be multiple output_format, and seems like this cannot deal with that case.\ne.g:\n--output-format\u003dfoo --output-format\u003dbar",
+      "revId": "9b82425c95f3db011539721e59607b7ad3ef4407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
