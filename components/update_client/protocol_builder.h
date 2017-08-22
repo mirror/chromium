@@ -37,7 +37,7 @@ std::string BuildUpdateCheckRequest(
     const Configurator& config,
     const std::vector<std::string>& ids_checked,
     const IdToComponentPtrMap& components,
-    PersistedData* metadata,
+    const PersistedData* metadata,
     const std::string& additional_attributes,
     bool enabled_component_updates,
     const std::unique_ptr<UpdaterState::Attributes>& updater_state_attributes);
@@ -65,6 +65,11 @@ std::string BuildUpdateCompleteEventElement(const Component& component);
 // Returns a string representing one ping event for the uninstall of a
 // component. The event type for this ping event is 4.
 std::string BuildUninstalledEventElement(const Component& component);
+
+// Returns a string represent an update check ping element corresponding
+// to one update check request.
+std::string BuildUpdateCheckPingElement(const PersistedData* metadata,
+                                        const std::string& component_id);
 
 // Returns a string representing a download complete event corresponding to
 // one download metrics instance. The event type for this ping event is 14.

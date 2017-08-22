@@ -6,8 +6,12 @@ include_rules = [
   "+components/version_info",
   "+courgette",
   "+crypto",
+  "+extensions/browser",
+  "+extensions/common",
+  "+extensions/features",
   "+libxml",
   "+net",
+  "+services/preferences/public/cpp",
   "+third_party/libxml",
   "+third_party/zlib",
 ]

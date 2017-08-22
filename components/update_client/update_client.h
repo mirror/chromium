@@ -16,6 +16,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/version.h"
 #include "components/update_client/update_client_errors.h"
+#include "extensions/features/features.h"
 
 // The UpdateClient class is a facade with a simple interface. The interface
 // exposes a few APIs to install a CRX or update a group of CRXs.
@@ -244,6 +245,13 @@ struct CrxComponent {
   // note, the confidentiality of the downloads is enforced by the server,
   // which only returns secure download URLs in this case.
   bool requires_network_encryption;
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  // The reasons why this extension is disabled.
+  // |extensions::disable_reason::DISABLE_NONE| means that
+  // the component/extension is enabled.
+  int disable_reasons;
+#endif
 
   // True if the component allows enabling or disabling updates by group policy.
   // This member should be set to |false| for data, non-binary components, such

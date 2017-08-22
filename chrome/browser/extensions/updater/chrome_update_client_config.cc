@@ -2,11 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/extensions/updater/chrome_update_client_config.h"
 #include "base/command_line.h"
 #include "base/version.h"
 #include "chrome/browser/component_updater/component_patcher_operation_out_of_process.h"
 #include "chrome/browser/component_updater/component_updater_utils.h"
-#include "chrome/browser/extensions/updater/chrome_update_client_config.h"
 #include "chrome/browser/google/google_brand.h"
 #include "chrome/browser/update_client/chrome_update_query_params_delegate.h"
 #include "chrome/common/channel_info.h"
@@ -14,6 +14,7 @@
 #include "components/update_client/update_query_params.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/storage_partition.h"
+#include "extensions/browser/extension_prefs.h"
 
 namespace extensions {
 
@@ -22,9 +23,10 @@ namespace extensions {
 ChromeUpdateClientConfig::ChromeUpdateClientConfig(
     content::BrowserContext* context)
     : impl_(base::CommandLine::ForCurrentProcess(),
-            content::BrowserContext::GetDefaultStoragePartition(context)->
-                GetURLRequestContext(),
-            true) {}
+            content::BrowserContext::GetDefaultStoragePartition(context)
+                ->GetURLRequestContext(),
+            true),
+      browser_context_(context) {}
 
 int ChromeUpdateClientConfig::InitialDelay() const {
   return impl_.InitialDelay();
@@ -111,6 +113,9 @@ bool ChromeUpdateClientConfig::EnabledCupSigning() const {
 }
 
 PrefService* ChromeUpdateClientConfig::GetPrefService() const {
+  if (browser_context_) {
+    return ExtensionPrefs::Get(browser_context_)->pref_service();
+  }
   return nullptr;
 }
 

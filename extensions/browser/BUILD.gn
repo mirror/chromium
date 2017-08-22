@@ -35,6 +35,13 @@ source_set("browser_context_keyed_service_factories") {
   ]
 }
 
+source_set("constants") {
+  sources = [
+    "pref_names.cc",
+    "pref_names.h",
+  ]
+}
+
 source_set("browser_sources") {
   visibility = [ "./*" ]
 
@@ -272,8 +279,6 @@ source_set("browser_sources") {
     "path_util.h",
     "policy_check.cc",
     "policy_check.h",
-    "pref_names.cc",
-    "pref_names.h",
     "preload_check.cc",
     "preload_check.h",
     "preload_check_group.cc",
@@ -336,6 +341,7 @@ source_set("browser_sources") {
   ]
 
   deps = [
+    ":constants",
     "//base:i18n",
     "//components/cast_certificate",
     "//components/cast_channel",

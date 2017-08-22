@@ -57,6 +57,9 @@ class ChromeUpdateClientConfig : public update_client::Configurator {
  private:
   component_updater::ConfiguratorImpl impl_;
 
+  // |browser_context_| is not owned by this class.
+  content::BrowserContext* browser_context_;
+
   DISALLOW_COPY_AND_ASSIGN(ChromeUpdateClientConfig);
 };
 

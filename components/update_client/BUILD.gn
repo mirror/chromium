@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//net/features.gni")
+import("//extensions/features/features.gni")
 
 static_library("update_client") {
   sources = [
@@ -71,11 +72,19 @@ static_library("update_client") {
     "//components/version_info:version_info",
     "//courgette:courgette_lib",
     "//crypto",
+    "//extensions/features",
     "//net",
+    "//services/preferences/public/cpp",
     "//third_party/libxml",
     "//third_party/zlib/google:zip",
     "//url",
   ]
+  if (enable_extensions) {
+    deps += [
+      "//extensions/browser:constants",
+      "//extensions/common:common_constants",
+    ]
+  }
   libs = []
   if (is_mac) {
     libs += [ "OpenDirectory.framework" ]
@@ -161,9 +170,13 @@ source_set("unit_tests") {
     "//components/prefs:test_support",
     "//components/version_info:version_info",
     "//courgette:courgette_lib",
+    "//extensions/features",
     "//net:test_support",
     "//testing/gmock",
     "//testing/gtest",
     "//third_party/libxml",
   ]
+  if (enable_extensions) {
+    deps += [ "//extensions/common:common_constants" ]
+  }
 }

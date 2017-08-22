@@ -8,22 +8,25 @@
 #include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "build/build_config.h"
+#include "components/prefs/testing_pref_service.h"
+#include "components/update_client/persisted_data.h"
 #include "components/update_client/protocol_builder.h"
 #include "components/update_client/updater_state.h"
+#include "extensions/features/features.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using std::string;
 
 namespace update_client {
 
-TEST(UpdateClientUtils, BuildProtocolRequest_ProdIdVersion) {
+TEST(UpdateClientUtilsTest, BuildProtocolRequest_ProdIdVersion) {
   // Verifies that |prod_id| and |version| are serialized.
   const string request = BuildProtocolRequest("some_prod_id", "1.0", "", "", "",
                                               "", "", "", nullptr);
   EXPECT_NE(string::npos, request.find(" version=\"some_prod_id-1.0\" "));
 }
 
-TEST(UpdateClientUtils, BuildProtocolRequest_DownloadPreference) {
+TEST(UpdateClientUtilsTest, BuildProtocolRequest_DownloadPreference) {
   // Verifies that an empty |download_preference| is not serialized.
   const string request_no_dlpref =
       BuildProtocolRequest("", "", "", "", "", "", "", "", nullptr);
@@ -35,7 +38,7 @@ TEST(UpdateClientUtils, BuildProtocolRequest_DownloadPreference) {
   EXPECT_NE(string::npos, request_with_dlpref.find(" dlpref=\"some pref\""));
 }
 
-TEST(UpdateClientUtils, BuildProtocolRequestUpdaterStateAttributes) {
+TEST(UpdateClientUtilsTest, BuildProtocolRequestUpdaterStateAttributes) {
   // When no updater state is provided, then check that the elements and
   // attributes related to the updater state are not serialized.
   std::string request =
@@ -64,6 +67,65 @@ TEST(UpdateClientUtils, BuildProtocolRequestUpdaterStateAttributes) {
 #else
   EXPECT_EQ(std::string::npos, request.find(updater_element));
 #endif  // GOOGLE_CHROME_BUILD
+}
+
+TEST(UpdateClientUtilsTest, BuildUpdateCheckPingElement) {
+  std::unique_ptr<TestingPrefServiceSimple> pref(
+      new TestingPrefServiceSimple());
+  PersistedData::RegisterPrefs(pref->registry());
+  std::unique_ptr<PersistedData> metadata(new PersistedData(pref.get()));
+  std::string component_id("someappid");
+
+  std::string ping = BuildUpdateCheckPingElement(metadata.get(), component_id);
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  EXPECT_EQ("<ping rd=\"-1\" r=\"-1\" ping_freshness=\"\"/>", ping);
+
+  // Fall back on r if rd is not available.
+  metadata->SetLastRollCallTime(
+      component_id, base::Time::Now() - base::TimeDelta::FromDays(2));
+  ping = BuildUpdateCheckPingElement(metadata.get(), component_id);
+  EXPECT_EQ("<ping rd=\"-2\" r=\"2\" ping_freshness=\"\"/>", ping);
+
+  metadata->SetDateLastRollCall({component_id}, 123);
+  ping = BuildUpdateCheckPingElement(metadata.get(), component_id);
+  EXPECT_NE(std::string::npos,
+            ping.find("<ping rd=\"123\" r=\"2\" ping_freshness="));
+
+  metadata->SetActiveBit(component_id);
+  ping = BuildUpdateCheckPingElement(metadata.get(), component_id);
+  EXPECT_NE(
+      std::string::npos,
+      ping.find("<ping active=\"1\" ad=\"-1\" a=\"-1\" rd=\"123\" r=\"2\" "
+                "ping_freshness="));
+
+  metadata->SetLastActiveTime(component_id,
+                              base::Time::Now() - base::TimeDelta::FromDays(4));
+  ping = BuildUpdateCheckPingElement(metadata.get(), component_id);
+  EXPECT_NE(std::string::npos,
+            ping.find("<ping active=\"1\" ad=\"-2\" a=\"4\" rd=\"123\" r=\"2\" "
+                      "ping_freshness="));
+
+  metadata->SetDateLastRollCall({component_id}, 234);
+  metadata->SetDateLastActive({component_id}, 200);
+  ping = BuildUpdateCheckPingElement(metadata.get(), component_id);
+  EXPECT_NE(
+      std::string::npos,
+      ping.find("<ping active=\"1\" ad=\"200\" a=\"4\" rd=\"234\" r=\"2\" "
+                "ping_freshness="));
+
+  metadata->ClearActiveBit({component_id});
+  metadata->SetDateLastRollCall({component_id}, 345);
+  ping = BuildUpdateCheckPingElement(metadata.get(), component_id);
+  EXPECT_NE(std::string::npos,
+            ping.find("<ping rd=\"345\" r=\"2\" ping_freshness="));
+#else
+  EXPECT_EQ("<ping rd=\"-2\" ping_freshness=\"\"/>", ping);
+
+  metadata->SetDateLastRollCall({component_id}, 123);
+  ping = BuildUpdateCheckPingElement(metadata.get(), component_id);
+  EXPECT_NE(std::string::npos, ping.find("<ping rd=\"123\" ping_freshness="));
+#endif
 }
 
 }  // namespace update_client

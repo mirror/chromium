@@ -25,6 +25,7 @@
 #include "components/update_client/test_configurator.h"
 #include "components/update_client/update_engine.h"
 #include "components/update_client/url_request_post_interceptor.h"
+#include "extensions/common/disable_reason.h"
 #include "net/url_request/url_request_test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -208,7 +209,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckSuccess) {
       request.find(
           std::string("<app appid=\"") + kUpdateItemId +
           "\" version=\"0.9\" "
-          "brand=\"TEST\" ap=\"some_ap\"><updatecheck/><ping rd=\"-2\" "));
+          "brand=\"TEST\" ap=\"some_ap\"><updatecheck/><ping rd=\"-1\" "));
   EXPECT_NE(string::npos,
             request.find("<packages><package fp=\"fp1\"/></packages></app>"));
 
@@ -264,7 +265,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckInvalidAp) {
   EXPECT_NE(string::npos, post_interceptor_->GetRequests()[0].find(
                               std::string("app appid=\"") + kUpdateItemId +
                               "\" version=\"0.9\" "
-                              "brand=\"TEST\"><updatecheck/><ping rd=\"-2\" "));
+                              "brand=\"TEST\"><updatecheck/><ping rd=\"-1\" "));
   EXPECT_NE(string::npos,
             post_interceptor_->GetRequests()[0].find(
                 "<packages><package fp=\"fp1\"/></packages></app>"));
@@ -290,7 +291,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckSuccessNoBrand) {
   EXPECT_NE(string::npos, post_interceptor_->GetRequests()[0].find(
                               std::string("<app appid=\"") + kUpdateItemId +
                               "\" version=\"0.9\">"
-                              "<updatecheck/><ping rd=\"-2\" "));
+                              "<updatecheck/><ping rd=\"-1\" "));
   EXPECT_NE(string::npos,
             post_interceptor_->GetRequests()[0].find(
                 "<packages><package fp=\"fp1\"/></packages></app>"));
@@ -378,7 +379,7 @@ TEST_F(UpdateCheckerTest, UpdateCheckCupError) {
   EXPECT_NE(string::npos, post_interceptor_->GetRequests()[0].find(
                               std::string("<app appid=\"") + kUpdateItemId +
                               "\" version=\"0.9\" "
-                              "brand=\"TEST\"><updatecheck/><ping rd=\"-2\" "));
+                              "brand=\"TEST\"><updatecheck/><ping rd=\"-1\" "));
   EXPECT_NE(string::npos,
             post_interceptor_->GetRequests()[0].find(
                 "<packages><package fp=\"fp1\"/></packages></app>"));
@@ -413,7 +414,9 @@ TEST_F(UpdateCheckerTest, UpdateCheckRequiresEncryptionError) {
 
 // Tests that the PersistedData will get correctly update and reserialize
 // the elapsed_days value.
-TEST_F(UpdateCheckerTest, UpdateCheckDateLastRollCall) {
+TEST_F(UpdateCheckerTest, UpdateCheckLastRollCall) {
+  EXPECT_TRUE(post_interceptor_->ExpectRequest(
+      new PartialMatch("updatecheck"), test_file("updatecheck_reply_4.xml")));
   EXPECT_TRUE(post_interceptor_->ExpectRequest(
       new PartialMatch("updatecheck"), test_file("updatecheck_reply_4.xml")));
   EXPECT_TRUE(post_interceptor_->ExpectRequest(
@@ -424,13 +427,94 @@ TEST_F(UpdateCheckerTest, UpdateCheckDateLastRollCall) {
   IdToComponentPtrMap components;
   components[kUpdateItemId] = MakeComponent();
 
-  // Do two update-checks.
+  // Do 3 update-checks.
   update_checker_->CheckForUpdates(
       std::vector<std::string>{kUpdateItemId}, components, "extra=\"params\"",
       true,
       base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
                  base::Unretained(this)));
   RunThreads();
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  metadata_->SetLastRollCallTime(
+      kUpdateItemId, base::Time::Now() - base::TimeDelta::FromDays(2));
+#endif
+  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_->CheckForUpdates(
+      std::vector<std::string>{kUpdateItemId}, components, "extra=\"params\"",
+      true,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
+  RunThreads();
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  metadata_->SetLastRollCallTime(kUpdateItemId, base::Time::Now());
+#endif
+  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_->CheckForUpdates(
+      std::vector<std::string>{kUpdateItemId}, components, "extra=\"params\"",
+      true,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
+  RunThreads();
+
+  EXPECT_EQ(3, post_interceptor_->GetHitCount())
+      << post_interceptor_->GetRequestsAsString();
+  ASSERT_EQ(3, post_interceptor_->GetCount())
+      << post_interceptor_->GetRequestsAsString();
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[0].find(
+                              "<ping rd=\"-1\" r=\"-1\" ping_freshness="));
+  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[1].find(
+                              "<ping rd=\"3383\" r=\"2\" ping_freshness="));
+  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[2].find(
+                              "<ping rd=\"3383\" r=\"0\" ping_freshness="));
+#endif
+  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[0].find(
+                              "<ping rd=\"-2\" ping_freshness="));
+  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[1].find(
+                              "<ping rd=\"3383\" ping_freshness="));
+  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[2].find(
+                              "<ping rd=\"3383\" ping_freshness="));
+}
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+
+TEST_F(UpdateCheckerTest, UpdateCheckLastActive) {
+  EXPECT_TRUE(post_interceptor_->ExpectRequest(
+      new PartialMatch("updatecheck"), test_file("updatecheck_reply_4.xml")));
+  EXPECT_TRUE(post_interceptor_->ExpectRequest(
+      new PartialMatch("updatecheck"), test_file("updatecheck_reply_4.xml")));
+  EXPECT_TRUE(post_interceptor_->ExpectRequest(
+      new PartialMatch("updatecheck"), test_file("updatecheck_reply_4.xml")));
+
+  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+
+  IdToComponentPtrMap components;
+  components[kUpdateItemId] = MakeComponent();
+
+  metadata_->SetActiveBit(kUpdateItemId);
+  update_checker_->CheckForUpdates(
+      std::vector<std::string>{kUpdateItemId}, components, "extra=\"params\"",
+      true,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
+  RunThreads();
+
+  // The active bit should be reset.
+  EXPECT_FALSE(metadata_->GetActiveBit(kUpdateItemId));
+
+  metadata_->SetActiveBit(kUpdateItemId);
+  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_->CheckForUpdates(
+      std::vector<std::string>{kUpdateItemId}, components, "extra=\"params\"",
+      true,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
+  RunThreads();
+
+  // The active bit should be reset.
+  EXPECT_FALSE(metadata_->GetActiveBit(kUpdateItemId));
 
   update_checker_ = UpdateChecker::Create(config_, metadata_.get());
   update_checker_->CheckForUpdates(
@@ -440,15 +524,81 @@ TEST_F(UpdateCheckerTest, UpdateCheckDateLastRollCall) {
                  base::Unretained(this)));
   RunThreads();
 
-  EXPECT_EQ(2, post_interceptor_->GetHitCount())
+  EXPECT_FALSE(metadata_->GetActiveBit(kUpdateItemId));
+
+  EXPECT_EQ(3, post_interceptor_->GetHitCount())
       << post_interceptor_->GetRequestsAsString();
-  ASSERT_EQ(2, post_interceptor_->GetCount())
+  ASSERT_EQ(3, post_interceptor_->GetCount())
       << post_interceptor_->GetRequestsAsString();
-  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[0].find(
-                              "<ping rd=\"-2\" ping_freshness="));
-  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[1].find(
-                              "<ping rd=\"3383\" ping_freshness="));
+  EXPECT_NE(string::npos,
+            post_interceptor_->GetRequests()[0].find(
+                "<ping active=\"1\" ad=\"-1\" a=\"-1\" rd=\"-1\" r=\"-1\" "
+                "ping_freshness="));
+  EXPECT_NE(string::npos,
+            post_interceptor_->GetRequests()[1].find(
+                "<ping active=\"1\" ad=\"3383\" a=\"-2\" rd=\"3383\" r=\"-2\" "
+                "ping_freshness="));
+  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[2].find(
+                              "<ping rd=\"3383\" r=\"-2\" ping_freshness="));
 }
+
+TEST_F(UpdateCheckerTest, ComponentDisabled) {
+  EXPECT_TRUE(post_interceptor_->ExpectRequest(
+      new PartialMatch("updatecheck"), test_file("updatecheck_reply_1.xml")));
+
+  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+
+  IdToComponentPtrMap components;
+  components[kUpdateItemId] = MakeComponent();
+
+  auto& component = components[kUpdateItemId];
+  auto& crx_component = const_cast<CrxComponent&>(component->crx_component());
+
+  crx_component.disable_reasons =
+      extensions::disable_reason::DISABLE_REASON_LAST;
+  update_checker_->CheckForUpdates(
+      std::vector<std::string>{kUpdateItemId}, components, "", false,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
+  RunThreads();
+
+  EXPECT_NE(string::npos,
+            post_interceptor_->GetRequests()[0].find("<disable/>"));
+
+  crx_component.disable_reasons =
+      extensions::disable_reason::DISABLE_USER_ACTION;
+  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_->CheckForUpdates(
+      std::vector<std::string>{kUpdateItemId}, components, "", false,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
+  RunThreads();
+  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[1].find(
+                              "<disable reason=\"1\"/>"));
+
+  crx_component.disable_reasons =
+      extensions::disable_reason::DISABLE_RELOAD |
+      extensions::disable_reason::DISABLE_SIDELOAD_WIPEOUT;
+  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_->CheckForUpdates(
+      std::vector<std::string>{kUpdateItemId}, components, "", false,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
+  RunThreads();
+  EXPECT_NE(string::npos, post_interceptor_->GetRequests()[2].find(
+                              "<disable reason=\"4\" reason=\"16\"/>"));
+
+  crx_component.disable_reasons = extensions::disable_reason::DISABLE_NONE;
+  update_checker_ = UpdateChecker::Create(config_, metadata_.get());
+  update_checker_->CheckForUpdates(
+      std::vector<std::string>{kUpdateItemId}, components, "", false,
+      base::Bind(&UpdateCheckerTest::UpdateCheckComplete,
+                 base::Unretained(this)));
+  RunThreads();
+  EXPECT_EQ(string::npos, post_interceptor_->GetRequests()[3].find("<disable"));
+}
+
+#endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
 TEST_F(UpdateCheckerTest, UpdateCheckUpdateDisabled) {
   EXPECT_TRUE(post_interceptor_->ExpectRequest(
