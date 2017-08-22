@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24acef79_6d28e6ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-22T08:57:24Z",
+      "side": 1,
+      "message": "Done. Sorry, my bad..",
+      "parentUuid": "0e38ef92_1cab88b6",
+      "range": {
+        "startLine": 7,
+        "startChar": 32,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebe05aad_ad3a73a4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5115819_58ef3495",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-22T08:57:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebe05aad_ad3a73a4",
+      "range": {
+        "startLine": 9,
+        "startChar": 28,
+        "endLine": 9,
+        "endChar": 31
+      },
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "192dd04c_4886e9f0",
+        "filename": "content/common/service_worker/service_worker_messages.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-22T08:57:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dc2c988_eaeda4a8",
+      "range": {
+        "startLine": 378,
+        "startChar": 59,
+        "endLine": 378,
+        "endChar": 68
+      },
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52e103bf_656536ce",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 6
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "bc8a1216_fa59a7d7",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-22T08:57:24Z",
+      "side": 1,
+      "message": "Done. Included \"service_worker_error_type.mojom.h\" here. The gn target containing this file is already depending on WebKit/public:mojo_bindings.",
+      "parentUuid": "52e103bf_656536ce",
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a64705e4_4ae095ef",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerWindowClientCallback.cpp",
         "patchSetId": 6
@@ -102,6 +192,24 @@
       "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b392c48b_5c3131ea",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerWindowClientCallback.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-22T08:57:24Z",
+      "side": 1,
+      "message": "Done. Also done for all similar cases.",
+      "parentUuid": "a64705e4_4ae095ef",
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -125,6 +233,30 @@
       "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e741da_12127088",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-22T08:57:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "878183cb_42c49e4e",
+      "range": {
+        "startLine": 793,
+        "startChar": 36,
+        "endLine": 793,
+        "endChar": 40
+      },
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "323f6824_e44be4f6",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-22T08:57:24Z",
+      "side": 1,
+      "message": "Yeah I found several existing usages like this so I\u0027m somehow sure we can go this way :)",
+      "parentUuid": "e9738e20_5fc16146",
+      "range": {
+        "startLine": 35,
+        "startChar": 73,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d50652a_58d4cff0",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
         "patchSetId": 6
@@ -192,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "a5b69601_042e5f70",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-22T08:57:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d50652a_58d4cff0",
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "097e08f1_28485a11",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
         "patchSetId": 6
@@ -206,6 +380,24 @@
       "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1be160_f0f94554",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-22T08:57:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "097e08f1_28485a11",
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
