@@ -14,6 +14,8 @@
 
 namespace remoting {
 
+// TODO(nicholss): Update legacy audio player to use new audio buffer code.
+
 class AudioPlayerAndroid : public AudioPlayer {
  public:
   AudioPlayerAndroid();
