@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "430f5231_b9d293aa",
+        "filename": "content/browser/accessibility/browser_accessibility_com_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-22T17:20:13Z",
+      "side": 1,
+      "message": "Do we need this as an intermediate step? Can\u0027t you just\ndelete this override?",
+      "revId": "5e8dc59ec971e386eaa8d77a16a4e5ef6a079bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ec0172_e6e24a8b",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-22T17:20:13Z",
+      "side": 1,
+      "message": "Do you think screen is correct?\n\nBlink only knows about frame coordinates.",
+      "revId": "5e8dc59ec971e386eaa8d77a16a4e5ef6a079bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7abceca9_58de19f4",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-22T17:20:13Z",
+      "side": 1,
+      "message": "Yes, this looks fine",
+      "revId": "5e8dc59ec971e386eaa8d77a16a4e5ef6a079bd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
