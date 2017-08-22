@@ -3422,6 +3422,28 @@ DOMRect* Internals::visualRect(Node* node) {
       FloatRect(node->GetLayoutObject()->VisualRect()));
 }
 
+ClientRect* Internals::layoutOverflowRect(Element* element) {
+  if (element) {
+    if (LayoutObject* lo = element->layoutObject()) {
+      if (lo->isBox()) {
+        return ClientRect::create(
+            FloatRect(toLayoutBox(lo)->layoutOverflowRect()));
+      }
+    }
+  }
+  return ClientRect::create();
+}
+
+ClientRect* Internals::frameRect(Element* element) {
+  if (element) {
+    if (LayoutObject* lo = element->layoutObject()) {
+      if (lo->isBox())
+        return ClientRect::create(FloatRect(toLayoutBox(lo)->frameRect()));
+    }
+  }
+  return ClientRect::create();
+}
+
 void Internals::crash() {
   CHECK(false) << "Intentional crash";
 }

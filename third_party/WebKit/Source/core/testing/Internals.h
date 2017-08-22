@@ -568,6 +568,9 @@ class Internals final : public GarbageCollected<Internals>,
   // Returns the visual rect of a node's LayoutObject.
   DOMRect* visualRect(Node*);
 
+  ClientRect* layoutOverflowRect(Element*);
+  ClientRect* frameRect(Element*);
+
   // Intentional crash.
   void crash();
 
