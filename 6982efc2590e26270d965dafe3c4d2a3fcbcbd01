@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fc16a16_919fd83d",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1508,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-22T20:39:43Z",
+      "side": 1,
+      "message": "The hash needs to be adjusted to match the modified body of the scripts (the scripts are changing, because we are removing setAutomationId calls below).",
+      "range": {
+        "startLine": 1507,
+        "startChar": 31,
+        "endLine": 1508,
+        "endChar": 36
+      },
+      "revId": "6982efc2590e26270d965dafe3c4d2a3fcbcbd01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
