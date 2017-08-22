@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7f17bbd_d007244e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 5911,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-22T18:10:06Z",
+      "side": 1,
+      "message": "Since you are not recording to this specific histogram, mark it with base\u003d\"true\".",
+      "range": {
+        "startLine": 5911,
+        "startChar": 55,
+        "endLine": 5911,
+        "endChar": 56
+      },
+      "revId": "4998ffcef965267c24a2f5c1eaa29ef24a883d34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
