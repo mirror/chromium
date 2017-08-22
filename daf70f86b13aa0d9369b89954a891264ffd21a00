@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e83d601e_9324994a",
+        "filename": "chrome/android/java/res/drawable/site_explore_page_indicator.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T16:28:55Z",
+      "side": 1,
+      "message": "copyright notice",
+      "range": {
+        "startLine": 1,
+        "startChar": 6,
+        "endLine": 1,
+        "endChar": 13
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284d435d_d7218305",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T16:28:55Z",
+      "side": 1,
+      "message": "use DPs for constants? this would be big on small phone and very small or high res one.",
+      "range": {
+        "startLine": 27,
+        "startChar": 29,
+        "endLine": 27,
+        "endChar": 56
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85baee72_9d9251d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T16:28:55Z",
+      "side": 1,
+      "message": "no need to initialise it if you will not need the position before addPageIndicators()",
+      "range": {
+        "startLine": 31,
+        "startChar": 40,
+        "endLine": 31,
+        "endChar": 44
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d1a509_5e830f01",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T16:28:55Z",
+      "side": 1,
+      "message": "is this needed? Throwing in constructors in not a good practice anyway",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 28
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bccf3f44_9ec76af0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T16:28:55Z",
+      "side": 1,
+      "message": "Feel free to assert, it would crash on the next line anyway",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 31
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9524ff7_d8561f2e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T16:28:55Z",
+      "side": 1,
+      "message": "Why are these 2 properties set in Java rather than via XML?",
+      "range": {
+        "startLine": 64,
+        "startChar": 17,
+        "endLine": 64,
+        "endChar": 39
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435aadb5_5da15659",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T16:28:55Z",
+      "side": 1,
+      "message": "nit: private methods after public and protected ones",
+      "range": {
+        "startLine": 69,
+        "startChar": 17,
+        "endLine": 69,
+        "endChar": 34
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dddde43a_309fce5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T16:28:55Z",
+      "side": 1,
+      "message": "does this need to be inside the loop? Feels like it can be called only when attached or reset even.",
+      "range": {
+        "startLine": 81,
+        "startChar": 12,
+        "endLine": 81,
+        "endChar": 72
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8ee9d7_2664516e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T16:28:55Z",
+      "side": 1,
+      "message": "do this after setting the layout params?",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 19
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ae18f0_3596d6b9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T16:28:55Z",
+      "side": 1,
+      "message": "nit: for the sake of symmetry, you can also set the margin left and right to half 10px (or half of the current value anyway), that might look nicer :) Also useful if you want to reuse the views.",
+      "range": {
+        "startLine": 85,
+        "startChar": 20,
+        "endLine": 85,
+        "endChar": 33
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fffff4f4_226f062e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T16:28:55Z",
+      "side": 1,
+      "message": "move next to onAttach?",
+      "range": {
+        "startLine": 100,
+        "startChar": 19,
+        "endLine": 100,
+        "endChar": 39
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30257d8c_3c1ac7f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T16:28:55Z",
+      "side": 1,
+      "message": "also set mViewPager to null? or if you want to keep it around, handle rebinding to the same adapter?",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 18
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604400c2_0736f672",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-22T16:28:55Z",
+      "side": 1,
+      "message": "nit: is this the right measurespec to use? I suppose tilegridlayout does not care, but should the tabs and page indicators have AT_MOST width instead? Maybe AT_MOST the width of the widest tilegridlayout? or some other max width we decide? I\u0027m fine if you want to look into that specifically in another patch.",
+      "range": {
+        "startLine": 31,
+        "startChar": 20,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
