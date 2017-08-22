@@ -2713,6 +2713,13 @@ ChromeContentBrowserClient::CreateNetworkContext(
                                                     relative_partition_path);
 }
 
+base::FilePath ChromeContentBrowserClient::GetMediaCapabiltiesDatabasePath() {
+  base::FilePath user_data_dir;
+  PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
+  DCHECK(!user_data_dir.empty());
+  return user_data_dir.Append(FILE_PATH_LITERAL("MediaCapabilities"));
+}
+
 void ChromeContentBrowserClient::GetAdditionalFileSystemBackends(
     content::BrowserContext* browser_context,
     const base::FilePath& storage_partition_path,

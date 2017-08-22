@@ -856,6 +856,11 @@ class CONTENT_EXPORT ContentBrowserClient {
       BrowserContext* context,
       bool in_memory,
       const base::FilePath& relative_partition_path);
+
+  // Returns the fully qualified path to the the media capabilities database.
+  // The empty path means that the database is not supported by the content
+  // embedder.
+  virtual base::FilePath GetMediaCapabiltiesDatabasePath();
 };
 
 }  // namespace content

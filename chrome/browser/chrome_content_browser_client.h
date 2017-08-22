@@ -326,6 +326,7 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       content::BrowserContext* context,
       bool in_memory,
       const base::FilePath& relative_partition_path) override;
+  base::FilePath GetMediaCapabiltiesDatabasePath() override;
 
 #if BUILDFLAG(ENABLE_MEDIA_REMOTING)
   void CreateMediaRemoter(content::RenderFrameHost* render_frame_host,

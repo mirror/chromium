@@ -109,6 +109,7 @@
 #include "media/media_features.h"
 #include "media/midi/midi_service.h"
 #include "media/mojo/features.h"
+#include "media/mojo/services/media_capabilities_database.h"
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/edk/embedder/scoped_ipc_support.h"
 #include "net/base/network_change_notifier.h"
@@ -1614,6 +1615,10 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 #if defined(OS_ANDROID)
   media::SetMediaDrmBridgeClient(GetContentClient()->GetMediaDrmBridgeClient());
 #endif
+
+  media_capabilities_database_ =
+      base::MakeUnique<media::MediaCapabilitiesDatabase>(
+          GetContentClient()->browser()->GetMediaCapabiltiesDatabasePath());
 
   return result_code_;
 }

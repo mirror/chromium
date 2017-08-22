@@ -8,6 +8,13 @@ import("//services/service_manager/public/cpp/service.gni")
 import("//services/service_manager/public/service_manifest.gni")
 import("//services/service_manager/public/tools/test/service_test.gni")
 import("//testing/test.gni")
+import("//third_party/protobuf/proto_library.gni")
+
+proto_library("media_capabilities_proto") {
+  sources = [
+    "media_capabilities.proto",
+  ]
+}
 
 component("services") {
   output_name = "media_mojo_services"
@@ -16,6 +23,8 @@ component("services") {
     "gpu_mojo_media_client.h",
     "interface_factory_impl.cc",
     "interface_factory_impl.h",
+    "media_capabilities_database.cc",
+    "media_capabilities_database.h",
     "media_interface_provider.cc",
     "media_interface_provider.h",
     "media_mojo_export.h",
@@ -69,6 +78,7 @@ component("services") {
   configs += [ "//build/config/compiler:no_size_t_to_int_warning" ]
 
   public_deps = [
+    ":media_capabilities_proto",
     "//base",
     "//media",
     "//media/gpu",
@@ -81,6 +91,7 @@ component("services") {
   ]
 
   deps = [
+    "//components/leveldb_proto",
     "//media:shared_memory_support",
     "//media/cdm:cdm_manager",
     "//media/gpu",

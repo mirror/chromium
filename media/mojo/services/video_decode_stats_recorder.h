@@ -16,14 +16,17 @@
 
 namespace media {
 
+class MediaCapabilitiesDatabase;
+
 // See mojom::VideoDecodeStatsRecorder for documentation.
 class MEDIA_MOJO_EXPORT VideoDecodeStatsRecorder
     : public mojom::VideoDecodeStatsRecorder {
  public:
-  VideoDecodeStatsRecorder() = default;
+  explicit VideoDecodeStatsRecorder(MediaCapabilitiesDatabase* database);
   ~VideoDecodeStatsRecorder() override;
 
-  static void Create(mojom::VideoDecodeStatsRecorderRequest request);
+  static void Create(MediaCapabilitiesDatabase* database,
+                     mojom::VideoDecodeStatsRecorderRequest request);
 
   // mojom::VideoDecodeStatsRecorder implementation:
   void StartNewRecord(VideoCodecProfile profile,
@@ -38,6 +41,8 @@ class MEDIA_MOJO_EXPORT VideoDecodeStatsRecorder
   int frames_per_sec_ = 0;
   uint32_t frames_decoded_ = 0;
   uint32_t frames_dropped_ = 0;
+  // Owned by the browser process, can't be free'd before this service.
+  MediaCapabilitiesDatabase* database_;
 
   DISALLOW_COPY_AND_ASSIGN(VideoDecodeStatsRecorder);
 };

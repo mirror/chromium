@@ -506,4 +506,8 @@ mojom::NetworkContextPtr ContentBrowserClient::CreateNetworkContext(
   return network_context;
 }
 
+base::FilePath ContentBrowserClient::GetMediaCapabiltiesDatabasePath() {
+  return base::FilePath();
+}
+
 }  // namespace content
