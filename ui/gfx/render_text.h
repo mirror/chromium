@@ -87,14 +87,16 @@ class StyleIterator {
   StyleIterator(const BreakList<SkColor>& colors,
                 const BreakList<BaselineStyle>& baselines,
                 const BreakList<Font::Weight>& weights,
-                const std::vector<BreakList<bool>>& styles);
+                const std::vector<BreakList<bool>>& styles,
+                const BreakList<bool>& force_ltrs);
   ~StyleIterator();
 
   // Get the colors and styles at the current iterator position.
   SkColor color() const { return color_->second; }
   BaselineStyle baseline() const { return baseline_->second; }
-  bool style(TextStyle s) const { return style_[s]->second; }
   Font::Weight weight() const { return weight_->second; }
+  bool style(TextStyle s) const { return style_[s]->second; }
+  bool force_ltr() const { return force_ltr_->second; }
 
   // Get the intersecting range of the current iterator set.
   Range GetRange() const;
@@ -107,11 +109,13 @@ class StyleIterator {
   BreakList<BaselineStyle> baselines_;
   BreakList<Font::Weight> weights_;
   std::vector<BreakList<bool> > styles_;
+  BreakList<bool> force_ltrs_;
 
   BreakList<SkColor>::const_iterator color_;
   BreakList<BaselineStyle>::const_iterator baseline_;
   BreakList<Font::Weight>::const_iterator weight_;
   std::vector<BreakList<bool>::const_iterator> style_;
+  BreakList<bool>::const_iterator force_ltr_;
 
   DISALLOW_COPY_AND_ASSIGN(StyleIterator);
 };
@@ -502,6 +506,7 @@ class GFX_EXPORT RenderText {
   const BreakList<BaselineStyle>& baselines() const { return baselines_; }
   const BreakList<Font::Weight>& weights() const { return weights_; }
   const std::vector<BreakList<bool> >& styles() const { return styles_; }
+  const BreakList<bool>& force_ltrs() const { return force_ltrs_; }
   SkScalar strike_thickness_factor() const { return strike_thickness_factor_; }
 
   const std::vector<internal::Line>& lines() const { return lines_; }
@@ -600,6 +605,9 @@ class GFX_EXPORT RenderText {
   // Update the display text.
   void UpdateDisplayText(float text_width);
 
+  // Refreshes force_ltrs_, based on |directionality_mode_| and |text_|.
+  void UpdateForceLTRs();
+
   // Returns display text positions that are suitable for breaking lines.
   const BreakList<size_t>& GetLineBreaks();
 
@@ -626,6 +634,11 @@ class GFX_EXPORT RenderText {
   // Get the text direction for the current directionality mode and given
   // |text|.
   base::i18n::TextDirection GetTextDirection(const base::string16& text);
+
+  // Determines whether the text is treated as a URL for bidi purposes.
+  bool IsRenderedAsUrl() const {
+    return directionality_mode_ == DIRECTIONALITY_AS_URL;
+  }
 
   // Convert an index in |text_| to the index in |given_text|. The
   // |given_text| should be either |display_text_| or |layout_text_|
@@ -742,6 +755,11 @@ class GFX_EXPORT RenderText {
   BreakList<BaselineStyle> baselines_;
   BreakList<Font::Weight> weights_;
   std::vector<BreakList<bool> > styles_;
+
+  // Ranges of text that are forced "left to right". These breaks are equivalent
+  // to surrounding the text in LRO (U+202D) and PDF (U+202C) characters, except
+  // without altering the logical character indices.
+  BreakList<bool> force_ltrs_;
 
   // Breaks saved without temporary composition and selection styling.
   BreakList<SkColor> saved_colors_;

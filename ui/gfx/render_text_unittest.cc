@@ -1519,6 +1519,9 @@ TEST_P(RenderTextTest, GetDisplayTextDirection) {
       render_text->SetDirectionalityMode(DIRECTIONALITY_FORCE_RTL);
       EXPECT_EQ(render_text->GetDisplayTextDirection(),
                 base::i18n::RIGHT_TO_LEFT);
+      render_text->SetDirectionalityMode(DIRECTIONALITY_AS_URL);
+      EXPECT_EQ(render_text->GetDisplayTextDirection(),
+                base::i18n::LEFT_TO_RIGHT);
     }
   }
 
