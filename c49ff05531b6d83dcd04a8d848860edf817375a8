@@ -16,6 +16,24 @@
       "revId": "c49ff05531b6d83dcd04a8d848860edf817375a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a50e38_ef643509",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerCacheModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-08-22T22:22:33Z",
+      "side": 1,
+      "message": "Ah great, using that now",
+      "parentUuid": "6bfe1400_686c677f",
+      "revId": "c49ff05531b6d83dcd04a8d848860edf817375a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
