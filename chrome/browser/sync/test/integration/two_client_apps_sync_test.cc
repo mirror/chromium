@@ -312,22 +312,20 @@ IN_PROC_BROWSER_TEST_F(TwoClientAppsSyncTest, E2E_ENABLED(UpdateLaunchType)) {
   extensions::SetLaunchType(GetProfile(1), extensions::kWebStoreAppId,
                             extensions::LAUNCH_TYPE_WINDOW);
   ASSERT_TRUE(AppsMatchChecker().Wait());
-  ASSERT_EQ(
-      extensions::GetLaunchTypePrefValue(
-          extensions::ExtensionPrefs::Get(GetProfile(0)),
-          extensions::kWebStoreAppId),
-      extensions::LAUNCH_TYPE_WINDOW);
+  ASSERT_EQ(extensions::GetLaunchTypePrefValue(
+                extensions::ExtensionPrefs::Get(GetProfile(0)),
+                extensions::kWebStoreAppId),
+            extensions::LAUNCH_TYPE_WINDOW);
 
   // Change the launch type to regular tab.
   extensions::SetLaunchType(GetProfile(1), extensions::kWebStoreAppId,
                             extensions::LAUNCH_TYPE_REGULAR);
   ASSERT_TRUE(AppsMatchChecker().Wait());
 
-  ASSERT_EQ(
-      extensions::GetLaunchTypePrefValue(
-          extensions::ExtensionPrefs::Get(GetProfile(0)),
-          extensions::kWebStoreAppId),
-      extensions::LAUNCH_TYPE_REGULAR);
+  ASSERT_EQ(extensions::GetLaunchTypePrefValue(
+                extensions::ExtensionPrefs::Get(GetProfile(0)),
+                extensions::kWebStoreAppId),
+            extensions::LAUNCH_TYPE_REGULAR);
 }
 
 IN_PROC_BROWSER_TEST_F(TwoClientAppsSyncTest, UnexpectedLaunchType) {
@@ -339,9 +337,9 @@ IN_PROC_BROWSER_TEST_F(TwoClientAppsSyncTest, UnexpectedLaunchType) {
   ASSERT_TRUE(AppsMatchChecker().Wait());
 
   const extensions::Extension* extension =
-      GetExtensionRegistry(GetProfile(1))->GetExtensionById(
-          extensions::kWebStoreAppId,
-          extensions::ExtensionRegistry::EVERYTHING);
+      GetExtensionRegistry(GetProfile(1))
+          ->GetExtensionById(extensions::kWebStoreAppId,
+                             extensions::ExtensionRegistry::EVERYTHING);
   ASSERT_TRUE(extension);
 
   ExtensionSyncService* extension_sync_service =

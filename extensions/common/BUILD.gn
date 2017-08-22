@@ -329,6 +329,7 @@ if (enable_extensions) {
         "manifest_handlers/action_handlers_handler.cc",
         "manifest_handlers/action_handlers_handler.h",
       ]
+      deps += [ "//components/arc" ]
     }
   }
 
