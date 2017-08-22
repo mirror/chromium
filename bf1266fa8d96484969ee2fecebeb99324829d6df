@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0078fd99_9f29924e",
+        "filename": "chrome/browser/chromeos/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 2023,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-22T19:17:18Z",
+      "side": 1,
+      "message": "You probably also need a dependency on \"//third_party/protobuf:py_proto\"?",
+      "range": {
+        "startLine": 2023,
+        "startChar": 2,
+        "endLine": 2023,
+        "endChar": 42
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a271b0fb_c21f9adf",
         "filename": "chrome/browser/chromeos/BUILD.gn",
         "patchSetId": 10
@@ -41,6 +64,29 @@
         "startChar": 0,
         "endLine": 2054,
         "endChar": 24
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df6553f_f21a1cb5",
+        "filename": "chrome/browser/chromeos/policy/device_policy_remover.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-22T19:17:18Z",
+      "side": 1,
+      "message": "nit: Remove \"(c)\".\nSee https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#file-headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
       },
       "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -94,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "9aa5e7c6_346b4158",
+        "filename": "chrome/browser/chromeos/policy/device_policy_remover.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-22T19:17:18Z",
+      "side": 1,
+      "message": "Maybe not return the resulting proto, but just modify the passed proto in-place? (I mean, to accept |input_policies| by ChromeDeviceSettingsProto*.)\nThis would leave more space for the clients of this code: if someone doesn\u0027t need to keep the old version, then why cloning the entire protobuf.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 48
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c7dfd40_09a5fdb4",
         "filename": "chrome/browser/chromeos/policy/device_policy_remover.h",
         "patchSetId": 10
@@ -117,6 +186,52 @@
     },
     {
       "key": {
+        "uuid": "5c8a133f_83b40234",
+        "filename": "chrome/browser/chromeos/policy/device_policy_remover.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-22T19:17:18Z",
+      "side": 1,
+      "message": "I\u0027d recommend using std::vector here - this often makes it simpler to use the code in the future, and also vector is much more lightweight.\nImplementation-wise, it won\u0027t hurt much either: just call std::binary_search() instead of set::find().",
+      "range": {
+        "startLine": 20,
+        "startChar": 15,
+        "endLine": 20,
+        "endChar": 18
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "013e8bdb_f85e5ffa",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-22T19:17:18Z",
+      "side": 1,
+      "message": "nit: Remove \"(c)\".",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06dd8052_771d735d",
         "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
         "patchSetId": 10
@@ -133,6 +248,213 @@
         "startChar": 25,
         "endLine": 5,
         "endChar": 30
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dcf0cb4_567c69e6",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-22T19:17:18Z",
+      "side": 1,
+      "message": "nit: s/some/the specified/",
+      "range": {
+        "startLine": 5,
+        "startChar": 31,
+        "endLine": 5,
+        "endChar": 35
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a26b032c_a5d10229",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-22T19:17:18Z",
+      "side": 1,
+      "message": "nit: Probably it shouldn\u0027t be emphasized that much here - I\u0027d regard this as a generic function for policies deletion?\nIf you want, you can keep this bit of information, but better as a separate note:\n\n  This function is primarily intended to be used for the implementation of the DeviceOffHours policy.",
+      "range": {
+        "startLine": 6,
+        "startChar": 31,
+        "endLine": 6,
+        "endChar": 56
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831be96c_ee3571d4",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-22T19:17:18Z",
+      "side": 1,
+      "message": "It looks a bit clumsy...\nMaybe there\u0027s some other approach in the existing scripts? (Tried searching myself a little bit, but haven\u0027t succeeded.)",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 64
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f795b14_8d6ff3db",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-22T19:17:18Z",
+      "side": 1,
+      "message": "nit: Better use \"wt\", as you\u0027re writing into a text file (for instance, there may be differences in the new line character handling).",
+      "range": {
+        "startLine": 21,
+        "startChar": 39,
+        "endLine": 21,
+        "endChar": 40
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40fc0de7_4e45d9d8",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-22T19:17:18Z",
+      "side": 1,
+      "message": "Maybe reduce the duplication by passing a multiline string to a single file.write() call?\nSimilar to what you\u0027re doing in lines 28-29.",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 13
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4d70b8_b879a1e9",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-22T19:17:18Z",
+      "side": 1,
+      "message": "nit: The backslash is unnecessary here.\nIt\u0027s actually even advised against using it: https://google.github.io/styleguide/pyguide.html?showone\u003dLine_length#Line_length",
+      "range": {
+        "startLine": 28,
+        "startChar": 57,
+        "endLine": 28,
+        "endChar": 58
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d8aa2e7_55494147",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-22T19:17:18Z",
+      "side": 1,
+      "message": "nit: Maybe the \"field\" name suit it better here?",
+      "range": {
+        "startLine": 37,
+        "startChar": 6,
+        "endLine": 37,
+        "endChar": 11
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5b4411_ef5814f0",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-22T19:17:18Z",
+      "side": 1,
+      "message": "nit: I believe it\u0027ll be cleaner if written using the string formatting, e.g.:\n\n  file.write(\u0027...{name}...\u0027\n             \u0027...{name}...\u0027.format(name\u003dgroup.name))",
+      "range": {
+        "startLine": 38,
+        "startChar": 47,
+        "endLine": 38,
+        "endChar": 63
+      },
+      "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c54fa17_a98c8763",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-22T19:17:18Z",
+      "side": 1,
+      "message": "nit: Better use \"with open(...) as f\". It will close automatically, and is anyway a canonical way to write file operations.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 14
       },
       "revId": "bf1266fa8d96484969ee2fecebeb99324829d6df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
