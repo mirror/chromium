@@ -125,6 +125,12 @@ class DOMDataStore {
     return wrapper_map_->NewLocal(isolate, object);
   }
 
+  bool Has(ScriptWrappable* object, v8::Isolate* isolate) {
+    if (is_main_world_)
+      return object->ContainsWrapper();
+    return wrapper_map_->ContainsKey(object);
+  }
+
   WARN_UNUSED_RESULT bool Set(v8::Isolate* isolate,
                               ScriptWrappable* object,
                               const WrapperTypeInfo* wrapper_type_info,
