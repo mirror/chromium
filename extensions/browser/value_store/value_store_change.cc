@@ -17,14 +17,14 @@ std::string ValueStoreChange::ToJson(
   for (ValueStoreChangeList::const_iterator it = changes.begin();
       it != changes.end(); ++it) {
     std::unique_ptr<base::DictionaryValue> change_value =
-        base::MakeUnique<base::DictionaryValue>();
+        std::make_unique<base::DictionaryValue>();
     if (it->old_value()) {
       change_value->Set("oldValue",
-                        base::MakeUnique<base::Value>(*it->old_value()));
+                        std::make_unique<base::Value>(*it->old_value()));
     }
     if (it->new_value()) {
       change_value->Set("newValue",
-                        base::MakeUnique<base::Value>(*it->new_value()));
+                        std::make_unique<base::Value>(*it->new_value()));
     }
     changes_value.SetWithoutPathExpansion(it->key(), std::move(change_value));
   }

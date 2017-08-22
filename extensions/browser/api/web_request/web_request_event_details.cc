@@ -129,7 +129,7 @@ void WebRequestEventDetails::SetAuthInfo(
     dict_.SetString(keys::kSchemeKey, auth_info.scheme);
   if (!auth_info.realm.empty())
     dict_.SetString(keys::kRealmKey, auth_info.realm);
-  auto challenger = base::MakeUnique<base::DictionaryValue>();
+  auto challenger = std::make_unique<base::DictionaryValue>();
   challenger->SetString(keys::kHostKey, auth_info.challenger.host());
   challenger->SetInteger(keys::kPortKey, auth_info.challenger.port());
   dict_.Set(keys::kChallengerKey, std::move(challenger));
@@ -198,16 +198,16 @@ std::unique_ptr<base::DictionaryValue> WebRequestEventDetails::GetFilteredDict(
   std::unique_ptr<base::DictionaryValue> result = dict_.CreateDeepCopy();
   if ((extra_info_spec & ExtraInfoSpec::REQUEST_BODY) && request_body_) {
     result->Set(keys::kRequestBodyKey,
-                base::MakeUnique<base::Value>(*request_body_));
+                std::make_unique<base::Value>(*request_body_));
   }
   if ((extra_info_spec & ExtraInfoSpec::REQUEST_HEADERS) && request_headers_) {
     result->Set(keys::kRequestHeadersKey,
-                base::MakeUnique<base::Value>(*request_headers_));
+                std::make_unique<base::Value>(*request_headers_));
   }
   if ((extra_info_spec & ExtraInfoSpec::RESPONSE_HEADERS) &&
       response_headers_) {
     result->Set(keys::kResponseHeadersKey,
-                base::MakeUnique<base::Value>(*response_headers_));
+                std::make_unique<base::Value>(*response_headers_));
   }
   return result;
 }
