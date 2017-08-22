@@ -16,6 +16,24 @@
       "revId": "082ee0c69840b8a073543d358228ab1a867fa1f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b746b66d_f7b43e59",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-22T04:08:23Z",
+      "side": 1,
+      "message": "Yes, this is still used by app list button long press and stylus.  The new method is used only for keyboard shortcuts.",
+      "parentUuid": "b8519de0_ce590a3d",
+      "revId": "082ee0c69840b8a073543d358228ab1a867fa1f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
