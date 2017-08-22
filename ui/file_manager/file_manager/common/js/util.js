@@ -1049,6 +1049,8 @@ util.getRootTypeLabel = function(locationInfo) {
     case VolumeManagerCommon.RootType.MTP:
     case VolumeManagerCommon.RootType.PROVIDED:
       return locationInfo.volumeInfo.label;
+    case VolumeManagerCommon.RootType.RECENT:
+      return str('RECENT_ROOT_LABEL');
     default:
       console.error('Unsupported root type: ' + locationInfo.rootType);
       return locationInfo.volumeInfo.label;
