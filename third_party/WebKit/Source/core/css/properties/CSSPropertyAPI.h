@@ -14,6 +14,7 @@ namespace blink {
 class CSSParserContext;
 class CSSParserLocalContext;
 class CSSValue;
+class StyleResolverState;
 
 class CSSPropertyAPI {
  public:
@@ -31,6 +32,10 @@ class CSSPropertyAPI {
                               const CSSParserContext&,
                               const CSSParserLocalContext&,
                               HeapVector<CSSProperty, 256>&) const;
+
+  virtual void ApplyInitial(StyleResolverState&) const { NOTREACHED(); }
+  virtual void ApplyInherit(StyleResolverState&) const { NOTREACHED(); }
+  virtual void ApplyValue(StyleResolverState&, const CSSValue&) const { NOTREACHED(); }
 };
 
 }  // namespace blink

@@ -40,8 +40,7 @@ def apply_property_naming_defaults(property_):
         if property_[key] is None:
             property_[key] = value
 
-    # TODO(shend): Use name_utilities for manipulating names.
-    # TODO(shend): Rearrange the code below to separate assignment and set_if_none
+    # TODO(meade): Delete this once all methods are moved to CSSPropertyAPIs.
     upper_camel = upper_camel_case(property_['name'])
     set_if_none(property_, 'name_for_methods', upper_camel.replace('Webkit', ''))
     name = property_['name_for_methods']
@@ -58,8 +57,11 @@ def apply_property_naming_defaults(property_):
         property_['custom_value'] = True
     if property_['inherited']:
         property_['is_inherited_setter'] = 'Set' + name + 'IsInherited'
-    property_['should_declare_functions'] = not property_['use_handlers_for'] and not property_['longhands'] \
-        and not property_['direction_aware'] and not property_['builder_skip'] \
+    property_['should_declare_functions'] = \
+        not property_['use_handlers_for'] \
+        and not property_['longhands'] \
+        and not property_['direction_aware'] \
+        and not property_['builder_skip'] \
         and property_['is_property']
 
 
