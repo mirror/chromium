@@ -16,6 +16,24 @@
       "revId": "526f42190852d12822b9e05ffb24184de1f00138",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb4dbeb8_dc68f939",
+        "filename": "chrome/android/webapk/shell_apk/AndroidManifest.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002088
+      },
+      "writtenOn": "2017-08-22T15:13:52Z",
+      "side": 1,
+      "message": "\u003e is this necessary? can we keep it simpler by just switching over to the new version (i.e. ensuring the default of scope_url_path_type is android:pathPrefix?)\n\nI considered that. I think we should definitely take that approach for the long term. While we\u0027re rolling out, it just feels a bit less safe to me. Consider, for example:\n\n1) We update the server to have a default of scope_url_path_type \u003d \"android:pathPrefix\"\n2) We push the new shell\n3) We need to roll back the server for an unrelated issue\n\nThen this line will end up looking something like:\n\n\u003cdata android:scheme\u003d\"https\" android:host\u003d\"www.google.com\" \u003d\"/\"\u003e\u003c/data\u003e\n\n\n\u003e Also, does this need a shell version bump if we\u0027re byte-for-byte identical? Oh I guess you need some way to roll it out?\n\nI suppose technically it\u0027s not necessary. I can \"roll back\" the current shell, and then push V19 again and it\u0027ll pick up the newer changes. It feels a bit like a hack, though, and I\u0027m not sure there\u0027s a reason we want to avoid increasing the version?\n\nKeep in mind that this change targets unbound WebAPKs, so it won\u0027t be necessary for us to update expected_shell_apk_version and cause a bunch of updates.",
+      "parentUuid": "988e2d85_e558ae51",
+      "revId": "526f42190852d12822b9e05ffb24184de1f00138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
