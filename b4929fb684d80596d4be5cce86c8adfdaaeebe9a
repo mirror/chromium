@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01fd7ee0_dcba6b2e",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-22T15:08:34Z",
+      "side": 1,
+      "message": "This should be result !\u003d NavigationThrottle::DEFER.",
+      "revId": "b4929fb684d80596d4be5cce86c8adfdaaeebe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9d6787_50226c15",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-22T15:08:34Z",
+      "side": 1,
+      "message": "Remove this function from the header -\u003e it seems it isn\u0027t used.",
+      "revId": "b4929fb684d80596d4be5cce86c8adfdaaeebe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39098131_90ca4576",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-22T15:08:34Z",
+      "side": 1,
+      "message": "Note: the content/ public API policy is not to add changes to the API that are not used outside of content/. You will need to add a usage of the new API functions in the CL\u003e",
+      "revId": "b4929fb684d80596d4be5cce86c8adfdaaeebe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
