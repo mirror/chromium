@@ -301,6 +301,10 @@ void AnimateHideWindowCommon(aura::Window* window,
 
   // Property sets within this scope will be implicitly animated.
   ScopedHidingAnimationSettings hiding_settings(window);
+  // Render surface caching may not provide a benefit when animating the opacity
+  // of a single layer.
+  if (!window->layer()->children().empty())
+    hiding_settings.layer_animation_settings()->CacheRenderSurface();
   base::TimeDelta duration = GetWindowVisibilityAnimationDuration(*window);
   if (duration > base::TimeDelta())
     hiding_settings.layer_animation_settings()->SetTransitionDuration(duration);
