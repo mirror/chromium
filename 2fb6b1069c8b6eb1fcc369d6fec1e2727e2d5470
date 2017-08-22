@@ -2,6 +2,132 @@
   "comments": [
     {
       "key": {
+        "uuid": "0e38ef92_1cab88b6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:57:14Z",
+      "side": 1,
+      "message": "no longer Web",
+      "range": {
+        "startLine": 7,
+        "startChar": 32,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe05aad_ad3a73a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:57:14Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 9,
+        "startChar": 28,
+        "endLine": 9,
+        "endChar": 31
+      },
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc2c988_eaeda4a8",
+        "filename": "content/common/service_worker/service_worker_messages.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:57:14Z",
+      "side": 1,
+      "message": "can remove all these /* code */ comments",
+      "range": {
+        "startLine": 378,
+        "startChar": 59,
+        "endLine": 378,
+        "endChar": 68
+      },
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e103bf_656536ce",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:57:14Z",
+      "side": 1,
+      "message": "for \"include what you use\", I think this needs to #include \"service_worker_error_type.mojom.h\" (similarly for all the .cc files)\n\nthen all the gn targets that contain the files must have a dependency on WebKit/public:mojo_bindings",
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a64705e4_4ae095ef",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerWindowClientCallback.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:57:14Z",
+      "side": 1,
+      "message": "For \"include what you use\" I think this needs to #include \"service_worker_error_type-mojom-blink.h\"\n\nthen all the gn targets that include these files need to ensure they have a dependency on WebKit/public:mojo_bindings_blink\" \n\n(similarly for all the .cpp files that use an error type, except some will use -shared.h instead of blink)",
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878183cb_42c49e4e",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:57:14Z",
+      "side": 1,
+      "message": "remove web_",
+      "range": {
+        "startLine": 793,
+        "startChar": 36,
+        "endLine": 793,
+        "endChar": 40
+      },
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "243caea4_91bf344f",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h",
         "patchSetId": 6
@@ -19,6 +145,40 @@
         "endLine": 36,
         "endChar": 0
       },
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d50652a_58d4cff0",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:57:14Z",
+      "side": 1,
+      "message": "file name doesn\u0027t need web_\n\nI think the file name should be \"service_worker_error_type.mojom\" to match the enum",
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097e08f1_28485a11",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:57:14Z",
+      "side": 1,
+      "message": "// Add a new type in alphabetical order, and update kLast if needed.",
       "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
