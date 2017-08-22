@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9831142_36204a49",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 34615,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-22T08:41:19Z",
+      "side": 1,
+      "message": "I think this CL is mixing 2 kinds of data for which the code paths are very different:\n* dice responses\n* fetch refresh tokens from auth codes \n\nHow about we create 2 histograms:\n* SigninDiceResponseHeader\nSign in with auth code\nSign out main account\nSign out secondary account\n\n* SigninDiceFetchRefreshTokenResult\nFetch refresh token succeeded\nFetch refresh token failed with Gaia error\nFetch refresh token failed timed out",
+      "range": {
+        "startLine": 34615,
+        "startChar": 49,
+        "endLine": 34615,
+        "endChar": 55
+      },
+      "revId": "d3141246e4900b79308873cb60431d6053ea1551",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
