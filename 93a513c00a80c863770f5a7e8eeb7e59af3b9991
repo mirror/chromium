@@ -34,6 +34,23 @@
       "revId": "93a513c00a80c863770f5a7e8eeb7e59af3b9991",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ef74cf_055d0df1",
+        "filename": "tools/perf/core/perf_data_generator_unittest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-22T21:38:44Z",
+      "side": 1,
+      "message": "Probably makes sense to have a test case in which there is a supported platform, too?",
+      "revId": "93a513c00a80c863770f5a7e8eeb7e59af3b9991",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
