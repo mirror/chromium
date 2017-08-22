@@ -22,6 +22,30 @@
       "revId": "e1de6772d5908264aa5f2c7620da63205a5419d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b53bc7e_51f433cc",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-22T15:26:53Z",
+      "side": 1,
+      "message": "Is it working on the NTP? It is a native view.",
+      "parentUuid": "e028c35e_a3dcb37e",
+      "range": {
+        "startLine": 266,
+        "startChar": 43,
+        "endLine": 266,
+        "endChar": 75
+      },
+      "revId": "e1de6772d5908264aa5f2c7620da63205a5419d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
