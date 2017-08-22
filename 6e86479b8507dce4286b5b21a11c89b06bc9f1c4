@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5695a91_406ec8f7",
+        "filename": "android_webview/lib/aw_main_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-22T00:35:32Z",
+      "side": 1,
+      "message": "nit: Probably needs a comment on why it doesn\u0027t work with WebView, similar to the feature above.",
+      "range": {
+        "startLine": 151,
+        "startChar": 21,
+        "endLine": 151,
+        "endChar": 39
+      },
+      "revId": "6e86479b8507dce4286b5b21a11c89b06bc9f1c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
