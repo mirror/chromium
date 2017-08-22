@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ba9da1a_784a40b8",
+        "filename": "chrome/browser/predictors/autocomplete_action_predictor_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-08-22T15:47:38Z",
+      "side": 0,
+      "message": "Presumably this bit could have been removed long ago, when the PrerenderManager::SetMode calls were added?",
+      "range": {
+        "startLine": 96,
+        "startChar": 61,
+        "endLine": 96,
+        "endChar": 62
+      },
+      "revId": "5bfe2a697c314b24b1bcdc8047267175f063b68b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
