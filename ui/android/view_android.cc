@@ -299,6 +299,8 @@ void ViewAndroid::OnCursorChanged(int type,
     return;
   JNIEnv* env = base::android::AttachCurrentThread();
   if (type == WebCursorInfo::kTypeCustom) {
+    if (custom_image.drawsNothing())
+      return;
     ScopedJavaLocalRef<jobject> java_bitmap =
         gfx::ConvertToJavaBitmap(&custom_image);
     Java_ViewAndroidDelegate_onCursorChangedToCustom(env, delegate, java_bitmap,
