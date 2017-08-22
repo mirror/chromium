@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5013c1e_84a9a873",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-22T01:04:08Z",
+      "side": 1,
+      "message": "DispatchBeforePrintEvent() can run arbitrary JavaScript code, and it might detach the frame from the WebView. We can\u0027t proceed printing in such case.",
+      "parentUuid": "07246709_0c81991d",
+      "revId": "4f3c84799cf86166976b8341830c955559a66ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d9e820f_38218b78",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 7
