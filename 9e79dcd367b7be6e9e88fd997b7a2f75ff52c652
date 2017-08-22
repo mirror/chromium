@@ -16,6 +16,24 @@
       "revId": "9e79dcd367b7be6e9e88fd997b7a2f75ff52c652",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a0e891_d4427300",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/list_container.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-22T13:03:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "675ed5c8_572c8ad5",
+      "revId": "9e79dcd367b7be6e9e88fd997b7a2f75ff52c652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
