@@ -364,6 +364,11 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableMediaCastOverlayButton(
       base::FeatureList::IsEnabled(media::kMediaCastOverlayButton));
 
+  if (!base::FeatureList::IsEnabled(features::kBlockLegacySubresources)) {
+    WebRuntimeFeatures::EnableFeatureFromString("BlockLegacySubresources",
+                                                false);
+  }
+
   if (!base::FeatureList::IsEnabled(features::kBlockCredentialedSubresources)) {
     WebRuntimeFeatures::EnableFeatureFromString("BlockCredentialedSubresources",
                                                 false);

@@ -30,6 +30,11 @@ const base::Feature kAsyncWheelEvents{"AsyncWheelEvents",
 const base::Feature kBlockCredentialedSubresources{
     "BlockCredentialedSubresources", base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Block subresources requests that target "legacy" protocol (like "ftp") when
+// the main document is not served from a "legacy" protocol.
+const base::Feature kBlockLegacySubresources{"BlockLegacySubresources",
+                                             base::FEATURE_ENABLED_BY_DEFAULT};
+
 // Enables brotli "Accept-Encoding" advertising and "Content-Encoding" support.
 // Brotli format specification: http://www.ietf.org/id/draft-alakuijala-brotli
 const base::Feature kBrotliEncoding{"brotli-encoding",
