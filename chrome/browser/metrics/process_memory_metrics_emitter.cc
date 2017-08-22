@@ -6,6 +6,7 @@
 
 #include "base/metrics/histogram_macros.h"
 #include "base/trace_event/memory_dump_request_args.h"
+#include "chrome/browser/metrics/renderer_uptime_tracker.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
 #include "services/metrics/public/cpp/ukm_builders.h"
@@ -79,6 +80,8 @@ void EmitRendererMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
                                 pmd->chrome_dump->v8_total_kb / 1024);
   builder.SetV8(pmd->chrome_dump->v8_total_kb / 1024);
   builder.Record(ukm_recorder);
+
+  metrics::RendererUptimeTracker::Get()->EmitMetricForProcess(pmd->pid);
 }
 
 void EmitGpuMemoryMetrics(const ProcessMemoryDumpPtr& pmd,

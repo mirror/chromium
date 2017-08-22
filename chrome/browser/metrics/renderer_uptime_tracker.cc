@@ -49,20 +49,25 @@ void RendererUptimeTracker::OnRendererStarted(int pid) {
   info_map_[pid] = RendererInfo{base::TimeTicks::Now(), 0};
 }
 
-void RendererUptimeTracker::OnRendererTerminated(int pid) {
+void RendererUptimeTracker::EmitMetricForProcess(int pid) {
   auto it = info_map_.find(pid);
   // The pid may not exist when process fails to start up or when process is
   // terminated without reuse.
-  if (it != info_map_.end()) {
-    auto uptime = base::TimeTicks::Now() - it->second.launched_at_;
-    UMA_HISTOGRAM_CUSTOM_TIMES("Memory.Experimental.Renderer.Uptime", uptime,
-                               base::TimeDelta::FromHours(1),
-                               base::TimeDelta::FromDays(7), 50);
-    UMA_HISTOGRAM_COUNTS_10000(
-        "Memory.Experimental.Renderer.LoadsInMainFrameDuringUptime",
-        it->second.num_loads_in_main_frame_);
-    info_map_.erase(it);
-  }
+  if (it == info_map_.end())
+    return;
+
+  auto uptime = base::TimeTicks::Now() - it->second.launched_at_;
+  UMA_HISTOGRAM_CUSTOM_TIMES("Memory.Experimental.Renderer.Uptime", uptime,
+                             base::TimeDelta::FromHours(1),
+                             base::TimeDelta::FromDays(7), 50);
+  UMA_HISTOGRAM_COUNTS_10000(
+      "Memory.Experimental.Renderer.LoadsInMainFrameDuringUptime",
+      it->second.num_loads_in_main_frame_);
+}
+
+void RendererUptimeTracker::OnRendererTerminated(int pid) {
+  EmitMetricForProcess(pid);
+  info_map_.erase(pid);
 }
 
 void RendererUptimeTracker::OnLoadInMainFrame(int pid) {

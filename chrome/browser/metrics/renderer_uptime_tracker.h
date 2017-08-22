@@ -31,6 +31,9 @@ class RendererUptimeTracker : public content::NotificationObserver {
                const content::NotificationSource& source,
                const content::NotificationDetails& details) override;
 
+  // Emit the UMA/UKM metric for the given pin.
+  void EmitMetricForProcess(int pid);
+
  private:
   RendererUptimeTracker();
   ~RendererUptimeTracker() override;
