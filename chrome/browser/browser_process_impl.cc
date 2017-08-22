@@ -161,10 +161,6 @@
 #include "extensions/common/extension_l10n_util.h"
 #endif
 
-#if !defined(DISABLE_NACL)
-#include "chrome/browser/component_updater/pnacl_component_installer.h"
-#endif
-
 #if BUILDFLAG(ENABLE_PLUGINS)
 #include "chrome/browser/plugins/plugins_resource_service.h"
 #endif
@@ -958,19 +954,6 @@ CRLSetFetcher* BrowserProcessImpl::crl_set_fetcher() {
   if (!crl_set_fetcher_)
     crl_set_fetcher_ = new CRLSetFetcher();
   return crl_set_fetcher_.get();
-}
-
-component_updater::PnaclComponentInstaller*
-BrowserProcessImpl::pnacl_component_installer() {
-#if !defined(DISABLE_NACL)
-  if (!pnacl_component_installer_) {
-    pnacl_component_installer_ =
-        new component_updater::PnaclComponentInstaller();
-  }
-  return pnacl_component_installer_.get();
-#else
-  return nullptr;
-#endif
 }
 
 component_updater::SupervisedUserWhitelistInstaller*
