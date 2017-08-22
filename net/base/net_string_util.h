@@ -37,6 +37,10 @@ bool ConvertToUTF16WithSubstitutions(const std::string& text,
                                      const char* charset,
                                      base::string16* output);
 
+// Converts |str| to uppercase using the default locale, and writes it to
+// |output|. On failure returns false and |output| is cleared.
+bool ToUpper(const base::string16& str, base::string16* output);
+
 }  // namespace net
 
 #endif  // NET_BASE_NET_STRING_UTIL_H__

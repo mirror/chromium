@@ -105,8 +105,23 @@ bool ConvertToUTF16WithSubstitutions(const std::string& text,
                                      const char* charset,
                                      base::string16* output) {
   output->clear();
+  ScopedJavaLocalRef<jstring> new_str_result =
+      ConvertToJstringWithSubstitutions(text, charset);
+  if (java_result.is_null())
+    return false;
+  *output = base::android::ConvertJavaStringToUTF16(java_result);
+  return true;
+}
+
+bool ToUpper(const base::string16& str, base::string16* output) {
+  output->clear();
+  JNIEnv* env = base::android::AttachCurrentThread();
+  ScopedJavaLocalRef<jstring> java_new_str(
+      env, env->NewString(str.data(), str.length()));
+  if (java_new_str.is_null())
+    return false;
   ScopedJavaLocalRef<jstring> java_result =
-     ConvertToJstringWithSubstitutions(text, charset);
+      Java_NetStringUtil_toUpperCase(env, java_new_str.obj());
   if (java_result.is_null())
     return false;
   *output = base::android::ConvertJavaStringToUTF16(java_result);

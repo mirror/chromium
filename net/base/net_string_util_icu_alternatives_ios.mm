@@ -73,4 +73,9 @@ bool ConvertToUTF16WithSubstitutions(const std::string& text,
   return false;
 }
 
+bool ToUpper(const base::string16& str, base::string16* output) {
+  DCHECK(false) << "Not implemented yet.";
+  return false;
+}
+
 }  // namespace net
