@@ -92,6 +92,24 @@
       "revId": "7a83ab3b61e55dae274278556b6c227de0b0c61a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbbf46cc_9c8294e5",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2110,
+      "author": {
+        "id": 1239134
+      },
+      "writtenOn": "2017-08-22T01:08:11Z",
+      "side": 1,
+      "message": "Done. I dont need to simulate submit though as per other examples. Now, I am confused on logging here, but first let me first examine existing results and see what I am really looking for logging is included here or not.",
+      "parentUuid": "7b43df7f_9decee09",
+      "revId": "7a83ab3b61e55dae274278556b6c227de0b0c61a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
