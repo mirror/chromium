@@ -16,6 +16,24 @@
       "revId": "7c6511d4eed31fa175d7d29f933f1c7c35e3ae8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48673c4_aec642c7",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-22T23:10:14Z",
+      "side": 0,
+      "message": "It looks like this was once walking up the frame tree, based on https://chromium-review.googlesource.com/c/chromium/src/+/521686/11/content/browser/accessibility/browser_accessibility.cc#b1083 - do we still need to do that?",
+      "parentUuid": "26b23bb7_202a538d",
+      "revId": "7c6511d4eed31fa175d7d29f933f1c7c35e3ae8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
