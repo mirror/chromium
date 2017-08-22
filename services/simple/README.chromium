@@ -1,0 +1,204 @@
+Introduction:
+=============
+
+This directory contains sources to experiment with Mojo *in-process* call
+performance. The idea is to compare it to various other methods of calling
+entry points in shared libraries.
+
+At the moment, this provides the following:
+
+- A tiny executable (simple_mojo_exe) that tries to initialize Mojo and use
+  it to implement a trivial interface to add two 32-bit integers and return
+  their sum using a Mojom interface, and the corresponding C++ bindings.
+
+  This is only used to ensure that things work correctly, and to measure
+  the size of the final standalone executable (which statically links
+  the C++ library, base and Mojo all together).
+
+- A small benchmark program (simple_benchmark) that loads several shared
+  libraries that all implement the same trivial interfaces (see simple_api.h)
+  in different ways. Then measure the time it takes to perform the following
+  actions:
+
+  * load / unload the library (which includes running C++ initializers and
+    finalizers, respectively).
+
+  * create / destroy the abstract C++ interface derived classes at runtime
+    (which may trigger lazy initialization in //base or //mojo not measured
+    in library load/unload times).
+
+  * the performance of trivial synchronous calls. One (Math::Add is used to
+    add two 32-bit integers and return their sum), the other (Echo::Ping)
+    takes an std::string as input and returns it as the result.
+
+  Note that each library links its own version of the C++ library, and if
+  necessary //base and //mojo. And each one of them is loaded/unloaded
+  several times in a row at runtime.
+
+You can build the programs with:
+
+  ninja -C out/Release services/simple
+
+The following interface implementations are tested:
+
+  - direct          : Direct implementation of each method.
+  - std_function    : Invoke same std::function<> instance on each method call.
+  - callback        : Invoke same base::Callback<> instance on each method call.
+  - lambda          : Capture + Store + Invoke a lambda on each method call
+  - bind_once       : base::BindOnce() + Run() on each method call.
+  - bind_repeating  : base::BindRepeating() + Run() on each method call.
+  - post_msgloop    : use PostTask() with MessageLoop's TaskRunner.
+  - post_sequence   : use PostTask() with custom SequencedTaskRunner.
+  - post_single_thread : use PostTask() with custom SingleThreadTaskRunner.
+  - thread_condvar  : Background PlatformThread with condition variables for sync.
+  - thread_event    : Background PlatformThread with waitable events for sync.
+  - mojo_async      : Use Mojo asynchronous C++ bindings + RunUntilIdle().
+  - mojo_sync       : Use Mojo synchronous C++ bindings.
+
+Code size measurements:
+=======================
+
+The simple_mojo_exe gives a good idea of the amount of code required to
+implement a single trivial Mojo interface. As such, its size mostly reflects
+the cost of linking Mojo into an executable or shared library:
+
+  arm32 Android:  545 KiB
+  x86_64 Linux:   1.1 MiB
+
+The simple_benchmark program only links to //base and has the following sizes:
+
+  arm32 Android:  206 KiB
+  x86_64 Linux:   714 KiB
+
+The simple_api libraries have various dependencies, listed along their sizes
+after calling "strip --strip-unneeded" on them:
+
+                               arm32 Android     x86_64 Linux
+  libsimple_api_direct             122 KiB         451 KiB      (C++)
+  libsimple_api_std_function       122 KiB         455 KiB      (C++)
+  libsimple_api_callback           202 KiB         531 KiB      (C++, base)
+  libsimple_api_post_msgloop       420 KiB         907 KiB      (C++, base)
+  libsimple_api_mojo_async         548 KiB         1.2 MiB      (C++, base, mojo)
+  libsimple_api_mojo_sync          548 KiB         1.2 MiB      (C++, base, mojo)
+
+From this, we can conclude the following code sizes for the dependencies:
+
+                               arm32 Android     x86_64 Linux
+  C++ library                      122 KiB         451 KiB
+  base library (minimal)            80 KiB          80 KiB
+  base library (with PostTask)     298 KiB         456 KiB
+  mojo library                     128 KiB         321 KiB
+
+  base + mojo libraries            426 KiB         777 KiB
+
+Note that the number related for base minimal is only for the machine code
+related to base::Callback, and potential static C++ initializers, since the
+rest of //base should have been removed by the static linker at build time.
+
+The second number corresponds to //base including the code used to implement
+base::PostTask(), TaskRunners, etc, as well.
+
+Similarly, for Mojo, this doesn't include all the code used to manage services,
+only the Mojo EDK code and C++ bindings for the simple interfaces
+defined here.
+
+Benchmark results:
+==================
+
+IMPORTANT: The 'call' columns below are the most important.
+
+* Low-end Android device using a quad-core MediaTek MT6737M chipset.
+
+Run this with:
+
+  adb root           # Only required for adb shell stop/start to work.
+  adb shell stop     # Stop the Android framework
+
+  adb push out/Release/simple_benchmark out/Release/libsimple_api_*.so /data/local/tmp/
+  adb shell 'LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/simple_benchmark'
+
+  adb shell start    # If you want to restart the Android framework.
+
+TODO(digit): RE-RUN BENCHMARK ON LOW-END DEVICE, THESE NUMBERS ARE OBSOLETE!!
+
+times in us     :       load (us) |  math int (ns) | math call (ns) |  echo int (ns) | echo call (ns) |    unload (us)
+direct          :           689.9 |        27390.0 |           11.3 |         5180.0 |         1253.2 |          132.2
+std_function    :           687.8 |        28440.0 |           54.2 |         5440.0 |         1274.9 |          170.6
+callback        :           872.4 |        41580.0 |           52.4 |         6810.0 |         1368.8 |          143.7
+lambda          :           690.4 |        32650.0 |          164.2 |         6770.0 |         1418.4 |          133.8
+bind_once       :           911.0 |        38500.0 |         1255.2 |         4900.0 |         2570.6 |          226.9
+bind_repeating  :           950.8 |        39400.0 |         1220.1 |         4600.0 |         2509.5 |          233.5
+post_msgloop    :          1864.8 |         8000.0 |         7225.5 |         4400.0 |         8048.3 |       542675.7
+thread_condvar  :          2037.7 |        19600.0 |        53434.1 |        11100.0 |        63803.6 |          604.5
+mojo_async      :          1739.6 |      1524800.0 |       124260.4 |       385200.0 |       131615.7 |          718.3
+mojo_sync       :          1666.2 |      1394800.0 |       125842.7 |       387300.0 |       132326.6 |       386329.6
+
+Note that the cpu governor was not changed in this test.
+
+* Linux x86_64 2.9 GHz Xeon (E5-2690)
+
+Set cpu governor to "powersave" to get stable results for worst-case
+performance, then:
+
+  out/Linux/simple_benchmark
+
+times in us           :       load (us) |  math int (ns) | math call (ns) |  echo int (ns) | echo call (ns) |    unload (us)
+direct                :            93.4 |          310.0 |            2.7 |          230.0 |           62.1 |           17.6
+std_function          :            80.3 |          420.0 |            7.1 |          230.0 |           58.1 |           14.9
+callback              :           662.1 |          510.0 |            5.8 |          220.0 |           47.0 |           22.6
+lambda                :            62.9 |          280.0 |           16.1 |          100.0 |           57.9 |           11.5
+bind_once             :           648.8 |          600.0 |           39.6 |            0.0 |           83.8 |           18.6
+bind_repeating        :           737.6 |          100.0 |           36.7 |          100.0 |           84.4 |           36.0
+post_msgloop          :           850.1 |          700.0 |          367.1 |         1000.0 |          432.9 |           44.5
+post_sequence         :          1011.8 |          600.0 |          355.5 |         1400.0 |          365.7 |           77.9
+post_single_thread    :          1273.8 |         1100.0 |          435.1 |         1200.0 |          456.8 |        23742.9
+thread_condvar        :           876.0 |         1100.0 |         6228.3 |          900.0 |         6495.8 |           78.9
+thread_event          :           756.5 |          700.0 |         7216.8 |          800.0 |         7517.5 |           56.5
+mojo_async            :          2703.6 |       572200.0 |         9324.7 |        39100.0 |         7947.1 |          620.9
+mojo_sync             :          2333.4 |       486400.0 |        11995.9 |        48700.0 |        11261.4 |        45558.5
+
+We can conclude a few things from the numbers in the two 'call' columns above:
+
+  - Copying an std::string on Android seems to be _very_ expensive compared
+    to Linux. This shall be investigated, and probably boils down to
+    different C++ library and heap allocator implementations (Linux uses
+    TCMalloc, while Android uses the default malloc()).
+
+  - The 'bind_once' and 'bind_repeating' implementations seem to be *much*
+    more expensive on Android than their relative costs on Linux too. This
+    could come from difference in heap allocators, and/or the cost of atomic
+    operations (noticeably slower on ARM, and currently required for all
+    callbacks, even though a OnceCallback<> doesn't need them, technically).
+
+  - WaitableEvents are noticeably slower than ConditionVariables when
+    used to synchronize threads in the thread_xxx backends. At least on Linux
+    (x1.15 slower) and Android (x???).
+
+    This is not entirely surprising, since WaitableEvents provide several
+    unique guarantees: i.e. no spurious wakeups, and only one thread is woken
+    up on Signal(), even if there are several waiters.
+
+    However, this probably means that they are overkill for the common case
+    where there is a single waiting thread :-/
+
+  - Thread-hopping, as performed by the thread_xxx and mojo_xxx backends seem
+    to be a huge performance killer :-(
+
+  - On Android, async Mojo is x11,000 slower (!!) than an indirect function
+    call for a trivial function that only takes two integer parameters, and
+    return another integer.
+
+    On Linux, it is "only" x3,400 times slower, which is still abysmal.
+
+  - The Ping() method passes a std::string as input and output, involving
+    copies and possibly heap allocation. There Mojo gets slightly better by
+    being "only" x105 times slower on Android, and x132 slower on Linux.
+
+  - On Linux, the Mojo-generated synchronous method wrappers are about
+    x1.25 slower than calling the async methods and waiting explicitly for
+    an answer. This is surprising, especially since the _difference_ in
+    still several orders of magnitude larger than a direct function call.
+
+    Looking at the generated code shows that its implementation is different
+    from simply calling the async method then waiting for the result. Not
+    sure whether this is intentional or an accident.

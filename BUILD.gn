@@ -72,6 +72,7 @@ group("gn_all") {
     "//base:base_unittests",
     "//chrome/installer",
     "//net:net_unittests",
+    "//services/simple",
     "//skia:skia_unittests",
     "//sql:sql_unittests",
     "//tools/ipc_fuzzer:ipc_fuzzer_all",
