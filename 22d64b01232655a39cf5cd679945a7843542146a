@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6f13e4c_c14daae4",
+        "filename": "chrome/browser/chromeos/extensions/file_manager/private_api_misc.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-22T09:43:53Z",
+      "side": 1,
+      "message": "We\u0027re querying all sources even though the results may be discarded in the end. We may end up showing 0 recents if a discarded source provides all top 1000 recents. Shall we pass the restriction to RecentModel to skip irrelevant sources? If it\u0027s OK for it to be just a best effort method, then could you at least add a comment describing when it can return unexpected results?",
+      "revId": "22d64b01232655a39cf5cd679945a7843542146a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05fdd581_ddb4a3e4",
+        "filename": "chrome/common/extensions/api/file_manager_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-22T09:43:53Z",
+      "side": 1,
+      "message": "Please add a comment what is native source.",
+      "range": {
+        "startLine": 200,
+        "startChar": 2,
+        "endLine": 200,
+        "endChar": 15
+      },
+      "revId": "22d64b01232655a39cf5cd679945a7843542146a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f42d93c_3035aee6",
+        "filename": "chrome/common/extensions/api/file_manager_private.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-22T09:43:53Z",
+      "side": 1,
+      "message": "What are the purpose of this API argument?",
+      "range": {
+        "startLine": 1003,
+        "startChar": 29,
+        "endLine": 1003,
+        "endChar": 46
+      },
+      "revId": "22d64b01232655a39cf5cd679945a7843542146a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
