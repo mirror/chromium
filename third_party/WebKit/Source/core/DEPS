@@ -3,6 +3,7 @@ include_rules = [
     "-bindings/modules",
     "+build/mac",
     "+build/win",
+    "+common",
     "+core",
     "-inspector/v8",
     "+inspector/v8/public",
