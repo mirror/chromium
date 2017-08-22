@@ -15,6 +15,8 @@
 #include "content/public/common/browser_controls_state.h"
 #include "content/public/renderer/render_view_observer.h"
 #include "extensions/features/features.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 #include "third_party/WebKit/public/web/window_features.mojom.h"
 #include "url/gurl.h"
 
@@ -24,7 +26,8 @@ class WebCacheImpl;
 
 // This class holds the Chrome specific parts of RenderView, and has the same
 // lifetime.
-class ChromeRenderViewObserver : public content::RenderViewObserver {
+class ChromeRenderViewObserver : public content::RenderViewObserver,
+                                 public blink::mojom::WindowFeaturesClient {
  public:
   // translate_helper can be NULL.
   ChromeRenderViewObserver(
@@ -43,13 +46,22 @@ class ChromeRenderViewObserver : public content::RenderViewObserver {
                                     content::BrowserControlsState current,
                                     bool animate);
 #endif
-  void OnSetWindowFeatures(const blink::mojom::WindowFeatures& window_features);
+  void SetWindowFeatures(
+      blink::mojom::WindowFeaturesPtr window_features) override;
+
+  void OnWindowFeaturesClientRequest(
+      blink::mojom::WindowFeaturesClientRequest request);
 
   // Determines if a host is in the strict security host set.
   bool IsStrictSecurityHost(const std::string& host);
 
   // Owned by ChromeContentRendererClient and outlive us.
   web_cache::WebCacheImpl* web_cache_impl_;
+
+  mojo::BindingSet<blink::mojom::WindowFeaturesClient>
+      window_features_client_bindings_;
+
+  service_manager::BinderRegistry registry_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeRenderViewObserver);
 };

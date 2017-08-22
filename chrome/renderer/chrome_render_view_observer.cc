@@ -44,7 +44,11 @@ ChromeRenderViewObserver::ChromeRenderViewObserver(
     content::RenderView* render_view,
     web_cache::WebCacheImpl* web_cache_impl)
     : content::RenderViewObserver(render_view),
-      web_cache_impl_(web_cache_impl) {}
+      web_cache_impl_(web_cache_impl) {
+  registry_.AddInterface(
+      base::Bind(&ChromeRenderViewObserver::OnWindowFeaturesClientRequest,
+                 base::Unretained(this)));
+}
 
 ChromeRenderViewObserver::~ChromeRenderViewObserver() {
 }
@@ -56,7 +60,6 @@ bool ChromeRenderViewObserver::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ChromeViewMsg_UpdateBrowserControlsState,
                         OnUpdateBrowserControlsState)
 #endif
-    IPC_MESSAGE_HANDLER(ChromeViewMsg_SetWindowFeatures, OnSetWindowFeatures)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -72,10 +75,10 @@ void ChromeRenderViewObserver::OnUpdateBrowserControlsState(
 }
 #endif
 
-void ChromeRenderViewObserver::OnSetWindowFeatures(
-    const blink::mojom::WindowFeatures& window_features) {
+void ChromeRenderViewObserver::SetWindowFeatures(
+    blink::mojom::WindowFeaturesPtr window_features) {
   render_view()->GetWebView()->SetWindowFeatures(
-      content::ConvertMojoWindowFeaturesToWebWindowFeatures(window_features));
+      content::ConvertMojoWindowFeaturesToWebWindowFeatures(*window_features));
 }
 
 void ChromeRenderViewObserver::Navigate(const GURL& url) {
@@ -87,4 +90,9 @@ void ChromeRenderViewObserver::Navigate(const GURL& url) {
 
 void ChromeRenderViewObserver::OnDestruct() {
   delete this;
+}
+
+void ChromeRenderViewObserver::OnWindowFeaturesClientRequest(
+    blink::mojom::WindowFeaturesClientRequest request) {
+  window_features_client_bindings_.AddBinding(this, std::move(request));
 }
