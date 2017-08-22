@@ -200,9 +200,10 @@ newClearBrowsingDataController:(ios::ChromeBrowserState*)browserState
 newSyncEncryptionPassphraseController:(ios::ChromeBrowserState*)browserState
                              delegate:(id<SettingsNavigationControllerDelegate>)
                                           delegate {
-  UIViewController* controller =
+  SyncEncryptionPassphraseCollectionViewController* controller =
       [[SyncEncryptionPassphraseCollectionViewController alloc]
           initWithBrowserState:browserState];
+  controller.dispatcher = [delegate dispatcherForSettings];
   SettingsNavigationController* nc = [[SettingsNavigationController alloc]
       initWithRootViewController:controller
                     browserState:browserState
@@ -214,8 +215,10 @@ newSyncEncryptionPassphraseController:(ios::ChromeBrowserState*)browserState
 + (SettingsNavigationController*)
 newSavePasswordsController:(ios::ChromeBrowserState*)browserState
                   delegate:(id<SettingsNavigationControllerDelegate>)delegate {
-  UIViewController* controller = [[SavePasswordsCollectionViewController alloc]
-      initWithBrowserState:browserState];
+  SavePasswordsCollectionViewController* controller =
+      [[SavePasswordsCollectionViewController alloc]
+          initWithBrowserState:browserState];
+  controller.dispatcher = [delegate dispatcherForSettings];
 
   SettingsNavigationController* nc = [[SettingsNavigationController alloc]
       initWithRootViewController:controller
@@ -499,9 +502,10 @@ initWithRootViewController:(UIViewController*)rootViewController
       return;
     }
     case IDC_SHOW_SYNC_PASSPHRASE_SETTINGS: {
-      UIViewController* controller =
+      SyncEncryptionPassphraseCollectionViewController* controller =
           [[SyncEncryptionPassphraseCollectionViewController alloc]
               initWithBrowserState:mainBrowserState_];
+      controller.dispatcher = [delegate_ dispatcherForSettings];
       [self pushViewController:controller animated:YES];
       return;
     }
