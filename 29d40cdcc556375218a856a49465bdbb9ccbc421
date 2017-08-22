@@ -16,6 +16,24 @@
       "revId": "29d40cdcc556375218a856a49465bdbb9ccbc421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17f2777_7b50d29e",
+        "filename": "testing/buildbot/filters/fuchsia.content_unittests.filter",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-22T23:01:06Z",
+      "side": 1,
+      "message": "I can if you want. I mildly prefer it expanded so that we have a count of disabled tests simply by the number of lines in this file.",
+      "parentUuid": "82d4cbac_55c13da9",
+      "revId": "29d40cdcc556375218a856a49465bdbb9ccbc421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
