@@ -62,6 +62,8 @@ class StubOfflinePageModel : public OfflinePageModel, public KeyedService {
       const std::string& origin,
       const MultipleOfflinePageItemCallback& callback) override;
   ClientPolicyController* GetPolicyController() override;
+  ArchiveManager* GetArchiveManager() override;
+  OfflinePageMetadataStore* GetMetadataStore() override;
   bool is_loaded() const override;
   OfflineEventLogger* GetLogger() override;
 

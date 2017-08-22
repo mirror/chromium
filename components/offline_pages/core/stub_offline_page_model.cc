@@ -54,6 +54,12 @@ void StubOfflinePageModel::GetPagesByRequestOrigin(
 ClientPolicyController* StubOfflinePageModel::GetPolicyController() {
   return &policy_controller_;
 }
+ArchiveManager* StubOfflinePageModel::GetArchiveManager() {
+  return nullptr;
+}
+OfflinePageMetadataStore* StubOfflinePageModel::GetMetadataStore() {
+  return nullptr;
+}
 bool StubOfflinePageModel::is_loaded() const {
   return true;
 }

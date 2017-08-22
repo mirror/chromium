@@ -568,245 +568,6 @@ bool OfflinePageModelImplTest::HasPages(std::string name_space) {
   return false;
 }
 
-TEST_F(OfflinePageModelImplTest, SavePageSuccessful) {
-  EXPECT_FALSE(HasPages(kTestClientNamespace));
-
-  std::unique_ptr<OfflinePageTestArchiver> archiver(BuildArchiver(
-      kTestUrl, OfflinePageArchiver::ArchiverResult::SUCCESSFULLY_CREATED));
-  SavePageWithArchiverAsync(kTestUrl, kTestClientId1, kTestUrl2, "",
-                            std::move(archiver));
-  PumpLoop();
-  EXPECT_TRUE(HasPages(kTestClientNamespace));
-
-  OfflinePageTestStore* store = GetStore();
-  EXPECT_EQ(kTestUrl, store->last_saved_page().url);
-  EXPECT_EQ(kTestClientId1.id, store->last_saved_page().client_id.id);
-  EXPECT_EQ(kTestClientId1.name_space,
-            store->last_saved_page().client_id.name_space);
-  // Save last_archiver_path since it will be referred to later.
-  base::FilePath archiver_path = last_archiver_path();
-  EXPECT_EQ(archiver_path, store->last_saved_page().file_path);
-  EXPECT_EQ(kTestFileSize, store->last_saved_page().file_size);
-  EXPECT_EQ(SavePageResult::SUCCESS, last_save_result());
-  ResetResults();
-
-  const std::vector<OfflinePageItem>& offline_pages = GetAllPages();
-
-  ASSERT_EQ(1UL, offline_pages.size());
-  EXPECT_EQ(kTestUrl, offline_pages[0].url);
-  EXPECT_EQ(kTestClientId1.id, offline_pages[0].client_id.id);
-  EXPECT_EQ(kTestClientId1.name_space, offline_pages[0].client_id.name_space);
-  EXPECT_EQ(archiver_path, offline_pages[0].file_path);
-  EXPECT_EQ(kTestFileSize, offline_pages[0].file_size);
-  EXPECT_EQ(0, offline_pages[0].access_count);
-  EXPECT_EQ(0, offline_pages[0].flags);
-  EXPECT_EQ(kTestTitle, offline_pages[0].title);
-  EXPECT_EQ(kTestUrl2, offline_pages[0].original_url);
-  EXPECT_EQ("", offline_pages[0].request_origin);
-}
-
-TEST_F(OfflinePageModelImplTest, SavePageSuccessfulWithSameOriginalURL) {
-  std::unique_ptr<OfflinePageTestArchiver> archiver(BuildArchiver(
-      kTestUrl, OfflinePageArchiver::ArchiverResult::SUCCESSFULLY_CREATED));
-  // Pass the original URL same as the final URL.
-  SavePageWithArchiverAsync(kTestUrl, kTestClientId1, kTestUrl, "",
-                            std::move(archiver));
-  PumpLoop();
-
-  EXPECT_EQ(SavePageResult::SUCCESS, last_save_result());
-  ResetResults();
-
-  const std::vector<OfflinePageItem>& offline_pages = GetAllPages();
-
-  ASSERT_EQ(1UL, offline_pages.size());
-  EXPECT_EQ(kTestUrl, offline_pages[0].url);
-  // The original URL should be empty.
-  EXPECT_TRUE(offline_pages[0].original_url.is_empty());
-}
-
-TEST_F(OfflinePageModelImplTest, SavePageSuccessfulWithRequestOrigin) {
-  EXPECT_FALSE(HasPages(kTestClientNamespace));
-
-  std::unique_ptr<OfflinePageTestArchiver> archiver(BuildArchiver(
-      kTestUrl, OfflinePageArchiver::ArchiverResult::SUCCESSFULLY_CREATED));
-  SavePageWithArchiverAsync(kTestUrl, kTestClientId1, kTestUrl2, kRequestOrigin,
-                            std::move(archiver));
-  PumpLoop();
-  EXPECT_TRUE(HasPages(kTestClientNamespace));
-
-  OfflinePageTestStore* store = GetStore();
-  EXPECT_EQ(kTestUrl, store->last_saved_page().url);
-  EXPECT_EQ(kTestClientId1.id, store->last_saved_page().client_id.id);
-  EXPECT_EQ(kTestClientId1.name_space,
-            store->last_saved_page().client_id.name_space);
-  // Save last_archiver_path since it will be referred to later.
-  base::FilePath archiver_path = last_archiver_path();
-  EXPECT_EQ(archiver_path, store->last_saved_page().file_path);
-  EXPECT_EQ(kTestFileSize, store->last_saved_page().file_size);
-  EXPECT_EQ(SavePageResult::SUCCESS, last_save_result());
-  ResetResults();
-
-  const std::vector<OfflinePageItem>& offline_pages = GetAllPages();
-
-  ASSERT_EQ(1UL, offline_pages.size());
-  EXPECT_EQ(kTestUrl, offline_pages[0].url);
-  EXPECT_EQ(kTestClientId1.id, offline_pages[0].client_id.id);
-  EXPECT_EQ(kTestClientId1.name_space, offline_pages[0].client_id.name_space);
-  EXPECT_EQ(archiver_path, offline_pages[0].file_path);
-  EXPECT_EQ(kTestFileSize, offline_pages[0].file_size);
-  EXPECT_EQ(0, offline_pages[0].access_count);
-  EXPECT_EQ(0, offline_pages[0].flags);
-  EXPECT_EQ(kTestTitle, offline_pages[0].title);
-  EXPECT_EQ(kTestUrl2, offline_pages[0].original_url);
-  EXPECT_EQ(kRequestOrigin, offline_pages[0].request_origin);
-}
-
-TEST_F(OfflinePageModelImplTest, SavePageOfflineArchiverCancelled) {
-  SavePageWithArchiverResult(
-      kTestUrl, kTestClientId1,
-      OfflinePageArchiver::ArchiverResult::ERROR_CANCELED);
-  EXPECT_EQ(SavePageResult::CANCELLED, last_save_result());
-}
-
-TEST_F(OfflinePageModelImplTest, SavePageOfflineArchiverDeviceFull) {
-  SavePageWithArchiverResult(
-      kTestUrl, kTestClientId1,
-      OfflinePageArchiver::ArchiverResult::ERROR_DEVICE_FULL);
-  EXPECT_EQ(SavePageResult::DEVICE_FULL, last_save_result());
-}
-
-TEST_F(OfflinePageModelImplTest, SavePageOfflineArchiverContentUnavailable) {
-  SavePageWithArchiverResult(
-      kTestUrl, kTestClientId1,
-      OfflinePageArchiver::ArchiverResult::ERROR_CONTENT_UNAVAILABLE);
-  EXPECT_EQ(SavePageResult::CONTENT_UNAVAILABLE, last_save_result());
-}
-
-TEST_F(OfflinePageModelImplTest, SavePageOfflineCreationFailed) {
-  SavePageWithArchiverResult(
-      kTestUrl, kTestClientId1,
-      OfflinePageArchiver::ArchiverResult::ERROR_ARCHIVE_CREATION_FAILED);
-  EXPECT_EQ(SavePageResult::ARCHIVE_CREATION_FAILED, last_save_result());
-}
-
-TEST_F(OfflinePageModelImplTest, SavePageOfflineArchiverReturnedWrongUrl) {
-  std::unique_ptr<OfflinePageTestArchiver> archiver(
-      BuildArchiver(GURL("http://other.random.url.com"),
-                    OfflinePageArchiver::ArchiverResult::SUCCESSFULLY_CREATED));
-  SavePageWithArchiver(kTestUrl, kTestClientId1, std::move(archiver));
-  EXPECT_EQ(SavePageResult::ARCHIVE_CREATION_FAILED, last_save_result());
-}
-
-TEST_F(OfflinePageModelImplTest, SavePageOfflineCreationStoreWriteFailure) {
-  GetStore()->set_test_scenario(
-      OfflinePageTestStore::TestScenario::WRITE_FAILED);
-  SavePageWithArchiverResult(
-      kTestUrl, kTestClientId1,
-      OfflinePageArchiver::ArchiverResult::SUCCESSFULLY_CREATED);
-  EXPECT_EQ(SavePageResult::STORE_FAILURE, last_save_result());
-}
-
-TEST_F(OfflinePageModelImplTest, SavePageLocalFileFailed) {
-  // Don't create archiver since it will not be needed for pages that are not
-  // going to be saved.
-  SavePageWithArchiver(kFileUrl, kTestClientId1,
-                       std::unique_ptr<OfflinePageTestArchiver>());
-  EXPECT_EQ(SavePageResult::SKIPPED, last_save_result());
-}
-
-TEST_F(OfflinePageModelImplTest, SavePageOfflineArchiverTwoPages) {
-  std::unique_ptr<OfflinePageTestArchiver> archiver(BuildArchiver(
-      kTestUrl, OfflinePageArchiver::ArchiverResult::SUCCESSFULLY_CREATED));
-  // archiver_ptr will be valid until after first PumpLoop() call after
-  // CompleteCreateArchive() is called.
-  OfflinePageTestArchiver* archiver_ptr = archiver.get();
-  archiver_ptr->set_delayed(true);
-  // First page has no request origin.
-  SavePageWithArchiverAsync(kTestUrl, kTestClientId1, GURL(), "",
-                            std::move(archiver));
-  EXPECT_TRUE(archiver_ptr->create_archive_called());
-  // |remove_popup_overlay| should not be turned on on foreground mode.
-  EXPECT_FALSE(archiver_ptr->create_archive_params().remove_popup_overlay);
-
-  // Request to save another page, with request origin.
-  SavePage(kTestUrl2, kTestClientId2, kRequestOrigin);
-
-  OfflinePageTestStore* store = GetStore();
-
-  EXPECT_EQ(kTestUrl2, store->last_saved_page().url);
-  EXPECT_EQ(kTestClientId2, store->last_saved_page().client_id);
-  base::FilePath archiver_path2 = last_archiver_path();
-  EXPECT_EQ(archiver_path2, store->last_saved_page().file_path);
-  EXPECT_EQ(kTestFileSize, store->last_saved_page().file_size);
-  EXPECT_EQ(kRequestOrigin, store->last_saved_page().request_origin);
-  EXPECT_EQ(SavePageResult::SUCCESS, last_save_result());
-
-  ResetResults();
-
-  archiver_ptr->CompleteCreateArchive();
-  // After this pump loop archiver_ptr is invalid.
-  PumpLoop();
-
-  EXPECT_EQ(kTestUrl, store->last_saved_page().url);
-  EXPECT_EQ(kTestClientId1, store->last_saved_page().client_id);
-  base::FilePath archiver_path = last_archiver_path();
-  EXPECT_EQ(archiver_path, store->last_saved_page().file_path);
-  EXPECT_EQ(kTestFileSize, store->last_saved_page().file_size);
-  EXPECT_EQ("", store->last_saved_page().request_origin);
-  EXPECT_EQ(SavePageResult::SUCCESS, last_save_result());
-
-  ResetResults();
-
-  const std::vector<OfflinePageItem>& offline_pages = GetAllPages();
-
-  EXPECT_EQ(2UL, offline_pages.size());
-  // Offline IDs are random, so the order of the pages is also random
-  // So load in the right page for the validation below.
-  const OfflinePageItem* page1 = nullptr;
-  const OfflinePageItem* page2 = nullptr;
-  if (offline_pages[0].client_id == kTestClientId1) {
-    page1 = &offline_pages[0];
-    page2 = &offline_pages[1];
-  } else {
-    page1 = &offline_pages[1];
-    page2 = &offline_pages[0];
-  }
-
-  EXPECT_EQ(kTestUrl, page1->url);
-  EXPECT_EQ(kTestClientId1, page1->client_id);
-  EXPECT_EQ(archiver_path, page1->file_path);
-  EXPECT_EQ(kTestFileSize, page1->file_size);
-  EXPECT_EQ(0, page1->access_count);
-  EXPECT_EQ(0, page1->flags);
-  EXPECT_EQ("", page1->request_origin);
-  EXPECT_EQ(kTestUrl2, page2->url);
-  EXPECT_EQ(kTestClientId2, page2->client_id);
-  EXPECT_EQ(archiver_path2, page2->file_path);
-  EXPECT_EQ(kTestFileSize, page2->file_size);
-  EXPECT_EQ(0, page2->access_count);
-  EXPECT_EQ(0, page2->flags);
-  EXPECT_EQ(kRequestOrigin, page2->request_origin);
-}
-
-TEST_F(OfflinePageModelImplTest, SavePageOnBackground) {
-  std::unique_ptr<OfflinePageTestArchiver> archiver(BuildArchiver(
-      kTestUrl, OfflinePageArchiver::ArchiverResult::SUCCESSFULLY_CREATED));
-  // archiver_ptr will be valid until after first PumpLoop() is called.
-  OfflinePageTestArchiver* archiver_ptr = archiver.get();
-
-  OfflinePageModel::SavePageParams save_page_params;
-  save_page_params.url = kTestUrl;
-  save_page_params.client_id = kTestClientId1;
-  save_page_params.is_background = true;
-  save_page_params.use_page_problem_detectors = false;
-  SavePageWithParamsAsync(save_page_params, std::move(archiver));
-  EXPECT_TRUE(archiver_ptr->create_archive_called());
-  // |remove_popup_overlay| should be turned on on background mode.
-  EXPECT_TRUE(archiver_ptr->create_archive_params().remove_popup_overlay);
-
-  PumpLoop();
-}
-
 TEST_F(OfflinePageModelImplTest, AddPage) {
   base::FilePath file_path;
   ASSERT_TRUE(base::CreateTemporaryFileInDir(temp_path(), &file_path));
@@ -837,7 +598,7 @@ TEST_F(OfflinePageModelImplTest, AddPage) {
   AddPage(offline_page);
   EXPECT_EQ(AddPageResult::ALREADY_EXISTS, last_add_result());
 
-  //
+  // Trying to adding a page with store failure will return STORE_FAILURE.
   GetStore()->set_test_scenario(
       OfflinePageTestStore::TestScenario::WRITE_FAILED);
   AddPage(offline_page);
@@ -1122,8 +883,10 @@ TEST_F(OfflinePageModelImplTest, DeleteMultiplePages) {
 TEST_F(OfflinePageModelImplTest, GetPageByOfflineId) {
   SavePage(kTestUrl, kTestClientId1);
   int64_t offline1 = last_save_offline_id();
+  DLOG(ERROR) << "ROMAX InTEST " << offline1;
   SavePage(kTestUrl2, kTestClientId2);
   int64_t offline2 = last_save_offline_id();
+  DLOG(ERROR) << "ROMAX InTEST " << offline1;
 
   std::unique_ptr<OfflinePageItem> page = GetPageByOfflineId(offline1);
   ASSERT_TRUE(page);
@@ -1456,37 +1219,6 @@ TEST_F(OfflinePageModelImplTest, StoreLoadFailurePersists) {
   std::pair<SavePageResult, int64_t> result =
       SavePage(kTestUrl, ClientId(kDownloadNamespace, "123"));
   EXPECT_EQ(SavePageResult::STORE_FAILURE, result.first);
-}
-
-TEST_F(OfflinePageModelImplTest, GetPagesMatchingQuery) {
-  std::unique_ptr<OfflinePageTestArchiver> archiver(BuildArchiver(
-      kTestUrl, OfflinePageArchiver::ArchiverResult::SUCCESSFULLY_CREATED));
-  SavePageWithArchiverAsync(kTestUrl, kTestClientId1, kTestUrl2, "",
-                            std::move(archiver));
-  PumpLoop();
-
-  std::vector<ClientId> client_ids{kTestClientId1};
-  OfflinePageModelQueryBuilder builder;
-  builder.SetClientIds(OfflinePageModelQuery::Requirement::INCLUDE_MATCHING,
-                       client_ids);
-
-  MultipleOfflinePageItemResult offline_pages;
-  model()->GetPagesMatchingQuery(
-      builder.Build(model()->GetPolicyController()),
-      base::Bind(&OfflinePageModelImplTest::OnGetMultipleOfflinePageItemsResult,
-                 AsWeakPtr(), base::Unretained(&offline_pages)));
-  PumpLoop();
-
-  ASSERT_EQ(1UL, offline_pages.size());
-  EXPECT_EQ(kTestUrl, offline_pages[0].url);
-  EXPECT_EQ(kTestClientId1.id, offline_pages[0].client_id.id);
-  EXPECT_EQ(kTestClientId1.name_space, offline_pages[0].client_id.name_space);
-  EXPECT_EQ(last_archiver_path(), offline_pages[0].file_path);
-  EXPECT_EQ(kTestFileSize, offline_pages[0].file_size);
-  EXPECT_EQ(0, offline_pages[0].access_count);
-  EXPECT_EQ(0, offline_pages[0].flags);
-  EXPECT_EQ(kTestTitle, offline_pages[0].title);
-  EXPECT_EQ(kTestUrl2, offline_pages[0].original_url);
 }
 
 TEST(CommandLineFlagsTest, OfflineBookmarks) {

@@ -49491,6 +49491,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="OfflinePages.DownloadSavedPageDuplicateCount" units="pages">
+  <obsolete>
+    Deprecated 07/2017. There is proper handling for duplicates while
+    downloading. This is no longer needed.
+  </obsolete>
   <owner>dewittj@chromium.org</owner>
   <owner>dimich@chromium.org</owner>
   <summary>
@@ -49501,6 +49505,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="OfflinePages.DownloadSavedPageTimeSinceDuplicateSaved"
     units="seconds">
+  <obsolete>
+    Deprecated 07/2017. There is proper handling for duplicates while
+    downloading. This is no longer needed.
+  </obsolete>
   <owner>dewittj@chromium.org</owner>
   <owner>dimich@chromium.org</owner>
   <summary>

@@ -22,12 +22,13 @@
 #include "components/offline_pages/core/archive_manager.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
 #include "components/offline_pages/core/client_policy_controller.h"
+#include "components/offline_pages/core/get_pages_task.h"
 #include "components/offline_pages/core/offline_page_item.h"
 #include "components/offline_pages/core/offline_page_model_query.h"
 #include "components/offline_pages/core/offline_page_storage_manager.h"
+#include "components/offline_pages/core/save_page_task.h"
 #include "url/gurl.h"
 
-using ArchiverResult = offline_pages::OfflinePageArchiver::ArchiverResult;
 using ClearStorageCallback =
     offline_pages::OfflinePageStorageManager::ClearStorageCallback;
 using ClearStorageResult =
@@ -48,47 +49,10 @@ const base::TimeDelta kStorageManagerStartingDelay =
 // need to be gentle.
 const int kInitializeAttemptsMax = 3;
 
-int64_t GenerateOfflineId() {
-  return base::RandGenerator(std::numeric_limits<int64_t>::max()) + 1;
-}
-
 // The maximum histogram size for the metrics that measure time between views of
 // a given page.
 const base::TimeDelta kMaxOpenedPageHistogramBucket =
     base::TimeDelta::FromDays(90);
-
-SavePageResult ToSavePageResult(ArchiverResult archiver_result) {
-  SavePageResult result;
-  switch (archiver_result) {
-    case ArchiverResult::SUCCESSFULLY_CREATED:
-      result = SavePageResult::SUCCESS;
-      break;
-    case ArchiverResult::ERROR_DEVICE_FULL:
-      result = SavePageResult::DEVICE_FULL;
-      break;
-    case ArchiverResult::ERROR_CONTENT_UNAVAILABLE:
-      result = SavePageResult::CONTENT_UNAVAILABLE;
-      break;
-    case ArchiverResult::ERROR_ARCHIVE_CREATION_FAILED:
-      result = SavePageResult::ARCHIVE_CREATION_FAILED;
-      break;
-    case ArchiverResult::ERROR_CANCELED:
-      result = SavePageResult::CANCELLED;
-      break;
-    case ArchiverResult::ERROR_SECURITY_CERTIFICATE:
-      result = SavePageResult::SECURITY_CERTIFICATE_ERROR;
-      break;
-    case ArchiverResult::ERROR_ERROR_PAGE:
-      result = SavePageResult::ERROR_PAGE;
-      break;
-    case ArchiverResult::ERROR_INTERSTITIAL_PAGE:
-      result = SavePageResult::INTERSTITIAL_PAGE;
-    default:
-      NOTREACHED();
-      result = SavePageResult::CONTENT_UNAVAILABLE;
-  }
-  return result;
-}
 
 std::string AddHistogramSuffix(const ClientId& client_id,
                                const char* histogram_name) {
@@ -115,6 +79,29 @@ void ReportStorageHistogramsAfterSave(
   UMA_HISTOGRAM_COUNTS_10000("OfflinePages.TotalPageSize", total_page_size_mb);
 }
 
+void ReportPageHistogramAfterSave(ClientPolicyController* policy_controller_,
+                                  const OfflinePageItem& offline_page,
+                                  const base::Time& save_time) {
+  DCHECK(policy_controller_);
+  // The histogram below is an expansion of the UMA_HISTOGRAM_TIMES
+  // macro adapted to allow for a dynamically suffixed histogram name.
+  // Note: The factory creates and owns the histogram.
+  base::HistogramBase* histogram = base::Histogram::FactoryTimeGet(
+      AddHistogramSuffix(offline_page.client_id, "OfflinePages.SavePageTime"),
+      base::TimeDelta::FromMilliseconds(1), base::TimeDelta::FromSeconds(10),
+      50, base::HistogramBase::kUmaTargetedHistogramFlag);
+  histogram->AddTime(save_time - offline_page.creation_time);
+
+  // The histogram below is an expansion of the UMA_HISTOGRAM_CUSTOM_COUNTS
+  // macro adapted to allow for a dynamically suffixed histogram name.
+  // Note: The factory creates and owns the histogram.
+  // Reported as Kb between 1Kb and 10Mb.
+  histogram = base::Histogram::FactoryGet(
+      AddHistogramSuffix(offline_page.client_id, "OfflinePages.PageSize"), 1,
+      10000, 50, base::HistogramBase::kUmaTargetedHistogramFlag);
+  histogram->Add(offline_page.file_size / 1024);
+}
+
 void ReportStorageHistogramsAfterDelete(
     const ArchiveManager::StorageStats& storage_stats) {
   const int kMB = 1024 * 1024;
@@ -138,107 +125,7 @@ void ReportStorageHistogramsAfterDelete(
   }
 }
 
-void ReportSavePageResultHistogramAfterSave(const ClientId& client_id,
-                                            SavePageResult result) {
-  // The histogram below is an expansion of the UMA_HISTOGRAM_ENUMERATION
-  // macro adapted to allow for a dynamically suffixed histogram name.
-  // Note: The factory creates and owns the histogram.
-  base::HistogramBase* histogram = base::LinearHistogram::FactoryGet(
-      AddHistogramSuffix(client_id, "OfflinePages.SavePageResult"), 1,
-      static_cast<int>(SavePageResult::RESULT_COUNT),
-      static_cast<int>(SavePageResult::RESULT_COUNT) + 1,
-      base::HistogramBase::kUmaTargetedHistogramFlag);
-  histogram->Add(static_cast<int>(result));
-}
-
-// Goes through the list of offline pages, compiling the following two metrics:
-//   - a count of the pages with the same URL
-//   - The difference between the |created_before| time and the creation time of
-//     the page with the closest creation time before |created_before|.
-// Returns true if there was a page that was saved before |created_before| with
-// a matching URL.
-bool GetMatchingURLCountAndMostRecentCreationTime(
-    const std::map<int64_t, OfflinePageItem>& offline_pages,
-    std::string name_space,
-    const GURL& url,
-    base::Time created_before,
-    int* matching_url_count,
-    base::TimeDelta* most_recent_creation_time) {
-  int count = 0;
-
-  // Create a time that is very old, so that any valid time will be newer than
-  // it.
-  base::Time latest_time;
-  bool matching_page = false;
-
-  for (auto& id_page_pair : offline_pages) {
-    if (id_page_pair.second.client_id.name_space == name_space &&
-        url == id_page_pair.second.url) {
-      count++;
-      base::Time page_creation_time = id_page_pair.second.creation_time;
-      if (page_creation_time < created_before &&
-          page_creation_time > latest_time) {
-        latest_time = page_creation_time;
-        matching_page = true;
-      }
-    }
-  }
-
-  if (matching_url_count != nullptr)
-    *matching_url_count = count;
-  if (most_recent_creation_time != nullptr && latest_time != base::Time())
-    *most_recent_creation_time = created_before - latest_time;
-
-  return matching_page;
-}
-
-void ReportPageHistogramAfterSave(
-    ClientPolicyController* policy_controller_,
-    const std::map<int64_t, OfflinePageItem>& offline_pages,
-    const OfflinePageItem& offline_page,
-    const base::Time& save_time) {
-  DCHECK(policy_controller_);
-  // The histogram below is an expansion of the UMA_HISTOGRAM_TIMES
-  // macro adapted to allow for a dynamically suffixed histogram name.
-  // Note: The factory creates and owns the histogram.
-  base::HistogramBase* histogram = base::Histogram::FactoryTimeGet(
-      AddHistogramSuffix(offline_page.client_id, "OfflinePages.SavePageTime"),
-      base::TimeDelta::FromMilliseconds(1), base::TimeDelta::FromSeconds(10),
-      50, base::HistogramBase::kUmaTargetedHistogramFlag);
-  histogram->AddTime(save_time - offline_page.creation_time);
-
-  // The histogram below is an expansion of the UMA_HISTOGRAM_CUSTOM_COUNTS
-  // macro adapted to allow for a dynamically suffixed histogram name.
-  // Note: The factory creates and owns the histogram.
-  // Reported as Kb between 1Kb and 10Mb.
-  histogram = base::Histogram::FactoryGet(
-      AddHistogramSuffix(offline_page.client_id, "OfflinePages.PageSize"), 1,
-      10000, 50, base::HistogramBase::kUmaTargetedHistogramFlag);
-  histogram->Add(offline_page.file_size / 1024);
-
-  if (policy_controller_->IsSupportedByDownload(
-          offline_page.client_id.name_space)) {
-    int matching_url_count;
-    base::TimeDelta time_since_most_recent_duplicate;
-    if (GetMatchingURLCountAndMostRecentCreationTime(
-            offline_pages, offline_page.client_id.name_space, offline_page.url,
-            offline_page.creation_time, &matching_url_count,
-            &time_since_most_recent_duplicate)) {
-      // Using CUSTOM_COUNTS instead of time-oriented histogram to record
-      // samples in seconds rather than milliseconds.
-      UMA_HISTOGRAM_CUSTOM_COUNTS(
-          "OfflinePages.DownloadSavedPageTimeSinceDuplicateSaved",
-          time_since_most_recent_duplicate.InSeconds(),
-          base::TimeDelta::FromSeconds(1).InSeconds(),
-          base::TimeDelta::FromDays(7).InSeconds(), 50);
-    }
-    UMA_HISTOGRAM_CUSTOM_COUNTS("OfflinePages.DownloadSavedPageDuplicateCount",
-                                matching_url_count, 1, 20, 10);
-  }
-}
-
 void ReportPageHistogramsAfterDelete(
-    const std::map<int64_t, OfflinePageItem>& offline_pages,
     const std::vector<OfflinePageItem>& deleted_pages,
     const base::Time& delete_time) {
   const int max_minutes = base::TimeDelta::FromDays(365).InMinutes();
@@ -247,16 +134,6 @@ void ReportPageHistogramsAfterDelete(
   for (const auto& page : deleted_pages) {
     total_size += page.file_size;
     ClientId client_id = page.client_id;
-
-    if (client_id.name_space == kDownloadNamespace) {
-      int remaining_pages_with_url;
-      GetMatchingURLCountAndMostRecentCreationTime(
-          offline_pages, page.client_id.name_space, page.url, base::Time::Max(),
-          &remaining_pages_with_url, nullptr);
-      UMA_HISTOGRAM_CUSTOM_COUNTS(
-          "OfflinePages.DownloadDeletedPageDuplicateCount",
-          remaining_pages_with_url, 1, 20, 10);
-    }
 
     // The histograms below are an expansion of the UMA_HISTOGRAM_CUSTOM_COUNTS
     // macro adapted to allow for a dynamically suffixed histogram name.
@@ -362,38 +239,11 @@ void OfflinePageModelImpl::SavePage(
     const SavePageCallback& callback) {
   DCHECK(is_loaded_);
 
-  // Skip saving the page that is not intended to be saved, like local file
-  // page.
-  if (!OfflinePageModel::CanSaveURL(save_page_params.url)) {
-    InformSavePageDone(callback, SavePageResult::SKIPPED,
-                       save_page_params.client_id, kInvalidOfflineId);
-    return;
-  }
-
-  // The web contents is not available if archiver is not created and passed.
-  if (!archiver.get()) {
-    InformSavePageDone(callback, SavePageResult::CONTENT_UNAVAILABLE,
-                       save_page_params.client_id, kInvalidOfflineId);
-    return;
-  }
-
-  // If we already have an offline id, use it.  If not, generate one.
-  int64_t offline_id = save_page_params.proposed_offline_id;
-  if (offline_id == kInvalidOfflineId)
-    offline_id = GenerateOfflineId();
-
-  OfflinePageArchiver::CreateArchiveParams create_archive_params;
-  // If the page is being saved in the background, we should try to remove the
-  // popup overlay that obstructs viewing the normal content.
-  create_archive_params.remove_popup_overlay = save_page_params.is_background;
-  create_archive_params.use_page_problem_detectors =
-      save_page_params.use_page_problem_detectors;
-  archiver->CreateArchive(
-      archives_dir_, create_archive_params,
-      base::Bind(&OfflinePageModelImpl::OnCreateArchiveDone,
-                 weak_ptr_factory_.GetWeakPtr(), save_page_params, offline_id,
-                 GetCurrentTime(), callback));
-  pending_archivers_.push_back(std::move(archiver));
+  std::unique_ptr<Task> task(
+      new SavePageTask(this, save_page_params, std::move(archiver),
+                       base::Bind(&OfflinePageModelImpl::OnSavePageDone,
+                                  weak_ptr_factory_.GetWeakPtr(), callback)));
+  task_queue_.AddTask(std::move(task));
 }
 
 void OfflinePageModelImpl::AddPage(const OfflinePageItem& page,
@@ -511,13 +361,9 @@ void OfflinePageModelImpl::GetPagesMatchingQueryWhenLoadDone(
   DCHECK(is_loaded_);
 
   MultipleOfflinePageItemResult offline_pages_result;
-
-  for (const auto& id_page_pair : offline_pages_) {
-    if (query->Matches(id_page_pair.second))
-      offline_pages_result.emplace_back(id_page_pair.second);
-  }
-
-  callback.Run(offline_pages_result);
+  std::unique_ptr<Task> task(
+      new GetPagesTask(GetMetadataStore(), std::move(query), callback));
+  task_queue_.AddTask(std::move(task));
 }
 
 void OfflinePageModelImpl::GetPagesByClientIds(
@@ -688,6 +534,14 @@ ClientPolicyController* OfflinePageModelImpl::GetPolicyController() {
   return policy_controller_.get();
 }
 
+ArchiveManager* OfflinePageModelImpl::GetArchiveManager() {
+  return archive_manager_.get();
+}
+
+OfflinePageMetadataStore* OfflinePageModelImpl::GetMetadataStore() {
+  return store_.get();
+}
+
 OfflinePageMetadataStore* OfflinePageModelImpl::GetStoreForTesting() {
   return store_.get();
 }
@@ -704,60 +558,15 @@ OfflineEventLogger* OfflinePageModelImpl::GetLogger() {
   return &offline_event_logger_;
 }
 
-void OfflinePageModelImpl::OnCreateArchiveDone(
-    const SavePageParams& save_page_params,
-    int64_t offline_id,
-    const base::Time& start_time,
-    const SavePageCallback& callback,
-    OfflinePageArchiver* archiver,
-    ArchiverResult archiver_result,
-    const GURL& saved_url,
-    const base::FilePath& file_path,
-    const base::string16& title,
-    int64_t file_size) {
-  DeletePendingArchiver(archiver);
-
-  if (archiver_result != ArchiverResult::SUCCESSFULLY_CREATED) {
-    SavePageResult result = ToSavePageResult(archiver_result);
-    InformSavePageDone(
-        callback, result, save_page_params.client_id, offline_id);
-    return;
-  }
-
-  if (save_page_params.url != saved_url) {
-    DVLOG(1) << "Saved URL does not match requested URL.";
-    InformSavePageDone(callback, SavePageResult::ARCHIVE_CREATION_FAILED,
-                       save_page_params.client_id, offline_id);
-    return;
-  }
-
-  OfflinePageItem offline_page(saved_url, offline_id,
-                               save_page_params.client_id, file_path, file_size,
-                               start_time);
-  offline_page.title = title;
-  // Don't record the original URL if it is identical to the final URL. This is
-  // because some websites might route the redirect finally back to itself upon
-  // the completion of certain action, i.e., authentication, in the middle.
-  if (skip_clearing_original_url_for_testing_ ||
-      save_page_params.original_url != offline_page.url) {
-    offline_page.original_url = save_page_params.original_url;
-  }
-  offline_page.request_origin = save_page_params.request_origin;
-  AddPageWhenLoadDone(
-      offline_page,
-      base::Bind(&OfflinePageModelImpl::OnAddSavedPageDone,
-                 weak_ptr_factory_.GetWeakPtr(), offline_page, callback));
-}
-
 void OfflinePageModelImpl::OnAddPageDone(const OfflinePageItem& offline_page,
                                          const AddPageCallback& callback,
                                          ItemActionStatus status) {
   AddPageResult result;
+
   if (status == ItemActionStatus::SUCCESS) {
-    offline_pages_[offline_page.offline_id] = offline_page;
     result = AddPageResult::SUCCESS;
-    ReportPageHistogramAfterSave(policy_controller_.get(), offline_pages_,
-                                 offline_page, GetCurrentTime());
+    ReportPageHistogramAfterSave(policy_controller_.get(), offline_page,
+                                 GetCurrentTime());
     offline_event_logger_.RecordPageSaved(offline_page.client_id.name_space,
                                           offline_page.url.spec(),
                                           offline_page.offline_id);
@@ -773,33 +582,29 @@ void OfflinePageModelImpl::OnAddPageDone(const OfflinePageItem& offline_page,
   callback.Run(result, offline_page.offline_id);
 
   // We don't want to notify observers if the add failed.
-  if (status == ItemActionStatus::SUCCESS) {
+  if (result == AddPageResult::SUCCESS) {
     for (Observer& observer : observers_)
       observer.OfflinePageAdded(this, offline_page);
   }
 }
 
-void OfflinePageModelImpl::OnAddSavedPageDone(
-    const OfflinePageItem& offline_page,
-    const SavePageCallback& callback,
-    AddPageResult add_result,
-    int64_t offline_id) {
-  SavePageResult save_result;
-  if (add_result == AddPageResult::SUCCESS) {
-    save_result = SavePageResult::SUCCESS;
-  } else if (add_result == AddPageResult::ALREADY_EXISTS) {
-    save_result = SavePageResult::ALREADY_EXISTS;
-  } else if (add_result == AddPageResult::STORE_FAILURE) {
-    save_result = SavePageResult::STORE_FAILURE;
-  } else {
-    NOTREACHED();
-    save_result = SavePageResult::STORE_FAILURE;
-  }
-  InformSavePageDone(callback, save_result, offline_page.client_id, offline_id);
-  if (save_result == SavePageResult::SUCCESS) {
+void OfflinePageModelImpl::OnSavePageDone(const SavePageCallback& callback,
+                                          SavePageResult result,
+                                          const OfflinePageItem& offline_page) {
+  DLOG(ERROR) << "ROMAX OnSavePageDone " << offline_page.offline_id;
+  callback.Run(result, offline_page.offline_id);
+  archive_manager_->GetStorageStats(
+      base::Bind(&ReportStorageHistogramsAfterSave));
+  // No need to pass in a callback, since if the archive manager fails every
+  // time when creating an archive directory, there's nothing else to do other
+  // than fail every attempt to save a page.
+  if (result == SavePageResult::ARCHIVE_CREATION_FAILED)
+    archive_manager_->EnsureArchivesDirCreated(base::Bind([]() {}));
+  if (result == SavePageResult::SUCCESS) {
     DeleteExistingPagesWithSameURL(offline_page);
   } else {
     PostClearStorageIfNeededTask(false /* delayed */);
+    return;
   }
 }
 
@@ -900,21 +705,6 @@ void OfflinePageModelImpl::FinalizeModelLoad() {
   PostClearStorageIfNeededTask(true /* delayed */);
 }
 
-void OfflinePageModelImpl::InformSavePageDone(const SavePageCallback& callback,
-                                              SavePageResult result,
-                                              const ClientId& client_id,
-                                              int64_t offline_id) {
-  ReportSavePageResultHistogramAfterSave(client_id, result);
-  archive_manager_->GetStorageStats(
-      base::Bind(&ReportStorageHistogramsAfterSave));
-  // No need to pass in a callback, since if the archive manager fails every
-  // time when creating an archive directory, there's nothing else to do other
-  // than fail every attempt to save a page.
-  if (result == SavePageResult::ARCHIVE_CREATION_FAILED)
-    archive_manager_->EnsureArchivesDirCreated(base::Bind([]() {}));
-  callback.Run(result, offline_id);
-}
-
 void OfflinePageModelImpl::DeleteExistingPagesWithSameURL(
     const OfflinePageItem& offline_page) {
   // Remove existing pages generated by the same policy and with same url.
@@ -964,15 +754,6 @@ void OfflinePageModelImpl::OnDeleteOldPagesWithSameURL(
   PostClearStorageIfNeededTask(false /* delayed */);
 }
 
-void OfflinePageModelImpl::DeletePendingArchiver(
-    OfflinePageArchiver* archiver) {
-  pending_archivers_.erase(
-      std::find_if(pending_archivers_.begin(), pending_archivers_.end(),
-                   [archiver](const std::unique_ptr<OfflinePageArchiver>& a) {
-                     return a.get() == archiver;
-                   }));
-}
-
 void OfflinePageModelImpl::OnDeleteArchiveFilesDone(
     const std::vector<int64_t>& offline_ids,
     const DeletePageCallback& callback,
@@ -990,8 +771,7 @@ void OfflinePageModelImpl::OnDeleteArchiveFilesDone(
 void OfflinePageModelImpl::OnRemoveOfflinePagesDone(
     const DeletePageCallback& callback,
     std::unique_ptr<OfflinePagesUpdateResult> result) {
-  ReportPageHistogramsAfterDelete(offline_pages_, result->updated_items,
-                                  GetCurrentTime());
+  ReportPageHistogramsAfterDelete(result->updated_items, GetCurrentTime());
 
   // This part of the loop is explicitly broken out, as it should be gone in
   // fully asynchronous code.

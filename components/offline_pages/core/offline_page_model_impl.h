@@ -25,6 +25,7 @@
 #include "base/strings/string16.h"
 #include "base/time/time.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "components/offline_pages/core/archive_manager.h"
 #include "components/offline_pages/core/offline_page_archiver.h"
 #include "components/offline_pages/core/offline_page_metadata_store.h"
 #include "components/offline_pages/core/offline_page_model.h"
@@ -32,6 +33,7 @@
 #include "components/offline_pages/core/offline_page_storage_manager.h"
 #include "components/offline_pages/core/offline_page_types.h"
 #include "components/offline_pages/core/offline_store_types.h"
+#include "components/offline_pages/core/task_queue.h"
 
 class GURL;
 namespace base {
@@ -105,6 +107,8 @@ class OfflinePageModelImpl : public OfflinePageModel, public KeyedService {
       URLSearchMode url_search_mode,
       const MultipleOfflinePageItemCallback& callback) override;
   ClientPolicyController* GetPolicyController() override;
+  ArchiveManager* GetArchiveManager() override;
+  OfflinePageMetadataStore* GetMetadataStore() override;
 
   // Methods for testing only:
   OfflinePageMetadataStore* GetStoreForTesting();
@@ -165,26 +169,10 @@ class OfflinePageModelImpl : public OfflinePageModel, public KeyedService {
       const std::vector<OfflinePageItem>& offline_pages);
   void FinalizeModelLoad();
 
-  // Steps for saving a page offline.
-  void OnCreateArchiveDone(const SavePageParams& save_page_params,
-                           int64_t offline_id,
-                           const base::Time& start_time,
-                           const SavePageCallback& callback,
-                           OfflinePageArchiver* archiver,
-                           OfflinePageArchiver::ArchiverResult result,
-                           const GURL& saved_url,
-                           const base::FilePath& file_path,
-                           const base::string16& title,
-                           int64_t file_size);
-  void OnAddSavedPageDone(const OfflinePageItem& offline_page,
-                          const SavePageCallback& callback,
-                          AddPageResult add_result,
-                          int64_t offline_id);
-  void InformSavePageDone(const SavePageCallback& callback,
-                          SavePageResult result,
-                          const ClientId& client_id,
-                          int64_t offline_id);
-  void DeletePendingArchiver(OfflinePageArchiver* archiver);
+  // Callback for save page.
+  void OnSavePageDone(const SavePageCallback& callback,
+                      SavePageResult result,
+                      const OfflinePageItem& offline_page);
 
   // Steps for adding a page entry to metadata store.
   void AddPageWhenLoadDone(const OfflinePageItem& page,
@@ -293,6 +281,9 @@ class OfflinePageModelImpl : public OfflinePageModel, public KeyedService {
 
   // Manager for the offline archive files and directory.
   std::unique_ptr<ArchiveManager> archive_manager_;
+
+  // TaskQueue for atomic operations.
+  TaskQueue task_queue_;
 
   // Logger to facilitate recording of events.
   OfflinePageModelEventLogger offline_event_logger_;

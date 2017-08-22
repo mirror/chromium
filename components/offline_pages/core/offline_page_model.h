@@ -13,8 +13,10 @@
 #include <vector>
 
 #include "base/supports_user_data.h"
+#include "components/offline_pages/core/archive_manager.h"
 #include "components/offline_pages/core/offline_event_logger.h"
 #include "components/offline_pages/core/offline_page_archiver.h"
+#include "components/offline_pages/core/offline_page_metadata_store.h"
 #include "components/offline_pages/core/offline_page_model_query.h"
 #include "components/offline_pages/core/offline_page_storage_manager.h"
 #include "components/offline_pages/core/offline_page_types.h"
@@ -192,6 +194,12 @@ class OfflinePageModel : public base::SupportsUserData {
 
   // Returns the policy controller.
   virtual ClientPolicyController* GetPolicyController() = 0;
+
+  // Returns archive manager.
+  virtual ArchiveManager* GetArchiveManager() = 0;
+
+  // Returns metadata store.
+  virtual OfflinePageMetadataStore* GetMetadataStore() = 0;
 
   // TODO(dougarnett): Remove this and its uses.
   virtual bool is_loaded() const = 0;
