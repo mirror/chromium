@@ -16,6 +16,24 @@
       "revId": "a2b82df92fa389442c5a732229f9763815bfcfbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f1b648_a996d424",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T07:27:01Z",
+      "side": 1,
+      "message": "(This was a request to update the comments before committing. Please fix this in a followup \u003d)",
+      "parentUuid": "1e039411_aee8190d",
+      "revId": "a2b82df92fa389442c5a732229f9763815bfcfbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
