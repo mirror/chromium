@@ -90,7 +90,6 @@
 #include "components/exo/shell_surface.h"
 #include "components/prefs/pref_notifier_impl.h"
 #include "components/signin/core/account_id/account_id.h"
-#include "components/sync/model/attachments/attachment_service_proxy_for_test.h"
 #include "components/sync/model/fake_sync_change_processor.h"
 #include "components/sync/model/sync_error_factory_mock.h"
 #include "components/sync/protocol/sync.pb.h"
@@ -655,9 +654,8 @@ class ChromeLauncherControllerTest : public BrowserWithTestWindowTest {
     sync_pb::PreferenceSpecifics* pref_one = one.mutable_preference();
     pref_one->set_name(prefs::kPinnedLauncherApps);
     pref_one->set_value(serialized);
-    init_sync_list.push_back(syncer::SyncData::CreateRemoteData(
-        1, one, base::Time(), syncer::AttachmentIdList(),
-        syncer::AttachmentServiceProxyForTest::Create()));
+    init_sync_list.push_back(
+        syncer::SyncData::CreateRemoteData(1, one, base::Time()));
     StartPrefSyncService(init_sync_list);
   }
 
