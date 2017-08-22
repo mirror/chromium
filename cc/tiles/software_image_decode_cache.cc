@@ -570,53 +570,37 @@ std::unique_ptr<SoftwareImageDecodeCache::DecodedImage>
 SoftwareImageDecodeCache::GetOriginalSizeImageDecode(
     const ImageKey& key,
     const PaintImage& paint_image) {
-  sk_sp<const SkImage> image = paint_image.GetSkImage();
-  SkImageInfo decoded_info =
-      CreateImageInfo(image->width(), image->height(), format_);
-  sk_sp<SkColorSpace> target_color_space =
-      key.target_color_space().ToSkColorSpace();
+  gfx::Size decode_size(paint_image.width(), paint_image.height());
+  DCHECK(decode_size == paint_image.GetSupportedDecodeSize(decode_size));
+
+  size_t size_bytes =
+      paint_image.GetRequiredDecodeSizeBytes(decode_size, format_);
 
   std::unique_ptr<base::DiscardableMemory> decoded_pixels;
   {
     TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                  "SoftwareImageDecodeCache::GetOriginalSizeImageDecode - "
                  "allocate decoded pixels");
-    decoded_pixels =
-        base::DiscardableMemoryAllocator::GetInstance()
-            ->AllocateLockedDiscardableMemory(decoded_info.minRowBytes() *
-                                              decoded_info.height());
+    decoded_pixels = base::DiscardableMemoryAllocator::GetInstance()
+                         ->AllocateLockedDiscardableMemory(size_bytes);
   }
-  if (target_color_space) {
-    TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
-                 "SoftwareImageDecodeCache::GetOriginalSizeImageDecode - "
-                 "color conversion");
-    image = image->makeColorSpace(target_color_space,
-                                  SkTransferFunctionBehavior::kIgnore);
-    // Because image is a lazy-decode image, the call to makeColorSpace will
-    // fail if image decode fails.
-    if (!image) {
-      decoded_pixels->Unlock();
-      return nullptr;
-    }
-  }
+  SkImageInfo decoded_info;
   {
     TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                  "SoftwareImageDecodeCache::GetOriginalSizeImageDecode - "
-                 "read pixels");
-    bool result = image->readPixels(decoded_info, decoded_pixels->data(),
-                                    decoded_info.minRowBytes(), 0, 0,
-                                    SkImage::kDisallow_CachingHint);
-
+                 "decode");
+    bool result =
+        paint_image.Decode(decoded_pixels->data(), decode_size, format_,
+                           key.target_color_space(), &decoded_info);
     if (!result) {
       decoded_pixels->Unlock();
       return nullptr;
     }
   }
 
-  return base::MakeUnique<DecodedImage>(
-      decoded_info.makeColorSpace(target_color_space),
-      std::move(decoded_pixels), SkSize::Make(0, 0),
-      next_tracing_id_.GetNext());
+  return base::MakeUnique<DecodedImage>(decoded_info, std::move(decoded_pixels),
+                                        SkSize::Make(0, 0),
+                                        next_tracing_id_.GetNext());
 }
 
 std::unique_ptr<SoftwareImageDecodeCache::DecodedImage>

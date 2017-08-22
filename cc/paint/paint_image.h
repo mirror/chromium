@@ -6,9 +6,12 @@
 #define CC_PAINT_PAINT_IMAGE_H_
 
 #include "base/logging.h"
+#include "base/optional.h"
 #include "cc/paint/paint_export.h"
 #include "cc/paint/skia_paint_image_generator.h"
+#include "components/viz/common/resources/resource_format.h"
 #include "third_party/skia/include/core/SkImage.h"
+#include "ui/gfx/color_space.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace cc {
@@ -43,6 +46,36 @@ class CC_PAINT_EXPORT PaintImage {
   PaintImage& operator=(PaintImage&& other);
 
   bool operator==(const PaintImage& other) const;
+
+  // Returns the smallest size that is at least as big as the requested_size
+  // such that we can decode to exactly that scale. If the requested size is
+  // larger than the image, this returns the image size. Any returned value is
+  // guaranteed to be stable. That is,
+  // GetSupportedDecodeSize(GetSupportedDecodeSize(size)) is guaranteed to be
+  // GetSupportedDecodeSize(size).
+  gfx::Size GetSupportedDecodeSize(const gfx::Size& requested_size) const;
+
+  // Returns the number of bytes required to decode an image to the given size
+  // with the given format. The given size must be supported. Ie,
+  // GetSupportedDecodeSize(|requested_size|) must be |requested_size|.
+  size_t GetRequiredDecodeSizeBytes(const gfx::Size& size,
+                                    viz::ResourceFormat format) const;
+
+  // Decode the image into the given memory. The decode will be to the given
+  // size. The amount of bytes in memory must be at least
+  // GetRequiredDecodeSizeBytes(|size|), and GetSupportedDecodeSize(|size|) must
+  // be |size|. An optional color space can be provided in which case the image
+  // will be converted to that color space.
+  // Returns true on success and false on failure. If the decode is failed, the
+  // contents of memory are not specified and should not be relied on. Also
+  // populates decoded_info (if not nullptr) with the decoded image's
+  // SkImageInfo.
+  bool Decode(
+      void* memory,
+      const gfx::Size& size,
+      viz::ResourceFormat format,
+      const base::Optional<gfx::ColorSpace>& color_space = base::nullopt,
+      SkImageInfo* decoded_info = nullptr) const;
 
   Id stable_id() const { return id_; }
   const sk_sp<SkImage>& GetSkImage() const;

@@ -67,6 +67,7 @@ cc_component("paint") {
 
   deps = [
     "//base",
+    "//components/viz/common:resource_format",
   ]
 }
 
