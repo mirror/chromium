@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "904d208c_f84fcd8a",
+        "filename": "chrome/browser/resources/settings/settings_shared_css.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-22T01:31:46Z",
+      "side": 1,
+      "message": "nit: it appears to be the style to lead comment continuation lines with an * (like line 284 below).",
+      "revId": "6c6a9db66ca7dd46a00653d84f2a3747ce0fba01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
