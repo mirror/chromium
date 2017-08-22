@@ -576,6 +576,9 @@ extern const char kOverlayScrollbarsDescription[];
 extern const char kOverlayScrollbarsFlashWhenAnyScrollUpdateName[];
 extern const char kOverlayScrollbarsFlashWhenAnyScrollUpdateDescription[];
 
+extern const char kOverlayScrollbarsFlashWhenMouseEnterName[];
+extern const char kOverlayScrollbarsFlashWhenMouseEnterDescription[];
+
 extern const char kOverscrollHistoryNavigationName[];
 extern const char kOverscrollHistoryNavigationDescription[];
 extern const char kOverscrollHistoryNavigationSimpleUi[];
