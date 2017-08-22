@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0562093_d318fae6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-22T17:42:42Z",
+      "side": 1,
+      "message": "this looks fine. perhaps should even consider merging it with OnPhysicalSizeChanged, assuming all callers have all the information",
+      "revId": "6bf063f34f470dc36d5381dda99e6dc6db41ed22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ffb37d0_a7cc93f4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-22T17:42:42Z",
+      "side": 1,
+      "message": "viewport width/height is fine\n\nI wonder if we can remove the concept of browser control out of content/ui layer altogether. only chrome code needs to keep track of it. I don\u0027t think there\u0027s actually anything that cares about the viewport without browser controls affect?",
+      "revId": "6bf063f34f470dc36d5381dda99e6dc6db41ed22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b894e04_6622eaf1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-22T17:42:42Z",
+      "side": 1,
+      "message": "sounds fine, although didn\u0027t really look",
+      "revId": "6bf063f34f470dc36d5381dda99e6dc6db41ed22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e901f22b_b5990f40",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-22T17:42:42Z",
+      "side": 1,
+      "message": "or DCHECK it\u0027s not patch parent? shouldn\u0027t be explicitly setting size on match parent views I guess?",
+      "revId": "6bf063f34f470dc36d5381dda99e6dc6db41ed22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
