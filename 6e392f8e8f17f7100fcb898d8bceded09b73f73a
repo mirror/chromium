@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "af161f6d_377d4ae7",
+        "filename": "chrome/browser/web_applications/web_app_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-22T07:36:34Z",
+      "side": 1,
+      "message": "this is the non-reentrant call site.",
+      "revId": "6e392f8e8f17f7100fcb898d8bceded09b73f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae0f440_28210bb6",
+        "filename": "chrome/browser/web_applications/web_app_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-22T07:36:34Z",
+      "side": 1,
+      "message": "SetWorkspaceIconOnWorkerThread is invoked after bouncing off the UI thread to get stuff out of the resource bundle",
+      "revId": "6e392f8e8f17f7100fcb898d8bceded09b73f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ce1d88b_b329ed2a",
         "filename": "chrome/browser/web_applications/web_app_mac.mm",
         "patchSetId": 3
@@ -25,6 +59,30 @@
     },
     {
       "key": {
+        "uuid": "810d5722_f119b781",
+        "filename": "chrome/browser/web_applications/web_app_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-22T07:36:34Z",
+      "side": 1,
+      "message": "It should. static initializers are threadsafe now. We disabled it in chrome at http://crrev.com/23326 but re-enabled them in http://crrev.com/447163 . The compiler puts locks around all static local variable initializers to ensure the assignment expression isn\u0027t evaluated multiple times.",
+      "parentUuid": "7ce1d88b_b329ed2a",
+      "range": {
+        "startLine": 692,
+        "startChar": 59,
+        "endLine": 692,
+        "endChar": 76
+      },
+      "revId": "6e392f8e8f17f7100fcb898d8bceded09b73f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0cdc198_1efbf1c7",
         "filename": "chrome/browser/web_applications/web_app_mac.mm",
         "patchSetId": 3
@@ -36,6 +94,30 @@
       "writtenOn": "2017-08-22T07:18:39Z",
       "side": 1,
       "message": "Where is this call? I don\u0027t see it in that method.",
+      "range": {
+        "startLine": 693,
+        "startChar": 16,
+        "endLine": 693,
+        "endChar": 38
+      },
+      "revId": "6e392f8e8f17f7100fcb898d8bceded09b73f73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81eb71f_a6105e54",
+        "filename": "chrome/browser/web_applications/web_app_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-22T07:36:34Z",
+      "side": 1,
+      "message": "annotated",
+      "parentUuid": "c0cdc198_1efbf1c7",
       "range": {
         "startLine": 693,
         "startChar": 16,
