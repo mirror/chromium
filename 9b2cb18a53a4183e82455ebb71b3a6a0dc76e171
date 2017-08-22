@@ -22,6 +22,30 @@
       "revId": "9b2cb18a53a4183e82455ebb71b3a6a0dc76e171",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb81d7b_13d0567e",
+        "filename": "chrome/android/java/res/values/colors.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-22T00:59:02Z",
+      "side": 1,
+      "message": "Thanks Theresa for the tip!\nI will use light_normal_color.\n\nFor the longer term solution.  The black text colors in values-v17/styles.xml are black_alpha_** but I cannot find a black_alpha_** color \u003d #a5000000 (which is apparently same as #5a5a5a)",
+      "parentUuid": "2c4bf171_8b889d7f",
+      "range": {
+        "startLine": 212,
+        "startChar": 55,
+        "endLine": 212,
+        "endChar": 61
+      },
+      "revId": "9b2cb18a53a4183e82455ebb71b3a6a0dc76e171",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
