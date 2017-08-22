@@ -76,6 +76,30 @@
     },
     {
       "key": {
+        "uuid": "7005b1e2_1b1c32a0",
+        "filename": "components/url_formatter/elide_url.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T21:38:14Z",
+      "side": 1,
+      "message": "Totally understood.  Please see the reasoning in the CL description for why I\u0027m doing this initially, and also the big email thread you were copied on.  :)\n\nIn the email thread, Matt settled on two possible elision processes, one for the current use case and one for the new Omnibox use case. They\u0027re very similar, and could share an implementation with conditionals. However, we\u0027d need to augment that code to support returning a new Parsed, so that we can emphasize and style the resulting shortened URL.  This tipped me towards *not* sharing the code, as it\u0027s a bunch of logic not needed in the original use case.\n\nFinally, VR\u0027s UI is getting built in phases.  The first use of this elision code does *not* require any styling/emphasis, so the new function as-is is sufficient.  It could be used as a stopgap while we work on merging this with ElideUrl(), if you prefer that approach.  I would really like to land something intermediate though, if it\u0027s okay with you (either here or in VR code).",
+      "parentUuid": "688e63db_cefc97f3",
+      "range": {
+        "startLine": 65,
+        "startChar": 15,
+        "endLine": 65,
+        "endChar": 40
+      },
+      "revId": "494e5fc0eac8fa207a91887375100083891ba21e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5d8d1f3_87a78daf",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 1
