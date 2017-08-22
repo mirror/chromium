@@ -2905,9 +2905,6 @@ crbug.com/733524 [ Mac ] virtual/mojo-loading/http/tests/security/contentSecurit
 # Sheriff failures 2017-06-23
 crbug.com/736548 [ Mac ] css2.1/t040304-c64-uri-00-a-g.html [ Failure Pass ]
 
-
-crbug.com/v8/6529 inspector/console/console-format.html [ NeedsManualRebaseline ]
-
 crbug.com/737959 http/tests/misc/object-image-load-outlives-gc-without-crashing.html [ Failure Pass ]
 crbug.com/737959 virtual/mojo-loading/http/tests/misc/object-image-load-outlives-gc-without-crashing.html [ Failure Pass ]
 
