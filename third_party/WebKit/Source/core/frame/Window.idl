@@ -215,6 +215,10 @@
     readonly attribute boolean isSecureContext;
 
     attribute DOMMatrixConstructor WebKitCSSMatrix;
+
+    long createScopedLogger(DOMString message);
+    void appendScopedLogger(long id, DOMString message);
+    void destroyScopedLogger(long id);
 };
 
 Window implements GlobalEventHandlers;

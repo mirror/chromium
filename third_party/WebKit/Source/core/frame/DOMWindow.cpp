@@ -445,6 +445,33 @@ InputDeviceCapabilitiesConstants* DOMWindow::GetInputDeviceCapabilities() {
   return input_capabilities_;
 }
 
+using WTF::ScopedLogger;
+static Vector<ScopedLogger*>* s_loggers;
+
+int DOMWindow::createScopedLogger(const String& message) {
+  if (!s_loggers)
+    s_loggers = new Vector<ScopedLogger*>;
+  s_loggers->append(new ScopedLogger(true, "%s", message.utf8().data()));
+  return s_loggers->size() - 1;
+}
+
+void DOMWindow::appendScopedLogger(int id, const String& message) {
+  DCHECK((unsigned)id == s_loggers->size() - 1);
+  ScopedLogger* sl = (*s_loggers)[id];
+  sl->log("%s", message.utf8().data());
+}
+
+void DOMWindow::destroyScopedLogger(int id) {
+  DCHECK((unsigned)id == s_loggers->size() - 1);
+  ScopedLogger* sl = (*s_loggers)[id];
+  s_loggers->pop_back();
+  delete sl;
+  if (s_loggers->isEmpty()) {
+    delete s_loggers;
+    s_loggers = nullptr;
+  }
+}
+
 DEFINE_TRACE(DOMWindow) {
   visitor->Trace(frame_);
   visitor->Trace(window_proxy_manager_);

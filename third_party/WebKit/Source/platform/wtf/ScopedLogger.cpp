@@ -12,6 +12,12 @@
 
 namespace WTF {
 
+#if OS(ANDROID)
+#define SCOPED_LOGGER_NEWLINE "\\n"
+#else
+#define SCOPED_LOGGER_NEWLINE "\n"
+#endif
+
 ScopedLogger::ScopedLogger(bool condition, const char* format, ...)
     : parent_(condition ? Current() : 0), multiline_(false) {
   if (!condition)
@@ -29,7 +35,7 @@ ScopedLogger::~ScopedLogger() {
       Indent();
     else
       Print(" ");
-    Print(")\n");
+    Print(")" SCOPED_LOGGER_NEWLINE);
     Current() = parent_;
   }
 }
@@ -49,7 +55,7 @@ void ScopedLogger::Init(const char* format, va_list args) {
 
 void ScopedLogger::WriteNewlineIfNeeded() {
   if (!multiline_) {
-    Print("\n");
+    Print(SCOPED_LOGGER_NEWLINE);
     multiline_ = true;
   }
 }
@@ -72,7 +78,7 @@ void ScopedLogger::Log(const char* format, ...) {
   Indent();
   PrintIndent();
   print_func_(format, args);
-  Print("\n");
+  Print(SCOPED_LOGGER_NEWLINE);
 
   va_end(args);
 }
@@ -95,6 +101,8 @@ ScopedLogger*& ScopedLogger::Current() {
 
 ScopedLogger::PrintFunctionPtr ScopedLogger::print_func_ =
     vprintf_stderr_common;
+
+#undef SCOPED_LOGGER_NEWLINE
 
 }  // namespace WTF
 
