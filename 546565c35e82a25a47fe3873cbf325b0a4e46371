@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49e01335_3bcb248a",
+        "filename": "content/public/test/network_service_test_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-22T15:32:39Z",
+      "side": 1,
+      "message": "It feels weird, from a layering perspective, to have the NetworkServiceTestHelper know about the EmbeddedTestServer specifically - I suppose I had always thought of ETS as a separable bit of code (since you could use the Python test server or some other TLS server instance)\n\nThis is why having a service to allow you to Add/Remove certs (the interface of TestRootCerts) seems cleaner, since it avoids coupling these concepts. It\u0027s also something we want soon anyways - but I think you\u0027re opposed to this, Matt, because the code doesn\u0027t do this today?",
+      "revId": "546565c35e82a25a47fe3873cbf325b0a4e46371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
