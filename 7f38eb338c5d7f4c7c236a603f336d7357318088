@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73a0a758_6e1eeec8",
+        "filename": "media/blink/video_decode_stats_reporter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-22T22:44:49Z",
+      "side": 1,
+      "message": "Yep, this is redundant with the call in the recorder destruction. Now removed.",
+      "parentUuid": "ea2ee7da_7f260a24",
+      "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b98f37c_80caf02a",
         "filename": "media/blink/video_decode_stats_reporter.cc",
         "patchSetId": 16
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a223e02a_b5aa3b25",
+        "filename": "media/blink/video_decode_stats_reporter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-22T22:44:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b98f37c_80caf02a",
+      "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19cfc7ab_85676058",
         "filename": "media/blink/video_decode_stats_reporter.cc",
         "patchSetId": 16
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-17T01:40:28Z",
       "side": 1,
       "message": "Can you assume these are monotonic? Suspending a player should wipe the values but may not actually trigger a pause state.",
+      "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32767d51_dfca38c1",
+        "filename": "media/blink/video_decode_stats_reporter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-22T22:44:49Z",
+      "side": 1,
+      "message": "Hadn\u0027t checked the suspend case, but it looks like the pipeline stats (with exception of mem usage) are not reset across susp/resume. I think that makes sense, but LKM. The existing DCHECKs should catch any broken assumption",
+      "parentUuid": "19cfc7ab_85676058",
       "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "245e4527_035814d7",
+        "filename": "media/blink/video_decode_stats_reporter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-22T22:44:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79e394f1_25e7c773",
+      "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f81b1478_f6adfe6b",
         "filename": "media/blink/video_decode_stats_reporter.cc",
         "patchSetId": 16
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "72474233_ddac8a1d",
+        "filename": "media/blink/video_decode_stats_reporter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-22T22:44:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f81b1478_f6adfe6b",
+      "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d24af7ae_7e3ebfdb",
         "filename": "media/blink/video_decode_stats_reporter.cc",
         "patchSetId": 16
@@ -101,6 +191,24 @@
       "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce7ea5d_ac6708b8",
+        "filename": "media/blink/video_decode_stats_reporter.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-22T22:44:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d24af7ae_7e3ebfdb",
+      "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "da87a1bd_d8a5d8e3",
+        "filename": "media/blink/video_decode_stats_reporter.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-22T22:44:49Z",
+      "side": 1,
+      "message": "Neato! Done.",
+      "parentUuid": "b7a3102b_e2f4b501",
+      "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "980b19c1_0bfbc06b",
         "filename": "media/blink/video_decode_stats_reporter.h",
         "patchSetId": 16
@@ -168,6 +294,24 @@
       "writtenOn": "2017-08-17T01:40:28Z",
       "side": 1,
       "message": "Ditto.",
+      "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cafa6aa_76ca8e4d",
+        "filename": "media/blink/video_decode_stats_reporter.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-22T22:44:49Z",
+      "side": 1,
+      "message": "Now using constexpr in cc like above. Doesn\u0027t appear to be an SI",
+      "parentUuid": "980b19c1_0bfbc06b",
       "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -191,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "6f1ce817_2a7b1dff",
+        "filename": "media/mojo/interfaces/video_decode_stats_recorder.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-22T22:44:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e4b7d73_44becfe8",
+      "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57fc1a2b_05e46f4c",
         "filename": "media/mojo/interfaces/video_decode_stats_recorder.mojom",
         "patchSetId": 16
@@ -202,6 +364,24 @@
       "writtenOn": "2017-08-18T10:01:46Z",
       "side": 1,
       "message": "I\u0027m curious if we even need this; can the contract just be that closing the message pipe finalizes the record?",
+      "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a78be87_caf2167b",
+        "filename": "media/mojo/interfaces/video_decode_stats_recorder.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-22T22:44:49Z",
+      "side": 1,
+      "message": "You\u0027re right :). Removed",
+      "parentUuid": "57fc1a2b_05e46f4c",
       "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
