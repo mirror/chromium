@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c334334b_4c78f5e9",
+        "filename": "chrome/browser/ssl/security_state_tab_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-22T04:32:35Z",
+      "side": 1,
+      "message": "note for future cleanup: it would be nice to factor this code out of chrome/browser/ssl into chrome/browser/safe_browsing, as it\u0027s pretty weird to have all this Safe Browsing logic here.",
+      "range": {
+        "startLine": 217,
+        "startChar": 51,
+        "endLine": 217,
+        "endChar": 0
+      },
+      "revId": "cb79b40e189b8cbfee4915821ce364a6bbc1734d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
