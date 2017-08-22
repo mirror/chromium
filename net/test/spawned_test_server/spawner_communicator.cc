@@ -189,7 +189,7 @@ void SpawnerCommunicator::SendCommandAndWaitForResultOnIOThread(
   DCHECK(cur_request_);
   int current_request_id = ++next_id_;
   cur_request_->SetUserData(
-      this, base::MakeUnique<SpawnerRequestData>(current_request_id,
+      this, std::make_unique<SpawnerRequestData>(current_request_id,
                                                  result_code, data_received));
 
   if (post_data.empty()) {

@@ -21,7 +21,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
-using base::MakeUnique;
+using std::make_unique;
 
 namespace net {
 
