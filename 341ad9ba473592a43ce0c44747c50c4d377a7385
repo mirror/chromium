@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cecb44b4_829ace93",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-22T11:18:14Z",
+      "side": 1,
+      "message": "So if i set the delegate of the usernameField to null, we should be fine?\n\nI did some research and looks like there is no way of removing self from every object it responds to, but i can set the responder of the usernamefield to null, which is kind of the same thing in the end.",
+      "parentUuid": "7a62739c_51d8ca1a",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 3
+      },
+      "revId": "341ad9ba473592a43ce0c44747c50c4d377a7385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dad3f867_91d35afe",
         "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller_unittest.mm",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-22T09:55:39Z",
       "side": 1,
       "message": "This is a strange line. I see it came from the older test. If you need a window then you should add the top view to it instead of some username input. Also it require a comment with an explanation.\n\nProbably it should be done in the beginning of the test",
+      "range": {
+        "startLine": 182,
+        "startChar": 31,
+        "endLine": 182,
+        "endChar": 41
+      },
+      "revId": "341ad9ba473592a43ce0c44747c50c4d377a7385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a7a52e4_0481be8f",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-22T11:18:14Z",
+      "side": 1,
+      "message": "Hi, I have updated this and used the container instead.\n\nI was going to change the other test too, but it failed when i did so. Then i realized it actually was supposed to be failing because of a bug i realized just today (crbug.com/757752).\n\nSince this is a fix for a browser crash, I know it should be uploaded as soon as possible. I think I can focus on the other bug in a separate cl and update the EditableUsernameFieldBecomesLabelAfterEscKey test in there with the fix. I have added a TODO for this as well.",
+      "parentUuid": "dad3f867_91d35afe",
       "range": {
         "startLine": 182,
         "startChar": 31,
