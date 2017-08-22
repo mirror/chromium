@@ -439,6 +439,10 @@ class BasePage {
   // Returns true if this page has been swept by the ongoing lazy sweep.
   bool HasBeenSwept() const { return swept_; }
 
+  ALWAYS_INLINE bool IsIncrementalMarking() const {
+    return incremental_marking_;
+  }
+
   void MarkAsSwept() {
     DCHECK(!swept_);
     swept_ = true;
@@ -457,6 +461,7 @@ class BasePage {
   // Track the sweeping state of a page. Set to false at the start of a sweep,
   // true  upon completion of lazy sweeping.
   bool swept_;
+  bool incremental_marking_ = false;
   friend class BaseArena;
 };
 
@@ -848,7 +853,7 @@ class LargeObjectArena final : public BaseArena {
 //
 // FIXME: Remove PLATFORM_EXPORT once we get a proper public interface to our
 // typed arenas. This is only exported to enable tests in HeapTest.cpp.
-PLATFORM_EXPORT inline BasePage* PageFromObject(const void* object) {
+PLATFORM_EXPORT ALWAYS_INLINE BasePage* PageFromObject(const void* object) {
   Address address = reinterpret_cast<Address>(const_cast<void*>(object));
   BasePage* page = reinterpret_cast<BasePage*>(BlinkPageAddress(address) +
                                                kBlinkGuardPageSize);

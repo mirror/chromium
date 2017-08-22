@@ -582,6 +582,8 @@ class PLATFORM_EXPORT ThreadState {
 
   int GcAge() const { return gc_age_; }
 
+  bool IncrementalMarking() const { return incremental_marking_; }
+
  private:
   template <typename T>
   friend class PrefinalizerRegistration;
@@ -684,6 +686,7 @@ class PLATFORM_EXPORT ThreadState {
   BlinkGC::StackState stack_state_;
   intptr_t* start_of_stack_;
   intptr_t* end_of_stack_;
+  bool incremental_marking_;
 
   void* safe_point_scope_marker_;
   Vector<Address> safe_point_stack_copy_;
