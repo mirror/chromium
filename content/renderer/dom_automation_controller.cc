@@ -51,9 +51,7 @@ gin::ObjectTemplateBuilder DomAutomationController::GetObjectTemplateBuilder(
   return gin::Wrappable<DomAutomationController>::GetObjectTemplateBuilder(
              isolate)
       .SetMethod("send", &DomAutomationController::SendMsg)
-      .SetMethod("setAutomationId", &DomAutomationController::SetAutomationId)
-      .SetMethod("sendJSON", &DomAutomationController::SendJSON)
-      .SetMethod("sendWithId", &DomAutomationController::SendWithId);
+      .SetMethod("sendJSON", &DomAutomationController::SendJSON);
 }
 
 void DomAutomationController::OnDestruct() {}
@@ -106,10 +104,7 @@ bool DomAutomationController::SendMsg(const gin::Arguments& args) {
   if (!value || !serializer.Serialize(*value))
     return false;
 
-  bool succeeded = Send(new FrameHostMsg_DomOperationResponse(
-      routing_id(), json));
-
-  return succeeded;
+  return SendJSON(json);
 }
 
 bool DomAutomationController::SendJSON(const std::string& json) {
@@ -120,18 +115,6 @@ bool DomAutomationController::SendJSON(const std::string& json) {
       routing_id(), json));
 
   return result;
-}
-
-bool DomAutomationController::SendWithId(int automation_id,
-                                         const std::string& str) {
-  if (!render_frame())
-    return false;
-  return Send(
-      new FrameHostMsg_DomOperationResponse(routing_id(), str));
-}
-
-bool DomAutomationController::SetAutomationId(int automation_id) {
-  return true;
 }
 
 }  // namespace content
