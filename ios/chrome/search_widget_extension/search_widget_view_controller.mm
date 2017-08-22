@@ -75,28 +75,17 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  UIVibrancyEffect* primary;
-  UIVibrancyEffect* secondary;
   CGFloat height =
       self.extensionContext && base::ios::IsRunningOnIOS10OrLater()
           ? [self.extensionContext
                 widgetMaximumSizeForDisplayMode:NCWidgetDisplayModeCompact]
                 .height
           : 110;
-  if (base::ios::IsRunningOnIOS10OrLater()) {
-    primary = [UIVibrancyEffect widgetPrimaryVibrancyEffect];
-    secondary = [UIVibrancyEffect widgetSecondaryVibrancyEffect];
-  } else {
-    primary = [UIVibrancyEffect notificationCenterVibrancyEffect];
-    secondary = [UIVibrancyEffect notificationCenterVibrancyEffect];
-  }
 
   // A local variable is necessary here as the property is declared weak and the
   // object would be deallocated before being retained by the addSubview call.
   SearchWidgetView* widgetView = [[SearchWidgetView alloc]
          initWithActionTarget:self
-        primaryVibrancyEffect:primary
-      secondaryVibrancyEffect:secondary
                 compactHeight:height
              initiallyCompact:(base::ios::IsRunningOnIOS10OrLater() &&
                                [self.extensionContext

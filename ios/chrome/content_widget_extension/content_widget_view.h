@@ -29,8 +29,9 @@
 @property(nonatomic, readonly) CGFloat widgetExpandedHeight;
 
 // Designated initializer, creates the widget view with a |delegate| for user
-// actions. |compactHeight| indicates the size to use in compact display.
-// |initiallyCompact| indicates which mode to display on initialization.
+// actions. |compactHeight| indicates the size to use in
+// compact display. |initiallyCompact| indicates which mode to display on
+// initialization.
 - (instancetype)initWithDelegate:(id<ContentWidgetViewDelegate>)delegate
                    compactHeight:(CGFloat)compactHeight
                 initiallyCompact:(BOOL)compact NS_DESIGNATED_INITIALIZER;
