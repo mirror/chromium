@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "db2524cc_fdb69cbe",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-22T09:22:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1df18675_4d26fc57",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 35
+      },
+      "revId": "914540049ccf2b5aeb7398452d469aff7062911b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46df6d1e_13a5a385",
         "filename": "chrome/browser/ui/startup/startup_tab_provider.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-21T17:45:04Z",
       "side": 1,
       "message": "This is an improvement, but I\u0027m curious why you prefer this vs a bitmask? That seems to more naturally map to what you have.",
+      "range": {
+        "startLine": 65,
+        "startChar": 4,
+        "endLine": 65,
+        "endChar": 22
+      },
+      "revId": "914540049ccf2b5aeb7398452d469aff7062911b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307de4a6_e1092746",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-22T09:22:35Z",
+      "side": 1,
+      "message": "Let\u0027s say I declare the mask as:\nenum OnboardingTabsStateMask {\n kIsFirstRunParam \u003d 1 \u003c\u003c 0;\n kIsSigninAllowed \u003d 1 \u003c\u003c 1;\n ...\n}\n\nHere are my reasons (but I guess this all comes down to personal preference):\n* Future changes: This way, we can also pass different types in the future (let\u0027s say we want to pass the email of the authenticated account in the future).\n* Personal pref: I personally prefer to use params.is_first_run instead of doing (params \u0026 kIsFirstRunParam) when checking its value.\n* These values are not options (like a mask), so to me it feels more natural to list them in an enum\n* Initializing seems simpler with struct: With bitmasks, I would have to do the following to initialize these :\nint state \u003d 0;\nif (first_run::IsChromeFirstRun())\n  state |\u003d kIsFirstRunParam;\nif (profile-\u003eIsSyncAllowed())\n  state |\u003d kIsSigninAllowed;\nGetWin10OnboardingTabsForState(state);\n\nPlease let me know if you prefer me to change this to a bitmask (maybe explain your reasons as well so that I can keep an eye out in the future when encountering the same pattern).",
+      "parentUuid": "46df6d1e_13a5a385",
       "range": {
         "startLine": 65,
         "startChar": 4,
@@ -68,6 +116,30 @@
       "revId": "914540049ccf2b5aeb7398452d469aff7062911b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee154e9_e28e7cf8",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-22T09:22:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "946299dc_23b4c200",
+      "range": {
+        "startLine": 73,
+        "startChar": 37,
+        "endLine": 73,
+        "endChar": 65
+      },
+      "revId": "914540049ccf2b5aeb7398452d469aff7062911b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
