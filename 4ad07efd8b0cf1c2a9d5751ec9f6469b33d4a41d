@@ -45,6 +45,30 @@
       "revId": "4ad07efd8b0cf1c2a9d5751ec9f6469b33d4a41d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a639111_63594efb",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-22T02:02:12Z",
+      "side": 1,
+      "message": "I don\u0027t think that works - that makes it racy, no?  There\u0027s no guarantee RegisterNetworkBinders will run before test code, is there?  As this point, we\u0027ve already created the NetworkService, so there\u0027s potentially a race between creating the NetworkServiceTest object in the network process, and making the next call using the NetworkService interface.\n\nIf creating the Mojo services are guaranteed to happen in the order called, we could move creating the NetworkServiceTest object up some place after we initialize Mojo, but before we first create the NetworkService, but I\u0027m not sure such a place actually exists (And I\u0027m also not sure the order of creating services out of process is guaranteed).  I think both may happen in PreRunTestOnMainThread(), though it\u0027s possible only initializing Mojo happens there, and we can put the call just after PreRunTestOnMainThread().",
+      "parentUuid": "6e7296ee_b506494b",
+      "range": {
+        "startLine": 428,
+        "startChar": 2,
+        "endLine": 428,
+        "endChar": 22
+      },
+      "revId": "4ad07efd8b0cf1c2a9d5751ec9f6469b33d4a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
