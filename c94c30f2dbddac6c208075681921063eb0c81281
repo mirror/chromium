@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b51d466_74b99264",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-22T14:33:01Z",
+      "side": 1,
+      "message": "You also need to list this new crash key in the following files:\n\nhttps://cs.chromium.org/chromium/src/chrome/common/crash_keys.cc?rcl\u003dba7e48f93bd0d79696d11baf8374d273f76d72d1\u0026l\u003d211\nhttps://cs.chromium.org/chromium/src/chrome/app/chrome_crash_reporter_client_win.cc?q\u003dbad_histogram\u0026sq\u003dpackage:chromium\u0026l\u003d172\n\nSecond place might not be strictly necessary since this is not enabled on Windows, but I think it\u0027s better to update both locations for consistency.\n\nAlternatively, you could pass location to ValidateHistogramContents() and include that info in the existing crash key.",
+      "range": {
+        "startLine": 320,
+        "startChar": 45,
+        "endLine": 320,
+        "endChar": 49
+      },
+      "revId": "c94c30f2dbddac6c208075681921063eb0c81281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
