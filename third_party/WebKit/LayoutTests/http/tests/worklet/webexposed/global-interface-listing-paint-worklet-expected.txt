@@ -203,18 +203,6 @@ CONSOLE MESSAGE: line 147:     getter width
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147: interface PaintWorkletGlobalScope : WorkletGlobalScope
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147: interface Path2D
-CONSOLE MESSAGE: line 147:     method addPath
-CONSOLE MESSAGE: line 147:     method arc
-CONSOLE MESSAGE: line 147:     method arcTo
-CONSOLE MESSAGE: line 147:     method bezierCurveTo
-CONSOLE MESSAGE: line 147:     method closePath
-CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     method ellipse
-CONSOLE MESSAGE: line 147:     method lineTo
-CONSOLE MESSAGE: line 147:     method moveTo
-CONSOLE MESSAGE: line 147:     method quadraticCurveTo
-CONSOLE MESSAGE: line 147:     method rect
 CONSOLE MESSAGE: line 147: interface ReadableStream
 CONSOLE MESSAGE: line 147:     getter locked
 CONSOLE MESSAGE: line 147:     method cancel
@@ -459,18 +447,6 @@ CONSOLE MESSAGE: line 147:     getter width
 CONSOLE MESSAGE: line 147:     method constructor
 CONSOLE MESSAGE: line 147: interface PaintWorkletGlobalScope : WorkletGlobalScope
 CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147: interface Path2D
-CONSOLE MESSAGE: line 147:     method addPath
-CONSOLE MESSAGE: line 147:     method arc
-CONSOLE MESSAGE: line 147:     method arcTo
-CONSOLE MESSAGE: line 147:     method bezierCurveTo
-CONSOLE MESSAGE: line 147:     method closePath
-CONSOLE MESSAGE: line 147:     method constructor
-CONSOLE MESSAGE: line 147:     method ellipse
-CONSOLE MESSAGE: line 147:     method lineTo
-CONSOLE MESSAGE: line 147:     method moveTo
-CONSOLE MESSAGE: line 147:     method quadraticCurveTo
-CONSOLE MESSAGE: line 147:     method rect
 CONSOLE MESSAGE: line 147: interface ReadableStream
 CONSOLE MESSAGE: line 147:     getter locked
 CONSOLE MESSAGE: line 147:     method cancel
