@@ -2,6 +2,234 @@
   "comments": [
     {
       "key": {
+        "uuid": "fe38d040_fd883332",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T17:40:25Z",
+      "side": 1,
+      "message": "Nit: base::WrapUnique",
+      "range": {
+        "startLine": 100,
+        "startChar": 9,
+        "endLine": 100,
+        "endChar": 49
+      },
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "706bca6f_075b9d05",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T17:40:25Z",
+      "side": 1,
+      "message": "What do you expect this handler to do?",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31e96d7d_c5cb0767",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T17:40:25Z",
+      "side": 1,
+      "message": "Can you add a comment that explains why this should always be true (assuming no compromised renderer)? Can this PresentationReceiverImpl not be reused?\n\n(I don\u0027t completely understand how all the presentation interfaces work together)",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754a1674_74511971",
+        "filename": "content/renderer/presentation/presentation_dispatcher.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T17:40:25Z",
+      "side": 1,
+      "message": "Nit: I think it\u0027s more typical to use an early return (since there\u0027s no other word that happens after initializing this)",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635e1d2b_85c88760",
+        "filename": "content/renderer/presentation/presentation_dispatcher.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T17:40:25Z",
+      "side": 1,
+      "message": "Should there ever be an instance where a PresentationService that doesn\u0027t have a client?\n\nIt\u0027s not really clear how SetClient() and SetReceiver() interact on the mojom interface.",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08d3d54_0ab86cb9",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T17:40:25Z",
+      "side": 1,
+      "message": "As best as I can tell, this is never null, so please return pass a mutable ref.",
+      "range": {
+        "startLine": 158,
+        "startChar": 47,
+        "endLine": 158,
+        "endChar": 59
+      },
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4c5b8f_85e8ce9b",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T17:40:25Z",
+      "side": 1,
+      "message": "DLOG please.\n\n(Also, are we checking this on the browser side as well?",
+      "range": {
+        "startLine": 432,
+        "startChar": 4,
+        "endLine": 432,
+        "endChar": 7
+      },
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dda84221_288b2b36",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T17:40:25Z",
+      "side": 1,
+      "message": "Please document what these Mojo objects correspond to: I guess the binding is for browser to talk to presentation code in the renderer, but I\u0027m not sure what |target_connection_| is.",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef6f8ff_04cb33d7",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T17:40:25Z",
+      "side": 1,
+      "message": "Please add some comments about these subclasses (in particular, what spec concepts these would correspond to would be useful)",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68fc201a_7963f830",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T17:40:25Z",
+      "side": 1,
+      "message": "Nit: please use a type converter so we can audit things that convert to/from mojo",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4225283_0fae6957",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T17:40:25Z",
+      "side": 1,
+      "message": "It\u0027s difficult for me to tell: is it possible for this to be called for a frame that\u0027s detached but still using the presentation APIs?\n\n(Eagerly initializing in the ctor would avoid this problem)",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a12b1b_6a00cfbc",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationReceiver.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T17:40:25Z",
+      "side": 1,
+      "message": "Nit: T?",
+      "range": {
+        "startLine": 108,
+        "startChar": 5,
+        "endLine": 108,
+        "endChar": 6
+      },
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f86d26ed_511f084d",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationReceiver.h",
         "patchSetId": 17
@@ -48,6 +276,58 @@
       "side": 1,
       "message": "For things that aren\u0027t associated with a context, I think we had no choice but to use a pre-finalizer: we needed to invalidate the binding to ensure that Mojo doesn\u0027t call back into a finalized but not yet swept object.",
       "parentUuid": "3720f810_887a4ae8",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6216c29_ef0ae138",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T17:40:25Z",
+      "side": 1,
+      "message": "(And yes, in general, I think it\u0027s better to invalidate bindings on context destroyed, unless there\u0027s a good reason an object in a detached context should still be able to make ipc calls)",
+      "parentUuid": "414e4511_ee2f6e19",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb776aa_5c41bc8a",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/WebPresentationReceiver.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T17:40:25Z",
+      "side": 1,
+      "message": "Can we expand this comment a bit? It seems like there are minimal updates that Blink provides now.",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "751c6be6_fc5a77ce",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T17:40:25Z",
+      "side": 1,
+      "message": "Please document what a receiver PresentationConnection is and what the expected relationship between controller and receiver connection is in the mojom.",
       "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
