@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a797de6a_fbe6de38",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-22T03:29:42Z",
+      "side": 1,
+      "message": "trilinear_filtering : 1",
+      "revId": "c90a44a46d617981ba927b971b57431fea6eb3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aed50387_0b40dfd8",
         "filename": "cc/resources/resource_provider.cc",
         "patchSetId": 4
