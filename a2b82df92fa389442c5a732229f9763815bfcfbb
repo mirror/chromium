@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e039411_aee8190d",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T04:46:59Z",
+      "side": 1,
+      "message": "FWIW, it feels non-obvious that only Document-associated notifications are non-persistent. One of these comments should probably cover what they are (unless this is spec terminology: in that case, maybe point this at the relevant section of the spec)",
+      "revId": "a2b82df92fa389442c5a732229f9763815bfcfbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
