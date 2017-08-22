@@ -325,6 +325,17 @@ class ScopedResolvedFramebufferBinder {
   DISALLOW_COPY_AND_ASSIGN(ScopedResolvedFramebufferBinder);
 };
 
+class ScopedUnallocatedAttrib0Workaround {
+ public:
+  explicit ScopedUnallocatedAttrib0Workaround(bool enable_workaround,
+                                              const VertexAttrib* attrib0);
+  ~ScopedUnallocatedAttrib0Workaround();
+
+ private:
+  bool enable_attrib0_on_destruction_ = false;
+  DISALLOW_COPY_AND_ASSIGN(ScopedUnallocatedAttrib0Workaround);
+};
+
 // Encapsulates an OpenGL texture.
 class BackTexture {
  public:
@@ -2669,6 +2680,24 @@ ScopedResolvedFramebufferBinder::~ScopedResolvedFramebufferBinder() {
   decoder_->RestoreCurrentFramebufferBindings();
   if (decoder_->state_.enable_flags.scissor_test) {
     decoder_->state_.SetDeviceCapabilityState(GL_SCISSOR_TEST, true);
+  }
+}
+
+ScopedUnallocatedAttrib0Workaround::ScopedUnallocatedAttrib0Workaround(
+    bool enable_workaround,
+    const VertexAttrib* attrib0) {
+  if (enable_workaround && attrib0 && attrib0->enabled()) {
+    const Buffer* buffer = attrib0->buffer();
+    if (buffer && buffer->size() == 0) {
+      glDisableVertexAttribArray(0);
+      enable_attrib0_on_destruction_ = true;
+    }
+  }
+}
+
+ScopedUnallocatedAttrib0Workaround::~ScopedUnallocatedAttrib0Workaround() {
+  if (enable_attrib0_on_destruction_) {
+    glEnableVertexAttribArray(0);
   }
 }
 
@@ -10303,6 +10332,12 @@ error::Error GLES2DecoderImpl::DoDrawArrays(
     if (SimulateFixedAttribs(
         function_name, max_vertex_accessed, &simulated_fixed_attribs,
         primcount)) {
+      const VertexAttrib* attrib0 =
+          state_.vertex_attrib_manager->GetVertexAttrib(0);
+      ScopedUnallocatedAttrib0Workaround attrib0_workaround(
+          workarounds().disable_attrib0_if_unallocated && !simulated_attrib_0,
+          attrib0);
+
       bool textures_set = !PrepareTexturesForRender();
       ApplyDirtyState();
       if (!ValidateAndAdjustDrawBuffers(function_name)) {
@@ -10448,6 +10483,12 @@ error::Error GLES2DecoderImpl::DoDrawElements(const char* function_name,
     if (SimulateFixedAttribs(
         function_name, max_vertex_accessed, &simulated_fixed_attribs,
         primcount)) {
+      const VertexAttrib* attrib0 =
+          state_.vertex_attrib_manager->GetVertexAttrib(0);
+      ScopedUnallocatedAttrib0Workaround attrib0_workaround(
+          workarounds().disable_attrib0_if_unallocated && !simulated_attrib_0,
+          attrib0);
+
       bool textures_set = !PrepareTexturesForRender();
       ApplyDirtyState();
       // TODO(gman): Refactor to hide these details in BufferManager or
