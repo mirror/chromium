@@ -34,6 +34,24 @@
       "revId": "29d40cdcc556375218a856a49465bdbb9ccbc421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b67a74_ceb8876d",
+        "filename": "testing/buildbot/filters/fuchsia.content_unittests.filter",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-22T23:20:47Z",
+      "side": 1,
+      "message": "SGTM - LGTM as-is, then.\n\n(Yay, lots of juicy tests to get working ;)",
+      "parentUuid": "d17f2777_7b50d29e",
+      "revId": "29d40cdcc556375218a856a49465bdbb9ccbc421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
