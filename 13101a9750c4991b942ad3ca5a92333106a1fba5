@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "79e961b0_13658375",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:21:32Z",
+      "side": 1,
+      "message": "Ah that makes sense, thanks. (Done)",
+      "parentUuid": "51ca86a3_c0aec406",
+      "revId": "13101a9750c4991b942ad3ca5a92333106a1fba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9bc4d28_b7dd9619",
         "filename": "components/viz/common/BUILD.gn",
         "patchSetId": 4
@@ -105,6 +123,24 @@
       "revId": "13101a9750c4991b942ad3ca5a92333106a1fba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c05467_d283fbdb",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T20:21:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f03e37a_eb05fed8",
+      "revId": "13101a9750c4991b942ad3ca5a92333106a1fba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
