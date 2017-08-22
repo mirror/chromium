@@ -111,6 +111,10 @@ class CONTENT_EXPORT NavigationThrottle {
   // Note: this may lead to the deletion of the NavigationHandle and its
   // associated NavigationThrottles, including this one.
   virtual void CancelDeferredNavigation(ThrottleCheckResult result);
+  virtual void CancelDeferredNavigationWithErrorURL(
+      NavigationThrottle::ThrottleCheckResult result,
+      int net_error,
+      const GURL& error_page_url);
 
  private:
   NavigationHandle* navigation_handle_;

@@ -37,5 +37,7 @@ SSLErrorNavigationThrottle::WillFailRequest() {
     LOG(ERROR) << "Not a cert error: " << net_error;
   }
 
+  // TODO: Call CancelDeferredNavigationWithErrorURL().
+
   return content::NavigationThrottle::PROCEED;
 }

@@ -41,4 +41,13 @@ void NavigationThrottle::CancelDeferredNavigation(
       ->CancelDeferredNavigation(this, result);
 }
 
+void NavigationThrottle::CancelDeferredNavigationWithErrorURL(
+    NavigationThrottle::ThrottleCheckResult result,
+    int net_error,
+    const GURL& error_page_url) {
+  static_cast<NavigationHandleImpl*>(navigation_handle_)
+      ->CancelDeferredNavigationWithErrorURL(this, result, int net_error,
+                                             const GURL& error_page_url);
+}
+
 }  // namespace content
