@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c77d898_e5182dbd",
+        "filename": "third_party/WebKit/LayoutTests/compositing/composited-descendant-requiring-border-radius-mask-expected.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-22T21:11:05Z",
+      "side": 1,
+      "message": "I think it will fallback to Skia without forced compositing.",
+      "parentUuid": "95edd4ae_5b30f7f4",
+      "revId": "16f453ecbdffed0217dca7874a3602554ec53e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a45b638_1937527e",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
         "patchSetId": 2
@@ -30,6 +48,41 @@
       "writtenOn": "2017-08-22T20:52:37Z",
       "side": 1,
       "message": "Add a comment explaining.",
+      "revId": "16f453ecbdffed0217dca7874a3602554ec53e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9aee84_93ce8adc",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-22T21:11:05Z",
+      "side": 1,
+      "message": "Actually there is a more efficient way to do this, see below.",
+      "parentUuid": "1a45b638_1937527e",
+      "revId": "16f453ecbdffed0217dca7874a3602554ec53e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd3855a_afa13fd2",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-22T21:11:05Z",
+      "side": 1,
+      "message": "if (clip_rect.HasRadius()) {\n  if (owning_layer_.HasCompositingDescendant()) {\n    owning_layer_is_masked \u003d true;\n    return;\n  }",
       "revId": "16f453ecbdffed0217dca7874a3602554ec53e4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
