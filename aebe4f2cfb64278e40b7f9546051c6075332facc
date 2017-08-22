@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "587153e3_88a894cc",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T11:44:57Z",
+      "side": 1,
+      "message": "it looks like |process_type| is always content::PROCESS_TYPE_BROWSER. how about use content::PROCESS_TYPE_BROWSER explicitly here and get rid of the bound parameter?",
+      "range": {
+        "startLine": 194,
+        "startChar": 10,
+        "endLine": 194,
+        "endChar": 22
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc7e875_92989ec0",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T11:44:57Z",
+      "side": 1,
+      "message": "does this not have the same problem with potentially accessing |module_load_address| after the module has been unloaded?",
+      "range": {
+        "startLine": 195,
+        "startChar": 10,
+        "endLine": 195,
+        "endChar": 32
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8869500_f49130e9",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T11:44:57Z",
+      "side": 1,
+      "message": "stale comment",
+      "range": {
+        "startLine": 211,
+        "startChar": 31,
+        "endLine": 211,
+        "endChar": 47
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "204a80c7_6bfbf629",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2901,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T11:44:57Z",
+      "side": 1,
+      "message": "should this be \"ModuleEventSink interface\"?",
+      "range": {
+        "startLine": 2901,
+        "startChar": 15,
+        "endLine": 2901,
+        "endChar": 29
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a208da_06cec87f",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T11:44:57Z",
+      "side": 1,
+      "message": "#include \"base/location.h\"",
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e0e7b30_bf2283cb",
+        "filename": "chrome/browser/conflicts/module_event_sink_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T11:44:57Z",
+      "side": 1,
+      "message": "these are likely to fail for transiently-loaded modules, no? can you get this data in the child proc and send it to the browser?",
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f49cc5_53c115c8",
+        "filename": "chrome/common/conflicts/module_event_sink_win.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T11:44:57Z",
+      "side": 1,
+      "message": "this doesn\u0027t handle load-\u003eunload-\u003eload where the second load is for a different module that ends up at the same address. should the interface also support passing along SizeOfImage and TimeDateStamp?",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49aafbe7_2ca4e81d",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T11:44:57Z",
+      "side": 1,
+      "message": "nix \" and unloaded\"",
+      "range": {
+        "startLine": 59,
+        "startChar": 52,
+        "endLine": 59,
+        "endChar": 65
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d6712c_4561bed6",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-22T11:44:57Z",
+      "side": 1,
+      "message": "is it necessary to keep these types distinct any longer?",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 46
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
