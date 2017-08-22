@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c58c194_f1cee167",
+        "filename": "chrome/browser/predictors/preconnect_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-22T09:32:33Z",
+      "side": 1,
+      "message": "Just a question:\nYou didn\u0027t add\nbool is_detached() const { return !info; }\n\nAny reason not to?\nI thinkg this would make the code easier to follow later on.",
+      "range": {
+        "startLine": 48,
+        "startChar": 21,
+        "endLine": 48,
+        "endChar": 28
+      },
+      "revId": "9ace807d9d4877960335cc4e2837077115b2e233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
