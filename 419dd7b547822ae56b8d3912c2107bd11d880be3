@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "8d98dadf_5fea4688",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-22T22:29:32Z",
+      "side": 1,
+      "message": "let\u0027s clean the callback_",
+      "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f25daeed_8aff2982",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.h",
         "patchSetId": 3
@@ -30,6 +47,23 @@
       "writtenOn": "2017-08-22T08:30:25Z",
       "side": 1,
       "message": "Add explicit.",
+      "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf29e37_6a7bb49b",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol-1.2.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-22T22:29:32Z",
+      "side": 1,
+      "message": "We do not change version 1.2. It is frozen.",
       "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
