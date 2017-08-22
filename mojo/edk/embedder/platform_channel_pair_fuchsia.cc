@@ -16,6 +16,19 @@
 
 namespace mojo {
 namespace edk {
+namespace {
+
+std::string PrepareToPassHandle(const PlatformHandle& handle,
+                                HandlePassingInformation* handle_passing_info) {
+  DCHECK(handle.is_valid());
+
+  const uint32_t id = PA_HND(PA_USER0, 0);
+  handle_passing_info->push_back({id, handle.as_handle()});
+
+  return base::UintToString(id);
+}
+
+}  // namespace
 
 PlatformChannelPair::PlatformChannelPair(bool client_is_blocking) {
   mx_handle_t handles[2] = {};
@@ -70,12 +83,29 @@ void PlatformChannelPair::PrepareToPassClientHandleToChildProcess(
 std::string
 PlatformChannelPair::PrepareToPassClientHandleToChildProcessAsString(
     HandlePassingInformation* handle_passing_info) const {
-  DCHECK(client_handle_.is_valid());
+  return PrepareToPassHandle(client_handle_.get(), handle_passing_info);
+}
 
-  const uint32_t id = PA_HND(PA_USER0, 0);
-  handle_passing_info->push_back({id, client_handle_.get().as_handle()});
+// static
+void PlatformChannelPair::PrepareToPassHandleToChildProcess(
+    const PlatformHandle& handle,
+    base::CommandLine* command_line,
+    HandlePassingInformation* handle_passing_info) {
+  DCHECK(command_line);
 
-  return base::UintToString(id);
+  // Log a warning if the command line already has the switch, but "clobber" it
+  // anyway, since it's reasonably likely that all the switches were just copied
+  // from the parent.
+  LOG_IF(WARNING, command_line->HasSwitch(kMojoPlatformChannelHandleSwitch))
+      << "Child command line already has switch --"
+      << kMojoPlatformChannelHandleSwitch << "="
+      << command_line->GetSwitchValueASCII(kMojoPlatformChannelHandleSwitch);
+
+  // (Any existing switch won't actually be removed from the command line, but
+  // the last one appended takes precedence.)
+  command_line->AppendSwitchASCII(
+      kMojoPlatformChannelHandleSwitch,
+      PrepareToPassHandle(handle, handle_passing_info));
 }
 
 }  // namespace edk

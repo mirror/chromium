@@ -1,0 +1,31 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "base/fuchsia/child_job.h"
+
+#include <magenta/process.h>
+#include <magenta/syscalls.h>
+
+#include "base/lazy_instance.h"
+
+namespace base {
+namespace {
+static mx_handle_t g_job_handle = mx_job_default();
+}  // namespace
+
+void InitNewChildProcessJob() {
+  DCHECK_EQ(mx_job_default(), g_job_handle);
+
+  mx_status_t result = mx_job_create(mx_job_default(), 0, &g_job_handle);
+  CHECK_EQ(MX_OK, result) << "Error when creating a new child job, result: "
+                          << result;
+}
+
+mx_handle_t GetChildProcessJob() {
+  DCHECK_NE(0, mx_job_default());
+
+  return g_job_handle;
+}
+
+}  // namespace base

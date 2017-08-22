@@ -10,6 +10,7 @@
 #include "base/command_line.h"
 #include "base/environment.h"
 #include "base/files/file_util.h"
+#include "base/fuchsia/child_job.h"
 #include "base/lazy_instance.h"
 #include "base/path_service.h"
 #include "base/run_loop.h"
@@ -83,6 +84,10 @@ bool HeadlessContentMainDelegate::BasicStartupComplete(int* exit_code) {
 
   if (browser_->options()->disable_sandbox)
     command_line->AppendSwitch(switches::kNoSandbox);
+
+#if defined(OS_FUCHSIA)
+  base::InitNewChildProcessJob();
+#endif  // defined(OS_FUCHSIA)
 
 #if defined(USE_OZONE)
   // The headless backend is automatically chosen for a headless build, but also

@@ -24,7 +24,10 @@ bool PathProviderFuchsia(int key, FilePath* result) {
       // systems (like /system) but won't for files installed dynamically in
       // other locations on other types of file systems. So, for now, we use
       // /system/ as the location for everything.
-      *result = FilePath("/system/chrome");
+      *result = FilePath("/system/headless_shell");  // KM: replace this with
+                                                     // real detection before
+                                                     // putting this up for
+                                                     // review
       return true;
     case DIR_SOURCE_ROOT:
       // This is only used for tests, so we return the binary location for now.
