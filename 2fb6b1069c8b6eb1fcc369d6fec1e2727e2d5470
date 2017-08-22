@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "243caea4_91bf344f",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T06:43:06Z",
+      "side": 1,
+      "message": "Actually I\u0027m wondering if we can rely on the internal header.\nHowever, if this is changed to .mojom.h or .mojom-blink.h, I think it violates layering. So for appropriate implementation, we have to use \"#ifdef INCLUDE_BLINK\". It means we need to rely on identity between blink::mojom::blink::ServiceWorkerErrorType and blink::mojom::ServiceWorkerErrorType, but it also seems implementation detail and also too complicated...\nThus, I think if we can rely on mojom-shared.h, it seems better than other options.",
+      "range": {
+        "startLine": 35,
+        "startChar": 73,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
