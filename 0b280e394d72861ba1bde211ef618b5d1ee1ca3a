@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21372014_877d9be5",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-22T19:37:20Z",
+      "side": 1,
+      "message": "If we use a default value here, could we somehow use the \"kWideGamutColorCorrectionTolerance\", which will be more clear.",
+      "range": {
+        "startLine": 58,
+        "startChar": 41,
+        "endLine": 58,
+        "endChar": 45
+      },
+      "revId": "0b280e394d72861ba1bde211ef618b5d1ee1ca3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
