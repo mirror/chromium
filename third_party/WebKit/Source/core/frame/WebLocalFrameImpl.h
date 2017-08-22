@@ -102,6 +102,7 @@ class CORE_EXPORT WebLocalFrameImpl final
   WebDocument GetDocument() const override;
   WebPerformance Performance() const override;
   void DispatchUnloadEvent() override;
+  bool IsAttached() override;
   void ExecuteScript(const WebScriptSource&) override;
   void ExecuteScriptInIsolatedWorld(int world_id,
                                     const WebScriptSource* sources,

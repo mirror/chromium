@@ -140,6 +140,9 @@ class WebLocalFrame : public WebFrame {
   // Runs unload handlers for this frame.
   virtual void DispatchUnloadEvent() = 0;
 
+  // Checks if the frame is still attached to the frame tree.
+  virtual bool IsAttached() = 0;
+
   // Basic properties ---------------------------------------------------
 
   // The urls of the given combination types of favicon (if any) specified by

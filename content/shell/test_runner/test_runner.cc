@@ -1921,35 +1921,34 @@ void TestRunner::OnNavigationBegin(WebFrame* frame) {
     will_navigate_ = true;
 }
 
-bool TestRunner::tryToSetTopLoadingFrame(WebFrame* frame) {
+void TestRunner::tryToSetTopLoadingFrame(WebLocalFrame* frame) {
   will_navigate_ = false;
   if (!IsFramePartOfMainTestWindow(frame))
-    return false;
+    return;
 
   if (top_loading_frame_ || layout_test_runtime_flags_.have_top_loading_frame())
-    return false;
+    return;
 
   top_loading_frame_ = frame;
   layout_test_runtime_flags_.set_have_top_loading_frame(true);
   OnLayoutTestRuntimeFlagsChanged();
-  return true;
 }
 
-bool TestRunner::tryToClearTopLoadingFrame(WebFrame* frame) {
+void TestRunner::tryToClearTopLoadingFrame(WebLocalFrame* frame) {
   will_navigate_ = false;
   if (!IsFramePartOfMainTestWindow(frame))
-    return false;
+    return;
 
   if (frame != top_loading_frame_)
-    return false;
+    return;
 
   top_loading_frame_ = nullptr;
   DCHECK(layout_test_runtime_flags_.have_top_loading_frame());
   layout_test_runtime_flags_.set_have_top_loading_frame(false);
   OnLayoutTestRuntimeFlagsChanged();
 
-  LocationChangeDone();
-  return true;
+  if (frame->IsAttached())
+    LocationChangeDone();
 }
 
 WebFrame* TestRunner::topLoadingFrame() const {

@@ -146,14 +146,14 @@ class TestRunner : public WebTestRunner {
   // To be called when |frame| starts loading - TestRunner will check if
   // there is currently no top-loading-frame being tracked and if so, then it
   // will return true and start tracking |frame| as the top-loading-frame.
-  bool tryToSetTopLoadingFrame(blink::WebFrame* frame);
+  void tryToSetTopLoadingFrame(blink::WebLocalFrame* frame);
 
   // To be called when |frame| finishes loading - TestRunner will check if
   // |frame| is currently tracked as the top-loading-frame, and if yes, then it
   // will return true, stop top-loading-frame tracking, and potentially finish
   // the test (unless testRunner.waitUntilDone() was called and/or there are
   // pending load requests in WorkQueue).
-  bool tryToClearTopLoadingFrame(blink::WebFrame*);
+  void tryToClearTopLoadingFrame(blink::WebLocalFrame*);
 
   blink::WebFrame* mainFrame() const;
   blink::WebFrame* topLoadingFrame() const;
@@ -619,7 +619,7 @@ class TestRunner : public WebTestRunner {
   blink::WebView* main_view_;
 
   // This is non-0 IFF a load is in progress.
-  blink::WebFrame* top_loading_frame_;
+  blink::WebLocalFrame* top_loading_frame_;
 
   // WebContentSettingsClient mock object.
   std::unique_ptr<MockContentSettingsClient> mock_content_settings_client_;
