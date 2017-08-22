@@ -46,6 +46,30 @@
       "revId": "7a738ff4fe888d478cd7839799647d583ef24176",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93edd5f5_cdd1bf5a",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-22T19:36:52Z",
+      "side": 1,
+      "message": "Okay, then that sounds good. Maybe add a comment about it so future readers will know your reasoning.",
+      "parentUuid": "2f89aba7_9a19bd2f",
+      "range": {
+        "startLine": 210,
+        "startChar": 8,
+        "endLine": 210,
+        "endChar": 28
+      },
+      "revId": "7a738ff4fe888d478cd7839799647d583ef24176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
