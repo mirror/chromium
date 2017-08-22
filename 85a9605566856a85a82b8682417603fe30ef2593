@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47558de9_1eac7aa2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-22T13:40:25Z",
+      "side": 1,
+      "message": "Please expand the CL description.",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 89
+      },
+      "revId": "85a9605566856a85a82b8682417603fe30ef2593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31186f64_ac0e9db4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentApp.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-22T13:40:25Z",
+      "side": 1,
+      "message": "URI",
+      "range": {
+        "startLine": 102,
+        "startChar": 12,
+        "endLine": 102,
+        "endChar": 18
+      },
+      "revId": "85a9605566856a85a82b8682417603fe30ef2593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4028b48_4c2595cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentApp.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-22T13:40:25Z",
+      "side": 1,
+      "message": "URI",
+      "range": {
+        "startLine": 119,
+        "startChar": 22,
+        "endLine": 119,
+        "endChar": 27
+      },
+      "revId": "85a9605566856a85a82b8682417603fe30ef2593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e983f30c_847f12e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentApp.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-22T13:40:25Z",
+      "side": 1,
+      "message": "URI",
+      "range": {
+        "startLine": 252,
+        "startChar": 11,
+        "endLine": 252,
+        "endChar": 17
+      },
+      "revId": "85a9605566856a85a82b8682417603fe30ef2593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cda227b8_c2ec3a14",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-22T13:40:25Z",
+      "side": 1,
+      "message": "This always looks like https://something.com/stuff, so let\u0027s use URI type for this variable. You will find UriUtils.looksLikeUriMethod() and UriUtils.parseUriFromString() methods useful.",
+      "range": {
+        "startLine": 474,
+        "startChar": 19,
+        "endLine": 474,
+        "endChar": 37
+      },
+      "revId": "85a9605566856a85a82b8682417603fe30ef2593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e95058_c2391440",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-22T13:40:25Z",
+      "side": 1,
+      "message": "URI",
+      "range": {
+        "startLine": 58,
+        "startChar": 81,
+        "endLine": 58,
+        "endChar": 87
+      },
+      "revId": "85a9605566856a85a82b8682417603fe30ef2593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fdd76a9_79b104bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-22T13:40:25Z",
+      "side": 1,
+      "message": "URI",
+      "range": {
+        "startLine": 108,
+        "startChar": 12,
+        "endLine": 108,
+        "endChar": 17
+      },
+      "revId": "85a9605566856a85a82b8682417603fe30ef2593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7094fa_65301cc3",
+        "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-22T13:40:25Z",
+      "side": 1,
+      "message": "Not sure what this comment means.\n\nIt would be better to note that this parameter is the sublabel for the app.",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 45
+      },
+      "revId": "85a9605566856a85a82b8682417603fe30ef2593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
