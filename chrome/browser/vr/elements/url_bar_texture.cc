@@ -8,6 +8,7 @@
 #include "cc/paint/skia_paint_canvas.h"
 #include "chrome/browser/vr/color_scheme.h"
 #include "chrome/browser/vr/elements/render_text_wrapper.h"
+#include "components/url_formatter/elide_url.h"
 #include "components/url_formatter/url_formatter.h"
 #include "components/vector_icons/vector_icons.h"
 #include "ui/gfx/canvas.h"
@@ -334,28 +335,35 @@ void UrlBarTexture::RenderUrl(const gfx::Size& texture_size,
       url_formatter::kFormatUrlOmitDefaults;
   if (state_.offline_page)
     format_types |= url_formatter::kFormatUrlOmitHTTPS;
-  const base::string16 text = url_formatter::FormatUrl(
+
+  const base::string16 unelided_text = url_formatter::FormatUrl(
       state_.gurl, format_types, net::UnescapeRule::NORMAL, &parsed, nullptr,
       nullptr);
-
   int pixel_font_height = texture_size.height() * kFontHeight / kHeight;
-
   gfx::FontList font_list;
-  if (!GetFontList(pixel_font_height, text, &font_list))
+  if (!GetFontList(pixel_font_height, unelided_text, &font_list))
     failure_callback_.Run(UiUnsupportedMode::kUnhandledCodePoint);
+
+  // TODO: How do we know the text measurements that take place when eliding
+  // will apply when we enforce LTR directionality on the final rendering?
+  url::Parsed new_parsed;
+  const base::string16 text = url_formatter::SecurelyElideFormattedUrl(
+      state_.gurl, unelided_text, parsed, font_list, bounds.width(),
+      &new_parsed);
 
   std::unique_ptr<gfx::RenderText> render_text(
       gfx::RenderText::CreateInstance());
   render_text->SetFontList(font_list);
   render_text->SetColor(SK_ColorBLACK);
   render_text->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  render_text->SetElideBehavior(gfx::ELIDE_TAIL);
+  // render_text->SetElideBehavior(gfx::ELIDE_TAIL);
   render_text->SetDirectionalityMode(gfx::DIRECTIONALITY_FORCE_LTR);
   render_text->SetText(text);
   render_text->SetDisplayRect(bounds);
 
   // Until we can properly elide a URL, we need to bail if the origin portion
   // cannot be displayed in its entirety.
+#if 0
   base::string16 mandatory_prefix = text;
   int length = parsed.CountCharactersBefore(url::Parsed::PORT, false);
   if (length > 0)
@@ -368,10 +376,11 @@ void UrlBarTexture::RenderUrl(const gfx::Size& texture_size,
           mandatory_prefix) {
     failure_callback_.Run(UiUnsupportedMode::kCouldNotElideURL);
   }
+#endif
 
   vr::RenderTextWrapper vr_render_text(render_text.get());
-  ApplyUrlStyling(text, parsed, state_.security_level, &vr_render_text,
-                  color_scheme());
+  // ApplyUrlStyling(text, parsed, state_.security_level, &vr_render_text,
+  // color_scheme());
 
   url_render_text_ = std::move(render_text);
 }

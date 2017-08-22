@@ -20,6 +20,7 @@ class FontList;
 
 namespace url {
 class Origin;
+struct Parsed;
 }
 
 namespace url_formatter {
@@ -51,6 +52,22 @@ base::string16 ElideHost(const GURL& host_url,
                          const gfx::FontList& font_list,
                          float available_pixel_width);
 #endif  // !defined(OS_ANDROID)
+
+// This function takes a formatted URL string, along with the original GURL and
+// parsing results, and elides it to fit a specified width. Formatting is done
+// separately for flexibility. Elision is performed according to the origin
+// presentation guidance at:
+// https://www.chromium.org/Home/chromium-security/enamel
+// It will elide from the right until any path, query or reference components
+// are gone, then elide from the left. By eliding from the left, the TLD+1 is
+// preserved as long as possible, but will itself be chopped if necessary.
+// The scheme is also chopped if helpful.
+base::string16 SecurelyElideFormattedUrl(const GURL& url,
+                                         const base::string16 url_string,
+                                         const url::Parsed& parsed,
+                                         const gfx::FontList& font_list,
+                                         float available_pixel_width,
+                                         const url::Parsed* new_parsed);
 
 enum class SchemeDisplay {
   SHOW,

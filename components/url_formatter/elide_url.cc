@@ -20,10 +20,8 @@
 #include "url/origin.h"
 #include "url/url_constants.h"
 
-#if !defined(OS_ANDROID)
 #include "ui/gfx/text_elider.h"  // nogncheck
 #include "ui/gfx/text_utils.h"  // nogncheck
-#endif
 
 namespace {
 
@@ -414,6 +412,73 @@ base::string16 FormatOriginForSecurityDisplay(
   if (port != 0 && port != default_port)
     result += colon + base::UintToString16(origin.port());
 
+  return result;
+}
+
+base::string16 SecurelyElideFormattedUrl(const GURL& url,
+                                         const base::string16 url_string,
+                                         const url::Parsed& parsed,
+                                         const gfx::FontList& font_list,
+                                         float available_pixel_width,
+                                         const url::Parsed* new_parsed) {
+  // Get a formatted string and corresponding parsing of the url.
+  // url::Parsed parsed;
+  // const base::string16 url_string = url_formatter::FormatUrl(
+  // url, url_formatter::kFormatUrlOmitDefaults, net::UnescapeRule::SPACES,
+  //&parsed, nullptr, nullptr);
+  if (available_pixel_width <= 0)
+    return url_string;
+
+  // If non-standard, or a file URL, return plain eliding.
+  if (!url.IsStandard() || url.SchemeIsFile())
+    return gfx::ElideText(url_string, font_list, available_pixel_width,
+                          gfx::ELIDE_TAIL);
+
+  // If entire string fits, return it.
+  if (available_pixel_width >= gfx::GetStringWidthF(url_string, font_list))
+    return url_string;
+
+  base::string16 trailing_elision =
+      gfx::kForwardSlash + base::string16(gfx::kEllipsisUTF16);
+
+  // Check if there is anything after the hostname (path, query, ref).
+  // TODO - how should we properly handle no host?
+  DCHECK(parsed.host.is_valid());
+
+  bool characters_after_host =
+      (parsed.host.end() < static_cast<int>(url_string.size()));
+
+  if (characters_after_host) {
+    // Return general elided text if fully eliding the path/query/ref fits.
+    base::string16 shortest =
+        url_string.substr(0, parsed.host.end()) + trailing_elision;
+    if (available_pixel_width >= gfx::GetStringWidthF(shortest, font_list)) {
+      return gfx::ElideText(url_string, font_list, available_pixel_width,
+                            gfx::ELIDE_TAIL);
+    }
+
+    // Return general elided text if removing the scheme and fully eliding the
+    // path/query/ref fits.
+    shortest = url_string.substr(parsed.host.begin, parsed.host.len) +
+               trailing_elision;
+    if (available_pixel_width >= gfx::GetStringWidthF(shortest, font_list)) {
+      return gfx::ElideText(
+          url_string.substr(parsed.host.begin,
+                            url_string.size() - parsed.host.begin),
+          font_list, available_pixel_width, gfx::ELIDE_TAIL);
+    }
+  }
+
+  base::string16 remaining =
+      url_string.substr(parsed.host.begin, parsed.host.len);
+  if (characters_after_host)
+    remaining += trailing_elision;
+
+  // Only host remains, so elide from the left.
+  base::string16 result = gfx::ElideText(
+      remaining, font_list, available_pixel_width, gfx::ELIDE_HEAD);
+  if (result == (base::string16(gfx::kEllipsisUTF16) + gfx::kEllipsisUTF16))
+    result = base::string16(gfx::kEllipsisUTF16);
   return result;
 }
 
