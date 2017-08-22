@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ab1cec8_06b870fc",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T23:40:52Z",
+      "side": 1,
+      "message": "Revert.",
+      "range": {
+        "startLine": 283,
+        "startChar": 34,
+        "endLine": 283,
+        "endChar": 45
+      },
+      "revId": "86d032980c0c38595be4f5eda0334045a6384d53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
