@@ -16,6 +16,24 @@
       "revId": "3103d684c1500aaea4de9357dcb966c97d6c0508",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4650ffb3_a0190558",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1747,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-22T22:21:53Z",
+      "side": 1,
+      "message": "It\u0027s at 50% currently, but it shouldn\u0027t matter -- this is a PlzNav-only codepath (the speculative_render_frame_host_ is set right above in the CreateRenderFrame call).  Most (but not all) of these crashes have been with PlzNavigate enabled, so I\u0027m only doing this here.",
+      "parentUuid": "5849a3a2_e6893270",
+      "revId": "3103d684c1500aaea4de9357dcb966c97d6c0508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
