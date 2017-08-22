@@ -5,6 +5,36 @@
 import("//components/viz/viz.gni")
 import("//testing/test.gni")
 
+source_set("viz_common_export") {
+  visibility = [ ":*" ]
+  sources = [
+    "viz_common_export.h",
+  ]
+}
+
+viz_component("resource_format") {
+  output_name = "viz_resource_format"
+
+  defines = [ "VIZ_COMMON_IMPLEMENTATION" ]
+
+  sources = [
+    "resources/resource_format.h",
+    "resources/resource_format_utils.cc",
+    "resources/resource_format_utils.h",
+  ]
+
+  public_deps = [
+    ":viz_common_export",
+  ]
+
+  deps = [
+    "//base",
+    "//gpu/command_buffer/client:gles2_interface",
+    "//skia",
+    "//ui/gfx:buffer_types",
+  ]
+}
+
 viz_component("common") {
   output_name = "viz_common"
 
@@ -46,9 +76,6 @@ viz_component("common") {
     "resources/buffer_to_texture_target_map.cc",
     "resources/buffer_to_texture_target_map.h",
     "resources/platform_color.h",
-    "resources/resource_format.h",
-    "resources/resource_format_utils.cc",
-    "resources/resource_format_utils.h",
     "resources/resource_id.h",
     "resources/resource_settings.cc",
     "resources/resource_settings.h",
@@ -79,7 +106,6 @@ viz_component("common") {
     "switches.h",
     "traced_value.cc",
     "traced_value.h",
-    "viz_common_export.h",
   ]
 
   deps = [
@@ -98,6 +124,8 @@ viz_component("common") {
   ]
 
   public_deps = [
+    ":resource_format",
+    ":viz_common_export",
     "//gpu/command_buffer/client",
     "//gpu/command_buffer/common",
     "//mojo/public/cpp/bindings",
