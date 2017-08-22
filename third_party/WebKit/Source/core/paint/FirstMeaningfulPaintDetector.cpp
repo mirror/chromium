@@ -7,6 +7,7 @@
 #include "core/css/FontFaceSetDocument.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/paint/PaintTiming.h"
+#include "core/probe/CoreProbes.h"
 #include "platform/Histogram.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
@@ -93,7 +94,6 @@ void FirstMeaningfulPaintDetector::NotifyPaint() {
   // Skip document background-only paints.
   if (paint_timing_->FirstPaintRendered() == 0.0)
     return;
-
   provisional_first_meaningful_paint_ = MonotonicallyIncreasingTime();
   next_paint_is_meaningful_ = false;
 
@@ -104,10 +104,6 @@ void FirstMeaningfulPaintDetector::NotifyPaint() {
   provisional_first_meaningful_paint_swap_ = 0.0;
   RegisterNotifySwapTime(PaintEvent::kProvisionalFirstMeaningfulPaint);
 
-  TRACE_EVENT_MARK_WITH_TIMESTAMP1(
-      "loading,devtools.timeline", "firstMeaningfulPaintCandidate",
-      TraceEvent::ToTraceTimestamp(provisional_first_meaningful_paint_),
-      "frame", GetDocument()->GetFrame());
   // Ignore the first meaningful paint candidate as this generally is the first
   // contentful paint itself.
   if (!seen_first_meaningful_paint_candidate_) {
@@ -163,6 +159,8 @@ void FirstMeaningfulPaintDetector::Network0QuietTimerFired(TimerBase*) {
       !paint_timing_->FirstContentfulPaintRendered())
     return;
   network0_quiet_reached_ = true;
+  probe::lifecycleEvent(GetDocument(), "network0quiet",
+                        MonotonicallyIncreasingTime());
 
   if (provisional_first_meaningful_paint_) {
     // Enforce FirstContentfulPaint <= FirstMeaningfulPaint.
@@ -178,6 +176,8 @@ void FirstMeaningfulPaintDetector::Network2QuietTimerFired(TimerBase*) {
       !paint_timing_->FirstContentfulPaintRendered())
     return;
   network2_quiet_reached_ = true;
+  probe::lifecycleEvent(GetDocument(), "network2quiet",
+                        MonotonicallyIncreasingTime());
 
   if (provisional_first_meaningful_paint_) {
     // If there's only been one contentful paint, then there won't have been
@@ -291,6 +291,9 @@ void FirstMeaningfulPaintDetector::ReportSwapTime(
   // for reasons other than kDidNotSwapSwapFails.
   paint_timing_->ReportSwapResultHistogram(result);
   provisional_first_meaningful_paint_swap_ = timestamp;
+
+  probe::paintTiming(GetDocument(), "firstMeaningfulPaintCandidate",
+                     provisional_first_meaningful_paint_swap_);
 
   if (defer_first_meaningful_paint_ == kDeferOutstandingSwapPromises &&
       outstanding_swap_promise_count_ == 0) {
