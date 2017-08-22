@@ -70,6 +70,24 @@
       "revId": "e53f344b6b85236da31c69c890c59ff4b3e1f78c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29639aa9_99f86e23",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-22T21:47:43Z",
+      "side": 1,
+      "message": "Okay I see... it uses the output string\u0027s width as a basis for doing the test... so the same input could have multiple outputs...\n\nThat\u0027s really confusing. I\u0027ll stamp this because it doesn\u0027t make the situation worse... (adds another test case), but it would be good to add a TODO for the code owner to improve the situation.",
+      "parentUuid": "f893c441_320cfb16",
+      "revId": "e53f344b6b85236da31c69c890c59ff4b3e1f78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
