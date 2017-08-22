@@ -70,6 +70,30 @@
       "revId": "35f61abe5cf9453d92e83d3e7403c56ed5a9858f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbaae1cd_197b65b0",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-22T21:24:22Z",
+      "side": 1,
+      "message": "Got it. Thank you. I will keep it as it is then. There\u0027s some discussion on chromium-dev on making DCHECKs less painful to enable by default (https://groups.google.com/a/chromium.org/forum/?utm_medium\u003demail\u0026utm_source\u003dfooter#!msg/chromium-dev/IPK4YLS_Z20/NY3EKynqAwAJ )",
+      "parentUuid": "f331109b_158d615e",
+      "range": {
+        "startLine": 370,
+        "startChar": 41,
+        "endLine": 370,
+        "endChar": 0
+      },
+      "revId": "35f61abe5cf9453d92e83d3e7403c56ed5a9858f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
