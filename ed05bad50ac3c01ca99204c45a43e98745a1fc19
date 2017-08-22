@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "0ccefcab_6835f6b0",
+        "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-08-22T07:21:56Z",
+      "side": 1,
+      "message": "Exact location of selection box can be obtained through FindBarView and related objects, but as the bug is that find bar components receive incorrect coordinates, the test would pass even without the fix. To be honest, I don\u0027t really like something like that either, but can\u0027t come up with anything that would be more generic, yet check if the bug is fixed (so it would fail without the patch, and pass with it).",
+      "parentUuid": "233d5ab2_38b5a5c3",
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24bab9db_f699cf51",
         "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
         "patchSetId": 3
