@@ -1478,6 +1478,19 @@ class ChromeDriverTest(ChromeDriverBaseTestWithWebServer):
         chromedriver.NoSuchCookie, "no such cookie",
         self._driver.GetNamedCookie, 'foo')
 
+  def testDeleteCookie(self):
+    self._driver.Load(self.GetHttpUrlForFile(
+        '/chromedriver/empty.html'))
+    self._driver.AddCookie({'name': 'a', 'value': 'b'})
+    self._driver.AddCookie({'name': 'x', 'value': 'y'})
+    self._driver.AddCookie({'name': 'p', 'value': 'q'})
+    cookies = self._driver.GetCookies()
+    self.assertEquals(3, len(cookies))
+    self._driver.DeleteCookie('a')
+    self.assertEquals(2, len(self._driver.GetCookies()))
+    self._driver.DeleteAllCookies()
+    self.assertEquals(0, len(self._driver.GetCookies()))
+
   def testGetUrlOnInvalidUrl(self):
     # Make sure we don't return 'chrome-error://chromewebdata/' (see
     # https://bugs.chromium.org/p/chromedriver/issues/detail?id=1272). RFC 6761
