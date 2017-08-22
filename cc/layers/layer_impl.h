@@ -443,6 +443,7 @@ class CC_EXPORT LayerImpl {
     raster_even_if_not_drawn_ = yes;
   }
   bool raster_even_if_not_drawn() const { return raster_even_if_not_drawn_; }
+  std::string GetDebugName() const;
 
   void EnsureValidPropertyTreeIndices() const;
 
