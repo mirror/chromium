@@ -172,7 +172,8 @@ void NotificationPlatformBridgeAndroid::OnNotificationClicked(
 
   GURL origin(ConvertJavaStringToUTF8(env, java_origin));
   regenerated_notification_infos_[notification_id] =
-      RegeneratedNotificationInfo(origin.spec(), tag, webapk_package);
+      RegeneratedNotificationInfo(origin.spec(), tag,
+                                  base::Optional<std::string>(webapk_package));
 
   ProfileManager* profile_manager = g_browser_process->profile_manager();
   DCHECK(profile_manager);
@@ -200,7 +201,8 @@ void NotificationPlatformBridgeAndroid::
   regenerated_notification_infos_[notification_id] =
       RegeneratedNotificationInfo(
           info.origin, info.tag,
-          ConvertJavaStringToUTF8(env, java_webapk_package));
+          base::Optional<std::string>(
+              ConvertJavaStringToUTF8(env, java_webapk_package)));
 }
 
 void NotificationPlatformBridgeAndroid::OnNotificationClosed(
@@ -286,13 +288,14 @@ void NotificationPlatformBridgeAndroid::Display(
       ConvertUTF8ToJavaString(env, profile_id);
 
   Java_NotificationPlatformBridge_displayNotification(
-      env, java_object_, j_notification_id, j_origin, j_profile_id, incognito,
-      tag, title, body, image, notification_icon, badge, vibration_pattern,
-      notification.timestamp().ToJavaTime(), notification.renotify(),
-      notification.silent(), actions);
+      env, java_object_, j_notification_id, j_origin, j_scope_url, j_profile_id,
+      incognito, tag, title, body, image, notification_icon, badge,
+      vibration_pattern, notification.timestamp().ToJavaTime(),
+      notification.renotify(), notification.silent(), actions);
 
   regenerated_notification_infos_[notification_id] =
-      RegeneratedNotificationInfo(origin_url.spec(), notification.tag());
+      RegeneratedNotificationInfo(origin_url.spec(), scope_url.spec(),
+                                  notification.tag());
 }
 
 void NotificationPlatformBridgeAndroid::Close(
@@ -308,23 +311,28 @@ void NotificationPlatformBridgeAndroid::Close(
 
   ScopedJavaLocalRef<jstring> j_notification_id =
       ConvertUTF8ToJavaString(env, notification_id);
-  ScopedJavaLocalRef<jstring> origin =
+  ScopedJavaLocalRef<jstring> j_origin =
       ConvertUTF8ToJavaString(env, notification_info.origin);
-  ScopedJavaLocalRef<jstring> tag =
+
+  GURL scope_url(notification_info.scope.has_value() ? *notification_info.scope
+                                                     : "");
+  ScopedJavaLocalRef<jstring> j_scope_url =
+      ConvertUTF8ToJavaString(env, scope_url.spec());
+
+  ScopedJavaLocalRef<jstring> j_tag =
       ConvertUTF8ToJavaString(env, notification_info.tag);
 
-  bool has_queried_webapk_package =
-      notification_info.webapk_package.has_value();
-  std::string webapk_package =
-      has_queried_webapk_package ? *notification_info.webapk_package : "";
+  std::string webapk_package = notification_info.webapk_package.has_value()
+                                   ? *notification_info.webapk_package
+                                   : "";
   ScopedJavaLocalRef<jstring> j_webapk_package =
       ConvertUTF8ToJavaString(env, webapk_package);
 
   regenerated_notification_infos_.erase(iterator);
 
   Java_NotificationPlatformBridge_closeNotification(
-      env, java_object_, j_notification_id, origin, tag,
-      has_queried_webapk_package, j_webapk_package);
+      env, java_object_, j_notification_id, j_origin, j_scope_url, j_tag,
+      j_webapk_package);
 }
 
 void NotificationPlatformBridgeAndroid::GetDisplayed(
@@ -353,15 +361,19 @@ NotificationPlatformBridgeAndroid::RegeneratedNotificationInfo::
     RegeneratedNotificationInfo() {}
 
 NotificationPlatformBridgeAndroid::RegeneratedNotificationInfo::
-    RegeneratedNotificationInfo(const std::string& origin,
-                                const std::string& tag)
-    : origin(origin), tag(tag) {}
+    RegeneratedNotificationInfo(const std::string& origin_url,
+                                const std::string& scope_url,
+                                const std::string& tag_string)
+    : origin(origin_url), scope(scope_url), tag(tag_string) {}
 
 NotificationPlatformBridgeAndroid::RegeneratedNotificationInfo::
-    RegeneratedNotificationInfo(const std::string& origin,
-                                const std::string& tag,
-                                const std::string& webapk_package)
-    : origin(origin), tag(tag), webapk_package(webapk_package) {}
+    RegeneratedNotificationInfo(
+        const std::string& origin_url,
+        const std::string& tag_string,
+        const base::Optional<std::string>& webapk_package_name)
+    : origin(origin_url),
+      tag(tag_string),
+      webapk_package(webapk_package_name) {}
 
 NotificationPlatformBridgeAndroid::RegeneratedNotificationInfo::
     ~RegeneratedNotificationInfo() {}
