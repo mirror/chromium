@@ -23,6 +23,8 @@ class ChromeHttpUserAgentSettings : public net::HttpUserAgentSettings {
   // Must be called on the IO thread.
   ~ChromeHttpUserAgentSettings() override;
 
+  static std::string ExpandLanguageList(const std::string& language_prefs);
+
   void CleanupOnUIThread();
 
   // net::HttpUserAgentSettings implementation
