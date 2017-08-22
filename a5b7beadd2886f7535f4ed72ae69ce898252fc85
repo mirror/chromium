@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a82cbb06_8f523389",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-08-22T17:10:56Z",
+      "side": 1,
+      "message": "Thanks for pointing that out, looks like we\u0027ll need an alternate path for the GLES2DecoderHelperImpl methods eventually.  Do you know when/where the GLES2DecoderHelperImpl will be used?  Its methods don\u0027t show up as being used anywhere in code search.",
+      "parentUuid": "cd260ea0_88a79a09",
+      "range": {
+        "startLine": 334,
+        "startChar": 34,
+        "endLine": 334,
+        "endChar": 51
+      },
+      "revId": "a5b7beadd2886f7535f4ed72ae69ce898252fc85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa540540_62579af7",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
         "patchSetId": 4
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-18T16:53:19Z",
       "side": 1,
       "message": "Is the DCHECK valid? Say the client creates a texture with one target, kicks off the decode (passes the target check - mmh, actually, does it check when using passthrough? See comments I left in gpu_video_decode_accelerator.cc), reallocates the texture with a different target, then decode finishes and tries to bind the image with the original target.",
+      "revId": "a5b7beadd2886f7535f4ed72ae69ce898252fc85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f1c57b_2616d7d5",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-08-22T17:10:56Z",
+      "side": 1,
+      "message": "This same assertion is done in Texture::SetLevelImageInternal.  Do we want to validate that the target is valid for each Bind call?",
+      "parentUuid": "fa540540_62579af7",
       "revId": "a5b7beadd2886f7535f4ed72ae69ce898252fc85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "74eaa162_360e8cd3",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-08-22T17:10:56Z",
+      "side": 1,
+      "message": "I\u0027ve updated the current texture binding tracking in the passthrough command decoder to store the client ID and a reference to the texture object.  This way we\u0027ll be safe from it being deleted behind our backs.",
+      "parentUuid": "45beaa1a_7d46a2b2",
+      "revId": "a5b7beadd2886f7535f4ed72ae69ce898252fc85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bff975c8_5e3062d9",
         "filename": "media/gpu/ipc/service/gpu_video_decode_accelerator.cc",
         "patchSetId": 4
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "0fdd1e3f_9cffc76a",
+        "filename": "media/gpu/ipc/service/gpu_video_decode_accelerator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-08-22T17:10:56Z",
+      "side": 1,
+      "message": "Added this check.",
+      "parentUuid": "bff975c8_5e3062d9",
+      "revId": "a5b7beadd2886f7535f4ed72ae69ce898252fc85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bb8627a_1c5bf8ee",
         "filename": "media/gpu/ipc/service/gpu_video_decode_accelerator.cc",
         "patchSetId": 4
@@ -87,6 +165,24 @@
       "writtenOn": "2017-08-18T16:53:19Z",
       "side": 1,
       "message": "Ditto, do we need this check for passthrough?",
+      "revId": "a5b7beadd2886f7535f4ed72ae69ce898252fc85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe24100_29ebcca8",
+        "filename": "media/gpu/ipc/service/gpu_video_decode_accelerator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-08-22T17:10:56Z",
+      "side": 1,
+      "message": "This isn\u0027t feasible to validate right now, size information isn\u0027t tracked in the passthrough textures.  As is, the binding/uploading of video data to the texture will set the size.",
+      "parentUuid": "9bb8627a_1c5bf8ee",
       "revId": "a5b7beadd2886f7535f4ed72ae69ce898252fc85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
