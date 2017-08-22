@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <set>
+#include <unordered_map>
 #include <vector>
 
 #include "base/macros.h"
@@ -99,6 +100,11 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   void CountFeature(uint32_t feature);
   const std::set<uint32_t>& used_features() const;
 
+  // Creates a ServiceWorkerWorkerClientRequest which can be used to bind with a
+  // WorkerFetchContextImpl in a (dedicated or shared) worker thread and receive
+  // SetControllerServiceWorker() method call from the browser process.
+  mojom::ServiceWorkerWorkerClientRequest CreateWorkerClientRequest();
+
   // Called when ServiceWorkerNetworkProvider is destructed. This function
   // severs the Mojo binding to the browser-side ServiceWorkerProviderHost. The
   // reason ServiceWorkerNetworkProvider is special compared to the other
@@ -120,6 +126,10 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   ~ServiceWorkerProviderContext() override;
   void DestructOnMainThread() const;
 
+  // Clears the information of the ServiceWorkerWorkerClient of dedicated (or
+  // shared) worker, when the connection to the worker is disconnected.
+  void UnregisterWorkerFetchContext(mojom::ServiceWorkerWorkerClient*);
+
   const int provider_id_;
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
 
@@ -133,6 +143,12 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // Either |controllee_state_| or |controller_state_| is non-null.
   std::unique_ptr<ControlleeState> controllee_state_;
   std::unique_ptr<ControllerState> controller_state_;
+
+  // Keeps ServiceWorkerWorkerClient pointers of dedicated or shared workers
+  // which are associated with the ServiceWorkerProviderHost.
+  std::unordered_map<mojom::ServiceWorkerWorkerClient*,
+                     mojom::ServiceWorkerWorkerClientPtr>
+      worker_clients_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerProviderContext);
 };

@@ -75,7 +75,6 @@
 #include "content/common/site_isolation_policy.h"
 #include "content/common/swapped_out_messages.h"
 #include "content/common/view_messages.h"
-#include "content/common/worker_url_loader_factory_provider.mojom.h"
 #include "content/public/common/appcache_info.h"
 #include "content/public/common/associated_interface_provider.h"
 #include "content/public/common/bindings_policy.h"
@@ -718,15 +717,6 @@ std::vector<gfx::Size> ConvertToFaviconSizes(
   for (const blink::WebSize& web_size : web_sizes)
     result.push_back(gfx::Size(web_size));
   return result;
-}
-
-mojom::URLLoaderFactoryPtr GetBlobURLLoaderFactoryGetter() {
-  mojom::URLLoaderFactoryPtr blob_loader_factory;
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    RenderThreadImpl::current()->GetRendererHost()->GetBlobURLLoaderFactory(
-        mojo::MakeRequest(&blob_loader_factory));
-  }
-  return blob_loader_factory;
 }
 
 }  // namespace
@@ -3022,30 +3012,37 @@ RenderFrameImpl::CreateWorkerContentSettingsClient() {
 std::unique_ptr<blink::WebWorkerFetchContext>
 RenderFrameImpl::CreateWorkerFetchContext() {
   DCHECK(base::FeatureList::IsEnabled(features::kOffMainThreadFetch));
-  mojom::WorkerURLLoaderFactoryProviderPtr worker_url_loader_factory_provider;
-  RenderThreadImpl::current()
-      ->blink_platform_impl()
-      ->GetInterfaceProvider()
-      ->GetInterface(mojo::MakeRequest(&worker_url_loader_factory_provider));
+  blink::WebServiceWorkerNetworkProvider* web_provider =
+      frame_->GetDocumentLoader()->GetServiceWorkerNetworkProvider();
+  DCHECK(web_provider);
+  ServiceWorkerNetworkProvider* provider =
+      ServiceWorkerNetworkProvider::FromWebServiceWorkerNetworkProvider(
+          web_provider);
+  mojom::ServiceWorkerWorkerClientRequest request =
+      provider->CreateWorkerClientRequest();
+
+  ChildURLLoaderFactoryGetter* url_loader_factory_getter =
+      RenderThreadImpl::current()
+          ->blink_platform_impl()
+          ->GetDefaultURLLoaderFactoryGetter();
+  DCHECK(url_loader_factory_getter);
+  std::unique_ptr<ChildURLLoaderFactoryGetter::Info>
+      url_loader_factory_getter_info =
+          url_loader_factory_getter->GetClonedInfo();
+
   std::unique_ptr<WorkerFetchContextImpl> worker_fetch_context =
       base::MakeUnique<WorkerFetchContextImpl>(
-          worker_url_loader_factory_provider.PassInterface());
+          std::move(request), std::move(url_loader_factory_getter_info));
+
   worker_fetch_context->set_parent_frame_id(routing_id_);
   worker_fetch_context->set_site_for_cookies(
       frame_->GetDocument().SiteForCookies());
   worker_fetch_context->set_is_secure_context(
       frame_->GetDocument().IsSecureContext());
-  blink::WebServiceWorkerNetworkProvider* web_provider =
-      frame_->GetDocumentLoader()->GetServiceWorkerNetworkProvider();
-  if (web_provider) {
-    ServiceWorkerNetworkProvider* provider =
-        ServiceWorkerNetworkProvider::FromWebServiceWorkerNetworkProvider(
-            web_provider);
     worker_fetch_context->set_service_worker_provider_id(
         provider->provider_id());
     worker_fetch_context->set_is_controlled_by_service_worker(
         provider->IsControlledByServiceWorker());
-  }
   for (auto& observer : observers_)
     observer.WillCreateWorkerFetchContext(worker_fetch_context.get());
   return std::move(worker_fetch_context);
@@ -6841,22 +6838,24 @@ std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader(
     base::SingleThreadTaskRunner* task_runner) {
   UpdatePeakMemoryStats();
 
+  RendererBlinkPlatformImpl* blink_platform_impl =
+      RenderThreadImpl::current()->blink_platform_impl();
   ChildThreadImpl* child_thread = ChildThreadImpl::current();
   if (!child_thread) {
-    return RenderThreadImpl::current()->blink_platform_impl()->CreateURLLoader(
-        request, task_runner);
+    return blink_platform_impl->CreateURLLoader(request, task_runner);
   }
 
   mojom::URLLoaderFactory* factory = custom_url_loader_factory_.get();
+  ChildURLLoaderFactoryGetter* url_loader_factory_getter =
+      blink_platform_impl->GetDefaultURLLoaderFactoryGetter();
 
-  if (base::FeatureList::IsEnabled(features::kNetworkService) &&
-      request.Url().ProtocolIs(url::kBlobScheme)) {
-    factory = GetDefaultURLLoaderFactoryGetter()->GetBlobLoaderFactory();
+  if (request.Url().ProtocolIs(url::kBlobScheme)) {
+    factory = url_loader_factory_getter->GetBlobLoaderFactory();
     DCHECK(factory);
   }
 
   if (!factory) {
-    factory = GetDefaultURLLoaderFactoryGetter()->GetNetworkLoaderFactory();
+    factory = url_loader_factory_getter->GetNetworkLoaderFactory();
     DCHECK(factory);
   }
 
@@ -6867,20 +6866,6 @@ std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader(
 void RenderFrameImpl::DraggableRegionsChanged() {
   for (auto& observer : observers_)
     observer.DraggableRegionsChanged();
-}
-
-ChildURLLoaderFactoryGetter*
-RenderFrameImpl::GetDefaultURLLoaderFactoryGetter() {
-  RenderThreadImpl* render_thread = RenderThreadImpl::current();
-  DCHECK(render_thread);
-  if (!url_loader_factory_getter_) {
-    url_loader_factory_getter_ =
-        base::MakeRefCounted<ChildURLLoaderFactoryGetter>(
-            render_thread->blink_platform_impl()
-                ->CreateNetworkURLLoaderFactory(),
-            base::BindOnce(&GetBlobURLLoaderFactoryGetter));
-  }
-  return url_loader_factory_getter_.get();
 }
 
 blink::WebPageVisibilityState RenderFrameImpl::GetVisibilityState() const {
