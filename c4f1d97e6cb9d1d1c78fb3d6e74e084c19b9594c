@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15b0acc9_ebbf0c60",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T17:37:53Z",
+      "side": 1,
+      "message": "Can you link to the previous patch that got reverted, so people can follow the review history?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "c4f1d97e6cb9d1d1c78fb3d6e74e084c19b9594c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
