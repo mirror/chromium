@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.ntp.cards;
 
+import android.accounts.Account;
 import android.content.Context;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
@@ -14,22 +15,31 @@ import org.chromium.base.ContextUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.snippets.CategoryInt;
 import org.chromium.chrome.browser.ntp.snippets.CategoryStatus;
 import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
+import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.signin.AccountSigninActivity;
+import org.chromium.chrome.browser.signin.ProfileDataCache;
 import org.chromium.chrome.browser.signin.SigninAccessPoint;
 import org.chromium.chrome.browser.signin.SigninManager;
 import org.chromium.chrome.browser.signin.SigninManager.SignInAllowedObserver;
 import org.chromium.chrome.browser.signin.SigninManager.SignInStateObserver;
+import org.chromium.chrome.browser.signin.SigninPromoController;
+import org.chromium.chrome.browser.signin.SigninPromoView;
 import org.chromium.chrome.browser.suggestions.DestructionObserver;
 import org.chromium.chrome.browser.suggestions.SuggestionsRecyclerView;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
+import org.chromium.components.signin.AccountManagerFacade;
+import org.chromium.components.signin.AccountsChangeObserver;
+
+import java.util.Collections;
 
 /**
  * Shows a card prompting the user to sign in. This item is also an {@link OptionalLeaf}, and sign
@@ -60,6 +70,10 @@ public class SignInPromo extends OptionalLeaf
     @Nullable
     private final SigninObserver mSigninObserver;
 
+    private SigninPromoController mSigninPromoController;
+    private ProfileDataCache mProfileDataCache;
+    private NewTabPageViewHolder.PartialBindCallback mPromoUpdater;
+
     public SignInPromo(SuggestionsUiDelegate uiDelegate) {
         mDismissed = ChromePreferenceManager.getInstance().getNewTabPageSigninPromoDismissed();
 
@@ -68,6 +82,16 @@ public class SignInPromo extends OptionalLeaf
         if (mDismissed) {
             mSigninObserver = null;
         } else {
+            if (ChromeFeatureList.isEnabled(ChromeFeatureList.ANDROID_SIGNIN_PROMOS)) {
+                Context context = ContextUtils.getApplicationContext();
+                int imageSize =
+                        context.getResources().getDimensionPixelSize(R.dimen.user_picture_size);
+                mProfileDataCache =
+                        new ProfileDataCache(context, Profile.getLastUsedProfile(), imageSize);
+                mSigninPromoController = new SigninPromoController(
+                        mProfileDataCache, SigninAccessPoint.NTP_CONTENT_SUGGESTIONS);
+                mPromoUpdater = new UpdateSigninPromoCallback();
+            }
             mSigninObserver = new SigninObserver(signinManager, suggestionsSource);
             uiDelegate.addDestructionObserver(mSigninObserver);
         }
@@ -92,10 +116,28 @@ public class SignInPromo extends OptionalLeaf
         return mSigninObserver;
     }
 
+    /**
+     * @return a {@link NewTabPageViewHolder} which will contain the view for the signin promo.
+     */
+    public static NewTabPageViewHolder createViewHolder(SuggestionsRecyclerView parent,
+            ContextMenuManager contextMenuManager, UiConfig config) {
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.ANDROID_SIGNIN_PROMOS)) {
+            return new PersonalizedPromoViewHolder(parent, contextMenuManager, config);
+        }
+        return new GenericPromoViewHolder(parent, contextMenuManager, config);
+    }
+
     @Override
     protected void onBindViewHolder(NewTabPageViewHolder holder) {
-        assert holder instanceof StatusCardViewHolder;
-        ((StatusCardViewHolder) holder).onBindViewHolder(this);
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.ANDROID_SIGNIN_PROMOS)) {
+            assert holder instanceof PersonalizedPromoViewHolder;
+            ((PersonalizedPromoViewHolder) holder).onBindViewHolder();
+            mPromoUpdater.onResult(holder);
+        } else {
+            assert holder instanceof GenericPromoViewHolder;
+            ((GenericPromoViewHolder) holder).onBindViewHolder(this);
+        }
+
         mImpressionTracker.reset(mImpressionTracker.wasTriggered() ? null : holder.itemView);
     }
 
@@ -129,7 +171,11 @@ public class SignInPromo extends OptionalLeaf
 
     @Override
     public void onImpression() {
-        RecordUserAction.record("Signin_Impression_FromNTPContentSuggestions");
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.ANDROID_SIGNIN_PROMOS)) {
+            mSigninPromoController.recordSigninPromoImpression();
+        } else {
+            RecordUserAction.record("Signin_Impression_FromNTPContentSuggestions");
+        }
         mImpressionTracker.reset(null);
     }
 
@@ -156,7 +202,8 @@ public class SignInPromo extends OptionalLeaf
 
     @VisibleForTesting
     class SigninObserver extends SuggestionsSource.EmptyObserver
-            implements SignInStateObserver, SignInAllowedObserver, DestructionObserver {
+            implements SignInStateObserver, SignInAllowedObserver, DestructionObserver,
+                       ProfileDataCache.Observer, AccountsChangeObserver {
         private final SigninManager mSigninManager;
         private final SuggestionsSource mSuggestionsSource;
 
@@ -170,6 +217,11 @@ public class SignInPromo extends OptionalLeaf
 
             mSuggestionsSource = suggestionsSource;
             mSuggestionsSource.addObserver(this);
+
+            if (SigninPromoController.shouldShowPromo(SigninAccessPoint.NTP_CONTENT_SUGGESTIONS)) {
+                mProfileDataCache.addObserver(this);
+                AccountManagerFacade.get().addObserver(this);
+            }
         }
 
         private void unregister() {
@@ -180,12 +232,21 @@ public class SignInPromo extends OptionalLeaf
             mSigninManager.removeSignInStateObserver(this);
 
             mSuggestionsSource.removeObserver(this);
+
+            if (SigninPromoController.shouldShowPromo(SigninAccessPoint.NTP_CONTENT_SUGGESTIONS)) {
+                mProfileDataCache.removeObserver(this);
+                AccountManagerFacade.get().removeObserver(this);
+            }
         }
+
+        // DestructionObserver implementation.
 
         @Override
         public void onDestroy() {
             unregister();
         }
+
+        // SignInAllowedObserver implementation.
 
         @Override
         public void onSignInAllowedChanged() {
@@ -195,6 +256,8 @@ public class SignInPromo extends OptionalLeaf
             mCanSignIn = mSigninManager.isSignInAllowed();
             updateVisibility();
         }
+
+        // SignInStateObserver implementation.
 
         @Override
         public void onSignedIn() {
@@ -218,14 +281,45 @@ public class SignInPromo extends OptionalLeaf
                     || mSuggestionsSource.areRemoteSuggestionsEnabled();
             updateVisibility();
         }
+
+        // AccountsChangeObserver implementation.
+
+        @Override
+        public void onAccountsChanged() {
+            if (isVisible()) {
+                notifyItemChanged(0, mPromoUpdater);
+            }
+        }
+
+        // ProfileDataCache.Observer implementation.
+
+        @Override
+        public void onProfileDataUpdated(String accountId) {
+            if (isVisible()) {
+                notifyItemChanged(0, mPromoUpdater);
+            }
+        }
     }
 
     /**
-     * View Holder for {@link SignInPromo}.
+     * View Holder for {@link SignInPromo} if the personalized promo is to be shown.
      */
-    public static class ViewHolder extends StatusCardViewHolder {
-        public ViewHolder(SuggestionsRecyclerView parent, ContextMenuManager contextMenuManager,
-                UiConfig config) {
+    private static class PersonalizedPromoViewHolder extends CardViewHolder {
+        public PersonalizedPromoViewHolder(SuggestionsRecyclerView parent,
+                ContextMenuManager contextMenuManager, UiConfig config) {
+            super(R.layout.signin_promo_view_ntp_content_suggestions, parent, config,
+                    contextMenuManager);
+            getParams().topMargin = parent.getResources().getDimensionPixelSize(
+                    R.dimen.ntp_sign_in_promo_margin_top);
+        }
+    }
+
+    /**
+     * View Holder for {@link SignInPromo} if the generic promo is to be shown.
+     */
+    public static class GenericPromoViewHolder extends StatusCardViewHolder {
+        public GenericPromoViewHolder(SuggestionsRecyclerView parent,
+                ContextMenuManager contextMenuManager, UiConfig config) {
             super(parent, contextMenuManager, config);
             getParams().topMargin = parent.getResources().getDimensionPixelSize(
                     R.dimen.ntp_sign_in_promo_margin_top);
@@ -237,6 +331,27 @@ public class SignInPromo extends OptionalLeaf
             // Modern does not update the card background.
             assert !FeatureUtilities.isChromeHomeModernEnabled();
             return R.drawable.ntp_signin_promo_card_single;
+        }
+    }
+
+    /**
+     * Callback to update the new singin promo.
+     */
+    private class UpdateSigninPromoCallback extends NewTabPageViewHolder.PartialBindCallback {
+        @Override
+        public void onResult(NewTabPageViewHolder result) {
+            assert ChromeFeatureList.isEnabled(ChromeFeatureList.ANDROID_SIGNIN_PROMOS);
+
+            SigninPromoView view = (SigninPromoView) result.itemView;
+            Account[] accounts = AccountManagerFacade.get().tryGetGoogleAccounts();
+            String defaultAccountName = accounts.length == 0 ? null : accounts[0].name;
+
+            if (defaultAccountName != null) {
+                mProfileDataCache.update(Collections.singletonList(defaultAccountName));
+            }
+
+            mSigninPromoController.setAccountName(defaultAccountName);
+            mSigninPromoController.setupSigninPromoView(view.getContext(), view, null);
         }
     }
 }
