@@ -102,7 +102,6 @@
 #import "ios/chrome/browser/web/auto_reload_bridge.h"
 #import "ios/chrome/browser/web/external_app_launcher.h"
 #import "ios/chrome/browser/web/navigation_manager_util.h"
-#import "ios/chrome/browser/web/page_placeholder_tab_helper.h"
 #import "ios/chrome/browser/web/passkit_dialog_provider.h"
 #include "ios/chrome/browser/web/print_observer.h"
 #import "ios/chrome/browser/web/sad_tab_tab_helper.h"
@@ -1807,14 +1806,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   if (self.webState)
     self.webState->WasShown();
   [_inputAccessoryViewController wasShown];
-
-  auto* sadTabTabHelper = SadTabTabHelper::FromWebState(self.webState);
-  if (sadTabTabHelper->requires_reload_on_becoming_visible()) {
-    PagePlaceholderTabHelper::FromWebState(self.webState)
-        ->AddPlaceholderForNextNavigation();
-    self.webState->GetNavigationManager()->LoadIfNecessary();
-    sadTabTabHelper->set_requires_reload_on_becoming_visible(false);
-  }
 }
 
 - (void)wasHidden {
