@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e88b9c4_ffb3c88e",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T15:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b17e51d4_c0441a34",
+      "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a479cc3e_4eb7436e",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db19f333_9da3f549",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T15:19:45Z",
+      "side": 1,
+      "message": "Done (don\u0027t we have a presubmit for this yet?)",
+      "parentUuid": "a479cc3e_4eb7436e",
+      "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "8a14910b_4d52b2a6",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T15:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "145f791f_93822ca7",
+      "range": {
+        "startLine": 65,
+        "startChar": 40,
+        "endLine": 65,
+        "endChar": 42
+      },
+      "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3a30efb_ef4463f8",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd2400e2_6f6090c4",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T15:19:45Z",
+      "side": 1,
+      "message": "So the problem is these things are passed in by Mojo as a\n    const std::vector\u003c::content::ServiceWorkerFetchRequest\u003e\u0026 requests\nin\n\nhttps://cs.chromium.org/chromium/src/out/Debug/gen/third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom.h\n\nand they get passed (synchronously) down all the way here as a const\u0026. I can force a copy earlier then move them the rest of the way, but it\u0027s not clear that would improve anything?",
+      "parentUuid": "c3a30efb_ef4463f8",
+      "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "527c7761_eed8608e",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T15:19:45Z",
+      "side": 1,
+      "message": "My plan was to add SimplifyServiceWorkerDatabaseStatus that simplifies ServiceWorkerStatusCodes down to a tri-state enum. I\u0027ve done that now - better?",
+      "parentUuid": "df608c73_4ca16ec2",
+      "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de19b167_ae06dc8f",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
         "patchSetId": 1
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "762d259b_c28275e9",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T15:19:45Z",
+      "side": 1,
+      "message": "I figured I could get away without these, since the base class is uncopyable which should at least thwart automatic generation of copy/assignment constructors? But done.",
+      "parentUuid": "de19b167_ae06dc8f",
+      "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5719d52_0b0a391e",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
         "patchSetId": 1
@@ -124,6 +238,24 @@
       "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a7fb7f_7aa01ec4",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T15:19:45Z",
+      "side": 1,
+      "message": "Done (made it a commandline switch in content_switches.h).",
+      "parentUuid": "c5719d52_0b0a391e",
+      "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "b1d3aa1e_2b293af2",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T15:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a74e3d2a_e8f437e0",
+      "range": {
+        "startLine": 39,
+        "startChar": 3,
+        "endLine": 39,
+        "endChar": 17
+      },
+      "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ebd9071_ca7f1a59",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
         "patchSetId": 1
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "17919123_d5a31eba",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T15:19:45Z",
+      "side": 1,
+      "message": "Done (ditto in BackgroundFetchEventDispatcher::BackgroundFetchEventDispatcher for consistency)",
+      "parentUuid": "0ebd9071_ca7f1a59",
+      "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8625ebd_ae376c8f",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
         "patchSetId": 1
@@ -181,6 +355,24 @@
       "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c1db368_ae7f1ad8",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T15:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8625ebd_ae376c8f",
+      "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +399,30 @@
     },
     {
       "key": {
+        "uuid": "0173539c_a3969e47",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T15:19:45Z",
+      "side": 1,
+      "message": "Not sure what you mean? CreateRegistration and DeleteRegistration already spin RunLoops since the API to BGFDataManager is async.",
+      "parentUuid": "719f7104_614a5dd6",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 65
+      },
+      "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c2fa7d0_588dc74f",
         "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
         "patchSetId": 1
@@ -221,6 +437,24 @@
       "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88408d84_54052662",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T15:19:45Z",
+      "side": 1,
+      "message": "Undone.",
+      "parentUuid": "5c2fa7d0_588dc74f",
+      "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -241,6 +475,24 @@
     },
     {
       "key": {
+        "uuid": "d064e6d7_bc498b2f",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T15:19:45Z",
+      "side": 1,
+      "message": "Done (indeed, that\u0027s why the bots were failing!)",
+      "parentUuid": "403febc3_cf9b04e8",
+      "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0081e92_f4f8fa3a",
         "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchedEvent.cpp",
         "patchSetId": 1
@@ -255,6 +507,24 @@
       "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "078bd143_3a4b19a7",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchedEvent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T15:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0081e92_f4f8fa3a",
+      "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
