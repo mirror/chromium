@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "277c1025_65e618de",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T10:21:02Z",
+      "side": 1,
+      "message": "How about \"FailToDispatchFetchEvent\" to align with SWEventDispatcher::DispatchFetchEvent()?",
+      "parentUuid": "63f9a881_2bcacdf5",
+      "range": {
+        "startLine": 66,
+        "startChar": 13,
+        "endLine": 66,
+        "endChar": 16
+      },
+      "revId": "ba6115ab108406f27194abe67efd78b3727ecec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b03e3254_f96c233b",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 4
@@ -83,6 +107,23 @@
     },
     {
       "key": {
+        "uuid": "25fc46ae_15678cf1",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T10:21:02Z",
+      "side": 1,
+      "message": "I think this is not just about this CL and is a kind of memo, but I\u0027m recently wondering if we can avoid to make real registration/versions for unittesting. If we create MockServiceWorkerVersion for each test and implement minimal features needed for the tested class, the surface of the class (SWURLLoaderJob in this case) to other classes like SWVersion would become clearer.\nfalken, kinuko: WDYT?",
+      "revId": "ba6115ab108406f27194abe67efd78b3727ecec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92bb44f6_53cc6bea",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 4
@@ -94,6 +135,23 @@
       "writtenOn": "2017-08-22T09:12:54Z",
       "side": 1,
       "message": "nit: if (!callback) would work",
+      "revId": "ba6115ab108406f27194abe67efd78b3727ecec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af457e86_ec91d276",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T10:21:02Z",
+      "side": 1,
+      "message": "nit: no brackets for single line contents, and you can use operator bool() like \"if (!callback)\"",
       "revId": "ba6115ab108406f27194abe67efd78b3727ecec5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
