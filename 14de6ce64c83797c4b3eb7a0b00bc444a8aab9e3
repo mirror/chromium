@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f08a19f_8e14cad6",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-22T14:55:07Z",
+      "side": 1,
+      "message": "this isn\u0027t a realistic scope. You can model this after MainActivityTest.testRewriteStartUrlSchemeAndHost",
+      "range": {
+        "startLine": 90,
+        "startChar": 38,
+        "endLine": 90,
+        "endChar": 44
+      },
+      "revId": "14de6ce64c83797c4b3eb7a0b00bc444a8aab9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
