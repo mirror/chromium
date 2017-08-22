@@ -9,11 +9,15 @@
 #include <limits>
 
 #include "base/logging.h"
+#include "base/strings/string_number_conversions.h"
+#include "net/quic/core/quic_versions.h"
 #include "net/spdy/platform/api/spdy_string_utils.h"
 
 namespace net {
 
 namespace {
+
+const char IETF_FORMAT_QUIC_PROTOCOL_ID[] = "h2q";
 
 template <class T>
 bool ParsePositiveIntegerImpl(SpdyStringPiece::const_iterator c,
@@ -31,6 +35,11 @@ bool ParsePositiveIntegerImpl(SpdyStringPiece::const_iterator c,
     *value += *c - '0';
   }
   return (c == end && *value > 0);
+}
+
+uint32_t ReverseUIntByteOrder(uint32_t input) {
+  return (input << 24) | ((input << 8) & 0xff0000) | ((input >> 8) & 0xff00) |
+         ((input >> 24) & 0xff);
 }
 
 }  // namespace
@@ -76,6 +85,10 @@ bool SpdyAltSvcWireFormat::ParseHeaderFieldValue(
         !PercentDecode(c, percent_encoded_protocol_id_end, &protocol_id)) {
       return false;
     }
+    // Check for IETF format for advertising QUIC:
+    // h2q=":49288";quic=51303338;quic=51303334
+    const bool is_ietf_format_quic =
+        (protocol_id.compare(IETF_FORMAT_QUIC_PROTOCOL_ID) == 0);
     c = percent_encoded_protocol_id_end;
     if (c == value.end()) {
       return false;
@@ -146,7 +159,7 @@ bool SpdyAltSvcWireFormat::ParseHeaderFieldValue(
         if (!ParsePositiveInteger32(parameter_value_begin, c, &max_age)) {
           return false;
         }
-      } else if (parameter_name.compare("v") == 0) {
+      } else if (!is_ietf_format_quic && parameter_name.compare("v") == 0) {
         // Version is a comma separated list of positive integers enclosed in
         // quotation marks.  Since it can contain commas, which are not
         // delineating alternative service entries, |parameters_end| and |c| can
@@ -177,6 +190,24 @@ bool SpdyAltSvcWireFormat::ParseHeaderFieldValue(
             return false;
           }
         }
+      } else if (is_ietf_format_quic && parameter_name.compare("quic") == 0) {
+        // IETF format for advertising QUIC. Version is hex encoding of QUIC
+        // version tag. Hex-encoded string should not include leading "0x" or
+        // leading zeros.
+        // Example for advertising QUIC versions "Q038" and "Q034":
+        // h2q=":49288";quic=51303338;quic=51303334
+        if (*parameter_value_begin == '0') {
+          return false;
+        }
+        uint32_t v_tag;
+        if (!base::HexStringToUInt(std::string(parameter_value_begin, c),
+                                   &v_tag)) {
+          return false;
+        }
+        QuicVersion v = QuicTagToQuicVersion(ReverseUIntByteOrder(v_tag));
+        if (v != QUIC_VERSION_UNSUPPORTED) {
+          version.push_back(v);
+        }
       }
     }
     altsvc_vector->emplace_back(protocol_id, host, port, max_age, version);
@@ -198,6 +229,9 @@ SpdyString SpdyAltSvcWireFormat::SerializeHeaderFieldValue(
     if (!value.empty()) {
       value.push_back(',');
     }
+    // Check for IETF format for advertising QUIC.
+    const bool is_ietf_format_quic =
+        (altsvc.protocol_id.compare(IETF_FORMAT_QUIC_PROTOCOL_ID) == 0);
     // Percent escape protocol id according to
     // http://tools.ietf.org/html/rfc7230#section-3.2.6.
     for (char c : altsvc.protocol_id) {
@@ -243,15 +277,26 @@ SpdyString SpdyAltSvcWireFormat::SerializeHeaderFieldValue(
       SpdyStringAppendF(&value, "; ma=%d", altsvc.max_age);
     }
     if (!altsvc.version.empty()) {
-      value.append("; v=\"");
-      for (VersionVector::const_iterator it = altsvc.version.begin();
-           it != altsvc.version.end(); ++it) {
-        if (it != altsvc.version.begin()) {
-          value.append(",");
+      if (is_ietf_format_quic) {
+        for (VersionVector::const_iterator it = altsvc.version.begin();
+             it != altsvc.version.end(); ++it) {
+          value.append("; quic=");
+          QuicTag quic_version_tag = QuicVersionToQuicTag((QuicVersion)*it);
+          if (quic_version_tag) {
+            value.append(base::HexEncode(&quic_version_tag, sizeof(QuicTag)));
+          }
         }
-        SpdyStringAppendF(&value, "%d", *it);
+      } else {
+        value.append("; v=\"");
+        for (VersionVector::const_iterator it = altsvc.version.begin();
+             it != altsvc.version.end(); ++it) {
+          if (it != altsvc.version.begin()) {
+            value.append(",");
+          }
+          SpdyStringAppendF(&value, "%d", *it);
+        }
+        value.append("\"");
       }
-      value.append("\"");
     }
   }
   return value;
