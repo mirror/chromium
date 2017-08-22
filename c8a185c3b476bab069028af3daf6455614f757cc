@@ -22,6 +22,30 @@
       "revId": "c8a185c3b476bab069028af3daf6455614f757cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2162938d_4c8ac8b7",
+        "filename": "content/renderer/media/renderer_webmediaplayer_delegate_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-22T18:30:10Z",
+      "side": 1,
+      "message": "I did try doing that, but the idle timer is set to 0 in this test, so the callback still runs immediately if I call base::RunLooop().RunUntilIdle() after this.",
+      "parentUuid": "71353d4f_6692a14b",
+      "range": {
+        "startLine": 290,
+        "startChar": 2,
+        "endLine": 290,
+        "endChar": 51
+      },
+      "revId": "c8a185c3b476bab069028af3daf6455614f757cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
