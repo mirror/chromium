@@ -9,6 +9,7 @@
 
 #include "chromeos/printing/ppd_provider.h"
 #include "chromeos/printing/printer_configuration.h"
+#include "net/base/ip_address.h"
 
 namespace chromeos {
 
