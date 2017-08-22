@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40025aae_f9e96235",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-22T18:27:33Z",
+      "side": 1,
+      "message": "What about `DatabaseStatus`? We still avoid acronyms in our code style, and since this lives in an anonymous namespace we can grant ourselves some flexibility.",
+      "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ab30b3_937c1f6f",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-22T18:27:33Z",
+      "side": 1,
+      "message": "nit: normally we call these methods\n\nToOtherType()",
+      "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748959df_c72dc038",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-22T18:27:33Z",
+      "side": 1,
+      "message": "nit: maybe some docs?",
+      "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "447c1e41_48c007e9",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-22T18:27:33Z",
+      "side": 1,
+      "message": "I like this better, thanks! :)",
+      "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58681d94_8673bf1b",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-22T18:27:33Z",
+      "side": 1,
+      "message": "I have a mild preference of just returning a pointer and having a DCHECK in this call. Non-const references screw with my mind when reading the code. Up to you and Dan.",
+      "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f2fe9e_3f414afe",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-22T18:27:33Z",
+      "side": 1,
+      "message": "This has to be private. Let\u0027s add a protected accessor?\n\nhttps://google.github.io/styleguide/cppguide.html#Access_Control",
+      "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f36278a8_6e722728",
+        "filename": "content/public/common/content_switches.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-22T18:27:33Z",
+      "side": 1,
+      "message": "use //content/common/content_switches_internal.h (assuming there\u0027s no reason for //chrome to ever set this)",
+      "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
