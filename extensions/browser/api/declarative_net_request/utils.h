@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include <string>
+#include <vector>
 
 #ifndef EXTENSIONS_BROWSER_API_DECLARATIVE_NET_REQUEST_UTILS_H_
 #define EXTENSIONS_BROWSER_API_DECLARATIVE_NET_REQUEST_UTILS_H_

@@ -28,3 +28,16 @@ source_set("declarative_net_request") {
     "//url",
   ]
 }
+
+source_set("test_support") {
+  sources = [
+    "test_utils.cc",
+    "test_utils.h",
+  ]
+
+  deps = [
+    ":declarative_net_request",
+    "//base",
+    "//extensions/common",
+  ]
+}
