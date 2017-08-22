@@ -22,6 +22,30 @@
       "revId": "11aca5ffa134c621b5292e0b2244b044c7a6db30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8ee94f_de341fc9",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-22T22:14:27Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure if it made sense to try to see what numbers looked like in the wild before arbitrarily limiting.  I think capping to the bytes read does a pretty good job here at capping sizes reasonably.",
+      "parentUuid": "6acf3856_73918731",
+      "range": {
+        "startLine": 261,
+        "startChar": 5,
+        "endLine": 261,
+        "endChar": 45
+      },
+      "revId": "11aca5ffa134c621b5292e0b2244b044c7a6db30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
