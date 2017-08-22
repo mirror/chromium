@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be79471e_e4057d27",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelSelectorImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-22T04:26:19Z",
+      "side": 1,
+      "message": "Do we want to update oldTab\u0027s importance here as well?  I think this could happen if you have an incognito tab but still select an empty non-incognito tab stack (and therefore have no tab selected).",
+      "range": {
+        "startLine": 355,
+        "startChar": 8,
+        "endLine": 358,
+        "endChar": 9
+      },
+      "revId": "a84b601220a7bc55fc42f0e4cef7ef06d654186f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
