@@ -66,10 +66,11 @@ enum HorizontalAlignment {
 
 // The directionality modes used to determine the base text direction.
 enum DirectionalityMode {
-  DIRECTIONALITY_FROM_TEXT = 0, // Use the first strong character's direction.
-  DIRECTIONALITY_FROM_UI,       // Use the UI locale's text reading direction.
-  DIRECTIONALITY_FORCE_LTR,     // Use LTR regardless of content or UI locale.
-  DIRECTIONALITY_FORCE_RTL,     // Use RTL regardless of content or UI locale.
+  DIRECTIONALITY_FROM_TEXT = 0,  // Use the first strong character's direction.
+  DIRECTIONALITY_FROM_UI,        // Use the UI locale's text reading direction.
+  DIRECTIONALITY_FORCE_LTR,      // Use LTR regardless of content or UI locale.
+  DIRECTIONALITY_FORCE_RTL,      // Use RTL regardless of content or UI locale.
+  DIRECTIONALITY_AS_URL,         // FORCE_LTR with additional rules for URLs.
 };
 
 // Text styles and adornments.
