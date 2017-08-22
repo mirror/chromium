@@ -64,7 +64,7 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
     return client_surface_embedder_.get();
   }
 
-  const viz::SurfaceInfo& PrimarySurfaceInfoForTesting() const {
+  const viz::SurfaceInfo& primary_surface_info() const {
     return primary_surface_info_;
   }
 
