@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "36b72b9f_a3ed42c7",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T20:47:10Z",
+      "side": 1,
+      "message": "Tried it out. Let me know what you think. It\u0027s much longer now, but maybe it\u0027s clearer?\n\nOne thing I wanted to preserve is having explicit \u0026 minimal parameters to the methods that actually do the work (e.g. don\u0027t pass \"args\" to the _Run functions).",
+      "parentUuid": "121906c8_bd9feb19",
+      "revId": "9aa6f5d2bf723ce56f90f845290034249553336e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49d3aef2_b8cc2558",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-22T19:40:37Z",
       "side": 1,
       "message": "nit: you had these broken into helper functions for categories previously; retaining that would be nice here.",
+      "revId": "9aa6f5d2bf723ce56f90f845290034249553336e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cead0f00_72a19cee",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T20:47:10Z",
+      "side": 1,
+      "message": "I\u0027m not sure that would help readability much.",
+      "parentUuid": "49d3aef2_b8cc2558",
       "revId": "9aa6f5d2bf723ce56f90f845290034249553336e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "9aa6f5d2bf723ce56f90f845290034249553336e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d491e7_715122c5",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-22T20:47:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "698569ff_3b3718f9",
+      "revId": "9aa6f5d2bf723ce56f90f845290034249553336e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
