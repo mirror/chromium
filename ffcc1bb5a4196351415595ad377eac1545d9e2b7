@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f834fe2f_0cc95f5a",
+        "filename": "base/values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-22T16:51:24Z",
+      "side": 1,
+      "message": "Yes, I will update this comment and add deprecation warnings in a follow up CL.",
+      "parentUuid": "a226edb0_8c0d79be",
+      "revId": "ffcc1bb5a4196351415595ad377eac1545d9e2b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1832473e_b470f656",
         "filename": "base/values.h",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "ffcc1bb5a4196351415595ad377eac1545d9e2b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476fa1d9_55a39f9a",
+        "filename": "base/values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-22T16:51:24Z",
+      "side": 1,
+      "message": "Yes, these are all deprecated and should be marked as such (see comment above). Removing them is unfortunately not yet possible, given their extremely widespread usage.",
+      "parentUuid": "1832473e_b470f656",
+      "revId": "ffcc1bb5a4196351415595ad377eac1545d9e2b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "83b8d905_e2a08699",
+        "filename": "base/values_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-22T16:51:24Z",
+      "side": 1,
+      "message": "Passing a nullptr to the argument list likely leads to a crash in the current implementation.\nHowever, this is already taken care of in https://chromium-review.googlesource.com/c/chromium/src/+/623707 that changes the const char*s to StringPieces. base::StringPiece(nullptr) is well defined and equivalent to the empty string: https://codesearch.chromium.org/chromium/src/base/strings/string_piece.h?l\u003d181,250\u0026rcl\u003d37b2b70304ddfb18b194a2e04e96e3ee6f049cb0",
+      "parentUuid": "4c6a5efe_ea7f7a9f",
+      "revId": "ffcc1bb5a4196351415595ad377eac1545d9e2b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "883aabe7_094af548",
         "filename": "base/values_unittest.cc",
         "patchSetId": 16
@@ -67,6 +121,24 @@
       "revId": "ffcc1bb5a4196351415595ad377eac1545d9e2b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee36fe96_a5c3dbe1",
+        "filename": "base/values_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-22T16:51:24Z",
+      "side": 1,
+      "message": "Yes, quoting SetPath\u0027s comment:\n\n// The last path component will be unconditionally\n// overwritten if it exists, and created if it doesn\u0027t.\n\nroot.SetPath({\"foo\", \"bar\"}, Value(123)) would work as well.\nThe problem with root.SetPath({\"foo\", \"bar\", \"baz\"}, Value(123)) is that it requires root.foo.bar to be a dict, which it currently isn\u0027t.",
+      "parentUuid": "883aabe7_094af548",
+      "revId": "ffcc1bb5a4196351415595ad377eac1545d9e2b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
