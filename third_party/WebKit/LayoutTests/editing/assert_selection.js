@@ -980,4 +980,5 @@ function assertSelection(
 // Export symbols
 window.Sample = Sample;
 window.assert_selection = assertSelection;
+window.DOMTreeTraversal = DOMTreeTraversal;
 })();
