@@ -39,6 +39,30 @@
       "revId": "938e233ee49fa495b460376f72ce2f5a3d465d0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc4630a_3d43cb10",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-22T01:44:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5e14329_2252e778",
+      "range": {
+        "startLine": 1011,
+        "startChar": 33,
+        "endLine": 1014,
+        "endChar": 47
+      },
+      "revId": "938e233ee49fa495b460376f72ce2f5a3d465d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
