@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1067b49_b3b3581a",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-22T11:16:56Z",
+      "side": 1,
+      "message": "https://xkcd.com/1179/",
+      "range": {
+        "startLine": 115,
+        "startChar": 26,
+        "endLine": 115,
+        "endChar": 63
+      },
+      "revId": "efe568a6623ad1236be7b4a540e0b80ee73cf2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c65eb0a_7b612d1c",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-22T11:16:56Z",
+      "side": 1,
+      "message": "Sorry, didn\u0027t realize this before. We should keep the general rule that one file contains one public class. Can we put this into TrafficAnnotationExporter?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 18
+      },
+      "revId": "efe568a6623ad1236be7b4a540e0b80ee73cf2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14dc551a_581cdfdc",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-22T11:16:56Z",
+      "side": 1,
+      "message": "Can this actually be private? It seems like an implementation detail of the Update() above. Then ReportItem could also be a private subclass.",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 47
+      },
+      "revId": "efe568a6623ad1236be7b4a540e0b80ee73cf2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "417f425a_98f11c52",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-22T11:16:56Z",
+      "side": 1,
+      "message": "nit: Annotations (plural).",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "efe568a6623ad1236be7b4a540e0b80ee73cf2fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
