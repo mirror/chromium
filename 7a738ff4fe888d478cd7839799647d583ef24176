@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f052b061_a114d284",
+        "filename": "chrome/browser/conflicts/installed_programs_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-22T18:23:32Z",
+      "side": 1,
+      "message": "Might as well use UMA_HISTOGRAM_MEMORY_KB() since name is constant.",
+      "range": {
+        "startLine": 210,
+        "startChar": 8,
+        "endLine": 210,
+        "endChar": 28
+      },
+      "revId": "7a738ff4fe888d478cd7839799647d583ef24176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
