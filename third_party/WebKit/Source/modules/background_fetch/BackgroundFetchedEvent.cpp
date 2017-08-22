@@ -76,6 +76,12 @@ void BackgroundFetchedEvent::DidUpdateUI(
     case mojom::blink::BackgroundFetchError::INVALID_ID:
       resolver->Resolve();
       return;
+    case mojom::blink::BackgroundFetchError::STORAGE_ERROR:
+      // TODO(crbug.com/757760): Consider swallowing this error, as it's not
+      // particularly actionable?
+      resolver->Reject(DOMException::Create(
+          kAbortError, "Failed to update UI due to I/O error."));
+      return;
     case mojom::blink::BackgroundFetchError::DUPLICATED_ID:
     case mojom::blink::BackgroundFetchError::INVALID_ARGUMENT:
       // Not applicable for this callback.

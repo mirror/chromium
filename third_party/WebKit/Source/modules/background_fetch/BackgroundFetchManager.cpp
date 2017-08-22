@@ -82,13 +82,16 @@ void BackgroundFetchManager::DidFetch(
           kInvalidStateError,
           "There already is a registration for the given id."));
       return;
+    case mojom::blink::BackgroundFetchError::STORAGE_ERROR:
+      DCHECK(!registration);
+      resolver->Reject(DOMException::Create(
+          kAbortError, "Failed to store registration due to I/O error."));
+      return;
     case mojom::blink::BackgroundFetchError::INVALID_ARGUMENT:
     case mojom::blink::BackgroundFetchError::INVALID_ID:
-      // Not applicable for this callback.
-      break;
+      NOTREACHED();  // Not applicable for this callback.
+      return;
   }
-
-  NOTREACHED();
 }
 
 ScriptPromise BackgroundFetchManager::get(ScriptState* script_state,
@@ -177,15 +180,19 @@ void BackgroundFetchManager::DidGetRegistration(
   switch (error) {
     case mojom::blink::BackgroundFetchError::NONE:
     case mojom::blink::BackgroundFetchError::INVALID_ID:
+      DCHECK(registration);
       resolver->Resolve(registration);
+      return;
+    case mojom::blink::BackgroundFetchError::STORAGE_ERROR:
+      DCHECK(!registration);
+      resolver->Reject(DOMException::Create(
+          kAbortError, "Failed to get registration due to I/O error."));
       return;
     case mojom::blink::BackgroundFetchError::DUPLICATED_ID:
     case mojom::blink::BackgroundFetchError::INVALID_ARGUMENT:
-      // Not applicable for this callback.
-      break;
+      NOTREACHED();  // Not applicable for this callback.
+      return;
   }
-
-  NOTREACHED();
 }
 
 ScriptPromise BackgroundFetchManager::getIds(ScriptState* script_state) {
@@ -213,14 +220,17 @@ void BackgroundFetchManager::DidGetIds(ScriptPromiseResolver* resolver,
     case mojom::blink::BackgroundFetchError::NONE:
       resolver->Resolve(ids);
       return;
+    case mojom::blink::BackgroundFetchError::STORAGE_ERROR:
+      DCHECK(ids.IsEmpty());
+      resolver->Reject(DOMException::Create(
+          kAbortError, "Failed to get registration IDs due to I/O error."));
+      return;
     case mojom::blink::BackgroundFetchError::DUPLICATED_ID:
     case mojom::blink::BackgroundFetchError::INVALID_ARGUMENT:
     case mojom::blink::BackgroundFetchError::INVALID_ID:
-      // Not applicable for this callback.
-      break;
+      NOTREACHED();  // Not applicable for this callback.
+      return;
   }
-
-  NOTREACHED();
 }
 
 DEFINE_TRACE(BackgroundFetchManager) {

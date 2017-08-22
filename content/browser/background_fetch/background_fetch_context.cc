@@ -40,9 +40,10 @@ BackgroundFetchContext::BackgroundFetchContext(
     scoped_refptr<ServiceWorkerContextWrapper> service_worker_context)
     : browser_context_(browser_context),
       data_manager_(
-          base::MakeUnique<BackgroundFetchDataManager>(browser_context)),
+          base::MakeUnique<BackgroundFetchDataManager>(browser_context,
+                                                       service_worker_context)),
       event_dispatcher_(base::MakeUnique<BackgroundFetchEventDispatcher>(
-          std::move(service_worker_context))),
+          service_worker_context)),
       weak_factory_(this) {
   // Although this lives only on the IO thread, it is constructed on UI thread.
   DCHECK_CURRENTLY_ON(BrowserThread::UI);

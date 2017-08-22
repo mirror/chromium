@@ -11,8 +11,10 @@
 #include "base/callback_helpers.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
+#include "base/test/scoped_feature_list.h"
 #include "content/browser/background_fetch/background_fetch_request_info.h"
 #include "content/browser/background_fetch/background_fetch_test_base.h"
+#include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace content {
@@ -24,12 +26,20 @@ const char kExampleId[] = "my-example-id";
 
 class BackgroundFetchDataManagerTest : public BackgroundFetchTestBase {
  public:
-  BackgroundFetchDataManagerTest()
-      : background_fetch_data_manager_(
-            base::MakeUnique<BackgroundFetchDataManager>(browser_context())) {}
+  BackgroundFetchDataManagerTest() {
+    RestartDataManagerFromPersistentStorage();
+  }
   ~BackgroundFetchDataManagerTest() override = default;
 
  protected:
+  // Re-creates the data manager. Useful for testing that data was persisted.
+  void RestartDataManagerFromPersistentStorage() {
+    background_fetch_data_manager_ =
+        base::MakeUnique<BackgroundFetchDataManager>(
+            browser_context(),
+            embedded_worker_test_helper()->context_wrapper());
+  }
+
   // Synchronous version of BackgroundFetchDataManager::CreateRegistration().
   void CreateRegistration(
       const BackgroundFetchRegistrationId& registration_id,
@@ -95,27 +105,50 @@ TEST_F(BackgroundFetchDataManagerTest, NoDuplicateRegistrations) {
   blink::mojom::BackgroundFetchError error;
 
   // Deleting the not-yet-created registration should fail.
-  ASSERT_NO_FATAL_FAILURE(DeleteRegistration(registration_id, &error));
+  DeleteRegistration(registration_id, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::INVALID_ID);
 
   // Creating the initial registration should succeed.
-  ASSERT_NO_FATAL_FAILURE(
-      CreateRegistration(registration_id, requests, options, &error));
+  CreateRegistration(registration_id, requests, options, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
 
   // Attempting to create it again should yield an error.
-  ASSERT_NO_FATAL_FAILURE(
-      CreateRegistration(registration_id, requests, options, &error));
+  CreateRegistration(registration_id, requests, options, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::DUPLICATED_ID);
 
   // Deleting the registration should succeed.
-  ASSERT_NO_FATAL_FAILURE(DeleteRegistration(registration_id, &error));
+  DeleteRegistration(registration_id, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
 
   // And then recreating the registration again should work fine.
-  ASSERT_NO_FATAL_FAILURE(
-      CreateRegistration(registration_id, requests, options, &error));
+  CreateRegistration(registration_id, requests, options, &error);
   EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
+}
+
+TEST_F(BackgroundFetchDataManagerTest, CreateRegistrationPersisted) {
+  // Tests that the BackgroundFetchDataManager persists created registrations to
+  // the Service Worker DB.
+
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndEnableFeature(features::kBackgroundFetchPersistence);
+
+  BackgroundFetchRegistrationId registration_id;
+  ASSERT_TRUE(CreateRegistrationId(kExampleId, &registration_id));
+
+  std::vector<ServiceWorkerFetchRequest> requests;
+  BackgroundFetchOptions options;
+
+  blink::mojom::BackgroundFetchError error;
+
+  // Creating the initial registration should succeed.
+  CreateRegistration(registration_id, requests, options, &error);
+  EXPECT_EQ(error, blink::mojom::BackgroundFetchError::NONE);
+
+  RestartDataManagerFromPersistentStorage();
+
+  // Attempting to create it again should yield an error, even after restarting.
+  CreateRegistration(registration_id, requests, options, &error);
+  EXPECT_EQ(error, blink::mojom::BackgroundFetchError::DUPLICATED_ID);
 }
 
 }  // namespace content

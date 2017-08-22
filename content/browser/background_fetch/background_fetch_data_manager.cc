@@ -13,6 +13,7 @@
 #include "content/browser/background_fetch/background_fetch_cross_origin_filter.h"
 #include "content/browser/background_fetch/background_fetch_request_info.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
+#include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/public/browser/blob_handle.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/download_interrupt_reasons.h"
@@ -21,6 +22,13 @@
 
 namespace content {
 
+namespace features {
+const base::Feature kBackgroundFetchPersistence{
+    "BackgroundFetchPersistence", base::FEATURE_DISABLED_BY_DEFAULT};
+}  // namespace features
+
+namespace {
+
 // Returns whether the response contained in the Background Fetch |request| is
 // considered OK. See https://fetch.spec.whatwg.org/#ok-status aka a successful
 // 2xx status per https://tools.ietf.org/html/rfc7231#section-6.3.
@@ -28,6 +36,149 @@ bool IsOK(const BackgroundFetchRequestInfo& request) {
   int status = request.GetResponseCode();
   return status >= 200 && status < 300;
 }
+
+const char kRegistrationKeyPrefix[] = "bgf_registration_";
+
+std::string RegistrationKey(
+    const BackgroundFetchRegistrationId& registration_id) {
+  return kRegistrationKeyPrefix + registration_id.id();
+}
+
+}  // namespace
+
+class BackgroundFetchDataManager::DatabaseTask {
+ public:
+  void Run() {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    DCHECK(!data_manager_->database_tasks_.empty());
+    DCHECK_EQ(data_manager_->database_tasks_.front().get(), this);
+    Start();
+  }
+
+ protected:
+  DatabaseTask(BackgroundFetchDataManager* data_manager)
+      : data_manager_(data_manager) {}
+
+  virtual void Start() = 0;
+
+  void Finished() {
+    // Copy the |data_manager_| pointer on the stack before deleting |this|.
+    BackgroundFetchDataManager* data_manager = data_manager_;
+    data_manager->database_tasks_.pop();
+    // Warning, |this| has now been destroyed.
+    if (!data_manager->database_tasks_.empty())
+      data_manager->database_tasks_.front()->Run();
+  }
+
+  BackgroundFetchDataManager* const data_manager_;  // Owns this.
+
+  DISALLOW_COPY_AND_ASSIGN(DatabaseTask);
+};
+
+class BackgroundFetchDataManager::CreateRegistrationTask : public DatabaseTask {
+ public:
+  CreateRegistrationTask(BackgroundFetchDataManager* data_manager,
+                         const BackgroundFetchRegistrationId& registration_id,
+                         const std::vector<ServiceWorkerFetchRequest>& requests,
+                         const BackgroundFetchOptions& options,
+                         CreateRegistrationCallback callback)
+      : DatabaseTask(data_manager),
+        registration_id_(registration_id),
+        requests_(requests),
+        options_(options),
+        callback_(std::move(callback)),
+        weak_factory_(this) {}
+
+  void Start() override {
+    data_manager_->service_worker_context_->GetRegistrationUserData(
+        registration_id_.service_worker_registration_id(),
+        {RegistrationKey(registration_id_)},
+        base::Bind(&CreateRegistrationTask::DidGetRegistration,
+                   weak_factory_.GetWeakPtr()));
+  }
+
+ private:
+  void DidGetRegistration(const std::vector<std::string>& data,
+                          ServiceWorkerStatusCode status) {
+    switch (status) {
+      case SERVICE_WORKER_ERROR_NOT_FOUND:
+        data_manager_->service_worker_context_->StoreRegistrationUserData(
+            registration_id_.service_worker_registration_id(),
+            registration_id_.origin().GetURL(),
+            {{RegistrationKey(registration_id_), "TODO VALUE"}},
+            base::Bind(&CreateRegistrationTask::DidStoreRegistration,
+                       weak_factory_.GetWeakPtr()));
+        return;
+      case SERVICE_WORKER_OK:
+        std::move(callback_).Run(
+            blink::mojom::BackgroundFetchError::DUPLICATED_ID);
+        Finished();  // Destroys |this|.
+        return;
+      case SERVICE_WORKER_ERROR_FAILED:
+      case SERVICE_WORKER_ERROR_ABORT:
+      case SERVICE_WORKER_ERROR_START_WORKER_FAILED:
+      case SERVICE_WORKER_ERROR_PROCESS_NOT_FOUND:
+      case SERVICE_WORKER_ERROR_EXISTS:
+      case SERVICE_WORKER_ERROR_INSTALL_WORKER_FAILED:
+      case SERVICE_WORKER_ERROR_ACTIVATE_WORKER_FAILED:
+      case SERVICE_WORKER_ERROR_IPC_FAILED:
+      case SERVICE_WORKER_ERROR_NETWORK:
+      case SERVICE_WORKER_ERROR_SECURITY:
+      case SERVICE_WORKER_ERROR_EVENT_WAITUNTIL_REJECTED:
+      case SERVICE_WORKER_ERROR_STATE:
+      case SERVICE_WORKER_ERROR_TIMEOUT:
+      case SERVICE_WORKER_ERROR_SCRIPT_EVALUATE_FAILED:
+      case SERVICE_WORKER_ERROR_DISK_CACHE:
+      case SERVICE_WORKER_ERROR_REDUNDANT:
+      case SERVICE_WORKER_ERROR_DISALLOWED:
+      case SERVICE_WORKER_ERROR_MAX_VALUE:
+        // TODO: Better error handling.
+        std::move(callback_).Run(
+            blink::mojom::BackgroundFetchError::STORAGE_ERROR);
+        Finished();  // Destroys |this|.
+        return;
+    }
+  }
+
+  void DidStoreRegistration(ServiceWorkerStatusCode status) {
+    switch (status) {
+      case SERVICE_WORKER_OK:
+        std::move(callback_).Run(blink::mojom::BackgroundFetchError::NONE);
+        Finished();  // Destroys |this|.
+        return;
+      case SERVICE_WORKER_ERROR_FAILED:
+      case SERVICE_WORKER_ERROR_ABORT:
+      case SERVICE_WORKER_ERROR_START_WORKER_FAILED:
+      case SERVICE_WORKER_ERROR_PROCESS_NOT_FOUND:
+      case SERVICE_WORKER_ERROR_NOT_FOUND:
+      case SERVICE_WORKER_ERROR_EXISTS:
+      case SERVICE_WORKER_ERROR_INSTALL_WORKER_FAILED:
+      case SERVICE_WORKER_ERROR_ACTIVATE_WORKER_FAILED:
+      case SERVICE_WORKER_ERROR_IPC_FAILED:
+      case SERVICE_WORKER_ERROR_NETWORK:
+      case SERVICE_WORKER_ERROR_SECURITY:
+      case SERVICE_WORKER_ERROR_EVENT_WAITUNTIL_REJECTED:
+      case SERVICE_WORKER_ERROR_STATE:
+      case SERVICE_WORKER_ERROR_TIMEOUT:
+      case SERVICE_WORKER_ERROR_SCRIPT_EVALUATE_FAILED:
+      case SERVICE_WORKER_ERROR_DISK_CACHE:
+      case SERVICE_WORKER_ERROR_REDUNDANT:
+      case SERVICE_WORKER_ERROR_DISALLOWED:
+      case SERVICE_WORKER_ERROR_MAX_VALUE:
+        std::move(callback_).Run(
+            blink::mojom::BackgroundFetchError::STORAGE_ERROR);
+        Finished();  // Destroys |this|.
+        return;
+    }
+  }
+
+  BackgroundFetchRegistrationId registration_id_;
+  std::vector<ServiceWorkerFetchRequest> requests_;
+  BackgroundFetchOptions options_;
+  CreateRegistrationCallback callback_;
+
+  base::WeakPtrFactory<CreateRegistrationTask> weak_factory_;  // Keep as last.
+};
 
 // The Registration Data class encapsulates the data stored for a particular
 // Background Fetch registration. This roughly matches the on-disk format that
@@ -124,12 +275,11 @@ class BackgroundFetchDataManager::RegistrationData {
 };
 
 BackgroundFetchDataManager::BackgroundFetchDataManager(
-    BrowserContext* browser_context)
-    : weak_ptr_factory_(this) {
-  // Constructed on the UI thread, then used on a different thread.
+    BrowserContext* browser_context,
+    const scoped_refptr<ServiceWorkerContextWrapper>& service_worker_context)
+    : service_worker_context_(service_worker_context), weak_ptr_factory_(this) {
+  // Constructed on the UI thread, then used on the IO thread.
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DETACH_FROM_SEQUENCE(sequence_checker_);
-
   DCHECK(browser_context);
 
   // Store the blob storage context for the given |browser_context|.
@@ -139,7 +289,7 @@ BackgroundFetchDataManager::BackgroundFetchDataManager(
 }
 
 BackgroundFetchDataManager::~BackgroundFetchDataManager() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
 }
 
 void BackgroundFetchDataManager::CreateRegistration(
@@ -147,7 +297,13 @@ void BackgroundFetchDataManager::CreateRegistration(
     const std::vector<ServiceWorkerFetchRequest>& requests,
     const BackgroundFetchOptions& options,
     CreateRegistrationCallback callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  if (base::FeatureList::IsEnabled(features::kBackgroundFetchPersistence)) {
+    AddDatabaseTask(std::make_unique<CreateRegistrationTask>(
+        this, registration_id, requests, options, std::move(callback)));
+    return;
+  }
 
   if (registrations_.find(registration_id) != registrations_.end()) {
     std::move(callback).Run(blink::mojom::BackgroundFetchError::DUPLICATED_ID);
@@ -165,7 +321,7 @@ void BackgroundFetchDataManager::CreateRegistration(
 void BackgroundFetchDataManager::PopNextRequest(
     const BackgroundFetchRegistrationId& registration_id,
     NextRequestCallback callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   auto iter = registrations_.find(registration_id);
   DCHECK(iter != registrations_.end());
@@ -183,7 +339,7 @@ void BackgroundFetchDataManager::MarkRequestAsStarted(
     const BackgroundFetchRegistrationId& registration_id,
     BackgroundFetchRequestInfo* request,
     const std::string& download_guid) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   auto iter = registrations_.find(registration_id);
   DCHECK(iter != registrations_.end());
@@ -196,7 +352,7 @@ void BackgroundFetchDataManager::MarkRequestAsComplete(
     const BackgroundFetchRegistrationId& registration_id,
     BackgroundFetchRequestInfo* request,
     MarkedCompleteCallback callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   auto iter = registrations_.find(registration_id);
   DCHECK(iter != registrations_.end());
@@ -211,7 +367,7 @@ void BackgroundFetchDataManager::MarkRequestAsComplete(
 void BackgroundFetchDataManager::GetSettledFetchesForRegistration(
     const BackgroundFetchRegistrationId& registration_id,
     SettledFetchesCallback callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   auto iter = registrations_.find(registration_id);
   DCHECK(iter != registrations_.end());
@@ -251,8 +407,6 @@ void BackgroundFetchDataManager::GetSettledFetchesForRegistration(
 
       if (request->GetFileSize() > 0) {
         DCHECK(!request->GetFilePath().empty());
-        // CreateFileBackedBlob DCHECKs that it is called on the IO thread. This
-        // imposes a more specific requirement than our sequence_checker_.
         std::unique_ptr<BlobHandle> blob_handle =
             blob_storage_context_->CreateFileBackedBlob(
                 request->GetFilePath(), 0 /* offset */, request->GetFileSize(),
@@ -289,7 +443,7 @@ void BackgroundFetchDataManager::GetSettledFetchesForRegistration(
 void BackgroundFetchDataManager::DeleteRegistration(
     const BackgroundFetchRegistrationId& registration_id,
     DeleteRegistrationCallback callback) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   auto iter = registrations_.find(registration_id);
   if (iter == registrations_.end()) {
@@ -300,6 +454,13 @@ void BackgroundFetchDataManager::DeleteRegistration(
   registrations_.erase(iter);
 
   std::move(callback).Run(blink::mojom::BackgroundFetchError::NONE);
+}
+
+void BackgroundFetchDataManager::AddDatabaseTask(
+    std::unique_ptr<DatabaseTask> task) {
+  database_tasks_.push(std::move(task));
+  if (database_tasks_.size() == 1)
+    database_tasks_.front()->Run();
 }
 
 }  // namespace content
