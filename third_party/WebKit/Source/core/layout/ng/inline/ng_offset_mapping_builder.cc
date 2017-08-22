@@ -96,6 +96,16 @@ void NGOffsetMappingBuilder::Annotate(const LayoutText* layout_object) {
     annotation.first = layout_object;
 }
 
+void NGOffsetMappingBuilder::AnnotateRange(
+    unsigned start,
+    unsigned end,
+    const NGPhysicalTextFragment* text_fragment) {
+  for (unsigned i = start; i < end; ++i) {
+    DCHECK(!annotation_[i].second) << i;
+    annotation_[i].second = text_fragment;
+  }
+}
+
 void NGOffsetMappingBuilder::Concatenate(const NGOffsetMappingBuilder& other) {
   DCHECK(!mapping_.IsEmpty());
   DCHECK(!other.mapping_.IsEmpty());
