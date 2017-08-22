@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da76eb58_faa022d8",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-22T18:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "587153e3_88a894cc",
+      "range": {
+        "startLine": 194,
+        "startChar": 10,
+        "endLine": 194,
+        "endChar": 22
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cc7e875_92989ec0",
         "filename": "chrome/browser/chrome_browser_main_win.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8d84d5_f10e5994",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-22T18:01:33Z",
+      "side": 1,
+      "message": "My plan is to rebase https://chromium-review.googlesource.com/c/chromium/src/+/602874 on top of this after, to keep this CL manageable.",
+      "parentUuid": "6cc7e875_92989ec0",
+      "range": {
+        "startLine": 195,
+        "startChar": 10,
+        "endLine": 195,
+        "endChar": 32
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d4bc148e_01d36cab",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-22T18:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8869500_f49130e9",
+      "range": {
+        "startLine": 211,
+        "startChar": 31,
+        "endLine": 211,
+        "endChar": 47
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "204a80c7_6bfbf629",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "556e87e5_4439b34e",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2901,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-22T18:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "204a80c7_6bfbf629",
+      "range": {
+        "startLine": 2901,
+        "startChar": 15,
+        "endLine": 2901,
+        "endChar": 29
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85a208da_06cec87f",
         "filename": "chrome/browser/conflicts/module_database_win.cc",
         "patchSetId": 1
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "63e0c6ad_be14d734",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-22T18:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85a208da_06cec87f",
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e0e7b30_bf2283cb",
         "filename": "chrome/browser/conflicts/module_event_sink_impl_win.cc",
         "patchSetId": 1
@@ -125,6 +239,24 @@
       "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff01e44_4261c5b2",
+        "filename": "chrome/browser/conflicts/module_event_sink_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-22T18:01:33Z",
+      "side": 1,
+      "message": "The security review team told us that the only safe thing to send over IPC is the module address. Anything else should not be trusted.\n\nI don\u0027t think we can avoid the potential races with transient modules. The general strategy here is best-effort, dropping events if this isn\u0027t sufficient.\n\nI think adding a metric to keep track of the number of dropped events could be useful (In a follow-up CL).",
+      "parentUuid": "8e0e7b30_bf2283cb",
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "0fc9e32b_6971681d",
+        "filename": "chrome/common/conflicts/module_event_sink_win.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-22T18:01:33Z",
+      "side": 1,
+      "message": "See my other comment on why we only send the load address (security!)\n\nThe load-\u003eunload-\u003eload scenario only leads to identifying the second module twice (because we\u0027ll get another load event for that module), and missing the first. There\u0027s nothing we can really do that\u0027s better without taking extreme measures, and we\u0027re fine with that.",
+      "parentUuid": "a0f49cc5_53c115c8",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49aafbe7_2ca4e81d",
         "filename": "chrome/common/conflicts/module_watcher_win.h",
         "patchSetId": 1
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "e048095f_da0091fa",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-22T18:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49aafbe7_2ca4e81d",
+      "range": {
+        "startLine": 59,
+        "startChar": 52,
+        "endLine": 59,
+        "endChar": 65
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16d6712c_4561bed6",
         "filename": "chrome/common/conflicts/module_watcher_win.h",
         "patchSetId": 1
@@ -194,6 +374,30 @@
       "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda3761e_7c31c468",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-22T18:01:33Z",
+      "side": 1,
+      "message": "It\u0027s still useful. In the browser process, MODULE_LOADED events guarantee that the module is loaded in memory during the callback.",
+      "parentUuid": "16d6712c_4561bed6",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 46
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
