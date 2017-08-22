@@ -390,7 +390,7 @@ class CC_EXPORT LayerTreeImpl {
 
   // These should be called by LayerImpl's ctor/dtor.
   void RegisterLayer(LayerImpl* layer);
-  void UnregisterLayer(LayerImpl* layer);
+  void UnregisterLayer(LayerImpl* layer, ElementId element_id);
 
   // These manage ownership of the LayerImpl.
   void AddLayer(std::unique_ptr<LayerImpl> layer);

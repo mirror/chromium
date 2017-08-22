@@ -1208,12 +1208,16 @@ void LayerTreeImpl::RegisterLayer(LayerImpl* layer) {
   layer_id_map_[layer->id()] = layer;
 }
 
-void LayerTreeImpl::UnregisterLayer(LayerImpl* layer) {
+void LayerTreeImpl::UnregisterLayer(LayerImpl* layer, ElementId element_id) {
   DCHECK(LayerById(layer->id()));
   layers_that_should_push_properties_.erase(layer);
-  element_id_to_transform_animations_.erase(layer->element_id());
-  element_id_to_opacity_animations_.erase(layer->element_id());
-  element_id_to_filter_animations_.erase(layer->element_id());
+  // As part of transitioning to SPv2 we're removing references to
+  // element id on layer when possible. During transition let's make
+  // sure we still match the element id set on the layer.
+  DCHECK_EQ(layer->element_id(), element_id);
+  element_id_to_transform_animations_.erase(element_id);
+  element_id_to_opacity_animations_.erase(element_id);
+  element_id_to_filter_animations_.erase(element_id);
   layer_id_map_.erase(layer->id());
 }
 
