@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cba1126_f58ccdf3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewHighlighter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-22T04:23:04Z",
+      "side": 1,
+      "message": "Why return?  Shouldn\u0027t we just set the background to the pulse (or a LayerDrawable with one layer)?",
+      "range": {
+        "startLine": 36,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 39
+      },
+      "revId": "5af1ac2828cfaad88d4602ab6b7e84e38565c27f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

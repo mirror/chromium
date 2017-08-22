@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "24b499e0_50e8ef4e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewHighlighter.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-22T04:23:04Z",
+      "side": 1,
+      "message": "I think there were issues with the Drawable callback, but I don\u0027t remember the details.  I think it\u0027s fine as long as we\u0027re setting it back on the exact same view.",
+      "parentUuid": "80bc2536_3e9cf8d4",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "be1afb8ef0cb62ebd8a4a98dd5526fd438553964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca7e44e3_63186c5e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 7
