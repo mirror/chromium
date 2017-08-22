@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b71f825_1729d156",
+        "filename": "ui/webui/resources/cr_elements/shared_vars_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-22T00:50:17Z",
+      "side": 1,
+      "message": "This is being moved. I\u0027m happy to look into handling the row height differently, as we discussed today. For this particular CL, my plan is to only move them.",
+      "revId": "14038ce80adc428bbfac3ab46457edf26404e7f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
