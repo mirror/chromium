@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea76b4b6_d147533d",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:35:28Z",
+      "side": 1,
+      "message": "add \u0027.\u0027 to the end of the sentence",
+      "range": {
+        "startLine": 61,
+        "startChar": 61,
+        "endLine": 61,
+        "endChar": 63
+      },
+      "revId": "ba6115ab108406f27194abe67efd78b3727ecec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f9a881_2bcacdf5",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:35:28Z",
+      "side": 1,
+      "message": "FailFetchEventDispatch()",
+      "range": {
+        "startLine": 66,
+        "startChar": 13,
+        "endLine": 66,
+        "endChar": 16
+      },
+      "revId": "ba6115ab108406f27194abe67efd78b3727ecec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03e3254_f96c233b",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:35:28Z",
+      "side": 1,
+      "message": "Since it\u0027s a bit non-obvious, I think it\u0027d be good to comment what\u0027s going on here.\n\n// Simulate failure by stopping the worker before the event finishes. This causes ServiceWorkerVersion::StartRequest() to call its error callback, which triggers ServiceWorkerURLRequestJob\u0027s dispatch failed behavior.\nSimulateWorkerStopped(...)\n\n// Finish the event by calling |finish_callback|. This is the Mojo callback for mojom::ServiceWorkerEventDispatcher::DispatchFetchEvent(). If this is not called, Mojo will complain. In production code, ServiceWorkerContextClient would call this when it aborts all callbacks after an unexpected stop.\nstd::move(finish_callback).Run(...)",
+      "revId": "ba6115ab108406f27194abe67efd78b3727ecec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59bb8626_f0705afc",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:35:28Z",
+      "side": 1,
+      "message": "as before, would prefer to split this:\n\nJobResult result \u003d TestRequest();\nEXPECT_EQ(kHandled, result);",
+      "revId": "ba6115ab108406f27194abe67efd78b3727ecec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b894715_186237da",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:35:28Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "ba6115ab108406f27194abe67efd78b3727ecec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdaa84b9_2b21ca78",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:35:28Z",
+      "side": 1,
+      "message": "i.e., it does not call respondWith().",
+      "revId": "ba6115ab108406f27194abe67efd78b3727ecec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eebd4a5b_c684a74d",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T06:35:28Z",
+      "side": 1,
+      "message": "Since this looks really similar to the next test, we could add:\n\n// The request should not be handled by the job, but it shouldn\u0027t be a failure.\nEXPECT_FALSE(was_main_resource_load_failed_called_);",
+      "revId": "ba6115ab108406f27194abe67efd78b3727ecec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
