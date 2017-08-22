@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1660fcf_f247443c",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-22T20:57:57Z",
+      "side": 1,
+      "message": "We do but sky@ wanted the flag only for Windows. ChromeOS uses the barrel button for assistant; and the barrel button isn\u0027t quite functional on Android yet. So I\u0027ve just limited to the scope with the feature and the env I\u0027ve tested.",
+      "parentUuid": "cb5e1eb8_7f597614",
+      "revId": "90c1a7e473b635862abb84fb7f17dbefcafbc141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b7108e9_db081aeb",
         "filename": "third_party/WebKit/Source/core/input/MouseEventManager.cpp",
         "patchSetId": 2
