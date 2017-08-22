@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5eda058_9adb72c3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadManagerUi.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T23:40:58Z",
+      "side": 1,
+      "message": "This method isn\u0027t needed anymore.",
+      "range": {
+        "startLine": 509,
+        "startChar": 15,
+        "endLine": 509,
+        "endChar": 34
+      },
+      "revId": "8631a2c889f7b5c061a47cffa08bd0e1126f8e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e745ba89_1f31d9c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T23:40:58Z",
+      "side": 1,
+      "message": "Neither is this one.",
+      "range": {
+        "startLine": 471,
+        "startChar": 15,
+        "endLine": 471,
+        "endChar": 34
+      },
+      "revId": "8631a2c889f7b5c061a47cffa08bd0e1126f8e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddab2baf_8887c92d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T23:40:58Z",
+      "side": 1,
+      "message": "nit: Let\u0027s do this above the getMenu() line so that it\u0027s more readable.\n\nmSelectableListHasItems \u003d numItems !\u003d 0;\ngetMenu().findItem(mSearchMenuItemId).setVisible(...);",
+      "range": {
+        "startLine": 423,
+        "startChar": 32,
+        "endLine": 423,
+        "endChar": 71
+      },
+      "revId": "8631a2c889f7b5c061a47cffa08bd0e1126f8e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
