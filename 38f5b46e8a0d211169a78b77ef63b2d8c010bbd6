@@ -25,6 +25,98 @@
     },
     {
       "key": {
+        "uuid": "ee6e1d49_1de13111",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-08-22T14:05:17Z",
+      "side": 1,
+      "message": "Please add comments to explain why some values need to be constrained to fit 32 signed int.",
+      "range": {
+        "startLine": 132,
+        "startChar": 6,
+        "endLine": 132,
+        "endChar": 21
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "405d45b6_dd197dad",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-08-22T14:05:17Z",
+      "side": 1,
+      "message": "Avoid creating task runner on every message, use BrowserThread::PostTask() to post task instead.",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 170,
+        "endChar": 66
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf70cd2_28693b6d",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-08-22T14:05:17Z",
+      "side": 1,
+      "message": "Is it necessary to post 2 tasks (UpdateInfoStructures, SetValueAndReplySysInfo).\nHow about merge these 2 functions and only post once?",
+      "range": {
+        "startLine": 174,
+        "startChar": 50,
+        "endLine": 174,
+        "endChar": 70
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e45620f7_ffce450c",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-08-22T14:05:17Z",
+      "side": 1,
+      "message": "Datas -\u003e Data",
+      "range": {
+        "startLine": 203,
+        "startChar": 41,
+        "endLine": 203,
+        "endChar": 58
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b940de0a_2f55c7f9",
         "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
         "patchSetId": 4
@@ -41,6 +133,53 @@
         "startChar": 7,
         "endLine": 14,
         "endChar": 14
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3b90dd_dc3dacf5",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-08-22T14:05:17Z",
+      "side": 1,
+      "message": "Maybe a more specific name is better. ex: SysInternalsCpuInfo",
+      "parentUuid": "b940de0a_2f55c7f9",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 14
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127449b0_d78dc24a",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-08-22T14:05:17Z",
+      "side": 1,
+      "message": "HandleGetSysInfo() is a better name to conform to the naming convention of other WebUIMessageHandler subclasses.\nAnd please add comments to describe the getSysInfo message and it\u0027s return value.",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 17
       },
       "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
