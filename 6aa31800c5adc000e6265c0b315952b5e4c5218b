@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ceeddc62_1858ba06",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 15
+      },
+      "lineNbr": 1736,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-22T21:45:26Z",
+      "side": 1,
+      "message": "If you didn\u0027t add this, please remove this from your diff. Maybe you just need to rebase?",
+      "range": {
+        "startLine": 1736,
+        "startChar": 19,
+        "endLine": 1736,
+        "endChar": 47
+      },
+      "revId": "6aa31800c5adc000e6265c0b315952b5e4c5218b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
