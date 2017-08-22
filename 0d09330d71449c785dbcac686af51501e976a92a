@@ -336,6 +336,41 @@
     },
     {
       "key": {
+        "uuid": "be4efa27_31141fe9",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-22T23:59:09Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "14965b8f_bb0060ed",
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73916a81_377d7c42",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-22T23:59:09Z",
+      "side": 1,
+      "message": "This was all wrong. |first_audio_frame_timestamp| is in 100ns units. Fixed up code and added plenty of comments.",
+      "revId": "0d09330d71449c785dbcac686af51501e976a92a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2935730_d6be0e67",
         "filename": "media/base/audio_parameters.h",
         "patchSetId": 4
