@@ -46,6 +46,30 @@
       "revId": "11aca5ffa134c621b5292e0b2244b044c7a6db30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1734c085_d3323878",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T22:16:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fe8ee94f_de341fc9",
+      "range": {
+        "startLine": 261,
+        "startChar": 5,
+        "endLine": 261,
+        "endChar": 45
+      },
+      "revId": "11aca5ffa134c621b5292e0b2244b044c7a6db30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
