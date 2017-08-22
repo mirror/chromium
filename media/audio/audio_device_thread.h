@@ -31,8 +31,8 @@ class MEDIA_EXPORT AudioDeviceThread : public base::PlatformThread::Delegate {
    public:
     Callback(const AudioParameters& audio_parameters,
              base::SharedMemoryHandle memory,
-             int memory_length,
-             int total_segments);
+             size_t segment_length,
+             size_t total_segments);
 
     // One time initialization for the callback object on the audio thread.
     void InitializeOnAudioThread();
@@ -52,10 +52,11 @@ class MEDIA_EXPORT AudioDeviceThread : public base::PlatformThread::Delegate {
     // constructor and must never change.
     const AudioParameters audio_parameters_;
 
+    const size_t memory_length_;
+    const size_t total_segments_;
+    const size_t segment_length_;
+
     base::SharedMemory shared_memory_;
-    const int memory_length_;
-    const int total_segments_;
-    const int segment_length_;
 
     // Detached in constructor and attached in InitializeOnAudioThread() which
     // is called on the audio device thread. Sub-classes can then use it for
