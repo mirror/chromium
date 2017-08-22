@@ -32,6 +32,14 @@ class BASE_EXPORT PostTaskAndReplyImpl {
                         OnceClosure task,
                         OnceClosure reply);
 
+  // Posts |task| by calling PostTask(). An callback will be passed to the
+  // |task|, and when it is called, it means completion. On completion,
+  // |reply| is posted to the sequence or thread that called this.
+  // Can only be called when SequencedTaskRunnerHandle::IsSet().
+  bool PostTaskAndReplyAsync(const tracked_objects::Location& from_here,
+                             OnceCallback<void(OnceClosure)> task,
+                             OnceClosure reply);
+
  private:
   virtual bool PostTask(const tracked_objects::Location& from_here,
                         OnceClosure task) = 0;

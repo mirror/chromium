@@ -5,9 +5,12 @@
 #ifndef BASE_POST_TASK_AND_REPLY_WITH_RESULT_INTERNAL_H_
 #define BASE_POST_TASK_AND_REPLY_WITH_RESULT_INTERNAL_H_
 
+#include <tuple>
 #include <utility>
 
 #include "base/callback.h"
+#include "base/optional.h"
+#include "base/tuple.h"
 
 namespace base {
 
@@ -25,6 +28,34 @@ template <typename TaskReturnType, typename ReplyArgType>
 void ReplyAdapter(OnceCallback<void(ReplyArgType)> callback,
                   TaskReturnType* result) {
   std::move(callback).Run(std::move(*result));
+}
+
+template <typename... ReturnArgTypes>
+void TaskAsyncAdaptor(
+    OnceCallback<void(OnceCallback<void(ReturnArgTypes...)>)> task,
+    base::Optional<std::tuple<ReturnArgTypes...>>* result,
+    OnceClosure on_complete) {
+  std::move(task).Run(BindOnce(
+      [](base::Optional<std::tuple<ReturnArgTypes...>>* result,
+         OnceClosure on_complete, ReturnArgTypes... args) {
+        *result = std::make_tuple(std::move(args)...);
+        std::move(on_complete).Run();
+      },
+      Unretained(result), std::move(on_complete)));
+}
+
+template <typename Tuple, typename... ArgTypes, size_t... Is>
+void CallbackApply(OnceCallback<void(ArgTypes...)> callback,
+                   Tuple&& args,
+                   std::index_sequence<Is...>) {
+  std::move(callback).Run(std::get<Is>(std::forward<Tuple>(args))...);
+}
+
+template <typename ReturnTuple, typename... ReplyArgTypes>
+void ReplyAsyncAdaptor(OnceCallback<void(ReplyArgTypes...)> reply,
+                       base::Optional<ReturnTuple>* result) {
+  CallbackApply(std::move(reply), std::move(result->value()),
+                MakeIndexSequenceForTuple<ReturnTuple>());
 }
 
 }  // namespace internal
