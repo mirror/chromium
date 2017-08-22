@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "12a2d1ba_600173fc",
+        "filename": "chromeos/components/tether/disconnect_tethering_operation_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-22T00:16:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1b31e2a_c0f0332d",
+      "range": {
+        "startLine": 122,
+        "startChar": 41,
+        "endLine": 122,
+        "endChar": 52
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73c002cd_dd8d1e7f",
         "filename": "chromeos/components/tether/disconnect_tethering_operation_unittest.cc",
         "patchSetId": 2
@@ -332,6 +356,30 @@
     },
     {
       "key": {
+        "uuid": "2159ce0c_6891d133",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-22T00:16:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86b3b2d8_3a07118a",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 43
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3971e212_ead87b65",
         "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
         "patchSetId": 2
@@ -423,6 +471,30 @@
       "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555ce46d_e1ccca20",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-22T00:16:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac6a85c5_f698105d",
+      "range": {
+        "startLine": 395,
+        "startChar": 2,
+        "endLine": 395,
+        "endChar": 43
+      },
+      "revId": "dfb04446fce54fe9d84e895e52fc27e46e06ba92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

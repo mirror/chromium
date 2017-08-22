@@ -22,6 +22,30 @@
       "revId": "229aedb49cf0fcee0a5ff329cb381b170a84bc8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290b9087_9f36350a",
+        "filename": "chromeos/components/tether/wifi_hotspot_connector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-22T00:16:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ace215b_b9eac0c0",
+      "range": {
+        "startLine": 323,
+        "startChar": 44,
+        "endLine": 323,
+        "endChar": 49
+      },
+      "revId": "229aedb49cf0fcee0a5ff329cb381b170a84bc8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
