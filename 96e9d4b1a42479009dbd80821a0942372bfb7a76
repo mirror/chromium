@@ -16,6 +16,24 @@
       "revId": "96e9d4b1a42479009dbd80821a0942372bfb7a76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da89ba0_ded0375c",
+        "filename": "extensions/renderer/native_extension_bindings_system.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-22T14:54:06Z",
+      "side": 1,
+      "message": "Actually, I want avoid that.  There are a few places here where we early-out due to an error (line 544, line 507, line 462), and I don\u0027t want the metric recorded in those cases.  If we account for the early outs, we\u0027d need to remember to reset the object in those cases, and I think that\u0027s no better than needing to catch the exit sites (and might in fact be worse, since there\u0027s only two \"success\" cases we log in).",
+      "parentUuid": "a8325f57_9ff3a39f",
+      "revId": "96e9d4b1a42479009dbd80821a0942372bfb7a76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
