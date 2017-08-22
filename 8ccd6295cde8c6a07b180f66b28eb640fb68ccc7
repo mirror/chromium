@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "ffadd805_c78992f9",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 2270,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-22T19:46:30Z",
+      "side": 1,
+      "message": "It does not depend on android.  Moved per policy.",
+      "parentUuid": "30c94b70_dd776b53",
+      "range": {
+        "startLine": 2270,
+        "startChar": 23,
+        "endLine": 2270,
+        "endChar": 30
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2ea994b_8792d755",
         "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
         "patchSetId": 3
@@ -179,6 +203,30 @@
       "side": 1,
       "message": "I am secretly hoping the UMA reviewer is going to suggest naming the metric:\nOfflinePages.SavePageRequested so that metrics don\u0027t get out of control. I\u0027d actually ask explicitly about that.\n\nAlso, is there no xml file with a complete list of UKM metrics with ownership and so on?",
       "parentUuid": "bb9e0657_77c06269",
+      "range": {
+        "startLine": 15,
+        "startChar": 35,
+        "endLine": 15,
+        "endChar": 52
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26181ba1_628064ab",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-22T19:46:30Z",
+      "side": 1,
+      "message": "It turns out there is a ukm.xml file that I need to use, added it to the changelist.\n\nLooking at other metrics in the file, they use the event name and a less complicated metric name, so this matches the scheme in use as I understand it.",
+      "parentUuid": "550b58c8_7a1158ad",
       "range": {
         "startLine": 15,
         "startChar": 35,
@@ -356,6 +404,30 @@
       "side": 1,
       "message": "I don\u0027t think this addressed the question thou: Why is the interface defined in c/op/c/background?",
       "parentUuid": "3970dd70_c778f70e",
+      "range": {
+        "startLine": 8,
+        "startChar": 40,
+        "endLine": 8,
+        "endChar": 50
+      },
+      "revId": "8ccd6295cde8c6a07b180f66b28eb640fb68ccc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ce83f5_86e177d2",
+        "filename": "chrome/browser/offline_pages/android/offline_pages_ukm_reporter_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-22T19:46:30Z",
+      "side": 1,
+      "message": "Moved up one level to core.",
+      "parentUuid": "b17427c6_59e084a0",
       "range": {
         "startLine": 8,
         "startChar": 40,
