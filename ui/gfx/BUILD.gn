@@ -508,6 +508,12 @@ group("memory_buffer") {
   }
 }
 
+source_set("buffer_types") {
+  sources = [
+    "buffer_types.h",
+  ]
+}
+
 # Cannot be a static_library in component builds due to exported functions
 source_set("memory_buffer_sources") {
   visibility = [ ":*" ]  # Depend on through ":memory_buffer".
@@ -517,7 +523,6 @@ source_set("memory_buffer_sources") {
   sources = [
     "buffer_format_util.cc",
     "buffer_format_util.h",
-    "buffer_types.h",
     "client_native_pixmap.h",
     "client_native_pixmap_factory.cc",
     "client_native_pixmap_factory.h",
@@ -540,6 +545,10 @@ source_set("memory_buffer_sources") {
   }
 
   defines = [ "GFX_IMPLEMENTATION" ]
+
+  public_deps = [
+    ":buffer_types",
+  ]
 
   deps = [
     ":gfx_switches",
