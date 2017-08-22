@@ -16,6 +16,24 @@
       "revId": "f2ecc23131e89829f9ccb6f93166cb7ecfdca7b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d16bd6_915f7f58",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-22T07:45:51Z",
+      "side": 1,
+      "message": "Yes, I still need the separate slot because the \"title\" slot doesn\u0027t cover the full width of the dialog.",
+      "parentUuid": "a404cfe4_65758a61",
+      "revId": "f2ecc23131e89829f9ccb6f93166cb7ecfdca7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
