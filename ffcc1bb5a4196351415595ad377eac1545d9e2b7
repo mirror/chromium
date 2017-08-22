@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a226edb0_8c0d79be",
+        "filename": "base/values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-22T15:53:45Z",
+      "side": 1,
+      "message": "Update this?",
+      "revId": "ffcc1bb5a4196351415595ad377eac1545d9e2b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1832473e_b470f656",
+        "filename": "base/values.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-22T15:53:45Z",
+      "side": 1,
+      "message": "I guess all of these should become deprecated as well? Otherwise we have Set, SetKey and SetPath - each consuming the key in a different way?\n\nCan we already remove these functions? I wonder whether you have migrated all calls.",
+      "revId": "ffcc1bb5a4196351415595ad377eac1545d9e2b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6a5efe_ea7f7a9f",
+        "filename": "base/values_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-22T15:53:45Z",
+      "side": 1,
+      "message": "add a nullptr somewhere in the path?",
+      "revId": "ffcc1bb5a4196351415595ad377eac1545d9e2b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883aabe7_094af548",
+        "filename": "base/values_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-22T15:53:45Z",
+      "side": 1,
+      "message": "I guess root.SetPath({\"foo\"}, Value(123)) would work, right?",
+      "revId": "ffcc1bb5a4196351415595ad377eac1545d9e2b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
