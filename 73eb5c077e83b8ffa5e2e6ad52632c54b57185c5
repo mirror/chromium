@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "abe632c6_3bf87b36",
+        "filename": "device/serial/buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-22T13:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f470e15_cca4bb48",
+      "revId": "73eb5c077e83b8ffa5e2e6ad52632c54b57185c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dc1e999_4f281719",
         "filename": "tools/battor_agent/battor_connection_impl.cc",
         "patchSetId": 4
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "3dc1e999_4f281719",
+      "revId": "73eb5c077e83b8ffa5e2e6ad52632c54b57185c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b780ee4_ab2fd4ef",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-22T13:28:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "841a0e1a_ea6e5818",
       "revId": "73eb5c077e83b8ffa5e2e6ad52632c54b57185c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
