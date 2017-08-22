@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "94ed1c11_1427270c",
+        "filename": "chrome/browser/extensions/api/device_permissions_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-22T17:49:48Z",
+      "side": 1,
+      "message": "Add a comment explaining what events you are expecting to be run by this loop and if possible run the loop until the quit closure is explicitly called instead of simply until it is idle.",
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce6f282d_539e728b",
         "filename": "device/hid/hid_service.cc",
         "patchSetId": 5
@@ -18,6 +35,150 @@
         "startChar": 2,
         "endLine": 60,
         "endChar": 29
+      },
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79329ea_e0f3022f",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-22T17:49:48Z",
+      "side": 1,
+      "message": "It\u0027s okay for AddDevice to be called before GetDevices as long as the set of devices passed to the GetDevicesCallback contains the device passed to AddDevice.",
+      "parentUuid": "ce6f282d_539e728b",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 29
+      },
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a727f66_5c1830a5",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-22T17:49:48Z",
+      "side": 1,
+      "message": "Just to make the logic clear and hedge against future bugs I\u0027d rather DCHECK(enumeration_ready_) here and set enumeration_ready_ \u003d true in FirstEnumerationComplete.",
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d54938_4ed4f7b3",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-22T17:49:48Z",
+      "side": 1,
+      "message": "Similarly, when a task is posted to run this method we know this list isn\u0027t empty so I would rather DCHECK this here and leave the conditional in FirstEnumerationComplete.",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 39
+      },
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207bcdab_ef9ce086",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-22T17:49:48Z",
+      "side": 1,
+      "message": "While we\u0027re changing this code it is safer to write:\n\nstd::vector\u003cGetDevicesCallback\u003e callbacks;\ncallbacks.swap(pending_enumerations_);\nfor (const auto\u0026 callback : callbacks)\n  callback.Run(devices);",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 34
+      },
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f9fe17_b4b04f6c",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-22T17:49:48Z",
+      "side": 1,
+      "message": "nit: space between methods",
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d01b28_0c812459",
+        "filename": "device/hid/mock_hid_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-22T17:49:48Z",
+      "side": 1,
+      "message": "This method should be marked override and doesn\u0027t need to be public.",
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99af2c3f_2ac9b03a",
+        "filename": "device/u2f/u2f_request_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-22T17:49:48Z",
+      "side": 1,
+      "message": "This change seems wrong.",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 23
       },
       "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
