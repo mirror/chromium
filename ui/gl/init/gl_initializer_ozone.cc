@@ -14,16 +14,23 @@ namespace gl {
 namespace init {
 
 bool InitializeGLOneOffPlatform() {
-  if (HasGLOzone())
+  LOG(ERROR) << "here5";
+  if (HasGLOzone()) {
+    LOG(ERROR) << "here6";
     return GetGLOzone()->InitializeGLOneOffPlatform();
+  }
 
+  LOG(ERROR) << "here7";
   switch (GetGLImplementation()) {
+    LOG(ERROR) << "here8";
     case kGLImplementationMockGL:
     case kGLImplementationStubGL:
       return true;
     default:
+      LOG(ERROR) << "here9";
       NOTREACHED();
   }
+  LOG(ERROR) << "here10";
   return false;
 }
 
@@ -33,21 +40,27 @@ bool InitializeStaticGLBindings(GLImplementation implementation) {
   // later switch to another GL implementation.
   DCHECK_EQ(kGLImplementationNone, GetGLImplementation());
 
+  LOG(ERROR) << "here0";
   if (HasGLOzone(implementation)) {
+    LOG(ERROR) << "here1";
     return GetGLOzone(implementation)
         ->InitializeStaticGLBindings(implementation);
   }
 
+  LOG(ERROR) << "here2";
   switch (implementation) {
     case kGLImplementationMockGL:
     case kGLImplementationStubGL:
+      LOG(ERROR) << "here3";
       SetGLImplementation(implementation);
       InitializeStaticGLBindingsGL();
       return true;
     default:
+      LOG(ERROR) << "here4";
       NOTREACHED();
   }
 
+  LOG(ERROR) << "here11";
   return false;
 }
 
