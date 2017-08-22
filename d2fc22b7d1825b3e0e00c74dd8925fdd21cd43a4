@@ -22,6 +22,30 @@
       "revId": "d2fc22b7d1825b3e0e00c74dd8925fdd21cd43a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9792ec40_765f3674",
+        "filename": "chrome/android/java/res/values/colors.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-22T22:32:27Z",
+      "side": 1,
+      "message": "Sure, thanks for the advice!",
+      "parentUuid": "c65d9cb9_c9569726",
+      "range": {
+        "startLine": 153,
+        "startChar": 17,
+        "endLine": 153,
+        "endChar": 42
+      },
+      "revId": "d2fc22b7d1825b3e0e00c74dd8925fdd21cd43a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
