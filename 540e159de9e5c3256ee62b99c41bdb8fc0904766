@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "737b67b5_e2414ee4",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1932,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-08-22T13:38:13Z",
+      "side": 1,
+      "message": "If we are using a Create function like this, could you move it to somewhere so that everyone\nuses it to create an InitParams? (see https://cs.chromium.org/chromium/src/components/viz/host/renderer_settings_creation.h).\n\nAlternatively, we don\u0027t have to have a function for it. You can initialize it like you did in other files.",
+      "range": {
+        "startLine": 1932,
+        "startChar": 0,
+        "endLine": 1932,
+        "endChar": 43
+      },
+      "revId": "540e159de9e5c3256ee62b99c41bdb8fc0904766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
