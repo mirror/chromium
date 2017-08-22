@@ -40,7 +40,7 @@ function initializeNodes(rootNode) {
   assertEq('Ok', okButton.name);
   assertEq('disabled', okButton.restriction);
 
-  cancelButton = rootNode.children[3];
+  cancelButton = rootNode.children[4];
   assertEq(RoleType.BUTTON, cancelButton.role);
   assertEq('Cancel', cancelButton.name);
   assertEq(undefined, cancelButton.restriction);

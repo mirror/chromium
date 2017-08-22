@@ -4,7 +4,7 @@
 
 var allTests = [
   function testEventListenerTarget() {
-    var cancelButton = rootNode.firstChild.children[2];
+    var cancelButton = rootNode.firstChild.children[4];
     assertEq('Cancel', cancelButton.name);
     cancelButton.addEventListener(EventType.FOCUS,
                                   function onFocusTarget(event) {
@@ -16,7 +16,7 @@ var allTests = [
     cancelButton.focus();
   },
   function testEventListenerBubble() {
-    var cancelButton = rootNode.firstChild.children[2];
+    var cancelButton = rootNode.firstChild.children[4];
     assertEq('Cancel', cancelButton.name);
     var cancelButtonGotEvent = false;
     cancelButton.addEventListener(EventType.FOCUS,
@@ -35,7 +35,7 @@ var allTests = [
     cancelButton.focus();
   },
   function testStopPropagation() {
-    var cancelButton = rootNode.firstChild.children[2];
+    var cancelButton = rootNode.firstChild.children[4];
     assertEq('Cancel', cancelButton.name);
     function onFocusStopPropRoot(event) {
       rootNode.removeEventListener(EventType.FOCUS, onFocusStopPropRoot);
@@ -54,7 +54,7 @@ var allTests = [
     cancelButton.focus();
   },
   function testEventListenerCapture() {
-    var cancelButton = rootNode.firstChild.children[2];
+    var cancelButton = rootNode.firstChild.children[4];
     assertEq('Cancel', cancelButton.name);
     var cancelButtonGotEvent = false;
     function onFocusCapture(event) {

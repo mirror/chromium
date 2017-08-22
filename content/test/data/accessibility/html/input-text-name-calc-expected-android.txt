@@ -1,10 +1,31 @@
+------
+[ERROR:devtools_http_handler.cc(249)] Cannot start http server for devtools. Stop devtools.
 android.webkit.WebView focusable focused scrollable
+[WARNING:child_process_launcher_helper_posix.cc(118)] Ignoring invalid file assets/snapshot_blob_32.bin
 ++android.widget.EditText clickable editable_text focusable name='Title0' input_type=1
+++android.view.View name=' '
 ++android.widget.EditText clickable editable_text focusable name='Label1 Title1' input_type=1
+[WARNING:simple_synchronous_entry.cc(1056)] Could not open platform files for entry.
+++android.view.View name=' '
+[ERROR:shell_android.cc(72)] Not implemented reached in void content::Shell::PlatformSetTitle(const base::string16 &): Background Sync API Test
 ++android.widget.EditText clickable editable_text focusable name='AriaLabel2 Title2' input_type=1
+[INFO:CONSOLE(13)] "sendResultToTest: ok - service worker registered", source: https://127.0.0.1:45508/background_sync/background_sync_test_helpers.js (13)
+++android.view.View name=' '
+[INFO:CONSOLE(13)] "sendResultToTest: ok - foo_sw register sent to SW", source: https://127.0.0.1:45508/background_sync/background_sync_test_helpers.js (13)
 ++android.widget.EditText clickable editable_text focusable name='LabelledBy3 Title3' input_type=1
+[INFO:CONSOLE(13)] "sendResultToTest: ok - foo_sw registered in SW", source: https://127.0.0.1:45508/background_sync/background_sync_test_helpers.js (13)
 ++android.widget.EditText clickable editable_text focusable name='Placeholder4' input_type=1
+[INFO:CONSOLE(13)] "sendResultToTest: foo_sw fired", source: https://127.0.0.1:45508/background_sync/background_sync_test_helpers.js (13)
+++android.view.View name=' '
 ++android.widget.EditText clickable editable_text focusable name='ARIA Placeholder4a' input_type=1
+[INFO:CONSOLE(13)] "sendResultToTest: error - foo_sw not found", source: https://127.0.0.1:45508/background_sync/background_sync_test_helpers.js (13)
+++android.view.View name=' '
+referenceTable head length=54 1
 ++android.widget.EditText clickable editable_text focusable name='Placeholder4b' input_type=1
+[       OK ] BackgroundSyncBrowserTest.RegisterFromServiceWorker (1020 ms)
+++android.view.View name=' '
+[----------] 1 test from BackgroundSyncBrowserTest (1022 ms total)
 ++android.widget.EditText clickable editable_text focusable name='Placeholder5 Title5' input_type=1
+
 ++android.widget.EditText clickable editable_text focusable name='LabelledBy6 DescribedBy6' input_type=1
+[----------] Global test environment tear-down

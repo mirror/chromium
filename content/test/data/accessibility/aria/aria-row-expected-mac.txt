@@ -3,18 +3,22 @@ AXWebArea
 ++++AXRow
 ++++++AXCell AXTitle='Browser'
 ++++++++AXStaticText AXValue='Browser'
+++++++AXStaticText AXValue=' '
 ++++++AXCell AXTitle='Rendering Engine'
 ++++++++AXStaticText AXValue='Rendering Engine'
 ++++AXRow
 ++++++AXCell AXTitle='Chrome'
 ++++++++AXStaticText AXValue='Chrome'
+++++++AXStaticText AXValue=' '
 ++++++AXCell AXTitle='Blink'
 ++++++++AXStaticText AXValue='Blink'
 ++++AXRow
 ++++++AXCell AXTitle='Safari'
 ++++++++AXStaticText AXValue='Safari'
+++++++AXStaticText AXValue=' '
 ++++++AXCell AXTitle='WebKit'
 ++++++++AXStaticText AXValue='WebKit'
+++++AXColumn
 ++++AXColumn
 ++++AXColumn
 ++++AXGroup

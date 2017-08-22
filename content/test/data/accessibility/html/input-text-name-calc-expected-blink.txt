@@ -1,13 +1,25 @@
 rootWebArea
 ++textField name='Title0'
+++staticText name=' '
+++++inlineTextBox name=' '
 ++textField description='Title1' name='Label1' descriptionFrom=attribute
+++staticText name=' '
+++++inlineTextBox name=' '
 ++textField description='Title2' name='AriaLabel2' descriptionFrom=attribute
+++staticText name=' '
+++++inlineTextBox name=' '
 ++textField description='Title3' name='LabelledBy3' descriptionFrom=attribute
 ++textField name='Placeholder4'
 ++++genericContainer
+++staticText name=' '
+++++inlineTextBox name=' '
 ++textField name='ARIA Placeholder4a'
+++staticText name=' '
+++++inlineTextBox name=' '
 ++textField name='Placeholder4b'
 ++++genericContainer
+++staticText name=' '
+++++inlineTextBox name=' '
 ++textField description='Title5' name='Placeholder5' descriptionFrom=attribute
 ++++genericContainer
 ++textField description='DescribedBy6' name='LabelledBy6' descriptionFrom=relatedElement

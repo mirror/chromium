@@ -1,6 +1,10 @@
 AXWebArea
 ++AXGroup
+++++AXStaticText AXValue=' '
 ++++AXUnknown
+++++AXStaticText AXValue=' '
 ++++AXUnknown
+++++AXStaticText AXValue=' '
 ++++AXImage AXDescription='/read.jpg'
+++++AXStaticText AXValue=' '
 ++++AXImage AXDescription='full'

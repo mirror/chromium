@@ -151,8 +151,12 @@ WebArea
   text "List item also presentational"
   *GenericContainer
     text "Div in list isn't presentational"
+  text
   checkbox "Content within label refers to label container"
+  text
+  text
   GenericContainer
+  text
   combobox
 {
   "nodeId": "<string>",
@@ -336,8 +340,12 @@ WebArea
   button "Buttons are leaf nodes"
   text "List item also presentational"
   GenericContainer
+  text
   checkbox "Content within label refers to label container"
+  text
+  text
   GenericContainer
+  text
   *combobox
     MenuListPopup
 {

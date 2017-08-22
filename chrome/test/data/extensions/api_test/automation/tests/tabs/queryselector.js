@@ -5,7 +5,7 @@
 var allTests = [
   // Basic query from root node.
   function testQuerySelector() {
-    var cancelButton = rootNode.children[3];
+    var cancelButton = rootNode.children[4];
     function assertCorrectResult(queryResult) {
       assertEq(queryResult, cancelButton);
       chrome.test.succeed();
