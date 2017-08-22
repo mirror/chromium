@@ -22,6 +22,29 @@
       "revId": "4ad07efd8b0cf1c2a9d5751ec9f6469b33d4a41d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7296ee_b506494b",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-22T01:34:34Z",
+      "side": 1,
+      "message": "The old code only makes a sync call if host resolver rules are used, which most test don\u0027t need. Now we\u0027d need to make a sync call for all browser tests.\n\nSince there\u0027s no state in this case, how about running\nnet::TestRootCerts::GetInstance()-\u003eAddFromFile(net::EmbeddedTestServer::GetRootCertPemPath())\nin NetworkServiceTestHelper::RegisterNetworkBinders after the feature check?",
+      "range": {
+        "startLine": 428,
+        "startChar": 2,
+        "endLine": 428,
+        "endChar": 22
+      },
+      "revId": "4ad07efd8b0cf1c2a9d5751ec9f6469b33d4a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
