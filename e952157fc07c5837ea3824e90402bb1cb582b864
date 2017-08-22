@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ae83a05_97bb8e29",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-22T03:00:13Z",
+      "side": 1,
+      "message": "This is strange; there\u0027s no mention of \"the media thread\" in the class level description above.\n\nIs this class used solely on the |task_runner_|, or is it also called on the \"media thread\"?\n\nIf these functions really need to be called on some other thread then consider putting them on a separate class, owned by this one, and which it arranges to delete on the media thread at the appropriate point.",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26eee4bd_d3dd60be",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-22T03:00:13Z",
+      "side": 1,
+      "message": "In general it\u0027s best to describe what the |task_runner_| will be used for, and name it accordingly (e.g. \"the VideoFrameCompositor will work on this TaskRunner\").\n\nAlso, does it actually need to be a SingleThreadTaskRunner, or would a SequencedTaskRunner suffice?",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3421a90_2364135d",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-22T03:00:13Z",
+      "side": 1,
+      "message": "Is there any reason for this to be public? It looks like it\u0027s only used as an internal callback bound to PostTaskAndReply?",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f50aaa5d_d8cc2240",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-22T03:00:13Z",
+      "side": 1,
+      "message": "Why does the submitter_ need to be publicly exposed? What calls it?",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b3aafc_dd2ccdf5",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-22T03:00:13Z",
+      "side": 1,
+      "message": "The lifetime management here is pretty painful; the API contract for VideoFrameProvider provides few guarantees (\"may be used in a multithreaded manner\"), and no guidance as to ownership or lifetimes. The implementations you have in this CL assume that they will be torn down on the same sequence, though, and ensure that it doesn\u0027t matter which order that happens in.\n\nAs a result, I think you can safely DeleteSoon() these in the WebMediaPlayerImpl dtor - any pending work passing from one to the other from any other thread should be skipped by the checks in the VideoFrameCompositor and VideoFrameSubscriber implementations.  It\u0027s a shame that VFC can\u0027t \"own\" VFS, but that doesn\u0027t look to be possible while the VFC has to be shared between the Surface and Layer based implementations.\n\nIf WebMediaPlayerImpl were composed from helper classes that did the loading, EME, etc, work then it might be reasonable to take a copy and adapt that to use the Surface path, to avoid having the code be so complex, but that\u0027s probably too much effort at this point as well.",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "715dfcca_1a2de0b7",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-22T03:00:13Z",
+      "side": 1,
+      "message": "DCHECK_CALLED_ON_VALID_THREAD here, and in StartRendering, below.",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe63ed91_4aaaf01e",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-22T03:00:13Z",
+      "side": 1,
+      "message": "These methods don\u0027t seem to be part of VideoFrameProvider::Client, so consider moving them amove the block VFP::Client block above, to make clear that they\u0027re not related to that interface.",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d6f750b_01264e86",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-22T03:00:13Z",
+      "side": 1,
+      "message": "As per style-guide, this should be |is_rendering_|.",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4827fbb3_7081c7b6",
+        "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-22T03:00:13Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be an actual class, just a static Create() function - the class is never used, as far as I can tell - can we just remove this and make it a blink::CreateWebVideoFrameSubmitter() function or something?",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
