@@ -22,6 +22,30 @@
       "revId": "6a6667b6f3222db8e0937a6e87c9930ae81965fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f345827_b04fe656",
+        "filename": "chrome/browser/net/system_network_context_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-22T22:23:32Z",
+      "side": 1,
+      "message": "Done.  Happy to take care of minor unrelated nits in a CL, particularly nits that aren\u0027t worth their own CLs.",
+      "parentUuid": "905a0ea8_4e2e0e99",
+      "range": {
+        "startLine": 14,
+        "startChar": 32,
+        "endLine": 14,
+        "endChar": 46
+      },
+      "revId": "6a6667b6f3222db8e0937a6e87c9930ae81965fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
