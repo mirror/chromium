@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f567390_5d697722",
+        "filename": "components/bookmarks/browser/bookmark_reordering_features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-22T12:16:51Z",
+      "side": 1,
+      "message": "I would say it\u0027s more than \"just\" reordering. The whole UI changes :) kBookmarkNewGeneration? kBookmarkUIEvolution? kBookmarkDownUnder?",
+      "range": {
+        "startLine": 11,
+        "startChar": 20,
+        "endLine": 11,
+        "endChar": 59
+      },
+      "revId": "3be8b0304769ff30d3362146fde5de4c4b8db8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f8eeac_196e277b",
+        "filename": "components/bookmarks/browser/bookmark_reordering_features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-22T12:16:51Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s worth putting this in components. ios/browser/bookmarks seems a better choice for this iOS feature.",
+      "range": {
+        "startLine": 3,
+        "startChar": 12,
+        "endLine": 3,
+        "endChar": 15
+      },
+      "revId": "3be8b0304769ff30d3362146fde5de4c4b8db8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6ed43e_c32ac69f",
+        "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-22T12:16:51Z",
+      "side": 1,
+      "message": "This is going to get out of hand fairly quickly. Can you do me a favor and sort those constants in alphabetical order? here an in the .m?\n\nPlus a comment explaining that new entries should be added at the right place?",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 44
+      },
+      "revId": "3be8b0304769ff30d3362146fde5de4c4b8db8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
