@@ -82,6 +82,12 @@ GpuMojoMediaClient::GpuMojoMediaClient(
 
 GpuMojoMediaClient::~GpuMojoMediaClient() {}
 
+void GpuMojoMediaClient::Initialize(
+    service_manager::Connector* connector,
+    service_manager::ServiceContextRefFactory* context_ref_factory) {
+  context_ref_factory_ = context_ref_factory;
+}
+
 std::unique_ptr<AudioDecoder> GpuMojoMediaClient::CreateAudioDecoder(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
 #if defined(OS_ANDROID)
@@ -91,21 +97,28 @@ std::unique_ptr<AudioDecoder> GpuMojoMediaClient::CreateAudioDecoder(
 #endif  // defined(OS_ANDROID)
 }
 
-std::unique_ptr<VideoDecoder> GpuMojoMediaClient::CreateVideoDecoder(
+std::unique_ptr<VideoDecoder, VideoDecoderDeleter>
+GpuMojoMediaClient::CreateVideoDecoder(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     MediaLog* media_log,
     mojom::CommandBufferIdPtr command_buffer_id,
     OutputWithReleaseMailboxCB output_cb) {
 #if BUILDFLAG(ENABLE_MEDIA_CODEC_VIDEO_DECODER)
-  return base::MakeUnique<MediaCodecVideoDecoder>(
-      gpu_task_runner_,
-      base::Bind(&GetGpuCommandBufferStub, media_gpu_channel_manager_,
-                 command_buffer_id->channel_token, command_buffer_id->route_id),
-      std::move(output_cb), DeviceInfo::GetInstance(),
-      AVDACodecAllocator::GetInstance(),
-      base::MakeUnique<AndroidVideoSurfaceChooserImpl>(
-          DeviceInfo::GetInstance()->IsSetOutputSurfaceSupported()),
-      base::MakeUnique<VideoFrameFactoryImpl>());
+  auto deleter_func = [](VideoDecoder* ptr) {
+    static_cast<MediaCodecVideoDecoder*>(ptr)->Destroy();
+  };
+  return {new MediaCodecVideoDecoder(
+              gpu_task_runner_,
+              base::Bind(&GetGpuCommandBufferStub, media_gpu_channel_manager_,
+                         command_buffer_id->channel_token,
+                         command_buffer_id->route_id),
+              std::move(output_cb), DeviceInfo::GetInstance(),
+              AVDACodecAllocator::GetInstance(),
+              base::MakeUnique<AndroidVideoSurfaceChooserImpl>(
+                  DeviceInfo::GetInstance()->IsSetOutputSurfaceSupported()),
+              base::MakeUnique<VideoFrameFactoryImpl>(),
+              context_ref_factory_->CreateRef()),
+          VideoDecoderDeleter(deleter_func)};
 #else
   return nullptr;
 #endif  // BUILDFLAG(ENABLE_MEDIA_CODEC_VIDEO_DECODER)

@@ -109,7 +109,8 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
     DeviceInfo* device_info,
     AVDACodecAllocator* codec_allocator,
     std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser,
-    std::unique_ptr<VideoFrameFactory> video_frame_factory)
+    std::unique_ptr<VideoFrameFactory> video_frame_factory,
+    std::unique_ptr<service_manager::ServiceContextRef> connection_ref)
     : state_(State::kBeforeSurfaceInit),
       lazy_init_pending_(true),
       output_cb_(output_cb),
@@ -119,8 +120,13 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
       surface_chooser_(std::move(surface_chooser)),
       video_frame_factory_(std::move(video_frame_factory)),
       device_info_(device_info),
+      connection_ref_(std::move(connection_ref)),
       weak_factory_(this) {
   DVLOG(2) << __func__;
+}
+
+void MediaCodecVideoDecoder::Destroy() {
+  delete this;
 }
 
 MediaCodecVideoDecoder::~MediaCodecVideoDecoder() {
