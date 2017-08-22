@@ -16,6 +16,24 @@
       "revId": "37020437cf5b22e787f9f506de06ced266a1c770",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cde139d_11f6c2c3",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-22T20:11:43Z",
+      "side": 1,
+      "message": "I\u0027ve changed the code such that LayerTreeFrameSinkLocal does not allocate LocalSurfaceIds. It relies on the LocalSurfaceIds allocated here.",
+      "parentUuid": "a74a6c2d_b84b1c6c",
+      "revId": "37020437cf5b22e787f9f506de06ced266a1c770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
