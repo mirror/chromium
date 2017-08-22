@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "4f915c53_73584543",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-22T23:54:01Z",
+      "side": 1,
+      "message": "Drop this line.",
+      "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d98dadf_5fea4688",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
         "patchSetId": 3
@@ -81,6 +98,23 @@
       "writtenOn": "2017-08-22T22:29:32Z",
       "side": 1,
       "message": "We do not change version 1.2. It is frozen.",
+      "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d3fe9c_0272b287",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-22T23:54:01Z",
+      "side": 1,
+      "message": "We wanted to call it \"prepareForLeakDetection\" and would call gc separately.",
       "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
