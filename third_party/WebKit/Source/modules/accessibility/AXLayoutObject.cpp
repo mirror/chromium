@@ -583,10 +583,11 @@ bool AXLayoutObject::ComputeAccessibilityIsIgnored(
         return false;
     }
 
-    // Text elements that are just empty whitespace should not be returned.
-    // FIXME(dmazzoni): we probably shouldn't ignore this if the style is 'pre',
-    // or similar...
-    if (layout_text->GetText().Impl()->ContainsOnlyWhitespace()) {
+    // Text elements with empty whitespace are returned, because of cases
+    // such as <span>Hello</span><span> </span><span>World</span>. Keeping
+    // the whitespace-only node means we now correctly expose "Hello World".
+    // See crbug.com/435765.
+    if (layout_text->HasEmptyText()) {
       if (ignored_reasons)
         ignored_reasons->push_back(IgnoredReason(kAXEmptyText));
       return true;
