@@ -52,8 +52,7 @@ ChromotingClientRuntime::ChromotingClientRuntime() {
   // main thread.  We can not kill the main thread when the message loop becomes
   // idle so the callback function does nothing (as opposed to the typical
   // base::MessageLoop::QuitClosure())
-  ui_task_runner_ = new AutoThreadTaskRunner(ui_loop_->task_runner(),
-                                             base::Bind(&base::DoNothing));
+  ui_task_runner_ = new AutoThreadTaskRunner(base::Bind(&base::DoNothing));
 
   display_task_runner_ = AutoThread::Create("native_disp", ui_task_runner_);
   network_task_runner_ = AutoThread::CreateWithType(

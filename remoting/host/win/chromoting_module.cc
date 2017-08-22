@@ -118,8 +118,7 @@ bool ChromotingModule::Run() {
   // Arrange to run |message_loop| until no components depend on it.
   base::MessageLoopForUI message_loop;
   base::RunLoop run_loop;
-  g_module_task_runner.Get() = new AutoThreadTaskRunner(
-      message_loop.task_runner(), run_loop.QuitClosure());
+  g_module_task_runner.Get() = new AutoThreadTaskRunner(run_loop.QuitClosure());
 
   // Start accepting activations.
   result = CoResumeClassObjects();

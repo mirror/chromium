@@ -36,8 +36,7 @@ int DesktopProcessMain() {
   base::MessageLoopForUI message_loop;
   base::RunLoop run_loop;
   scoped_refptr<AutoThreadTaskRunner> ui_task_runner =
-      new AutoThreadTaskRunner(message_loop.task_runner(),
-                               run_loop.QuitClosure());
+      new AutoThreadTaskRunner(run_loop.QuitClosure());
 
   // Launch the video capture thread.
   scoped_refptr<AutoThreadTaskRunner> video_capture_task_runner =

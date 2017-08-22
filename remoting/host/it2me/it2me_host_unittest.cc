@@ -207,8 +207,8 @@ void It2MeHostTest::SetUp() {
   message_loop_.reset(new base::MessageLoop());
   run_loop_.reset(new base::RunLoop());
 
-  host_context_ = ChromotingHostContext::Create(new AutoThreadTaskRunner(
-      base::ThreadTaskRunnerHandle::Get(), run_loop_->QuitClosure()));
+  host_context_ = ChromotingHostContext::Create(
+      new AutoThreadTaskRunner(run_loop_->QuitClosure()));
   network_task_runner_ = host_context_->network_task_runner();
   ui_task_runner_ = host_context_->ui_task_runner();
   fake_bot_signal_strategy_.reset(

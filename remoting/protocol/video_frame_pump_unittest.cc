@@ -156,8 +156,7 @@ class VideoFramePumpTest : public testing::Test {
 };
 
 void VideoFramePumpTest::SetUp() {
-  main_task_runner_ = new AutoThreadTaskRunner(
-      message_loop_.task_runner(), run_loop_.QuitClosure());
+  main_task_runner_ = new AutoThreadTaskRunner(run_loop_.QuitClosure());
   encode_task_runner_ = AutoThread::Create("encode", main_task_runner_);
 }
 

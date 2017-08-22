@@ -277,8 +277,7 @@ void HostService::RunAsServiceImpl() {
   }
 
   CreateLauncher(scoped_refptr<AutoThreadTaskRunner>(
-      new AutoThreadTaskRunner(main_task_runner_,
-                               run_loop.QuitClosure())));
+      new AutoThreadTaskRunner(run_loop.QuitClosure())));
 
   // Run the service.
   run_loop.Run();
@@ -331,8 +330,7 @@ int HostService::RunInConsole() {
   if (WTSRegisterSessionNotification(window.hwnd(),
                                      NOTIFY_FOR_ALL_SESSIONS) != FALSE) {
     CreateLauncher(scoped_refptr<AutoThreadTaskRunner>(
-        new AutoThreadTaskRunner(main_task_runner_,
-                                 run_loop.QuitClosure())));
+        new AutoThreadTaskRunner(run_loop.QuitClosure())));
 
     // Run the service.
     run_loop.Run();

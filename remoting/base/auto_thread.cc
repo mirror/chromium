@@ -200,7 +200,6 @@ void AutoThread::ThreadMain() {
   // Return an AutoThreadTaskRunner that will cleanly quit this thread when
   // no more references to it remain.
   startup_data_->task_runner = new AutoThreadTaskRunner(
-      message_loop.task_runner(),
       base::Bind(&AutoThread::QuitThread, base::Unretained(this),
                  run_loop.QuitWhenIdleClosure()));
 

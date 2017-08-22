@@ -6,16 +6,28 @@
 
 #include <utility>
 
+#include "base/bind.h"
 #include "base/logging.h"
+#include "base/threading/thread_task_runner_handle.h"
 
 namespace remoting {
 
-AutoThreadTaskRunner::AutoThreadTaskRunner(
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-    base::OnceClosure stop_task)
-    : stop_task_(std::move(stop_task)), task_runner_(task_runner) {
-  DCHECK(!stop_task_.is_null());
+AutoThreadTaskRunner::AutoThreadTaskRunner(base::OnceClosure stop_task)
+    : task_runner_(base::ThreadTaskRunnerHandle::Get()),
+      stop_task_(std::move(stop_task)) {
+  DCHECK(task_runner_);
+  DCHECK(stop_task_);
 }
+
+#if defined(OS_CHROMEOS)
+AutoThreadTaskRunner::AutoThreadTaskRunner(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner)
+    : task_runner_(std::move(task_runner)),
+      stop_task_(base::Bind(&base::DoNothing)) {
+  DCHECK(task_runner_);
+  DCHECK(stop_task_);
+}
+#endif
 
 bool AutoThreadTaskRunner::PostDelayedTask(
     const tracked_objects::Location& from_here,
@@ -29,8 +41,8 @@ bool AutoThreadTaskRunner::PostNonNestableDelayedTask(
     const tracked_objects::Location& from_here,
     base::OnceClosure task,
     base::TimeDelta delay) {
-  CHECK(task_runner_->PostNonNestableDelayedTask(from_here, std::move(task),
-                                                 delay));
+  CHECK(task_runner_->PostNonNestableDelayedTask(
+      from_here, std::move(task), delay));
   return true;
 }
 

@@ -100,8 +100,7 @@ class DesktopSessionAgentTest : public ::testing::Test {
 };
 
 DesktopSessionAgentTest::DesktopSessionAgentTest()
-    : task_runner_(new AutoThreadTaskRunner(
-          message_loop_.task_runner(), run_loop_.QuitClosure())),
+    : task_runner_(new AutoThreadTaskRunner(run_loop_.QuitClosure())),
       agent_(new DesktopSessionAgent(
           task_runner_, task_runner_, task_runner_, task_runner_)) {}
 

@@ -62,8 +62,7 @@ class AudioDecodeSchedulerTest : public ::testing::Test {
 };
 
 void AudioDecodeSchedulerTest::SetUp() {
-  main_task_runner_ = new AutoThreadTaskRunner(message_loop_.task_runner(),
-                                               run_loop_.QuitClosure());
+  main_task_runner_ = new AutoThreadTaskRunner(run_loop_.QuitClosure());
   audio_decode_task_runner_ = AutoThread::Create("decode", main_task_runner_);
   session_config_ = SessionConfig::ForTestWithAudio();
 }

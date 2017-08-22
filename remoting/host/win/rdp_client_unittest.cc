@@ -125,8 +125,7 @@ RdpClientTest::~RdpClientTest() {
 
 void RdpClientTest::SetUp() {
   // Arrange to run |message_loop_| until no components depend on it.
-  task_runner_ = new AutoThreadTaskRunner(
-      message_loop_.task_runner(), run_loop_.QuitClosure());
+  task_runner_ = new AutoThreadTaskRunner(run_loop_.QuitClosure());
 
   module_.reset(new RdpClientModule());
 }
