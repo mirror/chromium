@@ -9,7 +9,9 @@
 #include "content/public/common/content_features.h"
 #include "content/public/test/test_host_resolver.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
+#include "net/cert/test_root_certs.h"
 #include "net/dns/mock_host_resolver.h"
+#include "net/test/embedded_test_server/embedded_test_server.h"
 
 namespace content {
 
@@ -52,6 +54,10 @@ void NetworkServiceTestHelper::RegisterNetworkBinders(
   registry->AddInterface(
       base::Bind(&NetworkServiceTestHelper::BindNetworkServiceTestRequest,
                  base::Unretained(this)));
+
+  // Add test root cert.
+  net::TestRootCerts::GetInstance()->AddFromFile(
+      net::EmbeddedTestServer::GetRootCertPemPath());
 }
 
 void NetworkServiceTestHelper::BindNetworkServiceTestRequest(
