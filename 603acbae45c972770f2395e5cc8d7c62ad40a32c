@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "19636781_0286ce7d",
+        "filename": "ios/chrome/search_widget_extension/search_action_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-22T09:45:27Z",
+      "side": 1,
+      "message": "why is git cl format not doing its job :(",
+      "parentUuid": "f4a8e9e5_da1c60ad",
+      "range": {
+        "startLine": 15,
+        "startChar": 25,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "603acbae45c972770f2395e5cc8d7c62ad40a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d873f9ce_4bf85bec",
         "filename": "ios/chrome/search_widget_extension/search_widget_view.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "603acbae45c972770f2395e5cc8d7c62ad40a32c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e49b195_a929f30d",
+        "filename": "ios/chrome/search_widget_extension/search_widget_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-22T09:45:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d873f9ce_4bf85bec",
+      "range": {
+        "startLine": 32,
+        "startChar": 46,
+        "endLine": 32,
+        "endChar": 56
+      },
+      "revId": "603acbae45c972770f2395e5cc8d7c62ad40a32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
