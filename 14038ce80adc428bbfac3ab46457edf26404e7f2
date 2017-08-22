@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "bc83d2af_1178dbd1",
+        "filename": "chrome/browser/resources/settings/settings_vars_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-22T22:37:40Z",
+      "side": 1,
+      "message": "can we just change the current --settings-box-row-padding usages to use --cr-section-padding directly?",
+      "revId": "14038ce80adc428bbfac3ab46457edf26404e7f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918f072e_7e009947",
+        "filename": "chrome/browser/resources/settings/settings_vars_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-22T22:37:40Z",
+      "side": 1,
+      "message": "can we just change the current --settings-row-xx-min-height usages to use --cr-section-xx-min-height directly?",
+      "revId": "14038ce80adc428bbfac3ab46457edf26404e7f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b71f825_1729d156",
         "filename": "ui/webui/resources/cr_elements/shared_vars_css.html",
         "patchSetId": 2
@@ -16,6 +50,24 @@
       "revId": "14038ce80adc428bbfac3ab46457edf26404e7f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25dab9a_9ab0c79d",
+        "filename": "ui/webui/resources/cr_elements/shared_vars_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-22T22:37:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b71f825_1729d156",
+      "revId": "14038ce80adc428bbfac3ab46457edf26404e7f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
