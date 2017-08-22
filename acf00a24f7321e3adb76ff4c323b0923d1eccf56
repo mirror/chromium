@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "419a550c_2312a38a",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-22T12:11:21Z",
+      "side": 1,
+      "message": "Do we really need this check?",
+      "range": {
+        "startLine": 37,
+        "startChar": 27,
+        "endLine": 37,
+        "endChar": 37
+      },
+      "revId": "acf00a24f7321e3adb76ff4c323b0923d1eccf56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
