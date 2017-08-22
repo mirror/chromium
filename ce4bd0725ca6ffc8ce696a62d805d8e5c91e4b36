@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "326972e0_8af2358e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-22T16:46:44Z",
+      "side": 1,
+      "message": "Addressed in patch #3",
+      "parentUuid": "83128db2_6c453795",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 73
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "012fc39e_e85d7344",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 2
@@ -318,6 +342,30 @@
       "writtenOn": "2017-08-22T13:41:24Z",
       "side": 1,
       "message": "Sorry, I\u0027m not sure I understand. What are the benefits of putting this in a PartialBindCallback? From my point of view moving onResult implementation to NewPromoViewHolder.onBindViewHolder will make it more readable.",
+      "range": {
+        "startLine": 335,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 94
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d448478a_e56a1b73",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-22T16:46:44Z",
+      "side": 1,
+      "message": "notifyItemChanged(int) is deprecated and so I had to use notifyItemChanged(int, PartialBindCallback) instead. At first I tried to update the promo in onBindViewHolder and pass a null PartialBindCallback but this issued an AssertionError here https://goo.gl/uMyV9k (this is the crash log: https://paste.googleplex.com/6312177321377792). I guess that a null PartialBindCallback results in a call to onBindViewHolder() which, by default, calls CardViewHolder#onBindViewHolder, thus registering the object twice. CardViewHolder#onBindViewHolder() is annotated with @CallSuper and therefore we must define some sort of condition which will call CardViewHolder#onBindViewHolder() only once. While finding an appropriate condition is doable, providing a PartialBindCallback solves this issue. For example, if the promo is showing and the account is removed from the device, onBindViewHolder would not be called, notifiyItemChanged(int, PartialBindCallback) using the callback to update the view. This was the best way that I found of handling this problem. Also, I didn\u0027t find any use case where null was passed as a parameter in notifyItemChanged, even though it is marked as @Nullable, so I thought that creating a custom PartialBindCallback was the right approach.",
+      "parentUuid": "65ae7304_f04e5590",
       "range": {
         "startLine": 335,
         "startChar": 0,
