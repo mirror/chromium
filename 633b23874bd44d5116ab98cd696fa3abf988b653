@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93f1e359_84a4372f",
+        "filename": "tools/clang/scripts/run_tool.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T04:57:26Z",
+      "side": 1,
+      "message": "I think this adds the tool to the path twice if args.tool_path isn\u0027t specified?\n\nThat being said, I think there was a bit of a miscommunication the first time. If the presubmit running run_tool.py sets %PATH% appropriately, do we even need to do this in the tool? Doing this in the tool was just to make things easier for people running out of the default path (rather than having to say PATH\u003d$PWD/third_party/llvm-build/Release+Asserts/bin:$PATH tools/clang/scripts/run_tool.py ... for every invocation)",
+      "revId": "633b23874bd44d5116ab98cd696fa3abf988b653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6856779_e1d63049",
+        "filename": "tools/clang/scripts/run_tool.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T04:57:26Z",
+      "side": 1,
+      "message": "Just curious: do we need to bake this into a script? It seems easy for an external app to just set these flags correctly.",
+      "revId": "633b23874bd44d5116ab98cd696fa3abf988b653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
