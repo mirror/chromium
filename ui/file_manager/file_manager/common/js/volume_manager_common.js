@@ -64,6 +64,9 @@ VolumeManagerCommon.RootType = {
 
   // Root for media views.
   MEDIA_VIEW: 'media_view',
+
+  // Fake root for the mixed "Recent" view.
+  RECENT: 'recent',
 };
 Object.freeze(VolumeManagerCommon.RootType);
 
@@ -143,6 +146,7 @@ VolumeManagerCommon.VolumeType = {
   MTP: 'mtp',
   PROVIDED: 'provided',
   MEDIA_VIEW: 'media_view',
+  NONE: 'none',
 };
 
 /**
@@ -198,6 +202,8 @@ VolumeManagerCommon.getVolumeTypeFromRootType = function(rootType) {
       return VolumeManagerCommon.VolumeType.PROVIDED;
     case VolumeManagerCommon.RootType.MEDIA_VIEW:
       return VolumeManagerCommon.VolumeType.MEDIA_VIEW;
+    case VolumeManagerCommon.RootType.RECENT:
+      return VolumeManagerCommon.VolumeType.NONE;
   }
   assertNotReached('Unknown root type: ' + rootType);
 };
@@ -251,12 +257,14 @@ VolumeManagerCommon.getMediaViewRootTypeFromVolumeId = function(volumeId) {
 };
 
 /**
- * Fake entries for Google Drive's virtual folders.
- * (OFFLINE, RECENT, and SHARED_WITH_ME)
+ * Fake entries for virtual folders which hold Google Drive offline files,
+ * Google Drive "Shared with me" files, and mixed Recent files.
+ * |allowedPath| is valid only for the Recent folder.
  * @typedef {{
  *   isDirectory: boolean,
  *   rootType: VolumeManagerCommon.RootType,
- *   toURL: function(): string
+ *   toURL: function(): string,
+ *   allowedPath: (string|undefined)
  * }}
  */
 var FakeEntry;

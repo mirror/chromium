@@ -8,7 +8,8 @@
 var NavigationModelItemType = {
   SHORTCUT: 'shortcut',
   VOLUME: 'volume',
-  MENU: 'menu'
+  MENU: 'menu',
+  RECENT: 'recent',
 };
 
 /**
@@ -109,16 +110,35 @@ NavigationModelMenuItem.prototype = /** @struct */ {
 };
 
 /**
+ * Item of NavigationListModel for a Recent view.
+ *
+ * @param {string} label Label on the menu button.
+ * @constructor
+ * @extends {NavigationModelItem}
+ * @struct
+ */
+function NavigationModelRecentItem(label) {
+  NavigationModelItem.call(this, label, NavigationModelItemType.RECENT);
+}
+
+NavigationModelRecentItem.prototype = /** @struct */ {
+  __proto__: NavigationModelItem.prototype,
+};
+
+/**
  * A navigation list model. This model combines multiple models.
  * @param {!VolumeManagerWrapper} volumeManager VolumeManagerWrapper instance.
  * @param {(!cr.ui.ArrayDataModel|!FolderShortcutsDataModel)} shortcutListModel
  *     The list of folder shortcut.
- * @param {NavigationModelMenuItem} menuModel Menu button at the end of the
+ * @param {NavigationModelMenuItem} menuModelItem Menu button at the end of the
  *     list.
+ * @param {NavigationModelRecentItem} recentModelItem Recent folder below the
+ *     Downloads volume in the list.
  * @constructor
  * @extends {cr.EventTarget}
  */
-function NavigationListModel(volumeManager, shortcutListModel, menuModel) {
+function NavigationListModel(
+    volumeManager, shortcutListModel, menuModelItem, recentModelItem) {
   cr.EventTarget.call(this);
 
   /**
@@ -137,7 +157,13 @@ function NavigationListModel(volumeManager, shortcutListModel, menuModel) {
    * @private {NavigationModelMenuItem}
    * @const
    */
-  this.menuModel_ = menuModel;
+  this.menuModelItem_ = menuModelItem;
+
+  /**
+   * @private {NavigationModelRecentItem}
+   * @const
+   */
+  this.recentModelItem_ = recentModelItem;
 
   var volumeInfoToModelItem = function(volumeInfo) {
     return new NavigationModelVolumeItem(
@@ -291,12 +317,20 @@ NavigationListModel.prototype = {
  * @return {NavigationModelItem|undefined} The item at the given index.
  */
 NavigationListModel.prototype.item = function(index) {
-  if (index < this.volumeList_.length)
-    return this.volumeList_[index];
-  if (index < this.volumeList_.length + this.shortcutList_.length)
-    return this.shortcutList_[index - this.volumeList_.length];
+  var downloadsVolumeIndex = this.findDownloadsVolumeIndex_();
+  var indexWithoutRecent = index;
+  if (this.recentModelItem_ && downloadsVolumeIndex >= 0) {
+    if (index == downloadsVolumeIndex + 1)
+      return this.recentModelItem_;
+    if (index > downloadsVolumeIndex + 1)
+      indexWithoutRecent--;
+  }
+  if (indexWithoutRecent < this.volumeList_.length)
+    return this.volumeList_[indexWithoutRecent];
+  if (indexWithoutRecent < this.volumeList_.length + this.shortcutList_.length)
+    return this.shortcutList_[indexWithoutRecent - this.volumeList_.length];
   if (index === this.length_() - 1)
-    return this.menuModel_;
+    return this.menuModelItem_;
   return undefined;
 };
 
@@ -306,8 +340,9 @@ NavigationListModel.prototype.item = function(index) {
  * @private
  */
 NavigationListModel.prototype.length_ = function() {
-  return this.volumeList_.length + this.shortcutList_.length
-      + (this.menuModel_ ? 1 : 0);
+  return this.volumeList_.length + this.shortcutList_.length +
+      (this.menuModelItem_ ? 1 : 0) +
+      (this.findDownloadsVolumeIndex_() != -1 ? 1 : 0);
 };
 
 /**
@@ -333,4 +368,14 @@ NavigationListModel.prototype.onItemNotFoundError = function(modelItem) {
   if (modelItem.type ===  NavigationModelItemType.SHORTCUT)
     this.shortcutListModel_.onItemNotFoundError(
         /** @type {!NavigationModelShortcutItem} */(modelItem).entry);
+};
+
+NavigationListModel.prototype.findDownloadsVolumeIndex_ = function() {
+  for (var i = 0; i < this.volumeList_.length; i++) {
+    if (this.volumeList_[i].volumeInfo.volumeType ==
+        VolumeManagerCommon.VolumeType.DOWNLOADS) {
+      return i;
+    }
+  }
+  return -1;
 };
