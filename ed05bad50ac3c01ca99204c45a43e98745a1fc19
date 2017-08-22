@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "bfaae01d_a119547b",
+        "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-22T18:01:55Z",
+      "side": 1,
+      "message": "I was thinking more of an api to get the location of the text on the page. That\u0027s the important part, right? You want to make sure the find bar doesn\u0027t obscure the text on the page you are search for.",
+      "parentUuid": "0ccefcab_6835f6b0",
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24bab9db_f699cf51",
         "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
         "patchSetId": 3
