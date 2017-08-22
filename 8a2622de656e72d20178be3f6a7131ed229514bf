@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f437278_e7580ca2",
+        "filename": "chrome/browser/ui/extensions/extension_installed_bubble_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-22T01:04:09Z",
+      "side": 1,
+      "message": "Include base/optional.h header.",
+      "range": {
+        "startLine": 27,
+        "startChar": 14,
+        "endLine": 27,
+        "endChar": 15
+      },
+      "revId": "8a2622de656e72d20178be3f6a7131ed229514bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd0e3d81_244839de",
+        "filename": "chrome/browser/ui/extensions/extension_installed_bubble_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-22T01:04:09Z",
+      "side": 1,
+      "message": "optional nit. Alias extensions::ExtensionBuilder::ActionType here and in other files.",
+      "range": {
+        "startLine": 70,
+        "startChar": 41,
+        "endLine": 70,
+        "endChar": 51
+      },
+      "revId": "8a2622de656e72d20178be3f6a7131ed229514bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2127538_e1b82a3b",
+        "filename": "chrome/browser/ui/extensions/extension_installed_bubble_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-22T01:04:09Z",
+      "side": 1,
+      "message": "nit: Use base::nullopt.",
+      "range": {
+        "startLine": 126,
+        "startChar": 46,
+        "endLine": 126,
+        "endChar": 62
+      },
+      "revId": "8a2622de656e72d20178be3f6a7131ed229514bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc9d4cb7_4c04db3c",
+        "filename": "chrome/browser/ui/extensions/extension_message_bubble_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-22T01:04:09Z",
+      "side": 1,
+      "message": "Was this include needed?",
+      "range": {
+        "startLine": 27,
+        "startChar": 28,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "8a2622de656e72d20178be3f6a7131ed229514bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f8b488_9d5018ec",
+        "filename": "chrome/browser/ui/toolbar/toolbar_actions_model_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-22T01:04:09Z",
+      "side": 1,
+      "message": "SetLocation(INTERNAL) here as well? The default is UNPACKED. If it\u0027s not needed, remove the above usages as well.",
+      "revId": "8a2622de656e72d20178be3f6a7131ed229514bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
