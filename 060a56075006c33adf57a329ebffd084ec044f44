@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4886153f_b218be09",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T01:53:52Z",
+      "side": 1,
+      "message": "My mental view is as following:\n\nThrottle implementers can choose to call CancelWithError if it thinks it should do that, because that\u0027s a part of the logic each throttle implements (but not the part of ThrottlingURLLoader itself).\n\nWhereas, connection error over mojo pipe is usually handled by the consumers, and your issue description also says that this change mirrors how ResourceDispatcher was doing, which seems to imply that the logic belongs to the consumer.  If we change where we hook ThrottlingURLLoader in the loading pipeline we\u0027ll easily forget that the connection error was being handled by ThrottlingURLLoader and we\u0027ll introduce the same error... which feels error prone.  So I prefer having it handled by the consumer.  Would it make sense?",
+      "parentUuid": "6b3191aa_96276b85",
+      "revId": "060a56075006c33adf57a329ebffd084ec044f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8df06717_45139f31",
         "filename": "content/common/throttling_url_loader.cc",
         "patchSetId": 4

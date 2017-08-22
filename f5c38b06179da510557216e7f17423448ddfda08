@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96fa2514_59a247f7",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T01:53:52Z",
+      "side": 1,
+      "message": "nit/optional: could we early return if (loader_cancelled_)",
+      "revId": "f5c38b06179da510557216e7f17423448ddfda08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
