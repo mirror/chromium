@@ -470,6 +470,10 @@ WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
       ui::GetPrimaryPointerType(prefs.available_pointer_types);
   prefs.primary_hover_type =
       ui::GetPrimaryHoverType(prefs.available_hover_types);
+#if defined(OS_WIN)
+  prefs.barrel_button_for_drag_enabled =
+      base::FeatureList::IsEnabled(features::kDirectManipulationStylus);
+#endif  // defined(OS_WIN)
 
 #if defined(OS_ANDROID)
   prefs.video_fullscreen_orientation_lock_enabled =
