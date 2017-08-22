@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "274261c9_f1440df9",
+        "filename": "content/shell/browser/shell_url_request_context_getter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-22T21:24:43Z",
+      "side": 1,
+      "message": "You have to call this before deleting URLRequestContext (Otherwise, you\u0027ll run into AssertNoURLRequests).",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 95,
+        "endChar": 25
+      },
+      "revId": "5947f16396f8831f3aeffca9e295f1598ba6ce08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c56a3d8_a07e3dfa",
+        "filename": "content/shell/browser/shell_url_request_context_getter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-22T21:24:43Z",
+      "side": 1,
+      "message": "This should be:\n\nif (!shut_down_)\n  return nullptr;\n\nif (!url_request_context_) {\n...\n\ni.e., should start returning false during the NotifyContextShuttingDown() call, which must be called before deleting the URLRequestContext.\n\nAnother option would be to move url_request_context_ into a stack variable in NotifyContextShuttingDown(), and just let it be deleted when it fallse out of scope (After the NotifyContextShuttingDown() call)",
+      "range": {
+        "startLine": 122,
+        "startChar": 7,
+        "endLine": 122,
+        "endChar": 28
+      },
+      "revId": "5947f16396f8831f3aeffca9e295f1598ba6ce08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
