@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "8a976a5b_41764c5c",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-22T23:31:39Z",
+      "side": 1,
+      "message": "I\u0027m curios if this method performs just prepare phase (not leak detection itself), should it be made sync and don\u0027t wait for OnLeakDetectionComplete?\n\nAlso, how about giving it a more generic name, e.g. clearInternalCaches or so?",
+      "revId": "419dd7b547822ae56b8d3912c2107bd11d880be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d98dadf_5fea4688",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorMemoryAgent.cpp",
         "patchSetId": 3
