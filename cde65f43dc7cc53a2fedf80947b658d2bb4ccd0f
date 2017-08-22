@@ -127,6 +127,57 @@
     },
     {
       "key": {
+        "uuid": "f9d924b1_ea9f9f37",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T07:16:56Z",
+      "side": 1,
+      "message": "Is this redundant?",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7224856_00a64d35",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T07:16:56Z",
+      "side": 1,
+      "message": "Forward declaration is enough?",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a863dc3_33bc1eda",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T07:16:56Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba2424c4_6b99b317",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 26
@@ -138,6 +189,29 @@
       "writtenOn": "2017-08-21T15:59:00Z",
       "side": 1,
       "message": "then you don\u0027t need these comment separators too",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "580d366d_c7811f11",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T07:16:56Z",
+      "side": 1,
+      "message": "The lifetimes of SWEventDispatcher and SWSubresourceLoaderFactory/SubresourceLoader are matching? \nSWSubresourceLoader seems independent of SWProviderContext/SWNetworkProvider, so passing a raw pointer feels a bit scaring.",
+      "range": {
+        "startLine": 367,
+        "startChar": 41,
+        "endLine": 367,
+        "endChar": 57
+      },
       "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -192,6 +266,23 @@
       "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34204f96_4f774d6f",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T07:16:56Z",
+      "side": 1,
+      "message": "Not needed?",
+      "revId": "cde65f43dc7cc53a2fedf80947b658d2bb4ccd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
