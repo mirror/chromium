@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "f1e10f29_926d0059",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-08-22T09:16:22Z",
+      "side": 1,
+      "message": "That\u0027s why I think the function name is a bit confusing, \"GridItemOffset\". If I understood it correctly what you want is the grid area size, hence the sum of spanning tracks\u0027 size plus gaps plus Content Alignment offset, right ? \n\nAdditionally, the method uses the term \"Item\", but there is no grid item involved on its implemented logic.\n\nFinally, answering your last question, I don\u0027t think we need to define separate methods. Using the direction argument is enough.",
+      "parentUuid": "327ceff8_cb35320d",
+      "revId": "32230b80f913f989320afa72ab2d393eb68f8df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "600124ed_41ede629",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
         "patchSetId": 2
