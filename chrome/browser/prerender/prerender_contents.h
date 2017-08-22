@@ -162,6 +162,16 @@ class PrerenderContents : public content::NotificationObserver,
 
   Origin origin() const { return origin_; }
 
+  void set_expected_redirect_endpoint(const GURL& endpoint) {
+    DCHECK_EQ(Origin::ORIGIN_REDIRECTS_WALK, origin());
+    expected_redirect_endpoint_ = endpoint;
+  }
+
+  const GURL& expected_redirect_endpoint() const {
+    DCHECK_EQ(Origin::ORIGIN_REDIRECTS_WALK, origin());
+    return expected_redirect_endpoint_;
+  }
+
   base::TimeTicks load_start_time() const { return load_start_time_; }
 
   // Indicates whether this prerendered page can be used for the provided
@@ -245,6 +255,8 @@ class PrerenderContents : public content::NotificationObserver,
   // the prerender contents is swapped in.
   void AddIdleResource(
       const base::WeakPtr<PrerenderResourceThrottle>& throttle);
+
+  void OnRedirectsWalkDone(bool success);
 
   // Increments the number of bytes fetched over the network for this prerender.
   void AddNetworkBytes(int64_t bytes);
@@ -389,6 +401,8 @@ class PrerenderContents : public content::NotificationObserver,
   // A running tally of the number of bytes this prerender has caused to be
   // transferred over the network for resources.  Updated with AddNetworkBytes.
   int64_t network_bytes_;
+
+  GURL expected_redirect_endpoint_;
 
   service_manager::BinderRegistry registry_;
 

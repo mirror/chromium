@@ -786,8 +786,18 @@ public class CustomTabsConnection {
         if (origin == null) return;
         if (!mClientManager.isFirstPartyOriginForSession(session, Uri.parse(origin))) return;
 
-        WarmupManager.getInstance().maybePreconnectUrlAndSubResources(
-                Profile.getLastUsedProfile(), redirectEndpoint.toString());
+        if (mExternalPrerenderHandler == null) {
+            mExternalPrerenderHandler = new ExternalPrerenderHandler();
+        }
+
+        Profile profile = Profile.getLastUsedProfile();
+        String expectedRedirectEndpoint = redirectEndpoint.toString();
+        boolean ok = mExternalPrerenderHandler.startRedirectWalk(
+                profile, url, expectedRedirectEndpoint, "");
+        if (!ok) {
+            WarmupManager.getInstance().maybePreconnectUrlAndSubResources(
+                    profile, expectedRedirectEndpoint);
+        }
     }
 
     /** See {@link ClientManager#getReferrerForSession(CustomTabsSessionToken)} */

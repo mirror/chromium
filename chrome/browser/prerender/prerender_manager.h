@@ -97,7 +97,9 @@ class PrerenderManager : public content::NotificationObserver,
 
     // Ignores requests to prerender, but keeps track of pages that would have
     // been prerendered and records metrics for comparison with other modes.
-    PRERENDER_MODE_SIMPLE_LOAD_EXPERIMENT
+    PRERENDER_MODE_SIMPLE_LOAD_EXPERIMENT,
+
+    PRERENDER_MODE_REDIRECTS_WALK
   };
 
   // One or more of these flags must be passed to ClearData() to specify just
@@ -178,6 +180,19 @@ class PrerenderManager : public content::NotificationObserver,
       const GURL& url,
       content::SessionStorageNamespace* session_storage_namespace,
       const gfx::Size& size);
+
+  // Adds a prerender to walk a redirect chain. Returns a PrerenderHandle if the
+  // URL was added, nullptr otherwise.
+  //
+  // Note that this is quite different from the other prerender types, as the
+  // prerender will cancel itself at or before commit.
+  //
+  // The expected_redirect_endpoint parameter is used to determine to stop
+  // prerendering before commit, and to report success / failure.
+  std::unique_ptr<PrerenderHandle> AddPrerenderForRedirectsWalk(
+      const GURL& url,
+      const GURL& expected_redirect_endpoint,
+      content::SessionStorageNamespace* session_storage_namespace);
 
   // Cancels all active prerenders.
   void CancelAllPrerenders();
@@ -484,7 +499,8 @@ class PrerenderManager : public content::NotificationObserver,
       const GURL& url,
       const content::Referrer& referrer,
       const gfx::Rect& bounds,
-      content::SessionStorageNamespace* session_storage_namespace);
+      content::SessionStorageNamespace* session_storage_namespace,
+      const GURL& expected_redirect_endpoint = GURL());
 
   void StartSchedulingPeriodicCleanups();
   void StopSchedulingPeriodicCleanups();
