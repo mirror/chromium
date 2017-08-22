@@ -93,6 +93,30 @@
       "revId": "4ad07efd8b0cf1c2a9d5751ec9f6469b33d4a41d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c89e228d_f08e13a2",
+        "filename": "content/public/test/browser_test_base.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-22T15:51:51Z",
+      "side": 1,
+      "message": "Sorry, was getting RegisterNetworkBinders confused with BindNetworkServiceTestRequest.  \"RegisterNetworkBinders\" having other side effects seems a bit funky to me, but done.",
+      "parentUuid": "d32bf11b_d4a4e41e",
+      "range": {
+        "startLine": 428,
+        "startChar": 2,
+        "endLine": 428,
+        "endChar": 22
+      },
+      "revId": "4ad07efd8b0cf1c2a9d5751ec9f6469b33d4a41d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

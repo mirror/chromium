@@ -16,6 +16,24 @@
       "revId": "546565c35e82a25a47fe3873cbf325b0a4e46371",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eb51146_57628d90",
+        "filename": "content/public/test/network_service_test_helper.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-22T15:51:51Z",
+      "side": 1,
+      "message": "Patch set 8 had logic in BrowserTestBase (Which is also what creates the EmbeddedTestServer accessed by tests via embedded_test_server()) to call out to this class to register the certs instead, but it required a sync Mojo call, which John didn\u0027t much care for.  I suspect that approach would appeal a bit more to you than this one, though it does still rely on Cert logic using globals.  Feel free to duke it out with John over this.\n\nI\u0027m opposed to me, personally, refactoring all 5 TestRootCert implementations, and rewriting our cert validation code to use the refactored API.  I\u0027m unfamiliar with this code and am not touching it in this CL (So I have no familiarity with it, and I don\u0027t think there\u0027s much advantage to me learning it), which makes me a bad person to pay down technical debt, and I expect that refactoring it all would take me the better part of a month.\n\nIf the code already worked this way, I\u0027d certainly be happy to maintain support for it working that way.",
+      "parentUuid": "49e01335_3bcb248a",
+      "revId": "546565c35e82a25a47fe3873cbf325b0a4e46371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
