@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "550315dd_10026a03",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-22T04:14:35Z",
+      "side": 1,
+      "message": "Is it ok to have more than one of these built at once?",
+      "range": {
+        "startLine": 67,
+        "startChar": 39,
+        "endLine": 67,
+        "endChar": 72
+      },
+      "revId": "b99b8ed65d47634f1e3d51b9d6c35982655c308d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
