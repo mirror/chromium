@@ -480,6 +480,8 @@ public class NotificationPlatformBridge {
      *
      * @param notificationId The id of the notification.
      * @param origin Full text of the origin, including the protocol, owning this notification.
+     * @param scopeUrl The scope of the service worker registered by the site where the notification
+     *                 comes from.
      * @param profileId Id of the profile that showed the notification.
      * @param incognito if the session of the profile is an off the record one.
      * @param tag A string identifier for this notification. If the tag is not empty, the new
@@ -505,12 +507,12 @@ public class NotificationPlatformBridge {
      */
     @CalledByNative
     private void displayNotification(final String notificationId, final String origin,
-            final String profileId, final boolean incognito, final String tag, final String title,
-            final String body, final Bitmap image, final Bitmap icon, final Bitmap badge,
-            final int[] vibrationPattern, final long timestamp, final boolean renotify,
-            final boolean silent, final ActionInfo[] actions) {
+            String scopeUrl, final String profileId, final boolean incognito, final String tag,
+            final String title, final String body, final Bitmap image, final Bitmap icon,
+            final Bitmap badge, final int[] vibrationPattern, final long timestamp,
+            final boolean renotify, final boolean silent, final ActionInfo[] actions) {
         final String webApkPackage =
-                WebApkValidator.queryWebApkPackage(ContextUtils.getApplicationContext(), origin);
+                WebApkValidator.queryWebApkPackage(ContextUtils.getApplicationContext(), scopeUrl);
         if (webApkPackage != null) {
             WebApkIdentityServiceClient.CheckBrowserBacksWebApkCallback callback =
                     new WebApkIdentityServiceClient.CheckBrowserBacksWebApkCallback() {
@@ -721,18 +723,18 @@ public class NotificationPlatformBridge {
      *
      * @param notificationId The id of the notification.
      * @param origin The origin to which the notification belongs.
+     * @param scopeUrl The scope of the service worker registered by the site where the notification
+     *                 comes from.
      * @param tag The tag of the notification. May be NULL.
-     * @param hasQueriedWebApkPackage Whether has done the query of is there a WebAPK can handle
-     *                                this notification.
      * @param webApkPackage The package of the WebAPK associated with the notification.
      *                      Empty if the notification is not associated with a WebAPK.
      */
     @CalledByNative
     private void closeNotification(final String notificationId, final String origin,
-            final String tag, boolean hasQueriedWebApkPackage, String webApkPackage) {
-        if (!hasQueriedWebApkPackage) {
+            String scopeUrl, final String tag, String webApkPackage) {
+        if (!TextUtils.isEmpty(scopeUrl)) {
             final String webApkPackageFound = WebApkValidator.queryWebApkPackage(
-                    ContextUtils.getApplicationContext(), origin);
+                    ContextUtils.getApplicationContext(), scopeUrl);
             if (webApkPackageFound != null) {
                 WebApkIdentityServiceClient.CheckBrowserBacksWebApkCallback callback =
                         new WebApkIdentityServiceClient.CheckBrowserBacksWebApkCallback() {

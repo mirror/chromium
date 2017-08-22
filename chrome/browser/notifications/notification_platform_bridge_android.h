@@ -102,14 +102,19 @@ class NotificationPlatformBridgeAndroid : public NotificationPlatformBridge {
   // query is done.
   struct RegeneratedNotificationInfo {
     RegeneratedNotificationInfo();
-    RegeneratedNotificationInfo(const std::string& origin,
-                                const std::string& tag);
-    RegeneratedNotificationInfo(const std::string& origin,
-                                const std::string& tag,
-                                const std::string& webapk_package);
+    RegeneratedNotificationInfo(
+        const std::string& origin,
+        const base::Optional<std::string>& scope,
+        const std::string& tag,
+        const base::Optional<std::string>& webapk_package);
     ~RegeneratedNotificationInfo();
 
     std::string origin;
+    // The |scope| is set when a notification is created. It is used to query
+    // whether the notification should be handled by a WebAPK. Once the query is
+    // done, we will set the |webapk_package|, and the |scope| isn't needed any
+    // more.
+    base::Optional<std::string> scope;
     std::string tag;
     base::Optional<std::string> webapk_package;
   };
