@@ -372,6 +372,30 @@
       "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdecb961_7029ca4d",
+        "filename": "chrome/browser/ui/find_bar/find_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-22T00:15:17Z",
+      "side": 1,
+      "message": "Hm. Mac has \"screen coordinates\" and \"window base coordinates\" (DIPs). -[NSWindow convertRectFromScreen:] is probably what gets called in Cocoa code -- https://developer.apple.com/documentation/appkit/nswindow/1419603-convertrectfromscreen\n\n(screen coordinates are sometimes \"native pixels\", but less so now since new laptop models use scaling by default. But screen coordinates are always 1x or 2x DIPs.)\n\n\nMac+Cocoa doesn\u0027t seem to be affected by this bug.\n\n\nI suspect that although find_notification_details.h and frame_messages.h both say this selection rect is \"screen coordinates\" it\u0027s actually \"root frame coordinates\"\n. From\n\n    WebRect selection_rect \u003d OwnerFrame().GetFrameView()-\u003eContentsToRootFrame(\n        active_match_-\u003eBoundingBox());\n    ReportFindInPageSelection(selection_rect, active_match_index_ + 1,\n                              identifier);\n\n\nin TextFinder.cpp .\n\n(Certainly, I didn\u0027t spot anything offsetting the origin until the logic gets to FindBarHost::GetDialogPosition().\n\nSo I think Mac must use DIPs for root frame coordinates in Blink? But I don\u0027t know too much about blink...\n\n\nThat works for Cocoa since the cocoa browser is positioning an NSView -- not an NSWindow -- and so it wants DIPs.\n\nBut for toolkit-views, FindBarHost is positioning a window, and so it actually wants screen coordinates. And I think this is the case on Mac -- (the find bar on mac_views_browser \u003d true does some crazy stuff, so I think it is also affected).\n\n\n\nSo! I think this logic really belongs in chrome/browser/ui/views/find_bar_host.cc . That\u0027s the place in the UI code that differs between the find-in-page UI being a subview of the parent window (Mac+Cocoa), and a child bubble window (views browser).\n\n\n\nWe should also update the documentation for |selection_bounds| in frame_messages.h and find_notification_details.h -- navigating all this find stuff was really confusing :/  (I *think* I got it right..)",
+      "parentUuid": "c97c4c15_b45c8f7b",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 172,
+        "endChar": 40
+      },
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
