@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f9b8ca5_0d154068",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-22T19:27:02Z",
+      "side": 1,
+      "message": "When the pixels are not wide gamut, this parameter is not needed, so IMHO a default value keeps the code cleaner on call sites.",
+      "parentUuid": "f87dd3cc_ce34e96a",
+      "range": {
+        "startLine": 392,
+        "startChar": 8,
+        "endLine": 392,
+        "endChar": 42
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ac91993_f5eec5c1",
         "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2DTest.cpp",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2e729f73_5af1ed4f",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2DTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-22T19:27:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ac91993_f5eec5c1",
+      "range": {
+        "startLine": 1199,
+        "startChar": 8,
+        "endLine": 1199,
+        "endChar": 72
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6136402f_50176728",
         "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2DTest.cpp",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-17T18:27:42Z",
       "side": 1,
       "message": "Is it safe to drop the \"swizzle\"?",
+      "range": {
+        "startLine": 1417,
+        "startChar": 8,
+        "endLine": 1417,
+        "endChar": 62
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb41b9b6_6ff01875",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2DTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-22T19:27:02Z",
+      "side": 1,
+      "message": "We don\u0027t need to swizzle as we do everything in RGBA888 now (not N32).",
+      "parentUuid": "6136402f_50176728",
       "range": {
         "startLine": 1417,
         "startChar": 8,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1115cd99_1ded6e9c",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2DTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1445,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-22T19:27:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure what\u0027s happening here but I filed a bug to look into it: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d755668\nThe test was not working as intended before, so this was not caught when the test was initially written.",
+      "parentUuid": "0193c4b3_41edffdd",
+      "range": {
+        "startLine": 1445,
+        "startChar": 6,
+        "endLine": 1445,
+        "endChar": 35
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc4d3573_98da999b",
         "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParamsTest.cpp",
         "patchSetId": 7
@@ -114,6 +210,30 @@
       "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "339d29d5_153f99da",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParamsTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-22T19:27:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc4d3573_98da999b",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "38a6e2b4_338b4394",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-22T19:27:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2714f7e_571c1f84",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 69
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6509f7f7_b0b6b37a",
         "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
         "patchSetId": 7
@@ -160,6 +304,30 @@
       "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9555cad0_d82805b7",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-22T19:27:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6509f7f7_b0b6b37a",
+      "range": {
+        "startLine": 33,
+        "startChar": 10,
+        "endLine": 33,
+        "endChar": 11
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "9a8881ec_16256cbb",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-22T19:27:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e01b6d4_105288f7",
+      "range": {
+        "startLine": 36,
+        "startChar": 13,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ebba381_7d1a2cba",
         "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
         "patchSetId": 7
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "af2b975e_8dfcec02",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-22T19:27:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ebba381_7d1a2cba",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 13
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d73a5a5d_c998e722",
         "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.h",
         "patchSetId": 7
@@ -229,6 +445,30 @@
       "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd2d177_334870b5",
+        "filename": "third_party/WebKit/Source/platform/graphics/ColorCorrectionTestUtils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-22T19:27:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d73a5a5d_c998e722",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 47
+      },
+      "revId": "a904ce1223bc5194e62bd9f19989b776150065e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
