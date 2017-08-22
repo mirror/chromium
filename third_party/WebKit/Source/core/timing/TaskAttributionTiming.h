@@ -12,7 +12,7 @@
 
 namespace blink {
 
-class TaskAttributionTiming final : public PerformanceEntry {
+class CORE_EXPORT TaskAttributionTiming final : public PerformanceEntry {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

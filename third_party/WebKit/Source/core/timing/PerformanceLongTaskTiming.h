@@ -16,7 +16,7 @@ namespace blink {
 class TaskAttributionTiming;
 using TaskAttributionVector = HeapVector<Member<TaskAttributionTiming>>;
 
-class PerformanceLongTaskTiming final : public PerformanceEntry {
+class CORE_EXPORT PerformanceLongTaskTiming final : public PerformanceEntry {
   DEFINE_WRAPPERTYPEINFO();
 
  public:

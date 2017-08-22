@@ -4,21 +4,62 @@
 
 #include "core/timing/Performance.h"
 
+#include "bindings/core/v8/PerformanceObserverCallback.h"
+#include "bindings/core/v8/V8BindingForTesting.h"
 #include "core/frame/PerformanceMonitor.h"
 #include "core/loader/DocumentLoadTiming.h"
 #include "core/loader/DocumentLoader.h"
+#include "core/probe/CoreProbes.h"
 #include "core/testing/DummyPageHolder.h"
 #include "core/timing/DOMWindowPerformance.h"
+#include "core/timing/PerformanceLongTaskTiming.h"
+#include "core/timing/PerformanceObserver.h"
+#include "core/timing/PerformanceObserverInit.h"
+#include "core/timing/TaskAttributionTiming.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
+using PerformanceEntryVector = HeapVector<Member<PerformanceEntry>>;
+using PerformanceObservers = HeapListHashSet<Member<PerformanceObserver>>;
+
+namespace {
+class FakeTimer {
+ public:
+  FakeTimer() {
+    g_mock_time = 1000.;
+    original_time_function_ =
+        WTF::SetTimeFunctionsForTesting(GetMockTimeInSeconds);
+  }
+
+  ~FakeTimer() { WTF::SetTimeFunctionsForTesting(original_time_function_); }
+
+  static double GetMockTimeInSeconds() { return g_mock_time; }
+
+  void ForwardTimer(double mock_time) { g_mock_time += mock_time; }
+
+ private:
+  TimeFunction original_time_function_;
+  static double g_mock_time;
+};
+
+double FakeTimer::g_mock_time = 1000.;
+}  // namespace
 
 class PerformanceTest : public ::testing::Test {
  protected:
   void SetUp() override {
+    V8TestingScope scope;
     page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
     page_holder_->GetDocument().SetURL(KURL(NullURL(), "https://example.com"));
     performance_ = Performance::Create(&page_holder_->GetFrame());
+    v8::Local<v8::Function> callback =
+        v8::Function::New(scope.GetScriptState()->GetContext(), nullptr)
+            .ToLocalChecked();
+    call_bask_ =
+        PerformanceObserverCallback::Create(scope.GetScriptState(), callback);
+    observer_ = new PerformanceObserver(performance_->GetExecutionContext(),
+                                        performance_, call_bask_);
 
     // Create another dummy page holder and pretend this is the iframe.
     another_page_holder_ = DummyPageHolder::Create(IntSize(400, 300));
@@ -43,9 +84,41 @@ class PerformanceTest : public ::testing::Test {
 
   void SimulateDidProcessLongTask() {
     auto* monitor = GetFrame()->GetPerformanceMonitor();
+    AddTaskExecutionContext();
+    monitor->DidProcessTask(0, 1);
+  }
+
+  void AddTaskExecutionContext() {
+    auto* monitor = GetFrame()->GetPerformanceMonitor();
     monitor->WillExecuteScript(GetDocument());
     monitor->DidExecuteScript();
-    monitor->DidProcessTask(0, 1);
+  }
+
+  void WillProcessTask(double start_time) {
+    GetFrame()->GetPerformanceMonitor()->WillProcessTask(start_time);
+  }
+
+  void DidProcessTask(double start_time, double end_time) {
+    GetFrame()->GetPerformanceMonitor()->DidProcessTask(start_time, end_time);
+  }
+
+  void SimulateV8CompileTask(FakeTimer& timer,
+                             double duration,
+                             String& script_url,
+                             int line,
+                             int column) {
+    probe::V8Compile probe(performance_->GetExecutionContext(), script_url,
+                           line, column);
+    timer.ForwardTimer(duration);
+  }
+
+  PerformanceObservers& GetPerformanceObservers() {
+    return performance_->observers_;
+  }
+
+  PerformanceEntryVector& GetPerformanceEntries(
+      const Member<PerformanceObserver>& observer) {
+    return observer->performance_entries_;
   }
 
   LocalFrame* GetFrame() const { return &page_holder_->GetFrame(); }
@@ -67,6 +140,8 @@ class PerformanceTest : public ::testing::Test {
   }
 
   Persistent<Performance> performance_;
+  Persistent<PerformanceObserver> observer_;
+  Persistent<PerformanceObserverCallback> call_bask_;
   std::unique_ptr<DummyPageHolder> page_holder_;
   std::unique_ptr<DummyPageHolder> another_page_holder_;
 };
@@ -160,4 +235,141 @@ TEST(PerformanceLifetimeTest, SurviveContextSwitch) {
   EXPECT_EQ(&page_holder->GetFrame(), timing->GetFrame());
   EXPECT_EQ(navigation_start, timing->navigationStart());
 }
+
+TEST_F(PerformanceTest, LongTaskV1_SubTaskAttribution) {
+  RuntimeEnabledFeatures::SetLongTaskV2Enabled(false);
+  FakeTimer timer;
+  String script_url = "http://abc.def";
+  int line = 1;
+  int column = 2;
+
+  AddLongTaskObserver();
+
+  // Make an observer for longtask
+  NonThrowableExceptionState exception_state;
+  PerformanceObserverInit options;
+  Vector<String> entry_type_vec;
+  entry_type_vec.push_back("longtask");
+  options.setEntryTypes(entry_type_vec);
+  observer_->observe(options, exception_state);
+
+  performance_->RegisterPerformanceObserver(*observer_);
+
+  double start_time = timer.GetMockTimeInSeconds();
+  WillProcessTask(start_time);
+  AddTaskExecutionContext();
+
+  // Too short to be considered as a long subtask.
+  SimulateV8CompileTask(timer, 0.001, script_url, 0, 0);
+  EXPECT_FLOAT_EQ(1000.001, timer.GetMockTimeInSeconds());
+  // Simulate a long subtask.
+  SimulateV8CompileTask(timer, 0.013, script_url, line, column);
+  EXPECT_FLOAT_EQ(1000.014, timer.GetMockTimeInSeconds());
+
+  timer.ForwardTimer(0.050);
+  EXPECT_FLOAT_EQ(1000.064, timer.GetMockTimeInSeconds());
+  DidProcessTask(start_time, timer.GetMockTimeInSeconds());
+  PerformanceObservers& observers = GetPerformanceObservers();
+  EXPECT_EQ(1, (int)observers.size());
+
+  for (auto& observer : observers) {
+    PerformanceEntryVector& entries = GetPerformanceEntries(observer);
+    EXPECT_EQ(1, (int)entries.size());
+    Member<PerformanceEntry>& entry = entries[0];
+
+    // Start time and duration being 0 is because the time_origin of
+    // PerformanceBase is set to 0.
+    EXPECT_FLOAT_EQ(0, entry->startTime());
+    EXPECT_FLOAT_EQ(0, entry->duration());
+    EXPECT_EQ("self", entry->name());
+    EXPECT_EQ("longtask", entry->entryType());
+    PerformanceEntry* entry_ptr = entry.Release();
+    PerformanceLongTaskTiming* long_task_entry =
+        (PerformanceLongTaskTiming*)entry_ptr;
+    TaskAttributionVector sub_task_attributions =
+        long_task_entry->attribution();
+    EXPECT_EQ(1, (int)sub_task_attributions.size());
+    Member<TaskAttributionTiming> sub_task_attribution =
+        sub_task_attributions[0];
+    EXPECT_EQ("", sub_task_attribution->scriptURL());
+    EXPECT_EQ("iframe", sub_task_attribution->containerType());
+    EXPECT_EQ("", sub_task_attribution->containerSrc());
+    EXPECT_EQ("", sub_task_attribution->containerId());
+    EXPECT_EQ("", sub_task_attribution->containerName());
+    EXPECT_EQ("script", sub_task_attribution->name());
+    EXPECT_EQ("taskattribution", sub_task_attribution->entryType());
+    EXPECT_FLOAT_EQ(0, sub_task_attribution->startTime());
+    EXPECT_FLOAT_EQ(0, sub_task_attribution->duration());
+  }
+
+  RemoveLongTaskObserver();
 }
+
+TEST_F(PerformanceTest, LongTaskV2_SubTaskAttribution) {
+  RuntimeEnabledFeatures::SetLongTaskV2Enabled(true);
+  FakeTimer timer;
+  String script_url = "http://abc.def";
+  int line = 1;
+  int column = 2;
+
+  AddLongTaskObserver();
+
+  // Make an observer for longtask
+  NonThrowableExceptionState exception_state;
+  PerformanceObserverInit options;
+  Vector<String> entry_type_vec;
+  entry_type_vec.push_back("longtask");
+  options.setEntryTypes(entry_type_vec);
+  observer_->observe(options, exception_state);
+
+  performance_->RegisterPerformanceObserver(*observer_);
+
+  double start_time = timer.GetMockTimeInSeconds();
+  WillProcessTask(start_time);
+  AddTaskExecutionContext();
+  // Too short to be considered as a long subtask.
+  SimulateV8CompileTask(timer, 0.001, script_url, 0, 0);
+  EXPECT_FLOAT_EQ(1000.001, timer.GetMockTimeInSeconds());
+  // Simulate a long subtask.
+  SimulateV8CompileTask(timer, 0.013, script_url, line, column);
+  EXPECT_FLOAT_EQ(1000.014, timer.GetMockTimeInSeconds());
+
+  timer.ForwardTimer(0.050);
+  EXPECT_FLOAT_EQ(1000.064, timer.GetMockTimeInSeconds());
+  DidProcessTask(start_time, timer.GetMockTimeInSeconds());
+  PerformanceObservers& observers = GetPerformanceObservers();
+  EXPECT_EQ(1, (int)observers.size());
+
+  for (auto& observer : observers) {
+    PerformanceEntryVector& entries = GetPerformanceEntries(observer);
+    EXPECT_EQ(1, (int)entries.size());
+    Member<PerformanceEntry>& entry = entries[0];
+
+    // Start time and duration being 0 is because the time_origin of
+    // PerformanceBase is set to 0.
+    EXPECT_FLOAT_EQ(0, entry->startTime());
+    EXPECT_FLOAT_EQ(0, entry->duration());
+    EXPECT_EQ("self", entry->name());
+    EXPECT_EQ("longtask", entry->entryType());
+    PerformanceEntry* entry_ptr = entry.Release();
+    PerformanceLongTaskTiming* long_task_entry =
+        (PerformanceLongTaskTiming*)entry_ptr;
+    TaskAttributionVector sub_task_attributions =
+        long_task_entry->attribution();
+    EXPECT_EQ(1, (int)sub_task_attributions.size());
+    Member<TaskAttributionTiming> sub_task_attribution =
+        sub_task_attributions[0];
+    EXPECT_EQ("http://abc.def(1, 2)", sub_task_attribution->scriptURL());
+    EXPECT_EQ("iframe", sub_task_attribution->containerType());
+    EXPECT_EQ("", sub_task_attribution->containerSrc());
+    EXPECT_EQ("", sub_task_attribution->containerId());
+    EXPECT_EQ("", sub_task_attribution->containerName());
+    EXPECT_EQ("script-compile", sub_task_attribution->name());
+    EXPECT_EQ("taskattribution", sub_task_attribution->entryType());
+    EXPECT_FLOAT_EQ(0, sub_task_attribution->startTime());
+    EXPECT_FLOAT_EQ(13, sub_task_attribution->duration());
+  }
+
+  RemoveLongTaskObserver();
+}
+}  // namespace blink
