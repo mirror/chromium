@@ -32,10 +32,6 @@ void HidService::Observer::OnDeviceRemoved(
     scoped_refptr<HidDeviceInfo> device_info) {
 }
 
-void HidService::Observer::OnDeviceRemovedCleanup(
-    scoped_refptr<HidDeviceInfo> device_info) {
-}
-
 // static
 constexpr base::TaskTraits HidService::kBlockingTaskTraits;
 
@@ -53,16 +49,15 @@ std::unique_ptr<HidService> HidService::Create() {
 
 void HidService::GetDevices(const GetDevicesCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  if (enumeration_ready_) {
-    std::vector<scoped_refptr<HidDeviceInfo>> devices;
-    for (const auto& map_entry : devices_) {
-      devices.push_back(map_entry.second);
-    }
+
+  bool was_empty = pending_enumerations_.empty();
+  pending_enumerations_.push_back(callback);
+  if (enumeration_ready_ && was_empty) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, devices));
-  } else {
-    pending_enumerations_.push_back(callback);
+        FROM_HERE,
+        base::Bind(&HidService::RunPendingEnumerations, GetWeakPtr()));
   }
+  enumeration_ready_ = false;
 }
 
 void HidService::AddObserver(HidService::Observer* observer) {
@@ -127,14 +122,10 @@ void HidService::RemoveDevice(const HidPlatformDeviceId& platform_device_id) {
         observer.OnDeviceRemoved(device);
     }
     devices_.erase(device_guid);
-    if (enumeration_ready_) {
-      for (auto& observer : observer_list_)
-        observer.OnDeviceRemovedCleanup(device);
-    }
   }
 }
 
-void HidService::FirstEnumerationComplete() {
+void HidService::RunPendingEnumerations() {
   enumeration_ready_ = true;
 
   if (!pending_enumerations_.empty()) {
@@ -148,6 +139,9 @@ void HidService::FirstEnumerationComplete() {
     }
     pending_enumerations_.clear();
   }
+}
+void HidService::FirstEnumerationComplete() {
+  RunPendingEnumerations();
 }
 
 std::string HidService::FindDeviceIdByPlatformDeviceId(

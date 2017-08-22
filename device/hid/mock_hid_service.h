@@ -18,6 +18,7 @@ class MockHidService : public HidService {
   ~MockHidService() override;
 
   // Public wrappers around protected functions needed for tests.
+  base::WeakPtr<HidService> GetWeakPtr();
   void AddDevice(scoped_refptr<HidDeviceInfo> info);
   void RemoveDevice(const HidPlatformDeviceId& platform_device_id);
   void FirstEnumerationComplete();
@@ -26,6 +27,8 @@ class MockHidService : public HidService {
   MOCK_METHOD2(Connect,
                void(const std::string& device_guid,
                     const ConnectCallback& callback));
+
+  base::WeakPtrFactory<MockHidService> weak_factory_;
 };
 
 }  // namespace device

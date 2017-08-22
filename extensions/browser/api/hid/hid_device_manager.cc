@@ -254,6 +254,12 @@ void HidDeviceManager::OnDeviceRemoved(
                   hid::OnDeviceRemoved::kEventName, std::move(args),
                   device_info);
   }
+
+  // Remove permission entry for ephemeral hid device.
+  DevicePermissionsManager* permissions_manager =
+      DevicePermissionsManager::Get(browser_context_);
+  DCHECK(permissions_manager);
+  permissions_manager->RemoveEntryForEphemeralHidDevice(device_info);
 }
 
 void HidDeviceManager::LazyInitialize() {
