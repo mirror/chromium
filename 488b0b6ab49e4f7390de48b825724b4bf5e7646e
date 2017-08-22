@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e201ce7_c78962a4",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-22T23:32:46Z",
+      "side": 1,
+      "message": "Does this conditional need to update last_size_in_pixels_ and last_device_scale_factor_?",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 65
+      },
+      "revId": "488b0b6ab49e4f7390de48b825724b4bf5e7646e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
