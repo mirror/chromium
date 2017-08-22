@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1f470e15_cca4bb48",
+        "filename": "device/serial/buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-22T04:23:24Z",
+      "side": 1,
+      "message": "Right. We can\u0027t avoid the copy but it would still be nice to update the type here to uint8_t if we can. Using char for byte buffers leads to trouble.",
+      "parentUuid": "ec2715f6_347e1d83",
+      "revId": "73eb5c077e83b8ffa5e2e6ad52632c54b57185c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3dc1e999_4f281719",
         "filename": "tools/battor_agent/battor_connection_impl.cc",
         "patchSetId": 4
