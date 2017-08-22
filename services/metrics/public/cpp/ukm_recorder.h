@@ -62,6 +62,10 @@ namespace previews {
 class PreviewsUKMObserver;
 }
 
+namespace offline_pages {
+class OfflinePagesUkmReporterImpl;
+}
+
 namespace ukm {
 
 class UkmEntryBuilder;
@@ -117,6 +121,7 @@ class METRICS_EXPORT UkmRecorder {
   friend content::RenderFrameImpl;
   friend content::RenderWidgetHostLatencyTracker;
   friend media::WatchTimeRecorder;
+  friend offline_pages::OfflinePagesUkmReporterImpl;
   friend password_manager::PasswordManagerMetricsRecorder;
   friend password_manager::PasswordFormMetricsRecorder;
   friend previews::PreviewsUKMObserver;
