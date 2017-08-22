@@ -16401,6 +16401,7 @@ crbug.com/591099 virtual/mojo-loading/http/tests/inspector/application-panel/sto
 crbug.com/591099 virtual/mojo-loading/http/tests/inspector/bindings/livelocation-main-frame-navigated.html [ Failure Pass Timeout ]
 crbug.com/591099 virtual/mojo-loading/http/tests/inspector/network/waterfall-images.html [ Failure Pass ]
 crbug.com/591099 virtual/mojo-loading/http/tests/inspector/persistence/automapping-sourcemap.html [ Failure Pass Timeout ]
+crbug.com/591099 virtual/mojo-loading/http/tests/inspector/service-workers/user-agent-override.html [ Failure Timeout ]
 crbug.com/591099 virtual/mojo-loading/http/tests/security/cors-rfc1918/addressspace-document-csp-appcache.html [ Failure Pass Timeout ]
 crbug.com/591099 virtual/mojo-loading/http/tests/serviceworker/ServiceWorkerGlobalScope/registration-attribute.html [ Failure Pass ]
 crbug.com/591099 virtual/mojo-localstorage/external/wpt/webstorage/storage_setitem.html [ Pass Timeout ]
