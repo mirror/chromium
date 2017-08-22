@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "6eba034e_9832b31f",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-22T16:59:28Z",
+      "side": 1,
+      "message": "I think you should be able to work around that by static_cast\u0027ing to const void*.",
+      "parentUuid": "4c592ef0_5bce26fe",
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76339628_406a8032",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 7
@@ -195,6 +213,24 @@
       "side": 1,
       "message": "Got it, I\u0027ll talk with Balazs about it (I also think the need to get and pass the localframe down will go away when cred man and authenticator\u0027s mojo are fully merged.)",
       "parentUuid": "76339628_406a8032",
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b89f5cae_7cdcdbb1",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-22T16:59:28Z",
+      "side": 1,
+      "message": "There will be a bit of refactoring here anyway so I\u0027d just leave a TODO. You can assign it to me. :-)",
+      "parentUuid": "7a5ada3f_66f50156",
       "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
