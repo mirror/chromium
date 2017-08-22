@@ -113,4 +113,9 @@ public class DownloadSheetContent implements BottomSheetContent {
     public boolean applyDefaultTopPadding() {
         return false;
     }
+
+    @Override
+    public void hideSearchIconIfNoContent() {
+        mToolbarView.onDataChanged(mDownloadManager.getAdapter().getItemCount());
+    }
 }

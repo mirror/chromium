@@ -303,6 +303,8 @@ public class BottomSheet
          * @return Whether the default top padding should be applied to the content view.
          */
         boolean applyDefaultTopPadding();
+
+        void hideSearchIconIfNoContent();
     }
 
     /**

@@ -140,9 +140,8 @@ public class VrShellNavigationTest {
         mVrTestRule.loadUrl("chrome://history", PAGE_LOAD_TIMEOUT_S);
         HistoryPage historyPage =
                 (HistoryPage) mVrTestRule.getActivity().getActivityTab().getNativePage();
-        ArrayList<HistoryItemView> itemViews = historyPage.getHistoryManagerForTesting()
-                                                       .getAdapterForTests()
-                                                       .getItemViewsForTests();
+        ArrayList<HistoryItemView> itemViews =
+                historyPage.getHistoryManagerForTesting().getAdapter().getItemViewsForTests();
         Assert.assertEquals("Two navigations showed up in history", 2, itemViews.size());
         // History is in reverse chronological order, so the first navigation should actually be
         // after the second in the list
