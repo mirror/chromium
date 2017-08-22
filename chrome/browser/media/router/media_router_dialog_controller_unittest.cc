@@ -5,7 +5,6 @@
 #include <memory>
 #include <vector>
 
-#include "chrome/browser/media/router/create_presentation_connection_request.h"
 #include "chrome/browser/media/router/media_router_dialog_controller.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
@@ -64,17 +63,15 @@ class MediaRouterDialogControllerTest : public ChromeRenderViewHostTestHarness {
   void RequestSuccess(const content::PresentationInfo&, const MediaRoute&) {}
   void RequestError(const content::PresentationError& error) {}
 
-  std::unique_ptr<CreatePresentationConnectionRequest> GetRequest() {
-    return std::unique_ptr<CreatePresentationConnectionRequest>(
-        new CreatePresentationConnectionRequest(
-            content::PresentationRequest(
-                {1, 2},
-                {GURL("http://example.com"), GURL("http://example2.com")},
-                url::Origin(GURL("http://google.com"))),
-            base::BindOnce(&MediaRouterDialogControllerTest::RequestSuccess,
-                           base::Unretained(this)),
-            base::BindOnce(&MediaRouterDialogControllerTest::RequestError,
-                           base::Unretained(this))));
+  bool ShowMediaRouterDialogForPresentation() {
+    return dialog_controller_->ShowMediaRouterDialogForPresentation(
+        content::PresentationRequest(
+            {1, 2}, {GURL("http://example.com"), GURL("http://example2.com")},
+            url::Origin(GURL("http://google.com"))),
+        base::BindOnce(&MediaRouterDialogControllerTest::RequestSuccess,
+                       base::Unretained(this)),
+        base::BindOnce(&MediaRouterDialogControllerTest::RequestError,
+                       base::Unretained(this)));
   }
 
   std::unique_ptr<TestMediaRouterDialogController> dialog_controller_;
@@ -111,15 +108,13 @@ TEST_F(MediaRouterDialogControllerTest, ShowAndHideDialog) {
 
 TEST_F(MediaRouterDialogControllerTest, ShowDialogForPresentation) {
   EXPECT_CALL(*web_contents_delegate_, ActivateContents(web_contents()));
-  EXPECT_TRUE(
-      dialog_controller_->ShowMediaRouterDialogForPresentation(GetRequest()));
+  EXPECT_TRUE(ShowMediaRouterDialogForPresentation());
   EXPECT_TRUE(dialog_controller_->IsShowingMediaRouterDialog());
 
   // If a dialog is already shown, ShowMediaRouterDialogForPresentation() should
   // return false.
   EXPECT_CALL(*web_contents_delegate_, ActivateContents(web_contents()));
-  EXPECT_FALSE(
-      dialog_controller_->ShowMediaRouterDialogForPresentation(GetRequest()));
+  EXPECT_FALSE(ShowMediaRouterDialogForPresentation());
 }
 
 }  // namespace media_router
