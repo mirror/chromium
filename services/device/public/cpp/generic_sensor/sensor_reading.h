@@ -87,24 +87,36 @@ struct SensorReadingQuat : public SensorReadingXYZ {
 //
 // ACCELEROMETER:
 // accel.x: acceleration minus Gx on the x-axis in SI meters per second
-// squared (m/s^2) units.
+// squared (m/s^2) units. It corresponds to the x value of
+// accelerationIncludingGravity in the W3C DeviceMotion Event Specification.
 // accel.y: acceleration minus Gy on the y-axis in SI meters per second
-// squared (m/s^2) units.
+// squared (m/s^2) units. It corresponds to the y value of
+// accelerationIncludingGravity in the W3C DeviceMotion Event Specification.
 // accel.z: acceleration minus Gz on the z-axis in SI meters per second
-// squared (m/s^2) units.
+// squared (m/s^2) units. It corresponds to the z value of
+// accelerationIncludingGravity in the W3C DeviceMotion Event Specification.
 //
 // LINEAR_ACCELERATION:
 // accel.x: acceleration on the x-axis in SI meters per second squared
-// (m/s^2) units.
+// (m/s^2) units. It corresponds to the x value of acceleration in the W3C
+// DeviceMotion Event Specification.
 // accel.y: acceleration on the y-axis in SI meters per second squared
-// (m/s^2) units.
+// (m/s^2) units. It corresponds to the y value of acceleration in the W3C
+// DeviceMotion Event Specification.
 // accel.z: acceleration on the z-axis in SI meters per second squared
-// (m/s^2) units.
+// (m/s^2) units. It corresponds to the z value of acceleration in the W3C
+// DeviceMotion Event Specification.
 //
 // GYROSCOPE:
-// gyro.x: angular speed around the x-axis in radians/second.
-// gyro.y: angular speed around the y-axis in radians/second.
-// gyro.z: angular speed around the z-axis in radians/second.
+// gyro.x: angular speed around the x-axis in radians/second. It corresponds
+// to the alpha value of rotationRate in the W3C DeviceMotion Event
+// Specification.
+// gyro.y: angular speed around the y-axis in radians/second. It corresponds
+// to the beta value of rotationRate in the W3C DeviceMotion Event
+// Specification.
+// gyro.z: angular speed around the z-axis in radians/second. It corresponds
+// to the gamma value of rotationRate in the W3C DeviceMotion Event
+// Specification.
 //
 // MAGNETOMETER:
 // magn.x: ambient magnetic field in the x-axis in micro-Tesla (uT).
