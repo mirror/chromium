@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a60ff51_0720792f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-22T17:14:29Z",
+      "side": 1,
+      "message": "Can we just move this up to right after the other histogram recording (i.e. around line 426), before we retrieve |minRequiredStorage|, since it\u0027s not required to record the histogram?",
+      "revId": "23bba4d00a95fe8a303e723c22005a753a0c869d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

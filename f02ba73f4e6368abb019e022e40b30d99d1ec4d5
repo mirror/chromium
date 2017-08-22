@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fd22da7d_92d39ac4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-22T17:14:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "edf0c931_e86d30ec",
+      "revId": "f02ba73f4e6368abb019e022e40b30d99d1ec4d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e62e1bb6_1e235314",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
         "patchSetId": 3
@@ -69,6 +87,24 @@
       "revId": "f02ba73f4e6368abb019e022e40b30d99d1ec4d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f1a01c7_9e95a771",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-22T17:14:29Z",
+      "side": 1,
+      "message": "Got it; yeah, I was thinking that we would just always record the device free space, regardless of the configuration.",
+      "parentUuid": "cccb05b6_692f7f94",
+      "revId": "f02ba73f4e6368abb019e022e40b30d99d1ec4d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
