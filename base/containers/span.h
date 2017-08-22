@@ -89,6 +89,11 @@ using EnableIfConstSpanCompatibleContainer =
 // span is somewhat analogous to StringPiece, but with arbitrary element types,
 // allowing mutation if T is non-const.
 //
+// span is designed to be light-weight and intended to be used as a value type.
+// It is cheap to construct, copy, move and use spans, so that users are
+// encouraged to use it as a pass-by-value parameter. This again is analogous to
+// StringPiece.
+//
 // span is implicitly convertible from C++ arrays, as well as most [1]
 // container-like types that provide a data() and size() method (such as
 // std::vector<T>). A mutable span<T> can also be implicitly converted to an
@@ -98,15 +103,32 @@ using EnableIfConstSpanCompatibleContainer =
 // parameter: it allows the function to still act on an array-like type, while
 // allowing the caller code to be a bit more concise.
 //
+// For read-only data access users are encouraged to declare span<const T>
+// parameters, as this allows both span<T> and span<const T> to be consumed due
+// to the above mentioned implicit construction. For read-write access a mutable
+// span<T> is required.
+//
 // Without span:
-//   // std::string HexEncode(uint8_t* data, size_t size);
-//   std::vector<uint8_t> data_buffer = GenerateData();
-//   std::string r = HexEncode(data_buffer.data(), data_buffer.size());
+//   Read-Only:
+//     // std::string HexEncode(const uint8_t* data, size_t size);
+//     std::vector<uint8_t> data_buffer = GenerateData();
+//     std::string r = HexEncode(data_buffer.data(), data_buffer.size());
+//
+//  Mutable:
+//     // ssize_t SafeSNPrintf(char* buf, size_t N, const char* fmt, Args...);
+//     char str_buffer[100];
+//     SafeSNPrintf(str_buffer, 100, "Pi ~= %lf", 3.14);
 //
 // With span:
-//   // std::string HexEncode(base::span<uint8_t> data);
-//   std::vector<uint8_t> data_buffer = GenerateData();
-//   std::string r = HexEncode(data_buffer);
+//   Read-Only:
+//     // std::string HexEncode(base::span<const uint8_t> data);
+//     std::vector<uint8_t> data_buffer = GenerateData();
+//     std::string r = HexEncode(data_buffer);
+
+//  Mutable:
+//     // ssize_t SafeSNPrintf(base::span<char>, const char* fmt, Args...);
+//     char str_buffer[100];
+//     SafeSNPrintf(str_buffer, "Pi ~= %lf", 3.14);
 //
 // ======= Differences from the working group proposal =======
 // http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2017/p0122r5.pdf is the
