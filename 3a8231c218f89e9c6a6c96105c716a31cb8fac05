@@ -69,6 +69,24 @@
       "revId": "3a8231c218f89e9c6a6c96105c716a31cb8fac05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d0f6771_bd8ee858",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-22T16:21:02Z",
+      "side": 1,
+      "message": "Ah you\u0027re right sorry about that.\n\nIt is unfortunate the unit tests pass in a null render_frame(). I wonder if you can either:\n1. Fix the unit tests to use a non null RenderFrame\n2. Do something like:\n  bool is_main_frame \u003d render_frame() \u0026\u0026 render_frame()-\u003eIsMainFrame();\n  bool is_subframe \u003d render_frame() \u0026\u0026 !is_main_frame;",
+      "parentUuid": "496abd7d_a4ea5c2e",
+      "revId": "3a8231c218f89e9c6a6c96105c716a31cb8fac05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
