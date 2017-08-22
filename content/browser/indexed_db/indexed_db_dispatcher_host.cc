@@ -97,7 +97,7 @@ class IndexedDBDispatcherHost::IDBSequenceHelper {
         indexed_db_context_(std::move(indexed_db_context)) {}
   ~IDBSequenceHelper() {}
 
-  void GetDatabaseNamesOnIDBThread(scoped_refptr<IndexedDBCallbacks> callbacks,
+  void GetDatabasesInfoOnIDBThread(scoped_refptr<IndexedDBCallbacks> callbacks,
                                    const url::Origin& origin);
   void OpenOnIDBThread(
       scoped_refptr<IndexedDBCallbacks> callbacks,
@@ -214,7 +214,7 @@ void IndexedDBDispatcherHost::RenderProcessExited(
           base::Unretained(this)));
 }
 
-void IndexedDBDispatcherHost::GetDatabaseNames(
+void IndexedDBDispatcherHost::GetDatabasesInfo(
     ::indexed_db::mojom::CallbacksAssociatedPtrInfo callbacks_info,
     const url::Origin& origin) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -227,7 +227,7 @@ void IndexedDBDispatcherHost::GetDatabaseNames(
   scoped_refptr<IndexedDBCallbacks> callbacks(new IndexedDBCallbacks(
       this->AsWeakPtr(), origin, std::move(callbacks_info), IDBTaskRunner()));
   IDBTaskRunner()->PostTask(
-      FROM_HERE, base::BindOnce(&IDBSequenceHelper::GetDatabaseNamesOnIDBThread,
+      FROM_HERE, base::BindOnce(&IDBSequenceHelper::GetDatabasesInfoOnIDBThread,
                                 base::Unretained(idb_helper_),
                                 base::Passed(&callbacks), origin));
 }
@@ -333,13 +333,13 @@ base::SequencedTaskRunner* IndexedDBDispatcherHost::IDBTaskRunner() const {
   return indexed_db_context_->TaskRunner();
 }
 
-void IndexedDBDispatcherHost::IDBSequenceHelper::GetDatabaseNamesOnIDBThread(
+void IndexedDBDispatcherHost::IDBSequenceHelper::GetDatabasesInfoOnIDBThread(
     scoped_refptr<IndexedDBCallbacks> callbacks,
     const url::Origin& origin) {
   DCHECK(indexed_db_context_->TaskRunner()->RunsTasksInCurrentSequence());
 
   base::FilePath indexed_db_path = indexed_db_context_->data_path();
-  indexed_db_context_->GetIDBFactory()->GetDatabaseNames(
+  indexed_db_context_->GetIDBFactory()->GetDatabasesInfo(
       callbacks, origin, indexed_db_path, request_context_getter_);
 }
 

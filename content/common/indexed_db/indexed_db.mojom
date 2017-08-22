@@ -123,6 +123,11 @@ struct DatabaseMetadata {
   int64 max_object_store_id;
   array<ObjectStoreMetadata> object_stores;
 };
+struct DatabaseInfo {
+
+  mojo.common.mojom.String16 name;
+  int64 version;
+};
 
 struct IndexKeys {
   int64 index_id;
@@ -180,8 +185,8 @@ struct ObserverChanges {
 interface Callbacks {
   Error(int32 code, mojo.common.mojom.String16 message);
 
-  // Factory::GetDatabaseNames
-  SuccessStringList(array<mojo.common.mojom.String16> value);
+  // Factory::GetDatabasesInfo
+  SuccessDatabaseInfoList(array<DatabaseInfo> value);
 
   // Factory::Open / DeleteDatabase
   Blocked(int64 existing_version);
@@ -333,7 +338,7 @@ interface Database {
 };
 
 interface Factory {
-  GetDatabaseNames(associated Callbacks callbacks, url.mojom.Origin origin);
+  GetDatabasesInfo(associated Callbacks callbacks, url.mojom.Origin origin);
   Open(associated Callbacks callbacks,
        associated DatabaseCallbacks database_callbacks, url.mojom.Origin origin,
        mojo.common.mojom.String16 name, int64 version, int64 transaction_id);

@@ -45,6 +45,7 @@
 #include "modules/indexeddb/IDBCursor.h"
 #include "modules/indexeddb/IDBCursorWithValue.h"
 #include "modules/indexeddb/IDBDatabase.h"
+#include "modules/indexeddb/IDBDatabaseInfo.h"
 #include "modules/indexeddb/IDBFactory.h"
 #include "modules/indexeddb/IDBIndex.h"
 #include "modules/indexeddb/IDBKey.h"
@@ -57,6 +58,7 @@
 #include "modules/indexeddb/IDBTransaction.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8PerIsolateData.h"
+#include "platform/heap/Handle.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Vector.h"
 #include "public/platform/modules/indexeddb/WebIDBCursor.h"
@@ -95,18 +97,18 @@ namespace {
 static const char kIndexedDBObjectGroup[] = "indexeddb";
 static const char kNoDocumentError[] = "No document for given frame found";
 
-class GetDatabaseNamesCallback final : public EventListener {
-  WTF_MAKE_NONCOPYABLE(GetDatabaseNamesCallback);
+class GetDatabasesInfosCallback final : public EventListener {
+  WTF_MAKE_NONCOPYABLE(GetDatabasesInfosCallback);
 
  public:
-  static GetDatabaseNamesCallback* Create(
+  static GetDatabasesInfosCallback* Create(
       std::unique_ptr<RequestDatabaseNamesCallback> request_callback,
       const String& security_origin) {
-    return new GetDatabaseNamesCallback(std::move(request_callback),
-                                        security_origin);
+    return new GetDatabasesInfosCallback(std::move(request_callback),
+                                         security_origin);
   }
 
-  ~GetDatabaseNamesCallback() override {}
+  ~GetDatabasesInfosCallback() override {}
 
   bool operator==(const EventListener& other) const override {
     return this == &other;
@@ -120,24 +122,25 @@ class GetDatabaseNamesCallback final : public EventListener {
 
     IDBRequest* idb_request = static_cast<IDBRequest*>(event->target());
     IDBAny* request_result = idb_request->ResultAsAny();
-    if (request_result->GetType() != IDBAny::kDOMStringListType) {
+    if (request_result->GetType() != IDBAny::kIDBDatabaseInfoListType) {
       request_callback_->sendFailure(
           Response::Error("Unexpected result type."));
       return;
     }
 
-    DOMStringList* database_names_list = request_result->DomStringList();
+    HeapVector<IDBDatabaseInfo> database_info_list =
+        request_result->IdbDatabaseInfoList();
     std::unique_ptr<protocol::Array<String>> database_names =
         protocol::Array<String>::create();
-    for (size_t i = 0; i < database_names_list->length(); ++i)
-      database_names->addItem(database_names_list->item(i));
+    for (const IDBDatabaseInfo& database_info : database_info_list)
+      database_names->addItem(database_info.name());
     request_callback_->sendSuccess(std::move(database_names));
   }
 
   DEFINE_INLINE_VIRTUAL_TRACE() { EventListener::Trace(visitor); }
 
  private:
-  GetDatabaseNamesCallback(
+  GetDatabasesInfosCallback(
       std::unique_ptr<RequestDatabaseNamesCallback> request_callback,
       const String& security_origin)
       : EventListener(EventListener::kCPPEventListenerType),
@@ -783,7 +786,7 @@ void InspectorIndexedDBAgent::requestDatabaseNames(
   ScriptState::Scope scope(script_state);
   DummyExceptionStateForTesting exception_state;
   IDBRequest* idb_request =
-      idb_factory->GetDatabaseNames(script_state, exception_state);
+      idb_factory->getDatabasesInfo(script_state, exception_state);
   if (exception_state.HadException()) {
     request_callback->sendFailure(
         Response::Error("Could not obtain database names."));
@@ -791,7 +794,7 @@ void InspectorIndexedDBAgent::requestDatabaseNames(
   }
   idb_request->addEventListener(
       EventTypeNames::success,
-      GetDatabaseNamesCallback::Create(
+      GetDatabasesInfosCallback::Create(
           std::move(request_callback),
           document->GetSecurityOrigin()->ToRawString()),
       false);

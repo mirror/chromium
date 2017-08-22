@@ -420,7 +420,7 @@ class CONTENT_EXPORT IndexedDBBackingStore
 
   // Compact is public for testing.
   virtual void Compact();
-  virtual std::vector<base::string16> GetDatabaseNames(leveldb::Status*);
+  virtual std::vector<IndexedDBDatabaseInfo> GetDatabasesInfo(leveldb::Status*);
   virtual leveldb::Status GetIDBDatabaseMetaData(
       const base::string16& name,
       IndexedDBDatabaseMetadata* metadata,

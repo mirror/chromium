@@ -81,6 +81,22 @@ struct CONTENT_EXPORT IndexedDBDatabaseMetadata {
   std::map<int64_t, IndexedDBObjectStoreMetadata> object_stores;
 };
 
+// The subset of IndexedDBDatabaseMetadata reported by GetDatabasesInfo().
+struct CONTENT_EXPORT IndexedDBDatabaseInfo {
+  IndexedDBDatabaseInfo();
+  IndexedDBDatabaseInfo(const base::string16& name,
+                        int64_t id,
+                        int64_t version);
+  IndexedDBDatabaseInfo(const IndexedDBDatabaseMetadata& other);
+  ~IndexedDBDatabaseInfo();
+  IndexedDBDatabaseInfo& operator=(const IndexedDBDatabaseInfo& other);
+  bool operator==(const IndexedDBDatabaseMetadata& other) const;
+
+  base::string16 name;
+  int64_t id;
+  int64_t version;
+};
+
 }  // namespace content
 
 #endif  // CONTENT_BROWSER_INDEXED_DB_INDEXED_DB_METADATA_H_

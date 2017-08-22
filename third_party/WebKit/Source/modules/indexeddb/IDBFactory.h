@@ -47,6 +47,7 @@ class IDBFactory final : public GarbageCollected<IDBFactory>,
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 
   // Implement the IDBFactory IDL
+  IDBRequest* getDatabasesInfo(ScriptState*, ExceptionState&);
   IDBOpenDBRequest* open(ScriptState*, const String& name, ExceptionState&);
   IDBOpenDBRequest* open(ScriptState*,
                          const String& name,
@@ -60,8 +61,7 @@ class IDBFactory final : public GarbageCollected<IDBFactory>,
             const ScriptValue& second,
             ExceptionState&);
 
-  // These are not exposed to the web applications and only used by DevTools.
-  IDBRequest* GetDatabaseNames(ScriptState*, ExceptionState&);
+  // This is not exposed to the web applications and only used by DevTools.
   IDBOpenDBRequest* CloseConnectionsAndDeleteDatabase(ScriptState*,
                                                       const String& name,
                                                       ExceptionState&);
