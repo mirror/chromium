@@ -229,6 +229,7 @@ const DefaultCommandLineSwitch kDefaultSwitches[] = {
     {switches::kDisableGpuShaderDiskCache, ""},
     // Enable audio focus by default (even on non-Android platforms).
     {switches::kEnableAudioFocus, ""},
+    {switches::kEnableMediaSuspend, ""},
 #endif
 #if BUILDFLAG(IS_CAST_AUDIO_ONLY)
     {switches::kDisableGpu, ""},
