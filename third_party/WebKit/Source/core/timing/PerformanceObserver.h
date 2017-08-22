@@ -34,6 +34,7 @@ class CORE_EXPORT PerformanceObserver final
   friend class PerformanceBase;
   friend class PerformanceBaseTest;
   friend class PerformanceObserverTest;
+  friend class PerformanceTest;
 
  public:
   static PerformanceObserver* Create(ScriptState*,

@@ -218,7 +218,6 @@ void PerformanceMonitor::Will(const probe::V8Compile& probe) {
 void PerformanceMonitor::Did(const probe::V8Compile& probe) {
   if (!enabled_ || !thresholds_[kLongTask])
     return;
-
   double v8_compile_duration = probe.Duration();
   if (v8_compile_duration <= kLongTaskSubTaskThresholdInSeconds)
     return;
