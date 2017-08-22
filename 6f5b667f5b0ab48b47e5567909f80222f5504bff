@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "813cb48c_d140ddd4",
+        "filename": "base/debug/activity_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-22T19:53:12Z",
+      "side": 1,
+      "message": "This should be below the \"friend\" declaration.",
+      "range": {
+        "startLine": 732,
+        "startChar": 2,
+        "endLine": 732,
+        "endChar": 7
+      },
+      "revId": "6f5b667f5b0ab48b47e5567909f80222f5504bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c163656_5867fcc4",
+        "filename": "base/debug/activity_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-22T19:53:12Z",
+      "side": 1,
+      "message": "can this be \"const\"?",
+      "range": {
+        "startLine": 747,
+        "startChar": 2,
+        "endLine": 747,
+        "endChar": 20
+      },
+      "revId": "6f5b667f5b0ab48b47e5567909f80222f5504bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
