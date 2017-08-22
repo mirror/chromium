@@ -266,6 +266,21 @@ TEST_F(VisibleSelectionTest, Initialisation) {
   EXPECT_TRUE(no_selection.IsNone());
 }
 
+TEST_F(VisibleSelectionTest, FirstLetter) {
+  SetBodyContent(
+      "<style>p::first-letter { font-color: red; }</style>"
+      "<p>abc def</p>");
+  const Element* sample = GetDocument().QuerySelector("p");
+  const VisibleSelection result =
+      CreateVisibleSelection(SelectionInDOMTree::Builder()
+                                 .Collapse(Position(sample->firstChild(), 0))
+                                 .Extend(Position(sample->firstChild(), 3))
+                                 .Build());
+
+  EXPECT_EQ(Position(sample->firstChild(), 0), result.Base());
+  EXPECT_EQ(Position(sample->firstChild(), 3), result.Extent());
+}
+
 // For http://crbug.com/695317
 TEST_F(VisibleSelectionTest, SelectAllWithInputElement) {
   SetBodyContent("<input>123");
