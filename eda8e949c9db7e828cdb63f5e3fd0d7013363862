@@ -22,6 +22,30 @@
       "revId": "eda8e949c9db7e828cdb63f5e3fd0d7013363862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a631d84_fe0dcf6e",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-08-22T22:10:40Z",
+      "side": 1,
+      "message": "I also considered that. Updating it to default value would be better.",
+      "parentUuid": "06fb42ae_92474b0a",
+      "range": {
+        "startLine": 302,
+        "startChar": 4,
+        "endLine": 303,
+        "endChar": 13
+      },
+      "revId": "eda8e949c9db7e828cdb63f5e3fd0d7013363862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
