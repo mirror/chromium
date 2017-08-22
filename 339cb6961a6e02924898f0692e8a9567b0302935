@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e882c749_ba360aaf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T20:00:44Z",
+      "side": 0,
+      "message": "Perhaps we can just make this #getPersistentFullscreenMode() instead? If the browser controls are hidden then Chrome Home shouldn\u0027t be allowed to open.",
+      "range": {
+        "startLine": 795,
+        "startChar": 73,
+        "endLine": 795,
+        "endChar": 91
+      },
+      "revId": "339cb6961a6e02924898f0692e8a9567b0302935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
