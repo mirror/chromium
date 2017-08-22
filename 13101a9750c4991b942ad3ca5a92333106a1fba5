@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7532bcc6_b48fa8b1",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T19:16:16Z",
+      "side": 1,
+      "message": "I was kind of following the ui/gfx example, which seems to do this with its export/define. Can you elaborate on what you mean by a different component here? Do you mean a different define or something else?",
+      "parentUuid": "addcc060_b4d67de0",
+      "revId": "13101a9750c4991b942ad3ca5a92333106a1fba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9bc4d28_b7dd9619",
         "filename": "components/viz/common/BUILD.gn",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-22T18:34:15Z",
       "side": 1,
       "message": "Why do you need this dependency? I don\u0027t think you\u0027re using it (and I think would cause problems with the OOP raster CL)",
+      "revId": "13101a9750c4991b942ad3ca5a92333106a1fba5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc36c89_d99e25ae",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T19:16:16Z",
+      "side": 1,
+      "message": "I\u0027m including third_party/khronos/GLES2/gl2.h, which includes GLES2/gl2chromium.h, which I think is a part of this? Is there another component that better provides this header?\n\n(removing the dependency gives me:\nIn file included from ../../components/viz/common/resources/resource_format_utils.cc:9:\n../../third_party/khronos/GLES2/gl2.h:38:10: fatal error: \u0027GLES2/gl2chromium.h\u0027 file not found\n#include \u003cGLES2/gl2chromium.h\u003e\n         ^~~~~~~~~~~~~~~~~~~~~\n)",
+      "parentUuid": "d9bc4d28_b7dd9619",
       "revId": "13101a9750c4991b942ad3ca5a92333106a1fba5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
