@@ -269,6 +269,54 @@ TEST_F(ProfileAttributesStorageTest, EntryAccessors) {
   TEST_BOOL_ACCESSORS(ProfileAttributesEntry, entry, IsAuthError);
 }
 
+TEST_F(ProfileAttributesStorageTest, EntryInternalAccessors) {
+  AddTestingProfile();
+
+  ProfileAttributesEntry* entry;
+  ASSERT_TRUE(storage()->GetProfileAttributesWithPath(
+      GetProfilePath("testing_profile_path0"), &entry));
+
+  EXPECT_EQ(GetProfilePath("testing_profile_path0"), entry->GetPath());
+
+  const char key[] = "test";
+
+  entry->SetString(key, std::string("abcd"));
+  ASSERT_TRUE(entry->GetValue(key));
+  EXPECT_EQ(base::Value::Type::STRING, entry->GetValue(key)->type());
+  EXPECT_EQ(std::string("abcd"), entry->GetString(key));
+  EXPECT_EQ(base::UTF8ToUTF16("abcd"), entry->GetString16(key));
+  EXPECT_EQ(0.0, entry->GetDouble(key));
+  EXPECT_FALSE(entry->GetBool(key));
+  EXPECT_FALSE(entry->IsDouble(key));
+
+  entry->SetString16(key, base::UTF8ToUTF16("efgh"));
+  ASSERT_TRUE(entry->GetValue(key));
+  EXPECT_EQ(base::Value::Type::STRING, entry->GetValue(key)->type());
+  EXPECT_EQ(std::string("efgh"), entry->GetString(key));
+  EXPECT_EQ(base::UTF8ToUTF16("efgh"), entry->GetString16(key));
+  EXPECT_EQ(0.0, entry->GetDouble(key));
+  EXPECT_FALSE(entry->GetBool(key));
+  EXPECT_FALSE(entry->IsDouble(key));
+
+  entry->SetDouble(key, 12.5);
+  ASSERT_TRUE(entry->GetValue(key));
+  EXPECT_EQ(base::Value::Type::DOUBLE, entry->GetValue(key)->type());
+  EXPECT_EQ(std::string(), entry->GetString(key));
+  EXPECT_EQ(base::UTF8ToUTF16(""), entry->GetString16(key));
+  EXPECT_EQ(12.5, entry->GetDouble(key));
+  EXPECT_FALSE(entry->GetBool(key));
+  EXPECT_TRUE(entry->IsDouble(key));
+
+  entry->SetBool(key, true);
+  ASSERT_TRUE(entry->GetValue(key));
+  EXPECT_EQ(base::Value::Type::BOOLEAN, entry->GetValue(key)->type());
+  EXPECT_EQ(std::string(), entry->GetString(key));
+  EXPECT_EQ(base::UTF8ToUTF16(""), entry->GetString16(key));
+  EXPECT_EQ(0.0, entry->GetDouble(key));
+  EXPECT_TRUE(entry->GetBool(key));
+  EXPECT_FALSE(entry->IsDouble(key));
+}
+
 TEST_F(ProfileAttributesStorageTest, AuthInfo) {
   AddTestingProfile();
 
