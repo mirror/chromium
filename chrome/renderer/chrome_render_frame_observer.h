@@ -14,6 +14,7 @@
 #include "content/public/renderer/render_frame_observer.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
+#include "third_party/WebKit/public/web/window_features.mojom.h"
 
 #if defined(SAFE_BROWSING_CSD)
 #include "chrome/common/safe_browsing/phishing_detector.mojom.h"
@@ -47,7 +48,8 @@ class ChromeRenderFrameObserver
 #if !defined(OS_ANDROID)
       public chrome::mojom::WebUITester,
 #endif
-      public chrome::mojom::ThumbnailCapturer {
+      public chrome::mojom::ThumbnailCapturer,
+      public blink::mojom::WindowFeaturesClient {
  public:
   explicit ChromeRenderFrameObserver(content::RenderFrame* render_frame);
   ~ChromeRenderFrameObserver() override;
@@ -113,6 +115,12 @@ class ChromeRenderFrameObserver
   void OnPrintNodeUnderContextMenu();
   void OnSetClientSidePhishingDetection(bool enable_phishing_detection);
 
+  // blink::mojom::WindowFeaturesClient:
+  void SetWindowFeatures(
+      blink::mojom::WindowFeaturesPtr window_features) override;
+  void OnWindowFeaturesClientRequest(
+      blink::mojom::WindowFeaturesClientRequest request);
+
   // Captures page information using the top (main) frame of a frame tree.
   // Currently, this page information is just the text content of the all
   // frames, collected and concatenated until a certain limit (kMaxIndexChars)
@@ -143,6 +151,9 @@ class ChromeRenderFrameObserver
 
   mojo::BindingSet<chrome::mojom::ThumbnailCapturer>
       thumbnail_capturer_bindings_;
+
+  mojo::BindingSet<blink::mojom::WindowFeaturesClient>
+      window_features_client_bindings_;
 
   service_manager::BinderRegistry registry_;
 
