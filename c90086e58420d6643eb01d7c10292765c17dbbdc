@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab7864f2_017549c7",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table_list.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-22T04:30:48Z",
+      "side": 1,
+      "message": "FileTableList should not expect that the id of the file list is \u0027file-list\u0027.\nMaybe you can find the file list element by checking if the element is an instance of FileTableList?",
+      "revId": "c90086e58420d6643eb01d7c10292765c17dbbdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
