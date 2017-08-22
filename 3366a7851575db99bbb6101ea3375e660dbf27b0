@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4ca15d06_206e8b6a",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1955,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-22T20:29:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf8990cf_476174aa",
+      "revId": "3366a7851575db99bbb6101ea3375e660dbf27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2a37769_64eb74b3",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 11
@@ -221,6 +239,24 @@
       "writtenOn": "2017-08-15T22:07:40Z",
       "side": 1,
       "message": "nit: at least add TODO(enne): validate pixel_config against level\u0027s internal_format. Also, maybe checking that the texture\u0027s target is one we support in skia (GL_TEXTURE_2D, GL_TEXTURE_RECTANGLE_ARB, not sure about others?)",
+      "revId": "3366a7851575db99bbb6101ea3375e660dbf27b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48be0f2_fa1f3e65",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 20029,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-22T20:29:50Z",
+      "side": 1,
+      "message": "Ok, I added checks for both of these instead of leaving a TODO.",
+      "parentUuid": "5a21d5a6_f7bb54be",
       "revId": "3366a7851575db99bbb6101ea3375e660dbf27b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
