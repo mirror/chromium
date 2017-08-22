@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b1acd84c_6bf08fca",
+        "filename": "components/ntp_snippets/remote/prefetched_pages_tracker_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-22T15:45:21Z",
+      "side": 1,
+      "message": "True.\n\nAdded a comment.\n\n  // It is enough to check existence of an item (instead of its count), because\n  // the mapping does not contain URLs with zero counts.",
+      "parentUuid": "f873ce0f_982a6dab",
+      "revId": "4021891ee4ddf7d726be4c245fa25c238999511b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f099cb83_a7f9fb4e",
         "filename": "components/ntp_snippets/remote/prefetched_pages_tracker_impl_unittest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "4021891ee4ddf7d726be4c245fa25c238999511b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57647c2c_fd3c8b51",
+        "filename": "components/ntp_snippets/remote/prefetched_pages_tracker_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-22T15:45:21Z",
+      "side": 1,
+      "message": "Previously a DCHECK was triggered.\n\nHowever, I deleted this test because it is completely covered by the following tests.",
+      "parentUuid": "f099cb83_a7f9fb4e",
+      "revId": "4021891ee4ddf7d726be4c245fa25c238999511b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "baa4e2de_158a366e",
+        "filename": "components/ntp_snippets/remote/prefetched_pages_tracker_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-22T15:45:21Z",
+      "side": 1,
+      "message": "Done.\n\nShouldKeepPrefetchedURLAfterDuplicatePageDeleted",
+      "parentUuid": "d35465c9_4302aeb5",
+      "revId": "4021891ee4ddf7d726be4c245fa25c238999511b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9433d8a_46a98e3e",
         "filename": "components/ntp_snippets/remote/prefetched_pages_tracker_impl_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "4021891ee4ddf7d726be4c245fa25c238999511b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "021a1b0c_2d8c679c",
+        "filename": "components/ntp_snippets/remote/prefetched_pages_tracker_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-22T15:45:21Z",
+      "side": 1,
+      "message": "Done.\n\nShouldDeletePrefetchedURLAfterAll*ItsPages*AreDeleted",
+      "parentUuid": "d9433d8a_46a98e3e",
+      "revId": "4021891ee4ddf7d726be4c245fa25c238999511b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
