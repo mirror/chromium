@@ -116,7 +116,6 @@ class ShellWindowDelegateView : public views::WidgetDelegateView,
     SetBackground(views::CreateStandardPanelBackground());
 
     views::GridLayout* layout = new views::GridLayout(this);
-    SetLayoutManager(layout);
 
     views::ColumnSet* column_set = layout->AddColumnSet(0);
     column_set->AddPaddingColumn(0, 2);
@@ -130,7 +129,6 @@ class ShellWindowDelegateView : public views::WidgetDelegateView,
     {
       layout->StartRow(0, 0);
       views::GridLayout* toolbar_layout = new views::GridLayout(toolbar_view_);
-      toolbar_view_->SetLayoutManager(toolbar_layout);
 
       views::ColumnSet* toolbar_column_set =
           toolbar_layout->AddColumnSet(0);
