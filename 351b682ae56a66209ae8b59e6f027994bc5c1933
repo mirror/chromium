@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55caed36_d3956526",
+        "filename": "components/arc/test/fake_file_system_instance.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-22T07:18:19Z",
+      "side": 1,
+      "message": "Maybe: s/immediately/synchronously/?",
+      "range": {
+        "startLine": 47,
+        "startChar": 33,
+        "endLine": 47,
+        "endChar": 44
+      },
+      "revId": "351b682ae56a66209ae8b59e6f027994bc5c1933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
