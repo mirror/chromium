@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daed9234_8cfc18a6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T19:00:50Z",
+      "side": 1,
+      "message": "s/Make sure/Test that/",
+      "revId": "bc7fb2706508a649c5f7f8437af05073472c185b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
