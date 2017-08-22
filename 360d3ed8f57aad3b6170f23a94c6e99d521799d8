@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "611ffc17_cb84ff31",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-22T12:17:11Z",
+      "side": 1,
+      "message": "style: Only one section per visibility specifier. First public, then private.\n\nIf you were confused by my previous note about ordering (classes before methods), that holds in every section.",
+      "range": {
+        "startLine": 16,
+        "startChar": 1,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "360d3ed8f57aad3b6170f23a94c6e99d521799d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
