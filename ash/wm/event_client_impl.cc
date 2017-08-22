@@ -19,6 +19,9 @@ EventClientImpl::~EventClientImpl() {}
 
 bool EventClientImpl::CanProcessEventsWithinSubtree(
     const aura::Window* window) const {
+  if (ignore_process_events_checks_)
+    return true;
+
   // TODO(oshima): Migrate this logic to Shell::CanWindowReceieveEvents and
   // remove this.
   const aura::Window* root_window = window ? window->GetRootWindow() : NULL;
@@ -55,6 +58,11 @@ bool EventClientImpl::CanProcessEventsWithinSubtree(
 
 ui::EventTarget* EventClientImpl::GetToplevelEventTarget() {
   return Shell::Get();
+}
+
+void EventClientImpl::SetIgnoreProcessEventsChecks(
+    bool ignore_process_events_checks) {
+  ignore_process_events_checks_ = ignore_process_events_checks;
 }
 
 }  // namespace ash

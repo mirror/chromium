@@ -23,4 +23,7 @@ ui::EventTarget* DesktopEventClient::GetToplevelEventTarget() {
   return aura::Env::GetInstance();
 }
 
+void DesktopEventClient::SetIgnoreProcessEventsChecks(
+    bool ignore_process_events_checks) {}
+
 }  // namespace views

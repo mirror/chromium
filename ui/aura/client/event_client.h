@@ -24,6 +24,9 @@ class AURA_EXPORT EventClient {
   // Returns the top level EventTarget for the current environment.
   virtual ui::EventTarget* GetToplevelEventTarget() = 0;
 
+  virtual void SetIgnoreProcessEventsChecks(
+      bool ignore_process_events_checks) = 0;
+
  protected:
   virtual ~EventClient() {}
 };
