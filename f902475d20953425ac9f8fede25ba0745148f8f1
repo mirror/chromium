@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f55f1c24_fd2ebfa1",
+        "filename": "content/common/navigation_params_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-22T20:15:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfff4228_e7ac33d8",
+      "revId": "f902475d20953425ac9f8fede25ba0745148f8f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3b5e0bd_42d0dc8e",
         "filename": "content/public/common/url_utils.h",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-22T15:42:15Z",
       "side": 1,
       "message": "I find the naming a bit weird for a function exposed outside content/. It made sense inside it, since it was called from places where we really wanted to know if we should be making a network request. Outside of content/ it probably will be used in a slightly different way: ie to asnwer the question will a navigation to this URL result in a network request. So I think we should rename it. Maybe IsURLHandledByNetwork or something like it?",
+      "revId": "f902475d20953425ac9f8fede25ba0745148f8f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0565c8df_0f6be5bf",
+        "filename": "content/public/common/url_utils.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-22T20:15:00Z",
+      "side": 1,
+      "message": "Sounds good. Renamed to IsURLHandledByNetworkRequest",
+      "parentUuid": "e3b5e0bd_42d0dc8e",
       "revId": "f902475d20953425ac9f8fede25ba0745148f8f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
