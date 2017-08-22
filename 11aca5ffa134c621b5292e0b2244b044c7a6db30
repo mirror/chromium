@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6acf3856_73918731",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-22T22:09:38Z",
+      "side": 1,
+      "message": "This sgtm. Do you wanna just do this or something similar instead of the check against max / sizeof(SkColor)?",
+      "range": {
+        "startLine": 261,
+        "startChar": 5,
+        "endLine": 261,
+        "endChar": 45
+      },
+      "revId": "11aca5ffa134c621b5292e0b2244b044c7a6db30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
