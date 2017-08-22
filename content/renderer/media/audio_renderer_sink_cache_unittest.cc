@@ -227,8 +227,7 @@ TEST_F(AudioRendererSinkCacheTest, GarbageCollection) {
 // the timeout.
 // Flaky on Linux TSan Tests. https://crbug.com/754196
 #if defined(OS_LINUX)
-#define MAYBE_NoGarbageCollectionForUsedSink \
-  DISABLED_NoGarbageCollectionForUsedSink
+#define MAYBE_NoGarbageCollectionForUsedSink NoGarbageCollectionForUsedSink
 #else
 #define MAYBE_NoGarbageCollectionForUsedSink NoGarbageCollectionForUsedSink
 #endif
@@ -313,7 +312,7 @@ TEST_F(AudioRendererSinkCacheTest, ReleaseSinkBeforeScheduledDeletion) {
 // used on another thread.
 // Flaky on Linux TSan Tests. https://crbug.com/753228
 #if defined(OS_LINUX)
-#define MAYBE_MultithreadedAccess DISABLED_MultithreadedAccess
+#define MAYBE_MultithreadedAccess MultithreadedAccess
 #else
 #define MAYBE_MultithreadedAccess MultithreadedAccess
 #endif
