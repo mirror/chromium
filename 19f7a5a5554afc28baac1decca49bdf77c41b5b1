@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "ab100822_190f8da4",
+        "filename": "chrome/renderer/content_settings_observer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T04:08:17Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "0b3ea5ca_31ce5ba0",
+      "revId": "19f7a5a5554afc28baac1decca49bdf77c41b5b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "293e67d2_04a0fc6d",
         "filename": "content/common/DEPS",
         "patchSetId": 17

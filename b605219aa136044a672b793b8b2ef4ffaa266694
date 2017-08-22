@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbccce40_013b3f3b",
+        "filename": "chrome/browser/client_hints/client_hints_observer.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T04:08:17Z",
+      "side": 1,
+      "message": "This range check is unnecessary: Mojo validates that the received values are in range.",
+      "revId": "b605219aa136044a672b793b8b2ef4ffaa266694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
