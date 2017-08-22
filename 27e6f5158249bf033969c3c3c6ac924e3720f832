@@ -46,6 +46,53 @@
       "revId": "27e6f5158249bf033969c3c3c6ac924e3720f832",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df3b65c_79e47729",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-22T17:33:53Z",
+      "side": 1,
+      "message": "This approach relies on some implementation details of MouseWheelPhaseHandler which can change at any moment. I think that might be not safe in the future.\n\n\u003e I don\u0027t think the timer might cause an issue but if you prefer not to deal with it here I can change it.\n\nTimer is always an issue during external automation, since it adds unpredictability - can fire before _or_ after automation client sends next event and thus mess up with event handling.",
+      "parentUuid": "40782ff4_c2846037",
+      "range": {
+        "startLine": 283,
+        "startChar": 37,
+        "endLine": 283,
+        "endChar": 76
+      },
+      "revId": "27e6f5158249bf033969c3c3c6ac924e3720f832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01880c02_de712953",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-22T17:33:53Z",
+      "side": 1,
+      "message": "So, this can produce two events, while we are going to invoke callback just once (for the first one). Or may it swallow the event? In this case the callback will hang here forever. I think this is too fragile to rely upon. Let\u0027s instead send two events manually.",
+      "range": {
+        "startLine": 489,
+        "startChar": 32,
+        "endLine": 489,
+        "endChar": 67
+      },
+      "revId": "27e6f5158249bf033969c3c3c6ac924e3720f832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
