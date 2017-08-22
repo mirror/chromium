@@ -21086,6 +21086,12 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2" label="SubframeBlocked"/>
 </enum>
 
+<enum name="IOSNTPImpression">
+  <summary>Types of NTP displayed</summary>
+  <int value="0" label="Local suggestions"/>
+  <int value="1" label="Remote suggestions"/>
+</enum>
+
 <enum name="IOSSearchExtensionAction">
   <int value="0" label="No Action"/>
   <int value="1" label="New Search"/>

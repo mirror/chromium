@@ -9,6 +9,17 @@
 
 namespace ntp_home {
 
+// Type of NTP opened, for UMA report.
+// These match tools/metrics/histograms/enums.xml.
+enum UMAIOSNTPImpression {
+  // The NTP only displays the local suggestions.
+  LOCAL_SUGGESTIONS = 0,
+  // The NTP displays local and remote suggestions.
+  REMOTE_SUGGESTIONS = 1,
+  // Add new enum above ENUM_MAX.
+  ENUM_MAX
+};
+
 // Returns the accessibility identifier used by the fake omnibox.
 NSString* FakeOmniboxAccessibilityID();
 
