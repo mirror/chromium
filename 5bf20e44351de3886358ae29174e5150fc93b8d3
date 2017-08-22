@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18475ce4_d1f2fcb4",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3424,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-22T21:52:48Z",
+      "side": 1,
+      "message": "This is already enabled by default.  Given that you\u0027re running a holdback experiment to understand changes in usage, I don\u0027t think it\u0027s necessary to make any changes to the fieldtrial_testing_config.",
+      "range": {
+        "startLine": 3424,
+        "startChar": 49,
+        "endLine": 3424,
+        "endChar": 0
+      },
+      "revId": "5bf20e44351de3886358ae29174e5150fc93b8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
