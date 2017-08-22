@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "307dfbb4_11163c3a",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-22T17:09:40Z",
+      "side": 1,
+      "message": "This is what breaks the Windows build, as runtimeobject.lib may not be available. (It\u0027s why we have to do the LoadLibrary dance.)",
+      "revId": "eca0319b21d281d32bb38023feef03129f70e573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca3aa1e_99542e04",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-22T17:09:40Z",
+      "side": 1,
+      "message": "The reason for SetReadyCallback() is exactly to handle this case.\n\nIn the NotificationPlatformBridgeWin constructor we should create a CombaseFunctions instance (I\u0027d store it as a unique_ptr\u003c\u003e class member if you can), call LoadFunctions() and cache the returned boolean.\n\nThen, in SetReadyCallback(), we should invoke the callback with whatever value this member has. If the combase functions could not be loaded, the system will automagically fall back to the existing notification system.\n\nIdeally we\u0027d load the combase functions as late as we can. I\u0027m OK landing this now with the above changes since it\u0027s disabled by default, but we should think of a system that would allow us to defer these calls.",
+      "revId": "eca0319b21d281d32bb38023feef03129f70e573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
