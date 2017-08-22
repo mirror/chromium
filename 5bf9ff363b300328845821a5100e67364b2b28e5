@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff3dab94_51fcdd04",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-22T04:55:29Z",
+      "side": 1,
+      "message": "Same as your other CL, let\u0027s use regular Python True/False here, after checking what the type of property_[\u0027inherited\u0027] is.",
+      "revId": "5bf9ff363b300328845821a5100e67364b2b28e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "663430e6_c2910edd",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-22T04:55:29Z",
+      "side": 1,
+      "message": "Nit: remove newline here.",
+      "revId": "5bf9ff363b300328845821a5100e67364b2b28e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec4038b8_2927861f",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-22T04:55:29Z",
+      "side": 1,
+      "message": "Does this not work with just \n\n#include \"core/css/properties/CSSPropertyAPIVariable.h\"\n\n? I thought that would be fine..",
+      "revId": "5bf9ff363b300328845821a5100e67364b2b28e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab6f3366_2b1b4e09",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-22T04:55:29Z",
+      "side": 1,
+      "message": "I have the same feedback as your previous CL, if you use regular Python types here you can just write {% if is_inherited %} ... {% endif %}",
+      "revId": "5bf9ff363b300328845821a5100e67364b2b28e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5464b490_9f871ca6",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPI.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-22T04:55:29Z",
+      "side": 1,
+      "message": "Likewise, can this just be \"IsInherited\"? The \"Property\" suffix seems extraneous.",
+      "revId": "5bf9ff363b300328845821a5100e67364b2b28e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
