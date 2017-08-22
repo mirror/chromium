@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53c7f264_783e75ce",
+        "filename": "third_party/WebKit/Source/core/paint/TableSectionPainter.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-22T07:40:05Z",
+      "side": 1,
+      "message": "Pretty messed up that we try to paint before we know the page logical height.\n\nCould you please add a TODO or something, explaining that this should never happen?\n\nI think I\u0027d like a DCHECK too (or *instead* of the defensive branch, to be honest, but I guess that\u0027s out of the question).",
+      "revId": "b04a1281b7bdd04657794a303861297c63805dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
