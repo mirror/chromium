@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09489a50_df58c1e4",
+        "filename": "chrome/browser/language/chrome_language_detection_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-22T20:41:12Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right; I think the ChromeLanguageDetectionClient needs updating to support multiple frames within a single WebContents, similar to ChromeTranslateDriver (see the comment at https://cs.chromium.org/chromium/src/components/translate/content/browser/content_translate_driver.h?type\u003dcs\u0026l\u003d131 in particular).",
+      "revId": "bf6dc0e9006b4ff58969f8b3ed7495ce261bd65f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
