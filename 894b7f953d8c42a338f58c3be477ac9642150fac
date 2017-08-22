@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf60db99_d47d1cd2",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-22T22:49:43Z",
+      "side": 1,
+      "message": "This means left/right paddings won\u0027t be set for cr_dialogs anymore, so for dialog footers that don\u0027t have .settings-box they\u0027ll lose their side paddings?\n\nOr, if we\u0027re gonna require all cr-dialog.footer to also have .settings-box, I think we might as well just add it in cr-dialog\u0027s markup directly.",
+      "revId": "894b7f953d8c42a338f58c3be477ac9642150fac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
