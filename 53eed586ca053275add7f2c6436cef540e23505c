@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "c4ae2b2d_e06bb722",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T21:51:21Z",
+      "side": 1,
+      "message": "It\u0027s all about the state management and whether distinguishing between cancelled and error is useful.  We can leave it as-is for now since it is easy to modify the enum since it is internal to the host.",
+      "parentUuid": "80466e2c_e840bc7d",
+      "range": {
+        "startLine": 43,
+        "startChar": 38,
+        "endLine": 43,
+        "endChar": 51
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f908e15_897cd34f",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 2
@@ -190,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "1eb85888_40951558",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T21:51:21Z",
+      "side": 1,
+      "message": "It is a good idea (easier maintenance / readability) to IWYU instead of relying on other headers to pull in dependencies.",
+      "parentUuid": "a4eda004_8a24ec5e",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6143b3c_5a0354ce",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 2
@@ -225,6 +273,30 @@
       "side": 1,
       "message": "Done.\nI added thread checks to the public methods, should I also add thread checks to the callbacks and the destructor? How would I use this task runner instead of a thread checker?",
       "parentUuid": "d6143b3c_5a0354ce",
+      "range": {
+        "startLine": 77,
+        "startChar": 43,
+        "endLine": 77,
+        "endChar": 60
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ce88680_47270653",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T21:51:21Z",
+      "side": 1,
+      "message": "It depends on the TaskRunner you are using.  SingleThreadedTaskRunners have a \u0027BelongsToCurrentThread\u0027 check you can DCHECK on.  The main TaskRunner interface exposes a \u0027RunsTasksInCurrentSequence()\u0027 method you can use.\n\nWith respect to when and what is checked, it seems like most calls to create / write will be made on the network thread (which is where the ThreadChecker is bound to).  If FileProxy guarantees that all callbacks will occur on the original thread (probably network thread) then you can add DCHECKs to them as well to guarantee the callbacks are being posted to the right thread.",
+      "parentUuid": "9184df5e_1deef330",
       "range": {
         "startLine": 77,
         "startChar": 43,

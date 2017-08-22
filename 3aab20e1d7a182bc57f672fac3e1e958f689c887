@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3923bf9a_89691b3a",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T21:51:21Z",
+      "side": 1,
+      "message": "nit: kClosed?  I think that matches kClosing a bit better.",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 14
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d064179_a3c75527",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T21:51:21Z",
+      "side": 1,
+      "message": "Maybe call this \u0027FileChunk\u0027 or \u0027ChunkInfo\u0027?  Then you could rename ConsumeWriteRequest to \u0027WriteFileChunk\u0027 which I think is clearer.",
+      "range": {
+        "startLine": 62,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4bea201_251ad289",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T21:51:21Z",
+      "side": 1,
+      "message": "You don\u0027t need this here, I think it is OK to have it in Init() (that would allow someone to create an instance but affinity is not assigned until the object is used).",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 48
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dbd735f_486ef56f",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T21:51:21Z",
+      "side": 1,
+      "message": "You probably want to make sure the object is destroyed on the correct thread (this ensures your WeakPtr references are invalidated properly), change default to  {\n  DCHECK(thread_checker_.CalledOnValidThread());\n}",
+      "range": {
+        "startLine": 108,
+        "startChar": 47,
+        "endLine": 109,
+        "endChar": 0
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2535c720_f2e8529f",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T21:51:21Z",
+      "side": 1,
+      "message": "I think you want to transition to a new state here, otherwise someone could call CreateFile multiple times (accidentally) and wouldn\u0027t know until the state was changed the second time in CreateFileCallback (by then you would have lost the stack trace for the duplicate call).",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 34
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "415e2640_dc3f9e62",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T21:51:21Z",
+      "side": 1,
+      "message": "Use this method to modify the name?\nhttps://cs.chromium.org/chromium/src/base/files/file_util.h?rcl\u003d62da4c88e85fa365dbc8bc100dafb36c4088e9db\u0026l\u003d362",
+      "range": {
+        "startLine": 247,
+        "startChar": 4,
+        "endLine": 248,
+        "endChar": 15
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3f50fa_502d2128",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T21:51:21Z",
+      "side": 1,
+      "message": "Presumably you only want to run this once, if so you can do this:\nstd::move(close_success_callback_).Run();",
+      "range": {
+        "startLine": 264,
+        "startChar": 4,
+        "endLine": 264,
+        "endChar": 27
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a771cd3b_a4fd8f9f",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T21:51:21Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this since you are passing in an empty callback.  You can just run:\nfile_task_runner_-\u003ePostTask(FROM_HERE, BoundCallbackObject);\n\nThis method doesn\u0027t block the current thread unless you use a RunLoop and spin until the return callback is called.",
+      "range": {
+        "startLine": 276,
+        "startChar": 4,
+        "endLine": 276,
+        "endChar": 30
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "186cdb3e_8ee69ed2",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T21:51:21Z",
+      "side": 1,
+      "message": "If you consolidated the filepaths (for instance if you knew the path had the crdownload extension until you started the move operation) then you could collapse these two if statements (line 275 and 282) into a single one.",
+      "range": {
+        "startLine": 282,
+        "startChar": 8,
+        "endLine": 282,
+        "endChar": 49
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07afd90b_d8155a08",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-22T21:51:21Z",
+      "side": 1,
+      "message": "I think you only want to signal errors once:\nif (error_callback_) {\n  std::move(error_callback_).Run();\n}\n\nThis is a common way to ensure the class does not run a callback unexpectedly multiple times",
+      "range": {
+        "startLine": 296,
+        "startChar": 2,
+        "endLine": 296,
+        "endChar": 17
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
