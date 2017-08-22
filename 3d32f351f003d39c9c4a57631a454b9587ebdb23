@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f7769008_b6fcd9da",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-22T20:13:39Z",
+      "side": 1,
+      "message": "Did you also intend to change the enum name to kActionForcedActivationNoUIResourceBlocked?",
+      "parentUuid": "c4dcc9de_7a177834",
+      "revId": "3d32f351f003d39c9c4a57631a454b9587ebdb23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6704832_4f89ebbf",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 3
