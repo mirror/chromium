@@ -212,6 +212,7 @@ chrome.automation.StateType = {
   EDITABLE: 'editable',
   EXPANDED: 'expanded',
   FOCUSABLE: 'focusable',
+  FOCUSED: 'focused',
   HASPOPUP: 'haspopup',
   HORIZONTAL: 'horizontal',
   HOVERED: 'hovered',
