@@ -110,42 +110,60 @@ class NotificationPermissionContextTest
       mock_time_task_runner_;
 };
 
-// Web Notification permission requests will completely ignore the embedder
-// origin. See https://crbug.com/416894.
-TEST_F(NotificationPermissionContextTest, IgnoresEmbedderOrigin) {
+// Web Notification permission checks will never return ASK for cross-origin
+// requests, as permission cannot be requested either in that situation.
+TEST_F(NotificationPermissionContextTest, CrossOriginPermissionChecks) {
   GURL requesting_origin("https://example.com");
   GURL embedding_origin("https://chrome.com");
   GURL different_origin("https://foobar.com");
 
   NotificationPermissionContext context(profile(),
                                         CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
+
+  // Both same-origin and cross-origin requests for |requesting_origin| should
+  // have their default values.
+  EXPECT_EQ(CONTENT_SETTING_ASK,
+            context
+                .GetPermissionStatus(nullptr /* render_frame_host */,
+                                     requesting_origin, requesting_origin)
+                .content_setting);
+
+  EXPECT_EQ(CONTENT_SETTING_BLOCK,
+            context
+                .GetPermissionStatus(nullptr /* render_frame_host */,
+                                     requesting_origin, embedding_origin)
+                .content_setting);
+
+  // Now grant permission for the |requesting_origin|. This should be granted
+  // in both contexts.
   UpdateContentSetting(&context, requesting_origin, embedding_origin,
                        CONTENT_SETTING_ALLOW);
 
   EXPECT_EQ(CONTENT_SETTING_ALLOW,
             context
                 .GetPermissionStatus(nullptr /* render_frame_host */,
-                                     requesting_origin, embedding_origin)
+                                     requesting_origin, requesting_origin)
                 .content_setting);
 
   EXPECT_EQ(CONTENT_SETTING_ALLOW,
             context
                 .GetPermissionStatus(nullptr /* render_frame_host */,
-                                     requesting_origin, different_origin)
+                                     requesting_origin, embedding_origin)
                 .content_setting);
 
+  // Resetting the permission should demonstrate the default behaviour again.
   context.ResetPermission(requesting_origin, embedding_origin);
 
   EXPECT_EQ(CONTENT_SETTING_ASK,
             context
                 .GetPermissionStatus(nullptr /* render_frame_host */,
-                                     requesting_origin, embedding_origin)
+                                     requesting_origin, requesting_origin)
                 .content_setting);
 
-  EXPECT_EQ(CONTENT_SETTING_ASK,
+  EXPECT_EQ(CONTENT_SETTING_BLOCK,
             context
                 .GetPermissionStatus(nullptr /* render_frame_host */,
-                                     requesting_origin, different_origin)
+                                     requesting_origin, embedding_origin)
                 .content_setting);
 }
 
@@ -162,6 +180,12 @@ TEST_F(NotificationPermissionContextTest, PushTopLevelOriginOnly) {
   EXPECT_EQ(CONTENT_SETTING_ASK,
             context
                 .GetPermissionStatus(nullptr /* render_frame_host */,
+                                     requesting_origin, requesting_origin)
+                .content_setting);
+
+  EXPECT_EQ(CONTENT_SETTING_BLOCK,
+            context
+                .GetPermissionStatus(nullptr /* render_frame_host */,
                                      requesting_origin, embedding_origin)
                 .content_setting);
 
@@ -176,6 +200,12 @@ TEST_F(NotificationPermissionContextTest, PushTopLevelOriginOnly) {
 
   ASSERT_EQ(result, CONTENT_SETTING_BLOCK);
   EXPECT_EQ(CONTENT_SETTING_ASK,
+            context
+                .GetPermissionStatus(nullptr /* render_frame_host */,
+                                     requesting_origin, requesting_origin)
+                .content_setting);
+
+  EXPECT_EQ(CONTENT_SETTING_BLOCK,
             context
                 .GetPermissionStatus(nullptr /* render_frame_host */,
                                      requesting_origin, embedding_origin)

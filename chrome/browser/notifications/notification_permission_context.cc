@@ -169,6 +169,20 @@ NotificationPermissionContext::NotificationPermissionContext(
 
 NotificationPermissionContext::~NotificationPermissionContext() {}
 
+ContentSetting NotificationPermissionContext::GetPermissionStatusInternal(
+    content::RenderFrameHost* render_frame_host,
+    const GURL& requesting_origin,
+    const GURL& embedding_origin) const {
+  ContentSetting setting = PermissionContextBase::GetPermissionStatusInternal(
+      render_frame_host, requesting_origin, embedding_origin);
+
+  if (setting == CONTENT_SETTING_ASK && requesting_origin != embedding_origin) {
+    return CONTENT_SETTING_BLOCK;
+  }
+
+  return setting;
+}
+
 void NotificationPermissionContext::ResetPermission(
     const GURL& requesting_origin,
     const GURL& embedder_origin) {
