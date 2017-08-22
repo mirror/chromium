@@ -136,3 +136,14 @@ be much better to use an enum, or a structure containing an enum, that gives a
 better detail of what went wrong.
 See `//components/offline_pages/core/prefetch/add_unique_urls_task.cc` for a
 good example of working consumer of the API.
+
+## Column ordering on table creation
+
+For minimizing space usage column ordering is important in SQLite 3 tables. When
+creating the table fixed-width columns should be declared first and
+variable-width ones later.
+
+To follow when adding or removing columns any existing column ordering might not
+be kept. This means that all queries must not assume any specific ordering of
+columns and always refer to them explicitly by name. Using "\*" for obtaining
+all columns is *unsafe and forbidden*.
