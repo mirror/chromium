@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<style>
+#clip-needs-escaped {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  will-change: opacity;
+}
+
+#escaping {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: red;
+}
+
+#inherited-escape {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  background: green;
+}
+
+#inherited-escape-with-sibling-clip {
+  position: relative;
+  left: 50px;
+  top: 50px;
+  width: 150px;
+  height: 150px;
+  background: blue;
+}
+</style>
+<div id="clip-needs-escaped">
+  <div id="escaping">
+    <div id="inherited-escape">
+      <div id="inherited-escape-with-sibling-clip"></div>
+    </div>
+  </div>
+</div>
+<!--
+This test verifies clips are escaped correctly, and ancestor clipping layers are only created when necessarily.
+None of the colored boxes should be clipped by the element "clip-needs-escaped".
+The blue box needs to be clipped by the green box, but shouldn't apply it as ancestor clipping layer because
+it could inherit the green box's clip directly.
+-->
+<script>
+if (window.testRunner) {
+  testRunner.dumpAsTextWithPixelResults();
+  testRunner.setCustomTextOutput(
+    internals.layerTreeAsText(document, internals.LAYER_TREE_INCLUDES_CLIP_AND_SCROLL_PARENTS));
+}
+</script>
