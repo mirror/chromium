@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d38fe33_e4d91016",
+        "filename": "third_party/WebKit/Source/core/dom/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-22T07:58:53Z",
+      "side": 1,
+      "message": "The definition of \"composed tree\" is given at line 351... maybe you can just say\n\"the whole tree is composed of 6 node trees\"?",
+      "revId": "28632ed694e9748ea303da9a068fe6e22276b073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b779122d_d473a119",
+        "filename": "third_party/WebKit/Source/core/dom/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-22T07:58:53Z",
+      "side": 1,
+      "message": "Nit: consider each node tree as \"a\" node.",
+      "revId": "28632ed694e9748ea303da9a068fe6e22276b073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
