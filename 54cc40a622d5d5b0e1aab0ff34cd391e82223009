@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "915379bc_d28ac68c",
+        "filename": "device/serial/buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-22T15:05:27Z",
+      "side": 1,
+      "message": "data_(data)",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 51
+      },
+      "revId": "54cc40a622d5d5b0e1aab0ff34cd391e82223009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364cf193_1b20625b",
+        "filename": "device/serial/test_serial_io_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-22T15:05:27Z",
+      "side": 1,
+      "message": "buffer_.insert(buffer_.end(), pending_write_buffer(),\n               pending_write_buffer() + pending_write_buffer_len());",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 37
+      },
+      "revId": "54cc40a622d5d5b0e1aab0ff34cd391e82223009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
