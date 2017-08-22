@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e96037e_575a416a",
+        "filename": "media/audio/audio_device_thread.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-22T17:32:30Z",
+      "side": 1,
+      "message": "This could overflow. Use base::CheckedNumeric.",
+      "revId": "cafe03534c5f0074ae285c1861d9a4148ec95da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788201be_cdec9e0c",
+        "filename": "media/audio/audio_input_device.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-22T17:32:30Z",
+      "side": 1,
+      "message": "Unless ranges are checked on the IPC boundaries, and I don\u0027t see that on a quick skim so far, it might be that these values should be of explicitly-sized types (uint32_t, uint64_t, or whatever is appropriate). It is not guaranteed that both sides of an IPC channel have the same word size; consider a 64-bit browser running 32-bit plugins, or the like. So size_t is not the same for those 2 processes. See https://www.chromium.org/Home/chromium-security/education/security-tips-for-ipc#TOC-Be-aware-of-the-subtleties-of-integer-types. for more.",
+      "revId": "cafe03534c5f0074ae285c1861d9a4148ec95da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d66b9e_d91ff3ea",
+        "filename": "media/audio/audio_output_device.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-22T17:32:30Z",
+      "side": 1,
+      "message": "This cast might not be safe (AudioBus::CalculateMemorySize returns int, which seems wrong to me). Use base::checked_cast. (There\u0027s a similar cast elsewhere in this CL; that should be fixed too.)",
+      "revId": "cafe03534c5f0074ae285c1861d9a4148ec95da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
