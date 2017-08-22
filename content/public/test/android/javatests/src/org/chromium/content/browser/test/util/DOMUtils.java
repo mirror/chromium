@@ -8,6 +8,7 @@ import static org.chromium.base.test.util.ScalableTimeout.scaleTimeout;
 
 import android.graphics.Rect;
 import android.util.JsonReader;
+import android.util.JsonWriter;
 
 import junit.framework.Assert;
 
@@ -16,6 +17,7 @@ import org.chromium.content_public.browser.WebContents;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -518,5 +520,45 @@ public class DOMUtils {
         }
 
         return new Rect(bounds[0], bounds[1], bounds[0] + bounds[2], bounds[1] + bounds[3]);
+    }
+
+    /**
+     * ScopedLogger bindings (see third_party/WebKit/Source/wtf/ScopedLogger.md).
+     */
+    public static class ScopedLogger {
+        public ScopedLogger(final ContentViewCore vc, String m) {
+            mViewCore = vc;
+            mId = Integer.parseInt(
+                    runScript(String.format("createScopedLogger(%s)", literal(m))), 10);
+        }
+        public void log(String m) {
+            runScript(String.format("appendScopedLogger(%d, %s)", mId, literal(m)));
+        }
+        public void dispose() {
+            runScript(String.format("destroyScopedLogger(%d)", mId));
+        }
+        private String runScript(String s) {
+            try {
+                WebContents wc = mViewCore.getWebContents();
+                return JavaScriptUtils.executeJavaScriptAndWaitForResult(wc, s);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        private String literal(String s) {
+            try {
+                StringWriter sw = new StringWriter();
+                JsonWriter jw = new JsonWriter(sw);
+                jw.beginArray();
+                jw.value(s);
+                jw.endArray();
+                jw.close();
+                return sw.toString() + "[0]";
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        private final ContentViewCore mViewCore;
+        private final int mId;
     }
 }

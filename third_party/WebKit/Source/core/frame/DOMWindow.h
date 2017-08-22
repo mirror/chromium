@@ -112,6 +112,10 @@ class CORE_EXPORT DOMWindow : public EventTargetWithInlineData,
 
   InputDeviceCapabilitiesConstants* GetInputDeviceCapabilities();
 
+  int createScopedLogger(const String& message);
+  void appendScopedLogger(int id, const String& message);
+  void destroyScopedLogger(int id);
+
  protected:
   explicit DOMWindow(Frame&);
 
