@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8247d4a_ddd7e2b7",
+        "filename": "chrome/browser/extensions/permissions_updater.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-22T21:19:28Z",
+      "side": 1,
+      "message": "This seems like the wrong thing to gate on.  If this is just for tests, couldn\u0027t we just load the extension as a packed extension?",
+      "revId": "d0638c67a5e69292b1e02de4d06f64541bf1734b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
