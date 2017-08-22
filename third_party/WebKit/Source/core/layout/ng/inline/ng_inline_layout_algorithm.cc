@@ -79,8 +79,9 @@ bool NGInlineLayoutAlgorithm::CreateLine(
   if (container_builder_.BfcOffset()) {
     NGLogicalOffset origin_point =
         GetOriginPointForFloats(ContainerBfcOffset(), content_size_);
-    PositionPendingFloats(origin_point.block_offset, &container_builder_,
-                          &unpositioned_floats_, MutableConstraintSpace());
+    PositionPendingFloats(ConstraintSpace(), origin_point.block_offset,
+                          &container_builder_, &unpositioned_floats_,
+                          line_info->ExclusionSpace());
   }
 
   return true;
@@ -392,9 +393,9 @@ LayoutUnit NGInlineLayoutAlgorithm::ComputeContentSize(
   if (layout_object && layout_object->IsBR()) {
     NGLogicalOffset bfc_offset =
         ContainerBfcOffset() + NGLogicalOffset(LayoutUnit(), content_size);
-    AdjustToClearance(ConstraintSpace().ExclusionSpace()->ClearanceOffset(
-                          item.Style()->Clear()),
-                      &bfc_offset);
+    AdjustToClearance(
+        line_info.ExclusionSpace().ClearanceOffset(item.Style()->Clear()),
+        &bfc_offset);
     content_size = bfc_offset.block_offset - ContainerBfcOffset().block_offset;
   }
 
@@ -469,11 +470,17 @@ RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
     }
   }
 
-  NGLineBreaker line_breaker(Node(), constraint_space_, &container_builder_,
+  NGLineBreaker line_breaker(Node(), *constraint_space_, &container_builder_,
                              &unpositioned_floats_, BreakToken());
+
+  std::unique_ptr<NGExclusionSpace> exclusion_space(
+      WTF::MakeUnique<NGExclusionSpace>(ConstraintSpace().ExclusionSpace()));
   NGLineInfo line_info;
-  while (line_breaker.NextLine(&line_info, {LayoutUnit(), content_size_}))
+  while (line_breaker.NextLine({LayoutUnit(), content_size_}, *exclusion_space,
+                               &line_info)) {
     CreateLine(&line_info, line_breaker.CreateBreakToken());
+    exclusion_space = line_info.ReleaseExclusionSpace();
+  }
 
   // Place any remaining floats which couldn't fit on the previous line.
   // TODO(ikilpatrick): This is duplicated from CreateLine, but flushes any
@@ -482,8 +489,9 @@ RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
   if (container_builder_.BfcOffset()) {
     NGLogicalOffset origin_point =
         GetOriginPointForFloats(ContainerBfcOffset(), content_size_);
-    PositionPendingFloats(origin_point.block_offset, &container_builder_,
-                          &unpositioned_floats_, MutableConstraintSpace());
+    PositionPendingFloats(ConstraintSpace(), origin_point.block_offset,
+                          &container_builder_, &unpositioned_floats_,
+                          exclusion_space.get());
   }
 
   // TODO(kojii): Check if the line box width should be content or available.
@@ -505,6 +513,8 @@ RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
     DCHECK(!container_builder_.BfcOffset());
     container_builder_.SwapUnpositionedFloats(&unpositioned_floats_);
   }
+
+  container_builder_.SetExclusionSpace(std::move(exclusion_space));
 
   PropagateBaselinesFromChildren();
 
