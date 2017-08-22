@@ -1256,10 +1256,11 @@ WARN_UNUSED_RESULT Status IndexedDBBackingStore::SetUpMetadata() {
 leveldb::Status IndexedDBBackingStore::GetCompleteMetadata(
     std::vector<IndexedDBDatabaseMetadata>* output) {
   leveldb::Status status = leveldb::Status::OK();
-  std::vector<base::string16> names = GetDatabaseNames(&status);
+  std::vector<IndexedDBDatabaseInfo> databases_info = GetDatabasesInfo(&status);
   if (!status.ok())
     return status;
-  for (const base::string16& name : names) {
+  for (const IndexedDBDatabaseInfo& database_info : databases_info) {
+    const base::string16& name = database_info.name;
     output->emplace_back();
     bool found = false;
     status = GetIDBDatabaseMetaData(name, &output->back(), &found);
@@ -1545,15 +1546,14 @@ void IndexedDBBackingStore::GrantChildProcessPermissions(int child_process_id) {
   }
 }
 
-std::vector<base::string16> IndexedDBBackingStore::GetDatabaseNames(Status* s) {
+std::vector<IndexedDBDatabaseInfo> IndexedDBBackingStore::GetDatabasesInfo(
+    Status* s) {
   *s = Status::OK();
-  std::vector<base::string16> found_names;
+  std::vector<IndexedDBDatabaseInfo> found_databases;
   const std::string start_key =
       DatabaseNameKey::EncodeMinKeyForOrigin(origin_identifier_);
   const std::string stop_key =
       DatabaseNameKey::EncodeStopKeyForOrigin(origin_identifier_);
-
-  DCHECK(found_names.empty());
 
   std::unique_ptr<LevelDBIterator> it = db_->CreateIterator();
   for (*s = it->Seek(start_key);
@@ -1589,14 +1589,17 @@ std::vector<base::string16> IndexedDBBackingStore::GetDatabaseNames(Status* s) {
     }
 
     // Ignore stale metadata from failed initial opens.
-    if (database_version != IndexedDBDatabaseMetadata::DEFAULT_VERSION)
-      found_names.push_back(database_name_key.database_name());
+    if (database_version == IndexedDBDatabaseMetadata::DEFAULT_VERSION)
+      continue;
+
+    found_databases.emplace_back(database_name_key.database_name(), database_id,
+                                 database_version);
   }
 
   if (!s->ok())
     INTERNAL_READ_ERROR(GET_DATABASE_NAMES);
 
-  return found_names;
+  return found_databases;
 }
 
 Status IndexedDBBackingStore::GetIDBDatabaseMetaData(

@@ -1,0 +1,29 @@
+<!doctype html>
+<meta charset="utf8">
+<title>IndexedDB: getDatabaseInfo results</title>
+<!-- These tests will be upstreamed to WPT when we're ready to spec
+     IDBFactory.getDatabaseInfo. -->
+<link rel="help" href="https://w3c.github.io/IndexedDB/#factory-interface">
+<link rel="author" href="pwnall@chromium.org" title="Victor Costan">
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="resources/support-promises.js"></script>
+<script>
+'use strict';
+
+promise_test(t => {
+  const dbName = databaseName(t);
+  return deleteTestDatabases(t).then(() => {
+    return migrateNamedDatabase(t, dbName, 42, () => {});
+  }).then(database => {
+    database.close();
+  }).then(() => getTestDatabasesInfo(t)).then(databasesInfo => {
+    const databaseInfo = databasesInfo.find(info => info.name == dbName);
+    assert_true(
+        databaseInfo != null,
+        'The database list should reflect a newly created database');
+    assert_equals(databaseInfo.version, 42);
+  });
+}, 'getDatabaseInfo reflects a newly created database');
+
+</script>
