@@ -9,6 +9,7 @@
 
 #import "cwv_export.h"
 
+@class CWVIdentity;
 @class CWVPreferences;
 @class CWVUserContentController;
 @class CWVWebsiteDataStore;

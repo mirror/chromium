@@ -4,8 +4,8 @@
 
 declare_args() {
   # Controls if cronet is included.
-  include_cronet = true
+  include_cronet = false
 
   # Controls if features that require sync are included.
-  enable_features_requiring_sync = false
+  enable_features_requiring_sync = true
 }

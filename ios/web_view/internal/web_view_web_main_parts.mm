@@ -6,10 +6,23 @@
 
 #include "base/base_paths.h"
 #include "base/path_service.h"
+#include "ios/web_view/cwv_web_view_features.h"
 #include "ios/web_view/internal/app/application_context.h"
 #include "ios/web_view/internal/translate/web_view_translate_service.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 #include "ui/base/resource/resource_bundle.h"
+
+#if BUILDFLAG(ENABLE_FEATURES_REQUIRING_SYNC)
+#include "ios/web_view/internal/signin/web_view_account_consistency_service_factory.h"
+#include "ios/web_view/internal/signin/web_view_account_fetcher_service_factory.h"
+#include "ios/web_view/internal/signin/web_view_account_reconcilor_factory.h"
+#include "ios/web_view/internal/signin/web_view_account_tracker_service_factory.h"
+#include "ios/web_view/internal/signin/web_view_gaia_cookie_manager_service_factory.h"
+#include "ios/web_view/internal/signin/web_view_oauth2_token_service_factory.h"
+#include "ios/web_view/internal/signin/web_view_signin_client_factory.h"
+#include "ios/web_view/internal/signin/web_view_signin_error_controller_factory.h"
+#include "ios/web_view/internal/signin/web_view_signin_manager_factory.h"
+#endif
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -43,6 +56,19 @@ void WebViewWebMainParts::PreCreateThreads() {
 
 void WebViewWebMainParts::PreMainMessageLoopRun() {
   WebViewTranslateService::GetInstance()->Initialize();
+
+#if BUILDFLAG(ENABLE_FEATURES_REQUIRING_SYNC)
+  // Create factories so that the dependency graph is initialized.
+  WebViewAccountConsistencyServiceFactory::GetInstance();
+  WebViewAccountFetcherServiceFactory::GetInstance();
+  WebViewAccountReconcilorFactory::GetInstance();
+  WebViewAccountTrackerServiceFactory::GetInstance();
+  WebViewGaiaCookieManagerServiceFactory::GetInstance();
+  WebViewOAuth2TokenServiceFactory::GetInstance();
+  WebViewSigninClientFactory::GetInstance();
+  WebViewSigninErrorControllerFactory::GetInstance();
+  WebViewSigninManagerFactory::GetInstance();
+#endif
 }
 
 void WebViewWebMainParts::PostMainMessageLoopRun() {
