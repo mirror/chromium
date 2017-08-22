@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f086040b_3be99f95",
+        "filename": "third_party/WebKit/LayoutTests/editing/spelling/mark-empty-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-22T01:44:33Z",
+      "side": 1,
+      "message": "nit: s/window.internals \u0026\u0026//\nSince L9 checks |windows.internals|, we don\u0027t need to check it here again.",
+      "revId": "b8b2e66da2d39338f8a30143b4c7c109a2c4f3cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
