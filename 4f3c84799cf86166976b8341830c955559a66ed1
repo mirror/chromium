@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "33a585fd_4a7a9725",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-22T05:31:28Z",
+      "side": 1,
+      "message": "Maybe elaborate a bit more to explain the difference between this and ClosePreviewDialog().",
+      "revId": "4f3c84799cf86166976b8341830c955559a66ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55524a0_04d54e4e",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-22T05:31:28Z",
+      "side": 1,
+      "message": "\"it\" really means the initiator WebContents, not the preview WebContents.",
+      "range": {
+        "startLine": 280,
+        "startChar": 43,
+        "endLine": 280,
+        "endChar": 45
+      },
+      "revId": "4f3c84799cf86166976b8341830c955559a66ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07246709_0c81991d",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 7
@@ -37,6 +77,23 @@
     },
     {
       "key": {
+        "uuid": "561cea18_293a566f",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-22T05:31:28Z",
+      "side": 1,
+      "message": "You may want to check and make sure |frame| is still a valid before calling this. Big warning right below! :) Same elsewhere in this file. I left lots of warnings.",
+      "revId": "4f3c84799cf86166976b8341830c955559a66ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d9e820f_38218b78",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 7
@@ -48,6 +105,23 @@
       "writtenOn": "2017-08-22T00:39:38Z",
       "side": 1,
       "message": "Ditto",
+      "revId": "4f3c84799cf86166976b8341830c955559a66ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9608588d_66c57dd5",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-22T05:31:28Z",
+      "side": 1,
+      "message": "As part of this CL, should WebLocalFrameImpl have a bool or enum to indicate whether the frame should be expecting a before-print event or after-print event? Then we can DCHECK that in both Dispatch methods.",
       "revId": "4f3c84799cf86166976b8341830c955559a66ed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
