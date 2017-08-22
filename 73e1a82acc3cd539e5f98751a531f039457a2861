@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc6f189e_35405f27",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-22T16:10:05Z",
+      "side": 1,
+      "message": "Optional: DiceResponseHeaderBucket",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 23
+      },
+      "revId": "73e1a82acc3cd539e5f98751a531f039457a2861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e964797_8bc68eb1",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-22T16:10:05Z",
+      "side": 1,
+      "message": "s/main/primary",
+      "range": {
+        "startLine": 45,
+        "startChar": 44,
+        "endLine": 45,
+        "endChar": 49
+      },
+      "revId": "73e1a82acc3cd539e5f98751a531f039457a2861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0909f5_bdb56dc6",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-22T16:10:05Z",
+      "side": 1,
+      "message": "SignoutSecondary",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 15
+      },
+      "revId": "73e1a82acc3cd539e5f98751a531f039457a2861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b794b24_cd3a043a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34639,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-22T16:10:05Z",
+      "side": 1,
+      "message": "Nit: Consider removing the \".\" at the end of these items.",
+      "range": {
+        "startLine": 34639,
+        "startChar": 32,
+        "endLine": 34639,
+        "endChar": 38
+      },
+      "revId": "73e1a82acc3cd539e5f98751a531f039457a2861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d6a0fc_884d7801",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34640,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-22T16:10:05Z",
+      "side": 1,
+      "message": "I think \"main\" does not mean much for the account. How about primary?\nSignout including primary account",
+      "revId": "73e1a82acc3cd539e5f98751a531f039457a2861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d48167_2a59f917",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34642,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-22T16:10:05Z",
+      "side": 1,
+      "message": "Signout only secondary accounts",
+      "range": {
+        "startLine": 34642,
+        "startChar": 16,
+        "endLine": 34642,
+        "endChar": 26
+      },
+      "revId": "73e1a82acc3cd539e5f98751a531f039457a2861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df211496_69e5b055",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34647,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-22T16:10:05Z",
+      "side": 1,
+      "message": "Personal pref maybe: I think these sentences should only be items, not sentences. How about\nSucceeded\nAborted\nFailed with Gaia error\nFailed with timeout\n\nI think having the succeeded first is important as all the other are failure case.",
+      "range": {
+        "startLine": 34647,
+        "startChar": 30,
+        "endLine": 34647,
+        "endChar": 31
+      },
+      "revId": "73e1a82acc3cd539e5f98751a531f039457a2861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
