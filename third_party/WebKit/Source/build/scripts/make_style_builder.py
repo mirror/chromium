@@ -28,6 +28,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 import sys
+import types
 
 from core.css import css_properties
 import json5_generator
@@ -40,8 +41,7 @@ def apply_property_naming_defaults(property_):
         if property_[key] is None:
             property_[key] = value
 
-    # TODO(shend): Use name_utilities for manipulating names.
-    # TODO(shend): Rearrange the code below to separate assignment and set_if_none
+    # TODO(meade): Delete this once all methods are moved to CSSPropertyAPIs.
     upper_camel = upper_camel_case(property_['name'])
     set_if_none(property_, 'name_for_methods', upper_camel.replace('Webkit', ''))
     name = property_['name_for_methods']
@@ -61,6 +61,12 @@ def apply_property_naming_defaults(property_):
     property_['should_declare_functions'] = not property_['use_handlers_for'] and not property_['longhands'] \
         and not property_['direction_aware'] and not property_['builder_skip'] \
         and property_['is_property']
+    # Functions should only be used in StyleBuilder if the API
+    # class is shared or not implemented yet (shared classes are denoted by
+    # api_class = "some string").
+    property_['use_api_in_stylebuilder'] = \
+        property_['should_declare_functions'] \
+        and type(property_['api_class']) is not types.BooleanType
 
 
 class StyleBuilderWriter(css_properties.CSSProperties):
