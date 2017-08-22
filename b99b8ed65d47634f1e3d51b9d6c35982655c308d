@@ -22,6 +22,23 @@
       "revId": "b99b8ed65d47634f1e3d51b9d6c35982655c308d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5738db8d_e9a40f7d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-22T16:41:47Z",
+      "side": 1,
+      "message": "if we only update the notification, without tracking it, does this work immediately for Download home? Download home also uses the SharedPref entries.",
+      "revId": "b99b8ed65d47634f1e3d51b9d6c35982655c308d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
