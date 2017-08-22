@@ -22,6 +22,30 @@
       "revId": "48d5fd4eebb94839193bc676093192abf7d16d6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84daa28b_1ba935f0",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3352,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-22T13:51:12Z",
+      "side": 1,
+      "message": "There is one change in blink that the barrel button is used for text selection when this flag was on; and it was being done based on a setting. And that setting was propagated from this flag...\n\nI was adding that in https://chromium-review.googlesource.com/c/624715\n\nSo being that Android and ChromeOS will have this on. What are your thoughts?",
+      "parentUuid": "841d06b8_3cc177ac",
+      "range": {
+        "startLine": 3352,
+        "startChar": 4,
+        "endLine": 3352,
+        "endChar": 33
+      },
+      "revId": "48d5fd4eebb94839193bc676093192abf7d16d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
