@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4da86b4e_94c05fab",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-22T20:29:21Z",
+      "side": 1,
+      "message": "EnableBluetooth",
+      "revId": "54a1466156fcd2880b80dc462f6a4735fa51905e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a6c50a5_a27f1946",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-22T20:29:21Z",
+      "side": 1,
+      "message": "nit: since the rest of this method isn\u0027t bluetooth specific, I think it would be more clear to wrap the above in a \u0027GetBluetoothAdapter\u0027 method, so the code reads \u0027if (bluetooth_adapter_) EnableBluetooth() else GetBluetoothAdapter().",
+      "revId": "54a1466156fcd2880b80dc462f6a4735fa51905e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d0aaa2_fa26abea",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-22T20:29:21Z",
+      "side": 1,
+      "message": "I think we might want check this first and test Cellular state as well. There may be some edge cases here if a user were to change the Cellular enabled state from Settings while waiting for Bluetooth to enable. The safest thing to do is to handle all of the possibilities here, e.g.\n\nif (CellularAvailable()) {\n  SetIsOn(CellularEnabled())\n  status \u003d IDLE\n  return\n}\n\nif (!TetherAvailable()) {\n  SetIsOn(false);\n  status \u003d IDLE\n  return\n}\n\nif (status !\u003d WAITING || !TetherInitialized())\n  return\n\np.s. \u0027CellularAvailable\u0027, etc is just shorthand; I\u0027m not specifically suggesting adding methods for those.",
+      "revId": "54a1466156fcd2880b80dc462f6a4735fa51905e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ddb754_52252e67",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-22T20:29:21Z",
+      "side": 1,
+      "message": "Instead of calling DeviceListChanged() here (which is a bit confusing and largely redundant), maybe wrap an \u0027EnableTether()\u0027 method and call that from both places.",
+      "revId": "54a1466156fcd2880b80dc462f6a4735fa51905e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633176a8_f7fc1367",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-22T20:29:21Z",
+      "side": 1,
+      "message": "network_state_handler_",
+      "revId": "54a1466156fcd2880b80dc462f6a4735fa51905e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e4d72b_917ddd7a",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-22T20:29:21Z",
+      "side": 1,
+      "message": "bluetooth_adapter_",
+      "revId": "54a1466156fcd2880b80dc462f6a4735fa51905e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34fc06c_9fdf293f",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-22T20:29:21Z",
+      "side": 1,
+      "message": "\u0027is_enabled\u0027 was confusing, it suggests the existing state, not the new state. Also, reading below, I think this will actually be less confusing as \u0027cellular_enabled\u0027, with a separate \u0027tether_enabled\u0027 set below, and the two or\u0027d together where appropriate.",
+      "revId": "54a1466156fcd2880b80dc462f6a4735fa51905e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63af7250_639c563e",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-22T20:29:21Z",
+      "side": 1,
+      "message": "tether_enabled \u003d",
+      "revId": "54a1466156fcd2880b80dc462f6a4735fa51905e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5370ac1_df47549b",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-22T20:29:21Z",
+      "side": 1,
+      "message": "if (!tether_enabled \u0026\u0026 !cellular_enabled)",
+      "revId": "54a1466156fcd2880b80dc462f6a4735fa51905e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e75365_862b2d40",
+        "filename": "ash/system/network/network_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-22T20:29:21Z",
+      "side": 1,
+      "message": "e.g. \u0027bool enable_mobile_toggle \u003d cellular_enabled || tether_enabled\u0027",
+      "revId": "54a1466156fcd2880b80dc462f6a4735fa51905e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
