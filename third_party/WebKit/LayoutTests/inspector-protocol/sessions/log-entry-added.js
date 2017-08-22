@@ -6,11 +6,11 @@
 
   session1.protocol.Log.onEntryAdded(event => {
     testRunner.log('From session1:');
-    testRunner.logMessage(event);
+    testRunner.log(event);
   });
   session2.protocol.Log.onEntryAdded(event => {
     testRunner.log('From session2:');
-    testRunner.logMessage(event);
+    testRunner.log(event);
   });
 
   testRunner.log('Enabling logging in session1');
