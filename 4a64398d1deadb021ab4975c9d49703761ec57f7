@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce5071c8_29d39544",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T19:08:38Z",
+      "side": 1,
+      "message": "nit: not really \u0027setting\u0027 but implementing it. You should also send an intent to implement and ship and link to it in this CL. Better to do this before landing. No need to wait for ship approval though because it will not be on by default.",
+      "revId": "4a64398d1deadb021ab4975c9d49703761ec57f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3249e7f0_4e907736",
+        "filename": "media/base/media_switches.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T19:08:38Z",
+      "side": 1,
+      "message": "Maybe keep it disabled by default for now and turn it on when inten to ship is approved?",
+      "revId": "4a64398d1deadb021ab4975c9d49703761ec57f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc134a1_b0918142",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2228,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-22T19:08:38Z",
+      "side": 1,
+      "message": "I don\u0027t think you should change the UseCounter as it\u0027s still `default`. We will not record if default is metadata or auto but that\u0027s probably okay :)",
+      "revId": "4a64398d1deadb021ab4975c9d49703761ec57f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
