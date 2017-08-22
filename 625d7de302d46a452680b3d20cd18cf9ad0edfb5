@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "145f791f_93822ca7",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-08-22T14:12:06Z",
+      "side": 1,
+      "message": "nit: onto",
+      "range": {
+        "startLine": 65,
+        "startChar": 40,
+        "endLine": 65,
+        "endChar": 42
+      },
+      "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3a30efb_ef4463f8",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
         "patchSetId": 1
@@ -155,6 +178,29 @@
       "writtenOn": "2017-08-22T13:36:09Z",
       "side": 1,
       "message": "nit: CreateRegistrationTask can be anonymous in the .cc",
+      "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719f7104_614a5dd6",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-08-22T14:12:06Z",
+      "side": 1,
+      "message": "Would it make sense to make a test where any/all of these were non-synchronous to check there aren\u0027t race conditions?",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 65
+      },
       "revId": "625d7de302d46a452680b3d20cd18cf9ad0edfb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
