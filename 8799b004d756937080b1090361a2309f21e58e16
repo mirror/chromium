@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "633e46b1_65df6209",
+        "filename": "third_party/WebKit/Source/platform/LongTaskDetector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-22T16:59:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaedeb7a_656fbaac",
+      "revId": "8799b004d756937080b1090361a2309f21e58e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e446ff68_2d9fe6fe",
         "filename": "third_party/WebKit/Source/platform/LongTaskDetector.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-22T14:59:40Z",
       "side": 1,
       "message": "nit: prefer \"const auto\u0026\" where no mutation is intended",
+      "revId": "8799b004d756937080b1090361a2309f21e58e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f72f4e0a_7d73f5a0",
+        "filename": "third_party/WebKit/Source/platform/LongTaskDetector.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-22T16:59:17Z",
+      "side": 1,
+      "message": "OnLongTaskDetected is not a const member function, so I feel like this will break logical const correctness (even though it compiles fine with const since observer is a WeakMember and the pointer it holds is not changed by the member function.) Let me know if I\u0027m wrong - I can fix this in a follow up CL even if I\u0027ve already landed this.",
+      "parentUuid": "e446ff68_2d9fe6fe",
       "revId": "8799b004d756937080b1090361a2309f21e58e16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9d7a131f_f289d4a4",
+        "filename": "third_party/WebKit/Source/platform/LongTaskDetector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-22T16:59:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3358aed7_7a034eb7",
+      "revId": "8799b004d756937080b1090361a2309f21e58e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d59e701_79d51d74",
         "filename": "third_party/WebKit/Source/platform/LongTaskDetector.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-22T14:59:40Z",
       "side": 1,
       "message": "doesn\u0027t need finalization; use GarbageCollected\u003cLongTaskDetector\u003e",
+      "revId": "8799b004d756937080b1090361a2309f21e58e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe0b402_4f6ad98e",
+        "filename": "third_party/WebKit/Source/platform/LongTaskDetector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-22T16:59:17Z",
+      "side": 1,
+      "message": "The compiler complains that base class scheduler::TaskTimeObserver requires finalization. TaskTimeObserver has a user defined empty destructor, and from the test case here [1], it looks like if any base class has any user defined destructor, even an empty one, Finalized must be used.\n\n[1] https://cs.chromium.org/chromium/src/tools/clang/blink_gc_plugin/tests/class_requires_finalization_base.h?l\u003d19",
+      "parentUuid": "9d59e701_79d51d74",
       "revId": "8799b004d756937080b1090361a2309f21e58e16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -101,6 +173,24 @@
       "revId": "8799b004d756937080b1090361a2309f21e58e16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b79cb8c_2e5701ea",
+        "filename": "third_party/WebKit/Source/platform/LongTaskDetectorTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1177266
+      },
+      "writtenOn": "2017-08-22T16:59:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99b358c6_a757142f",
+      "revId": "8799b004d756937080b1090361a2309f21e58e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
