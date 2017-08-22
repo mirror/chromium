@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a24b135_bc4c9964",
+        "filename": "ios/chrome/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-22T13:49:55Z",
+      "side": 0,
+      "message": "Should this be removed?",
+      "range": {
+        "startLine": 16,
+        "startChar": 22,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "a9fc3dfecf124efee034b86c1aca6910088f4bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d9e377_1ee1dd8e",
+        "filename": "ios/chrome/today_extension/today_metrics_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-22T13:49:55Z",
+      "side": 0,
+      "message": "You need to clean the app_group_metrics too. Can be done in another CL.",
+      "range": {
+        "startLine": 1,
+        "startChar": 39,
+        "endLine": 1,
+        "endChar": 40
+      },
+      "revId": "a9fc3dfecf124efee034b86c1aca6910088f4bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
