@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb2cabb6_e61a34ce",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-22T04:36:20Z",
+      "side": 1,
+      "message": "This test is changed because the pipe for SWProviderHost is now associated with the channel and it is not disconnected when the pipe to EWInstanceClientImpl is disconnected.",
+      "revId": "4b9d72cb5b73136a4e1aaad146627fca85706b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
