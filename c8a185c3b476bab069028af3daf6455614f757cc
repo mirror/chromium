@@ -70,6 +70,30 @@
       "revId": "c8a185c3b476bab069028af3daf6455614f757cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0eea2a_ae05f6b1",
+        "filename": "content/renderer/media/renderer_webmediaplayer_delegate_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-22T18:35:53Z",
+      "side": 1,
+      "message": "I believe that a new parameter on SetIdleCleanupParamsForTesting() would be needed to set the idle cleanup interval, but since we control the tick_clock it should be possible to test precisely.",
+      "parentUuid": "911b593b_c66d0cc0",
+      "range": {
+        "startLine": 290,
+        "startChar": 2,
+        "endLine": 290,
+        "endChar": 51
+      },
+      "revId": "c8a185c3b476bab069028af3daf6455614f757cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
