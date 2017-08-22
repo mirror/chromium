@@ -34,6 +34,98 @@
       "revId": "883fbb405a8bf9782fab7fc02ec54a44f273c0ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0634a3b2_ea47ca3f",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T16:29:28Z",
+      "side": 1,
+      "message": "Nit: remove the \"either\"?",
+      "range": {
+        "startLine": 114,
+        "startChar": 47,
+        "endLine": 114,
+        "endChar": 53
+      },
+      "revId": "883fbb405a8bf9782fab7fc02ec54a44f273c0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b582705_cfaeeb86",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T16:29:28Z",
+      "side": 1,
+      "message": "Unused?",
+      "range": {
+        "startLine": 118,
+        "startChar": 7,
+        "endLine": 118,
+        "endChar": 23
+      },
+      "revId": "883fbb405a8bf9782fab7fc02ec54a44f273c0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2459d9fe_066c6e9b",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T16:29:28Z",
+      "side": 1,
+      "message": "May as well check that BLOCK applies to both as well, or is that covered elsewhere?",
+      "range": {
+        "startLine": 137,
+        "startChar": 9,
+        "endLine": 137,
+        "endChar": 14
+      },
+      "revId": "883fbb405a8bf9782fab7fc02ec54a44f273c0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "605f0a74_1d77a4c1",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-22T16:29:28Z",
+      "side": 1,
+      "message": "Nice, the results of this test feel more consistent now :)",
+      "range": {
+        "startLine": 173,
+        "startChar": 7,
+        "endLine": 173,
+        "endChar": 40
+      },
+      "revId": "883fbb405a8bf9782fab7fc02ec54a44f273c0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
