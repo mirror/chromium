@@ -22,6 +22,30 @@
       "revId": "acf00a24f7321e3adb76ff4c323b0923d1eccf56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f7ac45_72ddfe5c",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-22T12:17:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "419a550c_2312a38a",
+      "range": {
+        "startLine": 37,
+        "startChar": 27,
+        "endLine": 37,
+        "endChar": 37
+      },
+      "revId": "acf00a24f7321e3adb76ff4c323b0923d1eccf56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
