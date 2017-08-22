@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9669df5e_9d51e9b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-22T08:47:01Z",
+      "side": 1,
+      "message": "Drop this? Commit message starts with a single subject line.",
+      "revId": "c7767f2f4e723aa37b19d8cef43a8e950e64a2c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec7e4e6_28f0261c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-22T08:47:01Z",
+      "side": 1,
+      "message": "I think you can just drop these two lines.",
+      "revId": "c7767f2f4e723aa37b19d8cef43a8e950e64a2c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b74d413_148e3639",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-22T08:47:01Z",
+      "side": 1,
+      "message": "contains -\u003e contain.",
+      "revId": "c7767f2f4e723aa37b19d8cef43a8e950e64a2c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
