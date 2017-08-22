@@ -16,6 +16,24 @@
       "revId": "894b7f953d8c42a338f58c3be477ac9642150fac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9cb259b_23435550",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-22T23:00:37Z",
+      "side": 1,
+      "message": "If we decided not to use controls in footers that would address it as well.\n\nIf the footer has a settings-box and a settings-box is added to the footer, then there are double settings-boxes. Which lays out badly (which this CL is intending to fix).\n\nIf the footer controls the outer shape that interferes with the tap area for controls. So that makes it better for the control to own its outer shape (rather than the container (footer in this case)).\n\nIf some controls contain layout and some don\u0027t then baking the layout into the container (footer) is problematic.\n\nHaving the individual footer elements addresses all the issues above, but it means that footer elements need to specify their layout.\n\nIf we go with something else, it would need to fit/work with all the use cases (or we\u0027d need to reduce the valid use cases, i.e. not allowed to put controls in footers).",
+      "parentUuid": "bf60db99_d47d1cd2",
+      "revId": "894b7f953d8c42a338f58c3be477ac9642150fac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
