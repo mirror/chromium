@@ -152,11 +152,12 @@ class CommandBufferSetup {
     scoped_refptr<gles2::FeatureInfo> feature_info =
         new gles2::FeatureInfo();
     scoped_refptr<gles2::ContextGroup> context_group = new gles2::ContextGroup(
-        gpu_preferences_, &mailbox_manager_, nullptr /* memory_tracker */,
-        &translator_cache_, &completeness_cache_, feature_info,
-        true /* bind_generates_resource */, &image_manager_,
-        nullptr /* image_factory */, nullptr /* progress_reporter */,
-        GpuFeatureInfo(), &discardable_manager_);
+        gpu_preferences_, gpu_preferences_.use_passthrough_cmd_decoder,
+        &mailbox_manager_, nullptr /* memory_tracker */, &translator_cache_,
+        &completeness_cache_, feature_info, true /* bind_generates_resource */,
+        &image_manager_, nullptr /* image_factory */,
+        nullptr /* progress_reporter */, GpuFeatureInfo(),
+        &discardable_manager_);
     command_buffer_.reset(new CommandBufferDirect(
         context_group->transfer_buffer_manager(), &sync_point_manager_));
 
