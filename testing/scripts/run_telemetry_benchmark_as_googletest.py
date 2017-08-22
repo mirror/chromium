@@ -47,7 +47,10 @@ def main():
   parser.add_argument(
       '--isolated-script-test-chartjson-output', required=False)
   parser.add_argument('--xvfb', help='Start xvfb.', action='store_true')
+  parser.add_argument('--output-format')
   args, rest_args = parser.parse_known_args()
+  if args.output_format:
+    rest_args += ('--output-format', args.output_format)
   xvfb_proc = None
   openbox_proc = None
   xcompmgr_proc = None
@@ -64,9 +67,9 @@ def main():
     tempfile_dir = tempfile.mkdtemp('telemetry')
     valid = True
     failures = []
-    chartjson_results_present = '--output-format=chartjson' in rest_args
+    chartjson_results_present = args.output_format == 'chartjson'
     chartresults = None
-    json_test_results_present = '--output-format=json-test-results' in rest_args
+    json_test_results_present = args.output_format == 'json-test-results'
     json_test_results = None
 
     results = None
