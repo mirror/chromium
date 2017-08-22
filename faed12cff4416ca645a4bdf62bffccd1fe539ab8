@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "4c1d43c9_544b89ee",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T04:55:02Z",
+      "side": 1,
+      "message": "will move to line 362",
+      "range": {
+        "startLine": 358,
+        "startChar": 45,
+        "endLine": 358,
+        "endChar": 50
+      },
+      "revId": "faed12cff4416ca645a4bdf62bffccd1fe539ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "028bf094_3de62e1e",
         "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
         "patchSetId": 2
@@ -13,6 +36,24 @@
       "writtenOn": "2017-08-22T04:26:20Z",
       "side": 1,
       "message": "nit: would it make sense to factor out this part into a helper method of ProviderHostTest, as, say, PrepareForMainResource(host, registration1_.get(), ...) and use it here and below?",
+      "revId": "faed12cff4416ca645a4bdf62bffccd1fe539ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f0f580_21df0d0f",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T04:55:02Z",
+      "side": 1,
+      "message": "good idea, done",
+      "parentUuid": "028bf094_3de62e1e",
       "revId": "faed12cff4416ca645a4bdf62bffccd1fe539ab8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -42,6 +83,30 @@
     },
     {
       "key": {
+        "uuid": "4fd3a40a_823cd079",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T04:55:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "629f418f_c67e1c7c",
+      "range": {
+        "startLine": 386,
+        "startChar": 41,
+        "endLine": 386,
+        "endChar": 68
+      },
+      "revId": "faed12cff4416ca645a4bdf62bffccd1fe539ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b0a60ec_2993480d",
         "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
         "patchSetId": 2
@@ -62,6 +127,30 @@
       "revId": "faed12cff4416ca645a4bdf62bffccd1fe539ab8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b9f01cd_1a7d5cd1",
+        "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-22T04:55:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b0a60ec_2993480d",
+      "range": {
+        "startLine": 427,
+        "startChar": 30,
+        "endLine": 427,
+        "endChar": 39
+      },
+      "revId": "faed12cff4416ca645a4bdf62bffccd1fe539ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
