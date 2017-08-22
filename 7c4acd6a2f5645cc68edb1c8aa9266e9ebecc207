@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac19e8e7_a38252f3",
+        "filename": "content/public/common/DEPS",
+        "patchSetId": 27
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-22T01:47:33Z",
+      "side": 1,
+      "message": "SGTM, done.",
+      "parentUuid": "4591461d_416a5958",
+      "revId": "7c4acd6a2f5645cc68edb1c8aa9266e9ebecc207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "862215ce_97f33b06",
         "filename": "content/public/common/simple_url_loader.h",
         "patchSetId": 27
@@ -33,6 +51,24 @@
       "revId": "7c4acd6a2f5645cc68edb1c8aa9266e9ebecc207",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf3522a_66b76305",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-22T01:47:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "862215ce_97f33b06",
+      "revId": "7c4acd6a2f5645cc68edb1c8aa9266e9ebecc207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
