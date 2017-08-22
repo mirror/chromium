@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08fd91a1_b1323021",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/page/page-lifecycleEvents.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-22T22:56:18Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think you need awaits here.",
+      "revId": "77e57f83293a7fa9917fd375deb3a92b4fc46070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd41335_12e5cc17",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/page/page-lifecycleEvents.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-22T22:56:18Z",
+      "side": 1,
+      "message": "do you need the former check?",
+      "revId": "77e57f83293a7fa9917fd375deb3a92b4fc46070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5a9868_8d2e8fc1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/page/page-lifecycleEvents.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-22T22:56:18Z",
+      "side": 1,
+      "message": "I wonder if we really need it. If these events start arriving in different order, I think we\u0027ve got a bit of a problem.",
+      "revId": "77e57f83293a7fa9917fd375deb3a92b4fc46070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c1e2db8_df8306c0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/page/page-lifecycleEvents.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-22T22:56:18Z",
+      "side": 1,
+      "message": "drop await?",
+      "revId": "77e57f83293a7fa9917fd375deb3a92b4fc46070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cfafef0_3a4e7405",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-22T22:56:18Z",
+      "side": 1,
+      "message": "I don\u0027t think we can meaningfully handle these as arbitrary strings, perhaps make them an enum?",
+      "revId": "77e57f83293a7fa9917fd375deb3a92b4fc46070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
