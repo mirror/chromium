@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0be0deb1_793b803b",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-22T21:22:21Z",
+      "side": 1,
+      "message": "should this doc be renamed webui_in_components.md ?",
+      "revId": "45d9f447518574799a35c73269f53644419f1ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707dff3a_54136eb1",
+        "filename": "docs/webui_infrastructure.md",
+        "patchSetId": 10
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-22T21:22:21Z",
+      "side": 1,
+      "message": "In this example, the response is calling a global JavaScript function.\n\nHowever, that\u0027s actually discouraged these days. The encouraged pattern is to use cr.sendWithPromise with ResolveJavascriptCallback.\n\nhttps://cs.chromium.org/chromium/src/docs/webui_explainer.md?type\u003dcs\u0026q\u003dcr.SendWithPromise\u0026sq\u003dpackage:chromium\u0026l\u003d341\n\nIt\u0027s not that what you\u0027re doing is bad per se, I\u0027d just hate to add more examples of the \u0027old and problematic\u0027 way of doing things.",
+      "revId": "45d9f447518574799a35c73269f53644419f1ea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
