@@ -7,6 +7,8 @@
 
 #include <memory>
 #include <string>
+#include <unordered_map>
+#include <utility>
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -20,13 +22,46 @@ class URLRequestContextGetter;
 namespace content {
 
 class BackgroundFetchJobController;
+struct BackgroundFetchResponse;
 class BrowserContext;
 
-// Proxy class for passing messages between BackgroundFetchJobController on the
-// IO thread to and BackgroundFetchDelegate on the UI thread.
+// Proxy class for passing messages between BackgroundFetchJobControllers on the
+// IO thread and BackgroundFetchDelegate on the UI thread.
 // TODO(delphick): Create BackgroundFetchDelegate.
 class CONTENT_EXPORT BackgroundFetchDelegateProxy {
  public:
+  // Failures that happen after the download has already started.
+  enum FailureReason {
+    // Used when the download has been aborted after reaching a threshold where
+    // it was decided it is not worth attempting to start again. This could be
+    // either due to a specific number of failed retry attempts or a specific
+    // number of wasted bytes due to the download restarting.
+    NETWORK,
+
+    // Used when the download was not completed before the timeout.
+    TIMEDOUT,
+
+    // Used when the failure reason is unknown.
+    UNKNOWN,
+  };
+
+  // Results returned immediately after attempting to start the fetch (but
+  // usually before reaching the network).
+  enum StartResult {
+    // The download is accepted and persisted.
+    ACCEPTED,
+
+    // The DownloadService has too many downloads.  Back off and retry.
+    BACKOFF,
+
+    // Failed to create the download.  The guid is already in use.
+    UNEXPECTED_GUID,
+
+    // The DownloadService was unable to accept and persist this download due to
+    // an internal error like the underlying DB store failing to write to disk.
+    INTERNAL_ERROR,
+  };
+
   BackgroundFetchDelegateProxy(
       BrowserContext* browser_context,
       scoped_refptr<net::URLRequestContextGetter> request_context);
@@ -53,23 +88,31 @@ class CONTENT_EXPORT BackgroundFetchDelegateProxy {
  private:
   class Core;
 
-  // Called when the download manager has started the given |request|. The
-  // |download_item| continues to be owned by the download system. The
-  // |interrupt_reason| will indicate when a request could not be started.
-  // Should only be called from the BackgroundFetchDelegate (on the IO thread).
-  void DidStartRequest(
-      const base::WeakPtr<BackgroundFetchJobController>& job_controller,
-      scoped_refptr<BackgroundFetchRequestInfo> request,
-      const std::string& download_guid);
+  // Called when the given download identified by |guid| has been completed
+  // successfully. Should only be called on the IO thread.
+  void OnDownloadSucceeded(std::string guid,
+                           base::FilePath path,
+                           uint64_t size);
 
-  // Called when the given |request| has been completed.
+  // Called when the given download identified by |guid| has failed. Should only
+  // be called on the IO thread.
+  void OnDownloadFailed(std::string guid, FailureReason reason);
+
+  void OnRequestReceived(const std::string& guid, StartResult result);
+
   // Should only be called from the BackgroundFetchDelegate (on the IO thread).
-  void DidCompleteRequest(
-      const base::WeakPtr<BackgroundFetchJobController>& job_controller,
-      scoped_refptr<BackgroundFetchRequestInfo> request);
+  void DidStartRequest(const std::string& guid,
+                       std::unique_ptr<const BackgroundFetchResponse> response);
 
   std::unique_ptr<Core, BrowserThread::DeleteOnUIThread> ui_core_;
   base::WeakPtr<Core> ui_core_ptr_;
+
+  // Map from DownloadService GUIDs to the RequestInfo and the JobController
+  // that started the download.
+  std::unordered_map<std::string,
+                     std::pair<scoped_refptr<BackgroundFetchRequestInfo>,
+                               base::WeakPtr<BackgroundFetchJobController>>>
+      controller_map_;
 
   base::WeakPtrFactory<BackgroundFetchDelegateProxy> weak_ptr_factory_;
 

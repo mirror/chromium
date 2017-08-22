@@ -22,6 +22,7 @@
 
 namespace content {
 
+struct BackgroundFetchResponse;
 class DownloadItem;
 
 // Simple class to encapsulate the components of a fetch request.
@@ -33,10 +34,11 @@ class CONTENT_EXPORT BackgroundFetchRequestInfo
   BackgroundFetchRequestInfo(int request_index,
                              const ServiceWorkerFetchRequest& fetch_request);
 
-  // Populates the cached state for the in-progress |download_item|.
-  void PopulateDownloadStateOnUI(
-      DownloadItem* download_item,
-      DownloadInterruptReason download_interrupt_reason);
+  // Populates the cached state for the in-progress download.
+  void PopulateWithResponse(
+      std::unique_ptr<const BackgroundFetchResponse> response);
+
+  void SetPathAndSize(base::FilePath path, uint64_t size);
 
   void SetDownloadStatePopulated();
 
