@@ -1,0 +1,24 @@
+rootWebArea
+++grid tableRowCount=2 tableColumnCount=2
+++++row selectable tableRowIndex=0
+++++++genericContainer
+++++++++cell selectable name='A1' tableCellColumnIndex=0 tableCellRowIndex=0
+++++++++++staticText name='A1'
+++++++++++++inlineTextBox name='A1'
+++++++genericContainer
+++++++++cell selectable name='A2' tableCellColumnIndex=1 tableCellRowIndex=0
+++++++++++staticText name='A2'
+++++++++++++inlineTextBox name='A2'
+++++row selectable tableRowIndex=1
+++++++genericContainer
+++++++++cell selectable name='B1' tableCellColumnIndex=0 tableCellRowIndex=1
+++++++++++staticText name='B1'
+++++++++++++inlineTextBox name='B1'
+++++++genericContainer
+++++++++cell selectable name='B2' tableCellColumnIndex=1 tableCellRowIndex=1
+++++++++++staticText name='B2'
+++++++++++++inlineTextBox name='B2'
+++++column tableColumnIndex=0
+++++column tableColumnIndex=1
+++++tableHeaderContainer
+++grid tableRowCount=2 tableColumnCount=2

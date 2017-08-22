@@ -1,19 +1,19 @@
 rootWebArea
-++grid
-++++row selectable
-++++++columnHeader selectable name='Browser'
+++grid tableRowCount=2 tableColumnCount=2
+++++row selectable tableRowIndex=0
+++++++columnHeader selectable name='Browser' tableCellColumnIndex=0 tableCellRowIndex=0
 ++++++++staticText name='Browser'
 ++++++++++inlineTextBox name='Browser'
-++++++columnHeader selectable name='Rendering Engine'
+++++++columnHeader selectable name='Rendering Engine' tableCellColumnIndex=1 tableCellRowIndex=0
 ++++++++staticText name='Rendering Engine'
 ++++++++++inlineTextBox name='Rendering Engine'
-++++row selectable
-++++++cell selectable name='Chrome'
+++++row selectable tableRowIndex=1
+++++++cell selectable name='Chrome' tableCellColumnIndex=0 tableCellRowIndex=1
 ++++++++staticText name='Chrome'
 ++++++++++inlineTextBox name='Chrome'
-++++++cell selectable name='Blink'
+++++++cell selectable name='Blink' tableCellColumnIndex=1 tableCellRowIndex=1
 ++++++++staticText name='Blink'
 ++++++++++inlineTextBox name='Blink'
-++++column
-++++column
+++++column tableColumnIndex=0
+++++column tableColumnIndex=1
 ++++tableHeaderContainer
