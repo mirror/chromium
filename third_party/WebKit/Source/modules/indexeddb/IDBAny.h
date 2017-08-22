@@ -26,11 +26,14 @@
 #ifndef IDBAny_h
 #define IDBAny_h
 
-#include "core/dom/DOMStringList.h"
+#include <utility>
+
 #include "modules/ModulesExport.h"
+#include "modules/indexeddb/IDBDatabaseInfo.h"
 #include "modules/indexeddb/IDBKey.h"
 #include "modules/indexeddb/IDBValue.h"
 #include "platform/bindings/ScriptWrappable.h"
+#include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/text/WTFString.h"
@@ -46,8 +49,8 @@ class IDBObjectStore;
 // IDBAny is used for:
 //  * source of IDBCursor (IDBObjectStore or IDBIndex)
 //  * source of IDBRequest (IDBObjectStore, IDBIndex, IDBCursor, or null)
-//  * result of IDBRequest (IDBDatabase, IDBCursor, DOMStringList, undefined,
-//    integer, key or value)
+//  * result of IDBRequest (IDBDatabase, IDBCursor, Vector<IDBDatabaseInfo>,
+//    undefined, integer, key or value)
 //
 // This allows for lazy conversion to script values (via IDBBindingUtilities),
 // and avoids the need for many dedicated union types.
@@ -60,8 +63,8 @@ class MODULES_EXPORT IDBAny : public GarbageCollectedFinalized<IDBAny> {
   static IDBAny* Create(T* idb_object) {
     return new IDBAny(idb_object);
   }
-  static IDBAny* Create(DOMStringList* dom_string_list) {
-    return new IDBAny(dom_string_list);
+  static IDBAny* Create(HeapVector<IDBDatabaseInfo> database_info_list) {
+    return new IDBAny(std::move(database_info_list));
   }
   static IDBAny* Create(int64_t value) { return new IDBAny(value); }
   static IDBAny* Create(RefPtr<IDBValue> value) {
@@ -77,9 +80,9 @@ class MODULES_EXPORT IDBAny : public GarbageCollectedFinalized<IDBAny> {
   enum Type {
     kUndefinedType = 0,
     kNullType,
-    kDOMStringListType,
     kIDBCursorType,
     kIDBCursorWithValueType,
+    kIDBDatabaseInfoListType,
     kIDBDatabaseType,
     kIDBIndexType,
     kIDBObjectStoreType,
@@ -91,7 +94,7 @@ class MODULES_EXPORT IDBAny : public GarbageCollectedFinalized<IDBAny> {
 
   Type GetType() const { return type_; }
   // Use type() to figure out which one of these you're allowed to call.
-  DOMStringList* DomStringList() const;
+  const HeapVector<IDBDatabaseInfo>& IdbDatabaseInfoList() const;
   IDBCursor* IdbCursor() const;
   IDBCursorWithValue* IdbCursorWithValue() const;
   IDBDatabase* IdbDatabase() const;
@@ -104,7 +107,7 @@ class MODULES_EXPORT IDBAny : public GarbageCollectedFinalized<IDBAny> {
 
  private:
   explicit IDBAny(Type);
-  explicit IDBAny(DOMStringList*);
+  explicit IDBAny(HeapVector<IDBDatabaseInfo>);
   explicit IDBAny(IDBCursor*);
   explicit IDBAny(IDBDatabase*);
   explicit IDBAny(IDBIndex*);
@@ -117,7 +120,7 @@ class MODULES_EXPORT IDBAny : public GarbageCollectedFinalized<IDBAny> {
   const Type type_;
 
   // Only one of the following should ever be in use at any given time.
-  const Member<DOMStringList> dom_string_list_;
+  const HeapVector<IDBDatabaseInfo> idb_database_info_list_;
   const Member<IDBCursor> idb_cursor_;
   const Member<IDBDatabase> idb_database_;
   const Member<IDBIndex> idb_index_;

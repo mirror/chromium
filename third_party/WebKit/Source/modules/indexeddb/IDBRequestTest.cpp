@@ -54,6 +54,7 @@
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/platform/WebURLResponse.h"
 #include "public/platform/modules/indexeddb/WebIDBCallbacks.h"
+#include "public/platform/modules/indexeddb/WebIDBDatabaseInfo.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "v8/include/v8.h"
 
@@ -114,7 +115,7 @@ void EnsureIDBCallbacksDontThrow(IDBRequest* request,
   request->HandleResponse();
   request->HandleResponse(IDBKey::CreateInvalid(), IDBKey::CreateInvalid(),
                           IDBValue::Create());
-  request->EnqueueResponse(Vector<String>());
+  request->EnqueueResponse(Vector<WebIDBDatabaseInfo>());
 
   EXPECT_TRUE(!exception_state.HadException());
 }
