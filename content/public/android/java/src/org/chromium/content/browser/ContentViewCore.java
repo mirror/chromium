@@ -1918,6 +1918,7 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
             mWebContentsAccessibility = WebContentsAccessibility.create(mContext, mContainerView,
                     mWebContents, mRenderCoordinates, mShouldSetAccessibilityFocusOnPageLoad);
             mWebContentsAccessibility.enable();
+            return mWebContentsAccessibility.getAccessibilityNodeProvider();
         }
         return null;
     }
