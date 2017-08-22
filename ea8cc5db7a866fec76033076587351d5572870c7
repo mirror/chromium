@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c132a40c_bb39b1cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-08-22T21:52:08Z",
+      "side": 1,
+      "message": "The BrowserActionsService is only responsible for creating/updating notifications. Tab creation is handled by the delegate and notify this by intents.",
+      "parentUuid": "d096866f_7b55188e",
+      "range": {
+        "startLine": 31,
+        "startChar": 43,
+        "endLine": 31,
+        "endChar": 50
+      },
+      "revId": "ea8cc5db7a866fec76033076587351d5572870c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e30bf868_6747abbb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1136dbf4_4d34ca80",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-08-22T21:52:08Z",
+      "side": 1,
+      "message": "From the comment of startForeground(), looks like it make the notification ongoing already until we call stopForeground(false). Then the notification will not be auto cancelled but user can manually dismiss it.",
+      "parentUuid": "e30bf868_6747abbb",
+      "range": {
+        "startLine": 108,
+        "startChar": 25,
+        "endLine": 108,
+        "endChar": 39
+      },
+      "revId": "ea8cc5db7a866fec76033076587351d5572870c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0385b24_14b0f919",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 1
@@ -83,6 +131,30 @@
       "writtenOn": "2017-08-22T04:38:50Z",
       "side": 1,
       "message": "This won\u0027t work if we\u0027re in the foreground.  Just confirming that\u0027s clear.",
+      "range": {
+        "startLine": 140,
+        "startChar": 23,
+        "endLine": 140,
+        "endChar": 55
+      },
+      "revId": "ea8cc5db7a866fec76033076587351d5572870c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c68386fe_e9f166ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-08-22T21:52:08Z",
+      "side": 1,
+      "message": "Yes, I find that if stopForeground() isn\u0027t called, notification cannot be dismissed. So add another action ACTION_TAB_CREATION_CRHOME_DISPLAYED to force stopping the service and dismiss the notification.",
+      "parentUuid": "a0385b24_14b0f919",
       "range": {
         "startLine": 140,
         "startChar": 23,
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "84fb8598_25c2eed4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-08-22T21:52:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d696f28_212f173a",
+      "range": {
+        "startLine": 157,
+        "startChar": 16,
+        "endLine": 157,
+        "endChar": 34
+      },
+      "revId": "ea8cc5db7a866fec76033076587351d5572870c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b687d67_0cdddad0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 1
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "c57b746f_9f5551d6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-08-22T21:52:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b687d67_0cdddad0",
+      "range": {
+        "startLine": 165,
+        "startChar": 27,
+        "endLine": 165,
+        "endChar": 52
+      },
+      "revId": "ea8cc5db7a866fec76033076587351d5572870c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b05d819_44bd289a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 1
@@ -152,6 +272,30 @@
       "writtenOn": "2017-08-22T04:38:50Z",
       "side": 1,
       "message": "We can\u0027t call this unless we\u0027re in the foreground.  IMO just check that your stuff all works on Android O :).",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 185,
+        "endChar": 37
+      },
+      "revId": "ea8cc5db7a866fec76033076587351d5572870c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb11edbb_8d1b1e28",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-08-22T21:52:08Z",
+      "side": 1,
+      "message": "Test it works ok on Android O device.",
+      "parentUuid": "7b05d819_44bd289a",
       "range": {
         "startLine": 185,
         "startChar": 8,
