@@ -165,6 +165,10 @@ class MockRenderProcessHost : public RenderProcessHost {
   void OverrideBinderForTesting(const std::string& interface_name,
                                 const InterfaceBinder& binder);
 
+ protected:
+  std::unique_ptr<mojo::AssociatedInterfacePtr<mojom::Renderer>>
+      renderer_interface_;
+
  private:
   // Stores IPC messages that would have been sent to the renderer.
   IPC::TestSink sink_;
@@ -184,8 +188,6 @@ class MockRenderProcessHost : public RenderProcessHost {
   bool is_unused_;
   std::unique_ptr<base::ProcessHandle> process_handle;
   int keep_alive_ref_count_;
-  std::unique_ptr<mojo::AssociatedInterfacePtr<mojom::Renderer>>
-      renderer_interface_;
   std::map<std::string, InterfaceBinder> binder_overrides_;
   std::unique_ptr<resource_coordinator::ResourceCoordinatorInterface>
       process_resource_coordinator_;
