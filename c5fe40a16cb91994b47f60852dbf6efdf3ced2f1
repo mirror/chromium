@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ffd1ece_b7238c1c",
+        "filename": "chrome/renderer/chrome_render_view_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-22T05:10:23Z",
+      "side": 1,
+      "message": ";",
+      "revId": "c5fe40a16cb91994b47f60852dbf6efdf3ced2f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
