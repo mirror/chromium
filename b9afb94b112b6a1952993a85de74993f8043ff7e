@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b25f359_25f809e4",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-22T22:54:01Z",
+      "side": 1,
+      "message": "They are currently used by two downstream files. Some for ssl tests, one for testSearchByImage. There is potential to combine these, and since nothing upstream uses, maybe that\u0027s correct. Here are a few ideas.\n1. Combine these tests into one file, and have the helper there.\n2. Create a downstream helper for this code. The downside is having multiple locations to find code.\n\nDo you have any thoughts?",
+      "parentUuid": "4480c5cd_6158c721",
+      "revId": "b9afb94b112b6a1952993a85de74993f8043ff7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9efee9df_ad62c27f",
         "filename": "ios/chrome/test/earl_grey/chrome_earl_grey.h",
         "patchSetId": 2
