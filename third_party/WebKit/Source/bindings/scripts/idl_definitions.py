@@ -443,6 +443,8 @@ class IdlAttribute(TypedObject):
 
 class IdlConstant(TypedObject):
     def __init__(self, node):
+        # TODO(bashi): Need to update this constructor when we modify the
+        # parser.
         children = node.GetChildren()
         num_children = len(children)
         if num_children < 2 or num_children > 3:
@@ -511,21 +513,18 @@ class IdlLiteralNull(IdlLiteral):
 
 
 def default_node_to_idl_literal(node):
-    # FIXME: This code is unnecessarily complicated due to the rather
-    # inconsistent way the upstream IDL parser outputs default values.
-    # http://crbug.com/374178
     idl_type = node.GetProperty('TYPE')
+    value = node.GetProperty('VALUE')
     if idl_type == 'DOMString':
-        value = node.GetProperty('NAME')
         if '"' in value or '\\' in value:
             raise ValueError('Unsupported string value: %r' % value)
         return IdlLiteral(idl_type, value)
     if idl_type == 'integer':
-        return IdlLiteral(idl_type, int(node.GetProperty('NAME'), base=0))
+        return IdlLiteral(idl_type, int(value, base=0))
     if idl_type == 'float':
-        return IdlLiteral(idl_type, float(node.GetProperty('VALUE')))
+        return IdlLiteral(idl_type, float(value))
     if idl_type in ['boolean', 'sequence']:
-        return IdlLiteral(idl_type, node.GetProperty('VALUE'))
+        return IdlLiteral(idl_type, value)
     if idl_type == 'NULL':
         return IdlLiteralNull()
     raise ValueError('Unrecognized default value type: %s' % idl_type)

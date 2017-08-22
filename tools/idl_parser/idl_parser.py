@@ -370,9 +370,15 @@ class IDLParser(object):
                             self.BuildAttribute('VALUE', '[]'))
     elif type(p[1]) == str:
       p[0] = ListFromConcat(self.BuildAttribute('TYPE', 'DOMString'),
-                            self.BuildAttribute('NAME', p[1]))
+                            self.BuildAttribute('VALUE', p[1]))
     else:
-      p[0] = p[1]
+      # TODO(bashi): It's better to modify the ConstValue rule to return
+      #   the same tree as above trees (list of two attributes, the first
+      #   one is 'TYPE' and the second one is 'VALUE').
+      node_type = p[1][0].value
+      node_value = p[1][1].value
+      p[0] = ListFromConcat(self.BuildAttribute('TYPE', node_type),
+                            self.BuildAttribute('VALUE', node_value))
 
   def p_Inheritance(self, p):
     """Inheritance : ':' identifier
