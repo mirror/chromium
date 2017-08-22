@@ -35,8 +35,8 @@
 #include "chrome/test/base/testing_profile.h"
 #include "components/search_engines/default_search_manager.h"
 #include "components/search_engines/template_url_data.h"
-#include "extensions/browser/pref_names.h"
 #include "extensions/common/extension.h"
+#include "extensions/common/pref_names.h"
 #include "services/preferences/public/cpp/tracked/tracked_preference_histogram_names.h"
 
 #if defined(OS_CHROMEOS)

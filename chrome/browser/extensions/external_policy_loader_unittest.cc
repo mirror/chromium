@@ -18,9 +18,9 @@
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "extensions/browser/external_install_info.h"
 #include "extensions/browser/external_provider_interface.h"
-#include "extensions/browser/pref_names.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/manifest.h"
+#include "extensions/common/pref_names.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using content::BrowserThread;

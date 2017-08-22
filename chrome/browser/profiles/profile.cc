@@ -40,7 +40,7 @@
 #endif
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-#include "extensions/browser/pref_names.h"
+#include "extensions/common/pref_names.h"
 #endif
 
 #if DCHECK_IS_ON()

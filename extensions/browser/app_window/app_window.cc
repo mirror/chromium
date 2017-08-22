@@ -57,7 +57,7 @@
 
 #if !defined(OS_MACOSX)
 #include "components/prefs/pref_service.h"
-#include "extensions/browser/pref_names.h"
+#include "extensions/common/pref_names.h"
 #endif
 
 using content::BrowserContext;

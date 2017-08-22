@@ -8,7 +8,7 @@
 #include "chrome/browser/extensions/api/content_settings/content_settings_store.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_prefs_scope.h"
-#include "extensions/browser/pref_names.h"
+#include "extensions/common/pref_names.h"
 
 namespace extensions {
 

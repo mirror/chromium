@@ -14,7 +14,7 @@
 #include "components/policy/core/common/schema_map.h"
 #include "components/policy/core/common/schema_registry.h"
 #include "components/prefs/pref_value_map.h"
-#include "extensions/browser/pref_names.h"
+#include "extensions/common/pref_names.h"
 
 namespace policy {
 

@@ -14,7 +14,7 @@
 #include "components/policy/core/common/schema.h"
 #include "components/policy/policy_constants.h"
 #include "components/prefs/pref_value_map.h"
-#include "extensions/browser/pref_names.h"
+#include "extensions/common/pref_names.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace extensions {

@@ -28,10 +28,10 @@
 #include "extensions/browser/extension_prefs_observer.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/install_flag.h"
-#include "extensions/browser/pref_names.h"
 #include "extensions/common/manifest.h"
 #include "extensions/common/permissions/permission_set.h"
 #include "extensions/common/permissions/permissions_info.h"
+#include "extensions/common/pref_names.h"
 #include "extensions/common/url_pattern.h"
 #include "extensions/common/user_script.h"
 

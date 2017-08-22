@@ -17,8 +17,8 @@
 #include "components/policy/policy_constants.h"
 #include "components/prefs/pref_value_map.h"
 #include "components/strings/grit/components_strings.h"
-#include "extensions/browser/pref_names.h"
 #include "extensions/common/extension.h"
+#include "extensions/common/pref_names.h"
 #include "url/gurl.h"
 
 namespace extensions {

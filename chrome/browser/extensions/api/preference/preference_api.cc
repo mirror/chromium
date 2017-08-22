@@ -44,10 +44,10 @@
 #include "extensions/browser/extension_prefs_factory.h"
 #include "extensions/browser/extension_system_provider.h"
 #include "extensions/browser/extensions_browser_client.h"
-#include "extensions/browser/pref_names.h"
 #include "extensions/common/error_utils.h"
 #include "extensions/common/permissions/api_permission.h"
 #include "extensions/common/permissions/permissions_data.h"
+#include "extensions/common/pref_names.h"
 #include "media/media_features.h"
 
 #if defined(OS_CHROMEOS)

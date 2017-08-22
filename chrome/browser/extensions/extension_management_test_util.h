@@ -11,8 +11,8 @@
 #include "base/macros.h"
 #include "base/values.h"
 #include "chrome/browser/extensions/extension_management_constants.h"
-#include "extensions/browser/pref_names.h"
 #include "extensions/common/extension_id.h"
+#include "extensions/common/pref_names.h"
 
 namespace policy {
 class MockConfigurationPolicyProvider;

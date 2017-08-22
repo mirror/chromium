@@ -13,7 +13,7 @@
 #include "chrome/browser/extensions/policy_handlers.h"
 #include "components/policy/core/common/policy_map.h"
 #include "components/prefs/pref_value_map.h"
-#include "extensions/browser/pref_names.h"
+#include "extensions/common/pref_names.h"
 #include "net/url_request/url_request_context_getter.h"
 
 namespace chromeos {

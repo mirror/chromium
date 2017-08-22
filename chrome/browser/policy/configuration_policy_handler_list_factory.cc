@@ -87,8 +87,8 @@
 #include "chrome/browser/extensions/api/messaging/native_messaging_policy_handler.h"
 #include "chrome/browser/extensions/extension_management_constants.h"
 #include "chrome/browser/extensions/policy_handlers.h"
-#include "extensions/browser/pref_names.h"
 #include "extensions/common/manifest.h"
+#include "extensions/common/pref_names.h"
 #endif
 
 #if BUILDFLAG(ENABLE_PLUGINS)

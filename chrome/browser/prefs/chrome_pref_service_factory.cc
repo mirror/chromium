@@ -67,7 +67,7 @@
 #include "ui/base/resource/resource_bundle.h"
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
-#include "extensions/browser/pref_names.h"
+#include "extensions/common/pref_names.h"
 #endif
 
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)

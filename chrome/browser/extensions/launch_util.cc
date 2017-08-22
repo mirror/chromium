@@ -14,8 +14,8 @@
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
-#include "extensions/browser/pref_names.h"
 #include "extensions/common/extension.h"
+#include "extensions/common/pref_names.h"
 
 #if defined(USE_ASH)
 #include "ash/shell.h"  // nogncheck

@@ -11,7 +11,7 @@
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
-#include "extensions/browser/pref_names.h"
+#include "extensions/common/pref_names.h"
 
 namespace extensions {
 
