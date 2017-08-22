@@ -4,10 +4,6 @@
 
 static_library("client") {
   sources = [
-    "audio_player.cc",
-    "audio_player.h",
-    "audio_player_android.cc",
-    "audio_player_android.h",
     "chromoting_client.cc",
     "chromoting_client.h",
     "chromoting_session.cc",
@@ -41,6 +37,7 @@ static_library("client") {
 
   deps = [
     "//remoting/base",
+    "//remoting/client/audio",
     "//remoting/codec:decoder",
     "//remoting/protocol",
     "//third_party/libyuv",
@@ -84,6 +81,8 @@ source_set("unit_tests") {
     "client_telemetry_logger_unittest.cc",
     "dual_buffer_frame_consumer_unittest.cc",
     "empty_cursor_filter_unittest.cc",
+
+    #    "queued_audio_player_unittest.cc",
     "queued_task_poster_unittest.cc",
     "software_video_renderer_unittest.cc",
   ]

@@ -18,6 +18,7 @@
 
 namespace remoting {
 
+// TODO(nicholss): Update legacy audio player to use new audio buffer code.
 class AudioPlayer : public protocol::AudioStub {
  public:
   // The number of channels in the audio stream (only supporting stereo audio
