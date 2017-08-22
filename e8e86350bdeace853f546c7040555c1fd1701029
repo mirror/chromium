@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b26366b8_e36c85c6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T22:31:08Z",
+      "side": 0,
+      "message": "Revert to the old name",
+      "revId": "e8e86350bdeace853f546c7040555c1fd1701029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

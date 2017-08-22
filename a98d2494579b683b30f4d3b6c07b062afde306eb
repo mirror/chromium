@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3058a5cc_3ea6f542",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T22:31:08Z",
+      "side": 1,
+      "message": "Is anything using this method?",
+      "range": {
+        "startLine": 461,
+        "startChar": 8,
+        "endLine": 461,
+        "endChar": 15
+      },
+      "revId": "a98d2494579b683b30f4d3b6c07b062afde306eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "754558fd_44d2f0a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadManagerToolbar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T22:31:08Z",
+      "side": 1,
+      "message": "Does this need to be public anymore?",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 10
+      },
+      "revId": "a98d2494579b683b30f4d3b6c07b062afde306eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bef9708_3ab1c183",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T22:31:08Z",
+      "side": 1,
+      "message": "@return The number of items...",
+      "range": {
+        "startLine": 470,
+        "startChar": 8,
+        "endLine": 470,
+        "endChar": 15
+      },
+      "revId": "a98d2494579b683b30f4d3b6c07b062afde306eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c902cc4e_ae2f9402",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManagerToolbar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T22:31:08Z",
+      "side": 1,
+      "message": "Does this need to be public anymore?",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 10
+      },
+      "revId": "a98d2494579b683b30f4d3b6c07b062afde306eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85bb7fcf_885ae1ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T22:31:08Z",
+      "side": 1,
+      "message": "Instead of making this protected, let\u0027s expose an updateSearchMenuItemVisibility(boolean isVisible) similar to #updateInfoMenuItem().",
+      "range": {
+        "startLine": 125,
+        "startChar": 4,
+        "endLine": 125,
+        "endChar": 13
+      },
+      "revId": "a98d2494579b683b30f4d3b6c07b062afde306eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39da0685_60262570",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-22T22:31:08Z",
+      "side": 1,
+      "message": "Another approach that may be easier is to track whether the selectable list has any items with a boolean e.g. mSelectableListHasItems \u003d numItems !\u003d 0.\n\nThat boolean could be used in showNormalView() to determine whether to reset search button visibility:\n\npublic void showNormalView() {\n    ....\n    if (mHasSearchView) {\n        mSearchView.setVisibility(View.GONE);\n        getMenu().findItem(mSearchMenuItemId).setVisibile(mSelectableListHasItems);\n    }\n    ...\n}\n\n\nI think this is my preference since it consolidates the changes into this one class that\u0027s already aware of when the search button should be visible.",
+      "revId": "a98d2494579b683b30f4d3b6c07b062afde306eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
