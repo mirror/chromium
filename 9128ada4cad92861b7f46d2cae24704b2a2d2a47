@@ -99,6 +99,24 @@
       "revId": "9128ada4cad92861b7f46d2cae24704b2a2d2a47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c8198a_df46606c",
+        "filename": "chrome/browser/ui/search/instant_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-22T08:13:23Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "38b84eb6_0c943d69",
+      "revId": "9128ada4cad92861b7f46d2cae24704b2a2d2a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
