@@ -11,6 +11,8 @@
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "components/url_formatter/url_formatter.h"
+#include "net/base/escape.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -160,10 +162,8 @@ TEST(TextEliderTest, TestMoreEliding) {
        "www/\xe4\xbd\xa0\xe5\xa5\xbd?q=\xe4\xbd\xa0\xe5\xa5\xbd#\xe4\xbd\xa0"},
 
       // Invalid unescaping for path. The ref will always be valid UTF-8. We
-      // don't
-      // bother to do too many edge cases, since these are handled by the
-      // escaper
-      // unittest.
+      // don't bother to do too many edge cases, since these are handled by the
+      // escaper unittest.
       {"http://www/%E4%A0%E5%A5%BD?q=%E4%BD%A0%E5%A5%BD#\xe4\xbd\xa0",
        "www/%E4%A0%E5%A5%BD?q=\xe4\xbd\xa0\xe5\xa5\xbd#\xe4\xbd\xa0"},
   };
@@ -527,6 +527,131 @@ TEST(TextEliderTest, FormatOriginForSecurityDisplay) {
       url::Origin(GURL()), url_formatter::SchemeDisplay::OMIT_CRYPTOGRAPHIC);
   EXPECT_EQ(base::string16(), formatted_omit_scheme)
       << "Explicitly test the url::Origin which takes an empty, invalid URL";
+}
+
+// Verify that a URL passes through an explicit sequence of truncated strings as
+// it is progressively shortened. This helps guarantee that transitional corner
+// cases are handled properly. The original URL is the first string in the
+// vector.
+void RunProgressiveElisionTest(const std::vector<std::string>& strings) {
+  const gfx::FontList font_list;
+  ASSERT_GT(strings.size(), 0u);
+  const GURL url(strings[0]);
+
+  size_t i = 0;
+  const ssize_t total_width =
+      gfx::GetStringWidth(base::UTF8ToUTF16(strings[0]), font_list);
+  url::Parsed parsed;
+  const base::string16 unelided_text = url_formatter::FormatUrl(
+      url, url_formatter::kFormatUrlOmitDefaults, net::UnescapeRule::NORMAL,
+      &parsed, nullptr, nullptr);
+
+  for (ssize_t width = total_width; width >= 0 && i < strings.size(); --width) {
+    url::Parsed new_parsed;
+    auto elided = url_formatter::SecurelyElideFormattedUrl(
+        url, unelided_text, parsed, font_list, width, &new_parsed);
+    if (elided != base::UTF8ToUTF16(strings[i])) {
+      ++i;
+      if (i == strings.size()) {
+        break;
+      }
+    }
+    EXPECT_EQ(base::UTF8ToUTF16(strings[i]), elided);
+  }
+}
+
+// Test eliding of commonplace URLs.
+TEST(SecureElisionTest, TestProgressiveEliding) {
+  const std::string kEllipsis(gfx::kEllipsis);
+  const std::vector<std::string> testcases = {
+      {"https://www.abc.com/def/"},
+      {"https://www.abc.com/d" + kEllipsis},
+      {"https://www.abc.com/" + kEllipsis},
+      {"www.abc.com/def/"},
+      {"www.abc.com/d" + kEllipsis},
+      {"www.abc.com/" + kEllipsis},
+      {kEllipsis + "w.abc.com/" + kEllipsis},
+      {kEllipsis + ".abc.com/" + kEllipsis},
+      {kEllipsis + "abc.com/" + kEllipsis},
+      {kEllipsis + "bc.com/" + kEllipsis},
+      {kEllipsis + "c.com/" + kEllipsis},
+      {kEllipsis + ".com/" + kEllipsis},
+      {kEllipsis + "com/" + kEllipsis},
+      {kEllipsis + "om/" + kEllipsis},
+      {kEllipsis + "m/" + kEllipsis},
+      {kEllipsis + "/" + kEllipsis},
+      {kEllipsis},
+      {""},
+  };
+  RunProgressiveElisionTest(testcases);
+}
+
+void RunSecureElisionTest(Testcase* testcases, size_t num_testcases) {
+  const gfx::FontList font_list;
+  for (size_t i = 0; i < num_testcases; ++i) {
+    const GURL url(testcases[i].input);
+    const float available_width =
+        gfx::GetStringWidthF(base::UTF8ToUTF16(testcases[i].output), font_list);
+
+    url::Parsed parsed;
+    const base::string16 unelided_text = url_formatter::FormatUrl(
+        url, url_formatter::kFormatUrlOmitDefaults, net::UnescapeRule::NORMAL,
+        &parsed, nullptr, nullptr);
+
+    url::Parsed new_parsed;
+    auto elided = url_formatter::SecurelyElideFormattedUrl(
+        url, unelided_text, parsed, font_list, available_width, &new_parsed);
+
+    EXPECT_EQ(base::UTF8ToUTF16(testcases[i].output), elided);
+  }
+}
+
+// Test eliding of commonplace URLs.
+TEST(SecureElisionTest, TestGeneralEliding) {
+  const std::string kEllipsisStr(gfx::kEllipsis);
+  Testcase testcases[] = {
+      {"https://www.google.com/intl/en/ads/",
+       "https://www.google.com/intl/en/ads/"},
+      {"https://www.google.com/intl/en/ads/",
+       "https://www.google.com/intl/en/a" + kEllipsisStr},
+      {"https://www.google.com/intl/en/ads/",
+       "https://www.google.com/i" + kEllipsisStr},
+      {"https://www.google.com/intl/en/ads/",
+       "https://www.google.com/" + kEllipsisStr},
+      {"https://www.google.com/intl/en/ads/",
+       "www.google.com/intl" + kEllipsisStr},
+      {"https://www.google.com/intl/en/ads/", "www.google.com/" + kEllipsisStr},
+      {"https://www.google.com/intl/en/ads/",
+       kEllipsisStr + "google.com/" + kEllipsisStr},
+      {"https://www.google.com/intl/en/ads/",
+       kEllipsisStr + "oogle.com/" + kEllipsisStr},
+      {"https://www.google.com/intl/en/ads/",
+       kEllipsisStr + "m/" + kEllipsisStr},
+
+      // HTTPS with no path.
+      {"https://www.google.com/", "https://www.google.com"},
+      {"https://www.google.com/", "www.google.com"},
+      {"https://www.google.com/", kEllipsisStr + "google.com"},
+
+      // HTTP (scheme is stripped first).
+      {"http://www.google.com/intl/en/ads/", "www.google.com/intl/en/ads/"},
+      {"http://www.google.com/intl/en/ads/",
+       "www.google.com/intl" + kEllipsisStr},
+      {"http://www.google.com/intl/en/ads/", "www.google.com/" + kEllipsisStr},
+      {"http://www.google.com/intl/en/ads/",
+       kEllipsisStr + "w.google.com/" + kEllipsisStr},
+
+      // HTTP with no path.
+      {"http://www.google.com/", "www.google.com"},
+      {"http://www.google.com/", kEllipsisStr + "google.com"},
+
+      // File URLs.
+      {"file:///C:/path1/path2", "file:///C:/path1/path2"},
+      {"file:///C:/path1/path2", "file:///C:/path1/" + kEllipsisStr},
+      {"file:///C:/path1/path2", "fil" + kEllipsisStr},
+  };
+
+  RunSecureElisionTest(testcases, arraysize(testcases));
 }
 
 }  // namespace
