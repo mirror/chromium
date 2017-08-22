@@ -159,6 +159,12 @@ PaintLayerScrollableArea::~PaintLayerScrollableArea() {
 #endif
 }
 
+void PaintLayerScrollableArea::DidScroll(const gfx::ScrollOffset& offset) {
+  ScrollableArea::DidScroll(offset);
+  // Ensure that there is no dangling pointer to a deleted object.
+  CHECK(!has_been_disposed_);
+}
+
 void PaintLayerScrollableArea::Dispose() {
   if (InResizeMode() && !Box().DocumentBeingDestroyed()) {
     if (LocalFrame* frame = Box().GetFrame())

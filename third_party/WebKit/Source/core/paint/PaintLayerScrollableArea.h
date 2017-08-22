@@ -246,6 +246,8 @@ class CORE_EXPORT PaintLayerScrollableArea final
   // only a helper.
   GraphicsLayer* LayerForScrolling() const override;
 
+  void DidScroll(const gfx::ScrollOffset&) override;
+
   // GraphicsLayers for the scrolling components.
   //
   // Any function can return nullptr if they are not accelerated.
