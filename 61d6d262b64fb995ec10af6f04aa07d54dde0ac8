@@ -46,6 +46,30 @@
       "revId": "61d6d262b64fb995ec10af6f04aa07d54dde0ac8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95190e56_6f0bf48d",
+        "filename": "cc/output/direct_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-22T03:59:28Z",
+      "side": 1,
+      "message": "not sure the scissor part is critical but it shouldn\u0027t hurt. lgtm.",
+      "parentUuid": "295d0397_c50d2343",
+      "range": {
+        "startLine": 632,
+        "startChar": 2,
+        "endLine": 637,
+        "endChar": 3
+      },
+      "revId": "61d6d262b64fb995ec10af6f04aa07d54dde0ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
