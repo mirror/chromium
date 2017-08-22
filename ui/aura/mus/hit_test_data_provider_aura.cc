@@ -43,15 +43,16 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
       gfx::Rect rect_mouse(child->bounds());
       gfx::Rect rect_touch;
       bool touch_and_mouse_are_same = true;
-      const WindowMus* window_mus = WindowMus::Get(child);
       const WindowPortMus* window_port = WindowPortMus::Get(child);
       // TODO(varkha): Use a surface ID for windows that submit their own
       // compositor frames and a frame sink ID otherwise.
-      viz::SurfaceId surface_id(window_port->frame_sink_id(),
-                                window_mus->GetLocalSurfaceId());
-      uint32_t flags = window_port->client_surface_embedder()
-                           ? viz::mojom::kHitTestChildSurface
-                           : viz::mojom::kHitTestMine;
+      const viz::SurfaceInfo* surface_info =
+          child->layer()->GetPrimarySurfaceInfo();
+      uint32_t flags = surface_info ? viz::mojom::kHitTestChildSurface
+                                    : viz::mojom::kHitTestMine;
+      viz::SurfaceId surface_id;
+      if (surface_info)
+        surface_id = surface_info->id();
       // Use the |targeter| to query for possibly expanded hit-test area.
       // Use the |child| bounds with mouse and touch flags when there is no
       // |targeter|.
@@ -72,6 +73,7 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
           if (rect.IsEmpty())
             continue;
           auto hit_test_region = viz::mojom::HitTestRegion::New();
+          hit_test_region->frame_sink_id = window_port->frame_sink_id();
           hit_test_region->surface_id = surface_id;
           hit_test_region->flags =
               flags | viz::mojom::kHitTestMouse | viz::mojom::kHitTestTouch;
@@ -83,6 +85,7 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
         // The |child| has possibly same mouse and touch hit-test areas.
         if (!rect_mouse.IsEmpty()) {
           auto hit_test_region = viz::mojom::HitTestRegion::New();
+          hit_test_region->frame_sink_id = window_port->frame_sink_id();
           hit_test_region->surface_id = surface_id;
           hit_test_region->flags =
               flags | (touch_and_mouse_are_same ? (viz::mojom::kHitTestMouse |
@@ -94,6 +97,7 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
         }
         if (!touch_and_mouse_are_same && !rect_touch.IsEmpty()) {
           auto hit_test_region = viz::mojom::HitTestRegion::New();
+          hit_test_region->frame_sink_id = window_port->frame_sink_id();
           hit_test_region->surface_id = surface_id;
           hit_test_region->flags = flags | viz::mojom::kHitTestTouch;
           hit_test_region->rect = rect_touch;
