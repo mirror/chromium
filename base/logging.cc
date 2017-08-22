@@ -71,6 +71,7 @@ typedef pthread_mutex_t* MutexHandle;
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/lock_impl.h"
 #include "base/threading/platform_thread.h"
+#include "base/threading/thread_local.h"
 #include "base/vlog.h"
 #if defined(OS_POSIX)
 #include "base/posix/safe_strerror.h"
@@ -81,6 +82,9 @@ typedef pthread_mutex_t* MutexHandle;
 #endif
 
 namespace logging {
+
+using ::base::LazyInstance;
+using ::base::ThreadLocalPointer;
 
 namespace {
 
@@ -134,6 +138,13 @@ base::LazyInstance<std::stack<LogAssertHandlerFunction>>::Leaky
 
 // A log message handler that gets notified of every log message we process.
 LogMessageHandlerFunction log_message_handler = nullptr;
+
+LazyInstance<ThreadLocalPointer<ScopedLogger*>>::Leaky g_scoped_loggers =
+    LAZY_INSTANCE_INITIALIZER;
+
+void PrintStderr(const char* format, va_list args) {
+  vfprintf(stderr, format, args);
+}
 
 // Helper functions to wrap platform differences.
 
@@ -978,6 +989,92 @@ BASE_EXPORT void LogErrorNotReached(const char* file, int line) {
   LogMessage(file, line, LOG_ERROR).stream()
       << "NOTREACHED() hit.";
 }
+
+ScopedLogger::ScopedLogger(const char* format, ...)
+    : m_parent(current()), m_multiline(false) {
+  va_list args;
+  va_start(args, format);
+  init(format, args);
+  va_end(args);
+}
+
+ScopedLogger::ScopedLogger(ScopedLogger&& o)
+    : m_parent(o.m_parent), m_multiline(o.m_multiline) {
+  current() = this;
+}
+
+ScopedLogger::~ScopedLogger() {
+  if (current() == this) {
+    if (m_multiline)
+      indent();
+    else
+      print(" ");
+    print(")\n");
+    current() = m_parent;
+  }
+}
+
+void ScopedLogger::init(const char* format, va_list args) {
+  current() = this;
+  if (m_parent)
+    m_parent->writeNewlineIfNeeded();
+  indent();
+  print("( ");
+  m_printFunc(format, args);
+}
+
+void ScopedLogger::writeNewlineIfNeeded() {
+  if (!m_multiline) {
+    print("\n");
+    m_multiline = true;
+  }
+}
+
+void ScopedLogger::indent() {
+  if (m_parent) {
+    m_parent->indent();
+    printIndent();
+  }
+}
+
+void ScopedLogger::log(const char* format, ...) {
+  if (current() != this)
+    return;
+
+  va_list args;
+  va_start(args, format);
+
+  writeNewlineIfNeeded();
+  indent();
+  printIndent();
+  m_printFunc(format, args);
+  print("\n");
+
+  va_end(args);
+}
+
+void ScopedLogger::print(const char* format, ...) {
+  va_list args;
+  va_start(args, format);
+  m_printFunc(format, args);
+  va_end(args);
+}
+
+void ScopedLogger::printIndent() {
+  print("  ");
+}
+
+ScopedLogger*& ScopedLogger::current() {
+  ThreadLocalPointer<ScopedLogger*>& tlp = g_scoped_loggers.Get();
+  ScopedLogger** tlp_val = tlp.Get();
+  if (!tlp_val) {
+    tlp_val = new ScopedLogger*();
+    tlp.Set(tlp_val);
+  }
+  return *tlp_val;
+}
+
+ScopedLogger::PrintFunctionPtr ScopedLogger::m_printFunc = PrintStderr;
 
 }  // namespace logging
 
