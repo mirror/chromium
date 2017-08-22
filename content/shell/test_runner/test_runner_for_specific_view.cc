@@ -103,7 +103,7 @@ void TestRunnerForSpecificView::Reset() {
 #endif
     web_view()->SetVisibilityState(kWebPageVisibilityStateVisible, true);
     if (web_view()->MainFrame()->IsWebLocalFrame()) {
-      web_view()->MainFrame()->EnableViewSourceMode(false);
+      web_view()->MainFrame()->ToWebLocalFrame()->EnableViewSourceMode(false);
       web_view()->SetTextZoomFactor(1);
       web_view()->SetZoomLevel(0);
     }
