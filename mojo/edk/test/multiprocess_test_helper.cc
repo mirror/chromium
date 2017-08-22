@@ -35,6 +35,9 @@
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
 #include "base/mac/mach_port_broker.h"
+#elif defined(OS_ANDROID)
+#include "base/test/multiprocess_test_android.h"
+#include "mojo/edk/jni/MultiprocessTestLauncherDelegate_jni.h"
 #endif
 
 namespace mojo {
@@ -174,8 +177,18 @@ ScopedMessagePipeHandle MultiprocessTestHelper::StartChildWithExtraSwitch(
         ConnectionParams(TransportProtocol::kLegacy, std::move(server_handle)));
   }
 
+#if defined(OS_ANDROID)
+  JNIEnv* env = base::android::AttachCurrentThread();
+  // TODO(crbug.com/699311): create the parcelable channel and pass them to the
+  // MultiprocessTestLauncherDelegate (so they are passed to the child process)
+  // pass them also in the ConnectionParams below.
+  test_child_ = base::SpawnMultiProcessTestChildWithDelegate(
+      test_child_main, command_line, options,
+      Java_MultiprocessTestLauncherDelegate_create(env, nullptr));
+#else
   test_child_ =
       base::SpawnMultiProcessTestChild(test_child_main, command_line, options);
+#endif
   if (launch_type == LaunchType::CHILD || launch_type == LaunchType::PEER)
     channel.ChildProcessLaunched();
 

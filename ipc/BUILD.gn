@@ -243,6 +243,10 @@ if (!is_ios) {
     if (!is_nacl_nonsfi) {
       sources += [ "ipc_message_protobuf_utils_unittest.cc" ]
     }
+
+    if (is_android) {
+      deps += [ "//mojo/edk/test:test_support_java" ]
+    }
   }
 
   test("ipc_perftests") {
@@ -263,6 +267,10 @@ if (!is_ios) {
       "//mojo/edk/test:test_support_impl",
       "//testing/gtest",
     ]
+
+    if (is_android) {
+      deps += [ "//mojo/edk/test:test_support_java" ]
+    }
   }
 
   static_library("test_support") {

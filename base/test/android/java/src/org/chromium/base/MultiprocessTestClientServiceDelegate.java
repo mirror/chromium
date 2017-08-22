@@ -17,6 +17,8 @@ import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.base.process_launcher.ChildProcessServiceDelegate;
 import org.chromium.native_test.MainRunner;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 /** Implementation of the ChildProcessServiceDelegate used for the Multiprocess tests. */
@@ -51,6 +53,28 @@ public class MultiprocessTestClientServiceDelegate implements ChildProcessServic
     @Override
     public void onConnectionSetup(Bundle connectionBundle, List<IBinder> callbacks) {
         mTestCallback = ITestCallback.Stub.asInterface(callbacks.get(0));
+        String initClassName = connectionBundle.getString(
+                MultiprocessTestClientLauncher.DELEGATE_INIT_CLASS_EXTRA);
+        if (initClassName != null) {
+            // We use reflection as a way to customize the service without having to declare a new
+            // service for each customization.
+            try {
+                Class<?> initClass = Class.forName(initClassName);
+                Method initMethod =
+                        initClass.getMethod("initializeMultiprocessTestService", List.class);
+                initMethod.invoke(null /* object */, callbacks.subList(1, callbacks.size()));
+            } catch (ClassNotFoundException cnfe) {
+                Log.e(TAG, "Failed to find initialization delegate class " + initClassName);
+            } catch (NoSuchMethodException nsme) {
+                Log.e(TAG,
+                        "Failed to perform delegate initialization, no initialize method in "
+                                + " class " + initClassName);
+            } catch (IllegalAccessException iae) {
+                Log.e(TAG, "Failed to access initialization delegate class " + initClassName, iae);
+            } catch (InvocationTargetException ite) {
+                Log.e(TAG, "Failed to invoke initialization delegate class " + initClassName, ite);
+            }
+        }
     }
 
     @Override

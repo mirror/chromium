@@ -33,6 +33,10 @@ static_library("test_support") {
     "//mojo/public/cpp/system",
     "//testing/gtest",
   ]
+
+  if (is_android) {
+    deps += [ ":test_support_jni_headers" ]
+  }
 }
 
 source_set("run_all_unittests") {
@@ -133,4 +137,27 @@ test("mojo_public_system_unittests") {
     ":run_all_unittests",
     "//mojo/public/cpp/system/tests",
   ]
+}
+
+if (is_android) {
+  generate_jni("test_support_jni_headers") {
+    jni_package = "mojo/edk"
+    sources = [
+      "android/java/src/org/chromium/mojo/edk/MultiprocessTestLauncherDelegate.java",
+    ]
+  }
+
+  android_library("test_support_java") {
+    testonly = true
+    deps = [
+      "//base:base_java",
+      "//base/test:test_support_java",
+      "//third_party/android_tools:android_support_annotations_java",
+      "//third_party/jsr-305:jsr_305_javalib",
+    ]
+    java_files = [
+      "android/java/src/org/chromium/mojo/edk/MultiprocessTestLauncherDelegate.java",
+      "android/java/src/org/chromium/mojo/edk/MultiprocessTestServiceHelper.java",
+    ]
+  }
 }
