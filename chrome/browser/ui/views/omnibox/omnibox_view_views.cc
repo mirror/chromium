@@ -602,14 +602,13 @@ void OmniboxViewViews::EmphasizeURLComponents() {
   if (!location_bar_view_)
     return;
 
-  // If the current contents is a URL, force left-to-right rendering at the
-  // paragraph level. Right-to-left runs are still rendered RTL, but will not
-  // flip the whole URL around. For example (if "ABC" is Hebrew), this will
-  // render "ABC.com" as "CBA.com", rather than "com.CBA".
+  // If the current contents is a URL, ensure it is rendered as a URL from a
+  // bidi standpoint (segments from left to right).
   bool text_is_url = model()->CurrentTextIsURL();
-  GetRenderText()->SetDirectionalityMode(text_is_url
-                                             ? gfx::DIRECTIONALITY_FORCE_LTR
-                                             : gfx::DIRECTIONALITY_FROM_TEXT);
+  // TODO(mgiuca): Gate this behind a flag. When the flag is off and text_is_url
+  // is true, use DIRECTIONALITY_FORCE_LTR. DO NOT SUBMIT.
+  GetRenderText()->SetDirectionalityMode(
+      text_is_url ? gfx::DIRECTIONALITY_AS_URL : gfx::DIRECTIONALITY_FROM_TEXT);
   SetStyle(gfx::STRIKE, false);
   UpdateTextStyle(text(), model()->client()->GetSchemeClassifier());
 }
