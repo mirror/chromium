@@ -1,14 +1,11 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "remoting/client/audio_player.h"
+#include "remoting/client/queued_audio_buffer.h"
 
 #include <stdint.h>
 
-#include <memory>
-
-#include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -28,10 +25,9 @@ const uint8_t kDummyAudioData = 0x8B;
 
 namespace remoting {
 
-class FakeAudioPlayer : public AudioPlayer {
+class FakeAudioPlayer : public QueuedAudioBuffer {
  public:
-  FakeAudioPlayer() {
-  }
+  FakeAudioPlayer() {}
 
   bool ResetAudioPlayer(AudioPacket::SamplingRate) override { return true; }
 
@@ -80,9 +76,7 @@ class AudioPlayerTest : public ::testing::Test {
     return static_cast<int>(audio_->queued_packets_.size());
   }
 
-  int GetBytesConsumed() {
-    return static_cast<int>(audio_->bytes_consumed_);
-  }
+  int GetBytesConsumed() { return static_cast<int>(audio_->bytes_consumed_); }
 
   std::unique_ptr<AudioPlayer> audio_;
   std::unique_ptr<char[]> buffer_;
@@ -118,28 +112,28 @@ std::unique_ptr<AudioPacket> CreatePacket48000Hz(int samples) {
 TEST_F(AudioPlayerTest, Init) {
   ASSERT_EQ(0, GetNumQueuedPackets());
 
-  audio_->ProcessAudioPacket(CreatePacket44100Hz(10), base::Closure());
+  audio_->ProcessAudioPacket(CreatePacket44100Hz(10));
   ASSERT_EQ(1, GetNumQueuedPackets());
 }
 
 TEST_F(AudioPlayerTest, MultipleSamples) {
-  audio_->ProcessAudioPacket(CreatePacket44100Hz(10), base::Closure());
+  audio_->ProcessAudioPacket(CreatePacket44100Hz(10));
   ASSERT_EQ(10, GetNumQueuedSamples());
   ASSERT_EQ(1, GetNumQueuedPackets());
 
-  audio_->ProcessAudioPacket(CreatePacket44100Hz(20), base::Closure());
+  audio_->ProcessAudioPacket(CreatePacket44100Hz(20));
   ASSERT_EQ(30, GetNumQueuedSamples());
   ASSERT_EQ(2, GetNumQueuedPackets());
 }
 
 TEST_F(AudioPlayerTest, ChangeSampleRate) {
-  audio_->ProcessAudioPacket(CreatePacket44100Hz(10), base::Closure());
+  audio_->ProcessAudioPacket(CreatePacket44100Hz(10));
   ASSERT_EQ(10, GetNumQueuedSamples());
   ASSERT_EQ(1, GetNumQueuedPackets());
 
   // New packet with different sampling rate causes previous samples to
   // be removed.
-  audio_->ProcessAudioPacket(CreatePacket48000Hz(20), base::Closure());
+  audio_->ProcessAudioPacket(CreatePacket48000Hz(20));
   ASSERT_EQ(20, GetNumQueuedSamples());
   ASSERT_EQ(1, GetNumQueuedPackets());
 }
@@ -147,7 +141,7 @@ TEST_F(AudioPlayerTest, ChangeSampleRate) {
 TEST_F(AudioPlayerTest, ExceedLatency) {
   // Push about 4 seconds worth of samples.
   for (int i = 0; i < 100; ++i) {
-    audio_->ProcessAudioPacket(CreatePacket48000Hz(2000), base::Closure());
+    audio_->ProcessAudioPacket(CreatePacket48000Hz(2000));
   }
 
   // Verify that we don't have more than 0.5s.
@@ -163,8 +157,7 @@ TEST_F(AudioPlayerTest, ConsumePartialPacket) {
   // Process 100 samples.
   int packet1_samples = 100;
   total_samples += packet1_samples;
-  audio_->ProcessAudioPacket(CreatePacket44100Hz(packet1_samples),
-                             base::Closure());
+  audio_->ProcessAudioPacket(CreatePacket44100Hz(packet1_samples));
   ASSERT_EQ(total_samples, GetNumQueuedSamples());
   ASSERT_EQ(1, GetNumQueuedPackets());
   ASSERT_EQ(bytes_consumed, GetBytesConsumed());
@@ -192,15 +185,13 @@ TEST_F(AudioPlayerTest, ConsumeAcrossPackets) {
   // Packet 1.
   int packet1_samples = 20;
   total_samples += packet1_samples;
-  audio_->ProcessAudioPacket(CreatePacket44100Hz(packet1_samples),
-                             base::Closure());
+  audio_->ProcessAudioPacket(CreatePacket44100Hz(packet1_samples));
   ASSERT_EQ(total_samples, GetNumQueuedSamples());
 
   // Packet 2.
   int packet2_samples = 70;
   total_samples += packet2_samples;
-  audio_->ProcessAudioPacket(CreatePacket44100Hz(packet2_samples),
-                             base::Closure());
+  audio_->ProcessAudioPacket(CreatePacket44100Hz(packet2_samples));
   ASSERT_EQ(total_samples, GetNumQueuedSamples());
   ASSERT_EQ(bytes_consumed, GetBytesConsumed());
 
@@ -237,16 +228,14 @@ TEST_F(AudioPlayerTest, ConsumeEntirePacket) {
   // Packet 1.
   int packet1_samples = 50;
   total_samples += packet1_samples;
-  audio_->ProcessAudioPacket(CreatePacket44100Hz(packet1_samples),
-                             base::Closure());
+  audio_->ProcessAudioPacket(CreatePacket44100Hz(packet1_samples));
   ASSERT_EQ(total_samples, GetNumQueuedSamples());
   ASSERT_EQ(bytes_consumed, GetBytesConsumed());
 
   // Packet 2.
   int packet2_samples = 30;
   total_samples += packet2_samples;
-  audio_->ProcessAudioPacket(CreatePacket44100Hz(packet2_samples),
-                             base::Closure());
+  audio_->ProcessAudioPacket(CreatePacket44100Hz(packet2_samples));
   ASSERT_EQ(total_samples, GetNumQueuedSamples());
   ASSERT_EQ(bytes_consumed, GetBytesConsumed());
 
@@ -305,8 +294,7 @@ TEST_F(AudioPlayerTest, NotEnoughDataToConsume) {
   // Packet 1.
   int packet1_samples = 10;
   total_samples += packet1_samples;
-  audio_->ProcessAudioPacket(CreatePacket44100Hz(packet1_samples),
-                             base::Closure());
+  audio_->ProcessAudioPacket(CreatePacket44100Hz(packet1_samples));
   ASSERT_EQ(total_samples, GetNumQueuedSamples());
   ASSERT_EQ(bytes_consumed, GetBytesConsumed());
 
