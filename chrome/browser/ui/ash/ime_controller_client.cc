@@ -13,6 +13,7 @@
 #include "content/public/common/service_manager_connection.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "ui/base/ime/chromeos/extension_ime_util.h"
+#include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_descriptor.h"
 #include "ui/base/ime/chromeos/input_method_util.h"
 
@@ -32,6 +33,7 @@ ImeControllerClient::ImeControllerClient(InputMethodManager* manager)
   DCHECK(input_method_manager_);
   input_method_manager_->AddObserver(this);
   input_method_manager_->AddImeMenuObserver(this);
+  input_method_manager_->GetImeKeyboard()->AddObserver(this);
   InputMethodMenuManager::GetInstance()->AddObserver(this);
 
   // This does not need to send the initial state to ash because that happens
@@ -48,6 +50,7 @@ ImeControllerClient::~ImeControllerClient() {
   InputMethodMenuManager::GetInstance()->RemoveObserver(this);
   input_method_manager_->RemoveImeMenuObserver(this);
   input_method_manager_->RemoveObserver(this);
+  input_method_manager_->GetImeKeyboard()->RemoveObserver(this);
 }
 
 void ImeControllerClient::Init() {
@@ -126,6 +129,13 @@ void ImeControllerClient::InputMethodMenuItemChanged(
   RefreshIme();
 }
 
+// chromeos::input_method::ImeKeyboard::Observer:
+void ImeControllerClient::OnCapsLockChanged(bool enabled) {
+  ime_controller_ptr_->SetCapsFromClient(enabled);
+}
+
+void ImeControllerClient::OnLayoutChanging(const std::string& layout_name) {}
+
 void ImeControllerClient::FlushMojoForTesting() {
   ime_controller_ptr_.FlushForTesting();
 }
@@ -182,4 +192,15 @@ void ImeControllerClient::RefreshIme() {
   }
   ime_controller_ptr_->RefreshIme(current_ime_id, std::move(available_imes),
                                   std::move(ash_menu_items));
+}
+
+void ImeControllerClient::SetCapsFromController(bool caps_enabled) {
+  chromeos::input_method::ImeKeyboard* keyboard =
+      chromeos::input_method::InputMethodManager::Get()->GetImeKeyboard();
+  if (keyboard)
+    keyboard->SetCapsLockEnabled(caps_enabled);
+}
+
+void ImeControllerClient::SetCapsFromClient(bool caps_enabled) {
+  ime_controller_ptr_->SetCapsFromClient(caps_enabled);
 }

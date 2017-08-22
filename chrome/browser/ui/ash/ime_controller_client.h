@@ -9,6 +9,7 @@
 #include "ash/public/interfaces/ime_info.mojom.h"
 #include "base/macros.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/chromeos/ime/input_method_menu_manager.h"
 
@@ -17,6 +18,7 @@ class ImeControllerClient
     : public ash::mojom::ImeControllerClient,
       public chromeos::input_method::InputMethodManager::Observer,
       public chromeos::input_method::InputMethodManager::ImeMenuObserver,
+      public chromeos::input_method::ImeKeyboard::Observer,
       public ui::ime::InputMethodMenuManager::Observer {
  public:
   explicit ImeControllerClient(
@@ -57,7 +59,19 @@ class ImeControllerClient
   void InputMethodMenuItemChanged(
       ui::ime::InputMethodMenuManager* manager) override;
 
+  // chromeos::input_method::ImeKeyboard::Observer:
+  void OnCapsLockChanged(bool enabled) override;
+  void OnLayoutChanging(const std::string& layout_name) override;
+
   void FlushMojoForTesting();
+
+  // Ash has induced a capslock change that needs to be reported back to the
+  // ImeKeyboard
+  void SetCapsFromController(bool caps_enabled) override;
+
+  // Called when the ImeKeyboard has changed state and needs to report the
+  // change to the tray.
+  void SetCapsFromClient(bool caps_enabled);
 
  private:
   // Binds this object to its mojo interface and sets it as the ash client.
