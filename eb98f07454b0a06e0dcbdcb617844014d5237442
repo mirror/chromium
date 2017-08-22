@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc9cb89b_8f6d4730",
+        "filename": "ui/views/cocoa/bridged_native_widget.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-22T03:19:02Z",
+      "side": 1,
+      "message": "There\u0027s some subtle stuff going on, which would be good to be explicit about. E.g. by using |native_widget_mac_-\u003eGetWidget()-\u003eis_top_level()| we can\u0027t just look at whether |native_view| was created as a \"control\" since, when it moves to another window, that link is lost.\n\nI was thinking of just putting a flag in the BridgedContentView @interface to say whether it is a control or not, but I think is_top_level() can work too. We just need to be clear. E.g.\n\n\n // Re-parent a |native_view| in this Widget to be a child of |new_parent|.\n // |native_view| must either be |ns_view()| or a descendant of |ns_view()|.\n // |native_view| is added as a subview of |new_parent| unless it is the\n // contentView of a top-level Widget. If |native_view| is |ns_view()|, |this|\n // also becomes a child window of |new_parent|\u0027s NSWindow.",
+      "revId": "eb98f07454b0a06e0dcbdcb617844014d5237442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813038ca_2b4496da",
+        "filename": "ui/views/cocoa/bridged_native_widget.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-22T03:19:02Z",
+      "side": 1,
+      "message": "I think we can also add\n\n  DCHECK([native_view isDescendantOf:bridged_view_]);",
+      "revId": "eb98f07454b0a06e0dcbdcb617844014d5237442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65136cb3_6a867ffe",
+        "filename": "ui/views/widget/native_widget_mac_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1749,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-22T03:19:02Z",
+      "side": 1,
+      "message": "toplevel1_params -\u003e toplevel_params",
+      "range": {
+        "startLine": 1749,
+        "startChar": 21,
+        "endLine": 1749,
+        "endChar": 37
+      },
+      "revId": "eb98f07454b0a06e0dcbdcb617844014d5237442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d074c0_b8c37dfb",
+        "filename": "ui/views/widget/native_widget_mac_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1758,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-22T03:19:02Z",
+      "side": 1,
+      "message": "Then reuse toplevel_params here",
+      "revId": "eb98f07454b0a06e0dcbdcb617844014d5237442",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
