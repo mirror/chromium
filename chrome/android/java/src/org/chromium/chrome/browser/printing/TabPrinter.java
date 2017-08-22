@@ -8,6 +8,7 @@ import android.text.TextUtils;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
+import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.printing.Printable;
@@ -33,6 +34,8 @@ public class TabPrinter implements Printable {
     }
 
     @Override
+    // |mTab| is checked in canPrint()
+    @SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
     public boolean print(int renderProcessId, int renderFrameId) {
         if (!canPrint()) return false;
         Tab tab = mTab.get();
