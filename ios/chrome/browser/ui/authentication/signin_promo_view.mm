@@ -4,6 +4,7 @@
 
 #import "ios/chrome/browser/ui/authentication/signin_promo_view.h"
 
+#include "base/ios/ios_util.h"
 #include "base/logging.h"
 #import "ios/chrome/browser/ui/authentication/signin_promo_view_delegate.h"
 #import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
@@ -127,6 +128,7 @@ const CGFloat kButtonHeight = 36;
     NSArray* visualConstraints = @[
       @"V:|-vpx2-[imageView]-vp-[textLabel]-vp_bvp-[primaryButton(bh)]",
       @"H:|-hp-[primaryButton]-hp-|",
+      @"H:|-hp-[textLabel]-hp-|",
     ];
     ApplyVisualConstraintsWithMetricsAndOptions(
         visualConstraints, views, metrics, NSLayoutFormatAlignAllCenterX);

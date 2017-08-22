@@ -54,7 +54,10 @@ namespace {
 CGSize PreferredCellSizeForWidth(UICollectionViewCell* cell, CGFloat width) {
   CGRect cellFrame = cell.frame;
   cellFrame.size.width = width;
-  cellFrame.size.height = CGFLOAT_MAX;
+  // Increase the cell height to big height to avoid any horizontal constrants.
+  // To avoid a warning from _NSLayoutConstraintNumberExceedsLimit, the value
+  // has to be reasonable.
+  cellFrame.size.height = 2000.;
   cell.frame = cellFrame;
   [cell setNeedsLayout];
   [cell layoutIfNeeded];
@@ -734,27 +737,28 @@ CGFloat minFaviconSizePt = 16;
 // The size of the cell at |indexPath|.
 - (CGSize)cellSizeForIndexPath:(NSIndexPath*)indexPath {
   if ([self isPromoSection:indexPath.section]) {
-    UICollectionViewCell* cell =
-        [self.collectionView cellForItemAtIndexPath:indexPath];
-    if (!cell) {
-      // -[UICollectionView
-      // dequeueReusableCellWithReuseIdentifier:forIndexPath:] cannot be used
-      // here since this method is called by -[id<UICollectionViewDelegate>
-      // collectionView:layout:sizeForItemAtIndexPath:]. This would generate
-      // crash: SIGFPE, EXC_I386_DIV.
-      if (experimental_flags::IsSigninPromoEnabled()) {
-        DCHECK(_signinPromoViewMediator);
-        BookmarkSigninPromoCell* signinPromoCell =
-            [[BookmarkSigninPromoCell alloc]
-                initWithFrame:CGRectMake(0, 0, 1000, 1000)];
-        [[_signinPromoViewMediator createConfigurator]
-            configureSigninPromoView:signinPromoCell.signinPromoView];
-        cell = signinPromoCell;
+    UICollectionViewCell* cellToMeasureHeight = nil;
+    // -[UICollectionView
+    // dequeueReusableCellWithReuseIdentifier:forIndexPath:] cannot be used
+    // here since this method is called by -[id<UICollectionViewDelegate>
+    // collectionView:layout:sizeForItemAtIndexPath:]. This would generate
+    // crash: SIGFPE, EXC_I386_DIV.
+    // The cell from the UICollectionView should not be used to compute the
+    // size. If it is used, iOS 9 asks for the cell size in an infinite loop,
+    // after
+    if (experimental_flags::IsSigninPromoEnabled()) {
+      DCHECK(_signinPromoViewMediator);
+      BookmarkSigninPromoCell* signinPromoCell =
+          [[BookmarkSigninPromoCell alloc]
+              initWithFrame:CGRectMake(0, 0, 1000, 1000)];
+      [[_signinPromoViewMediator createConfigurator]
+          configureSigninPromoView:signinPromoCell.signinPromoView];
+      suicidalCellToMeasureHeight = signinPromoCell;
       } else {
-        cell = [[BookmarkPromoCell alloc] init];
+        suicidalCellToMeasureHeight = [[BookmarkPromoCell alloc] init];
       }
-    }
-    return PreferredCellSizeForWidth(cell, CGRectGetWidth(self.bounds));
+      return PreferredCellSizeForWidth(suicidalCellToMeasureHeight,
+                                       CGRectGetWidth(self.bounds));
   }
   DCHECK(![self isPromoSection:indexPath.section]);
   UIEdgeInsets insets = [self insetForSectionAtIndex:indexPath.section];
