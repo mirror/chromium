@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec2715f6_347e1d83",
+        "filename": "device/serial/buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-22T02:28:13Z",
+      "side": 1,
+      "message": "Even we made |data_| as a std::vector\u003cuint8_t\u003e, seems we still can\u0027t avoid the copy here because we\u0027re passing |data| as a const reference of vector?",
+      "parentUuid": "7943a0f7_4b83d5fc",
+      "revId": "73eb5c077e83b8ffa5e2e6ad52632c54b57185c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3dc1e999_4f281719",
         "filename": "tools/battor_agent/battor_connection_impl.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "73eb5c077e83b8ffa5e2e6ad52632c54b57185c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "841a0e1a_ea6e5818",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-22T02:28:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3dc1e999_4f281719",
+      "revId": "73eb5c077e83b8ffa5e2e6ad52632c54b57185c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
