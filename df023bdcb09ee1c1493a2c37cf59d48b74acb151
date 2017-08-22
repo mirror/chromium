@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "0b9f9c73_39d1203f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/permissions/QuotaTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-22T20:47:39Z",
+      "side": 1,
+      "message": "Note: QuotaTest and PermissionUpdateWaiter are both in the package org.chromium.chrome.browser.permissions, so this should be fine.",
+      "parentUuid": "3097d813_85e7f5c0",
+      "revId": "df023bdcb09ee1c1493a2c37cf59d48b74acb151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57f23855_85a83322",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeActivityTestRule.java",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2017-08-22T19:55:16Z",
       "side": 1,
       "message": "On the one hand, I\u0027m a little wary of this -- Rules should call their own setup logic, and inheritance should be left out of it.\n\nOn the other hand, I imagine this is a case where order of execution matters -- you need mTestCommon.setUp to be called before PermissionTestRule does its thing. This seems like something that could be defined in a more abstract Rule base class -- something that\u0027s responsible for just ruleSetUp and ruleTearDown and provided empty implementations of each.\n\nIf we do decide to (or have to) do ruleSetUp and ruleTearDown, I certainly think they should be done in the same place (as opposed to the current implementation, which does the former here and the latter down in PermissionTestRule).",
+      "revId": "df023bdcb09ee1c1493a2c37cf59d48b74acb151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47fae9e7_d4f3611c",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeActivityTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-22T20:47:39Z",
+      "side": 1,
+      "message": "Just in very general terms, if we can avoid using inheritance, that would be great! Particularly for rules, since part of the point there was re-use and not requiring particular inheritance, etc., so it\u0027s probably wise to use the same concept for everything related to rules as far as we can.",
+      "parentUuid": "57f23855_85a83322",
       "revId": "df023bdcb09ee1c1493a2c37cf59d48b74acb151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
