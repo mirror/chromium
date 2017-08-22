@@ -73,6 +73,16 @@ class PLATFORM_EXPORT FontCustomPlatformData
   static bool SupportsFormat(const String&);
 
  private:
+  // Used in enums.xml, value should not change.
+  enum WebFontInstantiationResult {
+    kDecodeError = 0,
+    kErrorInstantiatingVariableFont = 1,
+    kSuccessConventionalWebFont = 2,
+    kSuccessVariableWebFont = 3,
+    kMaxWebFontInstantiationResult = 4
+  };
+
+  static void ReportWebFontInstantiationResult(WebFontInstantiationResult);
   FontCustomPlatformData(sk_sp<SkTypeface>, size_t data_size);
   sk_sp<SkTypeface> base_typeface_;
   size_t data_size_;
