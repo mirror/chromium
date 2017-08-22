@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "14f01d7e_ed2bcc1e",
+        "filename": "chrome_elf/blacklist/blacklist.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-22T14:02:18Z",
+      "side": 1,
+      "message": "When I originally wrote this, it wasn\u0027t clear to me how to deal with these incidental dependencies to //components/crash/content/app in tests. I had to figure that out for all the other cases, and it turns out it\u0027s no harder to do here. So, I\u0027ve reverted the layering change, and satisfied the resultant dependencies by the //components/crash/content/app:test_support target where needed. I hope that\u0027s OK with you.",
+      "parentUuid": "72349726_6ec5ed70",
+      "range": {
+        "startLine": 86,
+        "startChar": 72,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "9b059cfee28b58faaeb45f47c8a8bbe5b7885596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7044aa12_827b0337",
         "filename": "components/crash/content/app/crashpad.h",
         "patchSetId": 15
