@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c900863_dc519fa4",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-22T15:54:31Z",
+      "side": 1,
+      "message": "It\u0027s not super clear. On the one hand it says \"Do not use using-directives (e.g. using namespace foo)\". But then it says \"You may not use a using-directive to make all names from a namespace available.\" so it would seem that \"using content;\" is forbidden but \"using content::NavigationSimulator;\" isn\u0027t. Since a lot of unit tests have using foo declarations for specific classes I think it\u0027s authorized.\n\n@nasko: am I correct in my interpretation?",
+      "parentUuid": "83ee4fc5_2e3fec27",
+      "revId": "1bfc62f45a701fefc0d107738a7f4dff2ac6cc08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cee69de_11d7ee2b",
         "filename": "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.cc",
         "patchSetId": 4
