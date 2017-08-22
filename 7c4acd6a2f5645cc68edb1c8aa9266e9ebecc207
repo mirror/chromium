@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "0ba0062c_3379d55f",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-22T11:30:31Z",
+      "side": 1,
+      "message": "I wondered if we want to just DCHECK these checks (which will make URLLoader debugging easier in general), but on the second thought are you doing this because the URLLoader could be implemented by some untrusted process?",
+      "revId": "7c4acd6a2f5645cc68edb1c8aa9266e9ebecc207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "862215ce_97f33b06",
         "filename": "content/public/common/simple_url_loader.h",
         "patchSetId": 27
