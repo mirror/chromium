@@ -153,8 +153,11 @@ DeepestWindow FindDeepestVisibleWindowForLocation(ServerWindow* root_window,
                                                   EventSource event_source,
                                                   const gfx::Point& location) {
   DeepestWindow result;
-  FindDeepestVisibleWindowForLocationImpl(root_window, event_source, location,
-                                          location, gfx::Transform(), &result);
+  // Allow the root to have a transform, which mirrors what happens with
+  // WindowManagerDisplayRoot.
+  FindDeepestVisibleWindowForLocationImpl(
+      root_window, event_source, location, location,
+      TransformFromParent(root_window, gfx::Transform()), &result);
   return result;
 }
 
