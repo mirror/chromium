@@ -10,6 +10,7 @@
 #include "net/base/network_change_notifier.h"
 #include "net/http/http_stream_factory.h"
 #include "net/spdy/chromium/spdy_session.h"
+#include "net/test/spawned_test_server/test_server_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if defined(USE_NSS_CERTS)
@@ -62,9 +63,17 @@ void NetTestSuite::InitializeTestThread() {
 void NetTestSuite::InitializeTestThreadNoNetworkChangeNotifier() {
   host_resolver_proc_ = new net::RuleBasedHostResolverProc(NULL);
   scoped_host_resolver_proc_.Init(host_resolver_proc_.get());
-  // In case any attempts are made to resolve host names, force them all to
-  // be mapped to localhost.  This prevents DNS queries from being sent in
-  // the process of running these unit tests.
+
+#if defined(OS_IOS)
+  // Map testserver domain name to it's address, except on iOS, where
+  // testserver isn't used.
+  host_resolver_proc_->AddRule(
+      net::TestServerConfig::Get()->name(),
+      net::TestServerConfig::Get()->address().ToString());
+#endif
+
+  // All other addresses are mapped to 127.0.0.1 . This prevents DNS queries
+  // from being sent in the process of running these unit tests.
   host_resolver_proc_->AddRule("*", "127.0.0.1");
 
   scoped_task_environment_ =
