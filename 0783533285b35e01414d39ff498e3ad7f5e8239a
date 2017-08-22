@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42fdb5f8_6489ca5d",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-22T18:31:26Z",
+      "side": 1,
+      "message": "nit: Move to anonymous namespace in cc file since it does not depends on AppListView state.",
+      "revId": "0783533285b35e01414d39ff498e3ad7f5e8239a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
