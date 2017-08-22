@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e701a72_efba4463",
+        "filename": "base/post_task_and_reply_with_result_internal.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-22T11:09:54Z",
+      "side": 1,
+      "message": "Can this be another template parameter? I.e. ReturnTuple?",
+      "range": {
+        "startLine": 36,
+        "startChar": 19,
+        "endLine": 36,
+        "endChar": 48
+      },
+      "revId": "481a2f22c7ddaba6be0f998bb921e3a8e754e3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b7cf71c_439c46e2",
+        "filename": "base/post_task_and_reply_with_result_internal.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-22T11:09:54Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 39,
+        "startChar": 24,
+        "endLine": 39,
+        "endChar": 53
+      },
+      "revId": "481a2f22c7ddaba6be0f998bb921e3a8e754e3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d93b75_314c3218",
+        "filename": "base/post_task_and_reply_with_result_internal.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-22T11:09:54Z",
+      "side": 1,
+      "message": "result-\u003eemplace(std::forward\u003cReturnArgTypes\u003e(args)...);?",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 54
+      },
+      "revId": "481a2f22c7ddaba6be0f998bb921e3a8e754e3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6d49eb_3a3a3ced",
+        "filename": "base/task_runner_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-22T11:09:54Z",
+      "side": 1,
+      "message": "std::tuple\u003cstd::decay_t\u003cReturnArgTypes\u003e...\u003e?",
+      "range": {
+        "startLine": 72,
+        "startChar": 33,
+        "endLine": 72,
+        "endChar": 47
+      },
+      "revId": "481a2f22c7ddaba6be0f998bb921e3a8e754e3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5555059_53e652ea",
+        "filename": "base/threading/post_task_and_reply_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-22T11:09:54Z",
+      "side": 1,
+      "message": "DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);?",
+      "range": {
+        "startLine": 116,
+        "startChar": 4,
+        "endLine": 116,
+        "endChar": 54
+      },
+      "revId": "481a2f22c7ddaba6be0f998bb921e3a8e754e3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd9b070_5dc2860a",
+        "filename": "base/threading/post_task_and_reply_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-22T11:09:54Z",
+      "side": 1,
+      "message": "SEQUENCE_CHECKER(sequence_checker_);?",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 42
+      },
+      "revId": "481a2f22c7ddaba6be0f998bb921e3a8e754e3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9049e3_ca2abfa2",
+        "filename": "content/public/browser/browser_thread.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-22T11:09:54Z",
+      "side": 1,
+      "message": "std::move here?",
+      "range": {
+        "startLine": 160,
+        "startChar": 39,
+        "endLine": 160,
+        "endChar": 56
+      },
+      "revId": "481a2f22c7ddaba6be0f998bb921e3a8e754e3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
