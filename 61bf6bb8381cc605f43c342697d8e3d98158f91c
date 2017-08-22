@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d72e18c_4b6a2cf0",
+        "filename": "ios/chrome/search_widget_extension/search_widget_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-22T09:33:24Z",
+      "side": 0,
+      "message": "Do you still need #import \u003cNotificationCenter/NotificationCenter.h\u003e?",
+      "range": {
+        "startLine": 90,
+        "startChar": 32,
+        "endLine": 90,
+        "endChar": 64
+      },
+      "revId": "61bf6bb8381cc605f43c342697d8e3d98158f91c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
