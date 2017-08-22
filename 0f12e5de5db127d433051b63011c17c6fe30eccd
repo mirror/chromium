@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0edb9bf_8d3e2aa4",
+        "filename": "ui/file_manager/file_manager/background/js/entry_location_impl.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-22T09:32:07Z",
+      "side": 1,
+      "message": "Add the new RootType to here so that it can be treated as a read-only location.\nIt\u0027d be needed for showing the right icon upon hovering dragged file, and avoiding error at  FileTransferController.prototype.selectDropEffect_.",
+      "revId": "0f12e5de5db127d433051b63011c17c6fe30eccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d82ca8_c3a152f8",
+        "filename": "ui/file_manager/file_manager/foreground/js/navigation_list_model.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-22T09:32:07Z",
+      "side": 1,
+      "message": "Add jsdoc, especially about the return value -1.",
+      "revId": "0f12e5de5db127d433051b63011c17c6fe30eccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
