@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "895f7029_0832f771",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T05:36:19Z",
+      "side": 1,
+      "message": "Nit: Names should be descriptive; avoid abbreviation.\n\nSo in this case, |options| instead of just |opts|\n\nhttps://google.github.io/styleguide/cppguide.html#General_Naming_Rules",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 11
+      },
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8c300a_2f1e3aa9",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T05:36:19Z",
+      "side": 1,
+      "message": "Nit: please pass by mutable reference",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 16
+      },
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57f51ec3_0c724b3c",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T05:36:19Z",
+      "side": 1,
+      "message": "I think a DCHECK is sufficient here, FWIW",
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1735fe73_32bbab82",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T05:36:19Z",
+      "side": 1,
+      "message": "Nit: const vector since we\u0027re not transferring ownership",
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76339628_406a8032",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T05:36:19Z",
+      "side": 1,
+      "message": "FWIW, it\u0027s a bit non-obvious that this is checked elsewhere (and it also results in retrieving this pointer twice). That being said, I\u0027m not sure I have a good answer to make this more efficient (though I think there\u0027s a high chance the optimizer won\u0027t be able to combine the two calls).\n\nPerhaps one way is to rename CheckBoilerplate to CheckIsTopLevelFrame(), but I\u0027m not really sure (and this is really more of a followup item anyway)",
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c34459b2_0d0da895",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T05:36:19Z",
+      "side": 1,
+      "message": "This connection error handler seems to be a no-op: the other side of this interface is held by a strong binding, which won\u0027t be disconnected unless the remote pipe is closed. I don\u0027t see other calls that would reset the binding (and close the message pipe either)\n\nPlease consider removing in a followup.",
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "720e48c5_b899199e",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-22T05:36:19Z",
+      "side": 1,
+      "message": "Is this something that will be removed in a followup? Consider adding a comment to note this.",
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
