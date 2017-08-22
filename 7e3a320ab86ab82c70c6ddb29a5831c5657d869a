@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab8200f7_5c9c3ba9",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-22T02:46:49Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "range": {
+        "startLine": 1358,
+        "startChar": 2,
+        "endLine": 1358,
+        "endChar": 8
+      },
+      "revId": "7e3a320ab86ab82c70c6ddb29a5831c5657d869a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
