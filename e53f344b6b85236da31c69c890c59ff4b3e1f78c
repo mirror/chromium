@@ -52,6 +52,24 @@
       "revId": "e53f344b6b85236da31c69c890c59ff4b3e1f78c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f893c441_320cfb16",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-22T21:42:09Z",
+      "side": 1,
+      "message": "The first case expects an unchanged URL.  The second case is the same URL, but a smaller width (due to no space for \u0027https\u0027).  There\u0027s no query in the URL, so the scheme is the next thing to go.",
+      "parentUuid": "9c16ca52_993f049a",
+      "revId": "e53f344b6b85236da31c69c890c59ff4b3e1f78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
