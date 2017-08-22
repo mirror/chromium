@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "71a2f94f_f809296b",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-22T12:53:55Z",
+      "side": 1,
+      "message": "this seems really different from \"addItemToReadingList\"",
+      "range": {
+        "startLine": 364,
+        "startChar": 53,
+        "endLine": 364,
+        "endChar": 65
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2258ddbb_f6c51e97",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_metrics_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-22T12:53:55Z",
+      "side": 1,
+      "message": "2 lines may be enough.",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 16
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc23f4df_92b4c004",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_metrics_recorder.mm",
         "patchSetId": 2
@@ -64,6 +110,98 @@
         "startChar": 29,
         "endLine": 91,
         "endChar": 0
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0baaac7_f273cea4",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-22T12:53:55Z",
+      "side": 1,
+      "message": "comments?",
+      "range": {
+        "startLine": 58,
+        "startChar": 34,
+        "endLine": 58,
+        "endChar": 35
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be2afc3_8c9ddc19",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-22T12:53:55Z",
+      "side": 1,
+      "message": "Why not ContentSuggestionsSectionMostVisited?",
+      "range": {
+        "startLine": 131,
+        "startChar": 30,
+        "endLine": 131,
+        "endChar": 58
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0564572_a88cca3e",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-22T12:53:55Z",
+      "side": 1,
+      "message": "|position| and |numberOfItems| seems different.",
+      "range": {
+        "startLine": 677,
+        "startChar": 17,
+        "endLine": 677,
+        "endChar": 39
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18c476d_e2c7b1b5",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-22T12:53:55Z",
+      "side": 1,
+      "message": "I am a little afraid that this method will be called a lot, multiple times for a single display.\nAm I wrong?\nIs it possible to filter the reporting of the metric to be once per display?",
+      "range": {
+        "startLine": 314,
+        "startChar": 8,
+        "endLine": 314,
+        "endChar": 23
       },
       "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
