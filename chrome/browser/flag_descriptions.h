@@ -1188,6 +1188,9 @@ extern const char kAccountConsistencyDescription[];
 extern const char kAccountConsistencyChoiceMirror[];
 extern const char kAccountConsistencyChoiceDice[];
 
+extern const char kDoodlesOnLocalNtpName[];
+extern const char kDoodlesOnLocalNtpDescription[];
+
 extern const char kEnableAudioFocusName[];
 extern const char kEnableAudioFocusDescription[];
 extern const char kEnableAudioFocusDisabled[];

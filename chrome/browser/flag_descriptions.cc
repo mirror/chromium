@@ -1947,6 +1947,11 @@ const char kAccountConsistencyDescription[] =
 const char kAccountConsistencyChoiceMirror[] = "Mirror";
 const char kAccountConsistencyChoiceDice[] = "Dice";
 
+const char kDoodlesOnLocalNtpName[] = "Enable doodles on the local NTP";
+const char kDoodlesOnLocalNtpDescription[] =
+    "Show doodles on the local New Tab page if Google is the default search "
+    "engine.";
+
 const char kEnableAudioFocusName[] = "Manage audio focus across tabs";
 const char kEnableAudioFocusDescription[] =
     "Manage audio focus across tabs to improve the audio mixing.";
