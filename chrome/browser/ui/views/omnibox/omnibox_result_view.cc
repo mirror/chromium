@@ -477,18 +477,10 @@ std::unique_ptr<gfx::RenderText> OmniboxResultView::CreateClassifiedRenderText(
     ColorKind color_kind = TEXT;
     if (classifications[i].style & ACMatchClassification::URL) {
       color_kind = URL;
-      // Consider logical string for domain "ABC.comי/hello" where ABC are
-      // Hebrew (RTL) characters. This string should ideally show as
-      // "CBA.com/hello". If we do not force LTR on URL, it will appear as
-      // "com/hello.CBA".
-      // With IDN and RTL TLDs, it might be okay to allow RTL rendering of URLs,
-      // but it still has some pitfalls like :
-      // ABC.COM/abc-pqr/xyz/FGH will appear as HGF/abc-pqr/xyz/MOC.CBA which
-      // really confuses the path hierarchy of the URL.
-      // Also, if the URL supports https, the appearance will change into LTR
-      // directionality.
-      // In conclusion, LTR rendering of URL is probably the safest bet.
-      render_text->SetDirectionalityMode(gfx::DIRECTIONALITY_FORCE_LTR);
+      // Ensure the text is rendered as a URL (segments from left to right).
+      // TODO(mgiuca): Gate this behind a flag. When the flag is off, use
+      // DIRECTIONALITY_FORCE_LTR and retain the old comment. DO NOT SUBMIT.
+      render_text->SetDirectionalityMode(gfx::DIRECTIONALITY_AS_URL);
     } else if (force_dim ||
         (classifications[i].style & ACMatchClassification::DIM)) {
       color_kind = DIMMED_TEXT;

@@ -49,6 +49,10 @@ namespace gfx {
 
 namespace {
 
+// The gen-delims character set (from RFC 3986).
+// TODO(mgiuca): Reference URL Standard instead. DO NOT SUBMIT.
+const char kGenDelims[] = "#/:?@[]";
+
 // Default color used for the text and cursor.
 const SkColor kDefaultColor = SK_ColorBLACK;
 
@@ -269,16 +273,19 @@ void SkiaTextRenderer::DrawStrike(int x,
 StyleIterator::StyleIterator(const BreakList<SkColor>& colors,
                              const BreakList<BaselineStyle>& baselines,
                              const BreakList<Font::Weight>& weights,
-                             const std::vector<BreakList<bool>>& styles)
+                             const std::vector<BreakList<bool>>& styles,
+                             const BreakList<bool>& force_ltrs)
     : colors_(colors),
       baselines_(baselines),
       weights_(weights),
-      styles_(styles) {
+      styles_(styles),
+      force_ltrs_(force_ltrs) {
   color_ = colors_.breaks().begin();
   baseline_ = baselines_.breaks().begin();
   weight_ = weights_.breaks().begin();
   for (size_t i = 0; i < styles_.size(); ++i)
     style_.push_back(styles_[i].breaks().begin());
+  force_ltr_ = force_ltrs_.breaks().begin();
 }
 
 StyleIterator::~StyleIterator() {}
@@ -289,6 +296,7 @@ Range StyleIterator::GetRange() const {
   range = range.Intersect(weights_.GetRange(weight_));
   for (size_t i = 0; i < NUM_TEXT_STYLES; ++i)
     range = range.Intersect(styles_[i].GetRange(style_[i]));
+  range = range.Intersect(force_ltrs_.GetRange(force_ltr_));
   return range;
 }
 
@@ -298,6 +306,7 @@ void StyleIterator::UpdatePosition(size_t position) {
   weight_ = weights_.GetBreak(position);
   for (size_t i = 0; i < NUM_TEXT_STYLES; ++i)
     style_[i] = styles_[i].GetBreak(position);
+  force_ltr_ = force_ltrs_.GetBreak(position);
 }
 
 LineSegment::LineSegment() : run(0) {}
@@ -360,6 +369,7 @@ std::unique_ptr<RenderText> RenderText::CreateInstanceOfSameStyle(
   render_text->baselines_ = baselines_;
   render_text->colors_ = colors_;
   render_text->weights_ = weights_;
+  render_text->force_ltrs_ = force_ltrs_;
   return render_text;
 }
 
@@ -378,6 +388,7 @@ void RenderText::SetText(const base::string16& text) {
   for (size_t style = 0; style < NUM_TEXT_STYLES; ++style)
     styles_[style].SetValue(styles_[style].breaks().begin()->second);
   cached_bounds_and_offset_valid_ = false;
+  UpdateForceLTRs();
 
   // Reset selection model. SetText should always followed by SetSelectionModel
   // or SetCursorPosition in upper layer.
@@ -708,9 +719,12 @@ void RenderText::SetDirectionalityMode(DirectionalityMode mode) {
   if (mode == directionality_mode_)
     return;
 
+  bool was_rendered_as_url = IsRenderedAsUrl();
   directionality_mode_ = mode;
   text_direction_ = base::i18n::UNKNOWN_DIRECTION;
   cached_bounds_and_offset_valid_ = false;
+  if (was_rendered_as_url != IsRenderedAsUrl())
+    UpdateForceLTRs();
   OnLayoutTextAttributeChanged(false);
 }
 
@@ -1100,6 +1114,26 @@ void RenderText::UpdateDisplayText(float text_width) {
     display_text_.clear();
 }
 
+void RenderText::UpdateForceLTRs() {
+  static base::string16 gen_delims(base::ASCIIToUTF16(kGenDelims));
+
+  force_ltrs_.SetValue(false);
+  if (!IsRenderedAsUrl())
+    return;
+
+  // The text is a URL. Force left-to-right formatting on all URL gen-delim
+  // characters, or a period. This ensures that the URL components read from
+  // left to right, regardless of any RTL characters. (Within each component,
+  // RTL sequences are rendered from right to left as expected.)
+  // TODO(mgiuca): Should only insert LRM before periods in the host component.
+  // DO NOT SUBMIT.
+  for (size_t i = 0; i < text_.length(); ++i) {
+    base::char16 c = text_[i];
+    if (gen_delims.find(c) != base::string16::npos || c == '.')
+      force_ltrs_.ApplyValue(true, gfx::Range(i, i + 1));
+  }
+}
+
 const BreakList<size_t>& RenderText::GetLineBreaks() {
   if (line_breaks_.max() != 0)
     return line_breaks_;
@@ -1256,6 +1290,25 @@ base::i18n::TextDirection RenderText::GetTextDirection(
       case DIRECTIONALITY_FORCE_RTL:
         text_direction_ = base::i18n::RIGHT_TO_LEFT;
         break;
+      case DIRECTIONALITY_AS_URL:
+        // Rendering as a URL implies left-to-right paragraph direction.
+        // Consider logical string for domain "ABC.com/hello" where ABC are
+        // Hebrew (RTL) characters. This string should be displayed as
+        // "CBA.com/hello" (ie. the Hebrew runs are still RTL, but the top-level
+        // direction is LTR). If we use GetFirstStrongCharacterDirection, it
+        // will appear as "com/hello.CBA".
+        //
+        // With IDN and RTL TLDs, it might be okay to allow RTL rendering of
+        // URLs, but it still has some pitfalls like:
+        // ABC.COM/abc-pqr/xyz/FGH will appear as HGF/abc-pqr/xyz/MOC.CBA which
+        // really confuses the path hierarchy of the URL.
+        //
+        // Also, if the URL supports https, the appearance will change into LTR
+        // directionality.
+        //
+        // In conclusion, LTR rendering of URL is probably the safest bet.
+        text_direction_ = base::i18n::LEFT_TO_RIGHT;
+        break;
       default:
         NOTREACHED();
     }
@@ -1281,6 +1334,7 @@ void RenderText::UpdateStyleLengths() {
   weights_.SetMax(text_length);
   for (size_t style = 0; style < NUM_TEXT_STYLES; ++style)
     styles_[style].SetMax(text_length);
+  force_ltrs_.SetMax(text_length);
 }
 
 int RenderText::GetLineContainingYCoord(float text_y) {
@@ -1493,6 +1547,7 @@ base::string16 RenderText::Elide(const base::string16& text,
     RestoreBreakList(render_text.get(), &render_text->baselines_);
     render_text->weights_ = weights_;
     RestoreBreakList(render_text.get(), &render_text->weights_);
+    RestoreBreakList(render_text.get(), &render_text->force_ltrs_);
 
     // We check the width of the whole desired string at once to ensure we
     // handle kerning/ligatures/etc. correctly.
