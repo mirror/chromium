@@ -6,13 +6,39 @@
 
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Location.h"
+#include "core/probe/CoreProbes.h"
 #include "core/testing/DummyPageHolder.h"
+#include "core/timing/PerformanceLongTaskTiming.h"
+#include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/PtrUtil.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #include <memory>
 
 namespace blink {
+
+namespace {
+class FakeTimer {
+ public:
+  FakeTimer() {
+    g_mock_time = 1000.;
+    original_time_function_ =
+        WTF::SetTimeFunctionsForTesting(GetMockTimeInSeconds);
+  }
+
+  ~FakeTimer() { WTF::SetTimeFunctionsForTesting(original_time_function_); }
+
+  static double GetMockTimeInSeconds() { return g_mock_time; }
+
+  void ForwardTimer(double duration) { g_mock_time += duration; }
+
+ private:
+  TimeFunction original_time_function_;
+  static double g_mock_time;
+};
+
+double FakeTimer::g_mock_time = 1000.;
+}  // namespace
 
 class PerformanceMonitorTest : public ::testing::Test {
  protected:
@@ -42,6 +68,28 @@ class PerformanceMonitorTest : public ::testing::Test {
 
   void DidProcessTask(double start_time, double end_time) {
     monitor_->DidProcessTask(start_time, end_time);
+  }
+
+  void Will(probe::V8Compile& probe) { monitor_->Will(probe); }
+
+  void Did(probe::V8Compile& probe) { monitor_->Did(probe); }
+
+  void SubscribeLongTask() {
+    monitor_->enabled_ = true;
+    monitor_->thresholds_[PerformanceMonitor::kLongTask] = true;
+  }
+
+  SubTaskAttribution::EntriesVector& SubTaskAttributions() {
+    return monitor_->sub_task_attributions_;
+  }
+
+  void SimulateV8CompileTask(FakeTimer& timer,
+                             double duration,
+                             String& script_url,
+                             int line,
+                             int column) {
+    probe::V8Compile probe(GetExecutionContext(), script_url, line, column);
+    timer.ForwardTimer(duration);
   }
 
   String FrameContextURL();
@@ -131,6 +179,28 @@ TEST_F(PerformanceMonitorTest, NoScriptInLongTask) {
   DidProcessTask(3719349.445172, 3719349.5561923);  // Long task
   // Without presence of Script, FrameContext URL is not available
   EXPECT_EQ(0, NumUniqueFrameContextsSeen());
+}
+
+TEST_F(PerformanceMonitorTest, SubTaskAttribution_V8Compile) {
+  FakeTimer timer;
+  String script_url = "http://abc.def";
+  int line = 1;
+  int column = 2;
+  SubscribeLongTask();
+
+  WillProcessTask(0);
+
+  SimulateV8CompileTask(timer, 0.001, script_url, 0, 0);
+  EXPECT_EQ(0, (int)SubTaskAttributions().size());
+
+  SimulateV8CompileTask(timer, 0.013, script_url, line, column);
+  EXPECT_EQ(1, (int)SubTaskAttributions().size());
+  EXPECT_FLOAT_EQ(1000.001, SubTaskAttributions()[0]->startTime());
+  EXPECT_FLOAT_EQ(0.013, SubTaskAttributions()[0]->duration());
+  EXPECT_EQ("script-compile", SubTaskAttributions()[0]->subTaskName());
+  EXPECT_EQ(
+      String::Format("%s(%d, %d)", script_url.Utf8().data(), line, column),
+      SubTaskAttributions()[0]->scriptURL());
 }
 
 }  // namespace blink
