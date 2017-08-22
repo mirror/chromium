@@ -38,9 +38,7 @@ OverscrollGlow::OverscrollGlow(OverscrollGlowClient* client)
       edge_offsets_(),
       initialized_(false),
       allow_horizontal_overscroll_(true),
-      allow_vertical_overscroll_(true) {
-  DCHECK(client);
-}
+      allow_vertical_overscroll_(true) {}
 
 OverscrollGlow::~OverscrollGlow() {
   Detach();
@@ -194,6 +192,7 @@ bool OverscrollGlow::InitializeIfNecessary() {
     return true;
 
   DCHECK(!root_layer_.get());
+  DCHECK(client_);
   root_layer_ = cc::Layer::Create();
   for (size_t i = 0; i < EDGE_COUNT; ++i) {
     edge_effects_[i] = client_->CreateEdgeEffect();

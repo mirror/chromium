@@ -96,16 +96,25 @@ std::unique_ptr<OverscrollRefresh> CreateRefreshEffect(
 }  // namespace
 
 OverscrollControllerAndroid::OverscrollControllerAndroid(
-    ui::OverscrollRefreshHandler* overscroll_refresh_handler,
     ui::WindowAndroidCompositor* compositor,
-    float dpi_scale)
+    float dpi_scale,
+    std::unique_ptr<ui::OverscrollGlow> glow_effect,
+    std::unique_ptr<ui::OverscrollRefresh> refresh_effect)
     : compositor_(compositor),
       dpi_scale_(dpi_scale),
       enabled_(true),
-      glow_effect_(CreateGlowEffect(this, dpi_scale_)),
-      refresh_effect_(CreateRefreshEffect(overscroll_refresh_handler)) {
-  DCHECK(compositor_);
-}
+      glow_effect_(std::move(glow_effect)),
+      refresh_effect_(std::move(refresh_effect)) {}
+
+OverscrollControllerAndroid::OverscrollControllerAndroid(
+    ui::OverscrollRefreshHandler* overscroll_refresh_handler,
+    ui::WindowAndroidCompositor* compositor,
+    float dpi_scale)
+    : OverscrollControllerAndroid(
+          compositor,
+          dpi_scale,
+          CreateGlowEffect(this, dpi_scale),
+          CreateRefreshEffect(overscroll_refresh_handler)) {}
 
 OverscrollControllerAndroid::~OverscrollControllerAndroid() {
 }
@@ -189,10 +198,9 @@ void OverscrollControllerAndroid::OnGestureEventAck(
       refresh_effect_) {
     // The effect should only be allowed if both the causal touch events go
     // unconsumed and the generated scroll events go unconsumed.
-    bool consumed =
-        ack_result == INPUT_EVENT_ACK_STATE_CONSUMED ||
-        event.data.scroll_update.previous_update_in_sequence_prevented;
-    refresh_effect_->OnScrollUpdateAck(consumed);
+    if (ack_result == INPUT_EVENT_ACK_STATE_CONSUMED ||
+        event.data.scroll_update.previous_update_in_sequence_prevented)
+      refresh_effect_->Reset();
   }
 }
 
@@ -201,22 +209,51 @@ void OverscrollControllerAndroid::OnOverscrolled(
   if (!enabled_)
     return;
 
-  if (refresh_effect_ && (refresh_effect_->IsActive() ||
-                          refresh_effect_->IsAwaitingScrollUpdateAck())) {
-    // An active (or potentially active) refresh effect should always pre-empt
-    // the passive glow effect.
-    return;
+  if (refresh_effect_) {
+    if (params.scroll_boundary_behavior.y !=
+        cc::ScrollBoundaryBehavior::ScrollBoundaryBehaviorType::
+            kScrollBoundaryBehaviorTypeAuto)
+      refresh_effect_->Reset();
+    else
+      refresh_effect_->OnOverscrolled();
+
+    if (refresh_effect_->IsActive() ||
+        refresh_effect_->IsAwaitingScrollUpdateAck()) {
+      // An active (or potentially active) refresh effect should always pre-empt
+      // the passive glow effect.
+      return;
+    }
   }
 
-  if (glow_effect_ &&
-      glow_effect_->OnOverscrolled(
-          base::TimeTicks::Now(),
-          gfx::ScaleVector2d(params.accumulated_overscroll, dpi_scale_),
-          gfx::ScaleVector2d(params.latest_overscroll_delta, dpi_scale_),
-          gfx::ScaleVector2d(params.current_fling_velocity, dpi_scale_),
-          gfx::ScaleVector2d(
-              params.causal_event_viewport_point.OffsetFromOrigin(),
-              dpi_scale_))) {
+  gfx::Vector2dF accumulated_overscroll =
+      gfx::ScaleVector2d(params.accumulated_overscroll, dpi_scale_);
+  gfx::Vector2dF latest_overscroll_delta =
+      gfx::ScaleVector2d(params.latest_overscroll_delta, dpi_scale_);
+  gfx::Vector2dF current_fling_velocity =
+      gfx::ScaleVector2d(params.current_fling_velocity, dpi_scale_);
+  gfx::Vector2dF overscroll_location = gfx::ScaleVector2d(
+      params.causal_event_viewport_point.OffsetFromOrigin(), dpi_scale_);
+
+  if (params.scroll_boundary_behavior.x ==
+      cc::ScrollBoundaryBehavior::ScrollBoundaryBehaviorType::
+          kScrollBoundaryBehaviorTypeNone) {
+    accumulated_overscroll.set_x(0);
+    latest_overscroll_delta.set_x(0);
+    current_fling_velocity.set_x(0);
+  }
+
+  if (params.scroll_boundary_behavior.y ==
+      cc::ScrollBoundaryBehavior::ScrollBoundaryBehaviorType::
+          kScrollBoundaryBehaviorTypeNone) {
+    accumulated_overscroll.set_y(0);
+    latest_overscroll_delta.set_y(0);
+    current_fling_velocity.set_y(0);
+  }
+
+  if (glow_effect_ && glow_effect_->OnOverscrolled(
+                          base::TimeTicks::Now(), accumulated_overscroll,
+                          latest_overscroll_delta, current_fling_velocity,
+                          overscroll_location)) {
     SetNeedsAnimate();
   }
 }
@@ -277,7 +314,8 @@ OverscrollControllerAndroid::CreateEdgeEffect() {
 }
 
 void OverscrollControllerAndroid::SetNeedsAnimate() {
-  compositor_->SetNeedsAnimate();
+  if (compositor_)
+    compositor_->SetNeedsAnimate();
 }
 
 }  // namespace content

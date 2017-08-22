@@ -93,6 +93,9 @@ static bool CanPropagate(const ScrollState& scroll_state,
   // scroll should be propagated from this node given its relevant*
   // ScrollBoundaryBehavior value. * relevant here depends on the dominant
   // axis of scroll gesture.
+  // We ignore the scroll-boundary-behavior if the element is not scrollable.
+  if (!element.GetLayoutBox()->GetScrollableArea())
+    return true;
   bool x_dominant =
       std::abs(scroll_state.deltaXHint()) > std::abs(scroll_state.deltaYHint());
   return (x_dominant && element.GetComputedStyle()->ScrollBoundaryBehaviorX() ==

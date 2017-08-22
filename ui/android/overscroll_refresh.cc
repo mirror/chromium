@@ -20,16 +20,15 @@ OverscrollRefresh::OverscrollRefresh(OverscrollRefreshHandler* handler)
     : scrolled_to_top_(true),
       overflow_y_hidden_(false),
       scroll_consumption_state_(DISABLED),
-      handler_(handler) {
-  DCHECK(handler);
-}
+      handler_(handler) {}
 
 OverscrollRefresh::~OverscrollRefresh() {
 }
 
 void OverscrollRefresh::Reset() {
   scroll_consumption_state_ = DISABLED;
-  handler_->PullReset();
+  if (handler_)
+    handler_->PullReset();
 }
 
 void OverscrollRefresh::OnScrollBegin() {
@@ -43,15 +42,11 @@ void OverscrollRefresh::OnScrollEnd(const gfx::Vector2dF& scroll_velocity) {
   Release(allow_activation);
 }
 
-void OverscrollRefresh::OnScrollUpdateAck(bool was_consumed) {
+void OverscrollRefresh::OnOverscrolled() {
   if (scroll_consumption_state_ != AWAITING_SCROLL_UPDATE_ACK)
     return;
 
-  if (was_consumed) {
-    scroll_consumption_state_ = DISABLED;
-    return;
-  }
-
+  DCHECK(handler_);
   scroll_consumption_state_ = handler_->PullStart() ? ENABLED : DISABLED;
 }
 
@@ -68,6 +63,7 @@ bool OverscrollRefresh::WillHandleScrollUpdate(
       return false;
 
     case ENABLED:
+      DCHECK(handler_);
       handler_->PullUpdate(scroll_delta.y());
       return true;
   }
@@ -97,8 +93,10 @@ void OverscrollRefresh::OnFrameUpdated(
 }
 
 void OverscrollRefresh::Release(bool allow_refresh) {
-  if (scroll_consumption_state_ == ENABLED)
+  if (scroll_consumption_state_ == ENABLED) {
+    DCHECK(handler_);
     handler_->PullRelease(allow_refresh);
+  }
   scroll_consumption_state_ = DISABLED;
 }
 
