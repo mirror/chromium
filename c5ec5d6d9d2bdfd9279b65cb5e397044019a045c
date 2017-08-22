@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "488e93ed_a63af19b",
+        "filename": "chrome/browser/password_manager/password_manager_interactive_uitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-22T17:07:05Z",
+      "side": 1,
+      "message": "The only way I can find to achieve this is to create a new test fixture for these classes, which I have done here.",
+      "parentUuid": "e9818591_c11a94d2",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 110,
+        "endChar": 11
+      },
+      "revId": "c5ec5d6d9d2bdfd9279b65cb5e397044019a045c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d7c198e_80cd09ac",
         "filename": "components/password_manager/core/common/password_manager_features.h",
         "patchSetId": 4
