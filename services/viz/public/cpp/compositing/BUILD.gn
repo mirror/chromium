@@ -17,6 +17,9 @@ source_set("tests") {
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/cpp:service_test_support",
     "//services/viz/public/interfaces/compositing",
+    "//skia/public/interfaces",
+    "//third_party/skia/include/core/",
+    "//third_party/skia/include/effects/",
     "//testing/gtest",
     "//ui/gfx:test_support",
   ]
