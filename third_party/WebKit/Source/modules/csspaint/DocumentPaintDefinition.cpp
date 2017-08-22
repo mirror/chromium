@@ -15,7 +15,7 @@ DocumentPaintDefinition::~DocumentPaintDefinition() {}
 
 bool DocumentPaintDefinition::RegisterAdditionalPaintDefinition(
     const CSSPaintDefinition& other) {
-  if (HasAlpha() != other.HasAlpha() ||
+  if (GetContextAttributes().alpha() != other.GetContextAttributes().alpha() ||
       NativeInvalidationProperties() != other.NativeInvalidationProperties() ||
       CustomInvalidationProperties() != other.CustomInvalidationProperties() ||
       InputArgumentTypes() != other.InputArgumentTypes())

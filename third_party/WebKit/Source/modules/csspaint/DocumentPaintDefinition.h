@@ -39,7 +39,9 @@ class DocumentPaintDefinition final
   const Vector<CSSSyntaxDescriptor>& InputArgumentTypes() const {
     return paint_definition_->InputArgumentTypes();
   }
-  bool HasAlpha() const { return paint_definition_->HasAlpha(); }
+  ContextAttributes GetContextAttributes() const {
+    return paint_definition_->GetContextAttributes();
+  }
 
   bool RegisterAdditionalPaintDefinition(const CSSPaintDefinition&);
 

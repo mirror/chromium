@@ -22,9 +22,10 @@ class PaintRenderingContext2DTest : public ::testing::Test {
 };
 
 void PaintRenderingContext2DTest::SetUp() {
+  ContextAttributes context_attributes;
+  context_attributes.setAlpha(false);
   ctx_ = PaintRenderingContext2D::Create(
-      ImageBuffer::Create(IntSize(kWidth, kHeight)), false /* hasAlpha */,
-      kZoom);
+      ImageBuffer::Create(IntSize(kWidth, kHeight)), context_attributes, kZoom);
 }
 
 void TrySettingStrokeStyle(PaintRenderingContext2D* ctx,
