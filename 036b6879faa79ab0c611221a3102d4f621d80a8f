@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3f3bf014_71142401",
+        "filename": "chrome/browser/chromeos/fileapi/recent_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-22T04:19:12Z",
+      "side": 1,
+      "message": "\u003e  GetRecentFiles(nullptr /* file_system_context */, GURL() /* origin */, 3 /* max_files */, base::Time() /* cutoff_time */).\n\nI don\u0027t buy this argument. You\u0027d need to do exactly the same when constructing RecentContext.\n\nThough, IIUC |file_system_context| must not be null, |origin| must not be null. For optional arguments we can have simplified methods.\n\nSo it would look like:\n\nGetRecentFiles(file_system_context, origin, 3 /* max_files */).\n\nNot bad IMHO.\n\n\nMy concern is that Context named classes are usually holders of random things. See Android Context, or FileSystemContext. It\u0027s not obvious what such classes actually do. Do they represent a context of an operation? While origin sounds like a context [1], I\u0027m not sure if max_files is a context. In this case, let\u0027s see:\n\n- |file_system_context| is named to be a context, though not sure why,\n- |origin| is actually a context, as it tells about circumstances of being called,\n- |max_files| is IMHO not a context, it\u0027s an argument,\n- |cutoff_time| same as max_files. Though passing current time would be a context.\n\n\nFinally, while my comment is long, this is not such a big deal. If you prefer to have a wrapper for a arguments, how about renaming it to RecentArgs, or RecentOptions or something like that?\n\n\n[1] http://dictionary.cambridge.org/dictionary/english/context",
+      "parentUuid": "94779b63_4beb9c79",
+      "revId": "036b6879faa79ab0c611221a3102d4f621d80a8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b96e538e_2e4ee3d7",
         "filename": "chrome/browser/chromeos/fileapi/recent_context.h",
         "patchSetId": 1
