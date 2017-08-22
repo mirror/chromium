@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "921170aa_7d35a69b",
+        "filename": "ash/frame/custom_frame_view_ash_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-22T04:53:48Z",
+      "side": 1,
+      "message": "For example, maximized can be ...\n\nThis is just an example. You can use external keyboard, or chrome app can exit maximized state programmatically.",
+      "revId": "a831efe2c4848803ceb11e7b39318f7bd2a7a119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
