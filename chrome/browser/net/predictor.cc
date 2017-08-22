@@ -680,23 +680,6 @@ void Predictor::LearnAboutInitialNavigation(const GURL& url) {
   initial_observer_->Append(url, this);
 }
 
-// This API is only used in the browser process.
-// It is called from an IPC message originating in the renderer.  It currently
-// includes both Page-Scan, and Link-Hover prefetching.
-// TODO(jar): Separate out link-hover prefetching, and page-scan results.
-void Predictor::DnsPrefetchList(const std::vector<std::string>& hostnames) {
-  // TODO(jar): Push GURL transport further back into renderer, but this will
-  // require a Webkit change in the observer :-/.
-  std::vector<GURL> urls;
-  for (std::vector<std::string>::const_iterator it = hostnames.begin();
-       it < hostnames.end(); ++it) {
-    urls.push_back(GURL("http://" + *it + ":80"));
-  }
-
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  DnsPrefetchMotivatedList(urls, UrlInfo::PAGE_SCAN_MOTIVATED);
-}
-
 void Predictor::DnsPrefetchMotivatedList(
     const std::vector<GURL>& urls,
     UrlInfo::ResolutionMotivation motivation) {
