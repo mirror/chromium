@@ -22,6 +22,46 @@
       "revId": "b59a5414449540a5634ee34e220f57c0601efea8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012f75e4_77c82f63",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-22T09:54:53Z",
+      "side": 1,
+      "message": "nit:\n\nEXPECT_TRUE(checked_allowed);\nEXPECT_TRUE(checked_blocked);",
+      "revId": "b59a5414449540a5634ee34e220f57c0601efea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad174e9_aa03397c",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-22T09:54:53Z",
+      "side": 1,
+      "message": "Didn\u0027t you want to move this check to RegisterProfilePrefs?",
+      "range": {
+        "startLine": 672,
+        "startChar": 12,
+        "endLine": 672,
+        "endChar": 23
+      },
+      "revId": "b59a5414449540a5634ee34e220f57c0601efea8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
