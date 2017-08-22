@@ -1942,6 +1942,7 @@ WebURLRequest WebLocalFrameImpl::RequestForReload(
   return WrappedResourceRequest(request);
 }
 
+extern LocalFrame* g_frameOfInterest;
 void WebLocalFrameImpl::Load(const WebURLRequest& request,
                              WebFrameLoadType web_frame_load_type,
                              const WebHistoryItem& item,
@@ -1950,6 +1951,9 @@ void WebLocalFrameImpl::Load(const WebURLRequest& request,
   DCHECK(GetFrame());
   DCHECK(!request.IsNull());
   const ResourceRequest& resource_request = request.ToResourceRequest();
+  WTF_CREATE_SCOPED_LOGGER(logger, "WLFI::load %s",
+                           resource_request.Url().GetString().Utf8().data());
+  g_frameOfInterest = GetFrame();
 
   if (resource_request.Url().ProtocolIs("javascript") &&
       web_frame_load_type == WebFrameLoadType::kStandard) {

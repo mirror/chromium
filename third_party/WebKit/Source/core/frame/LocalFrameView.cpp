@@ -168,6 +168,9 @@ static const double kResourcePriorityUpdateDelayAfterScroll = 0.250;
 
 static bool g_initial_track_all_paint_invalidations = false;
 
+CORE_EXPORT LocalFrame* g_frameOfInterest = nullptr;
+LocalFrameView* g_frameViewOfInterest = nullptr;
+
 LocalFrameView::LocalFrameView(LocalFrame& frame, IntRect frame_rect)
     : frame_(frame),
       frame_rect_(frame_rect),
@@ -218,6 +221,10 @@ LocalFrameView::LocalFrameView(LocalFrame& frame, IntRect frame_rect)
       needs_intersection_observation_(false),
       main_thread_scrolling_reasons_(0),
       paint_frame_count_(0) {
+  if (&frame == g_frameOfInterest) {
+    g_frameViewOfInterest = this;
+    WTF_CREATE_SCOPED_LOGGER(logger, "create FrameView");
+  }
   Init();
 }
 
