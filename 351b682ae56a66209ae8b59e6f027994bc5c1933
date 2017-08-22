@@ -22,6 +22,30 @@
       "revId": "351b682ae56a66209ae8b59e6f027994bc5c1933",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed91540c_f506d0a4",
+        "filename": "components/arc/test/fake_file_system_instance.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-22T07:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55caed36_d3956526",
+      "range": {
+        "startLine": 47,
+        "startChar": 33,
+        "endLine": 47,
+        "endChar": 44
+      },
+      "revId": "351b682ae56a66209ae8b59e6f027994bc5c1933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
