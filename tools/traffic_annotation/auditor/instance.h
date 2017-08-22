@@ -22,7 +22,6 @@ class InstanceBase {
 };
 
 // Holds an instance of network traffic annotation.
-// TODO(rhalavati): Check if this class can also be reused in clang tool.
 class AnnotationInstance : public InstanceBase {
  public:
   // Annotation Type.
@@ -92,7 +91,6 @@ class AnnotationInstance : public InstanceBase {
 
 // Holds an instance of calling a function that might have a network traffic
 // annotation argument.
-// TODO(rhalavati): Check if this class can also be reused in clang tool.
 class CallInstance : public InstanceBase {
  public:
   CallInstance();
@@ -124,6 +122,36 @@ class CallInstance : public InstanceBase {
 
   // Is function |function_name| annotated?
   bool is_annotated;
+};
+
+// Holds an instance of initializing a traffic annotation tag with list
+// expressions or assignment of a value to |unique_id_hash_code| of the mutable
+// ones, outside traffic annotation API functions.
+class AssignmentInstance : public InstanceBase {
+ public:
+  AssignmentInstance();
+  AssignmentInstance(const AssignmentInstance& other);
+
+  // Deserializes an instance from serialized lines of text provided by the
+  // clang tool.
+  // |serialized_lines| are read from |start_line| to |end_line| and should
+  // contain the following lines:
+  //   1- File path.
+  //   2- Name of the function in which the call is made.
+  //   3- Name of the called function.
+  //   4- Does the call have an annotation?
+  // If the call instance is correctly read returns true, otherwise false.
+  // If any error happens, |error_text| will be set. If it would be set to
+  // FATAL, further processing of the text should be stopped.
+  AuditorResult Deserialize(const std::vector<std::string>& serialized_lines,
+                            int start_line,
+                            int end_line) override;
+
+  std::string file_path;
+  uint32_t line_number;
+
+  // Name of the function in which annotation is defined.
+  std::string function_context;
 };
 
 #endif  // TOOLS_TRAFFIC_ANNOTATION_AUDITOR_INSTANCE_H_

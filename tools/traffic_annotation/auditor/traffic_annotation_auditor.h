@@ -16,10 +16,10 @@
 // Holds an item of whitelist exception rule for auditor.
 struct AuditorException {
   enum class ExceptionType {
-    ALL,            // Ignore all errors (doesn't check the files at all).
-    MISSING,        // Ignore missing annotations.
-    EMPTY_MUTABLE,  // Ignore empty mutable annotation constructor.
-    EXCEPTION_TYPE_LAST = EMPTY_MUTABLE
+    ALL,                // Ignore all errors (doesn't check the files at all).
+    MISSING,            // Ignore missing annotations.
+    DIRECT_ASSIGNMENT,  // Ignore direct assignment of annotation value.
+    EXCEPTION_TYPE_LAST = DIRECT_ASSIGNMENT
   } type;
   std::string partial_path;
 
@@ -29,8 +29,8 @@ struct AuditorException {
       *type_value = ExceptionType::ALL;
     } else if (type_string == "missing") {
       *type_value = ExceptionType::MISSING;
-    } else if (type_string == "empty_mutable") {
-      *type_value = ExceptionType::EMPTY_MUTABLE;
+    } else if (type_string == "direct_assignment") {
+      *type_value = ExceptionType::DIRECT_ASSIGNMENT;
     } else {
       return false;
     }
@@ -145,8 +145,10 @@ class TrafficAnnotationAuditor {
   std::vector<CallInstance> extracted_calls_;
   std::vector<AuditorResult> errors_;
 
-  std::vector<std::string> ignore_list_[static_cast<int>(
-      AuditorException::ExceptionType::EXCEPTION_TYPE_LAST)];
+  std::vector<std::string>
+      ignore_list_[static_cast<int>(
+                       AuditorException::ExceptionType::EXCEPTION_TYPE_LAST) +
+                   1];
 
   base::FilePath gn_file_for_test_;
   std::map<std::string, bool> checked_dependencies_;

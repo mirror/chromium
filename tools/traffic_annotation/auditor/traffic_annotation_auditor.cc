@@ -47,6 +47,11 @@ struct AnnotationID {
   AnnotationInstance* instance;
 };
 
+enum BlockType { ASSIGNMENT, ANNOTATION, CALL };
+std::map<BlockType, std::string> kBlockTypes = {{ASSIGNMENT, "ASSIGNMENT"},
+                                                {ANNOTATION, "ANNOTATION"},
+                                                {CALL, "CALL"}};
+
 }  // namespace
 
 
@@ -160,32 +165,23 @@ bool TrafficAnnotationAuditor::ParseClangToolRawOutput() {
   std::vector<std::string> lines =
       base::SplitString(clang_tool_raw_output_, "\n", base::KEEP_WHITESPACE,
                         base::SPLIT_WANT_ALL);
-
   for (unsigned int current = 0; current < lines.size(); current++) {
-    // TODO(rhalavati): Remove this after updating auditor to process
-    // assignments.
-    if (lines[current] == "==== NEW ASSIGNMENT ====") {
-      while (current < lines.size()) {
-        if (lines[current] == "==== ASSIGNMENT ENDS ====")
-          break;
-        else
-          current++;
-      }
-      if (current == lines.size()) {
-        LOG(ERROR) << "'ASSIGNMENT END' not found.";
-        return false;
-      }
+    if (lines[current].empty())
       continue;
+
+    BlockType block_type;
+    std::string end_marker;
+    for (const auto& item : kBlockTypes) {
+      if (lines[current] ==
+          base::StringPrintf("==== NEW %s ====", item.second.c_str())) {
+        end_marker =
+            base::StringPrintf("==== %s ENDS ====", item.second.c_str());
+        block_type = item.first;
+        break;
+      }
     }
 
-    bool annotation_block;
-    if (lines[current] == "==== NEW ANNOTATION ====")
-      annotation_block = true;
-    else if (lines[current] == "==== NEW CALL ====") {
-      annotation_block = false;
-    } else if (lines[current].empty()) {
-      continue;
-    } else {
+    if (end_marker.empty()) {
       LOG(ERROR) << "Unexpected token at line: " << current;
       return false;
     }
@@ -193,8 +189,6 @@ bool TrafficAnnotationAuditor::ParseClangToolRawOutput() {
     // Get the block.
     current++;
     unsigned int end_line = current;
-    std::string end_marker =
-        annotation_block ? "==== ANNOTATION ENDS ====" : "==== CALL ENDS ====";
     while (end_line < lines.size() && lines[end_line] != end_marker)
       end_line++;
     if (end_line == lines.size()) {
@@ -204,37 +198,59 @@ bool TrafficAnnotationAuditor::ParseClangToolRawOutput() {
     }
 
     // Deserialize and handle errors.
-    AnnotationInstance new_annotation;
-    CallInstance new_call;
     AuditorResult result(AuditorResult::Type::RESULT_OK);
 
-    result = annotation_block
-                 ? new_annotation.Deserialize(lines, current, end_line)
-                 : new_call.Deserialize(lines, current, end_line);
-
-    if (!IsWhitelisted(result.file_path(),
-                       AuditorException::ExceptionType::ALL) &&
-        (result.type() != AuditorResult::Type::ERROR_MISSING ||
-         !IsWhitelisted(result.file_path(),
-                        AuditorException::ExceptionType::MISSING))) {
-      switch (result.type()) {
-        case AuditorResult::Type::RESULT_OK: {
-          if (annotation_block)
-            extracted_annotations_.push_back(new_annotation);
-          else
-            extracted_calls_.push_back(new_call);
-          break;
+    switch (block_type) {
+      case ANNOTATION: {
+        AnnotationInstance new_annotation;
+        result = new_annotation.Deserialize(lines, current, end_line);
+        if (result.IsOK()) {
+          extracted_annotations_.push_back(new_annotation);
+        } else if (result.type() ==
+                       AuditorResult::Type::ERROR_MISSING_TAG_USED &&
+                   IsWhitelisted(result.file_path(),
+                                 AuditorException::ExceptionType::MISSING)) {
+          result = AuditorResult(AuditorResult::Type::RESULT_IGNORE);
         }
-        case AuditorResult::Type::RESULT_IGNORE:
-          break;
-        case AuditorResult::Type::ERROR_FATAL: {
-          LOG(ERROR) << "Aborting after line " << current
-                     << " because: " << result.ToText().c_str();
-          return false;
-        }
-        default:
-          errors_.push_back(result);
+        break;
       }
+
+      case CALL: {
+        CallInstance new_call;
+        result = new_call.Deserialize(lines, current, end_line);
+        if (result.IsOK())
+          extracted_calls_.push_back(new_call);
+        break;
+      }
+
+      case ASSIGNMENT: {
+        AssignmentInstance new_assignment;
+        result = new_assignment.Deserialize(lines, current, end_line);
+        if (result.IsOK() &&
+            !IsWhitelisted(
+                base::StringPrintf("%s::%s", new_assignment.file_path.c_str(),
+                                   new_assignment.function_context.c_str()),
+                AuditorException::ExceptionType::DIRECT_ASSIGNMENT)) {
+          result = AuditorResult(AuditorResult::Type::ERROR_DIRECT_ASSIGNMENT,
+                                 std::string(), new_assignment.file_path,
+                                 new_assignment.line_number);
+        }
+      }
+    }
+
+    switch (result.type()) {
+      case AuditorResult::Type::RESULT_OK:
+      case AuditorResult::Type::RESULT_IGNORE:
+        break;
+      case AuditorResult::Type::ERROR_FATAL: {
+        LOG(ERROR) << "Aborting after line " << current
+                   << " because: " << result.ToText().c_str();
+        return false;
+      }
+      default:
+        if (!IsWhitelisted(result.file_path(),
+                           AuditorException::ExceptionType::ALL))
+          errors_.push_back(result);
     }
 
     current = end_line;
