@@ -49,6 +49,8 @@ Bindings.PresentationConsoleMessageHelper = class {
     ConsoleModel.consoleModel.addEventListener(
         ConsoleModel.ConsoleModel.Events.MessageAdded, this._onConsoleMessageAdded, this);
     ConsoleModel.consoleModel.messages().forEach(this._consoleMessageAdded, this);
+    ConsoleModel.consoleModel.addEventListener(
+        ConsoleModel.ConsoleModel.Events.MessageRemoved, this._onConsoleMessageRemoved, this);
     // TODO(dgozman): setImmediate because we race with DebuggerWorkspaceBinding on ParsedScriptSource event delivery.
     SDK.targetManager.addModelListener(
         SDK.DebuggerModel, SDK.DebuggerModel.Events.ParsedScriptSource,
@@ -162,6 +164,36 @@ Bindings.PresentationConsoleMessageHelper = class {
     this._locationPool.disposeAll();
   }
 
+  /**
+   * @param {!Common.Event} event
+   */
+  _onConsoleMessageRemoved(event) {
+    var message = /** @type {!ConsoleModel.ConsoleMessage} */ (event.data);
+    this._consoleMessageRemoved(message);
+  }
+
+  /**
+   * @param {!ConsoleModel.ConsoleMessage} message
+   */
+  _consoleMessageRemoved(message) {
+    if (message.url) {
+      var pendingConsoleMessages = this._pendingConsoleMessages[message.url];
+      if (pendingConsoleMessages) {
+        var index = pendingConsoleMessages.indexOf(message);
+        if (index !== -1)
+          pendingConsoleMessages.splice(index, 1);
+      }
+    }
+    for (var i = 0; i < this._presentationConsoleMessages.length; ++i) {
+      var presentationConsoleMessage = this._presentationConsoleMessages[i];
+      if (presentationConsoleMessage._message === message) {
+        presentationConsoleMessage.dispose();
+        this._presentationConsoleMessages.splice(i, 1);
+        break;
+      }
+    }
+  }
+
   _debuggerReset() {
     this._consoleCleared();
   }
@@ -177,6 +209,7 @@ Bindings.PresentationConsoleMessage = class {
    * @param {!Bindings.LiveLocationPool} locationPool
    */
   constructor(message, rawLocation, locationPool) {
+    this._message = message;
     this._text = message.messageText;
     this._level = message.level === ConsoleModel.ConsoleMessage.MessageLevel.Error ?
         Workspace.UISourceCode.Message.Level.Error :

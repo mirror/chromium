@@ -32,6 +32,7 @@
 #define WebConsoleMessage_h
 
 #include "public/platform/WebString.h"
+#include "public/web/WebNode.h"
 
 namespace blink {
 
@@ -46,6 +47,7 @@ struct WebConsoleMessage {
 
   Level level;
   WebString text;
+  WebVector<blink::WebNode> nodes;
   WebString url;
   unsigned line_number;
   unsigned column_number;
@@ -53,6 +55,12 @@ struct WebConsoleMessage {
   WebConsoleMessage() : level(kLevelInfo), line_number(0), column_number(0) {}
   WebConsoleMessage(Level level, const WebString& text)
       : level(level), text(text), line_number(0), column_number(0) {}
+  WebConsoleMessage(Level level,
+                    const WebString& text,
+                    const WebVector<blink::WebNode>& nodes)
+      : WebConsoleMessage(level, text) {
+    this->nodes = std::move(nodes);
+  }
   WebConsoleMessage(Level level,
                     const WebString& text,
                     const WebString url,
