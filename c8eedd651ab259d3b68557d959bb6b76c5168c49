@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46c4b0c0_8bb30f3a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "Please update this.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 71
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d552142e_a394b7e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "Add bug.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf4f4b8_ce76ac87",
+        "filename": "components/multidevice/service/BUILD.gn",
+        "patchSetId": 26
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "nit: Inline above.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 14
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58cc31f3_da1a1f65",
+        "filename": "components/multidevice/service/device_sync_impl.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "Is this comment supposed to be a TODO? Please change wording to make this clear.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f66dd9_8a66db71",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "Add class description.",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 20
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece69680_9113c129",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "Remove these.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 75
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3587a79c_cb9bc4c0",
+        "filename": "components/multidevice/service/device_sync_impl.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "Please name this observers_ to be consistent in your wording.",
+      "range": {
+        "startLine": 60,
+        "startChar": 64,
+        "endLine": 60,
+        "endChar": 74
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e878de17_558f9a3c",
+        "filename": "components/multidevice/service/main.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "Newline before this.",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 1
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6846b1b_c44bdc00",
+        "filename": "components/multidevice/service/main.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "Alphabetize.",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 14
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a86398_534a5fa2",
+        "filename": "components/multidevice/service/main.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 38
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6018d38_854998a4",
+        "filename": "components/multidevice/service/multidevice_service.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "Add class description.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 24
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef4c69cb_c2de0a45",
+        "filename": "components/multidevice/service/multidevice_service.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "Newline before this.",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 4
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ee959e_cf0ff675",
+        "filename": "components/multidevice/service/multidevice_service_manifest.json",
+        "patchSetId": 26
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "nit: I believe these are supposed to be named with a \"service:function\" pattern, so \"multidevice:device_sync\" seems to be the way to go here.",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 20
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2afa2a_0aed1508",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "The On*Finished() functions don\u0027t receive a result code. You shouldn\u0027t need to use them here.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 54
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4dcadd9_8247342b",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "You shouldn\u0027t be modifying the RunLoops of these observers. Does simply running the main RunLoop work here? I was thinking something like:\n\ndevice_sync_ptr_-\u003eForceEnrollmentNow();\nbase::RunLoop().RunUntilIdle();",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 45
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91ca098_5acd26d6",
+        "filename": "components/multidevice/service/public/interfaces/device_sync.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "Add comment.",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 17
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3d4b48_7d0183ac",
+        "filename": "components/multidevice/service/public/interfaces/device_sync.mojom",
+        "patchSetId": 26
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "Move to bottom of interface.",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 36
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a691612b_bc9a5ddb",
+        "filename": "components/printing/service/pdf_compositor_service.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-22T00:56:43Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "c8eedd651ab259d3b68557d959bb6b76c5168c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
