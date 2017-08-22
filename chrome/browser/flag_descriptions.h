@@ -64,6 +64,9 @@ extern const char kAutoplayPolicyDocumentUserActivation[];
 extern const char kBackgroundVideoTrackOptimizationName[];
 extern const char kBackgroundVideoTrackOptimizationDescription[];
 
+extern const char kBidiUrlsLeftToRightName[];
+extern const char kBidiUrlsLeftToRightDescription[];
+
 extern const char kBleAdvertisingInExtensionsName[];
 extern const char kBleAdvertisingInExtensionsDescription[];
 
