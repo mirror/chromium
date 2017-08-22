@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "16432c01_abcbdde9",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-22T16:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "895f7029_0832f771",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 11
+      },
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f8c300a_2f1e3aa9",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6ad6e65a_8663cab5",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialManagerClient.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-22T16:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f8c300a_2f1e3aa9",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 16
+      },
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57f51ec3_0c724b3c",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 7
@@ -62,6 +110,24 @@
       "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37bc9b9c_40400ebb",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-22T16:29:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "57f51ec3_0c724b3c",
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "4c592ef0_5bce26fe",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-22T16:29:07Z",
+      "side": 1,
+      "message": "Using const throws an error for the static_cast below.",
+      "parentUuid": "1735fe73_32bbab82",
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76339628_406a8032",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
         "patchSetId": 7
@@ -96,6 +180,24 @@
       "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a5ada3f_66f50156",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-22T16:29:07Z",
+      "side": 1,
+      "message": "Got it, I\u0027ll talk with Balazs about it (I also think the need to get and pass the localframe down will go away when cred man and authenticator\u0027s mojo are fully merged.)",
+      "parentUuid": "76339628_406a8032",
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "6f98bbad_9168d52a",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-22T16:29:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c34459b2_0d0da895",
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "720e48c5_b899199e",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
         "patchSetId": 7
@@ -130,6 +250,24 @@
       "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b284f0b4_4631543e",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-08-22T16:29:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "720e48c5_b899199e",
+      "revId": "a8b17a72e512475404a38cddf23bd63a002b0aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
