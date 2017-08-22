@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "e9818591_c11a94d2",
+        "filename": "chrome/browser/password_manager/password_manager_interactive_uitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-22T16:04:34Z",
+      "side": 1,
+      "message": "\u003e \u003e If I enable the feature via scoped_feature_list_ it will be unconditionally enabled for everything, even if somebody changes the default value. I am concerned that this could have side effects on other tests that would not test production code anymore.\n\u003e It should not take side effect on other tests. It is called scoped. The fallback tests should be run independently of default value. Otherwise, it will be just a dead code. \n\u003e \n\u003e Look here please https://cs.chromium.org/chromium/src/chrome/browser/password_manager/password_manager_browsertest.cc?rcl\u003de348e2dc2bf290274a67753958c5b986ee6acfb2\u0026l\u003d2334 or https://cs.chromium.org/chromium/src/chrome/renderer/autofill/password_autofill_agent_browsertest.cc?rcl\u003de348e2dc2bf290274a67753958c5b986ee6acfb2\u0026l\u003d356 This is Fill-On-Account-Select tests. There are run despite the feature is disable by default. We should not break FOAS tests.  \n\u003e \n\u003e \u003e The policy is to enable flags by default if the intent is to ship a feature such that tests are executed according to default setting.\n\u003e You may misunderstand me. The feature should be enabled by default for sure. But I suggest to re-play possible case: we need to disable the feature.\nIf we will disable the feature, we will not have failed tests. Just change one line.",
+      "parentUuid": "771e70fe_9ca10822",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 110,
+        "endChar": 11
+      },
+      "revId": "c5ec5d6d9d2bdfd9279b65cb5e397044019a045c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d7c198e_80cd09ac",
         "filename": "components/password_manager/core/common/password_manager_features.h",
         "patchSetId": 4
