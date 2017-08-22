@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9eaa4954_b6efd833",
+        "filename": "ui/chromeos/touch_accessibility_enabler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-22T06:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c847178_49f86372",
+      "revId": "1d29304c4f687e6bafd0a18aa418cf6a52709f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84e02e8a_09f02485",
         "filename": "ui/chromeos/touch_accessibility_enabler.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "1d29304c4f687e6bafd0a18aa418cf6a52709f6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8acfe25a_32c1d355",
+        "filename": "ui/chromeos/touch_accessibility_enabler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-22T06:18:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84e02e8a_09f02485",
+      "revId": "1d29304c4f687e6bafd0a18aa418cf6a52709f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
