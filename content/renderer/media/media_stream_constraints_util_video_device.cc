@@ -23,12 +23,17 @@ namespace {
 
 // Number of default settings to be used as final tie-breaking criteria for
 // settings that are equally good at satisfying constraints:
-// device ID, power-line frequency, noise reduction, resolution and frame rate.
-const int kNumDefaultDistanceEntries = 5;
+// device ID, power-line frequency, noise reduction, resolution (area),
+// resolution (aspect ratio) and frame rate.
+const int kNumDefaultDistanceEntries = 6;
 
 // The default resolution to be preferred as tie-breaking criterion.
 const int kDefaultResolutionArea = MediaStreamVideoSource::kDefaultWidth *
                                    MediaStreamVideoSource::kDefaultHeight;
+
+constexpr double kDefaultAspectRatio =
+    static_cast<double>(MediaStreamVideoSource::kDefaultWidth) /
+    MediaStreamVideoSource::kDefaultHeight;
 
 // The minimum aspect ratio to be supported by sources.
 const double kMinSourceAspectRatio = 0.05;
@@ -736,6 +741,14 @@ void AppendDistanceFromDefault(
           : NumericConstraintFitnessDistance(candidate_area,
                                              kDefaultResolutionArea);
   distance_vector->push_back(resolution_distance);
+
+  // Prefer a resolution with width close to the default aspect ratio.
+  double candidate_aspect_ratio =
+      static_cast<double>(candidate.format().frame_size.width()) /
+      candidate.format().frame_size.height();
+  double aspect_ratio_distance = NumericConstraintFitnessDistance(
+      candidate_aspect_ratio, kDefaultAspectRatio);
+  distance_vector->push_back(aspect_ratio_distance);
 
   // Prefer a frame rate close to the default.
   double frame_rate_distance =
