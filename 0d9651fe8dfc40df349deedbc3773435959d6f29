@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48e3f1a0_4064d6a5",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-22T13:18:57Z",
+      "side": 1,
+      "message": "True. Sorted.",
+      "parentUuid": "f8152a84_e9dce5b5",
+      "revId": "0d9651fe8dfc40df349deedbc3773435959d6f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32ed9c30_4c4bce2b",
         "filename": "third_party/WebKit/public/platform/WebCORS.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "0d9651fe8dfc40df349deedbc3773435959d6f29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b83e7eb_ab0a2e16",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-22T13:18:57Z",
+      "side": 1,
+      "message": "Done (though I could not find that exact paragraph in the fetch spec, so the comment is only marginally better than the name).",
+      "parentUuid": "32ed9c30_4c4bce2b",
+      "revId": "0d9651fe8dfc40df349deedbc3773435959d6f29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
