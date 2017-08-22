@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "58a63939_0f57581e",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-22T18:11:18Z",
+      "side": 1,
+      "message": "+final",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3bc787ef_239503ac",
         "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
         "patchSetId": 7
@@ -30,6 +47,23 @@
       "writtenOn": "2017-08-22T07:32:44Z",
       "side": 1,
       "message": "Should we make ScriptState::Scope here because we use v8 APIs?",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c8089ad_f77da6c0",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-22T18:11:18Z",
+      "side": 1,
+      "message": "If there are both a classic script and a module script with the same URL, and ResolveDynamically() is called from the classic script, then doesnn\u0027t this implementation thinks that the referencing script is a module script, which is incorrect?",
       "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +121,24 @@
     },
     {
       "key": {
+        "uuid": "4ca6d22d_fe3c885f",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-22T18:11:18Z",
+      "side": 1,
+      "message": "+1. I\u0027m alarmed by the scattered NOTIMPLEMENTED()s.\n\nAlternatively:\nDo we need to land ResolveDynamically() asap to unblock subsequent CLs?\nWill the support for this classic script case be implemented after M-63?\nIf the answers are both No, then it might be worth doing cleaner implementation, like:\nintroduce blink::Script* referencing_script,\nimplement Script::Nonce() and Script::ParserState() etc., and\nthus refer to e.g. referencing_script-\u003eParserState() etc. and remove NOTIMPLEMENTED() calls.\n(Currently, parser state and nonce are not the members of #concept-script, but probably the spec should be updated to make concept-script to contain parser state and nonce, because Step 7 of the proposed spec refers to \"referencing script\u0027s cryptographic nonce\" and \"referencing script\u0027s parser state\", where |referencing script| can be a module or classic script IIUC)",
+      "parentUuid": "801e455e_67e62f7f",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39538cb4_a4592ba2",
         "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
         "patchSetId": 7
@@ -98,6 +150,23 @@
       "writtenOn": "2017-08-22T09:04:09Z",
       "side": 1,
       "message": "Should this use parser_state and nonce rather than kNotParserInserted and empty_nonce?",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8392ce5_cc7e9e93",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-22T18:11:18Z",
+      "side": 1,
+      "message": "+final",
       "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +224,40 @@
     },
     {
       "key": {
+        "uuid": "8858ee16_9b656af1",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-22T18:11:18Z",
+      "side": 1,
+      "message": "+override",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7c6a99_f40fcaa1",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-22T18:11:18Z",
+      "side": 1,
+      "message": "+final?",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef076165_3df552a9",
         "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
         "patchSetId": 7
@@ -172,6 +275,40 @@
     },
     {
       "key": {
+        "uuid": "453b26eb_63345dfc",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-22T18:11:18Z",
+      "side": 1,
+      "message": "+final?",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73692574_4e5048c7",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-22T18:11:18Z",
+      "side": 1,
+      "message": "+explicit",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84071e40_7ec1aff1",
         "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
         "patchSetId": 7
@@ -183,6 +320,23 @@
       "writtenOn": "2017-08-22T07:32:44Z",
       "side": 1,
       "message": "ditto (const)",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e5dcd4_6203aa77",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-22T18:11:18Z",
+      "side": 1,
+      "message": "+final",
       "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
