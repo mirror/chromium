@@ -1304,6 +1304,10 @@ const char kTrySupportedChannelLayoutsDescription[] =
 const char kUiPartialSwapName[] = "Partial swap";
 const char kUiPartialSwapDescription[] = "Sets partial swap behavior.";
 
+const char kUseDdljsonApiName[] = "Use new ddljson API for Doodles";
+const char kUseDdljsonApiDescription[] =
+    "Enables the new ddljson API to fetch Doodles for the NTP.";
+
 const char kUserConsentForExtensionScriptsName[] =
     "User consent for extension scripts";
 const char kUserConsentForExtensionScriptsDescription[] =
@@ -1926,10 +1930,6 @@ const char kUseAndroidMidiApiDescription[] =
     "Use Android Midi API for WebMIDI (effective only with Android M+ "
     "devices).";
 
-const char kUseDdljsonApiName[] = "Use new ddljson API for Doodles";
-const char kUseDdljsonApiDescription[] =
-    "Enables the new ddljson API to fetch Doodles for the NTP.";
-
 const char kXGEOVisibleNetworksName[] = "Enable XGEO Visible Networks";
 const char kXGEOVisibleNetworksDescription[] =
     "If location permissions are granted, include visible networks in the XGEO "
@@ -1946,6 +1946,11 @@ const char kAccountConsistencyDescription[] =
     "When enabled, the browser manages signing in and out of Google accounts.";
 const char kAccountConsistencyChoiceMirror[] = "Mirror";
 const char kAccountConsistencyChoiceDice[] = "Dice";
+
+const char kDoodlesOnLocalNtpName[] = "Enable doodles on the local NTP";
+const char kDoodlesOnLocalNtpDescription[] =
+    "Show doodles on the local New Tab page if Google is the default search "
+    "engine.";
 
 const char kEnableAudioFocusName[] = "Manage audio focus across tabs";
 const char kEnableAudioFocusDescription[] =
