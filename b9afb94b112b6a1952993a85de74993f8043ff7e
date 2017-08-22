@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4480c5cd_6158c721",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T22:40:06Z",
+      "side": 1,
+      "message": "Should these \"waiters\" be a part of chrome_earl_grey.h? Are they going to be used in multiple files?",
+      "revId": "b9afb94b112b6a1952993a85de74993f8043ff7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9efee9df_ad62c27f",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T22:40:06Z",
+      "side": 1,
+      "message": "waitForWebViewContainingBlockedImageElementWithID ?",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 44
+      },
+      "revId": "b9afb94b112b6a1952993a85de74993f8043ff7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44db7138_c73feb8e",
+        "filename": "ios/web/public/test/web_view_content_test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T22:40:06Z",
+      "side": 1,
+      "message": "ImageElementState?",
+      "revId": "b9afb94b112b6a1952993a85de74993f8043ff7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ad004c_56257607",
+        "filename": "ios/web/public/test/web_view_content_test_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T22:40:06Z",
+      "side": 1,
+      "message": "s/defaultSessionConfiguration/ephemeralSessionConfiguration\n\nOriginal code was not correct :(",
+      "range": {
+        "startLine": 49,
+        "startChar": 33,
+        "endLine": 49,
+        "endChar": 60
+      },
+      "revId": "b9afb94b112b6a1952993a85de74993f8043ff7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55286540_9a4e733d",
+        "filename": "ios/web/public/test/web_view_content_test_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-22T22:40:06Z",
+      "side": 1,
+      "message": "This will be executed inside for-loop, which will slow down the test. How about changing this method to WaitForWebViewContainingImage?",
+      "range": {
+        "startLine": 109,
+        "startChar": 19,
+        "endLine": 109,
+        "endChar": 28
+      },
+      "revId": "b9afb94b112b6a1952993a85de74993f8043ff7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
