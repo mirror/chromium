@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9642929d_32e6463f",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-22T15:39:48Z",
+      "side": 1,
+      "message": "The reason I added this check here since in some unittests which the MouseWheel or Scroll events happened on the start page before now be triggered on AppsGridView. In PaginationModel, it will check the total pages number will fail the tests. And I think it also reasonable to check the page number before change the page.",
+      "parentUuid": "9d5588d0_f167ba81",
+      "revId": "a15f03eaac2cd22ab39c1d3ac421ebeea0dc2180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90a8b598_7abf12a8",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-22T00:50:39Z",
       "side": 1,
       "message": "Do we need this state test for other scroll handlers (OnMouseWheel and OnScrollEvent) ?",
+      "revId": "a15f03eaac2cd22ab39c1d3ac421ebeea0dc2180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86e87ef_9de6da1b",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1006,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-22T15:39:48Z",
+      "side": 1,
+      "message": "Yes. I found we\u0027d better add that for all the three funcs. And for gesture event, we should not handled the events here. Since, the current behavior here is if swiping on the start page, it will change from PEEKING to FULLSCREEN_ALL_APPS, and change to second page(if there has more than one page).",
+      "parentUuid": "90a8b598_7abf12a8",
       "revId": "a15f03eaac2cd22ab39c1d3ac421ebeea0dc2180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5289d9a5_25f36870",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1887,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-22T15:39:48Z",
+      "side": 1,
+      "message": "Not always needed during the dragging. We can make it layout in the start and end of the dragging.",
+      "parentUuid": "4ac0de72_0fcad839",
+      "revId": "a15f03eaac2cd22ab39c1d3ac421ebeea0dc2180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4dc76b31_0586911d",
         "filename": "ui/app_list/views/contents_view.cc",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "a15f03eaac2cd22ab39c1d3ac421ebeea0dc2180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984229d0_9491e5ba",
+        "filename": "ui/app_list/views/contents_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-22T15:39:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dc76b31_0586911d",
+      "revId": "a15f03eaac2cd22ab39c1d3ac421ebeea0dc2180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

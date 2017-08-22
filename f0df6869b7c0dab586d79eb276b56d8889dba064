@@ -404,6 +404,24 @@
       "revId": "f0df6869b7c0dab586d79eb276b56d8889dba064",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e853a6_562624a5",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1877,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-22T15:39:48Z",
+      "side": 1,
+      "message": "Thanks for the comment. I found I forgot to test this case. Moved the logic to EndDrag in AppListView.",
+      "parentUuid": "af2f35a5_9d10b399",
+      "revId": "f0df6869b7c0dab586d79eb276b56d8889dba064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

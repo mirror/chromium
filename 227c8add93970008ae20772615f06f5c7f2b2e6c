@@ -52,6 +52,24 @@
       "revId": "227c8add93970008ae20772615f06f5c7f2b2e6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d112c69_7d77580d",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-22T15:39:48Z",
+      "side": 1,
+      "message": "After this cl, I think weidong@ will continue to work on the key focus events of the pages. I think he will remove the tests here and add the same tests for apps_grid_view. I added a TODO in start_page_view, but didn\u0027t file a bug for this. Let me make it to be disabled and file a bug for this.",
+      "parentUuid": "28138d5d_b85593b6",
+      "revId": "227c8add93970008ae20772615f06f5c7f2b2e6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
