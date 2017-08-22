@@ -342,8 +342,6 @@ void DataReductionProxyNetworkDelegate::OnBeforeStartTransactionInternal(
     data_reduction_proxy_io_data_->lofi_decider()
         ->MaybeSetAcceptTransformHeader(
             *request,
-            !params::IsBlackListEnabledForServerPreviews() &&
-                data_reduction_proxy_config_->lofi_off(),
             headers);
   }
 
