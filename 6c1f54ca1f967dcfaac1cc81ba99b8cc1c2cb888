@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c91e0c6_a70de493",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T23:02:55Z",
+      "side": 1,
+      "message": "You mentioned that this avoids clipping, did you test strings with tall glyphs, descenders like \u0027y\u0027, other large ascenders/descenders (eg. Hindi glyphs cited in \u003chttp://crbug.com/404999\u003e)?",
+      "revId": "6c1f54ca1f967dcfaac1cc81ba99b8cc1c2cb888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea1161a_05c0eccf",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T23:02:55Z",
+      "side": 1,
+      "message": "q: would it make sense to use two lines for any items that don\u0027t already use a second line for a rating/price?",
+      "revId": "6c1f54ca1f967dcfaac1cc81ba99b8cc1c2cb888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1ebbe0_5a492225",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T23:02:55Z",
+      "side": 1,
+      "message": "For this case and |max_width_ !\u003d 0| below, we\u0027ll need GetHeightForWidth to respect |max_lines_|. Please add tests for both of those cases.",
+      "range": {
+        "startLine": 331,
+        "startChar": 35,
+        "endLine": 331,
+        "endChar": 52
+      },
+      "revId": "6c1f54ca1f967dcfaac1cc81ba99b8cc1c2cb888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19f6768_ce8a53e0",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T23:02:55Z",
+      "side": 1,
+      "message": "nit: please use \u0027multi-line\u0027 here and elsewhere, like the header.",
+      "range": {
+        "startLine": 340,
+        "startChar": 49,
+        "endLine": 340,
+        "endChar": 58
+      },
+      "revId": "6c1f54ca1f967dcfaac1cc81ba99b8cc1c2cb888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5c2b06_fc6fc9e0",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T23:02:55Z",
+      "side": 1,
+      "message": "nit: |\u0026\u0026 max_lines() \u003e 0|",
+      "revId": "6c1f54ca1f967dcfaac1cc81ba99b8cc1c2cb888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c963b341_974412f6",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T23:02:55Z",
+      "side": 1,
+      "message": "The calculated height should include the height of the insets; add a test case for that. Hopefully this code will be moving to GetHeightForWidth, and not simply duplicated there, so this part of CalculatePreferredSize could just do:\n  if (multi_line() \u0026\u0026 max_lines() \u003e 0)\n    return gfx::Size(size.width(), GetHeightForWidth(size.width()));",
+      "revId": "6c1f54ca1f967dcfaac1cc81ba99b8cc1c2cb888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7989566_6af0dc9c",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T23:02:55Z",
+      "side": 1,
+      "message": "nit: please use \u0027multi-line\u0027, like the header here and below.",
+      "revId": "6c1f54ca1f967dcfaac1cc81ba99b8cc1c2cb888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7b9a99_6ecc26c8",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T23:02:55Z",
+      "side": 1,
+      "message": "Hmm, I think this should actually do the following (ignoring max_lines):\n// Multi-line labels only support NO_ELIDE and ELIDE_TAIL for now.\ngfx::ElideBehavior elide_behavior \u003d  multi_line() \u0026\u0026 (elide_behavior_ !\u003d gfx::NO_ELIDE) ? gfx::ELIDE_TAIL : elide_behavior_;",
+      "revId": "6c1f54ca1f967dcfaac1cc81ba99b8cc1c2cb888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70bb5b7e_b9c9b25b",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T23:02:55Z",
+      "side": 1,
+      "message": "Please file a bug, cite it here:\n// TODO(warx): Support max_lines in this case: http://crbug.com/######",
+      "revId": "6c1f54ca1f967dcfaac1cc81ba99b8cc1c2cb888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c9828f_63942ff1",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T23:02:55Z",
+      "side": 1,
+      "message": "optional nit: label()-\u003eSetBorder(CreateEmptyBorder(border));",
+      "revId": "6c1f54ca1f967dcfaac1cc81ba99b8cc1c2cb888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f30dd540_e4095b96",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 655,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T23:02:55Z",
+      "side": 1,
+      "message": "optional nit: label()-\u003eSetBorder(CreateEmptyBorder(border));",
+      "revId": "6c1f54ca1f967dcfaac1cc81ba99b8cc1c2cb888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ceda010_10309ee1",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T23:02:55Z",
+      "side": 1,
+      "message": "nit: \"multi-line labels.\"",
+      "revId": "6c1f54ca1f967dcfaac1cc81ba99b8cc1c2cb888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed18eaf_4f404785",
+        "filename": "ui/views/controls/label_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T23:02:55Z",
+      "side": 1,
+      "message": "I\u0027m surprised SetBoundsRect seems to apply that width as a max_width or fixed_width, I\u0027m not sure GetPreferredSize should treat the current width as a limit. Either way, the basic test case should use a string with line breaks, rather than enforcing a narrower width for a long single-line string. For example (I also drafted some other test cases I requested):\n\n  // Ensure SetMaxLines clamps the line count of a string with returns.\n  label()-\u003eSetText(ASCIIToUTF16(\"first line\\nsecond line\\nthird line\"));\n  label()-\u003eSetMultiLine(true);\n  gfx::Size string_size \u003d label()-\u003eGetPreferredSize();\n  label()-\u003eSetMaxLines(2);\n  gfx::Size two_line_size \u003d label()-\u003eGetPreferredSize();\n  EXPECT_EQ(string_size.width(), two_line_size.width());\n  EXPECT_GT(string_size.height(), two_line_size.height());\n\n  // Ensure GetHeightForWidth also respects SetMaxLines.\n  int height \u003d label()-\u003eGetHeightForWidth(string_size.width() / 2);\n  EXPECT_EQ(height, two_line_size.height());\n\n  // Ensure SetMaxLines also works with line wrapping for SizeToFit.\n  label()-\u003eSetText(ASCIIToUTF16(\"A long string that will be wrapped\"));\n  label()-\u003eSetMaxLines(0);  // Used to get the uncapped height.\n  label()-\u003eSizeToFit(0);  // Used to get the uncapped width.\n  label()-\u003eSizeToFit(label()-\u003eGetPreferredSize().width() / 4);\n  string_size \u003d label()-\u003eGetPreferredSize();\n  label()-\u003eSetMaxLines(2);\n  two_line_size \u003d label()-\u003eGetPreferredSize();\n  EXPECT_EQ(string_size.width(), two_line_size.width());\n  EXPECT_GT(string_size.height(), two_line_size.height());\n\n  // Ensure SetMaxLines also works with line wrapping for SetMaximumWidth.\n  label()-\u003eSetMaxLines(0);  // Used to get the uncapped height.\n  label()-\u003eSizeToFit(0);  // Used to get the uncapped width.\n  label()-\u003eSetMaximumWidth(label()-\u003eGetPreferredSize().width() / 4);\n  string_size \u003d label()-\u003eGetPreferredSize();\n  label()-\u003eSetMaxLines(2);\n  two_line_size \u003d label()-\u003eGetPreferredSize();\n  EXPECT_EQ(string_size.width(), two_line_size.width());\n  EXPECT_GT(string_size.height(), two_line_size.height());\n\n  // Ensure SetMaxLines respects the requested inset height.\n  const gfx::Insets border(10, 20, 30, 40);\n  label()-\u003eSetBorder(CreateEmptyBorder(border));\n  EXPECT_EQ(two_line_size.height() + border.height(),\n            label()-\u003eGetPreferredSize().height());",
+      "revId": "6c1f54ca1f967dcfaac1cc81ba99b8cc1c2cb888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
