@@ -66,11 +66,7 @@ void RegisterProfilePrefs(PrefRegistrySimple* registry) {
   registry->RegisterBooleanPref(prefs::kEnableQuickUnlockFingerprint, false);
 }
 
-bool IsPinEnabled(PrefService* pref_service) {
-  if (enable_for_testing_)
-    return true;
-
-  // Check if policy allows PIN.
+bool IsPinEnabledByPolicy(PrefService* pref_service) {
   const base::ListValue* quick_unlock_whitelist =
       pref_service->GetList(prefs::kQuickUnlockModeWhitelist);
   base::Value all_value(kQuickUnlockWhitelistOptionAll);
@@ -81,6 +77,13 @@ bool IsPinEnabled(PrefService* pref_service) {
           quick_unlock_whitelist->end()) {
     return false;
   }
+
+  return true;
+}
+
+bool IsPinEnabled(PrefService* pref_service) {
+  if (enable_for_testing_)
+    return true;
 
   // TODO(jdufault): Disable PIN for supervised users until we allow the owner
   // to set the PIN. See crbug.com/632797.

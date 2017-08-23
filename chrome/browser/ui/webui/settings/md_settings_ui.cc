@@ -236,6 +236,9 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui)
   html_source->AddBoolean(
       "quickUnlockEnabled",
       chromeos::quick_unlock::IsPinEnabled(profile->GetPrefs()));
+  html_source->AddBoolean(
+      "quickUnlockEnabledByPolicy",
+      chromeos::quick_unlock::IsPinEnabledByPolicy(profile->GetPrefs()));
   html_source->AddBoolean("fingerprintUnlockEnabled",
                           chromeos::quick_unlock::IsFingerprintEnabled());
   html_source->AddBoolean("hasInternalStylus",
