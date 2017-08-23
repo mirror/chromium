@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b07325eb_84b48145",
+        "filename": "gpu/command_buffer/service/service_discardable_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-23T16:03:30Z",
+      "side": 1,
+      "message": "Commented on the bug. See https://cs.chromium.org/chromium/src/gpu/ipc/service/gpu_init.cc?dr\u0026l\u003d147 where we initialize the GPU process and start the sandbox, just a call to base::SysInfo::AmountOfPhysicalMemoryMB() before we start the sandbox might work?",
+      "revId": "ad62aabc96931edd46a6a0294efd9d08bc92ff01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
