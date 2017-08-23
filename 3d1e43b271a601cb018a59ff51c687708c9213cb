@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8e81e4a_d873b888",
+        "filename": "ui/aura/local/window_port_local.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T23:04:45Z",
+      "side": 1,
+      "message": "We generally only make note of the coordinates when *not* dips. In other words name this last_size_.",
+      "range": {
+        "startLine": 60,
+        "startChar": 12,
+        "endLine": 60,
+        "endChar": 29
+      },
+      "revId": "3d1e43b271a601cb018a59ff51c687708c9213cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
