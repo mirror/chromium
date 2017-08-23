@@ -105,6 +105,24 @@
       "revId": "684e6cd44082d162059ae16c02ba51b0d957a337",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655f0ed0_e73c07c2",
+        "filename": "content/browser/generic_sensor/sensor_provider_proxy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-08-23T12:35:52Z",
+      "side": 1,
+      "message": "I think DeviceMotion/Orientation implementation should not affect permissions\nmanagement for Generic Sensor API: for example, what if in future we need to\ndeny access to Accelerometer or Gyroscope but keep DeviceMotion events working?\n\nI see the following alternatives:\n1) Renderer part of DeviceMotion implementation somehow accesses SensorProvider directly from device service without passing through RenderFrameHostImpl.\nNote, one SensorProvider instance can be shared between several frames for DeviceMotion/Orientation since in this case sensor readings are always delivered at the same rate for all clients (unlike Generic Sensor API).\n\n2) It is possible to create and register an analogue of SensorProviderProxyImpl that will return only the sensor classes involved in DeviceMotion/Orientation.\n\n3) Simultaneously register SensorProvider for DeviceMotion/Orientation and SensorProviderProxyImpl (by different name) for Generic Sensor",
+      "parentUuid": "9d3d3369_7619f2f5",
+      "revId": "684e6cd44082d162059ae16c02ba51b0d957a337",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
