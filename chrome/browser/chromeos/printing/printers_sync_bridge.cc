@@ -44,31 +44,6 @@ std::unique_ptr<EntityData> CopyToEntityData(
   return entity_data;
 }
 
-// Store |specifics| locally in |data| and record change in |batch|.
-void StoreSpecifics(
-    std::unique_ptr<sync_pb::PrinterSpecifics> specifics,
-    std::map<std::string, std::unique_ptr<sync_pb::PrinterSpecifics>>* data,
-    ModelTypeStore::WriteBatch* batch) {
-  const std::string id = specifics->id();
-  batch->WriteData(id, specifics->SerializeAsString());
-  (*data)[id] = std::move(specifics);
-}
-
-// Remove the specific with |id| from |data| and update |batch| with the change.
-bool DeleteSpecifics(
-    const std::string& id,
-    std::map<std::string, std::unique_ptr<sync_pb::PrinterSpecifics>>* data,
-    ModelTypeStore::WriteBatch* batch) {
-  auto iter = data->find(id);
-  if (iter != data->end()) {
-    batch->DeleteData(id);
-    data->erase(iter);
-    return true;
-  }
-
-  return false;
-}
-
 }  // namespace
 
 // Delegate class which helps to manage the ModelTypeStore.
@@ -120,6 +95,8 @@ class PrintersSyncBridge::StoreProxy {
     }
 
     bool error = false;
+    owner_->data_lock_
+        .Acquire();  // Acquire lock while updating entries in |all_data_|.
     for (const ModelTypeStore::Record& r : *record_list) {
       auto specifics = base::MakeUnique<sync_pb::PrinterSpecifics>();
       if (specifics->ParseFromString(r.value)) {
@@ -128,6 +105,7 @@ class PrintersSyncBridge::StoreProxy {
         error = true;
       }
     }
+    owner_->data_lock_.Release();  // Done updating.
 
     if (error) {
       owner_->change_processor()->ReportError(
@@ -189,6 +167,7 @@ base::Optional<syncer::ModelError> PrintersSyncBridge::MergeSyncData(
   std::unique_ptr<ModelTypeStore::WriteBatch> batch =
       store_delegate_->CreateWriteBatch();
   std::set<std::string> sync_entity_ids;
+  data_lock_.Acquire();  // Acquire lock to update local cache.
   for (const auto& change : entity_data) {
     const sync_pb::PrinterSpecifics& specifics =
         change.data().specifics.printer();
@@ -198,7 +177,7 @@ base::Optional<syncer::ModelError> PrintersSyncBridge::MergeSyncData(
 
     // Write the update to local storage even if we already have it.
     StoreSpecifics(base::MakeUnique<sync_pb::PrinterSpecifics>(specifics),
-                   &all_data_, batch.get());
+                   batch.get());
   }
 
   // Inform the change processor of the new local entities and generate
@@ -212,6 +191,7 @@ base::Optional<syncer::ModelError> PrintersSyncBridge::MergeSyncData(
                               metadata_change_list.get());
     }
   }
+  data_lock_.Release();  // Lock released.
 
   batch->TransferMetadataChanges(std::move(metadata_change_list));
   store_delegate_->Commit(std::move(batch));
@@ -223,6 +203,7 @@ base::Optional<syncer::ModelError> PrintersSyncBridge::ApplySyncChanges(
     EntityChangeList entity_changes) {
   std::unique_ptr<ModelTypeStore::WriteBatch> batch =
       store_delegate_->CreateWriteBatch();
+  data_lock_.Acquire();  // Lock acquired for |all_data_|.
   // For all the entities from the server, apply changes.
   for (const EntityChange& change : entity_changes) {
     // We register the entity's storage key as our printer ids since they're
@@ -230,7 +211,7 @@ base::Optional<syncer::ModelError> PrintersSyncBridge::ApplySyncChanges(
     const std::string& id = change.storage_key();
     if (change.type() == EntityChange::ACTION_DELETE) {
       // Server says delete, try to remove locally.
-      DeleteSpecifics(id, &all_data_, batch.get());
+      DeleteSpecifics(id, batch.get());
     } else {
       // Server says update, overwrite whatever is local.  Conflict resolution
       // guarantees that this will be the newest version of the object.
@@ -238,9 +219,10 @@ base::Optional<syncer::ModelError> PrintersSyncBridge::ApplySyncChanges(
           change.data().specifics.printer();
       DCHECK_EQ(id, specifics.id());
       StoreSpecifics(base::MakeUnique<sync_pb::PrinterSpecifics>(specifics),
-                     &all_data_, batch.get());
+                     batch.get());
     }
   }
+  data_lock_.Release();  // Lock released for |all_data_|.
 
   // Update the local database with metadata for the incoming changes.
   batch->TransferMetadataChanges(std::move(metadata_change_list));
@@ -251,6 +233,7 @@ base::Optional<syncer::ModelError> PrintersSyncBridge::ApplySyncChanges(
 
 void PrintersSyncBridge::GetData(StorageKeyList storage_keys,
                                  DataCallback callback) {
+  base::AutoLock l(data_lock_);
   auto batch = base::MakeUnique<syncer::MutableDataBatch>();
   for (const auto& key : storage_keys) {
     auto found = all_data_.find(key);
@@ -263,6 +246,7 @@ void PrintersSyncBridge::GetData(StorageKeyList storage_keys,
 }
 
 void PrintersSyncBridge::GetAllData(DataCallback callback) {
+  base::AutoLock l(data_lock_);
   auto batch = base::MakeUnique<syncer::MutableDataBatch>();
   for (const auto& entry : all_data_) {
     batch->Put(entry.first, CopyToEntityData(*entry.second));
@@ -302,6 +286,15 @@ ConflictResolution PrintersSyncBridge::ResolveConflict(
 
 void PrintersSyncBridge::AddPrinter(
     std::unique_ptr<sync_pb::PrinterSpecifics> printer) {
+  base::AutoLock l(data_lock_);
+  AddPrinterLocked(std::move(printer));
+}
+
+void PrintersSyncBridge::AddPrinterLocked(
+    std::unique_ptr<sync_pb::PrinterSpecifics> printer) {
+  // TODO(skau): Benchmark this code.  Make sure it doesn't hold onto the lock
+  // for too long.
+  data_lock_.AssertAcquired();
   printer->set_updated_timestamp(base::Time::Now().ToJavaTime());
 
   std::unique_ptr<ModelTypeStore::WriteBatch> batch =
@@ -311,27 +304,42 @@ void PrintersSyncBridge::AddPrinter(
                             batch->GetMetadataChangeList());
   }
 
-  StoreSpecifics(std::move(printer), &all_data_, batch.get());
+  StoreSpecifics(std::move(printer), batch.get());
   store_delegate_->Commit(std::move(batch));
+}
+
+bool PrintersSyncBridge::UpdatePrinter(
+    std::unique_ptr<sync_pb::PrinterSpecifics> printer) {
+  base::AutoLock l(data_lock_);
+  DCHECK(printer->has_id());
+  auto iter = all_data_.find(printer->id());
+  if (iter == all_data_.end()) {
+    AddPrinterLocked(std::move(printer));
+    return true;
+  }
+
+  // Preserve fields in the proto which we don't understand.
+  iter->second->MergeFrom(*printer);
+  AddPrinterLocked(std::move(iter->second));
+
+  return false;
 }
 
 bool PrintersSyncBridge::RemovePrinter(const std::string& id) {
   DCHECK(store_delegate_->Ready());
 
-  // Remove from local cache.
-  if (all_data_.erase(id) == 0) {
+  data_lock_.Acquire();  // Lock acquired for DeleteSpecifics.
+  std::unique_ptr<ModelTypeStore::WriteBatch> batch =
+      store_delegate_->CreateWriteBatch();
+  if (!DeleteSpecifics(id, batch.get())) {
     LOG(WARNING) << "Could not find printer" << id;
     return false;
   }
+  data_lock_.Release();  // Lock released.
 
-  std::unique_ptr<ModelTypeStore::WriteBatch> batch =
-      store_delegate_->CreateWriteBatch();
   if (change_processor()->IsTrackingMetadata()) {
     change_processor()->Delete(id, batch->GetMetadataChangeList());
   }
-
-  // Remove from sync'd data.
-  batch->DeleteData(id);
   store_delegate_->Commit(std::move(batch));
 
   return true;
@@ -339,6 +347,7 @@ bool PrintersSyncBridge::RemovePrinter(const std::string& id) {
 
 std::vector<sync_pb::PrinterSpecifics> PrintersSyncBridge::GetAllPrinters()
     const {
+  base::AutoLock l(data_lock_);
   std::vector<sync_pb::PrinterSpecifics> printers;
   for (auto& entry : all_data_) {
     printers.push_back(*entry.second);
@@ -349,12 +358,35 @@ std::vector<sync_pb::PrinterSpecifics> PrintersSyncBridge::GetAllPrinters()
 
 base::Optional<sync_pb::PrinterSpecifics> PrintersSyncBridge::GetPrinter(
     const std::string& id) const {
+  base::AutoLock l(data_lock_);
   auto iter = all_data_.find(id);
   if (iter == all_data_.end()) {
     return {};
   }
 
   return {*iter->second};
+}
+
+void PrintersSyncBridge::StoreSpecifics(
+    std::unique_ptr<sync_pb::PrinterSpecifics> specifics,
+    ModelTypeStore::WriteBatch* batch) {
+  data_lock_.AssertAcquired();
+  const std::string id = specifics->id();
+  batch->WriteData(id, specifics->SerializeAsString());
+  all_data_[id] = std::move(specifics);
+}
+
+bool PrintersSyncBridge::DeleteSpecifics(const std::string& id,
+                                         ModelTypeStore::WriteBatch* batch) {
+  data_lock_.AssertAcquired();
+  auto iter = all_data_.find(id);
+  if (iter != all_data_.end()) {
+    batch->DeleteData(id);
+    all_data_.erase(iter);
+    return true;
+  }
+
+  return false;
 }
 
 }  // namespace chromeos
