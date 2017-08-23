@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5fc1dcb_f607f495",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-23T15:21:39Z",
+      "side": 1,
+      "message": "Can\u0027t you just use\n\n\u0026content::BindInterfaceInGpuProcess\n\nhere? (maybe with the explicit template name)",
+      "range": {
+        "startLine": 78,
+        "startChar": 24,
+        "endLine": 78,
+        "endChar": 75
+      },
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea301d7_abf839a7",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-23T15:21:39Z",
+      "side": 1,
+      "message": "nit: constexpr\n\n(see \"Constant Expressions\" in https://chromium-cpp.appspot.com/ )",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 5
+      },
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97430276_d71d0fe6",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-23T15:21:39Z",
+      "side": 1,
+      "message": "nit: Can you add an explicit base type?\n\n  enum HalPixelFormatExtension : uint32_t {\n\n?\n\n(see \"Enumerated Type Classes and Enum Bases\" in https://chromium-cpp.appspot.com/ )",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 28
+      },
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90ca22b_3e7aaf7f",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-23T15:21:39Z",
+      "side": 1,
+      "message": "Now that we\u0027re starting with a new interface, does it make sense to have a callback instead?\n\nReset@5() \u003d\u003e (VideoDecodeAccelerator.Result error);\n\nSame for the rest of the methods.",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 11
+      },
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c54eda1_69596ed0",
+        "filename": "components/arc/common/video_encode_accelerator.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-23T15:21:39Z",
+      "side": 1,
+      "message": "Same here, does it make sense to have the methods in VEA \"return\" the error in a callback?",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 52
+      },
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
