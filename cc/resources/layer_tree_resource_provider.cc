@@ -5,6 +5,7 @@
 #include "cc/resources/layer_tree_resource_provider.h"
 
 #include "build/build_config.h"
+#include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 
 using gpu::gles2::GLES2Interface;
@@ -81,6 +82,9 @@ void LayerTreeResourceProvider::PrepareSendToParent(
     gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, new_sync_token.GetData());
     unverified_sync_tokens.push_back(new_sync_token.GetData());
   }
+
+  if (compositor_context_provider_)
+    compositor_context_provider_->ContextSupport()->FlushPendingWork();
 
   if (!unverified_sync_tokens.empty()) {
     DCHECK(settings_.delegated_sync_points_required);
