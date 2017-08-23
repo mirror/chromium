@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4c829f9_7f34f09a",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-23T17:32:49Z",
+      "side": 0,
+      "message": "Are you intentionally removing this?",
+      "revId": "0c37678e60c680f60984be603d0c4b813bf75b57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
