@@ -139,34 +139,5 @@ void PlatformChannelPair::PrepareToPassClientHandleToChildProcess(
       PrepareToPassClientHandleToChildProcessAsString(handle_passing_info));
 }
 
-std::string
-PlatformChannelPair::PrepareToPassClientHandleToChildProcessAsString(
-      HandlePassingInformation* handle_passing_info) const {
-#if defined(OS_ANDROID)
-  int fd = client_handle_.get().handle;
-  handle_passing_info->push_back(
-      std::pair<int, int>(fd, kAndroidClientHandleDescriptor));
-  return base::UintToString(kAndroidClientHandleDescriptor);
-#else
-  DCHECK(handle_passing_info);
-  // This is an arbitrary sanity check. (Note that this guarantees that the loop
-  // below will terminate sanely.)
-  CHECK_LT(handle_passing_info->size(), 1000u);
-
-  DCHECK(client_handle_.is_valid());
-
-  // Find a suitable FD to map our client handle to in the child process.
-  // This has quadratic time complexity in the size of |*handle_passing_info|,
-  // but |*handle_passing_info| should be very small (usually/often empty).
-  int target_fd = base::GlobalDescriptors::kBaseDescriptor;
-  while (IsTargetDescriptorUsed(*handle_passing_info, target_fd))
-    target_fd++;
-
-  handle_passing_info->push_back(
-      std::pair<int, int>(client_handle_.get().handle, target_fd));
-  return base::IntToString(target_fd);
-#endif
-}
-
 }  // namespace edk
 }  // namespace mojo

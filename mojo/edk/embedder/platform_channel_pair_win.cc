@@ -106,16 +106,5 @@ void PlatformChannelPair::PrepareToPassClientHandleToChildProcess(
       PrepareToPassClientHandleToChildProcessAsString(handle_passing_info));
 }
 
-std::string
-PlatformChannelPair::PrepareToPassClientHandleToChildProcessAsString(
-    HandlePassingInformation* handle_passing_info) const {
-  DCHECK(handle_passing_info);
-  DCHECK(client_handle_.is_valid());
-
-  handle_passing_info->push_back(client_handle_.get().handle);
-
-  return base::IntToString(HandleToLong(client_handle_.get().handle));
-}
-
 }  // namespace edk
 }  // namespace mojo
