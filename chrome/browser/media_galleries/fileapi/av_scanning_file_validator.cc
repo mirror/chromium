@@ -61,17 +61,16 @@ AVScanningFileValidator::~AVScanningFileValidator() {}
 
 void AVScanningFileValidator::StartPostWriteValidation(
     const base::FilePath& dest_platform_path,
-    const ResultCallback& result_callback) {
+    ResultCallback result_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
 #if defined(OS_WIN)
   BrowserThread::PostTaskAndReplyWithResult(
-      BrowserThread::FILE,
-      FROM_HERE,
-      base::Bind(&ScanFile, dest_platform_path),
-      result_callback);
+      BrowserThread::FILE, FROM_HERE,
+      base::BindOnce(&ScanFile, dest_platform_path),
+      std::move(result_callback));
 #else
-  result_callback.Run(base::File::FILE_OK);
+  std::move(result_callback).Run(base::File::FILE_OK);
 #endif
 }
 

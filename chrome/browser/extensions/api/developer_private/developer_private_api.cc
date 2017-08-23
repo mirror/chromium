@@ -1100,16 +1100,16 @@ void DeveloperPrivateLoadDirectoryFunction::ReadDirectoryByFileSystemAPI(
   storage::FileSystemURL url = context_->CrackURL(project_url);
 
   context_->operation_runner()->ReadDirectory(
-      url, base::Bind(&DeveloperPrivateLoadDirectoryFunction::
-                      ReadDirectoryByFileSystemAPICb,
-                      this, project_path, destination_path));
+      url, base::BindRepeating(&DeveloperPrivateLoadDirectoryFunction::
+                                   ReadDirectoryByFileSystemAPICb,
+                               this, project_path, destination_path));
 }
 
 void DeveloperPrivateLoadDirectoryFunction::ReadDirectoryByFileSystemAPICb(
     const base::FilePath& project_path,
     const base::FilePath& destination_path,
     base::File::Error status,
-    const storage::FileSystemOperation::FileEntryList& file_list,
+    storage::FileSystemOperation::FileEntryList file_list,
     bool has_more) {
   if (status != base::File::FILE_OK) {
     DLOG(ERROR) << "Error in copying files from sync filesystem.";
@@ -1140,10 +1140,9 @@ void DeveloperPrivateLoadDirectoryFunction::ReadDirectoryByFileSystemAPICb(
     target_path = target_path.Append(file_list[i].name);
 
     context_->operation_runner()->CreateSnapshotFile(
-        url,
-        base::Bind(&DeveloperPrivateLoadDirectoryFunction::SnapshotFileCallback,
-            this,
-            target_path));
+        url, base::BindOnce(
+                 &DeveloperPrivateLoadDirectoryFunction::SnapshotFileCallback,
+                 this, target_path));
   }
 
   if (!has_more) {

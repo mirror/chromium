@@ -55,7 +55,7 @@ void AssignAndQuit(base::TaskRunner* original_task_runner,
                    const base::Closure& quit_closure,
                    R* result_out, R result) {
   DCHECK(result_out);
-  *result_out = result;
+  *result_out = std::forward<R>(result);
   original_task_runner->PostTask(FROM_HERE, quit_closure);
 }
 
@@ -63,28 +63,30 @@ template <typename R>
 R RunOnThread(
     base::SingleThreadTaskRunner* task_runner,
     const tracked_objects::Location& location,
-    const base::Callback<void(const base::Callback<void(R)>& callback)>& task) {
+    base::OnceCallback<void(base::OnceCallback<void(R)> callback)> task) {
   R result;
   base::RunLoop run_loop;
   task_runner->PostTask(
       location,
-      base::BindOnce(task, base::Bind(&AssignAndQuit<R>,
-                                      base::RetainedRef(
-                                          base::ThreadTaskRunnerHandle::Get()),
-                                      run_loop.QuitClosure(), &result)));
+      base::BindOnce(
+          std::move(task),
+          base::BindOnce(&AssignAndQuit<R>,
+                         base::RetainedRef(base::ThreadTaskRunnerHandle::Get()),
+                         run_loop.QuitClosure(), base::Unretained(&result))));
   run_loop.Run();
   return result;
 }
 
 void RunOnThread(base::SingleThreadTaskRunner* task_runner,
                  const tracked_objects::Location& location,
-                 const base::Closure& task) {
+                 base::OnceClosure task) {
   base::RunLoop run_loop;
-  task_runner->PostTaskAndReply(location, task,
-                                base::BindOnce(base::IgnoreResult(base::Bind(
-                                    &base::SingleThreadTaskRunner::PostTask,
-                                    base::ThreadTaskRunnerHandle::Get(),
-                                    FROM_HERE, run_loop.QuitClosure()))));
+  task_runner->PostTaskAndReply(
+      location, std::move(task),
+      base::BindOnce(
+          base::IgnoreResult(&base::SingleThreadTaskRunner::PostTask),
+          base::ThreadTaskRunnerHandle::Get(), FROM_HERE,
+          run_loop.QuitClosure()));
   run_loop.Run();
 }
 
@@ -103,13 +105,13 @@ void VerifySameTaskRunner(
 
 void OnCreateSnapshotFileAndVerifyData(
     const std::string& expected_data,
-    const CannedSyncableFileSystem::StatusCallback& callback,
+    CannedSyncableFileSystem::StatusCallback callback,
     base::File::Error result,
     const base::File::Info& file_info,
     const base::FilePath& platform_path,
     scoped_refptr<storage::ShareableFileReference> /* file_ref */) {
   if (result != base::File::FILE_OK) {
-    callback.Run(result);
+    std::move(callback).Run(result);
     return;
   }
   EXPECT_EQ(expected_data.size(), static_cast<size_t>(file_info.size));
@@ -117,13 +119,13 @@ void OnCreateSnapshotFileAndVerifyData(
   const bool read_status = base::ReadFileToString(platform_path, &data);
   EXPECT_TRUE(read_status);
   EXPECT_EQ(expected_data, data);
-  callback.Run(result);
+  std::move(callback).Run(result);
 }
 
 void OnCreateSnapshotFile(
     base::File::Info* file_info_out,
     base::FilePath* platform_path_out,
-    const CannedSyncableFileSystem::StatusCallback& callback,
+    CannedSyncableFileSystem::StatusCallback callback,
     base::File::Error result,
     const base::File::Info& file_info,
     const base::FilePath& platform_path,
@@ -133,20 +135,20 @@ void OnCreateSnapshotFile(
   DCHECK(platform_path_out);
   *file_info_out = file_info;
   *platform_path_out = platform_path;
-  callback.Run(result);
+  std::move(callback).Run(result);
 }
 
 void OnReadDirectory(CannedSyncableFileSystem::FileEntryList* entries_out,
-                     const CannedSyncableFileSystem::StatusCallback& callback,
+                     CannedSyncableFileSystem::StatusCallback callback,
                      base::File::Error error,
-                     const storage::FileSystemOperation::FileEntryList& entries,
+                     storage::FileSystemOperation::FileEntryList entries,
                      bool has_more) {
   DCHECK(entries_out);
   entries_out->reserve(entries_out->size() + entries.size());
   std::copy(entries.begin(), entries.end(), std::back_inserter(*entries_out));
 
   if (!has_more)
-    callback.Run(error);
+    std::move(callback).Run(error);
 }
 
 class WriteHelper {
@@ -170,7 +172,7 @@ class WriteHelper {
 
   ScopedTextBlob* scoped_text_blob() const { return blob_data_.get(); }
 
-  void DidWrite(const base::Callback<void(int64_t result)>& completion_callback,
+  void DidWrite(base::OnceCallback<void(int64_t result)> completion_callback,
                 File::Error error,
                 int64_t bytes,
                 bool complete) {
@@ -179,9 +181,9 @@ class WriteHelper {
       if (!complete)
         return;
     }
-    completion_callback.Run(error == base::File::FILE_OK
-                                ? bytes_written_
-                                : static_cast<int64_t>(error));
+    std::move(completion_callback)
+        .Run(error == base::File::FILE_OK ? bytes_written_
+                                          : static_cast<int64_t>(error));
   }
 
  private:
@@ -192,15 +194,16 @@ class WriteHelper {
   DISALLOW_COPY_AND_ASSIGN(WriteHelper);
 };
 
-void DidGetUsageAndQuota(const storage::StatusCallback& callback,
-                         int64_t* usage_out,
-                         int64_t* quota_out,
-                         storage::QuotaStatusCode status,
-                         int64_t usage,
-                         int64_t quota) {
+void DidGetUsageAndQuota(
+    base::OnceCallback<void(storage::QuotaStatusCode)> callback,
+    int64_t* usage_out,
+    int64_t* quota_out,
+    storage::QuotaStatusCode status,
+    int64_t usage,
+    int64_t quota) {
   *usage_out = usage;
   *quota_out = quota;
-  callback.Run(status);
+  std::move(callback).Run(status);
 }
 
 void EnsureLastTaskRuns(base::SingleThreadTaskRunner* runner) {
@@ -474,8 +477,8 @@ int64_t CannedSyncableFileSystem::Write(
     std::unique_ptr<storage::BlobDataHandle> blob_data_handle) {
   return RunOnThread<int64_t>(
       io_task_runner_.get(), FROM_HERE,
-      base::Bind(&CannedSyncableFileSystem::DoWrite, base::Unretained(this),
-                 url_request_context, url, base::Passed(&blob_data_handle)));
+      base::BindOnce(&CannedSyncableFileSystem::DoWrite, base::Unretained(this),
+                     url_request_context, url, std::move(blob_data_handle)));
 }
 
 int64_t CannedSyncableFileSystem::WriteString(const FileSystemURL& url,
@@ -489,24 +492,18 @@ int64_t CannedSyncableFileSystem::WriteString(const FileSystemURL& url,
 File::Error CannedSyncableFileSystem::DeleteFileSystem() {
   EXPECT_TRUE(is_filesystem_set_up_);
   return RunOnThread<File::Error>(
-      io_task_runner_.get(),
-      FROM_HERE,
-      base::Bind(&FileSystemContext::DeleteFileSystem,
-                 file_system_context_,
-                 origin_,
-                 type_));
+      io_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&FileSystemContext::DeleteFileSystem, file_system_context_,
+                     origin_, type_));
 }
 
 storage::QuotaStatusCode CannedSyncableFileSystem::GetUsageAndQuota(
     int64_t* usage,
     int64_t* quota) {
   return RunOnThread<storage::QuotaStatusCode>(
-      io_task_runner_.get(),
-      FROM_HERE,
-      base::Bind(&CannedSyncableFileSystem::DoGetUsageAndQuota,
-                 base::Unretained(this),
-                 usage,
-                 quota));
+      io_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&CannedSyncableFileSystem::DoGetUsageAndQuota,
+                     base::Unretained(this), usage, quota));
 }
 
 void CannedSyncableFileSystem::GetChangedURLsInTracker(
@@ -565,150 +562,150 @@ void CannedSyncableFileSystem::DoOpenFileSystem(
       std::move(callback));
 }
 
-void CannedSyncableFileSystem::DoCreateDirectory(
-    const FileSystemURL& url,
-    const StatusCallback& callback) {
+void CannedSyncableFileSystem::DoCreateDirectory(const FileSystemURL& url,
+                                                 StatusCallback callback) {
   EXPECT_TRUE(io_task_runner_->RunsTasksInCurrentSequence());
   EXPECT_TRUE(is_filesystem_opened_);
   operation_runner()->CreateDirectory(
-      url, false /* exclusive */, false /* recursive */, callback);
+      url, false /* exclusive */, false /* recursive */, std::move(callback));
 }
 
-void CannedSyncableFileSystem::DoCreateFile(
-    const FileSystemURL& url,
-    const StatusCallback& callback) {
+void CannedSyncableFileSystem::DoCreateFile(const FileSystemURL& url,
+                                            StatusCallback callback) {
   EXPECT_TRUE(io_task_runner_->RunsTasksInCurrentSequence());
   EXPECT_TRUE(is_filesystem_opened_);
-  operation_runner()->CreateFile(url, false /* exclusive */, callback);
+  operation_runner()->CreateFile(url, false /* exclusive */,
+                                 std::move(callback));
 }
 
-void CannedSyncableFileSystem::DoCopy(
-    const FileSystemURL& src_url,
-    const FileSystemURL& dest_url,
-    const StatusCallback& callback) {
+void CannedSyncableFileSystem::DoCopy(const FileSystemURL& src_url,
+                                      const FileSystemURL& dest_url,
+                                      StatusCallback callback) {
   EXPECT_TRUE(io_task_runner_->RunsTasksInCurrentSequence());
   EXPECT_TRUE(is_filesystem_opened_);
   operation_runner()->Copy(
       src_url, dest_url, storage::FileSystemOperation::OPTION_NONE,
       storage::FileSystemOperation::ERROR_BEHAVIOR_ABORT,
-      storage::FileSystemOperationRunner::CopyProgressCallback(), callback);
+      storage::FileSystemOperationRunner::CopyProgressCallback(),
+      std::move(callback));
 }
 
-void CannedSyncableFileSystem::DoMove(
-    const FileSystemURL& src_url,
-    const FileSystemURL& dest_url,
-    const StatusCallback& callback) {
+void CannedSyncableFileSystem::DoMove(const FileSystemURL& src_url,
+                                      const FileSystemURL& dest_url,
+                                      StatusCallback callback) {
   EXPECT_TRUE(io_task_runner_->RunsTasksInCurrentSequence());
   EXPECT_TRUE(is_filesystem_opened_);
-  operation_runner()->Move(
-      src_url, dest_url, storage::FileSystemOperation::OPTION_NONE, callback);
+  operation_runner()->Move(src_url, dest_url,
+                           storage::FileSystemOperation::OPTION_NONE,
+                           std::move(callback));
 }
 
 void CannedSyncableFileSystem::DoTruncateFile(const FileSystemURL& url,
                                               int64_t size,
-                                              const StatusCallback& callback) {
+                                              StatusCallback callback) {
   EXPECT_TRUE(io_task_runner_->RunsTasksInCurrentSequence());
   EXPECT_TRUE(is_filesystem_opened_);
-  operation_runner()->Truncate(url, size, callback);
+  operation_runner()->Truncate(url, size, std::move(callback));
 }
 
-void CannedSyncableFileSystem::DoTouchFile(
-    const FileSystemURL& url,
-    const base::Time& last_access_time,
-    const base::Time& last_modified_time,
-    const StatusCallback& callback) {
+void CannedSyncableFileSystem::DoTouchFile(const FileSystemURL& url,
+                                           const base::Time& last_access_time,
+                                           const base::Time& last_modified_time,
+                                           StatusCallback callback) {
   EXPECT_TRUE(io_task_runner_->RunsTasksInCurrentSequence());
   EXPECT_TRUE(is_filesystem_opened_);
-  operation_runner()->TouchFile(url, last_access_time,
-                                last_modified_time, callback);
+  operation_runner()->TouchFile(url, last_access_time, last_modified_time,
+                                std::move(callback));
 }
 
-void CannedSyncableFileSystem::DoRemove(
-    const FileSystemURL& url, bool recursive,
-    const StatusCallback& callback) {
+void CannedSyncableFileSystem::DoRemove(const FileSystemURL& url,
+                                        bool recursive,
+                                        StatusCallback callback) {
   EXPECT_TRUE(io_task_runner_->RunsTasksInCurrentSequence());
   EXPECT_TRUE(is_filesystem_opened_);
-  operation_runner()->Remove(url, recursive, callback);
+  operation_runner()->Remove(url, recursive, std::move(callback));
 }
 
-void CannedSyncableFileSystem::DoFileExists(
-    const FileSystemURL& url, const StatusCallback& callback) {
+void CannedSyncableFileSystem::DoFileExists(const FileSystemURL& url,
+                                            StatusCallback callback) {
   EXPECT_TRUE(io_task_runner_->RunsTasksInCurrentSequence());
   EXPECT_TRUE(is_filesystem_opened_);
-  operation_runner()->FileExists(url, callback);
+  operation_runner()->FileExists(url, std::move(callback));
 }
 
-void CannedSyncableFileSystem::DoDirectoryExists(
-    const FileSystemURL& url, const StatusCallback& callback) {
+void CannedSyncableFileSystem::DoDirectoryExists(const FileSystemURL& url,
+                                                 StatusCallback callback) {
   EXPECT_TRUE(io_task_runner_->RunsTasksInCurrentSequence());
   EXPECT_TRUE(is_filesystem_opened_);
-  operation_runner()->DirectoryExists(url, callback);
+  operation_runner()->DirectoryExists(url, std::move(callback));
 }
 
-void CannedSyncableFileSystem::DoVerifyFile(
-    const FileSystemURL& url,
-    const std::string& expected_data,
-    const StatusCallback& callback) {
+void CannedSyncableFileSystem::DoVerifyFile(const FileSystemURL& url,
+                                            const std::string& expected_data,
+                                            StatusCallback callback) {
   EXPECT_TRUE(io_task_runner_->RunsTasksInCurrentSequence());
   EXPECT_TRUE(is_filesystem_opened_);
   operation_runner()->CreateSnapshotFile(
-      url,
-      base::Bind(&OnCreateSnapshotFileAndVerifyData, expected_data, callback));
+      url, base::BindOnce(&OnCreateSnapshotFileAndVerifyData, expected_data,
+                          std::move(callback)));
 }
 
 void CannedSyncableFileSystem::DoGetMetadataAndPlatformPath(
     const FileSystemURL& url,
     base::File::Info* info,
     base::FilePath* platform_path,
-    const StatusCallback& callback) {
+    StatusCallback callback) {
   EXPECT_TRUE(io_task_runner_->RunsTasksInCurrentSequence());
   EXPECT_TRUE(is_filesystem_opened_);
   operation_runner()->CreateSnapshotFile(
-      url, base::Bind(&OnCreateSnapshotFile, info, platform_path, callback));
+      url, base::BindOnce(&OnCreateSnapshotFile, info, platform_path,
+                          std::move(callback)));
 }
 
-void CannedSyncableFileSystem::DoReadDirectory(
-    const FileSystemURL& url,
-    FileEntryList* entries,
-    const StatusCallback& callback) {
+void CannedSyncableFileSystem::DoReadDirectory(const FileSystemURL& url,
+                                               FileEntryList* entries,
+                                               StatusCallback callback) {
   EXPECT_TRUE(io_task_runner_->RunsTasksInCurrentSequence());
   EXPECT_TRUE(is_filesystem_opened_);
   operation_runner()->ReadDirectory(
-      url, base::Bind(&OnReadDirectory, entries, callback));
+      url, base::BindRepeating(
+               &OnReadDirectory, entries,
+               base::AdaptCallbackForRepeating(std::move(callback))));
 }
 
 void CannedSyncableFileSystem::DoWrite(
     net::URLRequestContext* url_request_context,
     const FileSystemURL& url,
     std::unique_ptr<storage::BlobDataHandle> blob_data_handle,
-    const WriteCallback& callback) {
+    WriteCallback callback) {
   EXPECT_TRUE(io_task_runner_->RunsTasksInCurrentSequence());
   EXPECT_TRUE(is_filesystem_opened_);
   WriteHelper* helper = new WriteHelper;
   operation_runner()->Write(
       url_request_context, url, std::move(blob_data_handle), 0,
-      base::Bind(&WriteHelper::DidWrite, base::Owned(helper), callback));
+      base::Bind(&WriteHelper::DidWrite, base::Owned(helper),
+                 base::Passed(&callback)));
 }
 
-void CannedSyncableFileSystem::DoWriteString(
-    const FileSystemURL& url,
-    const std::string& data,
-    const WriteCallback& callback) {
+void CannedSyncableFileSystem::DoWriteString(const FileSystemURL& url,
+                                             const std::string& data,
+                                             WriteCallback callback) {
   EXPECT_TRUE(io_task_runner_->RunsTasksInCurrentSequence());
   EXPECT_TRUE(is_filesystem_opened_);
   MockBlobURLRequestContext* url_request_context(
       new MockBlobURLRequestContext(file_system_context_.get()));
   WriteHelper* helper = new WriteHelper(url_request_context, data);
-  operation_runner()->Write(url_request_context, url,
-                            helper->scoped_text_blob()->GetBlobDataHandle(), 0,
-                            base::Bind(&WriteHelper::DidWrite,
-                                       base::Owned(helper), callback));
+  operation_runner()->Write(
+      url_request_context, url, helper->scoped_text_blob()->GetBlobDataHandle(),
+      0,
+      base::Bind(&WriteHelper::DidWrite, base::Owned(helper),
+                 base::AdaptCallbackForRepeating(std::move(callback))));
 }
 
 void CannedSyncableFileSystem::DoGetUsageAndQuota(
     int64_t* usage,
     int64_t* quota,
-    const storage::StatusCallback& callback) {
+    base::OnceCallback<void(storage::QuotaStatusCode)> callback) {
   // crbug.com/349708
   TRACE_EVENT0("io", "CannedSyncableFileSystem::DoGetUsageAndQuota");
 
@@ -717,7 +714,7 @@ void CannedSyncableFileSystem::DoGetUsageAndQuota(
   DCHECK(quota_manager_.get());
   quota_manager_->GetUsageAndQuota(
       origin_, storage_type(),
-      base::Bind(&DidGetUsageAndQuota, callback, usage, quota));
+      base::Bind(&DidGetUsageAndQuota, base::Passed(&callback), usage, quota));
 }
 
 void CannedSyncableFileSystem::DidOpenFileSystem(

@@ -74,8 +74,8 @@ int SandboxFileStreamWriter::Write(
       &SandboxFileStreamWriter::DidInitializeForWrite,
       weak_factory_.GetWeakPtr(), base::RetainedRef(buf), buf_len, callback);
   file_system_context_->operation_runner()->CreateSnapshotFile(
-      url_, base::Bind(&SandboxFileStreamWriter::DidCreateSnapshotFile,
-                       weak_factory_.GetWeakPtr(), write_task));
+      url_, base::BindOnce(&SandboxFileStreamWriter::DidCreateSnapshotFile,
+                           weak_factory_.GetWeakPtr(), write_task));
   return net::ERR_IO_PENDING;
 }
 

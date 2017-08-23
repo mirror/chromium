@@ -240,12 +240,13 @@ void ComputeChecksumRespondOnUIThread(
 
 // Calls a response callback on the UI thread.
 void GetFileMetadataRespondOnUIThread(
-    const storage::FileSystemOperation::GetMetadataCallback& callback,
+    storage::FileSystemOperation::GetMetadataCallback callback,
     base::File::Error result,
     const base::File::Info& file_info) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(callback, result, file_info));
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(std::move(callback), result, file_info));
 }
 
 }  // namespace
@@ -638,10 +639,11 @@ void GetFileMetadataOnIOThread(
     scoped_refptr<storage::FileSystemContext> file_system_context,
     const FileSystemURL& url,
     int fields,
-    const storage::FileSystemOperation::GetMetadataCallback& callback) {
+    storage::FileSystemOperation::GetMetadataCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   file_system_context->operation_runner()->GetMetadata(
-      url, fields, base::Bind(&GetFileMetadataRespondOnUIThread, callback));
+      url, fields,
+      base::BindOnce(&GetFileMetadataRespondOnUIThread, std::move(callback)));
 }
 
 // Checks if the available space of the |path| is enough for required |bytes|.

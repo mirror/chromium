@@ -53,7 +53,7 @@ void GetCancelStatus(bool* operation_done,
   *status_out = status;
 }
 
-void DidOpenFile(base::File file, const base::Closure& on_close_callback) {}
+void DidOpenFile(base::File file, base::OnceClosure on_close_callback) {}
 
 }  // namespace
 
@@ -234,9 +234,8 @@ class MultiThreadFileSystemOperationRunnerTest : public testing::Test {
 TEST_F(MultiThreadFileSystemOperationRunnerTest, OpenAndShutdown) {
   // Call OpenFile and immediately shutdown the runner.
   operation_runner()->OpenFile(
-      URL("foo"),
-      base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE,
-      base::Bind(&DidOpenFile));
+      URL("foo"), base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE,
+      base::BindOnce(&DidOpenFile));
   operation_runner()->Shutdown();
 
   // Wait until the task posted on the blocking thread is done.

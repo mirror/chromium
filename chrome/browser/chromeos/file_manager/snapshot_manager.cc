@@ -84,9 +84,9 @@ void ComputeSpaceNeedToBeFreed(
 void CreateSnapshotFileOnIOThread(
     scoped_refptr<storage::FileSystemContext> context,
     const storage::FileSystemURL& url,
-    const storage::FileSystemOperation::SnapshotFileCallback& callback) {
+    storage::FileSystemOperation::SnapshotFileCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-  context->operation_runner()->CreateSnapshotFile(url, callback);
+  context->operation_runner()->CreateSnapshotFile(url, std::move(callback));
 }
 
 // Utility for destructing the bound |file_refs| on IO thread. This is meant
@@ -181,10 +181,11 @@ void SnapshotManager::CreateManagedSnapshotAfterSpaceComputed(
   // Start creating the snapshot.
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&CreateSnapshotFileOnIOThread, context, filesystem_url,
-                     google_apis::CreateRelayCallback(base::Bind(
-                         &SnapshotManager::OnCreateSnapshotFile,
-                         weak_ptr_factory_.GetWeakPtr(), callback))));
+      base::BindOnce(
+          &CreateSnapshotFileOnIOThread, context, filesystem_url,
+          google_apis::CreateRelayCallback(base::Bind(
+              &SnapshotManager::OnCreateSnapshotFile,
+              weak_ptr_factory_.GetWeakPtr(), std::move(callback)))));
 }
 
 void SnapshotManager::OnCreateSnapshotFile(

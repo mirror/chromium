@@ -376,7 +376,7 @@ void LocalFileSyncContext::DidRemoveExistingEntryForRemoteAddOrUpdate(
           storage::VirtualPath::DirName(dir_path) == dir_path) {
         // Copying into the root directory.
         file_system_context->operation_runner()->CopyInForeignFile(
-            local_path, url_for_sync, operation_callback);
+            local_path, url_for_sync, std::move(operation_callback));
       } else {
         FileSystemURL dir_url = file_system_context->CreateCrackedFileSystemURL(
             url_for_sync.origin(),
@@ -384,16 +384,16 @@ void LocalFileSyncContext::DidRemoveExistingEntryForRemoteAddOrUpdate(
             storage::VirtualPath::DirName(url_for_sync.virtual_path()));
         file_system_context->operation_runner()->CreateDirectory(
             dir_url, false /* exclusive */, true /* recursive */,
-            base::Bind(&LocalFileSyncContext::DidCreateDirectoryForCopyIn, this,
-                       base::RetainedRef(file_system_context), local_path, url,
-                       operation_callback));
+            base::BindOnce(&LocalFileSyncContext::DidCreateDirectoryForCopyIn,
+                           this, base::RetainedRef(file_system_context),
+                           local_path, url, std::move(operation_callback)));
       }
       break;
     }
     case SYNC_FILE_TYPE_DIRECTORY:
       file_system_context->operation_runner()->CreateDirectory(
           url_for_sync, false /* exclusive */, true /* recursive */,
-          operation_callback);
+          std::move(operation_callback));
       break;
     case SYNC_FILE_TYPE_UNKNOWN:
       NOTREACHED() << "File type unknown for ADD_OR_UPDATE change";
@@ -1038,17 +1038,17 @@ void LocalFileSyncContext::DidCreateDirectoryForCopyIn(
     FileSystemContext* file_system_context,
     const base::FilePath& local_path,
     const FileSystemURL& dest_url,
-    const StatusCallback& callback,
+    StatusCallback callback,
     base::File::Error error) {
   if (error != base::File::FILE_OK) {
-    callback.Run(error);
+    std::move(callback).Run(error);
     return;
   }
 
   FileSystemURL url_for_sync = CreateSyncableFileSystemURLForSync(
       file_system_context, dest_url);
   file_system_context->operation_runner()->CopyInForeignFile(
-      local_path, url_for_sync, callback);
+      local_path, url_for_sync, std::move(callback));
 }
 
 }  // namespace sync_file_system

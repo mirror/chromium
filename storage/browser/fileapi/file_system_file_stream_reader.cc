@@ -96,21 +96,19 @@ FileSystemFileStreamReader::FileSystemFileStreamReader(
       weak_factory_(this) {}
 
 int FileSystemFileStreamReader::CreateSnapshot(
-    const base::Closure& callback,
+    base::OnceClosure callback,
     const net::CompletionCallback& error_callback) {
   DCHECK(!has_pending_create_snapshot_);
   has_pending_create_snapshot_ = true;
   file_system_context_->operation_runner()->CreateSnapshotFile(
-      url_,
-      base::Bind(&FileSystemFileStreamReader::DidCreateSnapshot,
-                 weak_factory_.GetWeakPtr(),
-                 callback,
-                 error_callback));
+      url_, base::BindOnce(&FileSystemFileStreamReader::DidCreateSnapshot,
+                           weak_factory_.GetWeakPtr(), std::move(callback),
+                           error_callback));
   return net::ERR_IO_PENDING;
 }
 
 void FileSystemFileStreamReader::DidCreateSnapshot(
-    const base::Closure& callback,
+    base::OnceClosure callback,
     const net::CompletionCallback& error_callback,
     base::File::Error file_error,
     const base::File::Info& file_info,
@@ -133,7 +131,7 @@ void FileSystemFileStreamReader::DidCreateSnapshot(
           file_system_context_->default_file_task_runner(),
           platform_path, initial_offset_, expected_modification_time_));
 
-  callback.Run();
+  std::move(callback).Run();
 }
 
 }  // namespace storage

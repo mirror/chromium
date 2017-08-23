@@ -210,9 +210,9 @@ class LocalFileSyncContext
   void OnWriteEnabled(const storage::FileSystemURL& url) override;
 
  private:
-  typedef base::Callback<void(base::File::Error result)> StatusCallback;
-  typedef std::deque<SyncStatusCallback> StatusCallbackQueue;
-  typedef std::deque<storage::FileSystemURL> FileSystemURLQueue;
+  using StatusCallback = base::OnceCallback<void(base::File::Error result)>;
+  using StatusCallbackQueue = std::deque<SyncStatusCallback>;
+  using FileSystemURLQueue = std::deque<storage::FileSystemURL>;
   friend class base::RefCountedThreadSafe<LocalFileSyncContext>;
   friend class CannedSyncableFileSystem;
 
@@ -324,7 +324,7 @@ class LocalFileSyncContext
       storage::FileSystemContext* file_system_context,
       const base::FilePath& local_file_path,
       const storage::FileSystemURL& dest_url,
-      const StatusCallback& callback,
+      StatusCallback callback,
       base::File::Error error);
 
   const base::FilePath local_base_path_;

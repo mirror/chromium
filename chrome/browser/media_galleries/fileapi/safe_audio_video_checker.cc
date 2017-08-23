@@ -15,8 +15,8 @@
 
 SafeAudioVideoChecker::SafeAudioVideoChecker(
     base::File file,
-    const storage::CopyOrMoveFileValidator::ResultCallback& callback)
-    : file_(std::move(file)), callback_(callback) {
+    storage::CopyOrMoveFileValidator::ResultCallback callback)
+    : file_(std::move(file)), callback_(std::move(callback)) {
   DCHECK(callback_);
 }
 
@@ -24,7 +24,7 @@ void SafeAudioVideoChecker::Start() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   if (!file_.IsValid()) {
-    callback_.Run(base::File::FILE_ERROR_SECURITY);
+    std::move(callback_).Run(base::File::FILE_ERROR_SECURITY);
     return;
   }
 
@@ -47,9 +47,11 @@ void SafeAudioVideoChecker::Start() {
 
 void SafeAudioVideoChecker::CheckMediaFileDone(bool valid) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  DCHECK(callback_);
 
   utility_process_mojo_client_.reset();  // Terminate the utility process.
-  callback_.Run(valid ? base::File::FILE_OK : base::File::FILE_ERROR_SECURITY);
+  std::move(callback_).Run(valid ? base::File::FILE_OK
+                                 : base::File::FILE_ERROR_SECURITY);
 }
 
 SafeAudioVideoChecker::~SafeAudioVideoChecker() = default;

@@ -25,24 +25,25 @@ namespace chromeos {
 namespace {
 
 void OnGetMetadataOnIOThread(
-    const storage::FileSystemOperation::GetMetadataCallback& callback,
+    storage::FileSystemOperation::GetMetadataCallback callback,
     base::File::Error result,
     const base::File::Info& info) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::BindOnce(callback, result, info));
+                          base::BindOnce(std::move(callback), result, info));
 }
 
 void GetMetadataOnIOThread(
     scoped_refptr<storage::FileSystemContext> file_system_context,
     const storage::FileSystemURL& url,
     int fields,
-    const storage::FileSystemOperation::GetMetadataCallback& callback) {
+    storage::FileSystemOperation::GetMetadataCallback callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   file_system_context->operation_runner()->GetMetadata(
-      url, fields, base::Bind(&OnGetMetadataOnIOThread, callback));
+      url, fields,
+      base::BindOnce(&OnGetMetadataOnIOThread, std::move(callback)));
 }
 
 }  // namespace
