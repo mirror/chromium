@@ -37,6 +37,41 @@
     },
     {
       "key": {
+        "uuid": "6c33889a_231329e8",
+        "filename": "ui/file_manager/file_manager/background/js/entry_location_impl.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-23T06:03:47Z",
+      "side": 1,
+      "message": "Maybe off topic, but are we fading out DRIVE_RECENT?",
+      "parentUuid": "993387bd_f61c54e3",
+      "revId": "0f12e5de5db127d433051b63011c17c6fe30eccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4e89839_1d17f6ba",
+        "filename": "ui/file_manager/file_manager/common/js/volume_manager_common.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-23T06:03:47Z",
+      "side": 1,
+      "message": "don\u0027t we need this case?\nLooks like DialogActionController.selectFilesAndClose_ requires the volume type.",
+      "revId": "0f12e5de5db127d433051b63011c17c6fe30eccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45d82ca8_c3a152f8",
         "filename": "ui/file_manager/file_manager/foreground/js/navigation_list_model.js",
         "patchSetId": 5
