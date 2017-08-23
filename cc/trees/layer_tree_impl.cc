@@ -860,11 +860,17 @@ void LayerTreeImpl::DidUpdatePageScale() {
   // Viewport scrollbar sizes depend on the page scale factor.
   SetScrollbarGeometriesNeedUpdate();
 
-  if (IsActiveTree() && layer_tree_host_impl_->ViewportMainScrollLayer()) {
-    if (ScrollbarAnimationController* controller =
-            layer_tree_host_impl_->ScrollbarAnimationControllerForElementId(
-                OuterViewportScrollLayer()->element_id()))
-      controller->DidScrollUpdate();
+  if (IsActiveTree()) {
+    if (settings().scrollbar_flash_when_after_scroll_update) {
+      layer_tree_host_impl_->FlashAllScrollbars(true);
+      return;
+    }
+    if (layer_tree_host_impl_->ViewportMainScrollLayer()) {
+      if (ScrollbarAnimationController* controller =
+              layer_tree_host_impl_->ScrollbarAnimationControllerForElementId(
+                  OuterViewportScrollLayer()->element_id()))
+        controller->DidScrollUpdate();
+    }
   }
 }
 
