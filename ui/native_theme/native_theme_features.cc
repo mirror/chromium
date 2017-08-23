@@ -25,6 +25,11 @@ const base::Feature kOverlayScrollbarFlashWhenAnyScrollUpdate{
     "OverlayScrollbarFlashWhenAnyScrollUpdate",
     base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Experiment: Enables will flash scorllbar when user move mouse enter a
+// scrollable area.
+const base::Feature kOverlayScrollbarFlashWhenMouseEnter{
+    "OverlayScrollbarFlashWhenMouseEnter", base::FEATURE_DISABLED_BY_DEFAULT};
+
 }  // namespace features
 
 namespace ui {
@@ -36,6 +41,11 @@ bool IsOverlayScrollbarEnabled() {
 bool OverlayScrollbarFlashWhenAnyScrollUpdate() {
   return base::FeatureList::IsEnabled(
       features::kOverlayScrollbarFlashWhenAnyScrollUpdate);
+}
+
+bool OverlayScrollbarFlashWhenMouseEnter() {
+  return base::FeatureList::IsEnabled(
+      features::kOverlayScrollbarFlashWhenMouseEnter);
 }
 
 }  // namespace ui

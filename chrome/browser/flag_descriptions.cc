@@ -928,6 +928,12 @@ const char kOverlayScrollbarsFlashWhenAnyScrollUpdateDescription[] =
     "Overlay Scrollbars flash when any scroll update happends in page. You must"
     " also enable Overlay Scrollbars.";
 
+const char kOverlayScrollbarsFlashWhenMouseEnterName[] =
+    "Flash Overlay Scrollbars When Mouse Enter";
+const char kOverlayScrollbarsFlashWhenMouseEnterDescription[] =
+    "Flash Overlay Scrollbars When Mouse Enter a scrollable area. You must also"
+    " enable Overlay Scrollbars.";
+
 const char kOverscrollHistoryNavigationName[] = "Overscroll history navigation";
 const char kOverscrollHistoryNavigationDescription[] =
     "Experimental history navigation in response to horizontal overscroll.";
