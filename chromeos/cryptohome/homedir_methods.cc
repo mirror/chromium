@@ -218,10 +218,12 @@ class HomedirMethodsImpl : public HomedirMethods {
   }
 
   void MigrateToDircrypto(const Identification& id,
+                          bool minimal_migration,
                           const DBusResultCallback& callback) override {
     DBusThreadManager::Get()->GetCryptohomeClient()->MigrateToDircrypto(
-        id, base::Bind(&HomedirMethodsImpl::OnDBusResultCallback,
-                       weak_ptr_factory_.GetWeakPtr(), callback));
+        id, minimal_migration,
+        base::Bind(&HomedirMethodsImpl::OnDBusResultCallback,
+                   weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
  private:
