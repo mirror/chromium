@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "934ce88b_7258712c",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-23T03:29:57Z",
+      "side": 1,
+      "message": "This is always non-null because the root transform paint property node (TransformPaintPropertyNode::Root()) has a ScrollPaintPropertyNode. I refactored this to use a reference so that\u0027s more clear, and updated the comment in TransformPaintPropertyNode::NearestScrollTranslationNode to mention this along with a DCHECK.",
+      "parentUuid": "5982adc6_16f59e2a",
+      "revId": "8b8dd4152f1a3573ebfd5d9861bc7b57b1f8cadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ca63a3f_fcd8122d",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
         "patchSetId": 16
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "40237c6a_0abaccf9",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-23T03:29:57Z",
+      "side": 1,
+      "message": "Scrolling uses the transform tree for scroll offsets. If a compositor transform node exists, we know all ancestor transform nodes also exist (see: EnsureCompositorTransformNode). Since we know the associated compositor-side scroll offset transform node exists (it\u0027s passed in), all ancestor scrolling nodes must also exist.\n\nI added a comment here to explain this.\n\nI also added a new test, PaintArtifactCompositorTestWithPropertyTrees.AncestorScrollNodes, that covers the case where a scroll node is encountered before its parent. In this case, the descendant scroll translation ensures the parent scroll translation exists which will in turn ensure the parent scroll node exists.",
+      "parentUuid": "3ca63a3f_fcd8122d",
+      "revId": "8b8dd4152f1a3573ebfd5d9861bc7b57b1f8cadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cdc7f74_57db7416",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/TransformPaintPropertyNode.h",
         "patchSetId": 16
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-23T01:20:02Z",
       "side": 1,
       "message": "Delete this shortcut method?",
+      "revId": "8b8dd4152f1a3573ebfd5d9861bc7b57b1f8cadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6184a48d_2cc06c4c",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/TransformPaintPropertyNode.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-23T03:29:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cdc7f74_57db7416",
       "revId": "8b8dd4152f1a3573ebfd5d9861bc7b57b1f8cadd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
