@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2606d26a_8d676c32",
+        "filename": "remoting/client/audio/async_audio_frame_supplier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-23T22:58:13Z",
+      "side": 1,
+      "message": "If the audio player implementation did not require full audio frames, like Android, then yes.\n\nInternally this delegates to the AudioFrameSupplier function to copy the frame data.",
+      "parentUuid": "8e652be3_64df59b4",
+      "range": {
+        "startLine": 29,
+        "startChar": 39,
+        "endLine": 29,
+        "endChar": 57
+      },
+      "revId": "1434fd7bfa71099f714a369315808394de5b6db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b89d3fe_0d6bfafc",
         "filename": "remoting/client/audio/async_audio_frame_supplier.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "1434fd7bfa71099f714a369315808394de5b6db2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db0ca78_29752831",
+        "filename": "remoting/client/audio/async_audio_frame_supplier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-23T22:58:13Z",
+      "side": 1,
+      "message": "Ok will will try out this no context and bind the context and the buffer in the callback.",
+      "parentUuid": "4b89d3fe_0d6bfafc",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 19
+      },
+      "revId": "1434fd7bfa71099f714a369315808394de5b6db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "27714bd5_593902cf",
+        "filename": "remoting/client/audio/async_audio_frame_supplier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-23T22:58:13Z",
+      "side": 1,
+      "message": "That is a pretty good idea!",
+      "parentUuid": "875de71f_60e45c26",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 20
+      },
+      "revId": "1434fd7bfa71099f714a369315808394de5b6db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04c0fd8f_4e5bc1d9",
         "filename": "remoting/client/audio/audio_stream_consumer.h",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d257182a_e2159729",
+        "filename": "remoting/client/audio/audio_stream_consumer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-23T22:58:13Z",
+      "side": 1,
+      "message": "This adds an audio packet to the consumer, what happens is based on implementation. ProcessAudioPacket is misleading because the consumer will not process it in the way that AudioStub is assuming it will. \n\nI could change it to ConsumeAudioPacket but again, it does not mean the audio packet is consumed when called, it is just added to *something*, be it buffer or something else.\n\nThis function is the exact same usage as ProcessAudioPacket, just without the callback and less confusing naming.",
+      "parentUuid": "04c0fd8f_4e5bc1d9",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 71
+      },
+      "revId": "1434fd7bfa71099f714a369315808394de5b6db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "817cedd2_d52302b8",
         "filename": "remoting/client/audio/audio_stream_consumer.h",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "1434fd7bfa71099f714a369315808394de5b6db2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95502e40_25ddf993",
+        "filename": "remoting/client/audio/audio_stream_consumer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-23T22:58:13Z",
+      "side": 1,
+      "message": "Thread management, but I might not need it for final impl.",
+      "parentUuid": "817cedd2_d52302b8",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 40
+      },
+      "revId": "1434fd7bfa71099f714a369315808394de5b6db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
