@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "decabf6d_cc7274b2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/longtask-timing/longtask-attributes-executescript.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-23T21:49:37Z",
+      "side": 1,
+      "message": "rename file to longtask-executescript",
+      "range": {
+        "startLine": 1,
+        "startChar": 15,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "94c444b08e90ac1a475d15086f32b92de2e599b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
