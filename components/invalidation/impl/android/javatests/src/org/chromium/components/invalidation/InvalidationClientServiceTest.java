@@ -6,9 +6,12 @@ package org.chromium.components.invalidation;
 
 import android.accounts.Account;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.os.IBinder;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
-import android.test.ServiceTestCase;
+import android.support.test.rule.ServiceTestRule;
 
 import com.google.ipc.invalidation.external.client.InvalidationListener.RegistrationState;
 import com.google.ipc.invalidation.external.client.contrib.AndroidListener;
@@ -16,11 +19,19 @@ import com.google.ipc.invalidation.external.client.types.ErrorInfo;
 import com.google.ipc.invalidation.external.client.types.Invalidation;
 import com.google.ipc.invalidation.external.client.types.ObjectId;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import org.chromium.base.CollectionUtil;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.PathUtils;
 import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.base.library_loader.LibraryProcessType;
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.AdvancedMockContext;
 import org.chromium.base.test.util.Feature;
 import org.chromium.components.signin.AccountManagerFacade;
@@ -41,46 +52,52 @@ import java.util.Set;
  *
  * @author dsmyers@google.com (Daniel Myers)
  */
-public class InvalidationClientServiceTest extends
-          ServiceTestCase<TestableInvalidationClientService> {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class InvalidationClientServiceTest {
+    @Rule
+    public ServiceTestRule mTestRule = new ServiceTestRule();
+
     /** Id used when creating clients. */
     private static final byte[] CLIENT_ID = new byte[]{0, 4, 7};
     private static final String PRIVATE_DATA_DIRECTORY_SUFFIX = "invalidation_test";
 
     /** Intents provided to {@link #startService}. */
     private List<Intent> mStartServiceIntents;
+    private IBinder mBinder;
 
-    public InvalidationClientServiceTest() {
-        super(TestableInvalidationClientService.class);
-    }
-
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
         mStartServiceIntents = new ArrayList<>();
-        setContext(new AdvancedMockContext(getContext()) {
+        Context context = new AdvancedMockContext(InstrumentationRegistry.getContext()) {
             @Override
             public ComponentName startService(Intent intent) {
                 mStartServiceIntents.add(intent);
                 return new ComponentName(this, InvalidationClientServiceTest.class);
             }
-        });
-        ContextUtils.initApplicationContextForTests(getContext().getApplicationContext());
+        };
+        ContextUtils.initApplicationContextForTests(
+                InstrumentationRegistry.getContext().getApplicationContext());
         PathUtils.setPrivateDataDirectorySuffix(PRIVATE_DATA_DIRECTORY_SUFFIX);
         LibraryLoader.get(LibraryProcessType.PROCESS_BROWSER).ensureInitialized();
-        setupService();
+        mTestRule.startService(new Intent(context, TestableInvalidationClientService.class));
+        IBinder mBinder =
+                mTestRule.bindService(new Intent(context, TestableInvalidationClientService.class));
     }
 
-    @Override
+    private TestableInvalidationClientService getService() {
+        return ((TestableInvalidationClientService.LocalBinder) mBinder).getService();
+    }
+
+    @After
     public void tearDown() throws Exception {
         if (InvalidationClientService.getIsClientStartedForTest()) {
             Intent stopIntent = createStopIntent();
             getService().onHandleIntent(stopIntent);
         }
-        assertFalse(InvalidationClientService.getIsClientStartedForTest());
-        super.tearDown();
+        Assert.assertFalse(InvalidationClientService.getIsClientStartedForTest());
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testComputeRegistrationOps() {
@@ -96,14 +113,14 @@ public class InvalidationClientServiceTest extends
                 toObjectIdSet(ModelType.BOOKMARKS, ModelType.SESSIONS),
                 toObjectIdSet(ModelType.BOOKMARKS, ModelType.SESSIONS),
                 regAccumulator, unregAccumulator);
-        assertEquals(0, regAccumulator.size());
-        assertEquals(0, unregAccumulator.size());
+        Assert.assertEquals(0, regAccumulator.size());
+        Assert.assertEquals(0, unregAccumulator.size());
 
         // Equal existing and desired registrations should yield empty operation sets.
         InvalidationClientService.computeRegistrationOps(new HashSet<ObjectId>(),
                 new HashSet<ObjectId>(), regAccumulator, unregAccumulator);
-        assertEquals(0, regAccumulator.size());
-        assertEquals(0, unregAccumulator.size());
+        Assert.assertEquals(0, regAccumulator.size());
+        Assert.assertEquals(0, unregAccumulator.size());
 
         // Empty existing and non-empty desired registrations should yield desired registrations
         // as the registration operations to do and no unregistrations.
@@ -112,10 +129,9 @@ public class InvalidationClientServiceTest extends
                 new HashSet<ObjectId>(),
                 desiredTypes,
                 regAccumulator, unregAccumulator);
-        assertEquals(
-                toObjectIdSet(ModelType.BOOKMARKS, ModelType.SESSIONS),
+        Assert.assertEquals(toObjectIdSet(ModelType.BOOKMARKS, ModelType.SESSIONS),
                 new HashSet<>(regAccumulator));
-        assertEquals(0, unregAccumulator.size());
+        Assert.assertEquals(0, unregAccumulator.size());
         regAccumulator.clear();
 
         // Unequal existing and desired registrations should yield both registrations and
@@ -125,19 +141,20 @@ public class InvalidationClientServiceTest extends
                 toObjectIdSet(ModelType.SESSIONS, ModelType.TYPED_URLS),
                 toObjectIdSet(ModelType.BOOKMARKS, ModelType.SESSIONS),
                 regAccumulator, unregAccumulator);
-        assertEquals(toObjectIdSet(ModelType.BOOKMARKS), regAccumulator);
-        assertEquals(toObjectIdSet(ModelType.TYPED_URLS), unregAccumulator);
+        Assert.assertEquals(toObjectIdSet(ModelType.BOOKMARKS), regAccumulator);
+        Assert.assertEquals(toObjectIdSet(ModelType.TYPED_URLS), unregAccumulator);
         regAccumulator.clear();
         unregAccumulator.clear();
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testReady() {
-       /**
-        * Test plan: call ready. Verify that the service sets the client id correctly and reissues
-        * pending registrations.
-        */
+        /**
+         * Test plan: call ready. Verify that the service sets the client id correctly and reissues
+         * pending registrations.
+         */
 
         // Persist some registrations.
         InvalidationPreferences invPrefs = new InvalidationPreferences();
@@ -145,21 +162,22 @@ public class InvalidationClientServiceTest extends
         invPrefs.setSyncTypes(editContext, CollectionUtil.newArrayList("BOOKMARK", "SESSION"));
         ObjectId objectId = ObjectId.newInstance(1, "obj".getBytes());
         invPrefs.setObjectIds(editContext, CollectionUtil.newArrayList(objectId));
-        assertTrue(invPrefs.commit(editContext));
+        Assert.assertTrue(invPrefs.commit(editContext));
 
         // Issue ready.
         getService().ready(CLIENT_ID);
-        assertTrue(Arrays.equals(CLIENT_ID, InvalidationClientService.getClientIdForTest()));
+        Assert.assertTrue(Arrays.equals(CLIENT_ID, InvalidationClientService.getClientIdForTest()));
         byte[] otherCid = "otherCid".getBytes();
         getService().ready(otherCid);
-        assertTrue(Arrays.equals(otherCid, InvalidationClientService.getClientIdForTest()));
+        Assert.assertTrue(Arrays.equals(otherCid, InvalidationClientService.getClientIdForTest()));
 
         // Verify registrations issued.
-        assertEquals(CollectionUtil.newHashSet(
-                toObjectId(ModelType.BOOKMARKS), toObjectId(ModelType.SESSIONS), objectId),
+        Assert.assertEquals(CollectionUtil.newHashSet(toObjectId(ModelType.BOOKMARKS),
+                                    toObjectId(ModelType.SESSIONS), objectId),
                 new HashSet<>(getService().mRegistrations.get(0)));
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testReissueRegistrations() {
@@ -172,7 +190,7 @@ public class InvalidationClientServiceTest extends
 
         // No persisted registrations.
         getService().reissueRegistrations(CLIENT_ID);
-        assertTrue(getService().mRegistrations.isEmpty());
+        Assert.assertTrue(getService().mRegistrations.isEmpty());
 
         // Persist some registrations.
         InvalidationPreferences invPrefs = new InvalidationPreferences();
@@ -180,16 +198,17 @@ public class InvalidationClientServiceTest extends
         invPrefs.setSyncTypes(editContext, CollectionUtil.newArrayList("BOOKMARK", "SESSION"));
         ObjectId objectId = ObjectId.newInstance(1, "obj".getBytes());
         invPrefs.setObjectIds(editContext, CollectionUtil.newArrayList(objectId));
-        assertTrue(invPrefs.commit(editContext));
+        Assert.assertTrue(invPrefs.commit(editContext));
 
         // Reissue registrations and verify that the appropriate registrations are issued.
         getService().reissueRegistrations(CLIENT_ID);
-        assertEquals(1, getService().mRegistrations.size());
-        assertEquals(CollectionUtil.newHashSet(
-                toObjectId(ModelType.BOOKMARKS), toObjectId(ModelType.SESSIONS), objectId),
+        Assert.assertEquals(1, getService().mRegistrations.size());
+        Assert.assertEquals(CollectionUtil.newHashSet(toObjectId(ModelType.BOOKMARKS),
+                                    toObjectId(ModelType.SESSIONS), objectId),
                 new HashSet<>(getService().mRegistrations.get(0)));
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testInformRegistrationStatus() {
@@ -209,45 +228,46 @@ public class InvalidationClientServiceTest extends
         ObjectId desiredObjectId = ObjectId.newInstance(1, "obj1".getBytes());
         ObjectId undesiredObjectId = ObjectId.newInstance(1, "obj2".getBytes());
         invPrefs.setObjectIds(editContext, CollectionUtil.newArrayList(desiredObjectId));
-        assertTrue(invPrefs.commit(editContext));
+        Assert.assertTrue(invPrefs.commit(editContext));
 
         // Cases 1 and 2: calls matching desired state cause no actions.
-        getService().informRegistrationStatus(CLIENT_ID, toObjectId(ModelType.SESSIONS),
-                RegistrationState.REGISTERED);
-        getService().informRegistrationStatus(CLIENT_ID, desiredObjectId,
-                RegistrationState.REGISTERED);
-        getService().informRegistrationStatus(CLIENT_ID, toObjectId(ModelType.BOOKMARKS),
-                RegistrationState.UNREGISTERED);
-        getService().informRegistrationStatus(CLIENT_ID, undesiredObjectId,
-                RegistrationState.UNREGISTERED);
-        assertTrue(getService().mRegistrations.isEmpty());
-        assertTrue(getService().mUnregistrations.isEmpty());
+        getService().informRegistrationStatus(
+                CLIENT_ID, toObjectId(ModelType.SESSIONS), RegistrationState.REGISTERED);
+        getService().informRegistrationStatus(
+                CLIENT_ID, desiredObjectId, RegistrationState.REGISTERED);
+        getService().informRegistrationStatus(
+                CLIENT_ID, toObjectId(ModelType.BOOKMARKS), RegistrationState.UNREGISTERED);
+        getService().informRegistrationStatus(
+                CLIENT_ID, undesiredObjectId, RegistrationState.UNREGISTERED);
+        Assert.assertTrue(getService().mRegistrations.isEmpty());
+        Assert.assertTrue(getService().mUnregistrations.isEmpty());
 
         // Case 3: registration of undesired object triggers an unregistration.
-        getService().informRegistrationStatus(CLIENT_ID, toObjectId(ModelType.BOOKMARKS),
-                RegistrationState.REGISTERED);
-        getService().informRegistrationStatus(CLIENT_ID, undesiredObjectId,
-                RegistrationState.REGISTERED);
-        assertEquals(2, getService().mUnregistrations.size());
-        assertEquals(0, getService().mRegistrations.size());
-        assertEquals(CollectionUtil.newArrayList(toObjectId(ModelType.BOOKMARKS)),
+        getService().informRegistrationStatus(
+                CLIENT_ID, toObjectId(ModelType.BOOKMARKS), RegistrationState.REGISTERED);
+        getService().informRegistrationStatus(
+                CLIENT_ID, undesiredObjectId, RegistrationState.REGISTERED);
+        Assert.assertEquals(2, getService().mUnregistrations.size());
+        Assert.assertEquals(0, getService().mRegistrations.size());
+        Assert.assertEquals(CollectionUtil.newArrayList(toObjectId(ModelType.BOOKMARKS)),
                 getService().mUnregistrations.get(0));
-        assertEquals(CollectionUtil.newArrayList(undesiredObjectId),
+        Assert.assertEquals(CollectionUtil.newArrayList(undesiredObjectId),
                 getService().mUnregistrations.get(1));
 
         // Case 4: unregistration of a desired object triggers a registration.
-        getService().informRegistrationStatus(CLIENT_ID, toObjectId(ModelType.SESSIONS),
-                RegistrationState.UNREGISTERED);
-        getService().informRegistrationStatus(CLIENT_ID, desiredObjectId,
-                RegistrationState.UNREGISTERED);
-        assertEquals(2, getService().mUnregistrations.size());
-        assertEquals(2, getService().mRegistrations.size());
-        assertEquals(CollectionUtil.newArrayList(toObjectId(ModelType.SESSIONS)),
+        getService().informRegistrationStatus(
+                CLIENT_ID, toObjectId(ModelType.SESSIONS), RegistrationState.UNREGISTERED);
+        getService().informRegistrationStatus(
+                CLIENT_ID, desiredObjectId, RegistrationState.UNREGISTERED);
+        Assert.assertEquals(2, getService().mUnregistrations.size());
+        Assert.assertEquals(2, getService().mRegistrations.size());
+        Assert.assertEquals(CollectionUtil.newArrayList(toObjectId(ModelType.SESSIONS)),
                 getService().mRegistrations.get(0));
-        assertEquals(CollectionUtil.newArrayList(desiredObjectId),
-                getService().mRegistrations.get(1));
+        Assert.assertEquals(
+                CollectionUtil.newArrayList(desiredObjectId), getService().mRegistrations.get(1));
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testInformRegistrationFailure() {
@@ -270,40 +290,41 @@ public class InvalidationClientServiceTest extends
         ObjectId desiredObjectId = ObjectId.newInstance(1, "obj1".getBytes());
         ObjectId undesiredObjectId = ObjectId.newInstance(1, "obj2".getBytes());
         invPrefs.setObjectIds(editContext, CollectionUtil.newArrayList(desiredObjectId));
-        assertTrue(invPrefs.commit(editContext));
+        Assert.assertTrue(invPrefs.commit(editContext));
 
         // Cases 2 and 4: permanent registration failures never cause calls to be made.
-        getService().informRegistrationFailure(CLIENT_ID, toObjectId(ModelType.SESSIONS), false,
-                "");
-        getService().informRegistrationFailure(CLIENT_ID, toObjectId(ModelType.BOOKMARKS), false,
-                "");
+        getService().informRegistrationFailure(
+                CLIENT_ID, toObjectId(ModelType.SESSIONS), false, "");
+        getService().informRegistrationFailure(
+                CLIENT_ID, toObjectId(ModelType.BOOKMARKS), false, "");
         getService().informRegistrationFailure(CLIENT_ID, desiredObjectId, false, "");
         getService().informRegistrationFailure(CLIENT_ID, undesiredObjectId, false, "");
-        assertTrue(getService().mRegistrations.isEmpty());
-        assertTrue(getService().mUnregistrations.isEmpty());
+        Assert.assertTrue(getService().mRegistrations.isEmpty());
+        Assert.assertTrue(getService().mUnregistrations.isEmpty());
 
         // Case 1: transient failure of a desired registration results in re-registration.
         getService().informRegistrationFailure(CLIENT_ID, toObjectId(ModelType.SESSIONS), true, "");
         getService().informRegistrationFailure(CLIENT_ID, desiredObjectId, true, "");
-        assertEquals(2, getService().mRegistrations.size());
-        assertTrue(getService().mUnregistrations.isEmpty());
-        assertEquals(CollectionUtil.newArrayList(toObjectId(ModelType.SESSIONS)),
+        Assert.assertEquals(2, getService().mRegistrations.size());
+        Assert.assertTrue(getService().mUnregistrations.isEmpty());
+        Assert.assertEquals(CollectionUtil.newArrayList(toObjectId(ModelType.SESSIONS)),
                 getService().mRegistrations.get(0));
-        assertEquals(CollectionUtil.newArrayList(desiredObjectId),
-                getService().mRegistrations.get(1));
+        Assert.assertEquals(
+                CollectionUtil.newArrayList(desiredObjectId), getService().mRegistrations.get(1));
 
         // Case 3: transient failure of an undesired registration results in unregistration.
-        getService().informRegistrationFailure(CLIENT_ID, toObjectId(ModelType.BOOKMARKS), true,
-                "");
+        getService().informRegistrationFailure(
+                CLIENT_ID, toObjectId(ModelType.BOOKMARKS), true, "");
         getService().informRegistrationFailure(CLIENT_ID, undesiredObjectId, true, "");
-        assertEquals(2, getService().mRegistrations.size());
-        assertEquals(2, getService().mUnregistrations.size());
-        assertEquals(CollectionUtil.newArrayList(toObjectId(ModelType.BOOKMARKS)),
+        Assert.assertEquals(2, getService().mRegistrations.size());
+        Assert.assertEquals(2, getService().mUnregistrations.size());
+        Assert.assertEquals(CollectionUtil.newArrayList(toObjectId(ModelType.BOOKMARKS)),
                 getService().mUnregistrations.get(0));
-        assertEquals(CollectionUtil.newArrayList(undesiredObjectId),
+        Assert.assertEquals(CollectionUtil.newArrayList(undesiredObjectId),
                 getService().mUnregistrations.get(1));
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testInformError() {
@@ -317,21 +338,22 @@ public class InvalidationClientServiceTest extends
         getService().setShouldRunStates(true, true);
         getService().onCreate();
         getService().onHandleIntent(createStartIntent());
-        getService().mStartedServices.clear();  // Discard start intent.
+        getService().mStartedServices.clear(); // Discard start intent.
 
         // Transient error.
         getService().informError(ErrorInfo.newInstance(0, true, "transient", null));
-        assertTrue(getService().mStartedServices.isEmpty());
+        Assert.assertTrue(getService().mStartedServices.isEmpty());
 
         // Permanent error.
         getService().informError(ErrorInfo.newInstance(0, false, "permanent", null));
-        assertEquals(1, getService().mStartedServices.size());
+        Assert.assertEquals(1, getService().mStartedServices.size());
         Intent sentIntent = getService().mStartedServices.get(0);
-        Intent stopIntent = AndroidListener.createStopIntent(getContext());
-        assertTrue(stopIntent.filterEquals(sentIntent));
-        assertEquals(stopIntent.getExtras().keySet(), sentIntent.getExtras().keySet());
+        Intent stopIntent = AndroidListener.createStopIntent(InstrumentationRegistry.getContext());
+        Assert.assertTrue(stopIntent.filterEquals(sentIntent));
+        Assert.assertEquals(stopIntent.getExtras().keySet(), sentIntent.getExtras().keySet());
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testReadWriteState() {
@@ -339,18 +361,20 @@ public class InvalidationClientServiceTest extends
          * Test plan: read, write, and read the internal notification client persistent state.
          * Verify appropriate return values.
          */
-        assertNull(getService().readState());
+        Assert.assertNull(getService().readState());
         byte[] writtenState = new byte[]{7, 4, 0};
         getService().writeState(writtenState);
-        assertTrue(Arrays.equals(writtenState, getService().readState()));
+        Assert.assertTrue(Arrays.equals(writtenState, getService().readState()));
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testInvalidateWithPayload() {
         doTestInvalidate(true);
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testInvalidateWithoutPayload() {
@@ -375,17 +399,18 @@ public class InvalidationClientServiceTest extends
         getService().invalidate(invalidation, ackHandle);
 
         // Validate bundle.
-        assertEquals(1, getService().mRequestedSyncs.size());
+        Assert.assertEquals(1, getService().mRequestedSyncs.size());
         PendingInvalidation request = new PendingInvalidation(getService().mRequestedSyncs.get(0));
-        assertEquals(objectSource, request.mObjectSource);
-        assertEquals(objectName, request.mObjectId);
-        assertEquals(version, request.mVersion);
-        assertEquals(hasPayload ? payload : null, request.mPayload);
+        Assert.assertEquals(objectSource, request.mObjectSource);
+        Assert.assertEquals(objectName, request.mObjectId);
+        Assert.assertEquals(version, request.mVersion);
+        Assert.assertEquals(hasPayload ? payload : null, request.mPayload);
 
         // Ensure acknowledged.
         assertSingleAcknowledgement(ackHandle);
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testInvalidateUnknownVersion() {
@@ -400,17 +425,18 @@ public class InvalidationClientServiceTest extends
         getService().invalidateUnknownVersion(objectId, ackHandle);
 
         // Validate bundle.
-        assertEquals(1, getService().mRequestedSyncs.size());
+        Assert.assertEquals(1, getService().mRequestedSyncs.size());
         PendingInvalidation request = new PendingInvalidation(getService().mRequestedSyncs.get(0));
-        assertEquals(objectSource, request.mObjectSource);
-        assertEquals(objectName, request.mObjectId);
-        assertEquals(0, request.mVersion);
-        assertEquals(null, request.mPayload);
+        Assert.assertEquals(objectSource, request.mObjectSource);
+        Assert.assertEquals(objectName, request.mObjectId);
+        Assert.assertEquals(0, request.mVersion);
+        Assert.assertEquals(null, request.mPayload);
 
         // Ensure acknowledged.
         assertSingleAcknowledgement(ackHandle);
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testInvalidateAll() {
@@ -421,9 +447,9 @@ public class InvalidationClientServiceTest extends
         getService().invalidateAll(ackHandle);
 
         // Validate bundle.
-        assertEquals(1, getService().mRequestedSyncs.size());
+        Assert.assertEquals(1, getService().mRequestedSyncs.size());
         PendingInvalidation request = new PendingInvalidation(getService().mRequestedSyncs.get(0));
-        assertEquals(0, request.mObjectSource);
+        Assert.assertEquals(0, request.mObjectSource);
 
         // Ensure acknowledged.
         assertSingleAcknowledgement(ackHandle);
@@ -431,10 +457,11 @@ public class InvalidationClientServiceTest extends
 
     /** Asserts that the service received a single acknowledgement with handle {@code ackHandle}. */
     private void assertSingleAcknowledgement(byte[] ackHandle) {
-        assertEquals(1, getService().mAcknowledgements.size());
-        assertTrue(Arrays.equals(ackHandle, getService().mAcknowledgements.get(0)));
+        Assert.assertEquals(1, getService().mAcknowledgements.size());
+        Assert.assertTrue(Arrays.equals(ackHandle, getService().mAcknowledgements.get(0)));
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testShouldClientBeRunning() {
@@ -443,19 +470,20 @@ public class InvalidationClientServiceTest extends
          * in-foreground/sync-enabled. Verify appropriate return values.
          */
         getService().setShouldRunStates(false, false);
-        assertFalse(getService().shouldClientBeRunning());
+        Assert.assertFalse(getService().shouldClientBeRunning());
 
         getService().setShouldRunStates(false, true);
-        assertFalse(getService().shouldClientBeRunning());
+        Assert.assertFalse(getService().shouldClientBeRunning());
 
         getService().setShouldRunStates(true, false);
-        assertFalse(getService().shouldClientBeRunning());
+        Assert.assertFalse(getService().shouldClientBeRunning());
 
         // Should only be running if both in the foreground and sync is enabled.
         getService().setShouldRunStates(true, true);
-        assertTrue(getService().shouldClientBeRunning());
+        Assert.assertTrue(getService().shouldClientBeRunning());
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testStartAndStopClient() {
@@ -473,19 +501,20 @@ public class InvalidationClientServiceTest extends
 
         Intent startIntent = createStartIntent();
         getService().onHandleIntent(startIntent);
-        assertTrue(InvalidationClientService.getIsClientStartedForTest());
+        Assert.assertTrue(InvalidationClientService.getIsClientStartedForTest());
 
         Intent stopIntent = createStopIntent();
         getService().onHandleIntent(stopIntent);
-        assertFalse(InvalidationClientService.getIsClientStartedForTest());
+        Assert.assertFalse(InvalidationClientService.getIsClientStartedForTest());
 
         // The issued intents should have been an AndroidListener start intent followed by an
         // AndroidListener stop intent.
-        assertEquals(2, mStartServiceIntents.size());
-        assertTrue(isAndroidListenerStartIntent(mStartServiceIntents.get(0)));
-        assertTrue(isAndroidListenerStopIntent(mStartServiceIntents.get(1)));
+        Assert.assertEquals(2, mStartServiceIntents.size());
+        Assert.assertTrue(isAndroidListenerStartIntent(mStartServiceIntents.get(0)));
+        Assert.assertTrue(isAndroidListenerStopIntent(mStartServiceIntents.get(1)));
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testClientStopsWhenShouldNotBeRunning() {
@@ -499,22 +528,23 @@ public class InvalidationClientServiceTest extends
         // Start the service.
         Intent startIntent = createStartIntent();
         getService().onHandleIntent(startIntent);
-        assertTrue(InvalidationClientService.getIsClientStartedForTest());
+        Assert.assertTrue(InvalidationClientService.getIsClientStartedForTest());
 
         // Change configuration.
         getService().setShouldRunStates(false, false);
 
         // Send an Intent and verify that the service stops.
         getService().onHandleIntent(startIntent);
-        assertFalse(InvalidationClientService.getIsClientStartedForTest());
+        Assert.assertFalse(InvalidationClientService.getIsClientStartedForTest());
 
         // The issued intents should have been an AndroidListener start intent followed by an
         // AndroidListener stop intent.
-        assertEquals(2, mStartServiceIntents.size());
-        assertTrue(isAndroidListenerStartIntent(mStartServiceIntents.get(0)));
-        assertTrue(isAndroidListenerStopIntent(mStartServiceIntents.get(1)));
+        Assert.assertEquals(2, mStartServiceIntents.size());
+        Assert.assertTrue(isAndroidListenerStartIntent(mStartServiceIntents.get(0)));
+        Assert.assertTrue(isAndroidListenerStopIntent(mStartServiceIntents.get(1)));
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testRegistrationIntent() {
@@ -533,33 +563,33 @@ public class InvalidationClientServiceTest extends
         getService().onHandleIntent(registrationIntent);
 
         // Verify client started and state written.
-        assertTrue(InvalidationClientService.getIsClientStartedForTest());
+        Assert.assertTrue(InvalidationClientService.getIsClientStartedForTest());
         InvalidationPreferences invPrefs = new InvalidationPreferences();
-        assertEquals(account, invPrefs.getSavedSyncedAccount());
-        assertEquals(modelTypesToNotificationTypes(desiredRegistrations),
+        Assert.assertEquals(account, invPrefs.getSavedSyncedAccount());
+        Assert.assertEquals(modelTypesToNotificationTypes(desiredRegistrations),
                 invPrefs.getSavedSyncedTypes());
-        assertNull(invPrefs.getSavedObjectIds());
-        assertEquals(1, mStartServiceIntents.size());
-        assertTrue(isAndroidListenerStartIntent(mStartServiceIntents.get(0)));
+        Assert.assertNull(invPrefs.getSavedObjectIds());
+        Assert.assertEquals(1, mStartServiceIntents.size());
+        Assert.assertTrue(isAndroidListenerStartIntent(mStartServiceIntents.get(0)));
 
         // Send a registration-change intent with different types to register for.
         desiredRegistrations = CollectionUtil.newHashSet(ModelType.PASSWORDS);
         getService().onHandleIntent(createRegisterIntent(account, desiredRegistrations));
-        assertEquals(account, invPrefs.getSavedSyncedAccount());
-        assertEquals(modelTypesToNotificationTypes(desiredRegistrations),
+        Assert.assertEquals(account, invPrefs.getSavedSyncedAccount());
+        Assert.assertEquals(modelTypesToNotificationTypes(desiredRegistrations),
                 invPrefs.getSavedSyncedTypes());
-        assertEquals(1, mStartServiceIntents.size());
+        Assert.assertEquals(1, mStartServiceIntents.size());
 
         // Finally, send one more registration-change intent, this time with a different account,
         // and verify that it both updates the account, stops the existing client, and
         // starts a new client.
         Account account2 = AccountManagerFacade.createAccountFromName("test2@example.com");
         getService().onHandleIntent(createRegisterIntent(account2, desiredRegistrations));
-        assertEquals(account2, invPrefs.getSavedSyncedAccount());
-        assertEquals(3, mStartServiceIntents.size());
-        assertTrue(isAndroidListenerStartIntent(mStartServiceIntents.get(0)));
-        assertTrue(isAndroidListenerStopIntent(mStartServiceIntents.get(1)));
-        assertTrue(isAndroidListenerStartIntent(mStartServiceIntents.get(2)));
+        Assert.assertEquals(account2, invPrefs.getSavedSyncedAccount());
+        Assert.assertEquals(3, mStartServiceIntents.size());
+        Assert.assertTrue(isAndroidListenerStartIntent(mStartServiceIntents.get(0)));
+        Assert.assertTrue(isAndroidListenerStopIntent(mStartServiceIntents.get(1)));
+        Assert.assertTrue(isAndroidListenerStartIntent(mStartServiceIntents.get(2)));
     }
 
     /**
@@ -598,6 +628,7 @@ public class InvalidationClientServiceTest extends
                 && getService().mCurrentRegistrations.equals(expectedRegisteredIds);
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testRegistrationIntentWithTypesAndObjectIds() {
@@ -619,59 +650,60 @@ public class InvalidationClientServiceTest extends
         Intent registrationIntent =
                 createRegisterIntent(account, new int[] {1, 2}, new String[] {"obj1", "obj2"});
         getService().onHandleIntent(registrationIntent);
-        assertTrue(expectedObjectIdsRegistered(types, objectIds, false /* isReady */));
+        Assert.assertTrue(expectedObjectIdsRegistered(types, objectIds, false /* isReady */));
 
         // Register for some types.
         types.add(ModelType.BOOKMARKS);
         types.add(ModelType.SESSIONS);
         registrationIntent = createRegisterIntent(account, types);
         getService().onHandleIntent(registrationIntent);
-        assertTrue(expectedObjectIdsRegistered(types, objectIds, false /* isReady */));
+        Assert.assertTrue(expectedObjectIdsRegistered(types, objectIds, false /* isReady */));
 
         // Set client to be ready and verify registrations.
         getService().ready(CLIENT_ID);
-        assertTrue(expectedObjectIdsRegistered(types, objectIds, true /* isReady */));
+        Assert.assertTrue(expectedObjectIdsRegistered(types, objectIds, true /* isReady */));
 
         // Change object id registration with types registered.
         objectIds.add(ObjectId.newInstance(3, "obj3".getBytes()));
         registrationIntent = createRegisterIntent(
             account, new int[] {1, 2, 3}, new String[] {"obj1", "obj2", "obj3"});
         getService().onHandleIntent(registrationIntent);
-        assertTrue(expectedObjectIdsRegistered(types, objectIds, true /* isReady */));
+        Assert.assertTrue(expectedObjectIdsRegistered(types, objectIds, true /* isReady */));
 
         // Change type registration with object ids registered.
         types.remove(ModelType.BOOKMARKS);
         registrationIntent = createRegisterIntent(account, types);
         getService().onHandleIntent(registrationIntent);
-        assertTrue(expectedObjectIdsRegistered(types, objectIds, true /* isReady */));
+        Assert.assertTrue(expectedObjectIdsRegistered(types, objectIds, true /* isReady */));
 
         // Unregister all types.
         types.clear();
         registrationIntent = createRegisterIntent(account, types);
         getService().onHandleIntent(registrationIntent);
-        assertTrue(expectedObjectIdsRegistered(types, objectIds, true /* isReady */));
+        Assert.assertTrue(expectedObjectIdsRegistered(types, objectIds, true /* isReady */));
 
         // Change object id registration with no types registered.
         objectIds.remove(ObjectId.newInstance(2, "obj2".getBytes()));
         registrationIntent = createRegisterIntent(
             account, new int[] {1, 3}, new String[] {"obj1", "obj3"});
         getService().onHandleIntent(registrationIntent);
-        assertTrue(expectedObjectIdsRegistered(types, objectIds, true /* isReady */));
+        Assert.assertTrue(expectedObjectIdsRegistered(types, objectIds, true /* isReady */));
 
         // Unregister all object ids.
         objectIds.clear();
         registrationIntent = createRegisterIntent(account, new int[0], new String[0]);
         getService().onHandleIntent(registrationIntent);
-        assertTrue(expectedObjectIdsRegistered(types, objectIds, true /* isReady */));
+        Assert.assertTrue(expectedObjectIdsRegistered(types, objectIds, true /* isReady */));
 
         // Change type registration with no object ids registered.
         types.add(ModelType.BOOKMARKS);
         types.add(ModelType.PASSWORDS);
         registrationIntent = createRegisterIntent(account, types);
         getService().onHandleIntent(registrationIntent);
-        assertTrue(expectedObjectIdsRegistered(types, objectIds, true /* isReady */));
+        Assert.assertTrue(expectedObjectIdsRegistered(types, objectIds, true /* isReady */));
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testRegistrationIntentNoProxyTabsUsingReady() {
@@ -685,25 +717,26 @@ public class InvalidationClientServiceTest extends
         getService().onHandleIntent(registrationIntent);
 
         // Verify client started and state written.
-        assertTrue(InvalidationClientService.getIsClientStartedForTest());
+        Assert.assertTrue(InvalidationClientService.getIsClientStartedForTest());
         InvalidationPreferences invPrefs = new InvalidationPreferences();
-        assertEquals(account, invPrefs.getSavedSyncedAccount());
-        assertEquals(
+        Assert.assertEquals(account, invPrefs.getSavedSyncedAccount());
+        Assert.assertEquals(
                 CollectionUtil.newHashSet("PROXY_TABS", "SESSION"), invPrefs.getSavedSyncedTypes());
-        assertEquals(1, mStartServiceIntents.size());
-        assertTrue(isAndroidListenerStartIntent(mStartServiceIntents.get(0)));
+        Assert.assertEquals(1, mStartServiceIntents.size());
+        Assert.assertTrue(isAndroidListenerStartIntent(mStartServiceIntents.get(0)));
 
         // Set client to be ready. This triggers registrations.
         getService().ready(CLIENT_ID);
-        assertTrue(Arrays.equals(CLIENT_ID, InvalidationClientService.getClientIdForTest()));
+        Assert.assertTrue(Arrays.equals(CLIENT_ID, InvalidationClientService.getClientIdForTest()));
 
         // Ensure registrations are correct.
         Set<ObjectId> expectedRegistrations =
                 modelTypesToObjectIds(CollectionUtil.newHashSet(ModelType.SESSIONS));
-        assertEquals(expectedRegistrations,
-                     new HashSet<>(getService().mRegistrations.get(0)));
+        Assert.assertEquals(
+                expectedRegistrations, new HashSet<>(getService().mRegistrations.get(0)));
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testRegistrationIntentNoProxyTabsAlreadyWithClientId() {
@@ -716,16 +749,16 @@ public class InvalidationClientServiceTest extends
         getService().onHandleIntent(registrationIntent);
 
         // Verify client started and state written.
-        assertTrue(InvalidationClientService.getIsClientStartedForTest());
+        Assert.assertTrue(InvalidationClientService.getIsClientStartedForTest());
         InvalidationPreferences invPrefs = new InvalidationPreferences();
-        assertEquals(account, invPrefs.getSavedSyncedAccount());
-        assertEquals(new HashSet<String>(), invPrefs.getSavedSyncedTypes());
-        assertEquals(1, mStartServiceIntents.size());
-        assertTrue(isAndroidListenerStartIntent(mStartServiceIntents.get(0)));
+        Assert.assertEquals(account, invPrefs.getSavedSyncedAccount());
+        Assert.assertEquals(new HashSet<String>(), invPrefs.getSavedSyncedTypes());
+        Assert.assertEquals(1, mStartServiceIntents.size());
+        Assert.assertTrue(isAndroidListenerStartIntent(mStartServiceIntents.get(0)));
 
         // Make sure client is ready.
         getService().ready(CLIENT_ID);
-        assertTrue(Arrays.equals(CLIENT_ID, InvalidationClientService.getClientIdForTest()));
+        Assert.assertTrue(Arrays.equals(CLIENT_ID, InvalidationClientService.getClientIdForTest()));
 
         // Send register Intent for SESSIONS and PROXY_TABS in an already ready client.
         registrationIntent = createRegisterIntent(account,
@@ -733,12 +766,13 @@ public class InvalidationClientServiceTest extends
         getService().onHandleIntent(registrationIntent);
 
         // Ensure that PROXY_TABS registration request is ignored.
-        assertEquals(1, getService().mRegistrations.size());
+        Assert.assertEquals(1, getService().mRegistrations.size());
         Set<ObjectId> expectedTypes =
                 modelTypesToObjectIds(CollectionUtil.newHashSet(ModelType.SESSIONS));
-        assertEquals(expectedTypes, new HashSet<>(getService().mRegistrations.get(0)));
+        Assert.assertEquals(expectedTypes, new HashSet<>(getService().mRegistrations.get(0)));
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testRegistrationIntentWhenClientShouldNotBeRunning() {
@@ -756,14 +790,15 @@ public class InvalidationClientServiceTest extends
         getService().onHandleIntent(registrationIntent);
 
         // Verify state written but client not started.
-        assertFalse(InvalidationClientService.getIsClientStartedForTest());
+        Assert.assertFalse(InvalidationClientService.getIsClientStartedForTest());
         InvalidationPreferences invPrefs = new InvalidationPreferences();
-        assertEquals(account, invPrefs.getSavedSyncedAccount());
-        assertEquals(modelTypesToNotificationTypes(desiredRegistrations),
+        Assert.assertEquals(account, invPrefs.getSavedSyncedAccount());
+        Assert.assertEquals(modelTypesToNotificationTypes(desiredRegistrations),
                 invPrefs.getSavedSyncedTypes());
-        assertEquals(0, mStartServiceIntents.size());
+        Assert.assertEquals(0, mStartServiceIntents.size());
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testDeferredRegistrationsIssued() {
@@ -783,30 +818,27 @@ public class InvalidationClientServiceTest extends
 
         Intent registrationIntent = createRegisterIntent(account, desiredRegistrations);
         getService().onHandleIntent(registrationIntent);
-        assertTrue(InvalidationClientService.getIsClientStartedForTest());
-        assertEquals(1, mStartServiceIntents.size());
-        assertTrue(isAndroidListenerStartIntent(mStartServiceIntents.get(0)));
+        Assert.assertTrue(InvalidationClientService.getIsClientStartedForTest());
+        Assert.assertEquals(1, mStartServiceIntents.size());
+        Assert.assertTrue(isAndroidListenerStartIntent(mStartServiceIntents.get(0)));
         InvalidationPreferences invPrefs = new InvalidationPreferences();
-        assertEquals(modelTypesToNotificationTypes(desiredRegistrations),
+        Assert.assertEquals(modelTypesToNotificationTypes(desiredRegistrations),
                 invPrefs.getSavedSyncedTypes());
-        assertEquals(desiredObjectIds, getService().readRegistrationsFromPrefs());
+        Assert.assertEquals(desiredObjectIds, getService().readRegistrationsFromPrefs());
 
         // Issue reissueRegistrations; verify registration intent issues.
         getService().reissueRegistrations(CLIENT_ID);
-        assertEquals(2, mStartServiceIntents.size());
+        Assert.assertEquals(2, mStartServiceIntents.size());
         Intent expectedRegisterIntent = AndroidListener.createRegisterIntent(
-                getContext(),
-                CLIENT_ID,
-                desiredObjectIds);
+                InstrumentationRegistry.getContext(), CLIENT_ID, desiredObjectIds);
         Intent actualRegisterIntent = mStartServiceIntents.get(1);
-        assertTrue(expectedRegisterIntent.filterEquals(actualRegisterIntent));
-        assertEquals(expectedRegisterIntent.getExtras().keySet(),
+        Assert.assertTrue(expectedRegisterIntent.filterEquals(actualRegisterIntent));
+        Assert.assertEquals(expectedRegisterIntent.getExtras().keySet(),
                 actualRegisterIntent.getExtras().keySet());
-        assertEquals(
-                desiredObjectIds,
-                new HashSet<>(getService().mRegistrations.get(0)));
+        Assert.assertEquals(desiredObjectIds, new HashSet<>(getService().mRegistrations.get(0)));
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testNullIntent() {
@@ -817,6 +849,7 @@ public class InvalidationClientServiceTest extends
         // No crash == success.
     }
 
+    @Test
     @SmallTest
     @Feature({"Sync"})
     public void testRegistrationRetries() {
@@ -887,14 +920,14 @@ public class InvalidationClientServiceTest extends
 
     /** Returns whether {@code intent} is an {@link AndroidListener} start intent. */
     private boolean isAndroidListenerStartIntent(Intent intent) {
-        Intent startIntent = AndroidListener.createStartIntent(getContext(),
+        Intent startIntent = AndroidListener.createStartIntent(InstrumentationRegistry.getContext(),
                 InvalidationClientService.CLIENT_TYPE, "unused".getBytes());
         return intent.getExtras().keySet().equals(startIntent.getExtras().keySet());
     }
 
     /** Returns whether {@code intent} is an {@link AndroidListener} stop intent. */
     private boolean isAndroidListenerStopIntent(Intent intent) {
-        Intent stopIntent = AndroidListener.createStopIntent(getContext());
+        Intent stopIntent = AndroidListener.createStopIntent(InstrumentationRegistry.getContext());
         return intent.getExtras().keySet().equals(stopIntent.getExtras().keySet());
     }
 }
