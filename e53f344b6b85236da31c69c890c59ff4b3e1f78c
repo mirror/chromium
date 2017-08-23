@@ -106,6 +106,24 @@
       "revId": "e53f344b6b85236da31c69c890c59ff4b3e1f78c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c240f0_abec2cf5",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-23T15:49:39Z",
+      "side": 1,
+      "message": "Is the width derived from gfx::FontList? Is there a dummy gfx::FontList that has a fixed with of 10 or 1 px per character?\n\nThat could be a way to address the dynamic-width issue.",
+      "parentUuid": "1de04248_c7665e68",
+      "revId": "e53f344b6b85236da31c69c890c59ff4b3e1f78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
