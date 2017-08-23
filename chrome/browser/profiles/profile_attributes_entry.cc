@@ -15,6 +15,11 @@
 namespace {
 
 const char kShortcutNameKey[] = "shortcut_name";
+const char kActiveTimeKey[] = "active_time";
+const char kUserNameKey[] = "user_name";
+const char kAuthCredentialsKey[] = "local_auth_credentials";
+const char kPasswordTokenKey[] = "gaia_password_token";
+const char kBackgroundAppsKey[] = "background_apps";
 
 }  // namespace
 
@@ -55,15 +60,19 @@ base::string16 ProfileAttributesEntry::GetShortcutName() const {
 }
 
 base::FilePath ProfileAttributesEntry::GetPath() const {
-  return profile_info_cache_->GetPathOfProfileAtIndex(profile_index());
+  return profile_path_;
 }
 
 base::Time ProfileAttributesEntry::GetActiveTime() const {
-  return profile_info_cache_->GetProfileActiveTimeAtIndex(profile_index());
+  if (IsDouble(kActiveTimeKey)) {
+    return base::Time::FromDoubleT(GetDouble(kActiveTimeKey));
+  } else {
+    return base::Time();
+  }
 }
 
 base::string16 ProfileAttributesEntry::GetUserName() const {
-  return profile_info_cache_->GetUserNameOfProfileAtIndex(profile_index());
+  return GetString16(kUserNameKey);
 }
 
 const gfx::Image& ProfileAttributesEntry::GetAvatarIcon() const {
@@ -71,18 +80,15 @@ const gfx::Image& ProfileAttributesEntry::GetAvatarIcon() const {
 }
 
 std::string ProfileAttributesEntry::GetLocalAuthCredentials() const {
-  return profile_info_cache_->GetLocalAuthCredentialsOfProfileAtIndex(
-      profile_index());
+  return GetString(kAuthCredentialsKey);
 }
 
 std::string ProfileAttributesEntry::GetPasswordChangeDetectionToken() const {
-  return profile_info_cache_->GetPasswordChangeDetectionTokenAtIndex(
-      profile_index());
+  return GetString(kPasswordTokenKey);
 }
 
 bool ProfileAttributesEntry::GetBackgroundStatus() const {
-  return profile_info_cache_->GetBackgroundStatusOfProfileAtIndex(
-      profile_index());
+  return GetBool(kBackgroundAppsKey);
 }
 
 base::string16 ProfileAttributesEntry::GetGAIAName() const {
@@ -172,7 +178,11 @@ void ProfileAttributesEntry::SetShortcutName(const base::string16& name) {
 }
 
 void ProfileAttributesEntry::SetActiveTimeToNow() {
-  profile_info_cache_->SetProfileActiveTimeAtIndex(profile_index());
+  if (IsDouble(kActiveTimeKey) &&
+      base::Time::Now() - GetActiveTime() < base::TimeDelta::FromHours(1)) {
+    return;
+  }
+  SetDouble(kActiveTimeKey, base::Time::Now().ToDoubleT());
 }
 
 void ProfileAttributesEntry::SetIsOmitted(bool is_omitted) {
@@ -184,19 +194,16 @@ void ProfileAttributesEntry::SetSupervisedUserId(const std::string& id) {
 }
 
 void ProfileAttributesEntry::SetLocalAuthCredentials(const std::string& auth) {
-  profile_info_cache_->SetLocalAuthCredentialsOfProfileAtIndex(
-      profile_index(), auth);
+  SetString(kAuthCredentialsKey, auth);
 }
 
 void ProfileAttributesEntry::SetPasswordChangeDetectionToken(
     const std::string& token) {
-  profile_info_cache_->SetPasswordChangeDetectionTokenAtIndex(
-      profile_index(), token);
+  SetString(kPasswordTokenKey, token);
 }
 
 void ProfileAttributesEntry::SetBackgroundStatus(bool running_background_apps) {
-  profile_info_cache_->SetBackgroundStatusOfProfileAtIndex(
-      profile_index(), running_background_apps);
+  SetBool(kBackgroundAppsKey, running_background_apps);
 }
 
 void ProfileAttributesEntry::SetGAIAName(const base::string16& name) {

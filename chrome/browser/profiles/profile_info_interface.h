@@ -10,10 +10,6 @@
 #include "base/files/file_path.h"
 #include "base/strings/string16.h"
 
-namespace base {
-class Time;
-}
-
 namespace gfx {
 class Image;
 }
@@ -30,8 +26,6 @@ class ProfileInfoInterface {
   virtual size_t GetIndexOfProfileWithPath(
       const base::FilePath& profile_path) const = 0;
 
-  virtual base::Time GetProfileActiveTimeAtIndex(size_t index) const = 0;
-
   virtual base::string16 GetNameOfProfileAtIndex(size_t index) const = 0;
 
   virtual base::FilePath GetPathOfProfileAtIndex(size_t index) const = 0;
@@ -39,16 +33,6 @@ class ProfileInfoInterface {
   virtual base::string16 GetUserNameOfProfileAtIndex(size_t index) const = 0;
 
   virtual const gfx::Image& GetAvatarIconOfProfileAtIndex(
-      size_t index) const = 0;
-
-  virtual std::string GetLocalAuthCredentialsOfProfileAtIndex(
-      size_t index) const = 0;
-  virtual std::string GetPasswordChangeDetectionTokenAtIndex(
-      size_t index) const = 0;
-
-  // Returns true if the profile at the given index is currently running any
-  // background apps.
-  virtual bool GetBackgroundStatusOfProfileAtIndex(
       size_t index) const = 0;
 
   virtual base::string16 GetGAIANameOfProfileAtIndex(size_t index) const = 0;

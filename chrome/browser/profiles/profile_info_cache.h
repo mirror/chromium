@@ -74,18 +74,11 @@ class ProfileInfoCache : public ProfileInfoInterface,
   size_t GetIndexOfProfileWithPath(
       const base::FilePath& profile_path) const override;
   base::string16 GetNameOfProfileAtIndex(size_t index) const override;
+  // Will be removed SOON with ProfileInfoCache tests. Do not use!
   base::FilePath GetPathOfProfileAtIndex(size_t index) const override;
-  base::Time GetProfileActiveTimeAtIndex(size_t index) const override;
+  // Will be removed SOON with ProfileInfoCache tests. Do not use!
   base::string16 GetUserNameOfProfileAtIndex(size_t index) const override;
   const gfx::Image& GetAvatarIconOfProfileAtIndex(size_t index) const override;
-  std::string GetLocalAuthCredentialsOfProfileAtIndex(
-      size_t index) const override;
-  std::string GetPasswordChangeDetectionTokenAtIndex(
-      size_t index) const override;
-  // Note that a return value of false could mean an error in collection or
-  // that there are currently no background apps running. However, the action
-  // which results is the same in both cases (thus far).
-  bool GetBackgroundStatusOfProfileAtIndex(size_t index) const override;
   base::string16 GetGAIANameOfProfileAtIndex(size_t index) const override;
   base::string16 GetGAIAGivenNameOfProfileAtIndex(size_t index) const override;
   std::string GetGAIAIdOfProfileAtIndex(size_t index) const override;
@@ -112,7 +105,6 @@ class ProfileInfoCache : public ProfileInfoInterface,
 
   size_t GetAvatarIconIndexOfProfileAtIndex(size_t index) const;
 
-  void SetProfileActiveTimeAtIndex(size_t index);
   // Warning: This will re-sort profiles and thus may change indices!
   void SetNameOfProfileAtIndex(size_t index, const base::string16& name);
   void SetAuthInfoOfProfileAtIndex(size_t index,
@@ -121,12 +113,6 @@ class ProfileInfoCache : public ProfileInfoInterface,
   void SetAvatarIconOfProfileAtIndex(size_t index, size_t icon_index);
   void SetIsOmittedProfileAtIndex(size_t index, bool is_omitted);
   void SetSupervisedUserIdOfProfileAtIndex(size_t index, const std::string& id);
-  void SetLocalAuthCredentialsOfProfileAtIndex(size_t index,
-                                               const std::string& auth);
-  void SetPasswordChangeDetectionTokenAtIndex(size_t index,
-                                              const std::string& token);
-  void SetBackgroundStatusOfProfileAtIndex(size_t index,
-                                           bool running_background_apps);
   // Warning: This will re-sort profiles and thus may change indices!
   void SetGAIANameOfProfileAtIndex(size_t index, const base::string16& name);
   // Warning: This will re-sort profiles and thus may change indices!
