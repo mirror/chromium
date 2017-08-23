@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46a89ae9_c94f0d0d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/sendbeacon/beacon-no-cors.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-23T06:25:49Z",
+      "side": 1,
+      "message": "CORS-safelisted",
+      "revId": "fd47887af09899e566c811d46d2c0d9108996237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ead8823_dc78f03b",
+        "filename": "third_party/WebKit/Source/core/loader/PingLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-23T06:25:49Z",
+      "side": 1,
+      "message": "how about using IsNull()?",
+      "revId": "fd47887af09899e566c811d46d2c0d9108996237",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
