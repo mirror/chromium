@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f5499ae_c725bd0f",
+        "filename": "ui/display/manager/chromeos/touchscreen_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-23T23:58:31Z",
+      "side": 1,
+      "message": "AssociateSingleDisplayAndSingleDevice()",
+      "revId": "334af41e6dc4b96e6e7fa978f5893f383360ebe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
