@@ -254,6 +254,13 @@ bool GpuInit::InitializeAndStartSandbox(const base::CommandLine& command_line,
   // By skipping the following code on Mac, we don't really lose anything,
   // because the basic GPU information is passed down from the host process.
   base::TimeTicks before_collect_context_graphics_info = base::TimeTicks::Now();
+
+  gl_initialized = gl::init::InitializeExtensionSettingsOneOffPlatform();
+  if (!gl_initialized) {
+    VLOG(1) << "gl::init::InitializeExtensionSettingsOneOffPlatform failed";
+    return false;
+  }
+
 #if !defined(OS_MACOSX)
   CollectGraphicsInfo(gpu_info_);
   if (gpu_info_.context_info_state == gpu::kCollectInfoFatalFailure)
@@ -278,12 +285,6 @@ bool GpuInit::InitializeAndStartSandbox(const base::CommandLine& command_line,
     gl::init::SetDisabledExtensionsPlatform(
         gpu_feature_info_.disabled_extensions);
   }
-  gl_initialized = gl::init::InitializeExtensionSettingsOneOffPlatform();
-  if (!gl_initialized) {
-    VLOG(1) << "gl::init::InitializeExtensionSettingsOneOffPlatform failed";
-    return false;
-  }
-
   base::TimeDelta initialize_one_off_time =
       base::TimeTicks::Now() - before_initialize_one_off;
   UMA_HISTOGRAM_MEDIUM_TIMES("GPU.InitializeOneOffMediumTime",
