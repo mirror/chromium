@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8f837af_aed49457",
+        "filename": "chrome/browser/profiles/host_zoom_map_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-23T22:20:38Z",
+      "side": 1,
+      "message": "Nit: |partition_key|?",
+      "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e4afc2_c869ea2b",
+        "filename": "chrome/browser/ui/zoom/chrome_zoom_level_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-23T22:20:38Z",
+      "side": 1,
+      "message": "AFAICT, it\u0027s possible for this to fail if dlopen() above fails, which seems like it could happen in rare circumstances (e.g. disk error?).  Maybe instead of a DCHECK this should be a conditional.",
+      "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e8c402d_0bcfd670",
+        "filename": "chrome/browser/ui/zoom/chrome_zoom_level_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-23T22:20:38Z",
+      "side": 1,
+      "message": "Nit: Maybe the migration functions should have a comment in the .h that they only migrate when a corresponding new setting doesn\u0027t yet exist?",
+      "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7432e958_566a76c4",
+        "filename": "chrome/browser/ui/zoom/chrome_zoom_level_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-23T22:20:38Z",
+      "side": 1,
+      "message": "Nit: Just \"\u003d 0\"... \"0.0\" would have worked but isn\u0027t necessary, \"0.0f\" is weird given that you\u0027re initializing a double.",
+      "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "099baa53_d7524d7e",
+        "filename": "chrome/browser/ui/zoom/chrome_zoom_level_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-23T22:20:38Z",
+      "side": 1,
+      "message": "Nit: Maybe blank line here?",
+      "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07469e22_c2ee65fb",
+        "filename": "chrome/browser/ui/zoom/chrome_zoom_level_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-23T22:20:38Z",
+      "side": 1,
+      "message": "Nit: const std::string\u0026 would avoid copy",
+      "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80eec830_e5fc8147",
+        "filename": "chrome/browser/ui/zoom/chrome_zoom_level_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-23T22:20:38Z",
+      "side": 1,
+      "message": "Nit: I suggest saying \"after M70\" (or whatever version you want to pick), so readers don\u0027t have to try to dig through blame to figure out whether \"now\" is soon enough.",
+      "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb64861_040a90d3",
+        "filename": "chrome/browser/ui/zoom/chrome_zoom_level_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-23T22:20:38Z",
+      "side": 1,
+      "message": "Nit: If the function below is supposed to also be covered by the above comment, I\u0027d remove this blank line and s/this/these/ (and similar) in the comment above.",
+      "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
