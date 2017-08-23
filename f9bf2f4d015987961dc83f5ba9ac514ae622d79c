@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fb317c5_f75f09cb",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-23T18:38:03Z",
+      "side": 1,
+      "message": "nit: previous_url",
+      "range": {
+        "startLine": 178,
+        "startChar": 18,
+        "endLine": 178,
+        "endChar": 26
+      },
+      "revId": "f9bf2f4d015987961dc83f5ba9ac514ae622d79c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
