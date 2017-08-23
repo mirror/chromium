@@ -8,20 +8,31 @@
 
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/strings/string_util.h"
-#include "base/time/time.h"
-#include "third_party/WebKit/public/platform/WebHTTPBody.h"
+#include "content/child/resource_dispatcher.h"
+#include "content/common/possibly_associated_interface_ptr.h"
+#include "content/public/common/resource_request_body.h"
+#include "content/renderer/render_thread_impl.h"
+#include "content/renderer/renderer_blink_platform_impl.h"
+#include "mojo/public/cpp/bindings/binding.h"
+#include "net/base/net_errors.h"
+#include "net/url_request/url_request_context.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
-#include "third_party/WebKit/public/platform/WebURLError.h"
-#include "third_party/WebKit/public/platform/WebURLLoader.h"
-#include "third_party/WebKit/public/platform/WebURLLoaderClient.h"
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
-#include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
-#include "third_party/WebKit/public/web/WebSecurityPolicy.h"
+
+namespace {
+
+constexpr int32_t kRoutingId = 0;
+constexpr uint32_t kNullOptions = 0;
+
+const char kHttpGetMethod[] = "GET";
+const char kHttpReferrerHeader[] = "referer";
+const char kAccessControlAllowOriginHeader[] = "Access-Control-Allow-Origin";
+
+}  // namespace
 
 namespace content {
 
@@ -30,33 +41,90 @@ ResourceFetcher* ResourceFetcher::Create(const GURL& url) {
   return new ResourceFetcherImpl(url);
 }
 
-class ResourceFetcherImpl::ClientImpl : public blink::WebURLLoaderClient {
+class ResourceFetcherImpl::ClientImpl : public mojom::URLLoaderClient {
  public:
   ClientImpl(ResourceFetcherImpl* parent, const Callback& callback)
       : parent_(parent),
+        client_binding_(this),
+        data_pipe_watcher_(FROM_HERE,
+                           mojo::SimpleWatcher::ArmingPolicy::MANUAL),
+        status_(Status::kNotStarted),
         completed_(false),
-        status_(LOADING),
+        failed_(false),
         callback_(callback) {}
 
   ~ClientImpl() override {}
 
-  virtual void Cancel() { OnLoadCompleteInternal(LOAD_FAILED); }
+  void Start(const ResourceRequest& request,
+             base::SingleThreadTaskRunner* task_runner) {
+    static const net::NetworkTrafficAnnotationTag traffic_annotation =
+        net::DefineNetworkTrafficAnnotation("content_resource_fetcher", R"(
+      semantics {
+        sender: "content ResourceFetcher"
+        description:
+          "Chrome content API initiated request, which includes network error "
+          "pages and mojo internal component downloader."
+        trigger:
+          "Showing network error pages, or needs to download mojo component."
+        data: "Anything the initiator wants."
+        destination: OTHER
+      }
+      policy {
+        cookies_allowed: YES
+        cookies_store: "user"
+        setting: "These requests cannot be disabled in settings."
+        policy_exception_justification:
+          "Not implemented. Without these requests, Chrome will not work."
+      })");
 
-  bool completed() const { return completed_; }
+    status_ = Status::kStarted;
+    response_.SetURL(request.url);
+
+    loader_factory_ = RenderThreadImpl::current()
+                          ->blink_platform_impl()
+                          ->CreateNetworkURLLoaderFactory();
+    DCHECK(loader_factory_);
+
+    mojom::URLLoaderClientPtr client;
+    client_binding_.Bind(mojo::MakeRequest(&client), task_runner);
+
+    loader_factory_->CreateLoaderAndStart(
+        mojo::MakeRequest(&loader_), kRoutingId,
+        ResourceDispatcher::MakeRequestID(), kNullOptions, request,
+        std::move(client),
+        net::MutableNetworkTrafficAnnotationTag(traffic_annotation));
+  }
+
+  void Cancel() {
+    failed_ = true;
+    completed_ = true;
+    Close();
+    loader_.reset();
+    MayComplete();
+  }
+
+  bool IsActive() const {
+    return status_ == Status::kStarted || status_ == Status::kFetching ||
+           status_ == Status::kClosed;
+  }
 
  private:
-  enum LoadStatus {
-    LOADING,
-    LOAD_FAILED,
-    LOAD_SUCCEEDED,
+  enum class Status {
+    kNotStarted,  // Initial state.
+    kStarted,     // Start() is called, but data pipe is not ready yet.
+    kFetching,    // Fetching via data pipe.
+    kClosed,      // Data pipe is already closed, but may not be completed yet.
+    kCompleted,   // Final state.
   };
 
-  void OnLoadCompleteInternal(LoadStatus status) {
-    DCHECK(!completed_);
-    DCHECK_EQ(status_, LOADING);
+  void MayComplete() {
+    DCHECK(IsActive());
+    DCHECK_NE(Status::kCompleted, status_);
 
-    completed_ = true;
-    status_ = status;
+    if (status_ == Status::kFetching || !completed_)
+      return;
+
+    status_ = Status::kCompleted;
 
     parent_->OnLoadComplete();
 
@@ -66,54 +134,123 @@ class ResourceFetcherImpl::ClientImpl : public blink::WebURLLoaderClient {
     // Take a reference to the callback as running the callback may lead to our
     // destruction.
     Callback callback = callback_;
-    callback.Run(status_ == LOAD_FAILED ? blink::WebURLResponse() : response_,
-                 status_ == LOAD_FAILED ? std::string() : data_);
+    callback.Run(failed_ ? blink::WebURLResponse() : response_,
+                 failed_ ? std::string() : data_);
   }
 
-  // WebURLLoaderClient methods:
-  void DidReceiveResponse(const blink::WebURLResponse& response) override {
-    DCHECK(!completed_);
+  void ReadDataPipe() {
+    DCHECK_EQ(Status::kFetching, status_);
 
-    response_ = response;
-  }
-  void DidReceiveCachedMetadata(const char* data, int data_length) override {
-    DCHECK(!completed_);
-    DCHECK_GT(data_length, 0);
-  }
-  void DidReceiveData(const char* data, int data_length) override {
-    DCHECK(!completed_);
-    DCHECK_GT(data_length, 0);
+    for (;;) {
+      const void* data;
+      uint32_t size;
+      MojoResult result =
+          data_pipe_->BeginReadData(&data, &size, MOJO_READ_DATA_FLAG_NONE);
+      if (result == MOJO_RESULT_SHOULD_WAIT) {
+        data_pipe_watcher_.ArmOrNotify();
+        return;
+      }
 
-    data_.append(data, data_length);
-  }
-  void DidFinishLoading(double finishTime,
-                        int64_t total_encoded_data_length,
-                        int64_t total_encoded_body_length,
-                        int64_t total_decoded_body_length) override {
-    DCHECK(!completed_);
+      if (result == MOJO_RESULT_BUSY)
+        return;
 
-    OnLoadCompleteInternal(LOAD_SUCCEEDED);
+      if (result == MOJO_RESULT_FAILED_PRECONDITION) {
+        Close();
+        MayComplete();
+        return;
+      }
+
+      if (result != MOJO_RESULT_OK) {
+        failed_ = true;
+        Close();
+        MayComplete();
+      }
+
+      data_.append(static_cast<const char*>(data), size);
+      data_pipe_->EndReadData(size);
+    }
   }
-  void DidFail(const blink::WebURLError& error,
-               int64_t total_encoded_data_length,
-               int64_t total_encoded_body_length,
-               int64_t total_decoded_body_length) override {
-    OnLoadCompleteInternal(LOAD_FAILED);
+
+  void Close() {
+    if (status_ == Status::kFetching) {
+      data_pipe_watcher_.Cancel();
+      data_pipe_.reset();
+    }
+    status_ = Status::kClosed;
+  }
+
+  void OnDataPipeSignaled(MojoResult result,
+                          const mojo::HandleSignalsState& state) {
+    ReadDataPipe();
+  }
+
+  // mojom::URLLoaderClient overrides:
+  void OnReceiveResponse(
+      const ResourceResponseHead& response_head,
+      const base::Optional<net::SSLInfo>& ssl_info,
+      mojom::DownloadedTempFilePtr downloaded_file) override {
+    DCHECK_EQ(Status::kStarted, status_);
+    // Existing callers need URL and HTTP status code. URL is already set in
+    // Start().
+    response_.SetHTTPStatusCode(response_head.headers->response_code());
+  }
+  void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
+                         const ResourceResponseHead& response_head) override {
+    DCHECK_EQ(Status::kStarted, status_);
+    loader_->FollowRedirect();
+    response_.SetURL(redirect_info.new_url);
+  }
+  void OnDataDownloaded(int64_t data_len, int64_t encoded_data_len) override {}
+  void OnUploadProgress(int64_t current_position,
+                        int64_t total_size,
+                        OnUploadProgressCallback ack_callback) override {}
+  void OnReceiveCachedMetadata(const std::vector<uint8_t>& data) override {}
+  void OnTransferSizeUpdated(int32_t transfer_size_diff) override {}
+  void OnStartLoadingResponseBody(
+      mojo::ScopedDataPipeConsumerHandle body) override {
+    DCHECK_EQ(Status::kStarted, status_);
+    status_ = Status::kFetching;
+
+    data_pipe_ = std::move(body);
+    data_pipe_watcher_.Watch(
+        data_pipe_.get(),
+        MOJO_HANDLE_SIGNAL_READABLE | MOJO_HANDLE_SIGNAL_PEER_CLOSED,
+        MOJO_WATCH_CONDITION_SATISFIED,
+        base::BindRepeating(
+            &ResourceFetcherImpl::ClientImpl::OnDataPipeSignaled,
+            base::Unretained(this)));
+    ReadDataPipe();
+  }
+  void OnComplete(const ResourceRequestCompletionStatus& status) override {
+    DCHECK(IsActive());
+    if (status.error_code != net::OK)
+      failed_ = true;
+    completed_ = true;
+    MayComplete();
   }
 
  private:
   ResourceFetcherImpl* parent_;
+  mojom::URLLoaderPtr loader_;
+  mojo::Binding<mojom::URLLoaderClient> client_binding_;
+  mojo::ScopedDataPipeConsumerHandle data_pipe_;
+  mojo::SimpleWatcher data_pipe_watcher_;
+  PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory> loader_factory_;
 
-  // Set to true once the request is complete.
+  Status status_;
+
+  // A flag to represent if OnComplete() is already called. |data_pipe_| can be
+  // ready even after OnComplete() is called.
   bool completed_;
 
-  // Buffer to hold the content from the server.
+  // A flag to remember if there are one or more errors while fetching.
+  bool failed_;
+
+  // Received data to be passed to the |callback_|.
   std::string data_;
 
-  // A copy of the original resource response.
+  // Response to be passed to the |callback_|.
   blink::WebURLResponse response_;
-
-  LoadStatus status_;
 
   // Callback when we're done.
   Callback callback_;
@@ -121,51 +258,36 @@ class ResourceFetcherImpl::ClientImpl : public blink::WebURLLoaderClient {
   DISALLOW_COPY_AND_ASSIGN(ClientImpl);
 };
 
-ResourceFetcherImpl::ResourceFetcherImpl(const GURL& url)
-    : request_(url) {
+ResourceFetcherImpl::ResourceFetcherImpl(const GURL& url) {
+  DCHECK(url.is_valid());
+  request_.url = url;
 }
 
 ResourceFetcherImpl::~ResourceFetcherImpl() {
-  if (!loader_)
-    return;
-
-  DCHECK(client_);
-
-  if (!client_->completed())
-    loader_->Cancel();
+  if (client_->IsActive())
+    client_->Cancel();
 }
 
 void ResourceFetcherImpl::SetMethod(const std::string& method) {
-  DCHECK(!request_.IsNull());
-  DCHECK(!loader_);
-
-  request_.SetHTTPMethod(blink::WebString::FromUTF8(method));
+  DCHECK(!client_);
+  request_.method = method;
 }
 
 void ResourceFetcherImpl::SetBody(const std::string& body) {
-  DCHECK(!request_.IsNull());
-  DCHECK(!loader_);
-
-  blink::WebHTTPBody web_http_body;
-  web_http_body.Initialize();
-  web_http_body.AppendData(blink::WebData(body));
-  request_.SetHTTPBody(web_http_body);
+  DCHECK(!client_);
+  request_.request_body =
+      ResourceRequestBody::CreateFromBytes(body.data(), body.size());
 }
 
 void ResourceFetcherImpl::SetHeader(const std::string& header,
                                     const std::string& value) {
-  DCHECK(!request_.IsNull());
-  DCHECK(!loader_);
-
-  if (base::LowerCaseEqualsASCII(header, "referer")) {
-    blink::WebString referrer =
-        blink::WebSecurityPolicy::GenerateReferrerHeader(
-            blink::kWebReferrerPolicyDefault, request_.Url(),
-            blink::WebString::FromUTF8(value));
-    request_.SetHTTPReferrer(referrer, blink::kWebReferrerPolicyDefault);
+  DCHECK(!client_);
+  if (base::LowerCaseEqualsASCII(header, kHttpReferrerHeader)) {
+    request_.referrer = GURL(value);
+    DCHECK(request_.referrer.is_valid());
+    request_.referrer_policy = blink::kWebReferrerPolicyDefault;
   } else {
-    request_.SetHTTPHeaderField(blink::WebString::FromUTF8(header),
-                                blink::WebString::FromUTF8(value));
+    headers_.SetHeader(header, value);
   }
 }
 
@@ -173,32 +295,42 @@ void ResourceFetcherImpl::Start(
     blink::WebLocalFrame* frame,
     blink::WebURLRequest::RequestContext request_context,
     const Callback& callback) {
-  DCHECK(!loader_);
   DCHECK(!client_);
-  DCHECK(!request_.IsNull());
   DCHECK(frame);
   DCHECK(!frame->GetDocument().IsNull());
-  if (!request_.HttpBody().IsNull())
-    DCHECK_NE("GET", request_.HttpMethod().Utf8()) << "GETs can't have bodies.";
+  if (request_.method.empty())
+    request_.method = kHttpGetMethod;
+  if (request_.request_body) {
+    DCHECK(!base::LowerCaseEqualsASCII(request_.method, kHttpGetMethod))
+        << "GETs can't have bodies.";
+  }
 
-  request_.SetRequestContext(request_context);
-  request_.SetSiteForCookies(frame->GetDocument().SiteForCookies());
-  request_.SetRequestorOrigin(frame->GetDocument().GetSecurityOrigin());
-  request_.AddHTTPOriginIfNeeded(blink::WebSecurityOrigin::CreateUnique());
+  request_.request_context = request_context;
+  request_.site_for_cookies = frame->GetDocument().SiteForCookies();
+  if (!frame->GetDocument().GetSecurityOrigin().IsNull()) {
+    request_.request_initiator =
+        static_cast<url::Origin>(frame->GetDocument().GetSecurityOrigin());
+    SetHeader(kAccessControlAllowOriginHeader,
+              blink::WebSecurityOrigin::CreateUnique().ToString().Ascii());
+  }
+  if (!headers_.IsEmpty())
+    request_.headers = headers_.ToString();
+
+  // Existing caller uses kRequestContextScript or kRequestContextInternal.
+  // We may want to use RESOURCE_TYPE_SCRIPT for kRequestContextScript, but
+  // kRequestContextInternal would be fine.
+  request_.resource_type = RESOURCE_TYPE_SUB_RESOURCE;
 
   client_.reset(new ClientImpl(this, callback));
-
-  loader_ = frame->CreateURLLoader(request_, frame->LoadingTaskRunner());
-  loader_->LoadAsynchronously(request_, client_.get());
+  client_->Start(request_, frame->LoadingTaskRunner());
 
   // No need to hold on to the request; reset it now.
-  request_ = blink::WebURLRequest();
+  request_ = ResourceRequest();
 }
 
 void ResourceFetcherImpl::SetTimeout(const base::TimeDelta& timeout) {
-  DCHECK(loader_);
   DCHECK(client_);
-  DCHECK(!client_->completed());
+  DCHECK(client_->IsActive());
 
   timeout_timer_.Start(FROM_HERE, timeout, this, &ResourceFetcherImpl::Cancel);
 }
@@ -208,7 +340,8 @@ void ResourceFetcherImpl::OnLoadComplete() {
 }
 
 void ResourceFetcherImpl::Cancel() {
-  loader_->Cancel();
+  DCHECK(client_);
+  DCHECK(client_->IsActive());
   client_->Cancel();
 }
 

@@ -159,7 +159,26 @@ class ResourceFetcherTests : public ContentBrowserTest {
     delegate->WaitForResponse();
 
     ASSERT_TRUE(delegate->completed());
-    EXPECT_EQ(delegate->response().HttpStatusCode(), 200);
+    EXPECT_EQ(200, delegate->response().HttpStatusCode());
+    std::string text = delegate->data();
+    EXPECT_TRUE(text.find("Basic html test.") != std::string::npos);
+  }
+
+  void ResourceFetcherRedirectOnRenderer(const GURL& url,
+                                         const GURL& final_url) {
+    blink::WebLocalFrame* frame =
+        GetRenderView()->GetWebView()->MainFrame()->ToWebLocalFrame();
+
+    std::unique_ptr<FetcherDelegate> delegate(new FetcherDelegate);
+    std::unique_ptr<ResourceFetcher> fetcher(ResourceFetcher::Create(url));
+    fetcher->Start(frame, WebURLRequest::kRequestContextInternal,
+                   delegate->NewCallback());
+
+    delegate->WaitForResponse();
+
+    ASSERT_TRUE(delegate->completed());
+    EXPECT_EQ(200, delegate->response().HttpStatusCode());
+    EXPECT_EQ(final_url.spec(), delegate->response().Url().GetString().Utf8());
     std::string text = delegate->data();
     EXPECT_TRUE(text.find("Basic html test.") != std::string::npos);
   }
@@ -176,7 +195,7 @@ class ResourceFetcherTests : public ContentBrowserTest {
     delegate->WaitForResponse();
 
     ASSERT_TRUE(delegate->completed());
-    EXPECT_EQ(delegate->response().HttpStatusCode(), 404);
+    EXPECT_EQ(404, delegate->response().HttpStatusCode());
   }
 
   void ResourceFetcherDidFailOnRenderer() {
@@ -196,7 +215,7 @@ class ResourceFetcherTests : public ContentBrowserTest {
     // values.
     EXPECT_TRUE(delegate->completed());
     EXPECT_TRUE(delegate->response().IsNull());
-    EXPECT_EQ(delegate->data(), std::string());
+    EXPECT_EQ(std::string(), delegate->data());
     EXPECT_FALSE(delegate->timed_out());
   }
 
@@ -216,7 +235,7 @@ class ResourceFetcherTests : public ContentBrowserTest {
     // values.
     EXPECT_TRUE(delegate->completed());
     EXPECT_TRUE(delegate->response().IsNull());
-    EXPECT_EQ(delegate->data(), std::string());
+    EXPECT_EQ(std::string(), delegate->data());
     EXPECT_FALSE(delegate->timed_out());
   }
 
@@ -250,7 +269,7 @@ class ResourceFetcherTests : public ContentBrowserTest {
 
     delegate->WaitForResponse();
     ASSERT_TRUE(delegate->completed());
-    EXPECT_EQ(delegate->response().HttpStatusCode(), 200);
+    EXPECT_EQ(200, delegate->response().HttpStatusCode());
     EXPECT_EQ(kBody, delegate->data());
   }
 
@@ -268,7 +287,7 @@ class ResourceFetcherTests : public ContentBrowserTest {
 
     delegate->WaitForResponse();
     ASSERT_TRUE(delegate->completed());
-    EXPECT_EQ(delegate->response().HttpStatusCode(), 200);
+    EXPECT_EQ(200, delegate->response().HttpStatusCode());
     EXPECT_EQ(kHeader, delegate->data());
   }
 
@@ -287,6 +306,21 @@ IN_PROC_BROWSER_TEST_F(ResourceFetcherTests, ResourceFetcherDownload) {
   PostTaskToInProcessRendererAndWait(
         base::Bind(&ResourceFetcherTests::ResourceFetcherDownloadOnRenderer,
                    base::Unretained(this), url));
+}
+
+// Test if ResourceFetcher can handle server redirects correctly.
+IN_PROC_BROWSER_TEST_F(ResourceFetcherTests, ResourceFetcherRedirect) {
+  // Need to spin up the renderer.
+  NavigateToURL(shell(), GURL(url::kAboutBlankURL));
+
+  ASSERT_TRUE(embedded_test_server()->Start());
+  GURL final_url(embedded_test_server()->GetURL("/simple_page.html"));
+  GURL url(
+      embedded_test_server()->GetURL("/server-redirect?" + final_url.spec()));
+
+  PostTaskToInProcessRendererAndWait(
+      base::Bind(&ResourceFetcherTests::ResourceFetcherRedirectOnRenderer,
+                 base::Unretained(this), url, final_url));
 }
 
 IN_PROC_BROWSER_TEST_F(ResourceFetcherTests, ResourceFetcher404) {
@@ -340,8 +374,6 @@ IN_PROC_BROWSER_TEST_F(ResourceFetcherTests, ResourceFetcherDeletedInCallback) {
             &ResourceFetcherTests::ResourceFetcherDeletedInCallbackOnRenderer,
             base::Unretained(this), url));
 }
-
-
 
 // Test that ResourceFetchers can handle POSTs.
 IN_PROC_BROWSER_TEST_F(ResourceFetcherTests, ResourceFetcherPost) {
