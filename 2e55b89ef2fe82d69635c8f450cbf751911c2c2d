@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41991899_64a34b2e",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-23T12:35:58Z",
+      "side": 1,
+      "message": "null render frames aren\u0027t really main frames so this doesn\u0027t quite add up. I think you want\nis_main_frame \u003d render_frame() \u0026\u0026 render_frame()-\u003eIsMainFrame();\n\nAlso, let\u0027s but that condition first to avoid string comparisons for SchemeIs*",
+      "revId": "2e55b89ef2fe82d69635c8f450cbf751911c2c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
