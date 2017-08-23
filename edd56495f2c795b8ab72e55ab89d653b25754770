@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f36cecba_4cb1192e",
+        "filename": "ui/views/widget/widget.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1432,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-23T18:21:42Z",
+      "side": 1,
+      "message": "Nit: .get() unnecessary",
+      "revId": "edd56495f2c795b8ab72e55ab89d653b25754770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
