@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52d9a2c3_b9d33013",
+        "filename": "ui/chromeos/touch_exploration_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T22:09:11Z",
+      "side": 1,
+      "message": "not for this CL: This function is super-long. It might be nice to break it out into some helper functions.",
+      "revId": "f5c1eb516c1923e3bf988078d501aaa79f3de8d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b46e0c_62acc807",
+        "filename": "ui/chromeos/touch_exploration_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2066,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T22:09:11Z",
+      "side": 1,
+      "message": "nit: A comment or a reference to the crbug would make this a little more readable.",
+      "revId": "f5c1eb516c1923e3bf988078d501aaa79f3de8d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
