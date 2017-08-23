@@ -16,6 +16,24 @@
       "revId": "d3ac7412c890ee5fd5b6157ef22856da770c68d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e76a4506_d8035e1d",
+        "filename": "gpu/command_buffer/service/context_group.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-23T22:57:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cb3ed1e_1442620f",
+      "revId": "d3ac7412c890ee5fd5b6157ef22856da770c68d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
