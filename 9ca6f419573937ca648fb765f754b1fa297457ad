@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bcdd19cc_5b2a656e",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1165055
+      },
+      "writtenOn": "2017-08-23T16:57:52Z",
+      "side": 1,
+      "message": "I think the update as you recommended for the new matcher will sufficiently differentiate between this matcher and the new one. ptal \u0026 lmk",
+      "parentUuid": "98912868_3b76c6b7",
+      "revId": "9ca6f419573937ca648fb765f754b1fa297457ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "468adc24_721208d9",
         "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "39b1d1b5_9c2f7b84",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1165055
+      },
+      "writtenOn": "2017-08-23T16:57:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "468adc24_721208d9",
+      "revId": "9ca6f419573937ca648fb765f754b1fa297457ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c79b4bf_74836876",
         "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "9ca6f419573937ca648fb765f754b1fa297457ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0fe5713_461e5c3c",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1165055
+      },
+      "writtenOn": "2017-08-23T16:57:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c79b4bf_74836876",
+      "revId": "9ca6f419573937ca648fb765f754b1fa297457ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
