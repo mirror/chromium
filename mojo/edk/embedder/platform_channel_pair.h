@@ -89,8 +89,6 @@ class MOJO_SYSTEM_IMPL_EXPORT PlatformChannelPair {
 
 #if defined(OS_FUCHSIA)
   // Like above, but accepts a caller-supplied client |handle|.
-  // TODO(wez): Consider incorporating this call into other platform
-  // implementations.
   static void PrepareToPassHandleToChildProcess(
       const PlatformHandle& handle,
       base::CommandLine* command_line,
