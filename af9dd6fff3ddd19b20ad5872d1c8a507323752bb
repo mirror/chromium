@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88076a48_49f6e5b0",
+        "filename": "components/component_updater/default_component_installer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-23T22:35:28Z",
+      "side": 1,
+      "message": "Presubmit error:\n\nYou added one or more #includes that violate checkdeps rules.\n  components/component_updater/default_component_installer_unittest.cc\n      Illegal include: \"jni/ComponentUpdater_jni.h\"\n    Because of no rule applying.\n\nI\u0027m not sure why.",
+      "revId": "af9dd6fff3ddd19b20ad5872d1c8a507323752bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3935bc3_ad94f7b3",
+        "filename": "third_party/android_apk_signature_verifier/java/src/org/chromium/third_party/android/util/apk/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-23T22:35:28Z",
+      "side": 1,
+      "message": "TODO: Need to finish cleaning up here.",
+      "revId": "af9dd6fff3ddd19b20ad5872d1c8a507323752bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

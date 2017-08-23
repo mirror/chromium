@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "3227b6a1_363132e8",
+        "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ComponentUpdater.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-23T22:35:28Z",
+      "side": 1,
+      "message": "They return an error code. Modified to throw different exceptions for different failures like the other Java verify methods.",
+      "parentUuid": "7c19ca3b_d7fc8c4d",
+      "revId": "84b7a343d54c2cf40d1d02efbb99d23ce37e0b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cf11474_832e9670",
         "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ComponentUpdater.java",
         "patchSetId": 5
@@ -89,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "8a4ce109_71890911",
+        "filename": "components/component_updater/android/java/src/org/chromium/components/component_updater/ComponentUpdater.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-23T22:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cf11474_832e9670",
+      "revId": "84b7a343d54c2cf40d1d02efbb99d23ce37e0b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0edb0a14_879223cc",
         "filename": "components/component_updater/default_component_installer_unittest.cc",
         "patchSetId": 5
@@ -103,6 +139,24 @@
       "revId": "84b7a343d54c2cf40d1d02efbb99d23ce37e0b7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da797ba2_9a9ff071",
+        "filename": "components/component_updater/default_component_installer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-23T22:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0edb0a14_879223cc",
+      "revId": "84b7a343d54c2cf40d1d02efbb99d23ce37e0b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -137,6 +191,24 @@
       "revId": "84b7a343d54c2cf40d1d02efbb99d23ce37e0b7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fefe2f8_64ba933b",
+        "filename": "components/test/data/component_updater/README",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-08-23T22:35:28Z",
+      "side": 1,
+      "message": "You\u0027re welcome!",
+      "parentUuid": "fa5ac9dd_c003ea2a",
+      "revId": "84b7a343d54c2cf40d1d02efbb99d23ce37e0b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
