@@ -22,6 +22,30 @@
       "revId": "ee00bd15b9a89727d4062ddee2d18b4150406253",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9e1e09c_1fcb2c19",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-23T08:03:35Z",
+      "side": 1,
+      "message": "Done (Note that I actually removed the standard params from the win10 struct and pass it as a separate argument of Win10OnboardingTabsParams).\n\nThank you for the suggestion. I agree this makes the code less error prone in the future.",
+      "parentUuid": "9c4cd7e6_21d1169a",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 72
+      },
+      "revId": "ee00bd15b9a89727d4062ddee2d18b4150406253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
