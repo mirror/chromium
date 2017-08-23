@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44b6cc8e_ebe30210",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-23T17:17:56Z",
+      "side": 1,
+      "message": "I think you can just move this method and its helper to LayerTreeImpl.",
+      "revId": "d554f90100d055f2ef4a4fbfa5e884f463551fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb64f9c8_fe734d81",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-23T17:17:56Z",
+      "side": 1,
+      "message": "You can instead loop over all element ids in the various maps in the\nproperty trees owned by this LayerTreeImpl.",
+      "revId": "d554f90100d055f2ef4a4fbfa5e884f463551fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
