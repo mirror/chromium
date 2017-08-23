@@ -22,7 +22,7 @@ bool SameModes(const DisplayMode_Params& lhs, const DisplayMode_Params& rhs) {
 }  // namespace
 
 DisplaySnapshotProxy::DisplaySnapshotProxy(const DisplaySnapshot_Params& params)
-    : DisplaySnapshotMojo(
+    : DisplaySnapshot(
           params.display_id,
           params.origin,
           params.physical_size,
@@ -32,11 +32,12 @@ DisplaySnapshotProxy::DisplaySnapshotProxy(const DisplaySnapshot_Params& params)
           params.has_color_correction_matrix,
           params.display_name,
           params.sys_path,
+          params.product_id,
           std::vector<std::unique_ptr<const display::DisplayMode>>(),
           params.edid,
           nullptr,
           nullptr,
-          params.string_representation) {
+          params.maximum_cursor_size) {
   for (size_t i = 0; i < params.modes.size(); ++i) {
     modes_.push_back(base::MakeUnique<display::DisplayMode>(
         params.modes[i].size, params.modes[i].is_interlaced,
@@ -50,9 +51,6 @@ DisplaySnapshotProxy::DisplaySnapshotProxy(const DisplaySnapshot_Params& params)
         SameModes(params.modes[i], params.native_mode))
       native_mode_ = modes_.back().get();
   }
-
-  product_id_ = params.product_id;
-  maximum_cursor_size_ = params.maximum_cursor_size;
 }
 
 DisplaySnapshotProxy::~DisplaySnapshotProxy() {
