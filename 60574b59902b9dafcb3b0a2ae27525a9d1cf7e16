@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1099a1c_2243b5bf",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-23T23:07:07Z",
+      "side": 1,
+      "message": "Please move this outside switch-case (like line 455)",
+      "revId": "60574b59902b9dafcb3b0a2ae27525a9d1cf7e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d346fb1_e647b64d",
+        "filename": "chromeos/dbus/session_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-23T23:07:07Z",
+      "side": 1,
+      "message": "same",
+      "revId": "60574b59902b9dafcb3b0a2ae27525a9d1cf7e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
