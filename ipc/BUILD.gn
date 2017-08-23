@@ -37,6 +37,8 @@ component("ipc") {
     "ipc_channel_mojo.h",
     "ipc_channel_nacl.cc",
     "ipc_channel_nacl.h",
+    "ipc_channel_posix.cc",
+    "ipc_channel_posix.h",
     "ipc_channel_proxy.cc",
     "ipc_channel_proxy.h",
     "ipc_channel_reader.cc",
@@ -94,6 +96,8 @@ component("ipc") {
     "param_traits_write_macros.h",
     "struct_constructor_macros.h",
     "struct_destructor_macros.h",
+    "unix_domain_socket_util.cc",
+    "unix_domain_socket_util.h",
   ]
 
   if (is_nacl && !is_nacl_nonsfi) {

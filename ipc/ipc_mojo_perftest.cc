@@ -110,6 +110,7 @@ class PerformanceChannelListener : public Listener {
   void OnPing(const std::string& payload) {
     // Include message deserialization in latency.
     DCHECK_EQ(payload_.size(), payload.size());
+    DCHECK_EQ(payload_, payload);
 
     CHECK(count_down_ > 0);
     count_down_--;
@@ -474,6 +475,7 @@ class MojoInterfacePerfTest : public mojo::edk::test::MojoTestBase {
       perf_logger_.reset(new base::PerfTimeLogger(test_name.c_str()));
     } else {
       DCHECK_EQ(payload_.size(), value.size());
+      DCHECK_EQ(payload_, value);
 
       CHECK(count_down_ > 0);
       count_down_--;
