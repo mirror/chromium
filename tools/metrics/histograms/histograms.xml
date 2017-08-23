@@ -1711,6 +1711,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Apps.AppListSearchResultOpenedSource"
+    enum="ApplistSearchResultOpenedSource">
+  <owner>newcomer@chromium.org</owner>
+  <summary>
+    The state of the app list when a search result was opened. This is gathered
+    when a search result is opened.
+  </summary>
+</histogram>
+
 <histogram name="Apps.AppListSearchResultOpenType" enum="AppListSearchResult">
   <owner>tapted@chromium.org</owner>
   <summary>
