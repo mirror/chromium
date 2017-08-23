@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "421e81d2_ad76b1ee",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-23T19:14:21Z",
+      "side": 1,
+      "message": "What is failing in VerifyDmabuf when we get NV12 buffers?\nCan we enable this check just for NV12 temporarily instead of completely skipping it?",
+      "revId": "bbbde46f80d0b07673c675b1708e20c3d03e2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
