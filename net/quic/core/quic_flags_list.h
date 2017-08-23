@@ -210,4 +210,4 @@ QUIC_FLAG(bool,
 // update the peer ip address only.
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_disable_peer_migration_on_client,
-          false)
+          true)
