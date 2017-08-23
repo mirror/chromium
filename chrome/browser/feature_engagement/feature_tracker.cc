@@ -4,6 +4,7 @@
 
 #include "chrome/browser/feature_engagement/feature_tracker.h"
 
+#include "base/metrics/field_trial_params.h"
 #include "base/time/time.h"
 #include "chrome/browser/feature_engagement/tracker_factory.h"
 #include "components/feature_engagement/public/event_constants.h"
@@ -32,6 +33,10 @@ void FeatureTracker::RemoveSessionDurationObserver() {
 
 bool FeatureTracker::IsObserving() {
   return session_duration_observer_.IsObserving(session_duration_updater_);
+}
+
+bool FeatureTracker::ShouldShowPromo(const base::Feature& feature) {
+  return GetTracker()->ShouldTriggerHelpUI(feature);
 }
 
 Tracker* FeatureTracker::GetTracker() const {
