@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f59cd482_6c820a23",
+        "filename": "ash/wm/event_client_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-23T19:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "733c1763_9ddfe319",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 31
+      },
+      "revId": "9b0a39b9afbdf05706e0b8944cd53a23edb9b2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f54468aa_665c8fdb",
         "filename": "ash/wm/event_client_impl.h",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "9b0a39b9afbdf05706e0b8944cd53a23edb9b2ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae6f162_8c5d2d3a",
+        "filename": "ash/wm/event_client_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-23T19:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f54468aa_665c8fdb",
+      "revId": "9b0a39b9afbdf05706e0b8944cd53a23edb9b2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "791bc7d0_59187b55",
+        "filename": "ash/wm/tablet_mode/scoped_ignore_process_events_checks.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-23T19:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f15d4f76_5855eabf",
+      "revId": "9b0a39b9afbdf05706e0b8944cd53a23edb9b2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "729ee34b_f727040b",
         "filename": "ui/aura/client/event_client.h",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "9b0a39b9afbdf05706e0b8944cd53a23edb9b2ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cceaf6e4_f6e1ae60",
+        "filename": "ui/aura/client/event_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-23T19:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "729ee34b_f727040b",
+      "revId": "9b0a39b9afbdf05706e0b8944cd53a23edb9b2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
