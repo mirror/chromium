@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f65db746_b0f35fd6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/browsers/browsing-the-web/history-traversal/browsing_context_name_cross_origin-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-08-23T20:29:27Z",
+      "side": 1,
+      "message": "This test now makes it farther before it fails. I believe it is now failing due to the fact that we don\u0027t restore browsing context names on history navigation, which the spec expects.",
+      "revId": "3d5b4c49b7bedda35113f874bbb76deaf75382d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
