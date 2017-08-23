@@ -685,6 +685,29 @@ TEST_F(LabelTest, MultiLineSizing) {
             required_size.width() + border.width());
 }
 
+#if !defined(OS_MACOSX)
+// Tests that non-zero SetMaxLines will enforce a capped number of lines for
+// multi line label.
+// TODO(warx): Remove !defined(OS_MACOSX) once SetMaxLines() is applied to MAC.
+TEST_F(LabelTest, MultiLineSetMaxLines) {
+  const base::string16 text =
+      ASCIIToUTF16("A random string for testing max lines");
+  label()->SetText(text);
+  label()->SetMultiLine(true);
+  const gfx::Size required_size = label()->GetPreferredSize();
+  const int kUncappedLines = 3;
+  const int kMaxLines = 2;
+  const gfx::Size narrow_size(required_size.width() / kUncappedLines,
+                              required_size.height());
+  label()->SetBoundsRect(gfx::Rect(narrow_size));
+  EXPECT_LE(kUncappedLines * required_size.height(),
+            label()->GetPreferredSize().height());
+  label()->SetMaxLines(kMaxLines);
+  EXPECT_EQ(kMaxLines * required_size.height(),
+            label()->GetPreferredSize().height());
+}
+#endif
+
 // Verifies if the combination of text eliding and multiline doesn't cause
 // any side effects of size / layout calculation.
 TEST_F(LabelTest, MultiLineSizingWithElide) {
