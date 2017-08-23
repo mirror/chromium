@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc696320_93c3f82a",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-23T22:13:52Z",
+      "side": 1,
+      "message": "Consider adding a test that verifies the entry is not visible/created if the flag is not present.",
+      "revId": "2ef02e53bc7b4e26e9397ec0f9e0338f8f5f584b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
