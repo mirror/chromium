@@ -10,10 +10,17 @@
 #error "This file requires ARC support."
 #endif
 
+@interface ToolbarButton ()
+@property(nonatomic, strong) UIImage* normalImage;
+@property(nonatomic, strong) UIImage* highlightedImage;
+@end
+
 @implementation ToolbarButton
 @synthesize visibilityMask = _visibilityMask;
 @synthesize hiddenInCurrentSizeClass = _hiddenInCurrentSizeClass;
 @synthesize hiddenInCurrentState = _hiddenInCurrentState;
+@synthesize normalImage = _normalImage;
+@synthesize highlightedImage = _highlightedImage;
 
 + (instancetype)toolbarButtonWithImageForNormalState:(UIImage*)normalImage
                             imageForHighlightedState:(UIImage*)highlightedImage
@@ -22,6 +29,8 @@
   [button setImage:normalImage forState:UIControlStateNormal];
   [button setImage:highlightedImage forState:UIControlStateHighlighted];
   [button setImage:disabledImage forState:UIControlStateDisabled];
+  button.normalImage = normalImage;
+  button.highlightedImage = highlightedImage;
   button.titleLabel.textAlignment = NSTextAlignmentCenter;
   button.translatesAutoresizingMaskIntoConstraints = NO;
   return button;
@@ -42,6 +51,16 @@
 }
 
 #pragma mark - Public Methods
+
+- (void)setHighlightedAppearance:(BOOL)highlighted {
+  if (highlighted) {
+    [self setImage:self.highlightedImage forState:UIControlStateNormal];
+    [self setImage:self.normalImage forState:UIControlStateHighlighted];
+  } else {
+    [self setImage:self.normalImage forState:UIControlStateNormal];
+    [self setImage:self.highlightedImage forState:UIControlStateHighlighted];
+  }
+}
 
 - (void)updateHiddenInCurrentSizeClass {
   BOOL newHiddenValue = YES;
