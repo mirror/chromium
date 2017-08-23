@@ -19,6 +19,7 @@ class EquivalenceMap;
 class ImageIndex;
 class OrderedLabelManager;
 class PatchElementWriter;
+class UnorderedLabelManager;
 
 // Creates an ImageIndex and initializes it with references from |disasm|.
 // Returns nullopt on error.
@@ -38,7 +39,21 @@ std::vector<offset_t> MakeNewTargetsFromEquivalenceMap(
 // targets in a new vector. |new_references| must be sorted in ascending order.
 std::vector<offset_t> FindExtraTargets(
     const std::vector<Reference>& new_references,
-    const EquivalenceMap& equivalences);
+    const UnorderedLabelManager& new_label_manager,
+    const EquivalenceMap& equivalence_map);
+
+// Creates an EquivalenceMap from "old" image to "new" image and returns the
+// result. |*_image_index|:
+// - Provide "old" and "new" raw image data and references.
+// - Mediate Label matching, which link references between "old" and "new", and
+//   guide EquivalenceMap construction.
+// |*_image_index| is assumed to hold targets as *unmarked* offsets. These are
+// also temporarily modified during Label matching -- that's why they're passed
+// by pointer. Meanwhile, |old_label_manager| contains labels for
+// |old_image_index|.
+EquivalenceMap CreateEquivalenceMap(
+    const ImageIndex& old_image_index,
+    const ImageIndex& new_image_index);
 
 // Creates an EquivalenceMap from "old" image to "new" image and returns the
 // result. The params |*_image_index|:
@@ -75,6 +90,7 @@ bool GenerateReferencesDelta(const ImageIndex& old_index,
                              const ImageIndex& new_index,
                              const EquivalenceMap& equivalence_map,
                              ReferenceDeltaSink* reference_delta_sink);
+
 
 // Writes |extra_targets| associated with |pool_tag| to |patch_writer|.
 bool GenerateExtraTargets(const std::vector<offset_t>& extra_targets,

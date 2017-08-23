@@ -12,38 +12,41 @@
 
 #include "chrome/installer/zucchini/image_index.h"
 #include "chrome/installer/zucchini/image_utils.h"
+#include "chrome/installer/zucchini/targets_affinity.h"
 
 namespace zucchini {
 
-constexpr double kMismatchFatal = -std::numeric_limits<double>::infinity();
+class EncodedView;
+class ImageIndex;
 
-// Returns a similarity metric between content in |old_view| and |new_view| at
-// offsets |src| and |dst|, respectively. Both |src| and |dst| must refer to
-// tokens in |old_image| and |new_image|.
 double GetTokenSimilarity(const ImageIndex& old_image,
-                          const ImageIndex& new_image,
-                          offset_t src,
-                          offset_t dst);
+                                   const ImageIndex& new_image,
+                                   const TargetsAffinitySet& targets_affinity,
+                                   offset_t src,
+                                   offset_t dst);
 
 // Returns a similarity metric between content in |old_view| and |new_view| at
 // regions described by |equivalence|.
-double GetEquivalenceSimilarity(const ImageIndex& old_image,
-                                const ImageIndex& new_image,
+double GetEquivalenceSimilarity(const ImageIndex& old_view,
+                                const ImageIndex& new_view,
+                                const std::vector<TargetsAffinity>& targets_affinities,
                                 const Equivalence& equivalence);
 
 // Extends |equivalence| forward and returns the result. This is related to
 // VisitEquivalenceSeed().
 EquivalenceCandidate ExtendEquivalenceForward(
-    const ImageIndex& old_image,
-    const ImageIndex& new_image,
+    const ImageIndex& old_view,
+    const ImageIndex& new_view,
+    const std::vector<TargetsAffinity>& targets_affinities,
     const EquivalenceCandidate& equivalence,
     double min_similarity);
 
 // Extends |equivalence| backward and returns the result. This is related to
 // VisitEquivalenceSeed().
 EquivalenceCandidate ExtendEquivalenceBackward(
-    const ImageIndex& old_image,
-    const ImageIndex& new_image,
+    const ImageIndex& old_view,
+    const ImageIndex& new_view,
+    const std::vector<TargetsAffinity>& targets_affinities,
     const EquivalenceCandidate& equivalence,
     double min_similarity);
 
@@ -52,8 +55,9 @@ EquivalenceCandidate ExtendEquivalenceBackward(
 // |old_image| and |new_image|, and returns the result. |min_similarity|
 // describes the minimum acceptable similarity score and is used as threshold to
 // discard bad equivalences.
-EquivalenceCandidate VisitEquivalenceSeed(const ImageIndex& old_image,
-                                          const ImageIndex& new_image,
+EquivalenceCandidate VisitEquivalenceSeed(const ImageIndex& old_view,
+                                          const ImageIndex& new_view,
+                                          const std::vector<TargetsAffinity>& targets_affinities,
                                           offset_t src,
                                           offset_t dst,
                                           double min_similarity);
@@ -79,8 +83,9 @@ class EquivalenceMap {
   // equivalence, while maximizing |new_image| coverage. The minimum similarity
   // of an equivalence is given by |min_similarity|.
   void Build(const std::vector<offset_t>& old_sa,
-             const ImageIndex& old_image,
-             const ImageIndex& new_image,
+             const EncodedView& old_view,
+             const EncodedView& new_view,
+             const std::vector<TargetsAffinity>& targets_affinities,
              double min_similarity);
 
   size_t size() const { return candidates_.size(); }
@@ -96,16 +101,18 @@ class EquivalenceMap {
   // stores them in the object. Note that resulting candidates are not sorted
   // and might be overlapping in new image.
   void CreateCandidates(const std::vector<offset_t>& old_sa,
-                        const ImageIndex& old_image,
-                        const ImageIndex& new_image,
+                        const EncodedView& old_view,
+                        const EncodedView& new_view,
+                        const std::vector<TargetsAffinity>& targets_affinities,
                         double min_similarity);
   // Sorts candidates by their offset in new image.
   void SortByDestination();
   // Visits |candidates_| (sorted by |dst_offset|) and remove all destination
   // overlaps. Candidates with low similarity scores are more likely to be
   // shrunken. Unfit candidates may be removed.
-  void Prune(const ImageIndex& old_image,
-             const ImageIndex& new_image,
+  void Prune(const EncodedView& old_view,
+             const EncodedView& new_view,
+             const std::vector<TargetsAffinity>& targets_affinities,
              double min_similarity);
 
   std::vector<EquivalenceCandidate> candidates_;
