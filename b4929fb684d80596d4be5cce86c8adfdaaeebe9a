@@ -104,6 +104,24 @@
       "revId": "b4929fb684d80596d4be5cce86c8adfdaaeebe9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de41860_4ea2a51d",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-23T06:06:24Z",
+      "side": 1,
+      "message": "Could we just remove these methods from this CL and add them in the next CL where we actually use them? That seems simplest to me.\n\n(Also, side note: it looks like the latest patchset pulls in some unrelated changes possibly from the previous CL, maybe a rebase mishap?)",
+      "parentUuid": "4336a6f9_8b9777e3",
+      "revId": "b4929fb684d80596d4be5cce86c8adfdaaeebe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
