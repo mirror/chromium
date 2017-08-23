@@ -614,6 +614,36 @@ TEST_F(AppListViewFullscreenTest, TapAndClickWithinAppsGridView) {
   EXPECT_EQ(AppListView::FULLSCREEN_ALL_APPS, view_->app_list_state());
 }
 
+// Test that a drag within the apps grid view gets passed to the AppListView if
+// it would result in no page change.
+TEST_F(AppListViewFullscreenTest, DragWithinAppsGridView) {
+  Initialize(0, false, false);
+  delegate_->GetTestModel()->PopulateApps(kInitialItems);
+  Show();
+  view_->SetState(AppListView::FULLSCREEN_ALL_APPS);
+  EXPECT_EQ(AppListView::FULLSCREEN_ALL_APPS, view_->app_list_state());
+  ContentsView* contents_view = view_->app_list_main_view()->contents_view();
+  AppsContainerView* container_view = contents_view->apps_container_view();
+
+  gfx::Point target_point =
+      container_view->apps_grid_view()->GetBoundsInScreen().CenterPoint();
+
+  ui::GestureEvent scroll_update(
+      target_point.x(), target_point.y(), 0, base::TimeTicks(),
+      ui::GestureEventDetails(ui::ET_GESTURE_SCROLL_UPDATE, 0, 100));
+  ui::GestureEvent scroll_end(
+      target_point.x(), target_point.y(), 0, base::TimeTicks(),
+      ui::GestureEventDetails(ui::ET_GESTURE_SCROLL_END));
+
+  EXPECT_EQ(gfx::Point(0, 0), view_->GetBoundsInScreen().origin());
+
+  // Send an upward drag to the AppsGridView, it should fail to scroll the page
+  // and send the scroll update to the AppListView.
+  container_view->apps_grid_view()->OnGestureEvent(&scroll_update);
+  container_view->apps_grid_view()->OnGestureEvent(&scroll_end);
+  ASSERT_EQ(gfx::Point(0, 100), view_->GetBoundsInScreen().origin());
+}
+
 // Tests displaying the app list and performs a standard set of checks on its
 // top level views. Then closes the window.
 TEST_F(AppListViewTest, DisplayTest) {

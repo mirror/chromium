@@ -141,7 +141,6 @@ void PaginationModel::UpdateScroll(double delta) {
   // Initializes a transition if there is none.
   if (!has_transition())
     transition_.target_page = CalculateTargetPage(page_change_dir);
-
   // Updates transition progress.
   int transition_dir = transition_.target_page > selected_page_ ? 1 : -1;
   double progress =

@@ -10,7 +10,7 @@
 namespace gfx {
 class Vector2d;
 class Rect;
-}
+}  // namespace gfx
 
 namespace ui {
 class GestureEvent;
@@ -47,6 +47,10 @@ class APP_LIST_EXPORT PaginationController {
  private:
   PaginationModel* pagination_model_;  // Not owned.
   ScrollAxis scroll_axis_;
+  // Whether a drag event sequence succeeded in
+  // moving the app grid.
+
+  bool drag_moved_app_grid_;
 };
 
 }  // namespace app_list

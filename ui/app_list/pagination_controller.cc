@@ -25,7 +25,9 @@ const double kFinishTransitionThreshold = 0.33;
 
 PaginationController::PaginationController(PaginationModel* model,
                                            ScrollAxis scroll_axis)
-    : pagination_model_(model), scroll_axis_(scroll_axis) {}
+    : pagination_model_(model),
+      scroll_axis_(scroll_axis),
+      drag_moved_app_grid_(false) {}
 
 bool PaginationController::OnScroll(const gfx::Vector2d& offset,
                                     ScrollEventType type) {
@@ -64,6 +66,7 @@ bool PaginationController::OnGestureEvent(const ui::GestureEvent& event,
   const ui::GestureEventDetails& details = event.details();
   switch (event.type()) {
     case ui::ET_GESTURE_SCROLL_BEGIN:
+      drag_moved_app_grid_ = false;
       pagination_model_->StartScroll();
       return true;
     case ui::ET_GESTURE_SCROLL_UPDATE: {
@@ -74,6 +77,16 @@ bool PaginationController::OnGestureEvent(const ui::GestureEvent& event,
                                                          : bounds.height();
       // scroll > 0 means moving contents right or down. That is, transitioning
       // to the previous page.
+
+      // If the scroll will not go to a valid page, give the event to the app
+      // list view.
+      int delta = -scroll > 0 ? 1 : -1;
+      if (!drag_moved_app_grid_ &&
+          !pagination_model_->IsValidPageRelative(delta) && delta < 0 &&
+          pagination_model_->transition().progress == 0) {
+        return false;  // newcomer remove transition progress check.
+      }
+      drag_moved_app_grid_ = true;
       pagination_model_->UpdateScroll(scroll / width);
       return true;
     }
