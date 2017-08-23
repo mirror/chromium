@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "1d9a3e12_07cca7d2",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-23T17:02:12Z",
+      "side": 1,
+      "message": "I considered this, but decided against it. The _[os] naming seems to generally suggest platform specific implementations of a single component. This isn\u0027t what we have here. This is a new implementation that can run side-by-side with the existing one.\n\nAn alternative that uses the naming convention could be...\nplatform_native_worker_pool_win.[cc|h], or something to that effect.\n\nThis would also allow\nplatform_native_worker_pool_mac.[cc|h] for libdispatch/gcd.",
+      "parentUuid": "d73a7818_72a0adf4",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf34aa8d_cbf8ee52",
         "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
         "patchSetId": 13
