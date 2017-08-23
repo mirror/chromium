@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae7a720d_cee4d874",
+        "filename": "chrome/browser/metrics/metrics_service_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-23T17:43:50Z",
+      "side": 1,
+      "message": "Instead of having ifdefs in a lot of places, how about making a helper method that takes both prefs and histogram_tester as params and have its implementation be ifdef\u0027d?\n\nAlso, since you\u0027re still hooking into IncreaseCrashCount() which updates the prefs, shouldn\u0027t the tests be checking both?",
+      "range": {
+        "startLine": 164,
+        "startChar": 23,
+        "endLine": 164,
+        "endChar": 36
+      },
+      "revId": "e9bd45c2d60fbbde49325efcd07505ac0330aba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a050a69_46093830",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-23T17:43:50Z",
+      "side": 1,
+      "message": "Can you add a comment documenting the new param?",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "e9bd45c2d60fbbde49325efcd07505ac0330aba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bac32877_f5dd73e1",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-23T17:43:50Z",
+      "side": 1,
+      "message": "Nit: pass by const\u0026",
+      "range": {
+        "startLine": 18,
+        "startChar": 42,
+        "endLine": 18,
+        "endChar": 59
+      },
+      "revId": "e9bd45c2d60fbbde49325efcd07505ac0330aba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b0e9eb_3b6ee7dd",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-23T17:43:50Z",
+      "side": 1,
+      "message": "Your comment for this function says \"Records a browser child process crash\" - but this is specifically incrementing the RendererCrash pref. Which is it? Because there are other child processes that are not renderers - such as utility processes. Please make the code and comment consistent - and also reflect that in the method name.",
+      "range": {
+        "startLine": 170,
+        "startChar": 33,
+        "endLine": 170,
+        "endChar": 61
+      },
+      "revId": "e9bd45c2d60fbbde49325efcd07505ac0330aba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f98dd5ba_790d2f90",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-23T17:43:50Z",
+      "side": 1,
+      "message": "Can this use #if BUILDFLAG(ENABLE_EXTENSIONS) instead? That way, it can cover other platforms that don\u0027t allow extensions like iOS.",
+      "range": {
+        "startLine": 198,
+        "startChar": 23,
+        "endLine": 198,
+        "endChar": 0
+      },
+      "revId": "e9bd45c2d60fbbde49325efcd07505ac0330aba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d8b804_2eb8936c",
+        "filename": "components/metrics/stability_metrics_helper_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-23T17:43:50Z",
+      "side": 1,
+      "message": "Can this part be refactored into a separate TEST that can then be disabled on Android?",
+      "range": {
+        "startLine": 96,
+        "startChar": 24,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "e9bd45c2d60fbbde49325efcd07505ac0330aba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
