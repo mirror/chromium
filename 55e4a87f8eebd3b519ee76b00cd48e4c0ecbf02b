@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "65b4df6c_d7c1d910",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-23T17:06:44Z",
+      "side": 1,
+      "message": "A good point. Perhaps this might fix the flakiness in AudioContext testing caused by the thread issue. I changed AudioDestination to RefPtr and made this class a ThreadSafeRefCounted.",
+      "parentUuid": "b3b7854d_24fce4b0",
+      "revId": "55e4a87f8eebd3b519ee76b00cd48e4c0ecbf02b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "139f66f4_f6adc552",
         "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
         "patchSetId": 10
