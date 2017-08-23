@@ -52,6 +52,24 @@
       "revId": "c2c1e56e68de3f0ad08166cc589a920a070ff05a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e4a7908_59a885a3",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-23T22:09:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f38767d_3224d209",
+      "revId": "c2c1e56e68de3f0ad08166cc589a920a070ff05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
