@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb2d25e0_e412e8d7",
+        "filename": "ash/system/ime_menu/ime_menu_tray.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T15:37:48Z",
+      "side": 1,
+      "message": "Make sure to remove any unnecessary includes. I suspect this isn\u0027t needed, perhaps others as well.",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 51
+      },
+      "revId": "2a3d8ff4fb2ce797e45c723c169a97857ddf7853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e9e6c8_e9fa7da8",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T15:37:48Z",
+      "side": 1,
+      "message": "Remember that is called *before* the EventHandlers installed by ash. Are you sure you want that? It seems like you want ash\u0027s AcceleratorDelegate to have a chance to consume the event *first*, then widget_.",
+      "range": {
+        "startLine": 154,
+        "startChar": 2,
+        "endLine": 154,
+        "endChar": 29
+      },
+      "revId": "2a3d8ff4fb2ce797e45c723c169a97857ddf7853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c12869b_600421cd",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T15:37:48Z",
+      "side": 1,
+      "message": "Please move add/removal into RerouteEventHandler as that\u0027s less error prone. When you don\u0027t need the activation_handler_ to be active, delete it.",
+      "range": {
+        "startLine": 195,
+        "startChar": 28,
+        "endLine": 195,
+        "endChar": 50
+      },
+      "revId": "2a3d8ff4fb2ce797e45c723c169a97857ddf7853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "648084b4_88f01011",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T15:37:48Z",
+      "side": 1,
+      "message": "use MakeUnique.",
+      "range": {
+        "startLine": 223,
+        "startChar": 30,
+        "endLine": 223,
+        "endChar": 53
+      },
+      "revId": "2a3d8ff4fb2ce797e45c723c169a97857ddf7853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b79762a_91bd3e69",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T15:37:48Z",
+      "side": 1,
+      "message": "I would be inclined to move this into RerouteEventHandler too.",
+      "range": {
+        "startLine": 398,
+        "startChar": 21,
+        "endLine": 398,
+        "endChar": 46
+      },
+      "revId": "2a3d8ff4fb2ce797e45c723c169a97857ddf7853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a5eea2_db4bd692",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T15:37:48Z",
+      "side": 1,
+      "message": "remove as this is obvious from the signature.",
+      "range": {
+        "startLine": 171,
+        "startChar": 5,
+        "endLine": 171,
+        "endChar": 45
+      },
+      "revId": "2a3d8ff4fb2ce797e45c723c169a97857ddf7853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf46ee2c_7d2b9770",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T15:37:48Z",
+      "side": 1,
+      "message": "The interesting thing is the \u0027why\u0027. Why do we need this code? (I know why, but the comment should explain the why).",
+      "range": {
+        "startLine": 172,
+        "startChar": 5,
+        "endLine": 172,
+        "endChar": 52
+      },
+      "revId": "2a3d8ff4fb2ce797e45c723c169a97857ddf7853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
