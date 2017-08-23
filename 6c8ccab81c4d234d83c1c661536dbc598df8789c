@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "731adbe9_107e0c8f",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-23T18:30:49Z",
+      "side": 1,
+      "message": "Why is this necessary?\nI believe reset() should just work on nullptrs.  Ref: https://stackoverflow.com/a/21606198\n\nMaybe my knowledge of smart pointers is wrong though...\n\nOr perhaps our understanding of the lifetime of this pointer and its memory contents is incorrect...\n\nlet me do some digging.\n\nAha, see message on main reply.",
+      "range": {
+        "startLine": 78,
+        "startChar": 23,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "6c8ccab81c4d234d83c1c661536dbc598df8789c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
