@@ -17,6 +17,7 @@ import logging
 from webkitpy.common.net.buildbot import current_build_link
 from webkitpy.common.net.git_cl import GitCL
 from webkitpy.common.path_finder import PathFinder
+from webkitpy.common.system.log_utils import configure_logging
 from webkitpy.layout_tests.models.test_expectations import TestExpectations, TestExpectationParser
 from webkitpy.layout_tests.port.base import Port
 from webkitpy.w3c.chromium_exportable_commits import exportable_commits_over_last_n_commits
@@ -48,11 +49,13 @@ class TestImporter(object):
         self.dest_path = self.finder.path_from_layout_tests('external', 'wpt')
 
     def main(self, argv=None):
+
+
         options = self.parse_args(argv)
 
         self.verbose = options.verbose
         log_level = logging.DEBUG if self.verbose else logging.INFO
-        logging.basicConfig(level=log_level, format='%(message)s')
+        configure_logging(log_level)
 
         if not self.checkout_is_okay():
             return 1
