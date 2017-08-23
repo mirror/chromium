@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "164867f9_5396a8cd",
+        "filename": "ui/ozone/platform/drm/host/drm_overlay_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-23T00:11:00Z",
+      "side": 1,
+      "message": "does this still update the MRU? is there a way we can avoid that?",
+      "range": {
+        "startLine": 145,
+        "startChar": 21,
+        "endLine": 145,
+        "endChar": 24
+      },
+      "revId": "af4f3bf4cd9687ed1d37bcb4d57447e6fd344464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
