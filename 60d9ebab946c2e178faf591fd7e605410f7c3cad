@@ -16,6 +16,24 @@
       "revId": "60d9ebab946c2e178faf591fd7e605410f7c3cad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ee741d_3aaf4f6e",
+        "filename": "chrome/common/extensions/api/file_manager_private.idl",
+        "patchSetId": 15
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-08-23T04:26:57Z",
+      "side": 1,
+      "message": "I will rename from \u0027diskFileSystemType\u0027 to \u0027diskFileSystem\u0027.\nThe exact type is required to determine volume name constraints defined by each file system type.",
+      "parentUuid": "21755c64_ed4abc8c",
+      "revId": "60d9ebab946c2e178faf591fd7e605410f7c3cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
