@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a82b8210_c63726df",
+        "filename": "ui/app_list/app_list_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T16:26:25Z",
+      "side": 1,
+      "message": "Prefer to move this enum definition into AppListModel. Think it is better to keep the deps in one direction, i.e. views code depends on model.",
+      "range": {
+        "startLine": 71,
+        "startChar": 26,
+        "endLine": 71,
+        "endChar": 51
+      },
+      "revId": "f792eb43928ff3df4442a763a0722a2a1eb95a20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98429610_38ff3a00",
+        "filename": "ui/app_list/app_list_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T16:26:25Z",
+      "side": 1,
+      "message": "OnTabletModelChanged -\u003e SetTabletMode to make it clear that this is a setter method.",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 26
+      },
+      "revId": "f792eb43928ff3df4442a763a0722a2a1eb95a20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61214c3c_2d84413d",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T16:26:25Z",
+      "side": 1,
+      "message": "If we keep a reference to AppListModel, prefer to get rid of |is_tablet_mode_| and use the one from AppListModel.",
+      "range": {
+        "startLine": 970,
+        "startChar": 2,
+        "endLine": 970,
+        "endChar": 17
+      },
+      "revId": "f792eb43928ff3df4442a763a0722a2a1eb95a20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f702a5d_e46b26f7",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T16:26:25Z",
+      "side": 1,
+      "message": "We can keep a reference to AppListModel instead of having to do this through ContentsView. AppListViewDelegate is passed to AppListView\u0027s ctor and we can call GetModel() to get a reference.",
+      "revId": "f792eb43928ff3df4442a763a0722a2a1eb95a20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "930fac31_1021c980",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T16:26:25Z",
+      "side": 1,
+      "message": "Similarly, prefer to use the one stored in AppListModel.",
+      "range": {
+        "startLine": 1081,
+        "startChar": 2,
+        "endLine": 1081,
+        "endChar": 17
+      },
+      "revId": "f792eb43928ff3df4442a763a0722a2a1eb95a20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
