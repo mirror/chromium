@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5805e4f8_73801921",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T15:51:16Z",
+      "side": 1,
+      "message": "How about:\n\n\"\"\"\nPROCESS_LAUNCHER is being deprecated but its migration is blocked\non Android\u0027s requirement to have a java launcher thread. Remove the\npresubmit error for it while a migration path is being conceived.\n\"\"\"",
+      "revId": "73e21d89c28eeabe2fc86f20c6b71b0c36e67ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c553120d_9e70c22a",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T15:51:16Z",
+      "side": 1,
+      "message": "Maybe this can all fit on one line now?",
+      "revId": "73e21d89c28eeabe2fc86f20c6b71b0c36e67ea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
