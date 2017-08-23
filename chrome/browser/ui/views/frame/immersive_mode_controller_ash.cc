@@ -6,6 +6,7 @@
 
 #include "ash/public/cpp/immersive/immersive_revealed_lock.h"
 #include "ash/shell.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/window_state.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -121,6 +122,14 @@ void ImmersiveModeControllerAsh::Init(BrowserView* browser_view) {
 }
 
 void ImmersiveModeControllerAsh::SetEnabled(bool enabled) {
+  // Do not exit immersive mode if the auto hide title bars feature is enabled.
+  // For example, exiting fullscreen mode while in tablet mode should not show
+  // the title bar again.
+  if (!enabled &&
+      ash::Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars()) {
+    return;
+  }
+
   if (controller_->IsEnabled() == enabled)
     return;
 
@@ -166,6 +175,23 @@ void ImmersiveModeControllerAsh::OnFindBarVisibleBoundsChanged(
 
 views::Widget* ImmersiveModeControllerAsh::GetRevealWidget() {
   return mash_reveal_widget_.get();
+}
+
+void ImmersiveModeControllerAsh::OnWidgetActivationChanged(
+    views::Widget* widget,
+    bool active) {
+  if (browser_view_->IsBrowserTypeNormal())
+    return;
+
+  if (!ash::Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars())
+    return;
+
+  // Enable immersive mode if the widget is activated.
+  controller_->SetEnabled(
+      browser_view_->browser()->is_app()
+          ? ash::ImmersiveFullscreenController::WINDOW_TYPE_HOSTED_APP
+          : ash::ImmersiveFullscreenController::WINDOW_TYPE_BROWSER,
+      active);
 }
 
 void ImmersiveModeControllerAsh::EnableWindowObservers(bool enable) {
