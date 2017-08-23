@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b40a28da_4dde36f1",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-23T23:12:16Z",
+      "side": 1,
+      "message": "Removed. Previously needed, but no longer.",
+      "parentUuid": "b8b72861_ababc942",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "0449b334b41ea5e4f80ad62d337d596563fd5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc89be76_867b0215",
         "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.h",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-23T22:24:45Z",
       "side": 1,
       "message": "nit: LegacyMailtoURLRewriterImpl ?",
+      "range": {
+        "startLine": 16,
+        "startChar": 11,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "0449b334b41ea5e4f80ad62d337d596563fd5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89626a29_a8968593",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-23T23:12:16Z",
+      "side": 1,
+      "message": "I\u0027d prefer to not use the Impl suffix. This dual implementation of *MailtoURLRewriter is temporary as we transition from one implementation to another. I want to keep the \"legacy\" version running until the newer \"prompting\" version is ready.",
+      "parentUuid": "dc89be76_867b0215",
       "range": {
         "startLine": 16,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "21509cbd_b49cc9a9",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-23T23:12:16Z",
+      "side": 1,
+      "message": "Yes, Foundation.h is sufficient.",
+      "parentUuid": "866fec74_b37c1d4b",
+      "range": {
+        "startLine": 12,
+        "startChar": 9,
+        "endLine": 12,
+        "endChar": 14
+      },
+      "revId": "0449b334b41ea5e4f80ad62d337d596563fd5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4beb8fa8_9ee14b59",
         "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "acb325fb_1c34f856",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-23T23:12:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4beb8fa8_9ee14b59",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 17
+      },
+      "revId": "0449b334b41ea5e4f80ad62d337d596563fd5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6d9d17a_f9604169",
         "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
         "patchSetId": 6
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-23T22:24:45Z",
       "side": 1,
       "message": "nit: s/gURL/URL",
+      "range": {
+        "startLine": 107,
+        "startChar": 43,
+        "endLine": 107,
+        "endChar": 47
+      },
+      "revId": "0449b334b41ea5e4f80ad62d337d596563fd5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e18c6f_9f2f1c53",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-23T23:12:16Z",
+      "side": 1,
+      "message": "Done. Changed in .h file as well.",
+      "parentUuid": "e6d9d17a_f9604169",
       "range": {
         "startLine": 107,
         "startChar": 43,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "9850134f_e29f12ab",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-23T23:12:16Z",
+      "side": 1,
+      "message": "Ack.\n\nI agree with your suggestion, but given that this legacy_ implementation may go away and the new implementation may not need this, I would prefer to leave this as-is. This code should go away once the new implementation is ready.",
+      "parentUuid": "ec634369_ece811e2",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 122,
+        "endChar": 49
+      },
+      "revId": "0449b334b41ea5e4f80ad62d337d596563fd5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b49451b4_8e5113b5",
         "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
         "patchSetId": 6
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "3f4c5032_9a74bc66",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-23T23:12:16Z",
+      "side": 1,
+      "message": "You actually need this:\n  _handlers[[app appStoreID]] \u003d app;\nThe [[...]] notation, while syntactically correct, looks jarring.\nI\u0027d rather stay with -setObject:forKey:.",
+      "parentUuid": "b49451b4_8e5113b5",
+      "range": {
+        "startLine": 127,
+        "startChar": 15,
+        "endLine": 127,
+        "endChar": 28
+      },
+      "revId": "0449b334b41ea5e4f80ad62d337d596563fd5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "745daaae_f9f64d9e",
         "filename": "ios/chrome/browser/web/mailto_url_rewriter.h",
         "patchSetId": 6
@@ -174,6 +342,30 @@
       "writtenOn": "2017-08-23T22:24:45Z",
       "side": 1,
       "message": "Should this be MailtoURLRewriting protocol instead?",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "0449b334b41ea5e4f80ad62d337d596563fd5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a4e66bb_1604ff0d",
+        "filename": "ios/chrome/browser/web/mailto_url_rewriter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-23T23:12:16Z",
+      "side": 1,
+      "message": "If this abstract class is meant to be a permanent fixture, I would agree that defining a protocol and have 2 different classes implementing the protocol would be a better approach.\n\nGiven that this is temporary and eventually there will be only one class, the protocol will have to be dismantled. It seems like a lot of work for little gain even in the interim.",
+      "parentUuid": "745daaae_f9f64d9e",
       "range": {
         "startLine": 24,
         "startChar": 11,
