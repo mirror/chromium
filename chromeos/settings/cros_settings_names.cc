@@ -248,4 +248,18 @@ const char kDeviceLoginScreenInputMethods[] =
 // A boolean pref that matches enable-per-user-time-zone chrome://flags value.
 const char kPerUserTimezoneEnabled[] = "cros.flags.per_user_timezone_enabled";
 
+// A dictionary pref contains time intervals and ignored policies which is used
+// by DeviceOffHours policy to allow less restricted using Chrome OS.
+// Pref format:
+// { "timezone" : string,
+//   "intervals" : list of Intervals,
+//   "ignored_policies" : string list }
+// Interval dictionary format:
+// { "start" : WeeklyTime,
+//   "end" : WeeklyTime }
+// WeeklyTime dictionary format:
+// { "weekday" : int,
+//   "time" : int }
+const char kDeviceOffHours[] = "cros.device_off_hours";
+
 }  // namespace chromeos
