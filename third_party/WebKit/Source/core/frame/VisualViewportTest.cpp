@@ -381,6 +381,33 @@ TEST_P(VisualViewportTest, TestResizeAfterHorizontalScroll) {
   EXPECT_FLOAT_SIZE_EQ(FloatSize(150, 0), visual_viewport.GetScrollOffset());
 }
 
+// Make sure that the SetupScrollbar function acurately reflects
+// the device scale factor for the scrollbars.
+TEST_P(VisualViewportTest, TestScrollbarSizeForDSF) {
+  InitializeWithAndroidSettings();
+
+  RegisterMockedHttpURLLoad("200-by-300.html");
+  NavigateTo(base_url_ + "200-by-300.html");
+
+  WebView()->Resize(IntSize(150, 100));
+
+  VisualViewport& visual_viewport = GetFrame()->GetPage()->GetVisualViewport();
+  int horizontal_scrollbar_size =
+      visual_viewport.ScrollSize(kHorizontalScrollbar);
+  int vertical_scrollbar_size = visual_viewport.ScrollSize(kVerticalScrollbar);
+
+  float devicePixelRatio = 2.625f;
+  WebView()->SetDeviceScaleFactor(devicePixelRatio);
+  WebView()->Resize(IntSize(100, 50));
+
+  EXPECT_EQ(static_cast<int>(static_cast<float>(horizontal_scrollbar_size) *
+                             devicePixelRatio),
+            visual_viewport.ScrollSize(kHorizontalScrollbar));
+  EXPECT_EQ(static_cast<int>(static_cast<float>(vertical_scrollbar_size) *
+                             devicePixelRatio),
+            visual_viewport.ScrollSize(kVerticalScrollbar));
+}
+
 // Test that the container layer gets sized properly if the WebView is resized
 // prior to the VisualViewport being attached to the layer tree.
 TEST_P(VisualViewportTest, TestWebViewResizedBeforeAttachment) {
