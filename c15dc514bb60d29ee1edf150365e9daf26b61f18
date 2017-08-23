@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "f5fc16c5_6c40f9ad",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-23T21:58:15Z",
+      "side": 1,
+      "message": "This is an odd name for a value that can indicate an error. Maybe kFailed, which also bypasses the British/American spelling of Cancelled :)",
+      "range": {
+        "startLine": 44,
+        "startChar": 19,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8d9794_138f62f4",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-23T21:58:15Z",
+      "side": 1,
+      "message": "I find this API a bit hard to get my head around. Passing in an error callback to Init() and a success callback to Close() feels asymmetric for no good reason. It means that I need to duplicate clean up code in both callbacks; if I want to write write, for example (excuse the JS notation):\n\n  fileProxyWrapper.Close(() \u003d\u003e { thisFunctionWillBeCalledWhenTheFileIsClosed(); });\n\nI can\u0027t be sure that my function will be called because there might be an error closing the file. I would have to call the same function from my error callback as well, but that\u0027s mostly likely defined in a different place which opens up the possibility of them getting out of sync.\n\nSince it\u0027s not related to this CL, you don\u0027t have to clean this up here, but I think a better API would be a single CompletionCallback which is passed an error code, then have a \"success\" placeholder to indicate that all went well. That way there\u0027s only one place to set the callback (Init()) and the problem I describe goes away. WDYT?",
+      "range": {
+        "startLine": 53,
+        "startChar": 61,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d46cf77_3ff2ccfa",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-23T21:58:15Z",
+      "side": 1,
+      "message": "I see that you added this comment in response to Joe\u0027s fb, but I\u0027m not sure who it\u0027s addressed to. I can see how a comment on Init stating that the callback must not delete the FileProxyWrapper would be useful if the implementation needs to access member variables after calling the error callback (though a better design would be to avoid that restriction), but documenting on a private method is a little odd, especially since this class can\u0027t really enforce it since it\u0027s calling into code outside its control.",
+      "range": {
+        "startLine": 91,
+        "startChar": 67,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9e300b8_5960f624",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 4
@@ -18,6 +87,29 @@
         "startChar": 51,
         "endLine": 125,
         "endChar": 74
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1e6bca_a08f0c2d",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-23T21:58:15Z",
+      "side": 1,
+      "message": "Why might this fail? Would a DCHECK be more appropriate here? If failure is a realistic situation, then a LOG(ERROR) would be appropriate to distinguish this instance of FILE_IO_ERROR from the others in this file (which should also be updated).",
+      "range": {
+        "startLine": 125,
+        "startChar": 76,
+        "endLine": 125,
+        "endChar": 0
       },
       "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -71,6 +163,29 @@
     },
     {
       "key": {
+        "uuid": "a06395e7_b516b81e",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-23T21:58:15Z",
+      "side": 1,
+      "message": "It\u0027s worth logging the actual error in the case that FileErrorToResponseError returns FILE_IO_ERROR, otherwise we\u0027re losing information that might be useful for debugging.",
+      "range": {
+        "startLine": 170,
+        "startChar": 53,
+        "endLine": 170,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54e046ca_322a462e",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 4
@@ -87,6 +202,121 @@
         "startChar": 2,
         "endLine": 182,
         "endChar": 75
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f2c482_ce1f199b",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-23T21:58:15Z",
+      "side": 1,
+      "message": "Is this copy necessary? file_chunks was a queue of CompoundBuffers, could you just move it instead? Feel free to punt to a later CL if it makes things a lot more complex.",
+      "range": {
+        "startLine": 182,
+        "startChar": 75,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5b55c97_4dcbbf70",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-23T21:58:15Z",
+      "side": 1,
+      "message": "DCHECK(!active_file_chunk_) would be help document the constraints this class operates under, I think.",
+      "range": {
+        "startLine": 199,
+        "startChar": 40,
+        "endLine": 199,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef56a6b0_ecc5cd6f",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-23T21:58:15Z",
+      "side": 1,
+      "message": "You\u0027re not using the parameter. Is it guaranteed to be the full chunk size (in which case a DCHECK would be a nice way of documenting that), or do you need to handle partial writes, either by flagging an error or retrying the rest of the chunk?",
+      "range": {
+        "startLine": 210,
+        "startChar": 46,
+        "endLine": 210,
+        "endChar": 59
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3eecd4a_de5b12d8",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-23T21:58:15Z",
+      "side": 1,
+      "message": "DCHECK(!close_success_callback_) here? Otherwise if multiple things call this method, only the last will be notified.",
+      "range": {
+        "startLine": 231,
+        "startChar": 45,
+        "endLine": 231,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff48ac8_b0d45212",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-23T21:58:15Z",
+      "side": 1,
+      "message": "It\u0027s a bit odd that you allow kUninitialized to transition to itself, but don\u0027t allow that for any other states. It\u0027s also at odds with your comment. Maybe just DCHECK(false) here, or in a default handler?",
+      "range": {
+        "startLine": 315,
+        "startChar": 40,
+        "endLine": 315,
+        "endChar": 0
       },
       "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
