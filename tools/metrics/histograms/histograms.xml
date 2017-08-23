@@ -20579,6 +20579,43 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram
+    name="Extensions.DeclarativeNetRequest.IndexAndPersistRulesDuration"
+    units="ms">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Measures the time taken to index and persist to disk, the deserialized json
+    rules provided by an extension manifest for the Declarative Net Request API.
+    This is emitted whenever an extension's json ruleset is successfully
+    indexed. This may happen when a packed extension is installed, an unpacked
+    extension is loaded, an extension's ruleset is re-indexed due to corruption
+    etc.
+  </summary>
+</histogram>
+
+<histogram name="Extensions.DeclarativeNetRequest.IndexRulesDuration"
+    units="ms">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Measures the time taken to index the deserialized json rules provided by an
+    extension manifest for the Declarative Net Request API. This is emitted
+    whenever an extension's json ruleset is successfully indexed. This may
+    happen when a packed extension is installed, an unpacked extension is
+    loaded, an extension's ruleset is re-indexed due to corruption etc.
+  </summary>
+</histogram>
+
+<histogram name="Extensions.DeclarativeNetRequest.ManifestRulesCount">
+  <owner>karandeepb@chromium.org</owner>
+  <summary>
+    Counts the number of indexed declarative rules provided by an extension
+    manifest for the Declarative Net Request API. This is emitted whenever an
+    extension's json ruleset is indexed. This may happen when a packed extension
+    is installed, an unpacked extension is loaded, an extension's ruleset is re-
+    indexed, due to corruption etc.
+  </summary>
+</histogram>
+
 <histogram name="Extensions.DeclarativeRulesStorageInitialization" units="ms">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <summary>Time spent until rules storage delegate gets ready.</summary>
