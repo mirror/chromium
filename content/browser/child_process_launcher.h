@@ -71,7 +71,6 @@ class CONTENT_EXPORT ChildProcessLauncher {
   // ready.  Deleting this object before the process is created is safe, since
   // the callback won't be called.  If the process is still running by the time
   // this object destructs, it will be terminated.
-  // Takes ownership of cmd_line.
   //
   // If |process_error_callback| is provided, it will be called if a Mojo error
   // is encountered when processing messages from the child process. This
@@ -88,7 +87,7 @@ class CONTENT_EXPORT ChildProcessLauncher {
   ~ChildProcessLauncher();
 
   // True if the process is being launched and so the handle isn't available.
-  bool IsStarting();
+  bool IsStarting() const;
 
   // Getter for the process.  Only call after the process has started.
   const base::Process& GetProcess() const;
