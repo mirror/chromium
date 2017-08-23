@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "1d7aa030_ecc32ed2",
+        "filename": "third_party/WebKit/LayoutTests/compositing/composited-descendant-requiring-border-radius-mask-expected.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-23T17:05:40Z",
+      "side": 1,
+      "message": "Turns out we draw the same thing, so done.",
+      "parentUuid": "461c2767_e98a2dc6",
+      "revId": "16f453ecbdffed0217dca7874a3602554ec53e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a45b638_1937527e",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
         "patchSetId": 2
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "90f9e26b_7d9b4192",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-23T17:05:40Z",
+      "side": 1,
+      "message": "I was wrong. Done.",
+      "parentUuid": "ee3b3218_ef538794",
+      "revId": "16f453ecbdffed0217dca7874a3602554ec53e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2dd3855a_afa13fd2",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
         "patchSetId": 2
@@ -137,6 +173,24 @@
       "side": 1,
       "message": "This will miss cases where the rounded rect clip is due to something farther up the tree than the parent, and we have a composited descendant. I\u0027ll verify my thinking.",
       "parentUuid": "2dd3855a_afa13fd2",
+      "revId": "16f453ecbdffed0217dca7874a3602554ec53e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dacd22f_3fc3c93b",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-23T17:05:40Z",
+      "side": 1,
+      "message": "So now I know that CalculateBackgroundClipRect(clip_rects_context, clip_rect) computes the total clip rect.",
+      "parentUuid": "72940f6a_257f22a1",
       "revId": "16f453ecbdffed0217dca7874a3602554ec53e4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
