@@ -16,6 +16,24 @@
       "revId": "e45456792a4bd6a0cb1c99625198ed9cc3442081",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac2366e4_c8e62480",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 6029,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-23T12:06:27Z",
+      "side": 1,
+      "message": "Thanks for catching that. Yes, I had confused the constructor of FontCustomPlatformData (which is only called from Create() with the GetFontPlatformData() call. I removed the decode error recording and added a comment in the commit msg, as decode errors are already tracked as part of the histogram in FontResource.",
+      "parentUuid": "3eb43db4_2bd55107",
+      "revId": "e45456792a4bd6a0cb1c99625198ed9cc3442081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
