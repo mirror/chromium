@@ -79,12 +79,18 @@ rootWebArea
 ++++++rowHeader selectable name='Alphabet'
 ++++++++staticText name='Alphabet'
 ++++++++++inlineTextBox name='Alphabet'
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
 ++++++cell selectable name='A'
 ++++++++staticText name='A'
 ++++++++++inlineTextBox name='A'
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
 ++++++cell selectable name='B'
 ++++++++staticText name='B'
 ++++++++++inlineTextBox name='B'
+++++column
+++++column
 ++++column
 ++++column
 ++++column
@@ -94,12 +100,18 @@ rootWebArea
 ++++++rowHeader selectable name='Alphabet'
 ++++++++staticText name='Alphabet'
 ++++++++++inlineTextBox name='Alphabet'
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
 ++++++cell selectable name='A'
 ++++++++staticText name='A'
 ++++++++++inlineTextBox name='A'
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
 ++++++cell selectable name='B'
 ++++++++staticText name='B'
 ++++++++++inlineTextBox name='B'
+++++column
+++++column
 ++++column
 ++++column
 ++++column
@@ -109,12 +121,18 @@ rootWebArea
 ++++++rowHeader selectable name='Alphabet'
 ++++++++staticText name='Alphabet'
 ++++++++++inlineTextBox name='Alphabet'
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
 ++++++cell selectable name='A'
 ++++++++staticText name='A'
 ++++++++++inlineTextBox name='A'
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
 ++++++cell selectable name='B'
 ++++++++staticText name='B'
 ++++++++++inlineTextBox name='B'
+++++column
+++++column
 ++++column
 ++++column
 ++++column
@@ -124,12 +142,18 @@ rootWebArea
 ++++++rowHeader selectable name='Alphabet'
 ++++++++staticText name='Alphabet'
 ++++++++++inlineTextBox name='Alphabet'
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
 ++++++cell selectable name='B'
 ++++++++staticText name='B'
 ++++++++++inlineTextBox name='B'
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
 ++++++cell selectable name='A'
 ++++++++staticText name='A'
 ++++++++++inlineTextBox name='A'
+++++column
+++++column
 ++++column
 ++++column
 ++++column
@@ -139,12 +163,18 @@ rootWebArea
 ++++++rowHeader selectable name='Alphabet'
 ++++++++staticText name='Alphabet'
 ++++++++++inlineTextBox name='Alphabet'
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
 ++++++cell selectable name='A'
 ++++++++staticText name='A'
 ++++++++++inlineTextBox name='A'
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
 ++++++cell selectable name='A'
 ++++++++staticText name='A'
 ++++++++++inlineTextBox name='A'
+++++column
+++++column
 ++++column
 ++++column
 ++++column

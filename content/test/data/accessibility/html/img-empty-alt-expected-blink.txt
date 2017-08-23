@@ -1,6 +1,14 @@
 rootWebArea
 ++genericContainer
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++image name=''
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++image name=''
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++image
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++image name='full'

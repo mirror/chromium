@@ -3,15 +3,20 @@ AXWebArea
 ++++AXRow
 ++++++AXCell AXTitle='cell 2' AXARIARowIndex='3'
 ++++++++AXStaticText AXValue='cell 2'
+++++++AXStaticText AXValue=' '
 ++++++AXCell AXTitle='cell 3' AXARIARowIndex='3'
 ++++++++AXStaticText AXValue='cell 3'
+++++++AXStaticText AXValue=' '
 ++++++AXCell AXTitle='cell 4' AXARIARowIndex='3'
 ++++++++AXStaticText AXValue='cell 4'
 ++++AXRow
 ++++++AXCell AXTitle='cell 2' AXARIARowIndex='4'
 ++++++++AXStaticText AXValue='cell 2'
+++++++AXStaticText AXValue=' '
 ++++++AXCell AXTitle='cell 3' AXARIARowIndex='4'
 ++++++++AXStaticText AXValue='cell 3'
+++++AXColumn
+++++AXColumn
 ++++AXColumn
 ++++AXColumn
 ++++AXColumn

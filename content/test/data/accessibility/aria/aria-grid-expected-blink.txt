@@ -4,6 +4,8 @@ rootWebArea
 ++++++columnHeader selectable name='Browser'
 ++++++++staticText name='Browser'
 ++++++++++inlineTextBox name='Browser'
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
 ++++++columnHeader selectable name='Rendering Engine'
 ++++++++staticText name='Rendering Engine'
 ++++++++++inlineTextBox name='Rendering Engine'
@@ -11,9 +13,12 @@ rootWebArea
 ++++++cell selectable name='Chrome'
 ++++++++staticText name='Chrome'
 ++++++++++inlineTextBox name='Chrome'
+++++++staticText name=' '
+++++++++inlineTextBox name=' '
 ++++++cell selectable name='Blink'
 ++++++++staticText name='Blink'
 ++++++++++inlineTextBox name='Blink'
+++++column
 ++++column
 ++++column
 ++++tableHeaderContainer
