@@ -6,6 +6,8 @@
 #define CHROME_BROWSER_PLUGINS_PDF_PLUGIN_PLACEHOLDER_OBSERVER_H_
 
 #include "base/macros.h"
+#include "content/public/browser/download_interrupt_reasons.h"
+#include "content/public/browser/download_item.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
@@ -29,6 +31,11 @@ class PDFPluginPlaceholderObserver
 
   // Message handlers:
   void OnOpenPDF(content::RenderFrameHost* render_frame_host, const GURL& url);
+
+  void OnDownloadStarted(content::DownloadItem* item,
+                         content::DownloadInterruptReason interrupt_reason);
+
+  base::WeakPtrFactory<PDFPluginPlaceholderObserver> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PDFPluginPlaceholderObserver);
 };
