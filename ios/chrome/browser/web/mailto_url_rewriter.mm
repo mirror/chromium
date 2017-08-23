@@ -90,9 +90,20 @@ NSString* const kMailtoDefaultHandlerKey = @"MailtoHandlerDefault";
 - (NSString*)defaultHandlerID {
   NSString* value = [[NSUserDefaults standardUserDefaults]
       stringForKey:kMailtoDefaultHandlerKey];
-  if ([_handlers[value] isAvailable])
-    return value;
-  return [[self class] systemMailApp];
+  if (value) {
+    if ([_handlers[value] isAvailable])
+      return value;
+    return [[self class] systemMailApp];
+  }
+  // User has not made a choice.
+  NSMutableArray* availableHandlers = [NSMutableArray array];
+  for (MailtoHandler* handler in [_handlers allValues]) {
+    if ([handler isAvailable])
+      [availableHandlers addObject:handler];
+  }
+  if ([availableHandlers count] == 1)
+    return [[availableHandlers firstObject] appStoreID];
+  return nil;
 }
 
 - (void)setDefaultHandlerID:(NSString*)appStoreID {
@@ -107,6 +118,8 @@ NSString* const kMailtoDefaultHandlerKey = @"MailtoHandlerDefault";
 
 - (NSString*)defaultHandlerName {
   NSString* handlerID = [self defaultHandlerID];
+  if (!handlerID)
+    return nil;
   MailtoHandler* handler = _handlers[handlerID];
   return [handler appName];
 }
@@ -133,8 +146,8 @@ NSString* const kMailtoDefaultHandlerKey = @"MailtoHandlerDefault";
   for (MailtoHandler* app in handlerApps) {
     [_handlers setObject:app forKey:[app appStoreID]];
   }
-  [self migrateLegacyOptions];
-  [self autoDefaultToGmailIfInstalled];
+  //  [self migrateLegacyOptions];
+  //  [self autoDefaultToGmailIfInstalled];
 }
 
 //

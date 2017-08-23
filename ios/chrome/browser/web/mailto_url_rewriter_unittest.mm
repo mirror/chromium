@@ -46,9 +46,6 @@ TEST_F(MailtoURLRewriterTest, TestStandardInstance) {
   MailtoURLRewriter* rewriter =
       [[MailtoURLRewriter alloc] initWithStandardHandlers];
   EXPECT_TRUE(rewriter);
-  EXPECT_GT([[rewriter defaultHandlerName] length], 0U);
-  // ID for system Mail client app must not be an empty string.
-  EXPECT_GT([[MailtoURLRewriter systemMailApp] length], 0U);
 
   NSArray<MailtoHandler*>* handlers = [rewriter defaultHandlers];
   EXPECT_GE([handlers count], 1U);
@@ -60,6 +57,73 @@ TEST_F(MailtoURLRewriterTest, TestStandardInstance) {
     [rewriter setDefaultHandlerID:appStoreID];
     EXPECT_NSEQ(expectedDefaultAppID, [rewriter defaultHandlerID]);
   }
+}
+
+// Case 1: If Gmail is not installed, rewriter defaults to system Mail app.
+TEST_F(MailtoURLRewriterTest, TestNoGmailInstalled) {
+  MailtoURLRewriter* rewriter = [[MailtoURLRewriter alloc] init];
+  [rewriter addMailtoApps:@[
+    [[MailtoHandlerSystemMail alloc] init],
+    [[FakeMailtoHandlerGmailNotInstalled alloc] init]
+  ]];
+  EXPECT_NSEQ([MailtoURLRewriter systemMailApp], [rewriter defaultHandlerID]);
+}
+
+// Case 2: If Gmail is installed but user has not made a choice, there is
+// no default mail app.
+TEST_F(MailtoURLRewriterTest, TestWithGmailChoiceNotMade) {
+  MailtoURLRewriter* rewriter = [[MailtoURLRewriter alloc] init];
+  [rewriter addMailtoApps:@[
+    [[MailtoHandlerSystemMail alloc] init],
+    [[FakeMailtoHandlerGmailInstalled alloc] init]
+  ]];
+  EXPECT_FALSE([rewriter defaultHandlerID]);
+}
+
+// Case 3: If Gmail was installed and user has made a choice, then Gmail is
+// uninstalled. The default returns to system Mail app.
+TEST_F(MailtoURLRewriterTest, TestWithGmailUninstalled) {
+  MailtoURLRewriter* rewriter = [[MailtoURLRewriter alloc] init];
+  MailtoHandler* systemMailHandler = [[MailtoHandlerSystemMail alloc] init];
+  MailtoHandler* fakeGmailHandler =
+      [[FakeMailtoHandlerGmailInstalled alloc] init];
+  [rewriter addMailtoApps:@[ systemMailHandler, fakeGmailHandler ]];
+  [rewriter setDefaultHandlerID:[fakeGmailHandler appStoreID]];
+  EXPECT_NSEQ([fakeGmailHandler appStoreID], [rewriter defaultHandlerID]);
+
+  rewriter = [[MailtoURLRewriter alloc] init];
+  fakeGmailHandler = [[FakeMailtoHandlerGmailNotInstalled alloc] init];
+  [rewriter addMailtoApps:@[ systemMailHandler, fakeGmailHandler ]];
+  EXPECT_NSEQ([MailtoURLRewriter systemMailApp], [rewriter defaultHandlerID]);
+}
+
+// Case 4: If Gmail is installed but system Mail app has been chosen by
+// user as the default mail handler app. Then Gmail is uninstalled. User's
+// choice of system Mail app remains unchanged and will persist through a
+// re-installation of Gmail.
+TEST_F(MailtoURLRewriterTest, TestSystemMailAppChosenSurviveGmailUninstall) {
+  // Initial state of system Mail app explicitly chosen.
+  MailtoURLRewriter* rewriter = [[MailtoURLRewriter alloc] init];
+  MailtoHandler* systemMailHandler = [[MailtoHandlerSystemMail alloc] init];
+  [rewriter addMailtoApps:@[
+    systemMailHandler, [[FakeMailtoHandlerGmailInstalled alloc] init]
+  ]];
+  [rewriter setDefaultHandlerID:[systemMailHandler appStoreID]];
+  EXPECT_NSEQ([systemMailHandler appStoreID], [rewriter defaultHandlerID]);
+
+  // Gmail is installed.
+  rewriter = [[MailtoURLRewriter alloc] init];
+  [rewriter addMailtoApps:@[
+    systemMailHandler, [[FakeMailtoHandlerGmailNotInstalled alloc] init]
+  ]];
+  EXPECT_NSEQ([systemMailHandler appStoreID], [rewriter defaultHandlerID]);
+
+  // Gmail is installed again.
+  rewriter = [[MailtoURLRewriter alloc] init];
+  [rewriter addMailtoApps:@[
+    systemMailHandler, [[FakeMailtoHandlerGmailInstalled alloc] init]
+  ]];
+  EXPECT_NSEQ([systemMailHandler appStoreID], [rewriter defaultHandlerID]);
 }
 
 TEST_F(MailtoURLRewriterTest, TestDefaultsInvalidToSystemMail) {
