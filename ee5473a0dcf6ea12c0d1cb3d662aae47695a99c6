@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cb2e7e7_2350908f",
+        "filename": "tools/chrome_proxy/webdriver/client_config.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-23T17:38:14Z",
+      "side": 1,
+      "message": "I\u0027d prefer you split the header value between \u0027, \u0027 into an array, and check that startswith for \u0027s\u003d\u0027 on one of the values.",
+      "revId": "ee5473a0dcf6ea12c0d1cb3d662aae47695a99c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
