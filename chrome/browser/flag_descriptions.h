@@ -570,6 +570,9 @@ extern const char kOriginTrialsDescription[];
 extern const char kOverlayScrollbarsName[];
 extern const char kOverlayScrollbarsDescription[];
 
+extern const char kUseNewAcceptLanguageHeaderName[];
+extern const char kUseNewAcceptLanguageHeaderDescription[];
+
 extern const char kOverscrollHistoryNavigationName[];
 extern const char kOverscrollHistoryNavigationDescription[];
 extern const char kOverscrollHistoryNavigationSimpleUi[];
