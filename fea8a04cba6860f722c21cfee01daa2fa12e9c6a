@@ -22,6 +22,30 @@
       "revId": "fea8a04cba6860f722c21cfee01daa2fa12e9c6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c16a20e_aeb75e98",
+        "filename": "services/catalog/entry.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-23T14:52:13Z",
+      "side": 1,
+      "message": "That would be Penny\u0027s doc at the moment.",
+      "parentUuid": "b03e44b1_b6fc7d0f",
+      "range": {
+        "startLine": 47,
+        "startChar": 21,
+        "endLine": 47,
+        "endChar": 33
+      },
+      "revId": "fea8a04cba6860f722c21cfee01daa2fa12e9c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
