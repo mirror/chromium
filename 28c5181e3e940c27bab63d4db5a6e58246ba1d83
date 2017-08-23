@@ -22,6 +22,30 @@
       "revId": "28c5181e3e940c27bab63d4db5a6e58246ba1d83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "990ad4f7_6f5e0764",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentAppBridge.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-23T15:28:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a39eb85b_7139a506",
+      "range": {
+        "startLine": 34,
+        "startChar": 39,
+        "endLine": 34,
+        "endChar": 42
+      },
+      "revId": "28c5181e3e940c27bab63d4db5a6e58246ba1d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
