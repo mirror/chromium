@@ -165,6 +165,10 @@ class ZeroSuggestProvider : public BaseSearchProvider,
   // Whether we are waiting for a most visited visited urls callback to run.
   bool waiting_for_most_visited_urls_request_;
 
+  // Whether we are waiting for a contextual suggestions request callback to
+  // run.
+  bool waiting_for_contextual_suggestion_request_;
+
   // For callbacks that may be run after destruction.
   base::WeakPtrFactory<ZeroSuggestProvider> weak_ptr_factory_;
 
