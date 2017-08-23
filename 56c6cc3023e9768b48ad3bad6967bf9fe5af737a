@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b33c7dab_ba708538",
+        "filename": "ash/system/bluetooth/bluetooth_notification_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T17:26:03Z",
+      "side": 1,
+      "message": "nit: ash:: not needed",
+      "revId": "56c6cc3023e9768b48ad3bad6967bf9fe5af737a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f71418c_36160676",
+        "filename": "ash/system/bluetooth/bluetooth_notification_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T17:26:03Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "56c6cc3023e9768b48ad3bad6967bf9fe5af737a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae474807_d05f62aa",
+        "filename": "ash/system/bluetooth/bluetooth_notification_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T17:26:03Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "56c6cc3023e9768b48ad3bad6967bf9fe5af737a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
