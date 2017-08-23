@@ -341,12 +341,46 @@ Resources.ServiceWorkersView.Section = class {
    * @param {!Protocol.ServiceWorker.ServiceWorkerErrorMessage} error
    */
   _addError(error) {
+    var url = error.sourceURL;
+    var version = this._registration.versions.get(error.versionId);
+    if (!url && version)
+      url = version.scriptURL;
     var target = this._targetForVersionId(error.versionId);
     var message = this._errorsList.createChild('div');
     if (this._errorsList.childElementCount > 100)
       this._errorsList.firstElementChild.remove();
-    message.appendChild(this._linkifier.linkifyScriptLocation(target, null, error.sourceURL, error.lineNumber));
+    message.appendChild(this._linkifier.linkifyScriptLocation(target, null, url, error.lineNumber));
     message.appendChild(UI.createLabel('#' + error.versionId + ': ' + error.errorMessage, 'smallicon-error'));
+
+    // Don't show messages from other targets; other workers in 'Show all'
+    // if (!target)
+    //   return;
+
+
+    var message = new ConsoleModel.ConsoleMessage(
+        target ? target.model(SDK.RuntimeModel) : undefined,
+        ConsoleModel.ConsoleMessage.MessageSource.Other,
+        ConsoleModel.ConsoleMessage.MessageLevel.Verbose,
+        '#' + error.versionId + ': ' + error.errorMessage,
+        ConsoleModel.ConsoleMessage.MessageType.Error,
+        url,
+        error.lineNumber,
+        error.columnNumber,
+        undefined,
+        undefined,  /* might want to add nice custom parameters later */
+        undefined,  /* might want to investigate adding this if appropriate */
+        undefined,
+        undefined, // executionContextId,
+        undefined, // scriptId,
+        undefined, // workerId,
+        '[SW] ' + url, // context
+        );
+    ConsoleModel.consoleModel.addMessage(message);
+
+    // unused
+    // registrationId
+    // sourceURL
+    // versionId
   }
 
   /**

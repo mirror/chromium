@@ -295,7 +295,8 @@ Console.ConsoleViewMessage = class {
       } else if (this._message.url && this._message.url !== 'undefined') {
         anchorElement = this._linkifyLocation(this._message.url, this._message.line, this._message.column);
       }
-    } else if (this._message.url) {
+    }
+    if (!anchorElement && this._message.url) {
       anchorElement =
           Components.Linkifier.linkifyURL(this._message.url, {maxLength: Console.ConsoleViewMessage.MaxLengthForLinks});
     }

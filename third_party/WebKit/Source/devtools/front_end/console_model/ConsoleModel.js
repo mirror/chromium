@@ -41,6 +41,7 @@ ConsoleModel.ConsoleModel = class extends Common.Object {
     this._messageByExceptionId = new Map();
     this._warnings = 0;
     this._errors = 0;
+    this._violations = 0;
 
     SDK.targetManager.observeTargets(this);
   }
@@ -329,8 +330,10 @@ ConsoleModel.ConsoleModel = class extends Common.Object {
    * @param {!ConsoleModel.ConsoleMessage} msg
    */
   _incrementErrorWarningCount(msg) {
-    if (msg.source === ConsoleModel.ConsoleMessage.MessageSource.Violation)
+    if (msg.source === ConsoleModel.ConsoleMessage.MessageSource.Violation) {
+      this._violations++;
       return;
+    }
     switch (msg.level) {
       case ConsoleModel.ConsoleMessage.MessageLevel.Warning:
         this._warnings++;
@@ -361,6 +364,7 @@ ConsoleModel.ConsoleModel = class extends Common.Object {
     this._messageByExceptionId.clear();
     this._errors = 0;
     this._warnings = 0;
+    this._violations = 0;
     this.dispatchEventToListeners(ConsoleModel.ConsoleModel.Events.ConsoleCleared);
   }
 
@@ -376,6 +380,13 @@ ConsoleModel.ConsoleModel = class extends Common.Object {
    */
   warnings() {
     return this._warnings;
+  }
+
+  /**
+   * @return {number}
+   */
+  violations() {
+    return this._violations;
   }
 };
 

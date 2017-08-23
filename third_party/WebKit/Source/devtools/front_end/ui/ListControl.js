@@ -136,10 +136,13 @@ UI.ListControl = class {
       console.error('Item to refresh is not present');
       return;
     }
+    var hadFocus = this._selectedIndex !== -1 ? this._elementAtIndex(this._selectedIndex).hasFocus() : false;
     this._itemToElement.delete(item);
     this.invalidateRange(index, index + 1);
     if (this._selectedIndex !== -1)
       this._select(this._selectedIndex, null, null);
+    if (hadFocus)
+      this._elementAtIndex(this._selectedIndex).focus();
   }
 
   /**
