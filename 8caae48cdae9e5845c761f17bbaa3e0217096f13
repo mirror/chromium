@@ -22,6 +22,30 @@
       "revId": "8caae48cdae9e5845c761f17bbaa3e0217096f13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "760ecd35_77fe0c60",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-23T21:38:20Z",
+      "side": 1,
+      "message": "BufferTest.OnLostResources fails without this change:\n\n#4 0x7fac77643f2c logging::CheckOpResult::message()\n#5 0x7fac77749e79 base::internal::WeakReference::is_valid()\n#6 0x00000045966f base::WeakPtr\u003c\u003e::get()\n#7 0x000000548f35 base::WeakPtr\u003c\u003e::operator bool()\n#8 0x00000058b846 exo::Surface::UpdateResource()\n#9 0x00000058d0b9 exo::Surface::RecreateResources()\n#10 0x000000599567 exo::SurfaceTreeHost::OnLostResources()\n#11 0x000000ac7401 ui::InProcessContextFactory::SendOnLostResources()\n\nPreviously, the host window had a valid surface ID only if it submitted a CompositorFrame. Now this is no longer the case because we will allocate LocalSurfaceIds if we have a LayerTreeFrameSink. Thus, we need to make sure we have a root_surface too.",
+      "parentUuid": "441574de_2735037b",
+      "range": {
+        "startLine": 265,
+        "startChar": 47,
+        "endLine": 265,
+        "endChar": 64
+      },
+      "revId": "8caae48cdae9e5845c761f17bbaa3e0217096f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
