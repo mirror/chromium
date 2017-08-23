@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf1af28a_49324509",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-23T20:02:22Z",
+      "side": 1,
+      "message": "s/successInstall/installSucceeded",
+      "range": {
+        "startLine": 157,
+        "startChar": 72,
+        "endLine": 157,
+        "endChar": 86
+      },
+      "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc9c854e_52942434",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-23T20:02:22Z",
+      "side": 1,
+      "message": "I don\u0027t think kb is very interesting and would suggest tracking in MB.",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 28
+      },
+      "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a9e5536_b46574c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-23T20:02:22Z",
+      "side": 1,
+      "message": "There\u0027s a typo in \"Available\" (also in histograms.xml)",
+      "range": {
+        "startLine": 177,
+        "startChar": 36,
+        "endLine": 177,
+        "endChar": 97
+      },
+      "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d79a96_d455cec2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-23T20:02:22Z",
+      "side": 1,
+      "message": "same typo",
+      "range": {
+        "startLine": 181,
+        "startChar": 36,
+        "endLine": 181,
+        "endChar": 94
+      },
+      "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfc4165e_6aadf22e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-23T20:02:22Z",
+      "side": 1,
+      "message": "Remove this line",
+      "range": {
+        "startLine": 188,
+        "startChar": 52,
+        "endLine": 188,
+        "endChar": 59
+      },
+      "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e3f9ed_bc6f4c2d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-23T20:02:22Z",
+      "side": 1,
+      "message": "Oh, ContentResolver APIs are typically not cheap. Can we do this work in an AsyncTask/Background thread? We don\u0027t actually need the result synchronously so it should be easy enough to offload.",
+      "range": {
+        "startLine": 201,
+        "startChar": 8,
+        "endLine": 201,
+        "endChar": 23
+      },
+      "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e30b04_06ef0c96",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 86171,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-23T20:02:22Z",
+      "side": 1,
+      "message": "fix typos in this file too",
+      "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "758b20a2_c95820e6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 86178,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-23T20:02:22Z",
+      "side": 1,
+      "message": "I\u0027m confused. If the install fails due to being low on space how do we have space above the threshold?",
+      "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
