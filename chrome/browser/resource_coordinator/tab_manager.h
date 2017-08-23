@@ -23,6 +23,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/resource_coordinator/tab_manager_observer.h"
 #include "chrome/browser/resource_coordinator/tab_stats.h"
+#include "chrome/browser/resource_coordinator/window_occlusion_observer.h"
 #include "chrome/browser/sessions/session_restore_observer.h"
 #include "chrome/browser/ui/browser_list_observer.h"
 #include "chrome/browser/ui/browser_tab_strip_tracker.h"
@@ -82,7 +83,12 @@ struct BrowserInfo {
 // TabManager (CrOS only for now) and need to be adjusted accordingly if
 // support for new platforms is added.
 class TabManager : public TabStripModelObserver,
-                   public chrome::BrowserListObserver {
+                   public chrome::BrowserListObserver
+#if defined(OS_CHROMEOS)
+    ,
+                   public WindowOcclusionObserver
+#endif  // defined(OS_CHROMEOS)
+{
  public:
   // Forward declaration of tab signal observer.
   class GRCTabSignalObserver;
@@ -371,7 +377,7 @@ class TabManager : public TabStripModelObserver,
   void OnMemoryPressure(
       base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level);
 
-  // TabStripModelObserver overrides.
+  // TabStripModelObserver:
   void TabChangedAt(content::WebContents* contents,
                     int index,
                     TabChangeType change_type) override;
@@ -387,8 +393,17 @@ class TabManager : public TabStripModelObserver,
                     content::WebContents* contents,
                     int index) override;
 
-  // BrowserListObserver overrides.
+// BrowserListObserver:
+#if defined(OS_CHROMEOS)
+  void OnBrowserAdded(Browser* browser) override;
+#endif
   void OnBrowserSetLastActive(Browser* browser) override;
+
+#if defined(OS_CHROMEOS)
+  // WindowOcclusionObserver:
+  void OnWindowOcclusionStateChanged(gfx::NativeWindow window,
+                                     bool is_occluded) override;
+#endif  // defined(OS_CHROMEOS)
 
   // Returns true if the tab is currently playing audio or has played audio
   // recently, or if the tab is currently accessing the camera, microphone or
