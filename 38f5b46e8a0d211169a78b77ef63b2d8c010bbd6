@@ -423,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "9c55307a_5b52c0f1",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-08-23T08:57:14Z",
+      "side": 1,
+      "message": "It is a empty |base::Value| object. Its type is |TYPE::NULL| but it is still a safe c++ object.",
+      "parentUuid": "aca41169_26e9a570",
+      "range": {
+        "startLine": 186,
+        "startChar": 55,
+        "endLine": 186,
+        "endChar": 64
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e45620f7_ffce450c",
         "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
         "patchSetId": 4
@@ -599,6 +623,24 @@
       "writtenOn": "2017-08-23T06:22:55Z",
       "side": 1,
       "message": "Why not also put this into namespace?\n\nAlso, please add class comment.",
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "761825f7_b2b2c561",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-08-23T08:57:14Z",
+      "side": 1,
+      "message": "But I find that other WebUI do not put it WebUIController and MessageHandler in a namespace?",
+      "parentUuid": "6ae21ab6_f9e0a001",
       "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
