@@ -9,10 +9,14 @@
 #include "core/loader/modulescript/ModuleScriptCreationParams.h"
 #include "platform/heap/Heap.h"
 #include "platform/heap/HeapAllocator.h"
+#include "platform/loader/fetch/FetchParameters.h"
+#include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/KURLHash.h"
 
 namespace blink {
+
+class ConsoleMessage;
 
 // WorkletModuleResponsesMap implements the module responses map concept and the
 // "fetch a worklet script" algorithm:
@@ -27,24 +31,15 @@ class CORE_EXPORT WorkletModuleResponsesMap
    public:
     virtual ~Client() {}
     virtual void OnRead(const ModuleScriptCreationParams&) = 0;
-    virtual void OnFetchNeeded() = 0;
-    virtual void OnFailed() = 0;
+    virtual void OnFailed(ConsoleMessage*) = 0;
   };
 
-  WorkletModuleResponsesMap() = default;
+  explicit WorkletModuleResponsesMap(ResourceFetcher*);
 
-  // Reads an entry for a given URL, or creates a placeholder entry:
-  // 1) If an entry is already fetched, synchronously calls Client::OnRead().
-  // 2) If an entry is now being fetched, pushes a given client into the entry's
-  //    waiting queue and asynchronously calls Client::OnRead() on the
-  //    completion of the fetch.
-  // 3) If an entry doesn't exist, creates a placeholder entry and synchronously
-  //    calls Client::OnFetchNeeded. A caller is required to fetch a module
-  //    script and update the entry via UpdateEntry().
-  void ReadOrCreateEntry(const KURL&, Client*);
-
-  // Updates an entry in 'fetching' state to 'fetched'.
-  void UpdateEntry(const KURL&, const ModuleScriptCreationParams&);
+  // Reads an entry for a given URL. If an entry is already fetched,
+  // synchronously calls Client::OnRead(). Otherwise, Client::OnRead() is called
+  // on the completion of the fetch.
+  void ReadEntry(const FetchParameters&, Client*);
 
   // Marks an entry as "failed" state and calls OnFailed() for waiting clients.
   void InvalidateEntry(const KURL&);
@@ -60,6 +55,8 @@ class CORE_EXPORT WorkletModuleResponsesMap
   class Entry;
 
   bool is_available_ = true;
+
+  Member<ResourceFetcher> fetcher_;
 
   // TODO(nhiroki): Keep the insertion order of top-level modules to replay
   // addModule() calls for a newly created global scope.
