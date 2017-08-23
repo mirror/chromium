@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7dc63c4_f4a74633",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-23T20:04:57Z",
+      "side": 1,
+      "message": "This function might be expensive on long text nodes. In total, we spend time quadratic to the number of markers on this function.\n\nAny way to optimize?\n\nOne idea is to sort the endpoints of suggestion markers. If we scan other markers in sorted order (say, spelling markers), we can maintain the number of overlapping suggestion markers. In this way, the cost is a sorting cost.\n\nWe may want to do some refactoring/optimization to PaintDocumentMarkers(), though. For example, we may want to iterate different marker types separately.",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "964d4beb66eedabdc0fec88e53651fc0c75c7079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb32390_143a5267",
+        "filename": "third_party/WebKit/Source/core/testing/Internals.idl",
+        "patchSetId": 9
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-23T20:04:57Z",
+      "side": 1,
+      "message": "nit: fix indentation.",
+      "revId": "964d4beb66eedabdc0fec88e53651fc0c75c7079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
