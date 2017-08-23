@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74c8896d_0568b04c",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-23T06:29:24Z",
+      "side": 1,
+      "message": "Would it be possible to create a helper function (anon namespace) for creating the HitTestRegion? Because it seems easy to miss updating one of these. For example:\n\n  viz::mojom::HitTestRegion CreateHitTestRegion(WindowPortMus* window_mus) {\n    ui::Layer* layer \u003d window_mus-\u003ewindow()-\u003elayer();\n    auto region \u003d ...::New();\n    region-\u003eframe_sink_id \u003d window_mus-\u003eframe_sink_id();\n    region-\u003etransform \u003d layer-\u003etransform();\n    if (layer-\u003eGetPrimarySurfaceInfo())\n      region-\u003esurface_id \u003d ...;\n    return region;\n  }\n\nOnly |rect| and |flags| will need to be updated separately here I think. The rest of the fields will be initialized in a single function.",
+      "revId": "24ff620f654166225cf2e567d94d4854d591d156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
