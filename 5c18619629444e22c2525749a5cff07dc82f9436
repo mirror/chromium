@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "87a59e84_dedec22e",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-23T17:11:27Z",
+      "side": 1,
+      "message": "Why bother creating a unique directory here instead of just using the regular temp directory? If you\u0027re worried about file name collisions, it seems most likely to come from people pushing \"report\" more than once in the same process, and this scheme doesn\u0027t protect you from that. Maybe we should append the date/time by default?",
+      "revId": "5c18619629444e22c2525749a5cff07dc82f9436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d59672f_f0677bb4",
         "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
         "patchSetId": 2
