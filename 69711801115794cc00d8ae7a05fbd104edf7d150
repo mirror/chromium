@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16d428c1_5dcc8b82",
+        "filename": "breakpad/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-23T17:17:31Z",
+      "side": 1,
+      "message": "Why do we need this -- is there a missing dependency?  What is the specific error you\u0027re trying to fix?\n\nAlso, I would recommend only adding this when is_component_build\u003dtrue",
+      "range": {
+        "startLine": 776,
+        "startChar": 4,
+        "endLine": 779,
+        "endChar": 5
+      },
+      "revId": "69711801115794cc00d8ae7a05fbd104edf7d150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
