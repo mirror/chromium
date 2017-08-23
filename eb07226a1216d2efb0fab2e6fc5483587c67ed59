@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e53738c8_766ca492",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-23T15:01:37Z",
+      "side": 1,
+      "message": "Is it a meaningful annotation to the compiler? Do we need it? If so, why only one local variable?",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 122,
+        "endChar": 10
+      },
+      "revId": "eb07226a1216d2efb0fab2e6fc5483587c67ed59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed8905dd_942bf0fb",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-23T15:01:37Z",
+      "side": 1,
+      "message": "Can you switch from this C-syntax to more readable one? I mean declare variables when they are needed.",
+      "range": {
+        "startLine": 132,
+        "startChar": 6,
+        "endLine": 132,
+        "endChar": 16
+      },
+      "revId": "eb07226a1216d2efb0fab2e6fc5483587c67ed59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
