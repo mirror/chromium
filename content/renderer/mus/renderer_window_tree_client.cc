@@ -85,13 +85,18 @@ void RendererWindowTreeClient::RequestLayerTreeFrameSinkInternal(
   viz::mojom::CompositorFrameSinkClientRequest client_request =
       mojo::MakeRequest(&client);
   constexpr bool enable_surface_synchronization = true;
+  auto params = base::MakeUnique<viz::ClientLayerTreeFrameSink::InitParams>();
+  params->synthetic_begin_frame_source = nullptr;
+  params->compositor_frame_sink_info = std::move(sink_info);
+  params->client_request = std::move(client_request);
+  params->hit_test_data_provider = nullptr;
+  params->local_surface_id_provider =
+      base::MakeUnique<viz::DefaultLocalSurfaceIdProvider>();
+  params->enable_surface_synchronization = enable_surface_synchronization;
   auto frame_sink = base::MakeUnique<viz::ClientLayerTreeFrameSink>(
       std::move(context_provider), nullptr /* worker_context_provider */,
       gpu_memory_buffer_manager, nullptr /* shared_bitmap_manager */,
-      nullptr /* synthetic_begin_frame_source */, std::move(sink_info),
-      std::move(client_request), nullptr /* hit_test_data_provider_ */,
-      base::MakeUnique<viz::DefaultLocalSurfaceIdProvider>(),
-      enable_surface_synchronization);
+      std::move(params));
   tree_->AttachCompositorFrameSink(root_window_id_, std::move(sink_request),
                                    std::move(client));
   callback.Run(std::move(frame_sink));
