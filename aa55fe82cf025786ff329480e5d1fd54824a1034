@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6264af7_60c442d4",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-23T21:44:28Z",
+      "side": 1,
+      "message": "Why not check clip_rect.HasRadius() at this line? We can avoid LocalToAncestorQuad computation this way.\nnit: Prefer early return than long if block.",
+      "revId": "aa55fe82cf025786ff329480e5d1fd54824a1034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
