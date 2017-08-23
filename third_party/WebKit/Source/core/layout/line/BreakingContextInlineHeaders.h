@@ -156,6 +156,7 @@ class BreakingContext {
   bool ShouldMidWordBreak(UChar,
                           LineLayoutText,
                           const Font&,
+                          unsigned& next_grapheme_cluster_boundary,
                           float& char_width,
                           float& width_from_last_breaking_opportunity,
                           bool break_all,
@@ -701,10 +702,19 @@ ALWAYS_INLINE bool BreakingContext::ShouldMidWordBreak(
     UChar c,
     LineLayoutText layout_text,
     const Font& font,
+    unsigned& next_grapheme_cluster_boundary,
     float& char_width,
     float& width_from_last_breaking_opportunity,
     bool break_all,
     int& next_breakable_position_for_break_all) {
+  unsigned char_len;
+  if (c <= 0xff) {
+    char_len = 1;
+  } else {
+    NonSharedCharacterBreakIterator iterator(layout_text.GetText());
+    next_grapheme_cluster_boundary = iterator.Following(current_.Offset());
+    char_len = next_grapheme_cluster_boundary - current_.Offset();
+  }
   // For breakWords/breakAll, we need to measure up to normal break
   // opportunity and then rewindToMidWordBreak() because ligatures/kerning can
   // shorten the width as we add more characters.
@@ -718,12 +728,9 @@ ALWAYS_INLINE bool BreakingContext::ShouldMidWordBreak(
   float overflow_allowance = 4 * font.GetFontDescription().ComputedSize();
 
   width_from_last_breaking_opportunity += char_width;
-  bool mid_word_break_is_before_surrogate_pair =
-      U16_IS_LEAD(c) && current_.Offset() + 1 < layout_text.TextLength() &&
-      U16_IS_TRAIL(layout_text.UncheckedCharacterAt(current_.Offset() + 1));
   char_width =
-      TextWidth(layout_text, current_.Offset(),
-                mid_word_break_is_before_surrogate_pair ? 2 : 1, font,
+      TextWidth(layout_text, current_.Offset(), char_len,
+                font,
                 width_.CommittedWidth() + width_from_last_breaking_opportunity,
                 collapse_white_space_);
   if (width_.CommittedWidth() + width_from_last_breaking_opportunity +
@@ -814,6 +821,9 @@ ALWAYS_INLINE bool BreakingContext::RewindToFirstMidWordBreak(
     if (next_breakable < 0)
       return false;
     end = next_breakable;
+  } else {
+    NonSharedCharacterBreakIterator iterator(text.GetText());
+    end = iterator.Following(end);
   }
   if (end >= word_measurement.end_offset)
     return false;
@@ -944,6 +954,7 @@ inline bool BreakingContext::HandleText(WordMeasurements& word_measurements,
   const Font& font = style.GetFont();
 
   unsigned last_space = current_.Offset();
+  unsigned next_grapheme_cluster_boundary = 0;
   float word_spacing = current_style_->WordSpacing();
   float last_space_word_spacing = 0;
   float word_spacing_for_word_measurement = 0;
@@ -1037,9 +1048,9 @@ inline bool BreakingContext::HandleText(WordMeasurements& word_measurements,
     bool apply_word_spacing = false;
 
     // Determine if we should try breaking in the middle of a word.
-    if (can_break_mid_word && !mid_word_break && !U16_IS_TRAIL(c))
+    if (can_break_mid_word && !mid_word_break && current_.Offset() >= next_grapheme_cluster_boundary && current_.Offset() > last_space)
       mid_word_break =
-          ShouldMidWordBreak(c, layout_text, font, char_width,
+          ShouldMidWordBreak(c, layout_text, font, next_grapheme_cluster_boundary, char_width,
                              width_from_last_breaking_opportunity, break_all,
                              next_breakable_position_for_break_all);
 
