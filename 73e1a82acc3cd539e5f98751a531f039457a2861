@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f23afed_8855183b",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-08-23T11:51:54Z",
+      "side": 1,
+      "message": "Not done.",
+      "parentUuid": "dc6f189e_35405f27",
+      "range": {
+        "startLine": 42,
+        "startChar": 5,
+        "endLine": 42,
+        "endChar": 23
+      },
+      "revId": "73e1a82acc3cd539e5f98751a531f039457a2861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e964797_8bc68eb1",
         "filename": "chrome/browser/signin/dice_response_handler.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "73e1a82acc3cd539e5f98751a531f039457a2861",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba05458_806d58ed",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-08-23T11:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e964797_8bc68eb1",
+      "range": {
+        "startLine": 45,
+        "startChar": 44,
+        "endLine": 45,
+        "endChar": 49
+      },
+      "revId": "73e1a82acc3cd539e5f98751a531f039457a2861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "199b3d5d_260b53eb",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-08-23T11:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf0909f5_bdb56dc6",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 15
+      },
+      "revId": "73e1a82acc3cd539e5f98751a531f039457a2861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b794b24_cd3a043a",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-22T16:10:05Z",
       "side": 1,
       "message": "Nit: Consider removing the \".\" at the end of these items.",
+      "range": {
+        "startLine": 34639,
+        "startChar": 32,
+        "endLine": 34639,
+        "endChar": 38
+      },
+      "revId": "73e1a82acc3cd539e5f98751a531f039457a2861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87e48ab_fade130f",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34639,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-08-23T11:51:54Z",
+      "side": 1,
+      "message": "Not done, other enums have it, we should be consistent.",
+      "parentUuid": "3b794b24_cd3a043a",
       "range": {
         "startLine": 34639,
         "startChar": 32,
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "9e9cf7eb_b6e214a3",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34640,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-08-23T11:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63d6a0fc_884d7801",
+      "revId": "73e1a82acc3cd539e5f98751a531f039457a2861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20d48167_2a59f917",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "200d627c_fc9a098e",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34642,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-08-23T11:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20d48167_2a59f917",
+      "range": {
+        "startLine": 34642,
+        "startChar": 16,
+        "endLine": 34642,
+        "endChar": 26
+      },
+      "revId": "73e1a82acc3cd539e5f98751a531f039457a2861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df211496_69e5b055",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
@@ -154,6 +292,30 @@
       "revId": "73e1a82acc3cd539e5f98751a531f039457a2861",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f4908f_80847cc0",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 34647,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-08-23T11:51:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df211496_69e5b055",
+      "range": {
+        "startLine": 34647,
+        "startChar": 30,
+        "endLine": 34647,
+        "endChar": 31
+      },
+      "revId": "73e1a82acc3cd539e5f98751a531f039457a2861",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
