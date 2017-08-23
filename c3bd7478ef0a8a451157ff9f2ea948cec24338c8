@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b8d1659_7bbd0a92",
+        "filename": "cc/resources/video_resource_updater_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-23T21:16:16Z",
+      "side": 1,
+      "message": "Would you mind adding a comment/note explaining that RGBA here really means we didn\u0027t set buffer_format. While with SingleNV12 test we expect that one to be set.",
+      "revId": "c3bd7478ef0a8a451157ff9f2ea948cec24338c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
