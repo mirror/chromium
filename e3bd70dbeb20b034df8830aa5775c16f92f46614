@@ -34,6 +34,24 @@
       "revId": "e3bd70dbeb20b034df8830aa5775c16f92f46614",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e36f24d_aad02705",
+        "filename": "content/renderer/media/audio_input_message_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-23T14:08:01Z",
+      "side": 1,
+      "message": "This parameters is unnecessary, as the renderer knows how much memory it needs, and can check if it got enough by calling GetSize on the handle. Thus, I removed this parameter. Since some code is shared between input and output, I also removed the length argument from the output IPC message.",
+      "parentUuid": "e27a2043_dba30bfd",
+      "revId": "e3bd70dbeb20b034df8830aa5775c16f92f46614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

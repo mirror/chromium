@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bf7634d_b3f14b1e",
+        "filename": "media/audio/audio_device_thread.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-23T14:08:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e96037e_575a416a",
+      "revId": "cafe03534c5f0074ae285c1861d9a4148ec95da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "788201be_cdec9e0c",
         "filename": "media/audio/audio_input_device.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "46c9a290_af978c10",
+        "filename": "media/audio/audio_input_device.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-23T14:08:01Z",
+      "side": 1,
+      "message": "I changed size_t to uint32_t in many places.",
+      "parentUuid": "788201be_cdec9e0c",
+      "revId": "cafe03534c5f0074ae285c1861d9a4148ec95da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d66b9e_d91ff3ea",
         "filename": "media/audio/audio_output_device.cc",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "cafe03534c5f0074ae285c1861d9a4148ec95da5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7998b864_34ce6e44",
+        "filename": "media/audio/audio_output_device.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-08-23T14:08:01Z",
+      "side": 1,
+      "message": "CalculateMemorySize should probably not work with ints, but I feel like this CL is getting large already, so maybe I\u0027ll not modify it in this CL? I did however add utility functions ComputeAudio{Input,Output}BufferSize to audio_parameters.h for this computation, as it was copy/pasted to quite a number of places :).",
+      "parentUuid": "07d66b9e_d91ff3ea",
+      "revId": "cafe03534c5f0074ae285c1861d9a4148ec95da5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
