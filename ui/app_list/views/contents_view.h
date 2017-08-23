@@ -15,6 +15,7 @@
 #include "ui/app_list/app_list_model.h"
 #include "ui/app_list/pagination_model.h"
 #include "ui/app_list/pagination_model_observer.h"
+#include "ui/app_list/views/app_list_view.h"
 #include "ui/views/view.h"
 #include "ui/views/view_model.h"
 
@@ -26,7 +27,6 @@ namespace app_list {
 
 class AppsGridView;
 class AppListPage;
-class AppListView;
 class ApplicationDragAndDropHost;
 class AppListFolderItem;
 class AppListMainView;
@@ -127,6 +127,12 @@ class APP_LIST_EXPORT ContentsView : public views::View,
   // Performs the 'back' action for the active page. Returns whether the action
   // was handled.
   bool Back();
+
+  // Notifies the model that the fullscreen app list state has changed.
+  void OnFullscreenStateChanged(AppListView::AppListState state);
+
+  // Called when tablet mode starts and ends.
+  void OnTabletModeChanged(bool is_tablet_mode);
 
   // Overridden from views::View:
   gfx::Size CalculatePreferredSize() const override;
