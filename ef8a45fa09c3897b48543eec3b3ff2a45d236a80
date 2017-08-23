@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae947582_69c3c347",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-23T14:27:48Z",
+      "side": 1,
+      "message": "nit: s/at background/a background/",
+      "range": {
+        "startLine": 375,
+        "startChar": 79,
+        "endLine": 375,
+        "endChar": 0
+      },
+      "revId": "ef8a45fa09c3897b48543eec3b3ff2a45d236a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18c5a55_53a511f0",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-23T14:27:48Z",
+      "side": 1,
+      "message": "Does\nstd::swap(queued_triggers_copy, queued_triggers_);\nnot work? Or why the using?\nAlso, std::set should have .swap as a member, so I\u0027d write this as\nqueued_triggers_copy.swap(queued_triggers_);",
+      "revId": "ef8a45fa09c3897b48543eec3b3ff2a45d236a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
