@@ -99,6 +99,9 @@ namespace win {
 class ScopedCOMInitializer;
 }  // namespace win
 #endif
+#if defined(OS_POSIX)
+class FileDescriptorWatcher;
+#endif
 }  // namespace base
 
 namespace content {
@@ -145,6 +148,10 @@ class TestBrowserThreadBundle {
 
 #if defined(OS_WIN)
   std::unique_ptr<base::win::ScopedCOMInitializer> com_initializer_;
+#endif
+
+#if defined(OS_POSIX)
+  std::unique_ptr<base::FileDescriptorWatcher> file_descriptor_watcher_;
 #endif
 
   DISALLOW_COPY_AND_ASSIGN(TestBrowserThreadBundle);
