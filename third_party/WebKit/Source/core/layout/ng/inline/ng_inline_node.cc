@@ -337,6 +337,26 @@ LayoutBox* CollectInlinesInternal(
   return next_box;
 }
 
+void AnnotateWithTextFragments(NGOffsetMappingBuilder* builder,
+                               const NGPhysicalFragment* fragment) {
+  if (!fragment)
+    return;
+
+  if (fragment->IsText()) {
+    const NGPhysicalTextFragment* text_fragment =
+        ToNGPhysicalTextFragment(fragment);
+    builder->AnnotateRange(text_fragment->StartOffset(),
+                           text_fragment->EndOffset(), text_fragment);
+    return;
+  }
+
+  const auto& children =
+      fragment->IsBox() ? ToNGPhysicalBoxFragment(fragment)->Children()
+                        : ToNGPhysicalLineBoxFragment(fragment)->Children();
+  for (auto& child : children)
+    AnnotateWithTextFragments(builder, child.Get());
+}
+
 }  // namespace
 
 NGInlineNode::NGInlineNode(LayoutNGBlockFlow* block)
@@ -386,6 +406,15 @@ const NGOffsetMappingResult& NGInlineNode::ComputeOffsetMappingIfNeeded() {
     NGOffsetMappingBuilder& mapping_builder =
         builder.GetConcatenatedOffsetMappingBuilder();
     mapping_builder.Composite(builder.GetOffsetMappingBuilder());
+
+    if (Text().length()) {
+      NGOffsetMappingBuilder fragment_annotation_builder;
+      fragment_annotation_builder.AppendIdentityMapping(Text().length());
+      AnnotateWithTextFragments(
+          &fragment_annotation_builder,
+          ToLayoutNGBlockFlow(GetLayoutBlockFlow())->RootFragment().Get());
+      mapping_builder.Composite(fragment_annotation_builder);
+    }
 
     MutableData()->offset_mapping_ =
         WTF::MakeUnique<NGOffsetMappingResult>(mapping_builder.Build());
