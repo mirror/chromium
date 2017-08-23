@@ -238,8 +238,6 @@ void ArcVoiceInteractionFrameworkService::OnInstanceReady() {
 
 void ArcVoiceInteractionFrameworkService::OnInstanceClosed() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  CallAndResetMetalayerCallback();
-  metalayer_enabled_ = false;
 }
 
 void ArcVoiceInteractionFrameworkService::CaptureFocusedWindow(
@@ -300,39 +298,23 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionState(
 
 void ArcVoiceInteractionFrameworkService::OnMetalayerClosed() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  CallAndResetMetalayerCallback();
+  LOG(ERROR) << "Deprecated method called: "
+                "VoiceInteractionFrameworkHost.OnInstanceClosed";
 }
 
 void ArcVoiceInteractionFrameworkService::SetMetalayerEnabled(bool enabled) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  metalayer_enabled_ = enabled;
-  if (!metalayer_enabled_)
-    CallAndResetMetalayerCallback();
+  LOG(ERROR) << "Deprecated method called: "
+                "VoiceInteractionFrameworkHost.SetMetalayerEnabled";
 }
 
-bool ArcVoiceInteractionFrameworkService::IsMetalayerSupported() {
+void ArcVoiceInteractionFrameworkService::ShowMetalayer() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  return metalayer_enabled_;
-}
-
-void ArcVoiceInteractionFrameworkService::ShowMetalayer(
-    const base::Closure& closed) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (!metalayer_closed_callback_.is_null()) {
-    LOG(ERROR) << "Metalayer is already enabled";
-    return;
-  }
-  metalayer_closed_callback_ = closed;
   NotifyMetalayerStatusChanged(true);
 }
 
 void ArcVoiceInteractionFrameworkService::HideMetalayer() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (metalayer_closed_callback_.is_null()) {
-    LOG(ERROR) << "Metalayer is already hidden";
-    return;
-  }
-  metalayer_closed_callback_ = base::Closure();
   NotifyMetalayerStatusChanged(false);
 }
 
@@ -362,6 +344,12 @@ void ArcVoiceInteractionFrameworkService::OnSessionStateChanged() {
       prefs::kVoiceInteractionEnabled);
   ash::Shell::Get()->NotifyVoiceInteractionEnabled(enabled);
 
+  bool context = ProfileManager::GetActiveUserProfile()->GetPrefs()->GetBoolean(
+      prefs::kVoiceInteractionContextEnabled);
+  // TODO(kaznacheev) remove the below line once the preference UI is done.
+  context = true;
+  ash::Shell::Get()->NotifyVoiceInteractionContextEnabled(context);
+
   // We only want notify the status change on first user signed in.
   session_manager::SessionManager::Get()->RemoveObserver(this);
 }
@@ -387,13 +375,6 @@ void ArcVoiceInteractionFrameworkService::NotifyMetalayerStatusChanged(
   if (!framework_instance)
     return;
   framework_instance->SetMetalayerVisibility(visible);
-}
-
-void ArcVoiceInteractionFrameworkService::CallAndResetMetalayerCallback() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (metalayer_closed_callback_.is_null())
-    return;
-  base::ResetAndReturn(&metalayer_closed_callback_).Run();
 }
 
 void ArcVoiceInteractionFrameworkService::SetVoiceInteractionEnabled(
