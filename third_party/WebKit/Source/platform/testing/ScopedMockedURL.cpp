@@ -4,8 +4,8 @@
 
 #include "platform/testing/ScopedMockedURL.h"
 
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 
 namespace blink {
@@ -14,7 +14,8 @@ namespace testing {
 ScopedMockedURL::ScopedMockedURL(const WebURL& url) : url_(url) {}
 
 ScopedMockedURL::~ScopedMockedURL() {
-  Platform::Current()->GetURLLoaderMockFactory()->UnregisterURL(url_);
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
+  platform_->GetURLLoaderMockFactory()->UnregisterURL(url_);
 }
 
 ScopedMockedURLLoad::ScopedMockedURLLoad(const WebURL& full_url,

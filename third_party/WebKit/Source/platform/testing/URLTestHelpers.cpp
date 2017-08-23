@@ -33,9 +33,9 @@
 #include <string>
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "public/platform/FilePathConversion.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebURLError.h"
 #include "public/platform/WebURLLoadTiming.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
@@ -75,6 +75,7 @@ void RegisterMockedURLLoad(const WebURL& full_url,
 }
 
 void RegisterMockedErrorURLLoad(const WebURL& full_url) {
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
   WebURLLoadTiming timing;
   timing.Initialize();
 
@@ -86,15 +87,16 @@ void RegisterMockedErrorURLLoad(const WebURL& full_url) {
   WebURLError error;
   error.domain = WebURLError::Domain::kTest;
   error.reason = 404;
-  Platform::Current()->GetURLLoaderMockFactory()->RegisterErrorURL(
-      full_url, response, error);
+  platform_->GetURLLoaderMockFactory()->RegisterErrorURL(full_url, response,
+                                                         error);
 }
 
 void RegisterMockedURLLoadWithCustomResponse(const WebURL& full_url,
                                              const WebString& file_path,
                                              WebURLResponse response) {
-  Platform::Current()->GetURLLoaderMockFactory()->RegisterURL(
-      full_url, response, file_path);
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
+  platform_->GetURLLoaderMockFactory()->RegisterURL(full_url, response,
+                                                    file_path);
 }
 
 }  // namespace URLTestHelpers
