@@ -127,11 +127,15 @@ bool PaintController::UseCachedSubsequenceIfPossible(
 
   EnsureNewDisplayItemListInitialCapacity();
 
-  next_item_to_match_ = markers->end;
-  // Items before |next_item_to_match_| have been copied so we don't need to
-  // index them.
-  if (next_item_to_match_ > next_item_to_index_)
-    next_item_to_index_ = next_item_to_match_;
+  if (next_item_to_match_ == markers->start) {
+    // We are matching sequentially. Skip the subsequence for the next
+    // sequential match of individual display item.
+    next_item_to_match_ = markers->end;
+    // Items before |next_item_to_match_| have been copied so we don't need to
+    // index them.
+    if (next_item_to_match_ > next_item_to_index_)
+      next_item_to_index_ = next_item_to_match_;
+  }
 
   num_cached_new_items_ += markers->end - markers->start;
 
@@ -439,7 +443,10 @@ size_t PaintController::FindOutOfOrderCachedItemForward(
   for (size_t i = next_item_to_index_;
        i < current_paint_artifact_.GetDisplayItemList().size(); ++i) {
     const DisplayItem& item = current_paint_artifact_.GetDisplayItemList()[i];
-    DCHECK(item.HasValidClient());
+    if (!item.HasValidClient()) {
+      // This item has been copied in an cached subsequence.
+      continue;
+    }
     if (id == item.GetId()) {
 #ifndef NDEBUG
       ++num_sequential_matches_;
