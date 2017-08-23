@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9b64b286_6d971f30",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseChromiumAndroidJUnitRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-23T23:29:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fad2b347_7ba32ebd",
+      "revId": "1d55618731bb5652cf4f076da829c81457261f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3c3f3d5_dfa6fee8",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseChromiumAndroidJUnitRunner.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-23T21:12:13Z",
       "side": 1,
       "message": "I\u0027m wondering if the Java side should be responsible for this or if it\u0027d be better to handle it on the python side.",
+      "revId": "1d55618731bb5652cf4f076da829c81457261f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2744da2_78e2c6da",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseChromiumAndroidJUnitRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-23T23:29:17Z",
+      "side": 1,
+      "message": "I think doing over the java side is the easier thing to do to fix this issue first.\n\nOnce tests are all converted, I would like to drop overriding this class and at that point decide either to handle package extra on python side (like chromium-junit4) or try to figure out a way to fix netty deps issue. what do you think?\n\nadded TODO for this first",
+      "parentUuid": "b3c3f3d5_dfa6fee8",
       "revId": "1d55618731bb5652cf4f076da829c81457261f5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
