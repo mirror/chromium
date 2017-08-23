@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2c355b9e_69958c52",
+        "filename": "remoting/base/service_urls.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-23T00:37:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "23b411df_fe099e3b",
+      "range": {
+        "startLine": 45,
+        "startChar": 58,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "7de845857a04950d684891ca8a64b2a72c785aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3a6373d_1b80b0a1",
         "filename": "remoting/base/service_urls.h",
         "patchSetId": 1
@@ -163,6 +187,30 @@
       "revId": "7de845857a04950d684891ca8a64b2a72c785aa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf61e00_bc1bd0a7",
+        "filename": "remoting/signaling/signaling_address.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-23T00:37:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16302855_78e1e030",
+      "range": {
+        "startLine": 50,
+        "startChar": 63,
+        "endLine": 50,
+        "endChar": 0
+      },
+      "revId": "7de845857a04950d684891ca8a64b2a72c785aa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

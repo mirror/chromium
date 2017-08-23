@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a362963_6bb9c606",
+        "filename": "remoting/base/service_urls.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-23T00:37:39Z",
+      "side": 1,
+      "message": "Can you include some mention of this change in the CL description?",
+      "range": {
+        "startLine": 49,
+        "startChar": 48,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "12a9f63bb13af2921f7bffd8eec790683a819db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
