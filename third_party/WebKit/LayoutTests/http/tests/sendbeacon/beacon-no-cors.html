@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+
+const URL = 'http://localhost:8080/sendbeacon/resources/no-cors-redirect.php';
+const REDIRECT_URL =
+  'http://127.0.0.1:8000/sendbeacon/resources/save-beacon.php?name=beacon-no-cors';
+const CHECK_URL =
+  'http://127.0.0.1:8000/sendbeacon/resources/check-beacon.php?name=beacon-no-cors';
+
+promise_test(t => {
+  assert_true(navigator.sendBeacon(URL + '?redirect=' + REDIRECT_URL, 'hi'));
+  return fetch(CHECK_URL).then(res => {
+    return res.text();
+  }).then(text => {
+    assert_true(text.startsWith('Beacon sent successfully\n'));
+  });
+}, 'beacon with a CORS safe-listed content type should use no-cors mode');
+
+</script>

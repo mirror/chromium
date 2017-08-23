@@ -213,9 +213,16 @@ bool SendBeaconCommon(LocalFrame* frame,
   beacon.Serialize(request);
   FetchParameters params(request);
   params.MutableOptions().initiator_info.name = FetchInitiatorTypeNames::beacon;
-  params.SetCrossOriginAccessControl(
-      frame->GetDocument()->GetSecurityOrigin(),
-      WebURLRequest::kFetchCredentialsModeInclude);
+
+  // If mimeType value is a CORS-safelisted request-header value for the
+  // Content-Type header, set corsMode to "no-cors".
+  const AtomicString content_type = request.HttpContentType();
+  if (!content_type.IsEmpty() &&
+      !FetchUtils::IsCORSSafelistedContentType(content_type)) {
+    params.SetCrossOriginAccessControl(
+        frame->GetDocument()->GetSecurityOrigin(),
+        WebURLRequest::kFetchCredentialsModeInclude);
+  }
 
   Resource* resource =
       RawResource::Fetch(params, frame->GetDocument()->Fetcher());
