@@ -70,6 +70,7 @@ class ArcSessionRunner : public ArcSession::Observer,
   // or stopping ARC instance.
   bool IsRunning() const;
   bool IsStopped() const;
+  bool IsMiniContainerStarting() const;
 
   // Returns the current ArcSession instance for testing purpose.
   ArcSession* GetArcSessionForTesting() { return arc_session_.get(); }
