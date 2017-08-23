@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24e2cb0a_66349698",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-23T18:58:29Z",
+      "side": 1,
+      "message": "Nit: we don\u0027t use \u003cul\u003e/\u003cli\u003e in Chromium for Android code, just use * bullets.",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 6
+      },
+      "revId": "f07664934802c5256f03308cdccfd8f83c55a2f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0efea45_787148cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-23T18:58:29Z",
+      "side": 1,
+      "message": "Did you mean to call this nm?",
+      "range": {
+        "startLine": 103,
+        "startChar": 28,
+        "endLine": 103,
+        "endChar": 30
+      },
+      "revId": "f07664934802c5256f03308cdccfd8f83c55a2f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
