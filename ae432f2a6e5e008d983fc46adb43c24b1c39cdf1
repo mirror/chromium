@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5fb616c_4711342b",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1532,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-23T04:55:47Z",
+      "side": 1,
+      "message": "Blah. As discussed offline, using json comment eater to process this now.",
+      "parentUuid": "ff561b57_0ebc30e4",
+      "revId": "ae432f2a6e5e008d983fc46adb43c24b1c39cdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f431bcaf_8f445ab2",
         "filename": "PRESUBMIT.py",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9bb27842_649ac587",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1541,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-23T04:55:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f431bcaf_8f445ab2",
+      "range": {
+        "startLine": 1541,
+        "startChar": 25,
+        "endLine": 1541,
+        "endChar": 33
+      },
+      "revId": "ae432f2a6e5e008d983fc46adb43c24b1c39cdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25a28e3a_1a6d3c50",
         "filename": "PRESUBMIT.py",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-21T17:47:54Z",
       "side": 1,
       "message": "Parsing the JSON seems like it could be slow. How much does this slow down a change to testing/buildbot/chromium.perf.json or net/http/transport_security_state_static.json (two of the largest JSON files in the tree)?",
+      "revId": "ae432f2a6e5e008d983fc46adb43c24b1c39cdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87201985_40ec6bc0",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1546,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-23T04:55:47Z",
+      "side": 1,
+      "message": "~15.1 sec median of best of three runs with those two json files also modified.\n~14.7 sec media of best of three runs with those two json files modified with the parsing line commented out.\n\nSo the impact is not huge, though it is noticeable.",
+      "parentUuid": "25a28e3a_1a6d3c50",
       "revId": "ae432f2a6e5e008d983fc46adb43c24b1c39cdf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "3f2bc4db_dbf12915",
+        "filename": "ash/mus/manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-23T04:55:47Z",
+      "side": 1,
+      "message": "These are just to test the presubmit.",
+      "parentUuid": "567c2f91_85a8aa18",
+      "revId": "ae432f2a6e5e008d983fc46adb43c24b1c39cdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b30be8be_0256f9c1",
         "filename": "chrome/common/instant_struct_traits.h",
         "patchSetId": 1
@@ -87,6 +165,24 @@
       "writtenOn": "2017-08-21T17:24:52Z",
       "side": 1,
       "message": "lol?",
+      "revId": "ae432f2a6e5e008d983fc46adb43c24b1c39cdf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e472f98_c7848254",
+        "filename": "chrome/common/instant_struct_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-23T04:55:47Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "b30be8be_0256f9c1",
       "revId": "ae432f2a6e5e008d983fc46adb43c24b1c39cdf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
