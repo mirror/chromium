@@ -24,6 +24,7 @@
 #include "base/debug/stack_trace.h"
 #include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/sys_info.h"
 #include "base/task_scheduler/initialization_util.h"
 #include "base/time/time.h"
@@ -187,6 +188,14 @@ std::unique_ptr<RenderProcess> RenderProcessImpl::Create() {
       content::GetContentClient()->renderer()->GetTaskSchedulerInitParams();
   if (!task_scheduler_init_params)
     task_scheduler_init_params = GetDefaultTaskSchedulerInitParams();
+
+  // TODO(fdoray): Remove after experiment. https://crbug.com/757022
+  task_scheduler_init_params->task_priority_adjustment =
+      base::GetFieldTrialParamValue("BrowserScheduler",
+                                    "AllTasksUserBlocking") == "true"
+          ? base::TaskScheduler::TaskPriorityAdjustment::
+                EXPERIMENTAL_ALL_TASKS_USER_BLOCKING
+          : base::TaskScheduler::TaskPriorityAdjustment::NONE;
 
   return base::WrapUnique(
       new RenderProcessImpl(std::move(task_scheduler_init_params)));

@@ -23,6 +23,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/field_trial.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/pending_task.h"
@@ -988,6 +989,14 @@ int BrowserMainLoop::CreateThreads() {
               current_foreground_worker_pool_params.suggested_reclaim_time(),
               current_foreground_worker_pool_params.backward_compatibility());
     }
+
+    // TODO(fdoray): Remove after experiment. https://crbug.com/757022
+    task_scheduler_init_params->task_priority_adjustment =
+        base::GetFieldTrialParamValue("BrowserScheduler",
+                                      "AllTasksUserBlocking") == "true"
+            ? base::TaskScheduler::TaskPriorityAdjustment::
+                  EXPERIMENTAL_ALL_TASKS_USER_BLOCKING
+            : base::TaskScheduler::TaskPriorityAdjustment::NONE;
 
     base::TaskScheduler::GetInstance()->Start(
         *task_scheduler_init_params.get());
