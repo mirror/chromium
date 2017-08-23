@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c42ed245_03341c59",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T09:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e6d6f45_a592b727",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a30438c_7f87aaca",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 18
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "4d7bc756_80bf298f",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T09:19:05Z",
+      "side": 1,
+      "message": "This is enum that is not needed to be public and put in .h file.\nThen, I has just removed TODO.",
+      "parentUuid": "5a30438c_7f87aaca",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8be3ab7f_531a6e22",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 18
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-23T06:43:11Z",
       "side": 1,
       "message": "I don\u0027t think \"buffer_size\" is required since we have passed coded_size_ and format.",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7473c024_d00b67de",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T09:19:05Z",
+      "side": 1,
+      "message": "I think you mean buffer_size can be computed in Android side.\nIt is correct.\nHowever, what is an advantage by this?\nTo compute the size in Android, we need to implement a function similar to AllocationSize in Android, which is a little of bit complicated. The code size would increase, because AllocationSize is used in other Chromium codes and cannot be removed from Chromium.\n\nAlthough this is not a critical problem, PictureBufferFormat already includes buffer_size.\nThen, buffer_size should be calculated in Chromium side.\nI think it is meaningless to get rid of buffer_size from PictureBufferFormat only for the sake of this.",
+      "parentUuid": "8be3ab7f_531a6e22",
       "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "3d844b82_05c5571a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T09:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3484bdf_a83e36cb",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4da791af_7e8acec5",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 18
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "3626037e_5d8b5666",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T09:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4da791af_7e8acec5",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0e05d8f_d4807c92",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 18
@@ -107,6 +203,24 @@
       "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3ad851_b1316c4e",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T09:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0e05d8f_d4807c92",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "0825e4bb_60ec9816",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T09:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d558b5a9_25d7a340",
+      "range": {
+        "startLine": 264,
+        "startChar": 9,
+        "endLine": 264,
+        "endChar": 22
+      },
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d978641_b853a96a",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 18
@@ -147,6 +285,24 @@
       "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5918257a_9788ca95",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T09:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d978641_b853a96a",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "84b7d04d_7e83b227",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T09:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03c0a4bb_d237ab7c",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bedbd660_d6e6e1fe",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 18
@@ -181,6 +355,24 @@
       "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6e0b9e_b3455625",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T09:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bedbd660_d6e6e1fe",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +399,30 @@
     },
     {
       "key": {
+        "uuid": "35e7bfd7_97ed9080",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T09:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "281d0f13_b37e56a9",
+      "range": {
+        "startLine": 432,
+        "startChar": 18,
+        "endLine": 432,
+        "endChar": 19
+      },
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41d9b514_f7927870",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
         "patchSetId": 18
@@ -230,6 +446,30 @@
     },
     {
       "key": {
+        "uuid": "4ba3b8e3_f0647d33",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T09:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41d9b514_f7927870",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "246937ee_b44ba9b0",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
         "patchSetId": 18
@@ -241,6 +481,24 @@
       "writtenOn": "2017-08-23T06:43:11Z",
       "side": 1,
       "message": "static?",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74c8f00_51ee09b7",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T09:19:05Z",
+      "side": 1,
+      "message": "VerifyDmabuf uses some member variables. Then, it shouldn\u0027t be static.",
+      "parentUuid": "246937ee_b44ba9b0",
       "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
