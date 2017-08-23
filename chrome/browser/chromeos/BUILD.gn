@@ -41,6 +41,7 @@ source_set("chromeos") {
   deps = [
     # TODO(tbarzic): Cleanup this list.
     ":attestation_proto",
+    ":device_policy_remover_generated",
     "//apps",
     "//ash",
     "//ash:ash_with_content",
@@ -1244,8 +1245,11 @@ source_set("chromeos") {
     "policy/device_local_account_policy_store.h",
     "policy/device_network_configuration_updater.cc",
     "policy/device_network_configuration_updater.h",
+    "policy/device_off_hours_controller.cc",
+    "policy/device_off_hours_controller.h",
     "policy/device_policy_decoder_chromeos.cc",
     "policy/device_policy_decoder_chromeos.h",
+    "policy/device_policy_remover.h",
     "policy/device_status_collector.cc",
     "policy/device_status_collector.h",
     "policy/display_rotation_default_handler.cc",
@@ -1653,6 +1657,7 @@ static_library("test_support") {
     "//skia",
     "//testing/gmock",
     "//testing/gtest",
+    "//third_party/icu",
   ]
 }
 
@@ -2012,4 +2017,42 @@ proto_library("attestation_proto") {
 service_manifest("ash_pref_connector_manifest") {
   name = "ash_pref_connector"
   source = "prefs/ash_pref_connector_manifest.json"
+}
+
+device_policy_remover_path = "$target_gen_dir/device_policy_remover.cc"
+
+action("device_policy_remover_generate") {
+  script = "policy/tools/generate_device_policy_remover.py"
+  google_protobuf_path = "//third_party/protobuf/python"
+  pyproto_path = "$root_build_dir/pyproto"
+  pb2_path = "$root_build_dir/pyproto/chrome/browser/chromeos/policy/proto"
+
+  outputs = [
+    device_policy_remover_path,
+  ]
+
+  args = [
+    # generated file name
+    rebase_path(device_policy_remover_path),
+
+    # directories for PATH variable to compile generated file
+    rebase_path(google_protobuf_path),
+    rebase_path(pyproto_path),
+    rebase_path(pb2_path),
+  ]
+
+  public_deps = [
+    ":device_policy_proto",
+    "//third_party/protobuf:py_proto",
+  ]
+}
+
+static_library("device_policy_remover_generated") {
+  sources = [
+    device_policy_remover_path,
+  ]
+
+  public_deps = [
+    ":device_policy_remover_generate",
+  ]
 }
