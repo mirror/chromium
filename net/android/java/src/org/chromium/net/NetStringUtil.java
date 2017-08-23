@@ -85,4 +85,18 @@ public class NetStringUtil {
             return null;
         }
     }
+
+    /**
+     * Convert a string to uppercase.
+     * @return: String converted to uppercase using default locale,
+     * null on failure.
+     */
+    @CalledByNative
+    private static String toUpperCase(String str) {
+        try {
+            return str.toUpperCase();
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
