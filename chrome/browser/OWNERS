@@ -86,3 +86,24 @@ per-file vr_shell_resources.grdp=file://chrome/browser/android/vr_shell/OWNERS
 per-file web_bluetooth*=jyasskin@chromium.org
 per-file web_bluetooth*=ortuno@chromium.org
 per-file web_bluetooth*=scheib@chromium.org
+
+per-file chrome_content_browser_manifest_overlay.json=set noparent
+per-file chrome_content_browser_manifest_overlay.json=file://ipc/SECURITY_OWNERS
+
+per-file chrome_content_gpu_manifest_overlay.json=set noparent
+per-file chrome_content_gpu_manifest_overlay.json=file://ipc/SECURITY_OWNERS
+
+per-file chrome_content_packaged_services_manifest_overlay.json=set noparent
+per-file chrome_content_packaged_services_manifest_overlay.json=file://ipc/SECURITY_OWNERS
+
+per-file chrome_content_plugin_manifest_overlay.json=set noparent
+per-file chrome_content_plugin_manifest_overlay.json=file://ipc/SECURITY_OWNERS
+
+per-file chrome_content_renderer_manifest_overlay.json=set noparent
+per-file chrome_content_renderer_manifest_overlay.json=file://ipc/SECURITY_OWNERS
+
+per-file chrome_content_utility_manifest_overlay.json=set noparent
+per-file chrome_content_utility_manifest_overlay.json=file://ipc/SECURITY_OWNERS
+
+per-file chrome_test_browser_overlay.json=set noparent
+per-file chrome_test_browser_overlay.json=file://ipc/SECURITY_OWNERS
