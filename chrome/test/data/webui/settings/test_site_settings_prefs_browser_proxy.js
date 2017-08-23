@@ -31,6 +31,7 @@ var prefsEmpty = {
     plugins: {},
     images: {},
     popups: {},
+    protectedContent: {},
     unsandboxed_plugins: {},
   },
   exceptions: {
@@ -47,6 +48,7 @@ var prefsEmpty = {
     plugins: [],
     images: [],
     popups: [],
+    protectedContent: [],
     unsandboxed_plugins: [],
   },
 };
@@ -262,6 +264,9 @@ class TestSiteSettingsPrefsBrowserProxy extends TestBrowserProxy {
     } else if (
         contentType == settings.ContentSettingsTypes.UNSANDBOXED_PLUGINS) {
       pref = this.prefs_.defaults.unsandboxed_plugins;
+    } else if (
+        contentType == settings.ContentSettingsTypes.PROTECTED_CONTENT) {
+      pref = this.prefs_.defaults.protectedContent;
     } else {
       console.log('getDefault received unknown category: ' + contentType);
     }
