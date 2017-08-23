@@ -5,11 +5,53 @@
 #include "gpu/command_buffer/service/service_discardable_manager.h"
 
 #include "base/memory/singleton.h"
+#include "base/sys_info.h"
+#include "build/build_config.h"
 #include "gpu/command_buffer/service/texture_manager.h"
 
 namespace gpu {
+namespace {
+// Cache size values are designed to roughly correspond to existing image cache
+// sizes for 2-3 renderers. These will be updated as more types of data are
+// moved to this cache.
+#if defined(OS_ANDROID)
+const size_t kLowEndAndroidCacheSizeBytes = 512 * 1024;
+const size_t kNormalAndroidCacheSizeBytes = 128 * 1024 * 1024;
+#else
+const size_t kNormalCacheSizeBytes = 384 * 1024 * 1024;
+const size_t kHighMemoryMaxCacheSizeBytes = 512 * 1024 * 1024;
+// Device ram threshold at which we move from a normal cache to a
+// high-memory-usage cache. While this is a GPU memory cache,
+// we can't read GPU memory reliably, so we use system ram as a proxy.
+const int kHighMemoryCacheSizeMemoryThresholdMB = 4 * 1024;
+#endif  // defined(OS_ANDROID)
 
-const size_t ServiceDiscardableManager::kMaxSize;
+size_t CacheSizeLimit() {
+#if defined(OS_ANDROID)
+  if (base::SysInfo::IsLowEndDevice()) {
+    return kLowEndAndroidCacheSizeBytes;
+  } else {
+    return kNormalAndroidCacheSizeBytes;
+  }
+#else
+#if defined(OS_LINUX)
+  // TODO(ericrk): AmountOfPhysicalMemoryMB is broken in the GPU proc on Linux,
+  // Use 0, causing us to pick our non-high-memory default. This cache is
+  // currently only used in production by GPU raster, which is not enabled on
+  // Linux.  crbug.com/743271
+  int physical_mem_mb = 0;
+#else
+  int physical_mem_mb = base::SysInfo::AmountOfPhysicalMemoryMB();
+#endif
+
+  if (physical_mem_mb < kHighMemoryCacheSizeMemoryThresholdMB) {
+    return kNormalCacheSizeBytes;
+  } else {
+    return kHighMemoryMaxCacheSizeBytes;
+  }
+#endif
+}
+}  // namespace
 
 ServiceDiscardableManager::GpuDiscardableEntry::GpuDiscardableEntry(
     ServiceDiscardableHandle handle,
@@ -23,7 +65,9 @@ ServiceDiscardableManager::GpuDiscardableEntry::~GpuDiscardableEntry() =
     default;
 
 ServiceDiscardableManager::ServiceDiscardableManager()
-    : entries_(EntryCache::NO_AUTO_EVICT) {}
+    : entries_(EntryCache::NO_AUTO_EVICT),
+      cache_size_limit_(CacheSizeLimit()) {}
+
 ServiceDiscardableManager::~ServiceDiscardableManager() {
 #if DCHECK_IS_ON()
   for (const auto& entry : entries_) {
@@ -132,7 +176,7 @@ void ServiceDiscardableManager::OnTextureSizeChanged(
 
 void ServiceDiscardableManager::EnforceLimits() {
   for (auto it = entries_.rbegin(); it != entries_.rend();) {
-    if (total_size_ <= kMaxSize) {
+    if (total_size_ <= cache_size_limit_) {
       return;
     }
     if (!it->second.handle.Delete()) {
