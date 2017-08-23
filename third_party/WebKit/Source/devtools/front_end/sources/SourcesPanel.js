@@ -114,8 +114,8 @@ Sources.SourcesPanel = class extends UI.Panel {
     SDK.targetManager.addModelListener(
         SDK.DebuggerModel, SDK.DebuggerModel.Events.GlobalObjectCleared,
         event => this._debuggerResumed(/** @type {!SDK.DebuggerModel} */ (event.data)));
-    SDK.targetManager.addEventListener(
-        SDK.TargetManager.Events.AvailableNodeTargetsChanged, this._availableNodeTargetsChanged, this);
+    // SDK.targetManager.addEventListener(
+    //     SDK.TargetManager.Events.AvailableNodeTargetsChanged, this._availableNodeTargetsChanged, this);
     new Sources.WorkspaceMappingTip(this, this._workspace);
     Extensions.extensionServer.addEventListener(
         Extensions.ExtensionServer.Events.SidebarPaneAdded, this._extensionSidebarPaneAdded, this);
@@ -167,9 +167,9 @@ Sources.SourcesPanel = class extends UI.Panel {
   targetRemoved(target) {
   }
 
-  _availableNodeTargetsChanged() {
-    this._showThreadsIfNeeded();
-  }
+  // _availableNodeTargetsChanged() {
+  //   this._showThreadsIfNeeded();
+  // }
 
   _showThreadsIfNeeded() {
     if (Sources.ThreadsSidebarPane.shouldBeShown() && !this._threadsSidebarPane) {
