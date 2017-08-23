@@ -181,7 +181,9 @@ class Port(object):
             #   base64
             #
             # to regenerate.
-            return ['--run-layout-test', '--ignore-certificate-errors-spki-list=Nxvaj3+bY3oVrTc+Jp7m3E3sB1n3lXtnMDCyBsqEXiY=']
+            return ['--run-layout-test',
+                    '--ignore-certificate-errors-spki-list=Nxvaj3+bY3oVrTc+Jp7m3E3sB1n3lXtnMDCyBsqEXiY=',
+                    '--user-data-dir']
         return []
 
     def supports_per_test_timeout(self):

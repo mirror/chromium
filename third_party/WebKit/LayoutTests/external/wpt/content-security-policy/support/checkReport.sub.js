@@ -32,7 +32,9 @@
     }
   }
 
-  var timeout = document.querySelector("meta[name=timeout][content=long]") ? 50 : 5;
+  var timeout =
+      document.querySelector("meta[name=reporting-api-timeout]") ? 70 :
+          document.querySelector("meta[name=timeout][content=long]") ? 50 : 5;
   var reportLocation = location.protocol + "//" + location.host + "/content-security-policy/support/report.py?op=take&timeout=" + timeout + "&reportID=" + reportID;
 
   var reportTest = async_test("Violation report status OK.");

@@ -25,7 +25,7 @@ namespace content {
 
 namespace {
 
-class ReportingServiceProxyImpl : public mojom::ReportingServiceProxy {
+class ReportingServiceProxyImpl : public blink::mojom::ReportingServiceProxy {
  public:
   ReportingServiceProxyImpl(
       scoped_refptr<net::URLRequestContextGetter> request_context_getter)
@@ -61,7 +61,7 @@ class ReportingServiceProxyImpl : public mojom::ReportingServiceProxy {
 };
 
 void CreateReportingServiceProxyOnNetworkTaskRunner(
-    mojom::ReportingServiceProxyRequest request,
+    blink::mojom::ReportingServiceProxyRequest request,
     scoped_refptr<net::URLRequestContextGetter> request_context_getter) {
   mojo::MakeStrongBinding(base::MakeUnique<ReportingServiceProxyImpl>(
                               std::move(request_context_getter)),
@@ -73,7 +73,7 @@ void CreateReportingServiceProxyOnNetworkTaskRunner(
 // static
 void CreateReportingServiceProxy(
     StoragePartition* storage_partition,
-    mojom::ReportingServiceProxyRequest request) {
+    blink::mojom::ReportingServiceProxyRequest request) {
   scoped_refptr<net::URLRequestContextGetter> request_context_getter(
       storage_partition->GetURLRequestContext());
   scoped_refptr<base::SingleThreadTaskRunner> network_task_runner(

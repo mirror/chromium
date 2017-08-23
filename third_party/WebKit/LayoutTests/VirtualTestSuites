@@ -507,5 +507,10 @@
     "prefix": "mojo-blobs",
     "base": "fast/files",
     "args": ["--enable-features=MojoBlobs"]
+  },
+  {
+    "prefix": "reporting-api",
+    "base": "external/wpt/content-security-policy/reporting-api",
+    "args": ["--enable-features=Reporting"]
   }
 ]

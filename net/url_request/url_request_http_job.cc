@@ -895,7 +895,6 @@ void URLRequestHttpJob::ProcessReportToHeader() {
     ReportingHeaderParser::RecordHeaderDiscardedForNoReportingService();
     return;
   }
-
   // Only accept Report-To headers on HTTPS connections that have no
   // certificate errors.
   // TODO(juliatuttle): Do we need to check cert status?

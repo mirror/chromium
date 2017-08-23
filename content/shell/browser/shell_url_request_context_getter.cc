@@ -188,6 +188,11 @@ net::URLRequestContext* ShellURLRequestContextGetter::GetURLRequestContext() {
     // Set up interceptors in the reverse order.
     builder.SetInterceptors(std::move(request_interceptors_));
 
+#if BUILDFLAG(ENABLE_REPORTING)
+    if (base::FeatureList::IsEnabled(features::kReporting))
+      builder.set_reporting_policy(base::MakeUnique<net::ReportingPolicy>());
+#endif  // BUILDFLAG(ENABLE_REPORTING)
+
     url_request_context_ = builder.Build();
   }
 

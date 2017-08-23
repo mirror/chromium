@@ -59,6 +59,7 @@
 #include "platform/network/EncodedFormData.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/KnownPorts.h"
+#include "platform/weborigin/ReportingServiceProxyPtrHolder.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/NotFound.h"
 #include "platform/wtf/PtrUtil.h"
@@ -1311,10 +1312,14 @@ void ContentSecurityPolicy::PostViolationReport(
     RefPtr<EncodedFormData> report =
         EncodedFormData::Create(stringified_report.Utf8());
 
-    // TODO(andypaicu): for now we can only send reports to report-uri, skip
-    // report-to
-    if (!use_reporting_api) {
-      for (const auto& report_endpoint : report_endpoints) {
+    DEFINE_STATIC_LOCAL(ReportingServiceProxyPtrHolder,
+                        reporting_service_proxy_holder, ());
+
+    for (const auto& report_endpoint : report_endpoints) {
+      if (use_reporting_api) {
+        reporting_service_proxy_holder.QueueReport(
+            document->Url(), report_endpoint, "csp", stringified_report);
+      } else {
         // If we have a context frame we're dealing with 'frame-ancestors' and
         // we don't have our own execution context. Use the frame's document to
         // complete the endpoint URL, overriding its URL with the blocked
