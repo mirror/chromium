@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5d22db8_e002f4b3",
+        "filename": "chrome/browser/ui/android/infobars/notify_infobar_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-23T16:47:27Z",
+      "side": 1,
+      "message": "Just so that we can avoid this awkwardness, we could construct the bridge in Show() and pass it in to the constructor. If we make the constructor private, the slightly more complicated signature shouldn\u0027t be too bad.",
+      "range": {
+        "startLine": 28,
+        "startChar": 10,
+        "endLine": 28,
+        "endChar": 67
+      },
+      "revId": "7c3081b520668d743e19438cb010b862fe4b5d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42aac25a_ffbd2772",
+        "filename": "chrome/browser/ui/android/infobars/notify_infobar_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-23T16:47:27Z",
+      "side": 1,
+      "message": "Make the constructor private?",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "7c3081b520668d743e19438cb010b862fe4b5d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "767099fc_827b036a",
+        "filename": "chrome/browser/ui/android/infobars/notify_infobar_delegate_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-23T16:47:27Z",
+      "side": 1,
+      "message": "I think this comment can be simplified a bit now -- the delegate *is* owned by the infobar?",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 26
+      },
+      "revId": "7c3081b520668d743e19438cb010b862fe4b5d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
