@@ -1,0 +1,9 @@
+include_rules = [
+  # Allow inclusion of specific components that we depend on.
+  # See comment in content/DEPS for which components are allowed.
+  "+platform/network/HTTPHeaderMap.h",
+  "+public/platform/WebCORS.h",
+  "+public/platform/WebString.h",
+  "+public/platform/WebSecurityOrigin.h",
+  "+public/platform/WebCORSPreflightResultCache.h"
+]
