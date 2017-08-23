@@ -1064,6 +1064,7 @@ class CORE_EXPORT Document : public ContainerNode,
   enum LoadEventProgress {
     kLoadEventNotRun,
     kLoadEventInProgress,
+    kIframeLoadEventInProgress,
     kLoadEventCompleted,
     kBeforeUnloadEventInProgress,
     kBeforeUnloadEventCompleted,
@@ -1075,6 +1076,12 @@ class CORE_EXPORT Document : public ContainerNode,
   bool LoadEventStillNeeded() const {
     return load_event_progress_ == kLoadEventNotRun;
   }
+  // This corresponds to the HTML spec's "completely loaded".
+  // See https://html.spec.whatwg.org/#completely-loaded
+  bool IsCompletelyLoaded() const {
+    return load_event_progress_ != kLoadEventNotRun &&
+           load_event_progress_ != kLoadEventInProgress;
+  }
   bool LoadEventFinished() const {
     return load_event_progress_ >= kLoadEventCompleted;
   }
@@ -1085,6 +1092,10 @@ class CORE_EXPORT Document : public ContainerNode,
     return load_event_progress_ == kBeforeUnloadEventInProgress;
   }
   void SuppressLoadEvent();
+  void WillFireIframeLoad() {
+    if (!LoadEventFinished())
+      load_event_progress_ = kIframeLoadEventInProgress;
+  }
 
   void SetContainsPlugins() { contains_plugins_ = true; }
   bool ContainsPlugins() const { return contains_plugins_; }

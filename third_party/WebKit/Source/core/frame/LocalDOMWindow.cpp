@@ -1489,6 +1489,8 @@ void LocalDOMWindow::DispatchLoadEvent() {
     performance->NotifyNavigationTimingToObservers();
   }
 
+  document()->WillFireIframeLoad();
+
   // For load events, send a separate load event to the enclosing frame only.
   // This is a DOM extension and is independent of bubbling/capturing rules of
   // the DOM.
