@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93f4f362_c25dfcc4",
+        "filename": "components/exo/wm_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-23T05:54:52Z",
+      "side": 1,
+      "message": "nit: unused?",
+      "revId": "2cb05002e70e6188f61deca7911955fc0f6bbe8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
