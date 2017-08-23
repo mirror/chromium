@@ -13,28 +13,35 @@ import static org.chromium.net.smoke.TestSupport.Protocol.QUIC;
 import org.chromium.net.UrlRequest;
 
 import java.net.URL;
+import org.junit.Test;
+import org.chromium.base.test.BaseJUnit4ClassRunner;
+import org.junit.runner.RunWith;
+import android.support.test.InstrumentationRegistry;
+import org.junit.Assert;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * QUIC Tests.
  */
-public class QuicTest extends NativeCronetTestCase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class QuicTest {
     private TestSupport.TestServer mServer;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        mServer = mTestSupport.createTestServer(getContext(), QUIC);
+    @Before
+    public void setUp() throws Exception {
+        mServer = mTestSupport.createTestServer(InstrumentationRegistry.getContext(), QUIC);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         mServer.shutdown();
-        super.tearDown();
     }
 
+    @Test
     @SmallTest
     public void testQuic() throws Exception {
-        assertTrue(mServer.start());
+        Assert.assertTrue(mServer.start());
         final String urlString = mServer.getSuccessURL();
         final URL url = new URL(urlString);
 
@@ -64,6 +71,6 @@ public class QuicTest extends NativeCronetTestCase {
                 break;
             }
         }
-        assertTrue(quicNegotiated);
+        Assert.assertTrue(quicNegotiated);
     }
 }
