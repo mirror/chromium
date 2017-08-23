@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb230cd8_fcfb1d3d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-23T22:49:47Z",
+      "side": 1,
+      "message": "own",
+      "range": {
+        "startLine": 7,
+        "startChar": 36,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "094b2638151aad0c4dfe5876efcbe7416de5d2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427d9954_b6f83915",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-23T22:49:47Z",
+      "side": 1,
+      "message": "s/owns/own/\ns/of/to/",
+      "range": {
+        "startLine": 9,
+        "startChar": 22,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "094b2638151aad0c4dfe5876efcbe7416de5d2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67dfb80f_7f875a57",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-23T22:49:47Z",
+      "side": 1,
+      "message": "This description does not explain why you introduced GetArchiveManager().\nBased on the code it is not needed. What am I missing?",
+      "revId": "094b2638151aad0c4dfe5876efcbe7416de5d2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94be9c1d_c318791c",
+        "filename": "components/offline_pages/core/archive_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-23T22:49:47Z",
+      "side": 1,
+      "message": "this can be a const method I think\n\nAlso, is there a good reason to make it virtual?",
+      "range": {
+        "startLine": 67,
+        "startChar": 32,
+        "endLine": 67,
+        "endChar": 46
+      },
+      "revId": "094b2638151aad0c4dfe5876efcbe7416de5d2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
