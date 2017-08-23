@@ -121,6 +121,7 @@ class ProfileAttributesEntry {
   friend class ProfileInfoCache;
   FRIEND_TEST_ALL_PREFIXES(ProfileAttributesStorageTest,
                            EntryInternalAccessors);
+  FRIEND_TEST_ALL_PREFIXES(ProfileAttributesStorageTest, ProfileActiveTime);
 
   void Initialize(ProfileInfoCache* cache,
                   const base::FilePath& path,

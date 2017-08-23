@@ -62,7 +62,6 @@ const char kIsOmittedFromProfileListKey[] = "is_omitted_from_profile_list";
 const char kSigninRequiredKey[] = "signin_required";
 const char kSupervisedUserId[] = "managed_user_id";
 const char kProfileIsEphemeral[] = "is_ephemeral";
-const char kActiveTimeKey[] = "active_time";
 const char kIsAuthErrorKey[] = "is_auth_error";
 
 // TODO(dullweber): Remove these constants after the stored data is removed.
@@ -278,15 +277,6 @@ base::FilePath ProfileInfoCache::GetPathOfProfileAtIndex(size_t index) const {
   return user_data_dir_.AppendASCII(sorted_keys_[index]);
 }
 
-base::Time ProfileInfoCache::GetProfileActiveTimeAtIndex(size_t index) const {
-  double dt;
-  if (GetInfoForProfileAtIndex(index)->GetDouble(kActiveTimeKey, &dt)) {
-    return base::Time::FromDoubleT(dt);
-  } else {
-    return base::Time();
-  }
-}
-
 base::string16 ProfileInfoCache::GetUserNameOfProfileAtIndex(
     size_t index) const {
   base::string16 user_name;
@@ -473,18 +463,6 @@ size_t ProfileInfoCache::GetAvatarIconIndexOfProfileAtIndex(size_t index)
     DLOG(WARNING) << "Unknown avatar icon: " << icon_url;
 
   return icon_index;
-}
-
-void ProfileInfoCache::SetProfileActiveTimeAtIndex(size_t index) {
-  if (base::Time::Now() - GetProfileActiveTimeAtIndex(index) <
-      base::TimeDelta::FromHours(1)) {
-    return;
-  }
-
-  std::unique_ptr<base::DictionaryValue> info(
-      GetInfoForProfileAtIndex(index)->DeepCopy());
-  info->SetDouble(kActiveTimeKey, base::Time::Now().ToDoubleT());
-  SetInfoForProfileAtIndex(index, std::move(info));
 }
 
 void ProfileInfoCache::SetNameOfProfileAtIndex(size_t index,

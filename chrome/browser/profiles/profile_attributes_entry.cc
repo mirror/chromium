@@ -15,6 +15,7 @@
 namespace {
 
 const char kShortcutNameKey[] = "shortcut_name";
+const char kActiveTimeKey[] = "active_time";
 
 }  // namespace
 
@@ -55,11 +56,15 @@ base::string16 ProfileAttributesEntry::GetShortcutName() const {
 }
 
 base::FilePath ProfileAttributesEntry::GetPath() const {
-  return profile_info_cache_->GetPathOfProfileAtIndex(profile_index());
+  return profile_path_;
 }
 
 base::Time ProfileAttributesEntry::GetActiveTime() const {
-  return profile_info_cache_->GetProfileActiveTimeAtIndex(profile_index());
+  if (IsDouble(kActiveTimeKey)) {
+    return base::Time::FromDoubleT(GetDouble(kActiveTimeKey));
+  } else {
+    return base::Time();
+  }
 }
 
 base::string16 ProfileAttributesEntry::GetUserName() const {
@@ -172,7 +177,11 @@ void ProfileAttributesEntry::SetShortcutName(const base::string16& name) {
 }
 
 void ProfileAttributesEntry::SetActiveTimeToNow() {
-  profile_info_cache_->SetProfileActiveTimeAtIndex(profile_index());
+  if (IsDouble(kActiveTimeKey) &&
+      base::Time::Now() - GetActiveTime() < base::TimeDelta::FromHours(1)) {
+    return;
+  }
+  SetDouble(kActiveTimeKey, base::Time::Now().ToDoubleT());
 }
 
 void ProfileAttributesEntry::SetIsOmitted(bool is_omitted) {

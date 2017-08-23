@@ -74,8 +74,8 @@ class ProfileInfoCache : public ProfileInfoInterface,
   size_t GetIndexOfProfileWithPath(
       const base::FilePath& profile_path) const override;
   base::string16 GetNameOfProfileAtIndex(size_t index) const override;
+  // Will be removed SOON with ProfileInfoCache tests. Do not use!
   base::FilePath GetPathOfProfileAtIndex(size_t index) const override;
-  base::Time GetProfileActiveTimeAtIndex(size_t index) const override;
   base::string16 GetUserNameOfProfileAtIndex(size_t index) const override;
   const gfx::Image& GetAvatarIconOfProfileAtIndex(size_t index) const override;
   std::string GetLocalAuthCredentialsOfProfileAtIndex(
@@ -112,7 +112,6 @@ class ProfileInfoCache : public ProfileInfoInterface,
 
   size_t GetAvatarIconIndexOfProfileAtIndex(size_t index) const;
 
-  void SetProfileActiveTimeAtIndex(size_t index);
   // Warning: This will re-sort profiles and thus may change indices!
   void SetNameOfProfileAtIndex(size_t index, const base::string16& name);
   void SetAuthInfoOfProfileAtIndex(size_t index,
