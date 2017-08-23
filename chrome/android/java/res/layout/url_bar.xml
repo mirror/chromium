@@ -9,6 +9,7 @@
     android:background="@null"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingEnd="5dp"
     android:gravity="center_vertical"
     android:singleLine="true"
     android:imeOptions="actionGo|flagNoExtractUi|flagNoFullscreen"

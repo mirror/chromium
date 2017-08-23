@@ -13,6 +13,7 @@ import android.view.View;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
+import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 import org.chromium.chrome.browser.widget.selection.SelectableListToolbar;
 
 import java.util.List;
@@ -115,5 +116,12 @@ public class HistoryManagerToolbar extends SelectableListToolbar<HistoryItem> {
     @VisibleForTesting
     Menu getMenuForTests() {
         return getMenu();
+    }
+
+    @Override
+    public void onDisplayStyleChanged(UiConfig.DisplayStyle newDisplayStyle) {
+        super.onDisplayStyleChanged(newDisplayStyle);
+        float density = getResources().getDisplayMetrics().density;
+        setPadding((int) (density * 4), 0, 0, 0);
     }
 }
