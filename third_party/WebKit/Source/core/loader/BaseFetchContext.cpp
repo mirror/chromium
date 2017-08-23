@@ -54,6 +54,13 @@ ResourceRequestBlockedReason BaseFetchContext::CanRequest(
   ResourceRequestBlockedReason blocked_reason =
       CanRequestInternal(type, resource_request, url, options, reporting_policy,
                          origin_restriction, redirect_status);
+
+  // With PlzNavigate, there is no need to check for the requests that have
+  // already gone to the browser-side. If the requests have already been made,
+  // it is too late.
+  CHECK(resource_request.CheckForBrowserSideNavigation() ||
+        blocked_reason == ResourceRequestBlockedReason::kNone);
+
   if (blocked_reason != ResourceRequestBlockedReason::kNone &&
       reporting_policy == SecurityViolationReportingPolicy::kReport) {
     DispatchDidBlockRequest(resource_request, options.initiator_info,
