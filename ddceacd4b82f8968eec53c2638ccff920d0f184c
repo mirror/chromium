@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aaab85c_a7a640d7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-23T22:18:58Z",
+      "side": 1,
+      "message": "Gah, didn\u0027t mean to add these blank lines. Will remove.",
+      "revId": "ddceacd4b82f8968eec53c2638ccff920d0f184c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
