@@ -239,7 +239,6 @@ class HttpStreamFactoryImplJobControllerTest : public ::testing::Test {
           factory_, &request_delegate_, session_.get(), &job_factory_,
           request_info, is_preconnect_, enable_ip_based_pooling_,
           enable_alternative_services_, SSLConfig(), SSLConfig());
-      HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller_);
     }
   }
 
@@ -289,7 +288,7 @@ class HttpStreamFactoryImplJobControllerTest : public ::testing::Test {
   SpdySessionDependencies session_deps_{ProxyService::CreateDirect()};
   std::unique_ptr<HttpNetworkSession> session_;
   HttpStreamFactoryImpl* factory_ = nullptr;
-  HttpStreamFactoryImpl::JobController* job_controller_ = nullptr;
+  HttpStreamFactoryImpl::JobController* job_controller_;
   std::unique_ptr<HttpStreamFactoryImpl::Request> request_;
   std::unique_ptr<SequencedSocketData> tcp_data_;
   std::unique_ptr<MockQuicData> quic_data_;
@@ -331,9 +330,10 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, ProxyResolutionFailsSync) {
   EXPECT_CALL(request_delegate_,
               OnStreamFailed(ERR_MANDATORY_PROXY_CONFIGURATION_FAILED, _, _))
       .Times(1);
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
 
   EXPECT_FALSE(job_controller_->main_job());
   EXPECT_FALSE(job_controller_->alternative_job());
@@ -363,9 +363,10 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, ProxyResolutionFailsAsync) {
 
   Initialize(request_info);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
 
   EXPECT_FALSE(job_controller_->main_job());
   EXPECT_FALSE(job_controller_->alternative_job());
@@ -395,9 +396,10 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, NoSupportedProxies) {
 
   EXPECT_CALL(request_delegate_, OnStreamFailed(ERR_NO_SUPPORTED_PROXIES, _, _))
       .Times(1);
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
 
   EXPECT_FALSE(job_controller_->main_job());
   EXPECT_FALSE(job_controller_->alternative_job());
@@ -424,15 +426,15 @@ class JobControllerReconsiderProxyAfterErrorTest
 
   std::unique_ptr<HttpStreamRequest> CreateJobController(
       const HttpRequestInfo& request_info) {
-    HttpStreamFactoryImpl::JobController* job_controller =
-        new HttpStreamFactoryImpl::JobController(
+    auto job_controller =
+        base::MakeUnique<HttpStreamFactoryImpl::JobController>(
             factory_, &request_delegate_, session_.get(), &default_job_factory_,
             request_info, is_preconnect_, enable_ip_based_pooling_,
             enable_alternative_services_, SSLConfig(), SSLConfig());
-    HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller);
-    return job_controller->Start(&request_delegate_, nullptr, net_log_.bound(),
-                                 HttpStreamRequest::HTTP_STREAM,
-                                 DEFAULT_PRIORITY);
+    return base::MakeUnique<HttpStreamFactoryImpl::Request>(
+        request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+        std::move(job_controller), HttpStreamRequest::HTTP_STREAM,
+        DEFAULT_PRIORITY);
   }
 
  private:
@@ -636,9 +638,10 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
 
   Initialize(request_info);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
 
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_FALSE(job_controller_->alternative_job());
@@ -660,9 +663,10 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
 
   Initialize(request_info);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
 
   // There's no other alternative job. Thus when a stream is ready, it should
   // notify Request.
@@ -692,9 +696,11 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, CancelJobsBeforeBinding) {
   AlternativeService alternative_service(kProtoQUIC, server.host(), 443);
   SetAlternativeService(request_info, alternative_service);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
 
@@ -724,9 +730,11 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
   session_->http_server_properties()->SetQuicAlternativeService(
       server, alternative_service, expiration, {QUIC_VERSION_UNSUPPORTED});
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_FALSE(job_controller_->alternative_job());
 
@@ -750,9 +758,11 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, OnStreamFailedForBothJobs) {
   AlternativeService alternative_service(kProtoQUIC, server.host(), 443);
   SetAlternativeService(request_info, alternative_service);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
 
@@ -786,9 +796,11 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
   AlternativeService alternative_service(kProtoQUIC, server.host(), 443);
   SetAlternativeService(request_info, alternative_service);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
 
@@ -826,9 +838,11 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
   url::SchemeHostPort server(request_info.url);
   AlternativeService alternative_service(kProtoQUIC, server.host(), 443);
   SetAlternativeService(request_info, alternative_service);
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
   EXPECT_TRUE(JobControllerPeer::main_job_is_blocked(job_controller_));
@@ -869,9 +883,10 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
                                          alternative_port);
   SetAlternativeService(request_info, alternative_service);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
 
   HostPortPair main_host_port_pair =
       HttpStreamFactoryImplJobPeer::GetSpdySessionKey(
@@ -888,10 +903,10 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
   EXPECT_EQ(origin_port, alternative_host_port_pair.port());
 }
 
-// Tests that if an orphaned job completes after |request_| is gone,
+// Tests that if |request_| is destroyed when an alternative job is pending,
 // JobController will be cleaned up.
 TEST_F(HttpStreamFactoryImplJobControllerTest,
-       OrphanedJobCompletesControllerDestroyed) {
+       RequestCompletesControllerDestroyed) {
   quic_data_ = base::MakeUnique<MockQuicData>();
   quic_data_->AddRead(SYNCHRONOUS, ERR_IO_PENDING);
   // Use cold start and complete alt job manually.
@@ -913,9 +928,11 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
   AlternativeService alternative_service(kProtoQUIC, server.host(), 443);
   SetAlternativeService(request_info, alternative_service);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
   // main job should not be blocked because alt job returned ERR_IO_PENDING.
@@ -926,21 +943,10 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
   // Complete main job now.
   base::RunLoop().RunUntilIdle();
 
-  // Invoke OnRequestComplete() which should not delete |job_controller_| from
-  // |factory_| because alt job is yet to finish.
+  // Resetting |request_| will terminate the alt job, even though it has not
+  // yet finished and will delete |job_controller_| from |factory_|.
   request_.reset();
-  ASSERT_FALSE(HttpStreamFactoryImplPeer::IsJobControllerDeleted(factory_));
-  EXPECT_FALSE(job_controller_->main_job());
-  EXPECT_TRUE(job_controller_->alternative_job());
-
-  // Make |alternative_job| succeed.
-  HttpStream* http_stream =
-      new HttpBasicStream(base::MakeUnique<ClientSocketHandle>(), false, false);
-  job_factory_.alternative_job()->SetStream(http_stream);
-  // This should not call request_delegate_::OnStreamReady.
-  job_controller_->OnStreamReady(job_factory_.alternative_job(), SSLConfig());
-  // Make sure that controller does not leak.
-  EXPECT_TRUE(HttpStreamFactoryImplPeer::IsJobControllerDeleted(factory_));
+  ASSERT_TRUE(HttpStreamFactoryImplPeer::IsJobControllerDeleted(factory_));
 }
 
 TEST_F(HttpStreamFactoryImplJobControllerTest,
@@ -968,9 +974,11 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
   // |main_job| fails but should not report status to Request.
   EXPECT_CALL(request_delegate_, OnStreamFailed(_, _, _)).Times(0);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
 
@@ -1012,9 +1020,11 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
   AlternativeService alternative_service(kProtoQUIC, server.host(), 443);
   SetAlternativeService(request_info, alternative_service);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
 
@@ -1055,9 +1065,11 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
   AlternativeService alternative_service(kProtoQUIC, server.host(), 443);
   SetAlternativeService(request_info, alternative_service);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
 
@@ -1096,9 +1108,10 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, GetLoadStateAfterMainJobFailed) {
   AlternativeService alternative_service(kProtoQUIC, server.host(), 443);
   SetAlternativeService(request_info, alternative_service);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
 
@@ -1143,9 +1156,21 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, ResumeMainJobWhenAltJobStalls) {
   AlternativeService alternative_service(kProtoQUIC, server.host(), 443);
   SetAlternativeService(request_info, alternative_service);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  EXPECT_TRUE(job_controller_->main_job());
+  EXPECT_TRUE(job_controller_->alternative_job());
+
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
+  EXPECT_TRUE(job_controller_->main_job());
+  EXPECT_TRUE(job_controller_->alternative_job());
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
 
@@ -1168,9 +1193,10 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, InvalidPortForQuic) {
   AlternativeService alternative_service(kProtoQUIC, server.host(), 101);
   SetAlternativeService(request_info, alternative_service);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
 
   EXPECT_TRUE(job_factory_.main_job()->is_waiting());
 
@@ -1204,9 +1230,11 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, DelayedTCP) {
   AlternativeService alternative_service(kProtoQUIC, server.host(), 443);
   SetAlternativeService(request_info, alternative_service);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
   EXPECT_TRUE(job_controller_->main_job()->is_waiting());
@@ -1271,9 +1299,11 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, DelayedTCPWithLargeSrtt) {
   AlternativeService alternative_service(kProtoQUIC, server.host(), 443);
   SetAlternativeService(request_info, alternative_service);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
   EXPECT_TRUE(job_controller_->main_job()->is_waiting());
@@ -1330,9 +1360,10 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
   // The alternative job stalls as host resolution hangs when creating the QUIC
   // request and controller should resume the main job with delay.
   // OnStreamFailed should resume the main job immediately.
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
   EXPECT_TRUE(job_controller_->main_job()->is_waiting());
@@ -1374,9 +1405,10 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, HttpsURL) {
   Initialize(request_info);
   EXPECT_TRUE(test_proxy_delegate()->alternative_proxy_server().is_quic());
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_FALSE(job_controller_->main_job()->is_waiting());
   EXPECT_FALSE(job_controller_->alternative_job());
@@ -1399,9 +1431,11 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, HttpURLWithNoProxy) {
   Initialize(request_info);
   EXPECT_TRUE(test_proxy_delegate()->alternative_proxy_server().is_quic());
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_FALSE(job_controller_->main_job()->is_waiting());
   EXPECT_FALSE(job_controller_->alternative_job());
@@ -1441,9 +1475,11 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, DelayedTCPAlternativeProxy) {
   session_->http_server_properties()->SetServerNetworkStats(
       url::SchemeHostPort(GURL("https://myproxy.org")), stats1);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->main_job()->is_waiting());
   EXPECT_TRUE(job_controller_->alternative_job());
@@ -1497,9 +1533,11 @@ TEST_F(HttpStreamFactoryImplJobControllerTest, FailAlternativeProxy) {
   session_->http_server_properties()->SetServerNetworkStats(
       url::SchemeHostPort(GURL("https://myproxy.org")), stats1);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
 
@@ -1540,9 +1578,11 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
 
   url::SchemeHostPort server(request_info.url);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   EXPECT_TRUE(job_controller_->alternative_job());
 
@@ -1665,10 +1705,11 @@ TEST_F(JobControllerLimitMultipleH2Requests, MultipleRequests) {
             factory_, request_delegates[i].get(), session_.get(), &job_factory_,
             request_info, is_preconnect_, enable_ip_based_pooling_,
             enable_alternative_services_, SSLConfig(), SSLConfig());
-    HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller);
-    auto request = job_controller->Start(
-        request_delegates[i].get(), nullptr, net_log_.bound(),
+    auto request = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+        request_info.url, request_delegates[i].get(), nullptr, net_log_.bound(),
+        base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller),
         HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
     EXPECT_TRUE(job_controller->main_job());
     EXPECT_FALSE(job_controller->alternative_job());
     requests.push_back(std::move(request));
@@ -1738,10 +1779,11 @@ TEST_F(JobControllerLimitMultipleH2Requests, MultipleRequestsFirstRequestHang) {
             factory_, request_delegates[i].get(), session_.get(), &job_factory_,
             request_info, is_preconnect_, enable_ip_based_pooling_,
             enable_alternative_services_, SSLConfig(), SSLConfig());
-    HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller);
-    auto request = job_controller->Start(
-        request_delegates[i].get(), nullptr, net_log_.bound(),
+    auto request = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+        request_info.url, request_delegates[i].get(), nullptr, net_log_.bound(),
+        base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller),
         HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
     EXPECT_TRUE(job_controller->main_job());
     EXPECT_FALSE(job_controller->alternative_job());
     requests.push_back(std::move(request));
@@ -1810,10 +1852,11 @@ TEST_F(JobControllerLimitMultipleH2Requests,
             factory_, request_delegates[i].get(), session_.get(), &job_factory_,
             request_info, is_preconnect_, enable_ip_based_pooling_,
             enable_alternative_services_, SSLConfig(), SSLConfig());
-    HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller);
-    auto request = job_controller->Start(
-        request_delegates[i].get(), nullptr, net_log_.bound(),
+    auto request = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+        request_info.url, request_delegates[i].get(), nullptr, net_log_.bound(),
+        base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller),
         HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
     EXPECT_TRUE(job_controller->main_job());
     EXPECT_FALSE(job_controller->alternative_job());
     requests.push_back(std::move(request));
@@ -1909,10 +1952,11 @@ TEST_F(JobControllerLimitMultipleH2Requests, H1NegotiatedForFirstRequest) {
             factory_, request_delegates[i].get(), session_.get(), &job_factory_,
             request_info, is_preconnect_, enable_ip_based_pooling_,
             enable_alternative_services_, SSLConfig(), SSLConfig());
-    HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller);
-    auto request = job_controller->Start(
-        request_delegates[i].get(), nullptr, net_log_.bound(),
+    auto request = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+        request_info.url, request_delegates[i].get(), nullptr, net_log_.bound(),
+        base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller),
         HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
     EXPECT_TRUE(job_controller->main_job());
     EXPECT_FALSE(job_controller->alternative_job());
     requests.push_back(std::move(request));
@@ -1970,9 +2014,10 @@ TEST_F(JobControllerLimitMultipleH2Requests, QuicJobNotThrottled) {
           request_info, is_preconnect_, enable_ip_based_pooling_,
           enable_alternative_services_, SSLConfig(), SSLConfig());
   HttpStreamFactoryImplPeer::AddJobController(factory_, job_controller);
-  request_ =
-      job_controller->Start(&request_delegate_, nullptr, net_log_.bound(),
-                            HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
 
   EXPECT_TRUE(job_controller->main_job());
   EXPECT_TRUE(job_controller->alternative_job());
@@ -2024,9 +2069,11 @@ TEST_P(HttpStreamFactoryImplJobControllerMisdirectedRequestRetry,
   AlternativeService alternative_service(kProtoQUIC, server.host(), 443);
   SetAlternativeService(request_info, alternative_service);
 
-  request_ =
-      job_controller_->Start(&request_delegate_, nullptr, net_log_.bound(),
-                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  request_ = base::MakeUnique<HttpStreamFactoryImpl::Request>(
+      request_info.url, &request_delegate_, nullptr, net_log_.bound(),
+      base::WrapUnique<HttpStreamFactoryImpl::JobController>(job_controller_),
+      HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+
   EXPECT_TRUE(job_controller_->main_job());
   if (enable_alternative_services) {
     EXPECT_TRUE(job_controller_->alternative_job());

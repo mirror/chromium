@@ -117,25 +117,22 @@ bool HttpStreamFactoryImpl::JobController::for_websockets() {
   return factory_->for_websockets_;
 }
 
-std::unique_ptr<HttpStreamFactoryImpl::Request>
-HttpStreamFactoryImpl::JobController::Start(
+void HttpStreamFactoryImpl::JobController::Start(
     HttpStreamRequest::Delegate* delegate,
     WebSocketHandshakeStreamBase::CreateHelper*
         websocket_handshake_stream_create_helper,
     const NetLogWithSource& source_net_log,
     HttpStreamRequest::StreamType stream_type,
-    RequestPriority priority) {
+    RequestPriority priority,
+    HttpStreamFactoryImpl::Request* request) {
   DCHECK(factory_);
   DCHECK(!request_);
 
   stream_type_ = stream_type;
   priority_ = priority;
 
-  auto request = base::MakeUnique<Request>(
-      request_info_.url, this, delegate,
-      websocket_handshake_stream_create_helper, source_net_log, stream_type);
   // Keep a raw pointer but release ownership of Request instance.
-  request_ = request.get();
+  request_ = request;
 
   // Associates |net_log_| with |source_net_log|.
   source_net_log.AddEvent(NetLogEventType::HTTP_STREAM_JOB_CONTROLLER_BOUND,
@@ -144,7 +141,6 @@ HttpStreamFactoryImpl::JobController::Start(
                     source_net_log.source().ToEventParametersCallback());
 
   RunLoop(OK);
-  return request;
 }
 
 void HttpStreamFactoryImpl::JobController::Preconnect(int num_streams) {
@@ -180,16 +176,8 @@ void HttpStreamFactoryImpl::JobController::OnRequestComplete() {
   CancelJobs();
   request_ = nullptr;
   if (bound_job_) {
-    if (bound_job_->job_type() == MAIN) {
-      main_job_.reset();
-      // |alternative_job_| can be non-null if |main_job_| is resumed after
-      // |main_job_wait_time_| has elapsed. Allow |alternative_job_| to run to
-      // completion, rather than resetting it. OnOrphanedJobComplete() will
-      // clean up |this| when the job completes.
-    } else {
-      DCHECK(bound_job_->job_type() == ALTERNATIVE);
-      alternative_job_.reset();
-    }
+    alternative_job_.reset();
+    main_job_.reset();
     bound_job_ = nullptr;
   }
   MaybeNotifyFactoryOfCompletion();
