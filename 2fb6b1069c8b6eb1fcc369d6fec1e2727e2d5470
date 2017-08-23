@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "29633e58_63530d0f",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-23T04:09:35Z",
+      "side": 1,
+      "message": "I could find them, thanks!",
+      "parentUuid": "323f6824_e44be4f6",
+      "range": {
+        "startLine": 35,
+        "startChar": 73,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "2fb6b1069c8b6eb1fcc369d6fec1e2727e2d5470",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d50652a_58d4cff0",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/web_service_worker_error.mojom",
         "patchSetId": 6
