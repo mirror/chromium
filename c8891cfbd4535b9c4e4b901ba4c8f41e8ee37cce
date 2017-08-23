@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eab632b7_a1e894fa",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T19:15:43Z",
+      "side": 1,
+      "message": "The comment about \"Do not populate |loading_contents_|\" seems strange to me.\n\nEven if a session restore is ongoing, we still populate |loading_contents_| for non-session-restore associated tabs. The two activities are \"separate\" but may occur simultaneously. I\u0027d simply drop that sentence.",
+      "range": {
+        "startLine": 1162,
+        "startChar": 25,
+        "endLine": 1162,
+        "endChar": 26
+      },
+      "revId": "c8891cfbd4535b9c4e4b901ba4c8f41e8ee37cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef51bb0_30aa2adc",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T19:15:43Z",
+      "side": 1,
+      "message": "session*",
+      "range": {
+        "startLine": 442,
+        "startChar": 18,
+        "endLine": 442,
+        "endChar": 25
+      },
+      "revId": "c8891cfbd4535b9c4e4b901ba4c8f41e8ee37cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
