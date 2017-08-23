@@ -178,6 +178,17 @@ AutocompleteMatch& AutocompleteMatch::operator=(
 }
 
 // static
+bool AutocompleteMatch::ShouldDisplayFaviconForType(Type type) {
+#if defined(OS_ANDROID) || defined(OS_IOS)
+  return true;
+#endif
+
+  return base::FeatureList::IsEnabled(
+             omnibox::kUIExperimentShowSuggestionFavicons) &&
+         AutocompleteMatchType::IsUrlType(type);
+}
+
+// static
 const gfx::VectorIcon& AutocompleteMatch::TypeToVectorIcon(Type type) {
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
   switch (type) {
@@ -192,6 +203,7 @@ const gfx::VectorIcon& AutocompleteMatch::TypeToVectorIcon(Type type) {
     case Type::CLIPBOARD:
     case Type::PHYSICAL_WEB:
     case Type::PHYSICAL_WEB_OVERFLOW:
+      DCHECK(AutocompleteMatchType::IsUrlType(type));
       return omnibox::kHttpIcon;
 
     case Type::SEARCH_WHAT_YOU_TYPED:
