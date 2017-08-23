@@ -156,6 +156,10 @@ Configuration ParseExperimentalConfiguration(
       ParseInt(TakeVariationParamOrReturnEmpty(
           params, kActivationPriorityParameterName));
 
+  configuration.activation_conditions.experimental =
+      ParseBool(TakeVariationParamOrReturnEmpty(
+          params, kActivationExperimentalParameterName));
+
   // ActivationOptions:
   configuration.activation_options.activation_level = ParseActivationLevel(
       TakeVariationParamOrReturnEmpty(params, kActivationLevelParameterName));
@@ -261,6 +265,7 @@ const char kActivationListPhishingInterstitial[] = "phishing_interstitial";
 const char kActivationListSubresourceFilter[] = "subresource_filter";
 
 const char kActivationPriorityParameterName[] = "activation_priority";
+const char kActivationExperimentalParameterName[] = "experimental";
 
 const char kPerformanceMeasurementRateParameterName[] =
     "performance_measurement_rate";
@@ -315,6 +320,7 @@ bool Configuration::operator==(const Configuration& rhs) const {
     return std::tie(config.activation_conditions.activation_scope,
                     config.activation_conditions.activation_list,
                     config.activation_conditions.priority,
+                    config.activation_conditions.experimental,
                     config.activation_options.activation_level,
                     config.activation_options.performance_measurement_rate,
                     config.activation_options.should_whitelist_site_on_reload,
@@ -336,6 +342,7 @@ Configuration::ActivationConditions::ToTracedValue() const {
   value->SetString("activation_scope", StreamToString(activation_scope));
   value->SetString("activation_list", StreamToString(activation_list));
   value->SetInteger("priority", priority);
+  value->SetBoolean("experimental", experimental);
   return value;
 }
 
