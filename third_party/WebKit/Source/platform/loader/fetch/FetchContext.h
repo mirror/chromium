@@ -47,6 +47,7 @@
 #include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebURLLoader.h"
 #include "public/platform/WebURLRequest.h"
+#include "public/platform/WebURLRequestsTracker.h"
 
 namespace blink {
 
@@ -217,6 +218,10 @@ class PLATFORM_EXPORT FetchContext
   virtual std::unique_ptr<WebURLLoader> CreateURLLoader(
       const ResourceRequest&) {
     NOTREACHED();
+    return nullptr;
+  }
+
+  virtual std::unique_ptr<WebURLRequestsTracker> IssueRequestsTracker() {
     return nullptr;
   }
 

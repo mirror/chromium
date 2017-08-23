@@ -282,16 +282,14 @@ ResourceFetcher::ResourceFetcher(FetchContext* new_context,
       // keepalive_loaders_timer_ shouldn't use a frame associated timer because
       // it will be run after frame destruction.
       keepalive_loaders_timer_(
-          Platform::Current()
-              ->CurrentThread()
-              ->Scheduler()
-              ->LoadingTaskRunner(),
+          Platform::Current()->CurrentThread()->GetWebTaskRunner(),
           this,
           &ResourceFetcher::StopFetchingIncludingKeepaliveLoaders),
       auto_load_images_(true),
       images_enabled_(true),
       allow_stale_resources_(false),
-      image_fetched_(false) {}
+      image_fetched_(false),
+      context_cleared_(false) {}
 
 ResourceFetcher::~ResourceFetcher() {}
 
@@ -1199,13 +1197,19 @@ void ResourceFetcher::ReloadImagesIfNotDeferred() {
 }
 
 void ResourceFetcher::ClearContext() {
+  if (context_cleared_)
+    return;
+  context_cleared_ = true;
+
   scheduler_->Shutdown();
   ClearPreloads(ResourceFetcher::kClearAllPreloads);
+  auto requests_tracker = Context().IssueRequestsTracker();
   context_ = Context().Detach();
 
   if (!loaders_.IsEmpty() || !non_blocking_loaders_.IsEmpty()) {
     // There are some keepalive requests.
     self_keep_alive_ = this;
+    requests_tracker_ = std::move(requests_tracker);
     keepalive_loaders_timer_.StartOneShot(kKeepaliveLoadersTimeout,
                                           BLINK_FROM_HERE);
   }
@@ -1461,6 +1465,7 @@ void ResourceFetcher::RemoveResourceLoader(ResourceLoader* loader) {
 
   if (loaders_.IsEmpty() && non_blocking_loaders_.IsEmpty()) {
     self_keep_alive_.Clear();
+    requests_tracker_ = nullptr;
     keepalive_loaders_timer_.Stop();
   }
 }
@@ -1697,6 +1702,7 @@ void ResourceFetcher::StopFetchingInternal(StopFetchingTarget target) {
 void ResourceFetcher::StopFetchingIncludingKeepaliveLoaders(TimerBase*) {
   StopFetchingInternal(StopFetchingTarget::kIncludingKeepaliveLoaders);
   self_keep_alive_.Clear();
+  requests_tracker_ = nullptr;
 }
 
 DEFINE_TRACE(ResourceFetcher) {

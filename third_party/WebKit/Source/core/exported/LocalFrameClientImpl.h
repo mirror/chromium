@@ -234,6 +234,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   std::unique_ptr<WebURLLoader> CreateURLLoader(const ResourceRequest&,
                                                 WebTaskRunner*) override;
+  std::unique_ptr<WebURLRequestsTracker> IssueRequestsTracker() override;
 
   service_manager::InterfaceProvider* GetInterfaceProvider() override;
 
