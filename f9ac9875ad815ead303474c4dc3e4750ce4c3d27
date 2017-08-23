@@ -16,6 +16,24 @@
       "revId": "f9ac9875ad815ead303474c4dc3e4750ce4c3d27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f030f3_589e9152",
+        "filename": "chrome/browser/extensions/user_script_listener_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-23T22:07:37Z",
+      "side": 1,
+      "message": "Apparently not:\n\n../../chrome/browser/extensions/user_script_listener_unittest.cc:52:17: error: cannot initialize a variable of type \u0027void *const\u0027 with an rvalue of type \u0027void *const *\u0027\nconstexpr void* kUserDataKey \u003d \u0026kUserDataKey;\n                ^              ~~~~~~~~~~~~~\nWhich makes sense, it\u0027s actually link time that the value\u0027s generated at, and it needs to take memory in order for the address to exist.  I can (and will) use a simple const, though.",
+      "parentUuid": "3952d890_77175796",
+      "revId": "f9ac9875ad815ead303474c4dc3e4750ce4c3d27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
