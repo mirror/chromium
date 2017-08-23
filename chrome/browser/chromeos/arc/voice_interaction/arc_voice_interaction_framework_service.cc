@@ -21,6 +21,7 @@
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
 #include "base/task_scheduler/post_task.h"
+#include "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.h"
 #include "chrome/browser/chromeos/login/helper.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host_impl.h"
 #include "chrome/browser/profiles/profile.h"
@@ -466,6 +467,7 @@ void ArcVoiceInteractionFrameworkService::StartSessionFromUserInteraction(
         ash::VoiceInteractionState::NOT_READY);
   }
 
+  ArcBootPhaseMonitorBridge::RecordFirstAppLaunchDelayUMA(context_);
   if (!arc_bridge_service_->voice_interaction_framework()->has_instance()) {
     VLOG(1) << "Instance not ready.";
     SetArcCpuRestriction(false);
