@@ -707,6 +707,9 @@ public class BottomSheet
         mActivity = activity;
         mActionBarDelegate = new ViewShiftingActionBarDelegate(mActivity, this);
 
+        getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
+        setPadding(0, 0, 0, (int) mBottomNavHeight - mToolbarShadowHeight);
+
         mBottomSheetContentContainer = (FrameLayout) findViewById(R.id.bottom_sheet_content);
 
         // Listen to height changes on the root.
@@ -724,7 +727,7 @@ public class BottomSheet
                 mContainerHeight = bottom - top;
 
                 if (previousWidth != mContainerWidth || previousHeight != mContainerHeight) {
-                    updateSheetDimensions();
+                    updateSheetStateRatios();
                 }
 
                 int heightMinusKeyboard = (int) mContainerHeight;
@@ -752,8 +755,7 @@ public class BottomSheet
                     // This shrinks the content size while retaining the default background color
                     // where the keyboard is appearing. If the sheet is not showing, resize the
                     // sheet to its default state.
-                    mBottomSheetContentContainer.setPadding(
-                            0, 0, 0, (int) mBottomNavHeight + keyboardHeight);
+                    mBottomSheetContentContainer.setPadding(0, 0, 0, keyboardHeight);
                 }
 
                 if (previousHeight != mContainerHeight
@@ -784,7 +786,7 @@ public class BottomSheet
                 }
 
                 mToolbarHeight = bottom - top;
-                updateSheetDimensions();
+                updateSheetStateRatios();
 
                 if (!mIsScrolling) {
                     cancelAnimation();
@@ -1137,9 +1139,9 @@ public class BottomSheet
     }
 
     /**
-     * Updates the bottom sheet's peeking and content height.
+     * Updates the bottom sheet's state ratios and adjusts the sheet's state if necessary.
      */
-    private void updateSheetDimensions() {
+    private void updateSheetStateRatios() {
         if (mContainerHeight <= 0) return;
 
         // Though mStateRatios is a static constant, the peeking ratio is computed here because
@@ -1151,30 +1153,9 @@ public class BottomSheet
         // The max height ratio will be greater than 1 to account for the toolbar shadow.
         mStateRatios[2] = (mContainerHeight + mToolbarShadowHeight) / mContainerHeight;
 
-        MarginLayoutParams sheetContentParams =
-                (MarginLayoutParams) mBottomSheetContentContainer.getLayoutParams();
-        sheetContentParams.width = (int) mContainerWidth;
-        sheetContentParams.height = (int) mContainerHeight;
-        sheetContentParams.topMargin = mToolbarShadowHeight;
-
-        MarginLayoutParams toolbarShadowParams =
-                (MarginLayoutParams) findViewById(R.id.toolbar_shadow).getLayoutParams();
-        toolbarShadowParams.topMargin = (int) mToolbarHeight;
-
         if (mCurrentState == SHEET_STATE_HALF && isSmallScreen()) {
             setSheetState(SHEET_STATE_FULL, false);
         }
-
-        // RequestLayout is wrapped in a runnable for the sake of Android J.
-        // TODO(mdjones): We request too many layouts. This function itself is called inside of a
-        // layout cycle and calls requestLayout. Now that the sheet content fills the entire screen,
-        // we should no longer need to do this. https://crbug.com/725730
-        post(new Runnable() {
-            @Override
-            public void run() {
-                mBottomSheetContentContainer.requestLayout();
-            }
-        });
     }
 
     /**
