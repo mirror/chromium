@@ -47,8 +47,12 @@ class PrintersSyncBridge : public syncer::ModelTypeSyncBridge {
       const syncer::EntityData& local_data,
       const syncer::EntityData& remote_data) const override;
 
-  // Store a new or updated |printer|.
+  // Store a |printer|.  Overwrites a printer with a matching id if it exists.
   void AddPrinter(std::unique_ptr<sync_pb::PrinterSpecifics> printer);
+  // Merges the |printer| with an existing |printer| if their ids match.
+  // Otherwise, adds the printer.  Returns true if an existing printer was
+  // updated.
+  bool UpdatePrinter(std::unique_ptr<sync_pb::PrinterSpecifics> printer);
   // Remove a printer by |id|.
   bool RemovePrinter(const std::string& id);
   // Returns all printers stored in the database and synced.
