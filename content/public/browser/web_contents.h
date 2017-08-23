@@ -100,7 +100,6 @@ struct RendererPreferences;
 // WebContents, navigate it backwards/forwards, etc. See navigation_controller.h
 // for more details.
 class WebContents : public PageNavigator,
-                    public IPC::Sender,
                     public base::SupportsUserData {
  public:
   struct CONTENT_EXPORT CreateParams {

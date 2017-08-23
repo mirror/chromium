@@ -60,10 +60,10 @@ void ExtensionsGuestViewManagerDelegate::DispatchEvent(
   if (!owner)
     return;  // Could happen at tab shutdown.
 
-  EventRouter::DispatchEventToSender(owner, guest->browser_context(),
-                                     guest->owner_host(), histogram_value,
-                                     event_name, std::move(event_args),
-                                     EventRouter::USER_GESTURE_UNKNOWN, info);
+  EventRouter::DispatchEventToSender(
+      owner->GetMainFrame(), guest->browser_context(), guest->owner_host(),
+      histogram_value, event_name, std::move(event_args),
+      EventRouter::USER_GESTURE_UNKNOWN, info);
 }
 
 bool ExtensionsGuestViewManagerDelegate::IsGuestAvailableToContext(

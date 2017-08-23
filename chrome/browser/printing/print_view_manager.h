@@ -8,6 +8,8 @@
 #include "base/macros.h"
 #include "chrome/browser/printing/print_view_manager_base.h"
 #include "content/public/browser/web_contents_user_data.h"
+#include "ipc/ipc_message_templates.h"
+#include "ipc/ipc_sender.h"
 #include "printing/features/features.h"
 
 namespace content {
@@ -74,6 +76,11 @@ class PrintViewManager : public PrintViewManagerBase,
   void OnShowScriptedPrintPreview(content::RenderFrameHost* rfh,
                                   bool source_is_modifiable);
   void OnScriptedPrintPreviewReply(IPC::Message* reply_msg);
+
+  // API required by the IPC_MESSAGE_HANDLER_DELAY_REPLY macro.
+  bool Send(IPC::Message* msg);
+  template <typename T1, typename T2, typename T3>
+  friend class IPC::MessageT;
 
   base::Closure on_print_dialog_shown_callback_;
 

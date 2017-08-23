@@ -19,6 +19,7 @@
 #include "content/public/browser/plugin_service.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
+#include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/webplugininfo.h"
 #include "printing/features/features.h"
@@ -253,6 +254,10 @@ bool PrintViewManager::OnMessageReceived(
 
   return handled ||
          PrintViewManagerBase::OnMessageReceived(message, render_frame_host);
+}
+
+bool PrintViewManager::Send(IPC::Message* msg) {
+  return WebContentsObserver::web_contents()->GetRenderViewHost()->Send(msg);
 }
 
 }  // namespace printing

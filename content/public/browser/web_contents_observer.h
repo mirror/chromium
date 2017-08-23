@@ -59,8 +59,7 @@ struct ResourceRequestDetails;
 //
 // TODO(creis, jochen): Hide the fact that there are several RenderViewHosts
 // from the WebContentsObserver API. http://crbug.com/173325
-class CONTENT_EXPORT WebContentsObserver : public IPC::Listener,
-                                           public IPC::Sender {
+class CONTENT_EXPORT WebContentsObserver : public IPC::Listener {
  public:
   // Frames and Views ----------------------------------------------------------
 
@@ -458,10 +457,6 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener,
 
   // IPC::Listener implementation.
   bool OnMessageReceived(const IPC::Message& message) override;
-
-  // IPC::Sender implementation.
-  bool Send(IPC::Message* message) override;
-  int routing_id() const;
 
   WebContents* web_contents() const;
 

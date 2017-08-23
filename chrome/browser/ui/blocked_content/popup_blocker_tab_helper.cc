@@ -174,9 +174,10 @@ void PopupBlockerTabHelper::ShowBlockedPopup(
 #endif
   if (popup->params.disposition == WindowOpenDisposition::NEW_POPUP &&
       popup->params.target_contents) {
-    popup->params.target_contents->Send(new ChromeViewMsg_SetWindowFeatures(
-        popup->params.target_contents->GetRenderViewHost()->GetRoutingID(),
-        popup->window_features));
+    popup->params.target_contents->GetRenderViewHost()->Send(
+        new ChromeViewMsg_SetWindowFeatures(
+            popup->params.target_contents->GetRenderViewHost()->GetRoutingID(),
+            popup->window_features));
   }
 
   blocked_popups_.Remove(id);

@@ -302,8 +302,9 @@ void ChromeWebViewPermissionHelperDelegate::FileSystemAccessedAsyncResponse(
     bool allowed) {
   TabSpecificContentSettings::FileSystemAccessed(
       render_process_id, render_frame_id, url, !allowed);
-  Send(new ChromeViewMsg_RequestFileSystemAccessAsyncResponse(
-      render_frame_id, request_id, allowed));
+  content::RenderFrameHost::FromID(render_process_id, render_frame_id)
+      ->Send(new ChromeViewMsg_RequestFileSystemAccessAsyncResponse(
+          render_frame_id, request_id, allowed));
 }
 
 void ChromeWebViewPermissionHelperDelegate::FileSystemAccessedSync(
@@ -334,7 +335,8 @@ void ChromeWebViewPermissionHelperDelegate::FileSystemAccessedSyncResponse(
       render_process_id, render_frame_id, url, !allowed);
   ChromeViewHostMsg_RequestFileSystemAccessSync::WriteReplyParams(reply_msg,
                                                                   allowed);
-  Send(reply_msg);
+  content::RenderFrameHost::FromID(render_process_id, render_frame_id)
+      ->Send(reply_msg);
 }
 
 }  // namespace extensions
