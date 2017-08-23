@@ -8,12 +8,16 @@
           "resource_coordinator::mojom::CoordinationUnitIntrospector"
         ],
         "coordination_unit": [ "resource_coordinator::mojom::CoordinationUnitProvider" ],
+        "memory_instrumentation": [ "memory_instrumentation::mojom::Coordinator" ],
         "service_callbacks": [ "resource_coordinator::mojom::ServiceCallbacks" ],
         "tab_signal": [ "resource_coordinator::mojom::TabSignalGenerator" ],
         "tests": [ "*" ]
       },
       "requires": {
-        "service_manager": [ "service_manager:all_users" ]
+        "service_manager": [
+          "service_manager:all_users",
+          "service_manager:service_manager"
+        ]
       }
     }
   }
