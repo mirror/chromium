@@ -135,6 +135,30 @@
     },
     {
       "key": {
+        "uuid": "04b97abb_160a1420",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 27257,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-23T22:53:04Z",
+      "side": 1,
+      "message": "Landing the CLs in either order should be fine.  One of the two definitions will win the race while there\u0027s a conflict, but that should quickly resolve itself.",
+      "parentUuid": "34abcc27_1caedf86",
+      "range": {
+        "startLine": 27257,
+        "startChar": 24,
+        "endLine": 27257,
+        "endChar": 50
+      },
+      "revId": "169e43538af9132064ad73203456ae5c26810e2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bf4091f_9c9cc460",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
