@@ -423,6 +423,24 @@
       "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb7b1e0_d1f13d95",
+        "filename": "third_party/WebKit/Source/modules/permissions/Permissions.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-23T17:26:33Z",
+      "side": 1,
+      "message": "We\u0027re not entirely sure what impact that has, so I split that off in a separate CL for when Raymes returns from holiday:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/625920\n\nIt *should* be fine, though. However, since that lives in //chrome, it wouldn\u0027t be captured by layout tests, so we\u0027d need duplication elsewhere.",
+      "parentUuid": "9c683e7b_dfc61ab5",
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
