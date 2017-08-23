@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "f71765b1_94dcf664",
+        "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1239649
+      },
+      "writtenOn": "2017-08-23T06:43:55Z",
+      "side": 1,
+      "message": "That action would require assistance from renderer, and while I found some functions that could theoretically help in WebLocalFrame, I don\u0027t see any relevant existing messages that we could send to RenderFrameImpl aside from those that act on find in page (such as return closest find selection rect). And when we need a current active find in page rect, pretty much the only place to get it from would be by either asking the FindBarHost/FindBarView or subscribing to FindTabHelper. Both are pretty unreliable, as FindBarHost/FindBarView get the info from FindTabHelper, and the bug was precicely that it gave incorrect iformation. Without changing WebContentsImpl, Browser, or FindRequestManager (all of them just pass the information along to FindTabHelper without using or storing it) we cannot get the right selection_rect info.",
+      "parentUuid": "bfaae01d_a119547b",
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24bab9db_f699cf51",
         "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
         "patchSetId": 3
