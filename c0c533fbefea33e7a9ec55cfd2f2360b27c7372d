@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3809a23d_53461f5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T06:57:17Z",
+      "side": 1,
+      "message": "Remove the extra blank line here",
+      "revId": "c0c533fbefea33e7a9ec55cfd2f2360b27c7372d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c67c594_cd5b9da5",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T06:57:17Z",
+      "side": 1,
+      "message": "This comment should describe more what early response means. The point is that the promise passed to respondWith() settles before the promise passed to waitUntil().\n\nSomething like:\n\"Sets the response mode to \"early response\", which simulates the promise passed to respondWith() resolving before the waitUntil() promise resolves. In this mode, the helper will respond to fetch events immediately, but will not finish the fetch event until FinishWaitUntil() is called.\"",
+      "revId": "c0c533fbefea33e7a9ec55cfd2f2360b27c7372d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f85faa2_499f08db",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T06:57:17Z",
+      "side": 1,
+      "message": "Prefer function names to be verbs. Maybe: \"RespondEarly\".",
+      "revId": "c0c533fbefea33e7a9ec55cfd2f2360b27c7372d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f83a5ea_a37388c4",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T06:57:17Z",
+      "side": 1,
+      "message": "\u0027.\u0027 at end",
+      "range": {
+        "startLine": 142,
+        "startChar": 35,
+        "endLine": 142,
+        "endChar": 37
+      },
+      "revId": "c0c533fbefea33e7a9ec55cfd2f2360b27c7372d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "312445d1_a25ecc6d",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T06:57:17Z",
+      "side": 1,
+      "message": "This is actually testing when the service worker is not used at all. Maybe something like:\n\n// Test asking the job to fallback to network. In production code, this happens when there is no active service worker for the URL, or it must be skipped, etc.",
+      "revId": "c0c533fbefea33e7a9ec55cfd2f2360b27c7372d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3db760_3c06cf24",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T06:57:17Z",
+      "side": 1,
+      "message": "This should be something like \"Fallback\" or \"FallbackToNetwork\" (and the test in the previous patch which was named \"Fallback\" should be \"FallbackResponse\", since that test is testing a service worker responding with fallback.)",
+      "range": {
+        "startLine": 353,
+        "startChar": 38,
+        "endLine": 353,
+        "endChar": 54
+      },
+      "revId": "c0c533fbefea33e7a9ec55cfd2f2360b27c7372d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c428a641_fe4ffa19",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T06:57:17Z",
+      "side": 1,
+      "message": "Add a comment like\n\n// Ask the job to fallback to network. In production code, ServiceWorkerControlleeRequestHandler calls FallbackToNetwork() to do this.",
+      "revId": "c0c533fbefea33e7a9ec55cfd2f2360b27c7372d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa154f5a_f3334f61",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T06:57:17Z",
+      "side": 1,
+      "message": "EXPECT_FALSE(callback)\n\nis easier to read",
+      "revId": "c0c533fbefea33e7a9ec55cfd2f2360b27c7372d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
