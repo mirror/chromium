@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "7e7c4570_03089b66",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T00:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4ae2b2d_e06bb722",
+      "range": {
+        "startLine": 43,
+        "startChar": 38,
+        "endLine": 43,
+        "endChar": 51
+      },
+      "revId": "53eed586ca053275add7f2c6436cef540e23505c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f908e15_897cd34f",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 2

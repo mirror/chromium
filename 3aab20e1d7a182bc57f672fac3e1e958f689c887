@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b14e8f37_1dcb7e55",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T00:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3923bf9a_89691b3a",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 14
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d064179_a3c75527",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35c3d57_072dd327",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T00:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d064179_a3c75527",
+      "range": {
+        "startLine": 62,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dd04fefb_54b3b31f",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T00:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4bea201_251ad289",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 48
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dbd735f_486ef56f",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f18b32d_f75d6144",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T00:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dbd735f_486ef56f",
+      "range": {
+        "startLine": 108,
+        "startChar": 47,
+        "endLine": 109,
+        "endChar": 0
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a6021863_f2f6b547",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T00:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2535c720_f2e8529f",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 34
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "415e2640_dc3f9e62",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 3
@@ -137,6 +257,30 @@
       "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb6ab5d_de4b7b16",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T00:28:22Z",
+      "side": 1,
+      "message": "Done.\nThat\u0027s exactly what I was looking for, thanks!",
+      "parentUuid": "415e2640_dc3f9e62",
+      "range": {
+        "startLine": 247,
+        "startChar": 4,
+        "endLine": 248,
+        "endChar": 15
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "411559da_78cf39cb",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T00:28:22Z",
+      "side": 1,
+      "message": "Done.\nShould I be using OnceCallbacks instead of RepeatingCallbacks?",
+      "parentUuid": "ff3f50fa_502d2128",
+      "range": {
+        "startLine": 264,
+        "startChar": 4,
+        "endLine": 264,
+        "endChar": 27
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a771cd3b_a4fd8f9f",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 3
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "d6767f9e_dd856487",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T00:28:22Z",
+      "side": 1,
+      "message": "I can\u0027t just use base::DeleteFile because it returns a bool, and anything you give to PostTask() must be void. I either need a callback to reply to which takes the bool and does nothing like the one I used here, or I have to make another function which calls base::DeleteFile for me and returns void and post a task using that one.",
+      "parentUuid": "a771cd3b_a4fd8f9f",
+      "range": {
+        "startLine": 276,
+        "startChar": 4,
+        "endLine": 276,
+        "endChar": 30
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "186cdb3e_8ee69ed2",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 3
@@ -197,6 +389,30 @@
       "writtenOn": "2017-08-22T21:51:21Z",
       "side": 1,
       "message": "If you consolidated the filepaths (for instance if you knew the path had the crdownload extension until you started the move operation) then you could collapse these two if statements (line 275 and 282) into a single one.",
+      "range": {
+        "startLine": 282,
+        "startChar": 8,
+        "endLine": 282,
+        "endChar": 49
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04fdfd40_8a05d6c7",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T00:28:22Z",
+      "side": 1,
+      "message": "I don\u0027t understand. 275 is for deleting the temp file, and 282 is for deleting the destination file. I could put them under the same if for all the states they could cover since trying to delete them and failing is ok.",
+      "parentUuid": "186cdb3e_8ee69ed2",
       "range": {
         "startLine": 282,
         "startChar": 8,
@@ -229,6 +445,30 @@
       "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a709f427_3e74887f",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T00:28:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07afd90b_d8155a08",
+      "range": {
+        "startLine": 296,
+        "startChar": 2,
+        "endLine": 296,
+        "endChar": 17
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
