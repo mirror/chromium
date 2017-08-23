@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b99f0c6_c004ce96",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ab3ebb1_3fb1db18",
+      "range": {
+        "startLine": 125,
+        "startChar": 7,
+        "endLine": 125,
+        "endChar": 13
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d41e8132_528e7ac5",
         "filename": "chrome/common/conflicts/module_watcher_win.cc",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "5fbf2260_e969fb89",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "No longer applicable.",
+      "parentUuid": "d41e8132_528e7ac5",
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e9c5044_4a2d5bf7",
         "filename": "chrome/common/conflicts/module_watcher_win.cc",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56774163_b66833c9",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "No longer applicable.",
+      "parentUuid": "0e9c5044_4a2d5bf7",
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "caec0d64_f9a6a64f",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a005a3ab_c79c1db9",
+      "range": {
+        "startLine": 168,
+        "startChar": 11,
+        "endLine": 168,
+        "endChar": 19
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "770fff13_f16284cf",
         "filename": "chrome/common/conflicts/module_watcher_win.cc",
         "patchSetId": 3
@@ -102,6 +186,30 @@
       "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e3a170_fc06d468",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "770fff13_f16284cf",
+      "range": {
+        "startLine": 177,
+        "startChar": 23,
+        "endLine": 177,
+        "endChar": 53
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "8f816d00_8d44b1be",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "It is. I didn\u0027t know the right term. Thanks!",
+      "parentUuid": "59e28116_0ac9181e",
+      "range": {
+        "startLine": 197,
+        "startChar": 23,
+        "endLine": 197,
+        "endChar": 41
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3e9286b_b05c9132",
         "filename": "chrome/common/conflicts/module_watcher_win.cc",
         "patchSetId": 3
@@ -142,6 +274,24 @@
       "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045ad698_6deff9ae",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "No longer applicable.",
+      "parentUuid": "c3e9286b_b05c9132",
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +341,54 @@
     },
     {
       "key": {
+        "uuid": "e74a36dd_c3c7ee62",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "No longer applicable.",
+      "parentUuid": "c740f98a_3c3bb622",
+      "range": {
+        "startLine": 233,
+        "startChar": 29,
+        "endLine": 233,
+        "endChar": 35
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3661bd8e_9da90a57",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "No longer applicable.",
+      "parentUuid": "6d856077_321ec60a",
+      "range": {
+        "startLine": 233,
+        "startChar": 47,
+        "endLine": 233,
+        "endChar": 49
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e7a10cc_b6a1c124",
         "filename": "chrome/common/conflicts/module_watcher_win.cc",
         "patchSetId": 3
@@ -205,6 +403,24 @@
       "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eaf3ea5_256cb965",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "No longer applicable.",
+      "parentUuid": "8e7a10cc_b6a1c124",
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "50ea2ece_7f63eb7c",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc2723f9_694eeb58",
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10bd7842_94a4ff67",
         "filename": "chrome/common/conflicts/module_watcher_win.cc",
         "patchSetId": 3
@@ -239,6 +473,24 @@
       "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463f18c8_14504189",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "No longer applicable.",
+      "parentUuid": "10bd7842_94a4ff67",
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -265,6 +517,30 @@
     },
     {
       "key": {
+        "uuid": "1f63601f_c5b55673",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "No longer applicable, since I\u0027m dropping this approach because of the redesign of the ModuleWatcher.",
+      "parentUuid": "45693742_128cae5e",
+      "range": {
+        "startLine": 309,
+        "startChar": 20,
+        "endLine": 309,
+        "endChar": 29
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a22f0f1d_0d00be3c",
         "filename": "chrome/common/conflicts/module_watcher_win.h",
         "patchSetId": 3
@@ -285,6 +561,30 @@
       "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ec1b43_4f92287b",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "I was updating this comment in the followup CL with the SEH stuff around GetModuleTimeDateStamp.\n\nI\u0027ll do it here instead.",
+      "parentUuid": "a22f0f1d_0d00be3c",
+      "range": {
+        "startLine": 52,
+        "startChar": 58,
+        "endLine": 52,
+        "endChar": 61
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -311,6 +611,30 @@
     },
     {
       "key": {
+        "uuid": "c889f6b9_c3dbd7a6",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "Done. The comment no longer needs updating.",
+      "parentUuid": "5248b3f6_6c94427e",
+      "range": {
+        "startLine": 59,
+        "startChar": 35,
+        "endLine": 61,
+        "endChar": 66
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3737e166_388506ce",
         "filename": "chrome/common/conflicts/module_watcher_win.h",
         "patchSetId": 3
@@ -334,6 +658,30 @@
     },
     {
       "key": {
+        "uuid": "2991e826_a03131d1",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "No longer applicable.",
+      "parentUuid": "3737e166_388506ce",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 19
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c265d30b_b1ba4664",
         "filename": "chrome/common/conflicts/module_watcher_win.h",
         "patchSetId": 3
@@ -354,6 +702,30 @@
       "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f064a90_959b0717",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-23T21:03:11Z",
+      "side": 1,
+      "message": "No longer applicable.",
+      "parentUuid": "c265d30b_b1ba4664",
+      "range": {
+        "startLine": 127,
+        "startChar": 23,
+        "endLine": 127,
+        "endChar": 26
+      },
+      "revId": "8f4b07735b65bf27b1d7533ad4ca7203e326d680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
