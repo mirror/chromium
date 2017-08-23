@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e1bf6d5_4800d3eb",
+        "filename": "net/base/registry_controlled_domains/effective_tld_names.dat",
+        "patchSetId": 3
+      },
+      "lineNbr": 6475,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-23T23:11:00Z",
+      "side": 1,
+      "message": "Nit: Would be nice if upstream wrapped at 80 cols",
+      "revId": "5820b7ea7e6582fc8a0dceb659168f3f95655adf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
