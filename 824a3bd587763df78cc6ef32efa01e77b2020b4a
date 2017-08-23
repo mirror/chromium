@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27777f87_3c3fbaa5",
+        "filename": "content/common/sandbox_policy_fuchsia.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-23T23:33:23Z",
+      "side": 1,
+      "message": "Add header guards.",
+      "revId": "824a3bd587763df78cc6ef32efa01e77b2020b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
