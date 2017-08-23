@@ -274,8 +274,15 @@ class PrintPreviewHandler
   // Gets the initiator for the print preview dialog.
   content::WebContents* GetInitiator() const;
 
-  // Closes the preview dialog.
+  // Closes the preview dialog, and notify the initiator WebContents of it. The
+  // notification is used for 'afterprint' event.
   void ClosePreviewDialog();
+
+  // Closes the preview dialog. This doesn't notify the initiator.
+  void ClosePreviewDialogBySwitchToSystemDialog();
+
+  // Notify that this preview dialog is closed.
+  void NotifyClosePreviewDialog();
 
   // Adds all the recorded stats taken so far to histogram counts.
   void ReportStats();
