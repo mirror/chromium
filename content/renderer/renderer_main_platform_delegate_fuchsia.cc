@@ -18,7 +18,7 @@ void RendererMainPlatformDelegate::PlatformUninitialize() {}
 bool RendererMainPlatformDelegate::EnableSandbox() {
   // TODO(fuchsia): Implement this for Fuchsia.
   NOTIMPLEMENTED();
-  return false;
+  return true;
 }
 
 }  // namespace content
