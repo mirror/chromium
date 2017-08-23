@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "166073a3_25de4903",
+        "filename": "chrome/browser/ui/aura/accessibility/automation_manager_aura.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T21:34:24Z",
+      "side": 1,
+      "message": "SessionManager is a chrmoes only component. This block needs to be OS_CHROMEOS only if AutomationManagerAura is used on other platforms.",
+      "revId": "4559546727eaefaaaf3cdc0f9ff1f048bd9e6a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
