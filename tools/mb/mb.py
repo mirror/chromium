@@ -1080,6 +1080,20 @@ class MetaBuildWrapper(object):
 
     return ret
 
+  def FindAndroidUnstrippedLibrariesForLabel(self, label):
+    target_name = label[label.rindex(':') + 1:]
+    swarming_deps_path = self.ToSrcRelPath(
+        self.ToGenDirPath(label, target_name + '.swarming_deps'))
+    ret = []
+    # The file will not exist for non-instrumentation test targets.
+    if os.path.exists(swarming_deps_path):
+      for line in self.ReadFile(swarming_deps_path).splitlines():
+        if line.endswith('.so'):
+          parent, name = os.path.split(line)
+          ret.append(os.path.normpath(
+              os.path.join(parent, 'lib.unstripped', name)))
+    return ret
+
   def GetIsolateCommand(self, target, vals):
     isolate_map = self.ReadIsolateMap()
 
@@ -1119,6 +1133,9 @@ class MetaBuildWrapper(object):
           '--logdog-bin-cmd', '../../bin/logdog_butler',
           '--logcat-output-file', '${ISOLATED_OUTDIR}/logcats',
           '--store-tombstones']
+
+      label = isolate_map[target]['label']
+      extra_files.extend(self.FindAndroidUnstrippedLibrariesForLabel(label))
     elif use_xvfb and test_type == 'windowed_test_launcher':
       extra_files = [
           '../../testing/test_env.py',
@@ -1169,6 +1186,11 @@ class MetaBuildWrapper(object):
     cmdline += isolate_map[target].get('args', [])
 
     return cmdline, extra_files
+
+  def ToGenDirPath(self, label, *comps):
+    subdir = self.ToSrcRelPath(label[:label.rindex(':')])
+    build_path = self.args.path[0]
+    return self.PathJoin(build_path, 'gen', subdir, *comps)
 
   def ToAbsPath(self, build_path, *comps):
     return self.PathJoin(self.chromium_src_dir,
