@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_FEATURE_ENGAGEMENT_FEATURE_TRACKER_H_
 #define CHROME_BROWSER_FEATURE_ENGAGEMENT_FEATURE_TRACKER_H_
 
+#include "base/feature_list.h"
 #include "base/scoped_observer.h"
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
 #include "chrome/browser/profiles/profile.h"
@@ -47,6 +48,9 @@ class FeatureTracker : public SessionDurationUpdater::Observer,
   // SessionDurationUpdater::Observer:
   void OnSessionEnded(base::TimeDelta total_session_time) override;
 
+  // Returns whether or not the promo should be displayed.
+  bool ShouldShowPromo(const base::Feature& feature);
+
  protected:
   ~FeatureTracker() override;
   // Returns the required session time in minutes for the FeatureTracker's
@@ -56,6 +60,12 @@ class FeatureTracker : public SessionDurationUpdater::Observer,
   virtual void OnSessionTimeMet() = 0;
   // Returns the Tracker associated with this FeatureTracker.
   virtual Tracker* GetTracker() const;
+
+  // "x_minutes" param value from the field trial.
+  std::string field_trial_minutes_value;
+  // Whether the "x_minutes" param value has already been retrieved to prevent
+  // reading from the field trial multiple times for the same param.
+  bool has_retrieved_field_trial_minutes = false;
 
  private:
   // Returns whether the active session time of a user has elapsed more than the
