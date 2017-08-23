@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc6045ec_811b7bc8",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-23T05:54:53Z",
+      "side": 1,
+      "message": "\". Since\" \u003d\u003e \" since\"",
+      "range": {
+        "startLine": 344,
+        "startChar": 66,
+        "endLine": 344,
+        "endChar": 73
+      },
+      "revId": "15d41244e6561074e86373b32cfa475b393fab81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5673c9_a5be79f9",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-23T05:54:53Z",
+      "side": 1,
+      "message": "referred",
+      "range": {
+        "startLine": 345,
+        "startChar": 8,
+        "endLine": 345,
+        "endChar": 16
+      },
+      "revId": "15d41244e6561074e86373b32cfa475b393fab81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
