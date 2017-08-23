@@ -2867,11 +2867,13 @@ TEST_F(WebContentsImplTest, CapturerPreventsOcclusion) {
   contents()->WasOccluded();
   EXPECT_FALSE(view->is_occluded());
 
-  // Remove the capturer and try again.
+  // Remove the capturer. The view should become occluded.
   contents()->DecrementCapturerCount();
-  EXPECT_FALSE(view->is_occluded());
-  contents()->WasOccluded();
   EXPECT_TRUE(view->is_occluded());
+
+  // Unocclude the WebContents. The view should be unoccluded.
+  contents()->WasUnOccluded();
+  EXPECT_FALSE(view->is_occluded());
 }
 
 // Tests that GetLastActiveTime starts with a real, non-zero time and updates
