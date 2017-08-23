@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b90447d2_a0c874bc",
+        "filename": "third_party/WebKit/LayoutTests/compositing/massive-scale-interest-rect.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-23T23:08:07Z",
+      "side": 1,
+      "message": "nit: remove trailing whitespace in this file please",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "d2d0d40e8ddd75048323d529602bbe2408832110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
