@@ -14,29 +14,31 @@
  * limitations under the License.
  */
 
-package android.support.design.internal;
+package org.chromium.chrome.browser.widget.bottomsheet.base;
 
+import android.support.design.internal.TextScale;
 import android.support.transition.AutoTransition;
 import android.support.transition.TransitionManager;
 import android.support.transition.TransitionSet;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.view.ViewGroup;
 
-class BottomNavigationAnimationHelperIcs extends BottomNavigationAnimationHelperBase {
+/** Forked from android.support.design.internal.BottomNavigationAnimationHelperIcs */
+public class BottomNavigationAnimationHelperIcs extends BottomNavigationAnimationHelperBase {
     private static final long ACTIVE_ANIMATION_DURATION_MS = 115L;
 
-    private final TransitionSet mSet;
+    private final TransitionSet set;
 
     BottomNavigationAnimationHelperIcs() {
-        mSet = new AutoTransition();
-        mSet.setOrdering(TransitionSet.ORDERING_TOGETHER);
-        mSet.setDuration(ACTIVE_ANIMATION_DURATION_MS);
-        mSet.setInterpolator(new FastOutSlowInInterpolator());
+        set = new AutoTransition();
+        set.setOrdering(TransitionSet.ORDERING_TOGETHER);
+        set.setDuration(ACTIVE_ANIMATION_DURATION_MS);
+        set.setInterpolator(new FastOutSlowInInterpolator());
         TextScale textScale = new TextScale();
-        mSet.addTransition(textScale);
+        set.addTransition(textScale);
     }
 
     void beginDelayedTransition(ViewGroup view) {
-        TransitionManager.beginDelayedTransition(view, mSet);
+        TransitionManager.beginDelayedTransition(view, set);
     }
 }
