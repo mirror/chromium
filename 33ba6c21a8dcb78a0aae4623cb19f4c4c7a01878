@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0f3fd52d_97bd670a",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T07:49:10Z",
+      "side": 1,
+      "message": "nit: move down one line into the #if block",
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f9a1b28_a45da266",
         "filename": "chrome/installer/zucchini/mapped_file.cc",
         "patchSetId": 10
@@ -19,6 +36,23 @@
         "endLine": 36,
         "endChar": 26
       },
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a607ee_6a298834",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T07:49:10Z",
+      "side": 1,
+      "message": "nix this comment -- it doesn\u0027t add anything",
       "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -48,6 +82,40 @@
     },
     {
       "key": {
+        "uuid": "8a241e57_d73f235c",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T07:49:10Z",
+      "side": 1,
+      "message": "i\u0027m not sure whether you want DFATAL or not. i threw it in there since i would want to see the crash during development, but maybe you don\u0027t. just something to consider.",
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c73bc1e_8dfe21fa",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T07:49:10Z",
+      "side": 1,
+      "message": "how about clearing will_delete_on_close_ in here so that another attempt is made in the dtor?",
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f804ad0a_49abb17d",
         "filename": "chrome/installer/zucchini/mapped_file.cc",
         "patchSetId": 10
@@ -59,6 +127,46 @@
       "writtenOn": "2017-08-23T06:15:41Z",
       "side": 1,
       "message": "Delete state be set, so we won\u0027t manually delete the file on destruction?",
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85029cf_5dc90ec3",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T07:49:10Z",
+      "side": 1,
+      "message": "please add a unit test for this that verifies the behavior of the destructor with and without Keep().",
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c93315c_34088e4a",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T07:49:10Z",
+      "side": 1,
+      "message": "is this needed? can\u0027t callers that don\u0027t want deletion simply call Keep() in case of failure?",
+      "range": {
+        "startLine": 44,
+        "startChar": 24,
+        "endLine": 44,
+        "endChar": 37
+      },
       "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -190,6 +298,23 @@
       "writtenOn": "2017-08-23T06:15:41Z",
       "side": 1,
       "message": "// Successfully patch |new_file|. Explicitly request file to be kept.",
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc06877_1387672b",
+        "filename": "chrome/installer/zucchini/zucchini_integration.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T07:49:10Z",
+      "side": 1,
+      "message": "document that |new_path| is deleted in case of error? this will avoid consumers thinking that they need to handle the error cases.",
       "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
