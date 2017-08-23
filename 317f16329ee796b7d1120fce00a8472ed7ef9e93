@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "812349f7_a1724200",
+        "filename": "gpu/command_buffer/tests/gl_set_aggressively_free_resources_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-23T23:52:54Z",
+      "side": 1,
+      "message": "Is it better we break this into four tests, each covering one type, so if there is a regression, it\u0027s clear where it is?",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 8
+      },
+      "revId": "317f16329ee796b7d1120fce00a8472ed7ef9e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
