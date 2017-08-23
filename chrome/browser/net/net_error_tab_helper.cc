@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
+#include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/io_thread.h"
 #include "chrome/browser/net/dns_probe_service.h"
@@ -28,6 +29,11 @@
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
 #include "chrome/browser/offline_pages/offline_page_utils.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
+
+#if defined(OS_ANDROID)
+#include "chrome/browser/offline_pages/android/offline_page_bridge.h"
+#endif  // defined(OS_ANDROID)
+
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
 
 using content::BrowserContext;
@@ -225,7 +231,14 @@ void NetErrorTabHelper::OnDownloadPageLater() {
   if (!url.SchemeIsHTTPOrHTTPS())
     return;
 
-  DownloadPageLaterHelper(url);
+  // Record application that initiated the request. Non-empty if in CCT.
+  std::string app_origin;
+#if defined(OS_ANDROID)
+  app_origin = offline_pages::android::OfflinePageBridge::GetEncodedOriginApp(
+      web_contents());
+#endif  // defined(OS_ANDROID)
+
+  DownloadPageLaterHelper(url, app_origin);
 }
 
 void NetErrorTabHelper::OnSetIsShowingDownloadButtonInErrorPage(
@@ -288,10 +301,12 @@ void NetErrorTabHelper::RunNetworkDiagnosticsHelper(
 }
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
-void NetErrorTabHelper::DownloadPageLaterHelper(const GURL& page_url) {
+void NetErrorTabHelper::DownloadPageLaterHelper(const GURL& page_url,
+                                                const std::string& origin) {
   offline_pages::OfflinePageUtils::ScheduleDownload(
       web_contents(), offline_pages::kAsyncNamespace, page_url,
-      offline_pages::OfflinePageUtils::DownloadUIActionFlags::PROMPT_DUPLICATE);
+      offline_pages::OfflinePageUtils::DownloadUIActionFlags::PROMPT_DUPLICATE,
+      origin);
 }
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
 
