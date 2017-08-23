@@ -1,0 +1,19 @@
+Tests invalidations produced by scrolling a page with position: fixed elements.
+
+Scroll invalidations[
+Exception while running: function onRecordingDone()
+    {
+        var event = PerformanceTestRunner.findTimelineEvent(TimelineModel.TimelineModel.RecordType.Paint);
+        TestRunner.addArray(TimelineModel.InvalidationTracker.invalidationEventsFor(event), PerformanceTestRunner.InvalidationFormatters, "", "Scroll invalidations");
+        TestRunner.completeTest();
+    }
+TypeError: Cannot read property 'length' of null
+    at Object.InspectorTest.addArray (evaluateInWebInspector0.js:243:31)
+    at onRecordingDone (evaluateInWebInspector1.js:68:20)
+    at result (evaluateInWebInspector0.js:694:25)
+    at Timeline.TimelinePanel.InspectorTest.addSniffer (evaluateInWebInspector0.js:1156:75)
+    at Timeline.TimelinePanel.result (evaluateInWebInspector0.js:694:25)
+    at Timeline.TimelinePanel.receiver.(anonymous function) (evaluateInWebInspector0.js:724:22)
+    at Timeline.TimelineController._finalizeTrace (file:///b/c/b/mac_layout/src/out/Release/resources/inspector/timeline/timeline_module.js:130:99)
+    at setTimeout (file:///b/c/b/mac_layout/src/out/Release/resources/inspector/timeline/timeline_module.js:129:76)
+

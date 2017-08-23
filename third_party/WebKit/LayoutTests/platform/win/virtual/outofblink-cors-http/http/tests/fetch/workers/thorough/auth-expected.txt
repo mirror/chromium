@@ -1,0 +1,44 @@
+CONSOLE ERROR: line 368: Fetch API cannot load http://localhost:8000/serviceworker/resources/fetch-access-control.php?Auth&mode=same-origin&credentials=omit. Request mode is "same-origin" but the URL's origin is not same as the request origin http://127.0.0.1:8000.
+CONSOLE ERROR: line 368: Fetch API cannot load http://localhost:8000/serviceworker/resources/fetch-access-control.php?Auth&mode=same-origin&credentials=include. Request mode is "same-origin" but the URL's origin is not same as the request origin http://127.0.0.1:8000.
+CONSOLE ERROR: line 368: Fetch API cannot load http://localhost:8000/serviceworker/resources/fetch-access-control.php?Auth&mode=same-origin&credentials=same-origin. Request mode is "same-origin" but the URL's origin is not same as the request origin http://127.0.0.1:8000.
+This is a testharness.js-based test.
+PASS Startup 
+PASS executeTest-0 
+PASS executeTest-1 
+PASS executeTest-2 
+PASS executeTest-3 
+PASS executeTest-4 
+PASS executeTest-5 
+PASS executeTest-6 
+PASS executeTest-7 
+PASS executeTest-8 
+PASS executeTest-9 
+PASS executeTest-10 
+PASS executeTest-11 
+PASS executeTest-12 
+PASS executeTest-13 
+PASS executeTest-14 
+PASS executeTest-15 
+PASS executeTest-16 
+PASS executeTest-17 
+PASS executeTest-18 
+PASS executeTest-19 
+PASS executeTest-20 
+PASS executeTest-21 
+PASS executeTest-22 
+PASS executeTest-23 
+PASS executeTest-24 
+FAIL executeTest-25 assert_equals: http://localhost:8000/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=omit&ACAOrigin=*&PACAOrigin=*&method=PUT&PACAMethods=PUT&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-26 assert_equals: http://localhost:8000/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=same-origin&ACAOrigin=*&PACAOrigin=*&method=PUT&PACAMethods=PUT&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-27 assert_equals: http://localhost:8000/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=include&ACAOrigin=http://127.0.0.1:8000&PACAOrigin=http://127.0.0.1:8000&ACACredentials=true&PACACredentials=true&method=PUT&PACAMethods=PUT&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-28 
+PASS executeTest-29 
+PASS executeTest-30 
+PASS executeTest-31 
+PASS executeTest-32 
+PASS executeTest-33 
+PASS executeTest-34 
+PASS executeTest-35 
+PASS executeTest-36 
+Harness: the test ran to completion.
+

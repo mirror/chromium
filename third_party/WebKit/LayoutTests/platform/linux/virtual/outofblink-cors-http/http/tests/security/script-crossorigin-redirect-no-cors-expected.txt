@@ -1,0 +1,12 @@
+Testing the handling of CORS-enabled
+
+PASS/FAIL descriptions are of the form, 'CORS request type': 'redirect CORS type' => 'resource'
+
+PASS: Anonymous request: no-CORS => no-CORS script resource.
+PASS: Anonymous request: no-CORS => anonymous-CORS script resource.
+PASS: Credentialled request: no-CORS => credential-CORS script resource (same origin.)
+PASS: Credentialled request: no-CORS => credential-CORS script resource (cross origin.)
+PASS successfullyParsed is true
+
+TEST COMPLETE
+

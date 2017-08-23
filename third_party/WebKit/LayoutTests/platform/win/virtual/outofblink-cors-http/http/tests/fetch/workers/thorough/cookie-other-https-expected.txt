@@ -1,0 +1,45 @@
+CONSOLE ERROR: line 368: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=same-origin&credentials=omit&SetCookie=cookieC. Request mode is "same-origin" but the URL's origin is not same as the request origin http://127.0.0.1:8000.
+CONSOLE ERROR: line 368: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=same-origin&credentials=include&SetCookie=cookieC. Request mode is "same-origin" but the URL's origin is not same as the request origin http://127.0.0.1:8000.
+CONSOLE ERROR: line 368: Fetch API cannot load https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=same-origin&credentials=same-origin&SetCookie=cookieC. Request mode is "same-origin" but the URL's origin is not same as the request origin http://127.0.0.1:8000.
+This is a testharness.js-based test.
+PASS Startup 
+PASS executeTest-0 
+PASS executeTest-1 
+PASS executeTest-2 
+PASS executeTest-3 
+PASS executeTest-4 
+PASS executeTest-5 
+PASS executeTest-6 
+PASS executeTest-7 
+PASS executeTest-8 
+PASS executeTest-9 
+PASS executeTest-10 
+PASS executeTest-11 
+PASS executeTest-12 
+PASS executeTest-13 
+PASS executeTest-14 
+PASS executeTest-15 
+PASS executeTest-16 
+PASS executeTest-17 
+PASS executeTest-18 
+PASS executeTest-19 
+PASS executeTest-20 
+PASS executeTest-21 
+PASS executeTest-22 
+PASS executeTest-23 
+FAIL executeTest-24 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&ACAOrigin=http://127.0.0.1:8000&PACAOrigin=http://127.0.0.1:8000&ACACredentials=true&PACACredentials=true&method=PUT&PACAMethods=PUT&SetCookie=cookieB&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-25 assert_equals: Cookie must match. url: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck7 expected "cookieB" but got "cookieA"
+FAIL executeTest-26 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&ACAOrigin=http://127.0.0.1:8000&PACAOrigin=http://127.0.0.1:8000&ACACredentials=true&PACACredentials=true&method=PUT&PACAMethods=PUT&SetCookie2=cookieC&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-27 assert_equals: Cookie must match. url: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck8 expected "cookieB" but got "cookieA"
+FAIL executeTest-28 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&ACAOrigin=http://127.0.0.1:8000&PACAOrigin=http://127.0.0.1:8000&ACACredentials=true&PACACredentials=true&method=PUT&PACAMethods=PUT&PSetCookie=cookieC&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-29 assert_equals: Cookie must match. url: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck9 expected "cookieB" but got "cookieA"
+FAIL executeTest-30 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&ACAOrigin=http://127.0.0.1:8000&PACAOrigin=http://127.0.0.1:8000&ACACredentials=true&PACACredentials=true&method=PUT&PACAMethods=PUT&PSetCookie2=cookieC&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-31 assert_equals: Cookie must match. url: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck10 expected "cookieB" but got "cookieA"
+PASS executeTest-32 
+FAIL executeTest-33 assert_equals: Cookie must match. url: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck11 expected "cookieB" but got "cookieA"
+PASS executeTest-34 
+FAIL executeTest-35 assert_equals: Cookie must match. url: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck12 expected "cookieB" but got "cookieA"
+PASS executeTest-36 
+FAIL executeTest-37 assert_equals: Cookie must match. url: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck13 expected "cookieB" but got "cookieA"
+Harness: the test ran to completion.
+

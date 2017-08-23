@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Startup 
+FAIL Verify access control of fetch() in a Service Worker assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?method=GET&headers=CUSTOM jsonpResult must be success expected "success" but got "error"
+Harness: the test ran to completion.
+

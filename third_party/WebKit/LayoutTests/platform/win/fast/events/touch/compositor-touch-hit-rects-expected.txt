@@ -1,0 +1,47 @@
+This tests verifies the hit test regions given to the compositor. It can only be run in DumpRenderTree. The outputted rects should cover the hit test regions of all the listed elements. Enable visualize mode to quickly validate graphically.
+
+normalFlow: #document (13, 72, 290, 14)
+
+inlineOverflow: #document (13, 91, 64, 14)
+inlineOverflow: #document (13, 105, 22, 12)
+
+absoluteChildContainer: #document (13, 122, 290, 14)
+absoluteChildContainer: #document (320, 123, 61, 14)
+
+relativeChildContainer: #document (13, 141, 290, 14)
+relativeChildContainer: #document (458, 141, 59, 14)
+
+fixed: #document (405, 98, 25, 14)
+
+translate: #document (13, 160, 290, 16)
+translate: #document (314, 163, 288, 14)
+
+transform2d: #document (16, 182, 284, 22)
+
+overhangingContainer: #document (13, 210, 290, 12)
+overhangingContainer: #document (14, 222, 102, 15)
+
+transform3d: DIV#transform3dChild (0, 0, 288, 14)
+transform3d: #document (13, 247, 290, 16)
+
+negativeOffsetChild: DIV#withNegativeOffsetChild[109,0] (0, 1, 102, 12)
+
+continuation: #document (13, 291, 101, 11)
+continuation: #document (13, 302, 290, 12)
+continuation: #document (13, 315, 121, 12)
+
+inlineAbsoluteChildContainer: #document (13, 330, 105, 14)
+inlineAbsoluteChildContainer: #document (320, 331, 101, 14)
+
+list: #document (13, 353, 290, 16)
+list: #document (340, 354, 262, 14)
+
+styleModified: #document (13, 379, 290, 24)
+
+containsSvg: #document (13, 408, 290, 16)
+
+svgline: #document (13, 429, 100, 10)
+
+tablecell: #document (27, 463, 14, 12)
+
+

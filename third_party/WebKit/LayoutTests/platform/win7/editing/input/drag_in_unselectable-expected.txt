@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+FAIL A drag at unselectable should not modify selection in INPUT. assert_true: mouse moved on unselectable expected true got false
+FAIL A drag at unselectable should not modify selection in contenteditable. assert_true: mouse moved on unselectable expected true got false
+Harness: the test ran to completion.
+

@@ -1,0 +1,5 @@
+PASS target.import is null
+PASS successfullyParsed is true
+
+TEST COMPLETE
+

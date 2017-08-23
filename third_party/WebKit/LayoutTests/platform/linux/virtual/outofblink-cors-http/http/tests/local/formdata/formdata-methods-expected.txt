@@ -1,0 +1,22 @@
+This is a testharness.js-based test.
+FAIL FormData.has() assert_unreached: Failed to fetch form data Reached unreachable code
+FAIL FormData.delete() assert_unreached: Failed to fetch form data Reached unreachable code
+FAIL FormData.set() - DOMString assert_unreached: Failed to fetch form data Reached unreachable code
+FAIL FormData.set() - Blob assert_unreached: Failed to fetch form data Reached unreachable code
+FAIL FormData.set() - Blob and filename assert_unreached: Failed to fetch form data Reached unreachable code
+FAIL FormData.set() replaces all entries assert_unreached: Failed to fetch form data Reached unreachable code
+PASS FormData.get() - DOMString 
+PASS FormData.get() - Blob 
+PASS FormData.get() - Blob and filename 
+PASS FormData.get() - multiple matches 
+PASS FormData.get() - no matches 
+PASS FormData.getAll() 
+PASS FormData.getAll() - no matches 
+PASS FormData.get() - Files with name overrides 
+PASS FormData.getAll() - Files with name overrides 
+PASS FormData - lastModifiedDate of File/Blob entries 
+FAIL FormData - encoding round-trip assert_unreached: Failed to fetch form data Reached unreachable code
+PASS FormData - ScalarValueStrings 
+PASS FormData - iterators 
+Harness: the test ran to completion.
+

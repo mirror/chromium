@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL incompatible downgrade promise_test: Unhandled rejection with value: object "DataCloneError: Failed to execute 'serializeWithInlineWasm' on 'Internals': #<Module> could not be cloned."
+Harness: the test ran to completion.
+

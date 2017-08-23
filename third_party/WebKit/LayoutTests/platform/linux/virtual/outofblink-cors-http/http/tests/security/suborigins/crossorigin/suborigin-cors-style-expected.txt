@@ -1,0 +1,7 @@
+This is a testharness.js-based test.
+PASS Style: <crossorigin="anonymous">, ACAO: http://127.0.0.1:8000 
+FAIL Style: <crossorigin="anonymous">, ACAO: * assert_unreached: Good load fired error handler. Reached unreachable code
+PASS Style: <crossorigin="use-credentials">, ACAO: http://127.0.0.1:8000 
+PASS Style: <crossorigin="anonymous">, CORS-ineligible resource 
+Harness: the test ran to completion.
+

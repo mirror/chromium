@@ -1,0 +1,42 @@
+This is a testharness.js-based test.
+PASS Startup 
+PASS auth 
+PASS executeTest-0 
+PASS executeTest-1 
+PASS executeTest-2 
+PASS executeTest-3 
+PASS executeTest-4 
+PASS executeTest-5 
+PASS executeTest-6 
+PASS executeTest-7 
+PASS executeTest-8 
+PASS executeTest-9 
+PASS executeTest-10 
+PASS executeTest-11 
+FAIL executeTest-12 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=omit&ACAOrigin=* should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-13 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=omit&ACAOrigin=http://127.0.0.1:8000 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-14 
+PASS executeTest-15 
+PASS executeTest-16 
+PASS executeTest-17 
+PASS executeTest-18 
+FAIL executeTest-19 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=include&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true should be resolved expected "resolved" but got "rejected"
+PASS executeTest-20 
+PASS executeTest-21 
+FAIL executeTest-22 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=same-origin&ACAOrigin=* should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-23 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=same-origin&ACAOrigin=http://127.0.0.1:8000 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-24 
+FAIL executeTest-25 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=omit&ACAOrigin=*&PACAOrigin=*&method=PUT&PACAMethods=PUT&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-26 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=same-origin&ACAOrigin=*&PACAOrigin=*&method=PUT&PACAMethods=PUT&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-27 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?Auth&mode=cors&credentials=include&ACAOrigin=http://127.0.0.1:8000&PACAOrigin=http://127.0.0.1:8000&ACACredentials=true&PACACredentials=true&method=PUT&PACAMethods=PUT&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-28 
+PASS executeTest-29 
+PASS executeTest-30 
+PASS executeTest-31 
+PASS executeTest-32 
+PASS executeTest-33 
+PASS executeTest-34 
+PASS executeTest-35 
+PASS executeTest-36 
+Harness: the test ran to completion.
+

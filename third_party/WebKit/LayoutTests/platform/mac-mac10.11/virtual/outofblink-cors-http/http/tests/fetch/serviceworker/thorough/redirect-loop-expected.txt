@@ -1,0 +1,13 @@
+This is a testharness.js-based test.
+PASS Startup 
+PASS redirect-loop 
+PASS executeTest-0 
+PASS executeTest-1 
+FAIL executeTest-2 assert_equals: http://127.0.0.1:8000/fetch/resources/redirect-loop.php?Redirect=http%3A%2F%2Flocalhost%3A8000%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3F%26ACAOrigin%3D*&Count=20&mode=cors&credentials=same-origin&method=GET should be resolved expected "resolved" but got "rejected"
+PASS executeTest-3 
+FAIL executeTest-4 assert_equals: http://localhost:8000/fetch/resources/redirect-loop.php?Redirect=http%3A%2F%2F127.0.0.1%3A8000%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3FACAOrigin%3D*&Count=20&mode=cors&credentials=same-origin&method=GET&ACAOrigin=* should be resolved expected "resolved" but got "rejected"
+PASS executeTest-5 
+FAIL executeTest-6 assert_equals: http://localhost:8000/fetch/resources/redirect-loop.php?Redirect=http%3A%2F%2Flocalhost%3A8000%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3FACAOrigin%3D*&Count=20&mode=cors&credentials=same-origin&method=GET&ACAOrigin=* should be resolved expected "resolved" but got "rejected"
+PASS executeTest-7 
+Harness: the test ran to completion.
+

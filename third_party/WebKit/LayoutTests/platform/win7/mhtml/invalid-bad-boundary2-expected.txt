@@ -1,0 +1,9 @@
+CONSOLE ERROR: Blocked script execution in 'invalid-bad-boundary2.mht' because the document's frame is sandboxed and the 'allow-scripts' permission is not set.
+CONSOLE ERROR: Blocked script execution in 'invalid-bad-boundary2.mht' because the document's frame is sandboxed and the 'allow-scripts' permission is not set.
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x600
+  LayoutBlockFlow {HTML} at (0,0) size 800x600
+    LayoutBlockFlow {BODY} at (0,0) size 800x600 [bgcolor=#0E0E0E]
+      LayoutFlexibleBox {DIV} at (0,0) size 800x600
+        LayoutImage {IMG} at (385,285) size 30x30

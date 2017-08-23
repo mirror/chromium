@@ -1,0 +1,40 @@
+This is a testharness.js-based test.
+PASS Untitled 
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = about:client, policy =  
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = about:client, policy = no-referrer 
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = about:client, policy = no-referrer-when-downgrade 
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = about:client, policy = origin 
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = about:client, policy = origin-when-cross-origin 
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = about:client, policy = unsafe-url 
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = about:client, policy =  promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = about:client, policy = no-referrer promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = about:client, policy = no-referrer-when-downgrade promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = about:client, policy = origin promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = about:client, policy = origin-when-cross-origin promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = about:client, policy = unsafe-url promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = , policy =  
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = , policy = no-referrer 
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = , policy = no-referrer-when-downgrade 
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = , policy = origin 
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = , policy = origin-when-cross-origin 
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = , policy = unsafe-url 
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = , policy =  promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = , policy = no-referrer promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = , policy = no-referrer-when-downgrade promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = , policy = origin promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = , policy = origin-when-cross-origin promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = , policy = unsafe-url promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = /foo, policy =  
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = /foo, policy = no-referrer 
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = /foo, policy = no-referrer-when-downgrade 
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = /foo, policy = origin 
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = /foo, policy = origin-when-cross-origin 
+PASS referrer test: url = http://127.0.0.1:8000/fetch/resources/referrer.php, referrer = /foo, policy = unsafe-url 
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = /foo, policy =  promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = /foo, policy = no-referrer promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = /foo, policy = no-referrer-when-downgrade promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = /foo, policy = origin promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = /foo, policy = origin-when-cross-origin promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = http://localhost:8000/fetch/resources/referrer.php, referrer = /foo, policy = unsafe-url promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+Harness: the test ran to completion.
+

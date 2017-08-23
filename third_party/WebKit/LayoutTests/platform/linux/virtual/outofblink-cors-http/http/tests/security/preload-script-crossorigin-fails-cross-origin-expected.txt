@@ -1,0 +1,11 @@
+Preload of script with CORS failure only shows one error
+
+On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
+
+
+PASS Did preload.
+PASS Script error.
+PASS successfullyParsed is true
+
+TEST COMPLETE
+

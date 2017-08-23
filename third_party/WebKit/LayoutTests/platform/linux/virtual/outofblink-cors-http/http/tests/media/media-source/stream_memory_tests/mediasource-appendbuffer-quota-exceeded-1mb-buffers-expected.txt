@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Appending data repeatedly should fill up the buffer and throw a QuotaExceededError when buffer is full. assert_less_than: Appended less than 2MB of data expected a number less than 2097152 but got 14669538
+Harness: the test ran to completion.
+

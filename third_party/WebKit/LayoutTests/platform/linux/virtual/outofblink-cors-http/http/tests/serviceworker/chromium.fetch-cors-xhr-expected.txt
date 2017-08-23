@@ -1,0 +1,9 @@
+CONSOLE ERROR: Failed to start loading 
+CONSOLE ERROR: Failed to start loading 
+CONSOLE ERROR: Failed to start loading 
+CONSOLE ERROR: Failed to start loading 
+CONSOLE ERROR: Failed to start loading 
+This is a testharness.js-based test.
+FAIL Verify CORS XHR of fetch() in a Service Worker assert_equals: expected "finish" but got "failure:Result of url:http://127.0.0.1:8000/serviceworker/resources/fetch-access-control.php?mode=cors&url=http%3A%2F%2Flocalhost%3A8000%2Fserviceworker%2Fresources%2Ffetch-access-control.php%3FACAOrigin%3Dhttp%3A%2F%2F127.0.0.1%3A8000  with_credentials: false must be SUCCESS but FAIL"
+Harness: the test ran to completion.
+

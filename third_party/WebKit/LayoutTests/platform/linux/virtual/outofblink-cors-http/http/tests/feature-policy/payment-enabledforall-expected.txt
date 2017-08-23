@@ -1,0 +1,8 @@
+CONSOLE WARNING: line 10: Card issuer network ("amex", "diners", "discover", "jcb", "mastercard", "mir", "unionpay", "visa") as payment method is deprecated and will be removed in M64, around January 2018. Please use payment method name "basic-card" with issuer network in the "supportedNetworks" field instead. See https://www.chromestatus.com/features/5725727580225536 for more details.
+This is a testharness.js-based test.
+PASS Paymentrequest enabled for all on URL: resources/feature-policy-payment.html with allowpaymentrequest = false 
+PASS Paymentrequest enabled for all on URL: resources/feature-policy-payment.html with allowpaymentrequest = true 
+FAIL Paymentrequest enabled for all on URL: http://localhost:8000/feature-policy/resources/feature-policy-payment.html with allowpaymentrequest = false assert_true: Paymentrequest(): expected true got false
+PASS Paymentrequest enabled for all on URL: http://localhost:8000/feature-policy/resources/feature-policy-payment.html with allowpaymentrequest = true 
+Harness: the test ran to completion.
+

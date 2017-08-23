@@ -1,0 +1,21 @@
+Tests the Timeline API instrumentation of layout invalidations on a deleted node.
+
+
+
+Running: testLocalFrame
+paint invalidations[
+Exception while running: function () {
+                PerformanceTestRunner.dumpInvalidations(TimelineModel.TimelineModel.RecordType.Paint, 0, "paint invalidations");
+                next();
+            }
+TypeError: Cannot read property 'length' of null
+    at Object.InspectorTest.addArray (evaluateInWebInspector0.js:243:31)
+    at Object.InspectorTest.dumpInvalidations (evaluateInWebInspector0.js:1340:19)
+    at eval (evaluateInWebInspector1.js:67:39)
+    at result (evaluateInWebInspector0.js:694:25)
+    at Timeline.TimelinePanel.InspectorTest.addSniffer (evaluateInWebInspector0.js:1156:75)
+    at Timeline.TimelinePanel.result (evaluateInWebInspector0.js:694:25)
+    at Timeline.TimelinePanel.receiver.(anonymous function) (evaluateInWebInspector0.js:724:22)
+    at Timeline.TimelineController._finalizeTrace (file:///b/c/b/mac_layout/src/out/Release/resources/inspector/timeline/timeline_module.js:130:99)
+    at setTimeout (file:///b/c/b/mac_layout/src/out/Release/resources/inspector/timeline/timeline_module.js:129:76)
+

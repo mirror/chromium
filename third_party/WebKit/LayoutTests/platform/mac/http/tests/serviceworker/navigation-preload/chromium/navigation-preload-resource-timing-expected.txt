@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Navigation Preload Resource Timing after terminating SW. assert_equals: The first result must contain only one entry. expected 1 but got 0
+Harness: the test ran to completion.
+

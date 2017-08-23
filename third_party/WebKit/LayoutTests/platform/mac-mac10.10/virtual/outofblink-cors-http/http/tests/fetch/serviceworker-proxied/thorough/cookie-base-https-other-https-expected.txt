@@ -1,0 +1,5 @@
+This is a testharness.js-based test.
+PASS Startup 
+FAIL Verify access control of fetch() in a Service Worker assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&ACAOrigin=https://127.0.0.1:8443&ACACredentials=true&SetCookie=cookieA should be resolved expected "resolved" but got "rejected"
+Harness: the test ran to completion.
+

@@ -1,0 +1,15 @@
+This is a testharness.js-based test.
+PASS Startup 
+PASS block-mixed-content 
+PASS Mixed content fetch (same-origin, HTTPS->HTTP) 
+PASS Mixed content redirect (same-origin, HTTPS->HTTPS->HTTP) 
+PASS Mixed content redirect same-origin, HTTPS->HTTP->HTTPS) 
+PASS Same origin redirect (same-origin, HTTPS->HTTPS->HTTPS) 
+PASS Cross origin redirect (same-origin, HTTPS->HTTPS->HTTPS 
+PASS Mixed content fetch (cors, HTTPS->HTTP) 
+PASS Mixed content redirect (cors, HTTPS->HTTPS->HTTP) 
+PASS Mixed content redirect cors, HTTPS->HTTP->HTTPS) 
+PASS Same origin redirect (cors, HTTPS->HTTPS->HTTPS) 
+FAIL Cross origin redirect (cors, HTTPS->HTTPS->HTTPS assert_equals: expected "same-origin" but got "cors"
+Harness: the test ran to completion.
+

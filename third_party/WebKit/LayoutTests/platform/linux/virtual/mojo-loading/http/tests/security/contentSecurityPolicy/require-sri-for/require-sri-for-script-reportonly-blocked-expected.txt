@@ -1,0 +1,9 @@
+CONSOLE ERROR: The Content Security Policy 'require-sri-for script; script-src 'self' 'unsafe-inline'' was delivered in report-only mode, but does not specify a 'report-uri'; the policy will have no effect. Please either add a 'report-uri' directive, or deliver the policy via the 'Content-Security-Policy' header.
+CONSOLE ERROR: [Report Only] Refused to load the script 'http://127.0.0.1:8000/resources/testharness.js' because 'require-sri-for' directive requires integrity attribute be present for all scripts.
+CONSOLE ERROR: [Report Only] Refused to load the script 'http://127.0.0.1:8000/resources/testharnessreport.js' because 'require-sri-for' directive requires integrity attribute be present for all scripts.
+CONSOLE ERROR: [Report Only] Refused to load the script 'http://127.0.0.1:8000/security/contentSecurityPolicy/require-sri-for/ran.js' because 'require-sri-for' directive requires integrity attribute be present for all scripts.
+This is a testharness.js-based test.
+FAIL Script without integrity generates reports. assert_equals: expected "http://127.0.0.1:8000/resources/testharnessreport.js" but got "http://127.0.0.1:8000/resources/testharness.js"
+PASS Script that requires integrity executes and generates a violation report. 
+Harness: the test ran to completion.
+

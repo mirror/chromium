@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Service Worker responds with .body accessed response. assert_unreached: unexpected rejection: Failed to load url:TestRequest?type=opaque Reached unreachable code
+Harness: the test ran to completion.
+

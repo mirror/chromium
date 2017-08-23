@@ -1,0 +1,15 @@
+CONSOLE WARNING: Subresource requests using legacy protocols (like `ftp:`) are blocked. Please deliver web-accessible resources over modern protocols like HTTPS. See https://www.chromestatus.com/feature/5709390967472128 for details.
+CONSOLE ERROR: Not allowed to load local resource: motd
+Test EventSource with non-HTTP protocol schemes in the URL.
+
+On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
+
+
+PASS es.readyState is EventSource.CLOSED
+PASS es.readyState is EventSource.CLOSED
+FAIL es.readyState should be 2. Was 0.
+FAIL es.readyState should be 2. Was 0.
+PASS successfullyParsed is true
+
+TEST COMPLETE
+

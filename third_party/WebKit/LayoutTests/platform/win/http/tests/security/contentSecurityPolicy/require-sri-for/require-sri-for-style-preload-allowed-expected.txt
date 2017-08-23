@@ -1,0 +1,6 @@
+This is a testharness.js-based test.
+PASS Script that requires integrity executes and does not generate a violation report. 
+FAIL Makes sure that require-sri-for applies to preloaded resources. assert_equals: expected 3 but got 2
+PASS Stylesheets without integrity do not load. 
+Harness: the test ran to completion.
+

@@ -1,0 +1,7 @@
+CONSOLE WARNING: Styling master document from stylesheets defined in HTML Imports is deprecated, and is planned to be removed in M65, around March 2018. Please refer to https://goo.gl/EGXzpw for possible migration paths.
+layer at (0,0) size 800x600
+  LayoutView at (0,0) size 800x600
+layer at (0,0) size 800x116
+  LayoutBlockFlow {HTML} at (0,0) size 800x116
+    LayoutBlockFlow {BODY} at (8,8) size 784x100
+      LayoutBlockFlow {DIV} at (0,0) size 100x100 [bgcolor=#008000]

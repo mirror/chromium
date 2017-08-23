@@ -1,0 +1,44 @@
+This is a testharness.js-based test.
+PASS Startup 
+PASS executeTest-0 
+PASS executeTest-1 
+PASS executeTest-2 
+PASS executeTest-3 
+PASS executeTest-4 
+PASS executeTest-5 
+PASS executeTest-6 
+FAIL executeTest-7 assert_equals: http://localhost:8000/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=GET&headers=CUSTOM&ACAOrigin=*&PACAOrigin=*&PACAHeaders=x-serviceworker-test&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-8 
+PASS executeTest-9 
+PASS executeTest-10 
+FAIL executeTest-11 assert_equals: http://localhost:8000/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=GET&headers=CUSTOM&ACAOrigin=*&PACAOrigin=*&PACAHeaders=x-serviceworker-test&PACEHeaders=Content-Length, X-ServiceWorker-ServerHeader&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-12 assert_equals: http://localhost:8000/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=GET&headers=CUSTOM&ACAOrigin=*&PACAOrigin=*&PACAHeaders=x-serviceworker-test&PreflightTest=201 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-13 
+PASS executeTest-14 
+PASS executeTest-15 
+FAIL executeTest-16 assert_equals: http://localhost:8000/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=GET&headers=CUSTOM2&ACAOrigin=*&PACAOrigin=*&PACAHeaders=x-servicEworker-u,x-servicEworker-ua,x-servicewOrker-test,x-sErviceworker-s,x-sErviceworker-v&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-17 
+FAIL executeTest-18 assert_equals: http://localhost:8000/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=GET&headers=CUSTOM&ACAOrigin=*&PACAOrigin=*&PACAHeaders=x-serviceworker-test&PACRMethod=GET&PACRHeaders=x-serviceworker-test&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-19 assert_equals: http://localhost:8000/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=GET&headers=CUSTOM2&ACAOrigin=*&PACAOrigin=*&PACAHeaders=x-servicEworker-u,x-servicEworker-ua,x-servicewOrker-test,x-sErviceworker-s,x-sErviceworker-v&PACRMethod=GET&PACRHeaders=x-serviceworker-s,x-serviceworker-test,x-serviceworker-u,x-serviceworker-ua,x-serviceworker-v&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-20 
+PASS executeTest-21 
+PASS executeTest-22 
+PASS executeTest-23 
+PASS executeTest-24 
+PASS executeTest-25 
+PASS executeTest-26 
+FAIL executeTest-27 assert_equals: http://localhost:8000/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=POST&headers=CUSTOM&ACAOrigin=*&PACAOrigin=*&PACAHeaders=x-serviceworker-test&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-28 
+PASS executeTest-29 
+PASS executeTest-30 
+FAIL executeTest-31 assert_equals: http://localhost:8000/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=POST&headers=CUSTOM&ACAOrigin=*&PACAOrigin=*&PACAHeaders=x-serviceworker-test&PACEHeaders=Content-Length, X-ServiceWorker-ServerHeader&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-32 assert_equals: http://localhost:8000/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=POST&headers=CUSTOM&ACAOrigin=*&PACAOrigin=*&PACAHeaders=x-serviceworker-test&PreflightTest=201 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-33 
+PASS executeTest-34 
+PASS executeTest-35 
+FAIL executeTest-36 assert_equals: http://localhost:8000/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=POST&headers=CUSTOM2&ACAOrigin=*&PACAOrigin=*&PACAHeaders=x-servicEworker-u,x-servicEworker-ua,x-servicewOrker-test,x-sErviceworker-s,x-sErviceworker-v&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-37 
+FAIL executeTest-38 assert_equals: http://localhost:8000/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=POST&headers=CUSTOM&ACAOrigin=*&PACAOrigin=*&PACAHeaders=x-serviceworker-test&PACRMethod=POST&PACRHeaders=x-serviceworker-test&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-39 assert_equals: http://localhost:8000/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&method=POST&headers=CUSTOM2&ACAOrigin=*&PACAOrigin=*&PACAHeaders=x-servicEworker-u,x-servicEworker-ua,x-servicewOrker-test,x-sErviceworker-s,x-sErviceworker-v&PACRMethod=POST&PACRHeaders=x-serviceworker-s,x-serviceworker-test,x-serviceworker-u,x-serviceworker-ua,x-serviceworker-v&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+Harness: the test ran to completion.
+

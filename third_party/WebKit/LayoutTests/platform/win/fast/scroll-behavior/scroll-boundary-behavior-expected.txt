@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+PASS scroll-boundary-behavior-y: none should only prevent scroll propagation on y axis with: wheel. 
+PASS scroll-boundary-behavior-x: none should only prevent scroll propagation on x axis with: wheel. 
+PASS scroll-boundary-behavior should not affect scrolling inside the applied container with: wheel. 
+FAIL scroll-boundary-behavior-y: none should only prevent scroll propagation on y axis with: touch. assert_equals: expected 0 but got 100
+FAIL scroll-boundary-behavior-x: none should only prevent scroll propagation on x axis with: touch. assert_equals: expected 0 but got 100
+FAIL scroll-boundary-behavior should not affect scrolling inside the applied container with: touch. assert_equals: expected 0 but got 100
+Harness: the test ran to completion.
+

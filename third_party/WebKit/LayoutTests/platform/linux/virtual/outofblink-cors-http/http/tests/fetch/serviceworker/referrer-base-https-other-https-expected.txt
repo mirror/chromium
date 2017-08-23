@@ -1,0 +1,42 @@
+This is a testharness.js-based test.
+PASS Startup 
+PASS referrer 
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = about:client, policy =  
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = about:client, policy = no-referrer 
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = about:client, policy = no-referrer-when-downgrade 
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = about:client, policy = origin 
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = about:client, policy = origin-when-cross-origin 
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = about:client, policy = unsafe-url 
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = about:client, policy =  promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = about:client, policy = no-referrer promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = about:client, policy = no-referrer-when-downgrade promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = about:client, policy = origin promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = about:client, policy = origin-when-cross-origin promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = about:client, policy = unsafe-url promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = , policy =  
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = , policy = no-referrer 
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = , policy = no-referrer-when-downgrade 
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = , policy = origin 
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = , policy = origin-when-cross-origin 
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = , policy = unsafe-url 
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = , policy =  promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = , policy = no-referrer promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = , policy = no-referrer-when-downgrade promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = , policy = origin promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = , policy = origin-when-cross-origin promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = , policy = unsafe-url promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = /foo, policy =  
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = /foo, policy = no-referrer 
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = /foo, policy = no-referrer-when-downgrade 
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = /foo, policy = origin 
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = /foo, policy = origin-when-cross-origin 
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = /foo, policy = unsafe-url 
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = /foo, policy =  promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = /foo, policy = no-referrer promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = /foo, policy = no-referrer-when-downgrade promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = /foo, policy = origin promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = /foo, policy = origin-when-cross-origin promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+FAIL referrer test: url = https://localhost:8443/fetch/resources/referrer.php, referrer = /foo, policy = unsafe-url promise_test: Unhandled rejection with value: object "TypeError: Failed to fetch"
+PASS referrer test: url = https://127.0.0.1:8443/fetch/resources/referrer.php, referrer = https://user:pass@127.0.0.1:8443/fetch/resources/referrer.php/path#fragment?query#hash, policy = unsafe-url 
+Harness: the test ran to completion.
+

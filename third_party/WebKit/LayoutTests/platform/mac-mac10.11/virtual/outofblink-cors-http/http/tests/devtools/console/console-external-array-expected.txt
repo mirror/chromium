@@ -1,0 +1,10 @@
+CONSOLE ERROR: line 57: Uncaught TypeError: Cannot read property 'dispatchMessage' of undefined
+CONSOLE ERROR: line 57: Uncaught TypeError: Cannot read property 'dispatchMessage' of undefined
+CONSOLE ERROR: line 57: Uncaught TypeError: Cannot read property 'dispatchMessage' of undefined
+CONSOLE ERROR: line 57: Uncaught TypeError: Cannot read property 'dispatchMessage' of undefined
+CONSOLE ERROR: line 57: Uncaught TypeError: Cannot read property 'dispatchMessage' of undefined
+CONSOLE ERROR: line 57: Uncaught TypeError: Cannot read property 'dispatchMessage' of undefined
+CONSOLE ERROR: line 57: Uncaught TypeError: Cannot read property 'dispatchMessage' of undefined
+CONSOLE ERROR: line 57: Uncaught TypeError: Cannot read property 'dispatchMessage' of undefined
+Unable to execute test script because of error: TypeError: Failed to fetch
+

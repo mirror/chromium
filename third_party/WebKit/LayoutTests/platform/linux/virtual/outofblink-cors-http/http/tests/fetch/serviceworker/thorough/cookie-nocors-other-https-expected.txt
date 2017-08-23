@@ -1,0 +1,17 @@
+This is a testharness.js-based test.
+PASS Startup 
+PASS cookie-nocors 
+PASS executeTest-0 
+PASS executeTest-1 
+PASS executeTest-2 
+PASS executeTest-3 
+PASS executeTest-4 
+PASS executeTest-5 
+PASS executeTest-6 
+FAIL executeTest-7 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck1 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-8 
+FAIL executeTest-9 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck2 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-10 
+FAIL executeTest-11 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck3 should be resolved expected "resolved" but got "rejected"
+Harness: the test ran to completion.
+

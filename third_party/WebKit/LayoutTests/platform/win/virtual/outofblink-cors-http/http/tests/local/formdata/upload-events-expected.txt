@@ -1,0 +1,11 @@
+Test that upload events are fired when sending FormData via XMLHttpRequest.
+
+On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".
+
+
+loadstart event fired on XMLHttpRequestUpload: [object ProgressEvent]
+
+PASS successfullyParsed is true
+
+TEST COMPLETE
+

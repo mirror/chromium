@@ -1,0 +1,66 @@
+Tests the Timeline API instrumentation of multiple style recalc invalidations and ensures they are all collected on the paint event.
+
+PASS
+PASS
+PASS
+first style recalc[
+    {
+        cause : {reason: Element has pending invalidation list, stackTrace: .../inspector/tracing/timeline-paint/timeline-paint-and-multiple-style-invalidations.html:9}
+        changedAttribute : undefined
+        changedClass : "red"
+        changedId : undefined
+        changedPseudo : undefined
+        extraData : undefined
+        nodeName : "DIV id='testElementOne' class='red'"
+        selectorPart : undefined
+        type : "StyleRecalcInvalidationTracking"
+    }
+]
+second style recalc[
+    {
+        cause : {reason: Element has pending invalidation list, stackTrace: .../inspector/tracing/timeline-paint/timeline-paint-and-multiple-style-invalidations.html:11}
+        changedAttribute : undefined
+        changedClass : "snow"
+        changedId : undefined
+        changedPseudo : undefined
+        extraData : undefined
+        nodeName : "DIV id='testElementOne' class='snow'"
+        selectorPart : undefined
+        type : "StyleRecalcInvalidationTracking"
+    }
+    {
+        cause : {reason: Element has pending invalidation list, stackTrace: .../inspector/tracing/timeline-paint/timeline-paint-and-multiple-style-invalidations.html:11}
+        changedAttribute : undefined
+        changedClass : "red"
+        changedId : undefined
+        changedPseudo : undefined
+        extraData : undefined
+        nodeName : "DIV id='testElementOne' class='snow'"
+        selectorPart : undefined
+        type : "StyleRecalcInvalidationTracking"
+    }
+]
+first paint[
+Exception while running: function testMultipleStyleRecalcs()
+    {
+        PerformanceTestRunner.dumpInvalidations(TimelineModel.TimelineModel.RecordType.UpdateLayoutTree, 0, "first style recalc");
+        PerformanceTestRunner.dumpInvalidations(TimelineModel.TimelineModel.RecordType.UpdateLayoutTree, 1, "second style recalc");
+        PerformanceTestRunner.dumpInvalidations(TimelineModel.TimelineModel.RecordType.Paint, 0, "first paint");
+
+        var thirdRecalc = PerformanceTestRunner.findTimelineEvent(TimelineModel.TimelineModel.RecordType.UpdateLayoutTree, 2);
+        TestRunner.assertTrue(thirdRecalc === undefined, "There should be no additional style recalc records.");
+        var secondPaint = PerformanceTestRunner.findTimelineEvent(TimelineModel.TimelineModel.RecordType.Paint, 1);
+        TestRunner.assertTrue(secondPaint === undefined, "There should be no additional paint records.");
+        TestRunner.completeTest();
+    }
+TypeError: Cannot read property 'length' of null
+    at Object.InspectorTest.addArray (evaluateInWebInspector0.js:243:31)
+    at Object.InspectorTest.dumpInvalidations (evaluateInWebInspector0.js:1340:19)
+    at testMultipleStyleRecalcs (evaluateInWebInspector1.js:68:31)
+    at result (evaluateInWebInspector0.js:694:25)
+    at Timeline.TimelinePanel.InspectorTest.addSniffer (evaluateInWebInspector0.js:1156:75)
+    at Timeline.TimelinePanel.result (evaluateInWebInspector0.js:694:25)
+    at Timeline.TimelinePanel.receiver.(anonymous function) (evaluateInWebInspector0.js:724:22)
+    at Timeline.TimelineController._finalizeTrace (file:///b/c/b/mac_layout/src/out/Release/resources/inspector/timeline/timeline_module.js:130:99)
+    at setTimeout (file:///b/c/b/mac_layout/src/out/Release/resources/inspector/timeline/timeline_module.js:129:76)
+

@@ -1,0 +1,43 @@
+This is a testharness.js-based test.
+PASS Startup 
+PASS cookie 
+PASS executeTest-0 
+PASS executeTest-1 
+PASS executeTest-2 
+PASS executeTest-3 
+PASS executeTest-4 
+PASS executeTest-5 
+PASS executeTest-6 
+PASS executeTest-7 
+PASS executeTest-8 
+PASS executeTest-9 
+PASS executeTest-10 
+PASS executeTest-11 
+FAIL executeTest-12 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&SetCookie=cookieA should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-13 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck1 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-14 
+FAIL executeTest-15 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck2 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-16 
+FAIL executeTest-17 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck3 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-18 
+FAIL executeTest-19 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck4 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-20 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=omit&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&SetCookie=cookieB should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-21 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck5 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-22 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=same-origin&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&SetCookie=cookieB should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-23 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck6 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-24 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&ACAOrigin=http://127.0.0.1:8000&PACAOrigin=http://127.0.0.1:8000&ACACredentials=true&PACACredentials=true&method=PUT&PACAMethods=PUT&SetCookie=cookieB&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-25 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck7 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-26 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&ACAOrigin=http://127.0.0.1:8000&PACAOrigin=http://127.0.0.1:8000&ACACredentials=true&PACACredentials=true&method=PUT&PACAMethods=PUT&SetCookie2=cookieC&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-27 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck8 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-28 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&ACAOrigin=http://127.0.0.1:8000&PACAOrigin=http://127.0.0.1:8000&ACACredentials=true&PACACredentials=true&method=PUT&PACAMethods=PUT&PSetCookie=cookieC&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-29 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck9 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-30 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&ACAOrigin=http://127.0.0.1:8000&PACAOrigin=http://127.0.0.1:8000&ACACredentials=true&PACACredentials=true&method=PUT&PACAMethods=PUT&PSetCookie2=cookieC&PreflightTest=200 should be resolved expected "resolved" but got "rejected"
+FAIL executeTest-31 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck10 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-32 
+FAIL executeTest-33 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck11 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-34 
+FAIL executeTest-35 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck12 should be resolved expected "resolved" but got "rejected"
+PASS executeTest-36 
+FAIL executeTest-37 assert_equals: https://localhost:8443/serviceworker/resources/fetch-access-control.php?mode=cors&credentials=include&method=POST&ACAOrigin=http://127.0.0.1:8000&ACACredentials=true&label=otherCheck13 should be resolved expected "resolved" but got "rejected"
+Harness: the test ran to completion.
+
