@@ -28326,6 +28326,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="IOS.NTP.Impression" enum="IOSNTPImpression">
+  <owner>gambard@chromium.org</owner>
+  <summary>
+    The number of NTP impressions on iOS, split by type of suggestions shown
+    (local vs remote).
+  </summary>
+</histogram>
+
 <histogram name="IOS.SearchExtension.Action" enum="IOSSearchExtensionAction">
   <owner>olivierrobin@chromium.org</owner>
   <summary>The action selected by the user in the Search Extension.</summary>
