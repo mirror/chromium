@@ -37,6 +37,9 @@ class CC_PAINT_EXPORT DiscardableImageMap {
                                   std::vector<const DrawImage*>* images) const;
   gfx::Rect GetRectForImage(PaintImage::Id image_id) const;
   bool all_images_are_srgb() const { return all_images_are_srgb_; }
+  const std::vector<PaintImage>& animated_images() const {
+    return animated_images_;
+  }
 
   void Reset();
   void Generate(const PaintOpBuffer* paint_op_buffer, const gfx::Rect& bounds);
@@ -52,6 +55,7 @@ class CC_PAINT_EXPORT DiscardableImageMap {
       base::flat_map<PaintImage::Id, gfx::Rect> image_id_to_rect);
 
   base::flat_map<PaintImage::Id, gfx::Rect> image_id_to_rect_;
+  std::vector<PaintImage> animated_images_;
   bool all_images_are_srgb_ = false;
 
   RTree<DrawImage> images_rtree_;
