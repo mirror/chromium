@@ -125,6 +125,25 @@ public class WebApkUma {
                 "WebApk.Install.GooglePlayBindDuration", durationMs, TimeUnit.MILLISECONDS);
     }
 
+    /** Records the available space when installing a WebAPK via Google Play. */
+    public static void recordAvailableSpaceForInstallation(long mb, boolean successInstall) {
+        final int maxLogFreeMb = 1000;
+        if (mb <= 0) {
+            mb = 1;
+        } else if (mb >= maxLogFreeMb) {
+            mb = maxLogFreeMb - 1;
+        }
+        if (successInstall) {
+            RecordHistogram.recordCustomCountHistogram(
+                    "WebApk.Install.AvailableSpaceForInstallationWhenSuccessInMb", (int) mb, 1,
+                    maxLogFreeMb, 50);
+        } else {
+            RecordHistogram.recordCustomCountHistogram(
+                    "WebApk.Install.AvailableSpaceForInstallationWhenFailInMb", (int) mb, 1,
+                    maxLogFreeMb, 50);
+        }
+    }
+
     /** Records the current Shell APK version. */
     public static void recordShellApkVersion(int shellApkVersion, String packageName) {
         String name = packageName.startsWith(WebApkConstants.WEBAPK_PACKAGE_PREFIX)

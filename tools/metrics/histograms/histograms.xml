@@ -86167,6 +86167,28 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="WebApk.Install.AvailableSpaceForInstallationWhenFailInMb"
+    units="MB">
+  <owner>hanxi@chromium.org</owner>
+  <owner>ranj@chromium.org</owner>
+  <owner>yfriedman@chromium.org</owner>
+  <summary>
+    Records the available space that can be used when installing a WebAPK from
+    Google Play fails.
+  </summary>
+</histogram>
+
+<histogram name="WebApk.Install.AvailableSpaceForInstallationWhenSuccessInMb"
+    units="MB">
+  <owner>hanxi@chromium.org</owner>
+  <owner>ranj@chromium.org</owner>
+  <owner>yfriedman@chromium.org</owner>
+  <summary>
+    Records the available space that can be used when installing a WebAPK from
+    Google Play succeeds.
+  </summary>
+</histogram>
+
 <histogram name="WebApk.Install.GooglePlayBindDuration" units="ms">
   <owner>hanxi@chromium.org</owner>
   <owner>pkotwicz@chromium.org</owner>
