@@ -1,0 +1,510 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e43aa676_40c82aab",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "It\u0027s a little be confusing that a call of Nodes() changes a state of ConsoleLogger and that Send*() applies to the last added nodes.\nFor example something like having 2 methods\nSend(WebNode node, level, message) and Send(WebNodeVector nodes, level, message) would be more direct and would harder to misuse. WDYT?\nWe can discuss options offline if you like.",
+      "range": {
+        "startLine": 32,
+        "startChar": 17,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5595dc1e_fc731285",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Why do you need map from ConsoleLevel? it looks that just std::vector\u003cEntry\u003e is enough.",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 58
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a318ef_d0c96882",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Please add a short comment about this structure.",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 20
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca1053e9_19e890f2",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Please add a short comment about this structure.",
+      "range": {
+        "startLine": 85,
+        "startChar": 7,
+        "endLine": 85,
+        "endChar": 26
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f049f1a4_cd2e1db2",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Nit: non_password_inputs or text_inputs? (see also comment to the line 92)",
+      "range": {
+        "startLine": 88,
+        "startChar": 22,
+        "endLine": 88,
+        "endChar": 37
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d98caed9_50e3fad9",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Strictly speaking here U for a field means that the field is not a password field. So probably it\u0027s better to replace U to N (there is already used similar pattern here https://cs.chromium.org/chromium/src/components/autofill/content/renderer/password_form_conversion_utils.cc?sq\u003dpackage:chromium\u0026dr\u0026l\u003d91 )",
+      "range": {
+        "startLine": 92,
+        "startChar": 44,
+        "endLine": 92,
+        "endChar": 48
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53e5635_1f4ef6fc",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Please move comment to the header file",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 32
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67b3d20_0acee6d4",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Please move comment to the header file",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 69
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a74dd18c_9f0abd5c",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "I\u0027d prefer to split this big function in smaller chunks, for example\n1.Traversing nodes (and returning extracted from DOM data)\n2.One method for each suggestion or group of related suggestions (for example 1 method for Duplicating ids, 1 method for autocomplete attributes and so on).\n It would \n   1. Make this method more readable and understandable\n   2. allow to add new suggestions easier and since number",
+      "range": {
+        "startLine": 125,
+        "startChar": 36,
+        "endLine": 125,
+        "endChar": 54
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28bad383_95a2f79d",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Please add DCHECK(frame) (it would crash if |frame| is empty in Debug build and would show that we expect only non-null frames)",
+      "range": {
+        "startLine": 126,
+        "startChar": 33,
+        "endLine": 126,
+        "endChar": 34
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c55fa1_7017acc3",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Why LastChild and reverse traverse are used, rather than FirstChild and direct traverse?",
+      "range": {
+        "startLine": 149,
+        "startChar": 42,
+        "endLine": 149,
+        "endChar": 51
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f0a466b_f39ce95d",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Please create constant array in anonymous namespace, in order to avoid creating a vector each time (it\u0027s possible to use std::begin and std::end with arrays)",
+      "range": {
+        "startLine": 174,
+        "startChar": 31,
+        "endLine": 174,
+        "endChar": 45
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695ae06e_3be1ffd3",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Nit: Empty line after this } would increase readability",
+      "range": {
+        "startLine": 191,
+        "startChar": 2,
+        "endLine": 191,
+        "endChar": 3
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f278606_be126e77",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Nit: you can define this var much later, it\u0027s usually good to decrease variable scope (and to use passwords.empty() in the next line).",
+      "range": {
+        "startLine": 219,
+        "startChar": 11,
+        "endLine": 219,
+        "endChar": 25
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b21855_a34a425a",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Please move struct definition to anonymous namespace on the top of this file.",
+      "range": {
+        "startLine": 263,
+        "startChar": 13,
+        "endLine": 263,
+        "endChar": 23
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85bce50_226f4e0e",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "These regexps are used on each run, it\u0027s better to create them only once. Could you please use Lazy loading, in order to create them not more than once, here is an example https://cs.chromium.org/chromium/src/components/autofill/content/renderer/password_form_conversion_utils.cc?sq\u003dpackage:chromium\u0026dr\u0026l\u003d118.",
+      "range": {
+        "startLine": 290,
+        "startChar": 6,
+        "endLine": 293,
+        "endChar": 67
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ab3309_44ecdee6",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Just const char kind is better (no sense to use reference for char)",
+      "range": {
+        "startLine": 327,
+        "startChar": 9,
+        "endLine": 327,
+        "endChar": 25
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b15611b0_fef6b04f",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Nits: \n1.this is a good candidate for extracting as a helper method in anonymous namespace\n2.if the first element is a text, it\u0027s calculated as kind_change, but if a password not. Should it be that way?",
+      "range": {
+        "startLine": 326,
+        "startChar": 1,
+        "endLine": 330,
+        "endChar": 5
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a8a72c_556223e3",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Nit: password_count",
+      "range": {
+        "startLine": 347,
+        "startChar": 12,
+        "endLine": 347,
+        "endChar": 34
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c0cb7e_1737c2b8",
+        "filename": "components/autofill/content/renderer/form_autofill_util.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1806,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Please move this comment to the header file.",
+      "range": {
+        "startLine": 1800,
+        "startChar": 0,
+        "endLine": 1806,
+        "endChar": 67
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d91b2e6_d31945bb",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "Probably the best place for Reset is PasswordAutofillAgent::FrameClosing(), where all data related to the current page is reset (it\u0027s called on reloading of main frame or closing iframe)",
+      "range": {
+        "startLine": 1318,
+        "startChar": 2,
+        "endLine": 1318,
+        "endChar": 44
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7840698a_d1ed0a15",
+        "filename": "third_party/WebKit/public/web/WebConsoleMessage.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T12:39:46Z",
+      "side": 1,
+      "message": "std::move wouldn\u0027t work, since it\u0027s not possible to move from const object. So it\u0027s better just to remove move.",
+      "range": {
+        "startLine": 62,
+        "startChar": 23,
+        "endLine": 62,
+        "endChar": 27
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
