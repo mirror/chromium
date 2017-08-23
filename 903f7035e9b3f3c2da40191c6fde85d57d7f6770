@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "591b00f0_40ea2ea1",
+        "filename": "build/android/gyp/util/proguard_util.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-23T21:43:10Z",
+      "side": 1,
+      "message": "I\u0027m wondering about splitting these into their own gn variable. How long do you expect full enabling to take?",
+      "revId": "903f7035e9b3f3c2da40191c6fde85d57d7f6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d0e277_1cf76d5f",
+        "filename": "build/android/pylib/instrumentation/instrumentation_test_instance.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-23T21:43:10Z",
+      "side": 1,
+      "message": "nit: can we just create the deobfuscator here and forgo enable_java_deobfuscation?",
+      "revId": "903f7035e9b3f3c2da40191c6fde85d57d7f6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad59f18_6386e473",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-23T21:43:10Z",
+      "side": 1,
+      "message": "I\u0027m a bit concerned about this for multi-device configurations. What if we did multiple instances of Deobfuscator, or multiple java_deobfuscate processes within Deobfuscator?",
+      "revId": "903f7035e9b3f3c2da40191c6fde85d57d7f6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10df97eb_e645b718",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-23T21:43:10Z",
+      "side": 1,
+      "message": "Should we attempt to keep using the same instance of java_deobfuscate in this case?",
+      "revId": "903f7035e9b3f3c2da40191c6fde85d57d7f6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df276f1d_33a43307",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-23T21:43:10Z",
+      "side": 1,
+      "message": "Is this right? Don\u0027t we expect the process to have terminated -- i.e., have a non-None exit code -- at this point?",
+      "revId": "903f7035e9b3f3c2da40191c6fde85d57d7f6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
