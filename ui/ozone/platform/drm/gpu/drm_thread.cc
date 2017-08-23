@@ -322,7 +322,7 @@ void DrmThread::AddBinding(ozone::mojom::DeviceCursorRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
 
-void DrmThread::AddBindingGpu(ozone::mojom::GpuAdapterRequest request) {
+void DrmThread::AddBindingGpu(ozone::mojom::DrmDeviceRequest request) {
   TRACE_EVENT0("drm", "DrmThread::AddBindingGpu");
   binding_.Bind(std::move(request));
 }

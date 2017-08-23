@@ -117,8 +117,8 @@ class OzonePlatformGbm : public OzonePlatform {
                    weak_factory_.GetWeakPtr()),
         gpu_task_runner_);
 
-    registry->AddInterface<ozone::mojom::GpuAdapter>(
-        base::Bind(&OzonePlatformGbm::CreateGpuAdapterBinding,
+    registry->AddInterface<ozone::mojom::DrmDevice>(
+        base::Bind(&OzonePlatformGbm::CreateDrmDeviceBinding,
                    weak_factory_.GetWeakPtr()),
         gpu_task_runner_);
   }
@@ -131,9 +131,9 @@ class OzonePlatformGbm : public OzonePlatform {
       pending_cursor_requests_.push_back(std::move(request));
   }
 
-  // service_manager::InterfaceFactory<ozone::mojom::GpuAdapter>:
-  void CreateGpuAdapterBinding(
-      ozone::mojom::GpuAdapterRequest request,
+  // service_manager::InterfaceFactory<ozone::mojom::DrmDevice>:
+  void CreateDrmDeviceBinding(
+      ozone::mojom::DrmDeviceRequest request,
       const service_manager::BindSourceInfo& source_info) {
     if (drm_thread_proxy_)
       drm_thread_proxy_->AddBindingGpu(std::move(request));
@@ -273,7 +273,7 @@ class OzonePlatformGbm : public OzonePlatform {
   // TODO(rjkroege,sadrul): Once the mus gpu process split happens, this can go
   // away.
   std::vector<ozone::mojom::DeviceCursorRequest> pending_cursor_requests_;
-  std::vector<ozone::mojom::GpuAdapterRequest> pending_gpu_adapter_requests_;
+  std::vector<ozone::mojom::DrmDeviceRequest> pending_gpu_adapter_requests_;
   scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner_;
 
   // Objects in the Browser process.
