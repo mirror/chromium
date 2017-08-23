@@ -130,6 +130,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
           const ui::AXTreeUpdate&)>;
   using SmartClipCallback = base::Callback<void(const base::string16& text,
                                                 const base::string16& html)>;
+  using DidCommitProvisionalLoadCallback = base::RepeatingCallback<void(
+      const FrameHostMsg_DidCommitProvisionalLoad_Params&)>;
 
   // An accessibility reset is only allowed to prevent very rare corner cases
   // or race conditions where the browser and renderer get out of sync. If
@@ -654,6 +656,15 @@ class CONTENT_EXPORT RenderFrameHostImpl
     return stream_handle_.get();
   }
 
+  // Sets up a |callback| to be invoked every time DidCommitProvisionalLoad is
+  // received, but just before it is processed. This mechanism can be used in
+  // unit or browser tests to scrutinize the parameters, or trigger other calls
+  // just before the navigation is committed.
+  void set_did_commit_provisional_load_callback_for_testing(
+      DidCommitProvisionalLoadCallback callback) {
+    did_commit_provisional_load_callback_for_testing_ = callback;
+  }
+
  protected:
   friend class RenderFrameHostFactory;
 
@@ -722,7 +733,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnDidFailLoadWithError(const GURL& url,
                               int error_code,
                               const base::string16& error_description);
-  void OnDidCommitProvisionalLoad(const IPC::Message& msg);
   void OnUpdateState(const PageState& state);
   void OnBeforeUnloadACK(
       bool proceed,
@@ -831,6 +841,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // mojom::FrameHost
   void CreateNewWindow(mojom::CreateNewWindowParamsPtr params,
                        CreateNewWindowCallback callback) override;
+  void DidCommitProvisionalLoad(
+      std::unique_ptr<FrameHostMsg_DidCommitProvisionalLoad_Params>
+          validated_params) override;
 
   void RunCreateWindowCompleteCallback(CreateNewWindowCallback callback,
                                        mojom::CreateNewWindowReplyPtr reply,
@@ -1207,6 +1220,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
   mojo::AssociatedBinding<mojom::FrameHost> frame_host_associated_binding_;
   mojom::FramePtr frame_;
   mojom::FrameBindingsControlAssociatedPtr frame_bindings_control_;
+
+  DidCommitProvisionalLoadCallback
+      did_commit_provisional_load_callback_for_testing_;
 
   // If this is true then this object was created in response to a renderer
   // initiated request. Init() will be called, and until then navigation
