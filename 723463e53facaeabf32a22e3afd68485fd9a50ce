@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "fe058eaa_b2077596",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T20:49:58Z",
+      "side": 1,
+      "message": "do you need to handle failure to create the file specially? is there a unit test for this (maybe create a dir, make it read-only, then try to make an instance for a file in that dir?)?",
+      "revId": "723463e53facaeabf32a22e3afd68485fd9a50ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3d4cae_ace90f35",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T20:49:58Z",
+      "side": 1,
+      "message": "nit: since |delete_behavior_| is initialized to kManualDeleteOnClose, change this to:\n  if (DeleteOnClose)\n    delete_behavior_ \u003d kAutoDeleteOnClose;\n  else\n    LOG(WARNING)...",
+      "revId": "723463e53facaeabf32a22e3afd68485fd9a50ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93935e65_800a592b",
         "filename": "chrome/installer/zucchini/mapped_file.cc",
         "patchSetId": 11
@@ -19,6 +53,40 @@
         "endLine": 36,
         "endChar": 6
       },
+      "revId": "723463e53facaeabf32a22e3afd68485fd9a50ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44becefb_e54d1e37",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T20:49:58Z",
+      "side": 1,
+      "message": "nit:\n  LOG_IF(ERROR, !is_ok)...",
+      "revId": "723463e53facaeabf32a22e3afd68485fd9a50ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4308fdc_93ca6b31",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T20:49:58Z",
+      "side": 1,
+      "message": "move this log message up after line 27 and make this one \"Can\u0027t map file:\"?",
       "revId": "723463e53facaeabf32a22e3afd68485fd9a50ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -48,6 +116,46 @@
     },
     {
       "key": {
+        "uuid": "7e7099bb_64e46c68",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T20:49:58Z",
+      "side": 1,
+      "message": "nit: \"The target file is deleted on destruction unless Keep() is called.\"",
+      "range": {
+        "startLine": 36,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 20
+      },
+      "revId": "723463e53facaeabf32a22e3afd68485fd9a50ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "432dc146_fedff823",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T20:49:58Z",
+      "side": 1,
+      "message": "nit: move down to the top of the private: section below",
+      "revId": "723463e53facaeabf32a22e3afd68485fd9a50ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c36a3a60_0ee3f53c",
         "filename": "chrome/installer/zucchini/mapped_file.h",
         "patchSetId": 11
@@ -65,6 +173,40 @@
         "endLine": 61,
         "endChar": 26
       },
+      "revId": "723463e53facaeabf32a22e3afd68485fd9a50ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5071a609_98040cee",
+        "filename": "chrome/installer/zucchini/mapped_file_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T20:49:58Z",
+      "side": 1,
+      "message": "nit: protected:",
+      "revId": "723463e53facaeabf32a22e3afd68485fd9a50ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9731416_c4b05a19",
+        "filename": "chrome/installer/zucchini/mapped_file_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T20:49:58Z",
+      "side": 1,
+      "message": "nit: \" \u003d default;\" rather than {}",
       "revId": "723463e53facaeabf32a22e3afd68485fd9a50ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

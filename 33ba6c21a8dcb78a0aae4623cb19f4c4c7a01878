@@ -236,6 +236,24 @@
     },
     {
       "key": {
+        "uuid": "e2a165cd_5e3d16f9",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T20:49:58Z",
+      "side": 1,
+      "message": "oh, duh. failure to clear the delete-on-close bit means that the file will be deleted -- no need to try again.",
+      "parentUuid": "3dd66a0b_718bddb7",
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f804ad0a_49abb17d",
         "filename": "chrome/installer/zucchini/mapped_file.cc",
         "patchSetId": 10
