@@ -22,6 +22,75 @@
       "revId": "ef982ae0005080d12a475dc172b6a59a725bb3f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b78896_767c0157",
+        "filename": "third_party/WebKit/Source/platform/testing/ScopedMockedURL.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-23T10:47:44Z",
+      "side": 1,
+      "message": "If we provide GetURLLoaderMockFactory though the TestingPlatformSupport, it would be natural to unregister all URLs when the testing platform instance is scoped out.\n\nThen, this ScopedMockedURL won\u0027t be useful any more?\n\nIf you want to keep this for a while, probably you just want to have the platform_ as a member, and use it for register and unregister, though using it for register needs URLTEstHelper\u0027s modification too. It\u0027s also fine to do it in a separate CL.",
+      "range": {
+        "startLine": 14,
+        "startChar": 17,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "ef982ae0005080d12a475dc172b6a59a725bb3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48cbe6d3_a1bf6aad",
+        "filename": "third_party/WebKit/Source/platform/testing/URLTestHelpers.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-23T10:47:44Z",
+      "side": 1,
+      "message": "As I commented, you will need to take the platform reference as an argument here.\n\nOtherwise, platform_ will be destroyed here. So once the actual MockFactory implementation moves to TestingPlatformSupport, this won\u0027t work. Registered mock will just disappear immediately.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 1
+      },
+      "revId": "ef982ae0005080d12a475dc172b6a59a725bb3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25348741_38511fda",
+        "filename": "third_party/WebKit/Source/platform/testing/URLTestHelpers.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-23T10:47:44Z",
+      "side": 1,
+      "message": "As I commented, you will need to take the platform reference as an argument here.\n\nOtherwise, platform_ will be destroyed here. So once the actual MockFactory implementation moves to TestingPlatformSupport, this won\u0027t work. Registered mock will just disappear immediately.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 1
+      },
+      "revId": "ef982ae0005080d12a475dc172b6a59a725bb3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
