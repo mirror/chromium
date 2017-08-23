@@ -645,7 +645,10 @@ void BrowserMainLoop::MainMessageLoopStart() {
   TRACE_EVENT0("startup", "BrowserMainLoop::MainMessageLoopStart");
 
   // Create a MessageLoop if one does not already exist for the current thread.
-  if (!base::MessageLoop::current())
+  // Gate on ThreadTaskRunnerHandle::IsSet() instead of MessageLoop::current()
+  // to allow integration tests to provide a controlled task environment (e.g.
+  // base::TestMockTimeTaskRunner).
+  if (!base::ThreadTaskRunnerHandle::IsSet())
     main_message_loop_.reset(new base::MessageLoopForUI);
 
   InitializeMainThread();
