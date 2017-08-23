@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "481e8c62_d76c1f84",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-23T04:29:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbde577a_915e6995",
+      "revId": "b918449b356bf9856d1313576ebd7b4ab72c19f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a179635b_221add8d",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "b918449b356bf9856d1313576ebd7b4ab72c19f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e1cd8f_7a78cb83",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-23T04:29:57Z",
+      "side": 1,
+      "message": "yes, thanks. Done",
+      "parentUuid": "a179635b_221add8d",
+      "revId": "b918449b356bf9856d1313576ebd7b4ab72c19f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3e01202d_4135c827",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-23T04:29:57Z",
+      "side": 1,
+      "message": "Technically, it will cancel when rendering each cell. But we could also cancel here in one shot. Cancelling here now. Thanks",
+      "parentUuid": "b367dc13_dcacc3ff",
+      "revId": "b918449b356bf9856d1313576ebd7b4ab72c19f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2228b721_433b0a14",
         "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "b918449b356bf9856d1313576ebd7b4ab72c19f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab26707_4c05c2bd",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-08-23T04:29:57Z",
+      "side": 1,
+      "message": "Good idea, thanks Done.",
+      "parentUuid": "2228b721_433b0a14",
+      "revId": "b918449b356bf9856d1313576ebd7b4ab72c19f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
