@@ -221,6 +221,7 @@ class MediaRouterUI
   FRIEND_TEST_ALL_PREFIXES(MediaRouterUITest, SendInitialMediaStatusUpdate);
 
   class UIIssuesObserver;
+  class WebContentsLoadedObserver;
 
   class UIMediaRoutesObserver : public MediaRoutesObserver {
    public:
@@ -346,9 +347,13 @@ class MediaRouterUI
   bool SetLocalFileRouteParameters(
       const MediaSink::Id& sink_id,
       url::Origin* origin,
+      content::WebContents* tab_contents,
       std::vector<MediaRouteResponseCallback>* route_response_callbacks,
       base::TimeDelta* timeout,
       bool* incognito);
+
+  void FullScreenTab(content::WebContents* web_contents,
+                     const RouteRequestResult& result);
 
   // Updates the set of supported cast modes and sends the updated set to
   // |handler_|.
