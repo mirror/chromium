@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0f68f94_99496f83",
+        "filename": "device/serial/test_serial_io_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-23T20:57:10Z",
+      "side": 1,
+      "message": "I chose to create a generic ForceReadError() method rather than just a ForceTimeout because it\u0027s useful for users to be able to test different error handling logic for different errors. (I\u0027m actually doing this now.)",
+      "range": {
+        "startLine": 39,
+        "startChar": 7,
+        "endLine": 39,
+        "endChar": 21
+      },
+      "revId": "cf867d6eccee006e35ad30ca8b0404eb17422f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c01fbde8_fa04879d",
+        "filename": "device/serial/test_serial_io_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-23T20:57:10Z",
+      "side": 1,
+      "message": "I also added ForceWriteError(), as I also had difficult testing those.",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 22
+      },
+      "revId": "cf867d6eccee006e35ad30ca8b0404eb17422f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
