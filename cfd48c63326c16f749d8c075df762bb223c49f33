@@ -1,0 +1,464 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c08d4951_bb3aea72",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: s/anf/and/",
+      "range": {
+        "startLine": 19,
+        "startChar": 44,
+        "endLine": 19,
+        "endChar": 47
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8be70c5_179bd95a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: I think struct will be a better option here, as these classes don\u0027t have any logic in them.\nAlso, formally, you can\u0027t have a class with public data members anyway according to the style guide:\nhttps://google.github.io/styleguide/cppguide.html#Access_Control\nhttps://google.github.io/styleguide/cppguide.html#Structs_vs._Classes",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 5
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d762dd_f9ec2c1c",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: Add a comment about the format of this field - is it 0-indexed or 1-indexed? (I think you have a class-level comment about this, but such information should be placed right at the member definition.)",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 14
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c78d8c_15c9bc5a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "It\u0027s always dangerous to leave the members uninitialized.\nUsually we require to initialize all variables and members with some default values. But it\u0027ll be a bit weird in this case.\nActually, can you change the code to make the default constructor unnecessary? It should be possible (std::unique_ptr will help in tricky cases).",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 14
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc0545c_8167b2fb",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: Don\u0027t abbreviate parameter names.\nIn this case, it\u0027s even fine to call it \"weekday\" - C++ allows this, and it\u0027s commonly used across our code base.",
+      "range": {
+        "startLine": 28,
+        "startChar": 17,
+        "endLine": 28,
+        "endChar": 18
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab633322_e2a9e91f",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: Make the member const.",
+      "range": {
+        "startLine": 30,
+        "startChar": 50,
+        "endLine": 30,
+        "endChar": 51
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f127ba6a_4234855e",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: Accept the argument as const\u0026, because they are not of trivial types like int.",
+      "range": {
+        "startLine": 46,
+        "startChar": 11,
+        "endLine": 46,
+        "endChar": 21
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520dbdd3_332dc876",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: The output arguments should go last: https://google.github.io/styleguide/cppguide.html#Function_Parameter_Ordering",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 30
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f60ea8f6_4b029e9a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: #include \"base/logging.h\"",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 14
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1af44f9_9933cfec",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: #include \u003cvector\u003e",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 11
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc9465a3_268171f3",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: Is there a reason to have this fast exit route? The performance gain must be negligible.\n\nSame below in GetIgnoredPolicies().",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 21
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d147bc3_b5e14c8f",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: Maybe LOG(WARNING) here, as it is an ignoring of a part of the policy.",
+      "range": {
+        "startLine": 87,
+        "startChar": 6,
+        "endLine": 87,
+        "endChar": 15
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "589b219b_15cc7c1d",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: #include \u003cstring\u003e",
+      "range": {
+        "startLine": 97,
+        "startChar": 14,
+        "endLine": 97,
+        "endChar": 20
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cdb79da_1c1bb160",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: I believe there\u0027s a simpler way: base::ListValue has a constructor from std::vector\u003cbase::Value\u003e. (Although you\u0027ll have to adjust the return value type of GetIntervals().)\n\nThe same below for ignored_policies.",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 3
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd407ea5_668026f5",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: Remove \"(c)\" in this and other files.\nThat\u0027s according to https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#file-headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8a8c81d_28136f55",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: Information about types is excessive in a comment - it\u0027s already shown by the function signature.\nBut what is actually useful to be documented here is what are the contents of the returned dictionary: names of the keys, format of the values.",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 51
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cbf6f02_fc213105",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: Better make the function global.\nSee:\n\n  Prefer placing nonmember functions in a namespace; use completely global functions rarely. [...]. Static methods of a class should generally be closely related to instances of the class or the class\u0027s static data.\n\nhttps://google.github.io/styleguide/cppguide.html#Nonmember,_Static_Member,_and_Global_Functions",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 8
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae22453_2c99023c",
+        "filename": "chrome/browser/chromeos/settings/device_settings_provider.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "There\u0027s inconsistency with device_policy_decoder_chromeos.cc: there the off-hours policy is handled in DecodeGenericPolicies(), but here it\u0027s done in a separate function.\nBetter to use the same approach in both - for instance, do the work directly inside DecodeGenericPolicies().",
+      "range": {
+        "startLine": 786,
+        "startChar": 2,
+        "endLine": 786,
+        "endChar": 22
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70acc67_e968fd77",
+        "filename": "chromeos/settings/cros_settings_names.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: Please document the format of the pref value here - reader of the code shouldn\u0027t be forced to search for the implementation that sets the pref.",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 251,
+        "endChar": 2
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665bed6f_ef0e1796",
+        "filename": "chromeos/settings/cros_settings_names.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-23T10:37:30Z",
+      "side": 1,
+      "message": "nit: It\u0027s spelled \"Chrome OS\" (although many people indeed skip the space :) ).",
+      "range": {
+        "startLine": 252,
+        "startChar": 65,
+        "endLine": 252,
+        "endChar": 67
+      },
+      "revId": "cfd48c63326c16f749d8c075df762bb223c49f33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
