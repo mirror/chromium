@@ -136,7 +136,8 @@ void AutomationManagerAura::SendEvent(BrowserContext* context,
     return;
 
   if (!context && g_browser_process->profile_manager()) {
-    context = g_browser_process->profile_manager()->GetLastUsedProfile();
+    context =
+        g_browser_process->profile_manager()->GetLastUsedOrDefaultProfile();
   }
 
   if (!context) {
