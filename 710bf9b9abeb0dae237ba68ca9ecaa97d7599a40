@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "caf1d985_763f3d7f",
+        "filename": "chromeos/dbus/arc_midis_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-08-23T21:25:18Z",
+      "side": 1,
+      "message": "yup direct copy pasta from ArcOemCrypto.\n\nMy reasoning for the above code was that we std::move() the FD while calling BootstrapMojoConnection(), and so the base::ScopedFD would then be in function scope, so would automatically get closed when the BootstrapMojoConnection() returns.",
+      "parentUuid": "524f799d_68649865",
+      "revId": "710bf9b9abeb0dae237ba68ca9ecaa97d7599a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9b765ad_62829849",
         "filename": "chromeos/dbus/arc_midis_client.h",
         "patchSetId": 13
