@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ab4292e_8b52cbb8",
+        "filename": "chromeos/components/tether/connect_tethering_operation_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-23T01:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9d55d39_66e785f4",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 43
+      },
+      "revId": "f1ecfd62feed0396c83721b0d7dbfd9e1f33916a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "590bf3b8_8af74a18",
         "filename": "chromeos/components/tether/connect_tethering_operation_unittest.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "f1ecfd62feed0396c83721b0d7dbfd9e1f33916a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acaa50a0_6f69be31",
+        "filename": "chromeos/components/tether/connect_tethering_operation_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-23T01:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "590bf3b8_8af74a18",
+      "range": {
+        "startLine": 192,
+        "startChar": 18,
+        "endLine": 192,
+        "endChar": 50
+      },
+      "revId": "f1ecfd62feed0396c83721b0d7dbfd9e1f33916a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "38e9913a_947d26f3",
+        "filename": "chromeos/components/tether/connect_tethering_operation_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-23T01:19:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1aa2921_87a8b9f4",
+      "range": {
+        "startLine": 193,
+        "startChar": 35,
+        "endLine": 193,
+        "endChar": 37
+      },
+      "revId": "f1ecfd62feed0396c83721b0d7dbfd9e1f33916a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b9830aa_838391cb",
         "filename": "chromeos/components/tether/host_scanner_operation_unittest.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "f1ecfd62feed0396c83721b0d7dbfd9e1f33916a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a302aee_c2512af7",
+        "filename": "chromeos/components/tether/host_scanner_operation_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-23T01:19:45Z",
+      "side": 1,
+      "message": "As per our discussion on a similar CL, we won\u0027t test multiple durations.",
+      "parentUuid": "7b9830aa_838391cb",
+      "range": {
+        "startLine": 214,
+        "startChar": 7,
+        "endLine": 214,
+        "endChar": 55
+      },
+      "revId": "f1ecfd62feed0396c83721b0d7dbfd9e1f33916a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
