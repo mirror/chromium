@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1042214_dda9b887",
+        "filename": "media/gpu/generic_v4l2_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-23T22:54:26Z",
+      "side": 1,
+      "message": "dup() can fail in which case you\u0027d add an invalid fd here. Handle the error?",
+      "revId": "6f66ae45f53e9dc298f2f883367463d840f8c2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3cc14f1_bad7ea4a",
+        "filename": "media/gpu/generic_v4l2_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-23T22:54:26Z",
+      "side": 1,
+      "message": "This seems a bit scary since it seems to imply you can silently mess up the number of dmabuf_fds? Are there any stricter checks you can add here?",
+      "revId": "6f66ae45f53e9dc298f2f883367463d840f8c2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc59154a_6f702e03",
+        "filename": "media/gpu/generic_v4l2_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-23T22:54:26Z",
+      "side": 1,
+      "message": "internal_format",
+      "revId": "6f66ae45f53e9dc298f2f883367463d840f8c2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c80fccfb_cf03798f",
+        "filename": "media/gpu/v4l2_device.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-23T22:54:26Z",
+      "side": 1,
+      "message": "Can it be pure virtual?",
+      "revId": "6f66ae45f53e9dc298f2f883367463d840f8c2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7283b5_2f9a43d0",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-23T22:54:26Z",
+      "side": 1,
+      "message": "Why? Don\u0027t see any std::move of the record?",
+      "revId": "6f66ae45f53e9dc298f2f883367463d840f8c2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
