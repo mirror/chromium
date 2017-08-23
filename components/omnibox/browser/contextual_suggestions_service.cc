@@ -74,6 +74,12 @@ void ContextualSuggestionsService::CreateContextualSuggestionsRequest(
                      std::move(callback)));
 }
 
+void ContextualSuggestionsService::StopCreatingContextualSuggestionRequest() {
+  if (token_fetcher_) {
+    token_fetcher_.reset();
+  }
+}
+
 // static
 GURL ContextualSuggestionsService::ContextualSuggestionsUrl(
     const std::string& current_url,

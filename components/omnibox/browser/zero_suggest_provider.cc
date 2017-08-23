@@ -196,6 +196,9 @@ void ZeroSuggestProvider::Stop(bool clear_cached_results,
     LogOmniboxZeroSuggestRequest(ZERO_SUGGEST_REQUEST_INVALIDATED);
   fetcher_.reset();
   waiting_for_most_visited_urls_request_ = false;
+  client()
+      ->GetContextualSuggestionsService()
+      ->StopCreatingContextualSuggestionRequest();
   done_ = true;
 
   if (clear_cached_results) {
