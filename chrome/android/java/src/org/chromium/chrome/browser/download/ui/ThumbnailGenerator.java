@@ -50,6 +50,7 @@ public class ThumbnailGenerator {
      */
     public void destroy() {
         ThreadUtils.assertOnUiThread();
+        if (mNativeThumbnailGenerator == 0) return;
         nativeDestroy(mNativeThumbnailGenerator);
     }
 
