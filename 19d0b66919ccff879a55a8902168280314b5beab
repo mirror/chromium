@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "c9ad96e1_538f7a4b",
+        "filename": "ios/chrome/browser/sessions/session_util.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-23T21:30:49Z",
+      "side": 1,
+      "message": "I think leaving the code as it is is reasonable.",
+      "parentUuid": "48fe4e03_6cc91286",
+      "range": {
+        "startLine": 44,
+        "startChar": 13,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "19d0b66919ccff879a55a8902168280314b5beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc912e77_121845da",
         "filename": "ios/chrome/browser/tabs/tab_model_notification_observer.mm",
         "patchSetId": 19
