@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "303244f9_ea6a1771",
+        "filename": "chrome/browser/extensions/api/device_permissions_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-23T04:22:25Z",
+      "side": 1,
+      "message": "Done.\n\nActually I tried to create a fake HidDeviceManager and run the quit closure explictly like below:\n\nclass FakeHidDeviceManager : public HidDeviceManager {\n public:\n  explicit FakeHidDeviceManager(content::BrowserContext* context)\n      : HidDeviceManager(context) {}\n\n  void OnEnumerationComplete(\n      const std::vector\u003cscoped_refptr\u003cdevice::HidDeviceInfo\u003e\u003e\u0026 devices) override {\n    HidDeviceManager::OnEnumerationComplete(devices);\n    if (quit_closure_) {\n      std::move(quit_closure_).Run();\n    }\n  }\n\n private:\n  base::OnceClosure quit_closure_;\n};\n\nAnd found in this way I have to change the HidDeviceManager::OnEnumerationComplete() to protected and virtual.\nthat\u0027s why I decide to just use the RunUntilIdle() to make it simpler :(",
+      "parentUuid": "94ed1c11_1427270c",
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce6f282d_539e728b",
         "filename": "device/hid/hid_service.cc",
         "patchSetId": 5
@@ -66,6 +84,53 @@
     },
     {
       "key": {
+        "uuid": "70010df4_38a99a23",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-23T04:22:25Z",
+      "side": 1,
+      "message": "It is okay to call AddDevice/RemoveDevice before GetDevices, but AddDevice/RemoveDevice shouldn\u0027t call the observer.OnDeviceAdded()/OnDeviceRemoved() if the GetDevicesCallback is not called yet.\n\nTake observer.OnDeviceRemoved for example, HidDeviceManager uses DCHECK() in its OnDeviceRemoved() to guarantee that all the to-be-removed device must have been added into its map before, so the GetDevicesCallback(calls the HidDeviceManager::OnDeviceAdded) must be called earlier than HidDeviceManager::OnDeviceRemoved().\n\nAll our changes in this file is to make sure GetDevicesCallback runs earlier, observer.OnDeviceAdded/OnDeviceRemoved runs later, right?\n\nSo set the enumeration_ready_ false here is necessary.",
+      "parentUuid": "e79329ea_e0f3022f",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 29
+      },
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b72497f9_4fe1416a",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-23T04:22:25Z",
+      "side": 1,
+      "message": "After we posttask the RunPendingEnumerations(), we set enumeration_ready_ false, after RunPendingEnumerations call the pending callback, we set enmeration_ready_ back to true.\n\nSame as in RemoveDevice().",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 29
+      },
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a727f66_5c1830a5",
         "filename": "device/hid/hid_service.cc",
         "patchSetId": 5
@@ -83,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "9351d803_175f89e3",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-23T04:22:25Z",
+      "side": 1,
+      "message": "As explained above, enumeration_ready_ has been set false in GetDevices, so we have to set it back to true here.\n\nSo I found RunPendingEnumerations() is totally same as FirstEnuerationComplete().\n\nMaybe it is better to put the \"enumeration_ready_ \u003d true;\" at the end of this function.",
+      "parentUuid": "9a727f66_5c1830a5",
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88d54938_4ed4f7b3",
         "filename": "device/hid/hid_service.cc",
         "patchSetId": 5
@@ -94,6 +177,30 @@
       "writtenOn": "2017-08-22T17:49:48Z",
       "side": 1,
       "message": "Similarly, when a task is posted to run this method we know this list isn\u0027t empty so I would rather DCHECK this here and leave the conditional in FirstEnumerationComplete.",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 131,
+        "endChar": 39
+      },
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e0d9f2a_aff1c205",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-23T04:22:25Z",
+      "side": 1,
+      "message": "as explained above.",
+      "parentUuid": "88d54938_4ed4f7b3",
       "range": {
         "startLine": 131,
         "startChar": 2,
@@ -129,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "47e6535a_7f44a55d",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-23T04:22:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "207bcdab_ef9ce086",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 34
+      },
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9f9fe17_b4b04f6c",
         "filename": "device/hid/hid_service.cc",
         "patchSetId": 5
@@ -143,6 +274,24 @@
       "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "974b07aa_227b10f5",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-23T04:22:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9f9fe17_b4b04f6c",
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "f8bb4c45_28bb3eec",
+        "filename": "device/hid/mock_hid_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-23T04:22:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70d01b28_0c812459",
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99af2c3f_2ac9b03a",
         "filename": "device/u2f/u2f_request_unittest.cc",
         "patchSetId": 5
@@ -174,6 +341,30 @@
       "writtenOn": "2017-08-22T17:49:48Z",
       "side": 1,
       "message": "This change seems wrong.",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 23
+      },
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc5f60f_46777678",
+        "filename": "device/u2f/u2f_request_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-08-23T04:22:25Z",
+      "side": 1,
+      "message": "I did this change on purpose.\n\nBy adding \"hid_service-\u003eAddDevice(u2f_device_0);\" we can trigger the callback of TestResponseCallback. we use the cb.WaitForCallback() to wait until the GetDevicesCallback is called.\n\nAfter cb.WaitForCallback, the u2f_device_0 has been popped from request.devices_ (it is popped during the U2f::Trainsition(), in U2f::IterateDevice), so the EXPECTed request.devices_size() is still 0.\n\ncb.WaitForCallback() guarantees GetDevicesCallback has been called, so below HidService::AddDevice and HidService::RemoveDevice begins to call observer.OnDeviceAdded()/OnDeviceRemoved().\n\nI think using the cb.WaitForCallback() is better than using a RunLoop::RunUntilIdle. That\u0027s why I decided to add another hid_service-\u003eAddDevice(u2f_device_0).",
+      "parentUuid": "99af2c3f_2ac9b03a",
       "range": {
         "startLine": 95,
         "startChar": 0,
