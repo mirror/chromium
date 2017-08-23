@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58225b6b_a54ae05f",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-23T18:15:05Z",
+      "side": 1,
+      "message": "It seems we\u0027re only setting up scroll in PaintPropertyTreeBuilder for\nthe FrameView right now? Is the scroll client properly deleted when the\nLocalFrameView goes away?",
+      "revId": "08bef83981054d948fc0f82dabd4723224b8e9de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

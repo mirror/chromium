@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "607d49fb_ba33461b",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-23T18:15:05Z",
+      "side": 1,
+      "message": "Ah I see. the root scroll node is also a sentinel.",
+      "parentUuid": "934ce88b_7258712c",
+      "revId": "8b8dd4152f1a3573ebfd5d9861bc7b57b1f8cadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ca63a3f_fcd8122d",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
         "patchSetId": 16
@@ -69,6 +87,24 @@
       "revId": "8b8dd4152f1a3573ebfd5d9861bc7b57b1f8cadd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "679fe09a_6658fe42",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-23T18:15:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "40237c6a_0abaccf9",
+      "revId": "8b8dd4152f1a3573ebfd5d9861bc7b57b1f8cadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
