@@ -22,6 +22,8 @@ static_library("zucchini_lib") {
     "disassembler.h",
     "disassembler_no_op.cc",
     "disassembler_no_op.h",
+    "disassembler_win32.cc",
+    "disassembler_win32.h",
     "element_detection.cc",
     "element_detection.h",
     "encoded_view.cc",
@@ -33,8 +35,6 @@ static_library("zucchini_lib") {
     "image_utils.h",
     "io_utils.cc",
     "io_utils.h",
-    "label_manager.cc",
-    "label_manager.h",
     "patch_reader.cc",
     "patch_reader.h",
     "patch_utils.h",
@@ -52,6 +52,10 @@ static_library("zucchini_lib") {
     "zucchini_apply.h",
     "zucchini_gen.cc",
     "zucchini_gen.h",
+    "targets_affinity.h",
+    "targets_affinity.cc",
+    "zucchini_tools.cc",
+    "zucchini_tools.h",
   ]
 
   deps = [
@@ -120,6 +124,20 @@ test("zucchini_unittests") {
     "typed_value_unittest.cc",
     "zucchini_apply_unittest.cc",
     "zucchini_gen_unittest.cc",
+  ]
+
+  deps = [
+    ":zucchini_lib",
+    "//base",
+    "//base/test:run_all_unittests",
+    "//base/test:test_support",
+    "//testing/gtest",
+  ]
+}
+
+test("zucchini_integration_test") {
+  sources = [
+    "integration_test.cc",
   ]
 
   deps = [

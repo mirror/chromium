@@ -10,27 +10,30 @@
 
 namespace zucchini {
 
+EncodedView::~EncodedView() = default;
+
 EncodedView::EncodedView(const ImageIndex* image_index)
-    : image_index_(image_index) {}
+    : image_index_(image_index),
+      pools_(image_index->PoolCount()) {}
 
 // static
-EncodedView::value_type EncodedView::Projection(const ImageIndex& image_index,
-                                                offset_t location) {
-  DCHECK_LT(location, image_index.size());
+EncodedView::value_type EncodedView::Projection(
+                                                offset_t location) const {
+  DCHECK_LT(location, image_index_->size());
 
   // Find out what lies at |location|.
-  TypeTag type = image_index.GetType(location);
+  TypeTag type = image_index_->GetType(location);
 
   // |location| points into raw data.
   if (type == kNoTypeTag) {
     // The projection is the identity function on raw content.
-    return image_index.GetRawValue(location);
+    return image_index_->GetRawValue(location);
   }
 
   // |location| points into a Reference.
-  Reference ref = image_index.FindReference(type, location);
+  Reference ref = image_index_->FindReference(type, location);
   DCHECK(location >= ref.location);
-  DCHECK(location < ref.location + image_index.GetTraits(type).width);
+  DCHECK(location < ref.location + image_index_->GetTraits(type).width);
 
   // |location| is not the first byte of the reference.
   if (location != ref.location) {
@@ -40,14 +43,12 @@ EncodedView::value_type EncodedView::Projection(const ImageIndex& image_index,
 
   // Targets with an associated Label will use its Label index in projection.
   // Otherwise, LabelBound() is used for all targets with no Label.
-  size_t target = IsMarked(ref.target)
-                      ? UnmarkIndex(ref.target)
-                      : image_index.LabelBound(image_index.GetPoolTag(type));
+  size_t label = pools_[image_index_->GetPoolTag(type).value()].labels[ref.target];
 
   // Projection is done on (|target|, |type|), shifted by a constant value to
   // avoid collisions with raw content.
-  size_t projection = target;
-  projection *= image_index.TypeCount();
+  size_t projection = label;
+  projection *= image_index_->TypeCount();
   projection += type.value();
   return projection + kBaseReferenceProjection;
 }
@@ -57,9 +58,13 @@ size_t EncodedView::Cardinality() const {
   for (uint8_t pool = 0; pool < image_index_->PoolCount(); ++pool) {
     // LabelBound() + 1 for the extra case of references with no Label.
     max_width =
-        std::max(image_index_->LabelBound(PoolTag(pool)) + 1, max_width);
+        std::max(pools_[pool].bound + 1, max_width);
   }
   return max_width * image_index_->TypeCount() + kBaseReferenceProjection;
 }
+
+EncodedView::PoolInfo::PoolInfo() = default;
+EncodedView::PoolInfo::PoolInfo(PoolInfo&&) = default;
+EncodedView::PoolInfo::~PoolInfo() = default;
 
 }  // namespace zucchini

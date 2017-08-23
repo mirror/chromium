@@ -217,7 +217,7 @@ class PatchElementReader {
   const Element& new_element() const { return element_match_.new_element; }
   size_t pool_count() const { return extra_targets_.size(); }
 
-  const EquivalenceSource& GetEquivalenceSource() const {
+  EquivalenceSource GetEquivalenceSource() const {
     return equivalences_;
   }
   const ExtraDataSource& GetExtraDataSource() const { return extra_data_; }

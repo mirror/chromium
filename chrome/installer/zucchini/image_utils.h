@@ -131,6 +131,8 @@ struct EquivalenceCandidate {
   double similarity;
 };
 
+constexpr double kMismatchFatal = -std::numeric_limits<double>::infinity();
+
 // Enumerations for supported executables.
 enum ExecutableType : uint32_t {
   kExeTypeUnknown = UINT32_MAX,

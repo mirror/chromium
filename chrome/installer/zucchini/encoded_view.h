@@ -9,7 +9,9 @@
 #include <stdint.h>
 
 #include <iterator>
+#include <vector>
 
+#include "base/macros.h"
 #include "chrome/installer/zucchini/image_index.h"
 #include "chrome/installer/zucchini/image_utils.h"
 
@@ -35,16 +37,16 @@ class EncodedView {
     using reference = size_t;
     using pointer = size_t*;
 
-    Iterator(const ImageIndex* image_index, difference_type pos)
-        : image_index_(image_index), pos_(pos) {}
+    Iterator(const EncodedView* encoded_view, difference_type pos)
+        : encoded_view_(encoded_view), pos_(pos) {}
 
     value_type operator*() const {
-      return EncodedView::Projection(*image_index_,
+      return encoded_view_->Projection(
                                      static_cast<offset_t>(pos_));
     }
 
     value_type operator[](difference_type n) const {
-      return EncodedView::Projection(*image_index_,
+      return encoded_view_->Projection(
                                      static_cast<offset_t>(pos_ + n));
     }
 
@@ -107,7 +109,7 @@ class EncodedView {
     }
 
    private:
-    const ImageIndex* image_index_;
+    const EncodedView* encoded_view_;
     difference_type pos_;
   };
 
@@ -116,30 +118,53 @@ class EncodedView {
   using difference_type = ptrdiff_t;
   using const_iterator = Iterator;
 
-  // Projects |location| to a scalar value that describe the content on a higher
-  // level of abstraction.
-  static value_type Projection(const ImageIndex& image_index,
-                               offset_t location);
-
   // |image_index| is the annotated image being adapted, and is required to
   // remain valid for the lifetime of the object.
   explicit EncodedView(const ImageIndex* image_index);
+  ~EncodedView();
+  
+  // Projects |location| to a scalar value that describes the content on a
+  // higher level of abstraction.
+  value_type Projection(offset_t location) const;
+  
+  bool IsToken(offset_t location) const { return image_index_->IsToken(location); }
 
   // Returns the cardinality of the projection, i.e., the upper bound on
   // values returned by Projection().
   value_type Cardinality() const;
+  
+  void UpdateLabels(PoolTag pool, std::vector<size_t>&& labels, size_t bound) {
+    pools_[pool.value()].labels = std::move(labels);
+    pools_[pool.value()].bound = bound;
+  }
+  
+  const ImageIndex& GetImageIndex() const { return *image_index_; }
 
   // View functions.
   size_type size() const { return size_type(image_index_->size()); }
   const_iterator begin() const {
-    return const_iterator{image_index_, difference_type(0)};
+    return const_iterator{this, difference_type(0)};
   }
   const_iterator end() const {
-    return const_iterator{image_index_, difference_type(size())};
+    return const_iterator{this, difference_type(size())};
   }
 
  private:
+  struct PoolInfo {
+    PoolInfo();
+    PoolInfo(PoolInfo&&);
+    ~PoolInfo();
+  
+    std::vector<size_t> labels;
+    size_t bound = 0;
+    
+    //DISALLOW_COPY_AND_ASSIGN(PoolInfo);
+  };
+ 
   const ImageIndex* image_index_;
+  std::vector<PoolInfo> pools_;
+  
+  DISALLOW_COPY_AND_ASSIGN(EncodedView);
 };
 
 }  // namespace zucchini
