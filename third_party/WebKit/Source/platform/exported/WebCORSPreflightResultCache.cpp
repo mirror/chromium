@@ -202,7 +202,7 @@ bool WebCORSPreflightResultCacheItem::AllowsRequest(
   return true;
 }
 
-WebCORSPreflightResultCache& WebCORSPreflightResultCache::Shared() {
+WebCORSPreflightResultCache& WebCORSPreflightResultCache::SharedInMainThread() {
   DEFINE_STATIC_LOCAL(WebCORSPreflightResultCache, cache, ());
   DCHECK(IsMainThread());
   return cache;
@@ -212,8 +212,6 @@ void WebCORSPreflightResultCache::AppendEntry(
     const WebString& origin,
     const WebURL& url,
     std::unique_ptr<WebCORSPreflightResultCacheItem> preflight_result) {
-  DCHECK(IsMainThread());
-
   preflight_hash_map_[origin.Ascii()][url.GetString().Ascii()] =
       std::move(preflight_result);
 }
@@ -224,8 +222,6 @@ bool WebCORSPreflightResultCache::CanSkipPreflight(
     WebURLRequest::FetchCredentialsMode credentials_mode,
     const WebString& method,
     const HTTPHeaderMap& request_headers) {
-  DCHECK(IsMainThread());
-
   std::string origin(web_origin.Ascii());
   std::string url(web_url.GetString().Ascii());
 
