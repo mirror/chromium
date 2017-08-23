@@ -2063,4 +2063,14 @@ TEST_F(TouchExplorationTest, TouchExploreLiftInLiftActivationArea) {
   EXPECT_EQ(ui::ET_MOUSE_MOVED, out_captured_events[0]->type());
 }
 
+TEST_F(TouchExplorationTest, AlreadyHeldFingersGetCanceled) {
+  generator_->PressTouch();
+  SwitchTouchExplorationMode(true);
+  generator_->ReleaseTouch();
+
+  std::vector<ui::LocatedEvent*> events =
+      GetCapturedLocatedEventsOfType(ui::ET_TOUCH_CANCELLED);
+  ASSERT_EQ(1U, events.size());
+}
+
 }  // namespace ui
