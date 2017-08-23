@@ -9,7 +9,6 @@
 #include "ash/public/cpp/voice_interaction_state.h"
 #include "ash/shell_observer.h"
 #include "ash/system/palette/common_palette_tool.h"
-#include "base/memory/weak_ptr.h"
 #include "ui/events/event_handler.h"
 
 namespace ash {
@@ -27,6 +26,26 @@ class ASH_EXPORT MetalayerMode : public CommonPaletteTool,
   ~MetalayerMode() override;
 
  private:
+  // Whether the metalayer feature is enabled by the user. This is different
+  // from |enabled| which means that the palette tool is currently selected by
+  // the user.
+  bool enabled_by_user() const {
+    return voice_interaction_enabled_ && voice_interaction_context_enabled_;
+  }
+
+  // Whether the tool is in "loading" state.
+  bool loading() const {
+    return enabled_by_user() &&
+           voice_interaction_state_ == ash::VoiceInteractionState::NOT_READY;
+  }
+
+  // Whether the tool can be selected (that is, enabled by the user and fully
+  // loaded).
+  bool selectable() const {
+    return enabled_by_user() &&
+           voice_interaction_state_ != ash::VoiceInteractionState::NOT_READY;
+  }
+
   // PaletteTool:
   PaletteGroup GetGroup() const override;
   PaletteToolId GetToolId() const override;
@@ -45,7 +64,12 @@ class ASH_EXPORT MetalayerMode : public CommonPaletteTool,
   void OnVoiceInteractionStatusChanged(
       ash::VoiceInteractionState state) override;
 
-  void OnMetalayerDone();
+  void OnVoiceInteractionEnabled(bool enabled) override;
+
+  void OnVoiceInteractionContextEnabled(bool enabled) override;
+
+  // Update the state of the tool based on the current availability of the tool.
+  void UpdateState();
 
   // Update the palette menu item based on the current availability of the tool.
   void UpdateView();
@@ -53,7 +77,9 @@ class ASH_EXPORT MetalayerMode : public CommonPaletteTool,
   ash::VoiceInteractionState voice_interaction_state_ =
       ash::VoiceInteractionState::NOT_READY;
 
-  base::WeakPtrFactory<MetalayerMode> weak_factory_;
+  bool voice_interaction_enabled_ = false;
+
+  bool voice_interaction_context_enabled_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(MetalayerMode);
 };
