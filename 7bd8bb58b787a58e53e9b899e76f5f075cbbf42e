@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd70ffe6_50b6d212",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-23T22:57:10Z",
+      "side": 1,
+      "message": "tiral -\u003e trial",
+      "range": {
+        "startLine": 7,
+        "startChar": 39,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "7bd8bb58b787a58e53e9b899e76f5f075cbbf42e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f176fcd5_806cf9ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-23T22:57:10Z",
+      "side": 1,
+      "message": "Also refactored ShouldShowPromo() to the feature_tracker.",
+      "range": {
+        "startLine": 13,
+        "startChar": 14,
+        "endLine": 14,
+        "endChar": 34
+      },
+      "revId": "7bd8bb58b787a58e53e9b899e76f5f075cbbf42e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "775f1bad_0efbad00",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-23T22:57:10Z",
+      "side": 1,
+      "message": "Have this return a base::TimeDelta.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 4
+      },
+      "revId": "7bd8bb58b787a58e53e9b899e76f5f075cbbf42e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e418bd18_49771c09",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-23T22:57:10Z",
+      "side": 1,
+      "message": "Nit: Move this to the top of the block.",
+      "range": {
+        "startLine": 59,
+        "startChar": 4,
+        "endLine": 59,
+        "endChar": 45
+      },
+      "revId": "7bd8bb58b787a58e53e9b899e76f5f075cbbf42e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512fba3b_98c95a3a",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-23T22:57:10Z",
+      "side": 1,
+      "message": "Make these private",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 49
+      },
+      "revId": "7bd8bb58b787a58e53e9b899e76f5f075cbbf42e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18bddc4b_5b4df2e2",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-23T22:57:10Z",
+      "side": 1,
+      "message": "Are these header additions still needed?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 44
+      },
+      "revId": "7bd8bb58b787a58e53e9b899e76f5f075cbbf42e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac93bf3_07470eca",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-23T22:57:10Z",
+      "side": 1,
+      "message": "Nit: Alphabetize. This should go right before TestShouldNotShowPromo.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 77
+      },
+      "revId": "7bd8bb58b787a58e53e9b899e76f5f075cbbf42e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9408f6d6_ec0ef3a7",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-23T22:57:10Z",
+      "side": 1,
+      "message": "What\u0027s the motivation for moving this from a local var to an instance var? This seems to only be used locally.",
+      "range": {
+        "startLine": 159,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 19
+      },
+      "revId": "7bd8bb58b787a58e53e9b899e76f5f075cbbf42e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
