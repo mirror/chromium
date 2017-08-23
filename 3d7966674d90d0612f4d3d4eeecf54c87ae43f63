@@ -16,6 +16,24 @@
       "revId": "3d7966674d90d0612f4d3d4eeecf54c87ae43f63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f59aacce_0185a873",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-08-23T04:12:56Z",
+      "side": 1,
+      "message": "Those two values are not necessarily the same - e.g. I got 0.5 for |factor| and 1.0 for GetForcedDeviceScaleFactor.",
+      "parentUuid": "48ecb9c9_e43a9f4f",
+      "revId": "3d7966674d90d0612f4d3d4eeecf54c87ae43f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
