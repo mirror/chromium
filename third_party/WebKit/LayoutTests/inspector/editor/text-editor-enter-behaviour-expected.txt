@@ -2,157 +2,147 @@ This test checks text editor enter behaviour.
 
 
 Running: testEnterInTheLineEnd
-function.testFunction()
-{
+function.testFunction().{
 ....var.a.=.100;
-....|
 ....var.b.=.200;
+....|
 ....var.c.=.(a.+.b)./.2;
 ....console.log(a);
 ....console.log(b);
 ....console.log(c);
 ....if.(a.>.b).{
-........console.log(a);
+......console.log(a);
 ....}
 ....return.c;
-}
+..}
 
 Running: testEnterAfterOpenCurlyBrace
-function.testFunction()
-{
-....|
+function.testFunction().{
 ....var.a.=.100;
+....|
 ....var.b.=.200;
 ....var.c.=.(a.+.b)./.2;
 ....console.log(a);
 ....console.log(b);
 ....console.log(c);
 ....if.(a.>.b).{
-........console.log(a);
+......console.log(a);
 ....}
 ....return.c;
-}
+..}
 
 Running: testEnterInTheMiddleOfLine
-function.testFunction()
-{
+function.testFunction().{
+....var.a.=.100;
 ....var.
-....|a.=.100;
-....var.b.=.200;
+....|b.=.200;
 ....var.c.=.(a.+.b)./.2;
 ....console.log(a);
 ....console.log(b);
 ....console.log(c);
 ....if.(a.>.b).{
-........console.log(a);
+......console.log(a);
 ....}
 ....return.c;
-}
+..}
 
 Running: testEnterInTheBeginningOfTheLine
-function.testFunction()
-{
+function.testFunction().{
+....var.a.=.100;
 
-|....var.a.=.100;
-....var.b.=.200;
+|....var.b.=.200;
 ....var.c.=.(a.+.b)./.2;
 ....console.log(a);
 ....console.log(b);
 ....console.log(c);
 ....if.(a.>.b).{
-........console.log(a);
+......console.log(a);
 ....}
 ....return.c;
-}
+..}
 
 Running: testEnterWithTheSelection
-function.testFunction()
-{
+function.testFunction().{
+....var.a.=.100;
 ..
-..|var.a.=.100;
-....var.b.=.200;
+..|var.b.=.200;
 ....var.c.=.(a.+.b)./.2;
 ....console.log(a);
 ....console.log(b);
 ....console.log(c);
 ....if.(a.>.b).{
-........console.log(a);
+......console.log(a);
 ....}
 ....return.c;
-}
+..}
 
 Running: testEnterWithReversedSelection
-function.testFunction()
-{
+function.testFunction().{
+....var.a.=.100;
 ..
-..|var.a.=.100;
-....var.b.=.200;
+..|var.b.=.200;
 ....var.c.=.(a.+.b)./.2;
 ....console.log(a);
 ....console.log(b);
 ....console.log(c);
 ....if.(a.>.b).{
-........console.log(a);
+......console.log(a);
 ....}
 ....return.c;
-}
+..}
 
 Running: testEnterWithTheMultiLineSelection
-function.testFunction()
-{
+function.testFunction().{
+....var.a.=.100;
 
-|if.(a.>.b).{
-........console.log(a);
+|..console.log(a);
 ....}
 ....return.c;
-}
+..}
 
 Running: testEnterWithFullLineSelection
-function.testFunction()
-{
+function.testFunction().{
+....var.a.=.100;
 
-|....var.b.=.200;
-....var.c.=.(a.+.b)./.2;
+|....var.c.=.(a.+.b)./.2;
 ....console.log(a);
 ....console.log(b);
 ....console.log(c);
 ....if.(a.>.b).{
-........console.log(a);
+......console.log(a);
 ....}
 ....return.c;
-}
+..}
 
 Running: testEnterBeforeOpenBrace
-function.testFunction()
-{
+function.testFunction().{
 ....var.a.=.100;
 ....var.b.=.200;
 ....var.c.=.(a.+.b)./.2;
 ....console.log(a);
 ....console.log(b);
 ....console.log(c);
+....if.(a.>.b).{
 
-|....if.(a.>.b).{
-........console.log(a);
+|......console.log(a);
 ....}
 ....return.c;
-}
+..}
 
 Running: testEnterMultiCursor
-function.testFunction()
-{
+function.testFunction().{
 ....var.a.=.100;
+....var.b.=.200;
 
-|....var.b.=.200;
-....var.c.=.(a.+.b)./.2;
+|....var.c.=.(a.+.b)./.2;
+....console.log(a);
 .
-.|...console.log(a);
+.|...console.log(b);
 ..
-..|..console.log(b);
-....console.log(c);
+..|..console.log(c);
 ....if.(a.>.b).{
-........console.log(a);
+......console.log(a);
 ....}
 ....return.c;
-}
+..}
 
