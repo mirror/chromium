@@ -2,6 +2,167 @@
   "comments": [
     {
       "key": {
+        "uuid": "fcc34ea3_47ae7fc4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/input/SpellCheckMenuTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-23T18:28:31Z",
+      "side": 1,
+      "message": "Hmm... Unless there is a big difference in the setUp(), I prefer that this single test case be merged into TextSuggestionMenuTest.",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 31
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66979c5a_fd11ce9e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/input/SpellCheckMenuTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-23T18:28:31Z",
+      "side": 1,
+      "message": "Ditto here: you\u0027ll need to poll for the condition to avoid potential test flakiness.",
+      "range": {
+        "startLine": 79,
+        "startChar": 41,
+        "endLine": 79,
+        "endChar": 56
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b58f1eea_6353dd06",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/input/ImeAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-23T18:28:31Z",
+      "side": 1,
+      "message": "could you refactor this block into a private method?",
+      "range": {
+        "startLine": 917,
+        "startChar": 16,
+        "endLine": 917,
+        "endChar": 19
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06178acf_60c740d3",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/TextSuggestionMenuTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-23T18:28:31Z",
+      "side": 1,
+      "message": "Some more basic test cases I\u0027d suggest:\n1) Multiple suggestions:\n- Do we get the original suggestions? Is the order as expected?\n- Select the n-th suggestion\n\n2) Menu dismissal case:\n- Input loses focus?\n- Touch other part of text?\n- JS deletes/modifies text?\n\n3) Cursor position after replacement:\n- What should happen when you replace a text far from the current caret position?\n(I think this can be covered in TextSuggestionControllerTest instead.)\n\n4) [stretch] Scrolling: does the menu follows the text position when the webpage is scrolled?\n- This may be difficult to test.",
+      "range": {
+        "startLine": 35,
+        "startChar": 13,
+        "endLine": 35,
+        "endChar": 35
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd08768a_6c859766",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/TextSuggestionMenuTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-23T18:28:31Z",
+      "side": 1,
+      "message": "Is this intended? 1 is the default value. If 0 is intended, please leave some comment.",
+      "range": {
+        "startLine": 60,
+        "startChar": 39,
+        "endLine": 60,
+        "endChar": 40
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5589da10_5100db45",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/TextSuggestionMenuTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-23T18:28:31Z",
+      "side": 1,
+      "message": "Do you also need to check if the menu gets dismissed?",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 5
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "849951d3_563e8ddb",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/TextSuggestionMenuTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-08-23T18:28:31Z",
+      "side": 1,
+      "message": "I think you need to explicitly poll for the condition even for deletion.",
+      "range": {
+        "startLine": 89,
+        "startChar": 36,
+        "endLine": 89,
+        "endChar": 67
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12679f15_998e4a36",
         "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
         "patchSetId": 2
