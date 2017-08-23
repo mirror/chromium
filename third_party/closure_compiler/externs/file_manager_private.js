@@ -75,7 +75,7 @@ var ProfileInfo;
  *   watchable: boolean,
  *   mountCondition: (string|undefined),
  *   mountContext: (string|undefined),
- *   diskFileSystemType: (string|undefined)
+ *   diskFileSystem: (string|undefined)
  * }}
  */
 var VolumeMetadata;
