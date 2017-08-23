@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01bfbd7b_6f433e12",
+        "filename": "base/debug/activity_tracker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-23T12:07:43Z",
+      "side": 1,
+      "message": "Thought of this later...  Please comment here why ThreadChecker doesn\u0027t work so nobody tries to change it back in the future.",
+      "range": {
+        "startLine": 744,
+        "startChar": 8,
+        "endLine": 744,
+        "endChar": 26
+      },
+      "revId": "368ca7aa40f5b027cd363662a2fb8c1f79d777e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
