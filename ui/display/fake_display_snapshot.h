@@ -113,9 +113,6 @@ class DISPLAY_EXPORT FakeDisplaySnapshot : public DisplaySnapshot {
       int64_t id,
       const std::string& spec);
 
-  // DisplaySnapshot:
-  std::string ToString() const override;
-
  private:
   DISALLOW_COPY_AND_ASSIGN(FakeDisplaySnapshot);
 };
