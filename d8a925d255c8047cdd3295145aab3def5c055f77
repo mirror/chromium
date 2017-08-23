@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "9099020e_b669ac51",
+        "filename": "third_party/WebKit/Source/platform/fonts/opentype/OS2TableCJKFont.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-23T17:38:50Z",
+      "side": 1,
+      "message": "I\u0027ll update the CL with regards to the other request changes, but about this piece of MPL code. I vaguely remember we had this discussion for https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/fonts/opentype/OpenTypeCapsSupportMPL.cpp and we ended up deciding such a function can live here, wdyt? Original review in https://codereview.chromium.org/1882063002/ where dpranke@ also seemed fine with it.",
+      "parentUuid": "90b7bf6d_b2a752bf",
+      "revId": "d8a925d255c8047cdd3295145aab3def5c055f77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a70ef5e9_c159d615",
         "filename": "third_party/WebKit/Source/platform/fonts/opentype/OS2TableCJKFontTest.cpp",
         "patchSetId": 4
