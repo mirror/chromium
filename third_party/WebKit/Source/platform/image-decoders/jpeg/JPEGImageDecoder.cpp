@@ -445,6 +445,8 @@ class JPEGImageReader final {
         if (info_.scale_num != info_.scale_denom)
           override_color_space = JCS_UNKNOWN;
         jpeg_calc_output_dimensions(&info_);
+        info_.output_width *= 8;
+        info_.output_height *= 8;
         decoder_->SetDecodedSize(info_.output_width, info_.output_height);
 
         decoder_->SetOrientation(ReadImageOrientation(Info()));
@@ -759,6 +761,7 @@ size_t JPEGImageDecoder::DecodedYUVWidthBytes(int component) const {
 }
 
 unsigned JPEGImageDecoder::DesiredScaleNumerator() const {
+  return 1;
   size_t original_bytes = Size().Width() * Size().Height() * 4;
 
   if (original_bytes <= max_decoded_bytes_)

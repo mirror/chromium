@@ -9,6 +9,7 @@
 #include "cc/paint/paint_image_generator.h"
 #include "cc/paint/paint_record.h"
 #include "cc/paint/skia_paint_image_generator.h"
+#include "components/viz/common/resources/resource_format_utils.h"
 #include "ui/gfx/skia_util.h"
 
 namespace cc {
@@ -52,6 +53,39 @@ const sk_sp<SkImage>& PaintImage::GetSkImage() const {
         base::MakeUnique<SkiaPaintImageGenerator>(paint_image_generator_));
   }
   return cached_sk_image_;
+}
+
+SkISize PaintImage::GetSupportedDecodeSize(
+    const SkISize& requested_size) const {
+  // TODO(vmpstr): For now, we ignore the requested size and just return the
+  // available image size.
+  return SkISize::Make(width(), height());
+}
+
+SkImageInfo PaintImage::CreateDecodeImageInfo(const SkISize& size,
+                                              SkColorType color_type) const {
+  DCHECK(GetSupportedDecodeSize(size) == size);
+  return SkImageInfo::Make(size.width(), size.height(), color_type,
+                           kPremul_SkAlphaType);
+}
+
+bool PaintImage::Decode(void* memory,
+                        SkImageInfo* info,
+                        sk_sp<SkColorSpace> color_space) const {
+  auto image = GetSkImage();
+  DCHECK(image);
+  if (color_space) {
+    image =
+        image->makeColorSpace(color_space, SkTransferFunctionBehavior::kIgnore);
+    if (!image)
+      return false;
+  }
+  // Note that the readPixels has to happen before converting the info to the
+  // given color space, since it can produce incorrect results.
+  bool result = image->readPixels(*info, memory, info->minRowBytes(), 0, 0,
+                                  SkImage::kDisallow_CachingHint);
+  *info = info->makeColorSpace(color_space);
+  return result;
 }
 
 }  // namespace cc
