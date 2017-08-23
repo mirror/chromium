@@ -301,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "f20d4c47_d7332ee9",
+        "filename": "media/blink/video_decode_stats_reporter.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-23T06:52:27Z",
+      "side": 1,
+      "message": "Hm.\nApparently I misread the thread. MS said that they *could* support it in VC++ 2017. Sorry \u003d/",
+      "parentUuid": "f47724a6_e6be512a",
+      "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "980b19c1_0bfbc06b",
         "filename": "media/blink/video_decode_stats_reporter.h",
         "patchSetId": 16
