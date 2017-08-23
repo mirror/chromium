@@ -52,6 +52,24 @@
       "revId": "4559546727eaefaaaf3cdc0f9ff1f048bd9e6a44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5061c9e2_d33080c3",
+        "filename": "chrome/browser/ui/aura/accessibility/automation_manager_aura.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-23T22:00:32Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "d4698773_a33ccecc",
+      "revId": "4559546727eaefaaaf3cdc0f9ff1f048bd9e6a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
