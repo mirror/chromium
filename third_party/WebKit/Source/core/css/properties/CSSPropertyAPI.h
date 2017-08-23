@@ -39,6 +39,7 @@ class CORE_EXPORT CSSPropertyAPI {
     NOTREACHED();
     return 0;
   }
+  virtual bool IsDescriptor() const { return false; }
 };
 
 }  // namespace blink
