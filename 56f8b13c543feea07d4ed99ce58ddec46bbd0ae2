@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6066fe10_47422f15",
+        "filename": "chromeos/components/tether/message_transfer_operation.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-23T16:56:19Z",
+      "side": 0,
+      "message": "If authentication fails, the expected old_status will obviously be AUTHENTICATING, but the new_status is expected to be DISCONNECTED, right? (as opposed to it being CONNECTED) If you could point to the what a failed GATT connection transitions to, that would be really helpful (not in documentation, just here in the comments).",
+      "range": {
+        "startLine": 98,
+        "startChar": 61,
+        "endLine": 98,
+        "endChar": 73
+      },
+      "revId": "56f8b13c543feea07d4ed99ce58ddec46bbd0ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
