@@ -230,11 +230,9 @@ void HttpStreamFactoryImpl::JobController::OnStreamReady(
 
   factory_->OnStreamReady(job->proxy_info(), request_info_.privacy_mode);
 
-  if (IsJobOrphaned(job)) {
-    // We have bound a job to the associated Request, |job| has been orphaned.
-    OnOrphanedJobComplete(job);
+  if (is_preconnect_)
     return;
-  }
+
   std::unique_ptr<HttpStream> stream = job->ReleaseStream();
   DCHECK(stream);
 
@@ -257,11 +255,8 @@ void HttpStreamFactoryImpl::JobController::OnBidirectionalStreamImplReady(
     const ProxyInfo& used_proxy_info) {
   DCHECK(job);
 
-  if (IsJobOrphaned(job)) {
-    // We have bound a job to the associated Request, |job| has been orphaned.
-    OnOrphanedJobComplete(job);
+  if (is_preconnect_)
     return;
-  }
 
   MarkRequestComplete(job->was_alpn_negotiated(), job->negotiated_protocol(),
                       job->using_spdy());
@@ -316,11 +311,8 @@ void HttpStreamFactoryImpl::JobController::OnStreamFailed(
 
   MaybeResumeMainJob(job, base::TimeDelta());
 
-  if (IsJobOrphaned(job)) {
-    // We have bound a job to the associated Request, |job| has been orphaned.
-    OnOrphanedJobComplete(job);
+  if (is_preconnect_)
     return;
-  }
 
   if (!request_)
     return;
@@ -361,11 +353,8 @@ void HttpStreamFactoryImpl::JobController::OnCertificateError(
     const SSLInfo& ssl_info) {
   MaybeResumeMainJob(job, base::TimeDelta());
 
-  if (IsJobOrphaned(job)) {
-    // We have bound a job to the associated Request, |job| has been orphaned.
-    OnOrphanedJobComplete(job);
+  if (is_preconnect_)
     return;
-  }
 
   if (!request_)
     return;
@@ -384,11 +373,8 @@ void HttpStreamFactoryImpl::JobController::OnHttpsProxyTunnelResponse(
     std::unique_ptr<HttpStream> stream) {
   MaybeResumeMainJob(job, base::TimeDelta());
 
-  if (IsJobOrphaned(job)) {
-    // We have bound a job to the associated Request, |job| has been orphaned.
-    OnOrphanedJobComplete(job);
+  if (is_preconnect_)
     return;
-  }
 
   if (!bound_job_)
     BindJob(job);
@@ -404,11 +390,8 @@ void HttpStreamFactoryImpl::JobController::OnNeedsClientAuth(
     SSLCertRequestInfo* cert_info) {
   MaybeResumeMainJob(job, base::TimeDelta());
 
-  if (IsJobOrphaned(job)) {
-    // We have bound a job to the associated Request, |job| has been orphaned.
-    OnOrphanedJobComplete(job);
+  if (is_preconnect_)
     return;
-  }
   if (!request_)
     return;
   if (!bound_job_)
@@ -425,11 +408,8 @@ void HttpStreamFactoryImpl::JobController::OnNeedsProxyAuth(
     HttpAuthController* auth_controller) {
   MaybeResumeMainJob(job, base::TimeDelta());
 
-  if (IsJobOrphaned(job)) {
-    // We have bound a job to the associated Request, |job| has been orphaned.
-    OnOrphanedJobComplete(job);
+  if (is_preconnect_)
     return;
-  }
 
   if (!request_)
     return;
@@ -453,8 +433,6 @@ void HttpStreamFactoryImpl::JobController::OnNewSpdySessionReady(
   DCHECK(job->using_spdy());
   DCHECK(!is_preconnect_);
 
-  bool is_job_orphaned = IsJobOrphaned(job);
-
   // Cache these values in case the job gets deleted.
   const SSLConfig used_ssl_config = job->server_ssl_config();
   const ProxyInfo used_proxy_info = job->proxy_info();
@@ -467,36 +445,33 @@ void HttpStreamFactoryImpl::JobController::OnNewSpdySessionReady(
   SpdySessionPool* spdy_session_pool = session_->spdy_session_pool();
 
   // Notify |request_|.
-  if (!is_preconnect_ && !is_job_orphaned) {
-    if (job->job_type() == MAIN && alternative_job_net_error_ != OK)
-      ReportBrokenAlternativeService();
+  if (job->job_type() == MAIN && alternative_job_net_error_ != OK)
+    ReportBrokenAlternativeService();
 
-    DCHECK(request_);
+  DCHECK(request_);
 
-    // The first case is the usual case.
-    if (!job_bound_) {
-      BindJob(job);
-    }
+  // The first case is the usual case.
+  if (!job_bound_) {
+    BindJob(job);
+  }
 
-    MarkRequestComplete(was_alpn_negotiated, negotiated_protocol, using_spdy);
+  MarkRequestComplete(was_alpn_negotiated, negotiated_protocol, using_spdy);
 
-    if (for_websockets()) {
-      // TODO(ricea): Re-instate this code when WebSockets over SPDY is
-      // implemented.
-      NOTREACHED();
-    } else if (job->stream_type() == HttpStreamRequest::BIDIRECTIONAL_STREAM) {
-      std::unique_ptr<BidirectionalStreamImpl> bidirectional_stream_impl =
-          job->ReleaseBidirectionalStream();
-      DCHECK(bidirectional_stream_impl);
-      delegate_->OnBidirectionalStreamImplReady(
-          used_ssl_config, used_proxy_info,
-          std::move(bidirectional_stream_impl));
-    } else {
-      std::unique_ptr<HttpStream> stream = job->ReleaseStream();
-      DCHECK(stream);
-      delegate_->OnStreamReady(used_ssl_config, used_proxy_info,
-                               std::move(stream));
-    }
+  if (for_websockets()) {
+    // TODO(ricea): Re-instate this code when WebSockets over SPDY is
+    // implemented.
+    NOTREACHED();
+  } else if (job->stream_type() == HttpStreamRequest::BIDIRECTIONAL_STREAM) {
+    std::unique_ptr<BidirectionalStreamImpl> bidirectional_stream_impl =
+        job->ReleaseBidirectionalStream();
+    DCHECK(bidirectional_stream_impl);
+    delegate_->OnBidirectionalStreamImplReady(
+        used_ssl_config, used_proxy_info, std::move(bidirectional_stream_impl));
+  } else {
+    std::unique_ptr<HttpStream> stream = job->ReleaseStream();
+    DCHECK(stream);
+    delegate_->OnStreamReady(used_ssl_config, used_proxy_info,
+                             std::move(stream));
   }
 
   // Notify other requests that have the same SpdySessionKey.
@@ -506,9 +481,6 @@ void HttpStreamFactoryImpl::JobController::OnNewSpdySessionReady(
         spdy_session, direct, used_ssl_config, used_proxy_info,
         was_alpn_negotiated, negotiated_protocol, using_spdy,
         source_dependency);
-  }
-  if (is_job_orphaned) {
-    OnOrphanedJobComplete(job);
   }
 }
 
@@ -522,23 +494,10 @@ void HttpStreamFactoryImpl::JobController::OnPreconnectsComplete(Job* job) {
   factory_->OnPreconnectsComplete(this);
 }
 
-void HttpStreamFactoryImpl::JobController::OnOrphanedJobComplete(
-    const Job* job) {
-  // TODO(xunjieli): This is now dead code. Clean it up. crbug.com/475060.
-  CHECK(false);
-  if (job->job_type() == MAIN) {
-    DCHECK_EQ(main_job_.get(), job);
-    main_job_.reset();
-  } else {
-    DCHECK_EQ(alternative_job_.get(), job);
-    alternative_job_.reset();
-  }
-}
-
 void HttpStreamFactoryImpl::JobController::AddConnectionAttemptsToRequest(
     Job* job,
     const ConnectionAttempts& attempts) {
-  if (is_preconnect_ || IsJobOrphaned(job))
+  if (is_preconnect_)
     return;
 
   request_->AddConnectionAttempts(attempts);
@@ -622,7 +581,7 @@ void HttpStreamFactoryImpl::JobController::SetSpdySessionKey(
     const SpdySessionKey& spdy_session_key) {
   DCHECK(!job->using_quic());
 
-  if (is_preconnect_ || IsJobOrphaned(job))
+  if (is_preconnect_)
     return;
 
   session_->spdy_session_pool()->AddRequestToSpdySessionRequestMap(
@@ -633,7 +592,7 @@ void HttpStreamFactoryImpl::JobController::
     RemoveRequestFromSpdySessionRequestMapForJob(Job* job) {
   DCHECK(!job->using_quic());
 
-  if (is_preconnect_ || IsJobOrphaned(job))
+  if (is_preconnect_)
     return;
 
   RemoveRequestFromSpdySessionRequestMap();
@@ -976,14 +935,6 @@ void HttpStreamFactoryImpl::JobController::OnAlternativeServiceJobFailed(
   DCHECK_NE(kProtoUnknown, alternative_service_info_.protocol());
 
   alternative_job_net_error_ = net_error;
-
-  if (IsJobOrphaned(alternative_job_.get())) {
-    // If |request_| is gone, then it must have been successfully served by
-    // |main_job_|.
-    // If |request_| is bound to a different job, then it is being
-    // successfully served by the main job.
-    ReportBrokenAlternativeService();
-  }
 }
 
 void HttpStreamFactoryImpl::JobController::OnAlternativeProxyJobFailed(
@@ -1270,10 +1221,6 @@ void HttpStreamFactoryImpl::JobController::ReportAlternateProtocolUsage(
 
   HistogramAlternateProtocolUsage(ALTERNATE_PROTOCOL_USAGE_WON_RACE,
                                   proxy_server_used);
-}
-
-bool HttpStreamFactoryImpl::JobController::IsJobOrphaned(Job* job) const {
-  return !request_ || (job_bound_ && bound_job_ != job);
 }
 
 int HttpStreamFactoryImpl::JobController::ReconsiderProxyAfterError(Job* job,

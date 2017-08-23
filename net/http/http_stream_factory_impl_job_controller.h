@@ -228,9 +228,6 @@ class HttpStreamFactoryImpl::JobController
   // completion.
   void OrphanUnboundJob();
 
-  // Invoked when the orphaned |job| finishes.
-  void OnOrphanedJobComplete(const Job* job);
-
   // Called when a Job succeeds.
   void OnJobSucceeded(Job* job);
 
@@ -295,9 +292,6 @@ class HttpStreamFactoryImpl::JobController
   // Records histogram metrics for the usage of alternative protocol. Must be
   // called when |job| has succeeded and the other job will be orphaned.
   void ReportAlternateProtocolUsage(Job* job) const;
-
-  // Returns whether |job| is an orphaned job.
-  bool IsJobOrphaned(Job* job) const;
 
   // Called when a Job encountered a network error that could be resolved by
   // trying a new proxy configuration. If there is another proxy configuration
