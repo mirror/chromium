@@ -144,6 +144,9 @@ bool g_egl_context_priority_supported = false;
 bool g_egl_khr_colorspace = false;
 bool g_egl_ext_colorspace_display_p3_linear = false;
 bool g_use_direct_composition = false;
+bool g_egl_robust_resource_init_supported = false;
+bool g_egl_display_texture_share_group_supported = false;
+bool g_egl_create_context_client_arrays_supported = false;
 
 class EGLSyncControlVSyncProvider : public SyncControlVSyncProvider {
  public:
@@ -584,6 +587,11 @@ bool GLSurfaceEGL::InitializeExtensionSettingsOneOff() {
       !base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableDirectComposition);
 
+  g_egl_display_texture_share_group_supported =
+      HasEGLExtension("EGL_ANGLE_display_texture_share_group");
+  g_egl_create_context_client_arrays_supported =
+      HasEGLExtension("EGL_ANGLE_create_context_client_arrays");
+
   // TODO(oetuaho@nvidia.com): Surfaceless is disabled on Android as a temporary
   // workaround, since code written for Android WebView takes different paths
   // based on whether GL surface objects have underlying EGL surface handles,
@@ -632,6 +640,9 @@ void GLSurfaceEGL::ShutdownOneOff() {
   g_egl_surface_orientation_supported = false;
   g_use_direct_composition = false;
   g_egl_surfaceless_context_supported = false;
+  g_egl_robust_resource_init_supported = false;
+  g_egl_display_texture_share_group_supported = false;
+  g_egl_create_context_client_arrays_supported = false;
 
   initialized_ = false;
 }
@@ -684,6 +695,18 @@ bool GLSurfaceEGL::IsDirectCompositionSupported() {
   return g_use_direct_composition;
 }
 
+bool GLSurfaceEGL::IsRobustResourceInitSupported() {
+  return g_egl_robust_resource_init_supported;
+}
+
+bool GLSurfaceEGL::IsDisplayTextureShareGroupSupported() {
+  return g_egl_display_texture_share_group_supported;
+}
+
+bool GLSurfaceEGL::IsCreateContextClientArraysSupported() {
+  return g_egl_create_context_client_arrays_supported;
+}
+
 GLSurfaceEGL::~GLSurfaceEGL() {}
 
 // InitializeDisplay is necessary because the static binding code
@@ -716,12 +739,12 @@ EGLDisplay GLSurfaceEGL::InitializeDisplay(
         ExtensionsContain(client_extensions, "EGL_ANGLE_platform_angle_null");
   }
 
-  bool supports_robust_resource_init =
+  g_egl_robust_resource_init_supported =
       client_extensions &&
       ExtensionsContain(client_extensions,
                         "EGL_ANGLE_display_robust_resource_initialization");
   bool use_robust_resource_init =
-      supports_robust_resource_init &&
+      g_egl_robust_resource_init_supported &&
       UsePassthroughCommandDecoder(base::CommandLine::ForCurrentProcess());
 
   std::vector<DisplayType> init_displays;

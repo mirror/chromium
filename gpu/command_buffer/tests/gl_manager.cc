@@ -306,8 +306,10 @@ void GLManager::InitializeWithCommandLine(
     GpuDriverBugWorkarounds gpu_driver_bug_workaround(&command_line);
     scoped_refptr<gles2::FeatureInfo> feature_info =
         new gles2::FeatureInfo(command_line, gpu_driver_bug_workaround);
+    // Always mark the passthrough command decoder as supported so that tests do
+    // not unexpectedly use the wrong command decoder
     context_group = new gles2::ContextGroup(
-        gpu_preferences_, mailbox_manager_, nullptr /* memory_tracker */,
+        gpu_preferences_, true, mailbox_manager_, nullptr /* memory_tracker */,
         translator_cache_.get(), &completeness_cache_, feature_info,
         options.bind_generates_resource, &image_manager_, options.image_factory,
         nullptr /* progress_reporter */, GpuFeatureInfo(),
@@ -333,19 +335,17 @@ void GLManager::InitializeWithCommandLine(
     context_ = scoped_refptr<gl::GLContext>(new gpu::GLContextVirtual(
         share_group_.get(), base_context_->get(), decoder_->AsWeakPtr()));
     ASSERT_TRUE(context_->Initialize(
-        surface_.get(),
-        GenerateGLContextAttribs(attribs, context_group->gpu_preferences())));
+        surface_.get(), GenerateGLContextAttribs(attribs, context_group)));
   } else {
     if (real_gl_context) {
       context_ = scoped_refptr<gl::GLContext>(new gpu::GLContextVirtual(
           share_group_.get(), real_gl_context, decoder_->AsWeakPtr()));
       ASSERT_TRUE(context_->Initialize(
-          surface_.get(),
-          GenerateGLContextAttribs(attribs, context_group->gpu_preferences())));
+          surface_.get(), GenerateGLContextAttribs(attribs, context_group)));
     } else {
       context_ = gl::init::CreateGLContext(
           share_group_.get(), surface_.get(),
-          GenerateGLContextAttribs(attribs, context_group->gpu_preferences()));
+          GenerateGLContextAttribs(attribs, context_group));
     }
   }
   ASSERT_TRUE(context_.get() != NULL) << "could not create GL context";
