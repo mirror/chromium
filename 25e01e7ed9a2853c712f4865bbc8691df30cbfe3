@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ececff1_6a808e1b",
+        "filename": "chrome/browser/extensions/external_pref_loader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-23T23:03:23Z",
+      "side": 1,
+      "message": "nit: While you are at it, can you remove: \"Caller takes ownership of the returned dictionary.\". That\u0027s implicit.",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 11
+      },
+      "revId": "25e01e7ed9a2853c712f4865bbc8691df30cbfe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
