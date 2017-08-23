@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "443c8dda_57847d43",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T17:37:33Z",
+      "side": 1,
+      "message": "We discussed offline; basically:\n- At present the main process is launched with a non-enumerable Job.\n- We want it to have an enumerable Job, containing its child processes, so it can look them up by KOID, etc.\n- We may or may not want separate sub-Jobs for the children, depending on what policies we want for the sandbox; that\u0027s follow-up work to this CL, so the idea is to basically have LaunchProcess continue to accept a job_handle via Options, and for it to continue to look up the default job otherwise, but for it to use base::GetDefaultJob() so that in the browser it\u0027ll use our enumerable job.\n\nIIUC if we do for some reason want child processes to live in sub-jobs (e.g. to isolate them from one another more completely) then if a child process is itself able to launch processes, in it\u0027s sub-job, the browser will still be able to \"see\" into the sub-job to enumerate the children, etc; only the processes inside the sub-job will not be able to \"see\" outside the scope of their job.",
+      "parentUuid": "37a64170_465d98dd",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "610cda6e_3d360c18",
         "filename": "base/fuchsia/child_job.cc",
         "patchSetId": 4
@@ -269,6 +293,30 @@
       "writtenOn": "2017-08-23T04:22:48Z",
       "side": 1,
       "message": "I missed some discussion here, but I think don\u0027t think mx_job_set_default() is likely, it\u0027d be a bit odd to have a setter for such a global thing I think?\n\nIs mx_job_default() even !\u003d MX_HANDLE_INVALID in normal usage?",
+      "range": {
+        "startLine": 10,
+        "startChar": 12,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eef5bc6_0c14145b",
+        "filename": "base/fuchsia/child_job.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T17:37:33Z",
+      "side": 1,
+      "message": "We discussed offline and yes, we can\u0027t have an mx_job_set_default(), so for our purposes it makes most sense to have a GetDefaultJob(), and a SetDefaultJob() - the content/ layer will call the latter in the Browser process, while child processes will typically just rely on GetDefaultJob() falling-back to mx_job_default().",
+      "parentUuid": "68964a1e_4c8aff8e",
       "range": {
         "startLine": 10,
         "startChar": 12,
@@ -389,6 +437,30 @@
     },
     {
       "key": {
+        "uuid": "2dec396f_549adb07",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T17:37:33Z",
+      "side": 1,
+      "message": "That other platforms are inconsistent is a bit worrying :-/",
+      "parentUuid": "865a1bdc_517e7cff",
+      "range": {
+        "startLine": 127,
+        "startChar": 53,
+        "endLine": 127,
+        "endChar": 58
+      },
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fd6ca17_7bc64e98",
         "filename": "content/renderer/renderer_main_platform_delegate_fuchsia.cc",
         "patchSetId": 4
@@ -400,6 +472,30 @@
       "writtenOn": "2017-08-23T04:22:48Z",
       "side": 1,
       "message": "This is my kind of security! :)",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 13
+      },
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "442abfec_989d1daf",
+        "filename": "content/renderer/renderer_main_platform_delegate_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T17:37:33Z",
+      "side": 1,
+      "message": "Let\u0027s have this return false, and manually run with --no-sandbox for now; that seems preferable to having code lying about whether we have a sandbox!  We can replace the NOTIMPLEMENTED() with NOTREACHED() \u003c\u003c \"We have no sandbox - run with --no-sandbox for now!\"; :D",
+      "parentUuid": "1fd6ca17_7bc64e98",
       "range": {
         "startLine": 21,
         "startChar": 9,
