@@ -54,6 +54,7 @@
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/chrome_browser_main_extra_parts.h"
 #include "chrome/browser/component_updater/file_type_policies_component_installer.h"
+#include "chrome/browser/component_updater/optimization_hints_component_installer.h"
 #include "chrome/browser/component_updater/origin_trials_component_installer.h"
 #include "chrome/browser/component_updater/pepper_flash_component_installer.h"
 #include "chrome/browser/component_updater/recovery_component_installer.h"
@@ -504,6 +505,9 @@ void RegisterComponentsForUpdate() {
   whitelist_installer->RegisterComponents();
 
   RegisterSubresourceFilterComponent(cus);
+  RegisterOptimizationHintsComponent(
+      cus,
+      g_browser_process->profile_manager()->GetLastUsedProfile()->GetPrefs());
 
   base::FilePath path;
   if (PathService::Get(chrome::DIR_USER_DATA, &path)) {
