@@ -91,10 +91,10 @@ WebDataServiceWrapper::WebDataServiceWrapper(
   // TODO(pkasting): http://crbug.com/740773 This should likely be sequenced,
   // not single-threaded; it's also possible the various uses of this below
   // should each use their own sequences instead of sharing this one.
-  auto db_task_runner = base::CreateSingleThreadTaskRunnerWithTraits(
+  db_task_runner_ = base::CreateSingleThreadTaskRunnerWithTraits(
       {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
        base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
-  web_database_ = new WebDatabaseService(path, ui_task_runner, db_task_runner);
+  web_database_ = new WebDatabaseService(path, ui_task_runner, db_task_runner_);
 
   // All tables objects that participate in managing the database must
   // be added here.
@@ -114,7 +114,7 @@ WebDataServiceWrapper::WebDataServiceWrapper(
   web_database_->LoadDatabase();
 
   autofill_web_data_ = new autofill::AutofillWebDataService(
-      web_database_, ui_task_runner, db_task_runner,
+      web_database_, ui_task_runner, db_task_runner_,
       base::Bind(show_error_callback, ERROR_LOADING_AUTOFILL));
   autofill_web_data_->Init();
 
@@ -124,7 +124,7 @@ WebDataServiceWrapper::WebDataServiceWrapper(
   keyword_web_data_->Init();
 
   token_web_data_ =
-      new TokenWebData(web_database_, ui_task_runner, db_task_runner,
+      new TokenWebData(web_database_, ui_task_runner, db_task_runner_,
                        base::Bind(show_error_callback, ERROR_LOADING_TOKEN));
   token_web_data_->Init();
 
@@ -143,7 +143,7 @@ WebDataServiceWrapper::WebDataServiceWrapper(
 #endif
 
   autofill_web_data_->GetAutofillBackend(
-      base::Bind(&InitSyncableServicesOnDBSequence, db_task_runner, flare,
+      base::Bind(&InitSyncableServicesOnDBSequence, db_task_runner_, flare,
                  autofill_web_data_, context_path, application_locale));
 }
 
@@ -193,3 +193,7 @@ WebDataServiceWrapper::GetPaymentManifestWebData() {
   return payment_manifest_web_data_.get();
 }
 #endif
+
+base::SingleThreadTaskRunner* WebDataServiceWrapper::GetDBTaskRunner() {
+  return db_task_runner_.get();
+}

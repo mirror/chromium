@@ -24,6 +24,7 @@ class SingleThreadTaskGraphRunner;
 }
 namespace chromeos {
 class BlockingMethodCaller;
+class ThreadBlocker;
 namespace system {
 class StatisticsProviderImpl;
 }
@@ -201,6 +202,7 @@ class BASE_EXPORT ThreadRestrictions {
   friend class content::SynchronousCompositor;
   friend class content::SynchronousCompositorBrowserFilter;
   friend class content::SynchronousCompositorHost;
+  friend class ::chromeos::ThreadBlocker;
   friend class ::HistogramSynchronizer;
   friend class internal::TaskTracker;
   friend class cc::CompletionEvent;
