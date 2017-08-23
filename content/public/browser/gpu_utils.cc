@@ -124,7 +124,7 @@ const gpu::GpuPreferences GetGpuPreferencesFromCommandLine() {
   gpu_preferences.enable_gpu_service_tracing =
       command_line->HasSwitch(switches::kEnableGPUServiceTracing);
   gpu_preferences.use_passthrough_cmd_decoder =
-      command_line->HasSwitch(switches::kUsePassthroughCmdDecoder);
+      gl::UsePassthroughCommandDecoder(command_line);
   // Some of these preferences are set or adjusted in
   // GpuDataManagerImplPrivate::AppendGpuCommandLine.
   return gpu_preferences;
