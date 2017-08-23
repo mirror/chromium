@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ce136cb_030b3dd6",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 3517,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-23T18:17:30Z",
+      "side": 1,
+      "message": "nit: add comment so it\u0027s clear this is flashing when scroll delta is 0.",
+      "revId": "40c9797bc3d746f6dc6427df70a42237d97f5681",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
