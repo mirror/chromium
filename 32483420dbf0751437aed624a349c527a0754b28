@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09105a75_60a0ed20",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-23T04:01:34Z",
+      "side": 1,
+      "message": "If (!process_memory_dump)\ncallback.Run(false).",
+      "revId": "32483420dbf0751437aed624a349c527a0754b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f975079_09d4bf16",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-23T04:01:34Z",
+      "side": 1,
+      "message": "nit: s/are/should/ ?",
+      "range": {
+        "startLine": 131,
+        "startChar": 24,
+        "endLine": 131,
+        "endChar": 27
+      },
+      "revId": "32483420dbf0751437aed624a349c527a0754b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e9b79ba_af515c3e",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-23T04:01:34Z",
+      "side": 1,
+      "message": "this cannot be called when pmd is null.",
+      "range": {
+        "startLine": 135,
+        "startChar": 45,
+        "endLine": 135,
+        "endChar": 68
+      },
+      "revId": "32483420dbf0751437aed624a349c527a0754b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0cfbfc8_4741a4a2",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-23T04:01:34Z",
+      "side": 1,
+      "message": "nit: AddChromeDumpToTraceIfEnabled",
+      "range": {
+        "startLine": 132,
+        "startChar": 22,
+        "endLine": 132,
+        "endChar": 45
+      },
+      "revId": "32483420dbf0751437aed624a349c527a0754b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
