@@ -53,6 +53,46 @@
     },
     {
       "key": {
+        "uuid": "04e3faf1_f580350d",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-23T04:22:48Z",
+      "side": 1,
+      "message": "Does something use this change? It looks like it could land first/separately.",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478182a4_4102199d",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-23T04:22:48Z",
+      "side": 1,
+      "message": "This comment needs some fiddling.",
+      "range": {
+        "startLine": 15,
+        "startChar": 65,
+        "endLine": 16,
+        "endChar": 56
+      },
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ec90118_5afbd4d8",
         "filename": "base/base_paths_fuchsia.cc",
         "patchSetId": 4
@@ -104,6 +144,29 @@
     },
     {
       "key": {
+        "uuid": "37a64170_465d98dd",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-23T04:22:48Z",
+      "side": 1,
+      "message": "It seems ok to me to live here base/ as the whole point of it is to make sure that all subprocesses will work with base::Process::Open() (is that right?) For that reason, autocreating it here seems fine.\n\nmx_handle_t GetChildProcessJob() {\n  static mx_handle_t g_job_handle \u003d [](){\n    mx_job_create(...);\n    ...\n    return new_job;\n  }();\n  return g_job_handle;\n}\n\nTwo things I\u0027d like to check:\n- what happens if the browser spawns a child and then the child (say a service process) wants to spawn children -- we should probably make sure the same job is used in the child, or that pass no job so that that happens by default, so that the browser can do things to the grandchildren without unexpected behaviour\n- what does the os actually pass us as mx_job_default() for the initial process? Is it MX_HANDLE_INVALID?",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "610cda6e_3d360c18",
         "filename": "base/fuchsia/child_job.cc",
         "patchSetId": 4
@@ -138,6 +201,46 @@
     },
     {
       "key": {
+        "uuid": "f8684c5e_5e27b591",
+        "filename": "base/fuchsia/child_job.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-23T04:22:48Z",
+      "side": 1,
+      "message": "Header guard missing.",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "449ed6ce_9891dd81",
+        "filename": "base/fuchsia/child_job.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-23T04:22:48Z",
+      "side": 1,
+      "message": "I think you only need magenta/types.h here.",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 28
+      },
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c55f72a6_c2dea650",
         "filename": "base/fuchsia/child_job.h",
         "patchSetId": 4
@@ -149,6 +252,29 @@
       "writtenOn": "2017-08-23T00:37:19Z",
       "side": 1,
       "message": "Defining this as the job used to create \"child processes\" seems too specific, and if that\u0027s what we want this to be then we should just add a Fuchsia-specific setter function in base/process/launch.h and avoid the need for an extra .cc and .h.\n\nHowever, as we discussed it, this was more of a wrapper around mx_job_default, that allows us to set our own preferred \"default job\" for the rest of the Chromium code to use - if we take that model then the .h/.cc make more sense to me, but could we check with the Fuchsia team whether an mx_job_set_default() API would be plausible before we work-around that lack in the Chromium-side?",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68964a1e_4c8aff8e",
+        "filename": "base/fuchsia/child_job.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-23T04:22:48Z",
+      "side": 1,
+      "message": "I missed some discussion here, but I think don\u0027t think mx_job_set_default() is likely, it\u0027d be a bit odd to have a setter for such a global thing I think?\n\nIs mx_job_default() even !\u003d MX_HANDLE_INVALID in normal usage?",
+      "range": {
+        "startLine": 10,
+        "startChar": 12,
+        "endLine": 10,
+        "endChar": 30
+      },
       "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -234,6 +360,52 @@
       "writtenOn": "2017-08-23T00:37:19Z",
       "side": 1,
       "message": "ignore_result(...) here, and preferably a comment explaining that the |mojo_client_handle_| has been passed to the child process, not copied.\n\nYou might also consider moving this to AfterLaunchOnLauncherThread, as a form of post-launch cleanup.\n\nNote that the same is true of any other handles passed via options.handles_to_transfer, so are there callers or other components that need to know to relinquish passed handles here?  (This would be so much nicer if we rework LaunchProcess into a ProcessLauncher helper class...)",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "865a1bdc_517e7cff",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-23T04:22:48Z",
+      "side": 1,
+      "message": "I think based on this function being named \"Sync\" this should probably be passing true, although it looks like other platforms are inconsistent.",
+      "range": {
+        "startLine": 127,
+        "startChar": 53,
+        "endLine": 127,
+        "endChar": 58
+      },
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd6ca17_7bc64e98",
+        "filename": "content/renderer/renderer_main_platform_delegate_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-23T04:22:48Z",
+      "side": 1,
+      "message": "This is my kind of security! :)",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 13
+      },
       "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
