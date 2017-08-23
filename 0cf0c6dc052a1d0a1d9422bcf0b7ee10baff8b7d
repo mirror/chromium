@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e7747b8_2dd33423",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-23T14:05:08Z",
+      "side": 1,
+      "message": "Move down to where it\u0027s used.",
+      "range": {
+        "startLine": 34,
+        "startChar": 14,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "0cf0c6dc052a1d0a1d9422bcf0b7ee10baff8b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f15cb6_280af311",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-23T14:05:08Z",
+      "side": 1,
+      "message": "return json.GetBoolean(kCredentialRequestPasswordKey, include_passwords);",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 72
+      },
+      "revId": "0cf0c6dc052a1d0a1d9422bcf0b7ee10baff8b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7627ddff_a433d17d",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-23T14:05:08Z",
+      "side": 1,
+      "message": "std::move(gurl);",
+      "range": {
+        "startLine": 97,
+        "startChar": 29,
+        "endLine": 97,
+        "endChar": 36
+      },
+      "revId": "0cf0c6dc052a1d0a1d9422bcf0b7ee10baff8b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4702ba0_5c31b066",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-23T14:05:08Z",
+      "side": 1,
+      "message": "nit: I prefer \u003d default;",
+      "range": {
+        "startLine": 30,
+        "startChar": 30,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "0cf0c6dc052a1d0a1d9422bcf0b7ee10baff8b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363951ae_d6215159",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-23T14:05:08Z",
+      "side": 1,
+      "message": "You can move those methods to the anonymous namespace. If it turns out that you don\u0027t need CredentialManagerUtilTest then you can just use TEST instead of TEST_F.",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 23
+      },
+      "revId": "0cf0c6dc052a1d0a1d9422bcf0b7ee10baff8b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18d42606_be67f631",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-23T14:05:08Z",
+      "side": 1,
+      "message": "assign something to it.",
+      "range": {
+        "startLine": 117,
+        "startChar": 21,
+        "endLine": 117,
+        "endChar": 22
+      },
+      "revId": "0cf0c6dc052a1d0a1d9422bcf0b7ee10baff8b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd3647d7_0cdfa922",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-23T14:05:08Z",
+      "side": 1,
+      "message": "list_ptr-\u003eAppendString(AppendString);",
+      "range": {
+        "startLine": 232,
+        "startChar": 12,
+        "endLine": 232,
+        "endChar": 19
+      },
+      "revId": "0cf0c6dc052a1d0a1d9422bcf0b7ee10baff8b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
