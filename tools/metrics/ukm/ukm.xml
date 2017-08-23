@@ -528,6 +528,9 @@ be describing additional metrics about the same event.
 </event>
 
 <event name="Media.WatchTime">
+  <obsolete>
+    Deprecated 8/2017 in favor Media.BasicPlayback
+  </obsolete>
   <owner>dalecurtis@chromium.org</owner>
   <summary>
     Watch time is defined as the amount of elapsed media time for audio+video
@@ -573,6 +576,37 @@ be describing additional metrics about the same event.
   <metric name="AudioVideo.NativeControlsOff"/>
   <metric name="AudioVideo.NativeControlsOn"/>
   <metric name="AudioVideo.SRC"/>
+</event>
+
+<event name="Media.BasicPlayback">
+  <owner>dalecurtis@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Core metrics associated with a media playback. Only recorded if a playback
+    qualifies for WatchTime recording (see Media.WatchTime metrics). Reported at
+    the time of WebMediaPlayer destruction or render process termination;
+    whichever comes first.
+  </summary>
+  <metric name="AudioCodec"/>
+  <metric name="HasAudio"/>
+  <metric name="HasVideo"/>
+  <metric name="IsBackground"/>
+  <metric name="IsEME"/>
+  <metric name="IsMSE"/>
+  <metric name="MeanTimeBetweenRebuffers"/>
+  <metric name="PipelineStatus"/>
+  <metric name="RebuffersCount"/>
+  <metric name="VideoCodec"/>
+  <metric name="VideoNaturalHeight"/>
+  <metric name="VideoNaturalWidth"/>
+  <metric name="WatchTime"/>
+  <metric name="WatchTime.AC"/>
+  <metric name="WatchTime.Battery"/>
+  <metric name="WatchTime.DisplayFullscreen"/>
+  <metric name="WatchTime.DisplayInline"/>
+  <metric name="WatchTime.DisplayPictureInPicture"/>
+  <metric name="WatchTime.NativeControlsOff"/>
+  <metric name="WatchTime.NativeControlsOn"/>
 </event>
 
 <event name="Memory.Experimental">

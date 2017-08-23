@@ -34,11 +34,6 @@ static void RecordRebuffersCount(base::StringPiece key, int underflow_count) {
   base::UmaHistogramCounts100(key.as_string(), underflow_count);
 }
 
-static bool ShouldReportUkmWatchTime(base::StringPiece key) {
-  // EmbeddedExperience is always a file:// URL, so skip reporting.
-  return !key.ends_with("EmbeddedExperience");
-}
-
 class WatchTimeRecorderProvider : public mojom::WatchTimeRecorderProvider {
  public:
   WatchTimeRecorderProvider() {}
@@ -57,7 +52,7 @@ class WatchTimeRecorderProvider : public mojom::WatchTimeRecorderProvider {
   DISALLOW_COPY_AND_ASSIGN(WatchTimeRecorderProvider);
 };
 
-const char WatchTimeRecorder::kWatchTimeUkmEvent[] = "Media.WatchTime";
+const char WatchTimeRecorder::kWatchTimeUkmEvent[] = "Media.BasicPlayback";
 
 WatchTimeRecorder::WatchTimeRecorder(mojom::PlaybackPropertiesPtr properties)
     : properties_(std::move(properties)),
@@ -102,6 +97,9 @@ void WatchTimeRecorder::FinalizeWatchTime(
 
   // Only report underflow count when finalizing everything.
   if (should_finalize_everything) {
+    // This must be done before |underflow_count_| is cleared.
+    RecordUkmPlaybackData();
+
     // Check for watch times entries that have corresponding MTBR entries and
     // report the MTBR value using watch_time / |underflow_count|.
     for (auto& mapping : rebuffer_keys_) {
@@ -120,12 +118,6 @@ void WatchTimeRecorder::FinalizeWatchTime(
     underflow_count_ = 0;
   }
 
-  // UKM may be unavailable in content_shell or other non-chrome/ builds; it
-  // may also be unavailable if browser shutdown has started; so this may be a
-  // nullptr. If it's unavailable, UKM reporting will be skipped.
-  ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
-  std::unique_ptr<ukm::UkmEntryBuilder> builder;
-
   for (auto it = watch_time_info_.begin(); it != watch_time_info_.end();) {
     if (!should_finalize_everything &&
         std::find(keys_to_finalize.begin(), keys_to_finalize.end(),
@@ -136,27 +128,94 @@ void WatchTimeRecorder::FinalizeWatchTime(
 
     const base::StringPiece metric_name = WatchTimeKeyToString(it->first);
     RecordWatchTimeInternal(metric_name, it->second);
-
-    if (ukm_recorder && ShouldReportUkmWatchTime(metric_name)) {
-      if (!builder) {
-        const int32_t source_id = ukm_recorder->GetNewSourceID();
-        ukm_recorder->UpdateSourceURL(source_id, properties_->origin.GetURL());
-        builder = ukm_recorder->GetEntryBuilder(source_id, kWatchTimeUkmEvent);
-      }
-
-      // Strip Media.WatchTime. prefix for UKM since they're already grouped;
-      // arraysize() includes \0, so no +1 necessary for trailing period.
-      builder->AddMetric(
-          metric_name.substr(arraysize(kWatchTimeUkmEvent)).data(),
-          it->second.InMilliseconds());
-    }
-
     it = watch_time_info_.erase(it);
   }
 }
 
+void WatchTimeRecorder::OnError(PipelineStatus status) {
+  pipeline_status_ = status;
+}
+
 void WatchTimeRecorder::UpdateUnderflowCount(int32_t count) {
   underflow_count_ = count;
+}
+
+void WatchTimeRecorder::RecordUkmPlaybackData() {
+  // Ensure we have an "All" watch time entry or skip reporting.
+  bool have_watch_time_all = false;
+  for (auto& kv : watch_time_info_) {
+    if (kv.first == WatchTimeKey::kAudioAll ||
+        kv.first == WatchTimeKey::kAudioVideoAll ||
+        kv.first == WatchTimeKey::kAudioVideoBackgroundAll) {
+      have_watch_time_all = true;
+      break;
+    }
+  }
+  if (!have_watch_time_all)
+    return;
+
+  // UKM may be unavailable in content_shell or other non-chrome/ builds; it
+  // may also be unavailable if browser shutdown has started; so this may be a
+  // nullptr. If it's unavailable, UKM reporting will be skipped.
+  ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+  if (!ukm_recorder)
+    return;
+
+  const int32_t source_id = ukm_recorder->GetNewSourceID();
+  ukm_recorder->UpdateSourceURL(source_id, properties_->origin.GetURL());
+  std::unique_ptr<ukm::UkmEntryBuilder> builder =
+      ukm_recorder->GetEntryBuilder(source_id, kWatchTimeUkmEvent);
+
+  for (auto& kv : watch_time_info_) {
+    if (kv.first == WatchTimeKey::kAudioAll ||
+        kv.first == WatchTimeKey::kAudioVideoAll ||
+        kv.first == WatchTimeKey::kAudioVideoBackgroundAll) {
+      builder->AddMetric("WatchTime", kv.second.InMilliseconds());
+      if (underflow_count_) {
+        builder->AddMetric("MeanTimeBetweenRebuffers",
+                           (kv.second / underflow_count_).InMilliseconds());
+      }
+      builder->AddMetric("IsBackground",
+                         kv.first == WatchTimeKey::kAudioVideoBackgroundAll);
+    } else if (kv.first == WatchTimeKey::kAudioAc ||
+               kv.first == WatchTimeKey::kAudioVideoAc ||
+               kv.first == WatchTimeKey::kAudioVideoBackgroundAc) {
+      builder->AddMetric("WatchTime.AC", kv.second.InMilliseconds());
+    } else if (kv.first == WatchTimeKey::kAudioBattery ||
+               kv.first == WatchTimeKey::kAudioVideoBattery ||
+               kv.first == WatchTimeKey::kAudioVideoBackgroundBattery) {
+      builder->AddMetric("WatchTime.Battery", kv.second.InMilliseconds());
+    } else if (kv.first == WatchTimeKey::kAudioNativeControlsOn ||
+               kv.first == WatchTimeKey::kAudioVideoNativeControlsOn) {
+      builder->AddMetric("WatchTime.NativeControlsOn",
+                         kv.second.InMilliseconds());
+    } else if (kv.first == WatchTimeKey::kAudioNativeControlsOff ||
+               kv.first == WatchTimeKey::kAudioVideoNativeControlsOff) {
+      builder->AddMetric("WatchTime.NativeControlsOff",
+                         kv.second.InMilliseconds());
+    } else if (kv.first == WatchTimeKey::kAudioVideoDisplayFullscreen) {
+      builder->AddMetric("WatchTime.DisplayFullscreen",
+                         kv.second.InMilliseconds());
+    } else if (kv.first == WatchTimeKey::kAudioVideoDisplayInline) {
+      builder->AddMetric("WatchTime.DisplayInline", kv.second.InMilliseconds());
+    } else if (kv.first == WatchTimeKey::kAudioVideoDisplayPictureInPicture) {
+      builder->AddMetric("WatchTime.DisplayPictureInPicture",
+                         kv.second.InMilliseconds());
+    }
+  }
+
+  // See note in mojom::PlaybackProperties about why we have both of these.
+  builder->AddMetric("AudioCodec", properties_->audio_codec);
+  builder->AddMetric("VideoCodec", properties_->video_codec);
+  builder->AddMetric("HasAudio", properties_->has_audio);
+  builder->AddMetric("HasVideo", properties_->has_video);
+
+  builder->AddMetric("IsEME", properties_->is_eme);
+  builder->AddMetric("IsMSE", properties_->is_mse);
+  builder->AddMetric("PipelineStatus", pipeline_status_);
+  builder->AddMetric("RebuffersCount", underflow_count_);
+  builder->AddMetric("VideoNaturalWidth", properties_->natural_size.width());
+  builder->AddMetric("VideoNaturalHeight", properties_->natural_size.height());
 }
 
 WatchTimeRecorder::RebufferMapping::RebufferMapping(const RebufferMapping& copy)
