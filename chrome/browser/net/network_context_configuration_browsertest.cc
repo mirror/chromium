@@ -19,6 +19,9 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/test/base/in_process_browser_test.h"
 #include "components/network_session_configurator/common/network_switches.h"
+#include "components/prefs/pref_service.h"
+#include "components/ssl_config/ssl_config_prefs.h"
+#include "components/ssl_config/ssl_config_switches.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_features.h"
@@ -34,6 +37,8 @@
 #include "net/base/filename_util.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_response_headers.h"
+#include "net/ssl/ssl_config.h"
+#include "net/ssl/ssl_server_config.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -351,6 +356,102 @@ IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, DiskCache) {
   } else {
     EXPECT_NE(response_body.find("foopity foo"), std::string::npos);
   }
+}
+
+// Check that the SSLConfig is hooked up. PRE_SSLConfig checks that changing
+// local_state() after start modifies the SSLConfig, SSLConfig makes sure the
+// (now modified) initial value of local_state() is respected.
+IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, PRE_SSLConfig) {
+  // Start a TLS 1.0 server.
+  net::EmbeddedTestServer ssl_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  net::SSLServerConfig ssl_config;
+  ssl_config.version_min = net::SSL_PROTOCOL_VERSION_TLS1;
+  ssl_config.version_max = net::SSL_PROTOCOL_VERSION_TLS1;
+  ssl_server.SetSSLConfig(net::EmbeddedTestServer::CERT_OK, ssl_config);
+  ssl_server.AddDefaultHandlers(
+      base::FilePath(FILE_PATH_LITERAL("chrome/test/data")));
+  ASSERT_TRUE(ssl_server.Start());
+
+  // With the initial prefs, requests to the server should work.
+  {
+    content::mojom::URLLoaderPtr loader;
+    content::ResourceRequest request;
+    content::TestURLLoaderClient client;
+    request.url = ssl_server.GetURL("/echo");
+    request.method = "GET";
+    loader_factory()->CreateLoaderAndStart(
+        mojo::MakeRequest(&loader), 2, 1, content::mojom::kURLLoadOptionNone,
+        request, client.CreateInterfacePtr(),
+        net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
+    client.RunUntilComplete();
+    ASSERT_TRUE(client.response_head().headers);
+    EXPECT_EQ(200, client.response_head().headers->response_code());
+    // Don't bother reading the body.
+  }
+
+  // Disallow TLS 1.0 via prefs.
+  g_browser_process->local_state()->SetString(ssl_config::prefs::kSSLVersionMin,
+                                              switches::kSSLVersionTLSv11);
+
+  // With the new prefs, requests to the server should be blocked. However,
+  // setting prefs is races with making the request, so loop until a failure
+  // with ERR_SSL_VERSION_OR_CIPHER_MISMATCH.
+  while (true) {
+    content::mojom::URLLoaderPtr loader;
+    content::ResourceRequest request;
+    content::TestURLLoaderClient client;
+    request.url = ssl_server.GetURL("/echo");
+    request.method = "GET";
+    loader_factory()->CreateLoaderAndStart(
+        mojo::MakeRequest(&loader), 2, 1, content::mojom::kURLLoadOptionNone,
+        request, client.CreateInterfacePtr(),
+        net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
+    client.RunUntilComplete();
+
+    // If the request received an SSLClientSocket before the new SSLConfig
+    // reached the network service, the request can succeed. If this happens,
+    // just retry.
+    if (client.completion_status().error_code == net::OK)
+      continue;
+
+    // If the SSL configuration change makes to the NetworkContext after the
+    // request has already reached the SSL socket pool, the request may fail
+    // with ERR_NETWORK_CHANGED. In that case, just make a new request, to make
+    // sure it fails with ERR_SSL_VERSION_OR_CIPHER_MISMATCH.
+    if (client.completion_status().error_code == net::ERR_NETWORK_CHANGED)
+      continue;
+
+    EXPECT_FALSE(client.response_head().headers);
+    EXPECT_EQ(net::ERR_SSL_VERSION_OR_CIPHER_MISMATCH,
+              client.completion_status().error_code);
+    break;
+  }
+}
+
+IN_PROC_BROWSER_TEST_P(NetworkContextConfigurationBrowserTest, SSLConfig) {
+  // Start a TLS 1.0 server.
+  net::EmbeddedTestServer ssl_server;
+  net::SSLServerConfig ssl_config;
+  ssl_config.version_min = net::SSL_PROTOCOL_VERSION_TLS1;
+  ssl_config.version_max = net::SSL_PROTOCOL_VERSION_TLS1;
+  ssl_server.SetSSLConfig(net::EmbeddedTestServer::CERT_OK, ssl_config);
+  ASSERT_TRUE(ssl_server.Start());
+
+  // Making a request should fail, since PRE_SSLConfig saved a pref to disallow
+  // TLS 1.0.
+  content::mojom::URLLoaderPtr loader;
+  content::ResourceRequest request;
+  content::TestURLLoaderClient client;
+  request.url = ssl_server.GetURL("/echo");
+  request.method = "GET";
+  loader_factory()->CreateLoaderAndStart(
+      mojo::MakeRequest(&loader), 2, 1, content::mojom::kURLLoadOptionNone,
+      request, client.CreateInterfacePtr(),
+      net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
+  client.RunUntilComplete();
+  EXPECT_FALSE(client.response_head().headers);
+  EXPECT_EQ(net::ERR_SSL_VERSION_OR_CIPHER_MISMATCH,
+            client.completion_status().error_code);
 }
 
 class NetworkContextConfigurationFixedPortBrowserTest

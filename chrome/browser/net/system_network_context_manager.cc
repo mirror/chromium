@@ -10,6 +10,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/io_thread.h"
+#include "chrome/browser/net/chrome_ssl_config_tracker.h"
 #include "chrome/browser/net/default_network_context_params.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "components/policy/core/common/policy_namespace.h"
@@ -19,26 +20,11 @@
 #include "content/public/browser/network_service_instance.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/service_names.mojom.h"
+#include "content/public/common/ssl_config.mojom.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
+#include "net/ssl/ssl_config.h"
 
 namespace {
-
-content::mojom::NetworkContextParamsPtr CreateNetworkContextParams() {
-  // TODO(mmenke): Set up parameters here (in memory cookie store, etc).
-  content::mojom::NetworkContextParamsPtr network_context_params =
-      CreateDefaultNetworkContextParams();
-
-  network_context_params->http_cache_enabled = false;
-
-  // These are needed for PAC scripts that use file or data URLs (Or FTP URLs?).
-  network_context_params->enable_data_url_support = true;
-  network_context_params->enable_file_url_support = true;
-#if !BUILDFLAG(DISABLE_FTP_SUPPORT)
-  network_context_params->enable_ftp_url_support = true;
-#endif
-
-  return network_context_params;
-}
 
 // Called on IOThread to disable QUIC for HttpNetworkSessions not using the
 // network service. Note that re-enabling QUIC dynamically is not supported for
@@ -87,6 +73,13 @@ void SystemNetworkContextManager::SetUp(
   *network_context_request = mojo::MakeRequest(&io_thread_network_context_);
   *network_context_params = CreateNetworkContextParams();
   *is_quic_allowed = is_quic_allowed_;
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+    // If the network service is not enabled, this is the system NetworkContext.
+    *network_context_params = CreateNetworkContextParams();
+  } else {
+    // Otherwise, this is just a vestigal one, and default values will do.
+    *network_context_params = CreateDefaultNetworkContextParams();
+  }
 }
 
 SystemNetworkContextManager::SystemNetworkContextManager() {
@@ -123,4 +116,32 @@ void SystemNetworkContextManager::DisableQuic() {
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&DisableQuicOnIOThread, io_thread,
                      base::Unretained(safe_browsing_service)));
+}
+
+content::mojom::NetworkContextParamsPtr
+SystemNetworkContextManager::CreateNetworkContextParams() {
+  // TODO(mmenke): Set up parameters here (in memory cookie store, etc).
+  content::mojom::NetworkContextParamsPtr network_context_params =
+      CreateDefaultNetworkContextParams();
+
+  network_context_params->http_cache_enabled = false;
+
+  // These are needed for PAC scripts that use file or data URLs (Or FTP URLs?).
+  network_context_params->enable_data_url_support = true;
+  network_context_params->enable_file_url_support = true;
+#if !BUILDFLAG(DISABLE_FTP_SUPPORT)
+  network_context_params->enable_ftp_url_support = true;
+#endif
+
+  // Set up initial SSLConfig, and a channel for SSLConfig updates.
+  DCHECK(!ssl_config_tracker_);
+  content::mojom::SSLConfigClientPtr ssl_config_client;
+  network_context_params->ssl_config_client =
+      mojo::MakeRequest(&ssl_config_client);
+  ssl_config_tracker_ =
+      base::MakeUnique<ChromeSSLConfigTracker>(std::move(ssl_config_client));
+  network_context_params->initial_ssl_config =
+      ssl_config_tracker_->GetSSLConfig();
+
+  return network_context_params;
 }

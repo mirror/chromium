@@ -12,6 +12,30 @@
 
 namespace net {
 
+namespace {
+
+bool UserConfigsAreEqual(const SSLConfig& config1, const SSLConfig& config2) {
+  // Keep this list up to date with the one in the header.
+  return std::tie(config1.rev_checking_enabled,
+                  config1.rev_checking_required_local_anchors,
+                  config1.sha1_local_anchors_enabled,
+                  config1.common_name_fallback_local_anchors_enabled,
+                  config1.version_min, config1.version_max,
+                  config1.tls13_variant, config1.disabled_cipher_suites,
+                  config1.channel_id_enabled, config1.false_start_enabled,
+                  config1.require_ecdhe) ==
+         std::tie(config2.rev_checking_enabled,
+                  config2.rev_checking_required_local_anchors,
+                  config2.sha1_local_anchors_enabled,
+                  config2.common_name_fallback_local_anchors_enabled,
+                  config2.version_min, config2.version_max,
+                  config2.tls13_variant, config2.disabled_cipher_suites,
+                  config2.channel_id_enabled, config2.false_start_enabled,
+                  config2.require_ecdhe);
+}
+
+}  // namespace
+
 SSLConfigService::SSLConfigService()
     : observer_list_(base::ObserverList<Observer>::NOTIFY_EXISTING_ONLY) {
 }
@@ -70,26 +94,13 @@ SSLConfigService::~SSLConfigService() {
 
 void SSLConfigService::ProcessConfigUpdate(const SSLConfig& old_config,
                                            const SSLConfig& new_config) {
-  bool config_changed =
-      std::tie(old_config.rev_checking_enabled,
-               old_config.rev_checking_required_local_anchors,
-               old_config.sha1_local_anchors_enabled,
-               old_config.common_name_fallback_local_anchors_enabled,
-               old_config.version_min, old_config.version_max,
-               old_config.tls13_variant, old_config.disabled_cipher_suites,
-               old_config.channel_id_enabled, old_config.false_start_enabled,
-               old_config.require_ecdhe) !=
-      std::tie(new_config.rev_checking_enabled,
-               new_config.rev_checking_required_local_anchors,
-               new_config.sha1_local_anchors_enabled,
-               new_config.common_name_fallback_local_anchors_enabled,
-               new_config.version_min, new_config.version_max,
-               new_config.tls13_variant, new_config.disabled_cipher_suites,
-               new_config.channel_id_enabled, new_config.false_start_enabled,
-               new_config.require_ecdhe);
-
-  if (config_changed)
+  if (!UserConfigsAreEqual(old_config, new_config))
     NotifySSLConfigChange();
+}
+
+bool SSLConfigService::UserConfigsAreEqualForTesting(const SSLConfig& config1,
+                                                     const SSLConfig& config2) {
+  return UserConfigsAreEqual(config1, config2);
 }
 
 }  // namespace net

@@ -8,7 +8,11 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
+#include "chrome/browser/browser_process.h"
 #include "content/public/common/network_service.mojom.h"
+
+class ChromeSSLConfigTracker;
 
 // Responsible for creating and managing access to the system NetworkContext.
 // Lives on the UI thread. The NetworkContext this owns is intended for requests
@@ -57,6 +61,11 @@ class SystemNetworkContextManager {
   void DisableQuic();
 
  private:
+  // Create the NetworkContextParams for the system NetworkContext (Either the
+  // network service one, if the network service is enabled, or the in process
+  // once, if it's not).
+  content::mojom::NetworkContextParamsPtr CreateNetworkContextParams();
+
   // NetworkContext using the network service, if the/ network service is
   // enabled. nullptr, otherwise.
   content::mojom::NetworkContextPtr network_service_network_context_;
@@ -67,6 +76,9 @@ class SystemNetworkContextManager {
   content::mojom::NetworkContextPtr io_thread_network_context_;
 
   bool is_quic_allowed_ = true;
+
+  // Sends SSLConfig updates to the NetworkContext.
+  std::unique_ptr<ChromeSSLConfigTracker> ssl_config_tracker_;
 
   DISALLOW_COPY_AND_ASSIGN(SystemNetworkContextManager);
 };

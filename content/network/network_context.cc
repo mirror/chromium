@@ -13,6 +13,7 @@
 #include "components/network_session_configurator/common/network_switches.h"
 #include "content/network/cache_url_loader.h"
 #include "content/network/network_service_impl.h"
+#include "content/network/network_service_ssl_config_service.h"
 #include "content/network/network_service_url_loader_factory_impl.h"
 #include "content/network/url_loader_impl.h"
 #include "content/public/common/content_client.h"
@@ -76,6 +77,10 @@ void ApplyContextParamsToBuilder(
       network_context_params->http_09_on_non_default_ports_enabled;
 
   builder->set_http_network_session_params(session_params);
+
+  builder->set_ssl_config_service(new NetworkServiceSSLConfigService(
+      std::move(network_context_params->initial_ssl_config),
+      std::move(network_context_params->ssl_config_client)));
 }
 
 std::unique_ptr<net::URLRequestContext> MakeURLRequestContext(

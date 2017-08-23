@@ -41,6 +41,8 @@ source_set("network_sources") {
     "network_context.h",
     "network_service_impl.cc",
     "network_service_impl.h",
+    "network_service_ssl_config_service.cc",
+    "network_service_ssl_config_service.h",
     "network_service_url_loader_factory_impl.cc",
     "network_service_url_loader_factory_impl.h",
     "url_loader_impl.cc",
