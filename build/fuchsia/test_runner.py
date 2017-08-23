@@ -9,15 +9,17 @@ dependencies of a test binary, and then uses either QEMU from the Fuchsia SDK
 to run, or starts the bootserver to allow running on a hardware device."""
 
 import argparse
+import collections
 import json
 import os
 import socket
 import sys
 import tempfile
+import textwrap
 import time
 
 from runner_common import RunFuchsia, BuildBootfs, ReadRuntimeDeps, \
-    HOST_IP_ADDRESS
+    HOST_IP_ADDRESS, _RunAndCheck
 
 DIR_SOURCE_ROOT = os.path.abspath(
     os.path.join(os.path.dirname(__file__), os.pardir, os.pardir))
@@ -116,8 +118,10 @@ def main():
   parser.add_argument('--test-launcher-jobs',
                       type=int,
                       help='Sets the number of parallel test jobs.')
-  parser.add_argument('--test_launcher_summary_output',
-                      help='Currently ignored for 2-sided roll.')
+  parser.add_argument('--test-launcher-summary-output',
+                      '--test_launcher_summary_output',
+                      type=os.path.realpath,
+                      help='Retrieve JSON results from target process.')
   parser.add_argument('child_args', nargs='*',
                       help='Arguments for the test process.')
   parser.add_argument('-d', '--device', action='store_true', default=False,
@@ -177,19 +181,73 @@ def main():
     runtime_deps.append(('test_filter_file', test_launcher_filter_file))
     child_args.append('--test-launcher-filter-file=/system/test_filter_file')
 
+  if args.test_launcher_summary_output:
+    child_args.append('--test-launcher-summary-output=' +
+                      '/system/summary_output.json')
+
+  configure_ssh = bool(args.test_launcher_summary_output)
+  if configure_ssh:
+    ssh_config = InitializeSSH(args.exe_name, args.dry_run)
+    runtime_deps.extend([
+        ssh_config.auth_keys,
+        ssh_config.host_priv_key,
+        ssh_config.host_pub_key,
+        ])
+
   try:
     bootfs = BuildBootfs(args.output_directory, runtime_deps, args.exe_name,
-                         child_args, args.dry_run, power_off=not args.device)
+                         child_args, args.dry_run, power_off=False)
     if not bootfs:
       return 2
-
-    return RunFuchsia(bootfs, args.device, args.dry_run)
-
+    return RunFuchsia(
+        bootfs, args.device, args.dry_run, ssh_config=ssh_config,
+        test_launcher_summary_filename=args.test_launcher_summary_output)
   finally:
     # Stop the spawner to make sure it doesn't leave testserver running, in
     # case some tests failed.
     if spawning_server:
       spawning_server.Stop()
+
+
+def InitializeSSH(path, dry_run):
+  FuchsiaSSHConfig = collections.namedtuple(
+      'FuchsiaSSHConfig',
+      ['auth_keys', 'host_priv_key', 'host_pub_key', 'config_file'])
+  KeyLocation = collections.namedtuple(
+      'KeyLocation', ['host', 'guest'])
+  id_key_path = '%s.id_key' % path
+  host_key_path = '%s.host_key' % path
+  if not os.path.exists(id_key_path):
+    _RunAndCheck(
+        dry_run,
+        ['ssh-keygen', '-q', '-t', 'ed25519', '-N', '', '-f', id_key_path])
+  if not os.path.exists(host_key_path):
+    _RunAndCheck(
+        dry_run,
+        ['ssh-keygen', '-q', '-t', 'ed25519', '-N', '', '-f', host_key_path])
+
+  config_file_path = '%s.ssh_config' % path
+  if not os.path.exists(config_file_path):
+    with open(config_file_path, 'w') as f:
+      f.write(textwrap.dedent(
+          """\
+          Host *
+            CheckHostIP no
+            StrictHostKeyChecking no
+            ForwardAgent no
+            ForwardX11 no
+            GSSAPIDelegateCredentials no
+            UserKnownHostsFile /dev/null
+            User fuchsia
+            IdentityFile {id_key_path}
+            IPQoS reliability
+          """.format(id_key_path=id_key_path)))
+
+  return FuchsiaSSHConfig(
+      ('data/ssh/authorized_keys', '%s.pub' % id_key_path),
+      ('data/ssh/ssh_host_ed25519_key', host_key_path),
+      ('data/ssh/ssh_host_ed25519_key.pub', '%s.pub' % host_key_path),
+      config_file_path)
 
 
 if __name__ == '__main__':
