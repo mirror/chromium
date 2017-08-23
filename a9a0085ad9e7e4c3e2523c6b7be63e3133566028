@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1f4df4e_b027c44b",
+        "filename": "testing/scripts/run_telemetry_benchmark_as_googletest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-08-23T01:31:05Z",
+      "side": 1,
+      "message": "is this a valid scenario?",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 14
+      },
+      "revId": "a9a0085ad9e7e4c3e2523c6b7be63e3133566028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
