@@ -443,6 +443,7 @@ class SessionManagerClientImpl : public SessionManagerClient {
                         const cryptohome::Identification& cryptohome_id,
                         bool skip_boot_completed_broadcast,
                         bool scan_vendor_priv_app,
+                        bool native_bridge_experiment,
                         const StartArcInstanceCallback& callback) override {
     dbus::MethodCall method_call(
         login_manager::kSessionManagerInterface,
@@ -455,12 +456,14 @@ class SessionManagerClientImpl : public SessionManagerClient {
     switch (startup_mode) {
       case ArcStartupMode::FULL:
         request.set_account_id(cryptohome_id.id());
+        request.set_native_bridge_experiment(native_bridge_experiment);
         request.set_skip_boot_completed_broadcast(
             skip_boot_completed_broadcast);
         request.set_scan_vendor_priv_app(scan_vendor_priv_app);
         break;
       case ArcStartupMode::LOGIN_SCREEN:
         request.set_for_login_screen(true);
+        request.set_native_bridge_experiment(native_bridge_experiment);
         break;
     }
     writer.AppendProtoAsArrayOfBytes(request);
@@ -1113,6 +1116,7 @@ class SessionManagerClientStubImpl : public SessionManagerClient {
                         const cryptohome::Identification& cryptohome_id,
                         bool disable_boot_completed_broadcast,
                         bool enable_vendor_privileged,
+                        bool native_bridge_experiment,
                         const StartArcInstanceCallback& callback) override {
     callback.Run(StartArcInstanceResult::UNKNOWN_ERROR, std::string(),
                  base::ScopedFD());
