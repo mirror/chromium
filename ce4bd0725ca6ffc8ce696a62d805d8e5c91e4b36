@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "455e6a41_65ac4210",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-23T16:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b68eb9c_8ac009ad",
+      "range": {
+        "startLine": 72,
+        "startChar": 3,
+        "endLine": 74,
+        "endChar": 67
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db654142_742c6f5d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "\u003e #shouldShowPromo checks if the Finch flag is enabled and if the impression cap was reached for a particular AccessPoint. In this case, there is no impression cap so it merely checks if the Finch flag is enabled. Its general purpose is to decide if the \"Continue as\" promo should have been shown, regardless of it having been dismissed or the user being signed in/signin not being allowed. It is the deciding condition whether several observers (ProfileDataCache.Observer, AccountsChangeObserver) should be registered and whether certain objects related to the \"Continue as\" signin promos should be created (the SigninPromoController, ProfileDataCache etc). \n\u003e \n\u003e Adding the condition that singin is allowed/user is not signed in would mess up the logic behind the promos in Bookmarks. In BookmarkPromoHeader (https://goo.gl/xP7jMa) #shouldShowPromos decides whether there exists the possibility for the promo to be shown. What I mean by possibility is: even if the user is signed in, we should still initialize the SigninPromoController and register the observers due to the fact that the account may be removed from the device thus having to show the promo immediately.   \n\u003e \n\nIf this is the recommended behaviour for showing signin promos, shouldn\u0027t all the places using it do the same? For example here we do something similar with registering the SigninObserver as long as the user didn\u0027t explicitly dismiss the promo. Sounds like centralising it would ensure it is done everywhere the right way.\n\n\u003e Regarding dismissal, so far in Bookmarks we have treated the recording of dismissal \"near\" the place where the recording of the dismissal of the regular promo was done. Adding dismissal in #shouldShowPromo would mean however that we have to do 2 different checks here. ChromePreferenceManager#getNewTabPageSigninPromoDismissed() returns whether the appropriate promo was dismissed and moving the condition in #shouldShowPromo would mean that we would have to do an extra check to figure out which dismissal we need to verify - the old,regular promo or the \"Continue as\" promo - so I don\u0027t know if moving it there would increase readability.\n\u003e \n\nFair enough, I don\u0027t know how easy backing the old signin promo in bookmarks with the SigninPromoController would be, so letting embedders handle dismissal check is probably the pragmatic choice for the current CL.\n\n\u003e Given that #shouldShowPromo in this case only checks the Finch flag, I decided to replace every call here with ChromeFeatureList.isEnabled(...) to provide a more clear idea of what is actually checked in the condition. Sorry for the confusion. I\u0027ll also rename this method in a future CL which will modify the \"old\" and \"new\" naming that we\u0027ve used so far across Settings, Bookmarks and Recent Tabs. \n\u003e \n\nMaybe what you need is to split the method? have one that checks whether you should use the personalised promo or the generic one (existing code that wraps feature checks: SuggestionsConfig, FeatureUtilities), and a separate method that checks whether the personalised promo should not be shown because of the number of impressions, or whatever other check is meaningful there.\n\n\u003e If you think that it would be more appropriate to add the previously discussed conditions in #shouldShowPromo, please let me know and I will modify it :)",
       "parentUuid": "99dfe6c4_e7cdf303",
+      "range": {
+        "startLine": 84,
+        "startChar": 38,
+        "endLine": 84,
+        "endChar": 53
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5618cfff_9c0b008e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-23T16:36:12Z",
+      "side": 1,
+      "message": "Could you please be more specific when it comes to what exactly do you suggest to be split? The only idea that comes to mind is to split SigninPromoController#shouldShowPromo in 2 different methods: arePersonalizedPromosEnabled() which checks the whether the Finch flag is enabled and hasImpressionLimitBeenReached(AccessPoint). Does this sound good to you? I would like to address this in a different CL where I will rename a bunch of methods and classes so until then I\u0027ll just replace #shouldShowPromo with ChromeFeatureList#isEnabled.",
+      "parentUuid": "48b91379_a9028a82",
       "range": {
         "startLine": 84,
         "startChar": 38,
@@ -167,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "324fbbad_e976dbf5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-23T16:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b899632_79ca5157",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 56
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49c5cd90_209657f4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 2
@@ -187,6 +259,30 @@
       "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71265ea3_427fa783",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-23T16:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49c5cd90_209657f4",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 52
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -281,6 +377,30 @@
       "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0252999_b84390eb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-23T16:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc33e831_e90adba0",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 99
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -423,6 +543,30 @@
       "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb79c050_8bd93ab6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-23T16:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "128dfbfe_3c99fe5f",
+      "range": {
+        "startLine": 335,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 94
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -590,6 +734,30 @@
     },
     {
       "key": {
+        "uuid": "df3e6f4f_70e992ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-23T16:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d13fedd_e1b4ff72",
+      "range": {
+        "startLine": 360,
+        "startChar": 0,
+        "endLine": 360,
+        "endChar": 95
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12ad5bff_1dc156dd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
         "patchSetId": 2
@@ -661,6 +829,30 @@
     },
     {
       "key": {
+        "uuid": "669af105_97b7c09d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-23T16:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f1a5dbe_1f417eb8",
+      "range": {
+        "startLine": 361,
+        "startChar": 18,
+        "endLine": 361,
+        "endChar": 48
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c63ee63_36bcf04c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
         "patchSetId": 2
@@ -681,6 +873,30 @@
       "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f29b3d_2e863bb1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-23T16:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c63ee63_36bcf04c",
+      "range": {
+        "startLine": 372,
+        "startChar": 0,
+        "endLine": 372,
+        "endChar": 95
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

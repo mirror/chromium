@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "061ffef7_17dd78a8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-23T16:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08b424e1_fd336588",
+      "range": {
+        "startLine": 135,
+        "startChar": 26,
+        "endLine": 135,
+        "endChar": 34
+      },
+      "revId": "e0119c305083b830c58c23b95d859ad93b64bf99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4eb6eec_4e57f1e5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c6c3ec61_d25d26b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-23T16:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4eb6eec_4e57f1e5",
+      "range": {
+        "startLine": 289,
+        "startChar": 16,
+        "endLine": 289,
+        "endChar": 25
+      },
+      "revId": "e0119c305083b830c58c23b95d859ad93b64bf99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6201d8b4_fa5b14ae",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "e0119c305083b830c58c23b95d859ad93b64bf99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a32bc9f4_efb73f8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-23T16:36:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6201d8b4_fa5b14ae",
+      "range": {
+        "startLine": 298,
+        "startChar": 16,
+        "endLine": 298,
+        "endChar": 25
+      },
+      "revId": "e0119c305083b830c58c23b95d859ad93b64bf99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
