@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b604f89e_41176479",
+        "filename": "chrome/browser/ui/search/local_ntp_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-23T08:40:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c790a67e_0263eece",
+      "revId": "8c61aee4760cee82d29e99e3773bc2cb1e204b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e8d1dbe_b8e166cf",
         "filename": "chrome/browser/ui/search/local_ntp_uitest.cc",
         "patchSetId": 1
