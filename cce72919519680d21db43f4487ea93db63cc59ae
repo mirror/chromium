@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05fa51e7_1d2d5031",
+        "filename": "chrome/browser/profiles/host_zoom_map_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-23T22:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8f837af_aed49457",
+      "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50e4afc2_c869ea2b",
         "filename": "chrome/browser/ui/zoom/chrome_zoom_level_prefs.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-23T22:20:38Z",
       "side": 1,
       "message": "AFAICT, it\u0027s possible for this to fail if dlopen() above fails, which seems like it could happen in rare circumstances (e.g. disk error?).  Maybe instead of a DCHECK this should be a conditional.",
+      "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2721cbf_9586fa17",
+        "filename": "chrome/browser/ui/zoom/chrome_zoom_level_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-23T22:34:34Z",
+      "side": 1,
+      "message": "The call below is guarded by a if(GetLibstdcppHashBytesFunction()), so the intention was that this function shouldn\u0027t be called unless the symbol is already loaded. \n\nAdded a comment to clarify that",
+      "parentUuid": "50e4afc2_c869ea2b",
       "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bb467e0_276f9639",
+        "filename": "chrome/browser/ui/zoom/chrome_zoom_level_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-23T22:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e8c402d_0bcfd670",
+      "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "4fb5e330_6b3eb7f8",
+        "filename": "chrome/browser/ui/zoom/chrome_zoom_level_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-23T22:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "099baa53_d7524d7e",
+      "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07469e22_c2ee65fb",
         "filename": "chrome/browser/ui/zoom/chrome_zoom_level_prefs.cc",
         "patchSetId": 3
@@ -101,6 +173,24 @@
       "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f161028f_a6abb106",
+        "filename": "chrome/browser/ui/zoom/chrome_zoom_level_prefs.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-23T22:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07469e22_c2ee65fb",
+      "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "05cb4a8c_389e77c5",
+        "filename": "chrome/browser/ui/zoom/chrome_zoom_level_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-23T22:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80eec830_e5fc8147",
+      "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccb64861_040a90d3",
         "filename": "chrome/browser/ui/zoom/chrome_zoom_level_prefs.h",
         "patchSetId": 3
@@ -135,6 +243,24 @@
       "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b15430a_f4c973cf",
+        "filename": "chrome/browser/ui/zoom/chrome_zoom_level_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-23T22:34:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccb64861_040a90d3",
+      "revId": "cce72919519680d21db43f4487ea93db63cc59ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
