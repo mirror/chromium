@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "700e40dd_e9b8e1fd",
+        "filename": "ui/app_list/app_list_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-23T17:31:01Z",
+      "side": 1,
+      "message": "Discussed offline. Moved this refactoring to crbug.com/758254",
+      "parentUuid": "a82b8210_c63726df",
+      "range": {
+        "startLine": 71,
+        "startChar": 26,
+        "endLine": 71,
+        "endChar": 51
+      },
+      "revId": "f792eb43928ff3df4442a763a0722a2a1eb95a20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98429610_38ff3a00",
         "filename": "ui/app_list/app_list_model.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4be9006b_ba1f14b2",
+        "filename": "ui/app_list/app_list_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-23T17:31:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98429610_38ff3a00",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 26
+      },
+      "revId": "f792eb43928ff3df4442a763a0722a2a1eb95a20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61214c3c_2d84413d",
         "filename": "ui/app_list/views/app_list_view.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-23T16:26:25Z",
       "side": 1,
       "message": "If we keep a reference to AppListModel, prefer to get rid of |is_tablet_mode_| and use the one from AppListModel.",
+      "range": {
+        "startLine": 970,
+        "startChar": 2,
+        "endLine": 970,
+        "endChar": 17
+      },
+      "revId": "f792eb43928ff3df4442a763a0722a2a1eb95a20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0dd4ea_90eda6ce",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-23T17:31:01Z",
+      "side": 1,
+      "message": "moved to crbug.com/758254",
+      "parentUuid": "61214c3c_2d84413d",
       "range": {
         "startLine": 970,
         "startChar": 2,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "9fb3a035_8e265834",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-23T17:31:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f702a5d_e46b26f7",
+      "revId": "f792eb43928ff3df4442a763a0722a2a1eb95a20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "930fac31_1021c980",
         "filename": "ui/app_list/views/app_list_view.cc",
         "patchSetId": 2
@@ -99,6 +189,30 @@
       "writtenOn": "2017-08-23T16:26:25Z",
       "side": 1,
       "message": "Similarly, prefer to use the one stored in AppListModel.",
+      "range": {
+        "startLine": 1081,
+        "startChar": 2,
+        "endLine": 1081,
+        "endChar": 17
+      },
+      "revId": "f792eb43928ff3df4442a763a0722a2a1eb95a20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd939933_38af7805",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-23T17:31:01Z",
+      "side": 1,
+      "message": "Moved to crbug.com/758254",
+      "parentUuid": "930fac31_1021c980",
       "range": {
         "startLine": 1081,
         "startChar": 2,
