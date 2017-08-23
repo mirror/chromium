@@ -1157,6 +1157,20 @@ const FeatureEntry::FeatureVariation kUseDdljsonApiVariations[] = {
      arraysize(kUseDdljsonApiTest3), nullptr},
     {"(force test doodle 4)", kUseDdljsonApiTest4,
      arraysize(kUseDdljsonApiTest4), nullptr}};
+
+const FeatureEntry::FeatureParam kThirdPartyDoodlesTestSimple[] = {
+    {search_provider_logos::features::kThirdPartyDoodlesOverrideUrlParam,
+     "https://www.gstatic.com/chrome/ntp/doodle_test/third_party_simple.json"}};
+const FeatureEntry::FeatureParam kThirdPartyDoodlesTestAnimated[] = {
+    {search_provider_logos::features::kThirdPartyDoodlesOverrideUrlParam,
+     "https://www.gstatic.com/chrome/ntp/doodle_test/"
+     "third_party_animated.json"}};
+
+const FeatureEntry::FeatureVariation kThirdPartyDoodlesVariations[] = {
+    {"(force simple test doodle)", kThirdPartyDoodlesTestSimple,
+     arraysize(kThirdPartyDoodlesTestSimple), nullptr},
+    {"(force animated test doodle)", kThirdPartyDoodlesTestAnimated,
+     arraysize(kThirdPartyDoodlesTestAnimated), nullptr}};
 #endif  // OS_ANDROID
 
 // RECORDING USER METRICS FOR FLAGS:
@@ -3347,6 +3361,15 @@ const FeatureEntry kFeatureEntries[] = {
     {"click-to-open-pdf", flag_descriptions::kClickToOpenPDFName,
      flag_descriptions::kClickToOpenPDFDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kClickToOpenPDFPlaceholder)},
+
+#if defined(OS_ANDROID)
+    {"third-party-doodles", flag_descriptions::kThirdPartyDoodlesName,
+     flag_descriptions::kThirdPartyDoodlesDescription, kOsAndroid,
+     FEATURE_WITH_PARAMS_VALUE_TYPE(
+         search_provider_logos::features::kThirdPartyDoodles,
+         kThirdPartyDoodlesVariations,
+         "NTPThirdPartyDoodles")},
+#endif  // defined(OS_ANDROID)
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
