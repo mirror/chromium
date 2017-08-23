@@ -9,7 +9,6 @@
 
 #include "base/macros.h"
 #include "base/optional.h"
-#include "ui/base/accelerators/accelerator.h"
 #include "ui/events/event.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
@@ -59,17 +58,6 @@ class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
     // the user to enter the view.
     virtual void OnMouseEnteredView();
     virtual void OnMouseExitedView();
-
-    // Called to register/unregister accelerators for TrayBubbleView.
-    // TrayBubbleView wants to register those accelerators at the global level.
-    // Those accelerators are used to activate TrayBubbleView, i.e. those
-    // accelerators need to be processed even if TrayBubbleView is not active.
-    // UnregisterAllAccelerators can be called even if RegisterAccelerators is
-    // not called.
-    virtual void RegisterAccelerators(
-        const std::vector<ui::Accelerator>& accelerators,
-        TrayBubbleView* tray_bubble_view);
-    virtual void UnregisterAllAccelerators(TrayBubbleView* tray_bubble_view);
 
     // Called from GetAccessibleNodeData(); should return the appropriate
     // accessible name for the bubble.
@@ -166,8 +154,8 @@ class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
   // Overridden from MouseWatcherListener
   void MouseMovedOutOfHost() override;
 
-  // Overridden from ui::AcceleratorTarget
-  bool AcceleratorPressed(const ui::Accelerator& accelerator) override;
+  // Overridden from views::WidgetObserver
+  void OnWidgetActivationChanged(Widget* widget, bool active) override;
 
  protected:
   // Overridden from views::BubbleDialogDelegateView.
@@ -180,8 +168,19 @@ class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
       const ViewHierarchyChangedDetails& details) override;
 
  private:
-  void CloseBubbleView();
-  void ActivateAndStartNavigation(const ui::KeyEvent& key_event);
+  class RerouteEventHandler : public ui::EventHandler {
+   public:
+    explicit RerouteEventHandler(Widget* widget);
+    ~RerouteEventHandler() override;
+
+    // Overridden from ui::EventHandler
+    void OnKeyEvent(ui::KeyEvent* event) override;
+
+   private:
+    Widget* widget_;
+
+    DISALLOW_COPY_AND_ASSIGN(RerouteEventHandler);
+  };
 
   // Focus the default item if no item is focused.
   void FocusDefaultIfNeeded();
@@ -203,6 +202,10 @@ class VIEWS_EXPORT TrayBubbleView : public BubbleDialogDelegateView,
 
   // Used to find any mouse movements.
   std::unique_ptr<MouseWatcher> mouse_watcher_;
+
+  // Used to activate tray bubble view if user tries to interact the tray with
+  // keyboard.
+  std::unique_ptr<EventHandler> activation_handler_;
 
   DISALLOW_COPY_AND_ASSIGN(TrayBubbleView);
 };
