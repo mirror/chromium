@@ -700,11 +700,10 @@ TEST_F(StructTraitsTest, QuadListBasic) {
   const gfx::Size resource_size_in_pixels5(1234, 5678);
   cc::TextureDrawQuad* texture_draw_quad =
       render_pass->CreateAndAppendDrawQuad<cc::TextureDrawQuad>();
-  texture_draw_quad->SetAll(sqs, rect5, rect5, rect5, needs_blending,
-                            resource_id5, resource_size_in_pixels5,
-                            premultiplied_alpha, uv_top_left, uv_bottom_right,
-                            background_color, vertex_opacity, y_flipped,
-                            nearest_neighbor, secure_output_only);
+  texture_draw_quad->SetAll(
+      sqs, rect5, rect5, needs_blending, resource_id5, resource_size_in_pixels5,
+      premultiplied_alpha, uv_top_left, uv_bottom_right, background_color,
+      vertex_opacity, y_flipped, nearest_neighbor, secure_output_only);
 
   const gfx::Rect rect6(321, 765, 11109, 151413);
   const bool needs_blending6 = false;
@@ -715,7 +714,7 @@ TEST_F(StructTraitsTest, QuadListBasic) {
                               1.2f);
   cc::StreamVideoDrawQuad* stream_video_draw_quad =
       render_pass->CreateAndAppendDrawQuad<cc::StreamVideoDrawQuad>();
-  stream_video_draw_quad->SetNew(sqs, rect6, rect6, rect6, needs_blending6,
+  stream_video_draw_quad->SetNew(sqs, rect6, rect6, needs_blending6,
                                  resource_id6, resource_size_in_pixels, matrix);
 
   std::unique_ptr<cc::RenderPass> output;
