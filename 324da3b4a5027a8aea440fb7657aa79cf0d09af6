@@ -1,0 +1,249 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e6d6f45_a592b727",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-23T06:43:11Z",
+      "side": 1,
+      "message": "TypeConverter is deprecated in Chromium side. Use StructTraits instead.\n\nhttps://www.chromium.org/developers/design-documents/mojo/chrome-ipc-to-mojo-ipc-cheat-sheet#TOC-Mojo6",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a30438c_7f87aaca",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-23T06:43:11Z",
+      "side": 1,
+      "message": "Why not rename the old one with _Deprecated? But if it is not public API, no need to define it in .h file.",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be3ab7f_531a6e22",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-23T06:43:11Z",
+      "side": 1,
+      "message": "I don\u0027t think \"buffer_size\" is required since we have passed coded_size_ and format.",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3484bdf_a83e36cb",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-23T06:43:11Z",
+      "side": 1,
+      "message": "remove debug code.",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da791af_7e8acec5",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-23T06:43:11Z",
+      "side": 1,
+      "message": "VLOG?",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0e05d8f_d4807c92",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-23T06:43:11Z",
+      "side": 1,
+      "message": "Make sure Initialize is called once?\nif (vda_) {\n  VLOGF(1) \u003c\u003c ....\n  result \u003d PLATFORM_FAILURE;\n  .....\n}",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d558b5a9_25d7a340",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-23T06:43:11Z",
+      "side": 1,
+      "message": "I think we should prevent to use goto. (https://google.github.io/styleguide/cppguide.html#Goals)\n\n1. Move the content of InitializeEnd to a function:\nvoid GpuAVDA::FinishInitialize(\n   const InitializeCallback\u0026 callback, \n   ::arc::mojom::VideoDecodeAccelerator::Result result) {\n.....\n}\n\n2. (Optional) We can have a ScopedClosureRunner:\n\nauto result \u003d ::arc::mojom::......Result::SUCCESS;\nbase::ScopedClosureRunner finish_runner(\n    base::Bind(\u0026GpuAVDA::FinishInitialize, \n               base::Unratined(this), \n               base::ConstRef(result))\n\nReplace \"goto InitializeEnd\" with \"return\".",
+      "range": {
+        "startLine": 264,
+        "startChar": 9,
+        "endLine": 264,
+        "endChar": 22
+      },
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d978641_b853a96a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-23T06:43:11Z",
+      "side": 1,
+      "message": "move after l.277, i.e., vda is created",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c0a4bb_d237ab7c",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-23T06:43:11Z",
+      "side": 1,
+      "message": "The error is already logged and notify client in UnwrapFdFromMojoHandle.\nSimply return here.",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bedbd660_d6e6e1fe",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-23T06:43:11Z",
+      "side": 1,
+      "message": "I don\u0027t understand the TODO. What should you do about it?",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281d0f13_b37e56a9",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-23T06:43:11Z",
+      "side": 1,
+      "message": "nit: why not just loop over i?\nfor (size_t i \u003d 0; i \u003c planes.size(); ++i) {\n}",
+      "range": {
+        "startLine": 432,
+        "startChar": 18,
+        "endLine": 432,
+        "endChar": 19
+      },
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d9b514_f7927870",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-23T06:43:11Z",
+      "side": 1,
+      "message": "Where it is used? Could we move it to cc file? \nSame as PictureBufferFormat.",
+      "range": {
+        "startLine": 19,
+        "startChar": 7,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246937ee_b44ba9b0",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-23T06:43:11Z",
+      "side": 1,
+      "message": "static?",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
