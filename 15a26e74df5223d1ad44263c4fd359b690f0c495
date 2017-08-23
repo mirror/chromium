@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af92c644_45a4c4e3",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-23T09:16:28Z",
+      "side": 1,
+      "message": "There is no \"save to disk\" on iOS and \"add to reading list\" is used where android uses \"save\". So it makes sense to have SAVE_TO_DISK here.",
+      "parentUuid": "71a2f94f_f809296b",
+      "range": {
+        "startLine": 364,
+        "startChar": 53,
+        "endLine": 364,
+        "endChar": 65
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2258ddbb_f6c51e97",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_metrics_recorder.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e59a780c_48057937",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_metrics_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-23T09:16:28Z",
+      "side": 1,
+      "message": "cl format...",
+      "parentUuid": "2258ddbb_f6c51e97",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 16
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bc08e84b_1875a2f6",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_metrics_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-23T09:16:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc23f4df_92b4c004",
+      "range": {
+        "startLine": 26,
+        "startChar": 49,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08423849_45f3c1a8",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_metrics_recorder.mm",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23758c64_54d31e7a",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_metrics_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-23T09:16:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08423849_45f3c1a8",
+      "range": {
+        "startLine": 41,
+        "startChar": 51,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8324c241_030e3a34",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_metrics_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-23T09:16:28Z",
+      "side": 1,
+      "message": "Yes but I am not tracking this for now, and it should probably be tracked in ntp_snippets::ContentSuggestion as I don\u0027t really want to store informations on disk just to know if a suggestion has been visited.",
+      "parentUuid": "8f8563d9_d57c0093",
+      "range": {
+        "startLine": 91,
+        "startChar": 29,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0baaac7_f273cea4",
         "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_item.h",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0cd69e6_37f8dedc",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-23T09:16:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0baaac7_f273cea4",
+      "range": {
+        "startLine": 58,
+        "startChar": 34,
+        "endLine": 58,
+        "endChar": 35
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "c2e3d718_f114d034",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-23T09:16:28Z",
+      "side": 1,
+      "message": "Most Visited is not part of ContentSuggestions.",
+      "parentUuid": "9be2afc3_8c9ddc19",
+      "range": {
+        "startLine": 131,
+        "startChar": 30,
+        "endLine": 131,
+        "endChar": 58
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0564572_a88cca3e",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
         "patchSetId": 2
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "56832b77_4fd8809a",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-23T09:16:28Z",
+      "side": 1,
+      "message": "The footer is below the last item of the section. So its position in the section is equal to the number of items in the section.",
+      "parentUuid": "a0564572_a88cca3e",
+      "range": {
+        "startLine": 677,
+        "startChar": 17,
+        "endLine": 677,
+        "endChar": 39
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d18c476d_e2c7b1b5",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
         "patchSetId": 2
@@ -206,6 +398,30 @@
       "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c96a5f2_27700839",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-23T09:16:28Z",
+      "side": 1,
+      "message": "Woops!\nDone.",
+      "parentUuid": "d18c476d_e2c7b1b5",
+      "range": {
+        "startLine": 314,
+        "startChar": 8,
+        "endLine": 314,
+        "endChar": 23
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
