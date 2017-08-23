@@ -48,7 +48,12 @@ class NamedMessagePipeHandler : public MessagePipe::EventHandler {
 
   // Sends the message through the pipe. This function should only be called
   // once connected() returns true.
+  // TODO(zijiehe): Remove this overload.
   void Send(google::protobuf::MessageLite* message, const base::Closure& done);
+
+  // This overload is preferred.
+  void Send(const google::protobuf::MessageLite& message,
+            const base::Closure& done);
 
   // Derived classes can override these functions to receive data from the
   // connection or observe the connection state. These functions will not be
@@ -61,9 +66,10 @@ class NamedMessagePipeHandler : public MessagePipe::EventHandler {
   friend class base::DeleteHelper<NamedMessagePipeHandler>;
 
   // MessagePipe::EventHandler implementation.
-  void OnMessagePipeOpen() override;
-  void OnMessageReceived(std::unique_ptr<CompoundBuffer> message) override;
-  void OnMessagePipeClosed() override;
+  void OnMessagePipeOpen() final;
+  void OnMessageReceived(
+      std::unique_ptr<CompoundBuffer> message) final;
+  void OnMessagePipeClosed() final;
 
   const std::string name_;
   std::unique_ptr<MessagePipe> pipe_;

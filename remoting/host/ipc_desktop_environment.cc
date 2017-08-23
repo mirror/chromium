@@ -82,6 +82,11 @@ uint32_t IpcDesktopEnvironment::GetDesktopSessionId() const {
   return desktop_session_proxy_->desktop_session_id();
 }
 
+void IpcDesktopEnvironment::GetHostResourceUsage(
+    HostResourceUsageCallback on_result) {
+  desktop_session_proxy_->GetHostResourceUsage(std::move(on_result));
+}
+
 IpcDesktopEnvironmentFactory::IpcDesktopEnvironmentFactory(
     scoped_refptr<base::SingleThreadTaskRunner> audio_task_runner,
     scoped_refptr<base::SingleThreadTaskRunner> caller_task_runner,
@@ -202,6 +207,47 @@ void IpcDesktopEnvironmentFactory::OnTerminalDisconnected(int terminal_id) {
     // Disconnect the client session.
     desktop_session_proxy->DisconnectSession(protocol::OK);
   }
+}
+
+void IpcDesktopEnvironmentFactory::GetHostResourceUsage(
+    DesktopSessionProxy* desktop_session_proxy) {
+  DCHECK_NE(desktop_session_proxy->peer_pid(), 0);
+  GetHostResourceUsageFromProcessId(desktop_session_proxy->peer_pid());
+}
+
+void IpcDesktopEnvironmentFactory::OnReportProcessStats(
+    int desktop_process_id,
+    const protocol::AggregatedProcessResourceUsage& usage) {
+  if (!caller_task_runner_->BelongsToCurrentThread()) {
+    caller_task_runner_->PostTask(FROM_HERE, base::Bind(
+        &IpcDesktopEnvironmentFactory::OnReportProcessStats,
+        base::Unretained(this),
+        desktop_process_id,
+        usage));
+    return;
+  }
+
+  for (auto& connection : active_connections_) {
+    DesktopSessionProxy* proxy = connection.second;
+    if (proxy->peer_pid() == desktop_process_id) {
+      proxy->OnHostResourceUsage(usage);
+      return;
+    }
+  }
+  // Ignore the message if the desktop session has been closed or unknown.
+}
+
+void IpcDesktopEnvironmentFactory::GetHostResourceUsageFromProcessId(int pid) {
+  if (!caller_task_runner_->BelongsToCurrentThread()) {
+    caller_task_runner_->PostTask(FROM_HERE, base::Bind(
+        &IpcDesktopEnvironmentFactory::GetHostResourceUsageFromProcessId,
+        base::Unretained(this),
+        pid));
+    return;
+  }
+
+  daemon_channel_->Send(
+      new ChromotingNetworkToDaemonMsg_RetrieveProcessStats(pid));
 }
 
 }  // namespace remoting

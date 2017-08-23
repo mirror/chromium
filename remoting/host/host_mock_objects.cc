@@ -52,6 +52,11 @@ MockDesktopEnvironment::CreateFileProxyWrapper() {
   return base::WrapUnique(CreateFileProxyWrapperPtr());
 }
 
+void MockDesktopEnvironment::GetHostResourceUsage(
+    HostResourceUsageCallback on_result) {
+  std::move(on_result).Run(protocol::AggregatedProcessResourceUsage());
+}
+
 MockDesktopEnvironmentFactory::MockDesktopEnvironmentFactory() {}
 
 MockDesktopEnvironmentFactory::~MockDesktopEnvironmentFactory() {}

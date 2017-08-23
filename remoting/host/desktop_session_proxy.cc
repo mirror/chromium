@@ -99,9 +99,8 @@ DesktopSessionProxy::DesktopSessionProxy(
       io_task_runner_(io_task_runner),
       client_session_control_(client_session_control),
       desktop_session_connector_(desktop_session_connector),
-      pending_capture_frame_requests_(0),
-      is_desktop_session_connected_(false),
-      options_(options) {
+      options_(options),
+      current_process_stats_agent_("Network Process") {
   DCHECK(caller_task_runner_->BelongsToCurrentThread());
 }
 
@@ -173,6 +172,26 @@ void DesktopSessionProxy::SetCapabilities(const std::string& capabilities) {
   }
 }
 
+void DesktopSessionProxy::GetHostResourceUsage(
+    HostResourceUsageCallback on_result) {
+  if (!caller_task_runner_->BelongsToCurrentThread()) {
+    caller_task_runner_->PostTask(FROM_HERE, base::Bind(
+        &DesktopSessionProxy::GetHostResourceUsage,
+        base::Unretained(this),
+        base::Passed(std::move(on_result))));
+    return;
+  }
+
+  if (desktop_session_connector_ && peer_pid() != 0) {
+    desktop_session_connector_->GetHostResourceUsage(this);
+    // Consumes |on_host_resource_usage_| if there is one.
+    OnHostResourceUsage(protocol::AggregatedProcessResourceUsage());
+    on_host_resource_usage_ = std::move(on_result);
+  } else {
+    OnHostResourceUsage(protocol::AggregatedProcessResourceUsage());
+  }
+}
+
 bool DesktopSessionProxy::OnMessageReceived(const IPC::Message& message) {
   DCHECK(caller_task_runner_->BelongsToCurrentThread());
 
@@ -202,6 +221,7 @@ void DesktopSessionProxy::OnChannelConnected(int32_t peer_pid) {
   DCHECK(caller_task_runner_->BelongsToCurrentThread());
 
   VLOG(1) << "IPC: network <- desktop (" << peer_pid << ")";
+  peer_pid_ = peer_pid;
 }
 
 void DesktopSessionProxy::OnChannelError() {
@@ -241,6 +261,7 @@ void DesktopSessionProxy::DetachFromDesktop() {
 
   desktop_channel_.reset();
   desktop_session_id_ = UINT32_MAX;
+  peer_pid_ = 0;
 
   shared_buffers_.clear();
 
@@ -395,9 +416,28 @@ void DesktopSessionProxy::SetScreenResolution(
       new ChromotingNetworkDesktopMsg_SetScreenResolution(screen_resolution_));
 }
 
+void DesktopSessionProxy::OnHostResourceUsage(
+    const protocol::AggregatedProcessResourceUsage& usage) {
+  if (!caller_task_runner_->BelongsToCurrentThread()) {
+    caller_task_runner_->PostTask(FROM_HERE, base::Bind(
+        &DesktopSessionProxy::OnHostResourceUsage,
+        base::Unretained(this),
+        usage));
+    return;
+  }
+
+  if (on_host_resource_usage_) {
+    protocol::AggregatedProcessResourceUsage result = usage;
+    *result.add_usages() = current_process_stats_agent_.GetResourceUsage();
+    std::move(on_host_resource_usage_).Run(result);
+  }
+}
+
 DesktopSessionProxy::~DesktopSessionProxy() {
   DCHECK(caller_task_runner_->BelongsToCurrentThread());
 
+  // Consumes |on_host_resource_usage_| if there is one.
+  OnHostResourceUsage(protocol::AggregatedProcessResourceUsage());
   if (desktop_session_connector_.get() && is_desktop_session_connected_)
     desktop_session_connector_->DisconnectTerminal(this);
 }

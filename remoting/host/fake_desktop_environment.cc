@@ -116,6 +116,11 @@ const DesktopEnvironmentOptions& FakeDesktopEnvironment::options() const {
   return options_;
 }
 
+void FakeDesktopEnvironment::GetHostResourceUsage(
+    HostResourceUsageCallback on_result) {
+  std::move(on_result).Run(protocol::AggregatedProcessResourceUsage());
+}
+
 FakeDesktopEnvironmentFactory::FakeDesktopEnvironmentFactory(
     scoped_refptr<base::SingleThreadTaskRunner> capture_thread)
     : capture_thread_(std::move(capture_thread)) {}

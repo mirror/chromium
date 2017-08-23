@@ -112,6 +112,8 @@ bool DaemonProcess::OnMessageReceived(const IPC::Message& message) {
                         StartProcessStatsReport)
     IPC_MESSAGE_HANDLER(ChromotingNetworkToAnyMsg_StopProcessStatsReport,
                         StopProcessStatsReport)
+    IPC_MESSAGE_HANDLER(ChromotingNetworkToDaemonMsg_RetrieveProcessStats,
+                        RetrieveProcessStats)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -396,6 +398,22 @@ void DaemonProcess::StopProcessStatsReport() {
 void DaemonProcess::OnProcessStats(
     const protocol::AggregatedProcessResourceUsage& usage) {
   SendToNetwork(new ChromotingAnyToNetworkMsg_ReportProcessStats(usage));
+}
+
+void DaemonProcess::RetrieveProcessStats(int desktop_process_id) {
+  // TODO(zijiehe): Implementation.
+  protocol::AggregatedProcessResourceUsage result;
+  *result.add_usages() = current_process_stats_.GetResourceUsage();
+  {
+    protocol::ProcessResourceUsage dummy;
+    dummy.set_process_name("dummy");
+    dummy.set_processor_usage(1);
+    dummy.set_working_set_size(2);
+    dummy.set_pagefile_size(3);
+    *result.add_usages() = dummy;
+  }
+  SendToNetwork(new ChromotingDaemonToNetworkMsg_ReportProcessStats(
+      desktop_process_id, result));
 }
 
 }  // namespace remoting

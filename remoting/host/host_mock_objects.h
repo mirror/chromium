@@ -56,6 +56,7 @@ class MockDesktopEnvironment : public DesktopEnvironment {
   std::unique_ptr<webrtc::MouseCursorMonitor> CreateMouseCursorMonitor()
       override;
   std::unique_ptr<FileProxyWrapper> CreateFileProxyWrapper() override;
+  void GetHostResourceUsage(HostResourceUsageCallback on_result) override;
 };
 
 class MockClientSessionControl : public ClientSessionControl {
