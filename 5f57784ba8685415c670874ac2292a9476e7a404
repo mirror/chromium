@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ad3b434_e3133ead",
+        "filename": "ui/base/cocoa/hover_button_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-23T19:34:39Z",
+      "side": 1,
+      "message": "nit: goes between lines 7 and 9",
+      "revId": "5f57784ba8685415c670874ac2292a9476e7a404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364e693d_c49a6122",
+        "filename": "ui/base/cocoa/hover_button_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-23T19:34:39Z",
+      "side": 1,
+      "message": "nit: All the TEST_F can be in the namespace too.",
+      "revId": "5f57784ba8685415c670874ac2292a9476e7a404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49fb338_e89bcabd",
+        "filename": "ui/base/cocoa/hover_button_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-23T19:34:39Z",
+      "side": 1,
+      "message": "Use full name (callback).",
+      "range": {
+        "startLine": 61,
+        "startChar": 34,
+        "endLine": 61,
+        "endChar": 36
+      },
+      "revId": "5f57784ba8685415c670874ac2292a9476e7a404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020eaa83_77f34204",
+        "filename": "ui/base/cocoa/hover_button_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-23T19:34:39Z",
+      "side": 1,
+      "message": "Need a dealloc to release the callback.",
+      "revId": "5f57784ba8685415c670874ac2292a9476e7a404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
