@@ -29,6 +29,7 @@
 #include "chrome/browser/ui/app_list/app_list_syncable_service_factory.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_icon_loader.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
+#include "chrome/browser/ui/ash/app_list/app_list_service_ash.h"
 #include "chrome/browser/ui/ash/app_sync_ui_state.h"
 #include "chrome/browser/ui/ash/ash_util.h"
 #include "chrome/browser/ui/ash/chrome_launcher_prefs.h"
@@ -66,6 +67,7 @@
 #include "content/public/common/service_manager_connection.h"
 #include "extensions/common/extension.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "ui/app_list/presenter/app_list_presenter_impl.h"
 #include "ui/aura/window.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -506,6 +508,7 @@ ash::ShelfAction ChromeLauncherController::ActivateWindowOrMinimizeIfActive(
   // current user.
   if (chrome::MultiUserWindowManager::GetMultiProfileMode() ==
       chrome::MultiUserWindowManager::MULTI_PROFILE_MODE_SEPARATED) {
+    // LOG(ERROR) << "MSW CLC::ActivateWindowOrMinimizeIfActive 0"; 
     aura::Window* native_window = window->GetNativeWindow();
     const AccountId& current_account_id =
         multi_user_util::GetAccountIdFromProfile(profile());
@@ -520,14 +523,27 @@ ash::ShelfAction ChromeLauncherController::ActivateWindowOrMinimizeIfActive(
     }
   }
 
-  if (window->IsActive() && allow_minimize &&
-      !ash::Shell::Get()->IsAppListVisible()) {
+  const app_list::AppListPresenterImpl* app_list_presenter =
+      AppListServiceAsh::GetInstance()->GetAppListPresenter();
+  // LOG(ERROR) << "MSW CLC::ActivateWindowOrMinimizeIfActive A active:" << window->IsActive() << " allow_min:" << allow_minimize << " app_list:" << (!app_list_presenter || !app_list_presenter->IsVisible()); 
+  // << " native_active:" << window->GetNativeWindow()->; 
+  if (!window->IsMinimized() && window->IsActive() && allow_minimize &&
+      (!app_list_presenter || !app_list_presenter->IsVisible())) {
+    // TODO(msw): This seems to close the restore tabs bubble on mash... 
+    //LOG(ERROR) << "MSW CLC::ActivateWindowOrMinimizeIfActive Minimize A active:" << window->IsActive(); 
     window->Minimize();
+    window->Deactivate();
+    LOG(ERROR) << "MSW CLC::ActivateWindowOrMinimizeIfActive Minimize B active:" << window->IsActive(); 
     return ash::SHELF_ACTION_WINDOW_MINIMIZED;
   }
 
+  // LOG(ERROR) << "MSW CLC::ActivateWindowOrMinimizeIfActive Activate A active:" << window->IsActive(); 
+  // TODO(msw): This doesn't give the window keyboard focus on mash... 
+  if (window->IsMinimized())
+    window->Restore();
   window->Show();
   window->Activate();
+  LOG(ERROR) << "MSW CLC::ActivateWindowOrMinimizeIfActive Activate B active:" << window->IsActive(); 
   return ash::SHELF_ACTION_WINDOW_ACTIVATED;
 }
 

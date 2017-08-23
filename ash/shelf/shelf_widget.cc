@@ -96,9 +96,7 @@ void ShelfWidget::DelegateView::SetParentLayer(ui::Layer* layer) {
 }
 
 bool ShelfWidget::DelegateView::CanActivate() const {
-  // Allow to activate as fallback.
-  if (shelf_widget_->activating_as_fallback_)
-    return true;
+  // LOG(ERROR) << "MSW ShelfWidget::DelegateView::CanActivate A " << (focus_cycler_ && focus_cycler_->widget_activating() == GetWidget());
   // Allow to activate from the focus cycler.
   if (focus_cycler_ && focus_cycler_->widget_activating() == GetWidget())
     return true;
@@ -126,10 +124,8 @@ ShelfWidget::ShelfWidget(aura::Window* shelf_container, Shelf* shelf)
       status_area_widget_(nullptr),
       delegate_view_(new DelegateView(this)),
       shelf_view_(new ShelfView(Shell::Get()->shelf_model(), shelf_, this)),
-      background_animator_(SHELF_BACKGROUND_DEFAULT,
-                           shelf_,
-                           Shell::Get()->wallpaper_controller()),
-      activating_as_fallback_(false) {
+      background_animator_(SHELF_BACKGROUND_DEFAULT, shelf_,
+                           Shell::Get()->wallpaper_controller()) {
   DCHECK(shelf_container);
   DCHECK(shelf_);
 
@@ -313,7 +309,7 @@ ShelfWidget::GetDragAndDropHostForAppList() {
 
 void ShelfWidget::OnWidgetActivationChanged(views::Widget* widget,
                                             bool active) {
-  activating_as_fallback_ = false;
+  // LOG(ERROR) << "MSW ShelfWidget::OnWidgetActivationChanged A " << widget << " " << active;
   if (active)
     delegate_view_->SetPaneFocusAndFocusDefault();
   else
