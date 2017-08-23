@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "27cb676a_97e75ccb",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-08-23T19:36:52Z",
+      "side": 1,
+      "message": "Can these two calls be merged into one shutdown step?",
+      "revId": "025b95c8b7fd395059d655b39bf086dddda767af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f36cb29_ea987726",
         "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
         "patchSetId": 3
@@ -41,6 +58,29 @@
         "startChar": 42,
         "endLine": 512,
         "endChar": 43
+      },
+      "revId": "025b95c8b7fd395059d655b39bf086dddda767af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce2562e_549d6940",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-08-23T19:36:52Z",
+      "side": 1,
+      "message": "nit: associated",
+      "range": {
+        "startLine": 243,
+        "startChar": 37,
+        "endLine": 243,
+        "endChar": 47
       },
       "revId": "025b95c8b7fd395059d655b39bf086dddda767af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
