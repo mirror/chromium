@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39bbccbb_ec8376a0",
+        "filename": "media/gpu/android/media_codec_video_decoder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-23T18:00:25Z",
+      "side": 1,
+      "message": "Should be protected?",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 36
+      },
+      "revId": "1ef0f30aa8246b246ab02126fc73cfad01227722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
