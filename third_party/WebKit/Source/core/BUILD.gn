@@ -1332,7 +1332,6 @@ jumbo_source_set("unit_tests") {
     "dom/AttrTest.cpp",
     "dom/CSSSelectorWatchTest.cpp",
     "dom/DOMImplementationTest.cpp",
-    "dom/DocumentStatisticsCollectorTest.cpp",
     "dom/DocumentTest.cpp",
     "dom/ElementTest.cpp",
     "dom/ElementVisibilityObserverTest.cpp",
