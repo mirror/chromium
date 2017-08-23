@@ -84,6 +84,7 @@
 #include "platform/wtf/Vector.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebApplicationCacheHost.h"
+#include "public/platform/WebCORSPreflightResultCache.h"
 #include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
@@ -858,6 +859,10 @@ void FrameFetchContext::SetFirstPartyCookieAndRequestorOrigin(
       request.SetRequestorOrigin(GetRequestorOriginForFrameLoading());
     }
   }
+}
+
+WebCORSPreflightResultCache* FrameFetchContext::GetCORSPreflightResultCache() {
+  return &WebCORSPreflightResultCache::Shared();
 }
 
 MHTMLArchive* FrameFetchContext::Archive() const {

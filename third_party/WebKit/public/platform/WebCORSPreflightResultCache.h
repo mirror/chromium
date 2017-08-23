@@ -86,6 +86,8 @@ class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCache {
 
  public:
   static WebCORSPreflightResultCache& Shared();
+  // Protected for tests:
+  WebCORSPreflightResultCache() {}
 
   void AppendEntry(const WebString& origin,
                    const WebURL&,
@@ -97,8 +99,6 @@ class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCache {
                         const HTTPHeaderMap& request_headers);
 
  protected:
-  // Protected for tests:
-  WebCORSPreflightResultCache() {}
 
   typedef std::map<
       std::string,
