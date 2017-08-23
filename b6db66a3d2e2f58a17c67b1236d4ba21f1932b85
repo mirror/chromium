@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be9239c9_c528bb2c",
+        "filename": "services/viz/public/cpp/compositing/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-23T12:18:20Z",
+      "side": 1,
+      "message": "I think this deps needs to added to the mojom target, not a test target.",
+      "revId": "b6db66a3d2e2f58a17c67b1236d4ba21f1932b85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "832fdcb3_b40216fa",
+        "filename": "services/viz/public/cpp/compositing/filter_operation_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-23T12:18:20Z",
+      "side": 1,
+      "message": "This would be better handled by an EnumTraits? That way FilterOperations would just have a cc::FilterOperation::FilterType.",
+      "revId": "b6db66a3d2e2f58a17c67b1236d4ba21f1932b85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3fc52b5_4c931eb6",
+        "filename": "services/viz/public/cpp/compositing/filter_operations_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-23T12:18:20Z",
+      "side": 1,
+      "message": "You can deserialize directly into |out| here and not use a temporary.",
+      "revId": "b6db66a3d2e2f58a17c67b1236d4ba21f1932b85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cabb5081_3a48d12d",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-23T12:18:20Z",
+      "side": 1,
+      "message": "I would make one test case per FilterOperation, to make test failures more meaningful. It would almost be less repeat code.\n\ncc::FilterOperation input \u003d ...;\n\ncc::FilterOperation output;\nSerializeAndDeserialize\u003cmojom::FilterOperation\u003e(input, \u0026output);\n\nSomeFunctionThatChecksEquality(input, output);",
+      "revId": "b6db66a3d2e2f58a17c67b1236d4ba21f1932b85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c706384e_a05df24e",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-23T12:18:20Z",
+      "side": 1,
+      "message": "How is FilterOperation::operator\u003d\u003d() different than the equality check done in the test case above? Should we use one vs the other in both test cases?",
+      "revId": "b6db66a3d2e2f58a17c67b1236d4ba21f1932b85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
