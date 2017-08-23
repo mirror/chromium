@@ -135,6 +135,10 @@ class NavigationManagerImpl : public NavigationManager {
   // redirects. Does nothing if there is no pending item.
   void UpdatePendingItemUrl(const GURL& url) const;
 
+  // TODO(crbug.com/661316): Make this private once all navigation code is moved
+  // out of CRWWebController.
+  NavigationItemImpl* GetCurrentItemImpl() const;
+
   // NavigationManager:
   NavigationItem* GetLastCommittedItem() const final;
   NavigationItem* GetPendingItem() const final;
