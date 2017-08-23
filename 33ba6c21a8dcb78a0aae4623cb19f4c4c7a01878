@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f9a1b28_a45da266",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T06:15:41Z",
+      "side": 1,
+      "message": "to mark",
+      "range": {
+        "startLine": 36,
+        "startChar": 19,
+        "endLine": 36,
+        "endChar": 26
+      },
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e55ecde_a84ed279",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T06:15:41Z",
+      "side": 1,
+      "message": "to prevent",
+      "range": {
+        "startLine": 58,
+        "startChar": 27,
+        "endLine": 58,
+        "endChar": 37
+      },
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f804ad0a_49abb17d",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T06:15:41Z",
+      "side": 1,
+      "message": "Delete state be set, so we won\u0027t manually delete the file on destruction?",
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51981a27_60844fda",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T06:15:41Z",
+      "side": 1,
+      "message": "Looks like we just need one variable? How about\n\nenum OnCloseDeleteBehavior {\n  kKeep,\n  kAutoDeleteOnClose,\n  kManualDeleteOnClose\n};\n\nOnCloseDeleteBehavior delete_behavior_;\n\nThen constructor can have |should_delete_on_close| param, then |delete_behavior_| can be used throughout the class.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 21
+      },
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba1ea49_80e478d0",
+        "filename": "chrome/installer/zucchini/zucchini.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T06:15:41Z",
+      "side": 1,
+      "message": "Leftover stuff?",
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4046e45_330164de",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T06:15:41Z",
+      "side": 1,
+      "message": "Should this be moved to zucchini_integration.cc? If you don\u0027t want to do this now, add TODO (for huangs@ if necessary)?",
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d0b98e7_0f5dc0a8",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T06:15:41Z",
+      "side": 1,
+      "message": "// By default, delete patch on destruction, to avoid having lingering files in case of a failure. On Windows deletion can be done by the OS.",
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6765ad5_dfa4dec8",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T06:15:41Z",
+      "side": 1,
+      "message": "// Successfully created patch. Explicitly request file to be kept.",
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a4271d_da90315f",
+        "filename": "chrome/installer/zucchini/zucchini_integration.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T06:15:41Z",
+      "side": 1,
+      "message": "// By default, delete output on destruction, to avoid having lingering files in case of a failure. On Windows deletion can be done by the OS.",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 27
+      },
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f96a464_6e98f091",
+        "filename": "chrome/installer/zucchini/zucchini_integration.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T06:15:41Z",
+      "side": 1,
+      "message": "// Successfully patch |new_file|. Explicitly request file to be kept.",
+      "revId": "33ba6c21a8dcb78a0aae4623cb19f4c4c7a01878",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
