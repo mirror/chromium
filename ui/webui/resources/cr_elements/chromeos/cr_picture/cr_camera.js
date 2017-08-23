@@ -39,7 +39,7 @@ Polymer({
      */
     isFlipped_: {
       type: Boolean,
-      value: false,
+      value: true,
     },
   },
 
