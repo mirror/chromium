@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "bc020a22_e2795d79",
+        "filename": "components/ukm/ukm_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-23T19:23:02Z",
+      "side": 1,
+      "message": "The problem with using atomic ops is it misleads the reading into thinking this is used from multiple threads, whereas it isn\u0027t.\n\nSo I\u0027d rather not make the code more misleading via this. If you prefer to have extra checks, then I think that\u0027s fine - but do so using a mechanism that checks that explicitly.\n\nThe other option is to move this state to UkmRecorderImpl and have it set it on the UkmSource, which seems cleaner, because then UkmSource doesn\u0027t need to have any global state.",
+      "parentUuid": "381d39cb_25a57a04",
+      "range": {
+        "startLine": 30,
+        "startChar": 41,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "7d65d1ceddf216944f3a6303250dbd367e822241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "591274a7_0544ebda",
         "filename": "components/ukm/ukm_source.cc",
         "patchSetId": 2
