@@ -466,6 +466,8 @@ class CONTENT_EXPORT RenderWidget
     TTFAP_5MIN_AFTER_BACKGROUNDED,
   };
 
+  void ShowDeferredContextMenu(const ContextMenuParams& params, int routing_id);
+
  protected:
   // Friend RefCounted so that the dtor can be non-public. Using this class
   // without ref-counting is an error.
@@ -873,6 +875,8 @@ class CONTENT_EXPORT RenderWidget
   PepperPluginInstanceImpl* GetFocusedPepperPluginInsideWidget();
 #endif
   void RecordTimeToFirstActivePaint();
+
+  void ShowContextMenu(const ContextMenuParams& params, int routing_id);
 
   // Indicates whether this widget has focus.
   bool has_focus_;
