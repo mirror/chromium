@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "423232fd_b3773877",
+        "filename": "ash/system/system_notifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T17:22:11Z",
+      "side": 1,
+      "message": "nit: else not needed",
+      "revId": "4c2ac8df688cf64ec2e3885d1a631983ada665c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e39a7ee3_b50f81b5",
+        "filename": "ash/system/system_notifier.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T17:22:11Z",
+      "side": 1,
+      "message": "nit: #include \u003cmemory\u003e for unique_ptr",
+      "revId": "4c2ac8df688cf64ec2e3885d1a631983ada665c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
