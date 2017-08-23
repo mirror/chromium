@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "43a13a54_42ffc67a",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/list_container.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-23T02:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3be7bbc_1a0c4de0",
+      "range": {
+        "startLine": 255,
+        "startChar": 16,
+        "endLine": 255,
+        "endChar": 20
+      },
+      "revId": "1a2b1e14cd28e9aa207886b95f642eb17f76019c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f4763c1_91201d57",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/list_container.js",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "1a2b1e14cd28e9aa207886b95f642eb17f76019c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52db2143_b9593c71",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/list_container.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-23T02:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f4763c1_91201d57",
+      "range": {
+        "startLine": 261,
+        "startChar": 20,
+        "endLine": 261,
+        "endChar": 23
+      },
+      "revId": "1a2b1e14cd28e9aa207886b95f642eb17f76019c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
