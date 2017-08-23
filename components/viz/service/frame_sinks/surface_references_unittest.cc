@@ -268,6 +268,35 @@ TEST_F(SurfaceReferencesTest, GarbageCollectionWorksRecusively) {
   EXPECT_EQ(nullptr, GetSurfaceManager().GetSurfaceForId(id3));
 }
 
+// Verify that surfaces that have no surface references or temporary references,
+// but are not destroyed, are still used as part of the surface reference graph.
+TEST_F(SurfaceReferencesTest, LiveSurfaceStillReachable) {
+  SurfaceId id1 = CreateSurface(kFrameSink1, 1);
+  SurfaceId id2 = CreateSurface(kFrameSink2, 1);
+  SurfaceId id3 = CreateSurface(kFrameSink3, 1);
+
+  AddSurfaceReference(GetSurfaceManager().GetRootSurfaceId(), id1);
+  AddSurfaceReference(id1, id2);
+  AddSurfaceReference(id2, id3);
+  ASSERT_THAT(GetAllTempReferences(), IsEmpty());
+
+  // Marking |id3| for destruction shouldn't cause it be garbage collected
+  // because it's still referenced by something live.
+  DestroySurface(id3);
+  EXPECT_NE(nullptr, GetSurfaceManager().GetSurfaceForId(id3));
+
+  // Removing the surface reference to |id2| shouldn't destroy it or |id3|
+  // since |id2| is not marked for destruction.
+  RemoveSurfaceReference(id1, id2);
+  EXPECT_NE(nullptr, GetSurfaceManager().GetSurfaceForId(id3));
+  EXPECT_NE(nullptr, GetSurfaceManager().GetSurfaceForId(id2));
+
+  // Marking |id2| for destruction should destroy both |id2| and |id3| now.
+  DestroySurface(id2);
+  EXPECT_EQ(nullptr, GetSurfaceManager().GetSurfaceForId(id3));
+  EXPECT_EQ(nullptr, GetSurfaceManager().GetSurfaceForId(id2));
+}
+
 TEST_F(SurfaceReferencesTest, TryAddReferenceSameReferenceTwice) {
   SurfaceId id1 = CreateSurface(kFrameSink1, 1);
   SurfaceId id2 = CreateSurface(kFrameSink2, 1);
