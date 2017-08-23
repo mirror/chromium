@@ -11,7 +11,6 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
@@ -44,12 +43,10 @@ int kBufferSize = 2048;
 // A class to hold all data needed to send a command to spawner server.
 class SpawnerRequestData : public base::SupportsUserData::Data {
  public:
-  SpawnerRequestData(int id, int* result_code, std::string* data_received)
-      : request_id_(id),
-        buf_(new IOBuffer(kBufferSize)),
+  SpawnerRequestData(int* result_code, std::string* data_received)
+      : buf_(new IOBuffer(kBufferSize)),
         result_code_(result_code),
-        data_received_(data_received),
-        response_started_count_(0) {
+        data_received_(data_received) {
     DCHECK(result_code);
     *result_code_ = OK;
     DCHECK(data_received);
@@ -58,14 +55,11 @@ class SpawnerRequestData : public base::SupportsUserData::Data {
 
   ~SpawnerRequestData() override {}
 
-  bool DoesRequestIdMatch(int request_id) const {
-    return request_id_ == request_id;
-  }
-
   IOBuffer* buf() const { return buf_.get(); }
 
   bool IsResultOK() const { return *result_code_ == OK; }
 
+  const std::string& data_received() const { return *data_received_; }
   void ClearReceivedData() { data_received_->clear(); }
 
   void SetResultCode(int result_code) { *result_code_ = result_code; }
@@ -86,9 +80,6 @@ class SpawnerRequestData : public base::SupportsUserData::Data {
   }
 
  private:
-  // Unique ID for the current request.
-  int request_id_;
-
   // Buffer that URLRequest writes into.
   scoped_refptr<IOBuffer> buf_;
 
@@ -100,7 +91,7 @@ class SpawnerRequestData : public base::SupportsUserData::Data {
 
   // Used to track how many times the OnResponseStarted get called after
   // sending a command to spawner server.
-  int response_started_count_;
+  int response_started_count_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(SpawnerRequestData);
 };
@@ -112,8 +103,6 @@ SpawnerCommunicator::SpawnerCommunicator(uint16_t port)
       event_(base::WaitableEvent::ResetPolicy::AUTOMATIC,
              base::WaitableEvent::InitialState::NOT_SIGNALED),
       port_(port),
-      next_id_(0),
-      is_running_(false),
       weak_factory_(this) {}
 
 SpawnerCommunicator::~SpawnerCommunicator() {
@@ -121,25 +110,25 @@ SpawnerCommunicator::~SpawnerCommunicator() {
 }
 
 void SpawnerCommunicator::WaitForResponse() {
-  DCHECK_NE(base::MessageLoop::current(), io_thread_.message_loop());
+  DCHECK(io_thread_.task_runner()->BelongsToCurrentThread());
   event_.Wait();
   event_.Reset();
 }
 
 void SpawnerCommunicator::StartIOThread() {
-  DCHECK_NE(base::MessageLoop::current(), io_thread_.message_loop());
+  DCHECK(io_thread_.task_runner()->BelongsToCurrentThread());
   if (is_running_)
     return;
 
   allowed_port_.reset(new ScopedPortException(port_));
-  base::Thread::Options options;
-  options.message_loop_type = base::MessageLoop::TYPE_IO;
-  is_running_ = io_thread_.StartWithOptions(options);
-  DCHECK(is_running_);
+  if (!io_thread_.StartWithOptions(
+          base::Thread::Options(base::MessageLoop::TYPE_IO, 0)))
+    NOTREACHED();
+  is_running_ = true;
 }
 
 void SpawnerCommunicator::Shutdown() {
-  DCHECK_NE(base::MessageLoop::current(), io_thread_.message_loop());
+  DCHECK(io_thread_.task_runner()->BelongsToCurrentThread());
   DCHECK(is_running_);
   // The request and its context should be created and destroyed only on the
   // IO thread.
@@ -150,13 +139,12 @@ void SpawnerCommunicator::Shutdown() {
   allowed_port_.reset();
 }
 
-void SpawnerCommunicator::SendCommandAndWaitForResult(
+int SpawnerCommunicator::SendCommandAndWaitForResult(
     const std::string& command,
     const std::string& post_data,
-    int* result_code,
     std::string* data_received) {
-  if (!result_code || !data_received)
-    return;
+  DCHECK(data_received);
+
   // Start the communicator thread to talk to test server spawner.
   StartIOThread();
   DCHECK(io_thread_.message_loop());
@@ -164,12 +152,15 @@ void SpawnerCommunicator::SendCommandAndWaitForResult(
   // Since the method will be blocked until SpawnerCommunicator gets result
   // from the spawner server or timed-out. It's safe to use base::Unretained
   // when using base::Bind.
+  int result_code;
   io_thread_.task_runner()->PostTask(
       FROM_HERE,
       base::Bind(&SpawnerCommunicator::SendCommandAndWaitForResultOnIOThread,
-                 base::Unretained(this), command, post_data, result_code,
+                 base::Unretained(this), command, post_data, &result_code,
                  data_received));
   WaitForResponse();
+
+  return result_code;
 }
 
 void SpawnerCommunicator::SendCommandAndWaitForResultOnIOThread(
@@ -177,9 +168,7 @@ void SpawnerCommunicator::SendCommandAndWaitForResultOnIOThread(
     const std::string& post_data,
     int* result_code,
     std::string* data_received) {
-  base::MessageLoop* loop = io_thread_.message_loop();
-  DCHECK(loop);
-  DCHECK(loop->task_runner()->BelongsToCurrentThread());
+  DCHECK(io_thread_.task_runner()->BelongsToCurrentThread());
 
   // Prepare the URLRequest for sending the command.
   DCHECK(!cur_request_.get());
@@ -187,10 +176,8 @@ void SpawnerCommunicator::SendCommandAndWaitForResultOnIOThread(
   cur_request_ = context_->CreateRequest(
       GenerateSpawnerCommandURL(command, port_), DEFAULT_PRIORITY, this);
   DCHECK(cur_request_);
-  int current_request_id = ++next_id_;
   cur_request_->SetUserData(
-      this, base::MakeUnique<SpawnerRequestData>(current_request_id,
-                                                 result_code, data_received));
+      this, std::make_unique<SpawnerRequestData>(result_code, data_received));
 
   if (post_data.empty()) {
     cur_request_->set_method("GET");
@@ -206,27 +193,20 @@ void SpawnerCommunicator::SendCommandAndWaitForResultOnIOThread(
     cur_request_->SetExtraRequestHeaders(headers);
   }
 
-  // Post a task to timeout this request if it takes too long.
-  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&SpawnerCommunicator::OnTimeout,
-                            weak_factory_.GetWeakPtr(), current_request_id),
-      TestTimeouts::action_max_timeout());
+  timeout_timer_ = std::make_unique<base::Timer>(
+      FROM_HERE, TestTimeouts::action_max_timeout(),
+      base::Bind(&SpawnerCommunicator::OnTimeout, weak_factory_.GetWeakPtr()),
+      /*is_repeating=*/false);
 
   // Start the request.
   cur_request_->Start();
 }
 
-void SpawnerCommunicator::OnTimeout(int id) {
-  // Timeout tasks may outlive the URLRequest they reference. Make sure it
-  // is still applicable.
-  if (!cur_request_.get())
-    return;
+void SpawnerCommunicator::OnTimeout() {
   SpawnerRequestData* data =
       static_cast<SpawnerRequestData*>(cur_request_->GetUserData(this));
   DCHECK(data);
 
-  if (!data->DoesRequestIdMatch(id))
-    return;
   // Set the result code and cancel the timed-out task.
   int result = cur_request_->CancelWithError(ERR_TIMED_OUT);
   OnSpawnerCommandCompleted(cur_request_.get(), result);
@@ -243,22 +223,29 @@ void SpawnerCommunicator::OnSpawnerCommandCompleted(URLRequest* request,
       static_cast<SpawnerRequestData*>(cur_request_->GetUserData(this));
   DCHECK(data);
 
-  // If request is faild,return the error code.
-  if (net_error != OK)
+  // If request has failed, return the error code.
+  if (net_error != OK) {
+    LOG(ERROR) << "request failed, error: " << ErrorToString(net_error);
     data->SetResultCode(net_error);
-
-  if (!data->IsResultOK()) {
-    LOG(ERROR) << "request failed, error: " << net_error;
-    // Clear the buffer of received data if any net error happened.
-    data->ClearReceivedData();
+  } else if (request->GetResponseCode() != 200) {
+    LOG(ERROR) << "Spawner server returned bad status: "
+               << request->response_headers()->GetStatusLine() << ", "
+               << data->data_received();
+    data->SetResultCode(ERR_FAILED);
   } else {
     DCHECK_EQ(1, data->response_started_count());
+  }
+
+  if (!data->IsResultOK()) {
+    // Clear the buffer of received data if any net error happened.
+    data->ClearReceivedData();
   }
 
   // Clear current request to indicate the completion of sending a command
   // to spawner server and getting the result.
   cur_request_.reset();
   context_.reset();
+  timeout_timer_.reset();
   // Invalidate the weak pointers on the IO thread.
   weak_factory_.InvalidateWeakPtrs();
 
@@ -307,16 +294,6 @@ void SpawnerCommunicator::OnResponseStarted(URLRequest* request,
     return;
   }
 
-  // Require HTTP responses to have a success status code.
-  if (request->GetResponseCode() != 200) {
-    LOG(ERROR) << "Spawner server returned bad status: "
-               << request->response_headers()->GetStatusLine();
-    data->SetResultCode(ERR_FAILED);
-    request->Cancel();
-    OnSpawnerCommandCompleted(request, ERR_ABORTED);
-    return;
-  }
-
   ReadResult(request);
 }
 
@@ -341,41 +318,11 @@ void SpawnerCommunicator::OnReadCompleted(URLRequest* request, int num_bytes) {
 }
 
 bool SpawnerCommunicator::StartServer(const std::string& arguments,
-                                      uint16_t* port) {
-  *port = 0;
+                                      std::string* server_data) {
   // Send the start command to spawner server to start the Python test server
   // on remote machine.
-  std::string server_return_data;
-  int result_code;
-  SendCommandAndWaitForResult("start", arguments, &result_code,
-                              &server_return_data);
-  if (OK != result_code || server_return_data.empty())
-    return false;
-
-  // Check whether the data returned from spawner server is JSON-formatted.
-  std::unique_ptr<base::Value> value =
-      base::JSONReader::Read(server_return_data);
-  if (!value.get() || !value->IsType(base::Value::Type::DICTIONARY)) {
-    LOG(ERROR) << "Invalid server data: " << server_return_data.c_str();
-    return false;
-  }
-
-  // Check whether spawner server returns valid data.
-  base::DictionaryValue* server_data =
-      static_cast<base::DictionaryValue*>(value.get());
-  std::string message;
-  if (!server_data->GetString("message", &message) || message != "started") {
-    LOG(ERROR) << "Invalid message in server data: ";
-    return false;
-  }
-  int int_port;
-  if (!server_data->GetInteger("port", &int_port) || int_port <= 0 ||
-      int_port > std::numeric_limits<uint16_t>::max()) {
-    LOG(ERROR) << "Invalid port value: " << int_port;
-    return false;
-  }
-  *port = static_cast<uint16_t>(int_port);
-  return true;
+  int result = SendCommandAndWaitForResult("start", arguments, server_data);
+  return result == OK;
 }
 
 bool SpawnerCommunicator::StopServer() {
@@ -387,10 +334,9 @@ bool SpawnerCommunicator::StopServer() {
   // When the test is done, ask the test server spawner to kill the test server
   // on the remote machine.
   std::string server_return_data;
-  int result_code;
-  SendCommandAndWaitForResult("kill", "", &result_code, &server_return_data);
+  int result = SendCommandAndWaitForResult("kill", "", &server_return_data);
   Shutdown();
-  if (OK != result_code || server_return_data != "killed")
+  if (result != OK || server_return_data != "killed")
     return false;
   return true;
 }
