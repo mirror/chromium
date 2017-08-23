@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ce2431c_76446cc0",
+        "filename": "chrome/browser/ui/libgtkui/nav_button_layout_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-08-23T23:46:57Z",
+      "side": 1,
+      "message": "This is really weird. ParseButtonLayout() is the only method here and this keeps no persistent state. I get that you\u0027re trying to ensure that there\u0027s only one instance of either the Gconf or the Gtk3 object, but seems like an abuse of inheritance.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "fc5b9fc507eaf2856f95e0c58cb1a35ad6335c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
