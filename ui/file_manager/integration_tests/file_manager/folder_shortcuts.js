@@ -39,16 +39,17 @@ var ENTRY_SET = [
  */
 var DIRECTORY = {
   Drive: {
-    contents: [ENTRIES.directoryA.getExpectedRow(),
-               ENTRIES.directoryD.getExpectedRow()],
+    contents: [
+      ENTRIES.directoryA.getExpectedRow(), ENTRIES.directoryD.getExpectedRow()
+    ],
     name: 'Drive',
-    navItem: '#tree-item-autogen-id-3',
+    navItem: '#tree-item-autogen-id-4',
     treeItem: TREEITEM_DRIVE
   },
   A: {
     contents: [ENTRIES.directoryB.getExpectedRow()],
     name: 'A',
-    navItem: '#tree-item-autogen-id-14',
+    navItem: '#tree-item-autogen-id-15',
     treeItem: TREEITEM_A
   },
   B: {
@@ -59,13 +60,13 @@ var DIRECTORY = {
   C: {
     contents: [],
     name: 'C',
-    navItem: '#tree-item-autogen-id-14',
+    navItem: '#tree-item-autogen-id-15',
     treeItem: TREEITEM_C
   },
   D: {
     contents: [ENTRIES.directoryE.getExpectedRow()],
     name: 'D',
-    navItem: '#tree-item-autogen-id-13',
+    navItem: '#tree-item-autogen-id-14',
     treeItem: TREEITEM_D
   },
   E: {
