@@ -61,6 +61,7 @@ class ApplicationCacheHost;
 class SubresourceFilter;
 class ResourceFetcher;
 class Document;
+class DocumentParser;
 class HistoryItem;
 class LocalFrame;
 class LocalFrameClient;
@@ -297,6 +298,8 @@ class CORE_EXPORT DocumentLoader
 
   Member<RawResource> main_resource_;
   Member<HistoryItem> history_item_;
+
+  Member<DocumentParser> parser_;
 
   Member<SubresourceFilter> subresource_filter_;
 
