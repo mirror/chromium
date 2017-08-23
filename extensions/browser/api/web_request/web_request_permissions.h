@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "base/optional.h"
+#include "base/strings/string_piece.h"
 #include "extensions/common/permissions/permissions_data.h"
 #include "url/origin.h"
 
@@ -43,6 +44,10 @@ class WebRequestPermissions {
       const extensions::InfoMap* extension_info_map,
       const net::URLRequest* request,
       extensions::ExtensionNavigationUIData* navigation_ui_data);
+
+  // Returns true if extensions shall be prevented from reading or writing the
+  // header.
+  static bool HideResponseHeader(const base::StringPiece& header_name);
 
   // Helper function used only in tests, sets a variable which enables or
   // disables a CHECK.

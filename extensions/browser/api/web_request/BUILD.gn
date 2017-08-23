@@ -36,12 +36,15 @@ source_set("web_request") {
   ]
 
   deps = [
+    "//components/signin/core/browser",
     "//components/web_cache/browser",
     "//content/public/browser",
     "//content/public/common",
     "//extensions/common/api",
     "//extensions/strings",
+    "//net",
     "//third_party/re2",
+    "//url",
   ]
 
   public_deps = [
