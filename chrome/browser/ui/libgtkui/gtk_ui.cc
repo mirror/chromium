@@ -68,14 +68,16 @@
 #include "chrome/browser/ui/libgtkui/native_theme_gtk2.h"  // nogncheck
 #elif GTK_MAJOR_VERSION == 3
 #include "chrome/browser/ui/libgtkui/native_theme_gtk3.h"  // nogncheck
+#include "chrome/browser/ui/libgtkui/nav_button_layout_manager_gtk3.h"  // nogncheck
 #include "chrome/browser/ui/libgtkui/nav_button_provider_gtk3.h"  // nogncheck
 #endif
 
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
 #include "printing/printing_context_linux.h"
 #endif
+
 #if defined(USE_GCONF)
-#include "chrome/browser/ui/libgtkui/gconf_listener.h"
+#include "chrome/browser/ui/libgtkui/nav_button_layout_manager_gconf.h"
 #endif
 
 // A minimized port of GtkThemeService into something that can provide colors
@@ -268,6 +270,18 @@ int indicators_count;
 // The unknown content type.
 const char* kUnknownContentType = "application/octet-stream";
 
+std::unique_ptr<NavButtonLayoutManager> CreateNavButtonLayoutManager(
+    GtkUi* gtk_ui) {
+#if GTK_MAJOR_VERSION == 3
+  if (GtkVersionCheck(3, 10))
+    return std::make_unique<NavButtonLayoutManagerGtk3>(gtk_ui);
+#endif
+#if defined(USE_GCONF)
+  return std::make_unique<NavButtonLayoutManagerGconf>(gtk_ui);
+#endif
+  return nullptr;
+}
+
 // Returns a gfx::FontRenderParams corresponding to GTK's configuration.
 gfx::FontRenderParams GetGtkFontRenderParams() {
   GtkSettings* gtk_settings = gtk_settings_get_default();
@@ -449,10 +463,8 @@ void GtkUi::Initialize() {
       &GetPdfPaperSizeDeviceUnitsGtk);
 #endif
 
-#if defined(USE_GCONF)
   // We must build this after GTK gets initialized.
-  gconf_listener_.reset(new GConfListener(this));
-#endif  // defined(USE_GCONF)
+  nav_button_layout_manager_ = CreateNavButtonLayoutManager(this);
 
   indicators_count = 0;
 
