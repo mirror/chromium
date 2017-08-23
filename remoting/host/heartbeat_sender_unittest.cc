@@ -85,9 +85,9 @@ class HeartbeatSenderTest
                     base::TimeDelta interval = base::TimeDelta(),
                     int expected_sequence_id = 0);
 
+  base::MessageLoop message_loop_;
   scoped_refptr<base::TestMockTimeTaskRunner> fake_time_task_runner_ =
-      base::MakeRefCounted<base::TestMockTimeTaskRunner>(
-          base::TestMockTimeTaskRunner::Type::kBoundToThread);
+      new base::TestMockTimeTaskRunner();
 
   FakeSignalStrategy signal_strategy_;
   FakeSignalStrategy bot_signal_strategy_;
@@ -283,14 +283,19 @@ TEST_F(HeartbeatSenderTest, HostOsInfo) {
 }
 
 TEST_F(HeartbeatSenderTest, ResponseTimeout) {
+  base::TestMockTimeTaskRunner::ScopedContext scoped_context(
+      fake_time_task_runner_.get());
+
   signal_strategy_.Connect();
   base::RunLoop().RunUntilIdle();
 
   // Simulate heartbeat timeout.
   fake_time_task_runner_->FastForwardBy(base::TimeDelta::FromMinutes(1));
+  base::RunLoop().RunUntilIdle();
 
   // SignalStrategy should be disconnected in response to the second timeout.
   fake_time_task_runner_->FastForwardBy(base::TimeDelta::FromMinutes(1));
+  base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(SignalStrategy::DISCONNECTED, signal_strategy_.GetState());
 }
