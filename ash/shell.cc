@@ -88,6 +88,7 @@
 #include "ash/system/tray/system_tray_controller.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/system/tray_caps_lock.h"
+#include "ash/system/web_notification/message_center_controller.h"
 #include "ash/touch/ash_touch_transform_controller.h"
 #include "ash/tray_action/tray_action.h"
 #include "ash/utility/screenshot_controller.h"
@@ -660,6 +661,7 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       native_cursor_manager_(nullptr),
       simulate_modal_window_open_for_testing_(false),
       is_touch_hud_projection_enabled_(false),
+      message_center_controller_(new MessageCenterController()),
       weak_factory_(this) {
   // TODO(sky): better refactor cash/mash dependencies. Perhaps put all cash
   // state on ShellPortClassic. http://crbug.com/671246.
