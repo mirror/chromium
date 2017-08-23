@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7915ecd6_8de31b21",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 4377,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-23T12:47:51Z",
+      "side": 0,
+      "message": "This test is supposed to simulate a client-side redirect, and not a server redirect.\n- Server redirects happen when the server returns a 30* HTTP code, and this is what NavigationSimulator::Redirect simulates.\n- In client redirects, the navigation will commit (this is what other_contents-\u003eNavigateAndCommit(url2a); simulates), then you get a Javascript initiated navigation to the redirected url. I think they\u0027re trying to simulate that with other_controller.LoadURL(url2b, Referrer(), ui::PAGE_TRANSITION_LINK, std::string()); call, though it\u0027s actually wrong. This call simulates a browser-initiated nav starting, which has nothing to do with a client side-redirect.\n\nIn order to properly simulate the client-side redirect, you can do:\nother_contents-\u003eNavigateAndCommit(url2a);\nauto navigation \u003d NavigationSimulator::CreateRendererInitiated(url2b, other_contents-\u003eGetMainFrame());\nnavigation-\u003eSetTransition(ui::PAGE_TRANSITION_LINK | ui::PAGE_TRANSITION_CLIENT_REDIRECT);\nnavigation-\u003eStart();\n\nNote: this might cause issues with the test, since it\u0027s not currently simulating the client-side redirect properly.",
+      "revId": "339cb6961a6e02924898f0692e8a9567b0302935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
