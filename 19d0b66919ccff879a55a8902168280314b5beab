@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bc804c93_7e288976",
+        "filename": "ios/chrome/browser/sessions/session_util.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-23T21:04:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93a217c0_6b2c421e",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 27
+      },
+      "revId": "19d0b66919ccff879a55a8902168280314b5beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f29f8a8_cdd33567",
         "filename": "ios/chrome/browser/sessions/session_util.mm",
         "patchSetId": 19
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e57a3e67_f75a5940",
+        "filename": "ios/chrome/browser/sessions/session_util.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-23T21:04:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f29f8a8_cdd33567",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 13
+      },
+      "revId": "19d0b66919ccff879a55a8902168280314b5beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21542f56_12f6a39a",
         "filename": "ios/chrome/browser/sessions/session_util.mm",
         "patchSetId": 19
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-23T17:28:28Z",
       "side": 1,
       "message": "Should this be set outside by the caller?",
+      "range": {
+        "startLine": 44,
+        "startChar": 13,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "19d0b66919ccff879a55a8902168280314b5beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48fe4e03_6cc91286",
+        "filename": "ios/chrome/browser/sessions/session_util.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-23T21:04:54Z",
+      "side": 1,
+      "message": "There\u0027s four call sites and they all need to call SetWebUsageEnabled(true) on the returned WebState. This is why I did set the call there. I could move it to the caller, but that would make for more awkward code (as this would require a local variable to store the created WebState before adding it to the WebStateList).\n\nI\u0027ve updated the method documentation to indicate that the WebState has web usage enabled. WDYT?",
+      "parentUuid": "21542f56_12f6a39a",
       "range": {
         "startLine": 44,
         "startChar": 13,
@@ -91,6 +163,30 @@
       "revId": "19d0b66919ccff879a55a8902168280314b5beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44851717_20885d20",
+        "filename": "ios/chrome/browser/tabs/tab_model_notification_observer.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-23T21:04:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc912e77_121845da",
+      "range": {
+        "startLine": 52,
+        "startChar": 19,
+        "endLine": 52,
+        "endChar": 26
+      },
+      "revId": "19d0b66919ccff879a55a8902168280314b5beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
