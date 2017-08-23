@@ -1187,6 +1187,10 @@ void TabManager::OnWillRestoreTab(WebContents* web_contents) {
   data->SetIsRestoredInForeground(web_contents->IsVisible());
 }
 
+void TabManager::OnDidStartMainFrameNavigation(content::WebContents* contents) {
+  tab_manager_stats_collector_->OnDidStartMainFrameNavigation(contents);
+}
+
 void TabManager::OnDidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
   auto it = pending_navigations_.begin();
