@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06c2b66f_ea8d33e3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T17:50:02Z",
+      "side": 1,
+      "message": "Do you mind to create a crbug to track this? Also, if we need help from GVR team for this, it would also make sense to file a gvr bug.",
+      "range": {
+        "startLine": 159,
+        "startChar": 11,
+        "endLine": 159,
+        "endChar": 15
+      },
+      "revId": "41524ba175b5ae4bff5c4bd1906fc432e52342a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
