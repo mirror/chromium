@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7476ebf_ce6b798d",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-23T13:51:20Z",
+      "side": 1,
+      "message": "Use __strong to mark ownership of Objective-C variable in C++ classes:\n\n  __strong id\u003cNSObject\u003e application_did_become_active_observer_;\n\nThis is not required by the language but this is something we want to do after the ARC migration (i.e. all member field of C++ classes that are pointer to Objective-C instances should have one of __weak, __strong or __unsafe_unretained).",
+      "revId": "b266172df966090bdb5808e445eb2d22bcc3f04a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86804031_46a986ba",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-23T13:51:20Z",
+      "side": 1,
+      "message": "I think \"RemoveApplicationDidBecomeActiveObserver()\" should be called from destructor to ensure that the helper is unregistered from the NSNotificationCenter. Or at least DCHECK that application_did_become_active_observer_ is nil.",
+      "revId": "b266172df966090bdb5808e445eb2d22bcc3f04a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
