@@ -2117,8 +2117,7 @@ Elements.StylePropertyTreeElement = class extends UI.TreeElement {
       swatchIcon.setContrastInfo(contrastInfo);
     }
 
-    if (Runtime.experiments.isEnabled('colorContrastRatio') && this.property.name === 'color' &&
-        this._parentPane.cssModel() && this.node()) {
+    if (this.property.name === 'color' && this._parentPane.cssModel() && this.node()) {
       var cssModel = this._parentPane.cssModel();
       cssModel.backgroundColorsPromise(this.node().id).then(computedCallback);
     }

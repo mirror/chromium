@@ -55,11 +55,9 @@ ColorPicker.Spectrum = class extends UI.VBox {
     this._dragX = 0;
     this._dragY = 0;
 
-    if (Runtime.experiments.isEnabled('colorContrastRatio')) {
-      var boundToggleColorPicker = this._toggleColorPicker.bind(this);
-      this._contrastOverlay =
-          new ColorPicker.ContrastOverlay(this._colorElement, this.contentElement, boundToggleColorPicker);
-    }
+    var boundToggleColorPicker = this._toggleColorPicker.bind(this);
+    this._contrastOverlay =
+        new ColorPicker.ContrastOverlay(this._colorElement, this.contentElement, boundToggleColorPicker);
 
     var toolbar = new UI.Toolbar('spectrum-eye-dropper', this.contentElement);
     this._colorPickerButton = new UI.ToolbarToggle(Common.UIString('Toggle color picker'), 'largeicon-eyedropper');
