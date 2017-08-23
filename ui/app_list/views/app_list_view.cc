@@ -969,6 +969,7 @@ void AppListView::SchedulePaintInRect(const gfx::Rect& rect) {
 void AppListView::OnTabletModeChanged(bool started) {
   is_tablet_mode_ = started;
   search_box_view_->OnTabletModeChanged(started);
+  app_list_main_view_->contents_view()->OnTabletModeChanged(started);
   if (is_tablet_mode_ && !is_fullscreen()) {
     // Set |app_list_state_| to a tablet mode friendly state.
     SetState(app_list_state_ == PEEKING ? FULLSCREEN_ALL_APPS
@@ -1075,6 +1076,15 @@ void AppListView::SetState(AppListState new_state) {
   }
   StartAnimationForState(new_state_override);
   RecordStateTransitionForUma(new_state_override);
+  // Notify the model of the state change.
+
+  //
+  //
+  //
+  // change to StateChanged.
+
+  app_list_main_view_->contents_view()->OnFullscreenStatechanged(
+      new_state_override);
   app_list_state_ = new_state_override;
 }
 

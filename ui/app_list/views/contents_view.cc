@@ -453,6 +453,14 @@ bool ContentsView::Back() {
   return true;
 }
 
+void ContentsView::OnFullscreenStatechanged(AppListView::AppListState state) {
+  model_->SetStateFullscreen(state);
+}
+
+void ContentsView::OnTabletModeChanged(bool is_tablet_mode) {
+  model_->OnTabletModeChanged(is_tablet_mode);
+}
+
 gfx::Size ContentsView::GetDefaultContentsSize() const {
   gfx::Size size = apps_container_view_->GetPreferredSize();
   if (is_fullscreen_app_list_enabled_)

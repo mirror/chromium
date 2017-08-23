@@ -9,7 +9,9 @@
 #include <vector>
 
 #include "ash/public/interfaces/constants.mojom.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/profiler/scoped_tracker.h"
 #include "build/build_config.h"
@@ -46,6 +48,7 @@
 #include "extensions/common/manifest_constants.h"
 #include "extensions/common/manifest_handlers/launcher_page_info.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "ui/app_list/app_list_model.h"
 #include "ui/app_list/app_list_switches.h"
 #include "ui/app_list/app_list_view_delegate_observer.h"
 #include "ui/app_list/search_box_model.h"
@@ -58,6 +61,34 @@
 namespace {
 
 const int kAutoLaunchDefaultTimeoutMilliSec = 50;
+
+// The UMA histogram that logs which state search results are opened from.
+const char kAppListSearchResultOpenSourceHistogram[] =
+    "Apps.AppListSearchResultOpenedSource";
+
+// The different sources from which a search result is displayed. These values
+// are written to logs.  New enum values can be added, but existing enums must
+// never be renumbered or deleted and reused.
+enum ApplistSearchResultOpenedSource {
+  kHalfClamshell = 0,
+  kFullscreenClamshell = 1,
+  kFullscreenTablet = 2,
+  kMaxApplistSearchResultOpenedSource = 3,
+};
+
+void RecordHistogram(bool is_tablet_mode,
+                     app_list::AppListView::AppListState state) {
+  ApplistSearchResultOpenedSource source;
+
+  if (is_tablet_mode) {
+    source = kFullscreenTablet;
+  } else {
+    source = state == app_list::AppListView::HALF ? kHalfClamshell
+                                                  : kFullscreenClamshell;
+  }
+  UMA_HISTOGRAM_ENUMERATION(kAppListSearchResultOpenSourceHistogram, source,
+                            kMaxApplistSearchResultOpenedSource);
+}
 
 // Gets a list of URLs of the custom launcher pages to show in the launcher.
 // Returns a URL for each installed launcher page. If --custom-launcher-page is
@@ -315,6 +346,9 @@ void AppListViewDelegate::OpenSearchResult(
     int event_flags) {
   if (auto_launch)
     base::RecordAction(base::UserMetricsAction("AppList_AutoLaunched"));
+
+  RecordHistogram(model_->tablet_mode(), model_->state_fullscreen());
+
   search_controller_->OpenResult(result, event_flags);
 }
 
@@ -351,7 +385,7 @@ void AppListViewDelegate::ViewInitialized() {
   }
 }
 
-void AppListViewDelegate::Dismiss()  {
+void AppListViewDelegate::Dismiss() {
   controller_->DismissView();
 }
 
