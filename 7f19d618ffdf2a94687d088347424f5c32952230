@@ -307,6 +307,92 @@
     },
     {
       "key": {
+        "uuid": "471a7814_6dc27961",
+        "filename": "services/ui/public/interfaces/ime/ime_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-23T19:45:42Z",
+      "side": 1,
+      "message": "nit: rename this variable.",
+      "range": {
+        "startLine": 72,
+        "startChar": 26,
+        "endLine": 72,
+        "endChar": 52
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "947b5399_ce241dda",
+        "filename": "services/ui/public/interfaces/ime/ime_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-23T19:45:42Z",
+      "side": 1,
+      "message": "nit: rename this variable.",
+      "range": {
+        "startLine": 117,
+        "startChar": 28,
+        "endLine": 117,
+        "endChar": 54
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee4a132_ba7da268",
+        "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionBackendImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-23T19:45:42Z",
+      "side": 1,
+      "message": "Should check |frame_|",
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3605187_ce45e2d5",
+        "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-23T19:45:42Z",
+      "side": 1,
+      "message": "This function is very complicated as it does many things. Can we split it into:\n\n1. Construct |suggestion_infos| from |node_suggestion_marker_pairs|\n2. Add an ActiveSuggestionMarker from |suggestion_infos|\n3. Pass |suggestion_infos| to text suggestion menu",
+      "range": {
+        "startLine": 314,
+        "startChar": 31,
+        "endLine": 314,
+        "endChar": 49
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12679f15_998e4a36",
         "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
         "patchSetId": 2
@@ -371,6 +457,29 @@
       "side": 1,
       "message": "Probably uint32_t in C++...it does get cast to a signed int when we send it up to Java though.",
       "parentUuid": "e63c33c5_1ca9ed3b",
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f241f374_101d8a1d",
+        "filename": "third_party/WebKit/public/platform/input_host.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-23T19:45:42Z",
+      "side": 1,
+      "message": "nit: Now the timer is named after \"SpellCheck\" in TextSuggestionHost, but its callback is named after \"SuggestionMenu\" in TextSuggestionBackend. Please consider some unification to reduce confusion.",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 26
+      },
       "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
