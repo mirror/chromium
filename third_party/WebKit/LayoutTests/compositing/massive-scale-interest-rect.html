@@ -1,0 +1,28 @@
+<!doctype HTML>
+<style>
+.container {
+    height: 1080px;
+    width: 1920px;
+    transform: scale(0.0859375);
+    transform-origin: 0 0 0;
+    background:blue;
+}
+.wrapper {
+    height: 92px;
+    width: 165px;
+    overflow: hidden;
+}
+.target {
+    position: absolute;
+    width: 300px; 
+    height: 300px;
+    top: 5000px;
+}
+</style>   
+<div class="wrapper">
+    <div class="container">
+        <div class="target" ></div>
+        <div style="will-change: transform" class="target"></div>
+    </div>
+</div>
+

@@ -3170,6 +3170,9 @@ IntRect CompositedLayerMapping::RecomputeInterestRect(
   IntRect enclosing_graphics_layer_bounds(
       EnclosingIntRect(graphics_layer_bounds));
 
+  // Expand by interest rect padding amount.
+  visible_content_rect.Inflate(kPixelDistanceToRecord);
+
   // Map the visible content rect from root view space to local graphics layer
   // space.
   IntRect local_interest_rect;
@@ -3191,8 +3194,6 @@ IntRect CompositedLayerMapping::RecomputeInterestRect(
     // each direction.
     local_interest_rect.Intersect(enclosing_graphics_layer_bounds);
   }
-  // Expand by interest rect padding amount.
-  local_interest_rect.Inflate(kPixelDistanceToRecord);
   local_interest_rect.Intersect(enclosing_graphics_layer_bounds);
   return local_interest_rect;
 }
