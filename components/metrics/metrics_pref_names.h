@@ -69,6 +69,12 @@ extern const char kUkmCellDataUse[];
 extern const char kUmaCellDataUse[];
 extern const char kUserCellDataUse[];
 
+// Preferences for recording information about the tabs and browsers usage.
+extern const char kTabStatsTotalTabCountMax[];
+extern const char kTabStatsMaxTabsPerWindow[];
+extern const char kTabStatsBrowserCountMax[];
+extern const char kTabStatsDailySample[];
+
 }  // namespace prefs
 }  // namespace metrics
 
