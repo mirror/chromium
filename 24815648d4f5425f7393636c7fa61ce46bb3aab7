@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7d54a91_9b57fd80",
+        "filename": "chrome/common/extensions/api/file_manager_private.idl",
+        "patchSetId": 18
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-23T21:18:15Z",
+      "side": 1,
+      "message": "diskFileSystemType ?",
+      "revId": "24815648d4f5425f7393636c7fa61ce46bb3aab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770331d2_fd226ca6",
+        "filename": "chromeos/disks/disk_mount_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-23T21:18:15Z",
+      "side": 1,
+      "message": "nit: combine comment lines.",
+      "revId": "24815648d4f5425f7393636c7fa61ce46bb3aab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
