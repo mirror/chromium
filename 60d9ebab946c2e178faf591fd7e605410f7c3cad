@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21755c64_ed4abc8c",
+        "filename": "chrome/common/extensions/api/file_manager_private.idl",
+        "patchSetId": 15
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-23T04:12:34Z",
+      "side": 1,
+      "message": "\"file system type\" is an ambiguous term, and mean other things in Chrome OS.\nhttps://cs.chromium.org/chromium/src/storage/common/fileapi/file_system_types.h?rcl\u003d156f8f09114e82f5d6c9abf35fa2afce7023b052\u0026l\u003d12\n\nCan we rename? Some ideas:\n1. partitionType\n2. diskFileSystem\n\nAlso, do we need to know the exact file system type in Files app? If it\u0027s only to decide whether we allow renaming the volume or not, then we could just pass a boolean flag here, like: boolean isRenamable.",
+      "revId": "60d9ebab946c2e178faf591fd7e605410f7c3cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
