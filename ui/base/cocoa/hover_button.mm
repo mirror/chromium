@@ -8,6 +8,7 @@
 
 @synthesize hoverState = hoverState_;
 @synthesize trackingEnabled = trackingEnabled_;
+@synthesize dragDelegate = dragDelegate_;
 
 - (id)initWithFrame:(NSRect)frameRect {
   if ((self = [super initWithFrame:frameRect])) {
@@ -89,6 +90,16 @@
       // Update the image state, which will change if the user moves the mouse
       // into or out of the button.
       [self checkImageState];
+      if (dragDelegate_ && [nextEvent type] == NSLeftMouseDragged) {
+        const NSPoint startPos = [theEvent locationInWindow];
+        const NSPoint pos = [nextEvent locationInWindow];
+        if (fabs(startPos.x - pos.x) > 5 || fabs(startPos.y - pos.y) > 5) {
+          [dragDelegate_ beginDragFromHoverButton:self event:nextEvent];
+          mouseDown_ = NO;
+          self.hoverState = kHoverStateNone;
+          return;
+        }
+      }
     }
   }
 
