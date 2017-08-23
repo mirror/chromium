@@ -22,6 +22,30 @@
       "revId": "4699902a5de0caec693f05025deabfc93d4a3267",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d436f9ea_0c7668ef",
+        "filename": "components/ntp_snippets/content_suggestions_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-23T15:27:55Z",
+      "side": 1,
+      "message": "I\u0027m not completely sure, but I think probably not. Best to check with the metrics folks.\nAnyway, do we really need to change this for all existing histograms, or would it be enough to only make the new .Prefetched.Offline ones bigger?",
+      "parentUuid": "0fd9af2b_e03c7b02",
+      "range": {
+        "startLine": 22,
+        "startChar": 39,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "4699902a5de0caec693f05025deabfc93d4a3267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
