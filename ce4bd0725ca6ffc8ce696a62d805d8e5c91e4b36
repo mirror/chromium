@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "1b899632_79ca5157",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-23T11:05:59Z",
+      "side": 1,
+      "message": "I\u0027ve asked about this issue at java@chromium.org and I agree with Tommy that SuppressFBWarnings(\"BC_UNCONFIRMED_CAST\") is better than putting an assert: https://groups.google.com/a/chromium.org/d/msg/java/xfXmNLI4SqM/pK4iURtQBQAJ. Would you mind replacing these asserts with annotation?",
+      "parentUuid": "6ff40379_c14d64e1",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 56
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49c5cd90_209657f4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 2
