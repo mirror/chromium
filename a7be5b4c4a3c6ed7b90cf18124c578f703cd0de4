@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e6c5f2c_ada1c860",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-23T14:18:47Z",
+      "side": 1,
+      "message": "This looks way better. Thanks!",
+      "revId": "a7be5b4c4a3c6ed7b90cf18124c578f703cd0de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed36e221_cb0bca6d",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-23T14:18:47Z",
+      "side": 1,
+      "message": "We have unit tests for this.  Was it the tests that caught this?  Just making sure we have coverage.",
+      "revId": "a7be5b4c4a3c6ed7b90cf18124c578f703cd0de4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
