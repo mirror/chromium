@@ -14,17 +14,19 @@
  * limitations under the License.
  */
 
-package android.support.design.widget;
+package org.chromium.chrome.browser.widget.bottomsheet.base;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.design.R;
 
-class ThemeUtils {
+/**
+ * Formed from android.support.design.widget.ThemeUtils.
+ */
+public class ThemeUtils {
     private static final int[] APPCOMPAT_CHECK_ATTRS = {
             android.support.v7.appcompat.R.attr.colorPrimary};
 
-    static void checkAppCompatTheme(Context context) {
+    public static void checkAppCompatTheme(Context context) {
         TypedArray a = context.obtainStyledAttributes(APPCOMPAT_CHECK_ATTRS);
         final boolean failed = !a.hasValue(0);
         if (a != null) {
