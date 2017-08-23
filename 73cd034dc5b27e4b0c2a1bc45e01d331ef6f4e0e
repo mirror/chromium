@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ed83eef_3d7a6856",
+        "filename": "chrome/common/crash_keys.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T19:50:21Z",
+      "side": 1,
+      "message": "Do you need to update these other places?",
+      "range": {
+        "startLine": 98,
+        "startChar": 5,
+        "endLine": 100,
+        "endChar": 66
+      },
+      "revId": "73cd034dc5b27e4b0c2a1bc45e01d331ef6f4e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
