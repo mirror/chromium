@@ -34,6 +34,24 @@
       "revId": "3d7966674d90d0612f4d3d4eeecf54c87ae43f63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d1219e04_fdcd2c50",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-08-23T06:56:32Z",
+      "side": 1,
+      "message": "Discussed offline as well - it\u0027s also not the case that the device scale factor will be related to |factor|. We also found that notifications are likely being cropped by 4 pixels on the right from ages ago (which will be fixed in a separate CL).",
+      "parentUuid": "f59aacce_0185a873",
+      "revId": "3d7966674d90d0612f4d3d4eeecf54c87ae43f63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
