@@ -281,7 +281,7 @@ bool DrawingBuffer::PrepareTextureMailboxInternal(
     // 4. Here.
     return false;
   }
-  DCHECK(!is_hidden_);
+  //  DCHECK(!is_hidden_);
   if (!contents_changed_)
     return false;
 
