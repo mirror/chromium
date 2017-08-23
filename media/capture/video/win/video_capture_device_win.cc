@@ -104,6 +104,7 @@ mojom::RangePtr RetrieveControlRangeAndCurrent(
 // static
 void VideoCaptureDeviceWin::GetDeviceCapabilityList(
     const std::string& device_id,
+    bool query_detailed_frame_rates,
     CapabilityList* out_capability_list) {
   base::win::ScopedComPtr<IBaseFilter> capture_filter;
   HRESULT hr = VideoCaptureDeviceWin::GetDeviceFilter(
@@ -122,13 +123,15 @@ void VideoCaptureDeviceWin::GetDeviceCapabilityList(
     return;
   }
 
-  GetPinCapabilityList(capture_filter, output_capture_pin, out_capability_list);
+  GetPinCapabilityList(capture_filter, output_capture_pin,
+                       query_detailed_frame_rates, out_capability_list);
 }
 
 // static
 void VideoCaptureDeviceWin::GetPinCapabilityList(
     base::win::ScopedComPtr<IBaseFilter> capture_filter,
     base::win::ScopedComPtr<IPin> output_capture_pin,
+    bool query_detailed_frame_rates,
     CapabilityList* out_capability_list) {
   ScopedComPtr<IAMStreamConfig> stream_config;
   HRESULT hr = output_capture_pin.CopyTo(stream_config.GetAddressOf());
@@ -175,27 +178,30 @@ void VideoCaptureDeviceWin::GetPinCapabilityList(
           reinterpret_cast<VIDEOINFOHEADER*>(media_type->pbFormat);
       format.frame_size.SetSize(h->bmiHeader.biWidth, h->bmiHeader.biHeight);
 
-      // Try to get a better |time_per_frame| from IAMVideoControl. If not, use
-      // the value from VIDEOINFOHEADER.
-      std::vector<float> frame_rates;
-      if (video_control.Get()) {
-        ScopedCoMem<LONGLONG> time_per_frame_list;
-        LONG list_size = 0;
-        const SIZE size = {format.frame_size.width(),
-                           format.frame_size.height()};
-        hr = video_control->GetFrameRateList(output_capture_pin.Get(), i, size,
-                                             &list_size, &time_per_frame_list);
-        // Sometimes |list_size| will be > 0, but time_per_frame_list will be
-        // NULL. Some drivers may return an HRESULT of S_FALSE which SUCCEEDED()
-        // translates into success, so explicitly check S_OK.
-        // See http://crbug.com/306237.
-        if (hr == S_OK && list_size > 0 && time_per_frame_list) {
-          for (int k = 0; k < list_size; k++) {
-            LONGLONG time_per_frame = *(time_per_frame_list + k);
-            if (time_per_frame <= 0)
-              continue;
-            frame_rates.push_back(kSecondsToReferenceTime /
-                                  static_cast<float>(time_per_frame));
+      if (query_detailed_frame_rates) {
+        // Try to get a better |time_per_frame| from IAMVideoControl. If not,
+        // use the value from VIDEOINFOHEADER.
+        std::vector<float> frame_rates;
+        if (video_control.Get()) {
+          ScopedCoMem<LONGLONG> time_per_frame_list;
+          LONG list_size = 0;
+          const SIZE size = {format.frame_size.width(),
+                             format.frame_size.height()};
+          hr =
+              video_control->GetFrameRateList(output_capture_pin.Get(), i, size,
+                                              &list_size, &time_per_frame_list);
+          // Sometimes |list_size| will be > 0, but time_per_frame_list will be
+          // NULL. Some drivers may return an HRESULT of S_FALSE which
+          // SUCCEEDED() translates into success, so explicitly check S_OK. See
+          // http://crbug.com/306237.
+          if (hr == S_OK && list_size > 0 && time_per_frame_list) {
+            for (int k = 0; k < list_size; k++) {
+              LONGLONG time_per_frame = *(time_per_frame_list.get() + k);
+              if (time_per_frame <= 0)
+                continue;
+              frame_rates.push_back(kSecondsToReferenceTime /
+                                    static_cast<float>(time_per_frame));
+            }
           }
         }
       }
@@ -860,7 +866,8 @@ void VideoCaptureDeviceWin::FrameReceived(const uint8_t* buffer,
 
 bool VideoCaptureDeviceWin::CreateCapabilityMap() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  GetPinCapabilityList(capture_filter_, output_capture_pin_, &capabilities_);
+  GetPinCapabilityList(capture_filter_, output_capture_pin_,
+                       true /* query_detailed_frame_rates */, &capabilities_);
   return !capabilities_.empty();
 }
 

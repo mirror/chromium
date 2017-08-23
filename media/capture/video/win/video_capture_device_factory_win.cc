@@ -246,8 +246,9 @@ static void GetDeviceSupportedFormatsDirectShow(const Descriptor& descriptor,
   DVLOG(1) << "GetDeviceSupportedFormatsDirectShow for "
            << descriptor.display_name;
   CapabilityList capability_list;
-  VideoCaptureDeviceWin::GetDeviceCapabilityList(descriptor.device_id,
-                                                 &capability_list);
+  VideoCaptureDeviceWin::GetDeviceCapabilityList(
+      descriptor.device_id, false /* query_detailed_frame_rates */,
+      &capability_list);
   for (const auto& entry : capability_list) {
     formats->emplace_back(entry.supported_format);
     DVLOG(1) << descriptor.display_name << " "

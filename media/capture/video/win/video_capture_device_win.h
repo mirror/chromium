@@ -57,6 +57,7 @@ class VideoCaptureDeviceWin : public VideoCaptureDevice,
   };
 
   static void GetDeviceCapabilityList(const std::string& device_id,
+                                      bool query_detailed_frame_rates,
                                       CapabilityList* out_capability_list);
   static void GetPinCapabilityList(
       base::win::ScopedComPtr<IBaseFilter> capture_filter,
