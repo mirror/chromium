@@ -405,6 +405,24 @@
       "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c683e7b_dfc61ab5",
+        "filename": "third_party/WebKit/Source/modules/permissions/Permissions.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-23T17:18:13Z",
+      "side": 1,
+      "message": "I see that this CL removes ::GetPermissionStatusInternal implementation from NotificationPermissionContext. I\u0027m not sure I understand why returning BLOCK when the requesting and embedding origin wouldn\u0027t work here.",
+      "parentUuid": "186709a8_794ec974",
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
