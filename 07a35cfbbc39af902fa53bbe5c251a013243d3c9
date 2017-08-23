@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09bd2f7a_711b6f65",
+        "filename": "third_party/WebKit/Source/platform/bindings/DOMWrapperWorld.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-23T01:40:19Z",
+      "side": 1,
+      "message": "Do you still need |handle_scope|?\n\nAt a glance, you\u0027re not creating any handle in this function.  But I\u0027m not 100% sure.",
+      "revId": "07a35cfbbc39af902fa53bbe5c251a013243d3c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
