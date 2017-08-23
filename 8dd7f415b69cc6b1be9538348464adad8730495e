@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64bd92a0_94ac943f",
+        "filename": "components/arc/arc_session_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-23T15:21:48Z",
+      "side": 1,
+      "message": "code comment for L73? This comment doesn\u0027t seem to cover the new function.",
+      "revId": "8dd7f415b69cc6b1be9538348464adad8730495e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f012699_ed562a1e",
+        "filename": "components/arc/arc_session_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-23T15:21:48Z",
+      "side": 1,
+      "message": "s/Mini/LoginScreen/ and s/Container/Instance/? IIUC we don\u0027t use these words in code.",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 13
+      },
+      "revId": "8dd7f415b69cc6b1be9538348464adad8730495e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
