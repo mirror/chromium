@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "458a271a_3a837d98",
+        "filename": "chrome/browser/ui/app_list/search/search_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T00:46:49Z",
+      "side": 1,
+      "message": "Think we need to update tools/metrics/histograms/enums.xml as well.\n\nhttps://cs.chromium.org/chromium/src/tools/metrics/histograms/enums.xml?rcl\u003db9f8dc9da6329c722262a162d750f3096b14a5af\u0026l\u003d1172",
+      "revId": "a5fdd488c7c953621eefd26fccb625454a2b5bb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
