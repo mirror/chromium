@@ -1314,6 +1314,11 @@ const FeatureEntry kFeatureEntries[] = {
      // Uses the system preference on Mac (a different implementation).
      // On Android, this is always enabled.
      kOsAura, FEATURE_VALUE_TYPE(features::kOverlayScrollbar)},
+    {"overlay-scrollbars-flash-when-scroll-update",
+     flag_descriptions::kOverlayScrollbarsFlashWhenAnyScrollUpdateName,
+     flag_descriptions::kOverlayScrollbarsFlashWhenAnyScrollUpdateDescription,
+     kOsAura,
+     FEATURE_VALUE_TYPE(features::kOverlayScrollbarFlashAfterAnyScrollUpdate)},
 #endif  // USE_AURA
     {   // See http://crbug.com/120416 for how to remove this flag.
      "save-page-as-mhtml", flag_descriptions::kSavePageAsMhtmlName,
