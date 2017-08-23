@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4af75803_5b76f289",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-23T18:38:07Z",
+      "side": 1,
+      "message": "Super extra nitty nit: I dont know if adding white space increases readability of a 3 line method.",
+      "revId": "6e50c1371ed4af04ce21e0412444107181773f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
