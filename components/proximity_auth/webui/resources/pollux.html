@@ -24,30 +24,59 @@
     <div id='controls-panel'>
       <!-- Controls for server simulation -->
       <div class='control'>
-        <div class='control-title'>SERVER</div>
+        <div class='control-title'>CLOUD PAIRING</div>
         <div class='control-row'>
           <div class='control-row-text'>MASTER_KEY:</div>
-          <input class='textinput' type='text' value='F3DA234A14'></input>
+          <input class='textinput'
+                 type='text' id='master-key-input'
+                 value='ChzHJOJ0NAcxFOPElEOPtaOBis-bdj2RhXeAB4mV980='></input>
         </div>
-        <div class='control-row'><button>Challenge</button></div>
+        <div class='control-row'><button id='new-master-key'>New Master Key</button></div>
+
+        <div class='control-row'>
+          <div class='control-row-text'>LK:</div>
+          <input id='lk-input' class='textinput' type='text'
+              value='YQydZLEaMtW9M8Bru6qyJ2a_77C2zrh41NKteOJCld8='></input>
+        </div>
+        <div class='control-row'>
+          <div class='control-row-text'>IRK:</div>
+          <input id='irk-input' class='textinput' type='text'
+              value='66zQmguhWB4fvOWNgp7UbkeWEKHizfPCkE0rChESZwM='></input>
+        </div>
+        <div class='control-row'>
+            <button id='derive-cloud-keys'>Derive Cloud Keys</button>
+        </div>
       </div>
 
       <!-- Controls for testing getAssertion() -->
       <div class='control'>
-        <div class='control-title'>GET ASSERTION</div>
+        <div class='control-title'>ASSERTION</div>
+        <div class='control-row'>
+            <button id='new-challenge'>New Challenge</button>
+        </div>
         <div class='control-row'>
           <div class='control-row-text'>CHALLENGE:</div>
-          <input class='textinput' type='text' value='A3DA234A14'></input>
+          <input id='challenge-input' class='textinput' type='text'
+              value='Y2hhbGxlbmdl'></input>
+        </div>
+        <div class='control-row'>
+          <div class='control-row-text'>NONCE:</div>
+          <input id='nonce-input' class='textinput' type='text'
+              value='3zslPA=='></input>
         </div>
         <div class='control-row'>
           <div class='control-row-text'>EID:</div>
-          <input class='textinput' type='text' value='A3DA234A14'></input>
+          <input id='eid-input' class='textinput' type='text'
+              value='3zslPHSYVgg='></input>
         </div>
         <div class='control-row'>
           <div class='control-row-text'>SESSION_KEY:</div>
-          <input class='textinput' type='text' value='A3DA234A14'></input>
+          <input id='sk-input' class='textinput' type='text'
+              value='ykXAIQ7nO0eze64zGAiBEU-znYy3j4K7yhLqE2Dc5Dk='></input>
         </div>
-        <div class='control-row'><button>Start</button></div>
+        <div class='control-row'>
+            <button id='get-assertion'>Get Assertion</button>
+        </div>
       </div>
 
       <!-- Controls for the state of the remote device (AKA Authenticator) -->
@@ -63,7 +92,8 @@
   <!-- Panel for logs list. -->
   <section id='logs-panel'>
     <header>
-      <button id='clear-logs-button'>∅</button>
+      <button id='clear-logs-button'>Clear</button>
+      <button id='copy-logs-button'>Copy to Clipboard</button>
     </header>
     <div id='logs-list'>
       <template id='item-template'>
