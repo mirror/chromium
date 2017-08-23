@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7d6755c_fe1f55c9",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-23T22:11:33Z",
+      "side": 1,
+      "message": "The two faster ways I can think of are:\n\n- Put all the start/end point of all suggestion/composition/spelling markers into a vector, sort it by start and end point, then walk the vector and make a list of all the composition and spelling markers that don\u0027t overlap a suggestion marker (so we actually want to paint them). I think this is O(n log n) in the total number of suggestion + composition + spelling markers.\n\n- Build an interval tree of all the intervals marked by a suggestion marker, then query it for each composition and spelling marker. This is O(n log n) to construct (where n is the number of suggestion markers, rather than the total number of suggestion + composition + spelling), then O(log n + m) to query (where m is the number of results returned by the query).\n\nI think the first method is quicker in theory if we expect there to be a ton of overlaps, and the second method is quicker otherwise, since we\u0027re taking the log of a smaller number. The first method seems simpler though, so that\u0027s probably where we\u0027d want to start.\n\n\nAlternatively, instead of doing this check every time we paint, maybe we could make adding a suggestion marker clear all the spelling markers it intersects (since we can get them back by re-running spell check) and all the composition markers it intersects (is this OK?).",
+      "parentUuid": "b7dc63c4_f4a74633",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "964d4beb66eedabdc0fec88e53651fc0c75c7079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afb32390_143a5267",
         "filename": "third_party/WebKit/Source/core/testing/Internals.idl",
         "patchSetId": 9
