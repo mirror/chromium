@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c2ae29f_19d1be8e",
+        "filename": "chrome/browser/ui/ash/sort_windows_by_z_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T19:34:42Z",
+      "side": 0,
+      "message": "Given the recursive nature of this code, root_window is a confusing name (generally root_window means the root of the hierarchy, that isn\u0027t the case here). Maybe parent?",
+      "range": {
+        "startLine": 27,
+        "startChar": 24,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "5a52527e6a2e28ad5514a1240d19d6dd265a86d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5a7ce0_40abed3b",
+        "filename": "chrome/browser/ui/ash/sort_windows_by_z_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T19:34:42Z",
+      "side": 0,
+      "message": "Shouldn\u0027t this code early out if root_window is hidden?",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 66
+      },
+      "revId": "5a52527e6a2e28ad5514a1240d19d6dd265a86d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e20dac_ee801c01",
+        "filename": "chrome/browser/ui/ash/sort_windows_by_z_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T19:34:42Z",
+      "side": 0,
+      "message": "Early out if sorted_windows-\u003esize() \u003d\u003d windows.size()?",
+      "range": {
+        "startLine": 34,
+        "startChar": 6,
+        "endLine": 34,
+        "endChar": 40
+      },
+      "revId": "5a52527e6a2e28ad5514a1240d19d6dd265a86d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
