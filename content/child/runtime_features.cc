@@ -413,6 +413,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
       base::FeatureList::IsEnabled(
           media::kMediaEngagementBypassAutoplayPolicies));
 
+  WebRuntimeFeatures::EnableModuleScriptsDynamicImport(
+      base::FeatureList::IsEnabled(features::kModuleScriptsDynamicImport));
+
   // Enable explicitly enabled features, and then disable explicitly disabled
   // ones.
   for (const std::string& feature :
