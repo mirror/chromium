@@ -327,6 +327,7 @@ const ReadingListEntry& ReadingListModelImpl::AddEntry(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(loaded());
   DCHECK(url.SchemeIsHTTPOrHTTPS());
+  auto scoped_model_batch_updates = BeginBatchUpdates();
   RemoveEntryByURL(url);
 
   std::string trimmed_title = base::CollapseWhitespaceASCII(title, false);
