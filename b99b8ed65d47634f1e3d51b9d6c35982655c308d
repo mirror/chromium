@@ -63,6 +63,24 @@
       "revId": "b99b8ed65d47634f1e3d51b9d6c35982655c308d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1eb4992_8f8a732b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-08-23T22:42:57Z",
+      "side": 1,
+      "message": "As discussed offline, created a separate bug!",
+      "parentUuid": "5738db8d_e9a40f7d",
+      "revId": "b99b8ed65d47634f1e3d51b9d6c35982655c308d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
