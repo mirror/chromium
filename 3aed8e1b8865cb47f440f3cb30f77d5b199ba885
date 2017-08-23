@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d15a311_b62dd5b7",
+        "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-23T01:50:32Z",
+      "side": 1,
+      "message": "This if should not be needed, we won\u0027t go into for loop in l.147 if jda_factories is empty, so decoder_ will stay null and we will hit the if on l.154.\n\nDepending on what we want to do, we should also at the beginning of the method either a) check if (decoder_) and return if it\u0027s already created, or b) nullptr it and recreate, or c) error out.",
+      "revId": "3aed8e1b8865cb47f440f3cb30f77d5b199ba885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa80f00_a918c191",
+        "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-08-23T01:50:32Z",
+      "side": 1,
+      "message": "Do we need this, could we assign to decoder_ directly?",
+      "revId": "3aed8e1b8865cb47f440f3cb30f77d5b199ba885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
