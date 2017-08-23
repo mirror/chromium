@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c60570b7_7097b59a",
+        "filename": "ui/base/cocoa/hover_button.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-23T00:19:51Z",
+      "side": 1,
+      "message": "Prefer the C++ std::abs instead. Also need to IWYU.\n\nAlso where does 5 come from?",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 16
+      },
+      "revId": "4fda2e6113cc9b3ab61b125521b5d057d32f5b40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f407743b_a754fa3e",
+        "filename": "ui/base/cocoa/hover_button.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-23T00:19:51Z",
+      "side": 1,
+      "message": "What if the drag is ended by hitting Esc but the mouse is still over the button? Shouldn\u0027t this be hit-tested again?",
+      "revId": "4fda2e6113cc9b3ab61b125521b5d057d32f5b40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
