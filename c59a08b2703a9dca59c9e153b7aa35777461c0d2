@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6999858a_2c5742a0",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-23T07:21:15Z",
+      "side": 1,
+      "message": "Hmm, this is kind of subtle. Is this comment (about this calling CheckHasServiceWorker) still correct in all cases?",
+      "range": {
+        "startLine": 589,
+        "startChar": 5,
+        "endLine": 589,
+        "endChar": 26
+      },
+      "revId": "c59a08b2703a9dca59c9e153b7aa35777461c0d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4eb695a_42ff08bf",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-23T07:21:15Z",
+      "side": 1,
+      "message": "Is it necessary to call task_queue_.HasCurrent here?",
+      "revId": "c59a08b2703a9dca59c9e153b7aa35777461c0d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc185f6e_8e632d39",
+        "filename": "chrome/browser/installable/installable_task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-23T07:21:15Z",
+      "side": 1,
+      "message": "Maybe insert should be called Add? I assumed it would put things at the beginning of the queue...",
+      "revId": "c59a08b2703a9dca59c9e153b7aa35777461c0d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
