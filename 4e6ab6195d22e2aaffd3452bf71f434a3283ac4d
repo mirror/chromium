@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6e73ecce_2dd5936e",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-08-23T20:18:14Z",
+      "side": 1,
+      "message": "+1 to this concern, but I\u0027ve only made incremental changes to this file",
+      "parentUuid": "0eb89dd2_b1ab3618",
+      "range": {
+        "startLine": 273,
+        "startChar": 46,
+        "endLine": 273,
+        "endChar": 60
+      },
+      "revId": "4e6ab6195d22e2aaffd3452bf71f434a3283ac4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ac00dd0_763cdb0d",
         "filename": "components/autofill/content/renderer/autofill_agent.cc",
         "patchSetId": 2
@@ -111,6 +135,53 @@
         "startChar": 3,
         "endLine": 284,
         "endChar": 44
+      },
+      "revId": "4e6ab6195d22e2aaffd3452bf71f434a3283ac4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6631859_b9806699",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-08-23T20:18:14Z",
+      "side": 1,
+      "message": "Better still:\n\nif (form_submitted) {\n  GetAutofillDriver()-\u003eFormSubmitted(form_data);\n  being_submitted_forms_.erase(form_data);\n} else {\n  being_submitted_forms_.insert(form_data);\n}",
+      "parentUuid": "af197d45_083dd851",
+      "range": {
+        "startLine": 284,
+        "startChar": 3,
+        "endLine": 284,
+        "endChar": 44
+      },
+      "revId": "4e6ab6195d22e2aaffd3452bf71f434a3283ac4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba2cd6c_1a65b670",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-08-23T20:18:14Z",
+      "side": 1,
+      "message": "\"has been being\" seems like a typo?",
+      "range": {
+        "startLine": 240,
+        "startChar": 68,
+        "endLine": 240,
+        "endChar": 72
       },
       "revId": "4e6ab6195d22e2aaffd3452bf71f434a3283ac4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
