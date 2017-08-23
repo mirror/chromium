@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f02ab32c_a46a3b73",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-get-fail-non-simple.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-23T14:15:48Z",
+      "side": 1,
+      "message": "header",
+      "range": {
+        "startLine": 17,
+        "startChar": 25,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "016174fcc5db6264857773f640378d3a887f2198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f2c74f_e589dc03",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-get-fail-non-simple.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-23T14:15:48Z",
+      "side": 1,
+      "message": "You can use assert_throws.",
+      "revId": "016174fcc5db6264857773f640378d3a887f2198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
