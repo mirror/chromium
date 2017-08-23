@@ -35,6 +35,7 @@ public class OfflinePageBridge {
     public static final String SHARE_NAMESPACE = "share";
     public static final String CCT_NAMESPACE = "custom_tabs";
     public static final String DOWNLOAD_NAMESPACE = "download";
+    public static final String BROWSER_ACTIONS_NAMESPACE = "browser_actions";
 
     /**
      * Retrieves the OfflinePageBridge for the given profile, creating it the first time
