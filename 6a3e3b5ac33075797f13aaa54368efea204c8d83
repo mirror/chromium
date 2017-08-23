@@ -22,6 +22,30 @@
       "revId": "6a3e3b5ac33075797f13aaa54368efea204c8d83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51de66f9_268b6684",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValue.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1172708
+      },
+      "writtenOn": "2017-08-23T05:16:28Z",
+      "side": 1,
+      "message": "first time i tried to position it below line of kMillimeters.\nbut when UnitType translate to SVGLength, it had some problems. [1]\n\npresent, it was just type-cast because they have same values.\nif kQuarterMillimeters were positioned below line of kMillimeters, \nwe should just  not type-cast to translate to SVGLength. \nbecause svg is not consider about \u0027q\u0027 length yet in spec. [2]\n\ndo you think is it better than keep this code to move it below line of kMillimeters when consider upper issue?\ni just wonder your opinion which is better before do working.\n\n[1]https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/svg/SVGLength.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d103\n[2]https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/svg/SVGLength.idl?type\u003dcs\u0026sq\u003dpackage:chromium",
+      "parentUuid": "510a15e9_56b11439",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 23
+      },
+      "revId": "6a3e3b5ac33075797f13aaa54368efea204c8d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
