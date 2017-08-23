@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "733c1763_9ddfe319",
+        "filename": "ash/wm/event_client_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-23T16:15:16Z",
+      "side": 1,
+      "message": "since this is ash specific, can you use more specific name like\n\ndont_check_user_session_blocked_/skip_user_session_blocked_check_;",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 31
+      },
+      "revId": "9b0a39b9afbdf05706e0b8944cd53a23edb9b2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f54468aa_665c8fdb",
+        "filename": "ash/wm/event_client_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-23T16:15:16Z",
+      "side": 1,
+      "message": "Document this (or method) when to use this.",
+      "revId": "9b0a39b9afbdf05706e0b8944cd53a23edb9b2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f15d4f76_5855eabf",
+        "filename": "ash/wm/tablet_mode/scoped_ignore_process_events_checks.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-23T16:15:16Z",
+      "side": 1,
+      "message": "Use Shell::event_client_impl_.",
+      "revId": "9b0a39b9afbdf05706e0b8944cd53a23edb9b2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "729ee34b_f727040b",
+        "filename": "ui/aura/client/event_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-23T16:15:16Z",
+      "side": 1,
+      "message": "You should be able to just set the state on EventClientImpl. No need to add method here.",
+      "revId": "9b0a39b9afbdf05706e0b8944cd53a23edb9b2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
