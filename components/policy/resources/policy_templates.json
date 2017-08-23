@@ -9759,6 +9759,11 @@
           'value': 3,
           'caption': '''Ask the user if they would like to migrate or skip migration and disallow ARC.''',
         },
+        {
+          'name': 'MinimalMigrate',
+          'value': 4,
+          'caption': '''Similar to Wipe, but tries to preserve login tokens so the user does not have to sign-in again.''',
+        }
       ],
       'supported_on': ['chrome_os:61-'],
       'device_only': False,
