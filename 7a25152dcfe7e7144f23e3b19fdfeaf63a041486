@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89dd5ffd_34a11e32",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-23T22:58:42Z",
+      "side": 1,
+      "message": "This actually looks weird, although not introduced in this CL.\n\nI think this is only correct in RLS mode. In non-RLS mode, the border box of the LayoutView would be the frame\u0027s scrolled box instead of unscrolled box.",
+      "revId": "7a25152dcfe7e7144f23e3b19fdfeaf63a041486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
