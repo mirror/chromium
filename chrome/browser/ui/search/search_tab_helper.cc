@@ -165,22 +165,6 @@ void SearchTabHelper::OmniboxFocusChanged(OmniboxFocusState state,
     ipc_router_.SetInputInProgress(IsInputInProgress());
 }
 
-void SearchTabHelper::NavigationEntryUpdated() {
-  if (!is_search_enabled_)
-    return;
-
-  UpdateMode(/*update_origin=*/false);
-}
-
-void SearchTabHelper::SetSuggestionToPrefetch(
-    const InstantSuggestion& suggestion) {
-  ipc_router_.SetSuggestionToPrefetch(suggestion);
-}
-
-void SearchTabHelper::Submit(const EmbeddedSearchRequestParams& params) {
-  ipc_router_.Submit(params);
-}
-
 void SearchTabHelper::OnTabActivated() {
   ipc_router_.OnTabActivated();
 

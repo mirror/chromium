@@ -60,18 +60,6 @@ class SearchTabHelper : public content::WebContentsObserver,
   void OmniboxFocusChanged(OmniboxFocusState state,
                            OmniboxFocusChangeReason reason);
 
-  // Invoked when the active navigation entry is updated in some way that might
-  // affect the search mode. This is used by Instant when it "fixes up" the
-  // virtual URL of the active entry. Regular navigations are captured through
-  // the notification system and shouldn't call this method.
-  void NavigationEntryUpdated();
-
-  // Sends the current SearchProvider suggestion to the Instant page if any.
-  void SetSuggestionToPrefetch(const InstantSuggestion& suggestion);
-
-  // Tells the page that the user pressed Enter in the omnibox.
-  void Submit(const EmbeddedSearchRequestParams& params);
-
   // Called when the tab corresponding to |this| instance is activated.
   void OnTabActivated();
 
