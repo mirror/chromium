@@ -16,6 +16,24 @@
       "revId": "64035fadedbd824726ecd412ce29739e65d0aaad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ea0208_edcbbc5b",
+        "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-23T05:07:54Z",
+      "side": 1,
+      "message": "Thanks, I didn\u0027t realize it... Replied to it.",
+      "parentUuid": "8cfbacc5_55a5faff",
+      "revId": "64035fadedbd824726ecd412ce29739e65d0aaad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

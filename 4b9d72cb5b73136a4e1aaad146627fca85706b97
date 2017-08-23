@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f4423bf3_75cd89b0",
+        "filename": "content/browser/service_worker/embedded_worker_instance_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-23T05:07:54Z",
+      "side": 1,
+      "message": "Ahh, sorry, I missed this comment...\nPreviously mojom::EmbeddedWorkerInstanceClientRequest which is passed to EWInstance::StartTask is discarded on BindInterface() in SetupOnUIThread() synchronously(*) so the error handler is called at the moment. This patch uses real Mojo pipe for testing, so sending StartWorker message succeeds and the InterfaceRequest passed to StartWorker is immediately discarded without any operations.\nThus, the expectation has been changed.\n\n(*): This is because the MockRendererProcessHost internally has a map to the binder instead of issuing Mojo message, which is real world behavior. \nhttps://cs.chromium.org/chromium/src/content/public/test/mock_render_process_host.cc?sq\u003dpackage:chromium\u0026l\u003d288\n\n--\nAdded an EXPECT_EQ(STOPPED, worker-\u003estatus()).",
+      "parentUuid": "84e974db_02b1383b",
+      "revId": "4b9d72cb5b73136a4e1aaad146627fca85706b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb2cabb6_e61a34ce",
         "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
         "patchSetId": 7
