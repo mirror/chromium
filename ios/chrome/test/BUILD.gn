@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/ios/rules.gni")
 import("//ios/build/config.gni")
 import("//ios/public/provider/chrome/browser/build_config.gni")
 import("//testing/test.gni")
@@ -13,6 +14,25 @@ group("all_tests") {
   deps = [
     ":ios_chrome_perftests",
     ":ios_chrome_unittests",
+    ":xcuitests",
+  ]
+}
+
+source_set("xcuitests_sources") {
+  testonly = true
+  sources = [
+    "//xcuitests_xctest.mm",  # file name must end with "xctest.mm" for indexing.
+  ]
+
+  configs += [ "//build/config/ios:xctest_config" ]
+  libs = [ "XCTest.framework" ]
+}
+
+ios_xcuitest_test("xcuitests") {
+  xcode_test_application_name = "chrome"
+
+  deps = [
+    ":xcuitests_sources",
   ]
 }
 
