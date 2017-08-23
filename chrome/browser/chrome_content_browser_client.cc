@@ -291,6 +291,7 @@
 #if !defined(OS_ANDROID)
 #include "chrome/browser/devtools/chrome_devtools_manager_delegate.h"
 #include "chrome/browser/payments/payment_request_factory.h"
+#include "chrome/common/importer/profile_import.mojom.h"
 #endif
 
 #if defined(OS_LINUX) || defined(OS_WIN)
@@ -2999,6 +3000,11 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
 
   (*services)[profiling::mojom::kServiceName] = {
       base::ASCIIToUTF16("Profiling Service"), content::SANDBOX_TYPE_UTILITY};
+
+#if !defined(OS_ANDROID)
+  (*services)[chrome::mojom::kProfileImportServiceName] = {
+      base::ASCIIToUTF16("Profile Import"), content::SANDBOX_TYPE_NO_SANDBOX};
+#endif
 }
 
 std::unique_ptr<base::Value>
