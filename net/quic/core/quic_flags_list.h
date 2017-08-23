@@ -199,3 +199,8 @@ QUIC_FLAG(
     bool,
     FLAGS_quic_reloadable_flag_quic_set_version_on_async_get_proof_returns,
     false)
+
+// If true, check for packet number underflow when reading ack blocks.
+QUIC_FLAG(bool,
+          FLAGS_quic_reloadable_flag_sanitize_framer_addrange_input,
+          false)
