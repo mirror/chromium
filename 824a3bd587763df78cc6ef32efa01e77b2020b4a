@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "4fdc6bc1_6dd53b8f",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T23:54:51Z",
+      "side": 1,
+      "message": "At a casual glance it\u0027s not clear what PWD and CWD are - can we have the comment describe things in English here, e.g. \"Don\u0027t pass the current working directory to the child if...\"\n\nWhat CWD does the child run with if we override PWD like this?",
+      "revId": "824a3bd587763df78cc6ef32efa01e77b2020b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad5dd78_52a3bb4c",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T23:54:51Z",
+      "side": 1,
+      "message": "Doing this means we can\u0027t tell the difference between the case where we\u0027re removing the default cloning of CWD, and the case where the caller supplied both a PWD override *and* set this flag, which is an invalid input.\n\nI think it\u0027d be better to go back to the old |\u003d model, and have the override case DCHECK that the flag is not otherwise set.",
+      "revId": "824a3bd587763df78cc6ef32efa01e77b2020b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee60ad9e_f1d2f7e9",
+        "filename": "content/common/sandbox_policy_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T23:54:51Z",
+      "side": 1,
+      "message": "Let\u0027s name this consistently; in LaunchOptions we currently have a |clone_flags|, but it\u0027s described as specifying \"capabilities\", where here it\u0027s described as \"policy\". Policy is a confusing term to use here because we have job policy as well.\n\nIs it really worth having this helper function separate from ChildProcessLauncherHelper? Seems it could just be an anonymous or static method there, for better readability.\n\nI also suspect we\u0027re going to want to configure other aspects of the process slightly differently under the sandbox, so a more general ApplySandbox(SandboxType, LaunchOptions*) might be preferable.",
+      "revId": "824a3bd587763df78cc6ef32efa01e77b2020b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27777f87_3c3fbaa5",
         "filename": "content/common/sandbox_policy_fuchsia.h",
         "patchSetId": 2
@@ -13,6 +64,23 @@
       "writtenOn": "2017-08-23T23:33:23Z",
       "side": 1,
       "message": "Add header guards.",
+      "revId": "824a3bd587763df78cc6ef32efa01e77b2020b4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a76757_d75fdc00",
+        "filename": "content/renderer/renderer_main_platform_delegate_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T23:54:51Z",
+      "side": 1,
+      "message": "Add a comment to explain why there is nothing to do here.",
       "revId": "824a3bd587763df78cc6ef32efa01e77b2020b4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
