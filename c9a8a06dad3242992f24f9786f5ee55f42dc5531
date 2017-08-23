@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f5468c2_ca2c1b97",
+        "filename": "ui/base/cocoa/hover_button.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-23T00:11:34Z",
+      "side": 1,
+      "message": "Carry forward the comment.",
+      "revId": "c9a8a06dad3242992f24f9786f5ee55f42dc5531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
