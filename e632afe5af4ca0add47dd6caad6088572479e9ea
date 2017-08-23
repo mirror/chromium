@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e8d267f_73f3574b",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-23T06:46:24Z",
+      "side": 1,
+      "message": "Initialize it here to a default.",
+      "revId": "e632afe5af4ca0add47dd6caad6088572479e9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb654aa7_132cf556",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-23T06:46:24Z",
+      "side": 1,
+      "message": "Can this be a raw pointer, or a movable type instead?",
+      "revId": "e632afe5af4ca0add47dd6caad6088572479e9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd420ae_c0f7c60a",
+        "filename": "content/renderer/mus/renderer_window_tree_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-23T06:46:24Z",
+      "side": 1,
+      "message": "You should just create params on the stack (no good reason to use unique_ptr here)",
+      "revId": "e632afe5af4ca0add47dd6caad6088572479e9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c2a4f7b_2b42b5af",
+        "filename": "content/renderer/mus/renderer_window_tree_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-23T06:46:24Z",
+      "side": 1,
+      "message": "No need to explicitly initialize it here (the same applies to the rest of the fields explicitly set to nullptr here, and in other places)",
+      "revId": "e632afe5af4ca0add47dd6caad6088572479e9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f253713_f742cdae",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1953,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-23T06:46:24Z",
+      "side": 1,
+      "message": "Can we create an InitParams object here, and initialize the fields as we go down (so we won\u0027t create this |synthetic_begin_frame_source| here, or |sink_info| or |client_request| below). I think that would simplify the code a bit, and reduce the code duplication.",
+      "revId": "e632afe5af4ca0add47dd6caad6088572479e9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
