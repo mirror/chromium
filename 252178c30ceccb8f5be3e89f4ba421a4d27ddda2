@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1298170_ad42a7aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-23T23:24:45Z",
+      "side": 0,
+      "message": "With this removed, if the toolbar holder layout request is still needed, we can just post it from the onLayoutChange() where we call updateSheetStateRations(); (perhaps from the control container layout change listener if that works since logically that\u0027s where the toolbar layout would be changing)",
+      "revId": "252178c30ceccb8f5be3e89f4ba421a4d27ddda2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
