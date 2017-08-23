@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "aedc31a3_b98a7b51",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-23T20:49:05Z",
+      "side": 0,
+      "message": "Does this mean that now the client side field trials are meaningless?\nIs there a way to disable specific previews for specific Chrome versions?",
+      "range": {
+        "startLine": 109,
+        "startChar": 9,
+        "endLine": 109,
+        "endChar": 46
+      },
+      "revId": "ed55bb1319e75c1a8b3c39d26b107517ee0e1794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96173a4d_9e78116f",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-23T20:49:05Z",
+      "side": 0,
+      "message": "can we rm this method from headers.cc?",
+      "range": {
+        "startLine": 152,
+        "startChar": 58,
+        "endLine": 152,
+        "endChar": 76
+      },
+      "revId": "ed55bb1319e75c1a8b3c39d26b107517ee0e1794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "925033ba_715831d5",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate.cc",
         "patchSetId": 4

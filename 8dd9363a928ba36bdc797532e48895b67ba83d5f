@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76a2cc69_ac2778bc",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-23T20:49:05Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 695,
+        "startChar": 31,
+        "endLine": 695,
+        "endChar": 39
+      },
+      "revId": "8dd9363a928ba36bdc797532e48895b67ba83d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0faa7e1_686728c7",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-23T20:49:05Z",
+      "side": 1,
+      "message": "rm these?",
+      "range": {
+        "startLine": 232,
+        "startChar": 2,
+        "endLine": 235,
+        "endChar": 62
+      },
+      "revId": "8dd9363a928ba36bdc797532e48895b67ba83d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
