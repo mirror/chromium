@@ -24,7 +24,7 @@ class Grid;
 class LoadingIndicator;
 class Rect;
 class SplashScreenIcon;
-class TransientUrlBar;
+class WebVrUrlToast;
 class UiBrowserInterface;
 class UiElement;
 class UiScene;
@@ -81,7 +81,7 @@ class UiSceneManager {
   void CreateUnderDevelopmentNotice();
   void CreateBackground();
   void CreateUrlBar();
-  void CreateTransientUrlBar();
+  void CreateWebVrUrlToast();
   void CreateCloseButton();
   void CreateExitPrompt();
   void CreateToasts();
@@ -123,7 +123,7 @@ class UiSceneManager {
   UiElement* close_button_ = nullptr;
   SplashScreenIcon* splash_screen_icon_ = nullptr;
   UrlBar* url_bar_ = nullptr;
-  TransientUrlBar* transient_url_bar_ = nullptr;
+  WebVrUrlToast* webvr_url_toast_ = nullptr;
   LoadingIndicator* loading_indicator_ = nullptr;
 
   std::vector<UiElement*> system_indicators_;
