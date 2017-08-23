@@ -21,7 +21,9 @@ const int kPingIntervalInSecs = 5;
 // Liveness timeout for connect calls, in milliseconds. If no message is
 // received from the receiver during kConnectLivenessTimeoutSecs, it is
 // considered gone.
-const int kConnectLivenessTimeoutSecs = kPingIntervalInSecs * 2;
+// TODO(zhaobin): Decrease this value to 'kPingIntervalInSecs * 2' when browser
+// side retry logic is in place.
+const int kConnectLivenessTimeoutSecs = 30;
 }  // namespace
 
 namespace cast_channel {

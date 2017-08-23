@@ -108,8 +108,6 @@ CastMediaSinkService::~CastMediaSinkService() {}
 void CastMediaSinkService::Start() {
   // TODO(crbug.com/749305): Migrate the discovery code to use sequences.
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (dns_sd_registry_)
-    return;
 
   if (!cast_media_sink_service_impl_) {
     cast_media_sink_service_impl_.reset(new CastMediaSinkServiceImpl(
@@ -123,6 +121,11 @@ void CastMediaSinkService::Start() {
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&CastMediaSinkServiceImpl::Start,
                      cast_media_sink_service_impl_->AsWeakPtr()));
+
+  if (dns_sd_registry_) {
+    dns_sd_registry_->ForceDiscovery();
+    return;
+  }
 
   dns_sd_registry_ = DnsSdRegistry::GetInstance();
   dns_sd_registry_->AddObserver(this);

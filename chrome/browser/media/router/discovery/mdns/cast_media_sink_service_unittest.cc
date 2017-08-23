@@ -108,6 +108,7 @@ class CastMediaSinkServiceTest : public ::testing::Test {
 TEST_F(CastMediaSinkServiceTest, TestResetBeforeStop) {
   EXPECT_CALL(test_dns_sd_registry_, AddObserver(media_sink_service_.get()));
   EXPECT_CALL(test_dns_sd_registry_, RegisterDnsSdListener(_));
+  EXPECT_CALL(test_dns_sd_registry_, ForceDiscovery());
   media_sink_service_->SetDnsSdRegistryForTest(&test_dns_sd_registry_);
   media_sink_service_->Start();
 
@@ -123,6 +124,7 @@ TEST_F(CastMediaSinkServiceTest, TestRestartAfterStop) {
   EXPECT_CALL(test_dns_sd_registry_, AddObserver(media_sink_service_.get()))
       .Times(2);
   EXPECT_CALL(test_dns_sd_registry_, RegisterDnsSdListener(_));
+  EXPECT_CALL(test_dns_sd_registry_, ForceDiscovery());
   media_sink_service_->SetDnsSdRegistryForTest(&test_dns_sd_registry_);
   media_sink_service_->Start();
 
@@ -133,6 +135,7 @@ TEST_F(CastMediaSinkServiceTest, TestRestartAfterStop) {
   base::RunLoop().RunUntilIdle();
 
   EXPECT_CALL(test_dns_sd_registry_, RegisterDnsSdListener(_));
+  EXPECT_CALL(test_dns_sd_registry_, ForceDiscovery());
   media_sink_service_->SetDnsSdRegistryForTest(&test_dns_sd_registry_);
   media_sink_service_->Start();
 }
@@ -140,8 +143,10 @@ TEST_F(CastMediaSinkServiceTest, TestRestartAfterStop) {
 TEST_F(CastMediaSinkServiceTest, TestMultipleStartAndStop) {
   EXPECT_CALL(test_dns_sd_registry_, AddObserver(media_sink_service_.get()));
   EXPECT_CALL(test_dns_sd_registry_, RegisterDnsSdListener(_));
+  EXPECT_CALL(test_dns_sd_registry_, ForceDiscovery());
   media_sink_service_->SetDnsSdRegistryForTest(&test_dns_sd_registry_);
   media_sink_service_->Start();
+  EXPECT_CALL(test_dns_sd_registry_, ForceDiscovery());
   media_sink_service_->Start();
 
   EXPECT_CALL(test_dns_sd_registry_, RemoveObserver(media_sink_service_.get()));
