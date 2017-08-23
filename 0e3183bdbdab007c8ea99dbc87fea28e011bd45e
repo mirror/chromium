@@ -22,6 +22,30 @@
       "revId": "0e3183bdbdab007c8ea99dbc87fea28e011bd45e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6d467b_c22cc000",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/printing/PrintingControllerTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-08-23T21:08:28Z",
+      "side": 1,
+      "message": "Err, git cl format did this. We newly introduced lambdas, so format might not be updated? I have a not very related crbug https://bugs.chromium.org/p/chromium/issues/detail?id\u003d754886 reports an issue, although it is marked as won\u0027t fix, but I still think there is something wrong.",
+      "parentUuid": "4d6d319b_796a01f8",
+      "range": {
+        "startLine": 270,
+        "startChar": 17,
+        "endLine": 270,
+        "endChar": 18
+      },
+      "revId": "0e3183bdbdab007c8ea99dbc87fea28e011bd45e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
