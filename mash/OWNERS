@@ -4,3 +4,6 @@ msw@chromium.org
 sky@chromium.org
 
 # COMPONENT: UI>Shell
+
+per-file unittests_manifest.json=set noparent
+per-file unittests_manifest.json=file://ipc/SECURITY_OWNERS

@@ -3,3 +3,6 @@ reillyg@chromium.org
 
 # COMPONENT: Blink>ImageCapture
 # TEAM: device-dev@chromium.org
+
+per-file manifest.json=set noparent
+per-file manifest.json=file://ipc/SECURITY_OWNERS
