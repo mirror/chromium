@@ -262,8 +262,11 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
   if (surface_layer_for_video_enabled_)
     bridge_ = base::WrapUnique(blink::WebSurfaceLayerBridge::Create());
 
-  force_video_overlays_ = base::CommandLine::ForCurrentProcess()->HasSwitch(
-      switches::kForceVideoOverlays);
+  // If we're supposed to force video overlays, then make sure that they're
+  // enabled all the time, and note in |overlay_info_| that they must be used.
+  always_enable_overlays_ = overlay_info_.is_required =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kForceVideoOverlays);
 
   if (base::FeatureList::IsEnabled(media::kOverlayFullscreenVideo)) {
     bool use_android_overlay =
@@ -403,10 +406,10 @@ void WebMediaPlayerImpl::DisableOverlay() {
 void WebMediaPlayerImpl::EnteredFullscreen() {
   overlay_info_.is_fullscreen = true;
 
-  // |force_video_overlays_| implies that we're already in overlay mode, so take
-  // no action here.  Otherwise, switch to an overlay if it's allowed and if
-  // it will display properly.
-  if (!force_video_overlays_ && overlay_mode_ != OverlayMode::kNoOverlays &&
+  // |always_enable_overlays_| implies that we're already in overlay mode, so
+  // take no action here.  Otherwise, switch to an overlay if it's allowed and
+  // if it will display properly.
+  if (!always_enable_overlays_ && overlay_mode_ != OverlayMode::kNoOverlays &&
       DoesOverlaySupportMetadata()) {
     EnableOverlay();
   }
@@ -425,9 +428,9 @@ void WebMediaPlayerImpl::EnteredFullscreen() {
 void WebMediaPlayerImpl::ExitedFullscreen() {
   overlay_info_.is_fullscreen = false;
 
-  // If we're in overlay mode, then exit it unless we're supposed to be in
-  // overlay mode all the time.
-  if (!force_video_overlays_ && overlay_enabled_)
+  // If we're in overlay mode, then exit it unless we're supposed to allow
+  // overlays all the time.
+  if (!always_enable_overlays_ && overlay_enabled_)
     DisableOverlay();
 
   // See EnteredFullscreen for why we do this.
@@ -1385,9 +1388,11 @@ void WebMediaPlayerImpl::OnMetadata(PipelineMetadata metadata) {
   if (HasVideo()) {
     if (overlay_enabled_) {
       // SurfaceView doesn't support rotated video, so transition back if
-      // the video is now rotated.  If |force_video_overlays_|, we keep the
+      // the video is now rotated.  If |always_enable_overlays_|, we keep the
       // overlay anyway so that the state machine keeps working.
-      if (!force_video_overlays_ && !DoesOverlaySupportMetadata())
+      // TODO(liberato): verify if compositor feedback catches this.  If so,
+      // then we don't need this check.
+      if (!always_enable_overlays_ && !DoesOverlaySupportMetadata())
         DisableOverlay();
       else if (surface_manager_)
         surface_manager_->NaturalSizeChanged(pipeline_metadata_.natural_size);
@@ -1883,7 +1888,7 @@ void WebMediaPlayerImpl::OnOverlayInfoRequested(
 
   // For encrypted video on pre-M, we pretend that the decoder doesn't require a
   // restart.  This is because it needs an overlay all the time anyway.  We'll
-  // switch into |force_video_overlays_| mode below.
+  // switch into |always_enable_overlays_| mode below.
   if (overlay_mode_ == OverlayMode::kUseAndroidOverlay && is_encrypted_)
     decoder_requires_restart_for_overlay = false;
 
@@ -1897,12 +1902,12 @@ void WebMediaPlayerImpl::OnOverlayInfoRequested(
   decoder_requires_restart_for_overlay_ = decoder_requires_restart_for_overlay;
   provide_overlay_info_cb_ = provide_overlay_info_cb;
 
-  // We always force (allow, actually) video overlays in AndroidOverlayMode.
-  // AVDA figures out when to use them.  If the decoder requires restart, then
-  // we still want to restart the decoder on the fullscreen transitions anyway.
+  // We always allow video overlays in AndroidOverlayMode.  AVDA figures out
+  // when to use them.  If the decoder requires restart, then we still want to
+  // restart the decoder on the fullscreen transitions anyway.
   if (overlay_mode_ == OverlayMode::kUseAndroidOverlay &&
       !decoder_requires_restart_for_overlay) {
-    force_video_overlays_ = true;
+    always_enable_overlays_ = true;
     if (!overlay_enabled_)
       EnableOverlay();
   }
@@ -1955,11 +1960,8 @@ void WebMediaPlayerImpl::MaybeSendOverlayInfoToDecoder() {
 std::unique_ptr<Renderer> WebMediaPlayerImpl::CreateRenderer() {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
-  // TODO(liberato): Re-evaluate this as AndroidVideoSurfaceChooser gets smarter
-  // about turning off overlays.  Either we should verify that it is not
-  // breaking this use-case if it does so, or we should notify it that using
-  // the overlay is required.
-  if (force_video_overlays_)
+  // Make sure that overlays are enabled if they're always allowed.
+  if (always_enable_overlays_)
     EnableOverlay();
 
   RequestOverlayInfoCB request_overlay_info_cb;

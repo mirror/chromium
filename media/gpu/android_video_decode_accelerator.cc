@@ -1266,6 +1266,12 @@ void AndroidVideoDecodeAccelerator::SetOverlayInfo(
   OverlayInfo previous_info = config_.overlay_info;
   config_.overlay_info = overlay_info;
 
+  // Make overlays required if WMPI requests it.  Note that we don't clear it;
+  // we might require them anyway.  In practice, WMPI never transitions from
+  // "require overlay" to "don't require overlay", so we don't have to worry
+  // about it changing.
+  surface_chooser_state_.is_required |= overlay_info.is_required;
+
   // It's possible that we'll receive SetSurface before initializing the surface
   // chooser.  For example, if we defer surface creation, then we'll signal
   // success to WMPI before initializing it.  WMPI is then free to change
@@ -1504,8 +1510,10 @@ void AndroidVideoDecodeAccelerator::OnMediaCryptoReady(
   codec_config_->requires_secure_codec = requires_secure_video_codec;
   // Request a secure surface in all cases.  For L3, it's okay if we fall back
   // to SurfaceTexture rather than fail composition.  For L1, it's required.
+  // It's also required if WMPI says so.
   surface_chooser_state_.is_secure = true;
-  surface_chooser_state_.is_required = requires_secure_video_codec;
+  surface_chooser_state_.is_required =
+      requires_secure_video_codec || config_.overlay_info.is_required;
 
   // After receiving |media_crypto_| we can start with surface creation.
   StartSurfaceChooser();
