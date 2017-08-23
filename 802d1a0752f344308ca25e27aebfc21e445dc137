@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "944e1234_ce3a387f",
+        "filename": "chrome/browser/android/tab_web_contents_delegate_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T14:49:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b5ab887_93b76b95",
+      "range": {
+        "startLine": 510,
+        "startChar": 37,
+        "endLine": 510,
+        "endChar": 78
+      },
+      "revId": "802d1a0752f344308ca25e27aebfc21e445dc137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "568ce0fa_f7d89dc4",
         "filename": "chrome/browser/ui/android/infobars/notify_infobar_delegate_bridge.h",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ed526eb9_dcfa01f3",
+        "filename": "chrome/browser/ui/android/infobars/notify_infobar_delegate_bridge.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T14:49:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "568ce0fa_f7d89dc4",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "802d1a0752f344308ca25e27aebfc21e445dc137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a9a9621_ab2e0660",
         "filename": "chrome/browser/ui/framebust_block_infobar_delegate.cc",
         "patchSetId": 14
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "c1e1e376_4c36bd45",
+        "filename": "chrome/browser/ui/framebust_block_infobar_delegate.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T14:49:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a9a9621_ab2e0660",
+      "revId": "802d1a0752f344308ca25e27aebfc21e445dc137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0f288a7_6b6b5982",
         "filename": "components/web_contents_delegate_android/web_contents_delegate_android.cc",
         "patchSetId": 14
@@ -76,6 +142,30 @@
       "writtenOn": "2017-08-22T16:55:16Z",
       "side": 1,
       "message": "Move this up to right after line 410?",
+      "range": {
+        "startLine": 413,
+        "startChar": 2,
+        "endLine": 413,
+        "endChar": 20
+      },
+      "revId": "802d1a0752f344308ca25e27aebfc21e445dc137",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "932c9110_e192992f",
+        "filename": "components/web_contents_delegate_android/web_contents_delegate_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T14:49:39Z",
+      "side": 1,
+      "message": "obsolete",
+      "parentUuid": "c0f288a7_6b6b5982",
       "range": {
         "startLine": 413,
         "startChar": 2,
