@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "496baadd_be29b2f9",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-23T13:38:15Z",
+      "side": 1,
+      "message": "eula_accepted_callback_?",
+      "range": {
+        "startLine": 352,
+        "startChar": 8,
+        "endLine": 352,
+        "endChar": 21
+      },
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb904e3c_192e4101",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
         "patchSetId": 1
@@ -30,6 +53,52 @@
       "writtenOn": "2017-08-23T12:41:38Z",
       "side": 1,
       "message": "I don\u0027t understand this comment.",
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1902de9_880f7876",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-23T13:38:15Z",
+      "side": 1,
+      "message": "/*eula_accepted*/\nor even\n/*eula_accepted_callback_*/",
+      "range": {
+        "startLine": 454,
+        "startChar": 10,
+        "endLine": 454,
+        "endChar": 11
+      },
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80445143_eaed39c8",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-23T13:38:15Z",
+      "side": 1,
+      "message": "So what happens if eula as accepted, but the scheduler is not ready yet?\n\nWho will trigger this function?",
+      "range": {
+        "startLine": 504,
+        "startChar": 6,
+        "endLine": 504,
+        "endChar": 35
+      },
       "revId": "64044bc9a70539807bdbed4f9300937635771595",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +133,93 @@
       "writtenOn": "2017-08-23T12:41:38Z",
       "side": 1,
       "message": "nit: PersistentSchedulerWakeUp (not all caps), since the all-caps constant isn\u0027t mentioned in the test?",
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48720ff4_028394d6",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-23T13:38:15Z",
+      "side": 1,
+      "message": "Otherwise you can use ShouldQueueBackgroundFetchSignals*On*PersistentSchedulerWakeUp.",
+      "parentUuid": "e9e7dd8c_08f09153",
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c7fa31_8fc06bd9",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-23T13:38:15Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this line be before EXPECT_CALLs?\nMy impression is that the scheduler should queue the trigger before activation.",
+      "range": {
+        "startLine": 478,
+        "startChar": 2,
+        "endLine": 478,
+        "endChar": 45
+      },
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14fbfb9_742497fd",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-23T13:38:15Z",
+      "side": 1,
+      "message": "This helper is used only 2.\nWhy not just inlining it?\n\nAlso from the name it does not follow that the callback will be called.",
+      "range": {
+        "startLine": 540,
+        "startChar": 2,
+        "endLine": 540,
+        "endChar": 41
+      },
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b01c416_8a2edd6a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-23T13:38:15Z",
+      "side": 1,
+      "message": "Again I feel like this must be before EXPECT_CALL.",
+      "range": {
+        "startLine": 556,
+        "startChar": 2,
+        "endLine": 557,
+        "endChar": 36
+      },
       "revId": "64044bc9a70539807bdbed4f9300937635771595",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
