@@ -81,6 +81,30 @@
       "revId": "7926b4b2c0c355508946cb301c9ea0059b611306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8460df1_0dd07da5",
+        "filename": "ios/chrome/browser/ui/ssl/captive_portal_login_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-23T16:35:25Z",
+      "side": 1,
+      "message": "In general we consider showing web contents without a URL as a low severity security bug (e.g. crbug.com/698906) so I think we should display the URL. In this case, just showing the origin and dropping the path should be sufficient. You can use url_formatter::FormatUrlForSecurityDisplay() for this. According to its documentation, this function should safely handle internationalized domain names and RTL.",
+      "parentUuid": "b73a846c_cdee39ef",
+      "range": {
+        "startLine": 1,
+        "startChar": 60,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "7926b4b2c0c355508946cb301c9ea0059b611306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
