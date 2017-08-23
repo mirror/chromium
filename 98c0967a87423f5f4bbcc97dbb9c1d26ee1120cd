@@ -22,6 +22,30 @@
       "revId": "98c0967a87423f5f4bbcc97dbb9c1d26ee1120cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906dd938_e6a0ec61",
+        "filename": "chrome/browser/chromeos/extensions/default_keyboard_extension_browser_test.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-23T03:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25e77e4c_6d2d84b6",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 32
+      },
+      "revId": "98c0967a87423f5f4bbcc97dbb9c1d26ee1120cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
