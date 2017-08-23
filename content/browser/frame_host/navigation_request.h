@@ -209,13 +209,17 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
                          bool is_stream,
                          mojom::URLLoaderFactoryPtrInfo
                              subresource_url_loader_factory_info) override;
-  void OnRequestFailed(bool has_stale_copy_in_cache, int net_error) override;
+  void OnRequestFailed(bool has_stale_copy_in_cache,
+                       int net_error,
+                       base::Optional<net::SSLInfo> ssl_info,
+                       bool should_ssl_errors_be_fatal) override;
   void OnRequestStarted(base::TimeTicks timestamp) override;
 
   // Called when the NavigationThrottles have been checked by the
   // NavigationHandle.
   void OnStartChecksComplete(NavigationThrottle::ThrottleCheckResult result);
   void OnRedirectChecksComplete(NavigationThrottle::ThrottleCheckResult result);
+  void OnFailureChecksComplete(NavigationThrottle::ThrottleCheckResult result);
   void OnWillProcessResponseChecksComplete(
       NavigationThrottle::ThrottleCheckResult result);
 
@@ -304,6 +308,11 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   scoped_refptr<ResourceResponse> response_;
   std::unique_ptr<StreamHandle> body_;
   mojo::ScopedDataPipeConsumerHandle handle_;
+
+  // Holds information for the navigation while the WillFailResponse
+  // checks are performed by the NavigationHandle.
+  bool has_stale_copy_in_cache_;
+  int net_error_;
 
   base::Closure on_start_checks_complete_closure_;
 
