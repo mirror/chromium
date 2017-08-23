@@ -140,6 +140,7 @@ void ModuleScriptLoaderTest::SetUp() {
   platform_->AdvanceClockSeconds(1.);  // For non-zero DocumentParserTimings
   dummy_page_holder_ = DummyPageHolder::Create(IntSize(500, 500));
   GetDocument().SetURL(KURL(NullURL(), "https://example.test"));
+  GetDocument().SetSecurityOrigin(SecurityOrigin::Create(GetDocument().Url()));
   auto* context =
       MockFetchContext::Create(MockFetchContext::kShouldLoadNewResource);
   fetcher_ = ResourceFetcher::Create(context);
@@ -288,7 +289,7 @@ TEST_F(ModuleScriptLoaderTest, FetchInvalidURL_OnWorklet) {
 
 void ModuleScriptLoaderTest::TestFetchURL(
     TestModuleScriptLoaderClient* client) {
-  KURL url(kParsedURLString, "http://127.0.0.1:8000/module.js");
+  KURL url(NullURL(), "https://example.test/module.js");
   URLTestHelpers::RegisterMockedURLLoad(
       url, testing::CoreTestDataPath("module.js"), "text/javascript");
 
@@ -309,7 +310,7 @@ TEST_F(ModuleScriptLoaderTest, FetchURL) {
   platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
 
   EXPECT_TRUE(client->WasNotifyFinished());
-  EXPECT_FALSE(client->GetModuleScript());
+  EXPECT_TRUE(client->GetModuleScript());
 }
 
 TEST_F(ModuleScriptLoaderTest, FetchURL_OnWorklet) {
@@ -327,7 +328,7 @@ TEST_F(ModuleScriptLoaderTest, FetchURL_OnWorklet) {
   platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
 
   EXPECT_TRUE(client->WasNotifyFinished());
-  EXPECT_FALSE(client->GetModuleScript());
+  EXPECT_TRUE(client->GetModuleScript());
 }
 
 }  // namespace blink
