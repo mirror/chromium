@@ -296,6 +296,24 @@
     },
     {
       "key": {
+        "uuid": "ac548630_a024f233",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-08-23T23:08:12Z",
+      "side": 1,
+      "message": "Updated to check |rfh|.",
+      "parentUuid": "ca9680ec_c18ef5d5",
+      "revId": "7809437467449ccdf48d9896ce10dd96f1d32da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45f09a95_9d2177bd",
         "filename": "chrome/browser/renderer_host/pepper/pepper_platform_verification_message_filter.cc",
         "patchSetId": 3
