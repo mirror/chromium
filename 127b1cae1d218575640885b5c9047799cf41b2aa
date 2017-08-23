@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff062480_5c9a68bc",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 2227,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-08-23T05:41:28Z",
+      "side": 1,
+      "message": "Hmm, this seems to default to true in the tests. I\u0027ll take another look at this tomorrow.",
+      "range": {
+        "startLine": 2227,
+        "startChar": 9,
+        "endLine": 2227,
+        "endChar": 66
+      },
+      "revId": "127b1cae1d218575640885b5c9047799cf41b2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
