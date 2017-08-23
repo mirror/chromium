@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "967aac82_aa947545",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIBaseHelper.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-23T04:49:21Z",
+      "side": 0,
+      "message": "\\o/ to not needing this file so soon!",
+      "revId": "56f8b13c543feea07d4ed99ce58ddec46bbd0ae2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
