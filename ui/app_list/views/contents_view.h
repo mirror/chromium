@@ -15,6 +15,7 @@
 #include "ui/app_list/app_list_model.h"
 #include "ui/app_list/pagination_model.h"
 #include "ui/app_list/pagination_model_observer.h"
+#include "ui/app_list/views/app_list_view.h"
 #include "ui/views/view.h"
 #include "ui/views/view_model.h"
 
@@ -26,7 +27,6 @@ namespace app_list {
 
 class AppsGridView;
 class AppListPage;
-class AppListView;
 class ApplicationDragAndDropHost;
 class AppListFolderItem;
 class AppListMainView;
