@@ -81,6 +81,30 @@
       "revId": "891350b9f8e818a80280aeb98ed4bb4335205a7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4407ac_a21be856",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 6566,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-23T18:05:03Z",
+      "side": 1,
+      "message": "So it is.  Nvm then.",
+      "parentUuid": "88c361f8_54615d2d",
+      "range": {
+        "startLine": 6566,
+        "startChar": 41,
+        "endLine": 6566,
+        "endChar": 42
+      },
+      "revId": "891350b9f8e818a80280aeb98ed4bb4335205a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
