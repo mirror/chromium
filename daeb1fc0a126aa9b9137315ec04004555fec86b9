@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3f4ad75_74b40801",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-23T14:20:22Z",
+      "side": 0,
+      "message": "This is surprising to me. I suspect you\u0027ve refactored things to make this unnecessary, but I don\u0027t quite get it. Can you explain.",
+      "range": {
+        "startLine": 186,
+        "startChar": 3,
+        "endLine": 186,
+        "endChar": 0
+      },
+      "revId": "daeb1fc0a126aa9b9137315ec04004555fec86b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

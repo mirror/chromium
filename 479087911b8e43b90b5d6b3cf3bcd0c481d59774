@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe5a23c0_1521dd53",
+        "filename": "net/http/http_stream_factory_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-23T14:20:22Z",
+      "side": 1,
+      "message": "nit: I think the histogram name should change (or perhaps we can remove it) because it\u0027s tracking something different now.",
+      "range": {
+        "startLine": 44,
+        "startChar": 59,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "479087911b8e43b90b5d6b3cf3bcd0c481d59774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c98a5c44_cfdb76fd",
+        "filename": "net/http/http_stream_factory_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-23T14:20:22Z",
+      "side": 1,
+      "message": "nit: Should we just nuke this code? If not, let\u0027s change the name of the histograms.",
+      "range": {
+        "startLine": 256,
+        "startChar": 70,
+        "endLine": 256,
+        "endChar": 0
+      },
+      "revId": "479087911b8e43b90b5d6b3cf3bcd0c481d59774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e25fd4a9_bbc8e53f",
+        "filename": "net/http/http_stream_factory_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-23T14:20:22Z",
+      "side": 1,
+      "message": "I see. This is because preconnects are not associated with a request, rather, with the factor?",
+      "range": {
+        "startLine": 143,
+        "startChar": 56,
+        "endLine": 143,
+        "endChar": 0
+      },
+      "revId": "479087911b8e43b90b5d6b3cf3bcd0c481d59774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ec44f3_ea5f47c6",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-23T14:20:22Z",
+      "side": 1,
+      "message": "I think \"release ownership\" is perhaps a bit out of date, since |request| is simply a raw pointer.",
+      "range": {
+        "startLine": 134,
+        "startChar": 28,
+        "endLine": 134,
+        "endChar": 35
+      },
+      "revId": "479087911b8e43b90b5d6b3cf3bcd0c481d59774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5cdde91_559cee04",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-23T14:20:22Z",
+      "side": 1,
+      "message": "Can you add NOTREACHED() here? (I know its\u0027 going to go away RSN, but still :\u003e)",
+      "range": {
+        "startLine": 525,
+        "startChar": 21,
+        "endLine": 525,
+        "endChar": 0
+      },
+      "revId": "479087911b8e43b90b5d6b3cf3bcd0c481d59774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4a1440_f848db84",
+        "filename": "net/http/http_stream_factory_impl_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-23T14:20:22Z",
+      "side": 1,
+      "message": "The style guide frowns on constructors doing work. Can we add a Start() method instead?",
+      "range": {
+        "startLine": 42,
+        "startChar": 63,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "479087911b8e43b90b5d6b3cf3bcd0c481d59774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
