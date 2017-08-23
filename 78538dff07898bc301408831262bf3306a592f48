@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "831b6ed5_46f49e7e",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_interactive.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T18:05:15Z",
+      "side": 1,
+      "message": "Do you need a linear layout for a single view here?",
+      "range": {
+        "startLine": 91,
+        "startChar": 32,
+        "endLine": 91,
+        "endChar": 42
+      },
+      "revId": "78538dff07898bc301408831262bf3306a592f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c01ad3_29e5b776",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_interactive.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T18:05:15Z",
+      "side": 1,
+      "message": "use textAppearance\u003dBlackTitle2 ? go/clankstyles for reference.\n\nAnd then apply the same for the text above, to ensure consistency",
+      "revId": "78538dff07898bc301408831262bf3306a592f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce29ee1_a930eede",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T18:05:15Z",
+      "side": 1,
+      "message": "flip the condition? prefer not using negation when avoidable.",
+      "range": {
+        "startLine": 121,
+        "startChar": 25,
+        "endLine": 121,
+        "endChar": 46
+      },
+      "revId": "78538dff07898bc301408831262bf3306a592f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d66e90c_d9553459",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T18:05:15Z",
+      "side": 1,
+      "message": "do you need to set it to gone? isn\u0027t the layout hidden anyway?",
+      "range": {
+        "startLine": 122,
+        "startChar": 48,
+        "endLine": 122,
+        "endChar": 62
+      },
+      "revId": "78538dff07898bc301408831262bf3306a592f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034e3be9_40b4eafd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T18:05:15Z",
+      "side": 1,
+      "message": "This seems fairly similar to https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java?l\u003d295\n\nIs it possible to share code?",
+      "range": {
+        "startLine": 127,
+        "startChar": 23,
+        "endLine": 148,
+        "endChar": 97
+      },
+      "revId": "78538dff07898bc301408831262bf3306a592f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
