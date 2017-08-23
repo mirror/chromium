@@ -13,6 +13,7 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents_user_data.h"
 #include "headless/public/headless_export.h"
+#include "ipc/ipc_message_templates.h"
 #include "printing/print_settings.h"
 
 struct PrintHostMsg_DidPrintPage_Params;
@@ -102,6 +103,11 @@ class HeadlessPrintManager
   void OnPrintingFailed(int cookie) override;
   void OnDidGetPrintedPagesCount(int cookie, int number_pages) override;
   void OnDidPrintPage(const PrintHostMsg_DidPrintPage_Params& params);
+
+  // API required by the IPC_MESSAGE_HANDLER_DELAY_REPLY macro.
+  bool Send(IPC::Message* msg);
+  template <typename T1, typename T2, typename T3>
+  friend class IPC::MessageT;
 
   void Reset();
   void ReleaseJob(PrintResult result);

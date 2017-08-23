@@ -15,6 +15,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "components/printing/browser/print_manager_utils.h"
 #include "components/printing/common/print_messages.h"
+#include "content/public/browser/render_view_host.h"
 #include "printing/pdf_metafile_skia.h"
 #include "printing/print_job_constants.h"
 #include "printing/units.h"
@@ -314,6 +315,10 @@ void HeadlessPrintManager::OnDidPrintPage(
 
   if (--number_pages_ == 0)
     ReleaseJob(PRINT_SUCCESS);
+}
+
+bool HeadlessPrintManager::Send(IPC::Message* msg) {
+  return WebContentsObserver::web_contents()->GetRenderViewHost()->Send(msg);
 }
 
 void HeadlessPrintManager::Reset() {

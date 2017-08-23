@@ -8,6 +8,7 @@
 #include "components/printing/browser/print_manager_utils.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_view_host.h"
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(android_webview::AwPrintManager);
 
@@ -84,6 +85,10 @@ void AwPrintManager::OnScriptedPrint(
   params.pages = printing::PageRange::GetPages(settings_.ranges());
   PrintHostMsg_ScriptedPrint::WriteReplyParams(reply_msg, params);
   render_frame_host->Send(reply_msg);
+}
+
+bool AwPrintManager::Send(IPC::Message* msg) {
+  return WebContentsObserver::web_contents()->GetRenderViewHost()->Send(msg);
 }
 
 }  // namespace android_webview

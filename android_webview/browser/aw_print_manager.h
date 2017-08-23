@@ -9,6 +9,7 @@
 #include "components/printing/browser/print_manager.h"
 #include "components/printing/common/print_messages.h"
 #include "content/public/browser/web_contents_user_data.h"
+#include "ipc/ipc_message_templates.h"
 #include "printing/print_settings.h"
 
 namespace android_webview {
@@ -47,6 +48,11 @@ class AwPrintManager : public printing::PrintManager,
   void OnScriptedPrint(content::RenderFrameHost* render_frame_host,
                        const PrintHostMsg_ScriptedPrint_Params& params,
                        IPC::Message* reply_msg);
+
+  // API required by the IPC_MESSAGE_HANDLER_DELAY_REPLY macro.
+  bool Send(IPC::Message* msg);
+  template <typename T1, typename T2, typename T3>
+  friend class IPC::MessageT;
 
   printing::PrintSettings settings_;
 
