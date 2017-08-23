@@ -22,6 +22,30 @@
       "revId": "062f8ade01ff3eb9103a5d2c8fea87cd02c2b532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5bda8f_26f43421",
+        "filename": "components/sync/protocol/user_event_specifics.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-23T16:52:33Z",
+      "side": 1,
+      "message": "Sure, I can make those changes. CL(s) coming soon. See http://cl/166213372",
+      "parentUuid": "80aeaf59_1bf366ae",
+      "range": {
+        "startLine": 177,
+        "startChar": 4,
+        "endLine": 178,
+        "endChar": 59
+      },
+      "revId": "062f8ade01ff3eb9103a5d2c8fea87cd02c2b532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
