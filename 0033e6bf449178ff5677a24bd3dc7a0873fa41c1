@@ -16,6 +16,24 @@
       "revId": "0033e6bf449178ff5677a24bd3dc7a0873fa41c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5d979a_715fab63",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-23T13:05:03Z",
+      "side": 1,
+      "message": "Added a comment reflecting the motivation as well as mid- and long-term outlook.",
+      "parentUuid": "c1a15f32_4907bb6d",
+      "revId": "0033e6bf449178ff5677a24bd3dc7a0873fa41c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
