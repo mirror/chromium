@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab3d583a_adcf6a42",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 34640,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-23T14:25:04Z",
+      "side": 1,
+      "message": "Let\u0027s match the C++ enum here. So SignoutPrimary and SignoutSecondary",
+      "range": {
+        "startLine": 34640,
+        "startChar": 24,
+        "endLine": 34640,
+        "endChar": 35
+      },
+      "revId": "3e833207f9764cb81756809c145bacd080db90f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eddd824_9feac4e7",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 34647,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-23T14:25:04Z",
+      "side": 1,
+      "message": "Same as in previous comment: I think having the succeeded first is important as all the other are failure case. This will allow us to understand what is the success rate easily.\n\nIf you do this, remember to change the corresponding C++ enum.",
+      "range": {
+        "startLine": 34647,
+        "startChar": 17,
+        "endLine": 34647,
+        "endChar": 22
+      },
+      "revId": "3e833207f9764cb81756809c145bacd080db90f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
