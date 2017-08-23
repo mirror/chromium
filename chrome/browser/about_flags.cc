@@ -1528,6 +1528,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"multidevice", flag_descriptions::kMultideviceName,
      flag_descriptions::kMultideviceDescription, kOsCrOS,
      FEATURE_VALUE_TYPE(features::kMultidevice)},
+    {"multidevice-service", flag_descriptions::kMultiDeviceServiceName,
+     flag_descriptions::kMultiDeviceServiceDescription, kOsCrOS,
+     FEATURE_VALUE_TYPE(features::kMultiDeviceService)},
 #endif  // OS_CHROMEOS
     {
         "disable-accelerated-video-decode",

@@ -282,6 +282,9 @@ const base::Feature kModuleDatabase{"ModuleDatabase",
 // Enables or disables multidevice features and corresponding UI on Chrome OS.
 const base::Feature kMultidevice{"Multidevice",
                                  base::FEATURE_DISABLED_BY_DEFAULT};
+// Enables or disables multidevice service on Chrome OS.
+const base::Feature kMultiDeviceService{"MultiDeviceService",
+                                        base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
 // Enables the use of native notification centers instead of using the Message

@@ -1391,6 +1391,9 @@ extern const char kMtpWriteSupportDescription[];
 extern const char kMultideviceName[];
 extern const char kMultideviceDescription[];
 
+extern const char kMultiDeviceServiceName[];
+extern const char kMultiDeviceServiceDescription[];
+
 extern const char kNetworkPortalNotificationName[];
 extern const char kNetworkPortalNotificationDescription[];
 
