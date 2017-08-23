@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04a39d55_bef19c7d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1187,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-23T22:41:23Z",
+      "side": 1,
+      "message": "I remove this in a different patch. I\u0027ll likely wrap this in a version condition since the other layout is no longer needed.",
+      "range": {
+        "startLine": 1187,
+        "startChar": 8,
+        "endLine": 1187,
+        "endChar": 29
+      },
+      "revId": "cf5366a8633f06853560d52305773482a5133bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
