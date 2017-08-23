@@ -18,6 +18,7 @@ extern const char kDisableSuggestionsUI[];
 extern const char kDisableBookmarkReordering[];
 extern const char kDisableSlimNavigationManager[];
 extern const char kDisableThirdPartyKeyboardWorkaround[];
+extern const char kDisableDragAndDrop[];
 
 extern const char kEnableContextualSearch[];
 extern const char kEnableIOSFeatures[];
@@ -30,6 +31,7 @@ extern const char kEnableSuggestionsUI[];
 extern const char kEnableBookmarkReordering[];
 extern const char kEnableSlimNavigationManager[];
 extern const char kEnableThirdPartyKeyboardWorkaround[];
+extern const char kEnableDragAndDrop[];
 
 extern const char kIOSForceVariationIds[];
 extern const char kUserAgent[];

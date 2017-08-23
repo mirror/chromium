@@ -40,6 +40,9 @@ const char kDisableSlimNavigationManager[] = "disable-slim-navigation-manager";
 const char kDisableThirdPartyKeyboardWorkaround[] =
     "disable-third-party-keyboard-workaround";
 
+// Disables the drag and drop.
+const char kDisableDragAndDrop[] = "disable-drag-and-drop";
+
 // Enables Contextual Search.
 const char kEnableContextualSearch[] = "enable-contextual-search";
 
@@ -73,6 +76,9 @@ const char kEnableSlimNavigationManager[] = "enable-slim-navigation-manager";
 // Enables the 3rd party keyboard omnibox workaround.
 const char kEnableThirdPartyKeyboardWorkaround[] =
     "enable-third-party-keyboard-workaround";
+
+// Enables the drag and drop.
+const char kEnableDragAndDrop[] = "enable-drag-and-drop";
 
 // Forces additional Chrome Variation Ids that will be sent in X-Client-Data
 // header, specified as a 64-bit encoded list of numeric experiment ids. Ids
