@@ -34,6 +34,24 @@
       "revId": "f2ecc23131e89829f9ccb6f93166cb7ecfdca7b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c95a59_4d9ddf69",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-23T22:38:28Z",
+      "side": 1,
+      "message": "What about clearing the padding in the mixin? like:\n\n--cr-dialog-title: {\n  padding: 0;\n}\n\nI\u0027d expect that to allow the title to go wider.\n\n------\nOr can the tab bar actually be in the body instead? (or does that make the scrolling incorrect)?",
+      "parentUuid": "d0d16bd6_915f7f58",
+      "revId": "f2ecc23131e89829f9ccb6f93166cb7ecfdca7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
