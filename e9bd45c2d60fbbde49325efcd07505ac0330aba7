@@ -94,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "273efa3e_ecf70b61",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-23T20:23:31Z",
+      "side": 1,
+      "message": "Ya, I suspect the comment was a copy-pasto. :)\nThis is strictly for renderer\nAnd the code works (cause the boolean is only set to true when its a renderer) but I agree this can be made clearer :)",
+      "parentUuid": "e1b0e9eb_3b6ee7dd",
+      "range": {
+        "startLine": 170,
+        "startChar": 33,
+        "endLine": 170,
+        "endChar": 61
+      },
+      "revId": "e9bd45c2d60fbbde49325efcd07505ac0330aba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f98dd5ba_790d2f90",
         "filename": "components/metrics/stability_metrics_helper.cc",
         "patchSetId": 22
