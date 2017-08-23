@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "aafcf322_c10e9d5b",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-08-23T14:25:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5df3b65c_79e47729",
+      "range": {
+        "startLine": 283,
+        "startChar": 37,
+        "endLine": 283,
+        "endChar": 76
+      },
+      "revId": "27e6f5158249bf033969c3c3c6ac924e3720f832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01880c02_de712953",
         "filename": "content/browser/devtools/protocol/input_handler.cc",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "27e6f5158249bf033969c3c3c6ac924e3720f832",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d95c5a4_1c2779ed",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-08-23T14:25:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01880c02_de712953",
+      "range": {
+        "startLine": 489,
+        "startChar": 32,
+        "endLine": 489,
+        "endChar": 67
+      },
+      "revId": "27e6f5158249bf033969c3c3c6ac924e3720f832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
