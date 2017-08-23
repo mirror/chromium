@@ -1,0 +1,249 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d97a1077_44156cdf",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 1377,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T16:40:00Z",
+      "side": 1,
+      "message": "See naming tip in next comment, these can be listed in main (non is_win specific) list.",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a02566f7_ae997710",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T16:40:00Z",
+      "side": 1,
+      "message": "Prefix all Windows API calls with ::, this is how we identify they\u0027re symbols in the global namespace which hints the reader by convention that these are OS API calls.\n\n(everywhere in this file)",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "909679c2_da02fdc6",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T16:40:00Z",
+      "side": 1,
+      "message": "https://msdn.microsoft.com/en-us/library/windows/desktop/ms682456(v\u003dvs.85).aspx\n\nsays that this should be followed by a call to SetThreadpoolThreadMaximum/SetThreadpoolThreadMinimum. How about [1, 256]?",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8423b60_35f69e3e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T16:40:00Z",
+      "side": 1,
+      "message": "auto\n\n(the rest of the task_scheduler codebase was written just before C++11 was allowed in Chromium but we should now use auto for obvious types like this that are just long to spell)",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "929ad76e_2d29ee12",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T16:40:00Z",
+      "side": 1,
+      "message": "// static\n\n(above method decl as convention for decl of static class methods)",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df374387_0b132e3e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T16:40:00Z",
+      "side": 1,
+      "message": "Is a thread from |pool_| ever going to be reused by another pool? Or are we just unbinding to satisfy the requirement of BindToCurrentThread() in the next round that it wasn\u0027t previously bound? If so we should change that DCHECK to DCHECK(\"not previously bound\" OR \"already bound to current\").",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d526b95_7517ce8b",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T16:40:00Z",
+      "side": 1,
+      "message": "auto",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 45
+      },
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b89065_1eb56290",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T16:40:00Z",
+      "side": 1,
+      "message": "GetWork()/SubmitThreadpoolWork() as it makes it look like you\u0027re saying:\n\nnum(ScheduleSequence()) \u003d\u003d num(GetWork())+num(SubmitThreadPoolWork())\n\ndid you intend to write:\n\n\"... 1:1 correspondence between a call to ScheduleSequence()/SubmitThreadPoolWork() and GetWork().\"",
+      "range": {
+        "startLine": 88,
+        "startChar": 48,
+        "endLine": 88,
+        "endChar": 70
+      },
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77084b1c_ffe3d446",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T16:40:00Z",
+      "side": 1,
+      "message": "auto",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 45
+      },
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb29c7b_f82c3a09",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T16:40:00Z",
+      "side": 1,
+      "message": "::SetThreadpoolCallbackPriority() and ::SetThreadpoolCallbackRunsLong().",
+      "range": {
+        "startLine": 102,
+        "startChar": 42,
+        "endLine": 102,
+        "endChar": 43
+      },
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73a7818_72a0adf4",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T16:40:00Z",
+      "side": 1,
+      "message": "Rename file/class/etc. to scheduler_worker_pool_impl_win.h/cc / SchedulerWorkerPoolImplWin\n\n(this is how our file naming system works, the build system will know not to compile these on non-win platforms)",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf34aa8d_cbf8ee52",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T16:40:00Z",
+      "side": 1,
+      "message": "// Pointer to a thread pool object (it owns the threads).\n\n? (i.e. it\u0027s weird to generically document the type instead of the member variable itself)",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bfc01eb_7c7270a0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T16:40:00Z",
+      "side": 1,
+      "message": "\"has bounded to it\" sounds weird, \"is bound to\"? \"with a pointer to X bound to it\"?",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
