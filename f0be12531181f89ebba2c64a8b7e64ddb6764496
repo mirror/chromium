@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72b8b2d1_3e651245",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 31
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T02:04:02Z",
+      "side": 1,
+      "message": "Hmm...actually, we should create a //components/multidevice:unit_tests target and include that here. Please follow unit_test target examples from another component (e.g., //cryptauth) and add that here. Thanks!",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 68
+      },
+      "revId": "f0be12531181f89ebba2c64a8b7e64ddb6764496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d270121_ed8fd1e1",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T02:04:02Z",
+      "side": 1,
+      "message": "Rename to ObserverCallbackCount and move into the DeviceSyncObserverImpl class.",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "f0be12531181f89ebba2c64a8b7e64ddb6764496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf8c1c8_178852e9",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T02:04:02Z",
+      "side": 1,
+      "message": "Note: There are other things to improve with this test, but I don\u0027t think there is enough of a reason to fix them all here, since you\u0027re just testing a skeleton service. We\u0027ll go over them when you write your real service API functions soon.",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "f0be12531181f89ebba2c64a8b7e64ddb6764496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196f2422_039b9832",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T02:04:02Z",
+      "side": 1,
+      "message": "nit: Rename to on_callback_invoked.",
+      "range": {
+        "startLine": 71,
+        "startChar": 52,
+        "endLine": 71,
+        "endChar": 59
+      },
+      "revId": "f0be12531181f89ebba2c64a8b7e64ddb6764496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39b8083_c1001f57",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T02:04:02Z",
+      "side": 1,
+      "message": "You can combine these into one function:\n\nint GetNumCalls(MultiDeviceServiceActionType type, bool success)",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 64
+      },
+      "revId": "f0be12531181f89ebba2c64a8b7e64ddb6764496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e86074_e6ef20dd",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T02:04:02Z",
+      "side": 1,
+      "message": "nit: EXPECT_EQ() takes the expected value first, then the actual value.",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 11
+      },
+      "revId": "f0be12531181f89ebba2c64a8b7e64ddb6764496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
