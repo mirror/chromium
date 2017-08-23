@@ -170,49 +170,48 @@ class CannedSyncableFileSystem
   // They can be also called directly if the caller is already on IO thread.
   void DoOpenFileSystem(OpenFileSystemCallback callback);
   void DoCreateDirectory(const storage::FileSystemURL& url,
-                         const StatusCallback& callback);
-  void DoCreateFile(const storage::FileSystemURL& url,
-                    const StatusCallback& callback);
+                         StatusCallback callback);
+  void DoCreateFile(const storage::FileSystemURL& url, StatusCallback callback);
   void DoCopy(const storage::FileSystemURL& src_url,
               const storage::FileSystemURL& dest_url,
-              const StatusCallback& callback);
+              StatusCallback callback);
   void DoMove(const storage::FileSystemURL& src_url,
               const storage::FileSystemURL& dest_url,
-              const StatusCallback& callback);
+              StatusCallback callback);
   void DoTruncateFile(const storage::FileSystemURL& url,
                       int64_t size,
-                      const StatusCallback& callback);
+                      StatusCallback callback);
   void DoTouchFile(const storage::FileSystemURL& url,
                    const base::Time& last_access_time,
                    const base::Time& last_modified_time,
-                   const StatusCallback& callback);
+                   StatusCallback callback);
   void DoRemove(const storage::FileSystemURL& url,
                 bool recursive,
-                const StatusCallback& callback);
-  void DoFileExists(const storage::FileSystemURL& url,
-                    const StatusCallback& callback);
+                StatusCallback callback);
+  void DoFileExists(const storage::FileSystemURL& url, StatusCallback callback);
   void DoDirectoryExists(const storage::FileSystemURL& url,
-                         const StatusCallback& callback);
+                         StatusCallback callback);
   void DoVerifyFile(const storage::FileSystemURL& url,
                     const std::string& expected_data,
-                    const StatusCallback& callback);
+                    StatusCallback callback);
   void DoGetMetadataAndPlatformPath(const storage::FileSystemURL& url,
                                     base::File::Info* info,
                                     base::FilePath* platform_path,
-                                    const StatusCallback& callback);
+                                    StatusCallback callback);
   void DoReadDirectory(const storage::FileSystemURL& url,
                        FileEntryList* entries,
-                       const StatusCallback& callback);
+                       StatusCallback callback);
   void DoWrite(net::URLRequestContext* url_request_context,
                const storage::FileSystemURL& url,
                std::unique_ptr<storage::BlobDataHandle> blob_data_handle,
-               const WriteCallback& callback);
+               WriteCallback callback);
   void DoWriteString(const storage::FileSystemURL& url,
                      const std::string& data,
-                     const WriteCallback& callback);
-  void DoGetUsageAndQuota(int64_t* usage,
-                          int64_t* quota,
-                          const storage::StatusCallback& callback);
+                     WriteCallback callback);
+  void DoGetUsageAndQuota(
+      int64_t* usage,
+      int64_t* quota,
+      base::OnceCallback<void(storage::QuotaStatusCode)> callback);
 
  private:
   typedef base::ObserverListThreadSafe<LocalFileSyncStatus::Observer>
