@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b7f5499_5996e4a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-23T17:01:36Z",
+      "side": 1,
+      "message": "please document the default origin when this API is called",
+      "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf790c1_6fbeb69d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-23T17:01:36Z",
+      "side": 1,
+      "message": "Can\u0027t we get the Tab from the WebContents and use that to get the Origin?",
+      "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d67e30a_b8e5a009",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-23T17:01:36Z",
+      "side": 1,
+      "message": "Please document default value for origin app",
+      "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0918622a_abed811e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-23T17:01:36Z",
+      "side": 1,
+      "message": "please document default origin app",
+      "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85042511_38fc127a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridgeTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-23T17:01:36Z",
+      "side": 1,
+      "message": "Is this necessary?",
+      "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779e829f_d78a3527",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridgeTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-23T17:01:36Z",
+      "side": 1,
+      "message": "any chance you can add some asserts for the tests that expect a blank origin?",
+      "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf52232_f4a57f87",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridgeTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-23T17:01:36Z",
+      "side": 1,
+      "message": "Need a testSavePageLaterWithRequestOrigin()?",
+      "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
