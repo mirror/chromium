@@ -78,9 +78,12 @@ NGExclusion CreateExclusion(const NGFragment& fragment,
                             const NGLayoutOpportunity& opportunity,
                             const LayoutUnit float_offset,
                             const NGBoxStrut& margins,
+                            const NGBlockNode node,
                             NGExclusion::Type exclusion_type) {
   NGExclusion exclusion;
   exclusion.type = exclusion_type;
+  exclusion.node = node;
+
   NGLogicalRect& rect = exclusion.rect;
   rect.offset = opportunity.offset;
   rect.offset.inline_offset += float_offset;
@@ -257,6 +260,7 @@ NGPositionedFloat PositionFloat(LayoutUnit origin_block_offset,
   // Add the float as an exclusion.
   const NGExclusion exclusion = CreateExclusion(
       float_fragment, opportunity, float_offset, unpositioned_float->margins,
+      unpositioned_float->node,
       unpositioned_float->IsRight() ? NGExclusion::Type::kFloatRight
                                     : NGExclusion::Type::kFloatLeft);
   exclusion_space->Add(exclusion);

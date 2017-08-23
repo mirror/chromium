@@ -18,18 +18,26 @@ NGExclusionSpace::NGExclusionSpace()
 
 void NGExclusionSpace::Add(const NGExclusion& exclusion) {
   storage_.push_back(exclusion);
-  last_float_block_start_ =
-      std::max(last_float_block_start_, exclusion.rect.BlockStartOffset());
+  UpdateState(exclusion);
+}
 
-  if (exclusion.type == NGExclusion::kFloatLeft) {
-    has_left_float_ = true;
-    left_float_clear_offset_ =
-        std::max(left_float_clear_offset_, exclusion.rect.BlockEndOffset());
-  } else if (exclusion.type == NGExclusion::kFloatRight) {
-    has_right_float_ = true;
-    right_float_clear_offset_ =
-        std::max(right_float_clear_offset_, exclusion.rect.BlockEndOffset());
-  }
+bool NGExclusionSpace::RemoveLast(const NGBlockNode node) {
+  if (storage_.back().node != node)
+    return false;
+
+  storage_.pop_back();
+
+  // If we've removed the last float, we need to rebuild our state. This should
+  // only happen when Rewinding inlines, and shouldn't occur often.
+  last_float_block_start_ = LayoutUnit::Min();
+  left_float_clear_offset_ = LayoutUnit::Min();
+  right_float_clear_offset_ = LayoutUnit::Min();
+  has_left_float_ = false;
+  has_right_float_ = false;
+  for (const auto& exclusion : storage_)
+    UpdateState(exclusion);
+
+  return true;
 }
 
 NGLayoutOpportunity NGExclusionSpace::FindLayoutOpportunity(
@@ -70,6 +78,21 @@ LayoutUnit NGExclusionSpace::ClearanceOffset(EClear clear_type) const {
 
 bool NGExclusionSpace::operator==(const NGExclusionSpace& other) const {
   return storage_ == other.storage_;
+}
+
+void NGExclusionSpace::UpdateState(const NGExclusion& exclusion) {
+  last_float_block_start_ =
+      std::max(last_float_block_start_, exclusion.rect.BlockStartOffset());
+
+  if (exclusion.type == NGExclusion::kFloatLeft) {
+    has_left_float_ = true;
+    left_float_clear_offset_ =
+        std::max(left_float_clear_offset_, exclusion.rect.BlockEndOffset());
+  } else if (exclusion.type == NGExclusion::kFloatRight) {
+    has_right_float_ = true;
+    right_float_clear_offset_ =
+        std::max(right_float_clear_offset_, exclusion.rect.BlockEndOffset());
+  }
 }
 
 }  // namespace blink

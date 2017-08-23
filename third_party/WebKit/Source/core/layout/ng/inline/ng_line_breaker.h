@@ -25,18 +25,21 @@ class NGFragmentBuilder;
 // This class measures each NGInlineItem and determines items to form a line,
 // so that NGInlineLayoutAlgorithm can build a line box from the output.
 class CORE_EXPORT NGLineBreaker {
+  STACK_ALLOCATED();
+
  public:
   NGLineBreaker(NGInlineNode,
-                NGConstraintSpace*,
+                const NGConstraintSpace&,
                 NGFragmentBuilder*,
                 Vector<RefPtr<NGUnpositionedFloat>>*,
                 const NGInlineBreakToken* = nullptr);
   ~NGLineBreaker() {}
-  STACK_ALLOCATED();
 
   // Compute the next line break point and produces NGInlineItemResults for
   // the line.
-  bool NextLine(NGLineInfo*, const NGLogicalOffset&);
+  bool NextLine(const NGLogicalOffset& content_offset,
+                const NGExclusionSpace&,
+                NGLineInfo*);
 
   // Create an NGInlineBreakToken for the last line returned by NextLine().
   RefPtr<NGInlineBreakToken> CreateBreakToken() const;
@@ -53,6 +56,10 @@ class CORE_EXPORT NGLineBreaker {
     // The current opportunity.
     WTF::Optional<NGLayoutOpportunity> opportunity;
 
+    // TODO
+    const NGExclusionSpace* initial_exclusion_space;
+    std::unique_ptr<NGExclusionSpace> exclusion_space;
+
     // We don't create "certain zero-height line boxes".
     // https://drafts.csswg.org/css2/visuren.html#phantom-line-box
     // Such line boxes do not prevent two margins being "adjoining", and thus
@@ -64,6 +71,9 @@ class CORE_EXPORT NGLineBreaker {
     // the next line.
     bool is_after_forced_break = false;
 
+    // If we've encountered a float on this line.
+    bool has_float = false;
+
     bool HasAvailableWidth() const { return opportunity.has_value(); }
     LayoutUnit AvailableWidth() const { return opportunity->InlineSize(); }
     bool CanFit() const { return position <= AvailableWidth(); }
@@ -74,7 +84,7 @@ class CORE_EXPORT NGLineBreaker {
 
   void BreakLine(NGLineInfo*);
 
-  void PrepareNextLine(NGLineInfo*);
+  void PrepareNextLine(const NGExclusionSpace&, NGLineInfo*);
 
   bool HasFloatsAffectingCurrentLine() const;
   void FindNextLayoutOpportunity();
@@ -124,7 +134,7 @@ class CORE_EXPORT NGLineBreaker {
 
   LineData line_;
   NGInlineNode node_;
-  NGConstraintSpace* constraint_space_;
+  const NGConstraintSpace& constraint_space_;
   NGFragmentBuilder* container_builder_;
   Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats_;
   unsigned item_index_ = 0;
@@ -133,9 +143,6 @@ class CORE_EXPORT NGLineBreaker {
   LazyLineBreakIterator break_iterator_;
   HarfBuzzShaper shaper_;
   ShapeResultSpacing<String> spacing_;
-
-  // Keep track of handled float items. See HandleFloat().
-  unsigned handled_floats_end_item_index_ = 0;
 
   // True when current box allows line wrapping.
   bool auto_wrap_ = false;

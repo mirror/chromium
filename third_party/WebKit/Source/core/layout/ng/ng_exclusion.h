@@ -7,6 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "core/layout/ng/geometry/ng_logical_rect.h"
+#include "core/layout/ng/ng_block_node.h"
 
 namespace blink {
 
@@ -28,6 +29,9 @@ struct CORE_EXPORT NGExclusion {
 
   // Type of this exclusion.
   Type type = kExclusionTypeUndefined;
+
+  // The node which generated this exclusion.
+  NGBlockNode node = NGBlockNode(nullptr);
 
   bool operator==(const NGExclusion& other) const;
   bool operator!=(const NGExclusion& other) const { return !(*this == other); }
