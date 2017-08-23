@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4035aa7c_bb335aaa",
+        "filename": "chrome/installer/zucchini/algorithm.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T16:03:57Z",
+      "side": 1,
+      "message": "Done: Going wiht is_unsigned.",
+      "parentUuid": "0bf6a61f_d9de8337",
+      "revId": "0a7c40bd8f6949740deb33e548ba28e80073de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e548254_d8bfcbc3",
         "filename": "chrome/installer/zucchini/disassembler_win32.cc",
         "patchSetId": 9
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "de51b023_997af1b5",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T16:03:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e548254_d8bfcbc3",
+      "range": {
+        "startLine": 267,
+        "startChar": 8,
+        "endLine": 267,
+        "endChar": 10
+      },
+      "revId": "0a7c40bd8f6949740deb33e548ba28e80073de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37c5b417_44bb3348",
         "filename": "chrome/installer/zucchini/disassembler_win32.cc",
         "patchSetId": 9
@@ -62,6 +104,30 @@
       "revId": "0a7c40bd8f6949740deb33e548ba28e80073de38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce56ea58_4f27f558",
+        "filename": "chrome/installer/zucchini/disassembler_win32.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T16:03:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37c5b417_44bb3348",
+      "range": {
+        "startLine": 268,
+        "startChar": 27,
+        "endLine": 268,
+        "endChar": 34
+      },
+      "revId": "0a7c40bd8f6949740deb33e548ba28e80073de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

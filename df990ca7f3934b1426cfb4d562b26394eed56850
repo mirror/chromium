@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "85d5f2ff_4efee3fe",
+        "filename": "chrome/installer/zucchini/disassembler_win32.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T16:03:57Z",
+      "side": 1,
+      "message": "This works, but I\u0027m confused on why we\u0027re doing this? Is it to force a stored version of the constant, so \u0026Win32X86Traits::kExeType will not lead to link error?",
+      "parentUuid": "29a4e8c2_c8f1c6ed",
+      "revId": "df990ca7f3934b1426cfb4d562b26394eed56850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60e263eb_2d7d1665",
         "filename": "chrome/installer/zucchini/main_utils.cc",
         "patchSetId": 5
