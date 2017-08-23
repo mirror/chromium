@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "6d28cece_5b5a656e",
+        "filename": "chrome/browser/chrome_browser_main_android.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-23T15:29:12Z",
+      "side": 1,
+      "message": "There is no \"shutdown\" on android. We merely rely on the OS to kill browser process as needed",
+      "parentUuid": "306848f2_34828829",
+      "revId": "416d11cb63ccf9c38834a6f086571d260bbb096a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cc54ede_66cc5963",
         "filename": "components/crash/content/browser/child_process_crash_observer_android.cc",
         "patchSetId": 21
