@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3e1d5bd_e48b2b6a",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontPlatformData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-08-23T15:40:51Z",
+      "side": 1,
+      "message": "We don;t really use the Should prefix much for methods like this, why not simply AvoidEmbeddedBitmaps() ?",
+      "revId": "d8a925d255c8047cdd3295145aab3def5c055f77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a32488_566310f9",
+        "filename": "third_party/WebKit/Source/platform/fonts/linux/FontPlatformDataLinux.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-08-23T15:40:51Z",
+      "side": 1,
+      "message": "Is there other code that can disable embedded bitmaps? If not the following might be simpler:\npaint-\u003esetEmbeddedBitmapText(!avoid_embedded_bitmaps_);",
+      "revId": "d8a925d255c8047cdd3295145aab3def5c055f77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b7bf6d_b2a752bf",
+        "filename": "third_party/WebKit/Source/platform/fonts/opentype/OS2TableCJKFont.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-08-23T15:40:51Z",
+      "side": 1,
+      "message": "This will need to go in third_party. \nSee https://chromium.googlesource.com/chromium/src.git/+/master/docs/adding_to_third_party.md for details.",
+      "revId": "d8a925d255c8047cdd3295145aab3def5c055f77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
