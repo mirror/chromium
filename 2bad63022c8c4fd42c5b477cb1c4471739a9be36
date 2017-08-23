@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfff76d8_8619782f",
+        "filename": "media/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-23T23:59:41Z",
+      "side": 1,
+      "message": "Note: this retains the existing SRC\u003d fuzzer target name, so all the associated fuzzer corpus and stats should continue to be associated correctly (per chat with mmoroz@ last week).",
+      "range": {
+        "startLine": 154,
+        "startChar": 17,
+        "endLine": 154,
+        "endChar": 50
+      },
+      "revId": "2bad63022c8c4fd42c5b477cb1c4471739a9be36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
