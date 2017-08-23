@@ -27,12 +27,16 @@
 
 #include "WebCommon.h"
 
+namespace cc {
+struct ElementId;
+}
+
 namespace blink {
 
 // A client that is notified of scrolling on a WebLayer.
 class BLINK_PLATFORM_EXPORT WebLayerScrollClient {
  public:
-  virtual void DidScroll(const gfx::ScrollOffset&) = 0;
+  virtual void DidScroll(const gfx::ScrollOffset&, const cc::ElementId&) = 0;
 
  protected:
   virtual ~WebLayerScrollClient() {}
