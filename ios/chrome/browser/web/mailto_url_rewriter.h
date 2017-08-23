@@ -7,9 +7,9 @@
 
 #import <Foundation/Foundation.h>
 
+class GURL;
 @class MailtoHandler;
 @class MailtoURLRewriter;
-class GURL;
 
 // Protocol that must be implemented by observers of MailtoURLRewriter object.
 @protocol MailtoURLRewriterObserver<NSObject>
@@ -17,9 +17,9 @@ class GURL;
 - (void)rewriterDidChange:(MailtoURLRewriter*)rewriter;
 @end
 
-// An object that manages the available Mail client apps. The currently selected
-// Mail client to handle mailto: URL is stored in a key in NSUserDefaults.
-// If the key in NSUserDefaults is not set or the corresponding app is no longer
+// An abstract base class for objects that manage the available Mail client
+// apps. The currently selected Mail client to handle mailto: URL is available
+// through -defaultHandlerID property. If the corresponding app is no longer
 // installed, the system-provided Mail client app will be used.
 @interface MailtoURLRewriter : NSObject
 
