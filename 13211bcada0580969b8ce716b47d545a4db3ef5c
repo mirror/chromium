@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae33bd7_e183ca27",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailGeneratorTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-23T17:20:25Z",
+      "side": 1,
+      "message": "This looks like it\u0027s still using the older approach to instrumentation tests - you should probably be using JUnit4 like the other download UI tests https://cs.chromium.org/chromium/src/chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorageTest.java?q\u003dthumbnailgenerator\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d50",
+      "revId": "13211bcada0580969b8ce716b47d545a4db3ef5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
