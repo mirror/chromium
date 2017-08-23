@@ -67,7 +67,9 @@ void BrowserURLLoaderThrottle::WillRedirectRequest(
                      base::Unretained(this)));
 }
 
-void BrowserURLLoaderThrottle::WillProcessResponse(bool* defer) {
+void BrowserURLLoaderThrottle::WillProcessResponse(
+    const content::ResourceResponseInfo& response_info,
+    bool* defer) {
   // If |blocked_| is true, the resource load has been canceled and there
   // shouldn't be such a notification.
   DCHECK(!blocked_);
