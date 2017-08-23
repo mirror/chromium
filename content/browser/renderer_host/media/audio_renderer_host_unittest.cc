@@ -171,13 +171,12 @@ class MockAudioRendererHost : public AudioRendererHost {
   void OnNotifyStreamCreated(
       int stream_id,
       base::SharedMemoryHandle handle,
-      base::SyncSocket::TransitDescriptor socket_descriptor,
-      uint32_t length) {
+      base::SyncSocket::TransitDescriptor socket_descriptor) {
     // Maps the shared memory.
+    shared_memory_length_ = handle.GetSize();
     shared_memory_.reset(new base::SharedMemory(handle, false));
-    CHECK(shared_memory_->Map(length));
+    CHECK(shared_memory_->Map(shared_memory_length_));
     CHECK(shared_memory_->memory());
-    shared_memory_length_ = length;
 
     // Create the SyncSocket using the handle.
     base::SyncSocket::Handle sync_socket_handle =
@@ -185,7 +184,7 @@ class MockAudioRendererHost : public AudioRendererHost {
     sync_socket_.reset(new base::SyncSocket(sync_socket_handle));
 
     // And then delegate the call to the mock method.
-    WasNotifiedOfCreation(stream_id, length);
+    WasNotifiedOfCreation(stream_id, shared_memory_length_);
   }
 
   void OnNotifyStreamError(int stream_id) { WasNotifiedOfError(stream_id); }

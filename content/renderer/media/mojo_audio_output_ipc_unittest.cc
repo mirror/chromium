@@ -169,8 +169,8 @@ class MockDelegate : public media::AudioOutputIPCDelegate {
   ~MockDelegate() override {}
 
   void OnStreamCreated(base::SharedMemoryHandle mem_handle,
-                       base::SyncSocket::Handle socket_handle,
-                       int length) {
+                       base::SyncSocket::Handle socket_handle) {
+    size_t length = mem_handle.GetSize();
     base::SharedMemory sh_mem(
         mem_handle, /*read_only*/ false);  // Releases the shared memory handle.
     base::SyncSocket socket(socket_handle);  // Releases the socket descriptor.
@@ -182,7 +182,7 @@ class MockDelegate : public media::AudioOutputIPCDelegate {
                void(media::OutputDeviceStatus device_status,
                     const media::AudioParameters& output_params,
                     const std::string& matched_device_id));
-  MOCK_METHOD1(GotOnStreamCreated, void(int length));
+  MOCK_METHOD1(GotOnStreamCreated, void(size_t length));
   MOCK_METHOD0(OnIPCClosed, void());
 };
 

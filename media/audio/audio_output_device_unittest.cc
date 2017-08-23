@@ -154,12 +154,6 @@ class AudioOutputDeviceTest
   DISALLOW_COPY_AND_ASSIGN(AudioOutputDeviceTest);
 };
 
-int AudioOutputDeviceTest::CalculateMemorySize() {
-  // Calculate output memory size.
-  return sizeof(AudioOutputBufferParameters) +
-         AudioBus::CalculateMemorySize(default_audio_parameters_);
-}
-
 AudioOutputDeviceTest::AudioOutputDeviceTest()
     : device_status_(OUTPUT_DEVICE_STATUS_ERROR_INTERNAL) {
   default_audio_parameters_.Reset(AudioParameters::AUDIO_PCM_LINEAR,
@@ -227,7 +221,8 @@ void AudioOutputDeviceTest::StartAudioDevice() {
 }
 
 void AudioOutputDeviceTest::CreateStream() {
-  const int kMemorySize = CalculateMemorySize();
+  const uint32_t kMemorySize =
+      ComputeAudioOutputBufferSize(default_audio_parameters_).ValueOrDie();
 
   ASSERT_TRUE(shared_memory_.CreateAndMapAnonymous(kMemorySize));
   memset(shared_memory_.memory(), 0xff, kMemorySize);
@@ -249,7 +244,7 @@ void AudioOutputDeviceTest::CreateStream() {
   // https://crbug.com/640840.
   audio_device_->OnStreamCreated(
       duplicated_memory_handle,
-      SyncSocket::UnwrapHandle(audio_device_socket_descriptor), kMemorySize);
+      SyncSocket::UnwrapHandle(audio_device_socket_descriptor));
   base::RunLoop().RunUntilIdle();
 }
 
