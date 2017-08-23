@@ -29,7 +29,6 @@ scoped_refptr<Sequence> CreateSequenceWithTask(std::unique_ptr<Task> task);
 
 // Creates a TaskRunner that posts tasks to |worker_pool| with the
 // |execution_mode| execution mode and the WithBaseSyncPrimitives() trait.
-// Caveat: this does not support ExecutionMode::SINGLE_THREADED.
 scoped_refptr<TaskRunner> CreateTaskRunnerWithExecutionMode(
     SchedulerWorkerPool* worker_pool,
     test::ExecutionMode execution_mode);
