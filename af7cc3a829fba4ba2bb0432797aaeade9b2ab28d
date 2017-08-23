@@ -16,6 +16,24 @@
       "revId": "af7cc3a829fba4ba2bb0432797aaeade9b2ab28d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b3811a_44a3276d",
+        "filename": "content/browser/renderer_host/media/service_video_capture_device_launcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-08-23T21:30:21Z",
+      "side": 1,
+      "message": "I ended up reworking the design a bit to make it easier to understand.\n\nThe constructor of ServiceVideoCaptureDeviceLauncher now receives a single Callback object and no |device_factory|. It obtains a |device_factory| on-demand by invoking the callback. That automatically triggers the connection request to the service. The destructor of |device_factory| automatically messages VideoCaptureProvider that the connection is no longer needed.",
+      "parentUuid": "3502353c_d0f4f496",
+      "revId": "af7cc3a829fba4ba2bb0432797aaeade9b2ab28d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
