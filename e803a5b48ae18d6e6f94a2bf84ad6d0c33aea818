@@ -57,6 +57,30 @@
       "revId": "e803a5b48ae18d6e6f94a2bf84ad6d0c33aea818",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c804d637_81ad5e5d",
+        "filename": "chrome/browser/net/net_error_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-23T22:16:26Z",
+      "side": 1,
+      "message": "Added comment to clarify. Let me know if I can be more specific somehow...",
+      "parentUuid": "3cd68665_e9e8c82e",
+      "range": {
+        "startLine": 236,
+        "startChar": 35,
+        "endLine": 236,
+        "endChar": 52
+      },
+      "revId": "e803a5b48ae18d6e6f94a2bf84ad6d0c33aea818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
