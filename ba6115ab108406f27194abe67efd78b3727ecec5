@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e3aced02_5a324f13",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T01:10:03Z",
+      "side": 1,
+      "message": "(Just to clarify for emim@, this comment does not apply to your CL.)\n\nIt\u0027d have to be judged case-by-case I think. If the mocks grow too big of course it\u0027d be better to just use the real objects. Exercising the real objects could test more real code paths too and thus find more bugs.\n\nI agree this boilerplate on lines 168-191 should probably be factored out into convenient helper functions (there\u0027s 3-4 test files that do the similar things).",
+      "parentUuid": "25fc46ae_15678cf1",
+      "revId": "ba6115ab108406f27194abe67efd78b3727ecec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92bb44f6_53cc6bea",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 4
