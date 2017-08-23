@@ -4,6 +4,8 @@
 
 #include "chrome/test/base/chrome_test_suite.h"
 
+#include <array>
+
 #if defined(OS_CHROMEOS)
 #include <stdio.h>
 #include <unistd.h>
@@ -36,6 +38,9 @@
 #endif
 
 namespace {
+
+constexpr std::array<const char*, 2> kNonWildcardDomainNonPortSchemes = {
+    {extensions::kExtensionScheme, chrome::kChromeSearchScheme}};
 
 bool IsCrosPythonProcess() {
 #if defined(OS_CHROMEOS)
@@ -81,8 +86,9 @@ void ChromeTestSuite::Initialize() {
   // values for DIR_EXE and DIR_MODULE.
   content::ContentTestSuiteBase::Initialize();
 
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
-      extensions::kExtensionScheme);
+  ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(
+      kNonWildcardDomainNonPortSchemes.data(),
+      kNonWildcardDomainNonPortSchemes.size());
 
 #if defined(OS_MACOSX)
   // Look in the framework bundle for resources.

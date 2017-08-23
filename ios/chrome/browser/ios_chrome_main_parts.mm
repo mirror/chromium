@@ -4,6 +4,8 @@
 
 #include "ios/chrome/browser/ios_chrome_main_parts.h"
 
+#include <array>
+
 #include "base/base_switches.h"
 #include "base/feature_list.h"
 #include "base/files/file_path.h"
@@ -37,7 +39,6 @@
 #include "ios/chrome/browser/browser_state/chrome_browser_state_manager.h"
 #include "ios/chrome/browser/chrome_paths.h"
 #include "ios/chrome/browser/chrome_switches.h"
-#include "ios/chrome/browser/chrome_url_constants.h"
 #import "ios/chrome/browser/first_run/first_run.h"
 #include "ios/chrome/browser/install_time_util.h"
 #include "ios/chrome/browser/ios_chrome_field_trials.h"
@@ -148,8 +149,9 @@ void IOSChromeMainParts::PreMainMessageLoopRun() {
 
   // ContentSettingsPattern need to be initialized before creating the
   // ChromeBrowserState.
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
-      kDummyExtensionScheme);
+  const std::array<const char*, 0> schemes{};
+  ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(schemes.data(),
+                                                             schemes.size());
 
   // Ensure ClipboadRecentContentIOS is created.
   ClipboardRecentContent::SetInstance(CreateClipboardRecentContentIOS());
