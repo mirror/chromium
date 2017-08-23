@@ -22,6 +22,30 @@
       "revId": "19d0b66919ccff879a55a8902168280314b5beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4a48fac_c884b305",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 19
+      },
+      "lineNbr": 1927,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-23T09:07:55Z",
+      "side": 1,
+      "message": "No, it need to be ASSERT_EQ because we access the n-th element by calling GetItemAtIndex(i). Since the value \"i\" may be out of bound and the documentation of the method does not say it is safe, then the test needs to abort if the item count is not expected to avoid crashing the test suite.\n\n  // Returns the committed NavigationItem at |index|.\n  virtual NavigationItem* GetItemAtIndex(size_t index) const \u003d 0;\n\nIn general ASSERT should be used if the test may crash later if the condition is not true.",
+      "parentUuid": "5bcb8fcd_5bf4fd8d",
+      "range": {
+        "startLine": 1927,
+        "startChar": 2,
+        "endLine": 1927,
+        "endChar": 11
+      },
+      "revId": "19d0b66919ccff879a55a8902168280314b5beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
