@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "651c627a_2d4d8d44",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-23T23:28:13Z",
+      "side": 1,
+      "message": "* Looks weird when combined with * that starts a line of this type of javadoc. Changed to \u0027-\u0027 bullets.",
+      "parentUuid": "24e2cb0a_66349698",
+      "range": {
+        "startLine": 26,
+        "startChar": 4,
+        "endLine": 26,
+        "endChar": 6
+      },
+      "revId": "f07664934802c5256f03308cdccfd8f83c55a2f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0efea45_787148cd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationManager.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "f07664934802c5256f03308cdccfd8f83c55a2f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b61ac9_25262de2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-08-23T23:28:13Z",
+      "side": 1,
+      "message": "Nice catch :)",
+      "parentUuid": "b0efea45_787148cd",
+      "range": {
+        "startLine": 103,
+        "startChar": 28,
+        "endLine": 103,
+        "endChar": 30
+      },
+      "revId": "f07664934802c5256f03308cdccfd8f83c55a2f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
