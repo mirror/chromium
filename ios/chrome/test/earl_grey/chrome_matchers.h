@@ -64,6 +64,9 @@ id<GREYMatcher> PageSecurityInfoButton();
 // omnibox contents.
 id<GREYMatcher> OmniboxText(std::string text);
 
+// Returns matcher for |text| being a substring of the text in the omnibox.
+id<GREYMatcher> OmniboxContainingText(std::string text);
+
 // Matcher for Tools menu button.
 id<GREYMatcher> ToolsMenuButton();
 
@@ -149,6 +152,12 @@ id<GREYMatcher> SettingsMenuPrivacyButton();
 
 // Returns matcher for the Save passwords cell on the main Settings screen.
 id<GREYMatcher> SettingsMenuPasswordsButton();
+
+// Returns matcher for the payment request collection view.
+id<GREYMatcher> PaymentRequestView();
+
+// Returns matcher for the error confirmation view for payment request.
+id<GREYMatcher> PaymentRequestErrorView();
 
 }  // namespace chrome_test_util
 
