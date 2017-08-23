@@ -113,6 +113,8 @@ split_static_library("ui") {
     "find_bar/find_tab_helper.cc",
     "find_bar/find_tab_helper.h",
     "forced_reauthentication_dialog.h",
+    "framebust_block_infobar_delegate.cc",
+    "framebust_block_infobar_delegate.h",
     "history_ui.cc",
     "history_ui.h",
     "javascript_dialogs/chrome_javascript_native_dialog_factory.h",
