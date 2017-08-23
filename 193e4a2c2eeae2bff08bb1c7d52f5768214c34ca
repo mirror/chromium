@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e2ad7a1_23a09be7",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-08-23T19:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c9b532c_634990ec",
+      "revId": "193e4a2c2eeae2bff08bb1c7d52f5768214c34ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30270949_9459eff2",
         "filename": "content/browser/devtools/protocol/input_handler.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "193e4a2c2eeae2bff08bb1c7d52f5768214c34ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d83f82_d60eb195",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-08-23T19:54:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30270949_9459eff2",
+      "revId": "193e4a2c2eeae2bff08bb1c7d52f5768214c34ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
