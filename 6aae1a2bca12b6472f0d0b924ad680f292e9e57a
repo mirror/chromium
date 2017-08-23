@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f6db6e50_365a354d",
+        "filename": "chrome/browser/accessibility/accessibility_permission_context.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-23T06:06:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f32b1b6e_b0dd9c4c",
+      "revId": "6aae1a2bca12b6472f0d0b924ad680f292e9e57a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1948ab76_a90f33b1",
         "filename": "chrome/browser/permissions/permission_request_impl.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-23T03:10:11Z",
       "side": 1,
       "message": "Sorry if I wasn\u0027t clear earlier, there\u0027s a separate branches for Android in this function and GetMessageText below is only called on Android.",
+      "revId": "6aae1a2bca12b6472f0d0b924ad680f292e9e57a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b314fa_0158f346",
+        "filename": "chrome/browser/permissions/permission_request_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-23T06:06:35Z",
+      "side": 1,
+      "message": "Ah, thanks. Added.",
+      "parentUuid": "1948ab76_a90f33b1",
       "revId": "6aae1a2bca12b6472f0d0b924ad680f292e9e57a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
