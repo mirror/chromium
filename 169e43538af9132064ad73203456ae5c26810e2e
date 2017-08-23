@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "bdeb82ac_f2d7cc20",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-23T16:28:27Z",
+      "side": 1,
+      "message": "Remove TODO, or is there more to add later?",
+      "revId": "169e43538af9132064ad73203456ae5c26810e2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d95a0a1f_0952389a",
         "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
         "patchSetId": 3
