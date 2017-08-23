@@ -30,7 +30,7 @@ class AudioStreamConsumer : public protocol::AudioStub {
   ~AudioStreamConsumer() override {}
   virtual void AddAudioPacket(std::unique_ptr<AudioPacket> packet) = 0;
   virtual void Stop() = 0;
-  virtual base::WeakPtr<AudioStreamConsumer> AudioConsumerAsWeakPtr() = 0;
+  virtual base::WeakPtr<AudioStreamConsumer> AudioStreamConsumerAsWeakPtr() = 0;
 
   // AudioStub implementation. Deprecated. Delegates to AddAudioPacket.
   void ProcessAudioPacket(std::unique_ptr<AudioPacket> packet,

@@ -221,7 +221,8 @@ uint32_t AudioPlayerBuffer::GetBytesPerFrame() {
          GetSamplesPerFrame();
 }
 
-base::WeakPtr<AudioStreamConsumer> AudioPlayerBuffer::AudioConsumerAsWeakPtr() {
+base::WeakPtr<AudioStreamConsumer>
+AudioPlayerBuffer::AudioStreamConsumerAsWeakPtr() {
   return weak_factory_.GetWeakPtr();
 }
 
