@@ -16,6 +16,24 @@
       "revId": "7320ab96650d0e92403562121cdcd00443e98a15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa070f5_623833f7",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-23T21:44:18Z",
+      "side": 1,
+      "message": "Done\nJust had a discussion with robliao@, complaining about braces usage inconsistencies.",
+      "parentUuid": "64b86b3a_c4c66068",
+      "revId": "7320ab96650d0e92403562121cdcd00443e98a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
