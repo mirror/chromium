@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba906ef5_a2ee22a5",
+        "filename": "ui/views/layout/grid_layout.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T22:59:43Z",
+      "side": 1,
+      "message": "Please document this implicitly installs GridLayout as the LayoutManager of host.",
+      "range": {
+        "startLine": 103,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 34
+      },
+      "revId": "85b07594a12a98ee0da61fd377d7274121f4d34f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65cc569a_20f4cd0a",
+        "filename": "ui/views/window/dialog_client_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T22:59:43Z",
+      "side": 1,
+      "message": "I\u0027m mildly worried about side effects introduced by now installing the GridLayout earlier than previously. Could you move creation of the GridLayout here (after creating view_tracker).",
+      "range": {
+        "startLine": 334,
+        "startChar": 2,
+        "endLine": 334,
+        "endChar": 60
+      },
+      "revId": "85b07594a12a98ee0da61fd377d7274121f4d34f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
