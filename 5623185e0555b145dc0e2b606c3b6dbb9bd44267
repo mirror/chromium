@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bffc33e9_8241ec47",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T17:35:23Z",
+      "side": 1,
+      "message": "This can be\n  model_-\u003eSetStateFullscreen(state)\n\nand get rid of OnFullscreenStateChanged in ContentsView.",
+      "revId": "5623185e0555b145dc0e2b606c3b6dbb9bd44267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33be9dcf_4c7cd4bb",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T17:35:23Z",
+      "side": 1,
+      "message": "nit: const ptr and document ownership.\ni.e.\n  ApplistModel* const model_;  // Not owned",
+      "range": {
+        "startLine": 285,
+        "startChar": 2,
+        "endLine": 285,
+        "endChar": 22
+      },
+      "revId": "5623185e0555b145dc0e2b606c3b6dbb9bd44267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
