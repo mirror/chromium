@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d79695c1_e2ec6a08",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-23T06:29:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39f709dc_b23b9548",
+      "revId": "fc397d02468146ef1afd802d40e84e15af6e6780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "099d1457_61616897",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
         "patchSetId": 35
@@ -33,6 +51,24 @@
       "revId": "fc397d02468146ef1afd802d40e84e15af6e6780",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca782ea_3bff03d7",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-23T06:29:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "099d1457_61616897",
+      "revId": "fc397d02468146ef1afd802d40e84e15af6e6780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3b729ee6_f097b37d",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-23T06:29:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19c4ec36_d1c57aeb",
+      "revId": "fc397d02468146ef1afd802d40e84e15af6e6780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7079c28b_49e322f7",
         "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.html",
         "patchSetId": 35
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ef63c003_5d838477",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.html",
+        "patchSetId": 35
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-23T06:29:50Z",
+      "side": 1,
+      "message": "Done. I intentionally left the indent unchanged until a reviewer looks at the diff, otherwise the diff would have looked hard to parse by the reviewer.",
+      "parentUuid": "7079c28b_49e322f7",
+      "revId": "fc397d02468146ef1afd802d40e84e15af6e6780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6c7f59f_0825c4f7",
         "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.html",
         "patchSetId": 35
@@ -84,6 +156,24 @@
       "revId": "fc397d02468146ef1afd802d40e84e15af6e6780",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed41ebd0_09f04148",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.html",
+        "patchSetId": 35
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-23T06:29:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6c7f59f_0825c4f7",
+      "revId": "fc397d02468146ef1afd802d40e84e15af6e6780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
