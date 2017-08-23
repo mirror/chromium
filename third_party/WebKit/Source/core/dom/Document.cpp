@@ -258,10 +258,12 @@
 #include "platform/wtf/text/StringBuffer.h"
 #include "platform/wtf/text/TextEncodingRegistry.h"
 #include "public/platform/Platform.h"
+#include "public/platform/URLConversion.h"
 #include "public/platform/WebAddressSpace.h"
 #include "public/platform/WebPrerenderingSupport.h"
 #include "public/platform/modules/insecure_input/insecure_input_service.mojom-blink.h"
 #include "public/platform/site_engagement.mojom-blink.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
 #ifndef NDEBUG
@@ -277,7 +279,9 @@ using namespace HTMLNames;
 class DocumentOutliveTimeReporter : public BlinkGCObserver {
  public:
   explicit DocumentOutliveTimeReporter(Document* document)
-      : BlinkGCObserver(ThreadState::Current()), document_(document) {}
+      : BlinkGCObserver(ThreadState::Current()),
+        document_(document),
+        ukm_source_id_(ukm::UkmRecorder::GetNewSourceID()) {}
 
   ~DocumentOutliveTimeReporter() override {
     // As not all documents are destroyed before the process dies, this might
@@ -311,12 +315,22 @@ class DocumentOutliveTimeReporter : public BlinkGCObserver {
     int outlive_time_count = GetOutliveTimeCount();
     if (outlive_time_count == 5 || outlive_time_count == 10) {
       const char* kUMAString = "Document.OutliveTimeAfterShutdown.GCCount";
-      if (outlive_time_count == 5)
+      const char* kUKMString = "Document.OutliveTimeAfterShutdown.GCCount";
+
+      ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+      GURL url = WebStringToGURL(document_->Url().GetString());
+      ukm_recorder->UpdateSourceURL(ukm_source_id_, url);
+      std::unique_ptr<ukm::UkmEntryBuilder> builder =
+          ukm_recorder->GetEntryBuilder(ukm_source_id_, kUKMString);
+
+      if (outlive_time_count == 5) {
         UMA_HISTOGRAM_ENUMERATION(kUMAString, kGCCount5, kGCCountMax);
-      else if (outlive_time_count == 10)
+        // builder->AddMetric("5", 1);
+      } else if (outlive_time_count == 10) {
         UMA_HISTOGRAM_ENUMERATION(kUMAString, kGCCount10, kGCCountMax);
-      else
+      } else {
         NOTREACHED();
+      }
     }
   }
 
@@ -329,6 +343,7 @@ class DocumentOutliveTimeReporter : public BlinkGCObserver {
 
   WeakPersistent<Document> document_;
   int gc_age_when_document_detached_ = 0;
+  ukm::SourceId ukm_source_id_;
 };
 
 static const unsigned kCMaxWriteRecursionDepth = 21;

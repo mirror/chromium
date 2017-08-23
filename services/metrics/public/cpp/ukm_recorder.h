@@ -32,6 +32,10 @@ namespace autofill {
 class AutofillMetrics;
 }
 
+namespace blink {
+class DocumentOutliveTimeReporter;
+}
+
 namespace content {
 class RenderFrameImpl;
 class RenderWidgetHostLatencyTracker;
@@ -123,6 +127,7 @@ class METRICS_EXPORT UkmRecorder {
   friend resource_coordinator::CoordinationUnitManager;
   friend MediaEngagementContentsObserver;
   friend internal::UkmEntryBuilderBase;
+  friend blink::DocumentOutliveTimeReporter;
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, AddEntryWithEmptyMetrics);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, EntryBuilderAndSerialization);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest,
