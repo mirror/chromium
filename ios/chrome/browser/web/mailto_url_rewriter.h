@@ -24,6 +24,7 @@ class GURL;
 @interface MailtoURLRewriter : NSObject
 
 // The unique ID of the Mail client app that handles mailto: URL scheme.
+// This has a value of nil if default has not been set.
 @property(nonatomic, copy) NSString* defaultHandlerID;
 
 // Observer object that will be called when |defaultHandlerID| is changed.
@@ -42,12 +43,13 @@ class GURL;
 // schemes.
 - (NSArray<MailtoHandler*>*)defaultHandlers;
 
-// Returns the name of the application that handles mailto: URLs.
+// Returns the name of the application that handles mailto: URLs. Returns nil
+// if a default has not been set.
 - (NSString*)defaultHandlerName;
 
 // Rewrites |gURL| into a new URL that can be "opened" to launch the Mail
-// client app. May return nil if |gURL| is not a mailto: URL or there are no
-// Mail client app available.
+// client app. May return nil if |gURL| is not a mailto: URL, a mail client
+// app has not been selected, or there are no Mail client app available.
 - (NSString*)rewriteMailtoURL:(const GURL&)gURL;
 
 @end

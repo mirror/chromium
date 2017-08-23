@@ -83,12 +83,16 @@ NSString* const kMailtoDefaultHandlerKey = @"MailtoHandlerDefault";
 - (NSString*)defaultHandlerID {
   NSString* value = [[NSUserDefaults standardUserDefaults]
       stringForKey:kMailtoDefaultHandlerKey];
+  // This implementation of MailtoURLRewriter always returns a non-nil mailto:
+  // URL handler ID.
   if ([_handlers[value] isAvailable])
     return value;
   return [[self class] systemMailApp];
 }
 
 - (void)setDefaultHandlerID:(NSString*)appStoreID {
+  // This implementation of MailtoURLRewriter does not allow the unsetting of
+  // a mailto: URL handler.
   DCHECK([appStoreID length]);
   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
   if ([appStoreID
