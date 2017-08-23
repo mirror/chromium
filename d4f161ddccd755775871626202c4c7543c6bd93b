@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fda61bf6_f6e15762",
+        "filename": "chrome/browser/resources/signin/signin_dice_internals/signin_dice_internals.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-23T14:07:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c62723c_10442c06",
+      "revId": "d4f161ddccd755775871626202c4c7543c6bd93b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5122b47_009fbcd2",
         "filename": "chrome/browser/resources/signin/signin_dice_internals/signin_dice_internals.js",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8f1841e0_d0cbfce1",
+        "filename": "chrome/browser/resources/signin/signin_dice_internals/signin_dice_internals.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-23T14:07:15Z",
+      "side": 1,
+      "message": "Done (this is a programming-only interface).",
+      "parentUuid": "c5122b47_009fbcd2",
+      "revId": "d4f161ddccd755775871626202c4c7543c6bd93b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a60b54a9_834ba3da",
         "filename": "chrome/browser/ui/webui/signin/signin_dice_internals_ui.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-10T00:26:32Z",
       "side": 1,
       "message": "Hey, can I have some more context for the intended use of this page? It seems like this could be merged with chrome://signin-internals\n\nNew usages of CallJavascriptFunctionUnsafe really aren\u0027t supposed to be used...",
+      "revId": "d4f161ddccd755775871626202c4c7543c6bd93b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e089c0e0_dcfa5dfa",
+        "filename": "chrome/browser/ui/webui/signin/signin_dice_internals_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-23T14:07:15Z",
+      "side": 1,
+      "message": "This is a developer-only temporary page to make progress on the DICE enable and disable sync flows until we have mocks from the UX. We need to validate the fact that the sign-in / sign-out as we designed work.\n\nMy understanding is that CallJavascriptFunctionUnsafe should not be called from the WebUI message helpers, but instead use AllowJavascript() and then call CallJavascriptFunction. I moved this code to the message helper to avoid using CallJavascriptFunctionUnsafe.",
+      "parentUuid": "a60b54a9_834ba3da",
       "revId": "d4f161ddccd755775871626202c4c7543c6bd93b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
