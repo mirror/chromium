@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3108ad0c_19ef7011",
+        "filename": "components/bookmarks/browser/bookmark_new_generation_features.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-23T10:57:28Z",
+      "side": 1,
+      "message": "Remember that once moved into ios/chrome the namespaces (and the #ifdef) have to go, they are not necessary nor welcome there.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "1cecb77487160b2db602f664add9fa8d17eb0642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
