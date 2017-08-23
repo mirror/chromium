@@ -29,6 +29,17 @@ struct ServiceWorkerProviderContext::ControlleeState {
 
   // Tracks feature usage for UseCounter.
   std::set<uint32_t> used_features;
+
+  // Keeps ServiceWorkerWorkerClient pointers of dedicated or shared workers
+  // which are associated with the ServiceWorkerProviderContext.
+  // - If this ServiceWorkerProviderContext is for a Document, then
+  //   |worker_clients| contains all its dedicated workers.
+  // - If this ServiceWorkerProviderContext is for a SharedWorker (technically
+  //   speaking, for its shadow page), then |worker_clients| has one element:
+  //   the shared worker.
+  std::unordered_map<mojom::ServiceWorkerWorkerClient*,
+                     mojom::ServiceWorkerWorkerClientPtr>
+      worker_clients;
 };
 
 // Holds state for service worker execution contexts.
@@ -111,6 +122,13 @@ void ServiceWorkerProviderContext::SetController(
   DCHECK(state);
   DCHECK(!state->controller ||
          state->controller->handle_id() != kInvalidServiceWorkerHandleId);
+
+  if (controller) {
+    for (const auto& pair : state->worker_clients) {
+      // This is Mojo interface call to the (dedicated or shared) worker thread.
+      pair.second->SetControllerServiceWorker(controller->version_id());
+    }
+  }
   state->controller = std::move(controller);
   state->used_features = used_features;
   if (event_dispatcher_ptr_info.is_valid())
@@ -140,6 +158,30 @@ void ServiceWorkerProviderContext::CountFeature(uint32_t feature) {
 const std::set<uint32_t>& ServiceWorkerProviderContext::used_features() const {
   DCHECK(controllee_state_);
   return controllee_state_->used_features;
+}
+
+mojom::ServiceWorkerWorkerClientRequest
+ServiceWorkerProviderContext::CreateWorkerClientRequest() {
+  DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(controllee_state_);
+  mojom::ServiceWorkerWorkerClientPtr client;
+  mojom::ServiceWorkerWorkerClientRequest request = mojo::MakeRequest(&client);
+  client.set_connection_error_handler(base::BindOnce(
+      &ServiceWorkerProviderContext::UnregisterWorkerFetchContext,
+      base::Unretained(this), client.get()));
+  controllee_state_->worker_clients.insert(
+      std::make_pair<mojom::ServiceWorkerWorkerClient*,
+                     mojom::ServiceWorkerWorkerClientPtr>(client.get(),
+                                                          std::move(client)));
+  return request;
+}
+
+void ServiceWorkerProviderContext::UnregisterWorkerFetchContext(
+    mojom::ServiceWorkerWorkerClient* client) {
+  DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(controllee_state_);
+  DCHECK(controllee_state_->worker_clients.count(client));
+  controllee_state_->worker_clients.erase(client);
 }
 
 void ServiceWorkerProviderContext::OnNetworkProviderDestroyed() {
