@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "084354c6_6cf68f8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-08-23T00:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce5071c8_29d39544",
+      "revId": "4a64398d1deadb021ab4975c9d49703761ec57f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3249e7f0_4e907736",
         "filename": "media/base/media_switches.cc",
         "patchSetId": 18
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-22T19:08:38Z",
       "side": 1,
       "message": "Maybe keep it disabled by default for now and turn it on when inten to ship is approved?",
+      "revId": "4a64398d1deadb021ab4975c9d49703761ec57f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d77d2f72_0dbd1606",
+        "filename": "media/base/media_switches.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-08-23T00:51:40Z",
+      "side": 1,
+      "message": "Ack, done.",
+      "parentUuid": "3249e7f0_4e907736",
       "revId": "4a64398d1deadb021ab4975c9d49703761ec57f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "4a64398d1deadb021ab4975c9d49703761ec57f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5169d5d4_dae9b437",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 2228,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-08-23T00:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbc134a1_b0918142",
+      "revId": "4a64398d1deadb021ab4975c9d49703761ec57f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
