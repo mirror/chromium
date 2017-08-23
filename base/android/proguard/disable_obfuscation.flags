@@ -2,7 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-# Disables obfuscation for chromium packages.
--keepnames,allowoptimization class com.google.android.apps.chrome.**,org.chromium.** {
+# Disables obfuscation while still allowing optimizations.
+-keepnames,allowoptimization class *** {
   *;
 }
