@@ -1472,6 +1472,7 @@ TEST_P(CompositedLayerMappingTest,
       "<div id='grandparent'>"
       "  <div id='parent'>"
       "    <div id='child'></div>"
+      "  </div>"
       "</div>");
   GetDocument().View()->UpdateAllLifecyclePhases();
 
@@ -1508,6 +1509,7 @@ TEST_P(CompositedLayerMappingTest,
       "<div id='grandparent'>"
       "  <div id='parent'>"
       "    <div id='child'></div>"
+      "  </div>"
       "</div>");
   GetDocument().View()->UpdateAllLifecyclePhases();
 
@@ -1548,6 +1550,7 @@ TEST_P(CompositedLayerMappingTest,
       "<div id='grandparent'>"
       "  <div id='parent'>"
       "    <div id='child'></div>"
+      "  </div>"
       "</div>");
   GetDocument().View()->UpdateAllLifecyclePhases();
 
@@ -1586,6 +1589,7 @@ TEST_P(CompositedLayerMappingTest,
       "<div id='grandparent'>"
       "  <div id='parent'>"
       "    <div id='child'></div>"
+      "  </div>"
       "</div>");
   GetDocument().View()->UpdateAllLifecyclePhases();
 
@@ -1625,6 +1629,7 @@ TEST_P(CompositedLayerMappingTest,
       "<div id='grandparent'>"
       "  <div id='parent'>"
       "    <div id='child'></div>"
+      "  </div>"
       "</div>");
   GetDocument().View()->UpdateAllLifecyclePhases();
 
@@ -1895,6 +1900,87 @@ TEST_P(CompositedLayerMappingTest, AncestorClipMaskRequiredDueToRotation) {
   EXPECT_TRUE(child_mapping->AncestorClippingLayer());
   EXPECT_TRUE(child_mapping->AncestorClippingLayer()->MaskLayer());
   EXPECT_TRUE(child_mapping->AncestorClippingMaskLayer());
+}
+
+TEST_P(CompositedLayerMappingTest,
+       AncestorClipMaskRequiredByBorderRadiusWithCompositedDescendant) {
+  // This case has the child and grandchild within the ancestors and would
+  // in principle not need a mask, but does because we cannot efficiently
+  // check the bounds of the composited descendant for intersection with the
+  // border.
+  SetBodyInnerHTML(
+      "<style>"
+      "  #grandparent {"
+      "    width: 200px; height: 200px; overflow: hidden; border-radius: 25px;"
+      "  }"
+      "  #parent { position: relative; left: 30px; top: 30px; width: 140px;"
+      "           height: 140px; overflow: hidden; will-change: transform;"
+      "  }"
+      "  #child { position: relative; left: 10px; top: 10px; width: 120px;"
+      "           height: 120px; will-change: transform;"
+      "  }"
+      "</style>"
+      "<div id='grandparent'>"
+      "  <div id='parent'>"
+      "    <div id='child'></div>"
+      "  </div>"
+      "</div>");
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  Element* parent = GetDocument().getElementById("parent");
+  ASSERT_TRUE(parent);
+  PaintLayer* parent_paint_layer =
+      ToLayoutBoxModelObject(parent->GetLayoutObject())->Layer();
+  ASSERT_TRUE(parent_paint_layer);
+  CompositedLayerMapping* parent_mapping =
+      parent_paint_layer->GetCompositedLayerMapping();
+  ASSERT_TRUE(parent_mapping);
+  EXPECT_TRUE(parent_mapping->AncestorClippingLayer());
+  EXPECT_TRUE(parent_mapping->AncestorClippingLayer()->MaskLayer());
+  EXPECT_TRUE(parent_mapping->AncestorClippingMaskLayer());
+}
+
+TEST_P(CompositedLayerMappingTest,
+       AncestorClipMaskGrandparentBorderRadiusCompositedDescendant) {
+  // This case has the child clipped by the grandparent border radius but not
+  // the parent, and does not itself require a mask to clip to the grandparent.
+  // But the child has it's own composited child, so we force the mask in case
+  // the child's child needs it.
+  SetBodyInnerHTML(
+      "<style>"
+      "  #grandparent {"
+      "    width: 200px; height: 200px; overflow: hidden; border-radius: 25px;"
+      "  }"
+      "  #parent { position: relative; left: 30px; top: 30px; width: 140px;"
+      "           height: 140px; overflow: hidden;"
+      "  }"
+      "  #child { position: relative; left: 10px; top: 10px; width: 120px;"
+      "           height: 120px; will-change: transform;"
+      "  }"
+      "  #grandchild { position: relative; left: 10px; top: 10px; width: 200px;"
+      "           height: 200px; will-change: transform;"
+      "  }"
+      "</style>"
+      "<div id='grandparent'>"
+      "  <div id='parent'>"
+      "    <div id='child'>"
+      "      <div id='grandchild'></div>"
+      "    </div>"
+      "  </div>"
+      "</div>");
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  Element* child = GetDocument().getElementById("child");
+  ASSERT_TRUE(child);
+  PaintLayer* child_paint_layer =
+      ToLayoutBoxModelObject(child->GetLayoutObject())->Layer();
+  ASSERT_TRUE(child_paint_layer);
+  CompositedLayerMapping* child_mapping =
+      child_paint_layer->GetCompositedLayerMapping();
+  ASSERT_TRUE(child_mapping);
+  ASSERT_TRUE(child_mapping->AncestorClippingLayer());
+  EXPECT_TRUE(child_mapping->AncestorClippingLayer()->MaskLayer());
+  ASSERT_TRUE(child_mapping->AncestorClippingMaskLayer());
 }
 
 TEST_P(CompositedLayerMappingTest, StickyPositionMainThreadOffset) {

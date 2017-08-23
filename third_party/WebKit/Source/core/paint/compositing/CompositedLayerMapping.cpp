@@ -585,6 +585,14 @@ void CompositedLayerMapping::
   // should be via mask or by compositing the parent too.
   // https://bugs.chromium.org/p/chromium/issues/detail?id=615870
   if (owning_layer_is_clipped) {
+    // If there are any rounded corners we must use a mask in the presence of
+    // composited descendants because we have no efficient way to determine the
+    // bounds of those children for optimizing the mask.
+    if (clip_rect.HasRadius() && owning_layer_.HasCompositingDescendant()) {
+      owning_layer_is_masked = true;
+      return;
+    }
+
     FloatRect bounds_in_ancestor_space =
         GetLayoutObject()
             .LocalToAncestorQuad(FloatRect(composited_bounds_),
