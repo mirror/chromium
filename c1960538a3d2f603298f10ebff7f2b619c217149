@@ -192,6 +192,24 @@
       "revId": "c1960538a3d2f603298f10ebff7f2b619c217149",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9811105_71604efb",
+        "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-23T08:54:51Z",
+      "side": 1,
+      "message": "Agree!\n\nI\u0027m not a fan of adding more member functions to SelectionInUndoStep.\nBTW, we should remove VisibleSelection::IsNonOrphanedCaretOrRange()",
+      "parentUuid": "463c5afd_22f59116",
+      "revId": "c1960538a3d2f603298f10ebff7f2b619c217149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
