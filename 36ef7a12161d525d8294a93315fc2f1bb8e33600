@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d612748_7fb73860",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T19:01:40Z",
+      "side": 1,
+      "message": "nit: inline the unicode string with hebrew characters, like this:\n// show the character position. For example, the bi-directional logical string\n// \"abc+\\x05d0\\x05d1\\x05d2\" (visual string \"abc+אבג\") yields \"[0-\u003e2][3][6\u003c-4]\".",
+      "revId": "36ef7a12161d525d8294a93315fc2f1bb8e33600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09481c55_5687d61d",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T19:01:40Z",
+      "side": 1,
+      "message": "All callers pass in the GetHarfBuzzRunList() result. Maybe make this a RenderTextTest class member function near GetRuns() that starts like:\n  std::string GetRunListDebugString() {\n     const internal::TextRunList* run_list \u003d GetHarfBuzzRunList();",
+      "revId": "36ef7a12161d525d8294a93315fc2f1bb8e33600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72568f06_6d66588f",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3725,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T19:01:40Z",
+      "side": 1,
+      "message": "aside: GetRuns and ToString16Vec are also pretty nice.",
+      "revId": "36ef7a12161d525d8294a93315fc2f1bb8e33600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78a1207_6cd2fcfe",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3744,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-23T19:01:40Z",
+      "side": 1,
+      "message": "nit: one-liner like line 3757: \" // U+1F601 is represented as a surrogate pair in UTF-16.\"",
+      "revId": "36ef7a12161d525d8294a93315fc2f1bb8e33600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
