@@ -74,6 +74,10 @@ void ContextualSuggestionsService::CreateContextualSuggestionsRequest(
                      std::move(callback)));
 }
 
+void ContextualSuggestionsService::StopCreatingContextualSuggestionRequest() {
+  token_fetcher_.reset();
+}
+
 // static
 GURL ContextualSuggestionsService::ContextualSuggestionsUrl(
     const std::string& current_url,
@@ -251,7 +255,8 @@ void ContextualSuggestionsService::AccessTokenAvailable(
     const GoogleServiceAuthError& error,
     const std::string& access_token) {
   DCHECK(token_fetcher_);
-  token_fetcher_.reset();
+  std::unique_ptr<AccessTokenFetcher> token_fetcher_deleter(
+      std::move(token_fetcher_));
 
   // If there were no errors obtaining the access token, append it to the
   // request as a header.
