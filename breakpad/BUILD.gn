@@ -772,6 +772,11 @@ if (is_linux || is_android) {
     ]
 
     configs += [ ":client_config" ]
+
+    ldflags = [
+      "-Wl,-rpath,",
+      rebase_path(root_build_dir),
+    ]
   }
 
   executable("generate_test_dump") {
