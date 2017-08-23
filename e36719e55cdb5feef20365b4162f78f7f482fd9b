@@ -16,6 +16,24 @@
       "revId": "e36719e55cdb5feef20365b4162f78f7f482fd9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6093d79_ab0442f9",
+        "filename": "chrome/browser/resources/settings/internet_page/network_siminfo.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-08-23T21:10:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d996544_8db505b2",
+      "revId": "e36719e55cdb5feef20365b4162f78f7f482fd9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
