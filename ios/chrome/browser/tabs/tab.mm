@@ -939,15 +939,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     }
   }
 
-  ui::PageTransition transition = params.transition_type;
-
-  // Record any explicit, non-redirect navigation as a clobber (as long as it's
-  // in a real tab).
-  if (!initialNavigation && !_isPrerenderTab &&
-      !PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_RELOAD) &&
-      (transition & ui::PAGE_TRANSITION_IS_REDIRECT_MASK) == 0) {
-    base::RecordAction(base::UserMetricsAction("MobileTabClobbered"));
-  }
   if ([_parentTabModel tabUsageRecorder])
     [_parentTabModel tabUsageRecorder]->RecordPageLoadStart(self);
 
@@ -1372,16 +1363,13 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
   BOOL isUserNavigationEvent =
       (transition & ui::PAGE_TRANSITION_IS_REDIRECT_MASK) == 0;
-  // Check for link-follow clobbers. These are changes where there is no
+  // Record start of page load when a user taps a link. A user initiated link
+  // tap is indicated when the page transition is not a redirect, there is no
   // pending entry (since that means the change wasn't caused by this class),
-  // and where the URL changes (to avoid counting page resurrection).
-  // TODO(crbug.com/546401): Consider moving this into NavigationManager, or
-  // into a NavigationManager observer callback, so it doesn't need to be
-  // checked in several places.
+  // and when the URL changes (to avoid counting page resurrection).
   if (isUserNavigationEvent && !_isPrerenderTab &&
       ![self navigationManager]->GetPendingItem() &&
       url != self.lastCommittedURL) {
-    base::RecordAction(base::UserMetricsAction("MobileTabClobbered"));
     if ([_parentTabModel tabUsageRecorder])
       [_parentTabModel tabUsageRecorder]->RecordPageLoadStart(self);
   }
