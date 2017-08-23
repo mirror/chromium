@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "978b19d0_381f675b",
+        "filename": "third_party/WebKit/Source/build/scripts/update_css_ranking.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-23T01:37:27Z",
+      "side": 1,
+      "message": "Remove unused code?",
+      "revId": "d44d8001ada8795777663934e1b00719ea3edc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e29e740b_80ce3807",
+        "filename": "third_party/WebKit/Source/core/css/CSSGroupConfig.json5",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-23T01:37:27Z",
+      "side": 1,
+      "message": "Maybe an explanation of what this file is for?",
+      "revId": "d44d8001ada8795777663934e1b00719ea3edc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ca01dc_c8e36546",
+        "filename": "third_party/WebKit/Source/core/css/CSSPropertiesRanking.json5",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-23T01:37:27Z",
+      "side": 1,
+      "message": "I think the comments you had before were useful. Is it hard to add it back?",
+      "revId": "d44d8001ada8795777663934e1b00719ea3edc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

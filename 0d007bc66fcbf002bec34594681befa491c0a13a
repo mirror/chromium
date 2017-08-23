@@ -2,6 +2,125 @@
   "comments": [
     {
       "key": {
+        "uuid": "5d2c74eb_fab01e30",
+        "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-23T01:37:27Z",
+      "side": 1,
+      "message": "I think __ can just be a single _.",
+      "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8fc8bd_f443a112",
+        "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-23T01:37:27Z",
+      "side": 1,
+      "message": "k-mean -\u003e k-means",
+      "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0a8d94_be7c28a2",
+        "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-23T01:37:27Z",
+      "side": 1,
+      "message": "k-mean -\u003e k-means\nlist of number -\u003e list of numbers",
+      "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c916d3_b649840e",
+        "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-23T01:37:27Z",
+      "side": 1,
+      "message": "list of number -\u003e list of numbers\nnumber of cluster -\u003e number of clusters\nn_cluster -\u003e n_clusters?",
+      "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287b0ef5_ef9f221f",
+        "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-23T01:37:27Z",
+      "side": 1,
+      "message": "do you actually need these return values?",
+      "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a2f25be_39b38877",
+        "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-23T01:37:27Z",
+      "side": 1,
+      "message": "Maybe make this number a function parameter as well? I\u0027m guessing this like n_tries or n_seeds or something.",
+      "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deffd4a5_30c36fff",
+        "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-23T01:37:27Z",
+      "side": 1,
+      "message": "don\u0027t need the brackets around count[j].",
+      "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00139cf0_d9e291f8",
         "filename": "third_party/WebKit/Source/core/css/CSSGroupConfig.json5",
         "patchSetId": 6
