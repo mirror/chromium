@@ -41,7 +41,7 @@ ChildProcessLauncher::ChildProcessLauncher(
       terminate_child_on_shutdown_(terminate_on_shutdown),
 #endif
       weak_factory_(this) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   CHECK(BrowserThread::GetCurrentThreadIdentifier(&client_thread_id_));
 
   helper_ = new ChildProcessLauncherHelper(
@@ -52,7 +52,7 @@ ChildProcessLauncher::ChildProcessLauncher(
 }
 
 ChildProcessLauncher::~ChildProcessLauncher() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (process_.process.IsValid() && terminate_child_on_shutdown_) {
     // Client has gone away, so just kill the process.
     ChildProcessLauncherHelper::ForceNormalProcessTerminationAsync(
@@ -64,7 +64,7 @@ void ChildProcessLauncher::SetProcessPriority(
     bool background,
     bool boost_for_pending_views,
     ChildProcessImportance importance) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   base::Process to_pass = process_.process.Duplicate();
   BrowserThread::PostTask(
       BrowserThread::PROCESS_LAUNCHER, FROM_HERE,
@@ -78,7 +78,7 @@ void ChildProcessLauncher::Notify(
     ChildProcessLauncherHelper::Process process,
     mojo::edk::ScopedPlatformHandle server_handle,
     int error_code) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   starting_ = false;
   process_ = std::move(process);
 
@@ -103,22 +103,20 @@ void ChildProcessLauncher::Notify(
   }
 }
 
-bool ChildProcessLauncher::IsStarting() {
-  // TODO(crbug.com/469248): This fails in some tests.
-  // DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+bool ChildProcessLauncher::IsStarting() const {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   return starting_;
 }
 
 const base::Process& ChildProcessLauncher::GetProcess() const {
-  // TODO(crbug.com/469248): This fails in some tests.
-  // DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   return process_.process;
 }
 
 base::TerminationStatus ChildProcessLauncher::GetChildTerminationStatus(
     bool known_dead,
     int* exit_code) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (!process_.process.IsValid()) {
     // Process is already gone, so return the cached termination status.
     if (exit_code)
@@ -144,6 +142,7 @@ base::TerminationStatus ChildProcessLauncher::GetChildTerminationStatus(
 }
 
 bool ChildProcessLauncher::Terminate(int exit_code, bool wait) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   return IsStarting() ? false
                       : ChildProcessLauncherHelper::TerminateProcess(
                             GetProcess(), exit_code, wait);

@@ -13,7 +13,6 @@
 #include "base/memory/weak_ptr.h"
 #include "base/process/kill.h"
 #include "base/process/process.h"
-#include "base/sequence_checker.h"
 #include "build/build_config.h"
 #include "content/browser/child_process_importance.h"
 #include "content/browser/child_process_launcher_helper.h"
@@ -71,7 +70,6 @@ class CONTENT_EXPORT ChildProcessLauncher {
   // ready.  Deleting this object before the process is created is safe, since
   // the callback won't be called.  If the process is still running by the time
   // this object destructs, it will be terminated.
-  // Takes ownership of cmd_line.
   //
   // If |process_error_callback| is provided, it will be called if a Mojo error
   // is encountered when processing messages from the child process. This
@@ -88,7 +86,7 @@ class CONTENT_EXPORT ChildProcessLauncher {
   ~ChildProcessLauncher();
 
   // True if the process is being launched and so the handle isn't available.
-  bool IsStarting();
+  bool IsStarting() const;
 
   // Getter for the process.  Only call after the process has started.
   const base::Process& GetProcess() const;
@@ -174,8 +172,6 @@ class CONTENT_EXPORT ChildProcessLauncher {
   const bool terminate_child_on_shutdown_;
 
   scoped_refptr<internal::ChildProcessLauncherHelper> helper_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
 
   base::WeakPtrFactory<ChildProcessLauncher> weak_factory_;
 

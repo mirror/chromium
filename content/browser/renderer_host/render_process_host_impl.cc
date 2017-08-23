@@ -1535,11 +1535,11 @@ bool RenderProcessHostImpl::Init() {
     // Spawn the child process asynchronously to avoid blocking the UI thread.
     // As long as there's no renderer prefix, we can use the zygote process
     // at this stage.
-    child_process_launcher_.reset(new ChildProcessLauncher(
+    child_process_launcher_ = base::MakeUnique<ChildProcessLauncher>(
         base::MakeUnique<RendererSandboxedProcessLauncherDelegate>(),
         std::move(cmd_line), GetID(), this,
         std::move(broker_client_invitation_),
-        base::Bind(&RenderProcessHostImpl::OnMojoError, id_)));
+        base::Bind(&RenderProcessHostImpl::OnMojoError, id_));
     channel_->Pause();
 
     fast_shutdown_started_ = false;
@@ -2780,10 +2780,12 @@ void RenderProcessHostImpl::PropagateBrowserCommandLineToRenderer(
 }
 
 base::ProcessHandle RenderProcessHostImpl::GetHandle() const {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
   if (run_renderer_in_process())
     return base::GetCurrentProcessHandle();
 
-  if (!child_process_launcher_.get() || child_process_launcher_->IsStarting())
+  if (!child_process_launcher_ || child_process_launcher_->IsStarting())
     return base::kNullProcessHandle;
 
   return child_process_launcher_->GetProcess().Handle();
@@ -2799,23 +2801,24 @@ bool RenderProcessHostImpl::Shutdown(int exit_code, bool wait) {
   if (run_renderer_in_process())
     return false;  // Single process mode never shuts down the renderer.
 
-  if (!child_process_launcher_.get())
-    return false;
-
-  return child_process_launcher_->Terminate(exit_code, wait);
+  return child_process_launcher_ &&
+         child_process_launcher_->Terminate(exit_code, wait);
 }
 
 bool RenderProcessHostImpl::FastShutdownIfPossible(size_t page_count,
                                                    bool skip_unload_handlers) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
   if (page_count && GetActiveViewCount() != page_count)
     return false;
 
   if (run_renderer_in_process())
     return false;  // Single process mode never shuts down the renderer.
 
-  if (!child_process_launcher_.get() || child_process_launcher_->IsStarting() ||
-      !GetHandle())
+  if (!child_process_launcher_ || child_process_launcher_->IsStarting() ||
+      !GetHandle()) {
     return false;  // Render process hasn't started or is probably crashed.
+  }
 
   // Test if there's an unload listener.
   // NOTE: It's possible that an onunload listener may be installed
@@ -2840,6 +2843,8 @@ bool RenderProcessHostImpl::FastShutdownIfPossible(size_t page_count,
 }
 
 bool RenderProcessHostImpl::Send(IPC::Message* msg) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
   TRACE_EVENT0("renderer_host", "RenderProcessHostImpl::Send");
 
   std::unique_ptr<IPC::Message> message(msg);
@@ -2860,7 +2865,7 @@ bool RenderProcessHostImpl::Send(IPC::Message* msg) {
 
     // Likewise if we've done Init(), but process launch has not yet completed,
     // we avoid blocking on sync IPC.
-    if (child_process_launcher_.get() && child_process_launcher_->IsStarting())
+    if (child_process_launcher_ && child_process_launcher_->IsStarting())
       return false;
   }
 #endif
@@ -3663,7 +3668,7 @@ void RenderProcessHostImpl::ProcessDied(bool already_dead,
   if (known_details) {
     status = known_details->status;
     exit_code = known_details->exit_code;
-  } else if (child_process_launcher_.get()) {
+  } else if (child_process_launcher_) {
     status = child_process_launcher_->GetChildTerminationStatus(already_dead,
                                                                 &exit_code);
     if (already_dead && status == base::TERMINATION_STATUS_STILL_RUNNING) {
@@ -3785,7 +3790,9 @@ void RenderProcessHostImpl::SuddenTerminationChanged(bool enabled) {
 }
 
 void RenderProcessHostImpl::UpdateProcessPriority() {
-  if (!child_process_launcher_.get() || child_process_launcher_->IsStarting()) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  if (!child_process_launcher_ || child_process_launcher_->IsStarting()) {
     is_process_backgrounded_ = kLaunchingProcessIsBackgrounded;
     boost_priority_for_pending_views_ =
         kLaunchingProcessIsBoostedForPendingView;
