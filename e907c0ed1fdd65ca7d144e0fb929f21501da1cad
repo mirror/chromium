@@ -16,6 +16,24 @@
       "revId": "e907c0ed1fdd65ca7d144e0fb929f21501da1cad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f615383c_fa2db2ff",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-close-noexception.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-23T09:14:52Z",
+      "side": 1,
+      "message": "Renamed to RTCPeerConnection-close.html, but no TODO since there aren\u0027t any other close()-related tests.\nIt\u0027s common in the RTCPeerConnection test files to have a single test and this test did not quite fit in any of the existing test files, so I think it\u0027s OK.",
+      "parentUuid": "b281750d_0e4560d4",
+      "revId": "e907c0ed1fdd65ca7d144e0fb929f21501da1cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
