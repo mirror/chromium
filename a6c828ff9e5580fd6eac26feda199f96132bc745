@@ -34,6 +34,24 @@
       "revId": "a6c828ff9e5580fd6eac26feda199f96132bc745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b7d424_1fb863f7",
+        "filename": "headless/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-23T16:22:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand what the problem here is? Content Shell seems to follow a similar pattern of bundling browser and renderer code into the same library.",
+      "parentUuid": "f28ebe19_4814f52d",
+      "revId": "a6c828ff9e5580fd6eac26feda199f96132bc745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
