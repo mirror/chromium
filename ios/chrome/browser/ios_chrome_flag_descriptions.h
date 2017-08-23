@@ -7,18 +7,27 @@
 
 namespace flag_descriptions {
 
-// Title for the flag to control redirection to the task scheduler.
-extern const char kBrowserTaskScheduler[];
+// Title and description for the flag to enable the new bookmark UI.
+extern const char kBookmarkNewGenerationName[];
+extern const char kBookmarkNewGenerationDescription[];
 
-// Description of about:flag option to control redirection to the task
+// Title and description for the flag to control redirection to the task
 // scheduler.
+extern const char kBrowserTaskScheduler[];
 extern const char kBrowserTaskSchedulerDescription[];
 
-// Title for the flag to enable Contextual Search.
-extern const char kContextualSearch[];
+// Title and description for the flag to enable Captive Portal Login.
+extern const char kCaptivePortalName[];
+extern const char kCaptivePortalDescription[];
 
-// Description for the flag to enable Contextual Search.
+// Title and description for the flag to enable Contextual Search.
+extern const char kContextualSearch[];
 extern const char kContextualSearchDescription[];
+
+// Title and description for the flag to enable feature_engagement::Tracker
+// demo mode.
+extern const char kInProductHelpDemoModeName[];
+extern const char kInProductHelpDemoModeDescription[];
 
 // Title, description, and options for the MarkHttpAs setting that controls
 // display of omnibox warnings about non-secure pages.
@@ -29,10 +38,8 @@ extern const char kMarkHttpAsNonSecureAfterEditing[];
 extern const char kMarkHttpAsNonSecureWhileIncognito[];
 extern const char kMarkHttpAsNonSecureWhileIncognitoOrEditing[];
 
-// Title for the flag to enable Physical Web in the omnibox.
+// Title and description for the flag to enable Physical Web in the omnibox.
 extern const char kPhysicalWeb[];
-
-// Description for the flag to enable Physical Web in the omnibox.
 extern const char kPhysicalWebDescription[];
 
 // Title and description for the flag to enable the ddljson Doodle API.
@@ -48,14 +55,7 @@ extern const char kWebPaymentsDescription[];
 extern const char kWebPaymentsNativeAppsName[];
 extern const char kWebPaymentsNativeAppsDescription[];
 
-// Title and description for the flag to enable Captive Portal Login.
-extern const char kCaptivePortalName[];
-extern const char kCaptivePortalDescription[];
-
-// Title and description for the flag to enable feature_engagement::Tracker
-// demo mode.
-extern const char kInProductHelpDemoModeName[];
-extern const char kInProductHelpDemoModeDescription[];
+// Please insert your name/description above in alphabetical order.
 
 }  // namespace flag_descriptions
 

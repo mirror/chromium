@@ -14,12 +14,12 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "components/bookmarks/browser/bookmark_model.h"
+#include "components/bookmarks/browser/bookmark_new_generation_features.h"
 #include "components/bookmarks/browser/bookmark_utils.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
-#include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/metrics/new_tab_page_uma.h"
 #include "ios/chrome/browser/pref_names.h"
 #import "ios/chrome/browser/tabs/tab.h"
@@ -230,7 +230,8 @@ const int64_t kLastUsedFolderNone = -1;
                                   loader:_loader];
   self.bookmarkBrowser.homeDelegate = self;
 
-  if (experimental_flags::IsBookmarkReorderingEnabled()) {
+  if (base::FeatureList::IsEnabled(
+          bookmark_new_generation::features::kBookmarkNewGeneration)) {
     UINavigationController* navController = [[UINavigationController alloc]
         initWithRootViewController:self.bookmarkBrowser];
     [self.bookmarkBrowser setRootNode:self.bookmarkModel->root_node()];

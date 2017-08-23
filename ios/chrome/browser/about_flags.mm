@@ -20,6 +20,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/sys_info.h"
 #include "base/task_scheduler/switches.h"
+#include "components/bookmarks/browser/bookmark_new_generation_features.h"
 #include "components/dom_distiller/core/dom_distiller_switches.h"
 #include "components/feature_engagement/public/feature_constants.h"
 #include "components/feature_engagement/public/feature_list.h"
@@ -155,7 +156,11 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
      FEATURE_WITH_PARAMS_VALUE_TYPE(
          search_provider_logos::features::kUseDdljsonApi,
          kUseDdljsonApiVariations,
-         "NTPUseDdljsonApi")}};
+         "NTPUseDdljsonApi")},
+    {"bookmark-new-generation", flag_descriptions::kBookmarkNewGenerationName,
+     flag_descriptions::kBookmarkNewGenerationDescription, flags_ui::kOsIos,
+     FEATURE_VALUE_TYPE(
+         bookmark_new_generation::features::kBookmarkNewGeneration)}};
 
 // Add all switches from experimental flags to |command_line|.
 void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
@@ -278,15 +283,6 @@ void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
     command_line->AppendSwitch(switches::kEnableSigninPromo);
   } else if ([enableSigninPromo isEqualToString:@"Disabled"]) {
     command_line->AppendSwitch(switches::kDisableSigninPromo);
-  }
-
-  // Populate command line flag for Bookmark reordering.
-  NSString* enableBookmarkReordering =
-      [defaults stringForKey:@"EnableBookmarkReordering"];
-  if ([enableBookmarkReordering isEqualToString:@"Enabled"]) {
-    command_line->AppendSwitch(switches::kEnableBookmarkReordering);
-  } else if ([enableBookmarkReordering isEqualToString:@"Disabled"]) {
-    command_line->AppendSwitch(switches::kDisableBookmarkReordering);
   }
 
   // Populate command line flag for 3rd party keyboard omnibox workaround.
