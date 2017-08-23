@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34cd92f0_800eab8b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-23T21:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72e0ee0c_a8cd919e",
+      "revId": "fef5421074359063954a907e087e8c19cf07578d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac141208_d3e43c5f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "fef5421074359063954a907e087e8c19cf07578d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b604fd_dcea3b2b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-23T21:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac141208_d3e43c5f",
+      "revId": "fef5421074359063954a907e087e8c19cf07578d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "84e1cb58_5405a574",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-23T21:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c263aba2_40b3d89f",
+      "revId": "fef5421074359063954a907e087e8c19cf07578d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "662b8f5b_88902086",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "fef5421074359063954a907e087e8c19cf07578d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de6f95ac_d82b2f16",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-23T21:28:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "662b8f5b_88902086",
+      "revId": "fef5421074359063954a907e087e8c19cf07578d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
