@@ -16142,6 +16142,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2116" label="ARIAValueMinAttribute"/>
   <int value="2117" label="ARIAValueNowAttribute"/>
   <int value="2118" label="ARIAValueTextAttribute"/>
+  <int value="2119" label="NavigatorDeviceMemory"/>
 </enum>
 
 <enum name="FeedbackSource">
