@@ -362,6 +362,7 @@ class CONTENT_EXPORT WebContentsImpl
   void WasHidden() override;
   bool IsVisible() const override;
   void WasOccluded() override;
+  bool IsOccludedForTesting() override;
   void WasUnOccluded() override;
   bool NeedToFireBeforeUnload() override;
   void DispatchBeforeUnload() override;

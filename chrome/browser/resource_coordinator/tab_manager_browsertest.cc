@@ -11,6 +11,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
+#include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 #include "chrome/browser/ui/browser.h"
@@ -28,6 +29,7 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
 #include "content/public/browser/render_process_host.h"
+#include "content/public/browser/web_contents.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/test_utils.h"
 #include "url/gurl.h"
@@ -888,6 +890,27 @@ IN_PROC_BROWSER_TEST_F(TabManagerTest,
   EXPECT_TRUE(tab_manager->IsTabDiscarded(
       browser4->tab_strip_model()->GetWebContentsAt(1)));
 }
+
+#if defined(OS_CHROMEOS)
+IN_PROC_BROWSER_TEST_F(TabManagerTest, WindowOcclusion) {
+  Browser* browser1 = browser();
+  browser1->window()->SetBounds(gfx::Rect(10, 10, 10, 10));
+
+  Browser* browser2 = CreateBrowser(ProfileManager::GetActiveUserProfile());
+  browser2->window()->SetBounds(gfx::Rect(0, 0, 100, 100));
+
+  base::RunLoop().RunUntilIdle();
+
+  // The active WebContents in |browser1| should be occluded since |browser1| is
+  // covered by |browser2|.
+  EXPECT_TRUE(browser1->tab_strip_model()
+                  ->GetActiveWebContents()
+                  ->IsOccludedForTesting());
+  EXPECT_FALSE(browser2->tab_strip_model()
+                   ->GetActiveWebContents()
+                   ->IsOccludedForTesting());
+}
+#endif
 
 }  // namespace resource_coordinator
 

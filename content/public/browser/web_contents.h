@@ -458,6 +458,9 @@ class WebContents : public PageNavigator,
   virtual void WasOccluded() = 0;
   virtual void WasUnOccluded() = 0;
 
+  // Whether the WebContents is occluded.
+  virtual bool IsOccludedForTesting() = 0;
+
   // Returns true if the before unload and unload listeners need to be
   // fired. The value of this changes over time. For example, if true and the
   // before unload listener is executed and allows the user to exit, then this
