@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32a9642b_76d40de7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_item_result.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-08-23T21:45:52Z",
+      "side": 1,
+      "message": "Can this be const?",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 18
+      },
+      "revId": "21e6b381635032d5ba9769ceec441d8272409ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3592ce67_484a98c0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_item_result.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-08-23T21:45:52Z",
+      "side": 1,
+      "message": "The life-cycle of the exclusion space here looks quite complicated? Any chance we could do without the release/acquire model?\n\nWhat if the algorithm classes owned it and passed a regular pointer to the constraint space? That would also allow us to use a regular pointer to NGConstraintSpace and thereby allow us to use forward declaration instead of including the header.",
+      "range": {
+        "startLine": 123,
+        "startChar": 7,
+        "endLine": 123,
+        "endChar": 24
+      },
+      "revId": "21e6b381635032d5ba9769ceec441d8272409ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05e0ddc_14e51184",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-08-23T21:45:52Z",
+      "side": 1,
+      "message": "How about empty_exclusion_space to communicate that it is intentionally left blank?",
+      "range": {
+        "startLine": 558,
+        "startChar": 19,
+        "endLine": 558,
+        "endChar": 34
+      },
+      "revId": "21e6b381635032d5ba9769ceec441d8272409ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5b8887_3d299b8b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-08-23T21:45:52Z",
+      "side": 1,
+      "message": "This is a little odd, why would the line own the exclusion space? Wouldn\u0027t it be easier for the line breaker or the line layout algorithm to retain owenership and pass a pointer to it?",
+      "revId": "21e6b381635032d5ba9769ceec441d8272409ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
