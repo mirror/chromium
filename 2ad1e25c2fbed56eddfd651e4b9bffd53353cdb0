@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e324a753_8ac0f79a",
+        "filename": "components/translate/core/browser/translate_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-23T00:31:13Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this static_cast is needed.",
+      "range": {
+        "startLine": 597,
+        "startChar": 6,
+        "endLine": 597,
+        "endChar": 58
+      },
+      "revId": "2ad1e25c2fbed56eddfd651e4b9bffd53353cdb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
