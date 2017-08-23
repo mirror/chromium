@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc3ed45f_3d8b63d2",
+        "filename": "remoting/client/audio/audio_player_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T21:39:08Z",
+      "side": 1,
+      "message": "Consts are implicitly translation-unit-local, but just to be consistent put them inside anonymous namespace?",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc854f55_759f25cf",
+        "filename": "remoting/client/audio/audio_player_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T21:39:08Z",
+      "side": 1,
+      "message": "Why are there commented locks in the code?\n\nWhat is the threading story here. Do we add audio packet on one thread and play on another thread?",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 38
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44bcc7fa_e9afd1bf",
+        "filename": "remoting/client/audio/audio_player_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T21:39:08Z",
+      "side": 1,
+      "message": "Looks like the AudioPlayer implementation allows changing sampling rate in the flight. Looks like it could be 44100 but in this file you hardcoded it to 48000. Why?",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 64
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9a1765_9ca1fa44",
+        "filename": "remoting/client/audio/audio_player_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T21:39:08Z",
+      "side": 1,
+      "message": "What is this function used for? Is someone expected to subclass this class?",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 58
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c436274_4f7b12e5",
+        "filename": "remoting/client/audio/audio_player_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T21:39:08Z",
+      "side": 1,
+      "message": "Should be simpler if you use unique_ptr...",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 38
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b7b07d7_bf4601ce",
+        "filename": "remoting/client/audio/audio_player_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T21:39:08Z",
+      "side": 1,
+      "message": "Is it only used privately by AudioPlayerBuffer?\n\nif true, could we forward declare it as a private nested class of AudioPlayerBuffer then declare\u0026implement it in CC?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 26
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14fb1738_8c3a2325",
+        "filename": "remoting/client/audio/audio_player_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T21:39:08Z",
+      "side": 1,
+      "message": "Why do you need to explicitly define the constructor? Is this because of the Chromium style check?\n\nI think if you move the declaration inside CC then the style check will not complain... (could be wrong X_X)",
+      "range": {
+        "startLine": 30,
+        "startChar": 11,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22383a1a_800c78dd",
+        "filename": "remoting/client/audio/audio_player_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T21:39:08Z",
+      "side": 1,
+      "message": "Is this function not implemented?",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 15
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3822388_94cf70c8",
+        "filename": "remoting/client/audio/audio_player_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T21:39:08Z",
+      "side": 1,
+      "message": "Why using list instead of deque? Looks like it has a generally lower performance for queue operations...\n\nhttps://baptiste-wicht.com/posts/2012/12/cpp-benchmark-vector-list-deque.html\n\nAlso why using raw pointer instead of std::unique_ptr? Note that .front() should still work because it returns a reference of the unique_ptr.",
+      "range": {
+        "startLine": 83,
+        "startChar": 15,
+        "endLine": 83,
+        "endChar": 19
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef608972_a4f85195",
+        "filename": "remoting/client/audio/audio_player_buffer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T21:39:08Z",
+      "side": 1,
+      "message": "Should be local to translation unit. Wrap in anonymous namespace or add static?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 79
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53dbee8_375b5404",
+        "filename": "remoting/client/audio/audio_player_buffer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T21:39:08Z",
+      "side": 1,
+      "message": "Could you move these functions on the top (and make them local to translation unit)?",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 112,
+        "endChar": 63
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20fe200a_723dffde",
+        "filename": "remoting/client/audio/audio_player_buffer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T21:39:08Z",
+      "side": 1,
+      "message": "Do we ever care about 44.1kHz packets?",
+      "range": {
+        "startLine": 129,
+        "startChar": 29,
+        "endLine": 129,
+        "endChar": 46
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d204f2a1_4ff5da2c",
+        "filename": "remoting/client/audio/audio_stream_consumer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T21:39:08Z",
+      "side": 1,
+      "message": "I remember for video we needed to run the callback after the frame is rendered on the screen so that we can get the accurate latency estimation.\n\nNot sure what the done callback is doing for audio packets, but the existing AudioPlayer doesn\u0027t pass the callback all the way down the pipeline, so anyway...",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 13
+      },
+      "revId": "549a06251d3ac6bb2d281ec9cdce276bd31563fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
