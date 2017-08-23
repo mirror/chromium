@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7365e00_e4b60664",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 84907,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-23T22:09:20Z",
+      "side": 1,
+      "message": "nit: Please add\n// Only recorded if non-zero.\n\n(This is important for the interpretation of the distribution.)",
+      "revId": "31014762696bf1936a44a3a4ce27015fa9bd457e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
