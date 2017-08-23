@@ -654,13 +654,8 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       window_cycle_controller_(base::MakeUnique<WindowCycleController>()),
       window_selector_controller_(base::MakeUnique<WindowSelectorController>()),
       app_list_(base::MakeUnique<app_list::AppList>()),
-      link_handler_model_factory_(nullptr),
       tray_bluetooth_helper_(base::MakeUnique<TrayBluetoothHelper>()),
-      display_configurator_(new display::DisplayConfigurator()),
-      native_cursor_manager_(nullptr),
-      simulate_modal_window_open_for_testing_(false),
-      is_touch_hud_projection_enabled_(false),
-      weak_factory_(this) {
+      display_configurator_(new display::DisplayConfigurator()) {
   // TODO(sky): better refactor cash/mash dependencies. Perhaps put all cash
   // state on ShellPortClassic. http://crbug.com/671246.
 

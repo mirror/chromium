@@ -10,9 +10,10 @@
 #include <utility>
 #include <vector>
 
-#include "ash/link_handler_model.h"
+#include "ash/public/interfaces/link_handler.mojom.h"
 #include "base/macros.h"
 #include "components/renderer_context_menu/render_view_context_menu_observer.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 #include "ui/base/models/simple_menu_model.h"
 #include "url/gurl.h"
 
@@ -25,9 +26,9 @@ class SimpleMenuModel;
 // An observer class which populates the "Open with <app>" menu items either
 // synchronously or asynchronously.
 class OpenWithMenuObserver : public RenderViewContextMenuObserver,
-                             public ash::LinkHandlerModel::Observer {
+                             public ash::mojom::LinkHandlerObserver {
  public:
-  using HandlerMap = std::unordered_map<int, ash::LinkHandlerInfo>;
+  using HandlerMap = std::unordered_map<int, ash::mojom::LinkHandlerInfo>;
 
   class SubMenuDelegate : public ui::SimpleMenuModel::Delegate {
    public:
@@ -54,13 +55,14 @@ class OpenWithMenuObserver : public RenderViewContextMenuObserver,
   bool IsCommandIdEnabled(int command_id) override;
   void ExecuteCommand(int command_id) override;
 
-  // ash::OpenWithItems::Delegate overrides:
-  void ModelChanged(const std::vector<ash::LinkHandlerInfo>& handlers) override;
+  // ash::mojom::LinkHandlerObserver overrides:
+  void OnLinkHandlerModelChanged(
+      std::vector<ash::mojom::LinkHandlerInfoPtr> handlers) override;
 
   static void AddPlaceholderItemsForTesting(RenderViewContextMenuProxy* proxy,
                                             ui::SimpleMenuModel* submenu);
   static std::pair<HandlerMap, int> BuildHandlersMapForTesting(
-      const std::vector<ash::LinkHandlerInfo>& handlers);
+      const std::vector<ash::mojom::LinkHandlerInfoPtr>& handlers);
 
  private:
   // Adds placeholder items and the |submenu| to the |proxy|.
@@ -72,21 +74,22 @@ class OpenWithMenuObserver : public RenderViewContextMenuObserver,
   // parent of the submenu. When the submenu is not needed, the function
   // returns |kInvalidCommandId|.
   static std::pair<OpenWithMenuObserver::HandlerMap, int> BuildHandlersMap(
-      const std::vector<ash::LinkHandlerInfo>& handlers);
+      const std::vector<ash::mojom::LinkHandlerInfoPtr>& handlers);
 
   static const int kNumMainMenuCommands;
   static const int kNumSubMenuCommands;
 
   RenderViewContextMenuProxy* const proxy_;
-  SubMenuDelegate submenu_delegate_;
+  SubMenuDelegate submenu_delegate_{this};
   const base::string16 more_apps_label_;
   GURL link_url_;
 
-  // A menu model received from Ash side.
-  std::unique_ptr<ash::LinkHandlerModel> menu_model_;
   OpenWithMenuObserver::HandlerMap handlers_;
-  // A submenu passed to Chrome side.
-  std::unique_ptr<ui::MenuModel> submenu_;
+  ui::SimpleMenuModel submenu_;
+
+  ash::mojom::LinkHandlerControllerPtr link_handler_;
+  mojo::AssociatedBinding<ash::mojom::LinkHandlerObserver> observer_binding_{
+      this};
 
   DISALLOW_COPY_AND_ASSIGN(OpenWithMenuObserver);
 };

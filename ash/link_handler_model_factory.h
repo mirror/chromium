@@ -19,15 +19,9 @@ class LinkHandlerModel;
 // A class for creating a LinkHandlerModel object.
 class ASH_EXPORT LinkHandlerModelFactory {
  public:
-  LinkHandlerModelFactory();
-  virtual ~LinkHandlerModelFactory();
-
   // Returns a model for the |url|. When such a model for the |url| cannot be
   // created, returns nullptr.
-  virtual std::unique_ptr<LinkHandlerModel> CreateModel(const GURL& url);
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(LinkHandlerModelFactory);
+  virtual std::unique_ptr<LinkHandlerModel> CreateModel(const GURL& url) = 0;
 };
 
 }  // namespace ash
