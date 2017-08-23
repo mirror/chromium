@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2106303a_1921ffbd",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T19:26:54Z",
+      "side": 1,
+      "message": "Can you describe why disabling needs to happen here vs in the place that handles the double-tap? Wouldn\u0027t it make more sense for the code handling the double-tap to do nothing if on a mac? Also, the description and bug say mac, yet this is not platform specific. Should it be ifdef\u0027d for mac?",
+      "range": {
+        "startLine": 1335,
+        "startChar": 0,
+        "endLine": 1337,
+        "endChar": 12
+      },
+      "revId": "984acfb80506d46acc36aafb011283ce1fb39121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
