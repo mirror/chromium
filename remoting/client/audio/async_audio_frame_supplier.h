@@ -18,6 +18,7 @@
 
 namespace remoting {
 
+// TODO(nicholss): Replace with base::Closure ?
 typedef base::Callback<void()> AudioBufferGetAudioFrameCallback;
 
 // This interface extends the AudioFrameSupplier interface adding async support
