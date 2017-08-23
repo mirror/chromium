@@ -46,6 +46,30 @@
       "revId": "4699902a5de0caec693f05025deabfc93d4a3267",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e150023f_0b1f9b76",
+        "filename": "components/ntp_snippets/content_suggestions_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-23T15:32:59Z",
+      "side": 1,
+      "message": "\u003e Best to check with the metrics folks.\n\nI will confirm with them during the review.\n\n\u003e Anyway, do we really need to change this for all existing histograms\n\nObviously, this is essential for .Prefetched. histograms, but since these histograms are just subsets of normal histograms, I think it would be reasonable to extend the normal ones as well. Otherwise having two different constants looks like a mess.",
+      "parentUuid": "d436f9ea_0c7668ef",
+      "range": {
+        "startLine": 22,
+        "startChar": 39,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "4699902a5de0caec693f05025deabfc93d4a3267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
