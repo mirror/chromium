@@ -134,6 +134,11 @@ const gfx::Point& Env::last_mouse_location() const {
   return last_mouse_location_;
 }
 
+void Env::set_last_mouse_location(const gfx::Point& last_mouse_location) {
+  // LOG(ERROR) << "set_last_mouse_location(" << last_mouse_location.ToString() << ")";
+  last_mouse_location_ = last_mouse_location;
+}
+
 void Env::SetWindowTreeClient(WindowTreeClient* window_tree_client) {
   // The WindowTreeClient should only be set once. Test code may need to change
   // the value after the fact, to do that use EnvTestHelper.

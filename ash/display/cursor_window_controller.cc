@@ -172,6 +172,7 @@ void CursorWindowController::UpdateLocation() {
   if (!cursor_window_)
     return;
   gfx::Point point = aura::Env::GetInstance()->last_mouse_location();
+  // LOG(ERROR) << "UpdateLocation (base) : " << point.ToString();
   if (!is_cursor_compositing_enabled_) {
     Shell::GetPrimaryRootWindow()->GetHost()->ConvertDIPToPixels(&point);
   } else {

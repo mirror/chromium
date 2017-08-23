@@ -38,6 +38,7 @@ void DefaultScreenPositionClient::ConvertPointToScreen(
 void DefaultScreenPositionClient::ConvertPointFromScreen(
     const aura::Window* window,
     gfx::Point* point) {
+  //  LOG(ERROR) << "DefaultScreenPositionController::ConvertPointToScreen()";
   const aura::Window* root_window = window->GetRootWindow();
   gfx::Point origin = GetOriginInScreen(root_window);
   point->Offset(-origin.x(), -origin.y());

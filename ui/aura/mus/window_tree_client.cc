@@ -186,7 +186,13 @@ std::unique_ptr<ui::Event> MapEvent(const ui::Event& event) {
 // the EventSink.
 void DispatchEventToTarget(ui::Event* event, WindowMus* target) {
   ui::Event::DispatcherApi dispatch_helper(event);
-  dispatch_helper.set_target(target->GetWindow());
+  if (event->IsLocatedEvent()) {
+    // Experiment: located events shouldn't have targets.
+    ui::LocatedEvent* loc = event->AsLocatedEvent();
+    loc->set_location(loc->root_location());
+  } else {
+    dispatch_helper.set_target(target->GetWindow());
+  }
   GetWindowTreeHostMus(target)->SendEventToSink(event);
 }
 
@@ -1401,7 +1407,13 @@ void WindowTreeClient::OnWindowInputEvent(uint32_t event_id,
   // ui::TouchEvent once we have proper support for pointer events.
   std::unique_ptr<ui::Event> mapped_event = MapEvent(*event.get());
   ui::Event* event_to_dispatch = mapped_event.get();
-// Ash wants the native events in one place (see ExtendedMouseWarpController).
+  // if (mapped_event->IsLocatedEvent()) {
+  //   //    ui::LocatedEvent* l = mapped_event->AsLocatedEvent();
+  //   // LOG(ERROR) << "Inbound: location=" << l->location().ToString()
+  //   //            << ", root_location=" << l->root_location().ToString();
+  // }
+
+  // Ash wants the native events in one place (see ExtendedMouseWarpController).
 // By using the constructor that takes a MouseEvent we ensure the MouseEvent
 // has a NativeEvent that can be used to extract the pixel coordinates.
 //

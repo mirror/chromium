@@ -35,6 +35,7 @@ bool AshWindowTreeHostMus::ConfineCursorToRootWindow() {
 
 void AshWindowTreeHostMus::SetRootWindowTransformer(
     std::unique_ptr<RootWindowTransformer> transformer) {
+  // LOG(ERROR) << "SETTING TRANSFORM " << transformer->GetTransform().ToString();
   transformer_helper_->SetRootWindowTransformer(std::move(transformer));
   ConfineCursorToRootWindow();
 }

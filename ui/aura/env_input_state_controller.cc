@@ -76,8 +76,10 @@ void EnvInputStateController::SetLastMouseLocation(
   if (client) {
     gfx::Point location_in_screen = location_in_root;
     client->ConvertPointToScreen(root_window, &location_in_screen);
+    //,    LOG(ERROR) << "EISC::SetLastMouseLocation -> converting to screen";
     Env::GetInstance()->set_last_mouse_location(location_in_screen);
   } else {
+    //    LOG(ERROR) << "EISC::SetLastMouseLocation -> blankly setting";
     Env::GetInstance()->set_last_mouse_location(location_in_root);
   }
 }

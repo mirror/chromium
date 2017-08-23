@@ -236,6 +236,7 @@ void WindowEventDispatcher::OnHostLostMouseGrab() {
 
 void WindowEventDispatcher::OnCursorMovedToRootLocation(
     const gfx::Point& root_location) {
+  // LOG(ERROR) << "OnCursorMovedToRootLocation(" << root_location.ToString() << ")";
   Env::GetInstance()->env_controller()->SetLastMouseLocation(window(),
                                                              root_location);
 
