@@ -346,7 +346,6 @@ bool AVCBitstreamConverter::ConvertFrame(
                                       post_annexb_validation_));
   }
 
-  DCHECK(AVC::IsValidAnnexB(*frame_buf, *subsamples));
   return true;
 }
 
