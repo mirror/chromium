@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9816035_1fdddcbc",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-23T05:59:23Z",
+      "side": 0,
+      "message": "Done, but I left a question on the next patch.",
+      "parentUuid": "7aae5e72_a9379aba",
+      "revId": "6b77bb24ae8c62e2a736f18bee131e564e7e4854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07efe6dc_b7b31baf",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "eb2841bd_44c5cbab",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-23T05:59:23Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "07efe6dc_b7b31baf",
+      "revId": "6b77bb24ae8c62e2a736f18bee131e564e7e4854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc59ad7e_e420f84c",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-22T15:08:34Z",
       "side": 0,
       "message": "I\u0027m thinking we might want to compute the error page RFH before calling NavigationHandleImpl::WillFailRequest and pass it as an argument to the method. Then WillfailRequest can call ReadyToCommitNavigation internally, and this mirrors what we\u0027re doing for WillProcessResponse. Additional advantage: if we need to create a new process for the error page, we start doing so before the NavigationThrottle execute, so we can parallelize the process creation with possible asynchronous throttle operations.",
+      "revId": "6b77bb24ae8c62e2a736f18bee131e564e7e4854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec7a30f_af8b991b",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-23T05:59:23Z",
+      "side": 0,
+      "message": "So, if I understand this correctly:\n\n- Take the block above (calculating `render_frame_host`) and keep it in OnRequestFailed().\n- Remove the TransferNavigationHandleOwnership() and ReadyToCommitNavigation() calls here.\n- Keep only `state_ \u003d FAILED;` and render_frame_host-\u003eFailedNavigation(...) in OnFailureChecksComplete().\n\nNavigationHandleImpl::WillProcessResponse() calls MaybeTransferAndProceed() [1]. Will we want to do that unconditionally?\n\n[1] https://cs.chromium.org/chromium/src/content/browser/frame_host/navigation_handle_impl.cc?type\u003dcs\u0026l\u003d714",
+      "parentUuid": "bc59ad7e_e420f84c",
       "revId": "6b77bb24ae8c62e2a736f18bee131e564e7e4854",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

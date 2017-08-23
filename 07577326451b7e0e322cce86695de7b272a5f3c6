@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f470b22_22d2a521",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-23T05:59:23Z",
+      "side": 1,
+      "message": "clamy@: You said that renderer debug URLs should be invisible to navigation throttles.\nShould we add an `else` case to call NavigationRequest::OnFailureChecksComplete() [1] directly (and then return early from this function), so that render_frame_host-\u003eFailedNavigation() is called?\n\n[1] Setting has_stale_copy_in_cache_ and net_error_ as appropriate, higher up in the function.",
+      "revId": "07577326451b7e0e322cce86695de7b272a5f3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

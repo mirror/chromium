@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aec360aa_382d9f8c",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-23T05:59:23Z",
+      "side": 1,
+      "message": "I\u0027m copying WillRedirectRequest() and WillStartRequest() here.\nIt seems the point of this block is to call a certain callback in the case of DEFER, so I think the same logic is still correct here?",
+      "parentUuid": "01fd7ee0_dcba6b2e",
+      "revId": "b4929fb684d80596d4be5cce86c8adfdaaeebe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab9d6787_50226c15",
         "filename": "content/browser/frame_host/navigation_request.h",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4062794f_0e472d8b",
+        "filename": "content/browser/frame_host/navigation_request.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-23T05:59:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab9d6787_50226c15",
+      "revId": "b4929fb684d80596d4be5cce86c8adfdaaeebe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39098131_90ca4576",
         "filename": "content/public/browser/navigation_handle.h",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-22T15:08:34Z",
       "side": 1,
       "message": "Note: the content/ public API policy is not to add changes to the API that are not used outside of content/. You will need to add a usage of the new API functions in the CL\u003e",
+      "revId": "b4929fb684d80596d4be5cce86c8adfdaaeebe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4336a6f9_8b9777e3",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-23T05:59:23Z",
+      "side": 1,
+      "message": "Does this require a non-test usage?\n\nIf so, estark@: What do you think of taking the stub at https://chromium-review.googlesource.com/c/chromium/src/+/621236 that calls these getters from SSLErrorNavigationThrottle::WillFailRequest() and just logs them for debugging?\nWe could move that logic behind a flag and print only at the verbose logging level.",
+      "parentUuid": "39098131_90ca4576",
       "revId": "b4929fb684d80596d4be5cce86c8adfdaaeebe9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
