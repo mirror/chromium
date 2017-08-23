@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<script>
+if (window.testRunner) {
+    testRunner.dumpAsText();
+}
+</script>
+<style>
+.grid { display: grid; }
+.lb { justify-self: baseline; }
+.vr { writing-mode: vertical-rl; }
+.c { content: ""; }
+</style>
+<p>This test passes if it does not crash.</p>
+<div class="grid">
+   <div class="grid">
+      <div id="item" class="lb vr"></div>
+   </div>
+</div>
+<script>
+document.body.offsetLeft;
+item.classList.add("c");
+</script>
+
