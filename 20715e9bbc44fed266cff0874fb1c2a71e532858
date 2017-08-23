@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6b9f34d8_21325906",
+        "filename": "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-23T18:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0277b5b7_47c1bdef",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 16
+      },
+      "revId": "20715e9bbc44fed266cff0874fb1c2a71e532858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f347c9d_edf56cab",
         "filename": "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl.h",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "20715e9bbc44fed266cff0874fb1c2a71e532858",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74972d56_3e6df51f",
+        "filename": "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-23T18:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f347c9d_edf56cab",
+      "revId": "20715e9bbc44fed266cff0874fb1c2a71e532858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "f6339f50_83ae16f7",
+        "filename": "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-23T18:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db72eb52_81a79d87",
+      "range": {
+        "startLine": 20,
+        "startChar": 1,
+        "endLine": 20,
+        "endChar": 2
+      },
+      "revId": "20715e9bbc44fed266cff0874fb1c2a71e532858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60db1a86_08cb63c3",
         "filename": "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl_unittest.cc",
         "patchSetId": 6
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "dfa3aafc_300a1cb7",
+        "filename": "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-23T18:30:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60db1a86_08cb63c3",
+      "range": {
+        "startLine": 12,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 51
+      },
+      "revId": "20715e9bbc44fed266cff0874fb1c2a71e532858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "764fe7d8_79d94ea4",
         "filename": "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl_unittest.cc",
         "patchSetId": 6
@@ -108,6 +198,30 @@
       "revId": "20715e9bbc44fed266cff0874fb1c2a71e532858",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93db1ec_532832a7",
+        "filename": "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-23T18:30:02Z",
+      "side": 1,
+      "message": "Changed to a pointer. \n\nWe do need the fixture to return the test_recorder (changing TEST_F to TEST fails)",
+      "parentUuid": "764fe7d8_79d94ea4",
+      "range": {
+        "startLine": 21,
+        "startChar": 22,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "20715e9bbc44fed266cff0874fb1c2a71e532858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
