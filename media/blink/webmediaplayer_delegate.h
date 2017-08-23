@@ -63,6 +63,8 @@ class WebMediaPlayerDelegate {
     virtual void OnBecamePersistentVideo(bool value) = 0;
   };
 
+  virtual ~WebMediaPlayerDelegate() = default;
+
   // Returns true if the host frame is hidden or closed.
   virtual bool IsFrameHidden() = 0;
 
@@ -132,7 +134,6 @@ class WebMediaPlayerDelegate {
 
  protected:
   WebMediaPlayerDelegate() = default;
-  virtual ~WebMediaPlayerDelegate() = default;
 };
 
 }  // namespace media

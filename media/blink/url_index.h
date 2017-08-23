@@ -20,11 +20,14 @@
 #include "media/blink/multibuffer.h"
 #include "url/gurl.h"
 
+namespace blink {
+class WebFetchContext;
+}  // namespace blink
+
 namespace media {
 
 const int64_t kPositionNotSpecified = -1;
 
-class ResourceFetchContext;
 class UrlData;
 
 // A multibuffer for loading media resources which knows
@@ -212,8 +215,8 @@ class MEDIA_BLINK_EXPORT UrlData : public base::RefCounted<UrlData> {
 // The UrlIndex lets you look up UrlData instances by url.
 class MEDIA_BLINK_EXPORT UrlIndex {
  public:
-  explicit UrlIndex(ResourceFetchContext* fetch_context);
-  UrlIndex(ResourceFetchContext* fetch_context, int block_shift);
+  explicit UrlIndex(blink::WebFetchContext* fetch_context);
+  UrlIndex(blink::WebFetchContext* fetch_context, int block_shift);
   virtual ~UrlIndex();
 
   // Look up an UrlData in the index and return it. If none is found,
@@ -243,7 +246,7 @@ class MEDIA_BLINK_EXPORT UrlIndex {
   // TODO(hubbe): Add etag support.
   scoped_refptr<UrlData> TryInsert(const scoped_refptr<UrlData>& url_data);
 
-  ResourceFetchContext* fetch_context() const { return fetch_context_; }
+  blink::WebFetchContext* fetch_context() const { return fetch_context_; }
   int block_shift() const { return block_shift_; }
 
  private:
@@ -255,7 +258,7 @@ class MEDIA_BLINK_EXPORT UrlIndex {
   virtual scoped_refptr<UrlData> NewUrlData(const GURL& url,
                                             UrlData::CORSMode cors_mode);
 
-  ResourceFetchContext* fetch_context_;
+  blink::WebFetchContext* fetch_context_;
   using UrlDataMap = std::map<UrlData::KeyType, scoped_refptr<UrlData>>;
   UrlDataMap unindexed_data_;
   UrlDataMap indexed_data_;

@@ -29,6 +29,7 @@
 namespace blink {
 class WebContentDecryptionModule;
 class WebEncryptedMediaClient;
+class WebFetchContext;
 class WebLocalFrame;
 class WebMediaPlayer;
 class WebMediaPlayerClient;
@@ -179,7 +180,7 @@ class MediaFactory {
   std::unique_ptr<media::CdmFactory> cdm_factory_;
 
   // Media resource cache, lazily initialized.
-  std::unique_ptr<media::ResourceFetchContext> fetch_context_;
+  std::unique_ptr<blink::WebFetchContext> fetch_context_;
   std::unique_ptr<media::UrlIndex> url_index_;
 
   // EncryptedMediaClient attached to this frame; lazily initialized.

@@ -207,7 +207,7 @@ void MediaControlsRotateToFullscreenDelegateTest::InitScreenAndVideo(
 
   // Set up the WebMediaPlayer instance.
   GetDocument().body()->AppendChild(&GetVideo());
-  GetVideo().SetSrc("https://example.com");
+  GetVideo().setSrc("https://example.com");
   testing::RunPendingTasks();
   SimulateVideoReadyState(HTMLMediaElement::kHaveMetadata);
 
@@ -258,7 +258,7 @@ TEST_F(MediaControlsRotateToFullscreenDelegateTest, DelegateRequiresVideo) {
 TEST_F(MediaControlsRotateToFullscreenDelegateTest, ComputeVideoOrientation) {
   // Set up the WebMediaPlayer instance.
   GetDocument().body()->AppendChild(&GetVideo());
-  GetVideo().SetSrc("https://example.com");
+  GetVideo().setSrc("https://example.com");
   testing::RunPendingTasks();
 
   // Each `ComputeVideoOrientation` calls `NaturalSize` twice, except the first

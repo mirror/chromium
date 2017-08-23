@@ -37,6 +37,7 @@
     "core/workers/SharedWorker",
     "core/workers/SharedWorkerGlobalScope",
     "core/workers/Worker",
+    "core/workers/WorkerAudioPlayer",
     "core/xml/XMLHttpRequest",
     "core/xml/XMLHttpRequestUpload",
   ],
