@@ -34,6 +34,24 @@
       "revId": "c2c1e56e68de3f0ad08166cc589a920a070ff05a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f38767d_3224d209",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-23T21:11:56Z",
+      "side": 1,
+      "message": "If that\u0027s the case, I\u0027d recommend\n\nstatic const std::string kLocale \u003d icu::Locale::getDefault().getName();\n\nDCHECK_EQ(kLocale, icu::Locale::getDefault().getName());\n\n\nThis way, the getDefault() will be called only once in production.",
+      "parentUuid": "3298b1aa_489869ee",
+      "revId": "c2c1e56e68de3f0ad08166cc589a920a070ff05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
