@@ -1398,4 +1398,19 @@ bool LayoutBoxModelObject::BackgroundStolenForBeingBody(
   return true;
 }
 
+void LayoutBoxModelObject::UpdateAfterLayout() {
+  // Register ourselves if we're sticky.
+  if (IsStickyPositioned()) {
+    Persistent<Node> ancestor_overflow_node = StyleRef().AncestorOverflowNode();
+    LayoutBoxModelObject* ancestor_overflow_object =
+        ancestor_overflow_node->GetLayoutBoxModelObject();
+    DCHECK(ancestor_overflow_object->Layer());
+    // HACK(smcgruer): We can do this at style time.
+    Layer()->UpdateAncestorOverflowLayer(ancestor_overflow_object->Layer());
+    ancestor_overflow_object->Layer()
+        ->GetScrollableArea()
+        ->RegisterStickyElement(this);
+  }
+}
+
 }  // namespace blink

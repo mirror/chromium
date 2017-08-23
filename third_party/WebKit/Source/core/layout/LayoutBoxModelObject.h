@@ -432,6 +432,8 @@ class CORE_EXPORT LayoutBoxModelObject : public LayoutObject {
   void AbsoluteQuads(Vector<FloatQuad>& quads,
                      MapCoordinatesFlags mode = 0) const override;
 
+  void UpdateAfterLayout() override;
+
  protected:
   // Compute absolute quads for |this|, but not any continuations. May only be
   // called for objects which can be or have continuations, i.e. LayoutInline or

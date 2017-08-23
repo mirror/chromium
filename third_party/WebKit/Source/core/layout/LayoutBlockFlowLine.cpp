@@ -1980,6 +1980,7 @@ void LayoutBlockFlow::LayoutInlineChildren(bool relayout_children,
               layout_state.IsFullLayout());
         if (layout_state.IsFullLayout() || o->SelfNeedsLayout())
           DirtyLineBoxesForObject(o, layout_state.IsFullLayout());
+        o->UpdateAfterLayout();
         o->ClearNeedsLayout();
       }
 

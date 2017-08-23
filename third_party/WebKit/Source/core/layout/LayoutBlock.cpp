@@ -408,7 +408,9 @@ void LayoutBlock::RemoveLeftoverAnonymousBlock(LayoutBlock* child) {
 }
 
 void LayoutBlock::UpdateAfterLayout() {
-  InvalidateStickyConstraints();
+  // TODO(smcgruer): Why was this here? We need to remove it or it just
+  // invalidates the stickies after we get done setting them...
+  // InvalidateStickyConstraints();
   LayoutBox::UpdateAfterLayout();
 }
 
