@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3f142ae_3b7003e7",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-23T00:21:39Z",
+      "side": 1,
+      "message": "\"Flash overlay scrollbars when the mouse enters a scrollable area.\"",
+      "range": {
+        "startLine": 934,
+        "startChar": 18,
+        "endLine": 934,
+        "endChar": 45
+      },
+      "revId": "3ae7adbe0441aa53fe1a817e29d06e30dd9adf45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
