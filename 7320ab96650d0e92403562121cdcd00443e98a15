@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64b86b3a_c4c66068",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T21:24:52Z",
+      "side": 1,
+      "message": "nit: add braces for this if{}else{} since the else clause spans multiple lines.",
+      "revId": "7320ab96650d0e92403562121cdcd00443e98a15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
