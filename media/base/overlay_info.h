@@ -44,6 +44,9 @@ struct MEDIA_EXPORT OverlayInfo {
 
   // Is the player's frame hidden / closed?
   bool is_frame_hidden = false;
+
+  // Is an overlay required?
+  bool is_required = false;
 };
 
 using ProvideOverlayInfoCB = base::Callback<void(const OverlayInfo&)>;
