@@ -57,6 +57,13 @@ class Helper : public EmbeddedWorkerTestHelper {
     stream_handle_->stream = std::move(consumer_handle);
   }
 
+  // Tells this helper to simulate early respond.
+  void EarlyResponse() { response_mode_ = ResponseMode::kEarlyResponse; }
+  void FinishWaitUntil() {
+    std::move(finish_callback_).Run(SERVICE_WORKER_OK, base::Time::Now());
+    base::RunLoop().RunUntilIdle();
+  }
+
  protected:
   void OnFetchEvent(
       int embedded_worker_id,
@@ -102,12 +109,27 @@ class Helper : public EmbeddedWorkerTestHelper {
             std::move(stream_handle_), base::Time::Now());
         std::move(finish_callback).Run(SERVICE_WORKER_OK, base::Time::Now());
         return;
+      case ResponseMode::kEarlyResponse:
+        finish_callback_ = std::move(finish_callback);
+        response_callback->OnResponse(
+            ServiceWorkerResponse(
+                base::MakeUnique<std::vector<GURL>>(), 200, "OK",
+                network::mojom::FetchResponseType::kDefault,
+                base::MakeUnique<ServiceWorkerHeaderMap>(), "" /* blob_uuid */,
+                0 /* blob_size */, nullptr /* blob */,
+                blink::kWebServiceWorkerResponseErrorUnknown, base::Time(),
+                false /* response_is_in_cache_storage */,
+                std::string() /* response_cache_storage_cache_name */,
+                base::MakeUnique<
+                    ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
+            base::Time::Now());
+        return;
     }
     NOTREACHED();
   }
 
  private:
-  enum class ResponseMode { kDefault, kBlob, kStream };
+  enum class ResponseMode { kDefault, kBlob, kStream, kEarlyResponse };
   ResponseMode response_mode_ = ResponseMode::kDefault;
 
   // For ResponseMode::kBlob.
@@ -116,6 +138,9 @@ class Helper : public EmbeddedWorkerTestHelper {
 
   // For ResponseMode::kStream.
   blink::mojom::ServiceWorkerStreamHandlePtr stream_handle_;
+
+  // For ResponseMode::kEarlyResponse
+  FetchCallback finish_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(Helper);
 };
@@ -174,9 +199,16 @@ class ServiceWorkerURLLoaderJobTest
     return blob_context_.AsWeakPtr();
   }
 
+  // Indicates whether ServiceWorkerURLLoaderJob decided to handle a request,
+  // i.e., it returned a non-null StartLoaderCallback for the request.
+  enum class JobResult {
+    kHandledRequest,
+    kDidNotHandleRequest,
+  };
+
   // Performs a request. When this returns, |client_| will have information
   // about the response.
-  void TestRequest() {
+  JobResult TestRequest() {
     ResourceRequest request;
     request.url = GURL("https://www.example.com/");
     request.method = "GET";
@@ -189,16 +221,16 @@ class ServiceWorkerURLLoaderJobTest
         GetBlobStorageContext());
     job->ForwardToServiceWorker();
     base::RunLoop().RunUntilIdle();
-    // TODO(falken): When fallback to network tests are added,
-    // callback can be null. In that case this function should return cleanly
-    // and somehow tell the caller we're falling back to network.
-    EXPECT_FALSE(callback.is_null());
+    if (!callback)
+      return JobResult::kDidNotHandleRequest;
 
     // Start the loader. It will load |request.url|.
     mojom::URLLoaderPtr loader;
     std::move(callback).Run(mojo::MakeRequest(&loader),
                             client_.CreateInterfacePtr());
     client_.RunUntilComplete();
+
+    return JobResult::kHandledRequest;
   }
 
   void ExpectFetchedViaServiceWorker(const ResourceResponseHead& info) {
@@ -299,6 +331,37 @@ TEST_F(ServiceWorkerURLLoaderJobTest, StreamResponse) {
   EXPECT_TRUE(mojo::common::BlockingCopyToString(
       client_.response_body_release(), &response));
   EXPECT_EQ(kResponseBody, response);
+}
+
+// Test when the service worker responses early.
+TEST_F(ServiceWorkerURLLoaderJobTest, EarlyResponse) {
+  helper_->EarlyResponse();
+
+  // Perform the request.
+  JobResult result = TestRequest();
+  EXPECT_EQ(JobResult::kHandledRequest, result);
+  const ResourceResponseHead& info = client_.response_head();
+  EXPECT_EQ(200, info.headers->response_code());
+  ExpectFetchedViaServiceWorker(info);
+
+  EXPECT_TRUE(version_->HasWork());
+  helper_->FinishWaitUntil();
+  EXPECT_FALSE(version_->HasWork());
+}
+
+// Test when service worker responses with fallback.
+TEST_F(ServiceWorkerURLLoaderJobTest, FallbackResponse) {
+  ResourceRequest request;
+  request.url = GURL("https://www.example.com/");
+  request.method = "GET";
+
+  StartLoaderCallback callback;
+  auto job = base::MakeUnique<ServiceWorkerURLLoaderJob>(
+      base::BindOnce(&ReceiveStartLoaderCallback, &callback), this, request,
+      GetBlobStorageContext());
+  job->FallbackToNetwork();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(!callback);
 }
 
 }  // namespace content
