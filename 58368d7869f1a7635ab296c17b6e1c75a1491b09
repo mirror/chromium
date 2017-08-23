@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "425392d5_374d9f59",
+        "filename": "chrome/common/secure_origin_whitelist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-08-23T16:14:11Z",
+      "side": 1,
+      "message": "Can we add an UMA histogram here, to keep an eye on usage?",
+      "revId": "58368d7869f1a7635ab296c17b6e1c75a1491b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
