@@ -18,21 +18,21 @@ public class NativeCronetTestCase extends CronetSmokeTestCase {
     private static final String LOGFILE_NAME = "cronet-netlog.json";
 
     @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    public void ruleSetUp() throws Exception {
+        super.ruleSetUp();
         ContextUtils.initApplicationContext(getContext().getApplicationContext());
         PathUtils.setPrivateDataDirectorySuffix(PRIVATE_DATA_DIRECTORY_SUFFIX);
         mTestSupport.loadTestNativeLibrary();
     }
 
     @Override
-    protected void tearDown() throws Exception {
+    public void ruleTearDown() throws Exception {
         stopAndSaveNetLog();
-        super.tearDown();
+        super.ruleTearDown();
     }
 
     @Override
-    protected void initCronetEngine() {
+    public void initCronetEngine() {
         super.initCronetEngine();
         assertNativeEngine(mCronetEngine);
         startNetLog();

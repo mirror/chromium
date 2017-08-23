@@ -6,12 +6,19 @@ package org.chromium.android_webview.test;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
-import android.test.InstrumentationTestCase;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.chromium.android_webview.AwVariationsSeedFetchService;
 import org.chromium.android_webview.AwVariationsSeedFetchService.SeedPreference;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.MinAndroidSdkLevel;
 import org.chromium.components.variations.firstrun.VariationsSeedFetcher.SeedInfo;
 
@@ -21,21 +28,26 @@ import java.util.Arrays;
 /**
  * Instrumentation tests for AwVariationsSeedFetchService.
  */
+@RunWith(BaseJUnit4ClassRunner.class)
 @MinAndroidSdkLevel(Build.VERSION_CODES.LOLLIPOP) // Android versions under L don't have JobService.
 @TargetApi(Build.VERSION_CODES.LOLLIPOP) // JobService requires API level 21.
-public class AwVariationsSeedFetchServiceTest extends InstrumentationTestCase {
-    protected void setUp() throws Exception {
-        ContextUtils.initApplicationContextForTests(
-                getInstrumentation().getTargetContext().getApplicationContext());
+public class AwVariationsSeedFetchServiceTest {
+    @Before
+    public void setUp() throws Exception {
+        ContextUtils.initApplicationContextForTests(InstrumentationRegistry.getInstrumentation()
+                                                            .getTargetContext()
+                                                            .getApplicationContext());
     }
 
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         AwVariationsSeedFetchService.clearDataForTesting();
     }
 
     /**
      * Ensure reading and writing seed data and pref works correctly.
      */
+    @Test
     @MediumTest
     public void testReadAndWriteVariationsSeed() throws IOException, ClassNotFoundException {
         SeedInfo seedInfo = new SeedInfo();
@@ -47,12 +59,12 @@ public class AwVariationsSeedFetchServiceTest extends InstrumentationTestCase {
         AwVariationsSeedFetchService.storeVariationsSeed(seedInfo);
 
         byte[] seedData = AwVariationsSeedFetchService.getVariationsSeedData();
-        assertTrue(Arrays.equals(seedData, seedInfo.seedData));
+        Assert.assertTrue(Arrays.equals(seedData, seedInfo.seedData));
 
         SeedPreference seedPreference = AwVariationsSeedFetchService.getVariationsSeedPreference();
-        assertEquals(seedPreference.signature, seedInfo.signature);
-        assertEquals(seedPreference.country, seedInfo.country);
-        assertEquals(seedPreference.date, seedInfo.date);
-        assertEquals(seedPreference.isGzipCompressed, seedInfo.isGzipCompressed);
+        Assert.assertEquals(seedPreference.signature, seedInfo.signature);
+        Assert.assertEquals(seedPreference.country, seedInfo.country);
+        Assert.assertEquals(seedPreference.date, seedInfo.date);
+        Assert.assertEquals(seedPreference.isGzipCompressed, seedInfo.isGzipCompressed);
     }
 }
