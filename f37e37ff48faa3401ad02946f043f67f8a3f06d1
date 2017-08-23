@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba840672_ad34d65d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-23T22:22:31Z",
+      "side": 1,
+      "message": "Useful comment! Thanks!",
+      "revId": "f37e37ff48faa3401ad02946f043f67f8a3f06d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
