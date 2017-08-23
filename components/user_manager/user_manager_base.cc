@@ -270,6 +270,8 @@ void UserManagerBase::OnProfileInitialized(User* user) {
 
   // Mark the user as having an initialized session and persist this in
   // the known_user DB.
+  LOG(ERROR) << "PMO setting OnProfileInitialized for "
+             << user->GetAccountId().GetUserEmail();
   user->set_profile_ever_initialized(true);
   known_user::SetProfileEverInitialized(user->GetAccountId(), true);
   GetLocalState()->CommitPendingWrite();
@@ -1030,6 +1032,18 @@ void UserManagerBase::ChangeUserChildStatus(User* user, bool is_child) {
                                          : user_manager::USER_TYPE_REGULAR);
   for (auto& observer : session_state_observer_list_)
     observer.UserChangedChildStatus(user);
+}
+
+void UserManagerBase::ResetProfileEverInitialized(const AccountId& account_id) {
+  User* user = FindUserAndModify(account_id);
+  if (!user) {
+    LOG(ERROR) << "User not found: " << account_id.GetUserEmail();
+    return;  // Ignore if there is no such user.
+  }
+
+  user->set_profile_ever_initialized(false);
+  known_user::SetProfileEverInitialized(user->GetAccountId(), false);
+  GetLocalState()->CommitPendingWrite();
 }
 
 void UserManagerBase::Initialize() {
