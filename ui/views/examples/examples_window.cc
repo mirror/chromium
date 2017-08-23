@@ -144,7 +144,6 @@ class ExamplesWindowContents : public WidgetDelegateView,
 
     SetBackground(CreateStandardPanelBackground());
     GridLayout* layout = new GridLayout(this);
-    SetLayoutManager(layout);
     ColumnSet* column_set = layout->AddColumnSet(0);
     column_set->AddPaddingColumn(0, 5);
     column_set->AddColumn(GridLayout::FILL, GridLayout::FILL, 1,

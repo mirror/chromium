@@ -219,7 +219,6 @@ std::unique_ptr<views::View> PaymentRequestSheetController::CreateView() {
   view->SetPaintToLayer();
 
   views::GridLayout* layout = new views::GridLayout(view.get());
-  view->SetLayoutManager(layout);
 
   // Note: each view is responsible for its own padding (insets).
   views::ColumnSet* columns = layout->AddColumnSet(0);
@@ -243,7 +242,6 @@ std::unique_ptr<views::View> PaymentRequestSheetController::CreateView() {
                           views::GridLayout::Alignment::LEADING, 0,
                           views::GridLayout::SizeType::FIXED,
                           GetActualDialogWidth(), GetActualDialogWidth());
-  pane_->SetLayoutManager(pane_layout);
   pane_layout->StartRow(0, 0);
   // This is owned by its parent. It's the container passed to FillContentView.
   content_view_ = new views::View;
@@ -346,7 +344,6 @@ std::unique_ptr<views::View> PaymentRequestSheetController::CreateFooterView() {
       views::CreateEmptyBorder(kInset, kInset, kInset, kInset));
 
   views::GridLayout* layout = new views::GridLayout(container.get());
-  container->SetLayoutManager(layout);
 
   views::ColumnSet* columns = layout->AddColumnSet(0);
   columns->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER,
