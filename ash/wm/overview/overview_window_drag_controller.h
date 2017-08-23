@@ -34,7 +34,10 @@ class ASH_EXPORT OverviewWindowDragController {
   WindowSelectorItem* item() { return item_; }
 
  private:
-  // Updates visuals for the user while dragging items around.
+  // Reset the window selector item in dragging.
+  void ResetDragItem(WindowSelectorItem* item);
+
+  // Updates visuals for the user while dragging |item_| around.
   void UpdatePhantomWindowAndWindowGrid(const gfx::Point& location_in_screen);
 
   SplitViewController::SnapPosition GetSnapPosition(

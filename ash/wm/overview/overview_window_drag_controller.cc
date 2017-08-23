@@ -39,8 +39,8 @@ OverviewWindowDragController::~OverviewWindowDragController() {}
 void OverviewWindowDragController::InitiateDrag(
     WindowSelectorItem* item,
     const gfx::Point& location_in_screen) {
+  ResetDragItem(item);
   previous_event_location_ = location_in_screen;
-  item_ = item;
 }
 
 void OverviewWindowDragController::Drag(const gfx::Point& location_in_screen) {
@@ -88,6 +88,14 @@ void OverviewWindowDragController::CompleteDrag() {
     else
       SnapWindow(snap_position_);
   }
+}
+
+void OverviewWindowDragController::ResetDragItem(WindowSelectorItem* item) {
+  item_ = item;
+  phantom_window_controller_.reset();
+  previous_event_location_ = gfx::Point();
+  did_move_ = false;
+  snap_position_ = SplitViewController::NONE;
 }
 
 void OverviewWindowDragController::UpdatePhantomWindowAndWindowGrid(
@@ -176,9 +184,6 @@ void OverviewWindowDragController::SnapWindow(
   window_selector_->RemoveWindowSelectorItem(item_);
   item_ = nullptr;
 
-  // Note: SplitViewController::SnapWindow() might end of overview mode if two
-  // windows are snapped to both side of the screen. In this case the deletion
-  // of WindowSelector will then delete OverviewWindowDragController.
   split_view_controller_->SnapWindow(window, snap_position);
 }
 

@@ -11,6 +11,7 @@
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/wm/mru_window_tracker.h"
+#include "ash/wm/overview/overview_window_drag_controller.h"
 #include "ash/wm/overview/window_grid.h"
 #include "ash/wm/overview/window_selector.h"
 #include "ash/wm/overview/window_selector_item.h"
@@ -30,6 +31,7 @@ WindowSelectorController::~WindowSelectorController() {
        delayed_animations_) {
     animation_observer->Shutdown();
   }
+  window_drag_controller_.reset();
 }
 
 // static
@@ -100,6 +102,8 @@ bool WindowSelectorController::ToggleOverview() {
     Shell::Get()->NotifyOverviewModeStarting();
     window_selector_.reset(new WindowSelector(this));
     window_selector_->Init(windows, hide_windows);
+    window_drag_controller_.reset(
+        new OverviewWindowDragController(window_selector_.get()));
     OnSelectionStarted();
   }
   return true;
@@ -174,6 +178,11 @@ void WindowSelectorController::OnSelectionStarted() {
     UMA_HISTOGRAM_LONG_TIMES("Ash.WindowSelector.TimeBetweenUse",
                              base::Time::Now() - last_selection_time_);
   }
+}
+
+OverviewWindowDragController*
+WindowSelectorController::GetOverviewWindowDragController() {
+  return window_drag_controller_.get();
 }
 
 }  // namespace ash

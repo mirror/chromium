@@ -57,6 +57,10 @@ class TestWindowSelectorDelegate : public WindowSelectorDelegate {
                      observers_.end());
   }
 
+  OverviewWindowDragController* GetOverviewWindowDragController() override {
+    return nullptr;
+  }
+
  private:
   std::vector<std::unique_ptr<DelayedAnimationObserver>> observers_;
 

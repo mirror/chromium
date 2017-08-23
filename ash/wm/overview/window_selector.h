@@ -225,8 +225,8 @@ class ASH_EXPORT WindowSelector : public display::DisplayObserver,
 
   bool is_shut_down_ = false;
 
-  // The drag controller for a window in the overview mode.
-  std::unique_ptr<OverviewWindowDragController> window_drag_controller_;
+  // The pointer of the window drag controller for an overview window item.
+  OverviewWindowDragController* window_drag_controller_ = nullptr;
 
   std::unique_ptr<ScopedHideOverviewWindows> hide_overview_windows_;
 

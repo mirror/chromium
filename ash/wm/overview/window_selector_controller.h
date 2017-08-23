@@ -18,6 +18,7 @@
 namespace ash {
 class WindowSelector;
 class WindowSelectorTest;
+class OverviewWindowDragController;
 
 // Manages a window selector which displays an overview of all windows and
 // allows selecting a window to activate it.
@@ -59,6 +60,7 @@ class ASH_EXPORT WindowSelectorController : public WindowSelectorDelegate {
       std::unique_ptr<DelayedAnimationObserver> animation) override;
   void RemoveAndDestroyAnimationObserver(
       DelayedAnimationObserver* animation) override;
+  OverviewWindowDragController* GetOverviewWindowDragController() override;
 
  private:
   friend class WindowSelectorTest;
@@ -73,6 +75,9 @@ class ASH_EXPORT WindowSelectorController : public WindowSelectorDelegate {
   std::vector<std::unique_ptr<DelayedAnimationObserver>> delayed_animations_;
   std::unique_ptr<WindowSelector> window_selector_;
   base::Time last_selection_time_;
+
+  // The drag controller for an overview window item.
+  std::unique_ptr<OverviewWindowDragController> window_drag_controller_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowSelectorController);
 };
