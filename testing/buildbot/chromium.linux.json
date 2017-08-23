@@ -3512,6 +3512,7 @@
       "base_unittests",
       "crypto_unittests",
       "gl_unittests",
+      "headless_shell",
       "ipc_tests",
       "media_unittests",
       "mojo_common_unittests",
