@@ -38,8 +38,6 @@ class CC_PAINT_EXPORT PaintImageBuilder {
   }
   PaintImageBuilder& set_paint_record(sk_sp<PaintRecord> paint_record,
                                       const gfx::Rect& rect) {
-    paint_image_.paint_record_ = std::move(paint_record);
-    paint_image_.paint_record_rect_ = rect;
     return *this;
   }
   PaintImageBuilder& set_animation_type(PaintImage::AnimationType type) {
