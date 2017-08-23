@@ -717,7 +717,7 @@ void LayerTreeImpl::UpdatePropertyTreeAnimationFromMainThread() {
   }
 
   LayerTreeHostCommon::CallFunctionForEveryLayer(this, [](LayerImpl* layer) {
-    layer->UpdatePropertyTreeForAnimationIfNeeded();
+    layer->UpdatePropertyTreeForAnimationIfNeeded(layer->element_id());
   });
 }
 
