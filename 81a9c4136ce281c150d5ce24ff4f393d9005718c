@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f095b5c9_80d660cf",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1163397
+      },
+      "writtenOn": "2017-08-23T06:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d3fbd8d_ac1401b6",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 25
+      },
+      "revId": "81a9c4136ce281c150d5ce24ff4f393d9005718c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "541aa357_5ce2c90b",
         "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-22T15:35:52Z",
       "side": 1,
       "message": "Ditto.",
+      "range": {
+        "startLine": 96,
+        "startChar": 26,
+        "endLine": 96,
+        "endChar": 50
+      },
+      "revId": "81a9c4136ce281c150d5ce24ff4f393d9005718c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3068693a_12773797",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1163397
+      },
+      "writtenOn": "2017-08-23T06:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "541aa357_5ce2c90b",
       "range": {
         "startLine": 96,
         "startChar": 26,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5be6c4c5_8f5ba737",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1163397
+      },
+      "writtenOn": "2017-08-23T06:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "777fa6f2_61821d2e",
+      "range": {
+        "startLine": 150,
+        "startChar": 20,
+        "endLine": 150,
+        "endChar": 26
+      },
+      "revId": "81a9c4136ce281c150d5ce24ff4f393d9005718c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b5601a3_e81c1aac",
         "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8c55fc0f_e9313aac",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1163397
+      },
+      "writtenOn": "2017-08-23T06:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b5601a3_e81c1aac",
+      "range": {
+        "startLine": 154,
+        "startChar": 20,
+        "endLine": 154,
+        "endChar": 26
+      },
+      "revId": "81a9c4136ce281c150d5ce24ff4f393d9005718c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e28bde54_068b7395",
         "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "81a9c4136ce281c150d5ce24ff4f393d9005718c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d01c58f0_caa9b821",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1163397
+      },
+      "writtenOn": "2017-08-23T06:12:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e28bde54_068b7395",
+      "range": {
+        "startLine": 157,
+        "startChar": 14,
+        "endLine": 157,
+        "endChar": 20
+      },
+      "revId": "81a9c4136ce281c150d5ce24ff4f393d9005718c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
