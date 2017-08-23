@@ -2,6 +2,8 @@ rootWebArea
 ++genericContainer
 ++++canvas
 ++++++staticText name='Static fallback'
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++canvas
 ++++++link name='Interactive fallback'
 ++++++++staticText name='Interactive fallback'

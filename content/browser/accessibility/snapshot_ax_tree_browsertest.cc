@@ -124,18 +124,23 @@ IN_PROC_BROWSER_TEST_F(SnapshotAXTreeBrowserTest,
       "rootWebArea\n"
       "  genericContainer\n"
       "    button 'Before'\n"
+      "    staticText ' '\n"
       "    iframe\n"
       "      rootWebArea\n"
       "        pre\n"
       "          staticText 'Alpha'\n"
+      "    staticText ' '\n"
       "    button 'Middle'\n"
+      "    staticText ' '\n"
       "    iframe\n"
       "      rootWebArea\n"
       "        genericContainer\n"
       "          button 'Inside Before'\n"
+      "          staticText ' '\n"
       "          iframe\n"
       "            rootWebArea\n"
       "          button 'Inside After'\n"
+      "    staticText ' '\n"
       "    button 'After'\n",
       dump);
 }
