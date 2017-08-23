@@ -80,6 +80,7 @@ class TestImeControllerClient : public mojom::ImeControllerClient {
     last_show_message_ = show_message;
   }
   void ActivateImeMenuItem(const std::string& key) override {}
+  void SetCapsFromController(bool enabled) override {}
 
   int next_ime_count_ = 0;
   int previous_ime_count_ = 0;

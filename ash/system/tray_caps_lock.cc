@@ -5,6 +5,7 @@
 #include "ash/system/tray_caps_lock.h"
 
 #include "ash/accessibility_delegate.h"
+#include "ash/ime/ime_controller.h"
 #include "ash/metrics/user_metrics_recorder.h"
 #include "ash/public/cpp/config.h"
 #include "ash/resources/vector_icons/vector_icons.h"
@@ -21,8 +22,6 @@
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "ui/accessibility/ax_node_data.h"
-#include "ui/base/ime/chromeos/ime_keyboard.h"
-#include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/chromeos/events/pref_names.h"
@@ -48,11 +47,7 @@ const int kCaptionRightPadding = 6;
 const char kCapsLockNotificationId[] = "capslock";
 
 bool CapsLockIsEnabled() {
-  chromeos::input_method::InputMethodManager* ime =
-      chromeos::input_method::InputMethodManager::Get();
-  return (ime && ime->GetImeKeyboard())
-             ? ime->GetImeKeyboard()->CapsLockIsEnabled()
-             : false;
+  return ash::Shell::Get()->ime_controller()->IsCapsLockEnabled();
 }
 
 bool IsSearchKeyMappedToCapsLock() {
@@ -161,15 +156,11 @@ class CapsLockDefaultView : public ActionableView {
 
   // ActionableView:
   bool PerformAction(const ui::Event& event) override {
-    chromeos::input_method::ImeKeyboard* keyboard =
-        chromeos::input_method::InputMethodManager::Get()->GetImeKeyboard();
-    if (keyboard) {
-      Shell::Get()->metrics()->RecordUserMetricsAction(
-          keyboard->CapsLockIsEnabled()
-              ? UMA_STATUS_AREA_CAPS_LOCK_DISABLED_BY_CLICK
-              : UMA_STATUS_AREA_CAPS_LOCK_ENABLED_BY_CLICK);
-      keyboard->SetCapsLockEnabled(!keyboard->CapsLockIsEnabled());
-    }
+    bool new_state = !CapsLockIsEnabled();
+    ash::Shell::Get()->ime_controller()->SetCapsFromController(new_state);
+    Shell::Get()->metrics()->RecordUserMetricsAction(
+        new_state ? UMA_STATUS_AREA_CAPS_LOCK_ENABLED_BY_CLICK
+                  : UMA_STATUS_AREA_CAPS_LOCK_DISABLED_BY_CLICK);
     return true;
   }
 
@@ -187,17 +178,11 @@ TrayCapsLock::TrayCapsLock(SystemTray* system_tray)
       default_(nullptr),
       caps_lock_enabled_(CapsLockIsEnabled()),
       message_shown_(false) {
-  chromeos::input_method::InputMethodManager* ime =
-      chromeos::input_method::InputMethodManager::Get();
-  if (ime && ime->GetImeKeyboard())
-    ime->GetImeKeyboard()->AddObserver(this);
+  ash::Shell::Get()->ime_controller()->AddObserver(this);
 }
 
 TrayCapsLock::~TrayCapsLock() {
-  chromeos::input_method::InputMethodManager* ime =
-      chromeos::input_method::InputMethodManager::Get();
-  if (ime && ime->GetImeKeyboard())
-    ime->GetImeKeyboard()->RemoveObserver(this);
+  ash::Shell::Get()->ime_controller()->RemoveObserver(this);
 }
 
 // static
@@ -235,8 +220,6 @@ void TrayCapsLock::OnCapsLockChanged(bool enabled) {
     }
   }
 }
-
-void TrayCapsLock::OnLayoutChanging(const std::string& layout_name) {}
 
 bool TrayCapsLock::GetInitialVisibility() {
   return CapsLockIsEnabled();
