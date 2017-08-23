@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4391fc23_ef2165a6",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T15:14:59Z",
+      "side": 1,
+      "message": "Remove public here and on line 72 as public is the default for structs.",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 10
+      },
+      "revId": "8fb5b1f875ff6006c889a831ed39be922325c82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
