@@ -86,8 +86,8 @@ class LocalNTPTest : public InProcessBrowserTest, public InstantTestBase {
     ASSERT_TRUE(https_test_server().Start());
     GURL instant_url =
         https_test_server().GetURL("/instant_extended.html?strk=1&");
-    GURL ntp_url =
-        https_test_server().GetURL("/local_ntp_browsertest.html?strk=1&");
+    GURL ntp_url = https_test_server().GetURL(
+        "/local_ntp/local_ntp_browsertest.html?strk=1&");
     InstantTestBase::Init(instant_url, ntp_url, false);
   }
 };
@@ -108,7 +108,7 @@ IN_PROC_BROWSER_TEST_F(LocalNTPTest, SimpleJavascriptTests) {
 
   bool success = false;
   ASSERT_TRUE(instant_test_utils::GetBoolFromJS(
-      active_tab, "!!runSimpleTests()", &success));
+      active_tab, "!!runSimpleTests('local-ntp-body')", &success));
   EXPECT_TRUE(success);
 }
 

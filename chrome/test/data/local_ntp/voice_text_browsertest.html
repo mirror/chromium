@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<!-- Copyright 2017 The Chromium Authors. All rights reserved.
+     Use of this source code is governed by a BSD-style license that can be
+     found in the LICENSE file. -->
+<head>
+  <script>window.localNTPUnitTest = true;</script>
+  <script src="chrome-search://local-ntp/config.js"></script>
+  <script src="chrome-search://local-ntp/local-ntp.js"></script>
+  <script src="chrome-search://local-ntp/voice.js"></script>  
+  <link rel="stylesheet" href="chrome-search://local-ntp/local-ntp.css"></link>
+  <link rel="stylesheet" href="chrome-search://local-ntp/voice.css"></link>
+  <script src="test_utils.js"></script>
+  <script src="voice_text_browsertest.js"></script>
+  <template id="voice-text-template">
+    <!-- Keep in sync with local_ntp.html. -->
+    <div class="text-container">
+      <!-- Low confidence text underneath high confidence text. -->
+      <span id="voice-text-i" class="voice-text"></span>
+      <!-- High confidence text on top of low confidence text. -->
+      <span id="voice-text-f" class="voice-text"></span>
+    </div>
+  </template>
+</head>
+<body>
+</body>
+</html>
