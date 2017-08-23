@@ -1,4 +1,6 @@
 include_rules = [
   "+components/policy/proto",
+  "+net/traffic_annotation",
+  "+third_party/libxml",
   "+third_party/protobuf/src/google",
 ]
