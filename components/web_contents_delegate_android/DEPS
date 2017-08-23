@@ -1,8 +1,4 @@
 include_rules = [
-  "+content/public/browser",
-  "+content/public/common",
-  "+jni",
-  "+ui/android",
-  "+ui/base",
-  "+ui/gfx",
+  "+content/public/android/java",
+  "+ui/android/java",
 ]
