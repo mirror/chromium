@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a621068c_fbb10222",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 2941,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-23T00:12:04Z",
+      "side": 1,
+      "message": "Remove stray change.",
+      "range": {
+        "startLine": 2939,
+        "startChar": 1,
+        "endLine": 2941,
+        "endChar": 61
+      },
+      "revId": "f849ee02470a7d818cccb25661ecabf29448f2a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

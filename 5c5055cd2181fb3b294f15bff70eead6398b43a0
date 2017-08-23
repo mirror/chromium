@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "83dadb7c_abb305df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-23T00:12:04Z",
+      "side": 1,
+      "message": "If you want to avoid the copy+paste, you can do this:\nThere should be an option in Drive to copy to your personal Drive. From that you can share it with your @chromium.org account, perform the same copy to your @chromium.org account and then you\u0027ll be good to go.",
+      "parentUuid": "2cfd7e53_7c98073b",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 119
+      },
+      "revId": "5c5055cd2181fb3b294f15bff70eead6398b43a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0310d536_3a9890b9",
         "filename": "chrome/browser/feature_engagement/bookmark/bookmark_tracker.h",
         "patchSetId": 5
