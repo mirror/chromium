@@ -164,6 +164,7 @@ PasswordFormManager* FindMatchedManager(
        iter != pending_login_managers.end(); ++iter) {
     PasswordFormManager::MatchResultMask result =
         (*iter)->DoesManage(form, driver);
+    LOG(ERROR) << "match " << result;
 
     if (result == PasswordFormManager::RESULT_COMPLETE_MATCH) {
       // If we find a manager that exactly matches the submitted form including
@@ -465,12 +466,16 @@ void PasswordManager::ShowManualFallbackForSaving(
 
   PasswordFormManager* matched_manager = FindMatchedManager(
       password_form, pending_login_managers_, driver, nullptr);
-  if (!matched_manager)
+  if (!matched_manager) {
+    LOG(ERROR) << "no matching manager #managers="
+               << pending_login_managers_.size();
     return;
+  }
   // TODO(crbug.com/741537): Process manual saving request even if there is
   // still no response from the store.
   if (matched_manager->form_fetcher()->GetState() ==
       FormFetcher::State::WAITING) {
+    LOG(ERROR) << "store is not ready to show fallback";
     return;
   }
   ProvisionallySaveManager(password_form, matched_manager, nullptr);

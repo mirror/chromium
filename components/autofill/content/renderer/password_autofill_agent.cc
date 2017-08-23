@@ -657,9 +657,7 @@ blink::WebInputElement FindUsernameElementPrecedingPasswordElement(
 
 bool ShouldShowStandaloneManuallFallback(
     const blink::WebInputElement& element) {
-  return (element.IsPasswordField() &&
-          !IsCreditCardVerificationPasswordField(element) &&
-          !HasCreditCardAutocompleteAttributes(element) &&
+  return (element.IsPasswordField() && !IsCreditCardRelatedField(element) &&
           base::FeatureList::IsEnabled(
               password_manager::features::kEnableManualFallbacksFilling));
 }
