@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "68188143_2ca2f038",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-23T20:59:47Z",
+      "side": 1,
+      "message": "nit: DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);",
+      "range": {
+        "startLine": 97,
+        "startChar": 32,
+        "endLine": 97,
+        "endChar": 68
+      },
+      "revId": "ae95fdafaccd1be1b1e5b15fbda26bfdb2b7570e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "299b0b72_1fbf35ac",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 2
