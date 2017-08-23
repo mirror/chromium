@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "b08d1ead_cca7967f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T17:18:20Z",
+      "side": 1,
+      "message": "It\u0027s still there :p",
+      "parentUuid": "7de3a05e_60d52d22",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 28
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bccf3f44_9ec76af0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
         "patchSetId": 1

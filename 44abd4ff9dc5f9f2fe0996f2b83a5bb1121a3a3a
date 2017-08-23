@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d01fec42_b5515600",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T17:18:20Z",
+      "side": 1,
+      "message": "do the conversion outside of the loop?",
+      "range": {
+        "startLine": 107,
+        "startChar": 58,
+        "endLine": 107,
+        "endChar": 64
+      },
+      "revId": "44abd4ff9dc5f9f2fe0996f2b83a5bb1121a3a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc9c565_fb13683b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T17:18:20Z",
+      "side": 1,
+      "message": "nit: move that to a separate utility class? for example browser.util.ConversionUtils or browser.util.ViewUtils? If you want you can also replace the various dpToPx implementations we have all over the place with this. In that case, moving it out as a separate CL sgtm.",
+      "range": {
+        "startLine": 118,
+        "startChar": 16,
+        "endLine": 118,
+        "endChar": 22
+      },
+      "revId": "44abd4ff9dc5f9f2fe0996f2b83a5bb1121a3a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
