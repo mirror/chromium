@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07271e52_951ae2df",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-23T15:26:23Z",
+      "side": 1,
+      "message": "nit: ARC\n\nAlso, shouldn\u0027t this be above the code? Also, can\u0027t you use some other bit of information (such as https://cs.chromium.org/chromium/src/chrome/browser/chromeos/arc/arc_util.h?q\u003darc::IsAllowedForProfile\u0026sq\u003dpackage:chromium\u0026l\u003d47 ) to detect whether you\u0027re in ARC or not?",
+      "range": {
+        "startLine": 418,
+        "startChar": 57,
+        "endLine": 418,
+        "endChar": 62
+      },
+      "revId": "4e879c19a6b8eb1fc8ecaca8864b5ea9711e40ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
