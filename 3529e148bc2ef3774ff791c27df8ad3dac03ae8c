@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "21b66044_00f71386",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-23T20:03:46Z",
+      "side": 1,
+      "message": "Good point! Added a MakeClientWindowId that takes a WindowId directly.",
+      "parentUuid": "9c16c681_ab503b21",
+      "range": {
+        "startLine": 247,
+        "startChar": 24,
+        "endLine": 247,
+        "endChar": 46
+      },
+      "revId": "3529e148bc2ef3774ff791c27df8ad3dac03ae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bbc7d57_944e7203",
         "filename": "services/ui/ws/window_tree.cc",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "4a3d97cd_2f9d2fd1",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-23T20:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9625651f_5d48650d",
+      "range": {
+        "startLine": 529,
+        "startChar": 2,
+        "endLine": 529,
+        "endChar": 13
+      },
+      "revId": "3529e148bc2ef3774ff791c27df8ad3dac03ae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2c7466e_b8523b09",
         "filename": "services/ui/ws/window_tree.cc",
         "patchSetId": 1
@@ -115,6 +163,30 @@
       "revId": "3529e148bc2ef3774ff791c27df8ad3dac03ae8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70821a8_04d48045",
+        "filename": "services/ui/ws/window_tree.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-23T20:03:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e12622d_e5845b87",
+      "range": {
+        "startLine": 420,
+        "startChar": 2,
+        "endLine": 420,
+        "endChar": 66
+      },
+      "revId": "3529e148bc2ef3774ff791c27df8ad3dac03ae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
