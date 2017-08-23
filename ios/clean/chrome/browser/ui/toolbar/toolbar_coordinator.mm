@@ -7,22 +7,27 @@
 #include "ios/chrome/browser/chrome_url_constants.h"
 #import "ios/chrome/browser/ui/browser_list/browser.h"
 #import "ios/chrome/browser/ui/commands/command_dispatcher.h"
+#import "ios/chrome/browser/ui/commands/history_popup_commands.h"
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
+#import "ios/chrome/browser/ui/history_popup/requirements/tab_history_constants.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
 #import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
+#import "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator.h"
 #import "ios/clean/chrome/browser/ui/omnibox/location_bar_coordinator.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_mediator.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h"
 #import "ios/clean/chrome/browser/ui/tools/tools_coordinator.h"
 #import "ios/shared/chrome/browser/ui/broadcaster/chrome_broadcaster.h"
+#import "ios/web/public/navigation_manager.h"
 #import "ios/web/public/web_state/web_state.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
-@interface ToolbarCoordinator ()<ToolsMenuCommands>
+@interface ToolbarCoordinator ()<ToolsMenuCommands, TabHistoryPopupCommands>
 @property(nonatomic, weak) LocationBarCoordinator* locationBarCoordinator;
+@property(nonatomic, weak) HistoryPopupCoordinator* historyPopupCoordinator;
 @property(nonatomic, weak) ToolsCoordinator* toolsMenuCoordinator;
 @property(nonatomic, strong) ToolbarViewController* viewController;
 @property(nonatomic, strong) ToolbarMediator* mediator;
@@ -30,6 +35,7 @@
 
 @implementation ToolbarCoordinator
 @synthesize locationBarCoordinator = _locationBarCoordinator;
+@synthesize historyPopupCoordinator = _historyPopupCoordinator;
 @synthesize toolsMenuCoordinator = _toolsMenuCoordinator;
 @synthesize viewController = _viewController;
 @synthesize webState = _webState;
@@ -56,6 +62,8 @@
                            forSelector:@selector(showToolsMenu)];
   [dispatcher startDispatchingToTarget:self
                            forSelector:@selector(closeToolsMenu)];
+  [dispatcher startDispatchingToTarget:self
+                           forProtocol:@protocol(TabHistoryPopupCommands)];
 
   self.mediator.consumer = self.viewController;
   self.mediator.webStateList = &self.browser->web_state_list();
@@ -120,6 +128,48 @@
 - (void)closeToolsMenu {
   [self.toolsMenuCoordinator stop];
   [self removeChildCoordinator:self.toolsMenuCoordinator];
+}
+
+#pragma mark - HistoryPopupCommandss Implementation
+
+- (void)showTabHistoryPopupForBackwardHistory {
+  HistoryPopupCoordinator* historyPopupCoordinator =
+      [[HistoryPopupCoordinator alloc] init];
+  historyPopupCoordinator.positionProvider = self.viewController;
+  historyPopupCoordinator.presentationProvider = self.viewController;
+  historyPopupCoordinator.tabHistoryUIUpdater = self.viewController;
+  historyPopupCoordinator.webState = self.webState;
+  historyPopupCoordinator.presentingButton = ToolbarButtonTypeBack;
+  historyPopupCoordinator.navigationItems =
+      self.webState->GetNavigationManager()->GetBackwardItems();
+  self.historyPopupCoordinator = historyPopupCoordinator;
+
+  [self addChildCoordinator:self.historyPopupCoordinator];
+  [self.historyPopupCoordinator start];
+}
+
+- (void)showTabHistoryPopupForForwardHistory {
+  HistoryPopupCoordinator* historyPopupCoordinator =
+      [[HistoryPopupCoordinator alloc] init];
+  historyPopupCoordinator.positionProvider = self.viewController;
+  historyPopupCoordinator.presentationProvider = self.viewController;
+  historyPopupCoordinator.tabHistoryUIUpdater = self.viewController;
+  historyPopupCoordinator.webState = self.webState;
+  historyPopupCoordinator.presentingButton = ToolbarButtonTypeForward;
+  historyPopupCoordinator.navigationItems =
+      self.webState->GetNavigationManager()->GetForwardItems();
+  self.historyPopupCoordinator = historyPopupCoordinator;
+
+  [self addChildCoordinator:self.historyPopupCoordinator];
+  [self.historyPopupCoordinator start];
+}
+
+- (void)navigateToHistoryItem:(const web::NavigationItem*)item {
+  DCHECK(item);
+  int index = self.webState->GetNavigationManager()->GetIndexOfItem(item);
+  DCHECK_NE(index, -1);
+  self.webState->GetNavigationManager()->GoToIndex(index);
+  [self.historyPopupCoordinator stop];
 }
 
 @end
