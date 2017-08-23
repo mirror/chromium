@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe4bc007_87b29339",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-23T21:41:22Z",
+      "side": 1,
+      "message": "nit: remove this comment.",
+      "revId": "d4261a1e6c6d57d4da13f6d314afe8a752dbb36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc20bac_40c89847",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-23T21:41:22Z",
+      "side": 1,
+      "message": "nit: refactor to named constant.",
+      "revId": "d4261a1e6c6d57d4da13f6d314afe8a752dbb36f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
