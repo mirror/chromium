@@ -244,6 +244,24 @@
       "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7af5dcdd_341fd732",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridgeTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-23T22:31:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bf4ee7d9_150231f1",
+      "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
