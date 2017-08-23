@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fd9af2b_e03c7b02",
+        "filename": "components/ntp_snippets/content_suggestions_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-23T15:14:31Z",
+      "side": 1,
+      "message": "@treib, this time this is really necessary (prefetched suggestions are intended to stay longer after fetches and so we expect \u003c\u003d 15 suggestion at most, which is configurable via params). Is it safe to change this for existing histograms?",
+      "range": {
+        "startLine": 22,
+        "startChar": 39,
+        "endLine": 22,
+        "endChar": 41
+      },
+      "revId": "4699902a5de0caec693f05025deabfc93d4a3267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
