@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7748229_57ce9e71",
+        "filename": "components/offline_pages/core/prefetch/store/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-23T01:15:30Z",
+      "side": 1,
+      "message": "Realized this sounds Yoda-esque. Also the reason is a bit different:\n\n\"Column ordering is important to simplify data retrieval in SQLite 3 tables.\"\n\nApparently this is about finding a column in row, and it is easier to do offset calculation for initial columns if you don\u0027t put variable width in there.",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 72
+      },
+      "revId": "655778d6b40c690f8fd692857140ad58bf5441f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
