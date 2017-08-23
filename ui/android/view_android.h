@@ -188,6 +188,9 @@ class UI_ANDROID_EXPORT ViewAndroid {
 
   void RemoveChild(ViewAndroid* child);
 
+  void OnAttachedToWindow();
+  void OnDetachedFromWindow();
+
   template <typename E>
   using ViewClientCallback =
       const base::Callback<bool(ViewClient*, const E&, const gfx::PointF&)>;
