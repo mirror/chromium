@@ -16,6 +16,24 @@
       "revId": "1e1519ddf90c88e16446f839d769879d9b0be989",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "652d5465_d6b640d2",
+        "filename": "ui/file_manager/integration_tests/file_manager/drive_specific.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-23T06:56:33Z",
+      "side": 0,
+      "message": "Yes, I\u0027m going to add automated test for the new Recent folder in a followup CL, but I\u0027m prioritizing manual tests right now to ensure test variety in a short time.",
+      "parentUuid": "34bbc79a_8d77ee65",
+      "revId": "1e1519ddf90c88e16446f839d769879d9b0be989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5cc57fea_e3c723f7",
+        "filename": "ui/file_manager/file_manager/background/js/entry_location_impl.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-23T06:56:33Z",
+      "side": 1,
+      "message": "Yes, I\u0027ll clean up the DRIVE_RECENT related code and resources in a follow-up CL.",
+      "parentUuid": "6c33889a_231329e8",
+      "revId": "0f12e5de5db127d433051b63011c17c6fe30eccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4e89839_1d17f6ba",
         "filename": "ui/file_manager/file_manager/common/js/volume_manager_common.js",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "writtenOn": "2017-08-23T06:03:47Z",
       "side": 1,
       "message": "don\u0027t we need this case?\nLooks like DialogActionController.selectFilesAndClose_ requires the volume type.",
+      "revId": "0f12e5de5db127d433051b63011c17c6fe30eccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31195085_fd487dbc",
+        "filename": "ui/file_manager/file_manager/common/js/volume_manager_common.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-23T06:56:33Z",
+      "side": 1,
+      "message": "In the selectFilesAndClose_ function, we don\u0027t have to call VolumeManagerCommon.getVolumeTypeFromRootType() at all.\nI fixed it in the dialog_action_controller.js.",
+      "parentUuid": "d4e89839_1d17f6ba",
       "revId": "0f12e5de5db127d433051b63011c17c6fe30eccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
