@@ -672,7 +672,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
   // Record reload of previously-evicted tab.
   if (self.webState->IsEvicted() && [_parentTabModel tabUsageRecorder])
-    [_parentTabModel tabUsageRecorder]->RecordPageLoadStart(self);
+    [_parentTabModel tabUsageRecorder]->RecordPageLoadStart(self.webState);
   return self.webState->GetView();
 }
 
@@ -908,7 +908,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     base::RecordAction(base::UserMetricsAction("MobileTabClobbered"));
   }
   if ([_parentTabModel tabUsageRecorder])
-    [_parentTabModel tabUsageRecorder]->RecordPageLoadStart(self);
+    [_parentTabModel tabUsageRecorder]->RecordPageLoadStart(self.webState);
 
   web::NavigationItem* navigationItem =
       [self navigationManager]->GetPendingItem();
@@ -1334,7 +1334,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
       url != self.lastCommittedURL) {
     base::RecordAction(base::UserMetricsAction("MobileTabClobbered"));
     if ([_parentTabModel tabUsageRecorder])
-      [_parentTabModel tabUsageRecorder]->RecordPageLoadStart(self);
+      [_parentTabModel tabUsageRecorder]->RecordPageLoadStart(self.webState);
   }
 }
 
@@ -1343,7 +1343,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   if ([_parentTabModel tabUsageRecorder] &&
       PageTransitionCoreTypeIs(navigation->GetPageTransition(),
                                ui::PAGE_TRANSITION_RELOAD)) {
-    [_parentTabModel tabUsageRecorder]->RecordReload(self);
+    [_parentTabModel tabUsageRecorder]->RecordReload(self.webState);
   }
 
   if (!navigation->IsSameDocument()) {
@@ -1452,8 +1452,10 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   [_parentTabModel notifyTabChanged:self];
 
   if (_parentTabModel) {
-    if ([_parentTabModel tabUsageRecorder])
-      [_parentTabModel tabUsageRecorder]->RecordPageLoadDone(self, loadSuccess);
+    if ([_parentTabModel tabUsageRecorder]) {
+      [_parentTabModel tabUsageRecorder]->RecordPageLoadDone(self.webState,
+                                                             loadSuccess);
+    }
     [[NSNotificationCenter defaultCenter]
         postNotificationName:kTabModelTabDidFinishLoadingNotification
                       object:_parentTabModel
@@ -1669,8 +1671,10 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
         kRendererTerminationStateHistogram, static_cast<int>(tab_state),
         static_cast<int>(
             RendererTerminationTabState::TERMINATION_TAB_STATE_COUNT));
-    if ([_parentTabModel tabUsageRecorder])
-      [_parentTabModel tabUsageRecorder]->RendererTerminated(self, _visible);
+    if ([_parentTabModel tabUsageRecorder]) {
+      [_parentTabModel tabUsageRecorder]->RendererTerminated(self.webState,
+                                                             _visible);
+    }
   }
 
   if (_visible) {
