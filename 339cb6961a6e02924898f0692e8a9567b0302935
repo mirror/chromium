@@ -22,6 +22,30 @@
       "revId": "339cb6961a6e02924898f0692e8a9567b0302935",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d5233ea_7e644a24",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-23T14:27:28Z",
+      "side": 0,
+      "message": "if video isn\u0027t an important part of the check, then that\u0027s much simpler!  PS4 does this, which seems to work fine.",
+      "parentUuid": "e882c749_ba360aaf",
+      "range": {
+        "startLine": 795,
+        "startChar": 73,
+        "endLine": 795,
+        "endChar": 91
+      },
+      "revId": "339cb6961a6e02924898f0692e8a9567b0302935",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

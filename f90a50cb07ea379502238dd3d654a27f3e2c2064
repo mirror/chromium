@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32f3639b_83ab6c30",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-23T14:27:28Z",
+      "side": 1,
+      "message": "yikes, thanks!  i forgot about that check.  anyway, no longer needed in PS4.",
+      "parentUuid": "f5990352_b6c9ed8a",
+      "revId": "f90a50cb07ea379502238dd3d654a27f3e2c2064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a28998cd_d0373e03",
         "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "f90a50cb07ea379502238dd3d654a27f3e2c2064",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb42eb0e_b15cce82",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1263,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-23T14:27:28Z",
+      "side": 1,
+      "message": "TL;DR: we no longer do, since we now check getPersistentFullscreenMode rather than anything specific to video.\n\nthe rationale was EnteredFullscreen doesn\u0027t cause IsEffective* that i could see.  my goal is to make IsEffective* approximately answer the question \"is the user looking at a big video\".  on O, it will be a better approximation since it does the intersection check.",
+      "parentUuid": "a28998cd_d0373e03",
+      "revId": "f90a50cb07ea379502238dd3d654a27f3e2c2064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
