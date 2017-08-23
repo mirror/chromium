@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dfbb6fb_3abe4649",
+        "filename": "components/web_contents_delegate_android/android/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-23T17:24:23Z",
+      "side": 1,
+      "message": "Sorry to ask to move these again, but I don\u0027t think it makes sense to have an android subdirectory in a component called \"web_contents_delegate_android\"",
+      "revId": "f1e3a3527ad24fada8505bd21389aa81aa5832f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
