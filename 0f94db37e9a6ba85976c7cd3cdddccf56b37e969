@@ -141,6 +141,24 @@
       "revId": "0f94db37e9a6ba85976c7cd3cdddccf56b37e969",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c7e31e_122f43f4",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-23T16:04:26Z",
+      "side": 1,
+      "message": "OK, for the time being it does seem safest to use ContextDestroyed\nto reset the mojo pointers due to corner cases like a Document that\u0027s\nnot attached to a frame. I\u0027ve fixed some bugs involving a\nJS-created Document caught by clusterfuzz in the past, so it\u0027s better\nto be safe.\n\nWould be great if that could be handled automatically by mojo.",
+      "parentUuid": "9898a693_0fed80ca",
+      "revId": "0f94db37e9a6ba85976c7cd3cdddccf56b37e969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
