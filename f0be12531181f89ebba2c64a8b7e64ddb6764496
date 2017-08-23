@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b0f3d127_a8e457ef",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 31
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-23T19:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72b8b2d1_3e651245",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 68
+      },
+      "revId": "f0be12531181f89ebba2c64a8b7e64ddb6764496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d270121_ed8fd1e1",
         "filename": "components/multidevice/service/multidevice_service_unittest.cc",
         "patchSetId": 31
@@ -45,6 +69,30 @@
       "revId": "f0be12531181f89ebba2c64a8b7e64ddb6764496",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f0f150_034435e2",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-23T19:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d270121_ed8fd1e1",
+      "range": {
+        "startLine": 29,
+        "startChar": 7,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "f0be12531181f89ebba2c64a8b7e64ddb6764496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c7e53ad1_042eef2b",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-23T19:22:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eaf8c1c8_178852e9",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "f0be12531181f89ebba2c64a8b7e64ddb6764496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "196f2422_039b9832",
         "filename": "components/multidevice/service/multidevice_service_unittest.cc",
         "patchSetId": 31
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "10c10a07_0e950f90",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-23T19:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "196f2422_039b9832",
+      "range": {
+        "startLine": 71,
+        "startChar": 52,
+        "endLine": 71,
+        "endChar": 59
+      },
+      "revId": "f0be12531181f89ebba2c64a8b7e64ddb6764496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b39b8083_c1001f57",
         "filename": "components/multidevice/service/multidevice_service_unittest.cc",
         "patchSetId": 31
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-23T02:04:02Z",
       "side": 1,
       "message": "You can combine these into one function:\n\nint GetNumCalls(MultiDeviceServiceActionType type, bool success)",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 64
+      },
+      "revId": "f0be12531181f89ebba2c64a8b7e64ddb6764496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e561430_cadfc7d1",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-23T19:22:19Z",
+      "side": 1,
+      "message": "@khorimoto Is it OK to do it this way (if some unrecognized type is passed in)?  I was thinking about putting a return -1 at the end of the function, but realized that it may never be executed unless you can disable NOTREACHED.",
+      "parentUuid": "b39b8083_c1001f57",
       "range": {
         "startLine": 75,
         "startChar": 0,
@@ -137,6 +257,30 @@
       "revId": "f0be12531181f89ebba2c64a8b7e64ddb6764496",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b40a7f0_56736179",
+        "filename": "components/multidevice/service/multidevice_service_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-23T19:22:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56e86074_e6ef20dd",
+      "range": {
+        "startLine": 144,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 11
+      },
+      "revId": "f0be12531181f89ebba2c64a8b7e64ddb6764496",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
