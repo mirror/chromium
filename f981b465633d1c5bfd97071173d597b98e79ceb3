@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cb00e7d_3983b854",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-23T13:55:45Z",
+      "side": 1,
+      "message": "nit: with c++11, it is less error-prone to declare default value here than in constructor\n\n  bool requires_reload_on_becoming_visible_ \u003d false;",
+      "revId": "f981b465633d1c5bfd97071173d597b98e79ceb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
