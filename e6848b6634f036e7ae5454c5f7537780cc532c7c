@@ -16,6 +16,24 @@
       "revId": "e6848b6634f036e7ae5454c5f7537780cc532c7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040230a9_58530277",
+        "filename": "base/process/process_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T23:46:34Z",
+      "side": 1,
+      "message": "You\u0027ll also need to update LaunchProcess() to explicitly duplicate \u0026 pass GetDefaultJob() if the LP_CLONE_DEFAULT_JOB clone flag is set, otherwise launchpad/mxio will pick up mx_job_default() for that as well.",
+      "parentUuid": "f3c6c7a2_c553fc31",
+      "revId": "e6848b6634f036e7ae5454c5f7537780cc532c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
