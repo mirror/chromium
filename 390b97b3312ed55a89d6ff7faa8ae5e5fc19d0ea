@@ -104,6 +104,24 @@
     },
     {
       "key": {
+        "uuid": "eda2e155_ec649f70",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-23T16:27:56Z",
+      "side": 1,
+      "message": "What\u0027s a benefit of doing it?\n\nWhen we move common/ to //blink/common, all other directories will move to //blink/ as well.",
+      "parentUuid": "d5566529_435ee730",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74ec30d5_c0501db7",
         "filename": "third_party/WebKit/Source/platform/exported/DEPS",
         "patchSetId": 8
