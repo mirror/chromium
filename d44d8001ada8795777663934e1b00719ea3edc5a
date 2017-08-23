@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "054d71da_5577bbeb",
+        "filename": "third_party/WebKit/Source/build/scripts/update_css_ranking.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-23T03:15:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33ba9205_019ab1c0",
+      "revId": "d44d8001ada8795777663934e1b00719ea3edc5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e29e740b_80ce3807",
         "filename": "third_party/WebKit/Source/core/css/CSSGroupConfig.json5",
         "patchSetId": 8
