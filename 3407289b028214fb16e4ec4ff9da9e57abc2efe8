@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1132e717_3d116abc",
+        "filename": "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T18:06:38Z",
+      "side": 1,
+      "message": "I see. This sounds a case that worth a test if it is possible.",
+      "parentUuid": "e6053c7f_2bfb493a",
+      "revId": "3407289b028214fb16e4ec4ff9da9e57abc2efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94789f1c_c646c0bb",
         "filename": "components/wallpaper/wallpaper_manager_base.cc",
         "patchSetId": 1
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "No it\u0027s not hash code. It contains email string unfortunately. But seems it\u0027s also used elsewhere in many places in the code base. For example, https://cs.chromium.org/chromium/src/chrome/browser/signin/easy_unlock_service.cc?rcl\u003d2084d0274e99a6a5de25148fca67ded219682a2a\u0026l\u003d455 or https://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/existing_user_controller.cc?rcl\u003d2084d0274e99a6a5de25148fca67ded219682a2a\u0026l\u003d1089",
       "parentUuid": "00e5c3a4_79a36823",
+      "revId": "3407289b028214fb16e4ec4ff9da9e57abc2efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dcc8fbb_f18fa65c",
+        "filename": "components/wallpaper/wallpaper_manager_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T18:06:38Z",
+      "side": 1,
+      "message": "hmm. I am surprised to see email address is logged. If it is already done, I wont block you from doing this.\nIt probably still makes sense to check with someone else to see if this is indeed acceptable.",
+      "parentUuid": "7359aa26_78a394b2",
       "revId": "3407289b028214fb16e4ec4ff9da9e57abc2efe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
