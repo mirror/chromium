@@ -137,6 +137,10 @@ class UnorderedLabelManager : public BaseLabelManager {
   // to reused indices to create new Labels, otherwise it allocates new indices.
   // Previous lookup results involving stored offsets / indexes remain valid.
   void InsertNewOffset(offset_t offset);
+  
+  bool Contains(offset_t offset) const {
+    return labels_map_.find(offset) != labels_map_.end();
+  }
 
  private:
   // Inverse map of |labels_| (excludes |kUnusedIndex|).

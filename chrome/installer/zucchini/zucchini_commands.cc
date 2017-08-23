@@ -18,6 +18,7 @@
 #include "chrome/installer/zucchini/io_utils.h"
 #include "chrome/installer/zucchini/patch_reader.h"
 #include "chrome/installer/zucchini/patch_writer.h"
+#include "chrome/installer/zucchini/zucchini_tools.h"
 
 namespace {
 
@@ -72,6 +73,7 @@ class MappedFileWriter {
 
 /******** Command-line Switches ********/
 
+const char kSwitchDump[] = "dump";
 const char kSwitchRaw[] = "raw";
 
 }  // namespace
@@ -132,6 +134,22 @@ zucchini::status::Code MainApply(MainParams params) {
       zucchini::Apply(old_image.region(), *patch_reader, new_image.region());
   if (status != zucchini::status::kStatusSuccess) {
     params.err << "Fatal error encountered while applying patch." << std::endl;
+    return status;
+  }
+  return zucchini::status::kStatusSuccess;
+}
+
+zucchini::status::Code MainRead(MainParams params) {
+  CHECK_EQ(1U, params.file_paths.size());
+  MappedFileReader input(params.file_paths[0]);
+  if (!input.is_ok())
+    return zucchini::status::kStatusFileReadError;
+
+  bool do_dump = params.command_line.HasSwitch(kSwitchDump);
+  zucchini::status::Code status =
+      zucchini::ReadReferences({input.data(), input.length()}, do_dump);
+  if (status != zucchini::status::kStatusSuccess) {
+    params.err << "Fatal error found when dumping references." << std::endl;
     return status;
   }
   return zucchini::status::kStatusSuccess;

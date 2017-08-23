@@ -250,7 +250,7 @@ base::Optional<EnsemblePatchReader> EnsemblePatchReader::Create(
   EnsemblePatchReader patch;
   if (!patch.Initialize(&source))
     return base::nullopt;
-  return patch;
+  return std::move(patch);
 }
 
 EnsemblePatchReader::EnsemblePatchReader() = default;

@@ -46,7 +46,7 @@ class Rel32ReaderX86 : public ReferenceReader {
 };
 
 // Writer for x86 / x64 rel32 references.
-class Rel32WriterX86 : ReferenceWriter {
+class Rel32WriterX86 : public ReferenceWriter {
  public:
   // |image| wraps the raw bytes of a binary in which rel32 references will be
   // written. |translator| is a suitable address translator for the binary
