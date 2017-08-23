@@ -43,7 +43,8 @@ enum VAVDADecoderFailure {
 // Buffer format to use for output buffers backing PictureBuffers. This is the
 // format decoded frames in VASurfaces are converted into.
 const gfx::BufferFormat kAllocatePictureFormat = gfx::BufferFormat::BGRX_8888;
-const gfx::BufferFormat kImportPictureFormat = gfx::BufferFormat::YVU_420;
+const gfx::BufferFormat kImportPictureFormat =
+    gfx::BufferFormat::YUV_420_BIPLANAR;
 }
 
 static void ReportToUMA(VAVDADecoderFailure failure) {
@@ -702,6 +703,9 @@ static VideoPixelFormat BufferFormatToVideoPixelFormat(
     case gfx::BufferFormat::YVU_420:
       return PIXEL_FORMAT_YV12;
 
+    case gfx::BufferFormat::YUV_420_BIPLANAR:
+      return PIXEL_FORMAT_NV12;
+
     default:
       LOG(FATAL) << "Add more cases as needed";
       return PIXEL_FORMAT_UNKNOWN;
@@ -886,6 +890,12 @@ void VaapiVideoDecodeAccelerator::ImportBufferForPicture(
              << " not in use (anymore?).";
     return;
   }
+
+  // TODO(owenlin): Remove the hack for output format. See b/64962126.
+  output_format_ =
+      gpu_memory_buffer_handle.native_pixmap_handle.planes.size() == 2
+          ? gfx::BufferFormat::YUV_420_BIPLANAR
+          : gfx::BufferFormat::YVU_420;
 
   if (!picture->ImportGpuMemoryBufferHandle(output_format_,
                                             gpu_memory_buffer_handle)) {

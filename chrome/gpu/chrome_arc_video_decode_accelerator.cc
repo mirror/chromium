@@ -255,10 +255,13 @@ void ChromeArcVideoDecodeAccelerator::BindDmabuf(
     arc_client_->OnError(INVALID_ARGUMENT);
     return;
   }
+
+  // TODO(owenlin): Enable the following code. See b/64962126.
+  /*
   if (!VerifyDmabuf(dmabuf_fd, planes)) {
     arc_client_->OnError(INVALID_ARGUMENT);
     return;
-  }
+  }*/
 
   OutputBufferInfo& info = buffers_pending_import_[index];
   info.handle = std::move(dmabuf_fd);
