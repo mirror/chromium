@@ -1258,6 +1258,15 @@ void AppListView::SetIsInDrag(bool is_in_drag) {
       ->UpdateControlVisibility(app_list_state_, is_in_drag_);
 }
 
+int AppListView::GetWorkAreaBottom() {
+  int current_work_area_bottom =
+      fullscreen_widget_->GetWorkAreaBoundsInScreen().bottom();
+  if (work_area_bottom_ != current_work_area_bottom)
+    work_area_bottom_ = current_work_area_bottom;
+
+  return work_area_bottom_;
+}
+
 void AppListView::OnSpeechRecognitionStateChanged(
     SpeechRecognitionState new_state) {
   if (!speech_view_)
