@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8b72861_ababc942",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-23T22:24:45Z",
+      "side": 1,
+      "message": "Library includes should go first, but in this case you don\u0027t even need this include.",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "0449b334b41ea5e4f80ad62d337d596563fd5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc89be76_867b0215",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-23T22:24:45Z",
+      "side": 1,
+      "message": "nit: LegacyMailtoURLRewriterImpl ?",
+      "range": {
+        "startLine": 16,
+        "startChar": 11,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "0449b334b41ea5e4f80ad62d337d596563fd5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866fec74_b37c1d4b",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-23T22:24:45Z",
+      "side": 1,
+      "message": "1.) Library imports should go after related header.\n2.) Do you need UIKit? Would it be enough to import Foundation?",
+      "range": {
+        "startLine": 12,
+        "startChar": 9,
+        "endLine": 12,
+        "endChar": 14
+      },
+      "revId": "0449b334b41ea5e4f80ad62d337d596563fd5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4beb8fa8_9ee14b59",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-23T22:24:45Z",
+      "side": 1,
+      "message": "nit:\n\nif ([appStoreID isEqual:[defaults objectForKey:kMailtoDefaultHandlerKey]])\n\nFor practical purpose isEqual: is the same as isEqualToString:\nhttps://www.bignerdranch.com/blog/isequal-vs-isequaltostring/",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 17
+      },
+      "revId": "0449b334b41ea5e4f80ad62d337d596563fd5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d9d17a_f9604169",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-23T22:24:45Z",
+      "side": 1,
+      "message": "nit: s/gURL/URL",
+      "range": {
+        "startLine": 107,
+        "startChar": 43,
+        "endLine": 107,
+        "endChar": 47
+      },
+      "revId": "0449b334b41ea5e4f80ad62d337d596563fd5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec634369_ece811e2",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-23T22:24:45Z",
+      "side": 1,
+      "message": "How about making kMailtoDefaultHandlerKey key public and removing resetDefaultHandlerIDForTesting?\n\ngo/unit-test-practices?cl\u003dhead#public-apis",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 122,
+        "endChar": 49
+      },
+      "revId": "0449b334b41ea5e4f80ad62d337d596563fd5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b49451b4_8e5113b5",
+        "filename": "ios/chrome/browser/web/legacy_mailto_url_rewriter.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-23T22:24:45Z",
+      "side": 1,
+      "message": "nit: _handlers[app appStoreID] \u003d app;",
+      "range": {
+        "startLine": 127,
+        "startChar": 15,
+        "endLine": 127,
+        "endChar": 28
+      },
+      "revId": "0449b334b41ea5e4f80ad62d337d596563fd5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745daaae_f9f64d9e",
+        "filename": "ios/chrome/browser/web/mailto_url_rewriter.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-23T22:24:45Z",
+      "side": 1,
+      "message": "Should this be MailtoURLRewriting protocol instead?",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "0449b334b41ea5e4f80ad62d337d596563fd5f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
