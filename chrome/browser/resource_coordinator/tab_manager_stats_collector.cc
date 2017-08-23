@@ -19,51 +19,49 @@
 
 namespace resource_coordinator {
 
-class TabManagerStatsCollector::SessionRestoreSwapMetricsDelegate
+class TabManagerStatsCollector::SwapMetricsDelegate
     : public content::SwapMetricsDriver::Delegate {
  public:
-  explicit SessionRestoreSwapMetricsDelegate(
-      TabManagerStatsCollector* tab_manager_stats_collector)
-      : tab_manager_stats_collector_(tab_manager_stats_collector) {}
+  explicit SwapMetricsDelegate(
+      TabManagerStatsCollector* tab_manager_stats_collector,
+      SessionType type)
+      : tab_manager_stats_collector_(tab_manager_stats_collector),
+        event_type_(type) {}
 
-  ~SessionRestoreSwapMetricsDelegate() override = default;
+  ~SwapMetricsDelegate() override = default;
 
   void OnSwapInCount(uint64_t count, base::TimeDelta interval) override {
-    tab_manager_stats_collector_->OnSessionRestoreSwapInCount(count, interval);
+    tab_manager_stats_collector_->OnSwapInCount(event_type_, count, interval);
   }
 
   void OnSwapOutCount(uint64_t count, base::TimeDelta interval) override {
-    tab_manager_stats_collector_->OnSessionRestoreSwapOutCount(count, interval);
+    tab_manager_stats_collector_->OnSwapOutCount(event_type_, count, interval);
   }
 
   void OnDecompressedPageCount(uint64_t count,
                                base::TimeDelta interval) override {
-    tab_manager_stats_collector_->OnSessionRestoreDecompressedPageCount(
-        count, interval);
+    tab_manager_stats_collector_->OnDecompressedPageCount(event_type_, count,
+                                                          interval);
   }
 
   void OnCompressedPageCount(uint64_t count,
                              base::TimeDelta interval) override {
-    tab_manager_stats_collector_->OnSessionRestoreCompressedPageCount(count,
-                                                                      interval);
+    tab_manager_stats_collector_->OnCompressedPageCount(event_type_, count,
+                                                        interval);
   }
 
-  void OnSessionRestoreUpdateMetricsFailed() {
-    tab_manager_stats_collector_->OnSessionRestoreUpdateMetricsFailed();
+  void OnUpdateMetricsFailed() override {
+    tab_manager_stats_collector_->OnUpdateMetricsFailed(event_type_);
   }
 
  private:
   TabManagerStatsCollector* tab_manager_stats_collector_;
+  const SessionType event_type_;
 };
 
 TabManagerStatsCollector::TabManagerStatsCollector()
     : is_session_restore_loading_tabs_(false),
       is_in_background_tab_opening_session_(false) {
-  std::unique_ptr<content::SwapMetricsDriver::Delegate> delegate(
-      base::WrapUnique<content::SwapMetricsDriver::Delegate>(
-          new SessionRestoreSwapMetricsDelegate(this)));
-  session_restore_swap_metrics_driver_ = content::SwapMetricsDriver::Create(
-      std::move(delegate), base::TimeDelta::FromSeconds(0));
   SessionRestore::AddObserver(this);
 }
 
@@ -82,16 +80,17 @@ void TabManagerStatsCollector::RecordSwitchToTab(
   auto* new_data = TabManager::WebContentsData::FromWebContents(new_contents);
   DCHECK(new_data);
 
-  if (is_session_restore_loading_tabs_) {
+  if (is_session_restore_loading_tabs_ && !IsInOverlappedSession()) {
     UMA_HISTOGRAM_ENUMERATION(kHistogramSessionRestoreSwitchToTab,
                               new_data->tab_loading_state(),
                               TAB_LOADING_STATE_MAX);
   }
-  if (is_in_background_tab_opening_session_) {
+  if (is_in_background_tab_opening_session_ && !IsInOverlappedSession()) {
     UMA_HISTOGRAM_ENUMERATION(kHistogramBackgroundTabOpeningSwitchToTab,
                               new_data->tab_loading_state(),
                               TAB_LOADING_STATE_MAX);
   }
+
   if (old_contents)
     foreground_contents_switched_to_times_.erase(old_contents);
   DCHECK(
@@ -105,13 +104,19 @@ void TabManagerStatsCollector::RecordSwitchToTab(
 void TabManagerStatsCollector::RecordExpectedTaskQueueingDuration(
     content::WebContents* contents,
     base::TimeDelta queueing_time) {
-  if (is_session_restore_loading_tabs_ && contents->IsVisible()) {
+  if (!contents->IsVisible())
+    return;
+
+  if (IsInOverlappedSession())
+    return;
+
+  if (is_session_restore_loading_tabs_) {
     UMA_HISTOGRAM_TIMES(
         kHistogramSessionRestoreForegroundTabExpectedTaskQueueingDuration,
         queueing_time);
   }
 
-  if (is_in_background_tab_opening_session_ && contents->IsVisible()) {
+  if (is_in_background_tab_opening_session_) {
     UMA_HISTOGRAM_TIMES(
         kHistogramBackgroundTabOpeningForegroundTabExpectedTaskQueueingDuration,
         queueing_time);
@@ -120,91 +125,195 @@ void TabManagerStatsCollector::RecordExpectedTaskQueueingDuration(
 
 void TabManagerStatsCollector::OnSessionRestoreStartedLoadingTabs() {
   DCHECK(!is_session_restore_loading_tabs_);
-  if (session_restore_swap_metrics_driver_)
-    session_restore_swap_metrics_driver_->InitializeMetrics();
+  CreateAndInitSessionRestoreSwapMetricsDriverIfNeeded();
   is_session_restore_loading_tabs_ = true;
 }
 
 void TabManagerStatsCollector::OnSessionRestoreFinishedLoadingTabs() {
   DCHECK(is_session_restore_loading_tabs_);
-  if (session_restore_swap_metrics_driver_)
+  if (session_restore_swap_metrics_driver_ && !IsInOverlappedSession())
     session_restore_swap_metrics_driver_->UpdateMetrics();
   is_session_restore_loading_tabs_ = false;
 }
 
 void TabManagerStatsCollector::OnBackgroundTabOpeningSessionStarted() {
   DCHECK(!is_in_background_tab_opening_session_);
+  CreateAndInitBackgroundTabOpeningSwapMetricsDriverIfNeeded();
   is_in_background_tab_opening_session_ = true;
 }
 
 void TabManagerStatsCollector::OnBackgroundTabOpeningSessionEnded() {
   DCHECK(is_in_background_tab_opening_session_);
+  if (background_tab_opening_swap_metrics_driver_ && !IsInOverlappedSession())
+    background_tab_opening_swap_metrics_driver_->UpdateMetrics();
   is_in_background_tab_opening_session_ = false;
 }
 
-void TabManagerStatsCollector::OnSessionRestoreSwapInCount(
-    uint64_t count,
-    base::TimeDelta interval) {
-  DCHECK(is_session_restore_loading_tabs_);
-  UMA_HISTOGRAM_COUNTS_10000(
-      "TabManager.SessionRestore.SwapInPerSecond",
-      static_cast<double>(count) / interval.InSecondsF());
+void TabManagerStatsCollector::
+    CreateAndInitSessionRestoreSwapMetricsDriverIfNeeded() {
+  if (IsInOverlappedSession()) {
+    session_restore_swap_metrics_driver_ = nullptr;
+    return;
+  }
+
+  if (!session_restore_swap_metrics_driver_) {
+    session_restore_swap_metrics_driver_ = content::SwapMetricsDriver::Create(
+        base::WrapUnique<content::SwapMetricsDriver::Delegate>(
+            new SwapMetricsDelegate(this, kSessionRestore)),
+        base::TimeDelta::FromSeconds(0));
+  }
+  // The driver could still be null on a platform with no swap driver support.
+  if (session_restore_swap_metrics_driver_)
+    session_restore_swap_metrics_driver_->InitializeMetrics();
 }
 
-void TabManagerStatsCollector::OnSessionRestoreSwapOutCount(
-    uint64_t count,
-    base::TimeDelta interval) {
-  DCHECK(is_session_restore_loading_tabs_);
-  UMA_HISTOGRAM_COUNTS_10000(
-      "TabManager.SessionRestore.SwapOutPerSecond",
-      static_cast<double>(count) / interval.InSecondsF());
+void TabManagerStatsCollector::
+    CreateAndInitBackgroundTabOpeningSwapMetricsDriverIfNeeded() {
+  if (IsInOverlappedSession()) {
+    background_tab_opening_swap_metrics_driver_ = nullptr;
+    return;
+  }
+
+  if (!background_tab_opening_swap_metrics_driver_) {
+    background_tab_opening_swap_metrics_driver_ =
+        content::SwapMetricsDriver::Create(
+            base::WrapUnique<content::SwapMetricsDriver::Delegate>(
+                new SwapMetricsDelegate(this, kBackgroundTabOpening)),
+            base::TimeDelta::FromSeconds(0));
+  }
+  // The driver could still be null on a platform with no swap driver support.
+  if (background_tab_opening_swap_metrics_driver_)
+    background_tab_opening_swap_metrics_driver_->InitializeMetrics();
 }
 
-void TabManagerStatsCollector::OnSessionRestoreDecompressedPageCount(
-    uint64_t count,
-    base::TimeDelta interval) {
-  DCHECK(is_session_restore_loading_tabs_);
-  UMA_HISTOGRAM_COUNTS_10000(
-      "TabManager.SessionRestore.DecompressedPagesPerSecond",
-      static_cast<double>(count) / interval.InSecondsF());
+void TabManagerStatsCollector::OnSwapInCount(SessionType type,
+                                             uint64_t count,
+                                             base::TimeDelta interval) {
+  switch (type) {
+    case kSessionRestore:
+      DCHECK(is_session_restore_loading_tabs_);
+      UMA_HISTOGRAM_COUNTS_10000(
+          "TabManager.SessionRestore.SwapInPerSecond",
+          static_cast<double>(count) / interval.InSecondsF());
+      break;
+    case kBackgroundTabOpening:
+      DCHECK(is_in_background_tab_opening_session_);
+      UMA_HISTOGRAM_COUNTS_10000(
+          "TabManager.BackgroundTabOpening.SwapInPerSecond",
+          static_cast<double>(count) / interval.InSecondsF());
+      break;
+    default:
+      NOTREACHED();
+  }
 }
 
-void TabManagerStatsCollector::OnSessionRestoreCompressedPageCount(
-    uint64_t count,
-    base::TimeDelta interval) {
-  DCHECK(is_session_restore_loading_tabs_);
-  UMA_HISTOGRAM_COUNTS_10000(
-      "TabManager.SessionRestore.CompressedPagesPerSecond",
-      static_cast<double>(count) / interval.InSecondsF());
+void TabManagerStatsCollector::OnSwapOutCount(SessionType type,
+                                              uint64_t count,
+                                              base::TimeDelta interval) {
+  switch (type) {
+    case kSessionRestore:
+      DCHECK(is_session_restore_loading_tabs_);
+      UMA_HISTOGRAM_COUNTS_10000(
+          "TabManager.SessionRestore.SwapOutPerSecond",
+          static_cast<double>(count) / interval.InSecondsF());
+      break;
+    case kBackgroundTabOpening:
+      DCHECK(is_in_background_tab_opening_session_);
+      UMA_HISTOGRAM_COUNTS_10000(
+          "TabManager.BackgroundTabOpening.SwapOutPerSecond",
+          static_cast<double>(count) / interval.InSecondsF());
+      break;
+    default:
+      NOTREACHED();
+  }
 }
 
-void TabManagerStatsCollector::OnSessionRestoreUpdateMetricsFailed() {
+void TabManagerStatsCollector::OnDecompressedPageCount(
+    SessionType type,
+    uint64_t count,
+    base::TimeDelta interval) {
+  switch (type) {
+    case kSessionRestore:
+      DCHECK(is_session_restore_loading_tabs_);
+      UMA_HISTOGRAM_COUNTS_10000(
+          "TabManager.SessionRestore.DecompressedPagesPerSecond",
+          static_cast<double>(count) / interval.InSecondsF());
+      break;
+    case kBackgroundTabOpening:
+      DCHECK(is_in_background_tab_opening_session_);
+      UMA_HISTOGRAM_COUNTS_10000(
+          "TabManager.BackgroundTabOpening.DecompressedPagesPerSecond",
+          static_cast<double>(count) / interval.InSecondsF());
+      break;
+    default:
+      NOTREACHED();
+  }
+}
+
+void TabManagerStatsCollector::OnCompressedPageCount(SessionType type,
+                                                     uint64_t count,
+                                                     base::TimeDelta interval) {
+  switch (type) {
+    case kSessionRestore:
+      DCHECK(is_session_restore_loading_tabs_);
+      UMA_HISTOGRAM_COUNTS_10000(
+          "TabManager.SessionRestore.CompressedPagesPerSecond",
+          static_cast<double>(count) / interval.InSecondsF());
+      break;
+    case kBackgroundTabOpening:
+      DCHECK(is_in_background_tab_opening_session_);
+      UMA_HISTOGRAM_COUNTS_10000(
+          "TabManager.BackgroundTabOpening.CompressedPagesPerSecond",
+          static_cast<double>(count) / interval.InSecondsF());
+      break;
+    default:
+      NOTREACHED();
+  }
+}
+
+void TabManagerStatsCollector::OnUpdateMetricsFailed(SessionType type) {
   // If either InitializeMetrics() or UpdateMetrics() fails, it's unlikely an
   // error that can be recovered from, in which case we don't collect swap
   // metrics for session restore.
-  session_restore_swap_metrics_driver_.reset();
+  switch (type) {
+    case kSessionRestore:
+      session_restore_swap_metrics_driver_.reset();
+      break;
+    case kBackgroundTabOpening:
+      background_tab_opening_swap_metrics_driver_.reset();
+      break;
+    default:
+      NOTREACHED();
+  }
 }
 
 void TabManagerStatsCollector::OnDidStopLoading(
     content::WebContents* contents) {
   if (!base::ContainsKey(foreground_contents_switched_to_times_, contents))
     return;
-  if (is_session_restore_loading_tabs_) {
+
+  if (is_session_restore_loading_tabs_ && !IsInOverlappedSession()) {
     UMA_HISTOGRAM_TIMES(kHistogramSessionRestoreTabSwitchLoadTime,
                         base::TimeTicks::Now() -
                             foreground_contents_switched_to_times_[contents]);
   }
-  if (is_in_background_tab_opening_session_) {
+  if (is_in_background_tab_opening_session_ && !IsInOverlappedSession()) {
     UMA_HISTOGRAM_TIMES(kHistogramBackgroundTabOpeningTabSwitchLoadTime,
                         base::TimeTicks::Now() -
                             foreground_contents_switched_to_times_[contents]);
   }
+
   foreground_contents_switched_to_times_.erase(contents);
 }
 
 void TabManagerStatsCollector::OnWebContentsDestroyed(
     content::WebContents* contents) {
   foreground_contents_switched_to_times_.erase(contents);
+}
+
+bool TabManagerStatsCollector::IsInOverlappedSession() {
+  return is_session_restore_loading_tabs_ &&
+         is_in_background_tab_opening_session_;
 }
 
 // static
