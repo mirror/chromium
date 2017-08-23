@@ -70,6 +70,24 @@
       "revId": "a6c828ff9e5580fd6eac26feda199f96132bc745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0162612_64452c06",
+        "filename": "headless/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-08-23T17:47:57Z",
+      "side": 1,
+      "message": "Ah, this target started out as not being linked into chrome but these days it\u0027s included there. Is the solution to split this into two targets? (Also still not clear on the exact problem this is causing :)",
+      "parentUuid": "c58cbecc_7f5d041d",
+      "revId": "a6c828ff9e5580fd6eac26feda199f96132bc745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
