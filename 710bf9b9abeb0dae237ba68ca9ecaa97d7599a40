@@ -78,6 +78,24 @@
     },
     {
       "key": {
+        "uuid": "e15f226e_c35f04b1",
+        "filename": "chromeos/dbus/arc_midis_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-08-23T21:43:11Z",
+      "side": 1,
+      "message": "Good point, I\u0027ll clean that up in my code.\n\nPrashant, calling release() prevents the ScopedFD from cleaning up the handle itself because it relinquishes ownership when that\u0027s called. Just call .get() instead and then it should be fine.",
+      "parentUuid": "caf1d985_763f3d7f",
+      "revId": "710bf9b9abeb0dae237ba68ca9ecaa97d7599a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9b765ad_62829849",
         "filename": "chromeos/dbus/arc_midis_client.h",
         "patchSetId": 13
