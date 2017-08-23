@@ -47,6 +47,7 @@ class MockDesktopEnvironment : public DesktopEnvironment {
   MOCK_CONST_METHOD0(GetCapabilities, std::string());
   MOCK_METHOD1(SetCapabilities, void(const std::string&));
   MOCK_CONST_METHOD0(GetDesktopSessionId, uint32_t());
+  MOCK_METHOD1(GetHostResourceUsage, void(HostResourceUsageCallback));
 
   // DesktopEnvironment implementation.
   std::unique_ptr<AudioCapturer> CreateAudioCapturer() override;

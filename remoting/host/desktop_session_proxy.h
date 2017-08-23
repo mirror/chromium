@@ -18,6 +18,7 @@
 #include "ipc/ipc_channel_handle.h"
 #include "ipc/ipc_listener.h"
 #include "remoting/host/audio_capturer.h"
+#include "remoting/host/current_process_stats_agent.h"
 #include "remoting/host/desktop_environment.h"
 #include "remoting/host/screen_resolution.h"
 #include "remoting/proto/event.pb.h"
@@ -70,6 +71,9 @@ class DesktopSessionProxy
                                         DesktopSessionProxyTraits>,
       public IPC::Listener {
  public:
+  using HostResourceUsageCallback =
+      DesktopEnvironment::HostResourceUsageCallback;
+
   DesktopSessionProxy(
       scoped_refptr<base::SingleThreadTaskRunner> audio_capture_task_runner,
       scoped_refptr<base::SingleThreadTaskRunner> caller_task_runner,
@@ -86,6 +90,7 @@ class DesktopSessionProxy
   std::unique_ptr<webrtc::MouseCursorMonitor> CreateMouseCursorMonitor();
   std::string GetCapabilities() const;
   void SetCapabilities(const std::string& capabilities);
+  void GetHostResourceUsage(HostResourceUsageCallback on_result);
 
   // IPC::Listener implementation.
   bool OnMessageReceived(const IPC::Message& message) override;
@@ -132,7 +137,16 @@ class DesktopSessionProxy
   // API used to implement the SessionController interface.
   void SetScreenResolution(const ScreenResolution& resolution);
 
+  // Receives aggregated process resource usage from
+  // IpcDesktopEnvironmentFactory.
+  void OnHostResourceUsage(
+      const protocol::AggregatedProcessResourceUsage& usage);
+
   uint32_t desktop_session_id() const { return desktop_session_id_; }
+
+  // Returns the process id of desktop process. Maybe 0 if the connection to
+  // desktop process has not been generated.
+  int32_t peer_pid() const { return peer_pid_; }
 
  private:
   friend class base::DeleteHelper<DesktopSessionProxy>;
@@ -177,9 +191,9 @@ class DesktopSessionProxy
   //   - public methods of this class (with some exceptions) are called on
   //     |caller_task_runner_|.
   //   - background I/O is served on |io_task_runner_|.
-  scoped_refptr<base::SingleThreadTaskRunner> audio_capture_task_runner_;
-  scoped_refptr<base::SingleThreadTaskRunner> caller_task_runner_;
-  scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
+  const scoped_refptr<base::SingleThreadTaskRunner> audio_capture_task_runner_;
+  const scoped_refptr<base::SingleThreadTaskRunner> caller_task_runner_;
+  const scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 
   // Points to the audio capturer receiving captured audio packets.
   base::WeakPtr<IpcAudioCapturer> audio_capturer_;
@@ -203,7 +217,7 @@ class DesktopSessionProxy
   // IPC channel to the desktop session agent.
   std::unique_ptr<IPC::ChannelProxy> desktop_channel_;
 
-  int pending_capture_frame_requests_;
+  int pending_capture_frame_requests_ = 0;
 
   // Shared memory buffers by Id. Each buffer is owned by the corresponding
   // frame.
@@ -214,12 +228,22 @@ class DesktopSessionProxy
   ScreenResolution screen_resolution_;
 
   // True if |this| has been connected to the desktop session.
-  bool is_desktop_session_connected_;
+  bool is_desktop_session_connected_ = false;
 
-  DesktopEnvironmentOptions options_;
+  const DesktopEnvironmentOptions options_;
 
   // Stores the session id for the proxied desktop process.
   uint32_t desktop_session_id_ = UINT32_MAX;
+
+  // Stores the peer_pid received from IPC::Listener. The pid is valid only when
+  // the channel connection to the desktop process is generated. I.e. between
+  // OnChannelConnected() and DetachFromDesktop().
+  int32_t peer_pid_ = 0;
+
+  // Stores the callback of last GetHostResourceUsage() request.
+  DesktopEnvironment::HostResourceUsageCallback on_host_resource_usage_;
+
+  CurrentProcessStatsAgent current_process_stats_agent_;
 
   DISALLOW_COPY_AND_ASSIGN(DesktopSessionProxy);
 };

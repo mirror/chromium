@@ -23,6 +23,7 @@
 #include "remoting/host/current_process_stats_agent.h"
 #include "remoting/host/host_status_monitor.h"
 #include "remoting/host/worker_process_ipc_delegate.h"
+#include "remoting/proto/process_stats.pb.h"
 #include "remoting/protocol/process_stats_stub.h"
 
 struct SerializedTransportRoute;
@@ -170,6 +171,8 @@ class DaemonProcess
   // ProcessStatsStub implementation.
   void OnProcessStats(
       const protocol::AggregatedProcessResourceUsage& usage) override;
+
+  void RetrieveProcessStats(int desktop_process_id);
 
   // Task runner on which public methods of this class must be called.
   scoped_refptr<AutoThreadTaskRunner> caller_task_runner_;

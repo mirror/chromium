@@ -240,6 +240,8 @@ static_library("host") {
     "posix/signal_handler.cc",
     "posix/signal_handler.h",
     "process_stats_agent.h",
+    "process_stats_message_handler.cc",
+    "process_stats_message_handler.h",
     "process_stats_sender.cc",
     "process_stats_sender.h",
     "register_support_host_request.cc",

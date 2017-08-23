@@ -59,6 +59,7 @@ class IpcDesktopEnvironment : public DesktopEnvironment {
   std::string GetCapabilities() const override;
   void SetCapabilities(const std::string& capabilities) override;
   uint32_t GetDesktopSessionId() const override;
+  void GetHostResourceUsage(HostResourceUsageCallback on_result) override;
 
  private:
   scoped_refptr<DesktopSessionProxy> desktop_session_proxy_;
@@ -99,8 +100,15 @@ class IpcDesktopEnvironmentFactory
       int session_id,
       const IPC::ChannelHandle& desktop_pipe) override;
   void OnTerminalDisconnected(int terminal_id) override;
+  void GetHostResourceUsage(
+      DesktopSessionProxy* desktop_session_proxy) override;
+  void OnReportProcessStats(
+      int desktop_process_id,
+      const protocol::AggregatedProcessResourceUsage& usage) override;
 
  private:
+  void GetHostResourceUsageFromProcessId(int pid);
+
   // Used to run the audio capturer.
   scoped_refptr<base::SingleThreadTaskRunner> audio_task_runner_;
 

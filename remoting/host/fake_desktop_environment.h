@@ -106,6 +106,10 @@ class FakeDesktopEnvironment : public DesktopEnvironment {
     return last_input_injector_;
   }
 
+  void GetHostResourceUsage(HostResourceUsageCallback on_result) override {
+    on_result(protocol::AggregatedProcessResourceUsage());
+  }
+
  private:
   friend class FakeDesktopEnvironmentFactory;
 

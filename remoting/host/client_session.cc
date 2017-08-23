@@ -21,6 +21,7 @@
 #include "remoting/host/host_extension_session.h"
 #include "remoting/host/input_injector.h"
 #include "remoting/host/mouse_shape_pump.h"
+#include "remoting/host/process_stats_message_handler.h"
 #include "remoting/host/screen_controls.h"
 #include "remoting/host/screen_resolution.h"
 #include "remoting/proto/control.pb.h"
@@ -81,6 +82,10 @@ ClientSession::ClientSession(
   // reaches |remote_input_filter_|.
   remote_input_filter_.SetExpectLocalEcho(false);
 #endif  // defined(OS_WIN)
+  data_channel_manager_.RegisterCreateHandlerCallback(
+      kProcessStatsDataChannelName,
+      base::Bind(&ClientSession::CreateProcessStatsMessageHandler,
+                 base::Unretained(this)));
 }
 
 ClientSession::~ClientSession() {
@@ -493,6 +498,13 @@ void ClientSession::CreateFileTransferMessageHandler(
   new FileTransferMessageHandler(
       channel_name, std::move(pipe),
       desktop_environment_->CreateFileProxyWrapper());
+}
+
+void ClientSession::CreateProcessStatsMessageHandler(
+    const std::string& channel_name,
+    std::unique_ptr<protocol::MessagePipe> pipe) {
+  new ProcessStatsMessageHandler(
+      channel_name, std::move(pipe), desktop_environment_.get());
 }
 
 }  // namespace remoting

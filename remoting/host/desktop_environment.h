@@ -9,10 +9,12 @@
 #include <memory>
 #include <string>
 
+#include "base/callback.h"
 #include "base/callback_forward.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "remoting/host/desktop_environment_options.h"
+#include "remoting/proto/process_stats.pb.h"
 
 namespace webrtc {
 class DesktopCapturer;
@@ -53,6 +55,16 @@ class DesktopEnvironment {
   // Returns an id which identifies the current desktop session on Windows.
   // Other platforms will always return the default value (UINT32_MAX).
   virtual uint32_t GetDesktopSessionId() const = 0;
+
+  // Returns the resource usage of host processes associated with current
+  // session. On Windows, the return value covers desktop, network, daemon and
+  // rdp (in curtain mode) processes. On other platforms, only the resource
+  // usage of current process will be returned. The callback will carry the
+  // result, but it may be executed in a random thread. In case of error, the
+  // callback may be executed with an empty AggregatedProcessResourceUsage.
+  using HostResourceUsageCallback =
+      base::OnceCallback<void(const protocol::AggregatedProcessResourceUsage&)>;
+  virtual void GetHostResourceUsage(HostResourceUsageCallback on_result) = 0;
 };
 
 // Used to create |DesktopEnvironment| instances.

@@ -12,6 +12,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "remoting/host/current_process_stats_agent.h"
 #include "remoting/host/desktop_environment.h"
 
 namespace base {
@@ -30,6 +31,7 @@ namespace remoting {
 // the local console.
 class BasicDesktopEnvironment : public DesktopEnvironment {
  public:
+  BasicDesktopEnvironment();
   ~BasicDesktopEnvironment() override;
 
   // DesktopEnvironment implementation.
@@ -43,6 +45,7 @@ class BasicDesktopEnvironment : public DesktopEnvironment {
   std::string GetCapabilities() const override;
   void SetCapabilities(const std::string& capabilities) override;
   uint32_t GetDesktopSessionId() const override;
+  void GetHostResourceUsage(HostResourceUsageCallback on_result) override;
 
  protected:
   friend class BasicDesktopEnvironmentFactory;
@@ -98,6 +101,9 @@ class BasicDesktopEnvironment : public DesktopEnvironment {
   scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner_;
 
   DesktopEnvironmentOptions options_;
+
+  // Collects the resource usage of current process.
+  CurrentProcessStatsAgent current_process_stats_;
 
   DISALLOW_COPY_AND_ASSIGN(BasicDesktopEnvironment);
 };

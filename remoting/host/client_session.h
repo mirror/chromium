@@ -165,6 +165,10 @@ class ClientSession : public protocol::HostStub,
       const std::string& channel_name,
       std::unique_ptr<protocol::MessagePipe> pipe);
 
+  void CreateProcessStatsMessageHandler(
+      const std::string& channel_name,
+      std::unique_ptr<protocol::MessagePipe> pipe);
+
   EventHandler* event_handler_;
 
   // The connection to the client.

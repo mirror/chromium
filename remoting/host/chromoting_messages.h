@@ -278,3 +278,14 @@ IPC_MESSAGE_CONTROL0(ChromotingNetworkToAnyMsg_StopProcessStatsReport)
 // Reports process resource usage to network process.
 IPC_MESSAGE_CONTROL1(ChromotingAnyToNetworkMsg_ReportProcessStats,
                      remoting::protocol::AggregatedProcessResourceUsage)
+
+// Retrieves statistic data of host processes (daemon, network and
+// |desktop_process_id|) from daemon process.
+IPC_MESSAGE_CONTROL1(ChromotingNetworkToDaemonMsg_RetrieveProcessStats,
+                     int /* desktop_process_id */)
+
+// Returns statistic data of host processes (daemon, network and
+// |desktop_process_id|) to network process.
+IPC_MESSAGE_CONTROL2(ChromotingDaemonToNetworkMsg_ReportProcessStats,
+                     int /* desktop_process_id */,
+                     remoting::protocol::AggregatedProcessResourceUsage)

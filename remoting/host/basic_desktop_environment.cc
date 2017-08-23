@@ -27,6 +27,9 @@
 
 namespace remoting {
 
+BasicDesktopEnvironment::BasicDesktopEnvironment()
+    : current_process_stats_("BasicDesktopEnvironment") {}
+
 BasicDesktopEnvironment::~BasicDesktopEnvironment() {
   DCHECK(caller_task_runner_->BelongsToCurrentThread());
 }
@@ -72,6 +75,13 @@ uint32_t BasicDesktopEnvironment::GetDesktopSessionId() const {
   return UINT32_MAX;
 }
 
+void BasicDesktopEnvironment::GetHostResourceUsage(
+    HostResourceUsageCallback on_result) {
+  protocol::AggregatedProcessResourceUsage result;
+  *result.add_usages() = current_process_stats_.GetResourceUsage();
+  std::move(on_result).Run(result);
+}
+
 std::unique_ptr<webrtc::DesktopCapturer>
 BasicDesktopEnvironment::CreateVideoCapturer() {
   DCHECK(caller_task_runner_->BelongsToCurrentThread());
@@ -92,7 +102,8 @@ BasicDesktopEnvironment::BasicDesktopEnvironment(
       video_capture_task_runner_(video_capture_task_runner),
       input_task_runner_(input_task_runner),
       ui_task_runner_(ui_task_runner),
-      options_(options) {
+      options_(options),
+      current_process_stats_("BasicDesktopEnvironment") {
   DCHECK(caller_task_runner_->BelongsToCurrentThread());
 #if defined(USE_X11)
   IgnoreXServerGrabs(desktop_capture_options().x_display()->display(), true);

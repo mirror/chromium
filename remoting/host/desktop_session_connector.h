@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "base/process/process.h"
 #include "ipc/ipc_channel_handle.h"
+#include "remoting/proto/process_stats.pb.h"
 
 namespace remoting {
 
@@ -52,6 +53,17 @@ class DesktopSessionConnector {
   // Notifies the network process that the daemon has disconnected the desktop
   // session from the associated desktop environment.
   virtual void OnTerminalDisconnected(int terminal_id) = 0;
+
+  // Requests the daemon process to retrive resource usage of host processes for
+  // one desktop session.
+  virtual void GetHostResourceUsage(
+      DesktopSessionProxy* desktop_session_proxy) = 0;
+
+  // Notifies the network process that the daemon has send the
+  // ReportProcessStats message.
+  virtual void OnReportProcessStats(
+      int session_id,
+      const protocol::AggregatedProcessResourceUsage& usage) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(DesktopSessionConnector);
