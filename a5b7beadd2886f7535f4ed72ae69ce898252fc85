@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "af489046_7c158eb9",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-08-23T17:09:20Z",
+      "side": 1,
+      "message": "Done, added checks in BindImage.",
+      "parentUuid": "f3b275a0_358e2a25",
+      "revId": "a5b7beadd2886f7535f4ed72ae69ce898252fc85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45beaa1a_7d46a2b2",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
         "patchSetId": 4
@@ -243,6 +261,24 @@
       "side": 1,
       "message": "If this is equivalent to the path above (l.452), then it\u0027s good enough, I think.",
       "parentUuid": "dbe24100_29ebcca8",
+      "revId": "a5b7beadd2886f7535f4ed72ae69ce898252fc85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5d0bac6_1cbc9e43",
+        "filename": "media/gpu/ipc/service/gpu_video_decode_accelerator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-08-23T17:09:20Z",
+      "side": 1,
+      "message": "It\u0027s a different error path but still safe.",
+      "parentUuid": "89c8e3be_d3afd9a6",
       "revId": "a5b7beadd2886f7535f4ed72ae69ce898252fc85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
