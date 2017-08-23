@@ -13,6 +13,7 @@ var remoting = remoting || {};
  * @constructor
  */
 remoting.OptionsExporter = function() {
+
   base.Ipc.getInstance().register('getSettings',
                                   remoting.OptionsExporter.migrateSettings_,
                                   true);
