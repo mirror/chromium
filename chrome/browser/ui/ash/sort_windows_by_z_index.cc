@@ -30,13 +30,9 @@ void AppendDescendantsSortedByZIndex(
   const aura::Window::Windows& children = root_window->children();
   for (auto it = children.rbegin(); it != children.rend(); ++it) {
     aura::Window* window = *it;
-    if (base::ContainsKey(windows, window)) {
+    if (base::ContainsKey(windows, window))
       sorted_windows->push_back(window);
-      // Skip children of |window| since a window in |windows| is not expected
-      // to be the parent of another window in |windows|.
-    } else {
-      AppendDescendantsSortedByZIndex(window, windows, sorted_windows);
-    }
+    AppendDescendantsSortedByZIndex(window, windows, sorted_windows);
   }
 }
 
@@ -45,6 +41,7 @@ void DoSortWindowsByZIndex(std::unique_ptr<aura::WindowTracker> window_tracker,
   const base::flat_set<aura::Window*> windows(window_tracker->windows(),
                                               base::KEEP_FIRST_OF_DUPES);
   std::vector<aura::Window*> sorted_windows;
+  sorted_windows.reserve(windows.size());
   for (aura::Window* root_window : ash::Shell::GetAllRootWindows())
     AppendDescendantsSortedByZIndex(root_window, windows, &sorted_windows);
   DCHECK_EQ(windows.size(), sorted_windows.size());
