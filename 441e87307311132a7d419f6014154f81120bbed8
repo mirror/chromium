@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f393ac2f_34825fe0",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac-mac10.10/virtual/wheelscrolllatching/fast/compositor-wheel-scroll-latching/touchpad-scroll-impl-to-main-expected.txt",
+        "patchSetId": 12
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-23T04:53:48Z",
+      "side": 1,
+      "message": "Good catch. This was flaky and now we don\u0027t need update this.",
+      "parentUuid": "7d25e8cf_32aab62e",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 4
+      },
+      "revId": "441e87307311132a7d419f6014154f81120bbed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67af8ecd_63097808",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "441e87307311132a7d419f6014154f81120bbed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e49bea0_435d3b6c",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-23T04:53:48Z",
+      "side": 1,
+      "message": "Removed this check before instanciation at L428 and we don\u0027t have invalid object on release build.",
+      "parentUuid": "67af8ecd_63097808",
+      "range": {
+        "startLine": 45,
+        "startChar": 1,
+        "endLine": 46,
+        "endChar": 49
+      },
+      "revId": "441e87307311132a7d419f6014154f81120bbed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "19523084_1a79a4ca",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-23T04:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "176b4034_8b0f68fd",
+      "range": {
+        "startLine": 370,
+        "startChar": 13,
+        "endLine": 373,
+        "endChar": 13
+      },
+      "revId": "441e87307311132a7d419f6014154f81120bbed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8f87b03_4fb94366",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 12
@@ -91,6 +163,30 @@
       "revId": "441e87307311132a7d419f6014154f81120bbed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbdc3764_559e2140",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-23T04:53:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8f87b03_4fb94366",
+      "range": {
+        "startLine": 383,
+        "startChar": 2,
+        "endLine": 386,
+        "endChar": 13
+      },
+      "revId": "441e87307311132a7d419f6014154f81120bbed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
