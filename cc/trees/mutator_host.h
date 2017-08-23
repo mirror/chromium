@@ -109,9 +109,6 @@ class MutatorHost {
       ElementId element_id) const = 0;
   virtual bool HasAnimationThatInflatesBounds(ElementId element_id) const = 0;
 
-  virtual bool FilterAnimationBoundsForBox(ElementId element_id,
-                                           const gfx::BoxF& box,
-                                           gfx::BoxF* bounds) const = 0;
   virtual bool TransformAnimationBoundsForBox(ElementId element_id,
                                               const gfx::BoxF& box,
                                               gfx::BoxF* bounds) const = 0;

@@ -121,8 +121,6 @@ class CC_ANIMATION_EXPORT ElementAnimations
            HasFilterAnimationThatInflatesBounds();
   }
 
-  bool FilterAnimationBoundsForBox(const gfx::BoxF& box,
-                                   gfx::BoxF* bounds) const;
   bool TransformAnimationBoundsForBox(const gfx::BoxF& box,
                                       gfx::BoxF* bounds) const;
 

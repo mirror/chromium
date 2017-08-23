@@ -212,12 +212,6 @@ bool ElementAnimations::HasTransformAnimationThatInflatesBounds() const {
   return false;
 }
 
-bool ElementAnimations::FilterAnimationBoundsForBox(const gfx::BoxF& box,
-                                                    gfx::BoxF* bounds) const {
-  // TODO(avallee): Implement.
-  return false;
-}
-
 bool ElementAnimations::TransformAnimationBoundsForBox(
     const gfx::BoxF& box,
     gfx::BoxF* bounds) const {
