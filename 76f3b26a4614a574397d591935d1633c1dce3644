@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb683fc7_e6258faf",
+        "filename": "third_party/WebKit/Source/platform/graphics/DeferredImageDecoder.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-23T22:11:03Z",
+      "side": 1,
+      "message": "I ran rasterize_and_record to verify that this was not affecting perf and on a few pages I see a minor regression with pixels_record and record_time_caching_disabled. I was assuming that the painting code only uses Image::CurrentFrameKnownToBeOpaque for the background recording optimization but may be in some cases we are checking the alpha type on the image created to this effect? I\u0027ll restore this for now.",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 53
+      },
+      "revId": "76f3b26a4614a574397d591935d1633c1dce3644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
