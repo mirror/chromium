@@ -122,6 +122,24 @@
       "revId": "b4929fb684d80596d4be5cce86c8adfdaaeebe9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5149abe_f14a5d94",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-23T06:26:55Z",
+      "side": 1,
+      "message": "Sounds fine to me. clamy@?\n\nThanks for noticing the unrelated changes; indeed a rebase mishap because `git cl patch` doesn\u0027t automatically set upstream branches to match CL dependencies. :-(\nFixed in the latest patch.",
+      "parentUuid": "5de41860_4ea2a51d",
+      "revId": "b4929fb684d80596d4be5cce86c8adfdaaeebe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
