@@ -50,6 +50,7 @@
 #include "core/resize_observer/ResizeObserverEntry.h"
 #include "modules/media_controls/MediaControlsMediaEventListener.h"
 #include "modules/media_controls/MediaControlsOrientationLockDelegate.h"
+#include "modules/media_controls/MediaControlsResourceLoader.h"
 #include "modules/media_controls/MediaControlsRotateToFullscreenDelegate.h"
 #include "modules/media_controls/MediaControlsWindowEventListener.h"
 #include "modules/media_controls/elements/MediaControlCastButtonElement.h"
@@ -297,6 +298,7 @@ MediaControlsImpl::MediaControlsImpl(HTMLMediaElement& media_element)
           &MediaControlsImpl::ElementSizeChangedTimerFired),
       keep_showing_until_timer_fires_(false) {
   resize_observer_->observe(&media_element);
+  SetHasCustomStyleCallbacks();
 }
 
 MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
@@ -320,6 +322,8 @@ MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
         new MediaControlsRotateToFullscreenDelegate(
             toHTMLVideoElement(media_element));
   }
+
+  MediaControlsResourceLoader::InjectMediaControlsUAStyleSheet();
 
   shadow_root.AppendChild(controls);
   return controls;
