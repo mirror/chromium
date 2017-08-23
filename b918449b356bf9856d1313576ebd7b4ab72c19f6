@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbde577a_915e6995",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-23T03:23:02Z",
+      "side": 1,
+      "message": "can remove this comment",
+      "revId": "b918449b356bf9856d1313576ebd7b4ab72c19f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a179635b_221add8d",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-23T03:23:02Z",
+      "side": 1,
+      "message": "Should we declare it as a constant like minFaviconSizePt?",
+      "revId": "b918449b356bf9856d1313576ebd7b4ab72c19f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b367dc13_dcacc3ff",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-23T03:23:02Z",
+      "side": 1,
+      "message": "Wondering if we need cancelAllFaviconLoads here?",
+      "revId": "b918449b356bf9856d1313576ebd7b4ab72c19f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2228b721_433b0a14",
+        "filename": "ios/chrome/browser/ui/bookmarks/cells/bookmark_table_cell.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-23T03:23:02Z",
+      "side": 1,
+      "message": "could we declare kBookmarkTableCellImagePadding \u003d 16.0;\nand here use kBookmarkTableCellDefaultImageSize + kBookmarkTableCellImagePadding * 2;\nand the CGRectMake below with kBookmarkTableCellImagePadding as x?",
+      "revId": "b918449b356bf9856d1313576ebd7b4ab72c19f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
