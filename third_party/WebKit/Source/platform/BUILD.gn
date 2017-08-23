@@ -337,6 +337,8 @@ component("platform") {
     "Prerender.cpp",
     "Prerender.h",
     "PrerenderClient.h",
+    "ResourceLoader.cpp",
+    "ResourceLoader.h",
     "ScopedOrientationChangeIndicator.cpp",
     "ScopedOrientationChangeIndicator.h",
     "ScriptForbiddenScope.cpp",
