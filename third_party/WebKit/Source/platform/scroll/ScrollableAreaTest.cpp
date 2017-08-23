@@ -261,7 +261,7 @@ TEST_F(ScrollableAreaTest, ScrollableAreaDidScroll) {
   MockScrollableArea* scrollable_area =
       MockScrollableArea::Create(ScrollOffset(100, 100));
   scrollable_area->SetScrollOrigin(IntPoint(20, 30));
-  scrollable_area->DidScroll(gfx::ScrollOffset(40, 51));
+  scrollable_area->DidScroll(gfx::ScrollOffset(40, 51), CompositorElementId());
 
   // After calling didScroll, the new offset should account for scroll origin.
   EXPECT_EQ(20, scrollable_area->ScrollOffsetInt().Width());

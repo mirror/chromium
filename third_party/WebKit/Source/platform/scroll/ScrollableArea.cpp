@@ -673,7 +673,8 @@ IntSize ScrollableArea::ExcludeScrollbars(const IntSize& size) const {
                  std::max(0, size.Height() - HorizontalScrollbarHeight()));
 }
 
-void ScrollableArea::DidScroll(const gfx::ScrollOffset& offset) {
+void ScrollableArea::DidScroll(const gfx::ScrollOffset& offset,
+                               const CompositorElementId&) {
   ScrollOffset new_offset = ScrollOffset(offset.x() - ScrollOrigin().X(),
                                          offset.y() - ScrollOrigin().Y());
   SetScrollOffset(new_offset, kCompositorScroll);
