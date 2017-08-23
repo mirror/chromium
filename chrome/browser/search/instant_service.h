@@ -16,7 +16,6 @@
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "build/build_config.h"
-#include "chrome/browser/search/search_engine_base_url_tracker.h"
 #include "components/history/core/browser/history_types.h"
 #include "components/history/core/browser/top_sites_observer.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -97,7 +96,6 @@ class InstantService : public KeyedService,
 
  private:
   friend class InstantExtendedTest;
-  friend class InstantServiceTest;
   friend class InstantTestBase;
   friend class InstantUnitTestBase;
 
@@ -118,9 +116,6 @@ class InstantService : public KeyedService,
   void TopSitesLoaded(history::TopSites* top_sites) override;
   void TopSitesChanged(history::TopSites* top_sites,
                        ChangeReason change_reason) override;
-
-  void OnSearchEngineBaseURLChanged(
-      SearchEngineBaseURLTracker::ChangeReason change_reason);
 
   // Called when a renderer process is terminated.
   void OnRendererProcessTerminated(int process_id);
@@ -144,8 +139,6 @@ class InstantService : public KeyedService,
 #endif
 
   Profile* const profile_;
-
-  std::unique_ptr<SearchEngineBaseURLTracker> search_engine_base_url_tracker_;
 
   // The process ids associated with Instant processes.
   std::set<int> process_ids_;
