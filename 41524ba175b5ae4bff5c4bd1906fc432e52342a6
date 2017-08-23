@@ -22,6 +22,30 @@
       "revId": "41524ba175b5ae4bff5c4bd1906fc432e52342a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee4a0970_4327cbc2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTransitionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-23T18:10:22Z",
+      "side": 1,
+      "message": "We\u0027ve requested similar functionality in b/63116739 before to fix the hack in VrShellDelegate https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java?q\u003dvrshelldelegate\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d728\n\nI\u0027ve filed crbug.com/758296 to remove this hack if ever possible.",
+      "parentUuid": "06c2b66f_ea8d33e3",
+      "range": {
+        "startLine": 159,
+        "startChar": 11,
+        "endLine": 159,
+        "endChar": 15
+      },
+      "revId": "41524ba175b5ae4bff5c4bd1906fc432e52342a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
