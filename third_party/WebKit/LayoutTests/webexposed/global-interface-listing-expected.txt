@@ -3635,6 +3635,7 @@ interface Headers
     method values
 interface History
     attribute @@toStringTag
+    getter index
     getter length
     getter scrollRestoration
     getter state

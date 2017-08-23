@@ -8,6 +8,7 @@ PASS childWindow.closed is true
 PASS childWindow.defaultStatus is ''
 PASS childWindow.defaultstatus is ''
 PASS childWindow.devicePixelRatio is 0
+PASS childWindow.history.index is 0
 PASS childWindow.history.length is 0
 PASS childWindow.history.scrollRestoration is 'auto'
 PASS childWindow.history.state is null

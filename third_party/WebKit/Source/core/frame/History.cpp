@@ -63,6 +63,12 @@ DEFINE_TRACE(History) {
   DOMWindowClient::Trace(visitor);
 }
 
+unsigned History::index() const {
+  if (!GetFrame() || !GetFrame()->Client())
+    return 0;
+  return GetFrame()->Client()->BackForwardIndex();
+}
+
 unsigned History::length() const {
   if (!GetFrame() || !GetFrame()->Client())
     return 0;
