@@ -116,19 +116,12 @@ TEST_F(DataReductionProxyHeadersTest, IsEmptyImagePreviewValue) {
     bool expected_result;
   } tests[] = {
       {"", "", false},
-      {"foo", "", false},
-      {"", "bar", false},
       {"foo", "bar", false},
       {"empty-image", "", true},
       {"empty-image;foo", "", true},
       {"Empty-Image", "", true},
       {"foo;empty-image", "", false},
       {"empty-image", "foo", true},
-      {"foo;empty-image", "bar", false},
-      {"", "q=low", true},
-      {"foo", "q=low", true},
-      {"foo", "bar, baz, Q=LOW ", true},
-      {"empty-image", "q=low", true},
   };
   for (const auto& test : tests) {
     EXPECT_EQ(test.expected_result,
