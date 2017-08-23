@@ -10,6 +10,7 @@
 #include "components/signin/core/browser/signin_manager.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #include "ios/chrome/browser/signin/signin_manager_factory.h"
+#import "ios/chrome/browser/ui/authentication/signin_promo_view.h"
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
 #include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
@@ -28,6 +29,7 @@
 #endif
 
 using chrome_test_util::NavigationBarDoneButton;
+using chrome_test_util::SecondarySignInButton;
 
 namespace {
 
@@ -116,7 +118,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
       identity);
 
   [ChromeEarlGreyUI openSettingsMenu];
-  [ChromeEarlGreyUI tapSettingsMenuButton:chrome_test_util::SignInMenuButton()];
+  [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
   [ChromeEarlGreyUI signInToIdentityByEmail:identity.userEmail];
   [ChromeEarlGreyUI confirmSigninConfirmationDialog];
   [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
@@ -138,7 +140,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   identity_service->AddIdentity(identity2);
 
   [ChromeEarlGreyUI openSettingsMenu];
-  [ChromeEarlGreyUI tapSettingsMenuButton:chrome_test_util::SignInMenuButton()];
+  [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
   [ChromeEarlGreyUI signInToIdentityByEmail:identity1.userEmail];
   [ChromeEarlGreyUI confirmSigninConfirmationDialog];
   AssertAuthenticatedIdentityInActiveProfile(identity1);
@@ -176,7 +178,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
 
   // Sign in to |identity1|.
   [ChromeEarlGreyUI openSettingsMenu];
-  [ChromeEarlGreyUI tapSettingsMenuButton:chrome_test_util::SignInMenuButton()];
+  [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
   [ChromeEarlGreyUI signInToIdentityByEmail:identity1.userEmail];
   [ChromeEarlGreyUI confirmSigninConfirmationDialog];
   AssertAuthenticatedIdentityInActiveProfile(identity1);
@@ -217,7 +219,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   identity_service->AddIdentity(identity);
 
   [ChromeEarlGreyUI openSettingsMenu];
-  [ChromeEarlGreyUI tapSettingsMenuButton:chrome_test_util::SignInMenuButton()];
+  [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
   [ChromeEarlGreyUI signInToIdentityByEmail:managed_identity.userEmail];
 
   // Accept warning for signing into a managed identity, with synchronization
@@ -259,7 +261,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
 
   // Sign in to |identity|.
   [ChromeEarlGreyUI openSettingsMenu];
-  [ChromeEarlGreyUI tapSettingsMenuButton:chrome_test_util::SignInMenuButton()];
+  [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
   [ChromeEarlGreyUI signInToIdentityByEmail:identity.userEmail];
   [ChromeEarlGreyUI confirmSigninConfirmationDialog];
   AssertAuthenticatedIdentityInActiveProfile(identity);
@@ -297,7 +299,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
       identity);
 
   [ChromeEarlGreyUI openSettingsMenu];
-  [ChromeEarlGreyUI tapSettingsMenuButton:chrome_test_util::SignInMenuButton()];
+  [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
   [ChromeEarlGreyUI signInToIdentityByEmail:identity.userEmail];
 
   // Synchronization off due to an infinite spinner.
@@ -340,7 +342,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
       identity);
 
   [ChromeEarlGreyUI openSettingsMenu];
-  [ChromeEarlGreyUI tapSettingsMenuButton:chrome_test_util::SignInMenuButton()];
+  [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
   [ChromeEarlGreyUI signInToIdentityByEmail:identity.userEmail];
 
   // Tap Settings link.
@@ -371,7 +373,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
       identity);
 
   [ChromeEarlGreyUI openSettingsMenu];
-  [ChromeEarlGreyUI tapSettingsMenuButton:chrome_test_util::SignInMenuButton()];
+  [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
 
   // Open new tab to cancel sign-in.
   OpenUrlCommand* command =
@@ -381,7 +383,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   // Re-open the sign-in screen. If it wasn't correctly dismissed previously,
   // this will fail.
   [ChromeEarlGreyUI openSettingsMenu];
-  [ChromeEarlGreyUI tapSettingsMenuButton:chrome_test_util::SignInMenuButton()];
+  [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
   id<GREYMatcher> signin_matcher =
       chrome_test_util::StaticTextWithAccessibilityLabelId(
           IDS_IOS_ACCOUNT_CONSISTENCY_SETUP_DESCRIPTION);
@@ -404,7 +406,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
       identity);
 
   [ChromeEarlGreyUI openSettingsMenu];
-  [ChromeEarlGreyUI tapSettingsMenuButton:chrome_test_util::SignInMenuButton()];
+  [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
 
   // Open Add Account screen.
   id<GREYMatcher> add_account_matcher =
@@ -422,7 +424,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   // Re-open the sign-in screen. If it wasn't correctly dismissed previously,
   // this will fail.
   [ChromeEarlGreyUI openSettingsMenu];
-  [ChromeEarlGreyUI tapSettingsMenuButton:chrome_test_util::SignInMenuButton()];
+  [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
   id<GREYMatcher> signin_matcher =
       chrome_test_util::StaticTextWithAccessibilityLabelId(
           IDS_IOS_ACCOUNT_CONSISTENCY_SETUP_DESCRIPTION);
@@ -452,7 +454,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   // effectively block the authentication flow, ensuring that the authentication
   // flow is always still running when the sign-in is being cancelled.
   [ChromeEarlGreyUI openSettingsMenu];
-  [ChromeEarlGreyUI tapSettingsMenuButton:chrome_test_util::SignInMenuButton()];
+  [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
   [ChromeEarlGreyUI signInToIdentityByEmail:identity2.userEmail];
   [ChromeEarlGreyUI confirmSigninConfirmationDialog];
   AssertAuthenticatedIdentityInActiveProfile(identity2);
@@ -472,7 +474,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
       performAction:grey_tap()];
   TapButtonWithLabelId(IDS_IOS_DISCONNECT_DIALOG_CONTINUE_BUTTON_MOBILE);
   AssertAuthenticatedIdentityInActiveProfile(nil);
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::SignInMenuButton()]
+  [[EarlGrey selectElementWithMatcher:SecondarySignInButton()]
       performAction:grey_tap()];
   [ChromeEarlGreyUI signInToIdentityByEmail:identity1.userEmail];
 
@@ -484,7 +486,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   // Re-open the sign-in screen. If it wasn't correctly dismissed previously,
   // this will fail.
   [ChromeEarlGreyUI openSettingsMenu];
-  [ChromeEarlGreyUI tapSettingsMenuButton:chrome_test_util::SignInMenuButton()];
+  [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
   id<GREYMatcher> signin_matcher =
       chrome_test_util::StaticTextWithAccessibilityLabelId(
           IDS_IOS_ACCOUNT_CONSISTENCY_SETUP_DESCRIPTION);
@@ -532,7 +534,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
                  grey_descendant(grey_text(topLevelFolderTitle)), nil);
   [[EarlGrey selectElementWithMatcher:all_bookmarks_matcher]
       performAction:grey_tap()];
-  TapButtonWithLabelId(IDS_IOS_BOOKMARK_PROMO_SIGN_IN_BUTTON);
+  [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
 
   // Assert sign-in screen was shown.
   id<GREYMatcher> signin_matcher =
@@ -561,7 +563,7 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   }
   [[EarlGrey selectElementWithMatcher:all_bookmarks_matcher]
       performAction:grey_tap()];
-  TapButtonWithLabelId(IDS_IOS_BOOKMARK_PROMO_SIGN_IN_BUTTON);
+  [ChromeEarlGreyUI tapSettingsMenuButton:SecondarySignInButton()];
   [[EarlGrey selectElementWithMatcher:signin_matcher]
       assertWithMatcher:grey_sufficientlyVisible()];
 
