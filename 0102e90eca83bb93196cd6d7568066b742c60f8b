@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b49d49b_2e4e58ff",
+        "filename": "ash/ime/ime_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "nit: move up when you move the header method order",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0608d94_e32600a9",
+        "filename": "ash/ime/ime_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "nit: put with other overrides and nix comment (comment should be incorporated into mojom file if needed)",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30eb57d8_3bf6c5fd",
+        "filename": "ash/ime/ime_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "nit: I think this should match the updated mojom method name. Also, put it up with the other \"Wrappers for ImeControllerClient\" methods.",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b40265_4b001ee6",
+        "filename": "ash/ime/ime_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think the \"transient\" part is important here. This member really is the caps lock state value, it just lags a little behind the true owner of the state in the browser process. Maybe just |is_caps_lock_enabled_| and document? Or |cached_caps_lock_enabled_|?",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36900e83_9b18f022",
+        "filename": "ash/ime/ime_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "Please add tests for the methods you added here. In particular, it would be nice to test the expected behavior of calls to SetCapsLock* immediately followed by calls to IsCapsLockEnabled().",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a7d633_b54b0007",
+        "filename": "ash/public/interfaces/ime_controller.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "super-nit: end comments with period",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "401583a9_2b8dd8bd",
+        "filename": "ash/public/interfaces/ime_controller.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "nit: I would call this SetCapsLockState() or SetImeCapsLockState() or UpdateCapsLockState() or something similar (with the word \"lock\" in it). We also need to ensure the reader knows that this doesn\u0027t actually *set* the caps lock state, it just reports it. A longer comment might help.",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c004ff_cca41850",
+        "filename": "ash/public/interfaces/ime_controller.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate that this needs to exist. It supports two behaviors:\n1. Clicking on the notification to turn off caps lock, which is a good idea\n2. Toggling the caps lock state by clicking on the item in the system tray menu, which is more questionable. In particular, the ability to turn caps lock *on* by clicking twice in the menu is really goofy. I think clicking on the menu item should turn off caps lock and close the menu. This would simplify the feature and make this interface method only need to disable caps lock. Can you file a bug to make this UI change (go ahead and assign it to me) and reference it here?\n\nIn the mean time, I would call this SetCapsLockFromTray() or similar and document why this goes in both directions.",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "471a9074_d2210a78",
+        "filename": "ash/system/tray_caps_lock.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "nit: rename to IsCapsLockEnabled",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb7fe4e3_030c7327",
+        "filename": "ash/system/tray_caps_lock.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "nit: \"ash::\" not needed here, or below",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28a5a71_655e5b23",
+        "filename": "ash/system/tray_caps_lock.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "nit: ash:: not needed",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71a2408_1f2c77c4",
+        "filename": "ash/system/tray_caps_lock.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "Remove this.",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a742b64_dd38d9cb",
+        "filename": "ash/system/tray_caps_lock.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "nit: is this needed?",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5613d674_f7ac33ae",
+        "filename": "ash/system/tray_caps_lock.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "update comment please",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc8dcc7_38d6e954",
+        "filename": "chrome/browser/ui/ash/ime_controller_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "nit: remove comment (mojom docs should be enough) and group with other mojom overrides",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae460cd_a04fb9a4",
+        "filename": "chrome/browser/ui/ash/ime_controller_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c326b70c_7fd47d7d",
+        "filename": "chrome/browser/ui/ash/ime_controller_client_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T18:14:58Z",
+      "side": 1,
+      "message": "Please add a test, either here or in input_method_manager_impl_unittest.cc, that verifies that a change in caps lock state results in the right mojo method being invoked.\n\nIn general I like to test both sides of the mojo interface layer independently in unit tests. Unfortunately many of these features don\u0027t have integration tests for chrome browser \u003c-\u003e ash and we don\u0027t have a good framework for adding them in a mustash-friendly way. :-(",
+      "revId": "0102e90eca83bb93196cd6d7568066b742c60f8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
