@@ -4,12 +4,17 @@
 
 #include "core/editing/LayoutSelection.h"
 
+#include "bindings/core/v8/HTMLElementOrLong.h"
+#include "bindings/core/v8/HTMLOptionElementOrHTMLOptGroupElement.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/ShadowRootInit.h"
 #include "core/editing/EditingTestBase.h"
 #include "core/editing/FrameSelection.h"
+#include "core/html/HTMLOptGroupElement.h"
+#include "core/html/HTMLSelectElement.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutText.h"
+#include "core/page/ValidationMessageClient.h"
 #include "platform/wtf/Assertions.h"
 
 namespace blink {
@@ -247,6 +252,53 @@ TEST_F(LayoutSelectionTest,
   TEST_NEXT("bar", kNone, ShouldInvalidate);
   TEST_NEXT("baz", kNone, NotInvalidate);
   TEST_NO_NEXT_LAYOUT_OBJECT();
+}
+
+class MockDocumentValidationMessageClient
+    : public GarbageCollectedFinalized<MockDocumentValidationMessageClient>,
+      public ValidationMessageClient {
+  USING_GARBAGE_COLLECTED_MIXIN(MockDocumentValidationMessageClient);
+
+ public:
+  MockDocumentValidationMessageClient(Document* document)
+      : document_(document) {}
+
+  // ValidationMessageClient functions.
+  void ShowValidationMessage(const Element& anchor,
+                             const String& main_message,
+                             TextDirection,
+                             const String& sub_message,
+                             TextDirection) override {
+    document_->UpdateStyleAndLayoutIgnorePendingStylesheets();
+  }
+  void HideValidationMessage(const Element& anchor) override {}
+  bool IsValidationMessageVisible(const Element& anchor) override {
+    return true;
+  }
+  void DocumentDetached(const Document&) override {}
+  void WillBeDestroyed() override {}
+
+  Member<Document> document_;
+  DEFINE_INLINE_VIRTUAL_TRACE() { visitor->Trace(document_); }
+};
+
+// crbug.com/756408
+TEST_F(LayoutSelectionTest, CommitNotCrash) {
+  SetBodyContent("<select><optgroup></select>");
+  HTMLSelectElement* const select =
+      toHTMLSelectElement(GetDocument().QuerySelector("select"));
+  HTMLOptGroupElement* const optgroup =
+      toHTMLOptGroupElement(GetDocument().QuerySelector("optgroup"));
+  select->setCustomValidity("foobar");
+  Selection().SetSelection(
+      SelectionInDOMTree::Builder().SelectAllChildren(GetDocument()).Build());
+  MockDocumentValidationMessageClient* mock_client =
+      new MockDocumentValidationMessageClient(&GetDocument());
+  GetDocument().GetPage()->SetValidationMessageClient(mock_client);
+  select->reportValidity();
+  HTMLOptionElementOrHTMLOptGroupElement element;
+  element.setHTMLOptGroupElement(optgroup);
+  select->add(element, {}, ASSERT_NO_EXCEPTION);
 }
 
 }  // namespace blink
