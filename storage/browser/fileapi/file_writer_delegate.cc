@@ -43,8 +43,8 @@ FileWriterDelegate::~FileWriterDelegate() {
 }
 
 void FileWriterDelegate::Start(std::unique_ptr<net::URLRequest> request,
-                               const DelegateWriteCallback& write_callback) {
-  write_callback_ = write_callback;
+                               DelegateWriteCallback write_callback) {
+  write_callback_ = std::move(write_callback);
   request_ = std::move(request);
   request_->Start();
 }

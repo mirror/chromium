@@ -181,8 +181,7 @@ void GenerateTestFiles(content::MockBlobURLRequestContext* url_request_context,
   content::RunAllBlockingPoolTasksUntilIdle();
 }
 
-void VerifyFileContents(base::File file,
-                        const base::Closure& on_close_callback) {
+void VerifyFileContents(base::File file, base::OnceClosure on_close_callback) {
   ASSERT_EQ(14, file.GetLength());
   std::unique_ptr<char[]> buffer(new char[15]);
 
@@ -195,7 +194,7 @@ void VerifyFileContents(base::File file,
 
   file.Close();
   if (!on_close_callback.is_null())
-    on_close_callback.Run();
+    std::move(on_close_callback).Run();
   base::RunLoop::QuitCurrentWhenIdleDeprecated();
 }
 
@@ -219,7 +218,7 @@ void VerifyTestFilesMigrated(content::StoragePartition* new_partition,
 
   new_fs_context->operation_runner()->OpenFile(
       fs_temp_url, base::File::FLAG_READ | base::File::FLAG_OPEN,
-      base::Bind(&VerifyFileContents));
+      base::BindOnce(&VerifyFileContents));
   content::RunAllBlockingPoolTasksUntilIdle();
   new_fs_context->operation_runner()->OpenFile(
       fs_persistent_url, base::File::FLAG_READ | base::File::FLAG_OPEN,

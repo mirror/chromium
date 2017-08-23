@@ -16,25 +16,23 @@ class RemoveOperationDelegate : public RecursiveOperationDelegate {
  public:
   RemoveOperationDelegate(FileSystemContext* file_system_context,
                           const FileSystemURL& url,
-                          const StatusCallback& callback);
+                          StatusCallback callback);
   ~RemoveOperationDelegate() override;
 
   // RecursiveOperationDelegate overrides:
   void Run() override;
   void RunRecursively() override;
-  void ProcessFile(const FileSystemURL& url,
-                   const StatusCallback& callback) override;
+  void ProcessFile(const FileSystemURL& url, StatusCallback callback) override;
   void ProcessDirectory(const FileSystemURL& url,
-                        const StatusCallback& callback) override;
+                        StatusCallback callback) override;
   void PostProcessDirectory(const FileSystemURL& url,
-                            const StatusCallback& callback) override;
+                            StatusCallback callback) override;
 
  private:
   void DidTryRemoveFile(base::File::Error error);
   void DidTryRemoveDirectory(base::File::Error remove_file_error,
                              base::File::Error remove_directory_error);
-  void DidRemoveFile(const StatusCallback& callback,
-                     base::File::Error error);
+  void DidRemoveFile(StatusCallback callback, base::File::Error error);
 
   FileSystemURL url_;
   StatusCallback callback_;

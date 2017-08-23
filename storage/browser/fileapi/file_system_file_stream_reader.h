@@ -56,10 +56,10 @@ class STORAGE_EXPORT FileSystemFileStreamReader
                              int64_t initial_offset,
                              const base::Time& expected_modification_time);
 
-  int CreateSnapshot(const base::Closure& callback,
+  int CreateSnapshot(base::OnceClosure callback,
                      const net::CompletionCallback& error_callback);
   void DidCreateSnapshot(
-      const base::Closure& callback,
+      base::OnceClosure callback,
       const net::CompletionCallback& error_callback,
       base::File::Error file_error,
       const base::File::Info& file_info,
