@@ -18,6 +18,7 @@
 #include "ios/chrome/browser/application_context.h"
 #import "ios/chrome/browser/content_suggestions/content_suggestions_category_wrapper.h"
 #import "ios/chrome/browser/content_suggestions/content_suggestions_favicon_mediator.h"
+#import "ios/chrome/browser/content_suggestions/content_suggestions_metrics_recorder.h"
 #import "ios/chrome/browser/content_suggestions/content_suggestions_service_bridge_observer.h"
 #import "ios/chrome/browser/content_suggestions/mediator_util.h"
 #include "ios/chrome/browser/ntp_tiles/most_visited_sites_observer_bridge.h"
@@ -49,9 +50,11 @@ const NSInteger kMaxNumMostVisitedTiles = 8;
 
 }  // namespace
 
-@interface ContentSuggestionsMediator ()<ContentSuggestionsItemDelegate,
-                                         ContentSuggestionsServiceObserver,
-                                         MostVisitedSitesObserving> {
+@interface ContentSuggestionsMediator ()<
+    ContentSuggestionsItemDelegate,
+    ContentSuggestionsMetricsRecorderDelegate,
+    ContentSuggestionsServiceObserver,
+    MostVisitedSitesObserving> {
   // Bridge for this class to become an observer of a ContentSuggestionsService.
   std::unique_ptr<ContentSuggestionsServiceBridge> _suggestionBridge;
   std::unique_ptr<ntp_tiles::MostVisitedSites> _mostVisitedSites;
@@ -113,6 +116,7 @@ const NSInteger kMaxNumMostVisitedTiles = 8;
 @synthesize faviconMediator = _faviconMediator;
 @synthesize learnMoreItem = _learnMoreItem;
 @synthesize readingListNeedsReload = _readingListNeedsReload;
+@synthesize metricsRecorder = _metricsRecorder;
 
 #pragma mark - Public
 
@@ -128,6 +132,10 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
         base::MakeUnique<ContentSuggestionsServiceBridge>(self, contentService);
     _contentService = contentService;
     _sectionInformationByCategory = [[NSMutableDictionary alloc] init];
+
+    _metricsRecorder = [[ContentSuggestionsMetricsRecorder alloc] init];
+    _metricsRecorder.delegate = self;
+
     _faviconMediator = [[ContentSuggestionsFaviconMediator alloc]
         initWithContentService:contentService
               largeIconService:largeIconService
@@ -464,6 +472,14 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
   }
 }
 
+#pragma mark - ContentSuggestionsMetricsRecorderDelegate
+
+- (ContentSuggestionsCategoryWrapper*)categoryWrapperForSectionInfo:
+    (ContentSuggestionsSectionInformation*)sectionInfo {
+  return [[self.sectionInformationByCategory allKeysForObject:sectionInfo]
+      firstObject];
+}
+
 #pragma mark - Private
 
 // Converts the |suggestions| from |category| to CSCollectionViewItem and adds
@@ -507,13 +523,6 @@ initWithContentService:(ntp_snippets::ContentSuggestionsService*)contentService
 
   self.sectionInformationByCategory[[ContentSuggestionsCategoryWrapper
       wrapperWithCategory:category]] = sectionInfo;
-}
-
-// Returns a CategoryWrapper acting as a key for this section info.
-- (ContentSuggestionsCategoryWrapper*)categoryWrapperForSectionInfo:
-    (ContentSuggestionsSectionInformation*)sectionInfo {
-  return [[self.sectionInformationByCategory allKeysForObject:sectionInfo]
-      firstObject];
 }
 
 // If the |statusCode| is a success and |suggestions| is not empty, runs the

@@ -27,6 +27,7 @@ class MostVisitedSites;
 @protocol ContentSuggestionsCommands;
 @protocol ContentSuggestionsGestureCommands;
 @protocol ContentSuggestionsHeaderProvider;
+@class ContentSuggestionsMetricsRecorder;
 @class ContentSuggestionIdentifier;
 class GURL;
 class LargeIconCache;
@@ -60,6 +61,9 @@ initWithContentService:
 // Whether to force the reload the Reading List section next time it is updated.
 // Reset to NO after actual reload.
 @property(nonatomic, assign) BOOL readingListNeedsReload;
+
+@property(nonatomic, strong, nullable)
+    ContentSuggestionsMetricsRecorder* metricsRecorder;
 
 // The notification promo owned by this mediator.
 - (nonnull NotificationPromoWhatsNew*)notificationPromo;
