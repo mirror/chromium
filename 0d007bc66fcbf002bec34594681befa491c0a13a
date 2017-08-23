@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b2281cd2_fec62354",
+        "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-23T03:15:10Z",
+      "side": 1,
+      "message": "I was afraid it will be mistaken with the _ before, but yeah _ is ok",
+      "parentUuid": "5d2c74eb_fab01e30",
+      "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb8fc8bd_f443a112",
         "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c032911e_0be1fac8",
+        "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-23T03:15:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eb8fc8bd_f443a112",
+      "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e596900f_4179ed0d",
+        "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-23T03:15:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e0a8d94_be7c28a2",
+      "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91c916d3_b649840e",
         "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "d14ec56b_131b91d8",
+        "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-23T03:15:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "91c916d3_b649840e",
+      "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "287b0ef5_ef9f221f",
         "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-23T01:37:27Z",
       "side": 1,
       "message": "do you actually need these return values?",
+      "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96dc111a_29180166",
+        "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-23T03:15:10Z",
+      "side": 1,
+      "message": "it is just for general purpose, a k-means algorithm is suppose to return these values.",
+      "parentUuid": "287b0ef5_ef9f221f",
       "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "9a72cc77_c052e0f0",
+        "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-23T03:15:10Z",
+      "side": 1,
+      "message": "yeah you are right.",
+      "parentUuid": "8a2f25be_39b38877",
+      "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "deffd4a5_30c36fff",
         "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
         "patchSetId": 6
@@ -118,6 +226,24 @@
       "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e45a9dff_ba7b439a",
+        "filename": "third_party/WebKit/Source/build/scripts/cluster.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-08-23T03:15:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "deffd4a5_30c36fff",
+      "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
