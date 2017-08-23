@@ -22,6 +22,30 @@
       "revId": "d8f832851d584f4efc3824586ceab37dc93c62d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4841654_69687272",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-23T22:21:53Z",
+      "side": 1,
+      "message": "Ohh, oops. I just need to track changes to size, I don\u0027t really care if it\u0027s in dip or pixels. Leaving it in dip avoids the unnecessary conversion and is easier to read.",
+      "parentUuid": "577beaaa_baded81f",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 34
+      },
+      "revId": "d8f832851d584f4efc3824586ceab37dc93c62d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
