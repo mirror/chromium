@@ -163,40 +163,30 @@ ShortcutsProvider::~ShortcutsProvider() {
 }
 
 // static
-ShortcutsProvider::WordMap ShortcutsProvider::CreateWordMapForString(
+ShortcutsProvider::WordList ShortcutsProvider::CreateWordListForString(
     const base::string16& text) {
   // First, convert |text| to a vector of the unique words in it.
-  WordMap word_map;
   base::i18n::BreakIterator word_iter(text,
                                       base::i18n::BreakIterator::BREAK_WORD);
+  WordList words;
   if (!word_iter.Init())
-    return word_map;
-  std::vector<base::string16> words;
+    return words;
   while (word_iter.Advance()) {
     if (word_iter.IsWord())
       words.push_back(word_iter.GetString());
   }
   if (words.empty())
-    return word_map;
+    return words;
   std::sort(words.begin(), words.end());
   words.erase(std::unique(words.begin(), words.end()), words.end());
 
-  // Now create a map from (first character) to (words beginning with that
-  // character).  We insert in reverse lexicographical order and rely on the
-  // multimap preserving insertion order for values with the same key.  (This
-  // is mandated in C++11, and part of that decision was based on a survey of
-  // existing implementations that found that it was already true everywhere.)
-  std::reverse(words.begin(), words.end());
-  for (std::vector<base::string16>::const_iterator i(words.begin());
-       i != words.end(); ++i)
-    word_map.insert(std::make_pair((*i)[0], *i));
-  return word_map;
+  return words;
 }
 
 // static
 ACMatchClassifications ShortcutsProvider::ClassifyAllMatchesInString(
     const base::string16& find_text,
-    const WordMap& find_words,
+    const WordList& find_words,
     const base::string16& text,
     const ACMatchClassifications& original_class) {
   DCHECK(!find_text.empty());
@@ -233,20 +223,18 @@ ACMatchClassifications ShortcutsProvider::ClassifyAllMatchesInString(
         ACMatchClassification(0, ACMatchClassification::NONE));
   }
 
-  // Now, starting with |last_position|, check each character in
-  // |text_lowercase| to see if we have words starting with that character in
-  // |find_words|.  If so, check each of them to see if they match the portion
-  // of |text_lowercase| beginning with |last_position|.  Accept the first
-  // matching word found (which should be the longest possible match at this
-  // location, given the construction of |find_words|) and add a MATCH region to
-  // |match_class|, moving |last_position| to be after the matching word.  If we
-  // found no matching words, move to the next character and repeat.
+  // Now, starting at |last_position|, check each substring in
+  // |text_lowercase| to see if they begin with the words in |find_words|.
+  // (Try the best match in |find_words|, then look backwards for a shorter
+  // match.) Accept the best matching word found and add a MATCH region to
+  // |match_class|, moving |last_position| to be after the matching word.  If
+  // we found no matching words, move to the next character and repeat.
   while (last_position < text_lowercase.length()) {
-    std::pair<WordMap::const_iterator, WordMap::const_iterator> range(
-        find_words.equal_range(text_lowercase[last_position]));
     size_t next_character = last_position + 1;
-    for (WordMap::const_iterator i(range.first); i != range.second; ++i) {
-      const base::string16& word = i->second;
+    for (WordList::const_iterator i = std::lower_bound(
+             find_words.begin(), find_words.end(), text_lowercase);
+         (*i)[0] >= text_lowercase[0]; --i) {
+      const base::string16& word = *i;
       size_t word_end = last_position + word.length();
       if ((word_end <= text_lowercase.length()) &&
           !text_lowercase.compare(last_position, word.length(), word)) {
@@ -263,6 +251,8 @@ ACMatchClassifications ShortcutsProvider::ClassifyAllMatchesInString(
         last_position = word_end;
         break;
       }
+      if (i == find_words.begin())
+        break;
     }
     last_position = std::max(last_position, next_character);
   }
@@ -343,7 +333,7 @@ void ShortcutsProvider::GetMatches(const AutocompleteInput& input) {
   // Create and initialize autocomplete matches from shortcut matches.
   // Also guarantee that all relevance scores are decreasing (but do not assign
   // any scores below 1).
-  WordMap terms_map(CreateWordMapForString(term_string));
+  WordList terms_map(CreateWordListForString(term_string));
   matches_.reserve(shortcut_matches.size());
   for (ShortcutMatch& match : shortcut_matches) {
     max_relevance = std::min(max_relevance, match.relevance);
@@ -361,7 +351,7 @@ AutocompleteMatch ShortcutsProvider::ShortcutToACMatch(
     const AutocompleteInput& input,
     const base::string16& fixed_up_input_text,
     const base::string16 term_string,
-    const WordMap& terms_map) {
+    const WordList& terms_map) {
   DCHECK(!input.text().empty());
   AutocompleteMatch match;
   match.provider = this;
