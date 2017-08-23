@@ -22,6 +22,30 @@
       "revId": "c6301b7746aa53362ba5c6ad0ab0a6c1357e923c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d74a27_a70e3d0b",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-23T00:54:37Z",
+      "side": 1,
+      "message": "Good catch, not any more. (Neither is content/test/test_web_contents.h for that matter).",
+      "parentUuid": "5ee0cb28_aac801f1",
+      "range": {
+        "startLine": 17,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 42
+      },
+      "revId": "c6301b7746aa53362ba5c6ad0ab0a6c1357e923c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
