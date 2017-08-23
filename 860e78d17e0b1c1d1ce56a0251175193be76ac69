@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7114002d_5a4fce43",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T22:40:15Z",
+      "side": 1,
+      "message": "A description of what\u0027s going on in this CL would be very helpful.",
+      "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fac1e18_4aa6a7e8",
+        "filename": "ash/link_handler_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T22:40:15Z",
+      "side": 1,
+      "message": "This could use a comment. Is it a classic ash vs. mash difference?",
+      "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a407f290_49185fff",
+        "filename": "ash/public/interfaces/link_handler.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T22:40:15Z",
+      "side": 1,
+      "message": "This needs documentation. Is this data that shows up in a context menu or something else? Is |name| a user-visible string or an internal name?",
+      "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f837908_74f1a8e7",
+        "filename": "ash/public/interfaces/link_handler.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T22:40:15Z",
+      "side": 1,
+      "message": "This needs documentation. What is it and why does it exist?",
+      "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6cccfe3_78014ab4",
+        "filename": "ash/public/interfaces/link_handler.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T22:40:15Z",
+      "side": 1,
+      "message": "Methods need docs too -- what happens if URL is empty, |id| is invalid, etc. What does it mean to \"connect a model\"? Should that method be called SetObserver() or AddObserver()? Can it be called multiple times?",
+      "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d29147_f2ebebc3",
+        "filename": "ash/public/interfaces/link_handler.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T22:40:15Z",
+      "side": 1,
+      "message": "I don\u0027t understand this. Why are other parts of the system asking ash to open a link? If it\u0027s a normal URL, the browser should be handling this. If it\u0027s an ARC app, the ARC code in the browser process should be handling this. Something seems backwards here.",
+      "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286c2933_6ecaecc9",
+        "filename": "ash/shell.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T22:40:15Z",
+      "side": 1,
+      "message": "nit: I would use unique_ptr\u003c\u003e here. I recognize the style guide does not recommend pointer-to-impl to avoid #includes, but given that shell.h is widely included I would prefer to avoid transitive includes, especially of headers that include mojo headers.",
+      "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "837aee3f_c1dff307",
+        "filename": "ash/shell.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T22:40:15Z",
+      "side": 1,
+      "message": "nit: I would keep this the way it was.",
+      "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13deca65_3ac5c88b",
+        "filename": "components/arc/intent_helper/link_handler_model_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-23T22:40:15Z",
+      "side": 1,
+      "message": "This is also a problem, since //components/arc is code in the browser process.",
+      "revId": "860e78d17e0b1c1d1ce56a0251175193be76ac69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
