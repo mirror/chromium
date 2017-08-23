@@ -4,11 +4,15 @@
 
 #include "chrome/browser/net/profile_network_context_service.h"
 
+#include <algorithm>
 #include <string>
+#include <vector>
 
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_temp_dir.h"
+#include "base/strings/string_piece.h"
+#include "base/strings/string_split.h"
 #include "base/threading/thread_restrictions.h"
 #include "chrome/browser/net/profile_network_context_service.h"
 #include "chrome/browser/net/profile_network_context_service_factory.h"
@@ -28,6 +32,8 @@
 #include "content/public/common/url_loader.mojom.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "content/public/test/test_url_loader_client.h"
+#include "mojo/common/data_pipe_utils.h"
+#include "net/base/load_flags.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -95,6 +101,40 @@ IN_PROC_BROWSER_TEST_P(ProfileNetworkContextServiceBrowsertest,
   expected_cache_path = expected_cache_path.Append(chrome::kCacheDirname);
   base::ThreadRestrictions::ScopedAllowIO allow_io;
   EXPECT_TRUE(base::PathExists(expected_cache_path));
+}
+
+IN_PROC_BROWSER_TEST_P(ProfileNetworkContextServiceBrowsertest, BrotliEnabled) {
+  // Brotli is only used over encrypted connections.
+  net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
+  https_server.AddDefaultHandlers(
+      base::FilePath(FILE_PATH_LITERAL("content/test/data")));
+  ASSERT_TRUE(https_server.Start());
+
+  content::mojom::URLLoaderPtr loader;
+  content::ResourceRequest request;
+  // TODO(mmenke): Remove this once the network service can recognize the
+  // embedded test server's root cert in tests. See https://crbug.com/757088.
+  if (GetParam() == NetworkServiceState::kEnabled)
+    request.load_flags = net::LOAD_IGNORE_ALL_CERT_ERRORS;
+  content::TestURLLoaderClient client;
+  request.url = https_server.GetURL("/echoheader?accept-encoding");
+  request.method = "GET";
+  loader_factory()->CreateLoaderAndStart(
+      mojo::MakeRequest(&loader), 2, 1, content::mojom::kURLLoadOptionNone,
+      request, client.CreateInterfacePtr(),
+      net::MutableNetworkTrafficAnnotationTag(TRAFFIC_ANNOTATION_FOR_TESTS));
+  client.RunUntilResponseReceived();
+  ASSERT_TRUE(client.response_head().headers);
+  EXPECT_EQ(200, client.response_head().headers->response_code());
+  client.RunUntilResponseBodyArrived();
+
+  std::string response_body;
+  EXPECT_TRUE(mojo::common::BlockingCopyToString(client.response_body_release(),
+                                                 &response_body));
+  std::vector<std::string> encodings = base::SplitString(
+      response_body, ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY);
+  EXPECT_TRUE(encodings.end() !=
+              std::find(encodings.begin(), encodings.end(), "br"));
 }
 
 // Test subclass that adds switches::kDiskCacheDir to the command line, to make
