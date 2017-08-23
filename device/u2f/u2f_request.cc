@@ -57,31 +57,31 @@ void U2fRequest::Enumerate() {
 }
 
 void U2fRequest::OnEnumerate(
-    const std::vector<scoped_refptr<HidDeviceInfo>>& devices) {
-  for (auto device_info : devices) {
-    if (filter_.Matches(device_info))
-      devices_.push_back(base::MakeUnique<U2fHidDevice>(device_info));
+    const std::vector<device::mojom::HidDeviceInfoPtr>& devices) {
+  for (auto& device_info : devices) {
+    if (filter_.Matches(device_info.get()))
+      devices_.push_back(base::MakeUnique<U2fHidDevice>(device_info->Clone()));
   }
 
   state_ = State::IDLE;
   Transition();
 }
 
-void U2fRequest::OnDeviceAdded(scoped_refptr<HidDeviceInfo> device_info) {
+void U2fRequest::OnDeviceAdded(device::mojom::HidDeviceInfoPtr device_info) {
   // Ignore non-U2F devices
-  if (!filter_.Matches(device_info))
+  if (!filter_.Matches(device_info.get()))
     return;
 
-  auto device = base::MakeUnique<U2fHidDevice>(device_info);
+  auto device = base::MakeUnique<U2fHidDevice>(std::move(device_info));
   AddDevice(std::move(device));
 }
 
-void U2fRequest::OnDeviceRemoved(scoped_refptr<HidDeviceInfo> device_info) {
+void U2fRequest::OnDeviceRemoved(device::mojom::HidDeviceInfoPtr device_info) {
   // Ignore non-U2F devices
-  if (!filter_.Matches(device_info))
+  if (!filter_.Matches(device_info.get()))
     return;
 
-  auto device = base::MakeUnique<U2fHidDevice>(device_info);
+  auto device = base::MakeUnique<U2fHidDevice>(std::move(device_info));
 
   // Check if the active device was removed
   if (current_device_ && current_device_->GetId() == device->GetId()) {
