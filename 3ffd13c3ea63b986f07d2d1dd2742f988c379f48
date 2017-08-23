@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "256b1811_e0afa4a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/ContentSettingsResources.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-23T23:37:12Z",
+      "side": 1,
+      "message": "This comment isn\u0027t quite correct, maybe something like \"Creates a {@link Drawable} for the given content type with the correct tint applied.\"\n\nTechnically this should have @param and @return lines for the two parameters and the return value, but the style follows suite for the other two static methods here so I\u0027m OK with it.",
+      "range": {
+        "startLine": 178,
+        "startChar": 7,
+        "endLine": 178,
+        "endChar": 14
+      },
+      "revId": "3ffd13c3ea63b986f07d2d1dd2742f988c379f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
