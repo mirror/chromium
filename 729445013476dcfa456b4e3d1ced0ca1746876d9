@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "792b1fb8_643eef5d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-23T06:02:32Z",
+      "side": 1,
+      "message": "Have you been able to measure the impact of this at all?",
+      "revId": "729445013476dcfa456b4e3d1ced0ca1746876d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3caf0ab_c944465d",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenRange.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-23T06:02:32Z",
+      "side": 1,
+      "message": "what does sub_first mean? Is there a more descriptive name you can think of?",
+      "revId": "729445013476dcfa456b4e3d1ced0ca1746876d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d00a72_b578156c",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenRange.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-23T06:02:32Z",
+      "side": 1,
+      "message": "Nit: perhaps the comment should be above so that we don\u0027t get this weird wrapping.",
+      "revId": "729445013476dcfa456b4e3d1ced0ca1746876d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
