@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38285d11_223810ed",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-23T02:09:44Z",
+      "side": 1,
+      "message": "Should we just remove this method? AFAICT this is the only usage, and I\u0027m not sure whether people really use this in tracing.",
+      "range": {
+        "startLine": 823,
+        "startChar": 20,
+        "endLine": 823,
+        "endChar": 66
+      },
+      "revId": "ca35b87322884ed18ff125cf4d10ddc2895db233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
