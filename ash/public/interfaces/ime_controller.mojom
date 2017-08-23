@@ -26,6 +26,9 @@ interface ImeController {
   // some Chinese IMEs) prefer this to keeping the IME menu under the primary
   // system tray menu.
   ShowImeMenuOnShelf(bool show);
+
+  // Report caps state changes from the client to the controller
+  SetCapsFromClient(bool enabled);
 };
 
 // Interface for ash to send input method requests to its client (e.g. Chrome).
@@ -48,4 +51,7 @@ interface ImeControllerClient {
   // Activates an input method menu item. The |key| must be a value from the
   // ImeMenuItems provided via RefreshIme. Does nothing if the |key| is invalid.
   ActivateImeMenuItem(string key);
+
+  // Report caps state changes from the controller to the client
+  SetCapsFromController(bool enabled);
 };

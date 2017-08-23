@@ -169,6 +169,7 @@ class TestImeController : ash::mojom::ImeController {
   void ShowImeMenuOnShelf(bool show) override {
     show_ime_menu_on_shelf_ = show;
   }
+  void SetCapsFromClient(bool enabled) override {}
 
   // The most recent values received via mojo.
   std::string current_ime_id_;
