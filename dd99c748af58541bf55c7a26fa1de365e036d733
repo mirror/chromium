@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "704f7ab0_f01dbc67",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-23T00:31:42Z",
+      "side": 1,
+      "message": "I agree with lpy@ and don\u0027t think it\u0027s necessary. Testing for 0 there is just testing that HistogramTester isn\u0027t broken, which IMO isn\u0027t our responsibility. Each parameterized test has a case where we expect ExpectTotalCount to be 0 for all histograms -- the (false, false) case.",
+      "parentUuid": "d5c473ab_df8ba8a5",
+      "range": {
+        "startLine": 139,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 69
+      },
+      "revId": "dd99c748af58541bf55c7a26fa1de365e036d733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd06554e_65084796",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector_unittest.cc",
         "patchSetId": 9
