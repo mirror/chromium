@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "f9cb3562_42ae5f5b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-23T00:06:27Z",
+      "side": 1,
+      "message": "Yes, ProbeBase. This could reduce the number of instrumentation points we have in the code.\nSo instead of having TaskObservers, TaskTimeObservers and now OnTaskStarted we could have just a single line probe::Task probe(this);\n\nI\u0027m ok with investigating it later though.",
+      "parentUuid": "941f2eb9_229c61fd",
+      "revId": "c0c681ce02972f6d6212180de00ef777c00f831b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4685e1f_63b1e9e7",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 8
