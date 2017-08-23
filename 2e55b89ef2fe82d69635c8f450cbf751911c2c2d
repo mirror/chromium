@@ -16,6 +16,24 @@
       "revId": "2e55b89ef2fe82d69635c8f450cbf751911c2c2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f175ebc3_7e7d87c0",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-23T14:47:12Z",
+      "side": 1,
+      "message": "Since its just the unit tests that can send render_frame as null, it will be simpler to create  IsMainFrame which will be overridden in the test. This is similar to the approach taken for GetDocumentUrl.\n\nAlso made this the first condition in the if statement.",
+      "parentUuid": "41991899_64a34b2e",
+      "revId": "2e55b89ef2fe82d69635c8f450cbf751911c2c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
