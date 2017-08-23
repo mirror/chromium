@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tests CORS denying preflighted request to resource without CORS headers for OPTIONS</title>
+    <script src="/resources/testharness.js"></script>
+    <script src="/resources/testharnessreport.js"></script>
+    <script src="/common/get-host-info.sub.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+    test(function() {
+      const xhr = new XMLHttpRequest;
+
+      xhr.open("GET", get_host_info().HTTP_REMOTE_ORIGIN +
+          "/XMLHttpRequest/resources/access-control-basic-get-fail-non-simple.py", false);
+
+      // Non-whitelisted method
+      xhr.setRequestHeader("x-test", "foobar");
+
+      // This fails because the server-side script is not prepared for an OPTIONS request
+      try {
+        xhr.send();
+        assert_unreached("Error should occur before this.");
+      } catch(e) {
+        assert_false(e.message.startsWith("assert_unreached"), "Error should occur on XHR send");
+        assert_equals(xhr.status, 0);
+      }
+
+    }, "Preflighted cross-origin request denied");
+    </script>
+  </body>
+</html>
