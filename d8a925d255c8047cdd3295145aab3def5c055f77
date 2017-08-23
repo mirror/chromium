@@ -50,6 +50,23 @@
       "revId": "d8a925d255c8047cdd3295145aab3def5c055f77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70ef5e9_c159d615",
+        "filename": "third_party/WebKit/Source/platform/fonts/opentype/OS2TableCJKFontTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-23T16:01:56Z",
+      "side": 1,
+      "message": "Could you add more fonts? At least all CJK default installed fonts?\nhttps://en.wikipedia.org/wiki/List_of_typefaces_included_with_Microsoft_Windows\n\nJapanese: Meiryo, MS Gothic, MS Mincho, Yu Gothic, Yu Mincho\nSimplified: Microsoft YaHei, SimHei, SimSun, KaiTi\nTraditional: Microsoft JhengHei, MingLiU, DFKai-SB\nKorean: Batang, Dotum, Gulim, Malgun Gothic\n(not all from the wikipedia but extracted what I think are common)\n\nI\u0027m a bit surprised code pages in OS/2 is reliable, it wasn\u0027t at all when I tried before (20 years ago, lol) but if Gecko is using this, things might have improved. Just want to make sure we cover default fonts here.\n\nNote, you might know but Win10 minimized default installed fonts for other languages, so bots may not have all of them. We might need to handle optional fonts as pass.",
+      "revId": "d8a925d255c8047cdd3295145aab3def5c055f77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
