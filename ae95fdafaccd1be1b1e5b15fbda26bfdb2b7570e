@@ -22,6 +22,30 @@
       "revId": "ae95fdafaccd1be1b1e5b15fbda26bfdb2b7570e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "822bf151_4596ae53",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-23T20:15:18Z",
+      "side": 1,
+      "message": "This is a request from Elijah (see the bug) and I think this makes sense. When Ctrl+a (the shortcut) is pressed before ARC fully starts, a small window with some animation is shown. We probably want to track both the spinner icon and the animation.",
+      "parentUuid": "299b0b72_1fbf35ac",
+      "range": {
+        "startLine": 470,
+        "startChar": 0,
+        "endLine": 470,
+        "endChar": 68
+      },
+      "revId": "ae95fdafaccd1be1b1e5b15fbda26bfdb2b7570e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
