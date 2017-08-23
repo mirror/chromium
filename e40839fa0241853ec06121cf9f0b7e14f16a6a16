@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "476de0c6_dddde983",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-23T21:21:15Z",
+      "side": 1,
+      "message": "We use completed to mean both success and failure. So I think success_downloads may be more precise.",
+      "parentUuid": "d7cdd157_ef8a7bf9",
+      "revId": "e40839fa0241853ec06121cf9f0b7e14f16a6a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "147750c1_33ce7b28",
         "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8340c8e7_074d01ff",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-23T21:21:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "147750c1_33ce7b28",
+      "revId": "e40839fa0241853ec06121cf9f0b7e14f16a6a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7170ad85_7767c1c0",
         "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-22T18:00:49Z",
       "side": 1,
       "message": "tracked_downloads -\u003e downloading_prefetch_items\nKinda, we keep \u0027items\u0027 in database and \u0027downloads\u0027 are the ones that are going on in Download system...",
+      "revId": "e40839fa0241853ec06121cf9f0b7e14f16a6a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b5e17d_01fb0190",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-23T21:21:15Z",
+      "side": 1,
+      "message": "Changed to outstanding_prefetch_downloads. I did not use \"items\" since we didn\u0027t have the full item info.",
+      "parentUuid": "7170ad85_7767c1c0",
       "revId": "e40839fa0241853ec06121cf9f0b7e14f16a6a16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "d58b683c_6139638e",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-23T21:21:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a71b67d5_28b94a1d",
+      "revId": "e40839fa0241853ec06121cf9f0b7e14f16a6a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86ce43f5_f508a98a",
         "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "e40839fa0241853ec06121cf9f0b7e14f16a6a16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa9ca622_707f81d3",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-23T21:21:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86ce43f5_f508a98a",
+      "revId": "e40839fa0241853ec06121cf9f0b7e14f16a6a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6dc21abf_bd951b42",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-23T21:21:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b0f6b03_e54aae44",
+      "revId": "e40839fa0241853ec06121cf9f0b7e14f16a6a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3db46d1d_75a4790c",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 2
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-22T18:00:49Z",
       "side": 1,
       "message": "It looks like this task will be run on every Chrome startup (as soon as Downloads start up). This will also load connect to DB on every startup, which seems unnecessary.\n\nAt the same time, simple check for empty vectors is not proper as well, because the emptiness may in fact signal about necessary cleanup. I am not sure at the moment how to fix this, lets chat?",
+      "revId": "e40839fa0241853ec06121cf9f0b7e14f16a6a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c6b7be_29862606",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-23T21:21:15Z",
+      "side": 1,
+      "message": "Good catch. I will have a separate patch to address this issue.",
+      "parentUuid": "3db46d1d_75a4790c",
       "revId": "e40839fa0241853ec06121cf9f0b7e14f16a6a16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
