@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f449667_429ed060",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-23T21:43:36Z",
+      "side": 1,
+      "message": "nit: Move this to above L418. Function comments should typically describe what the function does and be in the .h. This only seems to apply to the fact that you are enabling a pref.",
+      "range": {
+        "startLine": 409,
+        "startChar": 0,
+        "endLine": 411,
+        "endChar": 38
+      },
+      "revId": "f5beb06bac39d3646458cbf30b10546b9b952700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
