@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "778e3267_dc3201a0",
+        "filename": "net/http/http_stream_factory_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-23T19:53:21Z",
+      "side": 1,
+      "message": "Since JobController doesn\u0027t outlive non-preconnect Request, how about let the Request create JobContrller in its constructor?",
+      "range": {
+        "startLine": 118,
+        "startChar": 72,
+        "endLine": 118,
+        "endChar": 0
+      },
+      "revId": "128e2a5b3eb4df6918057c7e6497d6edff15334f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3b4c4b_eb1db129",
+        "filename": "net/http/http_stream_factory_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-23T19:53:21Z",
+      "side": 1,
+      "message": "nit: naming in this file looks inconsistent. Preconnect or Preconnects? Since we have a method PreconnectStreams(), how about OnPreconnectComplete?",
+      "revId": "128e2a5b3eb4df6918057c7e6497d6edff15334f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
