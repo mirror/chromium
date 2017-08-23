@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95c1d764_b16afccc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T04:23:40Z",
+      "side": 1,
+      "message": "Maybe to make the commit message nicer for the codebase as a whole:\n\nAdd more ServiceWorkerURLLoaderJob tests: fallback and fetch event dispatch failure.",
+      "revId": "62ab87ee7c455f7ac36236d05cecd9269fdd0e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea170790_111d944d",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T04:23:40Z",
+      "side": 1,
+      "message": "BTW these braces are optional according to the style guide, so it\u0027s OK to keep them.",
+      "revId": "62ab87ee7c455f7ac36236d05cecd9269fdd0e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
