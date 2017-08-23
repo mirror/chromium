@@ -22,6 +22,30 @@
       "revId": "299658e618284e6e56f1e4e1ec197ee84ccbcb06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44dd0b61_ca48872c",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-08-23T16:59:58Z",
+      "side": 1,
+      "message": "I think it\u0027s fine to include these changes in the CL since it\u0027s still related to making the tests run properly on swarming. Without these changes, the benchmark will fail on swarming unless the screen happens to be on already.",
+      "parentUuid": "f06d8293_eaadbeb5",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "299658e618284e6e56f1e4e1ec197ee84ccbcb06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
