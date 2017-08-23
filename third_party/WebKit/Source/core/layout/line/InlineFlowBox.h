@@ -231,8 +231,8 @@ class InlineFlowBox : public InlineBox {
                                 VerticalPositionCache&);
   void AdjustMaxAscentAndDescent(LayoutUnit& max_ascent,
                                  LayoutUnit& max_descent,
-                                 int max_position_top,
-                                 int max_position_bottom);
+                                 LayoutUnit max_position_top,
+                                 LayoutUnit max_position_bottom);
   void PlaceBoxesInBlockDirection(LayoutUnit logical_top,
                                   LayoutUnit max_height,
                                   LayoutUnit max_ascent,

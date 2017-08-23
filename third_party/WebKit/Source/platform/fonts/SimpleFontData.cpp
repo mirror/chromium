@@ -144,37 +144,9 @@ void SimpleFontData::PlatformInit(bool subpixel_ascent_descent) {
   if (is_vdmx_valid) {
     ascent = vdmx_ascent;
     descent = -vdmx_descent;
-  } else if (subpixel_ascent_descent &&
-             (-metrics.fAscent < 3 ||
-              -metrics.fAscent + metrics.fDescent < 2)) {
-    // For tiny fonts, the rounding of fAscent and fDescent results in equal
-    // baseline for different types of text baselines (crbug.com/338908).
-    // Please see CanvasRenderingContext2D::getFontBaseline for the heuristic.
+  } else {
     ascent = -metrics.fAscent;
     descent = metrics.fDescent;
-  } else {
-    ascent = SkScalarRoundToScalar(-metrics.fAscent);
-    descent = SkScalarRoundToScalar(metrics.fDescent);
-
-    if (ascent < -metrics.fAscent)
-      visual_overflow_inflation_for_ascent_ = 1;
-    if (descent < metrics.fDescent) {
-      visual_overflow_inflation_for_descent_ = 1;
-#if defined(OS_LINUX) || defined(OS_ANDROID)
-      // When subpixel positioning is enabled, if the descent is rounded down,
-      // the descent part of the glyph may be truncated when displayed in a
-      // 'overflow: hidden' container.  To avoid that, borrow 1 unit from the
-      // ascent when possible.
-      if (PlatformData().GetFontRenderStyle().use_subpixel_positioning &&
-          ascent >= 1) {
-        ++descent;
-        --ascent;
-        // We should inflate overflow 1 more pixel for ascent instead.
-        visual_overflow_inflation_for_descent_ = 0;
-        ++visual_overflow_inflation_for_ascent_;
-      }
-#endif
-    }
   }
 
 #if defined(OS_MACOSX)
@@ -220,8 +192,7 @@ void SimpleFontData::PlatformInit(bool subpixel_ascent_descent) {
 
   float line_gap = SkScalarToFloat(metrics.fLeading);
   font_metrics_.SetLineGap(line_gap);
-  font_metrics_.SetLineSpacing(lroundf(ascent) + lroundf(descent) +
-                               lroundf(line_gap));
+  font_metrics_.SetLineSpacing(lroundf(ascent + descent + line_gap));
 
   if (PlatformData().IsVerticalAnyUpright() && !IsTextOrientationFallback()) {
     static const uint32_t kVheaTag = SkSetFourByteTag('v', 'h', 'e', 'a');
