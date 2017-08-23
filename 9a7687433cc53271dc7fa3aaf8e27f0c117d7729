@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a67fe6e_88ae2c50",
+        "filename": "third_party/closure_compiler/externs/file_manager_private.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-23T07:58:00Z",
+      "side": 1,
+      "message": "Could you add enum for SourceRestriction in this file, like we do for chrome.fileManagerPrivate.Verb?",
+      "revId": "9a7687433cc53271dc7fa3aaf8e27f0c117d7729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
