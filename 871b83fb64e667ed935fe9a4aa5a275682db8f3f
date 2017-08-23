@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "a15927f6_04200e3c",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-23T03:47:01Z",
+      "side": 1,
+      "message": "Yeah, the other transition type, \"LINK\", is tested in a bunch of tests because they all call ClickAndWait. But I agree that it would be better if we explicitly test all navigations types. Done.",
+      "parentUuid": "940a485c_ff0345bf",
+      "range": {
+        "startLine": 254,
+        "startChar": 2,
+        "endLine": 254,
+        "endChar": 13
+      },
+      "revId": "871b83fb64e667ed935fe9a4aa5a275682db8f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56c65183_67655a4c",
         "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
         "patchSetId": 4
