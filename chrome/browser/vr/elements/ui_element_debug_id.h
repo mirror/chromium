@@ -33,7 +33,7 @@ enum UiElementDebugId {
   kTransientUrlBar,
   kLocationAccessIndicator,
   kExclusiveScreenToast,
-  kSplashScreenIcon,
+  kSplashScreenText,
   kBluetoothConnectedIndicator,
   kBackgroundFront,
   kBackgroundLeft,
