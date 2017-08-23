@@ -382,9 +382,6 @@ class QUIC_EXPORT_PRIVATE QuicSentPacketManager {
   // If true, use the new RTO with loss based CWND reduction instead of the send
   // algorithms's OnRetransmissionTimeout to reduce the congestion window.
   bool use_new_rto_;
-  // If true, cancel pending retransmissions if they're larger than
-  // largest_newly_acked.
-  bool undo_pending_retransmits_;
   // If true, use a more conservative handshake retransmission policy.
   bool conservative_handshake_retransmits_;
 
