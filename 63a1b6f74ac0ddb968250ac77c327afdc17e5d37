@@ -88,6 +88,24 @@
       "revId": "63a1b6f74ac0ddb968250ac77c327afdc17e5d37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53751728_6d025df9",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 1473,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-23T01:26:21Z",
+      "side": 1,
+      "message": "I\u0027m thinking of having the script exec itself adding --host-id flag that get_daemon_proc can check for, which should be a small, easy-to-implement change. Other options I considered were using python-setproctitle to change the name of the process to include the host ID on-the-fly (easy to implement, but adds a dependency) and storing PID files in /var/run (a more involved change).",
+      "parentUuid": "c4258089_b07e3fc3",
+      "revId": "63a1b6f74ac0ddb968250ac77c327afdc17e5d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
