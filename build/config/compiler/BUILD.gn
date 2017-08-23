@@ -459,13 +459,13 @@ config("compiler") {
 
   # C11/C++11 compiler flags setup.
   # ---------------------------
-  if (is_linux || is_android || (is_nacl && is_clang) || current_os == "aix") {
-    if (is_android) {
-      cxx11_override = use_cxx11_on_android
-    } else {
-      cxx11_override = use_cxx11
-    }
+  if (target_os == "android") {
+    cxx11_override = use_cxx11_on_android
+  } else {
+    cxx11_override = use_cxx11
+  }
 
+  if (is_linux || is_android || (is_nacl && is_clang) || current_os == "aix") {
     # gnu11/gnu++11 instead of c11/c++11 is needed because some code uses typeof()
     # (a GNU extension).
     # TODO(thakis): Eventually switch this to c++11 instead,
@@ -483,11 +483,13 @@ config("compiler") {
     # are still a few buildbots using it, so until those are turned off
     # we need the !is_nacl clause and the (is_nacl && is_clang) clause, above.
     cflags_c += [ "-std=c11" ]
-    if (use_cxx11) {
+    if (cxx11_override) {
       cflags_cc += [ "-std=c++11" ]
     } else {
       cflags_cc += [ "-std=c++14" ]
     }
+  } else {
+    not_needed(cxx11_override)
   }
 
   if (is_mac) {
