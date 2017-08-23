@@ -25,6 +25,7 @@
 #include "build/build_config.h"
 #include "components/crx_file/crx_verifier.h"
 #include "content/public/browser/browser_thread.h"
+#include "extensions/browser/api/declarative_net_request/utils.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_l10n_util.h"
@@ -438,7 +439,8 @@ void SandboxedUnpacker::Unpack(const base::FilePath& directory) {
 
 void SandboxedUnpacker::UnpackDone(
     const base::string16& error,
-    std::unique_ptr<base::DictionaryValue> manifest) {
+    std::unique_ptr<base::DictionaryValue> manifest,
+    std::unique_ptr<base::Value> json_ruleset) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   utility_process_mojo_client_.reset();
@@ -451,12 +453,14 @@ void SandboxedUnpacker::UnpackDone(
   }
 
   unpacker_io_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&SandboxedUnpacker::UnpackExtensionSucceeded, this,
-                            base::Passed(&manifest)));
+      FROM_HERE,
+      base::Bind(&SandboxedUnpacker::UnpackExtensionSucceeded, this,
+                 base::Passed(&manifest), base::Passed(&json_ruleset)));
 }
 
 void SandboxedUnpacker::UnpackExtensionSucceeded(
-    std::unique_ptr<base::DictionaryValue> manifest) {
+    std::unique_ptr<base::DictionaryValue> manifest,
+    std::unique_ptr<base::Value> json_ruleset) {
   CHECK(unpacker_io_task_runner_->RunsTasksInCurrentSequence());
 
   std::unique_ptr<base::DictionaryValue> final_manifest(
@@ -500,7 +504,28 @@ void SandboxedUnpacker::UnpackExtensionSucceeded(
   if (!RewriteCatalogFiles())
     return;
 
+  // Index and persist ruleset for the Declarative Net Request API.
+  if (json_ruleset && !IndexAndPersistRules(std::move(json_ruleset)))
+    return;  // Failure was already reported.
+
   ReportSuccess(std::move(manifest), install_icon);
+}
+
+bool SandboxedUnpacker::IndexAndPersistRules(
+    std::unique_ptr<base::Value> json_ruleset) {
+  DCHECK(extension_);
+  DCHECK(json_ruleset);
+
+  std::string error;
+  std::vector<InstallWarning> warnings;
+  if (!declarative_net_request::IndexAndPersistRules(
+          *json_ruleset, extension_.get(), &error, &warnings)) {
+    ReportFailure(ERROR_INDEXING_DNR_RULESET, base::UTF8ToUTF16(error));
+    return false;
+  }
+
+  extension_->AddInstallWarnings(warnings);
+  return true;
 }
 
 void SandboxedUnpacker::UnpackExtensionFailed(const base::string16& error) {
@@ -596,6 +621,9 @@ base::string16 SandboxedUnpacker::FailureReasonToString16(
       return ASCIIToUTF16("UNZIP_FAILED");
     case DIRECTORY_MOVE_FAILED:
       return ASCIIToUTF16("DIRECTORY_MOVE_FAILED");
+
+    case ERROR_INDEXING_DNR_RULESET:
+      return ASCIIToUTF16("ERROR_INDEXING_DNR_RULESET");
 
     case DEPRECATED_ABORTED_DUE_TO_SHUTDOWN:
     case NUM_FAILURE_REASONS:
