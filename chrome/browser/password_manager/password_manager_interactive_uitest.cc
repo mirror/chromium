@@ -167,4 +167,53 @@ IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestForManualSaving,
   EXPECT_FALSE(prompt_observer.IsSavePromptAvailable());
 }
 
+IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestForManualSaving,
+                       ManualFallbackForSaving_HideIcon) {
+  NavigateToFile("/password/password_form.html");
+
+  std::string focus("document.getElementById('password_field').focus();");
+  ASSERT_TRUE(content::ExecuteScript(RenderViewHost(), focus));
+  SimulateUserTypingInField(RenderViewHost(), WebContents(), "password_field");
+  BubbleObserver prompt_observer(WebContents());
+  prompt_observer.WaitForFallbackForSaving();
+
+  // Clear typed content.
+  std::string clear("document.getElementById('password_field').value = '';");
+  ASSERT_TRUE(content::ExecuteScript(RenderViewHost(), clear));
+
+  prompt_observer.WaitForInactiveState();
+  // If we reach inactive state, everything is good.
+}
+
+IN_PROC_BROWSER_TEST_F(PasswordManagerBrowserTestForManualSaving,
+                       ManualFallbackForSaving_GoToManagedState) {
+  // At first let us save a credential to the password store.
+  scoped_refptr<password_manager::TestPasswordStore> password_store =
+      static_cast<password_manager::TestPasswordStore*>(
+          PasswordStoreFactory::GetForProfile(
+              browser()->profile(), ServiceAccessType::IMPLICIT_ACCESS)
+              .get());
+  autofill::PasswordForm signin_form;
+  signin_form.signon_realm = embedded_test_server()->base_url().spec();
+  signin_form.origin = embedded_test_server()->base_url();
+  signin_form.username_value = base::ASCIIToUTF16("temp");
+  signin_form.password_value = base::ASCIIToUTF16("random");
+  password_store->AddLogin(signin_form);
+
+  NavigateToFile("/password/password_form.html");
+
+  std::string focus("document.getElementById('password_field').focus();");
+  ASSERT_TRUE(content::ExecuteScript(RenderViewHost(), focus));
+  SimulateUserTypingInField(RenderViewHost(), WebContents(), "password_field");
+  BubbleObserver prompt_observer(WebContents());
+  prompt_observer.WaitForFallbackForSaving();
+
+  // Clear typed content.
+  std::string clear("document.getElementById('password_field').value = '';");
+  ASSERT_TRUE(content::ExecuteScript(RenderViewHost(), clear));
+
+  prompt_observer.WaitForManagementState();
+  // If we reach managed state, everything is good.
+}
+
 }  // namespace password_manager
