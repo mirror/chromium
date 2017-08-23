@@ -145,6 +145,9 @@ class ArcFileSystemOperationRunner
   void OnInstanceReady() override;
   void OnInstanceClosed() override;
 
+  // Returns if operations will be deferred.
+  bool should_defer() const { return should_defer_; }
+
  private:
   friend class ArcFileSystemOperationRunnerTest;
 

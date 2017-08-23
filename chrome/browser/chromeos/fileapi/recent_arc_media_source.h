@@ -43,6 +43,8 @@ class RecentArcMediaSource : public RecentSource {
   void OnGetRecentFilesForRoot(std::vector<RecentFile> files);
   void OnComplete();
 
+  bool WillArcFileSystemOperationsRunImmediately();
+
   Profile* const profile_;
   std::vector<std::unique_ptr<MediaRoot>> roots_;
 
