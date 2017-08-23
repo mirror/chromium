@@ -2026,6 +2026,7 @@ test("browser_tests") {
       sources += [
         "../browser/chromeos/input_method/textinput_test_helper.cc",
         "../browser/chromeos/input_method/textinput_test_helper.h",
+        "../browser/resource_coordinator/window_occlusion_tracker_chromeos_browsertest.cc",
         "../browser/ui/ash/accelerator_commands_browsertest.cc",
         "../browser/ui/ash/accelerator_controller_browsertest.cc",
         "../browser/ui/ash/app_list/app_list_controller_ash_browsertest.cc",
