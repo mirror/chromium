@@ -27,11 +27,11 @@
               value="[[displayedCurrentTime_]]"></paper-slider>
           <div id="timeline">
             <span id="current-time"
-                  aria-label$="[[getCurrentTimeLabel_(displayedCurrentTime_)]]">
+                  title="[[getCurrentTimeLabel_(displayedCurrentTime_)]]">
               [[getFormattedTime_(displayedCurrentTime_)]]
             </span>
             <span id="duration"
-                  aria-label$="[[getDurationLabel_(routeStatus.duration)]]">
+                  title="[[getDurationLabel_(routeStatus.duration)]]">
               [[getFormattedTime_(routeStatus.duration)]]
             </span>
           </div>
@@ -55,6 +55,7 @@
           </span>
           <span id="volume-holder">
             <paper-slider
+                aria-valuetext$="[[getVolumeSliderValueText_(displayedVolume_)]]"
                 id="route-volume-slider"
                 hidden="[[!routeStatus.canSetVolume]]"
                 disabled="[[!routeStatus.canSetVolume]]"
