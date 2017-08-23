@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c46363a_fb5ed2fb",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2959,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-08-23T18:21:58Z",
+      "side": 1,
+      "message": "Nit: This is a little bit confusing since they are always paired regardless of latching flag.\nMaybe change it to \"applied to the same layer\" or something similar.",
+      "range": {
+        "startLine": 2959,
+        "startChar": 56,
+        "endLine": 2959,
+        "endChar": 62
+      },
+      "revId": "ff6a8068f3b7f87f3a1da77b793597bbcb520724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e0d77d_a9dd1109",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3644,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-08-23T18:21:58Z",
+      "side": 1,
+      "message": "same comment here.",
+      "range": {
+        "startLine": 3644,
+        "startChar": 54,
+        "endLine": 3644,
+        "endChar": 60
+      },
+      "revId": "ff6a8068f3b7f87f3a1da77b793597bbcb520724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
