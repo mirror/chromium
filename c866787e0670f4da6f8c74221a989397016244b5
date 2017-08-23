@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f61bbaa0_b8d80ddb",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3174,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T03:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c48c8f08_ea6c6003",
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6102dde_3f19a54c",
         "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "c866787e0670f4da6f8c74221a989397016244b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854c6d6f_832d37df",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T03:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6102dde_3f19a54c",
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,42 @@
     },
     {
       "key": {
+        "uuid": "57ddbd8f_2f6364b3",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T03:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a595cac_5281746b",
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e60131f_fd9333c8",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T03:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a595cac_5281746b",
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b36e3cfb_061fb024",
         "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
         "patchSetId": 6
@@ -67,6 +139,24 @@
       "revId": "c866787e0670f4da6f8c74221a989397016244b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0234ed_baa14f30",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T03:54:45Z",
+      "side": 1,
+      "message": "No, the plan is the fix ZH later, once we agree on how to handle it.",
+      "parentUuid": "b36e3cfb_061fb024",
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "68b557a7_537d4a54",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T03:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21eb277f_e1371fc2",
+      "range": {
+        "startLine": 58,
+        "startChar": 23,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cca19f54_8c142a8c",
         "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
         "patchSetId": 6
@@ -116,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "dfe3d925_9999d8c2",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T03:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cca19f54_8c142a8c",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 8
+      },
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "060f2524_14bc6d3e",
         "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
         "patchSetId": 6
@@ -133,6 +271,24 @@
     },
     {
       "key": {
+        "uuid": "95cfd318_665b1041",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T03:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "060f2524_14bc6d3e",
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91fbdf57_aaeb1ad8",
         "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
         "patchSetId": 6
@@ -147,6 +303,24 @@
       "revId": "c866787e0670f4da6f8c74221a989397016244b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2877f2e_756f7c4c",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T03:54:45Z",
+      "side": 1,
+      "message": "It would become more complicated, because if I add the first language outside the loop and start from 1, we would never enter the loop in case there\u0027s only one language.\nBasically \"en-US\" would not work, we would not add the base language \"en\".",
+      "parentUuid": "91fbdf57_aaeb1ad8",
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +347,30 @@
     },
     {
       "key": {
+        "uuid": "b84321cf_19675d5b",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T03:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d96b5c3_087daaaa",
+      "range": {
+        "startLine": 78,
+        "startChar": 12,
+        "endLine": 78,
+        "endChar": 18
+      },
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2c7ebfb_ce829033",
         "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
         "patchSetId": 6
@@ -196,6 +394,30 @@
     },
     {
       "key": {
+        "uuid": "c6c7dba0_6d818e22",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T03:54:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2c7ebfb_ce829033",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 76
+      },
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d08056d0_9177b354",
         "filename": "chrome/browser/net/chrome_http_user_agent_settings.h",
         "patchSetId": 6
@@ -210,6 +432,24 @@
       "revId": "c866787e0670f4da6f8c74221a989397016244b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a2c212b_142fae1e",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T03:54:45Z",
+      "side": 1,
+      "message": "Because it\u0027s related to this class.\nIf I make it a free standing function I wouldn\u0027t know where to put it.",
+      "parentUuid": "d08056d0_9177b354",
+      "revId": "c866787e0670f4da6f8c74221a989397016244b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
