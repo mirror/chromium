@@ -20,7 +20,7 @@ PlatformSensorFusion::PlatformSensorFusion(
                      provider),
       callback_(callback),
       fusion_algorithm_(std::move(fusion_algorithm)) {
-  for (mojom::SensorType type : fusion_algorithm->source_types()) {
+  for (mojom::SensorType type : fusion_algorithm_->source_types()) {
     scoped_refptr<PlatformSensor> sensor = provider->GetSensor(type);
     if (sensor) {
       AddSourceSensor(std::move(sensor));
