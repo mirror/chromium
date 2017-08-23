@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "20120d4a_0113b9ac",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-23T15:00:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40025aae_f9e96235",
+      "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2ab30b3_937c1f6f",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c31b0ff_89c4ca55",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-23T15:00:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2ab30b3_937c1f6f",
+      "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "739fd9e0_998753ff",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-23T15:00:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "748959df_c72dc038",
+      "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "447c1e41_48c007e9",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7b3252_bcf976c5",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-23T15:00:44Z",
+      "side": 1,
+      "message": "Ack (I also repeated the DCHECKs from Run here, to document/check that |front()| is indeed |this|)",
+      "parentUuid": "447c1e41_48c007e9",
+      "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "18997115_9196aa67",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-23T15:00:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58681d94_8673bf1b",
+      "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0f2fe9e_3f414afe",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
         "patchSetId": 5
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "8000d5cd_94a3978b",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-23T15:00:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0f2fe9e_3f414afe",
+      "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f36278a8_6e722728",
         "filename": "content/public/common/content_switches.h",
         "patchSetId": 5
@@ -118,6 +226,24 @@
       "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85033c3_69ab2f75",
+        "filename": "content/public/common/content_switches.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-23T15:00:44Z",
+      "side": 1,
+      "message": "There doesn\u0027t seem to be precedent for defining switches there.",
+      "parentUuid": "f36278a8_6e722728",
+      "revId": "f4dfcecddedb195008eaa8eb0939184b31455ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
