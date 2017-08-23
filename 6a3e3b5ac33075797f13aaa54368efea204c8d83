@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "510a15e9_56b11439",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValue.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-08-23T03:22:32Z",
+      "side": 1,
+      "message": "I would suggesting placing this after kMillimeters.",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 23
+      },
+      "revId": "6a3e3b5ac33075797f13aaa54368efea204c8d83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
