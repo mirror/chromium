@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1166f0f_c0ae372e",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T17:25:42Z",
+      "side": 1,
+      "message": "nit: insert a change test before this\ni.e.\n  if (is_in_drag_ \u003d\u003d is_in_drag)\n    return;",
+      "revId": "854c205ccbcfa926b0b5fd6317bc858263bcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df441718_b07c65fa",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T17:25:42Z",
+      "side": 1,
+      "message": "nit: Looks like this is repeated. We can use a const bool to make code cleaner.\n\ne.g.\n  const bool fullscreen_apps_in_drag \u003d ...;\n\nAnd use it here and the other two places.",
+      "range": {
+        "startLine": 904,
+        "startChar": 8,
+        "endLine": 906,
+        "endChar": 19
+      },
+      "revId": "854c205ccbcfa926b0b5fd6317bc858263bcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "730bb471_d1637d38",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T17:25:42Z",
+      "side": 1,
+      "message": "nit: wrap with {} since the condition takes \u003e 1 line",
+      "revId": "854c205ccbcfa926b0b5fd6317bc858263bcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8469a858_353c46df",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 994,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T17:25:42Z",
+      "side": 1,
+      "message": "nit: add a comment here and in other relevant places (OnGestureEvent, OnScrollEvent).\ne.g.\n  // Bail on STATE_START or no apps page to make PaginationModel happy.",
+      "revId": "854c205ccbcfa926b0b5fd6317bc858263bcaeef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
