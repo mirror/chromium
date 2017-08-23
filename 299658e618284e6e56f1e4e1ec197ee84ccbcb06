@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f06d8293_eaadbeb5",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/shared_android_vr_page_state.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1146751
+      },
+      "writtenOn": "2017-08-23T05:40:01Z",
+      "side": 1,
+      "message": "Should the changes in this file be a separate CL?",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "299658e618284e6e56f1e4e1ec197ee84ccbcb06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
