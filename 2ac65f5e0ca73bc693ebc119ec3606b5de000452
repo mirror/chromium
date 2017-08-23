@@ -2,6 +2,114 @@
   "comments": [
     {
       "key": {
+        "uuid": "63939fe8_46c3f1f1",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-23T16:23:04Z",
+      "side": 1,
+      "message": "nit: delete",
+      "revId": "2ac65f5e0ca73bc693ebc119ec3606b5de000452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ad9b8f_b7e51706",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-23T16:23:04Z",
+      "side": 1,
+      "message": "nit: base::BindOnce (you updated the other call :P)",
+      "revId": "2ac65f5e0ca73bc693ebc119ec3606b5de000452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "217ebf56_1cfaa3c3",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-23T16:23:04Z",
+      "side": 1,
+      "message": "nit: no {}, same on 340.",
+      "revId": "2ac65f5e0ca73bc693ebc119ec3606b5de000452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4709b4bc_26e942ff",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-23T16:23:04Z",
+      "side": 1,
+      "message": "nit: const\u0026 on |guid|. I\u0027m not sure if a bound function invocation will correctly move a string value to avoid the copy.",
+      "revId": "2ac65f5e0ca73bc693ebc119ec3606b5de000452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857124bf_8cee53fc",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-23T16:23:04Z",
+      "side": 1,
+      "message": "nit: uint64_t -\u003e int64_t per the style guide (\"Do not use unsigned types to mean \"this value should never be \u003c0\".\")",
+      "revId": "2ac65f5e0ca73bc693ebc119ec3606b5de000452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d85572d_1550147d",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-23T16:23:04Z",
+      "side": 1,
+      "message": "nit: avoid std::unordered_map\u003c\u003e. This is a newish recommendation, see the following document:\n\nhttps://chromium.googlesource.com/chromium/src/+/master/base/containers/README.md#map-and-set-selection",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 20
+      },
+      "revId": "2ac65f5e0ca73bc693ebc119ec3606b5de000452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1de0de2c_f90da3f5",
         "filename": "content/browser/background_fetch/background_fetch_request_info.cc",
         "patchSetId": 8
@@ -71,6 +179,23 @@
     },
     {
       "key": {
+        "uuid": "364c7e2a_48b27a96",
+        "filename": "content/browser/background_fetch/background_fetch_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-23T16:23:04Z",
+      "side": 1,
+      "message": "Should this be a TODO?",
+      "revId": "2ac65f5e0ca73bc693ebc119ec3606b5de000452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "293f9f32_cc80222e",
         "filename": "content/browser/background_fetch/background_fetch_request_info.cc",
         "patchSetId": 8
@@ -88,6 +213,40 @@
         "endLine": 55,
         "endChar": 27
       },
+      "revId": "2ac65f5e0ca73bc693ebc119ec3606b5de000452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aff62ff_06bd8e40",
+        "filename": "content/browser/background_fetch/background_fetch_request_info.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-23T16:23:04Z",
+      "side": 1,
+      "message": "nit: enum class\n\nNow you\u0027d use the values like BackgroundFetchRequestInfo::NONE, which is not clear about it being a failure reason.",
+      "revId": "2ac65f5e0ca73bc693ebc119ec3606b5de000452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e345b8_04e8d5ec",
+        "filename": "content/browser/background_fetch/background_fetch_request_info.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-23T16:23:04Z",
+      "side": 1,
+      "message": "same re: uint64_t -\u003e int64_t",
       "revId": "2ac65f5e0ca73bc693ebc119ec3606b5de000452",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
