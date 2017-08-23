@@ -104,6 +104,11 @@ class BubbleObserver {
   // credentials autofilled.
   // |web_contents| must be the custom one returned by
   // PasswordManagerBrowserTestBase.
+  void WaitForInteractiveState() const;
+
+  // Returns once the UI controller is in interactive state.
+  // |web_contents| must be the custom one returned by
+  // PasswordManagerBrowserTestBase.
   void WaitForManagementState() const;
 
   // Returns once the save prompt pops up or it's already shown.

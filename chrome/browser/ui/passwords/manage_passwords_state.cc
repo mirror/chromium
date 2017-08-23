@@ -179,6 +179,13 @@ void ManagePasswordsState::OnInactive() {
   SetState(password_manager::ui::INACTIVE_STATE);
 }
 
+void ManagePasswordsState::OnHideManualFallbackForSaving() {
+  if (local_credentials_forms_.empty())
+    OnInactive();
+  else
+    TransitionToState(password_manager::ui::MANAGE_STATE);
+}
+
 void ManagePasswordsState::TransitionToState(
     password_manager::ui::State state) {
   DCHECK_NE(password_manager::ui::INACTIVE_STATE, state_);
