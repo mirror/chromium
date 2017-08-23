@@ -8,6 +8,7 @@
 #include "bindings/core/v8/V8CustomElementRegistry.h"
 #include "bindings/core/v8/V8Element.h"
 #include "bindings/core/v8/V8ErrorHandler.h"
+#include "bindings/core/v8/V8Initializer.h"
 #include "bindings/core/v8/V8ScriptRunner.h"
 #include "bindings/core/v8/V8ThrowDOMException.h"
 #include "core/dom/ExceptionCode.h"
@@ -131,10 +132,8 @@ DEFINE_TRACE_WRAPPERS(ScriptCustomElementDefinition) {
 static void DispatchErrorEvent(v8::Isolate* isolate,
                                v8::Local<v8::Value> exception,
                                v8::Local<v8::Object> constructor) {
-  v8::TryCatch try_catch(isolate);
-  try_catch.SetVerbose(true);
-  V8ScriptRunner::ThrowException(
-      isolate, exception, constructor.As<v8::Function>()->GetScriptOrigin());
+  v8::Local<v8::Message> message = v8::Exception::CreateMessage(isolate, exception);
+  V8Initializer::MessageHandlerInMainThread(message, exception);
 }
 
 HTMLElement* ScriptCustomElementDefinition::HandleCreateElementSyncException(

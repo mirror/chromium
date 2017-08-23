@@ -6,6 +6,7 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/V8BindingForCore.h"
+#include "bindings/core/v8/V8Initializer.h"
 #include "core/dom/Modulator.h"
 #include "core/dom/ScriptModuleResolver.h"
 #include "core/probe/CoreProbes.h"
@@ -129,11 +130,9 @@ void ScriptModule::ReportException(ScriptState* script_state,
 
   v8::Isolate* isolate = script_state->GetIsolate();
 
-  v8::TryCatch try_catch(isolate);
-  try_catch.SetVerbose(true);
-
-  V8ScriptRunner::ReportExceptionForModule(isolate, exception, file_name,
-                                           start_position);
+  v8::Local<v8::Message> message = v8::Exception::CreateMessage(isolate, exception);
+  DCHECK(IsMainThread());
+  V8Initializer::MessageHandlerInMainThread(message, exception);
 }
 
 Vector<String> ScriptModule::ModuleRequests(ScriptState* script_state) {
