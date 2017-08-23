@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "713ff101_c69c77f1",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-08-23T23:19:10Z",
+      "side": 0,
+      "message": "Yes, field trials are no longer applicable - will clean up from params in follow-up CL since some calls in other files with other OWNERS\n\nTo disable server previews there is a Feature DataReductionProxyDecidesTransform that can be disabled (no field trials defined to do that though at this point). There are some exp force options to have some control in telling server what to do.\n\nNo change to disabling client previews.",
+      "parentUuid": "aedc31a3_b98a7b51",
+      "range": {
+        "startLine": 109,
+        "startChar": 9,
+        "endLine": 109,
+        "endChar": 46
+      },
+      "revId": "ed55bb1319e75c1a8b3c39d26b107517ee0e1794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96173a4d_9e78116f",
         "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-23T20:49:05Z",
       "side": 0,
       "message": "can we rm this method from headers.cc?",
+      "range": {
+        "startLine": 152,
+        "startChar": 58,
+        "endLine": 152,
+        "endChar": 76
+      },
+      "revId": "ed55bb1319e75c1a8b3c39d26b107517ee0e1794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd17d0d_14eb18f0",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-08-23T23:19:10Z",
+      "side": 0,
+      "message": "Done - plus a bit more too (q\u003dlow related stuff)",
+      "parentUuid": "96173a4d_9e78116f",
       "range": {
         "startLine": 152,
         "startChar": 58,
