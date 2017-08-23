@@ -479,6 +479,53 @@ TEST_F(ManagePasswordsStateTest, OnInactive) {
   TestNoisyUpdates();
 }
 
+TEST_F(ManagePasswordsStateTest,
+       OnHideManualFallbackForSavingWithoutLocalPasswords) {
+  // Set up new password for manual saving and verify state.
+  std::unique_ptr<password_manager::PasswordFormManager> test_form_manager(
+      CreateFormManager());
+  test_form_manager->ProvisionallySave(
+      test_submitted_form(),
+      password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
+  passwords_data().OnPendingPassword(std::move(test_form_manager));
+  EXPECT_EQ(password_manager::ui::PENDING_PASSWORD_STATE,
+            passwords_data().state());
+
+  // Hide manual fallback and verify that passwords_data() is in pristine state.
+  passwords_data().OnHideManualFallbackForSaving();
+  EXPECT_THAT(passwords_data().GetCurrentForms(), IsEmpty());
+  EXPECT_EQ(password_manager::ui::INACTIVE_STATE, passwords_data().state());
+  EXPECT_EQ(GURL::EmptyGURL(), passwords_data().origin());
+  EXPECT_FALSE(passwords_data().form_manager());
+  TestNoisyUpdates();
+}
+
+TEST_F(ManagePasswordsStateTest,
+       OnHideManualFallbackForSavingWithLocalPasswords) {
+  // Populate existing credentals.
+  test_stored_forms().push_back(&test_local_form());
+
+  // Set up new password for manual saving and verify state.
+  std::unique_ptr<password_manager::PasswordFormManager> test_form_manager(
+      CreateFormManager());
+  test_form_manager->ProvisionallySave(
+      test_submitted_form(),
+      password_manager::PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
+  passwords_data().OnPendingPassword(std::move(test_form_manager));
+  EXPECT_EQ(password_manager::ui::PENDING_PASSWORD_STATE,
+            passwords_data().state());
+
+  // Hide manual fallback and verify that passwords_data() still allows to
+  // manage previously filled credentials.
+  passwords_data().OnHideManualFallbackForSaving();
+  EXPECT_THAT(passwords_data().GetCurrentForms(),
+              ElementsAre(Pointee(test_local_form())));
+  EXPECT_EQ(password_manager::ui::MANAGE_STATE, passwords_data().state());
+  EXPECT_EQ(test_local_form().origin, passwords_data().origin());
+
+  TestAllUpdates();
+}
+
 TEST_F(ManagePasswordsStateTest, PendingPasswordAddBlacklisted) {
   std::unique_ptr<password_manager::PasswordFormManager> test_form_manager(
       CreateFormManager());

@@ -78,6 +78,9 @@ class ManagePasswordsState {
   // Move to INACTIVE_STATE.
   void OnInactive();
 
+  // Move to MANAGE_STATE or INTERACTIVE_STATE.
+  void OnHideManualFallbackForSaving();
+
   // Moves the object to |state| without resetting the internal data. Allowed:
   // * -> MANAGE_STATE
   void TransitionToState(password_manager::ui::State state);
