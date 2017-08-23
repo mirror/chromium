@@ -22,6 +22,30 @@
       "revId": "a68993edf516b921463fc19cb57a063da87d616f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a07bd212_69377f49",
+        "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-23T20:13:10Z",
+      "side": 1,
+      "message": "Yeah, probably. But this matches the name of an analogous variable in chrome/browser/about_flags.cc and I think we\u0027re probably better off keeping them the same.",
+      "parentUuid": "235e832a_913ae0b3",
+      "range": {
+        "startLine": 62,
+        "startChar": 18,
+        "endLine": 62,
+        "endChar": 59
+      },
+      "revId": "a68993edf516b921463fc19cb57a063da87d616f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
