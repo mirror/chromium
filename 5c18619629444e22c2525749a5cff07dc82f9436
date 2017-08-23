@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d59672f_f0677bb4",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-23T16:56:28Z",
+      "side": 1,
+      "message": "I think it would make more sense for the PPH to make the temp dir, and destroy it after the upload is complete.",
+      "revId": "5c18619629444e22c2525749a5cff07dc82f9436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
