@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "97ad2cdb_910004cb",
+        "filename": "content/browser/frame_host/render_frame_host_delegate.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-23T21:17:50Z",
+      "side": 1,
+      "message": "Wow, I guess it is... I must have misread the feature code. My bad!\n\nI think in that case it makes sense to revert this change, and have this exposed via GRC. Do you see any problems with that plan Oystein?",
+      "parentUuid": "26a40e97_b4a6254a",
+      "revId": "e46db933ead716c5a8e378ee4b831a7921bdb606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11c01a3f_a095e051",
         "filename": "third_party/WebKit/public/platform/frame_broker.mojom",
         "patchSetId": 14
