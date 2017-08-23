@@ -11040,6 +11040,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="CustomTabs.DisconnectedWhileActive" enum="CustomTabsClient">
+  <owner>mariakhomenko@chromium.org</owner>
+  <summary>
+    Android: Recorded whenever we receive a disconnect signal from the client on
+    CCT service while the custom tab is visible.
+  </summary>
+</histogram>
+
 <histogram name="CustomTabs.IntentToFirstCommitNavigationTime" units="ms">
   <obsolete>
     Deprecated 10/2016 in favor of .IntentToFirstCommitNavigationTime2.*.
@@ -11075,6 +11083,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Time between the intent arrival in Chrome and the first &quot;page
     loaded&quot; event, if the navigation is successful. Non-&quot;Herb&quot;
     mode.
+  </summary>
+</histogram>
+
+<histogram name="CustomTabs.LaunchedWithSession" enum="CustomTabsClient">
+  <owner>mariakhomenko@chromium.org</owner>
+  <summary>
+    Android: Recorded every time the client app launches a CCT and is also
+    connected through the service. Split by AGSA and everyone else.
   </summary>
 </histogram>
 

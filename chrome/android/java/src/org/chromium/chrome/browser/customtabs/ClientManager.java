@@ -23,6 +23,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.IntentHandler;
+import org.chromium.chrome.browser.gsa.GSAState;
 import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.common.Referrer;
@@ -316,6 +317,9 @@ class ClientManager {
 
         if (params == null) return;
 
+        RecordHistogram.recordBooleanHistogram(
+                "CustomTabs.LaunchedWithSession", GSAState.isGsaPackageName(params.packageName));
+
         int value = (params.lowConfidencePrediction ? LOW_CONFIDENCE : 0)
                 + (params.highConfidencePrediction ? HIGH_CONFIDENCE : 0);
         RecordHistogram.recordEnumeratedHistogram(
@@ -596,6 +600,12 @@ class ClientManager {
     public synchronized void cleanupSession(CustomTabsSessionToken session) {
         SessionParams params = mSessionParams.get(session);
         if (params == null) return;
+
+        if (CustomTabActivity.isActiveSession(session)) {
+            RecordHistogram.recordBooleanHistogram("CustomTabs.DisconnectedWhileActive",
+                    GSAState.isGsaPackageName(params.packageName));
+        }
+
         mSessionParams.remove(session);
         if (params.postMessageHandler != null) {
             params.postMessageHandler.cleanup(mContext);
