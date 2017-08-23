@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27455631_5c59007c",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bar_controller_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-08-23T15:26:00Z",
+      "side": 0,
+      "message": "Boy did I get this one wrong.",
+      "range": {
+        "startLine": 698,
+        "startChar": 57,
+        "endLine": 698,
+        "endChar": 0
+      },
+      "revId": "b0b3d8d80f4de5ce1e75ef39d8ece56a63038ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
