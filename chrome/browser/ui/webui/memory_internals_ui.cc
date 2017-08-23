@@ -8,6 +8,7 @@
 
 #include "base/allocator/features.h"
 #include "base/bind.h"
+#include "base/files/scoped_temp_dir.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/path_service.h"
@@ -38,6 +39,9 @@
 #include "ui/shell_dialogs/select_file_policy.h"
 
 namespace {
+
+const bool kDoNotUploadReport = false;
+const bool kUploadReport = true;
 
 // Returns the string to display at the top of the page for help.
 std::string GetMessageString() {
@@ -104,6 +108,9 @@ class MemoryInternalsDOMHandler : public content::WebUIMessageHandler,
   // Callback for the "dumpProcess" message.
   void HandleDumpProcess(const base::ListValue* args);
 
+  // Callback for the "reportProcess" message.
+  void HandleReportProcess(const base::ListValue* args);
+
  private:
   // Hops to the IO thread to enumerate child processes, and back to the UI
   // thread to fill in the renderer processes.
@@ -119,6 +126,8 @@ class MemoryInternalsDOMHandler : public content::WebUIMessageHandler,
 
   scoped_refptr<ui::SelectFileDialog> select_file_dialog_;
   content::WebUI* web_ui_;  // The WebUI that owns us.
+
+  base::ScopedTempDir temp_dir_;  // Temporary space for memory dumps.
 
   base::WeakPtrFactory<MemoryInternalsDOMHandler> weak_factory_;
 
@@ -143,6 +152,10 @@ void MemoryInternalsDOMHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "dumpProcess",
       base::BindRepeating(&MemoryInternalsDOMHandler::HandleDumpProcess,
+                          base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "reportProcess",
+      base::BindRepeating(&MemoryInternalsDOMHandler::HandleReportProcess,
                           base::Unretained(this)));
 }
 
@@ -170,12 +183,12 @@ void MemoryInternalsDOMHandler::HandleDumpProcess(const base::ListValue* args) {
 #if defined(OS_ANDROID)
   // On Android write to the user data dir.
   // TODO(bug 757115) Does it make sense to show the Android file picker here
-  // insead? Need to test what that looks like.
+  // instead? Need to test what that looks like.
   base::FilePath user_data_dir;
   PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
   base::FilePath output_path = user_data_dir.Append(default_file);
   profiling::ProfilingProcessHost::GetInstance()->RequestProcessDump(
-      pid, output_path);
+      pid, output_path, kDoNotUploadReport);
   (void)web_ui_;  // Avoid warning about not using private web_ui_ member.
 #else
   if (select_file_dialog_)
@@ -191,6 +204,26 @@ void MemoryInternalsDOMHandler::HandleDumpProcess(const base::ListValue* args) {
       web_ui_->GetWebContents()->GetTopLevelNativeWindow(),
       reinterpret_cast<void*>(pid));
 #endif
+}
+
+void MemoryInternalsDOMHandler::HandleReportProcess(
+    const base::ListValue* args) {
+  if (!args->is_list() || args->GetList().size() != 1)
+    return;
+  const base::Value& pid_value = args->GetList()[0];
+  if (!pid_value.is_int())
+    return;
+
+  int pid = pid_value.GetInt();
+  base::FilePath default_file = base::FilePath().AppendASCII(
+      base::StringPrintf("memlog_%lld.json.gz", static_cast<long long>(pid)));
+
+  if (!temp_dir_.IsValid())
+    temp_dir_.CreateUniqueTempDir();
+
+  base::FilePath output_path = temp_dir_.GetPath().Append(default_file);
+  profiling::ProfilingProcessHost::GetInstance()->RequestProcessDump(
+      pid, output_path, kUploadReport);
 }
 
 void MemoryInternalsDOMHandler::GetChildProcessesOnIOThread(
@@ -266,7 +299,8 @@ void MemoryInternalsDOMHandler::FileSelected(const base::FilePath& path,
                                              void* params) {
   // The PID to dump was stashed in the params.
   int pid = reinterpret_cast<intptr_t>(params);
-  profiling::ProfilingProcessHost::GetInstance()->RequestProcessDump(pid, path);
+  profiling::ProfilingProcessHost::GetInstance()->RequestProcessDump(
+      pid, path, kDoNotUploadReport);
   select_file_dialog_ = nullptr;
 }
 

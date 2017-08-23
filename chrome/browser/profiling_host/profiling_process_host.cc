@@ -6,6 +6,7 @@
 
 #include "base/allocator/features.h"
 #include "base/command_line.h"
+#include "base/files/file_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
@@ -170,7 +171,8 @@ ProfilingProcessHost* ProfilingProcessHost::GetInstance() {
 }
 
 void ProfilingProcessHost::RequestProcessDump(base::ProcessId pid,
-                                              const base::FilePath& dest) {
+                                              const base::FilePath& dest,
+                                              bool upload) {
   if (!connector_) {
     LOG(ERROR)
         << "Requesting process dump when profiling process hasn't started.";
@@ -179,7 +181,7 @@ void ProfilingProcessHost::RequestProcessDump(base::ProcessId pid,
   base::PostTaskWithTraits(
       FROM_HERE, {base::TaskPriority::USER_VISIBLE, base::MayBlock()},
       base::BindOnce(&ProfilingProcessHost::GetOutputFileOnBlockingThread,
-                     base::Unretained(this), pid, dest));
+                     base::Unretained(this), pid, dest, upload));
 }
 
 void ProfilingProcessHost::MakeConnector(
@@ -214,19 +216,46 @@ void ProfilingProcessHost::LaunchAsService() {
 
 void ProfilingProcessHost::GetOutputFileOnBlockingThread(
     base::ProcessId pid,
-    const base::FilePath& dest) {
+    const base::FilePath& dest,
+    bool upload) {
   base::File file(dest,
                   base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&ProfilingProcessHost::HandleDumpProcessOnIOThread,
-                     base::Unretained(this), pid, std::move(file)));
+                     base::Unretained(this), pid, std::move(dest),
+                     std::move(file), upload));
 }
 
 void ProfilingProcessHost::HandleDumpProcessOnIOThread(base::ProcessId pid,
-                                                       base::File file) {
+                                                       base::FilePath file_path,
+                                                       base::File file,
+                                                       bool upload) {
   mojo::ScopedHandle handle = mojo::WrapPlatformFile(file.TakePlatformFile());
-  memlog_->DumpProcess(pid, std::move(handle), GetMetadataJSONForTrace());
+  memlog_->DumpProcess(
+      pid, std::move(handle), GetMetadataJSONForTrace(),
+      base::BindOnce(&ProfilingProcessHost::OnProcessDumpComplete,
+                     base::Unretained(this), std::move(file_path), upload));
+}
+
+void ProfilingProcessHost::OnProcessDumpComplete(base::FilePath file_path,
+                                                 bool upload,
+                                                 bool success) {
+  if (!success) {
+    LOG(ERROR) << "Cannot dump process.";
+    return;
+  }
+
+  if (upload) {
+    std::string file_contents;
+    if (!base::ReadFileToString(file_path, &file_contents)) {
+      LOG(ERROR) << "Cannot read trace file contents.";
+      return;
+    }
+
+    // TODO(bug 753514): Upload the trace |file_contents| to crash server (slow
+    // reports).
+  }
 }
 
 void ProfilingProcessHost::SetMode(Mode mode) {
