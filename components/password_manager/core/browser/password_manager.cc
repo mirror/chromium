@@ -308,8 +308,10 @@ void PasswordManager::SaveGenerationFieldDetectedByClassifier(
 void PasswordManager::ProvisionallySavePassword(
     const PasswordForm& form,
     const password_manager::PasswordManagerDriver* driver) {
-  bool is_saving_and_filling_enabled =
-      client_->IsSavingAndFillingEnabledForCurrentPage();
+  // If the form was declined by some heuristics, don't show automatic bubble
+  // for it, only fallback saving should be available.
+  if (form.only_for_fallback_saving)
+    return;
 
   std::unique_ptr<BrowserSavePasswordProgressLogger> logger;
   if (password_manager_util::IsLoggingActive(client_)) {
@@ -320,6 +322,8 @@ void PasswordManager::ProvisionallySavePassword(
                             form);
   }
 
+  bool is_saving_and_filling_enabled =
+      client_->IsSavingAndFillingEnabledForCurrentPage();
   if (!is_saving_and_filling_enabled) {
     client_->GetMetricsRecorder().RecordProvisionalSaveFailure(
         PasswordManagerMetricsRecorder::SAVING_DISABLED, main_frame_url_,
@@ -793,6 +797,8 @@ void PasswordManager::OnLoginSuccessful() {
 
   RecordWhetherTargetDomainDiffers(main_frame_url_, client_->GetMainFrameURL());
 
+  DCHECK(!provisional_save_manager_->pending_credentials()
+              .only_for_fallback_saving);
   if (ShouldPromptUserToSavePassword()) {
     bool empty_password =
         provisional_save_manager_->pending_credentials().username_value.empty();
