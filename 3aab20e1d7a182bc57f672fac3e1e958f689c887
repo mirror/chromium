@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "e31be96b_ad98bef1",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-23T21:54:50Z",
+      "side": 1,
+      "message": "You can use \u0027IgnoreResult\u0027 which is described here https://cs.chromium.org/chromium/src/base/bind_helpers.h?rcl\u003d9c86f407653163fc835131783ac336cabfb4ff3e\u0026l\u003d37\n\nThat will cause DeleteFile to look like it returns void so you can post it.",
+      "parentUuid": "d6767f9e_dd856487",
+      "range": {
+        "startLine": 276,
+        "startChar": 4,
+        "endLine": 276,
+        "endChar": 30
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "186cdb3e_8ee69ed2",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 3
@@ -413,6 +437,30 @@
       "side": 1,
       "message": "I don\u0027t understand. 275 is for deleting the temp file, and 282 is for deleting the destination file. I could put them under the same if for all the states they could cover since trying to delete them and failing is ok.",
       "parentUuid": "186cdb3e_8ee69ed2",
+      "range": {
+        "startLine": 282,
+        "startChar": 8,
+        "endLine": 282,
+        "endChar": 49
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e89b84f_f4c08de8",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-23T21:54:50Z",
+      "side": 1,
+      "message": "Deleting the temp file and deleting the destination file is the same code with a different file_path param.\n\nYou could do something where the class only has a \u0027current_file_path_\u0027 and that path is either empty (no file being tracked), has a .crdownload ext (temp file) or matches the destination file (being moved).  In that case, you could simplify the logic here by using the current_file_path_ and the state_.\n\nFeel free to ignore, it is a way to collapse duplicate logic.",
+      "parentUuid": "04fdfd40_8a05d6c7",
       "range": {
         "startLine": 282,
         "startChar": 8,

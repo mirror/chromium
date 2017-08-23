@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9e300b8_5960f624",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-23T21:54:50Z",
+      "side": 1,
+      "message": "It is good to indicate that an error occurred but File I/O isn\u0027t accurate.  It may makes sense to add an \u0027unexpected\u0027 error which can be used for something exceptional like this.\n\nYou can add a TODO to track this here if you want instead of implmenting it in this CL.",
+      "range": {
+        "startLine": 125,
+        "startChar": 51,
+        "endLine": 125,
+        "endChar": 74
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd088b3_beb1dee7",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-23T21:54:50Z",
+      "side": 1,
+      "message": "nit: If we are going to call GetWeakPtr() frequently (say for each chunk) we can instead store an instance and pass the same WeakPtr to each callback we generate.",
+      "range": {
+        "startLine": 147,
+        "startChar": 21,
+        "endLine": 147,
+        "endChar": 47
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac6888f_6d3309e9",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-23T21:54:50Z",
+      "side": 1,
+      "message": "This feels like another \u0027unexpected\u0027 error case (where File IO error might not make sense on the client side.",
+      "range": {
+        "startLine": 162,
+        "startChar": 30,
+        "endLine": 162,
+        "endChar": 74
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e046ca_322a462e",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-23T21:54:50Z",
+      "side": 1,
+      "message": "I\u0027m a little concerned that we are double copying the data being transferred (network -\u003e compound buffer, compound buffer -\u003e FileChunk).  Without direct access to the underlying DataChunks in the buffer I\u0027m not sure to avoid it (it seems like every method is a memcpy operation in the CompoundBuffer class).\n\nperhaps a comment is warranted pointing out that we could reduce this extra memcpy step if we updated CompoundBuffer.",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 75
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
