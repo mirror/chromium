@@ -47,6 +47,8 @@ struct AnnotationID {
   AnnotationInstance* instance;
 };
 
+const base::FilePath kWhitelistPath(
+    FILE_PATH_LITERAL("tools/traffic_annotation/auditor/white_list.txt"));
 }  // namespace
 
 
@@ -244,11 +246,8 @@ bool TrafficAnnotationAuditor::ParseClangToolRawOutput() {
 }
 
 bool TrafficAnnotationAuditor::LoadWhiteList() {
-  base::FilePath white_list_file = base::MakeAbsoluteFilePath(
-      source_path_.Append(FILE_PATH_LITERAL("tools"))
-          .Append(FILE_PATH_LITERAL("traffic_annotation"))
-          .Append(FILE_PATH_LITERAL("auditor"))
-          .Append(FILE_PATH_LITERAL("white_list.txt")));
+  base::FilePath white_list_file =
+      base::MakeAbsoluteFilePath(source_path_.Append(kWhitelistPath));
   std::string file_content;
   if (base::ReadFileToString(white_list_file, &file_content)) {
     base::RemoveChars(file_content, "\r", &file_content);
