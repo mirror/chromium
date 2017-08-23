@@ -4,16 +4,20 @@
 
 #include "core/layout/ng/inline/ng_offset_mapping_result.h"
 
+#include "core/layout/ng/inline/ng_physical_text_fragment.h"
+
 namespace blink {
 
 NGOffsetMappingUnit::NGOffsetMappingUnit(NGOffsetMappingUnitType type,
                                          const LayoutText* owner,
+                                         const NGPhysicalTextFragment* fragment,
                                          unsigned dom_start,
                                          unsigned dom_end,
                                          unsigned text_content_start,
                                          unsigned text_content_end)
     : type_(type),
       owner_(owner),
+      fragment_(std::move(fragment)),
       dom_start_(dom_start),
       dom_end_(dom_end),
       text_content_start_(text_content_start),
