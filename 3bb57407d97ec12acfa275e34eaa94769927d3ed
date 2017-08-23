@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d35e0b9_c09d4857",
+        "filename": "remoting/client/audio/audio_player.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T00:03:36Z",
+      "side": 1,
+      "message": "REMOTING_CLIENT_AUDIO_AUDIO_PLAYER_H_",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 39
+      },
+      "revId": "3bb57407d97ec12acfa275e34eaa94769927d3ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
