@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c790a67e_0263eece",
+        "filename": "chrome/browser/ui/search/local_ntp_uitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-23T08:27:09Z",
+      "side": 1,
+      "message": "This comment is confusing to me because there\u0027s a separate “Type “a”.” comment below, so it\u0027s not clear what “Type something…” here refers to.\n\nMaybe remove the extra line breaks in L101-110, and expand the L100 comment so it\u0027s clear that the comment applies to the whole block? I think a similar treatment for L83-92 would be helpful.",
+      "revId": "8c61aee4760cee82d29e99e3773bc2cb1e204b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e8d1dbe_b8e166cf",
         "filename": "chrome/browser/ui/search/local_ntp_uitest.cc",
         "patchSetId": 1
