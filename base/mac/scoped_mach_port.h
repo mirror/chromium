@@ -5,7 +5,7 @@
 #ifndef BASE_MAC_SCOPED_MACH_PORT_H_
 #define BASE_MAC_SCOPED_MACH_PORT_H_
 
-#include <mach/mach.h>
+#include <mach/mach_types.h>
 
 #include "base/base_export.h"
 #include "base/scoped_generic.h"

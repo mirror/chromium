@@ -14,7 +14,7 @@
 #if defined(OS_WIN)
 #include "base/win/scoped_handle.h"
 #elif defined(OS_MACOSX)
-#include <mach/mach.h>
+#include <mach/mach_types.h>
 
 #include <list>
 #include <memory>
