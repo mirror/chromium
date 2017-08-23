@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00139cf0_d9e291f8",
+        "filename": "third_party/WebKit/Source/core/css/CSSGroupConfig.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-23T00:43:27Z",
+      "side": 1,
+      "message": "better name? Frequency distr?",
+      "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f2d3b6_0709e723",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleExtraFields.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 814,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-23T00:43:27Z",
+      "side": 1,
+      "message": "In the case that you do need to specify a sub group rename the flag to something that indicates that it is a sub_group?",
+      "revId": "0d007bc66fcbf002bec34594681befa491c0a13a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
