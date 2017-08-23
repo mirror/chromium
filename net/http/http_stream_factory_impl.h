@@ -91,8 +91,6 @@ class NET_EXPORT_PRIVATE HttpStreamFactoryImpl : public HttpStreamFactory {
 
   friend class HttpStreamFactoryImplPeer;
 
-  typedef std::set<std::unique_ptr<JobController>> JobControllerSet;
-
   // |PreconnectingProxyServer| holds information of a connection to a single
   // proxy server.
   struct PreconnectingProxyServer {
@@ -138,10 +136,6 @@ class NET_EXPORT_PRIVATE HttpStreamFactoryImpl : public HttpStreamFactory {
   // Called when the Preconnect completes. Used for testing.
   virtual void OnPreconnectsCompleteInternal() {}
 
-  // Called when the JobController finishes service. Delete the JobController
-  // from |pending_preconnects_set_|.
-  void OnPreconnectsComplete(JobController* controller);
-
   // Returns true if a connection to the proxy server contained in |proxy_info|
   // that has privacy mode |privacy_mode| can be skipped by a job controlled by
   // |controller|.
@@ -157,17 +151,7 @@ class NET_EXPORT_PRIVATE HttpStreamFactoryImpl : public HttpStreamFactory {
   // priorities.
   bool ProxyServerSupportsPriorities(const ProxyInfo& proxy_info) const;
 
-  // Adds the count of JobControllers that are not completed to UMA histogram if
-  // the count is a multiple of 100: 100, 200, 400, etc. Break down
-  // JobControllers count based on the type of JobController.
-  void AddJobControllerCountToHistograms();
-
   HttpNetworkSession* const session_;
-
-  // All Preconnects are assigned with a JobController to manage
-  // serving Job(s). JobController will be deleted from
-  // |pending_preconnects_set_| when preconnect completes.
-  JobControllerSet pending_preconnects_set_;
 
   // Factory used by job controllers for creating jobs.
   std::unique_ptr<JobFactory> job_factory_;
@@ -177,9 +161,6 @@ class NET_EXPORT_PRIVATE HttpStreamFactoryImpl : public HttpStreamFactory {
   std::set<PreconnectingProxyServer> preconnecting_proxy_servers_;
 
   const bool for_websockets_;
-
-  // The count of JobControllers that was most recently logged to histograms.
-  size_t last_logged_job_controller_count_;
 
   DISALLOW_COPY_AND_ASSIGN(HttpStreamFactoryImpl);
 };

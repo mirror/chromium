@@ -28,11 +28,10 @@ class HttpStreamFactoryImplPeer {
   static void AddJobController(
       HttpStreamFactoryImpl* factory,
       HttpStreamFactoryImpl::JobController* job_controller) {
-    factory->pending_preconnects_set_.insert(base::WrapUnique(job_controller));
   }
 
   static bool IsJobControllerDeleted(HttpStreamFactoryImpl* factory) {
-    return factory->pending_preconnects_set_.empty();
+    return true;
   }
 
   static HttpStreamFactoryImpl::JobFactory* GetDefaultJobFactory(

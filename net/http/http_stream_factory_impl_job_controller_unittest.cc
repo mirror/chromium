@@ -1607,15 +1607,12 @@ TEST_F(HttpStreamFactoryImplJobControllerTest,
   // Main job succeeds, starts serving Request and it should report status
   // to Request. The alternative job will mark the main job complete and gets
   // orphaned.
-  EXPECT_CALL(request_delegate_, OnStreamReadyImpl(_, _, _));
+  EXPECT_CALL(request_delegate_, OnStreamReadyImpl(_, _, _))
+      .Times(1)
+      .WillOnce(WithoutArgs(Invoke([this]() { request_.reset(); })));
 
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_TRUE(job_controller_->main_job());
-  EXPECT_TRUE(job_controller_->alternative_job());
-
-  // Reset the request as it's been successfully served.
-  request_.reset();
   EXPECT_TRUE(HttpStreamFactoryImplPeer::IsJobControllerDeleted(factory_));
 
   histogram_tester.ExpectUniqueSample("Net.QuicAlternativeProxy.Usage",
