@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe0f619a_2ba91fc5",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-23T06:38:57Z",
+      "side": 1,
+      "message": "Could you please add a one sentence comment here?",
+      "range": {
+        "startLine": 21,
+        "startChar": 29,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "b8acb56dd85530101990f2c7ab1404d9c4ee5249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e23a5c_d69b3e98",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-23T06:38:57Z",
+      "side": 1,
+      "message": "Can you please add a one sentence comment here?",
+      "range": {
+        "startLine": 26,
+        "startChar": 75,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "b8acb56dd85530101990f2c7ab1404d9c4ee5249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ed7181_69ef0dd9",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-08-23T06:38:57Z",
+      "side": 1,
+      "message": "Nitpick: does this need a blank line under it?",
+      "range": {
+        "startLine": 5,
+        "startChar": 63,
+        "endLine": 5,
+        "endChar": 0
+      },
+      "revId": "b8acb56dd85530101990f2c7ab1404d9c4ee5249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
