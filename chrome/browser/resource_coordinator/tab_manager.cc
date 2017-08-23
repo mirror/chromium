@@ -37,8 +37,10 @@
 #include "chrome/browser/resource_coordinator/tab_manager_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_stats_collector.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
+#include "chrome/browser/resource_coordinator/window_occlusion_tracker.h"
 #include "chrome/browser/sessions/session_restore.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/tab_contents/tab_contents_iterator.h"
@@ -1018,12 +1020,35 @@ void TabManager::TabClosingAt(TabStripModel* tab_strip_model,
       tab_resource_coordinator->id());
 }
 
+void TabManager::OnBrowserAdded(Browser* browser) {
+  WindowOcclusionTracker* const window_occlusion_tracker =
+      g_browser_process->GetWindowOcclusionTracker();
+  if (window_occlusion_tracker) {
+    window_occlusion_tracker->AddObserver(browser->window()->GetNativeWindow(),
+                                          this);
+  }
+}
+
 void TabManager::OnBrowserSetLastActive(Browser* browser) {
   // Reload the active tab in |browser| if it is discarded.
   content::WebContents* contents =
       browser->tab_strip_model()->GetActiveWebContents();
   if (contents)
     ReloadWebContentsIfDiscarded(contents, GetWebContentsData(contents));
+}
+
+void TabManager::OnWindowOcclusionStateChanged(gfx::NativeWindow window,
+                                               bool is_occluded) {
+  Browser* browser = chrome::FindBrowserWithWindow(window);
+  DCHECK(browser);
+  content::WebContents* const web_contents =
+      browser->tab_strip_model()->GetActiveWebContents();
+  if (!web_contents)
+    return;
+  if (is_occluded)
+    web_contents->WasOccluded();
+  else
+    web_contents->WasUnOccluded();
 }
 
 bool TabManager::IsMediaTab(WebContents* contents) const {

@@ -1563,6 +1563,10 @@ void WebContentsImpl::WasUnOccluded() {
   should_normally_be_occluded_ = false;
 }
 
+bool WebContentsImpl::IsOccludedForTesting() {
+  return should_normally_be_occluded_;
+}
+
 void WebContentsImpl::DoWasUnOccluded() {
   for (RenderWidgetHostView* view : GetRenderWidgetHostViewsInTree())
     view->WasUnOccluded();
