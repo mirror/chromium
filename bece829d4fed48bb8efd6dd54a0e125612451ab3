@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7b81f0c_71809afb",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-23T02:28:48Z",
+      "side": 1,
+      "message": "Isn\u0027t it possible for the body to be an overflow scroller with its own PaintLayerScrollableArea?",
+      "revId": "bece829d4fed48bb8efd6dd54a0e125612451ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533841b4_0fa14a71",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-23T02:28:48Z",
+      "side": 1,
+      "message": "This was here so that any change in layout invalidates all sticky constraints within the scroller. It should still be okay to do this since we should only set the sticky constraints after we finish layout on the scroller.",
+      "revId": "bece829d4fed48bb8efd6dd54a0e125612451ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be89eb89_7cdc9194",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlowLine.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1987,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-23T02:28:48Z",
+      "side": 1,
+      "message": "We probably don\u0027t need Layer::AncestorOverflowLayer anymore - we can always refer to the ComputedStyle overflow node.",
+      "revId": "bece829d4fed48bb8efd6dd54a0e125612451ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c099aacc_50047d91",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-23T02:28:48Z",
+      "side": 1,
+      "message": "Is this structure not duplicating the sticky constraints map? I.e. we could just populate the constraints map with uninitialized constraints.",
+      "revId": "bece829d4fed48bb8efd6dd54a0e125612451ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d02427c_387ab3d6",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-23T02:28:48Z",
+      "side": 1,
+      "message": "I think this is because there are many circumstances where we do a multi-pass layout (for example layout without scrollbars - see overflow - layout with scrollbars). Wouldn\u0027t this still be a problem for layouts of subtrees of overflow scrollers?",
+      "revId": "bece829d4fed48bb8efd6dd54a0e125612451ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
