@@ -22,6 +22,8 @@ AudioWorkletObjectProxy::AudioWorkletObjectProxy(
           static_cast<ThreadedWorkletMessagingProxy*>(messaging_proxy_weak_ptr),
           parent_frame_task_runners) {}
 
+// TODO(nhiroki): Move this.
+/*
 void AudioWorkletObjectProxy::EvaluateScript(const String& source,
                                              const KURL& script_url,
                                              WorkerThread* worker_thread) {
@@ -40,6 +42,7 @@ void AudioWorkletObjectProxy::EvaluateScript(const String& source,
                 &AudioWorkletMessagingProxy::SynchronizeWorkletData,
                 GetAudioWorkletMessagingProxyWeakPtr()));
 }
+*/
 
 CrossThreadWeakPersistent<AudioWorkletMessagingProxy>
 AudioWorkletObjectProxy::GetAudioWorkletMessagingProxyWeakPtr() {

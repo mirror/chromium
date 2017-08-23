@@ -145,9 +145,8 @@ void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
   // steps as part of the fetch's process response for the response response.
   ExecutionContext* execution_context =
       ExecutionContext::From(modulator_->GetScriptState());
-  if (execution_context->IsMainThreadWorkletGlobalScope()) {
-    MainThreadWorkletGlobalScope* global_scope =
-        ToMainThreadWorkletGlobalScope(execution_context);
+  if (execution_context->IsWorkletGlobalScope()) {
+    WorkletGlobalScope* global_scope = ToWorkletGlobalScope(execution_context);
     module_fetcher_ =
         new WorkletModuleScriptFetcher(fetch_params, fetcher, modulator_, this,
                                        global_scope->ModuleResponsesMapProxy());
