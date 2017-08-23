@@ -96,6 +96,17 @@ const NSInteger kMiddleButtonNumber = 2;
   hoveredIndex_ = rowIndex;
 }
 
+- (void)setMatchIcon:(NSImage*)icon forRow:(NSInteger)rowIndex {
+  if (!icon)
+    return;
+
+  OmniboxPopupCellData* cellData =
+      base::mac::ObjCCastStrict<OmniboxPopupCellData>(
+          [array_ objectAtIndex:rowIndex]);
+  [cellData setImage:icon];
+  [cellData setIncognitoImage:icon];
+}
+
 - (CGFloat)tableView:(NSTableView*)tableView heightOfRow:(NSInteger)row {
   BOOL isAnswer = [[array_ objectAtIndex:row] isAnswer];
   BOOL isDoubleLine = !isAnswer && base::FeatureList::IsEnabled(
@@ -315,6 +326,11 @@ const NSInteger kMiddleButtonNumber = 2;
     return YES;
   }
   return NO;
+}
+
+- (void)setMatchIcon:(NSImage*)icon forRow:(NSInteger)rowIndex {
+  [[self controller] setMatchIcon:icon forRow:rowIndex];
+  [self setNeedsDisplayInRect:[self rectOfRow:rowIndex]];
 }
 
 @end
