@@ -1027,6 +1027,7 @@ bool Widget::IsAlwaysRenderAsActive() const {
 }
 
 void Widget::OnNativeWidgetActivationChanged(bool active) {
+  // LOG(ERROR) << "MSW Widget::OnNativeWidgetActivationChanged " << active << " " << GetName() << " " << this; 
   // On windows we may end up here before we've completed initialization (from
   // an WM_NCACTIVATE). If that happens the WidgetDelegate likely doesn't know
   // the Widget and will crash attempting to access it.
@@ -1041,10 +1042,12 @@ void Widget::OnNativeWidgetActivationChanged(bool active) {
 }
 
 void Widget::OnNativeFocus() {
+  // LOG(ERROR) << "MSW Widget::OnNativeFocus " << GetName() << " " << this; 
   WidgetFocusManager::GetInstance()->OnNativeFocusChanged(GetNativeView());
 }
 
 void Widget::OnNativeBlur() {
+  // LOG(ERROR) << "MSW Widget::OnNativeBlur " << GetName() << " " << this; 
   WidgetFocusManager::GetInstance()->OnNativeFocusChanged(nullptr);
 }
 

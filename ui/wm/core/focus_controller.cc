@@ -14,7 +14,7 @@
 #include "ui/wm/core/focus_rules.h"
 #include "ui/wm/core/window_util.h"
 #include "ui/wm/public/activation_change_observer.h"
-
+#include "base/debug/stack_trace.h" 
 namespace wm {
 namespace {
 
@@ -99,6 +99,10 @@ void FocusController::RemoveObserver(
 }
 
 void FocusController::FocusWindow(aura::Window* window) {
+  LOG(ERROR) << "MSW FocusController::FocusWindow " << window << " " << (window ? window->GetName() : "");
+  // if(!window /*|| window->GetName()[0] == 'S'*/)  // Look for shelf widget focus or null... 
+  //   base::debug::StackTrace().Print(); 
+
   FocusAndActivateWindow(
       ActivationChangeObserver::ActivationReason::ACTIVATION_CLIENT, window);
 }
@@ -369,6 +373,7 @@ void FocusController::WindowLostFocusFromDispositionChange(
 
 void FocusController::WindowFocusedFromInputEvent(aura::Window* window,
                                                   const ui::Event* event) {
+  LOG(ERROR) << "MSW WindowFocusedFromInputEvent " << window << " " << (window ? window->GetName() : "") << " can_focus:" << rules_->CanFocusWindow(GetToplevelWindow(window), event); 
   // Only focus |window| if it or any of its parents can be focused. Otherwise
   // FocusWindow() will focus the topmost window, which may not be the
   // currently focused one.

@@ -10,6 +10,8 @@
 #include <memory>
 #include <utility>
 
+#include "base/debug/stack_trace.h" 
+
 #include "base/auto_reset.h"
 #include "base/command_line.h"
 #include "base/i18n/rtl.h"
@@ -645,6 +647,7 @@ void BrowserView::Deactivate() {
 }
 
 bool BrowserView::IsActive() const {
+  LOG(ERROR) << "MSW BrowserView::IsActive " << frame_->IsActive(); 
   return frame_->IsActive();
 }
 
@@ -1772,6 +1775,9 @@ void BrowserView::OnWidgetDestroying(views::Widget* widget) {
 
 void BrowserView::OnWidgetActivationChanged(views::Widget* widget,
                                             bool active) {
+  LOG(ERROR) << "MSW BrowserView::OnWidgetActivationChanged A widget: " << widget << " active:" << active; 
+  // base::debug::StackTrace().Print(); 
+
   if (active)
     BrowserList::SetLastActive(browser_.get());
   else

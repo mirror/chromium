@@ -232,6 +232,8 @@ views::Widget* CreateWallpaper(aura::Window* root_window, int container_id) {
   if (controller->GetWallpaper().isNull())
     params.opacity = views::Widget::InitParams::TRANSLUCENT_WINDOW;
   params.parent = root_window->GetChildById(container_id);
+  // TODO(msw): Doesn't affect WindowFocusedFromInputEvent? (clicking the wallpaper still attempts to activate there...) 
+  params.activatable = views::Widget::InitParams::ACTIVATABLE_NO;
   wallpaper_widget->Init(params);
   wallpaper_widget->SetContentsView(new LayerControlView(new WallpaperView()));
   int animation_type = wallpaper_delegate->GetAnimationType();
