@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b122f0b4_5cbe71cd",
+        "filename": "headless/lib/browser/headless_content_browser_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-23T00:40:47Z",
+      "side": 1,
+      "message": "nit: no need for else after return.",
+      "revId": "1ea90e70a6b719ad198d656f874a763d93a4f379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
