@@ -2708,6 +2708,12 @@ LRESULT HWNDMessageHandler::HandlePointerEventTypeTouch(UINT message,
     SetMsgHandled(FALSE);
     return -1;
   }
+
+  if (message == WM_POINTERENTER || message == WM_POINTERLEAVE) {
+    SetMsgHandled(TRUE);
+    return 0;
+  }
+
   unsigned int mapped_pointer_id = id_generator_.GetGeneratedID(pointer_id);
   POINTER_INFO pointer_info = pointer_touch_info.pointerInfo;
   POINT client_point = pointer_info.ptPixelLocationRaw;
