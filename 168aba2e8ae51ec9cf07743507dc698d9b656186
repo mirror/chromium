@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21d0424e_396f5c76",
+        "filename": "third_party/WebKit/Source/core/frame/BrowserControlsTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-23T18:10:59Z",
+      "side": 1,
+      "message": "Use WebViewImpl::ResizeWithBrowserControls rather than BrowserControls::SetHeight to go through more of the machinery but looks fine otherwise.",
+      "range": {
+        "startLine": 1174,
+        "startChar": 11,
+        "endLine": 1174,
+        "endChar": 12
+      },
+      "revId": "168aba2e8ae51ec9cf07743507dc698d9b656186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
