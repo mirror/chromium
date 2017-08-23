@@ -16,6 +16,24 @@
       "revId": "f981b465633d1c5bfd97071173d597b98e79ceb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44c7c83e_93c2800c",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-23T18:29:17Z",
+      "side": 1,
+      "message": "That\u0027s true. Let me fix all initialization altogether in a separate follow up CL.",
+      "parentUuid": "2cb00e7d_3983b854",
+      "revId": "f981b465633d1c5bfd97071173d597b98e79ceb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
