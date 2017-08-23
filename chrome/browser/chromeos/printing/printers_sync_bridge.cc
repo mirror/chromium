@@ -315,6 +315,11 @@ void PrintersSyncBridge::AddPrinter(
   store_delegate_->Commit(std::move(batch));
 }
 
+bool PrintersSyncBridge::UpdatePrinter(
+    std::unique_ptr<sync_pb::PrinterSpecifics> printer) {
+  return false;
+}
+
 bool PrintersSyncBridge::RemovePrinter(const std::string& id) {
   DCHECK(store_delegate_->Ready());
 
