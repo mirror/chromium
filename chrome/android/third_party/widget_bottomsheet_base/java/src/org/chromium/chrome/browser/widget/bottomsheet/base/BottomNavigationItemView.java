@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package android.support.design.internal;
+package org.chromium.chrome.browser.widget.bottomsheet.base;
 
 import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
 
@@ -38,6 +38,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
+ * Formed from android.support.design.internal.BottomNavigationItemView.
+ *
  * @hide
  */
 @RestrictTo(GROUP_ID)
