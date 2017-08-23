@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "1f88897b_9d9b8992",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-23T13:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57ec1fb2_97cde0de",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "600f8bca091be47f45c9a49db40ea009064e4c6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93c65b61_2fd32579",
         "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
         "patchSetId": 11
