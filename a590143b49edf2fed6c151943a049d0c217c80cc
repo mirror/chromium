@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ece2016a_d4df4c5a",
+        "filename": "gpu/command_buffer/client/gles2_implementation.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 7181,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-23T17:56:14Z",
+      "side": 1,
+      "message": "Can you leave a TODO to not access DIL\u0027s private members here",
+      "range": {
+        "startLine": 7181,
+        "startChar": 2,
+        "endLine": 7181,
+        "endChar": 67
+      },
+      "revId": "a590143b49edf2fed6c151943a049d0c217c80cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
