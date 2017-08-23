@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL The inner border radius clip should be respected for hit testing.assert_equals: expected "roundedBoxWithScrollbars" but got "roundedBoxWithScrollbarsChild"
+Harness: the test ran to completion.
+

@@ -783,9 +783,6 @@ crbug.com/692560 external/wpt/html/semantics/document-metadata/styling/LinkStyle
 crbug.com/627706 external/wpt/html/semantics/embedded-content/the-img-element/invalid-src.html [ Skip ]
 
 crbug.com/698135 external/wpt/editing/run/delete.html [ Crash Failure Timeout ]
-crbug.com/698165 external/wpt/editing/run/forwarddelete.html [ Pass Timeout ]
-crbug.com/698165 external/wpt/editing/run/justifycenter.html [ Pass Timeout ]
-crbug.com/698165 [ Win7 Debug ] external/wpt/editing/run/multitest.html [ Pass Timeout ]
 
 crbug.com/688613 external/wpt/mediacapture-streams/MediaStreamTrack-MediaElement-disabled-audio-is-silence.https.html [ Skip ]
 
@@ -2227,14 +2224,6 @@ crbug.com/626703 external/wpt/css/css-ui-3/text-overflow-011.html [ Failure Cras
 crbug.com/626703 external/wpt/workers/opaque-origin.html [ Failure Crash Timeout ]
 crbug.com/626703 external/wpt/html/rendering/non-replaced-elements/margin-collapsing-quirks/multicol-quirks-mode.html [ Pass Crash ]
 crbug.com/626703 external/wpt/html/rendering/non-replaced-elements/margin-collapsing-quirks/multicol-standards-mode.html [ Pass Crash Failure ]
-crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-1.htm [ Crash Pass ]
-crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-2.htm [ Crash Pass ]
-crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-3.htm [ Crash Pass ]
-crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-4.htm [ Crash Pass ]
-crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-5.htm [ Crash Pass ]
-crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-6.htm [ Crash Pass ]
-crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-7.htm [ Crash Pass ]
-crbug.com/720545 external/wpt/html/the-xhtml-syntax/parsing-xhtml-documents/xhtml-mathml-dtd-entity-9.htm [ Crash Pass ]
 
 # Other untriaged test failures, timeouts and crashes from newly-imported WPT tests.
 crbug.com/666703 external/wpt/html/browsers/sandboxing/sandbox-disallow-same-origin.html [ Timeout ]
@@ -2826,7 +2815,7 @@ crbug.com/715718 [ Win ] external/wpt/css/css-flexbox-1/flex-minimum-width-flex-
 crbug.com/715718 [ Win ] external/wpt/css/css-flexbox-1/flex-minimum-width-flex-items-003.xht [ Failure Pass ]
 crbug.com/715718 [ Win ] external/wpt/css/css-flexbox-1/flexbox_flex-natural-mixed-basis-auto.html [ Failure Pass ]
 
-crbug.com/739367 virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/fetch-event-redirect.https.html [ Timeout ]
+crbug.com/739367 [ Win ] virtual/service-worker-script-streaming/external/wpt/service-workers/service-worker/fetch-event-redirect.https.html [ Timeout ]
 
 # Feature Policy changes fullscreen behaviour, tests need updating
 crbug.com/718155 fullscreen/full-screen-iframe-not-allowed.html [ Failure ]
@@ -2868,9 +2857,6 @@ crbug.com/725545 [ Debug ] fast/forms/number/number-stepup-stepdown-from-rendere
 
 # Sheriff failures 2017-05-23
 crbug.com/725470 editing/shadow/doubleclick-on-meter-in-shadow-crash.html [ Crash Failure Pass ]
-
-# Sheriff failures 2017-05-29
-crbug.com/727252 [ Win7 ] external/wpt/media-source/mediasource-endofstream.html [ Pass Timeout ]
 
 # Failures when using libc++.  Rebaseline after landing https://codereview.chromium.org/2933573002/
 crbug.com/734873 [ Linux ] fast/backgrounds/size/contain-and-cover.html [ Pass Failure ]
@@ -3427,8 +3413,6 @@ crbug.com/686118 http/tests/security/contentSecurityPolicy/register-bypassing-sc
 crbug.com/686118 virtual/mojo-loading/http/tests/security/contentSecurityPolicy/register-bypassing-scheme.html [ Pass Crash ]
 crbug.com/686118 http/tests/security/contentSecurityPolicy/register-bypassing-scheme-partial.html [ Pass Crash ]
 crbug.com/686118 virtual/mojo-loading/http/tests/security/contentSecurityPolicy/register-bypassing-scheme-partial.html [ Pass Crash ]
-crbug.com/686118 http/tests/security/contentSecurityPolicy/register-bypassing-scheme-script.https.html [ Pass Crash ]
-crbug.com/686118 virtual/mojo-loading/http/tests/security/contentSecurityPolicy/register-bypassing-scheme-script.https.html [ Pass Crash ]
 
 crbug.com/757868 [ Linux ] virtual/threaded/animations/animations-parsing.html [ Pass Failure ]
 
