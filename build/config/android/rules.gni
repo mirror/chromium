@@ -1633,11 +1633,10 @@ if (enable_java_templates) {
     }
     final_dex_target_name = "${_template_name}__final_dex"
 
-    _final_apk_path = ""
     if (defined(invoker.final_apk_path)) {
       _final_apk_path = invoker.final_apk_path
-    } else if (defined(invoker.apk_name)) {
-      _final_apk_path = "$root_build_dir/apks/" + invoker.apk_name + ".apk"
+    } else {
+      _final_apk_path = "$root_build_dir/apks/${invoker.apk_name}.apk"
     }
     _final_apk_path_no_ext_list =
         process_file_template([ _final_apk_path ],
@@ -2096,9 +2095,9 @@ if (enable_java_templates) {
           ":$process_resources_target",
         ]
         inputs = [
-                   _build_config,
-                   _jar_path,
-                 ] + _proguard_configs
+          _build_config,
+          _jar_path,
+        ]
 
         output_jar_path = _proguard_output_jar_path
         _rebased_proguard_configs =
@@ -2601,6 +2600,7 @@ if (enable_java_templates) {
                                  "data_deps",
                                  "deps",
                                  "ignore_all_data_deps",
+                                 "proguard_enabled",
                                  "public_deps",
                                ])
         test_name = invoker.target_name
@@ -2651,6 +2651,15 @@ if (enable_java_templates) {
           proguard_configs = []
         }
         proguard_configs += [ "//testing/android/proguard_for_test.flags" ]
+        data_deps += [ "//build/android/stacktrace:java_deobfuscate" ]
+        if (defined(final_apk_path)) {
+          _final_apk_path = final_apk_path
+        } else {
+          _final_apk_path = "$root_build_dir/apks/${apk_name}.apk"
+        }
+        data = [
+          "$_final_apk_path.mapping",
+        ]
       }
 
       dist_ijar_path = _dist_ijar_path

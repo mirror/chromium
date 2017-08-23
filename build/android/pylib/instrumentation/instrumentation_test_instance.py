@@ -17,6 +17,7 @@ from pylib.base import test_instance
 from pylib.constants import host_paths
 from pylib.instrumentation import test_result
 from pylib.instrumentation import instrumentation_parser
+from pylib.symbols import deobfuscator
 from pylib.symbols import stack_symbolizer
 from pylib.utils import dexdump
 from pylib.utils import instrumentation_tracing
@@ -487,8 +488,8 @@ class InstrumentationTestInstance(test_instance.TestInstance):
 
     self._store_tombstones = False
     self._symbolizer = None
-    self._initializeTombstonesAttributes(args)
-
+    self._enable_java_deobfuscation = False
+    self._deobfuscator = None
     self._gs_results_bucket = None
     self._should_save_logcat = None
     self._initializeLogAttributes(args)
@@ -668,13 +669,13 @@ class InstrumentationTestInstance(test_instance.TestInstance):
   def _initializeTestCoverageAttributes(self, args):
     self._coverage_directory = args.coverage_dir
 
-  def _initializeTombstonesAttributes(self, args):
+  def _initializeLogAttributes(self, args):
+    self._enable_java_deobfuscation = args.enable_java_deobfuscation
     self._store_tombstones = args.store_tombstones
     self._symbolizer = stack_symbolizer.Symbolizer(
         self.apk_under_test.path if self.apk_under_test else None,
         args.enable_relocation_packing)
 
-  def _initializeLogAttributes(self, args):
     self._gs_results_bucket = args.gs_results_bucket
     self._should_save_logcat = bool(args.json_results_file)
 
@@ -817,6 +818,9 @@ class InstrumentationTestInstance(test_instance.TestInstance):
   def SetUp(self):
     self._data_deps.extend(
         self._data_deps_delegate(self._runtime_deps_path))
+    if self._enable_java_deobfuscation:
+      self._deobfuscator = deobfuscator.Deobfuscator(
+          self.test_apk.path + '.mapping')
 
   def GetDataDependencies(self):
     return self._data_deps
@@ -827,6 +831,11 @@ class InstrumentationTestInstance(test_instance.TestInstance):
     else:
       raw_tests = GetAllTestsFromApk(self.test_apk.path)
     return self.ProcessRawTests(raw_tests)
+
+  def MaybeDeobfuscateLines(self, lines):
+    if not self._deobfuscator:
+      return lines
+    return self._deobfuscator.TransformLines(lines)
 
   def ProcessRawTests(self, raw_tests):
     inflated_tests = self._ParameterizeTestsWithFlags(
@@ -904,3 +913,6 @@ class InstrumentationTestInstance(test_instance.TestInstance):
   #override
   def TearDown(self):
     self.symbolizer.CleanUp()
+    if self._deobfuscator:
+      self._deobfuscator.Close()
+      self._deobfuscator = None
