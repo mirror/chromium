@@ -22,6 +22,30 @@
       "revId": "4e879c19a6b8eb1fc8ecaca8864b5ea9711e40ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1106dd5_d9949633",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-08-23T17:59:15Z",
+      "side": 1,
+      "message": "Moved above function definition.\n\nDo we need to detect whether ARC is running or not here as this is an ARC service that should not be started if ARC is not enabled?\n\nWhat I mean here is the corresponding item \"voice_interaction_service\" in Android settings is assumed to contain proper service component instead of empty string.",
+      "parentUuid": "07271e52_951ae2df",
+      "range": {
+        "startLine": 418,
+        "startChar": 57,
+        "endLine": 418,
+        "endChar": 62
+      },
+      "revId": "4e879c19a6b8eb1fc8ecaca8864b5ea9711e40ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
