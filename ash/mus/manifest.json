@@ -11,6 +11,7 @@
           "ash::mojom::AcceleratorController",
           "ash::mojom::CastConfig",
           "ash::mojom::ImeController",
+          "ash::mojom::LinkHandlerController",
           "ash::mojom::LocaleNotificationController",
           "ash::mojom::LockScreen",
           "ash::mojom::MediaController",
