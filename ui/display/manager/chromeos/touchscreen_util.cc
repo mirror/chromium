@@ -270,6 +270,13 @@ void AssociateTouchscreens(
             << ", sys_path: " << device->sys_path.LossyDisplayName() << ")";
   }
 
+  // Fast path, if there is only have one display and only one touch device,
+  // just associate them. This also fix the issue that usb tablet input device
+  // doesn't work with chromebook.
+  if (displays.size() == 1 && devices.size() == 1) {
+    Associate(*displays.begin(), *devices.begin());
+    return;
+  }
   AssociateInternalDevices(&displays, &devices);
   AssociateUdlDevices(&displays, &devices);
   AssociateSameSizeDevices(&displays, &devices);
