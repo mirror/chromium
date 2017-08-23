@@ -22,6 +22,30 @@
       "revId": "cf5366a8633f06853560d52305773482a5133bc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4930eb51_44c4d41c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1187,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-23T23:18:38Z",
+      "side": 1,
+      "message": "Okay. Maybe this one isn\u0027t needed either after your patch. The repro case this is fixing is in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d751013\u0026desc\u003d2#c10",
+      "parentUuid": "04a39d55_bef19c7d",
+      "range": {
+        "startLine": 1187,
+        "startChar": 8,
+        "endLine": 1187,
+        "endChar": 29
+      },
+      "revId": "cf5366a8633f06853560d52305773482a5133bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
