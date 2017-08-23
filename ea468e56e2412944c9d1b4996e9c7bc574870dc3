@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "09fe605e_13734e69",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-08-23T04:35:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "aeb28c42_5d87a167",
+      "revId": "ea468e56e2412944c9d1b4996e9c7bc574870dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c1feec3_0926e91f",
         "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
         "patchSetId": 7
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "0295bf29_4da1846a",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-08-23T04:35:35Z",
+      "side": 1,
+      "message": "I prefer\n\nreturn tokens.empty() ? \"\" : tokens[0];\n\nBut your call.",
+      "parentUuid": "c1f08ce9_f6680417",
+      "revId": "ea468e56e2412944c9d1b4996e9c7bc574870dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cfc34e3_14049a7a",
         "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
         "patchSetId": 7
@@ -174,6 +210,24 @@
       "revId": "ea468e56e2412944c9d1b4996e9c7bc574870dc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f787936a_879550e5",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-08-23T04:35:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "98f30e1e_4f6dde84",
+      "revId": "ea468e56e2412944c9d1b4996e9c7bc574870dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
