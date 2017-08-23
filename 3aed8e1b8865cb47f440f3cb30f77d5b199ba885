@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a5f8cc54_c144c65d",
+        "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-08-23T02:47:00Z",
+      "side": 1,
+      "message": "I think it is still good to have this, for the sake of clarity. The factory provider returning 0 instances means that JpegDecodeAccelerator is not supported on that board. The constructor returning something invalid means something else went wrong. These are two different errors which should be reported their own way IMHO.",
+      "parentUuid": "cb64c82e_76d3d1af",
+      "revId": "3aed8e1b8865cb47f440f3cb30f77d5b199ba885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fa80f00_a918c191",
         "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
         "patchSetId": 6
