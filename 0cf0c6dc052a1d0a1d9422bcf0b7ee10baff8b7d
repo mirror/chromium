@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "026afed2_04224f5e",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-23T15:39:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e7747b8_2dd33423",
+      "range": {
+        "startLine": 34,
+        "startChar": 14,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "0cf0c6dc052a1d0a1d9422bcf0b7ee10baff8b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18f15cb6_280af311",
         "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "0cf0c6dc052a1d0a1d9422bcf0b7ee10baff8b7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c91d0d3_a13ee0b8",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-23T15:39:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18f15cb6_280af311",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 72
+      },
+      "revId": "0cf0c6dc052a1d0a1d9422bcf0b7ee10baff8b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3caa1c7d_4b7d81ca",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-23T15:39:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7627ddff_a433d17d",
+      "range": {
+        "startLine": 97,
+        "startChar": 29,
+        "endLine": 97,
+        "endChar": 36
+      },
+      "revId": "0cf0c6dc052a1d0a1d9422bcf0b7ee10baff8b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4702ba0_5c31b066",
         "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
         "patchSetId": 15
@@ -91,6 +163,30 @@
       "revId": "0cf0c6dc052a1d0a1d9422bcf0b7ee10baff8b7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "822432f4_5de0f3f8",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-23T15:39:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4702ba0_5c31b066",
+      "range": {
+        "startLine": 30,
+        "startChar": 30,
+        "endLine": 30,
+        "endChar": 32
+      },
+      "revId": "0cf0c6dc052a1d0a1d9422bcf0b7ee10baff8b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "90ebcc71_a8cec370",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-23T15:39:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "363951ae_d6215159",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 23
+      },
+      "revId": "0cf0c6dc052a1d0a1d9422bcf0b7ee10baff8b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18d42606_be67f631",
         "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
         "patchSetId": 15
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "448af6e9_e7dfb27d",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-23T15:39:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18d42606_be67f631",
+      "range": {
+        "startLine": 117,
+        "startChar": 21,
+        "endLine": 117,
+        "endChar": 22
+      },
+      "revId": "0cf0c6dc052a1d0a1d9422bcf0b7ee10baff8b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd3647d7_0cdfa922",
         "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
         "patchSetId": 15
@@ -151,6 +295,30 @@
       "writtenOn": "2017-08-23T14:05:08Z",
       "side": 1,
       "message": "list_ptr-\u003eAppendString(AppendString);",
+      "range": {
+        "startLine": 232,
+        "startChar": 12,
+        "endLine": 232,
+        "endChar": 19
+      },
+      "revId": "0cf0c6dc052a1d0a1d9422bcf0b7ee10baff8b7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c94021_1a12b598",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-23T15:39:52Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/base/values.h?q\u003dlistvalue\u0026sq\u003dpackage:chromium\u0026l\u003d596 It is deprecated.",
+      "parentUuid": "dd3647d7_0cdfa922",
       "range": {
         "startLine": 232,
         "startChar": 12,
