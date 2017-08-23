@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import base64
+import json
 
 from webkitpy.common.host_mock import MockHost
 from webkitpy.common.system.executive_mock import MockExecutive, mock_git_commands
@@ -18,13 +19,24 @@ from webkitpy.w3c.wpt_github_mock import MockWPTGitHub
 
 class TestExporterTest(LoggingTestCase):
 
-    def test_dry_run_stops_before_creating_pr(self):
+    def make_mock_host(self):
         host = MockHost()
+        host.filesystem.write_text_file(
+            '/tmp/credentials.json',
+            json.dumps({
+                'GH_USER': 'github-username',
+                'GH_TOKEN': 'github-token',
+                'GERRIT_USER': 'gerrit-username',
+                'GERRIT_TOKEN': 'gerrit-token',
+            }))
+        return host
+
+    def test_dry_run_stops_before_creating_pr(self):
+        host = self.make_mock_host()
         host.executive = mock_git_commands({
             'crrev-parse': 'c2087acb00eee7960339a0be34ea27d6b20e1131',
         })
-        test_exporter = TestExporter(host, 'gh-username', 'gh-token', gerrit_user=None,
-                                     gerrit_token=None, dry_run=True)
+        test_exporter = TestExporter(host)
         test_exporter.wpt_github = MockWPTGitHub(pull_requests=[
             PullRequest(title='title1', number=1234, body='', state='open', labels=[]),
         ])
@@ -34,7 +46,7 @@ class TestExporterTest(LoggingTestCase):
             ChromiumCommit(host, position='refs/heads/master@{#458476}'),
             ChromiumCommit(host, position='refs/heads/master@{#458477}'),
         ], [])
-        success = test_exporter.run()
+        success = test_exporter.main(['--credentials-json', '/tmp/credentials.json', '--dry-run'])
 
         self.assertTrue(success)
         self.assertEqual(test_exporter.wpt_github.calls, [
@@ -44,7 +56,7 @@ class TestExporterTest(LoggingTestCase):
         ])
 
     def test_creates_pull_request_for_all_exportable_commits(self):
-        host = MockHost()
+        host = self.make_mock_host()
 
         # TODO(robertma): Use MockChromiumCommit instead.
         def mock_command(args):
@@ -71,10 +83,10 @@ class TestExporterTest(LoggingTestCase):
             return canned_git_outputs.get(args[1], '')
 
         host.executive = MockExecutive(run_command_fn=mock_command)
-        test_exporter = TestExporter(host, 'gh-username', 'gh-token', gerrit_user=None, gerrit_token=None)
+        test_exporter = TestExporter(host)
         test_exporter.wpt_github = MockWPTGitHub(pull_requests=[], create_pr_fail_index=1)
         test_exporter.gerrit = MockGerritAPI(host, 'gerrit-username', 'gerrit-token')
-        success = test_exporter.run()
+        success = test_exporter.main(['--credentials-json', '/tmp/credentials.json'])
 
         self.assertTrue(success)
         self.assertEqual(test_exporter.wpt_github.calls, [
@@ -106,12 +118,12 @@ class TestExporterTest(LoggingTestCase):
         # 2. #458476 has no PR associated with it and should have one created.
         # 3. #458477 has a closed PR associated with it and should be skipped.
         # 4. #458478 has an in-flight PR associated with it and should be merged successfully.
-        host = MockHost()
+        host = self.make_mock_host()
         host.executive = mock_git_commands({
             'show': 'git show text\nCr-Commit-Position: refs/heads/master@{#458476}\nChange-Id: I0476',
             'crrev-parse': 'c2087acb00eee7960339a0be34ea27d6b20e1131',
         })
-        test_exporter = TestExporter(host, 'gh-username', 'gh-token', gerrit_user=None, gerrit_token=None)
+        test_exporter = TestExporter(host)
         test_exporter.wpt_github = MockWPTGitHub(pull_requests=[
             PullRequest(
                 title='Open PR',
@@ -142,7 +154,7 @@ class TestExporterTest(LoggingTestCase):
             MockChromiumCommit(host, position='refs/heads/master@{#458477}', change_id='Idead'),
             MockChromiumCommit(host, position='refs/heads/master@{#458478}', change_id='I0118'),
         ], [])
-        success = test_exporter.run()
+        success = test_exporter.main(['--credentials-json', '/tmp/credentials.json'])
 
         self.assertTrue(success)
         self.assertEqual(test_exporter.wpt_github.calls, [
@@ -173,9 +185,8 @@ class TestExporterTest(LoggingTestCase):
         ])
 
     def test_new_gerrit_cl(self):
-        host = MockHost()
-        test_exporter = TestExporter(host, 'gh-username', 'gh-token', gerrit_user=None,
-                                     gerrit_token=None, dry_run=False)
+        host = self.make_mock_host()
+        test_exporter = TestExporter(host)
         test_exporter.wpt_github = MockWPTGitHub(pull_requests=[])
         test_exporter.get_exportable_commits = lambda: ([], [])
         test_exporter.gerrit = MockGerritAPI(host, 'gerrit-username', 'gerrit-token')
@@ -193,7 +204,7 @@ class TestExporterTest(LoggingTestCase):
                 'owner': {'email': 'test@chromium.org'},
             }, api=test_exporter.gerrit),
         ]
-        test_exporter.run()
+        test_exporter.main(['--credentials-json', '/tmp/credentials.json'])
 
         self.assertEqual(test_exporter.wpt_github.calls, [
             'pr_with_change_id',
@@ -208,9 +219,8 @@ class TestExporterTest(LoggingTestCase):
         ])
 
     def test_gerrit_cl_no_update_if_pr_with_same_revision(self):
-        host = MockHost()
-        test_exporter = TestExporter(host, 'gh-username', 'gh-token', gerrit_user=None,
-                                     gerrit_token=None, dry_run=False)
+        host = self.make_mock_host()
+        test_exporter = TestExporter(host)
         test_exporter.wpt_github = MockWPTGitHub(pull_requests=[
             PullRequest(title='title1', number=1234,
                         body='description\nWPT-Export-Revision: 1',
@@ -231,7 +241,7 @@ class TestExporterTest(LoggingTestCase):
                 'owner': {'email': 'test@chromium.org'},
             }, api=test_exporter.gerrit),
         ]
-        success = test_exporter.run()
+        success = test_exporter.main(['--credentials-json', '/tmp/credentials.json'])
 
         self.assertTrue(success)
         self.assertEqual(test_exporter.wpt_github.calls, [
@@ -240,9 +250,8 @@ class TestExporterTest(LoggingTestCase):
         self.assertEqual(test_exporter.wpt_github.pull_requests_created, [])
 
     def test_gerrit_cl_updates_if_cl_has_new_revision(self):
-        host = MockHost()
-        test_exporter = TestExporter(host, 'gh-username', 'gh-token', gerrit_user=None,
-                                     gerrit_token=None, dry_run=False)
+        host = self.make_mock_host()
+        test_exporter = TestExporter(host)
         test_exporter.wpt_github = MockWPTGitHub(pull_requests=[
             PullRequest(title='title1', number=1234,
                         body='description\nWPT-Export-Revision: 1',
@@ -271,7 +280,7 @@ class TestExporterTest(LoggingTestCase):
                 'owner': {'email': 'test@chromium.org'},
             }, api=test_exporter.gerrit),
         ]
-        test_exporter.run()
+        test_exporter.main(['--credentials-json', '/tmp/credentials.json'])
 
         self.assertEqual(test_exporter.wpt_github.calls, [
             'pr_with_change_id',
@@ -280,9 +289,8 @@ class TestExporterTest(LoggingTestCase):
         self.assertEqual(test_exporter.wpt_github.pull_requests_created, [])
 
     def test_attempts_to_merge_landed_gerrit_cl(self):
-        host = MockHost()
-        test_exporter = TestExporter(host, 'gh-username', 'gh-token', gerrit_user=None,
-                                     gerrit_token=None, dry_run=False)
+        host = self.make_mock_host()
+        test_exporter = TestExporter(host)
         test_exporter.wpt_github = MockWPTGitHub(pull_requests=[
             PullRequest(title='title1', number=1234,
                         body='description\nWPT-Export-Revision: 9\nChange-Id: decafbad',
@@ -293,7 +301,7 @@ class TestExporterTest(LoggingTestCase):
         ], [])
         test_exporter.gerrit = MockGerritAPI(host, 'gerrit-username', 'gerrit-token')
         test_exporter.gerrit.query_exportable_open_cls = lambda: []
-        success = test_exporter.run()
+        success = test_exporter.main(['--credentials-json', '/tmp/credentials.json'])
 
         self.assertTrue(success)
         self.assertEqual(test_exporter.wpt_github.calls, [
@@ -309,9 +317,8 @@ class TestExporterTest(LoggingTestCase):
         self.assertEqual(test_exporter.wpt_github.pull_requests_merged, [1234])
 
     def test_does_not_create_pr_if_cl_review_has_not_started(self):
-        host = MockHost()
-        test_exporter = TestExporter(host, 'gh-username', 'gh-token', gerrit_user=None,
-                                     gerrit_token=None, dry_run=False)
+        host = self.make_mock_host()
+        test_exporter = TestExporter(host)
         test_exporter.wpt_github = MockWPTGitHub(pull_requests=[])
         test_exporter.get_exportable_commits = lambda: ([], [])
         test_exporter.gerrit = MockGerritAPI(host, 'gerrit-username', 'gerrit-token')
@@ -336,21 +343,20 @@ class TestExporterTest(LoggingTestCase):
                 'owner': {'email': 'test@chromium.org'},
             }, api=test_exporter.gerrit),
         ]
-        success = test_exporter.run()
+        success = test_exporter.main(['--credentials-json', '/tmp/credentials.json'])
 
         self.assertTrue(success)
         self.assertEqual(test_exporter.wpt_github.calls, [])
         self.assertEqual(test_exporter.wpt_github.pull_requests_created, [])
 
     def test_run_returns_false_on_patch_failure(self):
-        host = MockHost()
-        test_exporter = TestExporter(host, 'gh-username', 'gh-token', gerrit_user=None,
-                                     gerrit_token=None, dry_run=False)
+        host = self.make_mock_host()
+        test_exporter = TestExporter(host)
         test_exporter.wpt_github = MockWPTGitHub(pull_requests=[])
         test_exporter.get_exportable_commits = lambda: ([], ['There was an error with the rutabaga.'])
         test_exporter.gerrit = MockGerritAPI(host, 'gerrit-username', 'gerrit-token')
         test_exporter.gerrit.get = lambda path, raw: base64.b64encode('sample diff')  # pylint: disable=unused-argument
-        success = test_exporter.run()
+        success = test_exporter.main(['--credentials-json', '/tmp/credentials.json'])
 
         self.assertFalse(success)
         self.assertLog(['INFO: Cloning GitHub w3c/web-platform-tests into /tmp/wpt\n',
