@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98a8c5b1_4ab1a14b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/page/page-lifecycleEvents-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-23T00:23:49Z",
+      "side": 1,
+      "message": "Flaky? could network0quiet arrive before load, or some other event kicks in?",
+      "revId": "48ad737d8e592a8c798e2dbde56bea2a933dc928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7f7e28_dbf2a110",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/page/page-lifecycleEvents.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-23T00:23:49Z",
+      "side": 1,
+      "message": "const",
+      "revId": "48ad737d8e592a8c798e2dbde56bea2a933dc928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
