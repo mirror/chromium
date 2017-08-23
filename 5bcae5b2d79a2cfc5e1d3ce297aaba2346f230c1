@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "148f0756_ff937b17",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-08-23T15:20:19Z",
+      "side": 1,
+      "message": "NSInteger",
+      "range": {
+        "startLine": 459,
+        "startChar": 7,
+        "endLine": 459,
+        "endChar": 10
+      },
+      "revId": "5bcae5b2d79a2cfc5e1d3ce297aaba2346f230c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
