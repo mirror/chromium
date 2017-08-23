@@ -56,10 +56,6 @@ class CC_EXPORT DrawQuad {
   // this quad should draw to. This rect lives in content space.
   gfx::Rect rect;
 
-  // This specifies the region of the quad that is opaque. This rect lives in
-  // content space.
-  gfx::Rect opaque_rect;
-
   // Allows changing the rect that gets drawn to make it smaller. This value
   // should be clipped to |rect|. This rect lives in content space.
   gfx::Rect visible_rect;
@@ -138,7 +134,6 @@ class CC_EXPORT DrawQuad {
   void SetAll(const SharedQuadState* shared_quad_state,
               Material material,
               const gfx::Rect& rect,
-              const gfx::Rect& opaque_rect,
               const gfx::Rect& visible_rect,
               bool needs_blending);
   virtual void ExtendValue(base::trace_event::TracedValue* value) const = 0;
