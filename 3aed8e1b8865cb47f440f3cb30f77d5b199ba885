@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb64c82e_76d3d1af",
+        "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T02:22:10Z",
+      "side": 1,
+      "message": "I have done the latter.\nBut, regarding the former comment, I am not sure if we should do, because this is the code Alex mentioned and I agreed to the idea.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/620470/4/media/gpu/jpeg_decode_accelerator_unittest.cc#141",
+      "parentUuid": "0d15a311_b62dd5b7",
+      "revId": "3aed8e1b8865cb47f440f3cb30f77d5b199ba885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fa80f00_a918c191",
         "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "3aed8e1b8865cb47f440f3cb30f77d5b199ba885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71589069_d8f3843a",
+        "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T02:22:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fa80f00_a918c191",
+      "revId": "3aed8e1b8865cb47f440f3cb30f77d5b199ba885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
