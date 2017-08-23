@@ -18089,6 +18089,27 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
+<action name="WebappNotificationFocus">
+  <owner>piotrs@chromium.org</owner>
+  <description>
+    Tracks taps on the main area of a Webapp actions notification.
+  </description>
+</action>
+
+<action name="WebappNotificationOpenInChrome">
+  <owner>piotrs@chromium.org</owner>
+  <description>
+    Tracks taps on Open in Chrome action in a Webapp actions notification.
+  </description>
+</action>
+
+<action name="WebappNotificationShare">
+  <owner>piotrs@chromium.org</owner>
+  <description>
+    Tracks taps on Share action in a Webapp actions notification.
+  </description>
+</action>
+
 <action name="WebsiteSettings_CookiesDialogOpened">
   <obsolete>
     Superseded by the WebsiteSettings.Action histogram on 2014-10-30.
