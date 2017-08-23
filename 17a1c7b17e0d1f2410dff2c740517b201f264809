@@ -34,6 +34,24 @@
       "revId": "17a1c7b17e0d1f2410dff2c740517b201f264809",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b3c021_34d75522",
+        "filename": "mojo/edk/embedder/platform_channel_pair.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T21:26:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a77a3ee9_b6832f21",
+      "revId": "17a1c7b17e0d1f2410dff2c740517b201f264809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

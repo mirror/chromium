@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78cc079f_168760b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T21:26:11Z",
+      "side": 1,
+      "message": "This was already supported, albeit only on PlatformChannelPair; what you\u0027re doing here is making that \"helper\" facility available on an individual caller-provided PlatformHandle.",
+      "revId": "b7b3d9f46c42f56804d26a18d4c47e3ca00d47bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
