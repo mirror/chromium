@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f36cb29_ea987726",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-23T18:47:05Z",
+      "side": 1,
+      "message": "These three look surprising to me. Can you re-order the declaration order in the header file to ensure these three are destructed in the desired order?",
+      "range": {
+        "startLine": 238,
+        "startChar": 28,
+        "endLine": 238,
+        "endChar": 29
+      },
+      "revId": "025b95c8b7fd395059d655b39bf086dddda767af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57bc92bb_27eccdc5",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-23T18:47:05Z",
+      "side": 1,
+      "message": "nit: Can you do DCHECK(jcronet_url_request_context_.obj()) or DCHECK_NE() ?",
+      "range": {
+        "startLine": 512,
+        "startChar": 42,
+        "endLine": 512,
+        "endChar": 43
+      },
+      "revId": "025b95c8b7fd395059d655b39bf086dddda767af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c310d5e_0ce3bd06",
+        "filename": "components/cronet/cronet_prefs_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-23T18:47:05Z",
+      "side": 1,
+      "message": "s/HTTP_SERVER_PROPERTIES_MANAGER/PREFS_MANAGER",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 66
+      },
+      "revId": "025b95c8b7fd395059d655b39bf086dddda767af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aae878c_8db4ed2a",
+        "filename": "components/cronet/cronet_prefs_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-23T18:47:05Z",
+      "side": 1,
+      "message": "#include \u003cstring\u003e",
+      "range": {
+        "startLine": 40,
+        "startChar": 23,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "025b95c8b7fd395059d655b39bf086dddda767af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc620356_40cccc53",
+        "filename": "components/cronet/cronet_prefs_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-23T18:47:05Z",
+      "side": 1,
+      "message": "nit: There is no |context_|.\n\nI find this comment repetitive. We already have one comment on |http_server_properties_manager_| that says |http_server_properties_manager_| needs to outlive |this|.",
+      "revId": "025b95c8b7fd395059d655b39bf086dddda767af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3997a1dd_269df82e",
+        "filename": "components/cronet/cronet_prefs_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-23T18:47:05Z",
+      "side": 1,
+      "message": "#include \"base/macros.h\"",
+      "revId": "025b95c8b7fd395059d655b39bf086dddda767af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec2ce07_520cce54",
+        "filename": "components/cronet/cronet_prefs_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-23T18:47:05Z",
+      "side": 1,
+      "message": "nit: leave one line before the closing of a namespace here.",
+      "range": {
+        "startLine": 90,
+        "startChar": 5,
+        "endLine": 90,
+        "endChar": 6
+      },
+      "revId": "025b95c8b7fd395059d655b39bf086dddda767af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
