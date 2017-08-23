@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "32e94371_1055d9ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T17:24:02Z",
+      "side": 1,
+      "message": "nit: default implementation does nothing, calling this is not necessary.",
+      "range": {
+        "startLine": 40,
+        "startChar": 22,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "44abd4ff9dc5f9f2fe0996f2b83a5bb1121a3a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d01fec42_b5515600",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
         "patchSetId": 2
