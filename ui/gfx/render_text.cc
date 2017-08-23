@@ -10,6 +10,7 @@
 #include <climits>
 
 #include "base/command_line.h"
+#include "base/feature_list.h"
 #include "base/i18n/break_iterator.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -30,6 +31,7 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
+#include "ui/gfx/gfx_features.h"
 #include "ui/gfx/platform_font.h"
 #include "ui/gfx/render_text_harfbuzz.h"
 #include "ui/gfx/scoped_canvas.h"
@@ -269,16 +271,19 @@ void SkiaTextRenderer::DrawStrike(int x,
 StyleIterator::StyleIterator(const BreakList<SkColor>& colors,
                              const BreakList<BaselineStyle>& baselines,
                              const BreakList<Font::Weight>& weights,
-                             const std::vector<BreakList<bool>>& styles)
+                             const std::vector<BreakList<bool>>& styles,
+                             const BreakList<bool>& force_ltrs)
     : colors_(colors),
       baselines_(baselines),
       weights_(weights),
-      styles_(styles) {
+      styles_(styles),
+      force_ltrs_(force_ltrs) {
   color_ = colors_.breaks().begin();
   baseline_ = baselines_.breaks().begin();
   weight_ = weights_.breaks().begin();
   for (size_t i = 0; i < styles_.size(); ++i)
     style_.push_back(styles_[i].breaks().begin());
+  force_ltr_ = force_ltrs_.breaks().begin();
 }
 
 StyleIterator::~StyleIterator() {}
@@ -289,6 +294,7 @@ Range StyleIterator::GetRange() const {
   range = range.Intersect(weights_.GetRange(weight_));
   for (size_t i = 0; i < NUM_TEXT_STYLES; ++i)
     range = range.Intersect(styles_[i].GetRange(style_[i]));
+  range = range.Intersect(force_ltrs_.GetRange(force_ltr_));
   return range;
 }
 
@@ -298,6 +304,7 @@ void StyleIterator::UpdatePosition(size_t position) {
   weight_ = weights_.GetBreak(position);
   for (size_t i = 0; i < NUM_TEXT_STYLES; ++i)
     style_[i] = styles_[i].GetBreak(position);
+  force_ltr_ = force_ltrs_.GetBreak(position);
 }
 
 LineSegment::LineSegment() : run(0) {}
@@ -360,6 +367,7 @@ std::unique_ptr<RenderText> RenderText::CreateInstanceOfSameStyle(
   render_text->baselines_ = baselines_;
   render_text->colors_ = colors_;
   render_text->weights_ = weights_;
+  render_text->force_ltrs_ = force_ltrs_;
   return render_text;
 }
 
@@ -378,6 +386,7 @@ void RenderText::SetText(const base::string16& text) {
   for (size_t style = 0; style < NUM_TEXT_STYLES; ++style)
     styles_[style].SetValue(styles_[style].breaks().begin()->second);
   cached_bounds_and_offset_valid_ = false;
+  UpdateForceLTRs();
 
   // Reset selection model. SetText should always followed by SetSelectionModel
   // or SetCursorPosition in upper layer.
@@ -708,9 +717,12 @@ void RenderText::SetDirectionalityMode(DirectionalityMode mode) {
   if (mode == directionality_mode_)
     return;
 
+  bool was_rendered_as_url = IsRenderedAsUrl();
   directionality_mode_ = mode;
   text_direction_ = base::i18n::UNKNOWN_DIRECTION;
   cached_bounds_and_offset_valid_ = false;
+  if (was_rendered_as_url != IsRenderedAsUrl())
+    UpdateForceLTRs();
   OnLayoutTextAttributeChanged(false);
 }
 
@@ -1100,6 +1112,42 @@ void RenderText::UpdateDisplayText(float text_width) {
     display_text_.clear();
 }
 
+void RenderText::UpdateForceLTRs() {
+  // The set of characters that delimit URL components (separating the scheme,
+  // username, password, domain labels, host, path segments, query names/values
+  // and fragment).
+  static base::string16 kDelimiters(base::ASCIIToUTF16("#&./:=?@"));
+
+  force_ltrs_.SetValue(false);
+
+  // If the feature flag is disabled, use the normal Bidi algorithm, even for
+  // URLs.
+  if (!base::FeatureList::IsEnabled(features::kBidiUrlsLeftToRight))
+    return;
+
+  // If rendering as plain text, use the normal Bidi algorithm.
+  if (!IsRenderedAsUrl())
+    return;
+
+  // TODO(mgiuca): If there are no RTL characters in |text_|, early-out as an
+  // optimization. This doesn't optimize the below loop, but ensures we don't
+  // have a tonne of |force_ltrs_| hanging around on all-LTR URLs. An
+  // alternative approach is to use ICU's ubidi_setClassCallback to set the
+  // above characters as L class, and not use |force_ltrs_| at all.
+
+  // The text is a URL. Treat all characters in |kDelimiters| as strong LTR,
+  // which effectively surrounds all of the text components of a URL (e.g., the
+  // domain labels and path segments) in a left-to-right embedding. This ensures
+  // that the URL components read from left to right, regardless of any RTL
+  // characters. (Within each component, RTL sequences are rendered from right
+  // to left as expected.)
+  for (size_t i = 0; i < text_.length(); ++i) {
+    base::char16 c = text_[i];
+    if (kDelimiters.find(c) != base::string16::npos)
+      force_ltrs_.ApplyValue(true, gfx::Range(i, i + 1));
+  }
+}
+
 const BreakList<size_t>& RenderText::GetLineBreaks() {
   if (line_breaks_.max() != 0)
     return line_breaks_;
@@ -1256,6 +1304,23 @@ base::i18n::TextDirection RenderText::GetTextDirection(
       case DIRECTIONALITY_FORCE_RTL:
         text_direction_ = base::i18n::RIGHT_TO_LEFT;
         break;
+      case DIRECTIONALITY_AS_URL:
+        // Rendering as a URL implies left-to-right paragraph direction.
+        // URL Standard specifies that a URL "should be rendered as if it were
+        // in a left-to-right embedding".
+        // https://url.spec.whatwg.org/#url-rendering
+        //
+        // Consider logical string for domain "ABC.com/hello" (where ABC are
+        // Hebrew (RTL) characters). The normal Bidi algorithm renders this as
+        // "com/hello.CBA"; by forcing LTR, it is rendered as "CBA.com/hello".
+        //
+        // Note that this only applies a LTR embedding at the top level; it
+        // doesn't change the Bidi algorithm, so there are still some URLs that
+        // will render in a confusing order. Consider the logical string
+        // "abc.COM/HELLO/world", which will render as "abc.OLLEH/MOC/world".
+        // See https://crbug.com/351639.
+        text_direction_ = base::i18n::LEFT_TO_RIGHT;
+        break;
       default:
         NOTREACHED();
     }
@@ -1281,6 +1346,7 @@ void RenderText::UpdateStyleLengths() {
   weights_.SetMax(text_length);
   for (size_t style = 0; style < NUM_TEXT_STYLES; ++style)
     styles_[style].SetMax(text_length);
+  force_ltrs_.SetMax(text_length);
 }
 
 int RenderText::GetLineContainingYCoord(float text_y) {
@@ -1493,6 +1559,7 @@ base::string16 RenderText::Elide(const base::string16& text,
     RestoreBreakList(render_text.get(), &render_text->baselines_);
     render_text->weights_ = weights_;
     RestoreBreakList(render_text.get(), &render_text->weights_);
+    RestoreBreakList(render_text.get(), &render_text->force_ltrs_);
 
     // We check the width of the whole desired string at once to ensure we
     // handle kerning/ligatures/etc. correctly.
