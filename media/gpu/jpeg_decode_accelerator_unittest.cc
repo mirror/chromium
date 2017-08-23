@@ -32,11 +32,9 @@
 #include "third_party/libyuv/include/libyuv.h"
 #include "ui/gfx/codec/jpeg_codec.h"
 
-#if defined(OS_CHROMEOS)
-#if defined(USE_V4L2_CODEC)
+#if BUILDFLAG(USE_V4L2_CODEC)
 #include "media/gpu/v4l2_device.h"
 #include "media/gpu/v4l2_jpeg_decode_accelerator.h"
-#endif
 #endif
 
 #if BUILDFLAG(USE_VAAPI)
@@ -138,7 +136,7 @@ void JpegClient::CreateJpegDecoder() {
 #if BUILDFLAG(USE_VAAPI)
   decoder_.reset(
       new VaapiJpegDecodeAccelerator(base::ThreadTaskRunnerHandle::Get()));
-#elif defined(OS_CHROMEOS) && defined(USE_V4L2_CODEC)
+#elif BUILDFLAG(USE_V4L2_CODEC)
   scoped_refptr<V4L2Device> device = V4L2Device::Create();
   if (!device.get()) {
     LOG(ERROR) << "V4L2Device::Create failed";
