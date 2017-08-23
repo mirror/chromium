@@ -136,7 +136,6 @@ void PermissionDialogDelegate::CreateJavaDelegate(JNIEnv* env) {
         base::android::ToJavaIntArray(env, content_settings_types),
         ResourceMapper::MapFromChromiumId(infobar_delegate_->GetIconId()),
         ConvertUTF16ToJavaString(env, infobar_delegate_->GetMessageText()),
-        ConvertUTF16ToJavaString(env, infobar_delegate_->GetLinkText()),
         primaryButtonText, secondaryButtonText,
         infobar_delegate_->ShouldShowPersistenceToggle()));
     return;
@@ -153,7 +152,6 @@ void PermissionDialogDelegate::CreateJavaDelegate(JNIEnv* env) {
       base::android::ToJavaIntArray(env, content_settings_types),
       ResourceMapper::MapFromChromiumId(permission_prompt_->GetIconId()),
       ConvertUTF16ToJavaString(env, permission_prompt_->GetMessageText()),
-      ConvertUTF16ToJavaString(env, permission_prompt_->GetLinkText()),
       primaryButtonText, secondaryButtonText,
       permission_prompt_->ShouldShowPersistenceToggle()));
 }
@@ -196,20 +194,6 @@ void PermissionDialogDelegate::Dismissed(JNIEnv* env,
   }
 
   permission_prompt_->Closing();
-}
-
-void PermissionDialogDelegate::LinkClicked(JNIEnv* env,
-                                           const JavaParamRef<jobject>& obj) {
-  // Don't call delegate_->LinkClicked() because that relies on having an
-  // InfoBarService as an owner() to open the link. That will fail since the
-  // wrapped delegate has no owner (it hasn't been added as an infobar).
-  if (tab_->web_contents()) {
-    GURL linkURL = infobar_delegate_ ? infobar_delegate_->GetLinkURL()
-                                     : permission_prompt_->GetLinkURL();
-    tab_->web_contents()->OpenURL(content::OpenURLParams(
-        linkURL, content::Referrer(), WindowOpenDisposition::NEW_FOREGROUND_TAB,
-        ui::PAGE_TRANSITION_LINK, false));
-  }
 }
 
 void PermissionDialogDelegate::Destroy(JNIEnv* env,
