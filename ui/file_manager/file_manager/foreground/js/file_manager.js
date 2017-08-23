@@ -1164,13 +1164,21 @@ FileManager.prototype = /** @struct */ {
                            assert(this.fileOperationManager_),
                            fakeEntriesVisible);
     directoryTree.dataModel = new NavigationListModel(
-        assert(this.volumeManager_),
-        assert(this.folderShortcutsModel_),
+        assert(this.volumeManager_), assert(this.folderShortcutsModel_),
         addNewServicesVisible ?
             new NavigationModelMenuItem(
-                str('ADD_NEW_SERVICES_BUTTON_LABEL'),
-                '#add-new-services-menu',
-                'add-new-services') : null);
+                str('ADD_NEW_SERVICES_BUTTON_LABEL'), '#add-new-services-menu',
+                'add-new-services') :
+            null,
+        fakeEntriesVisible ?
+            new NavigationModelRecentItem(str('RECENT_ROOT_LABEL'), {
+              isDirectory: true,
+              rootType: VolumeManagerCommon.RootType.RECENT,
+              toURL: function() {
+                return 'fake-entry://recent';
+              }
+            }) :
+            null);
 
     this.ui_.initDirectoryTree(directoryTree);
   };

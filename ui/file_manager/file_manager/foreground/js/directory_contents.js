@@ -314,6 +314,52 @@ DriveMetadataSearchContentScanner.prototype.scan = function(
 };
 
 /**
+ * @constructor
+ * @param {string} query Search query.
+ * @param {string=} opt_allowedPath
+ * @extends {ContentScanner}
+ */
+function RecentContentScanner(query, opt_allowedPath) {
+  ContentScanner.call(this);
+
+  /**
+   * @private {string}
+   */
+  this.query_ = query;
+
+  /**
+   * @private {(string|undefined)}
+   */
+  this.allowedPath_ = opt_allowedPath;
+}
+
+/**
+ * Extends ContentScanner.
+ */
+RecentContentScanner.prototype.__proto__ = ContentScanner.prototype;
+
+/**
+ * @override
+ */
+RecentContentScanner.prototype.scan = function(
+    entriesCallback, successCallback, errorCallback) {
+  // TODO(fukino): Pass |allowedPath_| to getRecentFiles().
+  chrome.fileManagerPrivate.getRecentFiles(function(entries) {
+    if (chrome.runtime.lastError) {
+      console.error(chrome.runtime.lastError.message);
+      errorCallback(
+          util.createDOMError(util.FileError.INVALID_MODIFICATION_ERR));
+      return;
+    }
+    if (entries.length > 0) {
+      entriesCallback(entries.filter(
+          entry => entry.name.toLowerCase().indexOf(this.query_) >= 0));
+    }
+    successCallback();
+  }.bind(this));
+};
+
+/**
  * This class manages filters and determines a file should be shown or not.
  * When filters are changed, a 'changed' event is fired.
  *
@@ -923,4 +969,19 @@ DirectoryContents.createForDriveMetadataSearch = function(
       function() {
         return new DriveMetadataSearchContentScanner(searchType);
       });
+};
+
+/**
+ * Creates a DirectoryContents instance to show the mixed recent files.
+ *
+ * @param {FileListContext} context File list context.
+ * @param {!FakeEntry} recentRootEntry Fake directory entry representing the
+ *     root of recent files.
+ * @param {string} query Search query.
+ * @return {DirectoryContents} Created DirectoryContents instance.
+ */
+DirectoryContents.createForRecent = function(context, recentRootEntry, query) {
+  return new DirectoryContents(context, true, recentRootEntry, function() {
+    return new RecentContentScanner(query, recentRootEntry.allowedPath);
+  });
 };
