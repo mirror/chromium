@@ -139,11 +139,6 @@ void FirstMeaningfulPaintDetector::CheckNetworkStable() {
 
 void FirstMeaningfulPaintDetector::SetNetworkQuietTimers(
     int active_connections) {
-  if (!network0_quiet_reached_ && active_connections == 0) {
-    // This restarts 0-quiet timer if it's already running.
-    network0_quiet_timer_.StartOneShot(kNetwork0QuietWindowSeconds,
-                                       BLINK_FROM_HERE);
-  }
   if (!network2_quiet_reached_ && active_connections <= 2) {
     // If activeConnections < 2 and the timer is already running, current
     // 2-quiet window continues; the timer shouldn't be restarted.
@@ -152,6 +147,11 @@ void FirstMeaningfulPaintDetector::SetNetworkQuietTimers(
                                          BLINK_FROM_HERE);
     }
   }
+  if (!network0_quiet_reached_ && active_connections == 0) {
+    // This restarts 0-quiet timer if it's already running.
+    network0_quiet_timer_.StartOneShot(kNetwork0QuietWindowSeconds,
+                                       BLINK_FROM_HERE);
+  }
 }
 
 void FirstMeaningfulPaintDetector::Network0QuietTimerFired(TimerBase*) {
@@ -159,7 +159,7 @@ void FirstMeaningfulPaintDetector::Network0QuietTimerFired(TimerBase*) {
       !paint_timing_->FirstContentfulPaintRendered())
     return;
   network0_quiet_reached_ = true;
-  probe::lifecycleEvent(GetDocument(), "network0quiet",
+  probe::lifecycleEvent(GetDocument(), "networkIdle",
                         MonotonicallyIncreasingTime());
 
   if (provisional_first_meaningful_paint_) {
@@ -176,7 +176,7 @@ void FirstMeaningfulPaintDetector::Network2QuietTimerFired(TimerBase*) {
       !paint_timing_->FirstContentfulPaintRendered())
     return;
   network2_quiet_reached_ = true;
-  probe::lifecycleEvent(GetDocument(), "network2quiet",
+  probe::lifecycleEvent(GetDocument(), "networkAlmostIdle",
                         MonotonicallyIncreasingTime());
 
   if (provisional_first_meaningful_paint_) {

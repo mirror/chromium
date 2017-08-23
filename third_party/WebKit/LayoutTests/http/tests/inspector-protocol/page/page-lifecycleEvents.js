@@ -7,7 +7,7 @@
   var events = [];
   dp.Page.onLifecycleEvent(result => {
     events.push(result.params.name);
-    if (events.includes('network0quiet') && events.includes('network2quiet')) {
+    if (events.includes('networkIdle') && events.includes('networkAlmostIdle')) {
       events.sort();
       testRunner.log(events);
       testRunner.completeTest();
