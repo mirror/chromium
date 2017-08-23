@@ -22,6 +22,30 @@
       "revId": "488b0b6ab49e4f7390de48b825724b4bf5e7646e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2db19644_b027a27c",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-08-23T21:54:55Z",
+      "side": 1,
+      "message": "No, it doesn\u0027t. If the size changes or the device scale factor changes then we allocate a new ID again but for now, we don\u0027t need to store current values...",
+      "parentUuid": "0e201ce7_c78962a4",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 65
+      },
+      "revId": "488b0b6ab49e4f7390de48b825724b4bf5e7646e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
