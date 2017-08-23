@@ -46,6 +46,29 @@
       "revId": "55560d6af27861e38f5ce270fdae9b375a9d053f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eee3849b_6e242090",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-23T18:24:24Z",
+      "side": 1,
+      "message": "Why is this ifdef\u0027d?",
+      "range": {
+        "startLine": 879,
+        "startChar": 22,
+        "endLine": 879,
+        "endChar": 23
+      },
+      "revId": "55560d6af27861e38f5ce270fdae9b375a9d053f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
