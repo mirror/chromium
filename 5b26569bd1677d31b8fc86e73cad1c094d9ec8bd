@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e0e734d0_d27a935e",
+        "filename": "base/values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-23T08:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c816f8a_0a6120e5",
+      "range": {
+        "startLine": 192,
+        "startChar": 45,
+        "endLine": 192,
+        "endChar": 62
+      },
+      "revId": "5b26569bd1677d31b8fc86e73cad1c094d9ec8bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0829ef2_51d68e50",
         "filename": "base/values.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c6030892_bfa59a00",
+        "filename": "base/values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-23T08:34:11Z",
+      "side": 1,
+      "message": "Yeah, I wasn\u0027t 100% sure about this myself, but it seems like there is no POD restriction on the type used for the list. Changing it to StringPiece also makes make_span\u0027s life easier to deduce the correct type for the span, i.e. const StringPiece.",
+      "parentUuid": "a0829ef2_51d68e50",
+      "range": {
+        "startLine": 194,
+        "startChar": 23,
+        "endLine": 194,
+        "endChar": 39
+      },
+      "revId": "5b26569bd1677d31b8fc86e73cad1c094d9ec8bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53b145c2_7ee027b8",
         "filename": "base/values.h",
         "patchSetId": 2
@@ -62,6 +110,24 @@
       "revId": "5b26569bd1677d31b8fc86e73cad1c094d9ec8bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd910cfa_6854eeba",
+        "filename": "base/values.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-23T08:34:11Z",
+      "side": 1,
+      "message": "Done: https://chromium-review.googlesource.com/c/chromium/src/+/625657",
+      "parentUuid": "53b145c2_7ee027b8",
+      "revId": "5b26569bd1677d31b8fc86e73cad1c094d9ec8bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
