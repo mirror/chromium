@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1a15f32_4907bb6d",
+        "filename": "third_party/WebKit/public/platform/WebCORS.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-23T05:02:12Z",
+      "side": 1,
+      "message": "Would be better to leave some TODO comments that say this is a workaround to land OutOfCORSBlink quickly, and developers should not add more dependencies to following methods? Also long term plan should be clarified in the comment, crbug or somewhere? (since I didn\u0027t read details discussion, it might be discussed in the review. But for other readers in the future)",
+      "revId": "0033e6bf449178ff5677a24bd3dc7a0873fa41c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
