@@ -192,6 +192,24 @@
       "revId": "f901b7ce844807ae9c1dd86241dc28dbbda3f069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "992624b0_33891be6",
+        "filename": "chrome/browser/renderer_context_menu/open_with_menu_factory_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-23T21:54:27Z",
+      "side": 1,
+      "message": "thanks, that helps. ARC is sending back empty images (and then presumably updating with non-null images shortly after). Luckily all we have to do is allow empty/null images (see link_handler.mojom)",
+      "parentUuid": "8527e11d_e6e140ae",
+      "revId": "f901b7ce844807ae9c1dd86241dc28dbbda3f069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
