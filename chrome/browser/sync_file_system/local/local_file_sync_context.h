@@ -324,7 +324,7 @@ class LocalFileSyncContext
       storage::FileSystemContext* file_system_context,
       const base::FilePath& local_file_path,
       const storage::FileSystemURL& dest_url,
-      const StatusCallback& callback,
+      StatusCallback callback,
       base::File::Error error);
 
   const base::FilePath local_base_path_;
