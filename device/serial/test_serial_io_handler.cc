@@ -112,6 +112,16 @@ bool TestSerialIoHandler::ClearBreak() {
   return true;
 }
 
+void TestSerialIoHandler::ForceReadError(
+    device::mojom::SerialReceiveError error) {
+  ReadCompleted(0, error);
+}
+
+void TestSerialIoHandler::ForceWriteError(
+    device::mojom::SerialWriteError error) {
+  WriteCompleted(0, error);
+}
+
 TestSerialIoHandler::~TestSerialIoHandler() {
 }
 
