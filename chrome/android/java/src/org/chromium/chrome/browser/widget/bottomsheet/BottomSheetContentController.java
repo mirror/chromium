@@ -238,6 +238,21 @@ public class BottomSheetContentController extends BottomNavigationView
     }
 
     /**
+     * Show specific content in new tab if currently in tab switcher, otherwise show content
+     * in current tab.
+     * @param itemId The menu item id of the the {@link BottomSheetContent} to show.
+     */
+    public void showContentInNewTabIfNecessary(int itemId) {
+        if (!mBottomSheet.displayContentInNewTab(
+                    mTabModelSelector.getCurrentModel().isIncognito(), itemId)) {
+            showContentAndOpenSheet(itemId);
+            if (mBottomSheet.getSheetState() != BottomSheet.SHEET_STATE_FULL) {
+                mBottomSheet.setSheetState(BottomSheet.SHEET_STATE_FULL, true);
+            }
+        }
+    }
+
+    /**
      * Shows the specified {@link BottomSheetContent} and opens the {@link BottomSheet}.
      * @param itemId The menu item id of the {@link BottomSheetContent} to show.
      */

@@ -1540,6 +1540,21 @@ public class BottomSheet
     }
 
     /**
+     * Tells {@link BottomSheetNewTabController} to display specific content only if currently in
+     * tab switcher.
+     * @param isIncognito Whether to display the incognito new tab UI.
+     * @param actionId The action id of the bottom sheet content to be displayed.
+     * @return Whether a new page is created to display the content.
+     */
+    public boolean displayContentInNewTab(boolean isIncognito, int actionId) {
+        if (mDefaultToolbarView.isInTabSwitcherMode()) {
+            mNtpController.displayNewTabUi(isIncognito, actionId);
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * @return Whether or not the browser is in overview mode.
      */
     private boolean isInOverviewMode() {
