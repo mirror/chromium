@@ -26,12 +26,14 @@ function test() {
     TestRunner.consoleModel.addMessage(message, true);  // allowGrouping
   }
 
-  TestRunner.addResult('Console messages with timestamps disabled:');
-  addMessageWithFixedTimestamp('<Before>');
-  addMessageWithFixedTimestamp('<Before>', baseTimestamp + 456);
-  addMessageWithFixedTimestamp('<Before>');
-  addMessageWithFixedTimestamp('<Before> Command', baseTimestamp, ConsoleModel.ConsoleMessage.MessageType.Command);
-  addMessageWithFixedTimestamp('<Before> Result', baseTimestamp + 1, ConsoleModel.ConsoleMessage.MessageType.Result);
+  TestRunner.addResult("Console messages with timestamps disabled:");
+  addMessageWithFixedTimestamp("<Before> First Command", baseTimestamp + 789, ConsoleModel.ConsoleMessage.MessageType.Command);
+  addMessageWithFixedTimestamp("<Before> First Result", baseTimestamp + 789, ConsoleModel.ConsoleMessage.MessageType.Result);
+  addMessageWithFixedTimestamp("<Before>");
+  addMessageWithFixedTimestamp("<Before>", baseTimestamp + 456);
+  addMessageWithFixedTimestamp("<Before>");
+  addMessageWithFixedTimestamp("<Before> Command", baseTimestamp, ConsoleModel.ConsoleMessage.MessageType.Command);
+  addMessageWithFixedTimestamp("<Before> Result", baseTimestamp + 1, ConsoleModel.ConsoleMessage.MessageType.Result);
 
   ConsoleTestRunner.dumpConsoleMessages();
 
