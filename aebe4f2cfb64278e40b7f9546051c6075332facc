@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "eeb7547f_9b07a40b",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T07:54:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0a8d84d5_f10e5994",
+      "range": {
+        "startLine": 195,
+        "startChar": 10,
+        "endLine": 195,
+        "endChar": 32
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8869500_f49130e9",
         "filename": "chrome/browser/chrome_browser_main_win.cc",
         "patchSetId": 1
@@ -260,6 +284,24 @@
     },
     {
       "key": {
+        "uuid": "2909ee35_8afa6020",
+        "filename": "chrome/browser/conflicts/module_event_sink_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T07:54:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5ff01e44_4261c5b2",
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0f49cc5_53c115c8",
         "filename": "chrome/common/conflicts/module_event_sink_win.mojom",
         "patchSetId": 1
@@ -295,6 +337,30 @@
       "side": 1,
       "message": "See my other comment on why we only send the load address (security!)\n\nThe load-\u003eunload-\u003eload scenario only leads to identifying the second module twice (because we\u0027ll get another load event for that module), and missing the first. There\u0027s nothing we can really do that\u0027s better without taking extreme measures, and we\u0027re fine with that.",
       "parentUuid": "a0f49cc5_53c115c8",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e78bb440_06093a3e",
+        "filename": "chrome/common/conflicts/module_event_sink_win.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T07:54:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0fc9e32b_6971681d",
       "range": {
         "startLine": 18,
         "startChar": 26,
@@ -389,6 +455,30 @@
       "side": 1,
       "message": "It\u0027s still useful. In the browser process, MODULE_LOADED events guarantee that the module is loaded in memory during the callback.",
       "parentUuid": "16d6712c_4561bed6",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 46
+      },
+      "revId": "aebe4f2cfb64278e40b7f9546051c6075332facc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed265089_a04b3e1b",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T07:54:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bda3761e_7c31c468",
       "range": {
         "startLine": 64,
         "startChar": 5,
