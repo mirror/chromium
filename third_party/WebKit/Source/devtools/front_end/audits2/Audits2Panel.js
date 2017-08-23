@@ -108,9 +108,9 @@ Audits2.Audits2Panel = class extends UI.Panel {
   }
 
   /**
-   * @return {?string}
+   * @return {!Promise<?string>}
    */
-  _unauditablePageMessage() {
+  async _unauditablePageMessage() {
     if (!this._manager)
       return null;
 
@@ -118,13 +118,19 @@ Audits2.Audits2Panel = class extends UI.Panel {
     if (/^about:/.test(inspectedURL))
       return Common.UIString('Cannot audit about:* pages. Navigate to a different page to start an audit.');
 
+    if (/^chrome-extension:/.test(inspectedURL)) {
+      var isPopupOpen = await this._safeEvaluateInPage(`chrome.extension.getViews({type: 'popup'}).length > 0`);
+      if (isPopupOpen)
+        return Common.UIString('Cannot audit extension popup windows. Open the URL in a tab to start an audit.');
+    }
+
     return null;
   }
 
-  _updateStartButtonEnabled() {
+  async _updateStartButtonEnabled() {
     var hasActiveServiceWorker = this._hasActiveServiceWorker();
     var hasAtLeastOneCategory = this._hasAtLeastOneCategory();
-    var unauditablePageMessage = this._unauditablePageMessage();
+    var unauditablePageMessage = await this._unauditablePageMessage();
     var isDisabled = hasActiveServiceWorker || !hasAtLeastOneCategory || !!unauditablePageMessage;
 
     if (this._dialogHelpText && hasActiveServiceWorker) {
@@ -236,22 +242,20 @@ Audits2.Audits2Panel = class extends UI.Panel {
   }
 
   /**
-   * @return {!Promise<undefined>}
+   * @param {string} expression
+   * @return {!Promise<*>}
    */
-  _updateInspectedURL() {
+  _safeEvaluateInPage(expression) {
     var mainTarget = SDK.targetManager.mainTarget();
     var runtimeModel = mainTarget.model(SDK.RuntimeModel);
     var executionContext = runtimeModel && runtimeModel.defaultExecutionContext();
-    this._inspectedURL = mainTarget.inspectedURL();
     if (!executionContext)
       return Promise.resolve();
 
-    // Evaluate location.href for a more specific URL than inspectedURL provides so that SPA hash navigation routes
-    // will be respected and audited.
     return executionContext
         .evaluate(
             {
-              expression: 'window.location.href',
+              expression: expression,
               objectGroup: 'audits',
               includeCommandLineAPI: false,
               silent: false,
@@ -261,10 +265,33 @@ Audits2.Audits2Panel = class extends UI.Panel {
             /* userGesture */ false, /* awaitPromise */ false)
         .then(result => {
           if (!result.exceptionDetails && result.object) {
-            this._inspectedURL = result.object.value;
+            const value = result.object.value;
             result.object.release();
+            return value;
           }
-        });
+        })
+        .catch(() => undefined);
+  }
+
+  /**
+   * @return {!Promise<undefined>}
+   */
+  _updateInspectedURL() {
+    var mainTarget = SDK.targetManager.mainTarget();
+    this._inspectedURL = mainTarget.inspectedURL();
+
+    // Evaluate location.href for a more specific URL than inspectedURL provides so that SPA hash navigation routes
+    // will be respected and audited.
+    return this._safeEvaluateInPage('window.location.href')
+        .then(url => {
+          const parsed = url.asParsedURL();
+          // sanity check that the URL we got back is the same host as our target page
+          if (!parsed || !this._inspectedURL.includes(parsed.host))
+            return;
+          this._inspectedURL = url;
+        })
+        // disregard any errors
+        .catch(() => undefined);
   }
 
   _start() {
