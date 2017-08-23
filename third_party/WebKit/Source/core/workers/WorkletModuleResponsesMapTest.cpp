@@ -38,6 +38,8 @@ class ClientImpl final : public GarbageCollectedFinalized<ClientImpl>,
   void OnFailed(ConsoleMessage* message) override {
     ASSERT_EQ(Result::kInitial, result_);
     result_ = Result::kFailed;
+    if (message)
+      LOG(ERROR) << message->Message();
   }
 
   Result GetResult() const { return result_; }

@@ -9,6 +9,7 @@
 #include "core/workers/WorkletModuleResponsesMap.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/heap/Heap.h"
+#include "platform/loader/fetch/FetchParameters.h"
 
 namespace blink {
 
