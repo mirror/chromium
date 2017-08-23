@@ -17,6 +17,7 @@
 #include "content/public/browser/devtools_manager_delegate.h"
 #include "net/base/host_port_pair.h"
 
+class DevToolsBrowserProtocolHandler;
 class DevToolsNetworkProtocolHandler;
 
 class ChromeDevToolsManagerDelegate :
@@ -61,19 +62,6 @@ class ChromeDevToolsManagerDelegate :
       int command_id,
       base::DictionaryValue* params);
 
-  std::unique_ptr<base::DictionaryValue> HandleBrowserCommand(
-      int id,
-      std::string method,
-      base::DictionaryValue* params);
-  static std::unique_ptr<base::DictionaryValue> GetWindowForTarget(
-      int id,
-      base::DictionaryValue* params);
-  static std::unique_ptr<base::DictionaryValue> GetWindowBounds(
-      int id,
-      base::DictionaryValue* params);
-  static std::unique_ptr<base::DictionaryValue> SetWindowBounds(
-      int id,
-      base::DictionaryValue* params);
   std::unique_ptr<base::DictionaryValue> SetAdBlockingEnabled(
       content::DevToolsAgentHost* agent_host,
       int id,
@@ -81,6 +69,7 @@ class ChromeDevToolsManagerDelegate :
 
   void TogglePageEnable(bool enable, content::DevToolsAgentHost* agent_host);
 
+  std::unique_ptr<DevToolsBrowserProtocolHandler> browser_protocol_handler_;
   std::unique_ptr<DevToolsNetworkProtocolHandler> network_protocol_handler_;
   std::map<content::DevToolsAgentHost*, std::unique_ptr<HostData>> host_data_;
 
