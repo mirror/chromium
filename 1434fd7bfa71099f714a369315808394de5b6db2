@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e652be3_64df59b4",
+        "filename": "remoting/client/audio/async_audio_frame_supplier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T20:46:51Z",
+      "side": 1,
+      "message": "AudioFrameSupplier requires a GetAudioFrame() function. Is there a case we need to use both AsyncGetAudioFrame() and GetAudioFrame()?",
+      "range": {
+        "startLine": 29,
+        "startChar": 39,
+        "endLine": 29,
+        "endChar": 57
+      },
+      "revId": "1434fd7bfa71099f714a369315808394de5b6db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b89d3fe_0d6bfafc",
+        "filename": "remoting/client/audio/async_audio_frame_supplier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T20:46:51Z",
+      "side": 1,
+      "message": "Could you document the parameter here?\n\nWhat is |samples| for, and what\u0027s the difference between this |samples| and the |samples| in the callback? If they are just the same pointers, do we really need to pass it back to the callback? Also the callback doesn\u0027t take the buffer_size...\n\nI could probably expect either the callback takes nothing and let the caller deal with the |samples| pointer it kept, or you move around a unique_ptr of |samples|...",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 19
+      },
+      "revId": "1434fd7bfa71099f714a369315808394de5b6db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "875de71f_60e45c26",
+        "filename": "remoting/client/audio/async_audio_frame_supplier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T20:46:51Z",
+      "side": 1,
+      "message": "Is this context to be passed to and used by the callback? Given that we are using base::Callback, I feel like the caller could just do a base::Bind(callback, context) to bind the context.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 20
+      },
+      "revId": "1434fd7bfa71099f714a369315808394de5b6db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c0fd8f_4e5bc1d9",
+        "filename": "remoting/client/audio/audio_stream_consumer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T20:46:51Z",
+      "side": 1,
+      "message": "How will AddAudioPacket be used in the future? Are you planning to replace the ProcessAudioPacket interface in AudioStub?\n\nCould you add a comment for what\u0027s planned to do for this function?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 71
+      },
+      "revId": "1434fd7bfa71099f714a369315808394de5b6db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817cedd2_d52302b8",
+        "filename": "remoting/client/audio/audio_stream_consumer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-23T20:46:51Z",
+      "side": 1,
+      "message": "What is this friend class for?",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 40
+      },
+      "revId": "1434fd7bfa71099f714a369315808394de5b6db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
