@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/utility/profile_import_handler.h"
+#include "chrome/utility/importer/profile_import_impl.h"
 
 #include "base/bind.h"
 #include "base/location.h"
@@ -20,22 +20,21 @@
 
 using chrome::mojom::ThreadSafeProfileImportObserverPtr;
 
-ProfileImportHandler::ProfileImportHandler() : items_to_import_(0) {}
+ProfileImportImpl::ProfileImportImpl(
+    std::unique_ptr<service_manager::ServiceContextRef> service_ref)
+    : service_ref_(std::move(service_ref)) {}
 
-ProfileImportHandler::~ProfileImportHandler() {}
+ProfileImportImpl::~ProfileImportImpl() {}
 
-// static
-void ProfileImportHandler::Create(
-    chrome::mojom::ProfileImportRequest request) {
-  mojo::MakeStrongBinding(base::MakeUnique<ProfileImportHandler>(),
-                          std::move(request));
-}
-
-void ProfileImportHandler::StartImport(
+void ProfileImportImpl::StartImport(
     const importer::SourceProfile& source_profile,
     uint16_t items,
     std::unique_ptr<base::DictionaryValue> localized_strings,
     chrome::mojom::ProfileImportObserverPtr observer) {
+  LOG(ERROR) << "** JAY ** IMPORTER STARTED, CRASHING!";
+  int* ptr = 0;
+  *ptr = 0;
+
   content::UtilityThread::Get()->EnsureBlinkInitialized();
   importer_ = importer::CreateImporterByType(source_profile.importer_type);
   if (!importer_.get()) {
@@ -63,18 +62,18 @@ void ProfileImportHandler::StartImport(
                      base::RetainedRef(bridge_)));
 }
 
-void ProfileImportHandler::CancelImport() {
+void ProfileImportImpl::CancelImport() {
   ImporterCleanup();
 }
 
-void ProfileImportHandler::ReportImportItemFinished(importer::ImportItem item) {
+void ProfileImportImpl::ReportImportItemFinished(importer::ImportItem item) {
   items_to_import_ ^= item;  // Remove finished item from mask.
   if (items_to_import_ == 0) {
     ImporterCleanup();
   }
 }
 
-void ProfileImportHandler::ImporterCleanup() {
+void ProfileImportImpl::ImporterCleanup() {
   importer_->Cancel();
   importer_ = NULL;
   bridge_ = NULL;

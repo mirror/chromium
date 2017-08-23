@@ -48,6 +48,8 @@ void ExternalProcessImporterHost::StartImportSettings(
     Profile* target_profile,
     uint16_t items,
     ProfileWriter* writer) {
+  LOG(ERROR) << "** JAY ** ExternalProcessImporterHost::StartImportSettings";
+
   // We really only support importing from one host at a time.
   DCHECK(!profile_);
   DCHECK(target_profile);

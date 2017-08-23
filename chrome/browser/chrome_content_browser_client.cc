@@ -116,6 +116,7 @@
 #include "chrome/common/constants.mojom.h"
 #include "chrome/common/env_vars.h"
 #include "chrome/common/features.h"
+#include "chrome/common/importer/profile_import.mojom.h"
 #include "chrome/common/logging_chrome.h"
 #include "chrome/common/pepper_permission_util.h"
 #include "chrome/common/pref_names.h"
@@ -2999,6 +3000,9 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
 
   (*services)[profiling::mojom::kServiceName] = {
       base::ASCIIToUTF16("Profiling Service"), content::SANDBOX_TYPE_UTILITY};
+
+  (*services)[chrome::mojom::kProfileImportServiceName] = {
+      base::ASCIIToUTF16("Profile Import"), content::SANDBOX_TYPE_NO_SANDBOX};
 }
 
 std::unique_ptr<base::Value>

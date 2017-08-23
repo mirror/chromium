@@ -19,6 +19,8 @@
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/utility_process_host.h"
+#include "content/public/common/service_manager_connection.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "ui/base/l10n/l10n_util.h"
 
 using content::BrowserThread;
@@ -44,12 +46,13 @@ ExternalProcessImporterClient::ExternalProcessImporterClient(
 void ExternalProcessImporterClient::Start() {
   AddRef();  // balanced in Cleanup.
 
-  BrowserThread::ID thread_id;
-  CHECK(BrowserThread::GetCurrentThreadIdentifier(&thread_id));
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&ExternalProcessImporterClient::StartProcessOnIOThread,
-                     this, thread_id, mojo::MakeRequest(&profile_import_)));
+  content::ServiceManagerConnection::GetForProcess()
+      ->GetConnector()
+      ->BindInterface(chrome::mojom::kProfileImportServiceName,
+                      &profile_import_);
+
+  profile_import_.set_connection_error_handler(
+      base::BindOnce(&ExternalProcessImporterClient::OnProcessCrashed, this));
 
   // Dictionary of all localized strings that could be needed by the importer
   // in the external process.
@@ -94,7 +97,7 @@ void ExternalProcessImporterClient::Cancel() {
   Release();
 }
 
-void ExternalProcessImporterClient::OnProcessCrashed(int exit_code) {
+void ExternalProcessImporterClient::OnProcessCrashed() {
   DLOG(ERROR) << __func__;
   if (cancelled_)
     return;
@@ -103,11 +106,6 @@ void ExternalProcessImporterClient::OnProcessCrashed(int exit_code) {
   // import was already cancelled or completed and this message can be dropped.
   if (process_importer_host_.get())
     process_importer_host_->Cancel();
-}
-
-bool ExternalProcessImporterClient::OnMessageReceived(
-    const IPC::Message& message) {
-  return false;
 }
 
 void ExternalProcessImporterClient::OnImportStart() {
@@ -284,29 +282,6 @@ void ExternalProcessImporterClient::Cleanup() {
     process_importer_host_->NotifyImportEnded();
   CloseMojoHandles();
   Release();
-}
-
-void ExternalProcessImporterClient::StartProcessOnIOThread(
-    BrowserThread::ID thread_id,
-    chrome::mojom::ProfileImportRequest request) {
-  // Deletes itself when the external process dies.
-  UtilityProcessHost* utility_process_host = UtilityProcessHost::Create(
-      this, BrowserThread::GetTaskRunnerForThread(thread_id).get());
-  utility_process_host->SetName(
-      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PROFILE_IMPORTER_NAME));
-  utility_process_host->SetSandboxType(content::SANDBOX_TYPE_NO_SANDBOX);
-
-#if defined(OS_MACOSX)
-  base::EnvironmentMap env;
-  std::string dylib_path = GetFirefoxDylibPath().value();
-  if (!dylib_path.empty())
-    env["DYLD_FALLBACK_LIBRARY_PATH"] = dylib_path;
-  utility_process_host->SetEnv(env);
-#endif
-
-  utility_process_host->Start();
-  chrome::mojom::ProfileImportPtr profile_import;
-  BindInterface(utility_process_host, std::move(request));
 }
 
 void ExternalProcessImporterClient::CloseMojoHandles() {
