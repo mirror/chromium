@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ceb7d80f_aa0d605d",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-08-23T08:17:56Z",
+      "side": 1,
+      "message": "Cannot apply nullptr to hit_test_data_provider and local_surface_id_provider. \nOtherwise will report:\ninvalid application of \u0027sizeof\u0027 to an incomplete type \u0027viz::HitTestDataProvider\nerror: invalid application of \u0027sizeof\u0027 to an incomplete type \u0027viz::LocalSurfaceIdProvide",
+      "parentUuid": "8e8d267f_73f3574b",
+      "revId": "e632afe5af4ca0add47dd6caad6088572479e9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb654aa7_132cf556",
         "filename": "components/viz/client/client_layer_tree_frame_sink.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "e632afe5af4ca0add47dd6caad6088572479e9ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79beb605_f12e0f03",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-08-23T08:17:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb654aa7_132cf556",
+      "revId": "e632afe5af4ca0add47dd6caad6088572479e9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3c84ba2b_9bb4dc53",
+        "filename": "content/renderer/mus/renderer_window_tree_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-08-23T08:17:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cd420ae_c0f7c60a",
+      "revId": "e632afe5af4ca0add47dd6caad6088572479e9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c2a4f7b_2b42b5af",
         "filename": "content/renderer/mus/renderer_window_tree_client.cc",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-23T06:46:24Z",
       "side": 1,
       "message": "No need to explicitly initialize it here (the same applies to the rest of the fields explicitly set to nullptr here, and in other places)",
+      "revId": "e632afe5af4ca0add47dd6caad6088572479e9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bbd31b1_6fc3929a",
+        "filename": "content/renderer/mus/renderer_window_tree_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-08-23T08:17:56Z",
+      "side": 1,
+      "message": "Cannot apply nullptr to hit_test_data_provider and local_surface_id_provider. \nOtherwise will report:\ninvalid application of \u0027sizeof\u0027 to an incomplete type \u0027viz::HitTestDataProvider\nerror: invalid application of \u0027sizeof\u0027 to an incomplete type \u0027viz::LocalSurfaceIdProvider\u0027",
+      "parentUuid": "7c2a4f7b_2b42b5af",
       "revId": "e632afe5af4ca0add47dd6caad6088572479e9ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "e632afe5af4ca0add47dd6caad6088572479e9ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b76b0092_59385046",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1953,
+      "author": {
+        "id": 1139801
+      },
+      "writtenOn": "2017-08-23T08:17:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f253713_f742cdae",
+      "revId": "e632afe5af4ca0add47dd6caad6088572479e9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
