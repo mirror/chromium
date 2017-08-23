@@ -16,6 +16,24 @@
       "revId": "dfc2a1d77e528063687f18665479e6140cb08366",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ef2cdfc_b07fab7f",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-23T17:40:10Z",
+      "side": 1,
+      "message": "Is inline_text_box_.end() + 1 the same as inline_text_box_.Len()?\n\nI might put up another CL to consolidate these methods; I don\u0027t really want to combine it with this one.",
+      "parentUuid": "3138731f_80b67c5e",
+      "revId": "dfc2a1d77e528063687f18665479e6140cb08366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
