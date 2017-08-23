@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "4d1b216d_4bb8bc51",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T16:26:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3c32b32f_8e1253e2",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 58
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33a318ef_d0c96882",
         "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
         "patchSetId": 11
@@ -495,6 +519,30 @@
     },
     {
       "key": {
+        "uuid": "1e8ffe12_a626311c",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T16:26:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8295f080_192fae08",
+      "range": {
+        "startLine": 149,
+        "startChar": 42,
+        "endLine": 149,
+        "endChar": 51
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f0a466b_f39ce95d",
         "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
         "patchSetId": 11
@@ -812,6 +860,30 @@
       "side": 1,
       "message": "kind_changes is a simple heuristic designed specifically for identifying combinations of sign-in and sign-up forms in the same \u003cform\u003e, for which it functions fairly well. Forms that lead with a password field are very uncommon, and not really intended to be caught by this heuristic, so it doesn\u0027t really matter if a leading password field is ignored.",
       "parentUuid": "b15611b0_fef6b04f",
+      "range": {
+        "startLine": 326,
+        "startChar": 1,
+        "endLine": 330,
+        "endChar": 5
+      },
+      "revId": "2d2ece96feae2c2a96cb339a5467ff546e493e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0955e87d_b16b806e",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T16:26:51Z",
+      "side": 1,
+      "message": "Ok, it makes sense.",
+      "parentUuid": "c40ea8ed_cbba1e91",
       "range": {
         "startLine": 326,
         "startChar": 1,

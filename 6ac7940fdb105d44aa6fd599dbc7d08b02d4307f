@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c37333c_4d82de64",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T16:26:51Z",
+      "side": 1,
+      "message": "Nit: it\u0027s better to use char* in order to avoid creating string objects and in such case this array will be in constant memory.",
+      "range": {
+        "startLine": 26,
+        "startChar": 5,
+        "endLine": 26,
+        "endChar": 17
+      },
+      "revId": "6ac7940fdb105d44aa6fd599dbc7d08b02d4307f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe06925_9406e43d",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T16:26:51Z",
+      "side": 1,
+      "message": "it\u0027s better to forward declare re2::RE2 class in header and to make this include in cc file (https://www.chromium.org/developers/coding-style/cpp-dos-and-donts Don\u0027t include unneeded headers )",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "6ac7940fdb105d44aa6fd599dbc7d08b02d4307f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34eba12b_9eb2a6c3",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-23T16:26:51Z",
+      "side": 1,
+      "message": "Correctly do I understand that we can\u0027t return unique_ptr\u003cre2::RE2\u003e. If not, could you please add a comment that a caller of this function is responsible for deletion of resulting object.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 9
+      },
+      "revId": "6ac7940fdb105d44aa6fd599dbc7d08b02d4307f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
