@@ -123,6 +123,24 @@
       "revId": "684e6cd44082d162059ae16c02ba51b0d957a337",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ea031f_e0fb5e80",
+        "filename": "content/browser/generic_sensor/sensor_provider_proxy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-23T17:01:16Z",
+      "side": 1,
+      "message": "Mojo doesn\u0027t allow registering the same interface twice so we would have to provide a new interface, probably one with a BindSensorProviderForLegacySensors and BindSensorProviderForGenericSensors or something similarly awkward.\n\nGiven that these new permissions default to allow precisely because we are providing the same data through the old and new APIs I don\u0027t see any value in bypassing the permission check. In fact, if we did bypass the permission check that would provide a reverse incentive for developers to continue to use the old API because it doesn\u0027t require permission.\n\nOver the long term the data provided by DeviceOrientation Events should be the same as the data provided by Generic Sensors when only default permissions are granted.",
+      "parentUuid": "655f0ed0_e73c07c2",
+      "revId": "684e6cd44082d162059ae16c02ba51b0d957a337",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
