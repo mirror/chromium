@@ -99,6 +99,24 @@
       "revId": "488a03d3bd12ecb1cf53cb3209a195c0867cc3ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27ee37af_ebaec77c",
+        "filename": "third_party/WebKit/Source/modules/csspaint/ContextAttributes.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-23T01:59:30Z",
+      "side": 1,
+      "message": "Right of course. Then it seems this alpha attribute shouldn\u0027t be RuntimeEnabled since we just won\u0027t use a ContextAttributes except in the PaintWorklet class right?\n\nI\u0027m wondering if there is anything to list in idl since this is just a convention of the object the user sets on their custom paint class. I.e. we don\u0027t have an idl for the custom paint class do we? We just look up the methods we expect to exist.",
+      "parentUuid": "c781d8a0_784e8892",
+      "revId": "488a03d3bd12ecb1cf53cb3209a195c0867cc3ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
