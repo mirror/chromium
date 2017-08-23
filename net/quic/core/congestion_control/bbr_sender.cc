@@ -183,6 +183,10 @@ bool BbrSender::InRecovery() const {
   return recovery_state_ != NOT_IN_RECOVERY;
 }
 
+bool BbrSender::IsProbingForMoreBandwidth() const {
+  return mode_ == PROBE_BW && pacing_gain_ > 1;
+}
+
 void BbrSender::SetFromConfig(const QuicConfig& config,
                               Perspective perspective) {
   if (FLAGS_quic_reloadable_flag_quic_bbr_exit_startup_on_loss &&

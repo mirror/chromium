@@ -235,6 +235,10 @@ bool TcpCubicSenderBase::InRecovery() const {
          largest_acked_packet_number_ != 0;
 }
 
+bool TcpCubicSenderBase::IsProbingForMoreBandwidth() const {
+  return false;
+}
+
 void TcpCubicSenderBase::OnRetransmissionTimeout(bool packets_retransmitted) {
   largest_sent_at_last_cutback_ = 0;
   if (!packets_retransmitted) {

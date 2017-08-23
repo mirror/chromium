@@ -104,9 +104,12 @@ class QUIC_EXPORT_PRIVATE SendAlgorithmInterface {
   // Whether the send algorithm is currently in recovery.
   virtual bool InRecovery() const = 0;
 
+  // True when the congestion control is probing for more bandwidth and needs
+  // enough data to not be app-limited to do so.
+  virtual bool IsProbingForMoreBandwidth() const = 0;
+
   // Returns the size of the slow start congestion window in bytes,
-  // aka ssthresh.  Some send algorithms do not define a slow start
-  // threshold and will return 0.
+  // aka ssthresh.  Only defined for Cubic and Reno, other algorithms return 0.
   virtual QuicByteCount GetSlowStartThreshold() const = 0;
 
   virtual CongestionControlType GetCongestionControlType() const = 0;

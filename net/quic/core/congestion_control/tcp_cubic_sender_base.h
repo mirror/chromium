@@ -66,6 +66,7 @@ class QUIC_EXPORT_PRIVATE TcpCubicSenderBase : public SendAlgorithmInterface {
   QuicBandwidth BandwidthEstimate() const override;
   bool InSlowStart() const override;
   bool InRecovery() const override;
+  bool IsProbingForMoreBandwidth() const override;
   std::string GetDebugState() const override;
   void OnApplicationLimited(QuicByteCount bytes_in_flight) override;
 
