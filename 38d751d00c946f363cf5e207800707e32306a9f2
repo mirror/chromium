@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8194e339_eafb1a2b",
+        "filename": "chrome/browser/chromeos/login/signin/oauth2_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-23T18:44:33Z",
+      "side": 0,
+      "message": "This section is already protected",
+      "revId": "38d751d00c946f363cf5e207800707e32306a9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

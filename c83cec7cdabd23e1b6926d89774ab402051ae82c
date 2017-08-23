@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2826857_f82d38ec",
+        "filename": "chrome/browser/chromeos/login/signin/oauth2_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-23T18:44:33Z",
+      "side": 1,
+      "message": "RestoreAuthSessionImpl is disabled here:\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/login/session/user_session_manager.cc?l\u003d1429\n\nWe want to post a blocking task on the WebDataService DB thread. We can\u0027t do it here, because the WebDataService is profile-associated, and the user profile hasn\u0027t been created yet. The profile gets created in TryLogin, which immediately tries to restore the session. So we block session restore, create the profile and it\u0027s WebDataService in TryLogin, post the blocking task, then restore the session.",
+      "revId": "c83cec7cdabd23e1b6926d89774ab402051ae82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978ca2a0_0fffd89c",
+        "filename": "chrome/browser/chromeos/login/signin/oauth2_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-23T18:44:33Z",
+      "side": 1,
+      "message": "I could add a WebDataServiceFactory accessor like GetDBTaskRunnerForProfile like this:\nhttps://cs.chromium.org/chromium/src/chrome/browser/web_data_service_factory.cc?l\u003d135\n\nThese methods seem to guard against incognito profiles, which shouldn\u0027t be a factor here.",
+      "revId": "c83cec7cdabd23e1b6926d89774ab402051ae82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e23543_f4ce1aef",
+        "filename": "chrome/browser/chromeos/login/signin/oauth2_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-23T18:44:33Z",
+      "side": 1,
+      "message": "There appears to be no way to remove a switch :(",
+      "revId": "c83cec7cdabd23e1b6926d89774ab402051ae82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318a07ca_9e7082af",
+        "filename": "components/webdata_services/web_data_service_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-23T18:44:33Z",
+      "side": 1,
+      "message": "Without this, we hit the following assert:\nhttps://cs.chromium.org/chromium/src/base/threading/thread_restrictions.cc?l\u003d75",
+      "revId": "c83cec7cdabd23e1b6926d89774ab402051ae82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac55a0c0_ab435def",
+        "filename": "components/webdata_services/web_data_service_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-08-23T18:44:33Z",
+      "side": 1,
+      "message": "Without this, we hit the following assert:\nhttps://cs.chromium.org/chromium/src/base/task_scheduler/scheduler_single_thread_task_runner_manager.cc?l\u003d417-418\n\nWe can probably get rid of this when the TODO on line 91 is resolved.",
+      "revId": "c83cec7cdabd23e1b6926d89774ab402051ae82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
