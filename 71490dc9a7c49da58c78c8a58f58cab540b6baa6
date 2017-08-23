@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2af3744d_9c6fc6ed",
+        "filename": "ios/chrome/browser/web/resources/payment_request.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-23T18:16:34Z",
+      "side": 1,
+      "message": "Done.\nSeems like https://w3c.github.io/payment-request/#dfn-valid-decimal-monetary-value needs to be updated too. It says:\n\"If amount.currencySystem is not \"urn:iso:std:iso:4217\", terminate this algorithm.\" \nwhich is at odds with https://w3c-test.org/payment-request/payment-request-ctor-currency-code-checks.https.html",
+      "parentUuid": "33de0fe4_4fd8ef8a",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 13
+      },
+      "revId": "71490dc9a7c49da58c78c8a58f58cab540b6baa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12efb241_bb48d897",
         "filename": "ios/chrome/browser/web/resources/payment_request.js",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-23T16:39:19Z",
       "side": 1,
       "message": "Currency system should influence only the regex of the currency code. The length and string-ness of the currency code should be checked regardless.\n\nAlso, I\u0027m not sure what ?: is doing the regex. Can you explain? I believe the correct regex is /^[a-zA-Z]{3}$/.",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 211,
+        "endChar": 4
+      },
+      "revId": "71490dc9a7c49da58c78c8a58f58cab540b6baa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc0826f_58ac078f",
+        "filename": "ios/chrome/browser/web/resources/payment_request.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-23T18:16:34Z",
+      "side": 1,
+      "message": "Done.\n(?:) is a non-capturing block. It\u0027s unnecessary here. Removed.",
+      "parentUuid": "12efb241_bb48d897",
       "range": {
         "startLine": 196,
         "startChar": 0,
