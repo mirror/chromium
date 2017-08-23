@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04caefed_4610f0b5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_exportable_commits.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-23T20:20:48Z",
+      "side": 1,
+      "message": "Probably no need to explain the `clean` parameter since it\u0027s already explained below.\n\nOptionally, the clean parameter could be renamed if you think it makes it clearer (e.g. require_clean)",
+      "range": {
+        "startLine": 20,
+        "startChar": 14,
+        "endLine": 22,
+        "endChar": 16
+      },
+      "revId": "e3b9f5c5cf3c998c36d4c2a7042e691d2ae3c874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1acebe50_f2fb07b7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_exportable_commits.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-23T20:20:48Z",
+      "side": 1,
+      "message": "Also, optionally, no need to say what the defaults are since the code already says that.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 64
+      },
+      "revId": "e3b9f5c5cf3c998c36d4c2a7042e691d2ae3c874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
