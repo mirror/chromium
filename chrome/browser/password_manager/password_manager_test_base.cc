@@ -349,6 +349,12 @@ void BubbleObserver::WaitForAccountChooser() const {
   controller->WaitForState(password_manager::ui::CREDENTIAL_REQUEST_STATE);
 }
 
+void BubbleObserver::WaitForInactiveState() const {
+  CustomManagePasswordsUIController* controller =
+      static_cast<CustomManagePasswordsUIController*>(passwords_ui_controller_);
+  controller->WaitForState(password_manager::ui::INACTIVE_STATE);
+}
+
 void BubbleObserver::WaitForManagementState() const {
   CustomManagePasswordsUIController* controller =
       static_cast<CustomManagePasswordsUIController*>(passwords_ui_controller_);
