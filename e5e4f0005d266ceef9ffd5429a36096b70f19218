@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5d3045b5_95837046",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-23T17:49:13Z",
+      "side": 1,
+      "message": "stopSelf() actually stops the service, stopForeground() just makes it a background service.  Maybe we need to kill it at some point?",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 30
+      },
+      "revId": "e5e4f0005d266ceef9ffd5429a36096b70f19218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d698e27d_97a8bd62",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 2
@@ -18,6 +41,29 @@
         "startChar": 12,
         "endLine": 167,
         "endChar": 45
+      },
+      "revId": "e5e4f0005d266ceef9ffd5429a36096b70f19218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52d8bc99_3e296feb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-23T17:49:13Z",
+      "side": 1,
+      "message": "CHROME?",
+      "range": {
+        "startLine": 169,
+        "startChar": 42,
+        "endLine": 169,
+        "endChar": 44
       },
       "revId": "e5e4f0005d266ceef9ffd5429a36096b70f19218",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
