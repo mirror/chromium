@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "901767a6_8a7f9b77",
+        "filename": "ios/chrome/browser/content_suggestions/ntp_home_utils.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-23T14:11:04Z",
+      "side": 1,
+      "message": "the name seems not related to the enum.\nWhat about IOS.NTP.ContentType?",
+      "range": {
+        "startLine": 16,
+        "startChar": 37,
+        "endLine": 16,
+        "endChar": 47
+      },
+      "revId": "952a17dcc208c6e5eaddf30e08c8826553b264ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf42945_cce902e6",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-23T14:11:04Z",
+      "side": 1,
+      "message": "Type of NTP content? Or something more precise?",
+      "range": {
+        "startLine": 12,
+        "startChar": 3,
+        "endLine": 12,
+        "endChar": 7
+      },
+      "revId": "952a17dcc208c6e5eaddf30e08c8826553b264ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3ee0ff_5263ed9e",
+        "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-23T14:11:04Z",
+      "side": 1,
+      "message": "COUNT?",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 32
+      },
+      "revId": "952a17dcc208c6e5eaddf30e08c8826553b264ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601ce32f_518eebcb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 28332,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-23T14:11:04Z",
+      "side": 1,
+      "message": "It is not a number if it is an enum.\nIt is more the type than the number.",
+      "range": {
+        "startLine": 28332,
+        "startChar": 8,
+        "endLine": 28332,
+        "endChar": 14
+      },
+      "revId": "952a17dcc208c6e5eaddf30e08c8826553b264ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
