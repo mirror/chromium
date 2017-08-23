@@ -13,10 +13,12 @@
 #include "base/metrics/sparse_histogram.h"
 #include "base/metrics/user_metrics.h"
 #include "build/build_config.h"
+#include "build/buildflag.h"
 #include "components/metrics/metrics_pref_names.h"
 #include "components/metrics/proto/system_profile.pb.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
+#include "extensions/features/features.h"
 
 #if defined(OS_WIN)
 #include <windows.h>  // Needed for STATUS_* codes
@@ -164,6 +166,12 @@ void StabilityMetricsHelper::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterInt64Pref(prefs::kUninstallMetricsPageLoadCount, 0);
 }
 
+// static
+void StabilityMetricsHelper::IncreaseCrashCount(PrefService* local_state) {
+  int value = local_state->GetInteger(prefs::kStabilityRendererCrashCount);
+  local_state->SetInteger(prefs::kStabilityRendererCrashCount, value + 1);
+}
+
 void StabilityMetricsHelper::BrowserChildProcessCrashed() {
   IncrementPrefValue(prefs::kStabilityChildProcessCrashCount);
 }
@@ -189,6 +197,10 @@ void StabilityMetricsHelper::LogRendererCrash(bool was_extension_process,
     case base::TERMINATION_STATUS_ABNORMAL_TERMINATION:
     case base::TERMINATION_STATUS_OOM:
       if (was_extension_process) {
+#if !BUILDFLAG(ENABLE_EXTENSIONS)
+        // was_extension_process is disabled for Android
+        NOTREACHED();
+#endif
         IncrementPrefValue(prefs::kStabilityExtensionRendererCrashCount);
 
         UMA_HISTOGRAM_SPARSE_SLOWLY("CrashExitCodes.Extension",
