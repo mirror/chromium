@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9acbe710_9103f96e",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T17:59:24Z",
+      "side": 1,
+      "message": "I am good as long as views::Label takes care of it.",
+      "parentUuid": "81bf41f5_5d40f03d",
+      "revId": "9c05a50e0cf13556e38f16fc623842c4f985631a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89a8c540_d600022c",
         "filename": "ui/views/controls/label.cc",
         "patchSetId": 11
