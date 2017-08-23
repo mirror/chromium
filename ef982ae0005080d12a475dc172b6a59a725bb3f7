@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9f79897_7566720c",
+        "filename": "third_party/WebKit/Source/core/frame/BrowserControlsTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-23T10:26:57Z",
+      "side": 1,
+      "message": "This ScopedTestingPlatformSupport usage is wrong.\nYou should keep this instance while you want to use mocked Platform instance.\n\nIn this test, URLTestHelpers calls in RegisterMockedHttpURLLoad also calls GetURLLoaderMockFactory() internally, and code here just releases registered URLs for them.\n\nSo, what you need will be just to change platform_ to member variable so that we can keep it available while each test is running. While the instance is alive, Platform::Current() returns platform_ for you. So, URLTestHelpers should just work.\n\nBut, to remove all Platform::Current()-\u003eGetURLLoaderMockFactory() callers, you need to modify URLTestHelpers to take a TestingPlatformSupport reference to use it internally. It can be done in a separate CL.",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "ef982ae0005080d12a475dc172b6a59a725bb3f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
