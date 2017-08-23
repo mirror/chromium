@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ecf62e9c_83834f3f",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-23T02:35:42Z",
+      "side": 1,
+      "message": "See comment in ContextSupport. I\u0027ve renamed TileManager::Flush to CheckForCompletedTasks because we absolutely don\u0027t want to flush command buffers here.",
+      "parentUuid": "48e917da_8be8f49c",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fc517fc_1c487247",
         "filename": "gpu/command_buffer/client/context_support.h",
         "patchSetId": 11
@@ -51,6 +69,24 @@
       "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a23ef7c1_d01e67c8",
+        "filename": "gpu/command_buffer/client/context_support.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-23T02:35:42Z",
+      "side": 1,
+      "message": "We need this to ensure that tiles are flushed in a timely manner. I\u0027ve updated the comment. I\u0027ve removed the call to RasterBufferProvider::Flush and moved the flush to PrepareSendToParent. We should also flush when a tile manager task set finishes but that is strongly coupled with checking for completed tasks. I\u0027ll discuss this with ericrk@ and address it in a followup CL.",
+      "parentUuid": "0fc517fc_1c487247",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "d6e865d4_34c95420",
+        "filename": "gpu/command_buffer/client/gpu_control.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-23T02:35:42Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "32c4a0cb_005df378",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c67d1eb_0c304f0a",
         "filename": "gpu/command_buffer/client/gpu_control.h",
         "patchSetId": 11
@@ -85,6 +139,24 @@
       "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa2a9f0_57ba99bd",
+        "filename": "gpu/command_buffer/client/gpu_control.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-23T02:35:42Z",
+      "side": 1,
+      "message": "Updated comment. See comment in ContextSupport.",
+      "parentUuid": "3c67d1eb_0c304f0a",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "6791f02a_2867996b",
+        "filename": "gpu/command_buffer/service/scheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-23T02:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d428e3d7_26847ec4",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "698e3bc6_49ee901a",
         "filename": "gpu/command_buffer/service/scheduler.h",
         "patchSetId": 11
@@ -119,6 +209,24 @@
       "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adc61916_23bc6c3e",
+        "filename": "gpu/command_buffer/service/scheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-23T02:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "698e3bc6_49ee901a",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "93bf212a_5717ec2a",
+        "filename": "gpu/ipc/client/gpu_channel_host.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-23T02:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f87671b5_ccd708e0",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9b0a8f8_11bbde54",
         "filename": "gpu/ipc/client/gpu_channel_host.h",
         "patchSetId": 11
@@ -153,6 +279,24 @@
       "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00a938d9_35b1d5d7",
+        "filename": "gpu/ipc/client/gpu_channel_host.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-23T02:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9b0a8f8_11bbde54",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "0827a84e_55e53f65",
+        "filename": "gpu/ipc/common/flush_params.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-23T02:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8ee1ae4_29f34585",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93d8308e_5fc1e782",
         "filename": "gpu/ipc/common/gpu_messages.h",
         "patchSetId": 11
@@ -187,6 +349,24 @@
       "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf505cbb_ac577a87",
+        "filename": "gpu/ipc/common/gpu_messages.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-23T02:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93d8308e_5fc1e782",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "c446cba8_08964185",
+        "filename": "gpu/ipc/service/gpu_channel.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-23T02:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ff4aecd_f87223ee",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17aaa5e6_4e01232b",
         "filename": "gpu/ipc/service/gpu_channel.cc",
         "patchSetId": 11
@@ -221,6 +419,24 @@
       "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b1ab22_ffc4f4cf",
+        "filename": "gpu/ipc/service/gpu_channel.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-23T02:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17aaa5e6_4e01232b",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -241,6 +457,24 @@
     },
     {
       "key": {
+        "uuid": "e23ba5e7_2a6e24a7",
+        "filename": "gpu/ipc/service/gpu_channel.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-23T02:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27c77e3e_08a7f2a7",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "672e0460_158ac889",
         "filename": "gpu/ipc/service/gpu_channel.cc",
         "patchSetId": 11
@@ -255,6 +489,24 @@
       "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5163437a_73d8f8f2",
+        "filename": "gpu/ipc/service/gpu_channel.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-23T02:35:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "672e0460_158ac889",
+      "revId": "72f2da3735f7a0db0c5b5e564fb556e72f9573f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
