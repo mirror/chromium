@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3138731f_80b67c5e",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-23T03:54:59Z",
+      "side": 1,
+      "message": "Optional: What do you think of just inlining the text match code here and using a conditional to skip the truncation line at the end? In other words, something like:\nInlineTextBoxPainter::PaintOffsets InlineTextBoxPainter::MarkerPaintStartAndEnd(\n    const DocumentMarker\u0026 marker) {\n...\nif (marker.GetType() \u003d\u003d DocumentMarker::kTextMatch)\n  return ...;\nreturn ApplyTruncationToPaintOffsets({paint_start, paint_end});\n}",
+      "revId": "dfc2a1d77e528063687f18665479e6140cb08366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
