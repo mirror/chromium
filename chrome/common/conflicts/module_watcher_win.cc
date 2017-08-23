@@ -119,14 +119,20 @@ void OnModuleEvent(mojom::ModuleEventType event_type,
 // static
 std::unique_ptr<ModuleWatcher> ModuleWatcher::Create(
     OnModuleEventCallback callback) {
-  // If a ModuleWatcher already exists then bail out.
-  base::AutoLock lock(g_module_watcher_lock.Get());
-  if (g_module_watcher_instance)
-    return nullptr;
-
-  // This thread acquired the right to create a ModuleWatcher, so do so.
-  g_module_watcher_instance = new ModuleWatcher(std::move(callback));
-  return base::WrapUnique(g_module_watcher_instance);
+  std::unique_ptr<ModuleWatcher> module_watcher;
+  // Create and return a new instance only if one doesn't already exist.
+  {
+    base::AutoLock lock(g_module_watcher_lock.Get());
+    if (!g_module_watcher_instance) {
+      // This thread acquired the right to create a ModuleWatcher, so do so.
+      g_module_watcher_instance = new ModuleWatcher();
+      module_watcher = base::WrapUnique(g_module_watcher_instance);
+    }
+  }
+  // Initialize the new instance outside of the lock if one was created.
+  if (module_watcher)
+    module_watcher->Initialize(std::move(callback));
+  return module_watcher;
 }
 
 ModuleWatcher::~ModuleWatcher() {
@@ -138,18 +144,33 @@ ModuleWatcher::~ModuleWatcher() {
   UnregisterDllNotificationCallback();
 }
 
+// Initializes the ModuleWatcher instance.
+void ModuleWatcher::Initialize(OnModuleEventCallback callback) {
+  callback_ = std::move(callback);
+  RegisterDllNotificationCallback();
+  EnumerateAlreadyLoadedModules();
+}
+
 void ModuleWatcher::RegisterDllNotificationCallback() {
+  HMODULE ntdll_handle = ::GetModuleHandle(kNtDll);
+  if (!ntdll_handle)
+    return;
+
   LdrRegisterDllNotificationFunc reg_fn =
-      reinterpret_cast<LdrRegisterDllNotificationFunc>(::GetProcAddress(
-          ::GetModuleHandle(kNtDll), kLdrRegisterDllNotification));
+      reinterpret_cast<LdrRegisterDllNotificationFunc>(
+          ::GetProcAddress(ntdll_handle, kLdrRegisterDllNotification));
   if (reg_fn)
     reg_fn(0, &LoaderNotificationCallback, this, &dll_notification_cookie_);
 }
 
 void ModuleWatcher::UnregisterDllNotificationCallback() {
+  HMODULE ntdll_handle = ::GetModuleHandle(kNtDll);
+  if (!ntdll_handle)
+    return;
+
   LdrUnregisterDllNotificationFunc unreg_fn =
-      reinterpret_cast<LdrUnregisterDllNotificationFunc>(::GetProcAddress(
-          ::GetModuleHandle(kNtDll), kLdrUnregisterDllNotification));
+      reinterpret_cast<LdrUnregisterDllNotificationFunc>(
+          ::GetProcAddress(ntdll_handle, kLdrUnregisterDllNotification));
   if (unreg_fn)
     unreg_fn(dll_notification_cookie_);
 }
@@ -160,7 +181,7 @@ void ModuleWatcher::EnumerateAlreadyLoadedModules() {
   // ERROR_BAD_LENGTH. To avoid locking up here a retry limit is enforced.
   base::win::ScopedHandle snap;
   DWORD process_id = ::GetCurrentProcessId();
-  for (size_t i = 0; i < 5; ++i) {
+  for (int i = 0; i < 5; ++i) {
     snap.Set(::CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32,
                                         process_id));
     if (snap.IsValid())
@@ -180,8 +201,6 @@ void ModuleWatcher::EnumerateAlreadyLoadedModules() {
                       module.modBaseSize);
     callback_.Run(event);
   }
-
-  return;
 }
 
 // static
@@ -209,8 +228,7 @@ void __stdcall ModuleWatcher::LoaderNotificationCallback(
       break;
 
     case LDR_DLL_NOTIFICATION_REASON_UNLOADED:
-      OnModuleEvent(mojom::ModuleEventType::MODULE_UNLOADED,
-                    notification_data->Unloaded, callback);
+      // Intentionally ignored.
       break;
 
     default:
@@ -220,8 +238,4 @@ void __stdcall ModuleWatcher::LoaderNotificationCallback(
   }
 }
 
-ModuleWatcher::ModuleWatcher(OnModuleEventCallback callback)
-    : callback_(std::move(callback)) {
-  RegisterDllNotificationCallback();
-  EnumerateAlreadyLoadedModules();
-}
+ModuleWatcher::ModuleWatcher() = default;
