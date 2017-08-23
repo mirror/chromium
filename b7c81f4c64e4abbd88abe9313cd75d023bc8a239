@@ -34,6 +34,24 @@
       "revId": "b7c81f4c64e4abbd88abe9313cd75d023bc8a239",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0225b4_8d6d5a5e",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-23T19:58:18Z",
+      "side": 1,
+      "message": "ya but that isn\u0027t what you are testing. What about a hovering pointermove ?",
+      "parentUuid": "80cf6d0b_86b074e7",
+      "revId": "b7c81f4c64e4abbd88abe9313cd75d023bc8a239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
