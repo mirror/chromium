@@ -5,12 +5,14 @@
 #include "components/ntp_tiles/most_visited_sites.h"
 
 #include <algorithm>
+#include <iterator>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/feature_list.h"
 #include "base/metrics/user_metrics.h"
+#include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/history/core/browser/top_sites.h"
 #include "components/ntp_tiles/constants.h"
@@ -33,6 +35,8 @@ namespace {
 const base::Feature kDisplaySuggestionsServiceTiles{
     "DisplaySuggestionsServiceTiles", base::FEATURE_ENABLED_BY_DEFAULT};
 
+const char* kKnownGenericPagePrefixes[] = {"m.", "mobile.", "www."};
+
 // Determine whether we need any tiles from PopularSites to fill up a grid of
 // |num_tiles| tiles. If exploration sections are used, we need popular sites
 // regardless of how many tiles we already have.
@@ -50,6 +54,34 @@ bool HasHomeTile(const NTPTilesVector& tiles) {
   for (const auto& tile : tiles) {
     if (tile.source == TileSource::HOMEPAGE) {
       return true;
+    }
+  }
+  return false;
+}
+
+bool IsHostOrMobilePageKnown(const std::set<std::string>& hosts_to_skip,
+                             const std::string& host) {
+  if (hosts_to_skip.count(host)) {
+    return true;  // Perfect match.
+  }
+  // Remove if prefix is known and look again.
+  std::string no_prefix_host = host;
+  for (const char** prefix = std::begin(kKnownGenericPagePrefixes);
+       prefix != std::end(kKnownGenericPagePrefixes); ++prefix) {
+    if (base::StartsWith(host, *prefix, base::CompareCase::INSENSITIVE_ASCII)) {
+      no_prefix_host = std::string(
+          base::TrimString(host, *prefix, base::TrimPositions::TRIM_LEADING));
+      if (hosts_to_skip.count(no_prefix_host)) {
+        return true;
+      }
+      break;  // Don't try to trim the prefix more than once.
+    }
+  }
+  // Add a known prefix and look again.
+  for (const char** prefix = std::begin(kKnownGenericPagePrefixes);
+       prefix != std::end(kKnownGenericPagePrefixes); ++prefix) {
+    if (hosts_to_skip.count(base::JoinString({*prefix, no_prefix_host}, ""))) {
+      return true;  // Perfect match.
     }
   }
   return false;
@@ -399,7 +431,7 @@ NTPTilesVector MostVisitedSites::CreatePopularSitesTiles(
       continue;
 
     const std::string& host = popular_site.url.host();
-    if (hosts_to_skip.count(host)) {
+    if (IsHostOrMobilePageKnown(hosts_to_skip, host)) {
       continue;
     }
 
