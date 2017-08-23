@@ -13,6 +13,7 @@
 #include "base/path_service.h"
 #include "base/sequenced_task_runner.h"
 #include "base/threading/thread_restrictions.h"
+#include "components/keyed_service/ios/browser_state_dependency_manager.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/in_memory_pref_store.h"
 #include "components/prefs/json_pref_store.h"
@@ -21,9 +22,14 @@
 #include "components/translate/core/browser/translate_pref_names.h"
 #include "components/translate/core/browser/translate_prefs.h"
 #include "ios/web/public/web_thread.h"
+#include "ios/web_view/cwv_web_view_features.h"
 #include "ios/web_view/internal/pref_names.h"
 #include "ios/web_view/internal/web_view_url_request_context_getter.h"
 #include "ui/base/l10n/l10n_util_mac.h"
+
+#if BUILDFLAG(ENABLE_SYNC)
+#include "ios/web_view/internal/web_view_sync_initializer.h"
+#endif
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -71,6 +77,8 @@ WebViewBrowserState::WebViewBrowserState(bool off_the_record)
   prefs_ = factory.Create(pref_registry.get());
 
   base::ThreadRestrictions::SetIOAllowed(wasIOAllowed);
+
+  DoFinalInit();
 }
 
 WebViewBrowserState::~WebViewBrowserState() = default;
@@ -107,6 +115,15 @@ void WebViewBrowserState::RegisterPrefs(
                                     l10n_util::GetLocaleOverride());
   pref_registry->RegisterBooleanPref(prefs::kEnableTranslate, true);
   translate::TranslatePrefs::RegisterProfilePrefs(pref_registry);
+
+  BrowserStateDependencyManager::GetInstance()
+      ->RegisterBrowserStatePrefsForServices(this, pref_registry);
+}
+
+void WebViewBrowserState::DoFinalInit() {
+#if BUILDFLAG(ENABLE_SYNC)
+  WebViewSyncInitializer::InitializeServicesForBrowserState(this);
+#endif
 }
 
 }  // namespace ios_web_view

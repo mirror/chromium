@@ -7,6 +7,8 @@ import("//build/config/ios/rules.gni")
 ios_app_bundle("ios_web_view_shell") {
   info_plist = "Info.plist"
 
+  entitlements_path = "entitlements.plist"
+
   deps = [
     ":shell",
   ]
@@ -29,6 +31,9 @@ source_set("shell") {
   deps = [
     ":resources",
     "//ios/web_view:web_view+link",
+    "//ios_internal/google_internal/piper/local_src/google3/googlemac/iPhone/Shared/GoogleKit/HUD",
+    "//ios_internal/google_internal/piper/local_src/google3/googlemac/iPhone/Shared/GoogleKit/Web",
+    "//ios_internal/google_internal/piper/local_src/google3/googlemac/iPhone/Shared/SSOAuth",
   ]
 
   libs = [
