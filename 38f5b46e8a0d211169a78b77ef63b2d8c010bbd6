@@ -25,6 +25,223 @@
     },
     {
       "key": {
+        "uuid": "f4479bcc_a19261d8",
+        "filename": "chrome/browser/resources/sys_internals/index.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "Internals",
+      "range": {
+        "startLine": 10,
+        "startChar": 16,
+        "endLine": 10,
+        "endChar": 24
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc485ac8_99b2fa42",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "You may omit headers being included in its corresponding header \"sys_internals_message_handler.h\".\n\nHowever, any includes present in the related header do not need to be included again in the related cc (i.e., foo.cc can rely on foo.h\u0027s includes).\n\nhttps://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead#Names_and_Order_of_Includes",
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09513cb0_bb7e588f",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "info  (it is uncountable).",
+      "range": {
+        "startLine": 29,
+        "startChar": 45,
+        "endLine": 29,
+        "endChar": 50
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26077e76_49f8ae09",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "processor_index or cpu_index",
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01524613_5c53075b",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "#include \u003cinttypes.h\u003e",
+      "range": {
+        "startLine": 45,
+        "startChar": 20,
+        "endLine": 45,
+        "endChar": 26
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc48fe39_2dd92940",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "(*info)[cpu_index]\nor you may use a reference to hold it:\nCpuInfo\u0026 cpu \u003d (*info)[cpu_index];\ncpu.kernel \u003d ...;",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 19
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd7dd4b_1c8f920f",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "You have a lot of static_cast\u003cint\u003e(A \u0026 SysInternalsMessageHandler::COUNTER_MAX). How about having a inline function to shorten the code:\n\ntemplate\u003ctypename T\u003e\ninline int to_counter(T value) {\n    return static_cast\u003cint\u003e(value \u0026 SysInternalsMessageHandler::COUNTER_MAX);\n}",
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd715e9a_55d2f1eb",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "You may DCHECK it in other functions as well.",
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dca496b_60c1e1ce",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "Looking up chromium, the convention looks like:\n\nbase::ListValue* cpu_results \u003d result-\u003eSetList(\"cpus\", base::MakeUnique\u003cbase::ListValue\u003e());\n...\nfor (int i \u003d 0; ... ) {\n  ...\n  cpu_results-\u003eGetList().push_back(std::move(cpu_result));\n}",
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3416c991_02865af7",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "For unchanged argument, please use reference instead of pointer.\nconst base::SystemMemoryInfoKB\u0026\n\nSame below.",
+      "range": {
+        "startLine": 113,
+        "startChar": 42,
+        "endLine": 113,
+        "endChar": 67
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba6014d_f0e5cf94",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "void Foo(const string \u0026in, string *out);\n\nhttps://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead#Reference_Arguments",
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee6e1d49_1de13111",
         "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
         "patchSetId": 4
@@ -94,6 +311,46 @@
     },
     {
       "key": {
+        "uuid": "8304786e_f1eb574f",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "It is not clear to me why is_console_log is false if args is not empty.",
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca41169_26e9a570",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "If args is empty, is time_tick an uninitialized pointer?",
+      "range": {
+        "startLine": 186,
+        "startChar": 55,
+        "endLine": 186,
+        "endChar": 64
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e45620f7_ffce450c",
         "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
         "patchSetId": 4
@@ -110,6 +367,29 @@
         "startChar": 41,
         "endLine": 203,
         "endChar": 58
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca0ed5c8_85c601e7",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "No \"(c)\". Please update all other license headers.",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
       },
       "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -164,6 +444,87 @@
     },
     {
       "key": {
+        "uuid": "7b107fcd_933e190a",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "How about\n\nnamespace sys_internals {\nstruct CpuInfo {\n  ...\n};\n}  // namespace sys_internals\n\nAh, I see. You plan to make CpuInfo the same level as SystemMemoryInfoKB, right? If so, it is better defined in base/.  Namespace sys_internals can be used for class SysInternalsMessageHandler.",
+      "parentUuid": "bc3b90dd_dc3dacf5",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 14
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae21ab6_f9e0a001",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "Why not also put this into namespace?\n\nAlso, please add class comment.",
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b040aab0_825fd4ba",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "#include \u003cstdint.h\u003e",
+      "range": {
+        "startLine": 28,
+        "startChar": 15,
+        "endLine": 28,
+        "endChar": 23
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab28635e_11c64f9a",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "Include what you use. That is,\n#include \u003cvector\u003e\n\nAlso, \"info\" is a uncountable noun. Rename it to cpu_info_.",
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "127449b0_d78dc24a",
         "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
         "patchSetId": 4
@@ -181,6 +542,63 @@
         "endLine": 36,
         "endChar": 17
       },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2890acc_2b4028ba",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e",
+      "range": {
+        "startLine": 37,
+        "startChar": 36,
+        "endLine": 37,
+        "endChar": 46
+      },
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0cb1bf6_db69861a",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "Or just \"UpdateSysInfo\"?  Please add comment to describe what is updated.",
+      "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5398496_3a272150",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_ui.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-23T06:22:55Z",
+      "side": 1,
+      "message": "Place it inside namespace sys_internals.",
       "revId": "38f5b46e8a0d211169a78b77ef63b2d8c010bbd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
