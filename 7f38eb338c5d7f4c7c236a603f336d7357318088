@@ -283,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "f47724a6_e6be512a",
+        "filename": "media/blink/video_decode_stats_reporter.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-23T00:55:46Z",
+      "side": 1,
+      "message": "Looks like windows bots don\u0027t like to mix const/constexpr... am I doing it wrong?\n\n../../media/blink/video_decode_stats_reporter.cc(27): error C2370: \u0027kRecordingInterval\u0027: redefinition; different storage class\n../..\\media/blink/video_decode_stats_reporter.h(56): note: see declaration of \u0027kRecordingInterval\u0027",
+      "parentUuid": "da87a1bd_d8a5d8e3",
+      "revId": "7f38eb338c5d7f4c7c236a603f336d7357318088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "980b19c1_0bfbc06b",
         "filename": "media/blink/video_decode_stats_reporter.h",
         "patchSetId": 16
