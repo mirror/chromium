@@ -597,11 +597,6 @@ bool DebuggerAttachFunction::RunAsync() {
     return false;
   }
 
-  if (agent_host_->IsAttached()) {
-    FormatErrorMessage(keys::kAlreadyAttachedError);
-    return false;
-  }
-
   new ExtensionDevToolsClientHost(GetProfile(), agent_host_.get(),
                                   extension()->id(), extension()->name(),
                                   debuggee_);

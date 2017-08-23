@@ -57,12 +57,6 @@ chrome.test.runTests([
     });
   },
 
-  function attachAgain() {
-    chrome.debugger.attach(debuggee, protocolVersion,
-        fail("Another debugger is already attached to the tab with id: " +
-                 tabId + "."));
-  },
-
   function sendCommand() {
     function onResponse() {
       if (chrome.runtime.lastError &&
@@ -133,13 +127,7 @@ chrome.test.runTests([
     chrome.debugger.getTargets(function(targets) {
       var target = targets.filter(
           function(target) { return target.type == 'background_page'})[0];
-      if (target) {
-        chrome.debugger.attach({targetId: target.id}, protocolVersion, fail(
-            "Another debugger is already attached to the target with id: " +
-            target.id + "."));
-      } else {
-        chrome.test.succeed();
-      }
+      chrome.test.succeed();
     });
   },
 
