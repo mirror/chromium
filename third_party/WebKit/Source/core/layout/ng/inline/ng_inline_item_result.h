@@ -6,6 +6,7 @@
 #define NGInlineItemResult_h
 
 #include "core/layout/ng/geometry/ng_box_strut.h"
+#include "core/layout/ng/ng_exclusion_space.h"
 #include "core/layout/ng/ng_layout_result.h"
 #include "platform/LayoutUnit.h"
 #include "platform/fonts/shaping/ShapeResult.h"
@@ -116,6 +117,16 @@ class CORE_EXPORT NGLineInfo {
   NGInlineItemResults& Results() { return results_; }
   const NGInlineItemResults& Results() const { return results_; }
 
+  NGExclusionSpace* ExclusionSpace() { return exclusion_space_.get(); }
+  const NGExclusionSpace& ExclusionSpace() const { return *exclusion_space_; }
+
+  void SetExclusionSpace(std::unique_ptr<NGExclusionSpace> exclusion_space) {
+    exclusion_space_ = std::move(exclusion_space);
+  }
+  std::unique_ptr<NGExclusionSpace> ReleaseExclusionSpace() {
+    return std::move(exclusion_space_);
+  }
+
   LayoutUnit TextIndent() const { return text_indent_; }
 
   LayoutUnit LineLeft() const { return line_left_; }
@@ -128,6 +139,8 @@ class CORE_EXPORT NGLineInfo {
  private:
   const ComputedStyle* line_style_ = nullptr;
   NGInlineItemResults results_;
+
+  std::unique_ptr<NGExclusionSpace> exclusion_space_;
 
   LayoutUnit line_left_;
   LayoutUnit available_width_;
