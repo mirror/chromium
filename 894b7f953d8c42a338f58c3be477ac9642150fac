@@ -34,6 +34,24 @@
       "revId": "894b7f953d8c42a338f58c3be477ac9642150fac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58c8682_2ca0b4a9",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-23T00:06:45Z",
+      "side": 1,
+      "message": "As discussed offline, I think consuming elements that have special needs should handle it case-by-case basis, instead of changing cr-dialog\u0027s default.",
+      "parentUuid": "d9cb259b_23435550",
+      "revId": "894b7f953d8c42a338f58c3be477ac9642150fac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
