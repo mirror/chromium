@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e18ddbaf_028d27e4",
+        "filename": "components/offline_pages/core/offline_pages_ukm_reporter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-23T22:56:10Z",
+      "side": 1,
+      "message": "nit: remove empty line\n\nAnd thanks for making it happen.",
+      "revId": "0cd83f1010451a1840a186b959c3f5c68480619e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f01182e_bd95cdd3",
+        "filename": "components/offline_pages/core/offline_pages_ukm_reporter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-23T22:56:10Z",
+      "side": 1,
+      "message": "nit: I think this should go above constructor.\n\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "0cd83f1010451a1840a186b959c3f5c68480619e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
