@@ -169,6 +169,26 @@ suite('SiteDetails', function() {
     return siteDetailsElement;
   };
 
+  test('all site settings are shown', function() {
+    browserProxy.setPrefs(prefs);
+    testElement = createSiteDetails('https://foo.com:443');
+
+    // Add ContentsSettingsTypes which are not supposed to be shown on the Site
+    // Details page here.
+    var nonSiteDetailsContentSettingsTypes = [
+      settings.ContentSettingsTypes.COOKIES,
+      settings.ContentSettingsTypes.PROTOCOL_HANDLERS,
+      settings.ContentSettingsTypes.PROTECTED_CONTENT,
+      settings.ContentSettingsTypes.USB_DEVICES,
+      settings.ContentSettingsTypes.ZOOM_LEVELS,
+    ];
+
+    assertEquals(
+        Object.keys(settings.ContentSettingsTypes).length -
+            nonSiteDetailsContentSettingsTypes.length,
+        testElement.getCategoryList_().length);
+  });
+
   test('usage heading shows when site settings enabled', function() {
     browserProxy.setPrefs(prefs);
     // Expect usage to be hidden when Site Settings is disabled.
