@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "451b4810_4562174c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/input/SpellCheckMenuTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-23T18:41:08Z",
+      "side": 1,
+      "message": "The issue is that ImeActivityTestRule is a ContentShellActivityTestRule (so I assume it doesn\u0027t work with a ChromeActivityTestCase?), but when I tried to convert SpellCheckMenuTest to ContentShellActivityTestRule, the spell check underline doesn\u0027t appear. Do you know why that is?",
+      "parentUuid": "fcc34ea3_47ae7fc4",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 31
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66979c5a_fd11ce9e",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/input/SpellCheckMenuTest.java",
         "patchSetId": 2
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "a5768e3a_2397c5f4",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/TextSuggestionMenuTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-23T18:41:08Z",
+      "side": 1,
+      "message": "2) We don\u0027t dismiss the menu in the case that the input loses focus. In theory, you could tap on one spell check underline, then some JavaScript could move the cursor to another misspelled word, and you could end up replacing the wrong word. yosin@ filed a bug for this: crbug.com/736181. I think this is currently more of a theoretical concern than something that\u0027s actually causing issues in practice. For suggestion markers, we won\u0027t ever replace the wrong span, since we look for it by a unique identifier, but the replacement will fail if the cursor gets moved off the span in question.\n\nWe dismiss for touching outside the menu; it doesn\u0027t matter whether you\u0027re tapping text or not.\n\nWe don\u0027t dismiss for JS deleting/modifying text. We could, I suppose, but this issue hasn\u0027t come up in practice yet.\n\n\n4) We don\u0027t scroll the menu if the webpage is scrolled. The user can\u0027t scroll the page by touch when the menu is open, since tapping outside the menu closes it. There may be some other input device (e.g. an external keyboard) that lets you scroll it though? At one point I had code that used CursorAnchorInfo so we could track cases like this, but aelias@ said it would probably be better just to close the menu.",
+      "parentUuid": "06178acf_60c740d3",
+      "range": {
+        "startLine": 35,
+        "startChar": 13,
+        "endLine": 35,
+        "endChar": 35
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd08768a_6c859766",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/TextSuggestionMenuTest.java",
         "patchSetId": 2
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "0222af7b_0db8fb2c",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/TextSuggestionMenuTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-23T18:41:08Z",
+      "side": 1,
+      "message": "Oh really? It doesn\u0027t matter as long as the cursor ends up still touching the word. I\u0027ll change it to 1 if 0 is distracting.",
+      "parentUuid": "cd08768a_6c859766",
+      "range": {
+        "startLine": 60,
+        "startChar": 39,
+        "endLine": 60,
+        "endChar": 40
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5589da10_5100db45",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/TextSuggestionMenuTest.java",
         "patchSetId": 2
@@ -128,6 +200,30 @@
       "writtenOn": "2017-08-23T18:28:31Z",
       "side": 1,
       "message": "Do you also need to check if the menu gets dismissed?",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 5
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47322af4_156110d0",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/TextSuggestionMenuTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-23T18:41:08Z",
+      "side": 1,
+      "message": "I suppose that would be good to test :)",
+      "parentUuid": "5589da10_5100db45",
       "range": {
         "startLine": 67,
         "startChar": 4,
@@ -180,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "a388fc03_25bb04a2",
+        "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-23T18:41:08Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "12679f15_998e4a36",
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e63c33c5_1ca9ed3b",
         "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionInfo.h",
         "patchSetId": 2
@@ -191,6 +305,24 @@
       "writtenOn": "2017-08-23T08:38:57Z",
       "side": 1,
       "message": "Which do we want to use |int32_t| or |uint32_t| for |suggestion_index|?\n\nTextSuggestionController::ApplyTextSuggestion() takes |uint32_t| for\n|suggestion_index|.",
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b588885_4df61949",
+        "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionInfo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-23T18:41:08Z",
+      "side": 1,
+      "message": "Probably uint32_t in C++...it does get cast to a signed int when we send it up to Java though.",
+      "parentUuid": "e63c33c5_1ca9ed3b",
       "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
