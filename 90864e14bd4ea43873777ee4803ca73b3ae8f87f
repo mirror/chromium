@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f0e74e_f3feed97",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_item_result.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-08-23T22:41:17Z",
+      "side": 1,
+      "message": "Is this still needed then?",
+      "range": {
+        "startLine": 133,
+        "startChar": 18,
+        "endLine": 133,
+        "endChar": 34
+      },
+      "revId": "90864e14bd4ea43873777ee4803ca73b3ae8f87f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
