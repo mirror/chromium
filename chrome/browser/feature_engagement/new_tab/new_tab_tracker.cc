@@ -4,7 +4,10 @@
 
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h"
 
+#include <string>
+
 #include "base/feature_list.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/time/time.h"
 #include "chrome/browser/feature_engagement/tracker_factory.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
@@ -41,7 +44,7 @@ void NewTabTracker::OnOmniboxNavigation() {
 }
 
 void NewTabTracker::OnOmniboxFocused() {
-  if (ShouldShowPromo())
+  if (ShouldShowPromo(kIPHNewTabFeature))
     ShowPromo();
 }
 
@@ -49,16 +52,20 @@ void NewTabTracker::OnPromoClosed() {
   GetTracker()->Dismissed(kIPHNewTabFeature);
 }
 
-bool NewTabTracker::ShouldShowPromo() {
-  return GetTracker()->ShouldTriggerHelpUI(kIPHNewTabFeature);
-}
-
 void NewTabTracker::OnSessionTimeMet() {
   GetTracker()->NotifyEvent(events::kNewTabSessionTimeMet);
 }
 
 int NewTabTracker::GetSessionTimeRequiredToShowInMinutes() {
-  return kTwoHoursInMinutes;
+  if (!has_retrieved_field_trial_minutes) {
+    field_trial_minutes_value =
+        base::GetFieldTrialParamValueByFeature(kIPHNewTabFeature, "x_minutes");
+    has_retrieved_field_trial_minutes = true;
+  }
+
+  return field_trial_minutes_value.empty()
+             ? kTwoHoursInMinutes
+             : std::stoi(field_trial_minutes_value, nullptr);
 }
 
 void NewTabTracker::ShowPromo() {
