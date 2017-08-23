@@ -926,11 +926,6 @@ QuicPacketNumber QuicSentPacketManager::GetLargestSentPacket() const {
   return unacked_packets_.largest_sent_packet();
 }
 
-// Remove this method when deprecating QUIC_VERSION_33.
-QuicPacketNumber QuicSentPacketManager::GetLeastPacketAwaitedByPeer() const {
-  return least_packet_awaited_by_peer_;
-}
-
 void QuicSentPacketManager::SetNetworkChangeVisitor(
     NetworkChangeVisitor* visitor) {
   DCHECK(!network_change_visitor_);

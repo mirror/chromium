@@ -210,8 +210,6 @@ class QUIC_EXPORT_PRIVATE QuicSentPacketManager {
 
   QuicPacketNumber GetLargestSentPacket() const;
 
-  QuicPacketNumber GetLeastPacketAwaitedByPeer() const;
-
   void SetNetworkChangeVisitor(NetworkChangeVisitor* visitor);
 
   bool InSlowStart() const;
