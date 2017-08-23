@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c43b6f97_6f3c4fdd",
+        "filename": "ios/chrome/browser/web/resources/payment_request.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-23T18:23:11Z",
+      "side": 1,
+      "message": "The spec defines \"currencySystem\" to have the default value of \"urn:iso:std:iso:4217\", if the web developer does not specify it. When the web developer does not specify \"currencySystem\", its value is \"undefined\". Therefore, \"undefined\" \"currencySystem\" behaves the same as \"urn:iso:std:iso:4217\".\n\nThe spec is correct because the default value of \"currencySystem\" is set before that algorithm runs.",
+      "parentUuid": "2af3744d_9c6fc6ed",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 13
+      },
+      "revId": "71490dc9a7c49da58c78c8a58f58cab540b6baa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12efb241_bb48d897",
         "filename": "ios/chrome/browser/web/resources/payment_request.js",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "71490dc9a7c49da58c78c8a58f58cab540b6baa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7558b728_8bdf183b",
+        "filename": "ios/chrome/browser/web/resources/payment_request.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-23T18:23:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4dc0826f_58ac078f",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 211,
+        "endChar": 4
+      },
+      "revId": "71490dc9a7c49da58c78c8a58f58cab540b6baa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
