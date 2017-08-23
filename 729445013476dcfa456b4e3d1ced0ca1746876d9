@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e080d251_dc4275c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-23T06:17:46Z",
+      "side": 1,
+      "message": "Nope :/ According to [1], we might regress performance on \"setting inline transforms to strings that miss the fast path\". My plan was to just land it and see if the bots complain :/ Do you have any ideas?\n\n[1] https://chromium.googlesource.com/chromium/src/+/7d18ae343a06b83d460ee4084fa2f5bc0f1e4acf",
+      "parentUuid": "792b1fb8_643eef5d",
+      "revId": "729445013476dcfa456b4e3d1ced0ca1746876d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3caf0ab_c944465d",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenRange.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-23T06:02:32Z",
       "side": 1,
       "message": "what does sub_first mean? Is there a more descriptive name you can think of?",
+      "revId": "729445013476dcfa456b4e3d1ced0ca1746876d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25aa662e_d9644e52",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenRange.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-23T06:17:46Z",
+      "side": 1,
+      "message": "Changed to sub_range_first?",
+      "parentUuid": "f3caf0ab_c944465d",
       "revId": "729445013476dcfa456b4e3d1ced0ca1746876d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "729445013476dcfa456b4e3d1ced0ca1746876d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "505eb961_3751f621",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenRange.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-23T06:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66d00a72_b578156c",
+      "revId": "729445013476dcfa456b4e3d1ced0ca1746876d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
