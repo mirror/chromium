@@ -9,6 +9,9 @@
 #include <limits>
 
 #include "base/logging.h"
+#include "base/strings/string_number_conversions.h"
+#include "net/quic/core/quic_versions.h"
+#include "net/socket/next_proto.h"
 #include "net/spdy/platform/api/spdy_string_utils.h"
 
 namespace net {
@@ -31,6 +34,11 @@ bool ParsePositiveIntegerImpl(SpdyStringPiece::const_iterator c,
     *value += *c - '0';
   }
   return (c == end && *value > 0);
+}
+
+uint32_t ReverseUIntByteOrder(uint32_t input) {
+  return (input << 24) | ((input << 8) & 0xff0000) | ((input >> 8) & 0xff00) |
+         ((input >> 24) & 0xff);
 }
 
 }  // namespace
@@ -76,6 +84,10 @@ bool SpdyAltSvcWireFormat::ParseHeaderFieldValue(
         !PercentDecode(c, percent_encoded_protocol_id_end, &protocol_id)) {
       return false;
     }
+    // Check for IETF format for advertising QUIC:
+    // h2q=":49288";quic=51303338;quic=51303334
+    const bool is_ietf_format_quic =
+        (protocol_id.compare(IETF_FORMAT_QUIC_PROTOCOL_ID) == 0);
     c = percent_encoded_protocol_id_end;
     if (c == value.end()) {
       return false;
@@ -146,7 +158,7 @@ bool SpdyAltSvcWireFormat::ParseHeaderFieldValue(
         if (!ParsePositiveInteger32(parameter_value_begin, c, &max_age)) {
           return false;
         }
-      } else if (parameter_name.compare("v") == 0) {
+      } else if (!is_ietf_format_quic && parameter_name.compare("v") == 0) {
         // Version is a comma separated list of positive integers enclosed in
         // quotation marks.  Since it can contain commas, which are not
         // delineating alternative service entries, |parameters_end| and |c| can
@@ -177,6 +189,25 @@ bool SpdyAltSvcWireFormat::ParseHeaderFieldValue(
             return false;
           }
         }
+      } else if (is_ietf_format_quic && parameter_name.compare("quic") == 0) {
+        // IETF format for advertising QUIC. Version is hex encoding of QUIC
+        // version tag. Hex-encoded string should not include leading "0x" or
+        // leading zeros.
+        // Example for advertising QUIC versions "Q038" and "Q034":
+        // h2q=":49288";quic=51303338;quic=51303334
+        if (*parameter_value_begin == '0') {
+          return false;
+        }
+        // Versions will be stored as the little-endian uint32_t value of the
+        // version tag. Example: QUIC version "Q038", which is advertised as:
+        // h2q=":49288";quic=51303338
+        // ... will be stored in |versions| as 0x38333051.
+        uint32_t quic_version_tag_reversed;
+        if (!base::HexStringToUInt(std::string(parameter_value_begin, c),
+                                   &quic_version_tag_reversed)) {
+          return false;
+        }
+        version.push_back(ReverseUIntByteOrder(quic_version_tag_reversed));
       }
     }
     altsvc_vector->emplace_back(protocol_id, host, port, max_age, version);
@@ -198,6 +229,9 @@ SpdyString SpdyAltSvcWireFormat::SerializeHeaderFieldValue(
     if (!value.empty()) {
       value.push_back(',');
     }
+    // Check for IETF format for advertising QUIC.
+    const bool is_ietf_format_quic =
+        (altsvc.protocol_id.compare(IETF_FORMAT_QUIC_PROTOCOL_ID) == 0);
     // Percent escape protocol id according to
     // http://tools.ietf.org/html/rfc7230#section-3.2.6.
     for (char c : altsvc.protocol_id) {
@@ -243,15 +277,33 @@ SpdyString SpdyAltSvcWireFormat::SerializeHeaderFieldValue(
       SpdyStringAppendF(&value, "; ma=%d", altsvc.max_age);
     }
     if (!altsvc.version.empty()) {
-      value.append("; v=\"");
-      for (VersionVector::const_iterator it = altsvc.version.begin();
-           it != altsvc.version.end(); ++it) {
-        if (it != altsvc.version.begin()) {
-          value.append(",");
+      if (is_ietf_format_quic) {
+        for (VersionVector::const_iterator it = altsvc.version.begin();
+             it != altsvc.version.end(); ++it) {
+          value.append("; quic=");
+          if (*it == 0) {
+            value.append("0");
+          } else {
+            QuicTag quic_version_tag = *it;
+            std::string hex_string =
+                base::HexEncode(&quic_version_tag, sizeof(QuicTag));
+            size_t first_not_zero = hex_string.find_first_not_of('0');
+            DCHECK_NE(std::string::npos, first_not_zero);
+            value.append(hex_string, first_not_zero,
+                         hex_string.size() - first_not_zero);
+          }
         }
-        SpdyStringAppendF(&value, "%d", *it);
+      } else {
+        value.append("; v=\"");
+        for (VersionVector::const_iterator it = altsvc.version.begin();
+             it != altsvc.version.end(); ++it) {
+          if (it != altsvc.version.begin()) {
+            value.append(",");
+          }
+          SpdyStringAppendF(&value, "%d", *it);
+        }
+        value.append("\"");
       }
-      value.append("\"");
     }
   }
   return value;
