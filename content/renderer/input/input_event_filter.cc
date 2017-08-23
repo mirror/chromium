@@ -276,7 +276,7 @@ void InputEventFilter::DidForwardToHandlerAndOverscroll(
   }
   if (callback) {
     std::move(callback).Run(ack_state, latency_info,
-                            std::move(overscroll_params));
+                            std::move(overscroll_params), base::nullopt);
   }
 }
 
@@ -286,7 +286,8 @@ void InputEventFilter::SendInputEventAck(
     int unique_touch_event_id,
     InputEventAckState ack_state,
     const ui::LatencyInfo& latency_info,
-    std::unique_ptr<ui::DidOverscrollParams> overscroll_params) {
+    std::unique_ptr<ui::DidOverscrollParams> overscroll_params,
+    base::Optional<cc::TouchAction> touch_action) {
   bool main_thread = main_task_runner_->BelongsToCurrentThread();
 
   InputEventAck ack(main_thread ? InputEventAckSource::MAIN_THREAD

@@ -4,6 +4,7 @@
 
 mojom = "//content/common/native_types.mojom"
 public_headers = [
+  "//cc/input/touch_action.h",
   "//content/common/edit_command.h",
   "//content/common/frame_owner_properties.h",
   "//content/common/frame_replication_state.h",
@@ -73,6 +74,7 @@ type_mappings = [
   "content.mojom.RendererPreferences=content::RendererPreferences",
   "content.mojom.ResizeParams=content::ResizeParams",
   "content.mojom.ScrollUnits=blink::WebGestureEvent::ScrollUnits",
+  "content.mojom.TouchAction=cc::TouchAction",
   "content.mojom.TouchState=blink::WebTouchPoint::State",
   "content.mojom.WebPopupType=blink::WebPopupType",
   "content.mojom.WebPreferences=content::WebPreferences",

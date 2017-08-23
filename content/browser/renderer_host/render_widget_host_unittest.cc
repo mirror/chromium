@@ -909,7 +909,7 @@ class RenderWidgetHostWithSourceTest
 void CallCallback(mojom::WidgetInputHandler::DispatchEventCallback callback,
                   InputEventAckState state) {
   std::move(callback).Run(InputEventAckSource::COMPOSITOR_THREAD,
-                          ui::LatencyInfo(), state, base::nullopt);
+                          ui::LatencyInfo(), state, base::nullopt, nullptr);
 }
 
 }  // namespace
