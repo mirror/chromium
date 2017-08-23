@@ -1,0 +1,20 @@
+{
+    "data": [
+        {
+            "cummulative_distribution": [
+                0.1436077057793345,
+                0.3327495621716287,
+                1.0
+            ],
+            "name": "rare_non_inherited_properties_rule"
+        },
+        {
+            "cummulative_distribution": [
+                0.488245931284,
+                1.0
+            ],
+            "name": "rare_inherited_properties_rule"
+        }
+    ],
+    "parameters": {}
+}
