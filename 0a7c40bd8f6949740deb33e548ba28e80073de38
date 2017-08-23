@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0bf6a61f_d9de8337",
+        "filename": "chrome/installer/zucchini/algorithm.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T08:15:05Z",
+      "side": 1,
+      "message": "do you want to assert std::is_unsigned\u003cT\u003e::value? otherwise, shouldn\u0027t this also check that begin and size are not negative?",
+      "revId": "0a7c40bd8f6949740deb33e548ba28e80073de38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e548254_d8bfcbc3",
         "filename": "chrome/installer/zucchini/disassembler_win32.cc",
         "patchSetId": 9

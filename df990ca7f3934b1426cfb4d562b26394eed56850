@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "29a4e8c2_c8f1c6ed",
+        "filename": "chrome/installer/zucchini/disassembler_win32.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T08:15:05Z",
+      "side": 1,
+      "message": "my read of the spec (C++-11 9.4.2 \"Static data members\" paragraph 3: \"The member shall still be defined in a namespace scope if it is odr-used (3.2) in the program and the namespace scope definition shall not contain an initializer.\") is that you leave this as-is and add this to the .cc file:\n\n// static\nconstexpr ExecutableType Win32X86Traits::kExeType;\n\ndoes that work?",
+      "parentUuid": "4fca6138_287f2e88",
+      "revId": "df990ca7f3934b1426cfb4d562b26394eed56850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60e263eb_2d7d1665",
         "filename": "chrome/installer/zucchini/main_utils.cc",
         "patchSetId": 5
