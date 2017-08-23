@@ -1,7 +1,6 @@
 <!doctype html>
 <!--
-Tests that screen taps aren't registered while in VR when viewer is
-Daydream View
+Tests that screen taps aren't registered while in VR
 -->
 <html>
   <head>
@@ -13,7 +12,7 @@ Daydream View
     <script src="../resources/webvr_e2e.js"></script>
     <script src="../resources/webvr_boilerplate.js"></script>
     <script>
-      var t = async_test("Screen taps not registered when in VR w/ DD View");
+      var t = async_test("Screen taps not registered when in VR");
       window.addEventListener("vrdisplaypresentchange",
           () => {finishJavaScriptStep();}, false);
       var numTaps = 0;
