@@ -52,7 +52,33 @@
 #include "url/scheme_host_port.h"
 #include "url/url_util.h"
 
+#include "components/cronet/interfaces/cronet.mojom.h"
+#include "mojo/edk/embedder/embedder.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
+
 namespace {
+
+class CronetEngineImpl : public cronet::mojom::CronetEngine {
+ public:
+  // NOTE: A common pattern for interface implementations which have one
+  // instance per client is to take an InterfaceRequest in the constructor.
+
+  explicit CronetEngineImpl() {}
+  ~CronetEngineImpl() override {}
+
+  // sample::mojom::Logger:
+  void StartNetLogToFile(const std::string& message) override {
+    LOG(ERROR) << "[Logger] " << message;
+  }
+
+  void CreateWithParams(cronet::mojom::CronetEngineParamsPtr params,
+                        CreateWithParamsCallback callback) override {}
+
+  void GetDefaultUserAgent(GetDefaultUserAgentCallback callback) override {}
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(CronetEngineImpl);
+};
 
 // Request context getter for Cronet.
 class CronetURLRequestContextGetter : public net::URLRequestContextGetter {
@@ -132,10 +158,23 @@ void CronetEnvironment::Initialize() {
 
   ios_global_state::BuildMessageLoop();
   ios_global_state::CreateNetworkChangeNotifier();
+
+  // mojo::edk::Init();
 }
 
 bool CronetEnvironment::StartNetLog(base::FilePath::StringType file_name,
                                     bool log_bytes) {
+  std::unique_ptr<cronet::mojom::CronetEngine> impl =
+      base::MakeUnique<CronetEngineImpl>();
+  impl->StartNetLogToFile(file_name);
+
+  // base::MessageLoop message_loop;
+
+  // cronet::mojom::CronetEnginePtr cronet_engine;
+  // mojo::MakeStrongBinding(base::MakeUnique<CronetEngineImpl>(),
+  //                        mojo::MakeRequest(&cronet_engine));
+  // cronet_engine->StartNetLogToFile("zzzzzz");
+
   if (file_name.empty())
     return false;
 
@@ -239,6 +278,7 @@ void CronetEnvironment::Start() {
 
   main_context_getter_ = new CronetURLRequestContextGetter(
       this, network_io_thread_->task_runner());
+
   base::subtle::MemoryBarrier();
   PostToNetworkThread(FROM_HERE,
                       base::Bind(&CronetEnvironment::InitializeOnNetworkThread,
