@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72e0ee0c_a8cd919e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-23T19:53:48Z",
+      "side": 1,
+      "message": "This should probably be done after setting the callback?",
+      "revId": "fef5421074359063954a907e087e8c19cf07578d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac141208_d3e43c5f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-23T19:53:48Z",
+      "side": 1,
+      "message": "I\u0027d rather just get rid of TriggerConditions altogether from this patch.",
+      "revId": "fef5421074359063954a907e087e8c19cf07578d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c263aba2_40b3d89f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-23T19:53:48Z",
+      "side": 1,
+      "message": "@VisibleForTesting\nalso, probably you could get away with package private.",
+      "revId": "fef5421074359063954a907e087e8c19cf07578d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662b8f5b_88902086",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-23T19:53:48Z",
+      "side": 1,
+      "message": "This should be done in one place, not both.",
+      "revId": "fef5421074359063954a907e087e8c19cf07578d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
