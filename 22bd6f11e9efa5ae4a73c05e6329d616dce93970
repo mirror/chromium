@@ -683,6 +683,24 @@
     },
     {
       "key": {
+        "uuid": "fe8d8c72_b02ce8ca",
+        "filename": "chrome/browser/resources/policy_base.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-23T22:51:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8b0fabc6_0c84ff56",
+      "revId": "22bd6f11e9efa5ae4a73c05e6329d616dce93970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdd4c56d_98a11624",
         "filename": "chrome/browser/resources/policy_common.css",
         "patchSetId": 8
@@ -800,6 +818,30 @@
       "side": 1,
       "message": "At the time of construction, web_ui is not yet available, so we can\u0027t get a path to user directory from it. Furthermore, documentation for RegisterMessages suggests that this is the place to perform additional initialization, see https://cs.chromium.org/chromium/src/content/public/browser/web_ui_message_handler.h?q\u003dwebuimessagehandler::registermessages\u0026sq\u003dpackage:chromium\u0026l\u003d78",
       "parentUuid": "ec321473_61fc494f",
+      "range": {
+        "startLine": 85,
+        "startChar": 17,
+        "endLine": 85,
+        "endChar": 0
+      },
+      "revId": "22bd6f11e9efa5ae4a73c05e6329d616dce93970",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0114f36f_2277417d",
+        "filename": "chrome/browser/ui/webui/policy_admin_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-23T22:51:09Z",
+      "side": 1,
+      "message": "Sounds good, thanks for the explanation.",
+      "parentUuid": "9fe6893a_e5e5d834",
       "range": {
         "startLine": 85,
         "startChar": 17,

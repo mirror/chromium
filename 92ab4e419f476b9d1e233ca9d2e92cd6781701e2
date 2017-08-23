@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "423a7270_a72a32a3",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-23T22:51:09Z",
+      "side": 1,
+      "message": "Unlike C++, the JS style guide doesn\u0027t allow this style of control structures.\n\nPlease add brackets as per https://google.github.io/styleguide/jsguide.html#formatting-braces-all\n\nif (table) {\n  table.setPolicyValues(values.extensionPolicies[extensionId]);\n}\n\n(here and below)",
+      "range": {
+        "startLine": 24,
+        "startChar": 16,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "92ab4e419f476b9d1e233ca9d2e92cd6781701e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf9253f_f0d849b0",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-23T22:51:09Z",
+      "side": 1,
+      "message": "nit: I\u0027m not sure if this TODO is relevant. \"once the page goes out of experimental\", wouldn\u0027t the kEnablePolicyTool constant be removed? Whoever\u0027s removing the switch would notice the switch here as well.",
+      "range": {
+        "startLine": 60,
+        "startChar": 71,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "92ab4e419f476b9d1e233ca9d2e92cd6781701e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5509ac_f657bfd8",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-08-23T22:51:09Z",
+      "side": 1,
+      "message": "I hadn\u0027t realized the existing policy browser test was like this.\nIt\u0027s... probably not how we write WebUI tests anymore. I\u0027ll let WebUI owners recommend what to test within a C++ browsertest and what to test within a javscript test.",
+      "range": {
+        "startLine": 76,
+        "startChar": 26,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "92ab4e419f476b9d1e233ca9d2e92cd6781701e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
