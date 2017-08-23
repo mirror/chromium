@@ -233,28 +233,21 @@ void CSSParserImpl::ParseStyleSheet(const String& string,
                      context->Mode());
 
   TRACE_EVENT_BEGIN0("blink,blink_style",
-                     "CSSParserImpl::parseStyleSheet.tokenize");
+                     "CSSParserImpl::parseStyleSheet.parse");
   CSSTokenizer tokenizer(string);
   CSSParserTokenStream stream(tokenizer);
-  // TODO(shend): Use streams instead of ranges. Streams will ruin
-  // tokenize/parse metrics as we will be tokenizing on demand.
-  const CSSParserTokenRange range = stream.MakeRangeToEOF();
-  TRACE_EVENT_END0("blink,blink_style",
-                   "CSSParserImpl::parseStyleSheet.tokenize");
-
-  TRACE_EVENT_BEGIN0("blink,blink_style",
-                     "CSSParserImpl::parseStyleSheet.parse");
   CSSParserImpl parser(context, style_sheet);
   if (defer_property_parsing) {
     parser.lazy_state_ = new CSSLazyParsingState(
         context, tokenizer.TakeEscapedStrings(), string, parser.style_sheet_);
   }
-  bool first_rule_valid = parser.ConsumeRuleList(
-      range, kTopLevelRuleList, [&style_sheet](StyleRuleBase* rule) {
-        if (rule->IsCharsetRule())
-          return;
-        style_sheet->ParserAppendRule(rule);
-      });
+  bool first_rule_valid =
+      parser.ConsumeRuleList(stream.MakeRangeToEOF(), kTopLevelRuleList,
+                             [&style_sheet](StyleRuleBase* rule) {
+                               if (rule->IsCharsetRule())
+                                 return;
+                               style_sheet->ParserAppendRule(rule);
+                             });
   style_sheet->SetHasSyntacticallyValidCSSHeader(first_rule_valid);
   if (parser.lazy_state_)
     parser.lazy_state_->FinishInitialParsing();
