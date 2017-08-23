@@ -229,9 +229,13 @@ class ExistingUserController
   void PerformLogin(const UserContext& user_context,
                     LoginPerformer::AuthorizationMode auth_mode);
 
-  // calls login() on previously-used |login_performer|.
+  // If |require_password_reentry| is false, calls login() on previously-used
+  // |login_performer_|.
+  // If |require_password_reentry| is true, asks the user to enter their
+  // password again.
   void ContinuePerformLogin(LoginPerformer::AuthorizationMode auth_mode,
-                            const UserContext& user_context);
+                            const UserContext& user_context,
+                            bool require_password_reentry);
 
   // Removes the constraint that user home mount requires ext4 encryption from
   // |user_context|, then calls login() on previously-used |login_performer|.
