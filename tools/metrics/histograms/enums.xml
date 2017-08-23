@@ -23923,6 +23923,8 @@ from previous Chrome versions.
   <int value="1312025202" label="NTPOfflinePageSuggestions:disabled"/>
   <int value="1314681756" label="NoStatePrefetch:disabled"/>
   <int value="1317562265" label="SeccompSandboxAndroid:disabled"/>
+  <int value="1317940924"
+      label="OverlayScrollbarFlashAfterAnyScrollUpdate:disabled"/>
   <int value="1318073661" label="MaterialDesignExtensions:enabled"/>
   <int value="1319725131" label="enable-distance-field-text"/>
   <int value="1320201920" label="enable-touchpad-three-finger-click"/>
@@ -24026,6 +24028,8 @@ from previous Chrome versions.
   <int value="1634897915" label="password-import-export:enabled"/>
   <int value="1636962093" label="disable-material-design-ntp"/>
   <int value="1646498561" label="OfflineBookmarks:disabled"/>
+  <int value="1654264110"
+      label="OverlayScrollbarFlashAfterAnyScrollUpdate:enabled"/>
   <int value="1657713458" label="disable-virtual-keyboard-overscroll"/>
   <int value="1658644418" label="disable-app-list-voice-search"/>
   <int value="1661925474" label="silent-debugger-extension-api"/>
