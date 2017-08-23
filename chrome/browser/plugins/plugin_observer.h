@@ -12,6 +12,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "chrome/common/features.h"
+#include "chrome/common/plugin.mojom.h"
 #include "components/component_updater/component_updater_service.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
@@ -30,6 +31,9 @@ class PluginObserver : public content::WebContentsObserver,
                      base::ProcessId plugin_pid) override;
   bool OnMessageReceived(const IPC::Message& message,
                          content::RenderFrameHost* render_frame_host) override;
+  chrome::mojom::PluginRendererPtr& plugin_renderer_interface() {
+    return plugin_renderer_interface_;
+  }
 
  private:
   class ComponentObserver;
@@ -56,8 +60,11 @@ class PluginObserver : public content::WebContentsObserver,
   // Stores all ComponentObservers, keyed by their routing ID.
   std::map<int, std::unique_ptr<ComponentObserver>> component_observers_;
 
+  chrome::mojom::PluginRendererPtr plugin_renderer_interface_;
+
   base::WeakPtrFactory<PluginObserver> weak_ptr_factory_;
 
+ private:
   DISALLOW_COPY_AND_ASSIGN(PluginObserver);
 };
 
