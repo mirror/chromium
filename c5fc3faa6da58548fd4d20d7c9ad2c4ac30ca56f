@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "558b46f7_37bc1c76",
+        "filename": "chrome/browser/password_manager/password_manager_interactive_uitest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-23T07:04:11Z",
+      "side": 1,
+      "message": "Thanks for fixing this. Please add a comment that the class was created to variate the list of enabled features. Once the fallback becomes a permanent feature, the test fixture can be removed. \n\nI believe we should modify other fallback tests in the same way. See for details\nhttps://chromium-review.googlesource.com/c/chromium/src/+/612081\nhttps://codereview.chromium.org/2915763003/",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 47
+      },
+      "revId": "c5fc3faa6da58548fd4d20d7c9ad2c4ac30ca56f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
