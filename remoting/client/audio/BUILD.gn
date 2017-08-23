@@ -5,12 +5,13 @@
 source_set("audio") {
   sources = [
     "async_audio_frame_supplier.h",
-    "audio_buffer.h",
     "audio_frame_supplier.h",
     "audio_player.cc",
     "audio_player.h",
     "audio_player_android.cc",
     "audio_player_android.h",
+    "audio_player_buffer.cc",
+    "audio_player_buffer.h",
     "audio_stream_consumer.h",
   ]
 
@@ -35,6 +36,7 @@ source_set("unit_tests") {
   testonly = true
 
   sources = [
+    "audio_player_buffer_unittest.cc",
     "audio_player_unittest.cc",
   ]
 
