@@ -15,7 +15,6 @@
 #include "cc/debug/rendering_stats_instrumentation.h"
 #include "cc/layers/recording_source.h"
 #include "cc/paint/image_id.h"
-#include "cc/paint/paint_canvas.h"
 #include "skia/ext/analysis_canvas.h"
 #include "third_party/skia/include/core/SkPicture.h"
 #include "ui/gfx/color_space.h"
@@ -47,12 +46,6 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
     // The ImageProvider used to replace images during playback.
     ImageProvider* image_provider = nullptr;
   };
-
-  void SetupCanvasForRaster(PaintCanvas* canvas,
-                            const gfx::Rect& canvas_bitmap_rect,
-                            const gfx::Rect& canvas_playback_rect,
-                            const gfx::AxisTransform2d& raster_transform,
-                            bool should_clear_canvas) const;
 
   // Helper function to apply a few common operations before passing the canvas
   // to the shorter version. This is useful for rastering into tiles.
@@ -120,6 +113,10 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
   virtual sk_sp<SkPicture> GetFlattenedPicture();
   virtual size_t GetMemoryUsage() const;
 
+  const DisplayItemList* display_list() const { return display_list_.get(); }
+
+  SkColor background_color() const { return background_color_; }
+
  protected:
   // RecordingSource is the only class that can create a raster source.
   friend class RecordingSource;
@@ -147,7 +144,7 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
                     ImageProvider* image_provider = nullptr,
                     SkPicture::AbortCallback* callback = nullptr) const;
 
-  void ClearCanvasForPlayback(PaintCanvas* canvas) const;
+  void ClearCanvasForPlayback(SkCanvas* canvas) const;
 
   DISALLOW_COPY_AND_ASSIGN(RasterSource);
 };
