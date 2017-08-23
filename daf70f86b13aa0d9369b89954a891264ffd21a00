@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9fa3808_f80c608f",
+        "filename": "chrome/android/java/res/drawable/site_explore_page_indicator.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-23T11:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e83d601e_9324994a",
+      "range": {
+        "startLine": 1,
+        "startChar": 6,
+        "endLine": 1,
+        "endChar": 13
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "284d435d_d7218305",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88436b0_bc538d53",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-23T11:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "284d435d_d7218305",
+      "range": {
+        "startLine": 27,
+        "startChar": 29,
+        "endLine": 27,
+        "endChar": 56
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "88df5758_89b083ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-23T11:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85baee72_9d9251d3",
+      "range": {
+        "startLine": 31,
+        "startChar": 40,
+        "endLine": 31,
+        "endChar": 44
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4d1a509_5e830f01",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7de3a05e_60d52d22",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-23T11:02:35Z",
+      "side": 1,
+      "message": "Not needed. Thanks",
+      "parentUuid": "c4d1a509_5e830f01",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 28
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "cebacbbe_e60b6d42",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-23T11:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bccf3f44_9ec76af0",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 31
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9524ff7_d8561f2e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90294e50_3774e6de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-23T11:02:35Z",
+      "side": 1,
+      "message": "At some point I wanted to make this view reusable and make it always be on the bottom of the view pager and centered. But then again if someone was to reuse this view, they should also probably have the freedom to put it wherever they want. I agree that it looks better in the xml. Moved it :)",
+      "parentUuid": "f9524ff7_d8561f2e",
+      "range": {
+        "startLine": 64,
+        "startChar": 17,
+        "endLine": 64,
+        "endChar": 39
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "8b6c3b25_f2643abb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-23T11:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "435aadb5_5da15659",
+      "range": {
+        "startLine": 69,
+        "startChar": 17,
+        "endLine": 69,
+        "endChar": 34
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dddde43a_309fce5a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
         "patchSetId": 1
@@ -183,6 +351,30 @@
       "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c69b71_61f55615",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-23T11:02:35Z",
+      "side": 1,
+      "message": "Uhh yeah. Thanks.",
+      "parentUuid": "dddde43a_309fce5a",
+      "range": {
+        "startLine": 81,
+        "startChar": 12,
+        "endLine": 81,
+        "endChar": 72
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "c490b444_02d48609",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-23T11:02:35Z",
+      "side": 1,
+      "message": "Setting it at the very end is probably best.",
+      "parentUuid": "df8ee9d7_2664516e",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 19
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8ae18f0_3596d6b9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
         "patchSetId": 1
@@ -229,6 +445,30 @@
       "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c31b3fe8_5b047394",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-23T11:02:35Z",
+      "side": 1,
+      "message": "I did think that, but I reasoned that because we want to set the space between each element, this weird if statement was doing exactly that - setting only the spaces between the dots. And this would allow odd numbers to be put as spaces. With the integer division we are bound to set only even numbered space between dots. But I don\u0027t mind - changed it :) If ever we need odd number space, we can change it back.",
+      "parentUuid": "a8ae18f0_3596d6b9",
+      "range": {
+        "startLine": 85,
+        "startChar": 20,
+        "endLine": 85,
+        "endChar": 33
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "fc6a7981_b0712a08",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-23T11:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fffff4f4_226f062e",
+      "range": {
+        "startLine": 100,
+        "startChar": 19,
+        "endLine": 100,
+        "endChar": 39
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30257d8c_3c1ac7f4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
         "patchSetId": 1
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "e5d3a008_7e73f5ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExplorePageIndicatorView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-23T11:02:35Z",
+      "side": 1,
+      "message": "Setting to null seems easier. And it should be safe as mViewPager is only used after onAttachToWindow().",
+      "parentUuid": "30257d8c_3c1ac7f4",
+      "range": {
+        "startLine": 104,
+        "startChar": 8,
+        "endLine": 104,
+        "endChar": 18
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "604400c2_0736f672",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
         "patchSetId": 1
@@ -298,6 +586,30 @@
       "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eed1467_d584cd5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-23T11:02:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "604400c2_0736f672",
+      "range": {
+        "startLine": 31,
+        "startChar": 20,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "daf70f86b13aa0d9369b89954a891264ffd21a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
