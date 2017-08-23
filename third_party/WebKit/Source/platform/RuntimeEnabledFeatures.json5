@@ -670,6 +670,9 @@
       name: "MobileLayoutTheme",
     },
     {
+      name: "ModernMediaControls",
+    },
+    {
       name: "ModuleScripts",
       status: "stable",
     },

@@ -125,6 +125,7 @@ MEDIA_EXPORT extern const base::Feature kUseNewMediaCache;
 MEDIA_EXPORT extern const base::Feature kVideoBlitColorAccuracy;
 MEDIA_EXPORT extern const base::Feature kVideoColorManagement;
 MEDIA_EXPORT extern const base::Feature kUseSurfaceLayerForVideo;
+MEDIA_EXPORT extern const base::Feature kUseModernMediaControls;
 
 #if defined(OS_ANDROID)
 MEDIA_EXPORT extern const base::Feature kVideoFullscreenOrientationLock;

@@ -332,4 +332,8 @@ std::string GetEffectiveAutoplayPolicy(const base::CommandLine& command_line) {
 #endif
 }
 
+// Enables the new redesigned media controls.
+const base::Feature kUseModernMediaControls{"UseModernMediaControls",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
+
 }  // namespace media
