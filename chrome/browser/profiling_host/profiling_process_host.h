@@ -69,7 +69,12 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
 
   // Sends a message to the profiling process that it dump the given process'
   // memory data to the given file.
-  void RequestProcessDump(base::ProcessId pid, const base::FilePath& dest);
+  void RequestProcessDump(base::ProcessId pid,
+                          const base::FilePath& dest);
+
+  // Sends a message to the profiling process that it report the given process'
+  // memory data to the crash server (slow-report).
+  void RequestProcessReport(base::ProcessId pid);
 
  private:
   friend struct base::DefaultSingletonTraits<ProfilingProcessHost>;
@@ -102,8 +107,15 @@ class ProfilingProcessHost : public content::BrowserChildProcessObserver,
                                mojo::ScopedHandle handle);
 
   void GetOutputFileOnBlockingThread(base::ProcessId pid,
-                                     const base::FilePath& dest);
-  void HandleDumpProcessOnIOThread(base::ProcessId pid, base::File file);
+                                     const base::FilePath& dest,
+                                     bool upload);
+  void HandleDumpProcessOnIOThread(base::ProcessId pid,
+                                   base::FilePath file_path,
+                                   base::File file,
+                                   bool upload);
+  void OnProcessDumpComplete(base::FilePath file_path,
+                             bool upload,
+                             bool success);
 
   void SetMode(Mode mode);
 
