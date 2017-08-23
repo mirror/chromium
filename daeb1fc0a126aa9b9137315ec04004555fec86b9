@@ -22,6 +22,30 @@
       "revId": "daeb1fc0a126aa9b9137315ec04004555fec86b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "099753f5_f795d7dd",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-23T15:19:29Z",
+      "side": 0,
+      "message": "OnRequestComplete() is called in Request\u0027s destructor. This method is not called for preconnects, since preconnects do not have a corresponding Request. JobController is now owned by Request, so we do not need to reset/cancel jobs because |this| is going away anyway in Request\u0027s destructor.",
+      "parentUuid": "b3f4ad75_74b40801",
+      "range": {
+        "startLine": 186,
+        "startChar": 3,
+        "endLine": 186,
+        "endChar": 0
+      },
+      "revId": "daeb1fc0a126aa9b9137315ec04004555fec86b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

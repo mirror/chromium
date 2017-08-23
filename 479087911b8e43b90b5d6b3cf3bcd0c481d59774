@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c3439b97_284d3172",
+        "filename": "net/http/http_stream_factory_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-23T15:19:29Z",
+      "side": 1,
+      "message": "Yes, I am going to remove the histograms in a follow-up. \nDeprecating a histogram needs a UMA owner review :)",
+      "parentUuid": "fe5a23c0_1521dd53",
+      "range": {
+        "startLine": 44,
+        "startChar": 59,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "479087911b8e43b90b5d6b3cf3bcd0c481d59774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c98a5c44_cfdb76fd",
         "filename": "net/http/http_stream_factory_impl.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "479087911b8e43b90b5d6b3cf3bcd0c481d59774",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd6afa90_0c33d1c5",
+        "filename": "net/http/http_stream_factory_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-23T15:19:29Z",
+      "side": 1,
+      "message": "Ack. We should get rid of it. I am going to upload a CL after this lands because that requires a UMA reviewer.",
+      "parentUuid": "c98a5c44_cfdb76fd",
+      "range": {
+        "startLine": 256,
+        "startChar": 70,
+        "endLine": 256,
+        "endChar": 0
+      },
+      "revId": "479087911b8e43b90b5d6b3cf3bcd0c481d59774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "be53b4d9_d4728100",
+        "filename": "net/http/http_stream_factory_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-23T15:19:29Z",
+      "side": 1,
+      "message": "Ack. Yes, there is no HttpStreamRequest for a preconnect. We can make a Preconnect JobController self destruct, but that involves a bit more cleanup.",
+      "parentUuid": "e25fd4a9_bbc8e53f",
+      "range": {
+        "startLine": 143,
+        "startChar": 56,
+        "endLine": 143,
+        "endChar": 0
+      },
+      "revId": "479087911b8e43b90b5d6b3cf3bcd0c481d59774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02ec44f3_ea5f47c6",
         "filename": "net/http/http_stream_factory_impl_job_controller.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "479087911b8e43b90b5d6b3cf3bcd0c481d59774",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39450cd_fd22cbc4",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-23T15:19:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02ec44f3_ea5f47c6",
+      "range": {
+        "startLine": 134,
+        "startChar": 28,
+        "endLine": 134,
+        "endChar": 35
+      },
+      "revId": "479087911b8e43b90b5d6b3cf3bcd0c481d59774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "36158f6a_374637ed",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-23T15:19:29Z",
+      "side": 1,
+      "message": "Done. Good idea!",
+      "parentUuid": "f5cdde91_559cee04",
+      "range": {
+        "startLine": 525,
+        "startChar": 21,
+        "endLine": 525,
+        "endChar": 0
+      },
+      "revId": "479087911b8e43b90b5d6b3cf3bcd0c481d59774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be4a1440_f848db84",
         "filename": "net/http/http_stream_factory_impl_request.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "479087911b8e43b90b5d6b3cf3bcd0c481d59774",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebcb4824_1850f6ef",
+        "filename": "net/http/http_stream_factory_impl_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-23T15:19:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be4a1440_f848db84",
+      "range": {
+        "startLine": 42,
+        "startChar": 63,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "479087911b8e43b90b5d6b3cf3bcd0c481d59774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
