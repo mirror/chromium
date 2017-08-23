@@ -284,7 +284,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void ShowContextMenuAtPoint(const gfx::Point& point, ui::MenuSourceType);
   void DismissTextHandles();
   void SetTextHandlesTemporarilyHidden(bool hidden);
-  void OnShowUnhandledTapUIIfNeeded(int x_dip, int y_dip);
+  void OnShowUnhandledTapUIIfNeeded(int x_dip, int y_dip, int text_height_dip);
   void OnSelectWordAroundCaretAck(bool did_select,
                                   int start_adjust,
                                   int end_adjust);

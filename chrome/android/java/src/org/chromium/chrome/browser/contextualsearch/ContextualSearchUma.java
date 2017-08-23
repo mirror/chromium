@@ -785,6 +785,20 @@ public class ContextualSearchUma {
     }
 
     /**
+     * Logs the size of the text Tapped and whether the panel was seen.
+     * @param wasPanelSeen Whether the panel was seen.
+     * @param textSizeDps The size of the text in DPs.
+     */
+    public static void logTextSizeTapped(boolean wasPanelSeen, int textSizeDps) {
+        String histogram = wasPanelSeen ? "Search.ContextualSearchTappedTextSizeSeen"
+                                        : "Search.ContextualSearchTappedTextSizeNotSeen";
+        int min = 1;
+        int max = 100;
+        int numBuckets = 50;
+        RecordHistogram.recordCustomCountHistogram(histogram, textSizeDps, min, max, numBuckets);
+    }
+
+    /**
      * Log whether results were seen due to a Tap with broad signals.
      * @param wasSearchContentViewSeen If the panel was opened.
      * @param isSecondTap Whether this was the second tap after an initial suppressed tap.

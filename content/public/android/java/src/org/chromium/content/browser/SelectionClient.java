@@ -24,10 +24,11 @@ public interface SelectionClient {
 
     /**
      * Requests to show the UI for an unhandled tap, if needed.
-     * @param x The x coordinate of the tap.
-     * @param y The y coordinate of the tap.
+     * @param x The x coordinate of the tap in pixels.
+     * @param y The y coordinate of the tap in pixels.
+     * @param textHeight The height of the text tapped in DPs.
      */
-    void showUnhandledTapUIIfNeeded(int x, int y);
+    void showUnhandledTapUIIfNeeded(int x, int y, int textHeight);
 
     /**
      * Acknowledges that a selectWordAroundCaret action has completed with the given result.

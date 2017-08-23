@@ -856,10 +856,11 @@ IPC_MESSAGE_ROUTED3(ViewHostMsg_SelectWordAroundCaretAck,
 
 #if defined(OS_ANDROID)
 // Notifies that an unhandled tap has occurred at the specified x,y position
-// and that the UI may need to be triggered.
-IPC_MESSAGE_ROUTED2(ViewHostMsg_ShowUnhandledTapUIIfNeeded,
+// on text with height text_height and that the UI may need to be triggered.
+IPC_MESSAGE_ROUTED3(ViewHostMsg_ShowUnhandledTapUIIfNeeded,
                     int /* x */,
-                    int /* y */)
+                    int /* y */,
+                    int /* text_height */)
 
 #elif defined(OS_MACOSX)
 // Receives content of a web page as plain text.

@@ -16,11 +16,12 @@ public class TapSuppressionHeuristics extends ContextualSearchHeuristics {
      * @param previousTapState The state of the previous tap, or {@code null}.
      * @param x The x position of the Tap.
      * @param y The y position of the Tap.
+     * @param textHeight The height of the text tapped.
      * @param tapsSinceOpen the number of Tap gestures since the last open of the panel.
      */
     TapSuppressionHeuristics(ContextualSearchSelectionController selectionController,
-            ContextualSearchTapState previousTapState, int x, int y, int tapsSinceOpen,
-            ContextualSearchContext contextualSearchContext, int tapDurationMs) {
+            ContextualSearchTapState previousTapState, int x, int y, int textHeight,
+            int tapsSinceOpen, ContextualSearchContext contextualSearchContext, int tapDurationMs) {
         super();
         mCtrSuppression = new CtrSuppression();
         mHeuristics.add(mCtrSuppression);
@@ -33,6 +34,7 @@ public class TapSuppressionHeuristics extends ContextualSearchHeuristics {
         mHeuristics.add(new ContextualSearchEntityHeuristic(contextualSearchContext));
         mHeuristics.add(new NearTopTapSuppression(selectionController, y));
         mHeuristics.add(new BarOverlapTapSuppression(selectionController, y));
+        mHeuristics.add(new SmallTextSuppression(textHeight));
         // General Tap Suppression and Tap Twice.
         TapSuppression tapSuppression =
                 new TapSuppression(selectionController, previousTapState, x, y, tapsSinceOpen);

@@ -110,6 +110,7 @@ bool SelectionPopupController::ShowSelectionMenu(
 
 void SelectionPopupController::OnShowUnhandledTapUIIfNeeded(int x_dip,
                                                             int y_dip,
+                                                            int text_heigh_dip,
                                                             float dip_scale) {
   JNIEnv* env = AttachCurrentThread();
   ScopedJavaLocalRef<jobject> obj = java_obj_.get(env);
@@ -117,7 +118,7 @@ void SelectionPopupController::OnShowUnhandledTapUIIfNeeded(int x_dip,
     return;
   Java_SelectionPopupController_onShowUnhandledTapUIIfNeeded(
       env, obj, static_cast<jint>(x_dip * dip_scale),
-      static_cast<jint>(y_dip * dip_scale));
+      static_cast<jint>(y_dip * dip_scale), static_cast<jint>(text_heigh_dip));
 }
 
 void SelectionPopupController::OnSelectWordAroundCaretAck(bool did_select,

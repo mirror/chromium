@@ -68,6 +68,9 @@ public class ContextualSearchSelectionController {
     private float mX;
     private float mY;
 
+    // Height of the text when tapped.
+    private int mTextHeight;
+
     // The time of the most last scroll activity, or 0 if none.
     private long mLastScrollTimeNs;
 
@@ -296,6 +299,7 @@ public class ContextualSearchSelectionController {
         mTapTimeNanoseconds = 0;
         mTapDurationMs = INVALID_DURATION;
         mDidExpandSelection = false;
+        mTextHeight = 0;
     }
 
     /**
@@ -321,7 +325,7 @@ public class ContextualSearchSelectionController {
      * @param x The x coordinate in px.
      * @param y The y coordinate in px.
      */
-    void handleShowUnhandledTapUIIfNeeded(int x, int y) {
+    void handleShowUnhandledTapUIIfNeeded(int x, int y, int textHeight) {
         mWasTapGestureDetected = false;
         // TODO(donnd): refactor to avoid needing a new handler API method as suggested by Pedro.
         if (mSelectionType != SelectionType.LONG_PRESS) {
@@ -332,11 +336,13 @@ public class ContextualSearchSelectionController {
             mSelectionType = SelectionType.TAP;
             mX = x;
             mY = y;
+            mTextHeight = textHeight;
             mHandler.handleValidTap();
         } else {
             // Long press; reset last tap state.
             mLastTapState = null;
             mHandler.handleInvalidTap();
+            mTextHeight = 0;
         }
     }
 
@@ -360,7 +366,7 @@ public class ContextualSearchSelectionController {
                 - prefs.getContextualSearchTapQuickAnswerCount();
         assert mTapDurationMs != INVALID_DURATION : "mTapDurationMs not set!";
         TapSuppressionHeuristics tapHeuristics = new TapSuppressionHeuristics(this, mLastTapState,
-                x, y, adjustedTapsSinceOpen, contextualSearchContext, mTapDurationMs);
+                x, y, mTextHeight, adjustedTapsSinceOpen, contextualSearchContext, mTapDurationMs);
         // TODO(donnd): Move to be called when the panel closes to work with states that change.
         tapHeuristics.logConditionState();
 

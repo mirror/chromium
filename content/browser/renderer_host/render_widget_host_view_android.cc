@@ -664,8 +664,10 @@ bool RenderWidgetHostViewAndroid::IsShowing() {
   return is_showing_ && content_view_core_;
 }
 
-void RenderWidgetHostViewAndroid::OnShowUnhandledTapUIIfNeeded(int x_dip,
-                                                               int y_dip) {
+void RenderWidgetHostViewAndroid::OnShowUnhandledTapUIIfNeeded(
+    int x_dip,
+    int y_dip,
+    int text_height_dip) {
   if (!selection_popup_controller_ || !content_view_core_)
     return;
   // Validate the coordinates are within the viewport.
@@ -674,8 +676,9 @@ void RenderWidgetHostViewAndroid::OnShowUnhandledTapUIIfNeeded(int x_dip,
   if (x_dip < 0 || x_dip > viewport_size.width() ||
       y_dip < 0 || y_dip > viewport_size.height())
     return;
+  DVLOG(0) << "ctxs view_.GetDipScale(): " << view_.GetDipScale();
   selection_popup_controller_->OnShowUnhandledTapUIIfNeeded(
-      x_dip, y_dip, view_.GetDipScale());
+      x_dip, y_dip, text_height_dip, view_.GetDipScale());
 }
 
 void RenderWidgetHostViewAndroid::OnSelectWordAroundCaretAck(bool did_select,

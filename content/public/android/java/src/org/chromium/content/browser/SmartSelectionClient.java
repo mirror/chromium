@@ -80,7 +80,7 @@ public class SmartSelectionClient implements SelectionClient {
     public void onSelectionEvent(int eventType, float posXPix, float posYPix) {}
 
     @Override
-    public void showUnhandledTapUIIfNeeded(int x, int y) {}
+    public void showUnhandledTapUIIfNeeded(int x, int y, int textHeight) {}
 
     @Override
     public void selectWordAroundCaretAck(boolean didSelect, int startAdjust, int endAdjust) {}

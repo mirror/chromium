@@ -60,11 +60,12 @@ public class ContextualSearchFieldTrial {
             "enable_not_long_word_suppression";
     @VisibleForTesting
     static final String NOT_AN_ENTITY_SUPPRESSION_ENABLED = "enable_not_an_entity_suppression";
+    @VisibleForTesting
+    static final String SMALL_TEXT_SIZE_LIMIT_DPS = "small_text_size_limit_dps";
     // The threshold for tap suppression based on duration.
     private static final String TAP_DURATION_THRESHOLD_MS = "tap_duration_threshold_ms";
     // The threshold for tap suppression based on a recent scroll.
     private static final String RECENT_SCROLL_DURATION_MS = "recent_scroll_duration_ms";
-
     private static final String MINIMUM_SELECTION_LENGTH = "minimum_selection_length";
 
     // -----------------
@@ -98,6 +99,7 @@ public class ContextualSearchFieldTrial {
     private static Integer sScreenTopSuppressionDps;
     private static Boolean sIsBarOverlapCollectionEnabled;
     private static Boolean sIsBarOverlapSuppressionEnabled;
+    private static Integer sSmallTextSizeLimitDps;
     private static Boolean sIsWordEdgeSuppressionEnabled;
     private static Boolean sIsShortWordSuppressionEnabled;
     private static Boolean sIsNotLongWordSuppressionEnabled;
@@ -271,6 +273,18 @@ public class ContextualSearchFieldTrial {
             sIsBarOverlapSuppressionEnabled = getBooleanParam(BAR_OVERLAP_SUPPRESSION_ENABLED);
         }
         return sIsBarOverlapSuppressionEnabled.booleanValue();
+    }
+
+    /**
+     * Gets a text size to use as a limit for Tap suppression.
+     * Any text height value less than the limit will suppress the Tap trigger.
+     * @return The text height triggering limit in DPs, a value of zero will not limit.
+     */
+    static int getSmallTextSizeLimitDps() {
+        if (sSmallTextSizeLimitDps == null) {
+            sSmallTextSizeLimitDps = getIntParamValueOrDefault(SMALL_TEXT_SIZE_LIMIT_DPS, 0);
+        }
+        return sSmallTextSizeLimitDps.intValue();
     }
 
     /**

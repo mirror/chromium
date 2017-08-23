@@ -73,7 +73,7 @@ public class GestureStateListener {
      * Called after a single-tap gesture event was processed by the renderer,
      * but was not handled.
      */
-    public void onShowUnhandledTapUIIfNeeded(int x, int y) {}
+    public void onShowUnhandledTapUIIfNeeded(int x, int y, int textHeight) {}
 
     /**
      * Called when the gesture source (ContentViewCore) loses window focus.
