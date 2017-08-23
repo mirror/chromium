@@ -10,8 +10,10 @@
 #include "ui/aura/local/layer_tree_frame_sink_local.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_delegate.h"
+#include "ui/base/layout.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
+#include "ui/gfx/geometry/dip_util.h"
 
 namespace aura {
 namespace {
@@ -65,6 +67,14 @@ WindowPortLocal::~WindowPortLocal() {}
 void WindowPortLocal::OnPreInit(Window* window) {}
 
 void WindowPortLocal::OnDeviceScaleFactorChanged(float device_scale_factor) {
+  if (last_device_scale_factor_ != device_scale_factor &&
+      local_surface_id_.is_valid()) {
+    last_device_scale_factor_ = device_scale_factor;
+    local_surface_id_ = local_surface_id_allocator_.GenerateId();
+    if (frame_sink_)
+      frame_sink_->SetLocalSurfaceId(local_surface_id_);
+  }
+
   ScopedCursorHider hider(window_);
   if (window_->delegate())
     window_->delegate()->OnDeviceScaleFactorChanged(device_scale_factor);
@@ -80,7 +90,15 @@ void WindowPortLocal::OnWillMoveChild(size_t current_index, size_t dest_index) {
 void WindowPortLocal::OnVisibilityChanged(bool visible) {}
 
 void WindowPortLocal::OnDidChangeBounds(const gfx::Rect& old_bounds,
-                                        const gfx::Rect& new_bounds) {}
+                                        const gfx::Rect& new_bounds) {
+  if (last_size_in_pixels_ != new_bounds.size() &&
+      local_surface_id_.is_valid()) {
+    last_size_in_pixels_ = new_bounds.size();
+    local_surface_id_ = local_surface_id_allocator_.GenerateId();
+    if (frame_sink_)
+      frame_sink_->SetLocalSurfaceId(local_surface_id_);
+  }
+}
 
 void WindowPortLocal::OnDidChangeTransform(
     const gfx::Transform& old_transform,
@@ -106,6 +124,9 @@ WindowPortLocal::CreateLayerTreeFrameSink() {
       frame_sink_id_, context_factory_private->GetHostFrameSinkManager());
   frame_sink->SetSurfaceChangedCallback(base::Bind(
       &WindowPortLocal::OnSurfaceChanged, weak_factory_.GetWeakPtr()));
+  frame_sink_ = frame_sink->GetWeakPtr();
+  local_surface_id_ = local_surface_id_allocator_.GenerateId();
+  frame_sink->SetLocalSurfaceId(local_surface_id_);
   if (window_->GetRootWindow())
     window_->layer()->GetCompositor()->AddFrameSink(frame_sink_id_);
   return std::move(frame_sink);
@@ -113,6 +134,22 @@ WindowPortLocal::CreateLayerTreeFrameSink() {
 
 viz::SurfaceId WindowPortLocal::GetSurfaceId() const {
   return viz::SurfaceId(frame_sink_id_, local_surface_id_);
+}
+
+void WindowPortLocal::AllocateLocalSurfaceId() {
+  local_surface_id_ = local_surface_id_allocator_.GenerateId();
+  if (frame_sink_)
+    frame_sink_->SetLocalSurfaceId(local_surface_id_);
+}
+
+const viz::LocalSurfaceId& WindowPortLocal::GetLocalSurfaceId() {
+  if (!local_surface_id_.is_valid()) {
+    last_device_scale_factor_ = ui::GetScaleFactorForNativeView(window_);
+    last_size_in_pixels_ = gfx::ConvertSizeToPixel(last_device_scale_factor_,
+                                                   window_->bounds().size());
+    local_surface_id_ = local_surface_id_allocator_.GenerateId();
+  }
+  return local_surface_id_;
 }
 
 void WindowPortLocal::OnWindowAddedToRootWindow() {
@@ -127,11 +164,9 @@ void WindowPortLocal::OnWillRemoveWindowFromRootWindow() {
 
 void WindowPortLocal::OnEventTargetingPolicyChanged() {}
 
-void WindowPortLocal::OnSurfaceChanged(const viz::SurfaceId& surface_id,
-                                       const gfx::Size& surface_size) {
-  DCHECK_EQ(surface_id.frame_sink_id(), frame_sink_id_);
-  local_surface_id_ = surface_id.local_surface_id();
-  viz::SurfaceInfo surface_info(surface_id, 1.0f, surface_size);
+void WindowPortLocal::OnSurfaceChanged(const viz::SurfaceInfo& surface_info) {
+  DCHECK_EQ(surface_info.id().frame_sink_id(), frame_sink_id_);
+  DCHECK_EQ(surface_info.id().local_surface_id(), local_surface_id_);
   scoped_refptr<viz::SurfaceReferenceFactory> reference_factory =
       aura::Env::GetInstance()
           ->context_factory_private()
