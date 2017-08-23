@@ -24,11 +24,11 @@ class InstallableTaskQueue {
   // Moves the current task from the main to the paused list.
   void PauseCurrent();
 
-  // Reports whether there are any tasks in the paused list.
-  bool HasPaused() const;
-
   // Moves all paused tasks to the main list.
   void UnpauseAll();
+
+  // Reports whether there are any tasks in the main list.
+  bool HasCurrent() const;
 
   // Returns the currently active task.
   InstallableTask& Current();
@@ -38,9 +38,6 @@ class InstallableTaskQueue {
 
   // Clears all tasks from the main and paused list.
   void Reset();
-
-  // Reports whether the main list is empty.
-  bool IsEmpty() const;
 
  private:
   // The list of <params, callback> pairs that have come from a call to

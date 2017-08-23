@@ -16,10 +16,6 @@ void InstallableTaskQueue::Reset() {
   paused_tasks_.clear();
 }
 
-bool InstallableTaskQueue::HasPaused() const {
-  return !paused_tasks_.empty();
-}
-
 void InstallableTaskQueue::UnpauseAll() {
   for (const auto& task : paused_tasks_)
     Insert(task);
@@ -42,8 +38,6 @@ void InstallableTaskQueue::Next() {
   tasks_.erase(tasks_.begin());
 }
 
-bool InstallableTaskQueue::IsEmpty() const {
-  // TODO(mcgreevy): try to remove this method by removing the need to
-  // explicitly call WorkOnTask.
-  return tasks_.empty();
+bool InstallableTaskQueue::HasCurrent() const {
+  return !tasks_.empty();
 }
