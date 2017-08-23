@@ -35,6 +35,13 @@ UI_BASE_EXPORT
 // Enables or disables the tracking for the button.
 @property(nonatomic) BOOL trackingEnabled;
 
+// An NSRect in the view's coordinate space representing the bounds used for
+// hover and hit testing. Default value is NSZeroRect, which makes the hitbox
+// equal to the view's bounds. Subclasses may override and return a different
+// value. The MD download shelf close button uses this to become clickable all
+// the way to the edges of the window when in fullscreen.
+@property(readonly, nonatomic) NSRect hitbox;
+
 // Common initialization called from initWithFrame: and awakeFromNib.
 // Subclassers should call [super commonInit].
 - (void)commonInit;
