@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee79e658_02b10745",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-23T14:19:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bc59d48_953af24b",
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "496baadd_be29b2f9",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
         "patchSetId": 1
@@ -53,6 +71,24 @@
       "writtenOn": "2017-08-23T12:41:38Z",
       "side": 1,
       "message": "I don\u0027t understand this comment.",
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37026ff2_d37baf94",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-23T14:19:57Z",
+      "side": 1,
+      "message": "clarified, hope it helps.",
+      "parentUuid": "bb904e3c_192e4101",
       "revId": "64044bc9a70539807bdbed4f9300937635771595",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +158,24 @@
     },
     {
       "key": {
+        "uuid": "b5da3b0e_6dc5de4a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-23T14:19:57Z",
+      "side": 1,
+      "message": "done, it\u0027s cleaner.",
+      "parentUuid": "2191d677_225db7ba",
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9e7dd8c_08f09153",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
         "patchSetId": 1
@@ -157,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "24f0fb5f_3a89fcf2",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-23T14:19:57Z",
+      "side": 1,
+      "message": "I was hoping to add some structure for better readability of the long names.\nBut i guess it doesn\u0027t help a lot either. changed.",
+      "parentUuid": "48720ff4_028394d6",
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94c7fa31_8fc06bd9",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
         "patchSetId": 1
@@ -168,6 +240,30 @@
       "writtenOn": "2017-08-23T13:38:15Z",
       "side": 1,
       "message": "Shouldn\u0027t this line be before EXPECT_CALLs?\nMy impression is that the scheduler should queue the trigger before activation.",
+      "range": {
+        "startLine": 478,
+        "startChar": 2,
+        "endLine": 478,
+        "endChar": 45
+      },
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e31a88b_40b4d9ac",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-23T14:19:57Z",
+      "side": 1,
+      "message": "that might be even cleaner. \n\nThe proper behavior was tested as we have other tests making sure that nothing happens before the activation. But yeah, flipping the order might make things cleaner.",
+      "parentUuid": "94c7fa31_8fc06bd9",
       "range": {
         "startLine": 478,
         "startChar": 2,
@@ -203,6 +299,30 @@
     },
     {
       "key": {
+        "uuid": "f0cae16c_1d04a9dc",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-23T14:19:57Z",
+      "side": 1,
+      "message": "To avoid clutter in the code. Calling the callback is just a detail for correctness. There\u0027s quite some work being done in that callback and if we ignore it, we are\na) not testing realistic scenarios and\nb) making the test harder to understand, as it\u0027s really unclear that this is in fact an asynchronous method we\u0027re stubbing out.\nIMO, all other uses of EXPECT_CALL(*provider(), RefetchInTheBackgroundMock(_)); should be replaced by this call. Actually I just did that ;-)",
+      "parentUuid": "c14fbfb9_742497fd",
+      "range": {
+        "startLine": 540,
+        "startChar": 2,
+        "endLine": 540,
+        "endChar": 41
+      },
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b01c416_8a2edd6a",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
         "patchSetId": 1
@@ -214,6 +334,30 @@
       "writtenOn": "2017-08-23T13:38:15Z",
       "side": 1,
       "message": "Again I feel like this must be before EXPECT_CALL.",
+      "range": {
+        "startLine": 556,
+        "startChar": 2,
+        "endLine": 557,
+        "endChar": 36
+      },
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa53d403_6c72ac85",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-23T14:19:57Z",
+      "side": 1,
+      "message": "can, but doesn\u0027t have to. flipped.",
+      "parentUuid": "1b01c416_8a2edd6a",
       "range": {
         "startLine": 556,
         "startChar": 2,
