@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6f00cbc_27c4fb05",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:11:02Z",
+      "side": 1,
+      "message": "nit: Capitalization.\n\nAlso, can you elaborate in this description; we already had logic for handle-passing to child processes. This is adding an extra helper to allow someone holding a PlatformHandle to request that we wrap it up for transfer, because the ChildProcessLauncherHelper call-site needs to do that.",
+      "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "300fa563_0f0fc22f",
+        "filename": "mojo/edk/embedder/platform_channel_pair.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:11:02Z",
+      "side": 1,
+      "message": "This is an analogue of PrepareToPassClientHandleToChildProcess - can we put it immediately below that, instead of here, and say e.g. \"Like above, but accepts a caller-supplied client |handle|.\"\n\nAlso, if we\u0027re only implementing this for Fuchsia, for now, then it should be wrapped in an OS_FUCHSIA conditional.",
+      "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55cfc157_56a47aa6",
+        "filename": "mojo/edk/embedder/platform_channel_pair_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:11:02Z",
+      "side": 1,
+      "message": "nit: Blank line before this, to match the one after it.",
+      "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcdd71db_252bc2e7",
+        "filename": "mojo/edk/embedder/platform_channel_pair_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:11:02Z",
+      "side": 1,
+      "message": "nit: Can we name this PrepareToPassHandleToChildProcessAsString(), to match the naming scheme for the functions below?",
+      "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d08be64_bf64dbf7",
+        "filename": "mojo/edk/embedder/platform_channel_pair_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:11:02Z",
+      "side": 1,
+      "message": "FWIW I can\u0027t see any call-sites that actually use this, besides the one immediately above.  Perhaps we should just remove this call from the API entirely.",
+      "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d156a1d7_b1f2eb33",
+        "filename": "mojo/edk/embedder/platform_channel_pair_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:11:02Z",
+      "side": 1,
+      "message": "Why are we duplicating the logic from the non-static version above, rather than just having that one call this version with |client_handle_.get()| as the |handle| parameter?",
+      "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
