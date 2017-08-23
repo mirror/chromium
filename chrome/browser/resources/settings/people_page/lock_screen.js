@@ -80,6 +80,18 @@ Polymer({
     },
 
     /**
+     * True if quick unlock settings are enabled by policy.
+     * @private
+     */
+    quickUnlockEnabledByPolicy_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.getBoolean('quickUnlockEnabledByPolicy');
+      },
+      readOnly: true,
+    },
+
+    /**
      * True if fingerprint unlock settings should be displayed on this machine.
      * @private
      */
