@@ -502,6 +502,24 @@
       "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21d2ad78_14e76dd4",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-23T19:30:41Z",
+      "side": 1,
+      "message": "Oops, outdated comment.\n\nActually changed it to\n\n  // Work object that executes RunNextSequence. It has a pointer to the current\n  // |PlatformNativeWorkerPoolWin| and a pointer to |environment_| bound to\n  // it.",
+      "parentUuid": "baf02fbd_3005842e",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
