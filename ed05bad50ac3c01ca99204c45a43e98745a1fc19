@@ -145,6 +145,24 @@
     },
     {
       "key": {
+        "uuid": "00920af4_9619f8f0",
+        "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T15:45:21Z",
+      "side": 1,
+      "message": "Thanks for the investigation. I tend to think the test is going to be more flaky and error prone then useful.",
+      "parentUuid": "f71765b1_94dcf664",
+      "revId": "ed05bad50ac3c01ca99204c45a43e98745a1fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24bab9db_f699cf51",
         "filename": "chrome/browser/ui/find_bar/find_bar_host_browsertest.cc",
         "patchSetId": 3
