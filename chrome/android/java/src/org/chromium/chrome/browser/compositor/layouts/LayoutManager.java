@@ -20,6 +20,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.compositor.LayerTitleCache;
+import org.chromium.chrome.browser.compositor.animation.CompositorAnimationHandler;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanelContentViewDelegate;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanelManager;
 import org.chromium.chrome.browser.compositor.bottombar.contextualsearch.ContextualSearchPanel;
@@ -117,6 +118,9 @@ public class LayoutManager
     // Whether the currently active event filter has changed.
     private boolean mIsNewEventFilter;
 
+    /** The animation handler responsible for updating all the browser compositor's animations. */
+    private final CompositorAnimationHandler mAnimationHandler;
+
     /**
      * Creates a {@link LayoutManager} instance.
      * @param host A {@link LayoutManagerHost} instance.
@@ -127,6 +131,9 @@ public class LayoutManager
 
         mContext = host.getContext();
         LayoutRenderHost renderHost = host.getLayoutRenderHost();
+
+        mAnimationHandler = CompositorAnimationHandler.getInstance(mContext);
+        mAnimationHandler.setUpdateHost(this);
 
         mToolbarOverlay = new ToolbarSceneLayer(mContext, this, renderHost);
 
@@ -245,6 +252,9 @@ public class LayoutManager
     public boolean onUpdate(long timeMs, long dtMs) {
         if (!mUpdateRequested) return false;
         mUpdateRequested = false;
+
+        mAnimationHandler.pushUpdate(dtMs);
+
         final Layout layout = getActiveLayout();
         if (layout != null && layout.onUpdate(timeMs, dtMs) && layout.isHiding()) {
             layout.doneHiding();
