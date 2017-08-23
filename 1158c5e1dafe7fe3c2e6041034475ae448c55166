@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "3e5889ab_0a9be53b",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-23T17:47:41Z",
+      "side": 1,
+      "message": "I was wrong to put that DCHECK in HidDeviceManager. It should simply ignore removal of a device it doesn\u0027t know about yet.\n\nThe problem with switching enumeration_ready_ back to false is that it will interfere with other observers of HidService which did not call GetDevices at the same time that this observer did and so will miss some devices being added or removed.",
+      "parentUuid": "70010df4_38a99a23",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 29
+      },
+      "revId": "1158c5e1dafe7fe3c2e6041034475ae448c55166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b72497f9_4fe1416a",
         "filename": "device/hid/hid_service.cc",
         "patchSetId": 5
