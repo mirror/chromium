@@ -38,17 +38,9 @@ void WorkletGlobalScope::EvaluateClassicScript(
     String source_code,
     std::unique_ptr<Vector<char>> cached_meta_data,
     V8CacheOptions v8_cache_options) {
-  if (source_code.IsNull()) {
-    // |source_code| is null when this is called during worker thread startup.
-    // Worklet will evaluate the script later via Worklet.addModule().
-    // TODO(nhiroki): Add NOTREACHED() once threaded worklet supports module
-    // loading.
-    return;
-  }
-  DCHECK(!cached_meta_data);
-  ScriptController()->Evaluate(ScriptSourceCode(source_code, script_url),
-                               nullptr /* error_event */,
-                               nullptr /* cache_handler */, v8_cache_options);
+  // Worklet should evaluate a scritp as a module script (as opposed to a
+  // classic script).
+  NOTREACHED();
 }
 
 v8::Local<v8::Object> WorkletGlobalScope::Wrap(
