@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d2ab1465_7d42d6e6",
+        "filename": "chromeos/components/tether/ble_connection_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-23T23:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5eaaa24b_9496f4be",
+      "range": {
+        "startLine": 486,
+        "startChar": 0,
+        "endLine": 486,
+        "endChar": 77
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "867cb957_090b62e6",
         "filename": "chromeos/components/tether/ble_connection_manager.cc",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5782302c_5626e301",
+        "filename": "chromeos/components/tether/ble_connection_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-23T23:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "867cb957_090b62e6",
+      "range": {
+        "startLine": 526,
+        "startChar": 0,
+        "endLine": 526,
+        "endChar": 68
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b05e1693_10a4c4ab",
         "filename": "chromeos/components/tether/ble_connection_manager.cc",
         "patchSetId": 9
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-23T17:49:55Z",
       "side": 1,
       "message": "Instead of DCHECK()ing some error conditions and returning early without logs in others, please log if these situations occur. Note that DHECK() is compiled out of release builds, so if the first time actually is_null(), it will be counted as time \u003d\u003d 0 and we will get wildly inaccurate UMA statistics.\n\nSo, do something like\nif (!base::ContainsKey(map, device_id) ||\n    !base::ContainsKey(other_map, device_id)) {\n  LOG(ERROR) \u003c\u003c \"yourError\";\n  // Reset map values.\n  return;\n}\n\nAlso, note that I used ContainsKey(). You don\u0027t want to use operator[] here because it automatically creates a value with the default constructor if it was not already present in the map.",
+      "range": {
+        "startLine": 550,
+        "startChar": 0,
+        "endLine": 550,
+        "endChar": 80
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570a979e_26f03941",
+        "filename": "chromeos/components/tether/ble_connection_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-23T23:29:10Z",
+      "side": 1,
+      "message": "Done. However, I\u0027m also additionally continuing to use operator[] because I think it\u0027s a good idea to check is_null(). The ContainsKey check will short-circuit and prevent the unnecessary construction though. Let me know what you think.",
+      "parentUuid": "b05e1693_10a4c4ab",
       "range": {
         "startLine": 550,
         "startChar": 0,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "23601232_bdc9da3c",
+        "filename": "chromeos/components/tether/ble_connection_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-23T23:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4c5fcd1_79b821f6",
+      "range": {
+        "startLine": 559,
+        "startChar": 2,
+        "endLine": 559,
+        "endChar": 46
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ad1ee0d_d60b088a",
         "filename": "chromeos/components/tether/ble_connection_manager.h",
         "patchSetId": 9
@@ -114,6 +210,30 @@
       "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52767c13_22120bcf",
+        "filename": "chromeos/components/tether/ble_connection_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-23T23:29:10Z",
+      "side": 1,
+      "message": "Pushing back on this because other maps in this file and many other files use RemoteDevice as the key. I\u0027d prefer to maintain consistency.",
+      "parentUuid": "4ad1ee0d_d60b088a",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 237,
+        "endChar": 47
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "47135693_34b6dda0",
+        "filename": "chromeos/components/tether/ble_connection_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-23T23:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a96dc0b_22c33150",
+      "range": {
+        "startLine": 243,
+        "startChar": 6,
+        "endLine": 243,
+        "endChar": 30
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "161faa8f_08438723",
         "filename": "chromeos/components/tether/ble_connection_manager_unittest.cc",
         "patchSetId": 9
@@ -160,6 +304,30 @@
       "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18804634_e29fdfcf",
+        "filename": "chromeos/components/tether/ble_connection_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-23T23:29:10Z",
+      "side": 1,
+      "message": "It normalizes conditions when multiple devices are being tested -- for each device, the wall clock is reset so that all of their advert-\u003econn and conn-\u003eauth durations are the same.",
+      "parentUuid": "161faa8f_08438723",
+      "range": {
+        "startLine": 459,
+        "startChar": 0,
+        "endLine": 459,
+        "endChar": 49
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "17668b38_462f78a5",
+        "filename": "chromeos/components/tether/host_scanner_operation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-23T23:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b72cb2c6_2b0fba33",
+      "range": {
+        "startLine": 143,
+        "startChar": 27,
+        "endLine": 143,
+        "endChar": 48
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3b7a944_e5507312",
         "filename": "chromeos/components/tether/host_scanner_operation.cc",
         "patchSetId": 9
@@ -206,6 +398,30 @@
       "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e834547_f840eb46",
+        "filename": "chromeos/components/tether/host_scanner_operation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-23T23:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3b7a944_e5507312",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 70
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "20df730f_149385b3",
+        "filename": "chromeos/components/tether/host_scanner_operation.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-23T23:29:10Z",
+      "side": 1,
+      "message": "Same comment about this being convention.",
+      "parentUuid": "8c0fe051_2a32717e",
+      "range": {
+        "startLine": 114,
+        "startChar": 11,
+        "endLine": 114,
+        "endChar": 34
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "defbd892_fc1da5f2",
         "filename": "chromeos/components/tether/host_scanner_operation_unittest.cc",
         "patchSetId": 9
@@ -252,6 +492,30 @@
       "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310df8eb_1a028909",
+        "filename": "chromeos/components/tether/host_scanner_operation_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-23T23:29:10Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "defbd892_fc1da5f2",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 30
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
