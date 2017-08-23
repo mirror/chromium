@@ -16,6 +16,24 @@
       "revId": "38e7030e1be4bb6f96eae91fec5fd1eadbe72302",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f8be36_076d2484",
+        "filename": "content/renderer/renderer_blink_platform_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-08-23T03:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0534b89c_9bbd5c2a",
+      "revId": "38e7030e1be4bb6f96eae91fec5fd1eadbe72302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
