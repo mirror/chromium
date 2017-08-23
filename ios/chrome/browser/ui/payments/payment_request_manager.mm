@@ -899,7 +899,6 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 
 - (void)paymentResponseHelperDidReceivePaymentMethodDetails {
   [_paymentRequestCoordinator setPending:YES];
-  [_paymentRequestCoordinator setCancellable:NO];
 }
 
 - (void)paymentResponseHelperDidFailToReceivePaymentMethodDetails {
@@ -909,6 +908,8 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 
 - (void)paymentResponseHelperDidCompleteWithPaymentResponse:
     (const web::PaymentResponse&)paymentResponse {
+  [_paymentRequestCoordinator setCancellable:NO];
+
   [_paymentRequestJsManager
       resolveRequestPromiseWithPaymentResponse:paymentResponse
                              completionHandler:nil];
