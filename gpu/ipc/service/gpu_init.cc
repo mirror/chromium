@@ -247,6 +247,16 @@ bool GpuInit::InitializeAndStartSandbox(const base::CommandLine& command_line,
     return false;
   }
 
+  if (!gpu_feature_info_.disabled_extensions.empty()) {
+    gl::init::SetDisabledExtensionsPlatform(
+        gpu_feature_info_.disabled_extensions);
+  }
+  gl_initialized = gl::init::InitializeExtensionSettingsOneOffPlatform();
+  if (!gl_initialized) {
+    VLOG(1) << "gl::init::InitializeExtensionSettingsOneOffPlatform failed";
+    return false;
+  }
+
   // We need to collect GL strings (VENDOR, RENDERER) for blacklisting purposes.
   // However, on Mac we don't actually use them. As documented in
   // crbug.com/222934, due to some driver issues, glGetString could take
@@ -274,16 +284,6 @@ bool GpuInit::InitializeAndStartSandbox(const base::CommandLine& command_line,
     cmd_line->AppendSwitchASCII(switches::kGpuDriverBugWorkarounds,
                                 gpu::IntSetToString(workarounds, ','));
   }
-  if (!gpu_feature_info_.disabled_extensions.empty()) {
-    gl::init::SetDisabledExtensionsPlatform(
-        gpu_feature_info_.disabled_extensions);
-  }
-  gl_initialized = gl::init::InitializeExtensionSettingsOneOffPlatform();
-  if (!gl_initialized) {
-    VLOG(1) << "gl::init::InitializeExtensionSettingsOneOffPlatform failed";
-    return false;
-  }
-
   base::TimeDelta initialize_one_off_time =
       base::TimeTicks::Now() - before_initialize_one_off;
   UMA_HISTOGRAM_MEDIUM_TIMES("GPU.InitializeOneOffMediumTime",
