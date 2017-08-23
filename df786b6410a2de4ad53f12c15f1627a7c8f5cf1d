@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9ef469f_d73033a1",
+        "filename": "content/browser/service_worker/browser_side_service_worker_event_dispatcher.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T03:18:23Z",
+      "side": 1,
+      "message": "nit: \"destroy\"",
+      "range": {
+        "startLine": 50,
+        "startChar": 34,
+        "endLine": 50,
+        "endChar": 40
+      },
+      "revId": "df786b6410a2de4ad53f12c15f1627a7c8f5cf1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa6c9a4_348fae3c",
+        "filename": "content/child/service_worker/service_worker_event_dispatcher_holder.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T03:18:23Z",
+      "side": 1,
+      "message": "Allows",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 11
+      },
+      "revId": "df786b6410a2de4ad53f12c15f1627a7c8f5cf1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edd70ef0_baa07d0d",
+        "filename": "content/child/service_worker/service_worker_event_dispatcher_holder.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T03:18:23Z",
+      "side": 1,
+      "message": "multiple owners?\n\n\"multiple holders\" sounds like \"multiple SWEventDispatcherHolders\"",
+      "range": {
+        "startLine": 15,
+        "startChar": 12,
+        "endLine": 15,
+        "endChar": 19
+      },
+      "revId": "df786b6410a2de4ad53f12c15f1627a7c8f5cf1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4e5114_768df7c1",
+        "filename": "content/child/service_worker/service_worker_event_dispatcher_holder.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T03:18:23Z",
+      "side": 1,
+      "message": "make \"rawptr\" vs \"raw_ptr\" consistent\n\n(I slightly prefer \"raw_ptr\" but either works)",
+      "range": {
+        "startLine": 38,
+        "startChar": 43,
+        "endLine": 38,
+        "endChar": 51
+      },
+      "revId": "df786b6410a2de4ad53f12c15f1627a7c8f5cf1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
