@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5bd94163_ec77a599",
+        "filename": "components/password_manager/core/browser/password_manager_metrics_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-23T11:31:24Z",
+      "side": 1,
+      "message": "Ack, I was considering doing this, but decided against it in the end. This had two reasons:\n\n- Consistency with most other enums in this file.\n- Convenience of using test expectations: While `UMA_HISTOGRAM_ENUMERATION(...)` easily supports both enums and enum classes, `base::HistogramTester::ExpectUniqueSample(...)` does not. If I was using an enum class, I would need to call it in the following way:\n\n  histograms.ExpectUniqueSample(\n      kAcceptedContextHistogram,\n      static_cast\u003cbase::HistogramBase::Sample\u003e(\n          metrics_util::ShowAllSavedPasswordsContext::MANUAL_FALLBACK),\n      1);\n\n\nIdeally the cast would not be necessary, but that either requires a macro or a template solution. Using an enum class here definitely is something to keep in mind, though.",
+      "parentUuid": "df64baf7_725b9c00",
+      "range": {
+        "startLine": 250,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 4
+      },
+      "revId": "5171e1436a1bca733f3c7609cb60ea2d1dec0691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e29f093_77a6c0fd",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "5171e1436a1bca733f3c7609cb60ea2d1dec0691",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27aa5ea3_39a2d6c4",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 34554,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-23T11:31:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e29f093_77a6c0fd",
+      "range": {
+        "startLine": 34553,
+        "startChar": 0,
+        "endLine": 34554,
+        "endChar": 69
+      },
+      "revId": "5171e1436a1bca733f3c7609cb60ea2d1dec0691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
