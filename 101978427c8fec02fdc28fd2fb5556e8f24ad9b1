@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cf9b815_c00d5534",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-08-23T00:41:13Z",
+      "side": 1,
+      "message": "Since this will always re-trigger Travis, it might be better to return here since the self.merge_pull_request call directly below will always fail if this code path is taken before it.",
+      "revId": "101978427c8fec02fdc28fd2fb5556e8f24ad9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
