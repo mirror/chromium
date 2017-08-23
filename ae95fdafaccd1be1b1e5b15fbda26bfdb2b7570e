@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "299b0b72_1fbf35ac",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-23T19:58:37Z",
+      "side": 1,
+      "message": "not sure if we want to record this since this is part of assistant flow and Android app is started as side-effect.",
+      "range": {
+        "startLine": 470,
+        "startChar": 0,
+        "endLine": 470,
+        "endChar": 68
+      },
+      "revId": "ae95fdafaccd1be1b1e5b15fbda26bfdb2b7570e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
