@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "6c356261_af33b917",
+        "filename": "chromeos/dbus/arc_midis_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-23T21:59:07Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 35
+      },
+      "revId": "710bf9b9abeb0dae237ba68ca9ecaa97d7599a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "524f799d_68649865",
         "filename": "chromeos/dbus/arc_midis_client.cc",
         "patchSetId": 13
@@ -114,6 +137,29 @@
     },
     {
       "key": {
+        "uuid": "ed4a6598_1bd39519",
+        "filename": "chromeos/dbus/arc_midis_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-23T21:59:07Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "range": {
+        "startLine": 70,
+        "startChar": 33,
+        "endLine": 70,
+        "endChar": 35
+      },
+      "revId": "710bf9b9abeb0dae237ba68ca9ecaa97d7599a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9b765ad_62829849",
         "filename": "chromeos/dbus/arc_midis_client.h",
         "patchSetId": 13
@@ -160,6 +206,29 @@
     },
     {
       "key": {
+        "uuid": "e838813f_ba0fa0aa",
+        "filename": "chromeos/dbus/arc_midis_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-23T21:59:07Z",
+      "side": 1,
+      "message": "can this be a std::unique_ptr\u003cArcMidisClient\u003e ?",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "710bf9b9abeb0dae237ba68ca9ecaa97d7599a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9813829_f6b44f5d",
         "filename": "chromeos/dbus/arc_midis_client.h",
         "patchSetId": 13
@@ -176,6 +245,29 @@
         "startChar": 19,
         "endLine": 30,
         "endChar": 23
+      },
+      "revId": "710bf9b9abeb0dae237ba68ca9ecaa97d7599a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a2c6cb1_25e63018",
+        "filename": "chromeos/dbus/fake_arc_midis_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-23T21:59:07Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "range": {
+        "startLine": 15,
+        "startChar": 41,
+        "endLine": 15,
+        "endChar": 43
       },
       "revId": "710bf9b9abeb0dae237ba68ca9ecaa97d7599a40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
