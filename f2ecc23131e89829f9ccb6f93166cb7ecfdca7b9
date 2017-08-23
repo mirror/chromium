@@ -52,6 +52,24 @@
       "revId": "f2ecc23131e89829f9ccb6f93166cb7ecfdca7b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf7e9569_e45ba6c7",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-23T22:43:41Z",
+      "side": 1,
+      "message": "I also prefer clearing the padding with mixin(s?) and then reusing the \"title\" slot.",
+      "parentUuid": "e5c95a59_4d9ddf69",
+      "revId": "f2ecc23131e89829f9ccb6f93166cb7ecfdca7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

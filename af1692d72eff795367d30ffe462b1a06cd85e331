@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4690bae_f909242d",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-23T22:43:41Z",
+      "side": 1,
+      "message": "What\u0027s the goal of this new rule? If you\u0027re trying to restrict the dialog size, consider using --cr-dialog-body-container, and let the flex styling take care of figuring out the height for the dialog as a whole (since top-container \u0026 button-container \u0026 footer all have set heights per design spec).\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/settings/passwords_and_forms_page/address_edit_dialog.html?q\u003daddress_edit_dialog\u0026sq\u003dpackage:chromium\u0026l\u003d70",
+      "revId": "af1692d72eff795367d30ffe462b1a06cd85e331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c17a70_91eb6039",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-23T22:43:41Z",
+      "side": 1,
+      "message": "what are you planning on setting this to?",
+      "revId": "af1692d72eff795367d30ffe462b1a06cd85e331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
