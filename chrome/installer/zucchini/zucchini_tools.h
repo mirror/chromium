@@ -5,18 +5,13 @@
 #ifndef CHROME_INSTALLER_ZUCCHINI_ZUCCHINI_TOOLS_H_
 #define CHROME_INSTALLER_ZUCCHINI_ZUCCHINI_TOOLS_H_
 
-#include <iosfwd>
-
-#include "chrome/installer/zucchini/buffer_view.h"
 #include "chrome/installer/zucchini/zucchini.h"
 
 namespace zucchini {
 
 // Prints stats on references found in |image|. If |do_dump| is true, then
 // prints all references (locations and targets).
-status::Code ReadReferences(ConstBufferView image,
-                            bool do_dump,
-                            std::ostream& out);
+status::Code ReadReferences(ConstBufferView image, bool do_dump);
 
 }  // namespace zucchini
 

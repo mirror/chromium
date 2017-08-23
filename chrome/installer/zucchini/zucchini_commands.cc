@@ -76,8 +76,8 @@ class MappedFileWriter {
 
 /******** Command-line Switches ********/
 
-constexpr char kSwitchDump[] = "dump";
-constexpr char kSwitchRaw[] = "raw";
+const char kSwitchDump[] = "dump";
+const char kSwitchRaw[] = "raw";
 
 }  // namespace
 
@@ -135,9 +135,11 @@ zucchini::status::Code MainApply(MainParams params) {
 
   zucchini::status::Code status =
       zucchini::Apply(old_image.region(), *patch_reader, new_image.region());
-  if (status != zucchini::status::kStatusSuccess)
+  if (status != zucchini::status::kStatusSuccess) {
     params.err << "Fatal error encountered while applying patch." << std::endl;
-  return status;
+    return status;
+  }
+  return zucchini::status::kStatusSuccess;
 }
 
 zucchini::status::Code MainRead(MainParams params) {
@@ -147,11 +149,13 @@ zucchini::status::Code MainRead(MainParams params) {
     return zucchini::status::kStatusFileReadError;
 
   bool do_dump = params.command_line.HasSwitch(kSwitchDump);
-  zucchini::status::Code status = zucchini::ReadReferences(
-      {input.data(), input.length()}, do_dump, params.out);
-  if (status != zucchini::status::kStatusSuccess)
+  zucchini::status::Code status =
+      zucchini::ReadReferences({input.data(), input.length()}, do_dump);
+  if (status != zucchini::status::kStatusSuccess) {
     params.err << "Fatal error found when dumping references." << std::endl;
-  return status;
+    return status;
+  }
+  return zucchini::status::kStatusSuccess;
 }
 
 zucchini::status::Code MainCrc32(MainParams params) {
