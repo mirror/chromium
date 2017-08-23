@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5989f61f_c63051fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T18:02:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69887bbb_817374a5",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0caee11_f07928b3",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -110,6 +128,24 @@
     },
     {
       "key": {
+        "uuid": "d31abc41_9487dcff",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T18:02:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ec90118_5afbd4d8",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4f737ae_4ccb2b1b",
         "filename": "base/base_paths_fuchsia.cc",
         "patchSetId": 4
@@ -121,6 +157,24 @@
       "writtenOn": "2017-08-23T00:37:19Z",
       "side": 1,
       "message": "Sometimes gl cl format makes me happy, this time it makes me sad. Q.Q",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9011438d_4548ee74",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T18:02:33Z",
+      "side": 1,
+      "message": "Yeah. What is this, a Java Builder?",
+      "parentUuid": "a4f737ae_4ccb2b1b",
       "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -141,6 +195,24 @@
       "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dedb6b6b_27520885",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T18:02:33Z",
+      "side": 1,
+      "message": "Defaults to mx_job_default.",
+      "parentUuid": "496f2144_a841362c",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +263,30 @@
     },
     {
       "key": {
+        "uuid": "0e898325_764150f0",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T18:02:33Z",
+      "side": 1,
+      "message": "\u003ewhat happens if the browser spawns a child and then the child (say a service process) wants to spawn children?\n\nWez and I had a discussion in person yesterday. We\u0027ll be creating a Chromium wrapper around mx_default_job. Calls to GetDefaultJob() will return mx_default_job OR an override job.\n\nThe content/browser process\u0027 init code sets the override to a new job meant for spawning all its child processes and their descendants.\n\nAll other processes will use mx_default_job() if they can spawn their own processes, or no job at all (indeed, jamesr said it\u0027s MX_HANDLE_INVALID).",
+      "parentUuid": "37a64170_465d98dd",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "610cda6e_3d360c18",
         "filename": "base/fuchsia/child_job.cc",
         "patchSetId": 4
@@ -208,6 +304,24 @@
     },
     {
       "key": {
+        "uuid": "fcc007a3_1700cadc",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T18:02:33Z",
+      "side": 1,
+      "message": "Setting the job in BrowserMainRunner, otherwise serving mx_job_default.",
+      "parentUuid": "610cda6e_3d360c18",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70fda798_c1a6dab7",
         "filename": "base/fuchsia/child_job.cc",
         "patchSetId": 4
@@ -222,6 +336,24 @@
       "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6e765b_9a30a15e",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T18:02:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70fda798_c1a6dab7",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -329,6 +461,24 @@
     },
     {
       "key": {
+        "uuid": "27541a2e_609deaf4",
+        "filename": "base/fuchsia/child_job.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T18:02:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c55f72a6_c2dea650",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "220537ea_36621f4d",
         "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
         "patchSetId": 4
@@ -343,6 +493,24 @@
       "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de16f61a_918bcf62",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T18:02:33Z",
+      "side": 1,
+      "message": "This specifies a partial implementation of a class, not a subclass. Adding inheritance \u0026 making some methods virtual would probably be more trouble than it\u0027s worth.",
+      "parentUuid": "220537ea_36621f4d",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -363,6 +531,24 @@
     },
     {
       "key": {
+        "uuid": "bfdab00b_0e829c95",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T18:02:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ec123b3_74d1949f",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58fcded0_d4cc9966",
         "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
         "patchSetId": 4
@@ -377,6 +563,24 @@
       "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86327911_22b1772f",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T18:02:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "58fcded0_d4cc9966",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -397,6 +601,24 @@
     },
     {
       "key": {
+        "uuid": "d07b4f27_50f38b37",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T18:02:33Z",
+      "side": 1,
+      "message": "So we did, awesome",
+      "parentUuid": "72db21ef_fe819930",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbd6df94_28ea5c38",
         "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
         "patchSetId": 4
@@ -408,6 +630,24 @@
       "writtenOn": "2017-08-23T00:37:19Z",
       "side": 1,
       "message": "ignore_result(...) here, and preferably a comment explaining that the |mojo_client_handle_| has been passed to the child process, not copied.\n\nYou might also consider moving this to AfterLaunchOnLauncherThread, as a form of post-launch cleanup.\n\nNote that the same is true of any other handles passed via options.handles_to_transfer, so are there callers or other components that need to know to relinquish passed handles here?  (This would be so much nicer if we rework LaunchProcess into a ProcessLauncher helper class...)",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1241dc7_a2b57980",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T18:02:33Z",
+      "side": 1,
+      "message": "Done.\n\nDone.\n\nFor a more general solution we\u0027d need to do a bit of rework to move scoped handle ownership into |options| and make it mutable. It doesn\u0027t seem necessary right now.",
+      "parentUuid": "fbd6df94_28ea5c38",
       "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -448,6 +688,30 @@
       "writtenOn": "2017-08-23T17:37:33Z",
       "side": 1,
       "message": "That other platforms are inconsistent is a bit worrying :-/",
+      "parentUuid": "865a1bdc_517e7cff",
+      "range": {
+        "startLine": 127,
+        "startChar": 53,
+        "endLine": 127,
+        "endChar": 58
+      },
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435c5427_d68e9e4c",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T18:02:33Z",
+      "side": 1,
+      "message": "Done.",
       "parentUuid": "865a1bdc_517e7cff",
       "range": {
         "startLine": 127,
@@ -505,6 +769,30 @@
       "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6498247d_539d3f86",
+        "filename": "content/renderer/renderer_main_platform_delegate_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T18:02:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "442abfec_989d1daf",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 13
+      },
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
