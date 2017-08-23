@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "998d59ba_e12c2981",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-23T21:59:35Z",
+      "side": 1,
+      "message": "I intended to say it is not populated for non-session-restore tabs. But I agree it is confusing. Dropped now.",
+      "parentUuid": "eab632b7_a1e894fa",
+      "range": {
+        "startLine": 1162,
+        "startChar": 25,
+        "endLine": 1162,
+        "endChar": 26
+      },
+      "revId": "c8891cfbd4535b9c4e4b901ba4c8f41e8ee37cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ef51bb0_30aa2adc",
         "filename": "chrome/browser/resource_coordinator/tab_manager.h",
         "patchSetId": 22
@@ -45,6 +69,30 @@
       "revId": "c8891cfbd4535b9c4e4b901ba4c8f41e8ee37cce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681bb0e5_05d8f874",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-23T21:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ef51bb0_30aa2adc",
+      "range": {
+        "startLine": 442,
+        "startChar": 18,
+        "endLine": 442,
+        "endChar": 25
+      },
+      "revId": "c8891cfbd4535b9c4e4b901ba4c8f41e8ee37cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
