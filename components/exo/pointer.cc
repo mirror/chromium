@@ -121,6 +121,11 @@ void Pointer::SetCursor(Surface* surface, const gfx::Point& hotspot) {
     }
     UpdatePointerSurface(surface);
     cursor_changed = true;
+
+    // Force a commit using the new surface, so any screen capture we
+    // subsequently make will use the update surface.
+    if (surface)
+      SurfaceTreeHost::OnSurfaceCommit();
   }
 
   if (hotspot != hotspot_)
