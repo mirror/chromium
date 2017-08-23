@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "461c2767_e98a2dc6",
+        "filename": "third_party/WebKit/LayoutTests/compositing/composited-descendant-requiring-border-radius-mask-expected.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-23T13:54:44Z",
+      "side": 1,
+      "message": "I\u0027ll check. I\u0027m concerned that the anti-aliasing will be different.",
+      "parentUuid": "2c77d898_e5182dbd",
+      "revId": "16f453ecbdffed0217dca7874a3602554ec53e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a45b638_1937527e",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ee3b3218_ef538794",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-23T13:54:44Z",
+      "side": 1,
+      "message": "I don\u0027t think so. See below.",
+      "parentUuid": "9f9aee84_93ce8adc",
+      "revId": "16f453ecbdffed0217dca7874a3602554ec53e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2dd3855a_afa13fd2",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
         "patchSetId": 2
@@ -83,6 +119,24 @@
       "writtenOn": "2017-08-22T21:11:05Z",
       "side": 1,
       "message": "if (clip_rect.HasRadius()) {\n  if (owning_layer_.HasCompositingDescendant()) {\n    owning_layer_is_masked \u003d true;\n    return;\n  }",
+      "revId": "16f453ecbdffed0217dca7874a3602554ec53e4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72940f6a_257f22a1",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-23T13:54:44Z",
+      "side": 1,
+      "message": "This will miss cases where the rounded rect clip is due to something farther up the tree than the parent, and we have a composited descendant. I\u0027ll verify my thinking.",
+      "parentUuid": "2dd3855a_afa13fd2",
       "revId": "16f453ecbdffed0217dca7874a3602554ec53e4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
