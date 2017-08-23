@@ -64,4 +64,7 @@ const char kInProductHelpDemoModeDescription[] =
     "an individual promotion causes that promotion but no other promotions to "
     "occur.";
 
+const char kDragAndDropName[] = "Drag and Drop";
+const char kDragAndDropDescription[] = "Enable support for drag and drop.";
+
 }  // namespace flag_descriptions
