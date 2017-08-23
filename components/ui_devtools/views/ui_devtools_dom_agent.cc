@@ -204,15 +204,30 @@ ui_devtools::protocol::Response UIDevToolsDOMAgent::HighlightNode(
     layer_for_highlighting_->set_delegate(this);
     layer_for_highlighting_->SetFillsBoundsOpaquely(false);
   }
-  std::pair<aura::Window*, gfx::Rect> window_and_bounds =
-      node_id_to_ui_element_.count(node_id)
-          ? node_id_to_ui_element_[node_id]->GetNodeWindowAndBounds()
-          : std::make_pair<aura::Window*, gfx::Rect>(nullptr, gfx::Rect());
-
-  if (!window_and_bounds.first)
+  if (!node_id_to_ui_element_.count(node_id))
     return ui_devtools::protocol::Response::Error("No node found with that id");
 
+  UIElement* ui_element = node_id_to_ui_element_[node_id];
+  std::pair<aura::Window*, gfx::Rect> window_and_bounds =
+      ui_element->GetNodeWindowAndBounds();
+
   show_size_on_canvas_ = show_size;
+  hit_test_window_bounds_ = gfx::Rect();
+  if (ui_element->type() == UIElementType::WINDOW) {
+    hit_test_window_bounds_ = window_and_bounds.second;
+  } else if (ui_element->type() == UIElementType::WIDGET) {
+    hit_test_window_bounds_ =
+        UIElement::GetBackingElement<views::Widget, WidgetElement>(ui_element)
+            ->GetNativeWindow()
+            ->GetBoundsInScreen();
+  } else if (ui_element->type() == UIElementType::VIEW) {
+    hit_test_window_bounds_ =
+        UIElement::GetBackingElement<views::View, ViewElement>(ui_element)
+            ->GetWidget()
+            ->GetNativeWindow()
+            ->GetBoundsInScreen();
+  }
+
   UpdateHighlight(window_and_bounds);
 
   if (!layer_for_highlighting_->visible())
@@ -256,6 +271,15 @@ void UIDevToolsDOMAgent::OnPaintLayer(const ui::PaintContext& context) {
   rect_f.Inset(gfx::InsetsF(-1));
 
   cc::PaintFlags flags;
+  flags.setStyle(cc::PaintFlags::kStrokeAndFill_Style);
+  flags.setAntiAlias(true);
+
+  // Set light blue color for hit test window.
+  flags.setColor(SkColorSetARGB(0x77, 153, 204, 255));
+
+  // Draw hit test window region.
+  canvas->DrawRect(hit_test_window_bounds_, flags);
+
   flags.setColor(SK_ColorBLUE);
   flags.setStrokeWidth(1.0f);
   flags.setStyle(cc::PaintFlags::kStroke_Style);
