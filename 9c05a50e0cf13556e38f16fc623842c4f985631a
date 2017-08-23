@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81bf41f5_5d40f03d",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-23T17:41:08Z",
+      "side": 1,
+      "message": "Done. But a question here, is it better to do this in views::Label?\n\nrender_text-\u003eSetMaxLines(multi_line() ? max_lines() : 0);",
+      "parentUuid": "90110f0b_b5b78a41",
+      "revId": "9c05a50e0cf13556e38f16fc623842c4f985631a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89a8c540_d600022c",
         "filename": "ui/views/controls/label.cc",
         "patchSetId": 11
@@ -39,6 +57,30 @@
       "revId": "9c05a50e0cf13556e38f16fc623842c4f985631a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae3d58f1_79f8bd0e",
+        "filename": "ui/views/controls/label.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-23T17:41:08Z",
+      "side": 1,
+      "message": "It is because I named the local variable to line_height, which is close enough to the point of use, that makes complier thinks that we are trying to make function call on integer.\nhttps://stackoverflow.com/questions/19733090/error-called-object-type-int-is-not-a-function-or-function-pointer\n\nRename to height now.",
+      "parentUuid": "89a8c540_d600022c",
+      "range": {
+        "startLine": 342,
+        "startChar": 31,
+        "endLine": 342,
+        "endChar": 37
+      },
+      "revId": "9c05a50e0cf13556e38f16fc623842c4f985631a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
