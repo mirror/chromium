@@ -213,6 +213,7 @@ void ImportFromSourceProfile(const importer::SourceProfile& source_profile,
 
   ImportEndedObserver observer;
   importer_host->set_observer(&observer);
+  LOG(ERROR) << "** JAY ** ImportFromSourceProfile";
   importer_host->StartImportSettings(source_profile,
                                      target_profile,
                                      items_to_import,
@@ -250,6 +251,7 @@ void ImportSettings(Profile* profile,
                     std::unique_ptr<ImporterList> importer_list,
                     uint16_t items_to_import) {
   DCHECK(items_to_import);
+  LOG(ERROR) << "** JAY ** ImportSettings";
   const importer::SourceProfile& source_profile =
       importer_list->GetSourceProfileAt(0);
 
@@ -666,6 +668,7 @@ ProcessMasterPreferencesResult ProcessMasterPreferences(
 void AutoImport(
     Profile* profile,
     const std::string& import_bookmarks_path) {
+  LOG(ERROR) << "** JAY ** AutoImport";
   g_auto_import_state |= AUTO_IMPORT_CALLED;
 
   // Use |profile|'s PrefService to determine what to import. It will reflect in
@@ -694,7 +697,14 @@ void AutoImport(
       items_to_import |= import_item.bit;
   }
 
+  items_to_import |= importer::AUTOFILL_FORM_DATA;
+  items_to_import |= importer::FAVORITES;
+  items_to_import |= importer::HISTORY;
+  items_to_import |= importer::HOME_PAGE;
+  items_to_import |= importer::SEARCH_ENGINES;
+
   if (items_to_import) {
+    LOG(ERROR) << "** JAY ** Items to import!";
     // It may be possible to do the if block below asynchronously. In which
     // case, get rid of this RunLoop. http://crbug.com/366116.
     base::RunLoop run_loop;

@@ -3373,9 +3373,6 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
         </message>
       </if>
       <if expr="not is_android">
-        <message name="IDS_UTILITY_PROCESS_PROFILE_IMPORTER_NAME" desc="The name of the utility process used for importing profiles.">
-          Profile Importer
-        </message>
         <message name="IDS_UTILITY_PROCESS_SAFE_BROWSING_ZIP_FILE_ANALYZER_NAME" desc="The name of the utility process used for analyzing .zip files for Safe Browsing.">
           Safe Browsing Zip File Analyzer
         </message>
