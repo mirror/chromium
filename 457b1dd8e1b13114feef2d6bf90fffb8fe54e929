@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "def1abfa_4d35b6db",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:43:55Z",
+      "side": 1,
+      "message": "Capitalization of title still needs fixing.",
+      "parentUuid": "a6f00cbc_27c4fb05",
+      "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "300fa563_0f0fc22f",
         "filename": "mojo/edk/embedder/platform_channel_pair.h",
         "patchSetId": 2
@@ -188,6 +206,40 @@
       "side": 1,
       "message": "Why are we, indeed! :P\n\nDone.",
       "parentUuid": "d156a1d7_b1f2eb33",
+      "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b36bc5_d4503eac",
+        "filename": "mojo/edk/embedder/platform_channel_pair_posix.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:43:55Z",
+      "side": 1,
+      "message": "This function is used in the function immediately above; if you want to remove the unused API in this CL then you\u0027ll need to move this and the equivalent implementations to be anonymous functions in the .cc\u0027s.",
+      "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431210ba_dcc4b878",
+        "filename": "mojo/edk/embedder/platform_channel_pair_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:43:55Z",
+      "side": 1,
+      "message": "Ditto here.",
       "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

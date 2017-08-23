@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0464b739_e8d6a151",
+        "filename": "mojo/edk/embedder/platform_channel_pair.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:43:55Z",
+      "side": 1,
+      "message": "So the POSIX and Windows implementations of ChildProcessLauncherHelper would not benefit from being able to use this version of the API?",
+      "revId": "17a1c7b17e0d1f2410dff2c740517b201f264809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
