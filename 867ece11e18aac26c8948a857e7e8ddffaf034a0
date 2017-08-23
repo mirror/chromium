@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9b11753c_7dd196fb",
+        "filename": "ash/system/ime_menu/ime_menu_tray.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-23T06:11:55Z",
+      "side": 1,
+      "message": "Fixed to use Prepend, and changed the code to use aura::Env. With aura::Env, we can remove those delegate methods. Those delegate methods were necessary to access ash::Shell. Thank you for letting me know about aura::Env!",
+      "parentUuid": "e7feaffc_c7de4c24",
+      "range": {
+        "startLine": 509,
+        "startChar": 16,
+        "endLine": 509,
+        "endChar": 19
+      },
+      "revId": "867ece11e18aac26c8948a857e7e8ddffaf034a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1426e763_24a1984a",
         "filename": "ash/system/tray/system_tray_unittest.cc",
         "patchSetId": 19
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0b5eb436_28dbe59a",
+        "filename": "ash/system/tray/system_tray_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-23T06:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1426e763_24a1984a",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 37
+      },
+      "revId": "867ece11e18aac26c8948a857e7e8ddffaf034a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0aac6ee0_7dd41377",
         "filename": "ui/views/bubble/tray_bubble_view.h",
         "patchSetId": 19
@@ -92,6 +140,30 @@
       "revId": "867ece11e18aac26c8948a857e7e8ddffaf034a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45121c46_d7a81ad1",
+        "filename": "ui/views/bubble/tray_bubble_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-08-23T06:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0aac6ee0_7dd41377",
+      "range": {
+        "startLine": 176,
+        "startChar": 2,
+        "endLine": 176,
+        "endChar": 27
+      },
+      "revId": "867ece11e18aac26c8948a857e7e8ddffaf034a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
