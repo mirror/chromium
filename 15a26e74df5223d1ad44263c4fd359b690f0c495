@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "bd986205_b06910c9",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-23T09:36:16Z",
+      "side": 1,
+      "message": "Ack. This is not really intuitive.\nnit: can we have a more specific name?",
+      "parentUuid": "c2e3d718_f114d034",
+      "range": {
+        "startLine": 131,
+        "startChar": 30,
+        "endLine": 131,
+        "endChar": 58
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0564572_a88cca3e",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
         "patchSetId": 2
@@ -366,6 +390,30 @@
       "side": 1,
       "message": "The footer is below the last item of the section. So its position in the section is equal to the number of items in the section.",
       "parentUuid": "a0564572_a88cca3e",
+      "range": {
+        "startLine": 677,
+        "startChar": 17,
+        "endLine": 677,
+        "endChar": 39
+      },
+      "revId": "15a26e74df5223d1ad44263c4fd359b690f0c495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40efd86b_09bb444b",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-23T09:36:16Z",
+      "side": 1,
+      "message": "ACK. Nit: May be worth a little comment.",
+      "parentUuid": "56832b77_4fd8809a",
       "range": {
         "startLine": 677,
         "startChar": 17,

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "049321a2_12c85b53",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_text_item.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-23T09:36:16Z",
+      "side": 1,
+      "message": "Should _metricsRecorded be reset?",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 37
+      },
+      "revId": "f18ef8c76650fbaae6ad2776670e94f9337f74c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
