@@ -29,6 +29,7 @@
 #include "platform/scheduler/renderer/task_cost_estimator.h"
 #include "platform/scheduler/renderer/user_model.h"
 #include "platform/scheduler/renderer/web_view_scheduler_impl.h"
+#include "platform/scheduler/util/state_tracer.h"
 #include "public/platform/scheduler/renderer/renderer_scheduler.h"
 
 namespace base {
@@ -260,6 +261,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   friend class RendererSchedulerImplForTest;
   friend class RendererSchedulerImplTest;
   FRIEND_TEST_ALL_PREFIXES(RendererSchedulerImplTest, Tracing);
+
+  static constexpr char tracing_category[] = "renderer.scheduler";
 
   enum class ExpensiveTaskPolicy { RUN, BLOCK, THROTTLE };
 
@@ -595,6 +598,8 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     WakeUpBudgetPool* wake_up_budget_pool;                // Not owned.
     RendererMetricsHelper metrics_helper;
     RendererProcessType process_type;
+    StateTracer<tracing_category> use_case_tracer;
+    StateTracer<tracing_category> backgrounding_tracer;
   };
 
   struct AnyThread {
