@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a7046e9_66d3ce53",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-08-23T18:55:54Z",
+      "side": 1,
+      "message": "Seems stopSelf() will also cancel the notification we want to persistent. Does it have any potential risk to make this service a background service?",
+      "parentUuid": "5d3045b5_95837046",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 30
+      },
+      "revId": "e5e4f0005d266ceef9ffd5429a36096b70f19218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d698e27d_97a8bd62",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-23T16:26:40Z",
       "side": 1,
       "message": "Sending an intent is asynchronous, so you could call sendIntent() and then get another call to getStatus() and not have it reflect any update from that intent.",
+      "range": {
+        "startLine": 167,
+        "startChar": 12,
+        "endLine": 167,
+        "endChar": 45
+      },
+      "revId": "e5e4f0005d266ceef9ffd5429a36096b70f19218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e3351ae_b30a49d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-08-23T18:55:54Z",
+      "side": 1,
+      "message": "I double check the logic and I think it works fine. We now have 4 stages: create -\u003e update -\u003e finish always come one after another and chrome_displayed could come at any time.\n1. If chrome_displayed comes before create, create will create another notification later (the case we discussed early today). I think it is fine because chrome_displayed is used to cancel notifications tabs have been created and we could think the create is the starting point of a \nnewly created tab.\n2. If chrome_displayed comes between create and update, that is the thing I am a little hesitated how to deal with. The question is should we reshow the notification? And I think we should because the reason we have update is we want to update the intent in the notification to navigate to the right tab. But no matter whether to reshow or not, it could be controlled by getStatus() properly?\n3. If chrome_displayed comes after update, those are the normal cases and should work fine.\n\nFrom that perspective, the logic sounds ok? But there might be some corner cases I haven\u0027t thought about.",
+      "parentUuid": "d698e27d_97a8bd62",
       "range": {
         "startLine": 167,
         "startChar": 12,
@@ -68,6 +116,30 @@
       "revId": "e5e4f0005d266ceef9ffd5429a36096b70f19218",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "579740f2_c3ae58e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-08-23T18:55:54Z",
+      "side": 1,
+      "message": "Ops. Sorry, it is CHROME.",
+      "parentUuid": "52d8bc99_3e296feb",
+      "range": {
+        "startLine": 169,
+        "startChar": 42,
+        "endLine": 169,
+        "endChar": 44
+      },
+      "revId": "e5e4f0005d266ceef9ffd5429a36096b70f19218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
