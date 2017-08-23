@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0774d589_76b5c5c7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-cors-safelisted-request-headers.htm",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-23T07:21:05Z",
+      "side": 1,
+      "message": "Good point! I should have noticed that. Thank you!",
+      "parentUuid": "f6b966c5_f9470954",
+      "revId": "a7b5ad474dc19f03bd89db21bf95d137bacea877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "994f2702_4795a0f8",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-whitelist-request-headers.py",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "29a495a6_af71c3c8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-whitelist-request-headers.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-23T07:21:05Z",
+      "side": 1,
+      "message": "Thanks for pointing that out! I\u0027ll try to be more careful about avoiding unnecessary parentheses. And the reduced indent is nice!",
+      "parentUuid": "994f2702_4795a0f8",
+      "revId": "a7b5ad474dc19f03bd89db21bf95d137bacea877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bd44566_e5f7aa66",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-whitelist-request-headers.py",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "a7b5ad474dc19f03bd89db21bf95d137bacea877",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da8c9be_0b7c8d1f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-whitelist-request-headers.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-23T07:21:05Z",
+      "side": 1,
+      "message": "Thank you for talking to me about this one, and for pointing out this potential improvement!",
+      "parentUuid": "2bd44566_e5f7aa66",
+      "revId": "a7b5ad474dc19f03bd89db21bf95d137bacea877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
