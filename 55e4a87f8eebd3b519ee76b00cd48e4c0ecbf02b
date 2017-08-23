@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b3b7854d_24fce4b0",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-23T09:14:09Z",
+      "side": 1,
+      "message": "WeakPtr is not thread-safe[1] and it\u0027s allowed to deference WeakPtr only on the thread that initializes WeakPtrFactory. IIUC, AudioDestionation initializes the factory not on |worklet_backing_thread_| (right?), so we cannot post a task bound with WeakPtr to |worklet_backing_thread_|.\n\nInstead, how about ensuring that AudioDestination is destroyed after all tasks runs by wrapping AudioDestination with thread-safe RefPtr or posting a task to delete AudioDestination to |worklet_backing_thread_|?\n\n[1] https://www.chromium.org/developers/smart-pointer-guidelines (WTF::WeakPtr is an alias of base::WeakPtr)",
+      "parentUuid": "056b7c89_bf60ec94",
+      "revId": "55e4a87f8eebd3b519ee76b00cd48e4c0ecbf02b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "139f66f4_f6adc552",
         "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
         "patchSetId": 10
