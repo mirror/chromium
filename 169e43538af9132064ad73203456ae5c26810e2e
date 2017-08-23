@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "629ffb1e_d8056e9e",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 27257,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-23T09:33:41Z",
+      "side": 1,
+      "message": "The label has been changed but the order respected, it should be fine.",
+      "range": {
+        "startLine": 27257,
+        "startChar": 24,
+        "endLine": 27257,
+        "endChar": 50
+      },
+      "revId": "169e43538af9132064ad73203456ae5c26810e2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
