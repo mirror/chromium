@@ -22,6 +22,8 @@ static_library("zucchini_lib") {
     "disassembler.h",
     "disassembler_no_op.cc",
     "disassembler_no_op.h",
+    "disassembler_win32.cc",
+    "disassembler_win32.h",
     "element_detection.cc",
     "element_detection.h",
     "encoded_view.cc",
@@ -33,8 +35,6 @@ static_library("zucchini_lib") {
     "image_utils.h",
     "io_utils.cc",
     "io_utils.h",
-    "label_manager.cc",
-    "label_manager.h",
     "patch_reader.cc",
     "patch_reader.h",
     "patch_utils.h",
@@ -45,6 +45,8 @@ static_library("zucchini_lib") {
     "rel32_utils.cc",
     "rel32_utils.h",
     "suffix_array.h",
+    "targets_affinity.cc",
+    "targets_affinity.h",
     "type_win_pe.h",
     "typed_value.h",
     "zucchini.h",
@@ -52,6 +54,8 @@ static_library("zucchini_lib") {
     "zucchini_apply.h",
     "zucchini_gen.cc",
     "zucchini_gen.h",
+    "zucchini_tools.cc",
+    "zucchini_tools.h",
   ]
 
   deps = [
