@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "01902b1b_a885d509",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T01:49:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7be4ab12_5cf7807b",
+      "range": {
+        "startLine": 255,
+        "startChar": 2,
+        "endLine": 255,
+        "endChar": 18
+      },
+      "revId": "7f1c273a3d14e798affa47d08dd66439a55f2c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c2cec34_283b2a0a",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 17
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-22T18:56:47Z",
       "side": 1,
       "message": "why do you create factory in advance?\nhttps://cs.chromium.org/chromium/src/chrome/gpu/chrome_arc_video_decode_accelerator.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d130\n\nPrevious code will return first if client_count_ \u003e\u003d kMaxConcurrentClients",
+      "range": {
+        "startLine": 257,
+        "startChar": 2,
+        "endLine": 257,
+        "endChar": 79
+      },
+      "revId": "7f1c273a3d14e798affa47d08dd66439a55f2c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b95eda3_043749ce",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T01:49:59Z",
+      "side": 1,
+      "message": "I would like to do so. But a compiler complains \"jump bypasses variable initialization\", which means the variable cannot be declared after goto sentence.\nI don\u0027t know the way to avoid this compile error.",
+      "parentUuid": "5c2cec34_283b2a0a",
       "range": {
         "startLine": 257,
         "startChar": 2,
@@ -68,6 +116,30 @@
       "revId": "7f1c273a3d14e798affa47d08dd66439a55f2c5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8345a931_31bc4640",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T01:49:59Z",
+      "side": 1,
+      "message": "Done.\nI decided to add RESULT_MAX to ::arc::mojom::VideoDecodeAccelerator::Result and use it here.",
+      "parentUuid": "836bd4de_1468da50",
+      "range": {
+        "startLine": 296,
+        "startChar": 41,
+        "endLine": 296,
+        "endChar": 42
+      },
+      "revId": "7f1c273a3d14e798affa47d08dd66439a55f2c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
