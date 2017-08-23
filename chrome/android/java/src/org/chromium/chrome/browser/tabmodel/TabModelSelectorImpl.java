@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.os.Handler;
 
 import org.chromium.base.VisibleForTesting;
+import org.chromium.chrome.browser.browseractions.BrowserActionsService;
 import org.chromium.chrome.browser.compositor.layouts.OverviewModeBehavior;
 import org.chromium.chrome.browser.compositor.layouts.content.TabContentManager;
 import org.chromium.chrome.browser.tab.Tab;
@@ -101,6 +102,10 @@ public class TabModelSelectorImpl extends TabModelSelectorBase implements TabMod
 
     private void handleOnPageLoadStopped(Tab tab) {
         if (tab != null) mTabSaver.addTabToSaveQueue(tab);
+        if (tab.getLaunchType() == TabLaunchType.FROM_BROWSER_ACTIONS) {
+            BrowserActionsService.sendIntent(
+                    BrowserActionsService.ACTION_TAB_CREATION_FINISH, Tab.INVALID_TAB_ID);
+        }
     }
 
     /**
