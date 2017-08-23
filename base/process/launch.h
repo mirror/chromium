@@ -16,6 +16,7 @@
 #include "base/base_export.h"
 #include "base/environment.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/process/process.h"
 #include "base/process/process_handle.h"
 #include "base/strings/string_piece.h"
@@ -198,6 +199,13 @@ struct BASE_EXPORT LaunchOptions {
   // Each entry is an <id,handle> pair, with an |id| created using the PA_HND()
   // macro. The child retrieves the handle |mx_get_startup_handle(id)|.
   HandlesToTransferVector handles_to_transfer;
+
+  // If set, specifies which capabilities should be granted (cloned) to the
+  // child process. A zero value indicates that the child process will receive
+  // no capabilities.
+  // If left unset, the child will inherit the same capabilities, job, and CWD
+  // from the parent process.
+  base::Optional<int> clone_flags;
 #endif  // defined(OS_FUCHSIA)
 
 #if defined(OS_POSIX)

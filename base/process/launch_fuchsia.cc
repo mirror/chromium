@@ -7,6 +7,7 @@
 #include <launchpad/launchpad.h>
 #include <magenta/process.h>
 #include <magenta/processargs.h>
+#include <stdint.h>
 #include <unistd.h>
 
 #include "base/command_line.h"
@@ -94,7 +95,16 @@ Process LaunchProcess(const std::vector<std::string>& argv,
   launchpad_load_from_file(lp, argv_cstr[0]);
   launchpad_set_args(lp, argv.size(), argv_cstr.data());
 
-  uint32_t to_clone = LP_CLONE_MXIO_NAMESPACE | LP_CLONE_DEFAULT_JOB;
+  uint32_t to_clone;
+  if (options.clone_flags.has_value()) {
+    // Caller has requirements for capability restriction, so use them.
+    to_clone = *options.clone_flags;
+  } else {
+    // Caller does not specify any capabilities, so launch the child
+    // with the same capabilities as the parent process.
+    to_clone =
+        LP_CLONE_MXIO_NAMESPACE | LP_CLONE_DEFAULT_JOB | LP_CLONE_MXIO_CWD;
+  }
 
   std::unique_ptr<char* []> new_environ;
   char* const empty_environ = nullptr;
@@ -105,8 +115,9 @@ Process LaunchProcess(const std::vector<std::string>& argv,
   EnvironmentMap environ_modifications = options.environ;
   if (!options.current_directory.empty()) {
     environ_modifications["PWD"] = options.current_directory.value();
-  } else {
-    to_clone |= LP_CLONE_MXIO_CWD;
+
+    // Don't clone the parent's CWD if we are overriding the child's PWD.
+    to_clone = to_clone & ~LP_CLONE_MXIO_CWD;
   }
 
   if (!environ_modifications.empty())
