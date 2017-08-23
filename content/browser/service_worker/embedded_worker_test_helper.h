@@ -24,7 +24,7 @@
 #include "content/common/service_worker/service_worker_status_code.h"
 #include "ipc/ipc_listener.h"
 #include "ipc/ipc_test_sink.h"
-#include "mojo/public/cpp/bindings/binding.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 #include "net/http/http_response_info.h"
 #include "url/gurl.h"
 
@@ -35,7 +35,7 @@ namespace content {
 struct BackgroundFetchSettledFetch;
 class EmbeddedWorkerRegistry;
 class EmbeddedWorkerTestHelper;
-class MockRenderProcessHost;
+class MockRenderProcessHostImpl;
 class ServiceWorkerContextCore;
 class ServiceWorkerContextWrapper;
 class ServiceWorkerDispatcherHost;
@@ -74,8 +74,9 @@ class EmbeddedWorkerTestHelper : public IPC::Sender,
         base::WeakPtr<EmbeddedWorkerTestHelper> helper);
     ~MockEmbeddedWorkerInstanceClient() override;
 
-    static void Bind(const base::WeakPtr<EmbeddedWorkerTestHelper>& helper,
-                     mojo::ScopedMessagePipeHandle request);
+    static void Bind(
+        const base::WeakPtr<EmbeddedWorkerTestHelper>& helper,
+        mojom::EmbeddedWorkerInstanceClientAssociatedRequest request);
 
    protected:
     // mojom::EmbeddedWorkerInstanceClient implementation.
@@ -93,7 +94,7 @@ class EmbeddedWorkerTestHelper : public IPC::Sender,
                              const std::string& message) override;
 
     base::WeakPtr<EmbeddedWorkerTestHelper> helper_;
-    mojo::Binding<mojom::EmbeddedWorkerInstanceClient> binding_;
+    mojo::AssociatedBinding<mojom::EmbeddedWorkerInstanceClient> binding_;
 
     base::Optional<int> embedded_worker_id_;
 
@@ -151,7 +152,7 @@ class EmbeddedWorkerTestHelper : public IPC::Sender,
   int GetNextThreadId() { return next_thread_id_++; }
 
   int mock_render_process_id() const { return mock_render_process_id_; }
-  MockRenderProcessHost* mock_render_process_host() {
+  MockRenderProcessHostImpl* mock_render_process_host() {
     return render_process_host_.get();
   }
 
@@ -272,6 +273,7 @@ class EmbeddedWorkerTestHelper : public IPC::Sender,
 
  private:
   class MockServiceWorkerEventDispatcher;
+  class MockRendererInterface;
 
   void OnStartWorkerStub(
       const EmbeddedWorkerStartParams& params,
@@ -351,13 +353,14 @@ class EmbeddedWorkerTestHelper : public IPC::Sender,
           callback);
 
   std::unique_ptr<TestBrowserContext> browser_context_;
-  std::unique_ptr<MockRenderProcessHost> render_process_host_;
-  std::unique_ptr<MockRenderProcessHost> new_render_process_host_;
+  std::unique_ptr<MockRenderProcessHostImpl> render_process_host_;
+  std::unique_ptr<MockRenderProcessHostImpl> new_render_process_host_;
 
   scoped_refptr<ServiceWorkerContextWrapper> wrapper_;
 
   IPC::TestSink sink_;
 
+  std::unique_ptr<MockRendererInterface> mock_renderer_interface_;
   std::vector<std::unique_ptr<MockEmbeddedWorkerInstanceClient>>
       mock_instance_clients_;
   size_t mock_instance_clients_next_index_;
