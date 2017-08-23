@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "de91430c_590d4212",
+        "filename": "chrome/browser/chromeos/login/signin/oauth2_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T20:22:01Z",
+      "side": 1,
+      "message": "nit: Use base::test::ScopedCommandLine ?",
+      "revId": "c83cec7cdabd23e1b6926d89774ab402051ae82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2826857_f82d38ec",
         "filename": "chrome/browser/chromeos/login/signin/oauth2_browsertest.cc",
         "patchSetId": 1
@@ -16,6 +33,24 @@
       "revId": "c83cec7cdabd23e1b6926d89774ab402051ae82c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7481f6_b42261f9",
+        "filename": "chrome/browser/chromeos/login/signin/oauth2_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T20:22:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2826857_f82d38ec",
+      "revId": "c83cec7cdabd23e1b6926d89774ab402051ae82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -36,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "8497897c_cb15a89a",
+        "filename": "chrome/browser/chromeos/login/signin/oauth2_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T20:22:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "978ca2a0_0fffd89c",
+      "revId": "c83cec7cdabd23e1b6926d89774ab402051ae82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68e23543_f4ce1aef",
         "filename": "chrome/browser/chromeos/login/signin/oauth2_browsertest.cc",
         "patchSetId": 1
@@ -53,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "95710960_55217143",
+        "filename": "chrome/browser/chromeos/login/signin/oauth2_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T20:22:01Z",
+      "side": 1,
+      "message": "Unfortunately yes. base::test::ScopedCommandLine might looks better.",
+      "parentUuid": "68e23543_f4ce1aef",
+      "revId": "c83cec7cdabd23e1b6926d89774ab402051ae82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "318a07ca_9e7082af",
         "filename": "components/webdata_services/web_data_service_wrapper.cc",
         "patchSetId": 1
@@ -64,6 +135,24 @@
       "writtenOn": "2017-08-23T18:44:33Z",
       "side": 1,
       "message": "Without this, we hit the following assert:\nhttps://cs.chromium.org/chromium/src/base/threading/thread_restrictions.cc?l\u003d75",
+      "revId": "c83cec7cdabd23e1b6926d89774ab402051ae82c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884de74d_42fe3db9",
+        "filename": "components/webdata_services/web_data_service_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T20:22:01Z",
+      "side": 1,
+      "message": "Can we put a base::ThreadRestrictions::ScopedAllowWait in ThreadBlocker::BlockThreadOnThread to resolve this?",
+      "parentUuid": "318a07ca_9e7082af",
       "revId": "c83cec7cdabd23e1b6926d89774ab402051ae82c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
