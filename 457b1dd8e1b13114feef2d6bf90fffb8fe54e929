@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "cb61e40d_6aa714ec",
+        "filename": "mojo/edk/embedder/platform_channel_pair.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T00:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "300fa563_0f0fc22f",
+      "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55cfc157_56a47aa6",
         "filename": "mojo/edk/embedder/platform_channel_pair_fuchsia.cc",
         "patchSetId": 2
@@ -50,6 +68,24 @@
       "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb9c7a9_1872be40",
+        "filename": "mojo/edk/embedder/platform_channel_pair_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T00:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55cfc157_56a47aa6",
+      "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "20c974cc_a4da747e",
+        "filename": "mojo/edk/embedder/platform_channel_pair_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T00:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcdd71db_252bc2e7",
+      "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d08be64_bf64dbf7",
         "filename": "mojo/edk/embedder/platform_channel_pair_fuchsia.cc",
         "patchSetId": 2
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "901dc9ac_33ea4f22",
+        "filename": "mojo/edk/embedder/platform_channel_pair_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T00:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d08be64_bf64dbf7",
+      "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d156a1d7_b1f2eb33",
         "filename": "mojo/edk/embedder/platform_channel_pair_fuchsia.cc",
         "patchSetId": 2
@@ -98,6 +170,24 @@
       "writtenOn": "2017-08-23T00:11:02Z",
       "side": 1,
       "message": "Why are we duplicating the logic from the non-static version above, rather than just having that one call this version with |client_handle_.get()| as the |handle| parameter?",
+      "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1255437_0c73e77e",
+        "filename": "mojo/edk/embedder/platform_channel_pair_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-23T00:32:08Z",
+      "side": 1,
+      "message": "Why are we, indeed! :P\n\nDone.",
+      "parentUuid": "d156a1d7_b1f2eb33",
       "revId": "457b1dd8e1b13114feef2d6bf90fffb8fe54e929",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
