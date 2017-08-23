@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "55ebdc22_4a4f0875",
+        "filename": "remoting/client/audio/audio_stream_consumer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-23T23:22:05Z",
+      "side": 1,
+      "message": "This is where it is a little funny. Because the AudioStreamConsumer implementation will be passed down into the protocol layer and used as a protocol::AudioStub, the data will flow into the ProcessAudioPacket function. But I believe this is a bad name and only makes sense for one side of the proto level. So for the conceptual side data flows to AddAudioPacket.\n\nThis function is here in hope of a clearly understandable API alone.",
+      "parentUuid": "42bbb052_9b8d281a",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 71
+      },
+      "revId": "1434fd7bfa71099f714a369315808394de5b6db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "817cedd2_d52302b8",
         "filename": "remoting/client/audio/audio_stream_consumer.h",
         "patchSetId": 5
@@ -273,6 +297,30 @@
       "side": 1,
       "message": "This class doesn\u0027t exist in the code base yet. Adding the name in advance will not fail the buildbots but I\u0027m not sure whether that\u0027s a good idea :)",
       "parentUuid": "95502e40_25ddf993",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 40
+      },
+      "revId": "1434fd7bfa71099f714a369315808394de5b6db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d387342_f2512527",
+        "filename": "remoting/client/audio/audio_stream_consumer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-23T23:22:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4fc53c58_5f98e7c8",
       "range": {
         "startLine": 40,
         "startChar": 0,

@@ -22,6 +22,30 @@
       "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907e5b00_9f950222",
+        "filename": "remoting/client/audio/async_audio_frame_supplier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-23T23:22:05Z",
+      "side": 1,
+      "message": "I will rework that later after I confirm I don\u0027t need the context object.",
+      "parentUuid": "cd37e704_8a9b100c",
+      "range": {
+        "startLine": 35,
+        "startChar": 12,
+        "endLine": 35,
+        "endChar": 44
+      },
+      "revId": "832055b03bdd0064d5ae9d618c7c14e47c803c5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
