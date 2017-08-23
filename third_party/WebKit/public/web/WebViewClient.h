@@ -249,9 +249,7 @@ class WebViewClient : protected WebWidgetClient {
   WebLayerTreeView* InitializeLayerTreeView() override { return nullptr; }
   WebScreenInfo GetScreenInfo() override { return WebScreenInfo(); }
   void SetTouchAction(WebTouchAction touch_action) override {}
-  void ShowUnhandledTapUIIfNeeded(const WebPoint& tapped_position,
-                                  const WebNode& tapped_node,
-                                  bool page_changed) override {}
+  void ShowUnhandledTapUIIfNeeded(const WebTappedInfo& tapped_info) override {}
   void Show(WebNavigationPolicy) override {}
   virtual WebWidgetClient* WidgetClient() { return this; }
 
