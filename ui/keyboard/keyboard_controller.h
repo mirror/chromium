@@ -16,6 +16,7 @@
 #include "ui/keyboard/keyboard_event_filter.h"
 #include "ui/keyboard/keyboard_export.h"
 #include "ui/keyboard/keyboard_layout_delegate.h"
+#include "ui/keyboard/keyboard_util.h"
 
 namespace aura {
 class Window;
@@ -152,6 +153,10 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // For access to SetContainerBounds.
   friend class KeyboardLayoutManager;
 
+  // For access to NotifyKeyboardConfigChanged
+  friend bool keyboard::UpdateKeyboardConfig(
+      const keyboard::KeyboardConfig& config);
+
   bool show_on_resize() const { return show_on_resize_; }
 
   // aura::WindowObserver overrides
@@ -194,6 +199,10 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // Called when the keyboard mode is set or the keyboard is moved to another
   // display.
   void AdjustKeyboardBounds();
+
+  // Notifies keyboard config change to the observers.
+  // Only called from |UpdateKeyboardConfig| in keyboard_util.
+  void NotifyKeyboardConfigChanged();
 
   // Validates the state transition. Called from ChangeState.
   void CheckStateTransition(KeyboardControllerState prev,
