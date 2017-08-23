@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3a7de91_8352aa9c",
+        "filename": "ui/views/accessibility/ax_window_obj_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-23T06:15:11Z",
+      "side": 1,
+      "message": "How about adding the INVISIBLE state if it\u0027s not visible, since\nyou\u0027re now including invisible windows in the tree?",
+      "revId": "dfcdf1b177eb4f669d6e35d37eb20eacefed0ec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
