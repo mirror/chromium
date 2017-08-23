@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "8ed99c6b_492a8119",
+        "filename": "chromeos/components/tether/ble_connection_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T23:37:00Z",
+      "side": 1,
+      "message": "Other maps use other fields of the RemoteDevice, but this one doesn\u0027t. There\u0027s no reason to use a full RemoteDevice here.\n\nIf there are other locations which are wasting space in this way, please flag them and file a cleanup bug - thanks!",
+      "parentUuid": "52767c13_22120bcf",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 237,
+        "endChar": 47
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a96dc0b_22c33150",
         "filename": "chromeos/components/tether/ble_connection_manager_unittest.cc",
         "patchSetId": 9
@@ -460,6 +484,30 @@
       "side": 1,
       "message": "Same comment about this being convention.",
       "parentUuid": "8c0fe051_2a32717e",
+      "range": {
+        "startLine": 114,
+        "startChar": 11,
+        "endLine": 114,
+        "endChar": 34
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8893929_6f258917",
+        "filename": "chromeos/components/tether/host_scanner_operation.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T23:37:00Z",
+      "side": 1,
+      "message": "Same thing - we\u0027re using extra memory for no good reason here.",
+      "parentUuid": "20df730f_149385b3",
       "range": {
         "startLine": 114,
         "startChar": 11,

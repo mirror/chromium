@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6781d4e5_9ad63a96",
+        "filename": "chromeos/components/tether/host_scanner_operation.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T23:37:00Z",
+      "side": 1,
+      "message": "nit: Can you move this to a helper function? OnMessageReceived() is a bit hard to read now.",
+      "range": {
+        "startLine": 191,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 24
+      },
+      "revId": "750596e406c4423f80a93790bb53bfa766e0aeeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
