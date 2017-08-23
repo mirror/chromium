@@ -6,8 +6,17 @@ package org.chromium.net;
 
 import android.os.ConditionVariable;
 import android.os.ParcelFileDescriptor;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetTestRule.CronetTestFramework;
 
@@ -17,7 +26,11 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /** Test the default provided implementations of {@link UploadDataProvider} */
-public class UploadDataProvidersTest extends CronetTestBase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class UploadDataProvidersTest {
+    @Rule
+    public CronetTestRule mTestRule = new CronetTestRule();
+
     private static final String LOREM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
             + "Proin elementum, libero laoreet fringilla faucibus, metus tortor vehicula ante, "
             + "lacinia lorem eros vel sapien.";
@@ -25,14 +38,14 @@ public class UploadDataProvidersTest extends CronetTestBase {
     private File mFile;
     private MockUrlRequestJobFactory mMockUrlRequestJobFactory;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        mTestFramework = startCronetTestFramework();
-        assertTrue(NativeTestServer.startNativeTestServer(getContext()));
+    @Before
+    public void setUp() throws Exception {
+        mTestFramework = mTestRule.startCronetTestFramework();
+        Assert.assertTrue(
+                NativeTestServer.startNativeTestServer(InstrumentationRegistry.getContext()));
         // Add url interceptors after native application context is initialized.
         mMockUrlRequestJobFactory = new MockUrlRequestJobFactory(mTestFramework.mCronetEngine);
-        mFile = new File(getContext().getCacheDir().getPath() + "/tmpfile");
+        mFile = new File(InstrumentationRegistry.getContext().getCacheDir().getPath() + "/tmpfile");
         FileOutputStream fileOutputStream = new FileOutputStream(mFile);
         try {
             fileOutputStream.write(LOREM.getBytes("UTF-8"));
@@ -41,15 +54,15 @@ public class UploadDataProvidersTest extends CronetTestBase {
         }
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         mMockUrlRequestJobFactory.shutdown();
         NativeTestServer.shutdownNativeTestServer();
         mTestFramework.mCronetEngine.shutdown();
-        assertTrue(mFile.delete());
-        super.tearDown();
+        Assert.assertTrue(mFile.delete());
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testFileProvider() throws Exception {
@@ -61,16 +74,17 @@ public class UploadDataProvidersTest extends CronetTestBase {
         builder.addHeader("Content-Type", "useless/string");
         builder.build().start();
         callback.blockForDone();
-        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
-        assertEquals(LOREM, callback.mResponseAsString);
+        Assert.assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+        Assert.assertEquals(LOREM, callback.mResponseAsString);
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testFileDescriptorProvider() throws Exception {
         ParcelFileDescriptor descriptor =
                 ParcelFileDescriptor.open(mFile, ParcelFileDescriptor.MODE_READ_ONLY);
-        assertTrue(descriptor.getFileDescriptor().valid());
+        Assert.assertTrue(descriptor.getFileDescriptor().valid());
         TestUrlRequestCallback callback = new TestUrlRequestCallback();
         UrlRequest.Builder builder = mTestFramework.mCronetEngine.newUrlRequestBuilder(
                 NativeTestServer.getRedirectToEchoBody(), callback, callback.getExecutor());
@@ -79,10 +93,11 @@ public class UploadDataProvidersTest extends CronetTestBase {
         builder.addHeader("Content-Type", "useless/string");
         builder.build().start();
         callback.blockForDone();
-        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
-        assertEquals(LOREM, callback.mResponseAsString);
+        Assert.assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+        Assert.assertEquals(LOREM, callback.mResponseAsString);
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testBadFileDescriptorProvider() throws Exception {
@@ -97,12 +112,13 @@ public class UploadDataProvidersTest extends CronetTestBase {
             builder.build().start();
             callback.blockForDone();
 
-            assertTrue(callback.mError.getCause() instanceof IllegalArgumentException);
+            Assert.assertTrue(callback.mError.getCause() instanceof IllegalArgumentException);
         } finally {
             pipe[1].close();
         }
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testBufferProvider() throws Exception {
@@ -115,10 +131,11 @@ public class UploadDataProvidersTest extends CronetTestBase {
         builder.build().start();
         callback.blockForDone();
 
-        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
-        assertEquals(LOREM, callback.mResponseAsString);
+        Assert.assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+        Assert.assertEquals(LOREM, callback.mResponseAsString);
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testNoErrorWhenCanceledDuringStart() throws Exception {
@@ -149,9 +166,10 @@ public class UploadDataProvidersTest extends CronetTestBase {
         urlRequest.cancel();
         second.open();
         callback.blockForDone();
-        assertTrue(callback.mOnCanceledCalled);
+        Assert.assertTrue(callback.mOnCanceledCalled);
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testNoErrorWhenExceptionDuringStart() throws Exception {
@@ -179,12 +197,14 @@ public class UploadDataProvidersTest extends CronetTestBase {
         urlRequest.start();
         first.block();
         callback.blockForDone();
-        assertFalse(callback.mOnCanceledCalled);
-        assertTrue(callback.mError instanceof CallbackException);
-        assertContains("Exception received from UploadDataProvider", callback.mError.getMessage());
-        assertContains(exceptionMessage, callback.mError.getCause().getMessage());
+        Assert.assertFalse(callback.mOnCanceledCalled);
+        Assert.assertTrue(callback.mError instanceof CallbackException);
+        CronetTestRule.assertContains(
+                "Exception received from UploadDataProvider", callback.mError.getMessage());
+        CronetTestRule.assertContains(exceptionMessage, callback.mError.getCause().getMessage());
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     // Tests that creating a ByteBufferUploadProvider using a byte array with an
@@ -201,12 +221,12 @@ public class UploadDataProvidersTest extends CronetTestBase {
         System.arraycopy(uploadData, 0, uploadDataWithPadding, offset, uploadData.length);
         UploadDataProvider dataProvider =
                 UploadDataProviders.create(uploadDataWithPadding, offset, uploadData.length);
-        assertEquals(uploadData.length, dataProvider.getLength());
+        Assert.assertEquals(uploadData.length, dataProvider.getLength());
         builder.setUploadDataProvider(dataProvider, callback.getExecutor());
         UrlRequest urlRequest = builder.build();
         urlRequest.start();
         callback.blockForDone();
-        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
-        assertEquals(LOREM, callback.mResponseAsString);
+        Assert.assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+        Assert.assertEquals(LOREM, callback.mResponseAsString);
     }
 }
