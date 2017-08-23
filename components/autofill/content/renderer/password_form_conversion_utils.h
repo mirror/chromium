@@ -15,6 +15,7 @@
 #include "components/autofill/core/common/password_form.h"
 #include "components/autofill/core/common/password_form_field_prediction_map.h"
 #include "third_party/WebKit/public/platform/WebString.h"
+#include "third_party/re2/src/re2/re2.h"
 #include "url/gurl.h"
 
 namespace blink {
@@ -27,6 +28,8 @@ class WebLocalFrame;
 namespace autofill {
 
 struct PasswordForm;
+
+re2::RE2* CreateMatcher(void* instance, const char* pattern);
 
 // Tests whether the given form is a GAIA reauthentication form.
 bool IsGaiaReauthenticationForm(const blink::WebFormElement& form);

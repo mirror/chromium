@@ -954,6 +954,7 @@ SDK.DeferredDOMNode = class {
   constructor(target, backendNodeId) {
     this._domModel = target.model(SDK.DOMModel);
     this._backendNodeId = backendNodeId;
+    this._agent = this._domModel._agent;
   }
 
   /**
@@ -971,6 +972,15 @@ SDK.DeferredDOMNode = class {
       return null;
     var nodeIds = await this._domModel.pushNodesByBackendIdsToFrontend(new Set([this._backendNodeId]));
     return nodeIds && nodeIds.get(this._backendNodeId) || null;
+  }
+
+  /**
+   * @param {string=} objectGroup
+   * @return {!Promise<?SDK.RemoteObject>}
+   */
+  async resolveToObject(objectGroup) {
+    var object = await this._agent.resolveNode(undefined, this._backendNodeId, objectGroup);
+    return object && this._domModel._runtimeModel.createRemoteObject(object);
   }
 
   /**

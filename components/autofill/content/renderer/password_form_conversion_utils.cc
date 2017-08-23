@@ -31,7 +31,6 @@
 #include "third_party/WebKit/public/web/WebFormControlElement.h"
 #include "third_party/WebKit/public/web/WebInputElement.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
-#include "third_party/re2/src/re2/re2.h"
 
 using blink::WebDocument;
 using blink::WebFormControlElement;
@@ -97,16 +96,6 @@ const char kAutocompleteUsername[] = "username";
 const char kAutocompleteCurrentPassword[] = "current-password";
 const char kAutocompleteNewPassword[] = "new-password";
 const char kAutocompleteCreditCardPrefix[] = "cc-";
-
-re2::RE2* CreateMatcher(void* instance, const char* pattern) {
-  re2::RE2::Options options;
-  options.set_case_sensitive(false);
-  // Use placement new to initialize the instance in the preallocated space.
-  // The "(instance)" is very important to force POD type initialization.
-  re2::RE2* matcher = new (instance) re2::RE2(pattern, options);
-  DCHECK(matcher->ok());
-  return matcher;
-}
 
 struct LoginAndSignupLazyInstanceTraits
     : public base::internal::DestructorAtExitLazyInstanceTraits<re2::RE2> {
@@ -640,6 +629,16 @@ bool GetPasswordForm(
 }
 
 }  // namespace
+
+re2::RE2* CreateMatcher(void* instance, const char* pattern) {
+  re2::RE2::Options options;
+  options.set_case_sensitive(false);
+  // Use placement new to initialize the instance in the preallocated space.
+  // The "(instance)" is very important to force POD type initialization.
+  re2::RE2* matcher = new (instance) re2::RE2(pattern, options);
+  DCHECK(matcher->ok());
+  return matcher;
+}
 
 bool IsGaiaReauthenticationForm(const blink::WebFormElement& form) {
   if (GURL(form.GetDocument().Url()).GetOrigin() !=
