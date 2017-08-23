@@ -129,6 +129,8 @@ class TestingBrowserProcess : public BrowserProcess {
   network_time::NetworkTimeTracker* network_time_tracker() override;
 
   gcm::GCMDriver* gcm_driver() override;
+  resource_coordinator::WindowOcclusionTracker* GetWindowOcclusionTracker()
+      override;
   resource_coordinator::TabManager* GetTabManager() override;
   shell_integration::DefaultWebClientState CachedDefaultWebClientState()
       override;
@@ -186,8 +188,13 @@ class TestingBrowserProcess : public BrowserProcess {
 
   std::unique_ptr<network_time::NetworkTimeTracker> network_time_tracker_;
 
-  // |tab_manager_| is null by default and will be created when
-  // GetTabManager() is invoked on supported platforms.
+#if defined(OS_CHROMEOS)
+  std::unique_ptr<resource_coordinator::WindowOcclusionTracker>
+      window_occlusion_tracker_;
+#endif
+
+// |tab_manager_| is null by default and will be created when
+// GetTabManager() is invoked on supported platforms.
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
   std::unique_ptr<resource_coordinator::TabManager> tab_manager_;
 #endif

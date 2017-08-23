@@ -1325,6 +1325,12 @@ void ChromeBrowserMainParts::PreBrowserStart() {
   SetupSyzyASAN();
 #endif
 
+#if defined(OS_CHROMEOS)
+  // Force WindowOcclusionTracker initialization. It is important to initialize
+  // WindowOcclusionTracker early so it knows about all windows.
+  g_browser_process->GetWindowOcclusionTracker();
+#endif
+
 // Start the tab manager here so that we give the most amount of time for the
 // other services to start up before we start adjusting the oom priority.
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
