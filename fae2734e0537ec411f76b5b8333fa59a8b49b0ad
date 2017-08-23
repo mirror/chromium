@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07c2d3fd_a4807c2a",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-23T16:16:13Z",
+      "side": 1,
+      "message": "nit. no ; after functions. Also, just use \u003d default for this and the dtor",
+      "revId": "fae2734e0537ec411f76b5b8333fa59a8b49b0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696654ab_17cb421a",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-23T16:16:13Z",
+      "side": 1,
+      "message": "if it\u0027s a class, then it should delete the move and copy constructors",
+      "revId": "fae2734e0537ec411f76b5b8333fa59a8b49b0ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
