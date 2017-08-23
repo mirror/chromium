@@ -45,6 +45,12 @@
   parent_->OnSystemControlTintChanged();
 }
 
+- (void)onMenuWillOpen:(NSNotification*)notification {
+  if ([NSWindow windowNumberAtPoint:[NSEvent mouseLocation]
+        belowWindowWithWindowNumber:0] != [parent_->ns_window() windowNumber])
+    [self nativeWidgetMac]->GetWidget()->Close();
+}
+
 - (void)sheetDidEnd:(NSWindow*)sheet
          returnCode:(NSInteger)returnCode
         contextInfo:(void*)contextInfo {

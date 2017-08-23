@@ -420,6 +420,18 @@ void BridgedNativeWidget::Init(base::scoped_nsobject<NSWindow> window,
              name:NSControlTintDidChangeNotification
            object:nil];
 
+  if (params.type == Widget::InitParams::TYPE_BUBBLE) {
+    [[NSNotificationCenter defaultCenter]
+        addObserver:window_delegate_
+           selector:@selector(onMenuWillOpen:)
+               name:NSMenuDidBeginTrackingNotification
+             object:nil];
+  } else if (params.type == Widget::InitParams::TYPE_MENU) {
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:NSMenuDidBeginTrackingNotification
+                      object:nil];
+  }
+
   // Validate the window's initial state, otherwise the bridge's initial
   // tracking state will be incorrect.
   DCHECK(![window_ isVisible]);
