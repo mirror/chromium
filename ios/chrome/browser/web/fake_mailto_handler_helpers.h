@@ -5,9 +5,9 @@
 #ifndef IOS_CHROME_BROWSER_WEB_FAKE_MAILTO_HANLDERS_H_
 #define IOS_CHROME_BROWSER_WEB_FAKE_MAILTO_HANLDERS_H_
 
+#import "ios/chrome/browser/web/legacy_mailto_url_rewriter.h"
 #import "ios/chrome/browser/web/mailto_handler.h"
 #import "ios/chrome/browser/web/mailto_handler_gmail.h"
-#import "ios/chrome/browser/web/mailto_url_rewriter.h"
 
 // Test fixtures for faking MailtoHandlerGmail objects that reports whether
 // Gmail app as installed or not.

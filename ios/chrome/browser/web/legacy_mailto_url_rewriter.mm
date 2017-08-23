@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "ios/chrome/browser/web/mailto_url_rewriter.h"
+#import "ios/chrome/browser/web/legacy_mailto_url_rewriter.h"
 
 #import "base/logging.h"
 #import "ios/chrome/browser/web/mailto_handler.h"
@@ -23,7 +23,7 @@ namespace {
 NSString* const kMailtoDefaultHandlerKey = @"MailtoHandlerDefault";
 }  // namespace
 
-@interface MailtoURLRewriter ()
+@interface LegacyMailtoURLRewriter ()
 
 // Dictionary keyed by the App Store ID of the Mail client and the value is
 // the MailtoHandler object that can rewrite a mailto: URL.
@@ -51,15 +51,8 @@ NSString* const kMailtoDefaultHandlerKey = @"MailtoHandlerDefault";
 
 @end
 
-@implementation MailtoURLRewriter
-@synthesize observer = _observer;
+@implementation LegacyMailtoURLRewriter
 @synthesize handlers = _handlers;
-
-+ (NSString*)systemMailApp {
-  // This is the App Store ID for Apple Mail app.
-  // See https://itunes.apple.com/us/app/mail/id1108187098?mt=8
-  return @"1108187098";
-}
 
 - (instancetype)init {
   self = [super init];
@@ -102,7 +95,7 @@ NSString* const kMailtoDefaultHandlerKey = @"MailtoHandlerDefault";
           isEqualToString:[defaults objectForKey:kMailtoDefaultHandlerKey]])
     return;
   [defaults setObject:appStoreID forKey:kMailtoDefaultHandlerKey];
-  [_observer rewriterDidChange:self];
+  [self.observer rewriterDidChange:self];
 }
 
 - (NSString*)defaultHandlerName {

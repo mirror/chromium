@@ -6,7 +6,7 @@
 #define IOS_CHROME_BROWSER_UI_SETTINGS_CONTENT_SETTINGS_COLLECTION_VIEW_CONTROLLER_H_
 
 #import "ios/chrome/browser/ui/settings/settings_root_collection_view_controller.h"
-#import "ios/chrome/browser/web/mailto_url_rewriter.h"
+#import "ios/chrome/browser/web/legacy_mailto_url_rewriter.h"
 
 namespace ios {
 class ChromeBrowserState;

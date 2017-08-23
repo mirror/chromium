@@ -5,7 +5,7 @@
 #import "ios/chrome/browser/web/mailto_handler_system_mail.h"
 
 #include "base/strings/sys_string_conversions.h"
-#import "ios/chrome/browser/web/mailto_url_rewriter.h"
+#import "ios/chrome/browser/web/legacy_mailto_url_rewriter.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "url/gurl.h"

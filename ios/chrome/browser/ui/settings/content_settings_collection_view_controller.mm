@@ -106,7 +106,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
                               inverted:YES];
     [_disablePopupsSetting setObserver:self];
 
-    _mailtoURLRewriter = [[MailtoURLRewriter alloc] initWithStandardHandlers];
+    _mailtoURLRewriter =
+        [[LegacyMailtoURLRewriter alloc] initWithStandardHandlers];
     [_mailtoURLRewriter setObserver:self];
 
     [self loadModel];
