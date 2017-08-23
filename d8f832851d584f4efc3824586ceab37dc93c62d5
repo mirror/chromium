@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "577beaaa_baded81f",
+        "filename": "ui/aura/local/window_port_local.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-23T22:13:46Z",
+      "side": 1,
+      "message": "new_bounds is not in pixels, it\u0027s in dips. Shouldn\u0027t you convert last_size_in_pixels_ here like you do on 148?",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 95,
+        "endChar": 34
+      },
+      "revId": "d8f832851d584f4efc3824586ceab37dc93c62d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
