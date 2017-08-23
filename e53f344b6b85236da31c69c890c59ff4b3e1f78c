@@ -88,6 +88,24 @@
       "revId": "e53f344b6b85236da31c69c890c59ff4b3e1f78c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1de04248_c7665e68",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-23T07:08:09Z",
+      "side": 1,
+      "message": "Yes, Chris is correct. To be clear:\n\n1. The test does use the expected output as input, to determine the pixel width to elide to. This has always been the case and I\u0027ve often found it troubling (for one thing, you can\u0027t write a test that elides to one length but expects a string that\u0027s shorter than that length). I\u0027ve thought a lot about fixing it but I\u0027m not sure what we can do because we can\u0027t hard-code pixel widths. I don\u0027t think a TODO is actionable here.\n2. \"http\" is always stripped. \"https\" is stripped if there isn\u0027t enough room. The existing test checks that https is stripped if there isn\u0027t enough room. The new test checks that it isn\u0027t stripped if there is enough room.\n\nI\u0027ll update the CL description.",
+      "parentUuid": "29639aa9_99f86e23",
+      "revId": "e53f344b6b85236da31c69c890c59ff4b3e1f78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
