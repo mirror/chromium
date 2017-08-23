@@ -104,6 +104,24 @@
       "revId": "6b77bb24ae8c62e2a736f18bee131e564e7e4854",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f5436b_5f9dee87",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-23T13:28:02Z",
+      "side": 0,
+      "message": "- state_ \u003d FAILED should still be set at the beginning of this function (calling NavigationHandle won\u0027t unfail us).\n- TransferNavigationHandleOwnership() and render_frame_host-\u003eFailedNavigation(...) should move to OnFailureChecksComplete().\n- NavigationHandleImpl::WillFailRequest shouldn\u0027t call MaybeTransferAndProceed. MaybetransferAndProceed is a pre-PlzNavigate function that allows transfer of the current navigation to a new RFH. It\u0027s not needed in PlzNavigate and it doesn\u0027t work with error pages.",
+      "parentUuid": "3ec7a30f_af8b991b",
+      "revId": "6b77bb24ae8c62e2a736f18bee131e564e7e4854",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

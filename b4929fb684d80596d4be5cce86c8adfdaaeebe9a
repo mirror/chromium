@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "12f835dd_dd6ad7b9",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-23T13:28:02Z",
+      "side": 1,
+      "message": "Indeed you\u0027re right. It\u0027s the callback for tests, not the callback for proceeding with the navigation.",
+      "parentUuid": "aec360aa_382d9f8c",
+      "revId": "b4929fb684d80596d4be5cce86c8adfdaaeebe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab9d6787_50226c15",
         "filename": "content/browser/frame_host/navigation_request.h",
         "patchSetId": 8
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "Sounds fine to me. clamy@?\n\nThanks for noticing the unrelated changes; indeed a rebase mishap because `git cl patch` doesn\u0027t automatically set upstream branches to match CL dependencies. :-(\nFixed in the latest patch.",
       "parentUuid": "5de41860_4ea2a51d",
+      "revId": "b4929fb684d80596d4be5cce86c8adfdaaeebe9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3acd1d_8cf5b9c7",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-23T13:28:02Z",
+      "side": 1,
+      "message": "For adding methods to NavigationHandle, what we\u0027ve done in the past is either:\n- add them in the same CL as they get used outside of content/\n- add then to NavigationHandleImpl only first, then expose them in NavigationHandle in the CL that needs them.\n\nYou still have the same issue with NavigationThrottle though. Considering that the mechanism described above is not possible, what we\u0027ve accepted in the past is landing the CL with a referrence to the CL that will use it in the commit message.",
+      "parentUuid": "c5149abe_f14a5d94",
       "revId": "b4929fb684d80596d4be5cce86c8adfdaaeebe9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

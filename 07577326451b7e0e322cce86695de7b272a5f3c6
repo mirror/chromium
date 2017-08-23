@@ -16,6 +16,24 @@
       "revId": "07577326451b7e0e322cce86695de7b272a5f3c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e622cb5d_79935058",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-23T13:28:02Z",
+      "side": 1,
+      "message": "You must skip the call to WillFailRequest in that case, but execute all of what OnRequestFailed is doing right now. Depending on how the function is split, this might mean doing it in an else clause here, or making a special case further down.",
+      "parentUuid": "1f470b22_22d2a521",
+      "revId": "07577326451b7e0e322cce86695de7b272a5f3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
