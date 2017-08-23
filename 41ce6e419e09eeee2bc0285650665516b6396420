@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4935b18_4ff551c9",
+        "filename": "ui/base/cocoa/hover_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-23T23:38:23Z",
+      "side": 1,
+      "message": "It\u0027s somewhat of a layering violation to talk about a //chrome thing in //ui/base. Can you give a more generic example?",
+      "range": {
+        "startLine": 41,
+        "startChar": 10,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f318e8_48300b3c",
+        "filename": "ui/base/cocoa/hover_button.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-23T23:38:23Z",
+      "side": 1,
+      "message": "I\u0027d undo clang-format here and put each option back on its own line.",
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32633392_4bfe4503",
+        "filename": "ui/base/cocoa/hover_button_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-23T23:38:23Z",
+      "side": 1,
+      "message": "Why not have the property on HoverButton be readwrite instead?",
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2556334_f5c16ea0",
+        "filename": "ui/base/cocoa/hover_button_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-23T23:38:23Z",
+      "side": 1,
+      "message": "Rebase this on top of the other CL?",
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59370c74_195362b0",
+        "filename": "ui/base/cocoa/hover_button_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-23T23:38:23Z",
+      "side": 1,
+      "message": "under_scores in C++",
+      "range": {
+        "startLine": 118,
+        "startChar": 10,
+        "endLine": 118,
+        "endChar": 24
+      },
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6757c90a_113a61d5",
+        "filename": "ui/base/cocoa/hover_button_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-23T23:38:23Z",
+      "side": 1,
+      "message": "This is copying the tracking areas array each time. Pull this out into a local.",
+      "range": {
+        "startLine": 123,
+        "startChar": 66,
+        "endLine": 123,
+        "endChar": 71
+      },
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
