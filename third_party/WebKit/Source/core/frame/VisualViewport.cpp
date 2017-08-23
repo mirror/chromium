@@ -451,6 +451,16 @@ void VisualViewport::SetupScrollbar(WebScrollbar::Orientation orientation) {
   int thumb_thickness = theme.ThumbThickness();
   int scrollbar_thickness = theme.ScrollbarThickness(kRegularScrollbar);
   int scrollbar_margin = theme.ScrollbarMargin();
+  LocalFrame* frame = MainFrame();
+  if (frame) {
+    double devicePixelRatio = frame->DevicePixelRatio();
+    thumb_thickness = static_cast<int>(static_cast<double>(thumb_thickness) *
+                                       devicePixelRatio);
+    scrollbar_thickness = static_cast<int>(
+        static_cast<double>(scrollbar_thickness) * devicePixelRatio);
+    scrollbar_margin = static_cast<int>(static_cast<double>(scrollbar_margin) *
+                                        devicePixelRatio);
+  }
 
   if (!web_scrollbar_layer) {
     ScrollingCoordinator* coordinator = GetPage().GetScrollingCoordinator();
