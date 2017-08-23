@@ -109,7 +109,7 @@ ParseInfo IndexAndPersistRulesImpl(const base::Value& rules,
 
   if (!all_rules_parsed && warnings) {
     warnings->push_back(InstallWarning(
-        kRulesNotPassedWarning, manifest_keys::kDeclarativeNetRequestKey,
+        kRulesNotParsedWarning, manifest_keys::kDeclarativeNetRequestKey,
         manifest_keys::kDeclarativeRuleResourcesKey));
   }
 

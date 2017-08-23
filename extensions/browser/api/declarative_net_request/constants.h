@@ -5,6 +5,8 @@
 #ifndef EXTENSIONS_BROWSER_API_DECLARATIVE_NET_REQUEST_CONSTANTS_H_
 #define EXTENSIONS_BROWSER_API_DECLARATIVE_NET_REQUEST_CONSTANTS_H_
 
+#include "extensions/common/api/declarative_net_request/constants.h"
+
 namespace extensions {
 namespace declarative_net_request {
 
@@ -53,33 +55,8 @@ constexpr char kErrorDuplicateIDs[] =
 constexpr char kErrorPersisting[] = "*: Rules file could not be parsed.";
 
 // Rule parsing install warnings.
-constexpr char kRulesNotPassedWarning[] =
+constexpr char kRulesNotParsedWarning[] =
     "Declarative Net Request: Not all rules were successfully parsed.";
-
-// Minimum valid value of a declarative rule ID.
-constexpr int kMinValidID = 1;
-
-// Minimum valid value of a declarative rule priority.
-constexpr int kMinValidPriority = 1;
-
-// Default priority used for rules when the priority is not explicity provided
-// by an extension.
-constexpr int kDefaultPriority = 1;
-
-// Keys used in rules.
-constexpr char kIDKey[] = "id";
-constexpr char kPriorityKey[] = "priority";
-constexpr char kRuleConditionKey[] = "condition";
-constexpr char kRuleActionKey[] = "action";
-constexpr char kUrlFilterKey[] = "urlFilter";
-constexpr char kIsUrlFilterCaseSensitiveKey[] = "isUrlFilterCaseSensitive";
-constexpr char kDomainsKey[] = "domains";
-constexpr char kExcludedDomainsKey[] = "excludedDomains";
-constexpr char kResourceTypesKey[] = "resourceTypes";
-constexpr char kExcludedResourceTypesKey[] = "excludedResourceTypes";
-constexpr char kDomainTypeKey[] = "domainType";
-constexpr char kRuleActionTypeKey[] = "type";
-constexpr char kRedirectUrlKey[] = "redirectUrl";
 
 // Histogram names.
 constexpr char kIndexAndPersistRulesDurationHistogram[] =
