@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad3f9ddd_329226f7",
+        "filename": "cc/paint/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-23T23:16:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e4a6279_ba35c2d1",
+      "range": {
+        "startLine": 70,
+        "startChar": 5,
+        "endLine": 70,
+        "endChar": 44
+      },
+      "revId": "d3ae310814724d4461b3a8a8298ab77ada0eda8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "851edcef_ca4cf5c5",
         "filename": "cc/paint/paint_image.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-23T20:01:35Z",
       "side": 1,
       "message": "nit: DCHECK_EQ",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 47
+      },
+      "revId": "d3ae310814724d4461b3a8a8298ab77ada0eda8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c0b03d4_1b9ded60",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-23T23:16:35Z",
+      "side": 1,
+      "message": "DCHECK_EQ needs the values to be stringify-able which SkIRect/SkISize doesn\u0027t support.",
+      "parentUuid": "851edcef_ca4cf5c5",
       "range": {
         "startLine": 68,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a29c827f_a7a2a312",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-23T23:16:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64b099ab_193a4914",
+      "range": {
+        "startLine": 73,
+        "startChar": 7,
+        "endLine": 73,
+        "endChar": 13
+      },
+      "revId": "d3ae310814724d4461b3a8a8298ab77ada0eda8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d74ecdbe_1a7fc13f",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-23T20:01:35Z",
       "side": 1,
       "message": "We can\u0027t subset the scaled image?",
+      "range": {
+        "startLine": 454,
+        "startChar": 37,
+        "endLine": 454,
+        "endChar": 46
+      },
+      "revId": "d3ae310814724d4461b3a8a8298ab77ada0eda8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ecc9e2c_a659e871",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-23T23:16:35Z",
+      "side": 1,
+      "message": "Not if there is a strict subset specified, since the surrounding content can bleed into the edge.",
+      "parentUuid": "d74ecdbe_1a7fc13f",
       "range": {
         "startLine": 454,
         "startChar": 37,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "9c1e6e84_d5bddac3",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-23T23:16:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean, can you provide an example?",
+      "parentUuid": "f0bad3bc_59c9c003",
+      "range": {
+        "startLine": 462,
+        "startChar": 7,
+        "endLine": 462,
+        "endChar": 67
+      },
+      "revId": "d3ae310814724d4461b3a8a8298ab77ada0eda8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fecc13be_047b390a",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-23T20:01:35Z",
       "side": 1,
       "message": "nit: DCHECK_EQ",
+      "range": {
+        "startLine": 580,
+        "startChar": 2,
+        "endLine": 580,
+        "endChar": 72
+      },
+      "revId": "d3ae310814724d4461b3a8a8298ab77ada0eda8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a880befd_337b8ee9",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-23T23:16:35Z",
+      "side": 1,
+      "message": "DCHECK_EQ needs the values to be stringify-able which SkIRect/SkISize doesn\u0027t support.",
+      "parentUuid": "fecc13be_047b390a",
       "range": {
         "startLine": 580,
         "startChar": 2,
@@ -160,6 +304,30 @@
       "revId": "d3ae310814724d4461b3a8a8298ab77ada0eda8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011a5a81_8638e1a6",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-23T23:16:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "285b7098_76906b7a",
+      "range": {
+        "startLine": 619,
+        "startChar": 5,
+        "endLine": 620,
+        "endChar": 45
+      },
+      "revId": "d3ae310814724d4461b3a8a8298ab77ada0eda8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
