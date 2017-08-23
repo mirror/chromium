@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43ea3b9c_46fb80a6",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontCustomPlatformData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-23T22:06:12Z",
+      "side": 1,
+      "message": "Please use a comment more like that in\nhttps://chromium.googlesource.com/chromium/src.git/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms\nthat mentions why they cannot change.\n\nThe current comment might be read as change in sync with enums.xml.",
+      "range": {
+        "startLine": 76,
+        "startChar": 49,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "5679c24bf16cd33ce19c53de6aadadc97197248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d0c0fd_87c8fd09",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 6029,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-23T22:06:12Z",
+      "side": 1,
+      "message": "This description is out of date.\nYou might simply be able to remove the whole second sentence, as the enum labels should make the counts clear.",
+      "revId": "5679c24bf16cd33ce19c53de6aadadc97197248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "393671e2_80aca7d5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 6030,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-23T22:06:12Z",
+      "side": 1,
+      "message": "Is this last sentence true?  (I merely ask because it\u0027s surprising to me.  For example, you have an enum value labeled conventional font.  I assume these are built-in and don\u0027t need to be passed around by web blobs.",
+      "revId": "5679c24bf16cd33ce19c53de6aadadc97197248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
