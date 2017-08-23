@@ -13,6 +13,7 @@
 #include <utility>
 #include <vector>
 
+#include "chrome/browser/ui/browser_window.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/strings/string_util.h"
@@ -250,7 +251,6 @@ ExtensionFunction::ResponseAction TabCaptureCaptureOffscreenTabFunction::Run() {
   std::unique_ptr<TabCapture::CaptureOffscreenTab::Params> params =
       TabCapture::CaptureOffscreenTab::Params::Create(*args_);
   EXTENSION_FUNCTION_VALIDATE(params);
-
   // Make sure the extension is whitelisted for using this API, regardless of
   // Chrome channel.
   //
@@ -270,6 +270,23 @@ ExtensionFunction::ResponseAction TabCaptureCaptureOffscreenTabFunction::Run() {
 
   if (!OptionsSpecifyAudioOrVideo(params->options))
     return RespondNow(Error(kNoAudioOrVideo));
+
+
+  // gfx::Rect bounds = gfx::Rect(0, 0, 500, 500);
+  // Browser::CreateParams browser_params =
+  //     Browser::CreateParams::CreateForApp("app name", true, bounds,
+  //     Profile::FromBrowserContext(browser_context()), false);
+  // browser_params.initial_show_state = ui::SHOW_STATE_NORMAL;
+  // Browser* browser = new Browser(browser_params);
+  // chrome::NavigateParams navigate_params(
+  //   browser, start_url, ui::PAGE_TRANSITION_CLIENT_REDIRECT);
+  //   navigate_params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
+  // navigate_params.user_gesture = false;
+  // chrome::Navigate(&navigate_params);
+  // browser->window()->Show();
+  // LOG(ERROR) << "------------------------- should've opened a window";
+
+
 
   content::WebContents* const extension_web_contents = GetSenderWebContents();
   EXTENSION_FUNCTION_VALIDATE(extension_web_contents);

@@ -6,12 +6,15 @@
 
 #include <algorithm>
 
+#include "chrome/browser/ui/browser_window.h"
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/extensions/api/tab_capture/tab_capture_registry.h"
 #include "chrome/browser/media/router/receiver_presentation_service_delegate_impl.h"  // nogncheck
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/web_contents_sizer.h"
 #include "content/public/browser/keyboard_event_processing_result.h"
 #include "content/public/browser/navigation_handle.h"
@@ -21,6 +24,8 @@
 #include "content/public/common/web_preferences.h"
 #include "extensions/browser/extension_host.h"
 #include "extensions/browser/process_manager.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
 
 using content::WebContents;
 
@@ -180,6 +185,27 @@ void OffscreenTab::Start(const GURL& start_url,
   load_params.should_replace_current_entry = true;
   load_params.should_clear_history_list = true;
   offscreen_tab_web_contents_->GetController().LoadURLWithParams(load_params);
+
+  Browser::CreateParams browser_params = Browser::CreateParams::CreateForDevTools(profile_.get());
+  browser_params.initial_bounds = gfx::Rect(500, 500);
+  browser_params.initial_show_state = ui::SHOW_STATE_NORMAL;
+  Browser* browser = new Browser(browser_params);
+  browser->tab_strip_model()->AddWebContents(
+    offscreen_tab_web_contents_.get(), -1, ui::PAGE_TRANSITION_AUTO_TOPLEVEL,
+    TabStripModel::ADD_ACTIVE);
+  // chrome::NavigateParams params(
+  //   browser, start_url_, ui::PAGE_TRANSITION_CLIENT_REDIRECT);
+  // params.disposition = WindowOpenDisposition::NEW_FOREGROUND_TAB;
+  // params.user_gesture = false;
+  // chrome::Navigate(&params);
+  browser->window()->Show();
+
+  const std::vector<display::Display>& displays =
+      display::Screen::GetScreen()->GetAllDisplays();
+
+  for (const auto& display : displays) {
+    LOG(ERROR) << display.ToString();
+  }
 
   start_time_ = base::TimeTicks::Now();
   DieIfContentCaptureEnded();
