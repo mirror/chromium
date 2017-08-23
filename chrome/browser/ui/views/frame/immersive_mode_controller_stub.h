@@ -30,6 +30,7 @@ class ImmersiveModeControllerStub : public ImmersiveModeController {
   void OnFindBarVisibleBoundsChanged(
       const gfx::Rect& new_visible_bounds_in_screen) override;
   views::Widget* GetRevealWidget() override;
+  void OnWidgetActivationChanged(views::Widget* widget, bool active) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ImmersiveModeControllerStub);
