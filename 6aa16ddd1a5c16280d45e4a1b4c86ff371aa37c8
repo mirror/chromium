@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b56c9ff_4825f85e",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3006,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-23T23:28:03Z",
+      "side": 1,
+      "message": "I think other services are just being lazy in this regard (following my own lead), but the process title should really be a localized string. Since we already have one in IDS_UTILITY_PROCESS_PROFILE_IMPORTER_NAME, I\u0027d say use that instead of deleting it and hard-coding English here. I think it\u0027s as simple as\n\n  l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PROFILE_IMPORTER_NAME)",
+      "revId": "6aa16ddd1a5c16280d45e4a1b4c86ff371aa37c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc54da20_ae019cfe",
+        "filename": "chrome/utility/importer/profile_import_manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-23T23:28:03Z",
+      "side": 1,
+      "message": "This should not be necessary.",
+      "revId": "6aa16ddd1a5c16280d45e4a1b4c86ff371aa37c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2f0b98_7a6a3a52",
+        "filename": "chrome/utility/importer/profile_import_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-23T23:28:03Z",
+      "side": 1,
+      "message": "no. the point of this behavior in data_decoder is that it\u0027s common for several decode requests to be sent to the data decoder in quick succession, but not necessarily overlapping. this causes the service to hang around for 5 seconds after its last ServiceContextRef is released (i.e. its last ProfileImport pipe is broken).\n\nprobably not necessary for profile importer, so the ref factory\u0027s callback can just invoke context()-\u003eRequestQuit() directly.",
+      "revId": "6aa16ddd1a5c16280d45e4a1b4c86ff371aa37c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "517a040d_166dfadd",
+        "filename": "chrome/utility/importer/profile_import_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-23T23:28:03Z",
+      "side": 1,
+      "message": "can kill this if we kill the delayed shutdown (see comment in cc file)",
+      "revId": "6aa16ddd1a5c16280d45e4a1b4c86ff371aa37c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f25997_4090d0c7",
+        "filename": "chrome/utility/importer/profile_import_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-23T23:28:03Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "6aa16ddd1a5c16280d45e4a1b4c86ff371aa37c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
