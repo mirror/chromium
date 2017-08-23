@@ -16,6 +16,24 @@
       "revId": "64d10ee47051c96a49bac7e7801109f9d3dbc70d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b0731f_40442471",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-23T22:33:40Z",
+      "side": 1,
+      "message": "Maybe not necessary? Since we have SetBounds() call here: https://cs.chromium.org/chromium/src/ui/app_list/views/contents_view.cc?dr\u003dCSs\u0026l\u003d353, which will trigger layout.\n\nBut I can add Layout() here confirm correctness.",
+      "parentUuid": "3644b9db_ae5d3bd1",
+      "revId": "64d10ee47051c96a49bac7e7801109f9d3dbc70d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
