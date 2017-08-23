@@ -317,6 +317,9 @@ struct PasswordForm {
   // out only for submitted forms.
   SubmissionIndicatorEvent submission_event;
 
+  // TODO
+  bool only_for_fallback_saving;
+
   // Return true if we consider this form to be a change password form.
   // We use only client heuristics, so it could include signup forms.
   bool IsPossibleChangePasswordForm() const;
