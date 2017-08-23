@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12679f15_998e4a36",
+        "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-23T08:38:57Z",
+      "side": 1,
+      "message": "nit: Can we use ternary to use |const Color|?",
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63c33c5_1ca9ed3b",
+        "filename": "third_party/WebKit/Source/core/editing/suggestion/TextSuggestionInfo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-23T08:38:57Z",
+      "side": 1,
+      "message": "Which do we want to use |int32_t| or |uint32_t| for |suggestion_index|?\n\nTextSuggestionController::ApplyTextSuggestion() takes |uint32_t| for\n|suggestion_index|.",
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
