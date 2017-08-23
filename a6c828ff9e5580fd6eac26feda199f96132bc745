@@ -88,6 +88,24 @@
       "revId": "a6c828ff9e5580fd6eac26feda199f96132bc745",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c077077_aff4c68f",
+        "filename": "headless/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-23T18:19:04Z",
+      "side": 1,
+      "message": "On windows, chrome consists of two separate DLLs. In order to only link blink and v8 into one of them and not both, only child/ and renderer/ can depend on blink or v8.\n\nWe also allow other directories to include POD and enum headers from blink (that\u0027s what the header target is for), but you can\u0027t make calls.\n\nThe problem this would cause is that the binary size goes unnecessarily up",
+      "parentUuid": "e0162612_64452c06",
+      "revId": "a6c828ff9e5580fd6eac26feda199f96132bc745",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
