@@ -640,6 +640,8 @@ TEST_F(RenderFrameHostManagerTest, UpdateFaviconURLWhilePendingSwapOut) {
   rfh1->GetSiteInstance()->IncrementActiveFrameCount();
 
   // Navigate to a cross-site URL and commit the new page.
+  // TODO(ahemery): Refactor this using NavigationSimulator when it is possible
+  // to skip SwapOut Ack in NavigationSimulator::Commit()
   controller().LoadURL(
       kDestUrl, Referrer(), ui::PAGE_TRANSITION_LINK, std::string());
   int entry_id = controller().GetPendingEntry()->GetUniqueID();
@@ -1753,10 +1755,10 @@ TEST_F(RenderFrameHostManagerTest, DeleteFrameAfterSwapOutACK) {
   EXPECT_TRUE(rfh1->is_active());
 
   // Navigate to new site, simulating onbeforeunload approval.
-  controller().LoadURL(
-      kUrl2, Referrer(), ui::PAGE_TRANSITION_LINK, std::string());
+  auto navigation =
+      NavigationSimulator::CreateBrowserInitiated(kUrl2, contents());
+  navigation->ReadyToCommit();
   int entry_id = controller().GetPendingEntry()->GetUniqueID();
-  contents()->GetMainFrame()->PrepareForCommit();
   EXPECT_TRUE(contents()->CrossProcessNavigationPending());
   EXPECT_TRUE(rfh1->is_active());
   TestRenderFrameHost* rfh2 = contents()->GetPendingMainFrame();
@@ -1768,6 +1770,8 @@ TEST_F(RenderFrameHostManagerTest, DeleteFrameAfterSwapOutACK) {
   EXPECT_TRUE(rfh1->is_active());
 
   // The new page commits.
+  // TODO(ahemery): Refactor this using NavigationSimulator when it is possible
+  // to skip SwapOut Ack in NavigationSimulator::Commit()
   contents()->TestDidNavigate(rfh2, entry_id, true, kUrl2,
                               ui::PAGE_TRANSITION_TYPED);
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
@@ -1801,15 +1805,17 @@ TEST_F(RenderFrameHostManagerTest, SwapOutFrameAfterSwapOutACK) {
   rfh1->GetSiteInstance()->IncrementActiveFrameCount();
 
   // Navigate to new site, simulating onbeforeunload approval.
-  controller().LoadURL(
-      kUrl2, Referrer(), ui::PAGE_TRANSITION_LINK, std::string());
+  auto navigation =
+      NavigationSimulator::CreateBrowserInitiated(kUrl2, contents());
+  navigation->ReadyToCommit();
   int entry_id = controller().GetPendingEntry()->GetUniqueID();
-  contents()->GetMainFrame()->PrepareForCommit();
   EXPECT_TRUE(contents()->CrossProcessNavigationPending());
   EXPECT_TRUE(rfh1->is_active());
   TestRenderFrameHost* rfh2 = contents()->GetPendingMainFrame();
 
   // The new page commits.
+  // TODO(ahemery): Refactor this using NavigationSimulator when it is possible
+  // to skip SwapOut Ack in NavigationSimulator::Commit()
   contents()->TestDidNavigate(rfh2, entry_id, true, kUrl2,
                               ui::PAGE_TRANSITION_TYPED);
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
@@ -1846,14 +1852,17 @@ TEST_F(RenderFrameHostManagerTest,
   site_instance->IncrementActiveFrameCount();
 
   // Navigate to new site, simulating onbeforeunload approval.
-  controller().LoadURL(
-      kUrl2, Referrer(), ui::PAGE_TRANSITION_LINK, std::string());
+  auto navigation =
+      NavigationSimulator::CreateBrowserInitiated(kUrl2, contents());
+  navigation->ReadyToCommit();
   int entry_id = controller().GetPendingEntry()->GetUniqueID();
-  rfh1->PrepareForCommit();
   EXPECT_TRUE(contents()->CrossProcessNavigationPending());
+  EXPECT_TRUE(rfh1->is_active());
   TestRenderFrameHost* rfh2 = contents()->GetPendingMainFrame();
 
   // The new page commits.
+  // TODO(ahemery): Refactor this using NavigationSimulator when it is possible
+  // to skip SwapOut Ack in NavigationSimulator::Commit()
   contents()->TestDidNavigate(rfh2, entry_id, true, kUrl2,
                               ui::PAGE_TRANSITION_TYPED);
   EXPECT_FALSE(contents()->CrossProcessNavigationPending());
