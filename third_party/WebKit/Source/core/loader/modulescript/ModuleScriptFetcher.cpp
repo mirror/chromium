@@ -11,10 +11,53 @@
 
 namespace blink {
 
-namespace {
+ModuleScriptFetcher::ModuleScriptFetcher(const FetchParameters& fetch_params,
+                                         ResourceFetcher* fetcher,
+                                         Modulator* modulator,
+                                         Client* client)
+    : fetch_params_(fetch_params),
+      fetcher_(fetcher),
+      modulator_(modulator),
+      client_(client) {}
 
-bool WasModuleLoadSuccessful(Resource* resource,
-                             ConsoleMessage** error_message) {
+void ModuleScriptFetcher::Fetch() {
+  ScriptResource* resource = ScriptResource::Fetch(fetch_params_, fetcher_);
+  if (was_fetched_) {
+    // ScriptResource::Fetch() has succeeded synchronously,
+    // ::NotifyFinished() already took care of the |resource|.
+    return;
+  }
+  if (!resource) {
+    // ScriptResource::Fetch() has failed synchronously.
+    NotifyFinished(nullptr);
+    return;
+  }
+
+  // ScriptResource::Fetch() is processed asynchronously.
+  SetResource(resource);
+}
+
+void ModuleScriptFetcher::NotifyFinished(Resource* resource) {
+  ClearResource();
+
+  ScriptResource* script_resource = ToScriptResource(resource);
+  ConsoleMessage* error_message = nullptr;
+  if (!VerifyFetchedModule(script_resource, &error_message)) {
+    if (error_message)
+      ReportErrorMessage(error_message);
+    Finalize(WTF::nullopt);
+    return;
+  }
+
+  ModuleScriptCreationParams params(
+      script_resource->GetResponse().Url(), script_resource->SourceText(),
+      script_resource->GetResourceRequest().GetFetchCredentialsMode(),
+      script_resource->CalculateAccessControlStatus());
+  Finalize(params);
+}
+
+bool ModuleScriptFetcher::VerifyFetchedModule(Resource* resource,
+                                              ConsoleMessage** error_message) {
   // Implements conditions in Step 7 of
   // https://html.spec.whatwg.org/#fetch-a-single-module-script
 
@@ -55,53 +98,10 @@ bool WasModuleLoadSuccessful(Resource* resource,
   return true;
 }
 
-}  // namespace
-
-ModuleScriptFetcher::ModuleScriptFetcher(const FetchParameters& fetch_params,
-                                         ResourceFetcher* fetcher,
-                                         Modulator* modulator,
-                                         Client* client)
-    : fetch_params_(fetch_params),
-      fetcher_(fetcher),
-      modulator_(modulator),
-      client_(client) {}
-
-void ModuleScriptFetcher::Fetch() {
-  ScriptResource* resource = ScriptResource::Fetch(fetch_params_, fetcher_);
-  if (was_fetched_) {
-    // ScriptResource::Fetch() has succeeded synchronously,
-    // ::NotifyFinished() already took care of the |resource|.
-    return;
-  }
-  if (!resource) {
-    // ScriptResource::Fetch() has failed synchronously.
-    NotifyFinished(nullptr);
-    return;
-  }
-
-  // ScriptResource::Fetch() is processed asynchronously.
-  SetResource(resource);
-}
-
-void ModuleScriptFetcher::NotifyFinished(Resource* resource) {
-  ClearResource();
-
-  ScriptResource* script_resource = ToScriptResource(resource);
-  ConsoleMessage* error_message = nullptr;
-  if (!WasModuleLoadSuccessful(script_resource, &error_message)) {
-    if (error_message) {
-      ExecutionContext::From(modulator_->GetScriptState())
-          ->AddConsoleMessage(error_message);
-    }
-    Finalize(WTF::nullopt);
-    return;
-  }
-
-  ModuleScriptCreationParams params(
-      script_resource->GetResponse().Url(), script_resource->SourceText(),
-      script_resource->GetResourceRequest().GetFetchCredentialsMode(),
-      script_resource->CalculateAccessControlStatus());
-  Finalize(params);
+void ModuleScriptFetcher::ReportErrorMessage(ConsoleMessage* error_message) {
+  DCHECK(error_message);
+  ExecutionContext::From(modulator_->GetScriptState())
+      ->AddConsoleMessage(error_message);
 }
 
 void ModuleScriptFetcher::Finalize(

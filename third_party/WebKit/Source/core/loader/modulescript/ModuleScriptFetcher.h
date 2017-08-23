@@ -16,6 +16,8 @@
 
 namespace blink {
 
+class ConsoleMessage;
+
 // ModuleScriptFetcher emits FetchParameters to ResourceFetcher
 // (via ScriptResource::Fetch). Then, it keeps track of the fetch progress by
 // being a ResourceOwner. Finally, it returns its client a fetched resource as
@@ -44,13 +46,16 @@ class CORE_EXPORT ModuleScriptFetcher
   void NotifyFinished(Resource*) final;
   String DebugName() const final { return "ModuleScriptFetcher"; }
 
-  KURL GetRequestUrl() const { return fetch_params_.Url(); }
+  FetchParameters GetFetchParams() const { return fetch_params_; }
   bool HasValidContext() const { return modulator_->HasValidContext(); }
+
+  static bool VerifyFetchedModule(Resource*, ConsoleMessage**);
 
   DECLARE_TRACE();
 
  protected:
-  virtual void Finalize(const WTF::Optional<ModuleScriptCreationParams>&);
+  void ReportErrorMessage(ConsoleMessage*);
+  void Finalize(const WTF::Optional<ModuleScriptCreationParams>&);
 
  private:
   FetchParameters fetch_params_;

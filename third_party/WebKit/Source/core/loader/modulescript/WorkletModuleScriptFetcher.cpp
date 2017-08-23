@@ -4,6 +4,8 @@
 
 #include "core/loader/modulescript/WorkletModuleScriptFetcher.h"
 
+#include "bindings/core/v8/SourceLocation.h"
+#include "core/inspector/ConsoleMessage.h"
 #include "platform/CrossThreadFunctional.h"
 
 namespace blink {
@@ -23,7 +25,7 @@ DEFINE_TRACE(WorkletModuleScriptFetcher) {
 }
 
 void WorkletModuleScriptFetcher::Fetch() {
-  module_responses_map_proxy_->ReadEntry(GetRequestUrl(), this);
+  module_responses_map_proxy_->ReadEntry(GetFetchParams(), this);
 }
 
 void WorkletModuleScriptFetcher::OnRead(
@@ -36,38 +38,15 @@ void WorkletModuleScriptFetcher::OnRead(
   Finalize(params);
 }
 
-void WorkletModuleScriptFetcher::OnFetchNeeded() {
-  // The context can be destroyed during cross-thread read operation.
-  if (!HasValidContext()) {
-    // This invalidates sibling worklet contexts that are waiting for module
-    // fetch on WorkletModuleResponsesMap.
-    // TODO(nhiroki): This could be a problem when we want to dynamically reduce
-    // the number of worklet contexts, for example, to reduce memory
-    // consumption.
-    module_responses_map_proxy_->InvalidateEntry(GetRequestUrl());
-    Finalize(WTF::nullopt);
-    return;
+void WorkletModuleScriptFetcher::OnFailed(ConsoleMessage* error_message) {
+  if (error_message) {
+    // Reconstruct the error message in the Oilpan's heap of the current thread.
+    error_message = ConsoleMessage::CreateForRequest(
+        kJSMessageSource, kErrorMessageLevel, error_message->Message(),
+        error_message->Location()->Url(), error_message->RequestIdentifier());
+    ReportErrorMessage(error_message);
   }
-
-  // A target module hasn't been fetched yet. Fallback to the regular module
-  // loading path. The module will be cached in NotifyFinished().
-  was_fetched_via_network_ = true;
-  ModuleScriptFetcher::Fetch();
-}
-
-void WorkletModuleScriptFetcher::OnFailed() {
   Finalize(WTF::nullopt);
-}
-
-void WorkletModuleScriptFetcher::Finalize(
-    const WTF::Optional<ModuleScriptCreationParams>& params) {
-  if (was_fetched_via_network_) {
-    if (params.has_value())
-      module_responses_map_proxy_->UpdateEntry(GetRequestUrl(), *params);
-    else
-      module_responses_map_proxy_->InvalidateEntry(GetRequestUrl());
-  }
-  ModuleScriptFetcher::Finalize(params);
 }
 
 }  // namespace blink
