@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d76ba99_6680a80d",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-23T01:27:31Z",
+      "side": 1,
+      "message": "getDefault gets the global variable with lock. Is there any reason why you want to keep it in static here?",
+      "revId": "c2c1e56e68de3f0ad08166cc589a920a070ff05a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
