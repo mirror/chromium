@@ -22,6 +22,30 @@
       "revId": "8bf0d9562c7f2f3f3a2a51e4247430556ff812ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2c41422_b208478e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-23T14:43:48Z",
+      "side": 1,
+      "message": "An alternative variable name could be firstAdapterItemScrolledOff, which clearly denotes what we\u0027re trying to check for.",
+      "parentUuid": "9291b7e6_78a91962",
+      "range": {
+        "startLine": 430,
+        "startChar": 26,
+        "endLine": 430,
+        "endChar": 53
+      },
+      "revId": "8bf0d9562c7f2f3f3a2a51e4247430556ff812ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
