@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b5f41c63_bf84ef9c",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-23T18:16:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a02566f7_ae997710",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "909679c2_da02fdc6",
         "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
         "patchSetId": 13
@@ -50,6 +68,24 @@
       "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea98356_d8e7ce43",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-23T18:16:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "909679c2_da02fdc6",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "a791bfa7_1c1a1367",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-23T18:16:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8423b60_35f69e3e",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "929ad76e_2d29ee12",
         "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
         "patchSetId": 13
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "51ae3c21_82616398",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-23T18:16:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "929ad76e_2d29ee12",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df374387_0b132e3e",
         "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
         "patchSetId": 13
@@ -98,6 +170,24 @@
       "writtenOn": "2017-08-23T16:40:00Z",
       "side": 1,
       "message": "Is a thread from |pool_| ever going to be reused by another pool? Or are we just unbinding to satisfy the requirement of BindToCurrentThread() in the next round that it wasn\u0027t previously bound? If so we should change that DCHECK to DCHECK(\"not previously bound\" OR \"already bound to current\").",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e42e941_44ccf63f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-23T18:16:26Z",
+      "side": 1,
+      "message": "Threads from |pool_| can be reused in a different pool (I added this after noticing that happening when running unit tests).",
+      "parentUuid": "df374387_0b132e3e",
       "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +217,30 @@
     },
     {
       "key": {
+        "uuid": "45c6f2c4_bcbe5312",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-23T18:16:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d526b95_7517ce8b",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 45
+      },
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75b89065_1eb56290",
         "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
         "patchSetId": 13
@@ -138,6 +252,30 @@
       "writtenOn": "2017-08-23T16:40:00Z",
       "side": 1,
       "message": "GetWork()/SubmitThreadpoolWork() as it makes it look like you\u0027re saying:\n\nnum(ScheduleSequence()) \u003d\u003d num(GetWork())+num(SubmitThreadPoolWork())\n\ndid you intend to write:\n\n\"... 1:1 correspondence between a call to ScheduleSequence()/SubmitThreadPoolWork() and GetWork().\"",
+      "range": {
+        "startLine": 88,
+        "startChar": 48,
+        "endLine": 88,
+        "endChar": 70
+      },
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ae57e7_c82b6bd5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-23T18:16:26Z",
+      "side": 1,
+      "message": "Oops, yeah that\u0027s what I meant to write.",
+      "parentUuid": "75b89065_1eb56290",
       "range": {
         "startLine": 88,
         "startChar": 48,
@@ -173,6 +311,30 @@
     },
     {
       "key": {
+        "uuid": "8f0fa848_2f90e727",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-23T18:16:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77084b1c_ffe3d446",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 45
+      },
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1eb29c7b_f82c3a09",
         "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
         "patchSetId": 13
@@ -193,6 +355,30 @@
       "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "420a2a93_10810b75",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-23T18:16:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eb29c7b_f82c3a09",
+      "range": {
+        "startLine": 102,
+        "startChar": 42,
+        "endLine": 102,
+        "endChar": 43
+      },
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +417,24 @@
     },
     {
       "key": {
+        "uuid": "1c8fed83_e1394798",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-23T18:16:26Z",
+      "side": 1,
+      "message": "Okay, renamed to platform_native_worker_pool_win.[cc|h] and PlatformNativeWorkerPoolWin.",
+      "parentUuid": "1d9a3e12_07cca7d2",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf34aa8d_cbf8ee52",
         "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
         "patchSetId": 13
@@ -248,6 +452,24 @@
     },
     {
       "key": {
+        "uuid": "39cd8d23_d354285a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-23T18:16:26Z",
+      "side": 1,
+      "message": "Okay, adjusted the comments here a bit.",
+      "parentUuid": "bf34aa8d_cbf8ee52",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bfc01eb_7c7270a0",
         "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
         "patchSetId": 13
@@ -259,6 +481,24 @@
       "writtenOn": "2017-08-23T16:40:00Z",
       "side": 1,
       "message": "\"has bounded to it\" sounds weird, \"is bound to\"? \"with a pointer to X bound to it\"?",
+      "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf02fbd_3005842e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_windows_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-23T18:16:26Z",
+      "side": 1,
+      "message": "Changed it to:\n\n  // Pointer to a work object. This work object executes RunNextSequence. It\n  // has a pointer to the current |SchedulerWorkerPoolWindowsImpl|\n  // and a pointer to |environment_| bound to it.",
+      "parentUuid": "6bfc01eb_7c7270a0",
       "revId": "6575f321643fd7d4d4b3441128b8d820aa11c88e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
