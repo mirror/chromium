@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22985098_41f82ac6",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelectionTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-23T01:40:58Z",
+      "side": 1,
+      "message": "Could you test ::first-letter { visibility:hidden; } and \n{text-transform: uppercase;}?",
+      "revId": "e1b684d7b7892db46ac0d5bb9c34e3f4625a1898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
