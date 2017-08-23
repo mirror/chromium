@@ -22,6 +22,30 @@
       "revId": "825a0443302ea71a1894386da8a943f8cc67c42a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f49dfc2_eeea37fa",
+        "filename": "components/safe_browsing_db/v4_local_database_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1232091
+      },
+      "writtenOn": "2017-08-23T03:19:48Z",
+      "side": 1,
+      "message": "renamed to task_runner_for_tests",
+      "parentUuid": "9237e3e7_ef901bf7",
+      "range": {
+        "startLine": 95,
+        "startChar": 47,
+        "endLine": 95,
+        "endChar": 58
+      },
+      "revId": "825a0443302ea71a1894386da8a943f8cc67c42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
