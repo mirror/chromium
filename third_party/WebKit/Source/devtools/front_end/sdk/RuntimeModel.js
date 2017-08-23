@@ -581,7 +581,7 @@ SDK.ExecutionContext = class {
     this.runtimeModel = runtimeModel;
     this.debuggerModel = runtimeModel.debuggerModel();
     this.frameId = frameId;
-    this._setLabel('');
+    this._setLabel('', '');
   }
 
   /**
@@ -589,6 +589,23 @@ SDK.ExecutionContext = class {
    */
   target() {
     return this.runtimeModel.target();
+  }
+
+  /**
+   * @return {string}
+   */
+  displayTitle() {
+    var target = this.target();
+    var label = this.label(true) ? target.decorateLabel(this.label(true)) : '';
+    if (this.frameId) {
+      var resourceTreeModel = target.model(SDK.ResourceTreeModel);
+      var frame = resourceTreeModel && resourceTreeModel.frameForId(this.frameId);
+      if (frame)
+        label = label || frame.displayName();
+    }
+    label = label || this.origin;
+
+    return label;
   }
 
   /**
@@ -687,24 +704,29 @@ SDK.ExecutionContext = class {
   }
 
   /**
+   * @param {boolean=} brief
    * @return {string}
    */
-  label() {
-    return this._label;
+  label(brief) {
+    var showStatus = brief || !this._status;
+    return showStatus ? this._label : (this._label + ' (' + this._status + ')');
   }
 
   /**
    * @param {string} label
+   * @param {string} status
    */
-  setLabel(label) {
-    this._setLabel(label);
+  setLabel(label, status) {
+    this._setLabel(label, status);
     this.runtimeModel.dispatchEventToListeners(SDK.RuntimeModel.Events.ExecutionContextChanged, this);
   }
 
   /**
    * @param {string} label
+   * @param {string} status
    */
-  _setLabel(label) {
+  _setLabel(label, status) {
+    this._status = status;
     if (label) {
       this._label = label;
       return;

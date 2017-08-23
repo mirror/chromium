@@ -18,10 +18,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
     padding: 6px 6px 6px 16px;
-    height: 28px;
+    height: 26px;
 }
 
 .context-item.selected {
+    background-color: #ddd;
+}
+
+.context-item.selected:focus {
     background-color: #3c7bd6;
 }
 
@@ -31,6 +35,32 @@
     margin-bottom: 10px;
 }
 
-.context-item.selected .name {
+.context-item.selected:focus .name {
     color: white;
+}
+
+.info-count, .warning-count, .error-count {
+  background-color: white;
+  border-radius: 4px;
+  margin: 0 3px;
+  text-align: center;
+  --bubble-size: 14px;
+  height: var(--bubble-size);
+  line-height: var(--bubble-size);
+  padding: 0px 3px;
+}
+
+.warning-count {
+  background-color: hsl(50, 100%, 90%);
+  color: brown;
+}
+
+.error-count {
+  background-color: hsl(0, 100%, 90%);
+  color: crimson;
+}
+
+.counters {
+  display: inline-block;
+  float: right;
 }

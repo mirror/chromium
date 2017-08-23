@@ -189,7 +189,7 @@ Console.ConsoleView = class extends UI.VBox {
     this._messagesElement.addEventListener('wheel', this._updateStickToBottomOnWheel.bind(this), false);
 
     this._sidebar.addEventListener(Console.ConsoleSidebar.Events.ContextSelected, event => {
-      this._filter.setContext(/** @type {string|symbol} */ (event.data));
+      this._filter.setSidebarGroup(/** @type {string|symbol} */ (event.data));
     });
 
     ConsoleModel.consoleModel.addEventListener(
@@ -446,6 +446,7 @@ Console.ConsoleView = class extends UI.VBox {
     } else {
       this._needsFullUpdate = true;
     }
+    this._sidebar.addMessage(message);
 
     this._scheduleViewportRefresh();
     this._consoleMessageAddedForTest(viewMessage);
@@ -481,10 +482,6 @@ Console.ConsoleView = class extends UI.VBox {
    * @param {!Console.ConsoleViewMessage} viewMessage
    */
   _appendMessageToEnd(viewMessage) {
-    var context = viewMessage.consoleMessage().context;
-    if (context)
-      this._sidebar.addGroup({name: context, context: context});
-
     if (!this._filter.shouldBeVisible(viewMessage)) {
       this._hiddenByFilterCount++;
       return;
@@ -1006,7 +1003,7 @@ Console.ConsoleViewFilter = class {
    */
   constructor(filterChangedCallback) {
     this._filterChanged = filterChangedCallback;
-    this._context = Console.ConsoleSidebar.AllContextsFilter;
+    this._sidebarGroup = Console.ConsoleSidebar.AllContextsFilter;
 
     this._messageURLFiltersSetting = Common.settings.createSetting('messageURLFilters', {});
     this._messageLevelFiltersSetting = Console.ConsoleViewFilter.levelFilterSetting();
@@ -1071,9 +1068,10 @@ Console.ConsoleViewFilter = class {
   /**
    * @param {string|symbol} context
    */
-  setContext(context) {
-    if (this._context !== context) {
-      this._context = context;
+  setSidebarGroup(data) {
+    if (!this._sidebarGroup || data.name !== this._sidebarGroup.name ||
+        data.context !== this._sidebarGroup.context || data.type !== this._sidebarGroup.type) {
+      this._sidebarGroup = data;
       this._filterChanged();
     }
   }
@@ -1186,8 +1184,8 @@ Console.ConsoleViewFilter = class {
         viewMessage.consoleMessage().source === ConsoleModel.ConsoleMessage.MessageSource.Network)
       return false;
 
-    if (viewMessage.consoleMessage().isGroupMessage())
-      return true;
+    // if (viewMessage.consoleMessage().isGroupMessage())
+    //   return true;
 
     if (message.type === ConsoleModel.ConsoleMessage.MessageType.Result ||
         message.type === ConsoleModel.ConsoleMessage.MessageType.Command)
@@ -1212,8 +1210,29 @@ Console.ConsoleViewFilter = class {
         message.source !== ConsoleModel.ConsoleMessage.MessageSource.ConsoleAPI)
       return false;
 
-    if (this._context !== Console.ConsoleSidebar.AllContextsFilter && message.context !== this._context)
-      return false;
+    if (this._sidebarGroup) {
+      switch (this._sidebarGroup.type) {
+        case 'All':
+          break;
+        case 'context':
+          if (message.context !== this._sidebarGroup.context)
+            return false;
+          break;
+        case 'source':
+          if (message.source !== this._sidebarGroup.context)
+            return false;
+          break;
+        case 'executionContext':
+          if (!message.runtimeModel() || message.runtimeModel().executionContext(message.executionContextId) !== this._sidebarGroup.context)
+            return false;
+          // if (message.runtimeModel() !== this._sidebarGroup.context.runtimeModel)
+          break;
+        case 'workerId':
+          if (message.workerId !== this._sidebarGroup.context)
+            return false;
+          break;
+      }
+    }
 
     return true;
   }
