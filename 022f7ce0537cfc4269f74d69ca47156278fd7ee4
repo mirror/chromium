@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03ca273a_d1e19f52",
+        "filename": "chrome/browser/resource_coordinator/window_occlusion_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T20:51:03Z",
+      "side": 1,
+      "message": "A class comment would be useful (that this is intended to be registered with the WindowOcclusionTracker, etc).",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 29
+      },
+      "revId": "022f7ce0537cfc4269f74d69ca47156278fd7ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9276b29b_b8461ae1",
+        "filename": "chrome/browser/resource_coordinator/window_occlusion_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T20:51:03Z",
+      "side": 1,
+      "message": "A comment about the threading model? Will this be called on the sequence with which the observer is registered, or on the sequence to which the Tracker is bound? Or some fixed known thread?",
+      "range": {
+        "startLine": 17,
+        "startChar": 44,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "022f7ce0537cfc4269f74d69ca47156278fd7ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be28cdab_6dabcb9f",
+        "filename": "chrome/browser/resource_coordinator/window_occlusion_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T20:51:03Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "range": {
+        "startLine": 20,
+        "startChar": 1,
+        "endLine": 20,
+        "endChar": 2
+      },
+      "revId": "022f7ce0537cfc4269f74d69ca47156278fd7ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6146b2e2_7a7ffd81",
+        "filename": "chrome/browser/resource_coordinator/window_occlusion_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T20:51:03Z",
+      "side": 1,
+      "message": "nit: Could just declare the observer directly in this file? Do we really need a separate observer file? Given that they\u0027re so intimate I find it more useful to have observer declarations inline with the class they observer...",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "022f7ce0537cfc4269f74d69ca47156278fd7ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48acd8d6_2de23907",
+        "filename": "chrome/browser/resource_coordinator/window_occlusion_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T20:51:03Z",
+      "side": 1,
+      "message": "if it* is",
+      "range": {
+        "startLine": 19,
+        "startChar": 27,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "022f7ce0537cfc4269f74d69ca47156278fd7ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a2697f_1bb6cbb2",
+        "filename": "chrome/browser/resource_coordinator/window_occlusion_tracker_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T20:51:03Z",
+      "side": 1,
+      "message": "Document what this is and the role it plays (for the uninitiated).",
+      "range": {
+        "startLine": 29,
+        "startChar": 53,
+        "endLine": 29,
+        "endChar": 68
+      },
+      "revId": "022f7ce0537cfc4269f74d69ca47156278fd7ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82d6158c_ff1c21ac",
+        "filename": "chrome/browser/resource_coordinator/window_occlusion_tracker_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T20:51:03Z",
+      "side": 1,
+      "message": "Known*",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 53
+      },
+      "revId": "022f7ce0537cfc4269f74d69ca47156278fd7ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800a421f_f29ab52c",
+        "filename": "chrome/browser/resource_coordinator/window_occlusion_tracker_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T20:51:03Z",
+      "side": 1,
+      "message": "Todo about making this handle occlusion by tiling?",
+      "range": {
+        "startLine": 171,
+        "startChar": 17,
+        "endLine": 171,
+        "endChar": 23
+      },
+      "revId": "022f7ce0537cfc4269f74d69ca47156278fd7ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "411665e1_9438ee3b",
+        "filename": "chrome/browser/resource_coordinator/window_occlusion_tracker_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T20:51:03Z",
+      "side": 1,
+      "message": "Do you need to recompute the entire Z-Index? Isn\u0027t it preserved, minus the window being destroyed?",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 239,
+        "endChar": 48
+      },
+      "revId": "022f7ce0537cfc4269f74d69ca47156278fd7ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b93a3c7_81f7fcbf",
+        "filename": "chrome/browser/resource_coordinator/window_occlusion_tracker_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T20:51:03Z",
+      "side": 1,
+      "message": "Worth moving all the stuff around observers into a cross-platform window_occlusion_tracker.cc? And making the Impl a friend of the parent? And passing the parent into the Impl constructor?",
+      "range": {
+        "startLine": 247,
+        "startChar": 29,
+        "endLine": 247,
+        "endChar": 40
+      },
+      "revId": "022f7ce0537cfc4269f74d69ca47156278fd7ee4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
