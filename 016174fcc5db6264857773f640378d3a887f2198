@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5071c55_3db6caaf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-get-fail-non-simple.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-23T23:57:27Z",
+      "side": 1,
+      "message": "Oops! Didn\u0027t notice that. Thanks for pointing it out!",
+      "parentUuid": "f02ab32c_a46a3b73",
+      "range": {
+        "startLine": 17,
+        "startChar": 25,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "016174fcc5db6264857773f640378d3a887f2198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76f2c74f_e589dc03",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-get-fail-non-simple.htm",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-23T14:15:48Z",
       "side": 1,
       "message": "You can use assert_throws.",
+      "revId": "016174fcc5db6264857773f640378d3a887f2198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23529bfc_c1af48a2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-get-fail-non-simple.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-23T23:57:27Z",
+      "side": 1,
+      "message": "Fair enough! It\u0027s not so good as it is, huh? I might rewrite this one to match the one in 616482 (link below), for consistency\u0027s sake. Is that all right? I\u0027ll upload a changed version so you can take a look at it! And I\u0027ll definitely keep the assert_throws function in mind. Thank you for your help!!\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/616482/4/third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-post-with-non-cors-safelisted-content-type.htm",
+      "parentUuid": "76f2c74f_e589dc03",
       "revId": "016174fcc5db6264857773f640378d3a887f2198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
