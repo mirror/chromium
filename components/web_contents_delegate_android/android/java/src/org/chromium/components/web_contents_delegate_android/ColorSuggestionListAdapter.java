@@ -29,6 +29,7 @@ public class ColorSuggestionListAdapter extends BaseAdapter implements View.OnCl
      * The callback used to indicate the user has clicked on a suggestion.
      */
     public interface OnColorSuggestionClickListener {
+
         /**
          * Called upon a click on a suggestion.
          *
@@ -99,7 +100,8 @@ public class ColorSuggestionListAdapter extends BaseAdapter implements View.OnCl
         } else {
             layout = new LinearLayout(mContext);
             layout.setLayoutParams(new AbsListView.LayoutParams(
-                    AbsListView.LayoutParams.MATCH_PARENT, AbsListView.LayoutParams.WRAP_CONTENT));
+                    AbsListView.LayoutParams.MATCH_PARENT,
+                    AbsListView.LayoutParams.WRAP_CONTENT));
             layout.setOrientation(LinearLayout.HORIZONTAL);
             layout.setBackgroundColor(Color.WHITE);
             int buttonHeight =

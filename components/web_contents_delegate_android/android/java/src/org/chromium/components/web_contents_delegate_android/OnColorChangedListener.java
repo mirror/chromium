@@ -8,6 +8,7 @@ package org.chromium.components.web_contents_delegate_android;
  * The callback used to indicate the user changed the color.
  */
 public interface OnColorChangedListener {
+
     /**
      * Called upon a color change.
      *

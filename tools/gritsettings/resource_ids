@@ -169,7 +169,7 @@
   "components/autofill/android/autofill_strings.grd": {
     "messages": [16350],
   },
-  "components/web_contents_delegate_android/web_contents_delegate_android_strings.grd": {
+  "components/web_contents_delegate_android/android/web_contents_delegate_android_strings.grd": {
     "messages": [16370],
   },
   # END components/ section.

@@ -39,8 +39,10 @@ public class ColorPickerDialog extends AlertDialog implements OnColorChangedList
      * @param color The initial color to set.
      * @param suggestions The list of suggestions.
      */
-    public ColorPickerDialog(Context context, OnColorChangedListener listener, int color,
-            ColorSuggestion[] suggestions) {
+    public ColorPickerDialog(Context context,
+                             OnColorChangedListener listener,
+                             int color,
+                             ColorSuggestion[] suggestions) {
         super(context, 0);
 
         mListener = listener;
@@ -48,8 +50,8 @@ public class ColorPickerDialog extends AlertDialog implements OnColorChangedList
         mCurrentColor = mInitialColor;
 
         // Initialize title
-        LayoutInflater inflater =
-                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View title = inflater.inflate(R.layout.color_picker_dialog_title, null);
         setCustomTitle(title);
 
@@ -60,12 +62,13 @@ public class ColorPickerDialog extends AlertDialog implements OnColorChangedList
 
         // Initialize Set/Cancel buttons
         String positiveButtonText = context.getString(R.string.color_picker_button_set);
-        setButton(BUTTON_POSITIVE, positiveButtonText, new Dialog.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                tryNotifyColorSet(mCurrentColor);
-            }
-        });
+        setButton(BUTTON_POSITIVE, positiveButtonText,
+                new Dialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        tryNotifyColorSet(mCurrentColor);
+                    }
+                });
 
         // Note that with the color picker there's not really any such thing as
         // "cancelled".
@@ -75,12 +78,13 @@ public class ColorPickerDialog extends AlertDialog implements OnColorChangedList
         // returning
         // the color that we were initialized with.
         String negativeButtonText = context.getString(R.string.color_picker_button_cancel);
-        setButton(BUTTON_NEGATIVE, negativeButtonText, new Dialog.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                tryNotifyColorSet(mInitialColor);
-            }
-        });
+        setButton(BUTTON_NEGATIVE, negativeButtonText,
+                new Dialog.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        tryNotifyColorSet(mInitialColor);
+                    }
+                });
 
         setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
