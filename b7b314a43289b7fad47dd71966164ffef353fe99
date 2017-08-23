@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "738e8f13_a2e8ea4c",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-23T22:18:28Z",
+      "side": 1,
+      "message": "this seems like it should be based on the calling observer\u0027s \"filter options\" not the full set of observer_filter_options_ which is aggregate for all observers",
+      "range": {
+        "startLine": 251,
+        "startChar": 52,
+        "endLine": 251,
+        "endChar": 0
+      },
+      "revId": "b7b314a43289b7fad47dd71966164ffef353fe99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
