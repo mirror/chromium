@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c0ce807_fa8c2ceb",
+        "filename": "base/process/launch.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T23:35:22Z",
+      "side": 1,
+      "message": "Could you instead just have:\n\nint clone_flags \u003d LP_CLONE_MXIO_NAMESPACE | LP_CLONE_DEFAULT_JOB | LP_CLONE_MXIO_CWD;\n\nand avoid needing the Optional\u003c\u003e?",
+      "revId": "ed4e53b490344eff3d7d26f0eca47ce4c689b5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ddca852_496a4682",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T23:35:22Z",
+      "side": 1,
+      "message": "nit: Capabilities is pretty generic; this is really just a sub-set of the parent process properties.",
+      "revId": "ed4e53b490344eff3d7d26f0eca47ce4c689b5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
