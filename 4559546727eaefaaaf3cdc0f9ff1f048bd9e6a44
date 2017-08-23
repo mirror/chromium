@@ -34,6 +34,24 @@
       "revId": "4559546727eaefaaaf3cdc0f9ff1f048bd9e6a44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4698773_a33ccecc",
+        "filename": "chrome/browser/ui/aura/accessibility/automation_manager_aura.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T21:41:45Z",
+      "side": 1,
+      "message": "Yep, that was what I meant. i.e. put the block under\n  #if defined(OS_CHROMEOS)",
+      "parentUuid": "1b212782_b93241d9",
+      "revId": "4559546727eaefaaaf3cdc0f9ff1f048bd9e6a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
