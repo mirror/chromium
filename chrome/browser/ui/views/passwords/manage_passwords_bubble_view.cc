@@ -24,6 +24,7 @@
 #include "chrome/browser/ui/views/passwords/manage_password_items_view.h"
 #include "chrome/browser/ui/views/passwords/manage_passwords_icon_views.h"
 #include "chrome/grit/generated_resources.h"
+#include "chrome/grit/theme_resources.h"
 #include "components/password_manager/core/common/password_manager_features.h"
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -33,8 +34,10 @@
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/native_theme/native_theme.h"
+#include "ui/resources/grit/ui_resources.h"
 #include "ui/views/bubble/bubble_frame_view.h"
 #include "ui/views/controls/button/blue_button.h"
+#include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/button/md_text_button.h"
 #include "ui/views/controls/link.h"
 #include "ui/views/controls/link_listener.h"
@@ -67,6 +70,11 @@ enum ColumnSetType {
   // | | (FILL, FILL) | | (FILL, FILL) | |
   // Used for the credentials line of the bubble, for the pending view.
   DOUBLE_VIEW_COLUMN_SET,
+
+  // | | (FILL, FILL) | | (FILL, FILL) | | (TRAILING, FILL) | |
+  // Used for the credentials line of the bubble, for the pending view.
+  // Views are username, password and the eye icon.
+  TRIPLE_VIEW_COLUMN_SET,
 
   // | | (TRAILING, CENTER) | | (TRAILING, CENTER) | |
   // Used for buttons at the bottom of the bubble which should nest at the
@@ -113,6 +121,17 @@ void BuildColumnSet(views::GridLayout* layout, ColumnSetType type) {
                             views::GridLayout::USE_PREF, 0, 0);
       column_set->AddPaddingColumn(0, column_divider);
       column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
+                            views::GridLayout::USE_PREF, 0, 0);
+      break;
+    case TRIPLE_VIEW_COLUMN_SET:
+      column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
+                            views::GridLayout::USE_PREF, 0, 0);
+      column_set->AddPaddingColumn(0, column_divider);
+      column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
+                            views::GridLayout::USE_PREF, 0, 0);
+      column_set->AddPaddingColumn(0, column_divider);
+      column_set->AddColumn(views::GridLayout::TRAILING,
+                            views::GridLayout::FILL, 0,
                             views::GridLayout::USE_PREF, 0, 0);
       break;
     case DOUBLE_BUTTON_COLUMN_SET:
@@ -301,6 +320,7 @@ class ManagePasswordsBubbleView::PendingView
   bool OnKeyPressed(const ui::KeyEvent& event) override;
 
   void ToggleEditingState(bool accept_changes);
+  std::unique_ptr<views::ToggleImageButton> GeneratePasswordVisibilityButton();
 
   ManagePasswordsBubbleView* parent_;
 
@@ -309,6 +329,7 @@ class ManagePasswordsBubbleView::PendingView
   views::Button* never_button_;
   views::View* username_field_;
   views::View* password_field_;
+  views::ToggleImageButton* password_visibility_button_;
 
   bool editing_;
 
@@ -323,6 +344,7 @@ ManagePasswordsBubbleView::PendingView::PendingView(
       never_button_(nullptr),
       username_field_(nullptr),
       password_field_(nullptr),
+      password_visibility_button_(nullptr),
       editing_(false) {
   CreateAndSetLayout();
   parent_->set_initially_focused_view(save_button_);
@@ -351,10 +373,15 @@ void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout() {
   }
 
   // Credentials row.
-  BuildColumnSet(layout, DOUBLE_VIEW_COLUMN_SET);
+  const ColumnSetType column_type =
+      (base::FeatureList::IsEnabled(
+          password_manager::features::kEnablePasswordSelection))
+          ? TRIPLE_VIEW_COLUMN_SET
+          : DOUBLE_VIEW_COLUMN_SET;
+  BuildColumnSet(layout, column_type);
   if (!parent_->model()->pending_password().username_value.empty() ||
       edit_button_) {
-    layout->StartRow(0, DOUBLE_VIEW_COLUMN_SET);
+    layout->StartRow(0, column_type);
     const autofill::PasswordForm* password_form =
         &parent_->model()->pending_password();
     DCHECK(!username_field_);
@@ -368,6 +395,14 @@ void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout() {
     }
     layout->AddView(username_field_);
     layout->AddView(password_field_);
+    // Add the eye icon if password selection feature is on.
+    if (column_type == TRIPLE_VIEW_COLUMN_SET) {
+      if (!password_visibility_button_) {
+        password_visibility_button_ =
+            GeneratePasswordVisibilityButton().release();
+      }
+      layout->AddView(password_visibility_button_);
+    }
     layout->AddPaddingRow(0,
                           ChromeLayoutProvider::Get()
                               ->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS)
@@ -404,6 +439,9 @@ void ManagePasswordsBubbleView::PendingView::ButtonPressed(
     }
   } else if (sender == never_button_) {
     parent_->model()->OnNeverForThisSiteClicked();
+  } else if (sender == password_visibility_button_) {
+    // TODO(https://crbug.com/753806): Implement making passwords visible logic.
+    return;
   } else {
     NOTREACHED();
   }
@@ -455,6 +493,33 @@ void ManagePasswordsBubbleView::PendingView::ToggleEditingState(
     GetFocusManager()->SetFocusedView(save_button_);
   }
   parent_->SizeToContents();
+}
+
+std::unique_ptr<views::ToggleImageButton>
+ManagePasswordsBubbleView::PendingView::GeneratePasswordVisibilityButton() {
+  std::unique_ptr<views::ToggleImageButton> button(
+      new views::ToggleImageButton(this));
+  button->SetFocusForPlatform();
+  button->set_request_focus_on_press(true);
+  button->SetTooltipText(
+      l10n_util::GetStringUTF16(IDS_MANAGE_PASSWORDS_SHOW_PASSWORD));
+  button->SetToggledTooltipText(
+      l10n_util::GetStringUTF16(IDS_MANAGE_PASSWORDS_HIDE_PASSWORD));
+  button->SetImage(views::ImageButton::STATE_NORMAL,
+                   *ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
+                       IDR_NETWORK_SHOW_PASSWORD));
+  button->SetImage(views::ImageButton::STATE_HOVERED,
+                   *ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
+                       IDR_NETWORK_SHOW_PASSWORD_HOVER));
+  button->SetToggledImage(views::ImageButton::STATE_NORMAL,
+                          ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
+                              IDR_NETWORK_HIDE_PASSWORD));
+  button->SetToggledImage(views::ImageButton::STATE_HOVERED,
+                          ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
+                              IDR_NETWORK_HIDE_PASSWORD_HOVER));
+  button->SetImageAlignment(views::ImageButton::ALIGN_CENTER,
+                            views::ImageButton::ALIGN_MIDDLE);
+  return button;
 }
 
 // ManagePasswordsBubbleView::ManageView --------------------------------------
