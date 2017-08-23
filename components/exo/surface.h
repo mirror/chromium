@@ -20,6 +20,7 @@
 #include "third_party/skia/include/core/SkBlendMode.h"
 #include "third_party/skia/include/core/SkRegion.h"
 #include "ui/aura/window.h"
+#include "ui/display/display.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/native_widget_types.h"
 
@@ -100,6 +101,10 @@ class Surface : public ui::PropertyHandler {
   // have to attach a buffer that is larger (by a factor of scale in each
   // dimension) than the desired surface size.
   void SetBufferScale(float scale);
+
+  // This sets the transformation used to interpret the contents of the buffer
+  // attached to the surface.
+  void SetBufferTransform(display::Display::Rotation rotation);
 
   // Functions that control sub-surface state. All sub-surface state is
   // double-buffered and will be applied when Commit() is called.
@@ -219,6 +224,7 @@ class Surface : public ui::PropertyHandler {
     SkRegion opaque_region;
     SkRegion input_region;
     float buffer_scale = 1.0f;
+    display::Display::Rotation buffer_rotation = display::Display::ROTATE_0;
     gfx::Size viewport;
     gfx::RectF crop;
     bool only_visible_on_secure_output = false;

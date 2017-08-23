@@ -418,8 +418,10 @@ int RectsClient::Run(const ClientBase::InitParams& params,
 
       wl_surface* surface = surface_.get();
       wl_surface_set_buffer_scale(surface, scale_);
-      wl_surface_damage(surface, 0, 0, size_.width() / scale_,
-                        size_.height() / scale_);
+      wl_surface_set_buffer_transform(surface_.get(), transform_);
+      int width = rotated_ ? size_.height() : size_.width();
+      int height = rotated_ ? size_.width() : size_.height();
+      wl_surface_damage(surface_.get(), 0, 0, width / scale_, height / scale_);
       wl_surface_attach(surface, frame->buffer->buffer.get(), 0, 0);
 
 #if defined(OZONE_PLATFORM_GBM)

@@ -50,6 +50,9 @@ const char kSize[] = "size";
 // Specifies the client scale factor (ie. number of physical pixels per DIP).
 const char kScale[] = "scale";
 
+// Specifies the client transform (ie. rotation).
+const char kTransform[] = "transform";
+
 // Specifies if the background should be transparent.
 const char kTransparentBackground[] = "transparent-background";
 
@@ -159,6 +162,23 @@ bool ClientBase::InitParams::FromCommandLine(
     return false;
   }
 
+  if (command_line.HasSwitch(switches::kTransform)) {
+    std::string transform_str =
+        command_line.GetSwitchValueASCII(switches::kTransform);
+    if (transform_str == "0") {
+      transform = WL_OUTPUT_TRANSFORM_NORMAL;
+    } else if (transform_str == "90") {
+      transform = WL_OUTPUT_TRANSFORM_90;
+    } else if (transform_str == "180") {
+      transform = WL_OUTPUT_TRANSFORM_180;
+    } else if (transform_str == "270") {
+      transform = WL_OUTPUT_TRANSFORM_270;
+    } else {
+      LOG(ERROR) << "Invalid value for " << switches::kTransform;
+      return false;
+    }
+  }
+
   use_drm = command_line.HasSwitch(switches::kUseDrm);
   if (use_drm)
     use_drm_value = command_line.GetSwitchValueASCII(switches::kUseDrm);
@@ -189,6 +209,9 @@ ClientBase::Buffer::~Buffer() {}
 bool ClientBase::Init(const InitParams& params) {
   size_.SetSize(params.width, params.height);
   scale_ = params.scale;
+  transform_ = params.transform;
+  rotated_ = params.transform == WL_OUTPUT_TRANSFORM_90 ||
+             params.transform == WL_OUTPUT_TRANSFORM_270;
   fullscreen_ = params.fullscreen;
   transparent_background_ = params.transparent_background;
 
