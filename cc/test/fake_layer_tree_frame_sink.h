@@ -30,6 +30,30 @@ namespace cc {
 
 class FakeLayerTreeFrameSink : public LayerTreeFrameSink {
  public:
+  class Builder {
+   public:
+    Builder();
+    ~Builder();
+
+    std::unique_ptr<FakeLayerTreeFrameSink> Build() &&;
+
+    // Calls a function on both the compositor and worker context.
+    template <typename... Args>
+    Builder&& AllContexts(void (TestWebGraphicsContext3D::*fn)(Args...),
+                          Args... args) && {
+      (compositor_context_provider_->UnboundTestContext3d()->*fn)(
+          std::forward<Args...>(args...));
+      (worker_context_provider_->UnboundTestContext3d()->*fn)(
+          std::forward<Args...>(args...));
+
+      return std::move(*this);
+    }
+
+   private:
+    scoped_refptr<TestContextProvider> compositor_context_provider_;
+    scoped_refptr<TestContextProvider> worker_context_provider_;
+  };
+
   ~FakeLayerTreeFrameSink() override;
 
   static std::unique_ptr<FakeLayerTreeFrameSink> Create3d() {
@@ -40,7 +64,14 @@ class FakeLayerTreeFrameSink : public LayerTreeFrameSink {
   static std::unique_ptr<FakeLayerTreeFrameSink> Create3d(
       scoped_refptr<TestContextProvider> context_provider) {
     return base::WrapUnique(new FakeLayerTreeFrameSink(
-        context_provider, TestContextProvider::CreateWorker()));
+        std::move(context_provider), TestContextProvider::CreateWorker()));
+  }
+
+  static std::unique_ptr<FakeLayerTreeFrameSink> Create3d(
+      scoped_refptr<TestContextProvider> context_provider,
+      scoped_refptr<TestContextProvider> worker_context_provider) {
+    return base::WrapUnique(new FakeLayerTreeFrameSink(
+        std::move(context_provider), std::move(worker_context_provider)));
   }
 
   static std::unique_ptr<FakeLayerTreeFrameSink> Create3d(
@@ -50,12 +81,12 @@ class FakeLayerTreeFrameSink : public LayerTreeFrameSink {
         TestContextProvider::CreateWorker()));
   }
 
-  static std::unique_ptr<FakeLayerTreeFrameSink> Create3dForGpuRasterization() {
-    auto context = TestWebGraphicsContext3D::Create();
-    context->set_gpu_rasterization(true);
-    auto context_provider = TestContextProvider::Create(std::move(context));
-    return base::WrapUnique(new FakeLayerTreeFrameSink(
-        std::move(context_provider), TestContextProvider::CreateWorker()));
+  static std::unique_ptr<FakeLayerTreeFrameSink> Create3dForGpuRasterization(
+      int max_msaa_samples = 0) {
+    return Builder()
+        .AllContexts(&TestWebGraphicsContext3D::set_gpu_rasterization, true)
+        .AllContexts(&TestWebGraphicsContext3D::SetMaxSamples, max_msaa_samples)
+        .Build();
   }
 
   static std::unique_ptr<FakeLayerTreeFrameSink> CreateSoftware() {
