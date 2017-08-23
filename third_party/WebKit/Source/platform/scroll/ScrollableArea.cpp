@@ -240,12 +240,19 @@ void ScrollableArea::ProgrammaticScrollHelper(const ScrollOffset& offset,
                                               bool is_sequenced_scroll) {
   CancelScrollAnimation();
 
+  float x = UserInputScrollable(kHorizontalScrollbar)
+                ? offset.Width()
+                : GetScrollAnimator().CurrentOffset().Width();
+  float y = UserInputScrollable(kVerticalScrollbar)
+                ? offset.Height()
+                : GetScrollAnimator().CurrentOffset().Height();
+
   if (scroll_behavior == kScrollBehaviorSmooth) {
-    GetProgrammaticScrollAnimator().AnimateToOffset(offset,
+    GetProgrammaticScrollAnimator().AnimateToOffset(ScrollOffset(x, y),
                                                     is_sequenced_scroll);
   } else {
     GetProgrammaticScrollAnimator().ScrollToOffsetWithoutAnimation(
-        offset, is_sequenced_scroll);
+        ScrollOffset(x, y), is_sequenced_scroll);
   }
 }
 
