@@ -4374,10 +4374,11 @@ TEST_F(NavigationControllerTest, CopyStateFromAndPruneTargetPending2) {
   std::unique_ptr<TestWebContents> other_contents(
       static_cast<TestWebContents*>(CreateTestWebContents()));
   NavigationControllerImpl& other_controller = other_contents->GetController();
-  other_contents->NavigateAndCommit(url2a);
-  // Simulate a client redirect, which has the same page ID as entry 2a.
-  other_controller.LoadURL(
-      url2b, Referrer(), ui::PAGE_TRANSITION_LINK, std::string());
+
+  auto navigation =
+      NavigationSimulator::CreateBrowserInitiated(url2a, other_contents.get());
+  navigation->Redirect(url2b);
+  navigation->Commit();
 
   other_contents->ExpectSetHistoryOffsetAndLength(1, 2);
   other_controller.CopyStateFromAndPrune(&controller, false);
