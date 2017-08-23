@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "43a5090e_58f1c9a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuAdapter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-23T18:19:12Z",
+      "side": 1,
+      "message": "I see, sorry, didn\u0027t see that this was for circular highlight inside a menu row. Reverted back. Thanks.",
+      "parentUuid": "dea777dd_cbff33e6",
+      "range": {
+        "startLine": 324,
+        "startChar": 3,
+        "endLine": 326,
+        "endChar": 9
+      },
+      "revId": "c3c3db9ba748c68383bd98a1dda89c7b82042940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fe0fc0e_cebf63e3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewHighlighter.java",
         "patchSetId": 11
