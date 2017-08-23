@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "26a40e97_b4a6254a",
+        "filename": "content/browser/frame_host/render_frame_host_delegate.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-23T21:13:19Z",
+      "side": 1,
+      "message": "FWIW, GRC has been enabled by default for about a month now.",
+      "parentUuid": "6f6661bc_72e8e89c",
+      "revId": "e46db933ead716c5a8e378ee4b831a7921bdb606",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11c01a3f_a095e051",
         "filename": "third_party/WebKit/public/platform/frame_broker.mojom",
         "patchSetId": 14
