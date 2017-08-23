@@ -4,6 +4,7 @@
 
 #include "core/workers/WorkletModuleResponsesMapProxy.h"
 
+#include "core/inspector/ConsoleMessage.h"
 #include "core/loader/modulescript/ModuleScriptCreationParams.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/wtf/Functional.h"
@@ -40,18 +41,13 @@ class ClientAdapter final : public GarbageCollectedFinalized<ClientAdapter>,
         CrossThreadBind(&WorkletModuleResponsesMap::Client::OnRead, client_,
                         params));
   }
-  void OnFetchNeeded() override {
+
+  void OnFailed(ConsoleMessage* error_message) override {
     DCHECK(IsMainThread());
     inside_settings_task_runner_->PostTask(
         BLINK_FROM_HERE,
-        CrossThreadBind(&WorkletModuleResponsesMap::Client::OnFetchNeeded,
-                        client_));
-  }
-  void OnFailed() override {
-    DCHECK(IsMainThread());
-    inside_settings_task_runner_->PostTask(
-        BLINK_FROM_HERE,
-        CrossThreadBind(&WorkletModuleResponsesMap::Client::OnFailed, client_));
+        CrossThreadBind(&WorkletModuleResponsesMap::Client::OnFailed, client_,
+                        WrapCrossThreadPersistent(error_message)));
   }
 
   DEFINE_INLINE_VIRTUAL_TRACE() {}
@@ -77,31 +73,15 @@ WorkletModuleResponsesMapProxy* WorkletModuleResponsesMapProxy::Create(
       std::move(inside_settings_task_runner));
 }
 
-void WorkletModuleResponsesMapProxy::ReadEntry(const KURL& url,
-                                               Client* client) {
+void WorkletModuleResponsesMapProxy::ReadEntry(
+    const FetchParameters& fetch_params,
+    Client* client) {
   DCHECK(inside_settings_task_runner_->RunsTasksInCurrentSequence());
   outside_settings_task_runner_->PostTask(
       BLINK_FROM_HERE,
       CrossThreadBind(&WorkletModuleResponsesMapProxy::ReadEntryOnMainThread,
-                      WrapCrossThreadPersistent(this), url,
+                      WrapCrossThreadPersistent(this), fetch_params,
                       WrapCrossThreadPersistent(client)));
-}
-
-void WorkletModuleResponsesMapProxy::UpdateEntry(
-    const KURL& url,
-    const ModuleScriptCreationParams& params) {
-  DCHECK(inside_settings_task_runner_->RunsTasksInCurrentSequence());
-  outside_settings_task_runner_->PostTask(
-      BLINK_FROM_HERE, CrossThreadBind(&WorkletModuleResponsesMap::UpdateEntry,
-                                       module_responses_map_, url, params));
-}
-
-void WorkletModuleResponsesMapProxy::InvalidateEntry(const KURL& url) {
-  DCHECK(inside_settings_task_runner_->RunsTasksInCurrentSequence());
-  outside_settings_task_runner_->PostTask(
-      BLINK_FROM_HERE,
-      CrossThreadBind(&WorkletModuleResponsesMap::InvalidateEntry,
-                      module_responses_map_, url));
 }
 
 DEFINE_TRACE(WorkletModuleResponsesMapProxy) {}
@@ -119,12 +99,14 @@ WorkletModuleResponsesMapProxy::WorkletModuleResponsesMapProxy(
   DCHECK(inside_settings_task_runner_->RunsTasksInCurrentSequence());
 }
 
-void WorkletModuleResponsesMapProxy::ReadEntryOnMainThread(const KURL& url,
-                                                           Client* client) {
+void WorkletModuleResponsesMapProxy::ReadEntryOnMainThread(
+    std::unique_ptr<CrossThreadFetchParametersData> fetch_params,
+    Client* client) {
   DCHECK(IsMainThread());
   ClientAdapter* wrapper =
       ClientAdapter::Create(client, inside_settings_task_runner_);
-  module_responses_map_->ReadOrCreateEntry(url, wrapper);
+  module_responses_map_->ReadOrCreateEntry(
+      FetchParameters(std::move(fetch_params)), wrapper);
 }
 
 }  // namespace blink
