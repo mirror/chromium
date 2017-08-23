@@ -9,6 +9,11 @@
 #include "content/public/browser/web_ui_controller.h"
 
 // The implementation for the chrome://signin-dice-internals page.
+//
+// The DICE internals page is a temporary page used by the desktop identity
+// consistency project to build and test the various sign-in flows. This WebUI
+// is temporary and should be removed once all the DICE feature is ready and
+// launched.
 class SigninDiceInternalsUI : public content::WebUIController {
  public:
   explicit SigninDiceInternalsUI(content::WebUI* web_ui);
