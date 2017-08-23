@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "429434ea_ee476c35",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-23T02:14:24Z",
+      "side": 1,
+      "message": "rm",
+      "revId": "e85b137ae33344cab2e181914769228ade2e478c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83aafc2a_9da02e95",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-23T02:14:24Z",
+      "side": 1,
+      "message": "Profile::FromBrowserContext(context_) use this instead.",
+      "revId": "e85b137ae33344cab2e181914769228ade2e478c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
