@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bc59d48_953af24b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-23T12:41:38Z",
+      "side": 1,
+      "message": "nit: This is base::Closure",
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb904e3c_192e4101",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-23T12:41:38Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment.",
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2191d677_225db7ba",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-23T12:41:38Z",
+      "side": 1,
+      "message": "Use .swap to avoid the copy?",
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e7dd8c_08f09153",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-23T12:41:38Z",
+      "side": 1,
+      "message": "nit: PersistentSchedulerWakeUp (not all caps), since the all-caps constant isn\u0027t mentioned in the test?",
+      "revId": "64044bc9a70539807bdbed4f9300937635771595",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
