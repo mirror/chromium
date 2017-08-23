@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "e7c7e852_85b9eea2",
+        "filename": "chromeos/dbus/arc_midis_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-23T21:42:57Z",
+      "side": 1,
+      "message": "assuming that ScopedFD does the standard thing when .release() is called (and it appears to), then it\u0027s not going to have anything left to free when its d\u0027tor runs... unless i\u0027m missing something.\n\nif you\u0027re just trying to get the underlying integer FD without telling the ScopedFD to release ownership of it, i think you want to call .get() instead.",
+      "parentUuid": "caf1d985_763f3d7f",
+      "revId": "710bf9b9abeb0dae237ba68ca9ecaa97d7599a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9b765ad_62829849",
         "filename": "chromeos/dbus/arc_midis_client.h",
         "patchSetId": 13
