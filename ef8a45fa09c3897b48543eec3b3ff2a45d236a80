@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bdaad14f_55ef7b1f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-23T14:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae947582_69c3c347",
+      "range": {
+        "startLine": 375,
+        "startChar": 79,
+        "endLine": 375,
+        "endChar": 0
+      },
+      "revId": "ef8a45fa09c3897b48543eec3b3ff2a45d236a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c18c5a55_53a511f0",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-23T14:27:48Z",
       "side": 1,
       "message": "Does\nstd::swap(queued_triggers_copy, queued_triggers_);\nnot work? Or why the using?\nAlso, std::set should have .swap as a member, so I\u0027d write this as\nqueued_triggers_copy.swap(queued_triggers_);",
+      "revId": "ef8a45fa09c3897b48543eec3b3ff2a45d236a80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c2f00b_e975b7e4",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-23T14:59:07Z",
+      "side": 1,
+      "message": "It\u0027s a common idiom to properly support optimizations relying on ADL.\nThat said, calling the set\u0027s swap is probably always safe, so let\u0027s do that :-D",
+      "parentUuid": "c18c5a55_53a511f0",
       "revId": "ef8a45fa09c3897b48543eec3b3ff2a45d236a80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
