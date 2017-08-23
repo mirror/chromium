@@ -2953,6 +2953,7 @@ DocumentParser* Document::ImplicitOpen(
   SetParsingState(kParsing);
   SetReadyState(kLoading);
   if (load_event_progress_ != kLoadEventInProgress &&
+      load_event_progress_ != kIframeLoadEventInProgress &&
       PageDismissalEventBeingDispatched() == kNoDismissal) {
     load_event_progress_ = kLoadEventNotRun;
   }
@@ -3194,6 +3195,7 @@ bool Document::ShouldComplete() {
   return parsing_state_ == kFinishedParsing && HaveImportsLoaded() &&
          !fetcher_->BlockingRequestCount() && !IsDelayingLoadEvent() &&
          load_event_progress_ != kLoadEventInProgress &&
+         load_event_progress_ != kIframeLoadEventInProgress &&
          AllDescendantsAreComplete(frame_);
 }
 
@@ -3366,6 +3368,7 @@ Document::PageDismissalType Document::PageDismissalEventBeingDispatched()
 
     case kLoadEventNotRun:
     case kLoadEventInProgress:
+    case kIframeLoadEventInProgress:
     case kLoadEventCompleted:
     case kBeforeUnloadEventCompleted:
     case kUnloadEventHandled:
