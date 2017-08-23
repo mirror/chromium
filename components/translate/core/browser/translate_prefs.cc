@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -30,6 +31,8 @@ const char TranslatePrefs::kPrefTranslateSiteBlacklist[] =
 const char TranslatePrefs::kPrefTranslateWhitelists[] = "translate_whitelists";
 const char TranslatePrefs::kPrefTranslateDeniedCount[] =
     "translate_denied_count_for_language";
+const char TranslatePrefs::kPrefTranslateEverChanged[] =
+    "translate_setting_ever_changed";
 const char TranslatePrefs::kPrefTranslateIgnoredCount[] =
     "translate_ignored_count_for_language";
 const char TranslatePrefs::kPrefTranslateAcceptedCount[] =
@@ -58,6 +61,10 @@ const char kLanguage[] = "language";
 const char kPreference[] = "preference";
 const char kProbability[] = "probability";
 const char kReading[] = "reading";
+
+// Name for uma histograms.
+const char kUMATranslateLanguageSettingChange[] =
+    "Translate.LanguageSettingChange";
 
 // The below properties used to be used but now are deprecated. Don't use them
 // since an old profile might have some values there.
@@ -482,6 +489,15 @@ void TranslatePrefs::UpdateLanguageList(
   ExpandLanguageCodes(languages, &accept_languages);
   std::string accept_languages_str = base::JoinString(accept_languages, ",");
   prefs_->SetString(accept_languages_pref_, accept_languages_str);
+  // If user ever changes the language list, we log that.
+  const base::Value* const language_setting_changed =
+      prefs_->GetDefaultPrefValue(kPrefTranslateEverChanged);
+  if (!language_setting_changed->GetBool()) {
+    // UMA logging for the user, we only log true case since we are only
+    // interested in how many users have ever changed their preferences.
+    UMA_HISTOGRAM_BOOLEAN(kUMATranslateLanguageSettingChange, true);
+    prefs_->SetBoolean(kPrefTranslateEverChanged, true);
+  }
 }
 
 bool TranslatePrefs::CanTranslateLanguage(
@@ -534,6 +550,7 @@ void TranslatePrefs::RegisterProfilePrefs(
   registry->RegisterDictionaryPref(
       kPrefTranslateDeniedCount,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+  registry->RegisterBooleanPref(kPrefTranslateEverChanged, false);
   registry->RegisterDictionaryPref(
       kPrefTranslateIgnoredCount,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);

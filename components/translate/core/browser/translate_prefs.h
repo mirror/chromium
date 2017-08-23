@@ -82,6 +82,7 @@ class TranslatePrefs {
   static const char kPrefTranslateSiteBlacklist[];
   static const char kPrefTranslateWhitelists[];
   static const char kPrefTranslateDeniedCount[];
+  static const char kPrefTranslateEverChanged[];
   static const char kPrefTranslateIgnoredCount[];
   static const char kPrefTranslateAcceptedCount[];
   static const char kPrefTranslateBlockedLanguages[];
