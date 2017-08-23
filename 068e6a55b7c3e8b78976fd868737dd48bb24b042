@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a6fa767_d627fd20",
+        "filename": "ui/views/cocoa/views_nswindow_delegate.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-23T02:53:24Z",
+      "side": 1,
+      "message": "Bubbles that have BubbleDialogDelegateView::close_on_deactivate() returning false should not automatically dismiss. Also right-clicking parts of the UI that don\u0027t show a menu should also dismiss (when close_on_deactivate is true).\n\nI think the solution to this bug needs to look more like the code in -[BaseBubbleController registerKeyStateEventTap]. i.e. watch for right-click and invoke windowDidResignKey:\n\nAlso is it possible to test?\n\nSomething in native_widget_mac_uniteractive_uitest.mm has the best chance.",
+      "revId": "068e6a55b7c3e8b78976fd868737dd48bb24b042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
