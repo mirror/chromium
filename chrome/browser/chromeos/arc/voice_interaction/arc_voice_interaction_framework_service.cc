@@ -540,14 +540,6 @@ bool ArcVoiceInteractionFrameworkService::InitiateUserInteraction() {
   }
 
   auto start_time = base::TimeTicks::Now();
-  if ((start_time - user_interaction_start_time_) <
-          kAllowedTimeSinceUserInteraction &&
-      context_request_remaining_count_) {
-    // If next request starts too soon and there is an active session in action,
-    // we should drop it.
-    VLOG(1) << "Rejected voice interaction request.";
-    return false;
-  }
   user_interaction_start_time_ = start_time;
   context_request_remaining_count_ = kContextRequestMaxRemainingCount;
   return true;
