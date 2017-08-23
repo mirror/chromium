@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bc15f15_e1a0d1ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-23T14:05:27Z",
+      "side": 1,
+      "message": "nit: Can you put the original CL description CL inline here (this make it easier to understand what the CL is doing when just browsing \"git log\"). Maybe doing something like this:\n\n  Reland \"Componentize BrowsingHistoryService.\"\n\n  ${inline original CL description}\n\n  Restored a null check that caused crashes in the original version\n  of this CL and added unit tests to catch similar regressions.\n\n  ...\n\nThis is because the CL description should explain the why, not the how, IMO.",
+      "revId": "8365c0e2fdac78b9702a5e3268894299e5d07bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
