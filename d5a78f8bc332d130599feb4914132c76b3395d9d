@@ -34,6 +34,41 @@
       "revId": "d5a78f8bc332d130599feb4914132c76b3395d9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f83a5d78_b153c724",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T04:09:06Z",
+      "side": 0,
+      "message": "Makes sense. That should also mean we can delete the protect_this code from SWVersion, but we can do that in a follow-up (I can volunteer to do that)",
+      "parentUuid": "0f2bdf14_8e3068f8",
+      "revId": "d5a78f8bc332d130599feb4914132c76b3395d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b2614d7_e3130b57",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T04:09:06Z",
+      "side": 0,
+      "message": "Let\u0027s keep this comment too.",
+      "revId": "d5a78f8bc332d130599feb4914132c76b3395d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
