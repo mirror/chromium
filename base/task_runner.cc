@@ -54,6 +54,14 @@ bool TaskRunner::PostTaskAndReply(const tracked_objects::Location& from_here,
       from_here, std::move(task), std::move(reply));
 }
 
+bool TaskRunner::PostTaskAndReplyAsync(
+    const tracked_objects::Location& from_here,
+    OnceCallback<void(OnceClosure)> task,
+    OnceClosure reply) {
+  return PostTaskAndReplyTaskRunner(this).PostTaskAndReplyAsync(
+      from_here, std::move(task), std::move(reply));
+}
+
 TaskRunner::TaskRunner() {}
 
 TaskRunner::~TaskRunner() {}

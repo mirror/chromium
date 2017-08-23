@@ -5,6 +5,7 @@
 #ifndef BASE_TASK_RUNNER_UTIL_H_
 #define BASE_TASK_RUNNER_UTIL_H_
 
+#include <tuple>
 #include <utility>
 
 #include "base/bind.h"
@@ -60,6 +61,22 @@ bool PostTaskAndReplyWithResult(TaskRunner* task_runner,
   return PostTaskAndReplyWithResult(
       task_runner, from_here, OnceCallback<TaskReturnType()>(std::move(task)),
       OnceCallback<void(ReplyArgType)>(std::move(reply)));
+}
+
+template <typename... ReturnArgTypes, typename... ReplyArgTypes>
+bool PostTaskAndReplyAsync(
+    TaskRunner* task_runner,
+    const tracked_objects::Location& from_here,
+    OnceCallback<void(OnceCallback<void(ReturnArgTypes...)>)> task,
+    OnceCallback<void(ReplyArgTypes...)> reply) {
+  using ReturnTuple = std::tuple<typename std::decay<ReturnArgTypes>::type...>;
+  auto* result = new base::Optional<ReturnTuple>();
+  return task_runner->PostTaskAndReplyAsync(
+      from_here,
+      BindOnce(&internal::TaskAsyncAdaptor<ReturnTuple, ReturnArgTypes...>,
+               std::move(task), Unretained(result)),
+      BindOnce(&internal::ReplyAsyncAdaptor<ReturnTuple, ReplyArgTypes...>,
+               std::move(reply), Owned(result)));
 }
 
 }  // namespace base
