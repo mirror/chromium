@@ -136,7 +136,7 @@ class CC_EXPORT DirectRenderer {
                      const gfx::Rect& render_pass_scissor,
                      bool use_render_pass_scissor);
   void DrawRenderPassAndExecuteCopyRequests(RenderPass* render_pass);
-  void DrawRenderPass(const RenderPass* render_pass);
+  void DrawRenderPass(RenderPass* render_pass);
   bool UseRenderPass(const RenderPass* render_pass);
 
   void DoDrawPolygon(const DrawPolygon& poly,

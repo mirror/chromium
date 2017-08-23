@@ -506,10 +506,14 @@ void DirectRenderer::DrawRenderPassAndExecuteCopyRequests(
   }
 }
 
-void DirectRenderer::DrawRenderPass(const RenderPass* render_pass) {
+void DirectRenderer::DrawRenderPass(RenderPass* render_pass) {
   TRACE_EVENT0("cc", "DirectRenderer::DrawRenderPass");
   if (!UseRenderPass(render_pass))
     return;
+  // We need invalidate cache if we are not using render pass, so that we can
+  // draw on it.
+  if (render_pass->cache_render_pass)
+    render_pass->has_damage_from_contributing_content = true;
 
   const gfx::Rect surface_rect_in_draw_space = OutputSurfaceRectInDrawSpace();
   gfx::Rect render_pass_scissor_in_draw_space = surface_rect_in_draw_space;
