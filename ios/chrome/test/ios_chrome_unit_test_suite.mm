@@ -4,6 +4,8 @@
 
 #include "ios/chrome/test/ios_chrome_unit_test_suite.h"
 
+#include <array>
+
 #include "base/macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/path_service.h"
@@ -88,6 +90,7 @@ void IOSChromeUnitTestSuite::Initialize() {
   ios::RegisterPathProvider();
   ui::RegisterPathProvider();
   url::AddStandardScheme(kChromeUIScheme, url::SCHEME_WITHOUT_PORT);
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
-      kDummyExtensionScheme);
+  const std::array<const char*, 0> schemes();
+  ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(schemes.data(),
+                                                             schemes.size());
 }

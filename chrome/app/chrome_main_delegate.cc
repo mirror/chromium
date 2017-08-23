@@ -5,6 +5,7 @@
 #include "chrome/app/chrome_main_delegate.h"
 
 #include <stddef.h>
+#include <array>
 #include <string>
 
 #include "base/base_paths.h"
@@ -193,6 +194,9 @@ extern int NaClMain(const content::MainFunctionParams&);
 extern int CloudPrintServiceProcessMain(const content::MainFunctionParams&);
 
 namespace {
+
+constexpr std::array<const char*, 2> kNonWildcardDomainNonPortSchemes{
+    {extensions::kExtensionScheme, chrome::kChromeSearchScheme}};
 
 base::LazyInstance<ChromeMainDelegate::ServiceCatalogFactory>::Leaky
     g_service_catalog_factory = LAZY_INSTANCE_INITIALIZER;
@@ -598,8 +602,9 @@ bool ChromeMainDelegate::BasicStartupComplete(int* exit_code) {
   nacl::RegisterPathProvider();
 #endif
 
-  ContentSettingsPattern::SetNonWildcardDomainNonPortScheme(
-      extensions::kExtensionScheme);
+  ContentSettingsPattern::SetNonWildcardDomainNonPortSchemes(
+      kNonWildcardDomainNonPortSchemes.data(),
+      kNonWildcardDomainNonPortSchemes.size());
 
 // No support for ANDROID yet as DiagnosticsController needs wchar support.
 // TODO(gspencer): That's not true anymore, or at least there are no w-string
