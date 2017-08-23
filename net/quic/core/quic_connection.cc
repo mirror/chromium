@@ -642,16 +642,26 @@ bool QuicConnection::OnPacketHeader(const QuicPacketHeader& header) {
     return false;
   }
 
-  // Only migrate connection to a new peer address if a change is not underway.
   PeerAddressChangeType peer_migration_type =
       QuicUtils::DetermineAddressChangeType(peer_address_,
                                             last_packet_source_address_);
-  // Do not migrate connection if the changed address packet is a reordered
-  // packet.
-  if (active_peer_migration_type_ == NO_CHANGE &&
-      peer_migration_type != NO_CHANGE &&
-      header.packet_number > received_packet_manager_.GetLargestObserved()) {
-    StartPeerMigration(peer_migration_type);
+  // Initiate connection migration if a non-reordered packet is received from a
+  // new address.
+  if (header.packet_number > received_packet_manager_.GetLargestObserved() &&
+      peer_migration_type != NO_CHANGE) {
+    if (FLAGS_quic_reloadable_flag_quic_disable_peer_migration_on_client &&
+        perspective_ == Perspective::IS_CLIENT) {
+      QUIC_FLAG_COUNT(
+          quic_reloadable_flag_quic_disable_peer_migration_on_client);
+      QUIC_DLOG(INFO) << ENDPOINT << "Peer's ip:port changed from "
+                      << peer_address_.ToString() << " to "
+                      << last_packet_source_address_.ToString();
+      peer_address_ = last_packet_source_address_;
+    } else if (active_peer_migration_type_ == NO_CHANGE) {
+      // Only migrate connection to a new peer address if there is no
+      // pending change underway.
+      StartPeerMigration(peer_migration_type);
+    }
   }
 
   --stats_.packets_dropped;
