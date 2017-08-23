@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "14f64385_937edced",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-23T22:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b7f5499_5996e4a7",
+      "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bf790c1_6fbeb69d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f94d270d_2c6d32f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-23T22:05:09Z",
+      "side": 1,
+      "message": "Yes, but this also allows for easier testing.",
+      "parentUuid": "5bf790c1_6fbeb69d",
+      "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "69ca6e99_aa331cb1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-23T22:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d67e30a_b8e5a009",
+      "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0918622a_abed811e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e696805_b2b99a37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-23T22:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0918622a_abed811e",
+      "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4f034524_7ed889bf",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridgeTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-23T22:05:09Z",
+      "side": 1,
+      "message": "doesn\u0027t seem like it",
+      "parentUuid": "85042511_38fc127a",
+      "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "779e829f_d78a3527",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridgeTest.java",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "35eaad29_84e902fa",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridgeTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-23T22:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "779e829f_d78a3527",
+      "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebf52232_f4a57f87",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridgeTest.java",
         "patchSetId": 4
@@ -118,6 +226,24 @@
       "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4ee7d9_150231f1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridgeTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-23T22:05:09Z",
+      "side": 1,
+      "message": "SavePageLater is hard to test because it goes through request coordinator and is subject to the task scheduler waking up (network conditions, etc). The test works on my phone, but doesn\u0027t work on the bots",
+      "parentUuid": "ebf52232_f4a57f87",
+      "revId": "b7d9c50d2a35b9386c809515a4c7ec5290bbbf24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
