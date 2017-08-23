@@ -69,6 +69,23 @@
       "revId": "e164c6dd8a9bcd61e2c7c6430dfc49953c3fb25d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "94002a78_4b12e649",
+        "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-08-23T03:50:53Z",
+      "side": 1,
+      "message": "I guess this line is needed?\nbecause line 602,\nmedia::VaapiWrapper::PreSandboxInitialization();",
+      "revId": "e164c6dd8a9bcd61e2c7c6430dfc49953c3fb25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
