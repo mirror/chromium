@@ -51,19 +51,21 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
  private:
   friend class MetricsCollectorTest;
 
-  struct MetricsReportRecord {
-    MetricsReportRecord();
+  struct BackgroundMetricsReportRecord {
+    BackgroundMetricsReportRecord();
     void Reset();
     // UMA histograms report.
-    bool first_alert_fired_after_backgrounded_reported;
-    bool first_audible_after_backgrounded_reported;
-    bool first_favicon_updated_after_backgrounded_reported;
-    bool first_non_persistent_notification_created_after_backgrounded_reported;
-    bool first_title_updated_after_backgrounded_reported;
+    bool first_alert_fired_uma_reported;
+    bool first_audible_uma_reported;
+    bool first_favicon_updated_uma_reported;
+    bool first_non_persistent_notification_created_uma_reported;
+    bool first_title_updated_uma_reported;
 
     // UKM collection report.
-    bool main_frame_first_audible_after_backgrounded_reported;
-    bool child_frame_first_audible_after_backgrounded_reported;
+    bool first_main_frame_alert_fired_ukm_reported;
+    bool first_child_frame_alert_fired_ukm_reported;
+    bool first_main_frame_audible_ukm_reported;
+    bool first_child_frame_audible_ukm_reported;
   };
 
   struct FrameData {
@@ -85,6 +87,11 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
   void RecordCPUUsageForUkm(const CoordinationUnitID& web_contents_cu_id,
                             double cpu_usage,
                             size_t num_coresident_tabs);
+  void ReportAlertFiredUKMIfNeeded(
+      const WebContentsCoordinationUnitImpl* web_contents_cu,
+      bool* reported,
+      bool is_main_frame,
+      base::TimeDelta duration);
   void ReportAudibilityUKMIfNeeded(
       const WebContentsCoordinationUnitImpl* web_contents_cu,
       bool* reported,
@@ -94,7 +101,7 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
       const CoordinationUnitID& web_contents_cu_id,
       ukm::SourceId ukm_source_id);
   void UpdateWithFieldTrialParams();
-  void ResetMetricsReportRecord(CoordinationUnitID cu_id);
+  void ResetBackgroundMetricsReportRecord(CoordinationUnitID cu_id);
 
   // Note: |clock_| is always |&default_tick_clock_|, except during unit
   // testing.
@@ -104,7 +111,8 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
   std::map<CoordinationUnitID, WebContentsData> web_contents_data_map_;
   // The metrics_report_record_map_ is used to record whether a metric was
   // already reported to avoid reporting multiple metrics.
-  std::map<CoordinationUnitID, MetricsReportRecord> metrics_report_record_map_;
+  std::map<CoordinationUnitID, BackgroundMetricsReportRecord>
+      background_metrics_report_record_map_;
   std::map<CoordinationUnitID, UkmCPUUsageCollectionState>
       ukm_cpu_usage_collection_state_map_;
   size_t max_ukm_cpu_usage_measurements_ = 0u;
