@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0277b5b7_47c1bdef",
+        "filename": "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-23T01:46:34Z",
+      "side": 1,
+      "message": "In case background \u003d 0, foreground \u003d 1, I recommend naming the metric:\nRequestedFromForeground (or something like that).\n\nAlternatively you could consider making a distinction between:\nRequested using download button vs. dino button.\n\n(This is not a request for capturing more metrics, but rather choosing a single one that we want to begin with, and something for you to think about).",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 16
+      },
+      "revId": "20715e9bbc44fed266cff0874fb1c2a71e532858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f347c9d_edf56cab",
+        "filename": "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-23T01:46:34Z",
+      "side": 1,
+      "message": "Is there a chance this is only needed in .cc file?\nPlease try to move it.",
+      "revId": "20715e9bbc44fed266cff0874fb1c2a71e532858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db72eb52_81a79d87",
+        "filename": "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-23T01:46:34Z",
+      "side": 1,
+      "message": "Would there be a good reason not to disallow copy and assign here?",
+      "range": {
+        "startLine": 20,
+        "startChar": 1,
+        "endLine": 20,
+        "endChar": 2
+      },
+      "revId": "20715e9bbc44fed266cff0874fb1c2a71e532858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60db1a86_08cb63c3",
+        "filename": "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-23T01:46:34Z",
+      "side": 1,
+      "message": "is it possible to make these value static consts on reporter instead of duplicating them here?",
+      "range": {
+        "startLine": 12,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 51
+      },
+      "revId": "20715e9bbc44fed266cff0874fb1c2a71e532858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "764fe7d8_79d94ea4",
+        "filename": "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-23T01:46:34Z",
+      "side": 1,
+      "message": "I think a convention for this stuff is to do it by pointer.\nI cannot think or a way this being relevant here, but perhaps you could consider that.\n\nAlso, since there is no real fixture to speak off, perhaps simply using TEST() macro would be suitable.",
+      "range": {
+        "startLine": 21,
+        "startChar": 22,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "20715e9bbc44fed266cff0874fb1c2a71e532858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
