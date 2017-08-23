@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85916d9f_a4f4e47e",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-23T15:28:41Z",
+      "side": 1,
+      "message": "nit: not needed?",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66572f98_eafc8742",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-23T15:28:41Z",
+      "side": 1,
+      "message": "nit: forward decl seems fine",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e9fa4a_10dee7aa",
+        "filename": "content/common/origin_trials/trial_policy_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-23T15:28:41Z",
+      "side": 1,
+      "message": "Some of these are probably out of scope of this patch, but some thoughts:\n- origin_trial_policy.h doesn\u0027t also seem to have any dependency, and can be moved into WebKit/common?\n- origin_util can be likely just moved into WebKit/common (it feels it belongs there)\n- GetContentClient() one\u0027s a bit tricky, while I wonder if we can just have similar embedder-exposed api in WebKit/common. (For now it\u0027s fine as is on this one, just thinking out loud)",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8c872e_2ca22a96",
+        "filename": "content/renderer/origin_trials/web_trial_token_validator_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-23T15:28:41Z",
+      "side": 1,
+      "message": "I think I\u0027m likely just repeating the same question that has been discussed (sorry), but could you elaborate why we need WebTrialTokenValidator in addition to blink::TrialTokenValidator?  This seems pretty undesirable.",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bba2dc5_92f33b0f",
+        "filename": "third_party/WebKit/Source/core/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-23T15:28:41Z",
+      "side": 1,
+      "message": "nit: for now can you always use full-path, i.e. \"+third_party/WebKit/common\"",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5566529_435ee730",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-23T15:28:41Z",
+      "side": 1,
+      "message": "third_party/WebKit/common/...",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ec30d5_c0501db7",
+        "filename": "third_party/WebKit/Source/platform/exported/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-23T15:28:41Z",
+      "side": 1,
+      "message": "\"+third_party/WebKit/common/origin_trials\"",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e683bad_9a304291",
+        "filename": "third_party/WebKit/Source/platform/exported/Platform.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-23T15:28:41Z",
+      "side": 1,
+      "message": "nit: full-path",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
