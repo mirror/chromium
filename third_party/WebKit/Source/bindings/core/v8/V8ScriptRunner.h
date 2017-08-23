@@ -145,10 +145,9 @@ class CORE_EXPORT V8ScriptRunner final {
     return CallExtraHelper(script_state, name, N, args).ToLocalChecked();
   }
 
-  // Use V8ThrowException instead of this function unless absolutely needed.
-  static void ThrowException(v8::Isolate*,
-                             v8::Local<v8::Value> exception,
-                             const v8::ScriptOrigin&);
+  // Reports an exception to the message handler, as if it were an uncaught
+  // exception. Can only be called on the main thread.
+  static void ReportException(v8::Isolate*, v8::Local<v8::Value> exception);
 
  private:
   static v8::MaybeLocal<v8::Value> CallExtraHelper(ScriptState*,
