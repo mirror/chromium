@@ -32,18 +32,18 @@ var allTests = [
     assertEq(undefined, body.restriction);
 
     var contentChildren = body.children;
-    assertEq(3, contentChildren.length);
+    assertEq(5, contentChildren.length);
     var okButton = contentChildren[0];
     assertEq('Ok', okButton.name);
     state = RemoveUntestedStates(okButton.state);
     assertEq({focusable: true}, state);
     assertEq(undefined, okButton.restriction);
-    var userNameInput = contentChildren[1];
+    var userNameInput = contentChildren[2];
     assertEq(undefined, userNameInput.restriction);
     assertEq('Username', userNameInput.name);
     state = RemoveUntestedStates(userNameInput.state);
     assertEq({editable: true, focusable: true}, state);
-    var cancelButton = contentChildren[2];
+    var cancelButton = contentChildren[4];
     assertEq('Cancel',
              cancelButton.name);
     state = RemoveUntestedStates(cancelButton.state);
@@ -66,13 +66,13 @@ var allTests = [
 
     assertEq(undefined, okButton.previousSibling);
     assertEq(undefined, okButton.firstChild);
-    assertEq(userNameInput, okButton.nextSibling);
+    assertEq(userNameInput, okButton.nextSibling.nextSibling);
     assertEq(undefined, okButton.lastChild);
 
-    assertEq(okButton, userNameInput.previousSibling);
-    assertEq(cancelButton, userNameInput.nextSibling);
+    assertEq(okButton, userNameInput.previousSibling.previousSibling);
+    assertEq(cancelButton, userNameInput.nextSibling.nextSibling);
 
-    assertEq(userNameInput, cancelButton.previousSibling);
+    assertEq(userNameInput, cancelButton.previousSibling.previousSibling);
     assertEq(undefined, cancelButton.nextSibling);
 
     chrome.test.succeed();

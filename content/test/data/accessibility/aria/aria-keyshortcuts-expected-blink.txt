@@ -1,5 +1,9 @@
 rootWebArea
 ++genericContainer
 ++++button keyShortcuts='Ctrl+X' name='Cut'
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++button keyShortcuts='Ctrl+C' name='Copy'
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++button keyShortcuts='Ctrl+V' name='Paste'

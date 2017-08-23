@@ -1,7 +1,17 @@
 rootWebArea
 ++checkBox name='Title0' checkedState=false
+++staticText name=' '
+++++inlineTextBox name=' '
 ++checkBox description='Title1' name='Label1' descriptionFrom=attribute checkedState=false
+++staticText name=' '
+++++inlineTextBox name=' '
 ++checkBox description='Title2' name='AriaLabel2' descriptionFrom=attribute checkedState=false
+++staticText name=' '
+++++inlineTextBox name=' '
 ++checkBox description='Title3' name='LabelledBy3' descriptionFrom=attribute checkedState=false
+++staticText name=' '
+++++inlineTextBox name=' '
 ++checkBox description='DescribedBy4' name='LabelledBy4' descriptionFrom=relatedElement checkedState=false
+++staticText name=' '
+++++inlineTextBox name=' '
 ++checkBox description='DescribedBy5' descriptionFrom=relatedElement checkedState=false

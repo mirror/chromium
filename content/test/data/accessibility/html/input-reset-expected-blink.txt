@@ -1,4 +1,6 @@
 rootWebArea
 ++genericContainer
 ++++textField
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++button name='Reset'
