@@ -389,14 +389,21 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
 
     @Override
     public void onFinishedVerification() {
+        Log.e(TAG, "Verifier #%d has finished verification.", mPendingVerifiersCount);
         mPendingVerifiersCount--;
         if (mPendingVerifiersCount != 0) return;
 
         for (Map.Entry<URI, PaymentMethod> nameAndMethod : mVerifiedPaymentMethods.entrySet()) {
             URI methodName = nameAndMethod.getKey();
-            if (!mUriPaymentMethods.contains(methodName)) continue;
+            Log.e(TAG, "Payment method %s has been verified.", methodName.toString());
+            if (!mUriPaymentMethods.contains(methodName)) {
+                Log.e(TAG, "%s is not one of the payment methods that the merchant supports.", methodName.toString());
+                continue;
+            }
+            Log.e(TAG, "%s is one of the payment methods that the merchant supports.", methodName.toString());
 
             PaymentMethod method = nameAndMethod.getValue();
+            Log.e(TAG, "%s has %d default applications.", methodName.toString(), method.defaultApplications.size());
             for (ResolveInfo app : method.defaultApplications) {
                 onValidPaymentAppForPaymentMethodName(app, methodName.toString());
             }
@@ -404,6 +411,7 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
             // Chrome does not verify payment apps if they claim to support URI payment methods
             // that support all origins.
             if (method.supportsAllOrigins) {
+                Log.e(TAG, "%s supports all origins.", methodName.toString());
                 Set<ResolveInfo> supportedApps = mMethodToSupportedAppsMapping.get(methodName);
                 for (ResolveInfo supportedApp : supportedApps) {
                     onValidPaymentAppForPaymentMethodName(supportedApp, methodName.toString());
@@ -411,10 +419,12 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
                 continue;
             }
 
+            Log.e(TAG, "%s supports %d origins.", methodName.toString(), method.supportedOrigins.size());
             for (URI supportedOrigin : method.supportedOrigins) {
                 Set<URI> supportedAppMethodNames =
                         mOriginToUriDefaultMethodsMapping.get(supportedOrigin);
                 assert supportedAppMethodNames != null;
+                Log.e(TAG, "%s supports %d payment methods from %s origin.", methodName.toString(), supportedAppMethodNames.size(), supportedOrigin.toString());
 
                 for (URI supportedAppMethodName : supportedAppMethodNames) {
                     PaymentMethod supportedAppMethod =

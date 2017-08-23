@@ -946,6 +946,30 @@ public class AndroidPaymentAppFinderTest implements PaymentAppCreatedCallback {
     }
 
     /**
+     * Verify that GeorgePay app cannot use https://georgepay.com/webpay payment method, because
+     * https://georgepay.com/payment-manifest.json does not contain "default_applications" entry.
+     * Repeated app look ups should succeed.
+     */
+    @Test
+    @Feature({"Payments"})
+    public void testNoDefaultApplication() throws Throwable {
+        Set<String> methods = new HashSet<>();
+        methods.add(mServer.getURL("/components/test/data/payments/georgepay.com/webpay"));
+        mPackageManager.installPaymentApp("GeorgePay", "com.georgepay",
+                mServer.getURL("/components/test/data/payments/georgepay.com/webpay"), "00");
+
+        findApps(methods);
+
+        Assert.assertTrue("No apps should match the query", mPaymentApps.isEmpty());
+
+        mAllPaymentAppsCreated = false;
+
+        findApps(methods);
+
+        Assert.assertTrue("No apps should match the query again", mPaymentApps.isEmpty());
+    }
+
+    /**
      * Verify that HenryPay can use https://henrypay.com/webpay payment method name because it's
      * a default application and BobPay can use it because
      * https://henrypay.com/payment-manifest.json contains "supported_origins": "*". Repeated app
