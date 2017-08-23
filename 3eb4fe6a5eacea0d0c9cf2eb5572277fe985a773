@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "493bec6b_ae89e736",
+        "filename": "third_party/zlib/adler32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T14:27:25Z",
+      "side": 1,
+      "message": "prototype of NEON_adler32 is:\n\n  unsigned long NEON_adler32(unsigned long adler,\n                             const unsigned char* buf,\n                             const unsigned int len);\n\nHere you call it with a z_size_t len as the last argument.  Is that a potential problem?",
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f878470a_d1cb7725",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T14:27:25Z",
+      "side": 1,
+      "message": "Better, should we do the same for M_BASE?",
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "442acc20_00bc5143",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T14:27:25Z",
+      "side": 1,
+      "message": "Is |len| the length of |buf|?  I think not, it seems to be the number 16-byte blocks to process.  Can we name it better?",
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1437071c_de006b60",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T14:27:25Z",
+      "side": 1,
+      "message": "formatting: should we be using tabs or spaces here?",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 1
+      },
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f09972a_dc2d2140",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T14:27:25Z",
+      "side": 1,
+      "message": "while (len--) {\n\nAlso, how about we remove this function, and just move the code into NEON_adler32() ?",
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "313b15b5_e9652f1e",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T14:27:25Z",
+      "side": 1,
+      "message": "formatting: should we be using tabs or spaces here?",
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
