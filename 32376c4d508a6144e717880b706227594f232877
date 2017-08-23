@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ff9230b_ccddd390",
+        "filename": "third_party/WebKit/LayoutTests/paint/markers/active-suggestion-marker-basic.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-23T07:22:15Z",
+      "side": 1,
+      "message": "\"run-after-layout-and-paint.js\" is in \"WebKit/LayoutTests/resources/\".\nSo, we need to use \"../../resources/run-after-layout-and-paint.js\"",
+      "revId": "32376c4d508a6144e717880b706227594f232877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
