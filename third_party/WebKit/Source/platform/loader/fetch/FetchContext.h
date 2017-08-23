@@ -57,6 +57,7 @@ class PlatformProbeSink;
 class ResourceError;
 class ResourceResponse;
 class ResourceTimingInfo;
+class WebCORSPreflightResultCache;
 
 enum FetchResourceType { kFetchMainResource, kFetchSubresource };
 
@@ -231,6 +232,12 @@ class PLATFORM_EXPORT FetchContext
   // with "keepalive" specified).
   // Returns a "detached" fetch context which can be null.
   virtual FetchContext* Detach() { return nullptr; }
+
+  // Returns the CORSPreflightResultCache for the fetch context. The cache
+  // for frames is shared with other frames in the same process.
+  virtual WebCORSPreflightResultCache* GetCORSPreflightResultCache() {
+    return nullptr;
+  }
 
  protected:
   FetchContext();
