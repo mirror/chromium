@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b815d10_ce1e7825",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-23T07:28:49Z",
+      "side": 1,
+      "message": "nit: Please remove a trailing whitespace.",
+      "revId": "45a50d3ecca1833f687c00a0351d3c6b257000dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c2f03c_323f5731",
+        "filename": "third_party/WebKit/Source/core/editing/SurroundingText.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-23T07:28:49Z",
+      "side": 1,
+      "message": "Could you file a bug about invalid position by BackwardsCharacterIterator\nand put TODO(editing-dev) with bug id?",
+      "revId": "45a50d3ecca1833f687c00a0351d3c6b257000dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
