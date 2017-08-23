@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "2e1edf87_3e6f88a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuAdapter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-23T17:51:16Z",
+      "side": 1,
+      "message": "Ah.. I see. I thought the menu dismissal will take care of it, but didn\u0027t think of reuse during scrolling of menu items.",
+      "parentUuid": "d639a3f8_f40e2e01",
+      "range": {
+        "startLine": 277,
+        "startChar": 7,
+        "endLine": 279,
+        "endChar": 9
+      },
+      "revId": "c3c3db9ba748c68383bd98a1dda89c7b82042940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7fb8741_018c2e5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuAdapter.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-08-23T17:51:16Z",
+      "side": 1,
+      "message": "Removing this block as this should be already covered by the above. Tested that it works.",
+      "range": {
+        "startLine": 324,
+        "startChar": 3,
+        "endLine": 326,
+        "endChar": 9
+      },
+      "revId": "c3c3db9ba748c68383bd98a1dda89c7b82042940",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fe0fc0e_cebf63e3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewHighlighter.java",
         "patchSetId": 11
