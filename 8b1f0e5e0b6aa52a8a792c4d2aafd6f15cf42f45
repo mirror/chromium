@@ -16,6 +16,24 @@
       "revId": "8b1f0e5e0b6aa52a8a792c4d2aafd6f15cf42f45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b1ace6_6cbdda5e",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-23T05:23:53Z",
+      "side": 1,
+      "message": "Ah, this is just moving existing code. Don\u0027t need to address in this CL.",
+      "parentUuid": "30476de3_6c87a668",
+      "revId": "8b1f0e5e0b6aa52a8a792c4d2aafd6f15cf42f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
