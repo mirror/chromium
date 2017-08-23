@@ -426,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "f25d07a0_c2bf749c",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T23:33:45Z",
+      "side": 1,
+      "message": "Done.\nPerfect!",
+      "parentUuid": "8fd5f2cd_12433b95",
+      "range": {
+        "startLine": 276,
+        "startChar": 4,
+        "endLine": 276,
+        "endChar": 30
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "186cdb3e_8ee69ed2",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 3
@@ -494,6 +518,30 @@
       "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c855a8a_f744223e",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T23:33:45Z",
+      "side": 1,
+      "message": "While I am waiting on base::Move() to reply, I think it\u0027s a good idea to try to delete both the temp file and the destination file since I can\u0027t be 100% sure that it has finished moving successfully or not.",
+      "parentUuid": "0e89b84f_f4c08de8",
+      "range": {
+        "startLine": 282,
+        "startChar": 8,
+        "endLine": 282,
+        "endChar": 49
+      },
+      "revId": "3aab20e1d7a182bc57f672fac3e1e958f689c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

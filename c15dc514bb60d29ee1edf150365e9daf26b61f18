@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "962f0ec6_048b133e",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T23:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5fc16c5_6c40f9ad",
+      "range": {
+        "startLine": 44,
+        "startChar": 19,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e8d9794_138f62f4",
         "filename": "remoting/host/file_proxy_wrapper.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "082daed1_75764254",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T23:33:45Z",
+      "side": 1,
+      "message": "I agree, that is better. It also makes me wonder if the SuccessCallback in CreateFile() is necessary. The purpose is to make it so that the CRD client will wait to send chunks until it gets a \"ready\" message from the host, and FileProxyWrapper can assume that WriteChunk() will not be called until the file is created and ready. This made more sense to me a while ago when I was prototyping and I used FileProxy::SetLength to try and check if the host is out of disk space early. However, all of these things could be removed if FileProxyWrapper just queued chunks until the file is ready. I\u0027ll make a TODO for your suggestion and removing SuccessCallback from CreateFile(). Does that sound good to you?",
+      "parentUuid": "2e8d9794_138f62f4",
+      "range": {
+        "startLine": 53,
+        "startChar": 61,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d46cf77_3ff2ccfa",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-23T21:58:15Z",
       "side": 1,
       "message": "I see that you added this comment in response to Joe\u0027s fb, but I\u0027m not sure who it\u0027s addressed to. I can see how a comment on Init stating that the callback must not delete the FileProxyWrapper would be useful if the implementation needs to access member variables after calling the error callback (though a better design would be to avoid that restriction), but documenting on a private method is a little odd, especially since this class can\u0027t really enforce it since it\u0027s calling into code outside its control.",
+      "range": {
+        "startLine": 91,
+        "startChar": 67,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4862d50_40239aff",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T23:33:45Z",
+      "side": 1,
+      "message": "I think this restriction can be avoided since every call to this callback occurs at the end of a function. If running the callback deletes this class, nothing bad should happen. Do you think there should be no comments about this, or perhaps have it say that running the callback may destroy the class even though it actually doesn\u0027t? Have any thoughts Joe?",
+      "parentUuid": "6d46cf77_3ff2ccfa",
       "range": {
         "startLine": 91,
         "startChar": 67,
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "52108fb7_6c7e802d",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T23:33:45Z",
+      "side": 1,
+      "message": "You\u0027re right, another error type would best represent what is happening here. I will add it in this CL.",
+      "parentUuid": "b9e300b8_5960f624",
+      "range": {
+        "startLine": 125,
+        "startChar": 51,
+        "endLine": 125,
+        "endChar": 74
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92537a69_8442b009",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T23:33:45Z",
+      "side": 1,
+      "message": "I actually don\u0027t know what would cause it to fail. I agree, a DCHECK would be good and I will add one. I don\u0027t see any harm in leaving the CancelWithError() though, so I will keep it.",
+      "parentUuid": "0d1e6bca_a08f0c2d",
+      "range": {
+        "startLine": 125,
+        "startChar": 76,
+        "endLine": 125,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dd088b3_beb1dee7",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e3b0ac1_a996dfde",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T23:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dd088b3_beb1dee7",
+      "range": {
+        "startLine": 147,
+        "startChar": 21,
+        "endLine": 147,
+        "endChar": 47
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "96e1ea91_c6b9be65",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T23:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ac6888f_6d3309e9",
+      "range": {
+        "startLine": 162,
+        "startChar": 30,
+        "endLine": 162,
+        "endChar": 74
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a06395e7_b516b81e",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 4
@@ -183,6 +351,30 @@
       "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1753384c_c3041a33",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T23:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a06395e7_b516b81e",
+      "range": {
+        "startLine": 170,
+        "startChar": 53,
+        "endLine": 170,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +424,54 @@
     },
     {
       "key": {
+        "uuid": "5cfbe738_b2ab5617",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T23:33:45Z",
+      "side": 1,
+      "message": "As Joe said, the copy could be avoided if we had access to the individual buffers comprising |buffer|. I will make a comment.",
+      "parentUuid": "b6f2c482_ce1f199b",
+      "range": {
+        "startLine": 182,
+        "startChar": 75,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75ea3fe9_f8a4f0ec",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T23:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54e046ca_322a462e",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 75
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5b55c97_4dcbbf70",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 4
@@ -252,6 +492,30 @@
       "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6a61b8_035aae3d",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T23:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5b55c97_4dcbbf70",
+      "range": {
+        "startLine": 199,
+        "startChar": 40,
+        "endLine": 199,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "7f008a46_9f17a2af",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T23:33:45Z",
+      "side": 1,
+      "message": "After reading into base::File some more, I found that returning a bytes_written which is less than the size passed in means that calling pwrite() returned an error code. I will update by checking bytes_written against the expected size to write.",
+      "parentUuid": "ef56a6b0_ecc5cd6f",
+      "range": {
+        "startLine": 210,
+        "startChar": 46,
+        "endLine": 210,
+        "endChar": 59
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3eecd4a_de5b12d8",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 4
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "ba2156da_93045785",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T23:33:45Z",
+      "side": 1,
+      "message": "There is already a DCHECK in SetState() called on the previous line which should ensure that this method is never called twice.",
+      "parentUuid": "a3eecd4a_de5b12d8",
+      "range": {
+        "startLine": 231,
+        "startChar": 45,
+        "endLine": 231,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aff48ac8_b0d45212",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 4
@@ -321,6 +633,30 @@
       "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "315aed95_30adf96a",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-23T23:33:45Z",
+      "side": 1,
+      "message": "DCHECK(false) sounds nice to me.",
+      "parentUuid": "aff48ac8_b0d45212",
+      "range": {
+        "startLine": 315,
+        "startChar": 40,
+        "endLine": 315,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
