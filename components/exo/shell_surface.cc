@@ -654,7 +654,6 @@ void ShellSurface::SetRectangularShadow_DEPRECATED(
   pending_shadow_underlay_in_surface_ = false;
   if (content_bounds != shadow_content_bounds_) {
     shadow_content_bounds_ = content_bounds;
-    shadow_content_bounds_changed_ = true;
     shadow_enabled_ = !content_bounds.IsEmpty();
   }
 }
@@ -666,7 +665,6 @@ void ShellSurface::SetRectangularSurfaceShadow(
   pending_shadow_underlay_in_surface_ = true;
   if (content_bounds != shadow_content_bounds_) {
     shadow_content_bounds_ = content_bounds;
-    shadow_content_bounds_changed_ = true;
     shadow_enabled_ = !content_bounds.IsEmpty();
   }
 }
@@ -748,15 +746,6 @@ std::unique_ptr<base::trace_event::TracedValue> ShellSurface::AsTracedValue()
 // SurfaceDelegate overrides:
 
 void ShellSurface::OnSurfaceCommit() {
-  // When the shadow underlay is in surface coordinate space and the surface's
-  // bounds have changed, shadow API requires that we synchronize the shadow
-  // bounds change with the next frame, so we have to submit the next frame to a
-  // new surface, and let the host_window() use the new surface.
-  if (pending_shadow_underlay_in_surface_ && shadow_content_bounds_changed_) {
-    layer_tree_frame_sink_holder()->frame_sink()->SetLocalSurfaceId(
-        viz::LocalSurfaceId());
-  }
-
   SurfaceTreeHost::OnSurfaceCommit();
 
   // Apply the accumulated pending origin offset to reflect acknowledged
@@ -1708,8 +1697,6 @@ void ShellSurface::UpdateShadow() {
     shadow_overlay_.reset();
     shadow_underlay_.reset();
   }
-
-  shadow_content_bounds_changed_ = false;
 
   aura::Window* window = widget_->GetNativeWindow();
 

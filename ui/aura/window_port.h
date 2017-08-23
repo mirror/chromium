@@ -87,6 +87,11 @@ class AURA_EXPORT WindowPort {
   // Get the current viz::SurfaceId.
   virtual viz::SurfaceId GetSurfaceId() const = 0;
 
+  // Gets the current viz::LocalSurfaceId. The viz::LocalSurfaceId is allocated
+  // lazily on call, and will be updated on changes to size or device scale
+  // factor.
+  virtual const viz::LocalSurfaceId& GetLocalSurfaceId() = 0;
+
   virtual void OnWindowAddedToRootWindow() = 0;
   virtual void OnWillRemoveWindowFromRootWindow() = 0;
 
