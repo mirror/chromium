@@ -105,6 +105,30 @@
       "revId": "7926b4b2c0c355508946cb301c9ea0059b611306",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a2749ea_bdf37b58",
+        "filename": "ios/chrome/browser/ui/ssl/captive_portal_login_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-23T17:50:05Z",
+      "side": 1,
+      "message": "Thank you for the info. I\u0027ll be OOO for a while and this feature will not ship until after I\u0027m back. I\u0027m going to land this as is, but I\u0027ve filed crbug.com/758252 for implementing the display of the URL domain before the feature is launched.",
+      "parentUuid": "f8460df1_0dd07da5",
+      "range": {
+        "startLine": 1,
+        "startChar": 60,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "7926b4b2c0c355508946cb301c9ea0059b611306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
