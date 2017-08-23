@@ -7,7 +7,7 @@
 #include <map>
 
 #include "testing/gtest/include/gtest/gtest.h"
-#include "ui/display/types/display_snapshot_mojo.h"
+#include "ui/display/types/display_snapshot.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/ozone/common/gpu/ozone_gpu_message_params.h"
 

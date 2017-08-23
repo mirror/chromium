@@ -22,7 +22,7 @@ class SingleThreadTaskRunner;
 }
 
 namespace display {
-class DisplaySnapshotMojo;
+class DisplaySnapshot;
 }
 
 namespace service_manager {
@@ -116,8 +116,7 @@ class MusThreadProxy : public GpuThreadAdapter,
                                          bool success) const;
 
   void GpuRefreshNativeDisplaysCallback(
-      std::vector<std::unique_ptr<display::DisplaySnapshotMojo>> displays)
-      const;
+      std::vector<std::unique_ptr<display::DisplaySnapshot>> displays) const;
   void GpuDisableNativeDisplayCallback(int64_t display_id, bool success) const;
   void GpuTakeDisplayControlCallback(bool success) const;
   void GpuRelinquishDisplayControlCallback(bool success) const;

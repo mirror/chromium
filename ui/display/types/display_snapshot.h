@@ -7,6 +7,8 @@
 
 #include <stdint.h>
 
+#include <memory>
+#include <string>
 #include <vector>
 
 #include "base/files/file_path.h"
@@ -26,6 +28,9 @@ class DISPLAY_TYPES_EXPORT DisplaySnapshot {
  public:
   using DisplayModeList = std::vector<std::unique_ptr<const DisplayMode>>;
 
+  // Create a new DisplaySnapshot by cloning |other|.
+  static std::unique_ptr<DisplaySnapshot> Clone(const DisplaySnapshot& other);
+
   DisplaySnapshot(int64_t display_id,
                   const gfx::Point& origin,
                   const gfx::Size& physical_size,
@@ -35,10 +40,12 @@ class DISPLAY_TYPES_EXPORT DisplaySnapshot {
                   bool has_color_correction_matrix,
                   std::string display_name,
                   const base::FilePath& sys_path,
+                  int64_t product_id,
                   DisplayModeList modes,
                   const std::vector<uint8_t>& edid,
                   const DisplayMode* current_mode,
-                  const DisplayMode* native_mode);
+                  const DisplayMode* native_mode,
+                  const gfx::Size& maximum_cursor_size);
   virtual ~DisplaySnapshot();
 
   const gfx::Point& origin() const { return origin_; }
@@ -73,7 +80,7 @@ class DISPLAY_TYPES_EXPORT DisplaySnapshot {
   }
 
   // Returns a textual representation of this display state.
-  virtual std::string ToString() const = 0;
+  virtual std::string ToString() const;
 
   // Used when no product id known.
   static const int64_t kInvalidProductID = -1;

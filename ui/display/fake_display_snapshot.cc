@@ -6,7 +6,6 @@
 
 #include <inttypes.h>
 
-#include <sstream>
 #include <utility>
 #include <vector>
 
@@ -27,42 +26,6 @@ static const float kInchInMm = 25.4f;
 // Get pixel pitch in millimeters from DPI.
 float PixelPitchMmFromDPI(float dpi) {
   return (1.0f / dpi) * kInchInMm;
-}
-
-std::string ModeListString(
-    const std::vector<std::unique_ptr<const DisplayMode>>& modes) {
-  std::stringstream stream;
-  bool first = true;
-  for (auto& mode : modes) {
-    if (!first)
-      stream << ", ";
-    stream << mode->ToString();
-    first = false;
-  }
-  return stream.str();
-}
-
-std::string DisplayConnectionTypeString(DisplayConnectionType type) {
-  switch (type) {
-    case DISPLAY_CONNECTION_TYPE_NONE:
-      return "none";
-    case DISPLAY_CONNECTION_TYPE_UNKNOWN:
-      return "unknown";
-    case DISPLAY_CONNECTION_TYPE_INTERNAL:
-      return "internal";
-    case DISPLAY_CONNECTION_TYPE_VGA:
-      return "vga";
-    case DISPLAY_CONNECTION_TYPE_HDMI:
-      return "hdmi";
-    case DISPLAY_CONNECTION_TYPE_DVI:
-      return "dvi";
-    case DISPLAY_CONNECTION_TYPE_DISPLAYPORT:
-      return "dp";
-    case DISPLAY_CONNECTION_TYPE_NETWORK:
-      return "network";
-  }
-  NOTREACHED();
-  return "";
 }
 
 // Extracts text after specified delimiter. If the delimiter doesn't appear
@@ -333,10 +296,12 @@ FakeDisplaySnapshot::FakeDisplaySnapshot(int64_t display_id,
                       has_color_correction_matrix,
                       display_name,
                       base::FilePath(),
+                      0,
                       std::move(modes),
                       std::vector<uint8_t>(),
                       current_mode,
-                      native_mode) {
+                      native_mode,
+                      gfx::Size(64, 64)) {
   product_id_ = product_id;
 }
 
@@ -369,19 +334,6 @@ std::unique_ptr<DisplaySnapshot> FakeDisplaySnapshot::CreateFromSpec(
     return nullptr;
 
   return builder.Build();
-}
-
-std::string FakeDisplaySnapshot::ToString() const {
-  return base::StringPrintf(
-      "id=%" PRId64
-      " current_mode=%s native_mode=%s origin=%s"
-      " physical_size=%s, type=%s name=\"%s\" modes=(%s)",
-      display_id_,
-      current_mode_ ? current_mode_->ToString().c_str() : "nullptr",
-      native_mode_ ? native_mode_->ToString().c_str() : "nullptr",
-      origin_.ToString().c_str(), physical_size_.ToString().c_str(),
-      DisplayConnectionTypeString(type_).c_str(), display_name_.c_str(),
-      ModeListString(modes_).c_str());
 }
 
 }  // namespace display
