@@ -37,9 +37,10 @@
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/geometry/DOMRect.h"
 #include "core/page/Page.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
-#include "public/platform/Platform.h"
+//#include "public/platform/Platform.h"
 #include "public/platform/WebCoalescedInputEvent.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/web/WebElement.h"
@@ -66,8 +67,8 @@ class BrowserControlsTest : public ::testing::Test {
   }
 
   ~BrowserControlsTest() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
