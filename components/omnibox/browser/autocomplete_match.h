@@ -110,6 +110,9 @@ struct AutocompleteMatch {
   // Converts |type| to a string representation.  Used in logging and debugging.
   AutocompleteMatch& operator=(const AutocompleteMatch& match);
 
+  // Returns true if we should display a favicon for this match type.
+  static bool ShouldDisplayFaviconForType(Type type);
+
   // Gets the vector icon identifier for the icon to be shown for |type|.
   static const gfx::VectorIcon& TypeToVectorIcon(Type type);
 
