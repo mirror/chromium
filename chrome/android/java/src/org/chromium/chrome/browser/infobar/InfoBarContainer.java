@@ -277,8 +277,9 @@ public class InfoBarContainer extends SwipableOverlayView {
      * Adds an InfoBar to the view hierarchy.
      * @param infoBar InfoBar to add to the View hierarchy.
      */
+    @VisibleForTesting
     @CalledByNative
-    private void addInfoBar(InfoBar infoBar) {
+    public void addInfoBar(InfoBar infoBar) {
         assert !mDestroyed;
         if (infoBar == null) {
             return;
