@@ -13,6 +13,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
+#include "base/time/time.h"
 #include "services/device/public/interfaces/serial.mojom.h"
 #include "tools/battor_agent/battor_connection.h"
 #include "tools/battor_agent/battor_error.h"
@@ -46,6 +47,7 @@ class BattOrConnectionImpl
   void ReadMessage(BattOrMessageType type) override;
   void CancelReadMessage() override;
   void Flush() override;
+  void SlowFlush() override;
 
  protected:
   // Overridden by the test to use a fake serial connection.
@@ -53,6 +55,9 @@ class BattOrConnectionImpl
 
   // IO handler capable of reading and writing from the serial connection.
   scoped_refptr<device::SerialIoHandler> io_handler_;
+
+  // Overridden by the test to avoid the unmockable TimeTicks::Now().
+  virtual base::TimeDelta GetSlowFlushQuietPeriodDuration();
 
  private:
   void OnOpened(bool success);
@@ -69,6 +74,10 @@ class BattOrConnectionImpl
   void EndReadBytesForMessage(bool success,
                               BattOrMessageType type,
                               std::unique_ptr<std::vector<char>> data);
+
+  void BeginReadBytesForSlowFlush();
+  void OnBytesReadForSlowFlush(int bytes_read,
+                               device::mojom::SerialReceiveError error);
 
   // Pulls off the next complete message from already_read_buffer_, returning
   // its type and contents through out parameters and any error that occurred
@@ -103,6 +112,11 @@ class BattOrConnectionImpl
 
   // The total number of bytes that we're expecting to send.
   size_t pending_write_length_;
+
+  // SlowFlush waits for a period of time during which no bytes are received.
+  // This is the start of the time period and is updated if new bytes are
+  // received.
+  base::TimeTicks slow_flush_quiet_period_start_;
 
   // Threads needed for serial communication.
   scoped_refptr<base::SingleThreadTaskRunner> ui_thread_task_runner_;
