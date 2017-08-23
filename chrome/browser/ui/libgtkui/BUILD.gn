@@ -78,7 +78,7 @@ template("libgtkui") {
       configs += [ "//printing:cups" ]
     }
 
-    defines = [ "LIBGTKUI_IMPLEMENTATION" ]
+    defines = invoker.defines + [ "LIBGTKUI_IMPLEMENTATION" ]
 
     deps = invoker.deps + [
              "//base",
@@ -129,11 +129,14 @@ if (use_gtk3) {
       "native_theme_gtk3.h",
       "nav_button_provider_gtk3.cc",
       "nav_button_provider_gtk3.h",
+      "titlebutton_layout_manager_gtk3.cc",
+      "titlebutton_layout_manager_gtk3.h",
     ]
     deps = [
       "//build/config/linux/gtk3",
       "//build/config/linux/gtk3:gtkprint3",
     ]
+    defines = [ "USE_GTK3" ]
   }
 } else {
   libgtkui("libgtk2ui") {
@@ -145,5 +148,6 @@ if (use_gtk3) {
       "//build/config/linux/gtk2",
       "//build/config/linux/gtk2:gtkprint2",
     ]
+    defines = []
   }
 }

@@ -69,6 +69,7 @@
 #elif GTK_MAJOR_VERSION == 3
 #include "chrome/browser/ui/libgtkui/native_theme_gtk3.h"  // nogncheck
 #include "chrome/browser/ui/libgtkui/nav_button_provider_gtk3.h"  // nogncheck
+#include "chrome/browser/ui/libgtkui/titlebutton_layout_manager_gtk3.h"  // nogncheck
 #endif
 
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
@@ -449,10 +450,12 @@ void GtkUi::Initialize() {
       &GetPdfPaperSizeDeviceUnitsGtk);
 #endif
 
-#if defined(USE_GCONF)
+#if GTK_MAJOR_VERSION == 3
+  titlebutton_layout_manager_.reset(new TitlebuttonLayoutManagerGtk3(this));
+#elif defined(USE_GCONF)
   // We must build this after GTK gets initialized.
   gconf_listener_.reset(new GConfListener(this));
-#endif  // defined(USE_GCONF)
+#endif
 
   indicators_count = 0;
 

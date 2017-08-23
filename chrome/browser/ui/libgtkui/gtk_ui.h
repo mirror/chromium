@@ -26,6 +26,7 @@ namespace libgtkui {
 class Gtk2KeyBindingsHandler;
 class GConfListener;
 class DeviceScaleFactorObserver;
+class TitlebuttonLayoutManagerGtk3;
 
 // Interface to GTK2 desktop features.
 //
@@ -171,11 +172,11 @@ class GtkUi : public views::LinuxUI {
   gfx::Font::Weight default_font_weight_ = gfx::Font::Weight::NORMAL;
   gfx::FontRenderParams default_font_render_params_;
 
-#if defined(USE_GCONF)
-  // Currently, the only source of window button configuration. This will
-  // change if we ever have to support XFCE's configuration system or KDE's.
+#if defined(USE_GTK3)
+  std::unique_ptr<TitlebuttonLayoutManagerGtk3> titlebutton_layout_manager_;
+#elif defined(USE_GCONF)
   std::unique_ptr<GConfListener> gconf_listener_;
-#endif  // defined(USE_GCONF)
+#endif
 
   // If either of these vectors are non-empty, they represent the current
   // window button configuration.
