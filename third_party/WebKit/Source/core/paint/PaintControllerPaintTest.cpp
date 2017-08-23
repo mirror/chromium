@@ -14,6 +14,7 @@
 #include "core/paint/PaintLayerPainter.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/paint/DrawingDisplayItem.h"
+#include "platform/graphics/paint/ScrollHitTestDisplayItem.h"
 
 namespace blink {
 
