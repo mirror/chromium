@@ -22,6 +22,7 @@
 #include "ash/test_shell_delegate.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
+#include "chromeos/chromeos_switches.h"
 #include "components/prefs/testing_pref_service.h"
 #include "components/session_manager/session_manager_types.h"
 #include "ui/events/devices/device_data_manager.h"
@@ -191,9 +192,22 @@ TEST_F(PaletteTrayTest, ModeToolDeactivatedAutomatically) {
   EXPECT_FALSE(palette_tray_->is_active());
 }
 
-TEST_F(PaletteTrayTest, MetalayerToolActivatesHighlighter) {
-  ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(
-      ash::VoiceInteractionState::RUNNING);
+// Base class for tests that need to simulate an internal stylus.
+class PaletteTrayTestWithMetalayer : public PaletteTrayTest {
+ public:
+  PaletteTrayTestWithMetalayer() {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch(
+        chromeos::switches::kEnableVoiceInteraction);
+  }
+  ~PaletteTrayTestWithMetalayer() override = default;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(PaletteTrayTestWithMetalayer);
+};
+
+TEST_F(PaletteTrayTestWithMetalayer, MetalayerToolActivatesHighlighter) {
+  Shell::Get()->NotifyVoiceInteractionStatusChanged(
+      VoiceInteractionState::RUNNING);
 
   HighlighterController highlighter_controller;
   HighlighterControllerTestApi highlighter_test_api(&highlighter_controller);
@@ -265,9 +279,9 @@ TEST_F(PaletteTrayTest, MetalayerToolActivatesHighlighter) {
   test_palette_delegate()->set_highlighter_test_api(nullptr);
 }
 
-TEST_F(PaletteTrayTest, StylusBarrelButtonActivatesHighlighter) {
-  ash::Shell::Get()->NotifyVoiceInteractionStatusChanged(
-      ash::VoiceInteractionState::RUNNING);
+TEST_F(PaletteTrayTestWithMetalayer, StylusBarrelButtonActivatesHighlighter) {
+  Shell::Get()->NotifyVoiceInteractionStatusChanged(
+      VoiceInteractionState::RUNNING);
 
   HighlighterController highlighter_controller;
   HighlighterControllerTestApi highlighter_test_api(&highlighter_controller);
