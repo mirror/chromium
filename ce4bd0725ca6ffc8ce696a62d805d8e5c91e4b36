@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "128dfbfe_3c99fe5f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T10:10:54Z",
+      "side": 1,
+      "message": "\u003eWhat are the benefits of putting this in a PartialBindCallback? From my point of view moving onResult implementation to NewPromoViewHolder.onBindViewHolder will make it more readable.\n\nBecause of RecyclerView constraints. \n1. calling notifyItemChanged(0) has a high chance of resulting in the creation of another view and view holder, that the RecyclerView will use for animations when swapping the objects. Calling notifyItemChanged with a payload allows us to do the update in a way that gives us more control.\n2. The view might not be created or attached to the window. Maybe the view got detached or recycled or never instantiated, even though there is a corresponding item in the adapter. If that is the case, the notification just gets dropped and we don\u0027t need to check a bunch of things about the state of the view.\n\nThat being said, I agree the current implementation is not the most obvious and looks wrong inside SigninPromo#onBindViewHolder. How about making the implementation of the update (the content of onResult basically) a method of the PersonalisedViewHolder and just calling that method in onResult? For the view initialisation, just call it in PersonalisedViewHolder#onBindViewHolder. And also you don\u0027t have to keep the reference to the callback.",
+      "parentUuid": "d448478a_e56a1b73",
+      "range": {
+        "startLine": 335,
+        "startChar": 0,
+        "endLine": 335,
+        "endChar": 94
+      },
+      "revId": "ce4bd0725ca6ffc8ce696a62d805d8e5c91e4b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37d12af3_e99af0fa",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
         "patchSetId": 2

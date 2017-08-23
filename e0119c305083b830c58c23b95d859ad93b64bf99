@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08b424e1_fd336588",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T10:10:54Z",
+      "side": 1,
+      "message": "Override PersonalizedPromoViewHolder#onBindViewHolder and do the update there instead. Maybe pass the signinController along so that the view holder can update the view later if needed.",
+      "range": {
+        "startLine": 135,
+        "startChar": 26,
+        "endLine": 135,
+        "endChar": 34
+      },
+      "revId": "e0119c305083b830c58c23b95d859ad93b64bf99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4eb6eec_4e57f1e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T10:10:54Z",
+      "side": 1,
+      "message": "nit: on one line if it fits.",
+      "range": {
+        "startLine": 289,
+        "startChar": 16,
+        "endLine": 289,
+        "endChar": 25
+      },
+      "revId": "e0119c305083b830c58c23b95d859ad93b64bf99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6201d8b4_fa5b14ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-23T10:10:54Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 298,
+        "startChar": 16,
+        "endLine": 298,
+        "endChar": 25
+      },
+      "revId": "e0119c305083b830c58c23b95d859ad93b64bf99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
