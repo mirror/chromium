@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c9b532c_634990ec",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-23T17:49:50Z",
+      "side": 1,
+      "message": "You should delete this object once done with it. Even better way is to make it stack-allocated. Or just reuse existing wheel_event, changing the delta and phase.",
+      "revId": "193e4a2c2eeae2bff08bb1c7d52f5768214c34ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30270949_9459eff2",
+        "filename": "content/browser/devtools/protocol/input_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-23T17:49:50Z",
+      "side": 1,
+      "message": "This check should happen before forwarding second mouse wheel, or we could get a callback which never fires.\n\nI suggest to move new code below this if statement. And we probably should not send a second event if the first one was discarded (that\u0027s what !input_queued_ means).",
+      "revId": "193e4a2c2eeae2bff08bb1c7d52f5768214c34ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
