@@ -13,6 +13,7 @@ PASS window.cached_applicationCache.onobsolete is null
 PASS window.cached_applicationCache.onprogress is null
 PASS window.cached_applicationCache.onupdateready is null
 PASS window.cached_applicationCache.status is 0
+PASS window.cached_history.index is 0
 PASS window.cached_history.length is 0
 PASS window.cached_history.scrollRestoration is 'auto'
 PASS window.cached_history.state is null

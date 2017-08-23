@@ -17,6 +17,7 @@ PASS oldChildWindow.closed is newChildWindow.closed
 PASS oldChildWindow.defaultStatus is newChildWindow.defaultStatus
 PASS oldChildWindow.defaultstatus is newChildWindow.defaultstatus
 PASS oldChildWindow.devicePixelRatio is newChildWindow.devicePixelRatio
+PASS oldChildWindow.history.index is newChildWindow.history.index
 PASS oldChildWindow.history.length is newChildWindow.history.length
 PASS oldChildWindow.history.scrollRestoration is newChildWindow.history.scrollRestoration
 PASS oldChildWindow.history.state is newChildWindow.history.state
