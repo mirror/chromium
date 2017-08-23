@@ -125,7 +125,7 @@ bool ConvertToPrinter(const ServiceDescription& service_description,
   // and a protocol, but if we don't have a service name, just fail.  Also fail
   // on a port of 0, as this is used to indicate that the service doesn't
   // *actually* exist, the device just wants to guard the name.
-  if (service_description.service_name.empty() ||
+  if (service_description.service_name.empty() || metadata.ty.empty() ||
       (service_description.address.port() == 0)) {
     return false;
   }
@@ -133,7 +133,7 @@ bool ConvertToPrinter(const ServiceDescription& service_description,
   Printer& printer = detected_printer->printer;
   printer.set_id(ZeroconfPrinterId(service_description, metadata));
   printer.set_uuid(metadata.UUID);
-  printer.set_display_name(service_description.service_name);
+  printer.set_display_name(metadata.ty);
   printer.set_description(metadata.note);
   printer.set_make_and_model(metadata.product);
   if (service_description.service_type() ==
