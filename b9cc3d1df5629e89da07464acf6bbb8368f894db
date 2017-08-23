@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5eaaa24b_9496f4be",
+        "filename": "chromeos/components/tether/ble_connection_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T17:49:55Z",
+      "side": 1,
+      "message": "Move this above the change event. We wouldn\u0027t want a listener to the change event to use the wrong time, even if this is unlikely to occur.",
+      "range": {
+        "startLine": 486,
+        "startChar": 0,
+        "endLine": 486,
+        "endChar": 77
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867cb957_090b62e6",
+        "filename": "chromeos/components/tether/ble_connection_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T17:49:55Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need to store this at all. Just use clock_-\u003eNow() in RecordConnectionToAuthenticationDuration().",
+      "range": {
+        "startLine": 526,
+        "startChar": 0,
+        "endLine": 526,
+        "endChar": 68
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05e1693_10a4c4ab",
+        "filename": "chromeos/components/tether/ble_connection_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T17:49:55Z",
+      "side": 1,
+      "message": "Instead of DCHECK()ing some error conditions and returning early without logs in others, please log if these situations occur. Note that DHECK() is compiled out of release builds, so if the first time actually is_null(), it will be counted as time \u003d\u003d 0 and we will get wildly inaccurate UMA statistics.\n\nSo, do something like\nif (!base::ContainsKey(map, device_id) ||\n    !base::ContainsKey(other_map, device_id)) {\n  LOG(ERROR) \u003c\u003c \"yourError\";\n  // Reset map values.\n  return;\n}\n\nAlso, note that I used ContainsKey(). You don\u0027t want to use operator[] here because it automatically creates a value with the default constructor if it was not already present in the map.",
+      "range": {
+        "startLine": 550,
+        "startChar": 0,
+        "endLine": 550,
+        "endChar": 80
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c5fcd1_79b821f6",
+        "filename": "chromeos/components/tether/ble_connection_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T17:49:55Z",
+      "side": 1,
+      "message": "Instead of storing empty base::Time() objects in the map, please erase() the entries when you\u0027re done with them.\n\nSame below.",
+      "range": {
+        "startLine": 559,
+        "startChar": 2,
+        "endLine": 559,
+        "endChar": 46
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad1ee0d_d60b088a",
+        "filename": "chromeos/components/tether/ble_connection_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T17:49:55Z",
+      "side": 1,
+      "message": "There\u0027s no reason to store a full RemoteDevice object. Just store device ID.",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 237,
+        "endChar": 47
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a96dc0b_22c33150",
+        "filename": "chromeos/components/tether/ble_connection_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T17:49:55Z",
+      "side": 1,
+      "message": "Please verify metrics are not logged if connections fail to advance to the next status.",
+      "range": {
+        "startLine": 243,
+        "startChar": 6,
+        "endLine": 243,
+        "endChar": 30
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161faa8f_08438723",
+        "filename": "chromeos/components/tether/ble_connection_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T17:49:55Z",
+      "side": 1,
+      "message": "Why does this need to be done? It\u0027s already done in SetUp().",
+      "range": {
+        "startLine": 459,
+        "startChar": 0,
+        "endLine": 459,
+        "endChar": 49
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b72cb2c6_2b0fba33",
+        "filename": "chromeos/components/tether/host_scanner_operation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T17:49:55Z",
+      "side": 1,
+      "message": "Before adding to the map here, verify that there is nothing already in the map. You can DCHECK(base::ContainsKey()).",
+      "range": {
+        "startLine": 143,
+        "startChar": 27,
+        "endLine": 143,
+        "endChar": 48
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3b7a944_e5507312",
+        "filename": "chromeos/components/tether/host_scanner_operation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T17:49:55Z",
+      "side": 1,
+      "message": "Same thing as earlier - check for key and if it is not available, log an error instead of logging the metric.",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 70
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c0fe051_2a32717e",
+        "filename": "chromeos/components/tether/host_scanner_operation.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T17:49:55Z",
+      "side": 1,
+      "message": "No need to use entire RemoteDevice as key - use device ID.",
+      "range": {
+        "startLine": 114,
+        "startChar": 11,
+        "endLine": 114,
+        "endChar": 34
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "defbd892_fc1da5f2",
+        "filename": "chromeos/components/tether/host_scanner_operation_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-23T17:49:55Z",
+      "side": 1,
+      "message": "Verify no metrics logged in failure cases.",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 30
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
