@@ -22,6 +22,30 @@
       "revId": "55560d6af27861e38f5ce270fdae9b375a9d053f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e1544e0_f5c9177a",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-08-23T17:39:40Z",
+      "side": 1,
+      "message": "Yes, OnSetTouchAction will call from hit test.",
+      "parentUuid": "b064b538_6ab0b1f4",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 74
+      },
+      "revId": "55560d6af27861e38f5ce270fdae9b375a9d053f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
