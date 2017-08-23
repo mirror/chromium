@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3644b9db_ae5d3bd1",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-23T22:13:57Z",
+      "side": 1,
+      "message": "set_inside_border_insets would not trigger a re-layout. Do we need a Layout() or InvalidateLayout() here?",
+      "revId": "64d10ee47051c96a49bac7e7801109f9d3dbc70d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
