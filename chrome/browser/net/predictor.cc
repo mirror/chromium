@@ -963,14 +963,13 @@ void Predictor::LookupFinished(const GURL& url, bool found) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   UrlInfo* info = &results_[url];
   DCHECK(info->HasUrl(url));
-  if (info->is_marked_to_delete()) {
+  if (found)
+    info->SetFoundState();
+  else
+    info->SetNoSuchNameState();
+
+  if (info->is_marked_to_delete())
     results_.erase(url);
-  } else {
-    if (found)
-      info->SetFoundState();
-    else
-      info->SetNoSuchNameState();
-  }
 }
 
 bool Predictor::WouldLikelyProxyURL(const GURL& url) {
