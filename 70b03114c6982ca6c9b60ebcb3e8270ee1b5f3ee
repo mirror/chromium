@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39608a97_7ceb9087",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-23T21:31:59Z",
+      "side": 1,
+      "message": "Consider using AutoLock for all of these pairs (introducing a new scope as needed).  It\u0027s all-too-easy to do something like add an early return in the middle of the locked section and end up with the lock stuck.",
+      "range": {
+        "startLine": 98,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 75
+      },
+      "revId": "70b03114c6982ca6c9b60ebcb3e8270ee1b5f3ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f372677_f74d77ca",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-23T21:31:59Z",
+      "side": 1,
+      "message": "This path seems really weird to me.  AFAICT it works, but it would be nice to find a less complicated path.\n\nThe thing that\u0027s most weird about it is the way this moves the value out of all_data_ (but leaving the entry in place with a null value) only to pass it to a function that (eventually) moves the pointer *back* into all_data in the same place.\n\nIs there a way to factor out something to make this a little less convoluted?",
+      "range": {
+        "startLine": 323,
+        "startChar": 0,
+        "endLine": 323,
+        "endChar": 44
+      },
+      "revId": "70b03114c6982ca6c9b60ebcb3e8270ee1b5f3ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cbfd93c_396ea8b1",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-23T21:31:59Z",
+      "side": 1,
+      "message": "all_data_",
+      "range": {
+        "startLine": 69,
+        "startChar": 35,
+        "endLine": 69,
+        "endChar": 39
+      },
+      "revId": "70b03114c6982ca6c9b60ebcb3e8270ee1b5f3ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa7b8c8_8461172e",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-23T21:31:59Z",
+      "side": 1,
+      "message": "function",
+      "range": {
+        "startLine": 74,
+        "startChar": 63,
+        "endLine": 74,
+        "endChar": 71
+      },
+      "revId": "70b03114c6982ca6c9b60ebcb3e8270ee1b5f3ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a7bd50_78916d2a",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-23T21:31:59Z",
+      "side": 1,
+      "message": "Is there a reason to make this protected wrapper function instead of just making bridge_ protected?",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 28
+      },
+      "revId": "70b03114c6982ca6c9b60ebcb3e8270ee1b5f3ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380ace26_e51f78ab",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-23T21:31:59Z",
+      "side": 1,
+      "message": "Add comments on what each test is testing for?",
+      "range": {
+        "startLine": 50,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 6
+      },
+      "revId": "70b03114c6982ca6c9b60ebcb3e8270ee1b5f3ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d27801_33461e7b",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-08-23T21:31:59Z",
+      "side": 1,
+      "message": "kUUID?  (ALso in the test below)",
+      "range": {
+        "startLine": 71,
+        "startChar": 19,
+        "endLine": 71,
+        "endChar": 43
+      },
+      "revId": "70b03114c6982ca6c9b60ebcb3e8270ee1b5f3ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
