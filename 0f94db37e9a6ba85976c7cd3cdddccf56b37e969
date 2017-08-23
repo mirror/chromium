@@ -105,6 +105,24 @@
       "revId": "0f94db37e9a6ba85976c7cd3cdddccf56b37e969",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f537b4_d043f14e",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-23T06:42:31Z",
+      "side": 1,
+      "message": "As far as I can tell, this is garbage collected though, right? What guarantee do we have that this will be destroyed in a prompt fashion?",
+      "parentUuid": "d5987ec1_974bfaef",
+      "revId": "0f94db37e9a6ba85976c7cd3cdddccf56b37e969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
