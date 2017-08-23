@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a70eedd8_668eebcd",
+        "filename": "chrome/browser/media/media_engagement_score.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-23T09:18:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb943714_413f0733",
+      "revId": "31b42e906cd48dfe5dd41b5e7f59a5e767fe5f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "611608d7_6b541a11",
         "filename": "chrome/browser/media/media_engagement_score.cc",
         "patchSetId": 2
