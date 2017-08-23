@@ -1,0 +1,38 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef CHROME_BROWSER_UI_WEBUI_POLICY_TOOL_UI_HANDLER_H_
+#define CHROME_BROWSER_UI_WEBUI_POLICY_TOOL_UI_HANDLER_H_
+
+#include "base/files/file_path.h"
+#include "chrome/browser/ui/webui/policy_ui_handler.h"
+
+class PolicyToolUIHandler : public PolicyUIHandler {
+ public:
+  PolicyToolUIHandler();
+  ~PolicyToolUIHandler() override;
+
+  // content::WebUIMessageHandler implementation.
+  void RegisterMessages() override;
+
+ private:
+  void ImportFile();
+  void HandleInitializedAdmin(const base::ListValue* args);
+  void HandleLoadSession(const base::ListValue* args);
+  void HandleUpdateSession(const base::ListValue* args);
+
+  std::string ReadOrCreateFileCallback();
+  void OnFileRead(const std::string& contents);
+
+  void DoUpdateSession(const std::string& contents);
+
+  bool IsValidSessionName(const std::string& name) const;
+
+  void ShowErrorMessageToUser(const std::string& message);
+
+  base::FilePath sessions_dir_;
+  std::string session_name_;
+};
+
+#endif  // CHROME_BROWSER_UI_WEBUI_POLICY_TOOL_UI_HANDLER_H_
