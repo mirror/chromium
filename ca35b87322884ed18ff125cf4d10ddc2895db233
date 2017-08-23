@@ -22,6 +22,30 @@
       "revId": "ca35b87322884ed18ff125cf4d10ddc2895db233",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc164595_8260e54b",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-23T16:40:22Z",
+      "side": 1,
+      "message": "I updated patch and removed it. It would be easy to restore if someone cries fowl.\n\nhttps://en.wikipedia.org/wiki/Kakapo",
+      "parentUuid": "38285d11_223810ed",
+      "range": {
+        "startLine": 823,
+        "startChar": 20,
+        "endLine": 823,
+        "endChar": 66
+      },
+      "revId": "ca35b87322884ed18ff125cf4d10ddc2895db233",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
