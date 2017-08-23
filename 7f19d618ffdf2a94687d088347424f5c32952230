@@ -142,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "0892a74d_e0235362",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/TextSuggestionMenuTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-23T18:44:18Z",
+      "side": 1,
+      "message": "3) What should happen when you replace a text far from the current caret position?\n\nThe current implementation does not support this (the replacement will fail, but the menu should close properly).",
+      "parentUuid": "a5768e3a_2397c5f4",
+      "range": {
+        "startLine": 35,
+        "startChar": 13,
+        "endLine": 35,
+        "endChar": 35
+      },
+      "revId": "7f19d618ffdf2a94687d088347424f5c32952230",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd08768a_6c859766",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/TextSuggestionMenuTest.java",
         "patchSetId": 2
