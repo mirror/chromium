@@ -31725,68 +31725,6 @@
       },
       {
         "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=release"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "102b:0534",
-              "id": "build151-m1",
-              "os": "Ubuntu-14.04",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=reference",
-          "--max-failures=5",
-          "--output-trace-tag=_ref"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop.reference",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "102b:0534",
-              "id": "build151-m1",
-              "os": "Ubuntu-14.04",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": true,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
           "memory.long_running_idle_gmail_background_tbmv2",
           "-v",
           "--upload-results",
@@ -36658,68 +36596,6 @@
       },
       {
         "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=release"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "8086:0166",
-              "id": "build105-b1",
-              "os": "Mac-10.11",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=reference",
-          "--max-failures=5",
-          "--output-trace-tag=_ref"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop.reference",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "8086:0166",
-              "id": "build105-b1",
-              "os": "Mac-10.11",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": true,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
           "memory.long_running_idle_gmail_background_tbmv2",
           "-v",
           "--upload-results",
@@ -41577,68 +41453,6 @@
             {
               "gpu": "8086:0a2e",
               "id": "build162-m1",
-              "os": "Mac-10.12",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": true,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=release"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "8086:0a2e",
-              "id": "build161-m1",
-              "os": "Mac-10.12",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=reference",
-          "--max-failures=5",
-          "--output-trace-tag=_ref"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop.reference",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "8086:0a2e",
-              "id": "build161-m1",
               "os": "Mac-10.12",
               "pool": "Chrome-perf"
             }
@@ -46543,68 +46357,6 @@
       },
       {
         "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=release"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "8086:1626",
-              "id": "build126-b1",
-              "os": "Mac-10.11",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=reference",
-          "--max-failures=5",
-          "--output-trace-tag=_ref"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop.reference",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "8086:1626",
-              "id": "build126-b1",
-              "os": "Mac-10.11",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": true,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
           "memory.long_running_idle_gmail_background_tbmv2",
           "-v",
           "--upload-results",
@@ -51496,68 +51248,6 @@
       },
       {
         "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=release"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "8086:0a26",
-              "id": "build27-b1",
-              "os": "Mac-10.12",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=reference",
-          "--max-failures=5",
-          "--output-trace-tag=_ref"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop.reference",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "8086:0a26",
-              "id": "build27-b1",
-              "os": "Mac-10.12",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": true,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
           "memory.long_running_idle_gmail_background_tbmv2",
           "-v",
           "--upload-results",
@@ -56415,68 +56105,6 @@
             {
               "gpu": "1002:6821",
               "id": "build132-b1",
-              "os": "Mac-10.11",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": true,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=release"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "1002:6821",
-              "id": "build131-b1",
-              "os": "Mac-10.11",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=reference",
-          "--max-failures=5",
-          "--output-trace-tag=_ref"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop.reference",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "1002:6821",
-              "id": "build131-b1",
               "os": "Mac-10.11",
               "pool": "Chrome-perf"
             }
@@ -61381,68 +61009,6 @@
       },
       {
         "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=release"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "8086:0d26",
-              "id": "build7-b1",
-              "os": "Mac-10.11",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=reference",
-          "--max-failures=5",
-          "--output-trace-tag=_ref"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop.reference",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "8086:0d26",
-              "id": "build7-b1",
-              "os": "Mac-10.11",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": true,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
           "memory.long_running_idle_gmail_background_tbmv2",
           "-v",
           "--upload-results",
@@ -66210,68 +65776,6 @@
       },
       {
         "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=release_x64"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "8086:1616",
-              "id": "build120-b1",
-              "os": "Windows-10-10240",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=reference",
-          "--max-failures=5",
-          "--output-trace-tag=_ref"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop.reference",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "8086:1616",
-              "id": "build120-b1",
-              "os": "Windows-10-10240",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": true,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
           "memory.long_running_idle_gmail_background_tbmv2",
           "-v",
           "--upload-results",
@@ -70909,68 +70413,6 @@
           "expiration": 72000,
           "hard_timeout": 10800,
           "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=release_x64"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "102b:0534",
-              "id": "build135-m1",
-              "os": "Windows-10-10240",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=reference",
-          "--max-failures=5",
-          "--output-trace-tag=_ref"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop.reference",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "102b:0534",
-              "id": "build135-m1",
-              "os": "Windows-10-10240",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": true,
           "io_timeout": 600,
           "upload_test_results": false
         }
@@ -75662,68 +75104,6 @@
       },
       {
         "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=release_x64"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "1002:6613",
-              "id": "build104-m1",
-              "os": "Windows-2008ServerR2-SP1",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=reference",
-          "--max-failures=5",
-          "--output-trace-tag=_ref"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop.reference",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "1002:6613",
-              "id": "build104-m1",
-              "os": "Windows-2008ServerR2-SP1",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": true,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
           "memory.long_running_idle_gmail_background_tbmv2",
           "-v",
           "--upload-results",
@@ -80396,68 +79776,6 @@
             {
               "gpu": "8086:041a",
               "id": "build168-m1",
-              "os": "Windows-2008ServerR2-SP1",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": true,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=release_x64"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "8086:041a",
-              "id": "build167-m1",
-              "os": "Windows-2008ServerR2-SP1",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=reference",
-          "--max-failures=5",
-          "--output-trace-tag=_ref"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop.reference",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "8086:041a",
-              "id": "build167-m1",
               "os": "Windows-2008ServerR2-SP1",
               "pool": "Chrome-perf"
             }
@@ -85177,68 +84495,6 @@
       },
       {
         "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=release_x64"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "10de:104a",
-              "id": "build95-m1",
-              "os": "Windows-2008ServerR2-SP1",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=reference",
-          "--max-failures=5",
-          "--output-trace-tag=_ref"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop.reference",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "10de:104a",
-              "id": "build95-m1",
-              "os": "Windows-2008ServerR2-SP1",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": true,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
           "memory.long_running_idle_gmail_background_tbmv2",
           "-v",
           "--upload-results",
@@ -89903,68 +89159,6 @@
       },
       {
         "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=release"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "102b:0532",
-              "id": "build188-m1",
-              "os": "Windows-2008ServerR2-SP1",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=reference",
-          "--max-failures=5",
-          "--output-trace-tag=_ref"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop.reference",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "102b:0532",
-              "id": "build188-m1",
-              "os": "Windows-2008ServerR2-SP1",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": true,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
           "memory.long_running_idle_gmail_background_tbmv2",
           "-v",
           "--upload-results",
@@ -94595,68 +93789,6 @@
             {
               "gpu": "102b:0532",
               "id": "build142-m1",
-              "os": "Windows-2008ServerR2-SP1",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": true,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=release_x64"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "102b:0532",
-              "id": "build141-m1",
-              "os": "Windows-2008ServerR2-SP1",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=reference",
-          "--max-failures=5",
-          "--output-trace-tag=_ref"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop.reference",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "102b:0532",
-              "id": "build141-m1",
               "os": "Windows-2008ServerR2-SP1",
               "pool": "Chrome-perf"
             }
@@ -99349,68 +98481,6 @@
           "expiration": 72000,
           "hard_timeout": 10800,
           "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=release_x64"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "102b:0532",
-              "id": "build146-m1",
-              "os": "Windows-2012ServerR2-SP0",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": false,
-          "io_timeout": 600,
-          "upload_test_results": false
-        }
-      },
-      {
-        "args": [
-          "memory.desktop",
-          "-v",
-          "--upload-results",
-          "--output-format=chartjson",
-          "--browser=reference",
-          "--max-failures=5",
-          "--output-trace-tag=_ref"
-        ],
-        "isolate_name": "telemetry_perf_tests",
-        "name": "memory.desktop.reference",
-        "override_compile_targets": [
-          "telemetry_perf_tests"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "gpu": "102b:0532",
-              "id": "build146-m1",
-              "os": "Windows-2012ServerR2-SP0",
-              "pool": "Chrome-perf"
-            }
-          ],
-          "expiration": 72000,
-          "hard_timeout": 10800,
-          "ignore_task_failure": true,
           "io_timeout": 600,
           "upload_test_results": false
         }

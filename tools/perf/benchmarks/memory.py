@@ -107,6 +107,8 @@ class MemoryBenchmarkTrivialSitesDesktop(_MemoryInfra):
       def SetExpectations(self):
         self.PermanentlyDisableBenchmark(
             [story.expectations.ALL_MOBILE], 'Desktop Benchmark')
+        self.PermanentlyDisableBenchmark(
+            [story.expectations.ALL], 'crbug.com/757847')
     return StoryExpectations()
 
 
