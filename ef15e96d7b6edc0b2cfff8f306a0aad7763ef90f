@@ -1,0 +1,464 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76a85238_2f0de405",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "disk_entry(entry),\nwriters(base::MakeUnique\u003cWriters\u003e(cache, this)) {}",
+      "range": {
+        "startLine": 94,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 51
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "043f0d20_0c2a712e",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "Is it safe to DCHECK that writers count is 1 here?",
+      "range": {
+        "startLine": 829,
+        "startChar": 23,
+        "endLine": 829,
+        "endChar": 0
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce11838_45541c00",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "Can we move this back to a DCHECK now?",
+      "range": {
+        "startLine": 849,
+        "startChar": 6,
+        "endLine": 849,
+        "endChar": 11
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa55ce81_d66f526c",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "Can we move this back to a DCHECK now?",
+      "range": {
+        "startLine": 850,
+        "startChar": 6,
+        "endLine": 850,
+        "endChar": 11
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5da3680_c3a07f52",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "Not sure that this is safe, transaction\u0027s mode_ is dynamic. For instance, it can be set to NONE in a call to Read(), which might happen after this point.",
+      "range": {
+        "startLine": 866,
+        "startChar": 10,
+        "endLine": 866,
+        "endChar": 29
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e6c7c6_35167464",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "How about we check for the size of writers before calling TruncateEntry?",
+      "range": {
+        "startLine": 923,
+        "startChar": 16,
+        "endLine": 924,
+        "endChar": 15
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d8c26df_a6378872",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "Dealing with a nullptr transaction through all of these functions is complex. Let\u0027s deal with the nullptr transaction either in a separate function or explicitly.",
+      "range": {
+        "startLine": 937,
+        "startChar": 55,
+        "endLine": 937,
+        "endChar": 66
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa662da_46080321",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "Why call DoneWritingToEntry here when what we want is at the bottom of DoneWritingToEntry (dealing with success or not). How about handling success or not is split into its own function?",
+      "range": {
+        "startLine": 958,
+        "startChar": 2,
+        "endLine": 958,
+        "endChar": 50
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12aed014_03aad329",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "This function is hard to follow because it allows for null transactions. It makes many calls and it\u0027s necessary to verify that each of them supports null transactions.  For instance, it ultimately can call DoneWritingToEntry, whose comment doesn\u0027t specify that a null argument is okay.",
+      "range": {
+        "startLine": 436,
+        "startChar": 55,
+        "endLine": 436,
+        "endChar": 66
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a77ec73_ec4ed7dc",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "Please comment that this is virtual for testing purposes.",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 9
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd240d8_0f4ba4fb",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "Please comment that this is virtual for testing purposes",
+      "range": {
+        "startLine": 182,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 9
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b073a0_bb55c211",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "shouldn\u0027t these be deleted now? STATE_CACHE_WRITE_DATA and STATE_CACHE_WRITE_DATA_COMPLETE have been removed.",
+      "range": {
+        "startLine": 329,
+        "startChar": 1,
+        "endLine": 330,
+        "endChar": 43
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b584ecbe_e473a58f",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "Error code to be returned from a subsequent Read call if shared writing failed in a separate transaction.",
+      "range": {
+        "startLine": 559,
+        "startChar": 2,
+        "endLine": 560,
+        "endChar": 12
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d412eb8c_b01ac0c1",
+        "filename": "net/http/http_cache_transaction_writers_common.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 22,
+        "startChar": 66,
+        "endLine": 22,
+        "endChar": 68
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6369b9_dc583e42",
+        "filename": "net/http/http_cache_transaction_writers_common.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 26,
+        "startChar": 49,
+        "endLine": 26,
+        "endChar": 51
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd8a7ba4_c71d6ab3",
+        "filename": "net/http/http_cache_transaction_writers_common.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 27,
+        "startChar": 50,
+        "endLine": 27,
+        "endChar": 52
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9313c5f9_15005ad1",
+        "filename": "net/http/http_cache_transaction_writers_common.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "const HttpTransaction\u0026 transaction",
+      "range": {
+        "startLine": 29,
+        "startChar": 32,
+        "endLine": 29,
+        "endChar": 60
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e32070_f34c78a3",
+        "filename": "net/http/http_cache_transaction_writers_common.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "needs an include",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 17
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db49e5d6_921423ad",
+        "filename": "net/http/http_cache_transaction_writers_common.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "forward declare this?",
+      "range": {
+        "startLine": 41,
+        "startChar": 12,
+        "endLine": 41,
+        "endChar": 28
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7560212c_987c995e",
+        "filename": "net/http/http_cache_transaction_writers_common.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "#endif  // NET_HTTP_HTTP_CACHE_TRANSACTION_WRITERS_COMMON_H_",
+      "range": {
+        "startLine": 58,
+        "startChar": 1,
+        "endLine": 58,
+        "endChar": 6
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

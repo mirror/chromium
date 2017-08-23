@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21a034d6_9dd17a4e",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "This is adding more logic to TruncateEntry. How about first calling, \"IsWritingOngoing\" or some such and then calling TruncateEntry when necessary.",
+      "range": {
+        "startLine": 923,
+        "startChar": 16,
+        "endLine": 924,
+        "endChar": 15
+      },
+      "revId": "0d1bc25e34b6ebdfcb3bd6dd801005f8a39e179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a2cc063_48ad8de6",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-23T17:31:11Z",
+      "side": 1,
+      "message": "Let\u0027s choose a different name here as the notion of shared memory is already commonly used for something else. Maybe TransactionWritersContext?",
+      "range": {
+        "startLine": 642,
+        "startChar": 0,
+        "endLine": 642,
+        "endChar": 30
+      },
+      "revId": "0d1bc25e34b6ebdfcb3bd6dd801005f8a39e179d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
