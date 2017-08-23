@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "5dc1c868_c92bc704",
+        "filename": "components/ukm/ukm_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-23T15:43:13Z",
+      "side": 1,
+      "message": "Currently.  I think it\u0027s better to use the atomic and be safe than write in a thread-checker between the static method and the object ctor to hopefully ensure it doesn\u0027t happen in the future.  (I say \"hopefully\" because it would only apply to tests which may not reflect how a new metric gets used in the field.)\n\nThe atomic, being no-barrier, has zero cost on x86 and a few ns on arm.",
+      "parentUuid": "8b3b1a28_e9a9c11f",
+      "range": {
+        "startLine": 30,
+        "startChar": 41,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "7d65d1ceddf216944f3a6303250dbd367e822241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "591274a7_0544ebda",
         "filename": "components/ukm/ukm_source.cc",
         "patchSetId": 2
