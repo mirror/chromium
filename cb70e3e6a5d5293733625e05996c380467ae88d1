@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c041e5c5_bf19d3d7",
+        "filename": "cc/quads/draw_quad_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-08-23T19:20:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e7d655e_a8abc71e",
+      "revId": "cb70e3e6a5d5293733625e05996c380467ae88d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f27645e_0b74e33f",
         "filename": "cc/quads/draw_quad_unittest.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "89de1bd4_ad07d864",
+        "filename": "cc/quads/draw_quad_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-08-23T19:20:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f27645e_0b74e33f",
+      "revId": "cb70e3e6a5d5293733625e05996c380467ae88d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ab5d552_eaabcb0b",
         "filename": "components/viz/common/BUILD.gn",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "cb70e3e6a5d5293733625e05996c380467ae88d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c5d025a_3e74d663",
+        "filename": "components/viz/common/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-08-23T19:20:49Z",
+      "side": 1,
+      "message": "Done. Thanks for catching this. git cl format moved the deps around and I didn\u0027t notice.",
+      "parentUuid": "1ab5d552_eaabcb0b",
+      "revId": "cb70e3e6a5d5293733625e05996c380467ae88d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
