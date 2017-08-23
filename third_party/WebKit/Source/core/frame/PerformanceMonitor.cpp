@@ -173,10 +173,24 @@ void PerformanceMonitor::Did(const probe::UpdateLayout& probe) {
 
 void PerformanceMonitor::Will(const probe::ExecuteScript& probe) {
   WillExecuteScript(probe.context);
+
+  v8_execute_script_start_time_ = probe.CaptureStartTime();
 }
 
 void PerformanceMonitor::Did(const probe::ExecuteScript& probe) {
   DidExecuteScript();
+
+  if (!enabled_ || !thresholds_[kLongTask])
+    return;
+
+  double v8_execute_script_duration = probe.Duration();
+  if (v8_execute_script_duration <= kLongTaskSubTaskThresholdInSeconds)
+    return;
+  std::unique_ptr<SubTaskAttribution> sub_task_attribution =
+      SubTaskAttribution::Create(
+          String("script-run"), probe.context->Url().GetString(),
+          v8_execute_script_start_time_, v8_execute_script_duration);
+  sub_task_attributions_.push_back(std::move(sub_task_attribution));
 }
 
 void PerformanceMonitor::Will(const probe::CallFunction& probe) {

@@ -140,6 +140,7 @@ class CORE_EXPORT PerformanceMonitor final
   unsigned user_callback_depth_ = 0;
   const void* user_callback_;
   double v8_compile_start_time_ = 0;
+  double v8_execute_script_start_time_ = 0;
 
   SubTaskAttribution::EntriesVector sub_task_attributions_;
 
