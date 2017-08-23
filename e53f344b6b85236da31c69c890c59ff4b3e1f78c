@@ -124,6 +124,24 @@
       "revId": "e53f344b6b85236da31c69c890c59ff4b3e1f78c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989644b3_6241ac16",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-23T23:59:05Z",
+      "side": 1,
+      "message": "That could work, but would require some effort.",
+      "parentUuid": "f3c240f0_abec2cf5",
+      "revId": "e53f344b6b85236da31c69c890c59ff4b3e1f78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
