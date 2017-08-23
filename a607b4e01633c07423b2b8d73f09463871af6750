@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe563a83_4c0f18c8",
+        "filename": "chrome/app/theme/theme_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-23T17:29:18Z",
+      "side": 1,
+      "message": "I think we should drop \"network\" from all the names.",
+      "range": {
+        "startLine": 247,
+        "startChar": 96,
+        "endLine": 247,
+        "endChar": 123
+      },
+      "revId": "a607b4e01633c07423b2b8d73f09463871af6750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a0e230_261da4a2",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-23T17:29:18Z",
+      "side": 1,
+      "message": "I think you can work around the bug by specifying a fixed width for the icon. I don\u0027t mind to do it in a separate CL for both bubbles.",
+      "range": {
+        "startLine": 135,
+        "startChar": 47,
+        "endLine": 135,
+        "endChar": 55
+      },
+      "revId": "a607b4e01633c07423b2b8d73f09463871af6750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b4b642_de69ee43",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-23T17:29:18Z",
+      "side": 1,
+      "message": "GeneratePasswordViewButton?\nSeems like it\u0027s gonna be reused for the update bubble. I\u0027d move it to the anonymous namespace.",
+      "range": {
+        "startLine": 323,
+        "startChar": 44,
+        "endLine": 323,
+        "endChar": 76
+      },
+      "revId": "a607b4e01633c07423b2b8d73f09463871af6750",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
