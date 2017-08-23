@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "3d7191fa_46492eb1",
+        "filename": "components/ukm/ukm_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-23T15:45:17Z",
+      "side": 1,
+      "message": "But it hurts readability and makes the reader question things about the API.\n\nI think we should just document the class as being expected to be used only on UI thread and land without thread checks. If this changes - which I don\u0027t expect to in the near future, there\u0027s always TSAN to catch things.",
+      "parentUuid": "5dc1c868_c92bc704",
+      "range": {
+        "startLine": 30,
+        "startChar": 41,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "7d65d1ceddf216944f3a6303250dbd367e822241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "591274a7_0544ebda",
         "filename": "components/ukm/ukm_source.cc",
         "patchSetId": 2
