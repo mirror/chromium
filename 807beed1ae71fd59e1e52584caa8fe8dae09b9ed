@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c8ba7c1_c46281bf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T21:19:37Z",
+      "side": 1,
+      "message": "nit: \"a  lock\" -\u003e \"a lock\"",
+      "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05217219_94663e9c",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T21:19:37Z",
+      "side": 1,
+      "message": "could you get rid of this check if the block above did an early return as before? for that matter, can\u0027t you also get rid of the local |module_watcher| var?\n  {\n    lock\n    if (g_foo)\n      return std::unique_ptr\u003cModuleWatcher\u003e();\n    g_foo \u003d new Foo();\n  }\n  g_foo-\u003eInitialize();\n  return base::WrapUnique(g_foo);",
+      "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a13e0a_e511b42f",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T21:19:37Z",
+      "side": 1,
+      "message": "is this CHECK-worthy so that we get a crash? how could this possibly happen?",
+      "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96542c81_acc9929c",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T21:19:37Z",
+      "side": 1,
+      "message": "nit: \"using this value\" -\u003e \"accessing memory at this address\" since the value may be freely used as a key or somesuch; it just can\u0027t be derefenced in some circumstances.",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 12
+      },
+      "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "540d2eff_6e48825a",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T21:19:37Z",
+      "side": 1,
+      "message": "this iteration is done during initialization, yes? this phrasing makes it sound like initialization and iteration are two of three distinct things (with loader notifications being the third). how about \"...may be invoked during initialization (while iterating over already loaded modules) or in response to...\"",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 71
+      },
+      "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1338ccc2_03ac8d27",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T21:19:37Z",
+      "side": 1,
+      "message": "is it THE loader\u0027s lock, or some other lock relating to loading? i thought in another thread you said that there seemed to be some lock held, but it wasn\u0027t what we normally think of as THE loader lock. am i remembering wrong?",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 28
+      },
+      "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4d889b_4439ffc6",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T21:19:37Z",
+      "side": 1,
+      "message": "this \"very unlikely\" comment has always bugged me. either it can happen or it can\u0027t -- there is no such thing as \"unlikely\" at Chrome\u0027s scale. :-)",
+      "range": {
+        "startLine": 65,
+        "startChar": 33,
+        "endLine": 65,
+        "endChar": 50
+      },
+      "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
