@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5064230b_8ca27907",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-23T22:51:13Z",
+      "side": 1,
+      "message": "You don\u0027t need to store it, probe.CaptureStartTime() will capture and cache it.",
+      "revId": "2875e1e88d3b420eb7d95723925e68950e459597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a47cc3f6_d9e15cb2",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-23T22:51:13Z",
+      "side": 1,
+      "message": "so you can simply use probe.CaptureStartTime() here.",
+      "revId": "2875e1e88d3b420eb7d95723925e68950e459597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
