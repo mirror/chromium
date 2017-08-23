@@ -142,7 +142,8 @@
 #include "chrome/browser/ui/desktop_ios_promotion/sms_service_factory.h"
 #endif
 
-#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
+#if defined(OS_WIN) || defined(OS_LINUX)
+#include "chrome/browser/feature_engagement/bookmark/bookmark_tracker_factory.h"
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.h"
 #endif
 
@@ -290,8 +291,9 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
   MediaGalleriesPreferencesFactory::GetInstance();
   NTPResourceCacheFactory::GetInstance();
 #endif
-#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
+#if defined(OS_WIN) || defined(OS_LINUX)
   feature_engagement::NewTabTrackerFactory::GetInstance();
+  feature_engagement::BookmarkTrackerFactory::GetInstance();
 #endif
   ContentSuggestionsServiceFactory::GetInstance();
   PasswordStoreFactory::GetInstance();
