@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c68dc47f_88feaa5f",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-08-23T19:16:16Z",
+      "side": 0,
+      "message": "PaintControllerTestBase is a friend of PaintController, and PaintControllerTestBase provides access to needed private members of PaintController for tests, we no longer need these.",
+      "revId": "a167cae9354f47dc38209f0d328c6f55e73401da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

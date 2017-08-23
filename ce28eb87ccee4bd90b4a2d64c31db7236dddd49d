@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "850def14_17590cd2",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintControllerTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-08-23T19:16:16Z",
+      "side": 1,
+      "message": "Previously SPv1 without under-invalidation checking and SPv2 with under-invalidation checking were not tested.",
+      "revId": "ce28eb87ccee4bd90b4a2d64c31db7236dddd49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
