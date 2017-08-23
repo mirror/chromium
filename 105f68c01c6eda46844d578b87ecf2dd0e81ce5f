@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b0670790_61c5f290",
+        "filename": "ui/gfx/icc_profile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-08-23T23:22:42Z",
+      "side": 1,
+      "message": "I think that people who have \u003e16 different color spaces in the lifetime of Chrome are outliers enough to not affect the histograms.\n\nThe reason that I don\u0027t want to do this at init is that\n- I want to capture people plugging monitors into laptops (on Mac, in particular)\n- I want to make sure that we histogram all monitors on the system (we just do 1 now)",
+      "parentUuid": "b98f41ca_6a6bc17b",
+      "range": {
+        "startLine": 131,
+        "startChar": 22,
+        "endLine": 131,
+        "endChar": 46
+      },
+      "revId": "105f68c01c6eda46844d578b87ecf2dd0e81ce5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50b3a45c_7cbd5356",
         "filename": "ui/gfx/icc_profile.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-17T17:16:32Z",
       "side": 1,
       "message": "add DCHECK(!lock_.trylock());\n\n(same for the other \"underlock\" function above.)",
+      "range": {
+        "startLine": 151,
+        "startChar": 8,
+        "endLine": 151,
+        "endChar": 12
+      },
+      "revId": "105f68c01c6eda46844d578b87ecf2dd0e81ce5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a56479fb_c3e5c15f",
+        "filename": "ui/gfx/icc_profile.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-08-23T23:22:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50b3a45c_7cbd5356",
       "range": {
         "startLine": 151,
         "startChar": 8,
