@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c55aee54_9d4e5289",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1409,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-23T16:53:44Z",
+      "side": 1,
+      "message": "Can we use base::MakeUnique like we used to?",
+      "revId": "0d8f6ebac049e66b89cd45c1c366ec7750080927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22e6b26_6ed64673",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2213,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-23T16:53:44Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "0d8f6ebac049e66b89cd45c1c366ec7750080927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3316d04_25160277",
+        "filename": "components/printing/renderer/print_render_frame_helper_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-23T16:53:44Z",
+      "side": 1,
+      "message": "More MakeUnique please. :)",
+      "revId": "0d8f6ebac049e66b89cd45c1c366ec7750080927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
