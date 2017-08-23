@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "373e50f9_224e613b",
+        "filename": "content/browser/download/url_download_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-23T16:42:03Z",
+      "side": 1,
+      "message": "moved the latter 2 into header. Move InputStream dtor into header causes a Chromium style warning",
+      "parentUuid": "ad62c85a_684b0f5b",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 52
+      },
+      "revId": "37e057cd6f2bc941462f6b748a520552de179584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df29bdef_d5bce4e8",
         "filename": "content/browser/download/url_download_handler.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-22T18:32:00Z",
       "side": 1,
       "message": "Do we want this?",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 18
+      },
+      "revId": "37e057cd6f2bc941462f6b748a520552de179584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7a5940_2151ddf7",
+        "filename": "content/browser/download/url_download_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-23T16:42:03Z",
+      "side": 1,
+      "message": "Done, removed. My initial plan is to use this for error case (no body received), but the old path uses an empty ByteStreamReader, so we should follow that.",
+      "parentUuid": "df29bdef_d5bce4e8",
       "range": {
         "startLine": 24,
         "startChar": 4,
