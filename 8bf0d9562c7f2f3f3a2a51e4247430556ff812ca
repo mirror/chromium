@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9291b7e6_78a91962",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-23T02:06:04Z",
+      "side": 1,
+      "message": "Rather than speculating whether this is an Android bug (it may be, but we\u0027re not sure), let\u0027s reference the crbug where folks can find more information (let\u0027s make sure we capture some notes about the issues in Chrome Home that we saw when checking for \u003d\u003d 0).\n\nI think we can make this a bit cleaner like this:\n\n// Before the RecyclerView binds its items, LinearLayoutManager#firstVisibleItemPosition()\n// returns {@link RecyclerView#NO_POSITION}. If #findVisibleItemPosition() returns NO_POSITION, \n// the current adapter position should not prevent the info button from being displayed if all \n// of the other criteria is met. See crbug.com/#####.\nLinearLayoutManager layoutManager \u003d (LinearLayoutManager) mRecyclerView.getLayoutManager();\nboolean firstAdapterItemHidden \u003d layoutManager.findFirstVisibleItemPosition() \u003e 0;\n\nreturn mHistoryAdapter.hasPrivacyDisclaimers() \u0026\u0026 mHistoryAdapter.getItemCount() \u003e 0 \u0026\u0026 !mToolbar.isSearching() \u0026\u0026 !mSelectionDelegate.isSelectionEnabled() \u0026\u0026 !firstAdapterItemHidden;",
+      "range": {
+        "startLine": 430,
+        "startChar": 26,
+        "endLine": 430,
+        "endChar": 53
+      },
+      "revId": "8bf0d9562c7f2f3f3a2a51e4247430556ff812ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
