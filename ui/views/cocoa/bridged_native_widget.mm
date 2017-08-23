@@ -420,6 +420,15 @@ void BridgedNativeWidget::Init(base::scoped_nsobject<NSWindow> window,
              name:NSControlTintDidChangeNotification
            object:nil];
 
+  if (params.type == Widget::InitParams::TYPE_BUBBLE) {
+    mouse_down_monitor_ = [NSEvent
+        addLocalMonitorForEventsMatchingMask:NSRightMouseDownMask
+        handler:^NSEvent* (NSEvent* event) {
+          OnRightMouseDown(event);
+          return event;
+        }];
+  }
+
   // Validate the window's initial state, otherwise the bridge's initial
   // tracking state will be incorrect.
   DCHECK(![window_ isVisible]);
@@ -742,6 +751,10 @@ void BridgedNativeWidget::OnWindowWillClose() {
     parent_ = nullptr;
   }
   [[NSNotificationCenter defaultCenter] removeObserver:window_delegate_];
+  if (mouse_down_monitor_) {
+    [NSEvent removeMonitor:mouse_down_monitor_];
+    mouse_down_monitor_ = nullptr;
+  }
   [window_ setDelegate:nil];
   native_widget_mac_->OnWindowDestroyed();
   // Note: |this| is deleted here.
@@ -993,6 +1006,29 @@ void BridgedNativeWidget::OnSizeConstraintsChanged() {
   gfx::ApplyNSWindowSizeConstraints(window_, min_size, max_size,
                                     shows_resize_controls,
                                     shows_fullscreen_controls);
+}
+
+void BridgedNativeWidget::OnRightMouseDown(NSEvent* event) {
+  NSWindow* eventWindow = [event window];
+  if ([eventWindow isSheet])
+    return;
+
+  // Do not close the bubble if the event happened on a window with a higher
+  // level.  For example, the content of a browser action bubble opens a
+  // calendar picker window with NSPopUpMenuWindowLevel, and a date selection
+  // closes the picker window, but it should not close the bubble.
+  if ([eventWindow level] > [window_ level])
+    return;
+
+  // If the event is in |window|'s hierarchy, do not close the bubble.
+  NSWindow* tempWindow = eventWindow;
+  while (tempWindow) {
+    if (tempWindow == window_.get())
+      return;
+    tempWindow = [tempWindow parentWindow];
+  }
+
+  OnWindowKeyStatusChangedTo(false);
 }
 
 ui::InputMethod* BridgedNativeWidget::GetInputMethod() {

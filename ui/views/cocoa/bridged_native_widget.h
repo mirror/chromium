@@ -252,6 +252,9 @@ class VIEWS_EXPORT BridgedNativeWidget
   void OnMouseCaptureLost() override;
   NSWindow* GetWindow() const override;
 
+  // Called by mouse_down_monitor_ to close bubble.
+  void OnRightMouseDown(NSEvent* event);
+
   // Returns a properties dictionary associated with the NSWindow.
   // Creates and attaches a new instance if not found.
   NSMutableDictionary* GetWindowProperties() const;
@@ -327,6 +330,9 @@ class VIEWS_EXPORT BridgedNativeWidget
   // modal windows, the window's alpha value is set to 0, till the frame from
   // the compositor arrives to avoid "blinking".
   bool initial_visibility_suppressed_ = false;
+
+  // Right mouse down monitor for bubble widget.
+  id mouse_down_monitor_;
 
   AssociatedViews associated_views_;
 
