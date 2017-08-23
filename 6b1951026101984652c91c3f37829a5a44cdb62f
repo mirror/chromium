@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca9e339e_550de99a",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T19:55:34Z",
+      "side": 1,
+      "message": "Should we store a dictionary in the prefs, with various things under that? Will make for more compact names, and better organization IMO.",
+      "range": {
+        "startLine": 53,
+        "startChar": 31,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db04461_e60e10d9",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T19:55:34Z",
+      "side": 1,
+      "message": "Do we actually expect this to be called with anything other than browser_count \u003d\u003d 1?",
+      "range": {
+        "startLine": 60,
+        "startChar": 25,
+        "endLine": 60,
+        "endChar": 40
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b757c507_6f9635b8",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T19:55:34Z",
+      "side": 1,
+      "message": "responsible for*",
+      "range": {
+        "startLine": 133,
+        "startChar": 73,
+        "endLine": 133,
+        "endChar": 75
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2795cf7a_aaea4a30",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T19:55:34Z",
+      "side": 1,
+      "message": "Initialize doesn\u0027t want a null pref service, but GetInstance creates such a thing?\n\nI also have a mild preference for less magic in Initialize, just allowing people to construct a tracker, and having a corresponding SetInstance(std::unique_ptr) for setting the singleton.",
+      "range": {
+        "startLine": 141,
+        "startChar": 9,
+        "endLine": 141,
+        "endChar": 19
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b53860_337c3dba",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T19:55:34Z",
+      "side": 1,
+      "message": "counts* stay",
+      "range": {
+        "startLine": 162,
+        "startChar": 58,
+        "endLine": 162,
+        "endChar": 64
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6286dc9b_534e45b8",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T19:55:34Z",
+      "side": 1,
+      "message": "... tracks. \n\nor\n\n... wants to track.",
+      "range": {
+        "startLine": 21,
+        "startChar": 19,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d8fc2b2_163c1684",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T19:55:34Z",
+      "side": 1,
+      "message": "Browsers !\u003d windows. These should all be rewritten to be \"window_\".\n\nThe hierarchy is browser \u003e profile \u003e window \u003e tab. Do we care about tracking per-profile metrics as well?",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6bded00_da493646",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-23T19:55:34Z",
+      "side": 1,
+      "message": "s/browser/window/",
+      "range": {
+        "startLine": 182,
+        "startChar": 24,
+        "endLine": 182,
+        "endChar": 25
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
