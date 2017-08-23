@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39f709dc_b23b9548",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-23T00:05:27Z",
+      "side": 1,
+      "message": "\u00271\u0027 seems a little like a magic number here. I did find the comment in session_controller.mojom, but it would be nice if this were a enum or #define (e.g. session_id \u003d UserSession::PrimaryUserSession).",
+      "revId": "fc397d02468146ef1afd802d40e84e15af6e6780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "099d1457_61616897",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-23T00:05:27Z",
+      "side": 1,
+      "message": "nit: \u0027both be\u0027",
+      "revId": "fc397d02468146ef1afd802d40e84e15af6e6780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c4ec36_d1c57aeb",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-23T00:05:27Z",
+      "side": 1,
+      "message": "This seems like it should CHECK or at least log an error (I think CHECK would be better). Currently we disable this UI in the system tray and Settings, but it would be easy to miss that resulting in very confusing UI :)",
+      "revId": "fc397d02468146ef1afd802d40e84e15af6e6780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7079c28b_49e322f7",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.html",
+        "patchSetId": 35
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-23T00:05:27Z",
+      "side": 1,
+      "message": "fix indent",
+      "revId": "fc397d02468146ef1afd802d40e84e15af6e6780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c7f59f_0825c4f7",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.html",
+        "patchSetId": 35
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-23T00:05:27Z",
+      "side": 1,
+      "message": "indent",
+      "revId": "fc397d02468146ef1afd802d40e84e15af6e6780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

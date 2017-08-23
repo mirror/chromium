@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90d6d4af_7325b582",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_page.js",
+        "patchSetId": 35
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-23T00:05:27Z",
+      "side": 0,
+      "message": "We should add a comment in bluetooth_private.idl to the \u0027powered\u0027 property that setting the property directly is not recommended and note the prefs that should be changed instead. In a followup we should disable setting \u0027powered\u0027 in the API.",
+      "revId": "83c2544d276cad4341da42aed3e240489183f611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
