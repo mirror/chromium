@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9efde876_808a53a2",
+        "filename": "chrome/browser/vr/elements/ui_texture.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T17:28:43Z",
+      "side": 1,
+      "message": "I dont have much background of this function. It looks like it just get available font list for text. And if no available font, it just return false. Let me know if you have a more accurate description.",
+      "parentUuid": "795bad2a_4c0e8b43",
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61bfb29b_928b5723",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "aa547746_d1e7dd2f",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T17:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61bfb29b_928b5723",
+      "range": {
+        "startLine": 196,
+        "startChar": 8,
+        "endLine": 196,
+        "endChar": 10
+      },
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55e5c80a_e8434232",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-21T13:58:12Z",
       "side": 1,
       "message": "Could you move this (new) block of code out to a new method, similar to how it was?  The current method is giant, and it should shrink as opposed to grow.  Can be RenderUrlText() or similar.  Also, it should probably be in the empty namespace, and take a pointer to the RenderText, as we\u0027re basically passing in everything else anyway.",
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1ab5a5_8e5263a8",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T17:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55e5c80a_e8434232",
       "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "339f0f69_c4e48609",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T17:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbcdfff2_fbe4f677",
+      "range": {
+        "startLine": 272,
+        "startChar": 6,
+        "endLine": 272,
+        "endChar": 10
+      },
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0fc3027_181a7a4c",
         "filename": "chrome/browser/vr/elements/url_bar_texture_unittest.cc",
         "patchSetId": 1
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "2eab567a_bf3b78b5",
+        "filename": "chrome/browser/vr/elements/url_bar_texture_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T17:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0fc3027_181a7a4c",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 8
+      },
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f206972_47c2918e",
         "filename": "chrome/browser/vr/elements/webvr_url_toast.h",
         "patchSetId": 1
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "d36e4166_2f722504",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T17:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f206972_47c2918e",
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b48729c_046a1310",
         "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
         "patchSetId": 1
@@ -133,6 +259,24 @@
       "writtenOn": "2017-08-18T19:03:22Z",
       "side": 1,
       "message": "It looks like there are quite a few code duplication with url_bar_texture. It might make sense to create a common class for WebVrUrlToast and UrlBarTexture to avoid the duplication.\nDon\u0027t worry about it in this CL given that you are officially OOO. I can help with it after it is landed.",
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba3983fe_77927740",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T17:28:43Z",
+      "side": 1,
+      "message": "discussed with Chris offline. It seems a lot of common code/methods is going to be removed after his planned refactor. So this comment is obsolete.",
+      "parentUuid": "5b48729c_046a1310",
       "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "f881352f_e5d99234",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T17:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3728c71c_5d820ab4",
+      "range": {
+        "startLine": 63,
+        "startChar": 34,
+        "endLine": 63,
+        "endChar": 42
+      },
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad875838_a6233fbd",
         "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
         "patchSetId": 1
@@ -173,6 +341,24 @@
       "writtenOn": "2017-08-21T13:58:12Z",
       "side": 1,
       "message": "I agree with Biao\u0027s comment that the common portion of code (between regular and webvr) should be \"draw security icon and URL text into a rectangular region\".  This left-edge stuff is fragile, and one copy (at most) seems appropriate.",
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3810c4f5_d5c3e376",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T17:28:43Z",
+      "side": 1,
+      "message": "draw security icon doesn\u0027t seem to have lot of common code. IIUC, only the code between 77 to 84 can be shared. Do we want to put it in a function in util? I feel it is not very necessary. I am not sure there is a way to get around without left_edge. Can you be more specific.",
+      "parentUuid": "ad875838_a6233fbd",
       "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -202,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "9f27fe2c_f21f76e9",
+        "filename": "chrome/browser/vr/vr_url_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T17:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d3fe6df_c7079b1e",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b54cdeb_71c4b4a2",
         "filename": "chrome/browser/vr/vr_url_util.cc",
         "patchSetId": 1
@@ -213,6 +423,30 @@
       "writtenOn": "2017-08-18T19:03:22Z",
       "side": 1,
       "message": "doesn\u0027t need to be static?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49aad8eb_34bcc480",
+        "filename": "chrome/browser/vr/vr_url_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T17:28:43Z",
+      "side": 1,
+      "message": "moved back to original file",
+      "parentUuid": "1b54cdeb_71c4b4a2",
       "range": {
         "startLine": 19,
         "startChar": 0,
@@ -248,6 +482,30 @@
     },
     {
       "key": {
+        "uuid": "9dd1d527_15cdc665",
+        "filename": "chrome/browser/vr/vr_url_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T17:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40a23afb_dd039a96",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "775d3c0d_c5ee65d0",
         "filename": "chrome/browser/vr/vr_url_util.h",
         "patchSetId": 1
@@ -259,6 +517,30 @@
       "writtenOn": "2017-08-21T13:58:12Z",
       "side": 1,
       "message": "This arg seems inappropriate.  It\u0027d be better to pass in either \"offline\" state, or just the whole toolbar state (as we already need URL and security level), and let the rendering method sort out the formatting args.",
+      "range": {
+        "startLine": 36,
+        "startChar": 21,
+        "endLine": 36,
+        "endChar": 34
+      },
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85be10c6_b6b3075b",
+        "filename": "chrome/browser/vr/vr_url_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T17:28:43Z",
+      "side": 1,
+      "message": "changed the parameters to something similar to ApplyUrlStyling.",
+      "parentUuid": "775d3c0d_c5ee65d0",
       "range": {
         "startLine": 36,
         "startChar": 21,
@@ -288,6 +570,24 @@
     },
     {
       "key": {
+        "uuid": "34a98efa_37179fb6",
+        "filename": "chrome/browser/vr/vr_url_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T17:28:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4180b143_dd7c0c82",
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "453012ab_47af1b8f",
         "filename": "chrome/browser/vr/vr_url_util.h",
         "patchSetId": 1
@@ -299,6 +599,24 @@
       "writtenOn": "2017-08-21T13:58:12Z",
       "side": 1,
       "message": "Passing in color scheme and text_color doesn\u0027t make sense.  Easiest workaround I see is to call this unstyled_text_color, and document that if apply_styling is false, this color is used.  The implementation should then use the color scheme for everything (if styled), or nothing, IMO.",
+      "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083deb4c_047cfdb2",
+        "filename": "chrome/browser/vr/vr_url_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T17:28:43Z",
+      "side": 1,
+      "message": "changed to default_text_color since webvr url toast use white color for styling.",
+      "parentUuid": "453012ab_47af1b8f",
       "revId": "a086b960099ba86ff8aae498d85facbfc66c6497",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
