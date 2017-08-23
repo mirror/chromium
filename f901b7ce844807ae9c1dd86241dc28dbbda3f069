@@ -174,6 +174,24 @@
       "revId": "f901b7ce844807ae9c1dd86241dc28dbbda3f069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8527e11d_e6e140ae",
+        "filename": "chrome/browser/renderer_context_menu/open_with_menu_factory_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-23T17:07:38Z",
+      "side": 1,
+      "message": "Done.\n\nWhen the issue reproduced, the log was like this:\n\n[12288:12288:0823/095647.459047:ERROR:link_handler_model_impl.cc(74)] Not implemented reached in bool arc::LinkHandlerModelImpl::Init(const GURL \u0026)\n[12288:12288:0823/095647.467106:ERROR:link_handler_model_impl.cc(110)] Not implemented reached in void arc::LinkHandlerModelImpl::OnUrlHandlerList(std::vector\u003cmojom::IntentHandlerInfoPtr\u003e)0\n[12288:12288:0823/095647.467155:ERROR:link_handler_model_impl.cc(145)] Not implemented reached in void arc::LinkHandlerModelImpl::NotifyObserver(std::unique_ptr\u003cArcIntentHelperBridge::ActivityToIconsMap\u003e)3\n[12288:12288:0823/095647.467229:ERROR:validation_errors.cc(76)] Invalid message: VALIDATION_ERROR_UNEXPECTED_NULL_POINTER (null icon field in LinkHandlerInfo)\n[12288:12288:0823/095647.501188:ERROR:link_handler_model_impl.cc(145)] Not implemented reached in void arc::LinkHandlerModelImpl::NotifyObserver(std::unique_ptr\u003cArcIntentHelperBridge::ActivityToIconsMap\u003e)3\n\n\nWhen it didn\u0027t repro, the log was:\n\n[12288:12288:0823/100019.742903:ERROR:link_handler_model_impl.cc(74)] Not implemented reached in bool arc::LinkHandlerModelImpl::Init(const GURL \u0026)\n[12288:12288:0823/100019.749428:ERROR:link_handler_model_impl.cc(145)] Not implemented reached in void arc::LinkHandlerModelImpl::NotifyObserver(std::unique_ptr\u003cArcIntentHelperBridge::ActivityToIconsMap\u003e)3\n[12288:12288:0823/100019.749788:ERROR:link_handler_model_impl.cc(110)] Not implemented reached in void arc::LinkHandlerModelImpl::OnUrlHandlerList(std::vector\u003cmojom::IntentHandlerInfoPtr\u003e)1\n[12288:12288:0823/100019.750387:ERROR:open_with_menu_factory_ash.cc(89)] Not implemented reached in virtual void OpenWithMenuObserver::OnLinkHandlerModelChanged(std::vector\u003cash::mojom::LinkHandlerInfoPtr\u003e)3",
+      "parentUuid": "1120b8b1_7908406a",
+      "revId": "f901b7ce844807ae9c1dd86241dc28dbbda3f069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
