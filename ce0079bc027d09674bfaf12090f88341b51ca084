@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "94b44dce_9baa3602",
+        "filename": "ios/clean/chrome/browser/experiment_support.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-23T03:14:39Z",
+      "side": 1,
+      "message": "nit: What\u0027s the value it returns? WDYT of \"Returns YES if the experimental setting for the tap strip has been set.\"",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6226d036_908e4afa",
         "filename": "ios/clean/chrome/browser/experiment_support.mm",
         "patchSetId": 16
@@ -47,6 +70,47 @@
       "writtenOn": "2017-08-23T01:30:05Z",
       "side": 1,
       "message": "Why not use booleans and NSUserDefaults\u0027 |-boolForKey:|?  I saw that in Experimental.plist, we\u0027ve declared this as multi-value instead of a switch.  Presumably this was to allow us to have the \"default\" option, but the way we\u0027re using the setting here is as a boolean (i.e. enabled iff the value is explicitly set to Enabled).  Typically, we\u0027ll just use switches for these experimental flags so that we can use |-boolForKey:|.  This could be as easy as switching the experiment type in the plist to PSToggleSwitchSpecifier, and setting the default to an appropriate value.",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94fd97c_1b0ea099",
+        "filename": "ios/clean/chrome/browser/experiment_support.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-23T03:14:39Z",
+      "side": 1,
+      "message": "I think it makes sense for some experiments, if not I think we should have some consts for these values as well.",
+      "parentUuid": "f090979b_0d1126bd",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3158dc54_bccf9024",
+        "filename": "ios/clean/chrome/browser/ui/tab/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-23T03:14:39Z",
+      "side": 1,
+      "message": "Not sure about this one... But I think having a secondary folder for the experiments could help... If not we might end up with too many files/classes on this folder/group, it can also improve readability if the coordinators and their vc\u0027s are grouped together. WDYT?",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 40
+      },
       "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +208,29 @@
     },
     {
       "key": {
+        "uuid": "22b59c6d_9d3b23e2",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-23T03:14:39Z",
+      "side": 1,
+      "message": "configureSubviews might not be overriden, this confused me a little bit. What about Internal methods or something like that?",
+      "range": {
+        "startLine": 168,
+        "startChar": 15,
+        "endLine": 168,
+        "endChar": 22
+      },
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f090cfb_087db414",
         "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
         "patchSetId": 16
@@ -184,6 +271,29 @@
     },
     {
       "key": {
+        "uuid": "5094fb5e_d6918a44",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-23T03:14:39Z",
+      "side": 1,
+      "message": "This should go on top to line 7-8.",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 10,
+        "endChar": 30
+      },
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2df0b58c_2f2efb31",
         "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator.mm",
         "patchSetId": 16
@@ -195,6 +305,70 @@
       "writtenOn": "2017-08-23T01:30:05Z",
       "side": 1,
       "message": "Is there any guideline on how we decide when to subclass vs. when to use properties like this for experiments?",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d070b089_18390176",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-23T03:14:39Z",
+      "side": 1,
+      "message": "I think the overall rule of thumb was that if we can make it work with some simple conditionals or parameters (style arrays,etc.) we should avoid subclassing.",
+      "parentUuid": "2df0b58c_2f2efb31",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1847b43_003aa901",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator_unittest.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-23T03:14:39Z",
+      "side": 1,
+      "message": "Can we have a nil Key? Should we test for that?",
+      "range": {
+        "startLine": 77,
+        "startChar": 52,
+        "endLine": 77,
+        "endChar": 53
+      },
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abdb2b08_12b8b60f",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_strip_tab_container_view_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-23T03:14:39Z",
+      "side": 1,
+      "message": "Comment",
+      "range": {
+        "startLine": 19,
+        "startChar": 37,
+        "endLine": 19,
+        "endChar": 49
+      },
       "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -218,6 +392,52 @@
     },
     {
       "key": {
+        "uuid": "fd22f530_a0892e13",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_strip_tab_container_view_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-23T03:14:39Z",
+      "side": 1,
+      "message": "We should create a constant in the anonymous namespace for this.",
+      "range": {
+        "startLine": 47,
+        "startChar": 45,
+        "endLine": 47,
+        "endChar": 49
+      },
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32d2764f_89dd5ef8",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_strip_tab_container_view_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-23T03:14:39Z",
+      "side": 1,
+      "message": "Are we going to allow the TabStrip and the bottom toolbar at the same time? I\u0027m not sure if its back on the table.",
+      "range": {
+        "startLine": 68,
+        "startChar": 11,
+        "endLine": 68,
+        "endChar": 28
+      },
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7a19139_9badb823",
         "filename": "ios/clean/chrome/browser/ui/tab/tab_strip_tab_container_view_controller.mm",
         "patchSetId": 16
@@ -235,6 +455,46 @@
     },
     {
       "key": {
+        "uuid": "2234cab4_427bc0c1",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_strip_tab_coordinator.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-23T03:14:39Z",
+      "side": 1,
+      "message": "I think we could improve this comment by stating that this is currently part of an experimental setting and the implementation differences from a regular tab coordinator. I just think it would help anyone reading about the class.",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3824302_28d9f2c0",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_strip_tab_coordinator.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-23T03:14:39Z",
+      "side": 1,
+      "message": "Should we also stop broadcasting for showTabStrip?",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 33
+      },
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc670b0f_5fad22ac",
         "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.mm",
         "patchSetId": 16
@@ -246,6 +506,29 @@
       "writtenOn": "2017-08-23T01:30:05Z",
       "side": 1,
       "message": "style nit to save a line:\n\nreturn experimental_flags::IsTabStripEnabled\n  ? [[TabStripTabCoordinator alloc] init]\n  : [[TabCoordinator alloc] init];",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d22ab6b_39d5cdf3",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-23T03:14:39Z",
+      "side": 1,
+      "message": "Could you please add a comment explaining that due to the experimental setting we need to perform different actions. Also, could you add an Actions pragma mark, I don\u0027t think this is a class helper method.",
+      "range": {
+        "startLine": 426,
+        "startChar": 9,
+        "endLine": 426,
+        "endChar": 10
+      },
       "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
