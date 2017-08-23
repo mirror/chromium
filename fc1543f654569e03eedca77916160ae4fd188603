@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b94d60a0_ae8cf189",
+        "filename": "chrome/browser/chromeos/policy/device_policy_remover.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-23T11:28:43Z",
+      "side": 1,
+      "message": "nit: by generate_device_policy_remover.py from ...",
+      "range": {
+        "startLine": 20,
+        "startChar": 17,
+        "endLine": 20,
+        "endChar": 55
+      },
+      "revId": "fc1543f654569e03eedca77916160ae4fd188603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
