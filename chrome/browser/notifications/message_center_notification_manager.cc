@@ -30,10 +30,6 @@
 #include "ui/message_center/message_center_types.h"
 #include "ui/message_center/notifier_settings.h"
 
-#if defined(OS_CHROMEOS)
-#include "chrome/browser/notifications/login_state_notification_blocker_chromeos.h"
-#endif
-
 using message_center::NotifierId;
 
 MessageCenterNotificationManager::MessageCenterNotificationManager(
@@ -46,10 +42,7 @@ MessageCenterNotificationManager::MessageCenterNotificationManager(
   message_center_->AddObserver(this);
   message_center_->SetNotifierSettingsProvider(settings_provider_.get());
 
-#if defined(OS_CHROMEOS)
-  blockers_.push_back(
-      base::MakeUnique<LoginStateNotificationBlockerChromeOS>(message_center));
-#else
+#if !defined(OS_CHROMEOS)
   blockers_.push_back(
       base::MakeUnique<ScreenLockNotificationBlocker>(message_center));
 #endif
@@ -267,17 +260,7 @@ void MessageCenterNotificationManager::StartShutdown() {
 void MessageCenterNotificationManager::OnNotificationRemoved(
     const std::string& id,
     bool by_user) {
-  auto iter = profile_notifications_.find(id);
-  if (iter != profile_notifications_.end())
-    RemoveProfileNotification(iter->first);
-}
-
-void MessageCenterNotificationManager::OnCenterVisibilityChanged(
-    message_center::Visibility visibility) {
-}
-
-void MessageCenterNotificationManager::OnNotificationUpdated(
-    const std::string& id) {
+  RemoveProfileNotification(id);
 }
 
 void MessageCenterNotificationManager::SetMessageCenterTrayDelegateForTest(
