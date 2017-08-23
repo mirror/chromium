@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d80e0c0_0f46f8b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-23T14:52:59Z",
+      "side": 1,
+      "message": "\"is made a vector of...\" ? \nRephrase.",
+      "range": {
+        "startLine": 9,
+        "startChar": 45,
+        "endLine": 9,
+        "endChar": 49
+      },
+      "revId": "e7310c83a1db185fa739f8f9e5210ac237fc7a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8704bf76_6c0a52dd",
+        "filename": "content/renderer/media/rtc_peer_connection_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-23T14:52:59Z",
+      "side": 1,
+      "message": "Does this (and other similar methods) require a thread check?",
+      "range": {
+        "startLine": 1107,
+        "startChar": 2,
+        "endLine": 1107,
+        "endChar": 3
+      },
+      "revId": "e7310c83a1db185fa739f8f9e5210ac237fc7a45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
