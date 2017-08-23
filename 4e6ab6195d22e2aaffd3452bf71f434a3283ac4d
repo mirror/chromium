@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2d82fad8_114629c7",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-08-23T20:32:56Z",
+      "side": 1,
+      "message": "Thanks Tommy, the main reason I made this change is that it seems not correct for AutofillAgent to fire one WillSubmitForm(), but 2 or more FormSubmitted().",
+      "parentUuid": "6e73ecce_2dd5936e",
+      "range": {
+        "startLine": 273,
+        "startChar": 46,
+        "endLine": 273,
+        "endChar": 60
+      },
+      "revId": "4e6ab6195d22e2aaffd3452bf71f434a3283ac4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ac00dd0_763cdb0d",
         "filename": "components/autofill/content/renderer/autofill_agent.cc",
         "patchSetId": 2
