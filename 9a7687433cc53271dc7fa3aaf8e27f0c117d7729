@@ -16,6 +16,24 @@
       "revId": "9a7687433cc53271dc7fa3aaf8e27f0c117d7729",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c0475ef_975d783c",
+        "filename": "third_party/closure_compiler/externs/file_manager_private.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-23T08:17:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a67fe6e_88ae2c50",
+      "revId": "9a7687433cc53271dc7fa3aaf8e27f0c117d7729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
