@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c937e983_72d81c79",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T21:35:15Z",
+      "side": 1,
+      "message": "nit: pe -\u003e PE\n(below, too)",
+      "range": {
+        "startLine": 9,
+        "startChar": 52,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "5cc3990a88ef7ec28d51750d45250897c938c88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26a5aa68_f817ed1d",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T21:35:15Z",
+      "side": 1,
+      "message": "nit: dll -\u003e DLL",
+      "range": {
+        "startLine": 191,
+        "startChar": 58,
+        "endLine": 191,
+        "endChar": 61
+      },
+      "revId": "5cc3990a88ef7ec28d51750d45250897c938c88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4bb6cd3_99e32736",
+        "filename": "chrome/browser/chrome_browser_main_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-23T21:35:15Z",
+      "side": 1,
+      "message": "since the code in the __try block has grown, consider checking not only the exception code but also that the address being accessed is within the range of module_load_address...size_of_image or somesuch. the goal being to *only* catch AV while accessing the unloaded module -- not a potential AV while paging in CompareEqualIgnoreCase or something else. see the handling in chrome/installer/util/lzma_util.cc for an example.",
+      "range": {
+        "startLine": 294,
+        "startChar": 4,
+        "endLine": 294,
+        "endChar": 12
+      },
+      "revId": "5cc3990a88ef7ec28d51750d45250897c938c88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
