@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d698e27d_97a8bd62",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-23T16:26:40Z",
+      "side": 1,
+      "message": "Sending an intent is asynchronous, so you could call sendIntent() and then get another call to getStatus() and not have it reflect any update from that intent.",
+      "range": {
+        "startLine": 167,
+        "startChar": 12,
+        "endLine": 167,
+        "endChar": 45
+      },
+      "revId": "e5e4f0005d266ceef9ffd5429a36096b70f19218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
