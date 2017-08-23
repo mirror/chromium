@@ -34,6 +34,24 @@
       "revId": "068e6a55b7c3e8b78976fd868737dd48bb24b042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480a1dd4_327ea56e",
+        "filename": "ui/views/cocoa/views_nswindow_delegate.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-23T09:06:01Z",
+      "side": 1,
+      "message": "\u003e Thanks for pointing me the cocoa code to reference. I almost copyed it to BridgedNativeWidget.\n\u003e I uploaded a patch. Test is not yet. Could you tell me how to compile and run native_widget_mac_uniteractive_uitest.mm ?\n\nSomething like the following should do it (replace out/gn_Debug with your build directory). One of the tests currently times out for me, hence the gtest_filter.\n\nninja -C out/gn_Debug macviews_interactive_ui_tests \u0026\u0026 out/gn_Debug/macviews_interactive_ui_tests --single-process-tests --gtest_filter\u003d-BridgedNativeWidgetUITest.HitTest",
+      "parentUuid": "e4894d5e_4298d96a",
+      "revId": "068e6a55b7c3e8b78976fd868737dd48bb24b042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

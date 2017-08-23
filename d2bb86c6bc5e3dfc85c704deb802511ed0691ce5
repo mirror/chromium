@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff1b985c_0ad86331",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-23T09:06:01Z",
+      "side": 1,
+      "message": "make sure you update the cl description",
+      "revId": "d2bb86c6bc5e3dfc85c704deb802511ed0691ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e898df92_aa369768",
+        "filename": "ui/views/cocoa/bridged_native_widget.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-23T09:06:01Z",
+      "side": 1,
+      "message": "this should be moved move up in the order so it comes before the overrides. and perhaps OnRightMouseDownWithBubble() or MaybeDismissBubbleForEvent() -- (something with \"Bubble\" in it).",
+      "range": {
+        "startLine": 256,
+        "startChar": 7,
+        "endLine": 256,
+        "endChar": 23
+      },
+      "revId": "d2bb86c6bc5e3dfc85c704deb802511ed0691ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf433656_fea797d0",
+        "filename": "ui/views/cocoa/bridged_native_widget.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-23T09:06:01Z",
+      "side": 1,
+      "message": "comment like, \n\n// Right-clicks outside a bubble should dismiss them, but that doesn\u0027t cause\n// loss of focus on Mac, so add an event monitor to detect.",
+      "revId": "d2bb86c6bc5e3dfc85c704deb802511ed0691ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ac0c44_838db889",
+        "filename": "ui/views/cocoa/bridged_native_widget.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-23T09:06:01Z",
+      "side": 1,
+      "message": "function order should match the declaration order in the .h",
+      "revId": "d2bb86c6bc5e3dfc85c704deb802511ed0691ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0233bb0b_1229d21c",
+        "filename": "ui/views/cocoa/bridged_native_widget.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-23T09:06:01Z",
+      "side": 1,
+      "message": "note we don\u0027t use camelCase unless the code is between @foo/@end\n\nhere, I\u0027d probably just call it `target` and re-use it below rather than declaring tempWindow",
+      "range": {
+        "startLine": 1012,
+        "startChar": 12,
+        "endLine": 1012,
+        "endChar": 23
+      },
+      "revId": "d2bb86c6bc5e3dfc85c704deb802511ed0691ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b90ee0_0b37b01d",
+        "filename": "ui/views/cocoa/bridged_native_widget.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-23T09:06:01Z",
+      "side": 1,
+      "message": "|window| -\u003e |window_|",
+      "range": {
+        "startLine": 1023,
+        "startChar": 25,
+        "endLine": 1023,
+        "endChar": 31
+      },
+      "revId": "d2bb86c6bc5e3dfc85c704deb802511ed0691ce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
