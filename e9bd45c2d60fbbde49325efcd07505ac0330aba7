@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9396ba61_ea468d38",
+        "filename": "chrome/browser/metrics/metrics_service_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-23T23:22:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae7a720d_cee4d874",
+      "range": {
+        "startLine": 164,
+        "startChar": 23,
+        "endLine": 164,
+        "endChar": 36
+      },
+      "revId": "e9bd45c2d60fbbde49325efcd07505ac0330aba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a050a69_46093830",
         "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
         "patchSetId": 22
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "730fd34f_f074458f",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-23T23:22:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a050a69_46093830",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "e9bd45c2d60fbbde49325efcd07505ac0330aba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bac32877_f5dd73e1",
         "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
         "patchSetId": 22
@@ -68,6 +116,30 @@
       "revId": "e9bd45c2d60fbbde49325efcd07505ac0330aba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7db5bcc_e5c90a04",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-23T23:22:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bac32877_f5dd73e1",
+      "range": {
+        "startLine": 18,
+        "startChar": 42,
+        "endLine": 18,
+        "endChar": 59
+      },
+      "revId": "e9bd45c2d60fbbde49325efcd07505ac0330aba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "070100de_1b7c7b00",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-23T23:22:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "273efa3e_ecf70b61",
+      "range": {
+        "startLine": 170,
+        "startChar": 33,
+        "endLine": 170,
+        "endChar": 61
+      },
+      "revId": "e9bd45c2d60fbbde49325efcd07505ac0330aba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f98dd5ba_790d2f90",
         "filename": "components/metrics/stability_metrics_helper.cc",
         "patchSetId": 22
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "981af7e5_1c97c7db",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-23T23:22:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f98dd5ba_790d2f90",
+      "range": {
+        "startLine": 198,
+        "startChar": 23,
+        "endLine": 198,
+        "endChar": 0
+      },
+      "revId": "e9bd45c2d60fbbde49325efcd07505ac0330aba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7d8b804_2eb8936c",
         "filename": "components/metrics/stability_metrics_helper_unittest.cc",
         "patchSetId": 22
@@ -161,6 +281,30 @@
       "revId": "e9bd45c2d60fbbde49325efcd07505ac0330aba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1177d9f2_37b4b3af",
+        "filename": "components/metrics/stability_metrics_helper_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-23T23:22:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7d8b804_2eb8936c",
+      "range": {
+        "startLine": 96,
+        "startChar": 24,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "e9bd45c2d60fbbde49325efcd07505ac0330aba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
