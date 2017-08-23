@@ -2227,6 +2227,8 @@ split_static_library("browser") {
       "offline_pages/offline_page_tab_helper.h",
       "offline_pages/offline_page_utils.cc",
       "offline_pages/offline_page_utils.h",
+      "offline_pages/offline_pages_ukm_reporter_impl.cc",
+      "offline_pages/offline_pages_ukm_reporter_impl.h",
       "offline_pages/offliner_helper.cc",
       "offline_pages/offliner_helper.h",
       "offline_pages/offliner_user_data.cc",
