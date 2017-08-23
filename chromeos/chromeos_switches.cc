@@ -580,23 +580,34 @@ bool IsCellularFirstDevice() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(kCellularFirst);
 }
 
-bool IsVoiceInteractionEnabled() {
-  // TODO(updowndota): Add DCHECK here to make sure the value never changes
-  // after all the use case for this method has been moved into user session.
+bool IsVoiceInteractionLocalesSupported() {
+  static std::string locale_;
+  std::string locale = icu::Locale::getDefault().getName();
+  if (locale_.empty())
+    locale_ = locale;
+  // Make sure the locale value does not change.
+  DCHECK_EQ(locale, locale_);
 
   // Disable voice interaction for non-supported locales.
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  std::string locale = icu::Locale::getDefault().getName();
   if (locale != ULOC_US && locale != ULOC_UK && locale != ULOC_CANADA &&
-      command_line
+      base::CommandLine::ForCurrentProcess()
               ->GetSwitchValueASCII(
                   chromeos::switches::kVoiceInteractionLocales)
               .find(locale) == std::string::npos) {
     return false;
   }
+  return true;
+}
 
+bool IsVoiceInteractionFlagsEnabled() {
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   return command_line->HasSwitch(kEnableVoiceInteraction) ||
          base::FeatureList::IsEnabled(kVoiceInteractionFeature);
+}
+
+bool IsVoiceInteractionEnabled() {
+  return IsVoiceInteractionLocalesSupported() &&
+         IsVoiceInteractionFlagsEnabled();
 }
 
 }  // namespace switches
