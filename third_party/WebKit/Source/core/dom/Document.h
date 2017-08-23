@@ -1190,7 +1190,7 @@ class CORE_EXPORT Document : public ContainerNode,
   void DidLoadAllImports();
 
   void AdjustFloatQuadsForScrollAndAbsoluteZoom(Vector<FloatQuad>&,
-                                                LayoutObject&);
+                                                const LayoutObject&) const;
   void AdjustFloatRectForScrollAndAbsoluteZoom(FloatRect&, LayoutObject&);
 
   void SetContextFeatures(ContextFeatures&);

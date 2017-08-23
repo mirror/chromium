@@ -6457,7 +6457,7 @@ Node* EventTargetNodeForDocument(Document* doc) {
 
 void Document::AdjustFloatQuadsForScrollAndAbsoluteZoom(
     Vector<FloatQuad>& quads,
-    LayoutObject& layout_object) {
+    const LayoutObject& layout_object) const {
   if (!View())
     return;
 
