@@ -39,6 +39,8 @@
 #include "content/public/common/url_constants.h"
 #include "content/public/common/url_loader_factory.mojom.h"
 #include "net/base/load_flags.h"
+#include "net/base/net_errors.h"
+#include "net/http/transport_security_state.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -548,10 +550,16 @@ void NavigationURLLoaderNetworkService::OnComplete(
     TRACE_EVENT_ASYNC_END2("navigation", "Navigation timeToResponseStarted",
                            this, "&NavigationURLLoaderNetworkService", this,
                            "success", false);
-
-    delegate_->OnRequestFailed(completion_status.exists_in_cache,
-                               completion_status.error_code);
   }
+
+  // TODO(https://crbug.com/757633): Pass real values in the case of cert
+  // errors.
+  base::Optional<net::SSLInfo> ssl_info = base::nullopt;
+  bool should_ssl_errors_be_fatal = true;
+
+  delegate_->OnRequestFailed(completion_status.exists_in_cache,
+                             completion_status.error_code, ssl_info,
+                             should_ssl_errors_be_fatal);
 }
 
 }  // namespace content
