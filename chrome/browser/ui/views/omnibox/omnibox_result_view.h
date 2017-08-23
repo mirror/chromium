@@ -27,6 +27,14 @@ class Canvas;
 class RenderText;
 }
 
+/*
+namespace views {
+class ImageButton;
+}
+*/
+
+class OmniboxKeywordButton;
+
 class OmniboxResultView : public views::View,
                           private gfx::AnimationDelegate {
  public:
@@ -69,9 +77,11 @@ class OmniboxResultView : public views::View,
   // views::View:
   gfx::Size CalculatePreferredSize() const override;
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
+  bool OnMouseDragged(const ui::MouseEvent& event) override;
   bool OnMousePressed(const ui::MouseEvent& event) override;
   void OnMouseMoved(const ui::MouseEvent& event) override;
   void OnMouseExited(const ui::MouseEvent& event) override;
+  void OnMouseReleased(const ui::MouseEvent& event) override;
   void OnNativeThemeChanged(const ui::NativeTheme* theme) override;
 
   ResultViewState GetState() const;
@@ -85,6 +95,18 @@ class OmniboxResultView : public views::View,
 
   // Stores the image in a local data member and schedules a repaint.
   void SetAnswerImage(const gfx::ImageSkia& image);
+
+  // Sets the hovered state of this result.
+  void SetHovered(bool hovered);
+
+  // FIXME: comment
+  void AcceptKeyword();
+
+  // FIXME: comments
+  // FIXME: I don't like this.
+  OmniboxPopupContentsView* model() { return model_; }
+  size_t model_index() { return model_index_; }
+
 
  protected:
   enum RenderTextType {
@@ -190,9 +212,6 @@ class OmniboxResultView : public views::View,
                               int text_type,
                               bool is_bold) const;
 
-  // Sets the hovered state of this result.
-  void SetHovered(bool hovered);
-
   // This row's model and model index.
   OmniboxPopupContentsView* model_;
   size_t model_index_;
@@ -214,7 +233,7 @@ class OmniboxResultView : public views::View,
   gfx::Rect icon_bounds_;
 
   gfx::Rect keyword_text_bounds_;
-  std::unique_ptr<views::ImageView> keyword_icon_;
+  std::unique_ptr<OmniboxKeywordButton> keyword_button_;
 
   std::unique_ptr<gfx::SlideAnimation> animation_;
 

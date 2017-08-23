@@ -37,8 +37,18 @@ void BackgroundWith1PxBorder::Paint(gfx::Canvas* canvas,
   SkPath path;
   const SkScalar scaled_corner_radius =
       SkFloatToScalar(kCornerRadius * scale + 0.5f);
-  path.addRoundRect(gfx::RectFToSkRect(border_rect_f), scaled_corner_radius,
-                    scaled_corner_radius);
+  // FIXME: RTL?
+  SkScalar radii[8] = {0,
+                       0,  // top-left
+                       scaled_corner_radius,
+                       scaled_corner_radius,  // top-right
+                       scaled_corner_radius,
+                       scaled_corner_radius,  // bottom-right
+                       0,
+                       0};  // bottom-left
+  path.addRoundRect(gfx::RectFToSkRect(border_rect_f), radii);
+  //path.addRoundRect(gfx::RectFToSkRect(border_rect_f), scaled_corner_radius,
+  //                  scaled_corner_radius);
 
   cc::PaintFlags flags;
   flags.setStyle(cc::PaintFlags::kStroke_Style);

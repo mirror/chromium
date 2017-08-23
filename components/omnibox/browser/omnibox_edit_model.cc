@@ -698,6 +698,8 @@ void OmniboxEditModel::OpenMatch(AutocompleteMatch match,
 
 bool OmniboxEditModel::AcceptKeyword(
       KeywordModeEntryMethod entry_method) {
+  LOG(ERROR) << "is_keyword_hint_ = " << is_keyword_hint_;
+  LOG(ERROR) << "keyword_ = " << keyword_;
   DCHECK(is_keyword_hint_ && !keyword_.empty());
 
   autocomplete_controller()->Stop(false);

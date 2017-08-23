@@ -364,6 +364,7 @@ std::string SearchSuggestionParser::ExtractJsonData(
         json_data = base::UTF16ToUTF8(data_16);
     }
   }
+  LOG(ERROR) << "json_data = " << json_data;
   return json_data;
 }
 
@@ -538,6 +539,10 @@ bool SearchSuggestionParser::ParseSuggestResults(
             answer = SuggestionAnswer::ParseAnswer(answer_json);
             int answer_type = 0;
             if (answer && base::StringToInt(answer_type_str, &answer_type)) {
+              LOG(ERROR) << "answer_type_str = " << answer_type_str;
+              LOG(ERROR) << "answer_type = " << answer_type;
+              if (answer_type == 0)
+                LOG(ERROR) << "ANSWER TYPE IS ZERO WTF???";
               UMA_HISTOGRAM_SPARSE_SLOWLY("Omnibox.AnswerParseType",
                                           answer_type);
               answer_parsed_successfully = true;
