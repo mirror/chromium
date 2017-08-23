@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b5fbffca_5412901b",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-08-23T13:17:25Z",
+      "side": 1,
+      "message": "#include hit_test_data_provider.h and local_surface_id_provider should fix that.",
+      "parentUuid": "ceb7d80f_aa0d605d",
+      "revId": "e632afe5af4ca0add47dd6caad6088572479e9ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb654aa7_132cf556",
         "filename": "components/viz/client/client_layer_tree_frame_sink.h",
         "patchSetId": 3
