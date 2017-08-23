@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aee2a22f_b5af9dc3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-23T18:04:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "739d3052_094f5448",
+      "range": {
+        "startLine": 130,
+        "startChar": 12,
+        "endLine": 130,
+        "endChar": 14
+      },
+      "revId": "f10fc73b13f1b583a9e8cf18cee9ea5583a13fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1509008d_98fa5620",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "f10fc73b13f1b583a9e8cf18cee9ea5583a13fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16735dfb_f85292a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-23T18:04:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1509008d_98fa5620",
+      "range": {
+        "startLine": 134,
+        "startChar": 36,
+        "endLine": 134,
+        "endChar": 80
+      },
+      "revId": "f10fc73b13f1b583a9e8cf18cee9ea5583a13fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "903848d9_39e53491",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 86177,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-23T18:04:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8286c9ad_4431af98",
+      "range": {
+        "startLine": 86177,
+        "startChar": 16,
+        "endLine": 86177,
+        "endChar": 21
+      },
+      "revId": "f10fc73b13f1b583a9e8cf18cee9ea5583a13fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58965b35_a60fbdca",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "f10fc73b13f1b583a9e8cf18cee9ea5583a13fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62165629_21dfd72e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 86187,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-23T18:04:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58965b35_a60fbdca",
+      "range": {
+        "startLine": 86187,
+        "startChar": 15,
+        "endLine": 86187,
+        "endChar": 31
+      },
+      "revId": "f10fc73b13f1b583a9e8cf18cee9ea5583a13fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
