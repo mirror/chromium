@@ -781,6 +781,7 @@ let GUI = {
     // - test.actualMap, map of actual results
     // - test.actualFinal, last result
     // - test.expectedMap, maps of expected results
+    // - test.crashSite, the crash site if the test crashes
     let nextId = 1;
     t.traverse(
       test => true,
@@ -795,6 +796,10 @@ let GUI = {
         test.expectedMap = new Map();
         for (let result of test.expected.split(" ")) {
           test.expectedMap.set(result, true);
+        }
+        test.crashSite = null;
+        if (test.actualMap.has("CRASH")) {
+          createGetCrashSitePromise(test).then(site => test.crashSite = site).catch(() => console.log("Can't get crash site for " + test.expectedPath));
         }
       }
     );
@@ -984,6 +989,12 @@ let GUI = {
   }
 }
 
+let getHref = function(path) {
+  let anchor = document.createElement("a");
+  anchor.href = path;
+  return anchor.href;
+}
+
 let RebaselineTool = {
   getCheckboxes: function() {
     return document.querySelectorAll(".rebaseline-checkbox");
@@ -1054,9 +1065,7 @@ let RebaselineTool = {
         RebaselineTool.ensureDir(lines, parser.dir);
         dir = parser.dir;
       }
-      let anchor = document.createElement('a');
-      anchor.href = file;
-      lines.push(`wget ${anchor.href}`);
+      lines.push(`wget ${getHref(file)}`);
       lines.push(`mv ${parser.file} ${parser.file.replace('-actual.', '-expected.')}`);
     });
     RebaselineTool.resetDir(lines, dir);
@@ -1071,6 +1080,35 @@ let RebaselineTool = {
     GUI.toggleVisibility('rebaseline');
     RebaselineTool.selectAll();
   }
+}
+
+let isCheckHitLine = function(line) {
+  return line.startsWith("STDERR") &&
+         line.indexOf("FATAL") !== -1 &
+         line.indexOf("Check failed") !== -1;
+}
+
+let getCrashSite = function(line) {
+  let startIndex = line.indexOf("FATAL") + 6;
+  let endIndex = line.indexOf("]", startIndex);
+  return line.substring(startIndex, endIndex);
+}
+
+let createGetCrashSitePromise = function(test) {
+  return new Promise((resolve, reject) => {
+    let parser = new PathParser(test.expectPath);
+    let crashLog = parser.resultLink("-crash-log.txt");
+    fetch(crashLog)
+      .then(response => response.text()
+          .then(text => {
+            let lines = text.split("\n").filter(isCheckHitLine);
+            if (!lines.length)
+              reject();
+            resolve(getCrashSite(lines[0]));
+          })
+          .catch(reject))
+      .catch(reject);
+  });
 }
 
 // jsonp callback
