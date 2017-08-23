@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93935e65_800a592b",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T18:56:26Z",
+      "side": 1,
+      "message": "#endif  // defined(OS_WIN)",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 6
+      },
+      "revId": "723463e53facaeabf32a22e3afd68485fd9a50ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427baa7b_b158ec13",
+        "filename": "chrome/installer/zucchini/mapped_file.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T18:56:26Z",
+      "side": 1,
+      "message": "#endif  // defined(OS_WIN)",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 6
+      },
+      "revId": "723463e53facaeabf32a22e3afd68485fd9a50ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c36a3a60_0ee3f53c",
+        "filename": "chrome/installer/zucchini/mapped_file.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T18:56:26Z",
+      "side": 1,
+      "message": "This is only used #if defined(OS_WIN). I\u0027m okay with having this (instead of wrapping #if here and for #include \"base/files/file.h\"), but check whether this compiles by running a try job?",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 26
+      },
+      "revId": "723463e53facaeabf32a22e3afd68485fd9a50ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95064eee_be2b572f",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-23T18:56:26Z",
+      "side": 1,
+      "message": "NIT: In zucchini_integration.cc this is called |result|, and gets returned in the end. Reconcile the two?",
+      "range": {
+        "startLine": 51,
+        "startChar": 25,
+        "endLine": 51,
+        "endChar": 31
+      },
+      "revId": "723463e53facaeabf32a22e3afd68485fd9a50ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
