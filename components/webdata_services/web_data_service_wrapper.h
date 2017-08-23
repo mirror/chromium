@@ -90,12 +90,19 @@ class WebDataServiceWrapper : public KeyedService {
   GetPaymentManifestWebData();
 #endif
 
+  // Returns a task runner that can be used to schedule tasks on the DB
+  // sequence.
+  base::SingleThreadTaskRunner* GetDBTaskRunner();
+
  protected:
   // For testing.
   WebDataServiceWrapper();
 
  private:
   scoped_refptr<WebDatabaseService> web_database_;
+
+  // Task runner used for DB tasks.
+  scoped_refptr<base::SingleThreadTaskRunner> db_task_runner_;
 
   scoped_refptr<autofill::AutofillWebDataService> autofill_web_data_;
   scoped_refptr<KeywordWebDataService> keyword_web_data_;

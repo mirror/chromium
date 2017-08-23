@@ -12,6 +12,8 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/test/scoped_command_line.h"
+#include "base/threading/thread_restrictions.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/login/signin/oauth2_login_manager.h"
@@ -29,17 +31,21 @@
 #include "chrome/browser/ui/scoped_tabbed_browser_displayer.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.h"
+#include "chrome/browser/web_data_service_factory.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/ui_test_utils.h"
+#include "chromeos/chromeos_switches.h"
 #include "chromeos/login/auth/key.h"
 #include "chromeos/login/auth/user_context.h"
 #include "components/browser_sync/browser_sync_switches.h"
+#include "components/keyed_service/core/service_access_type.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
+#include "components/webdata_services/web_data_service_wrapper.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/test/browser_test_utils.h"
 #include "extensions/browser/process_manager.h"
@@ -142,6 +148,8 @@ class OAuth2LoginManagerStateWaiter : public OAuth2LoginManager::Observer {
   DISALLOW_COPY_AND_ASSIGN(OAuth2LoginManagerStateWaiter);
 };
 
+}  // namespace
+
 // Blocks a thread associated with a given |task_runner| on construction and
 // unblocks it on destruction.
 class ThreadBlocker {
@@ -158,15 +166,16 @@ class ThreadBlocker {
 
  private:
   // Blocks the target thread until |event| is signaled.
-  static void BlockThreadOnThread(base::WaitableEvent* event) { event->Wait(); }
+  static void BlockThreadOnThread(base::WaitableEvent* event) {
+    base::ThreadRestrictions::ScopedAllowWait allow_wait;
+    event->Wait();
+  }
 
   // |unblock_event_| is deleted after BlockThreadOnThread returns.
   base::WaitableEvent* const unblock_event_;
 
   DISALLOW_COPY_AND_ASSIGN(ThreadBlocker);
 };
-
-}  // namespace
 
 class OAuth2Test : public OobeBaseTest {
  protected:
@@ -177,7 +186,7 @@ class OAuth2Test : public OobeBaseTest {
 
     // Disable sync sinc we don't really need this for these tests and it also
     // makes OAuth2Test.MergeSession test flaky http://crbug.com/408867.
-    command_line->AppendSwitch(switches::kDisableSync);
+    command_line->AppendSwitch(::switches::kDisableSync);
   }
 
   void SetupGaiaServerForNewAccount() {
@@ -270,7 +279,6 @@ class OAuth2Test : public OobeBaseTest {
     return user_manager::User::OAUTH_TOKEN_STATUS_UNKNOWN;
   }
 
- protected:
   // OobeBaseTest overrides.
   Profile* profile() override {
     if (user_manager::UserManager::Get()->GetActiveUser())
@@ -540,7 +548,7 @@ IN_PROC_BROWSER_TEST_F(OAuth2Test, PRE_OverlappingContinueSessionRestore) {
 }
 
 // Tests that ContinueSessionRestore could be called multiple times.
-IN_PROC_BROWSER_TEST_F(OAuth2Test, DISABLED_OverlappingContinueSessionRestore) {
+IN_PROC_BROWSER_TEST_F(OAuth2Test, OverlappingContinueSessionRestore) {
   SetupGaiaServerForUnexpiredAccount();
   SimulateNetworkOnline();
 
@@ -550,14 +558,27 @@ IN_PROC_BROWSER_TEST_F(OAuth2Test, DISABLED_OverlappingContinueSessionRestore) {
       content::NotificationService::AllSources())
       .Wait();
 
-  // Blocks database thread to control TokenService::LoadCredentials timing.
-  // TODO(achuith): Fix this. crbug.com/753615.
-  auto thread_blocker = base::MakeUnique<ThreadBlocker>(nullptr);
+  // Save the current command line.
+  auto scoped_command_line = base::MakeUnique<base::test::ScopedCommandLine>();
+
+  // Disable session restore.
+  base::CommandLine::ForCurrentProcess()->AppendSwitch(
+      chromeos::switches::kDisableGaiaServices);
 
   // Signs in as the existing user created in pre test.
   EXPECT_TRUE(
       TryToLogin(AccountId::FromUserEmailGaiaId(kTestEmail, kTestGaiaId),
                  kTestAccountPassword));
+
+  // Block database thread to control TokenService::LoadCredentials timing.
+  WebDataServiceWrapper* wrapper = WebDataServiceFactory::GetForProfile(
+      profile(), ServiceAccessType::EXPLICIT_ACCESS);
+  auto thread_blocker =
+      base::MakeUnique<ThreadBlocker>(wrapper->GetDBTaskRunner());
+
+  // Restore the command line, and restore the session.
+  scoped_command_line.reset();
+  UserSessionManager::GetInstance()->RestoreAuthenticationSession(profile());
 
   // Session restore should be using the saved tokens.
   EXPECT_EQ(OAuth2LoginManager::RESTORE_FROM_SAVED_OAUTH2_REFRESH_TOKEN,
@@ -577,7 +598,7 @@ IN_PROC_BROWSER_TEST_F(OAuth2Test, DISABLED_OverlappingContinueSessionRestore) {
   login_manager->ContinueSessionRestore();
   login_manager->ContinueSessionRestore();
 
-  // Let go DB thread to finish TokenService::LoadCredentials.
+  // Release database thread to finish TokenService::LoadCredentials.
   thread_blocker.reset();
 
   // Session restore can finish normally and token is loaded.
