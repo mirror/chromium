@@ -237,7 +237,7 @@ void BbrSender::AdjustNetworkParameters(QuicBandwidth bandwidth,
 void BbrSender::OnCongestionEvent(bool /*rtt_updated*/,
                                   QuicByteCount prior_in_flight,
                                   QuicTime event_time,
-                                  const CongestionVector& acked_packets,
+                                  const AckedPacketVector& acked_packets,
                                   const CongestionVector& lost_packets) {
   const QuicByteCount total_bytes_acked_before = sampler_->total_bytes_acked();
 
@@ -248,7 +248,7 @@ void BbrSender::OnCongestionEvent(bool /*rtt_updated*/,
 
   // Input the new data into the BBR model of the connection.
   if (!acked_packets.empty()) {
-    QuicPacketNumber last_acked_packet = acked_packets.rbegin()->first;
+    QuicPacketNumber last_acked_packet = acked_packets.rbegin()->packet_number;
     is_round_start = UpdateRoundTripCounter(last_acked_packet);
     min_rtt_expired = UpdateBandwidthAndMinRtt(event_time, acked_packets);
     UpdateRecoveryState(last_acked_packet, !lost_packets.empty(),
@@ -362,11 +362,11 @@ bool BbrSender::UpdateRoundTripCounter(QuicPacketNumber last_acked_packet) {
 
 bool BbrSender::UpdateBandwidthAndMinRtt(
     QuicTime now,
-    const CongestionVector& acked_packets) {
+    const AckedPacketVector& acked_packets) {
   QuicTime::Delta sample_min_rtt = QuicTime::Delta::Infinite();
   for (const auto& packet : acked_packets) {
     BandwidthSample bandwidth_sample =
-        sampler_->OnPacketAcknowledged(now, packet.first);
+        sampler_->OnPacketAcknowledged(now, packet.packet_number);
     last_sample_is_app_limited_ = bandwidth_sample.is_app_limited;
     if (!bandwidth_sample.rtt.IsZero()) {
       sample_min_rtt = std::min(sample_min_rtt, bandwidth_sample.rtt);

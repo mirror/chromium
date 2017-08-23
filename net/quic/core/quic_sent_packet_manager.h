@@ -384,7 +384,7 @@ class QUIC_EXPORT_PRIVATE QuicSentPacketManager {
   bool conservative_handshake_retransmits_;
 
   // Vectors packets acked and lost as a result of the last congestion event.
-  SendAlgorithmInterface::CongestionVector packets_acked_;
+  SendAlgorithmInterface::AckedPacketVector packets_acked_;
   SendAlgorithmInterface::CongestionVector packets_lost_;
   // Largest newly acknowledged packet.
   QuicPacketNumber largest_newly_acked_;

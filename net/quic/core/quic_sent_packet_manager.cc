@@ -310,7 +310,8 @@ void QuicSentPacketManager::HandleAckForSentPackets(
     // If data is associated with the most recent transmission of this
     // packet, then inform the caller.
     if (it->in_flight) {
-      packets_acked_.push_back(std::make_pair(packet_number, it->bytes_sent));
+      packets_acked_.push_back(SendAlgorithmInterface::AckedPacket(
+          packet_number, it->bytes_sent, QuicTime::Zero()));
     } else if (skip_unackable_packets_early || !it->is_unackable) {
       // Packets are marked unackable after they've been acked once.
       largest_newly_acked_ = packet_number;
@@ -667,8 +668,9 @@ QuicSentPacketManager::GetRetransmissionMode() const {
 
 void QuicSentPacketManager::InvokeLossDetection(QuicTime time) {
   if (!packets_acked_.empty()) {
-    DCHECK_LE(packets_acked_.front().first, packets_acked_.back().first);
-    largest_newly_acked_ = packets_acked_.back().first;
+    DCHECK_LE(packets_acked_.front().packet_number,
+              packets_acked_.back().packet_number);
+    largest_newly_acked_ = packets_acked_.back().packet_number;
   }
   loss_algorithm_->DetectLosses(unacked_packets_, time, rtt_stats_,
                                 largest_newly_acked_, &packets_lost_);

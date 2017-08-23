@@ -738,7 +738,7 @@ class MockSendAlgorithm : public SendAlgorithmInterface {
                void(bool rtt_updated,
                     QuicByteCount bytes_in_flight,
                     QuicTime event_time,
-                    const CongestionVector& acked_packets,
+                    const AckedPacketVector& acked_packets,
                     const CongestionVector& lost_packets));
   MOCK_METHOD5(OnPacketSent,
                bool(QuicTime,
