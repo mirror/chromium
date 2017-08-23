@@ -7,31 +7,39 @@ package org.chromium.net.smoke;
 import android.support.test.filters.SmallTest;
 
 import org.chromium.net.UrlRequest;
+import org.junit.Test;
+import org.chromium.base.test.BaseJUnit4ClassRunner;
+import org.junit.runner.RunWith;
+import android.support.test.InstrumentationRegistry;
+import org.junit.Assert;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * HTTP2 Tests.
  */
-public class Http2Test extends NativeCronetTestCase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class Http2Test {
     private TestSupport.TestServer mServer;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        mServer = mTestSupport.createTestServer(getContext(), TestSupport.Protocol.HTTP2);
+    @Before
+    public void setUp() throws Exception {
+        mServer = mTestSupport.createTestServer(
+                InstrumentationRegistry.getContext(), TestSupport.Protocol.HTTP2);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         mServer.shutdown();
-        super.tearDown();
     }
 
     // Test that HTTP/2 is enabled by default but QUIC is not.
+    @Test
     @SmallTest
     public void testHttp2() throws Exception {
         mTestSupport.installMockCertVerifierForTesting(mCronetEngineBuilder);
         initCronetEngine();
-        assertTrue(mServer.start());
+        Assert.assertTrue(mServer.start());
         SmokeTestRequestCallback callback = new SmokeTestRequestCallback();
         UrlRequest.Builder requestBuilder = mCronetEngine.newUrlRequestBuilder(
                 mServer.getSuccessURL(), callback, callback.getExecutor());
@@ -39,6 +47,6 @@ public class Http2Test extends NativeCronetTestCase {
         callback.blockForDone();
 
         assertSuccessfulNonEmptyResponse(callback, mServer.getSuccessURL());
-        assertEquals("h2", callback.getResponseInfo().getNegotiatedProtocol());
+        Assert.assertEquals("h2", callback.getResponseInfo().getNegotiatedProtocol());
     }
 }
