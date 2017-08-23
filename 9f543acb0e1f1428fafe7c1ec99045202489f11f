@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98d09978_678af3ed",
+        "filename": "ios/web_view/features.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-23T14:13:14Z",
+      "side": 1,
+      "message": "Arguments defined in declare_args are in a flat namespace. I would recommend prefixing those with ios_web_view_ to avoid collisions. The comment above the variables also are visible when using \"gn args --list\" in a flat list, so should be a bit more explicit on what they do.\n\nMaybe change this to:\n\n  # Controls whether iOS WebView framework is build with cronet included.\n  ios_web_view_include_cronet \u003d false\n\n  # Controls whether iOS WebView framework includes feature requiring sync.\n  ios_web_view_enable_sync \u003d false",
+      "revId": "9f543acb0e1f1428fafe7c1ec99045202489f11f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
