@@ -7,6 +7,7 @@
 
 #include "base/memory/ref_counted.h"
 #include "base/single_thread_task_runner.h"
+#include "base/synchronization/lock.h"
 #include "content/common/content_export.h"
 #include "content/renderer/media/webrtc/webrtc_media_stream_adapter.h"
 #include "third_party/WebKit/public/platform/WebMediaStream.h"
@@ -56,13 +57,16 @@ class CONTENT_EXPORT WebRtcMediaStreamAdapterMap
    private:
     friend class WebRtcMediaStreamAdapterMap;
     using MapEntryIterator = std::map<std::string, AdapterEntry>::iterator;
+    enum class Type { kLocal, kRemote };
 
-    // Increments the |AdapterEntry::ref_count|.
-    AdapterRef(scoped_refptr<WebRtcMediaStreamAdapterMap> map,
+    // Increments the |AdapterEntry::ref_count|. Assumes map's |lock_| is held.
+    AdapterRef(Type type,
+               scoped_refptr<WebRtcMediaStreamAdapterMap> map,
                const MapEntryIterator& it);
 
     AdapterEntry* entry() { return &it_->second; }
 
+    Type type_;
     scoped_refptr<WebRtcMediaStreamAdapterMap> map_;
     MapEntryIterator it_;
   };
@@ -72,10 +76,10 @@ class CONTENT_EXPORT WebRtcMediaStreamAdapterMap
       PeerConnectionDependencyFactory* const factory,
       scoped_refptr<WebRtcMediaStreamTrackAdapterMap> track_adapter_map);
 
-  // Invoke on the main thread. Gets a new reference to the local stream adapter
-  // by ID, or null if no such adapter was found. When all references are
-  // destroyed the adapter is destroyed and removed from the map. References
-  // must be destroyed on the main thread.
+  // Gets a new reference to the local stream adapter by ID, or null if no such
+  // adapter was found. When all references are destroyed the adapter is
+  // destroyed and removed from the map. This can be called on any thread, but
+  // references must be destroyed on the main thread.
   std::unique_ptr<AdapterRef> GetLocalStreamAdapter(const std::string& id);
   // Invoke on the main thread. Gets a new reference to the local stream adapter
   // for the web stream. If no adapter exists for the stream one is created.
@@ -83,16 +87,33 @@ class CONTENT_EXPORT WebRtcMediaStreamAdapterMap
   // the map. References must be destroyed on the main thread.
   std::unique_ptr<AdapterRef> GetOrCreateLocalStreamAdapter(
       const blink::WebMediaStream& web_stream);
-  // Invoke on the main thread.
   size_t GetLocalStreamCount() const;
 
- protected:
+  // Gets a new reference to the remote stream adapter by ID, or null if no such
+  // adapter was found. When all references are destroyed the adapter is
+  // destroyed and removed from the map. This can be called on any thread, but
+  // references must be destroyed on the main thread.
+  std::unique_ptr<AdapterRef> GetRemoteStreamAdapter(const std::string& id);
+  // Invoke on the webrtc signaling thread. Gets a new reference to the remote
+  // stream adapter for the webrtc stream. If no adapter exists for the stream
+  // one is created. When all references are destroyed the adapter is destroyed
+  // and removed from the map. References must be destroyed on the main thread.
+  std::unique_ptr<AdapterRef> GetOrCreateRemoteStreamAdapter(
+      scoped_refptr<webrtc::MediaStreamInterface> webrtc_stream);
+  size_t GetRemoteStreamCount() const;
+
+ private:
   friend class base::RefCountedThreadSafe<WebRtcMediaStreamAdapterMap>;
 
   // Invoke on the main thread.
   virtual ~WebRtcMediaStreamAdapterMap();
 
- private:
+  std::unique_ptr<AdapterRef> GetOrCreateStreamAdapter(
+      AdapterRef::Type type,
+      base::Callback<std::unique_ptr<WebRtcMediaStreamAdapter>()>
+          create_adapter_callback,
+      const std::string& id);
+
   // Pointer to a |PeerConnectionDependencyFactory| owned by the |RenderThread|.
   // It's valid for the lifetime of |RenderThread|.
   PeerConnectionDependencyFactory* const factory_;
@@ -100,9 +121,9 @@ class CONTENT_EXPORT WebRtcMediaStreamAdapterMap
   // Takes care of creating and owning track adapters, used by stream adapters.
   scoped_refptr<WebRtcMediaStreamTrackAdapterMap> track_adapter_map_;
 
+  mutable base::Lock lock_;
   std::map<std::string, AdapterEntry> local_stream_adapters_;
-  // TODO(hbos): Take care of remote stream adapters as well. This will require
-  // usage of the signaling thread. crbug.com/705901
+  std::map<std::string, AdapterEntry> remote_stream_adapters_;
 };
 
 }  // namespace content
