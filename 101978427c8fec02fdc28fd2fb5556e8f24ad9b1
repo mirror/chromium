@@ -16,6 +16,24 @@
       "revId": "101978427c8fec02fdc28fd2fb5556e8f24ad9b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ec6620_1a8cf9cc",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-23T20:08:58Z",
+      "side": 1,
+      "message": "Awesome suggestion, thanks a lot!",
+      "parentUuid": "1cf9b815_c00d5534",
+      "revId": "101978427c8fec02fdc28fd2fb5556e8f24ad9b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
