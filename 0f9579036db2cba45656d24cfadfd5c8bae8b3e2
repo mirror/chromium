@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "029f544f_c22781f2",
+        "filename": "chrome/browser/ui/webui/signin/signin_dice_internals_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-23T15:58:48Z",
+      "side": 1,
+      "message": "The observers should be added and removed in OnJavascriptAllowed / OnJavascriptDisallowed.\n\nOtherwise, you will get observer callbacks fired when JavaScript is disallowed.",
+      "revId": "0f9579036db2cba45656d24cfadfd5c8bae8b3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e1c480d_d12cb15e",
+        "filename": "chrome/browser/ui/webui/signin/signin_dice_internals_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-23T15:58:48Z",
+      "side": 1,
+      "message": "Instead of calling reload, the typical thing is to use WebUI listener events. See here for an example: https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/device_page/power.js?type\u003dcs\u0026q\u003dwebui+file:%5Esrc/chrome/browser/resources/settings/+package:%5Echromium$\u0026l\u003d94",
+      "revId": "0f9579036db2cba45656d24cfadfd5c8bae8b3e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

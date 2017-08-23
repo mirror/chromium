@@ -104,6 +104,24 @@
       "revId": "d4f161ddccd755775871626202c4c7543c6bd93b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c264c65_8aa7627f",
+        "filename": "chrome/browser/ui/webui/signin/signin_dice_internals_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-23T15:58:48Z",
+      "side": 1,
+      "message": "How temporary are we talking about? And can this be merged with chrome://signin-internals? It seems like there is not a need for two signin internals diagnostic pages.",
+      "parentUuid": "e089c0e0_dcfa5dfa",
+      "revId": "d4f161ddccd755775871626202c4c7543c6bd93b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
