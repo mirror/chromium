@@ -19,6 +19,13 @@ function SelectionMenuController(selectionMenuButton, menu) {
           queryRequiredElement('files-toggle-ripple', selectionMenuButton));
 
   /**
+   * Whether the menu has been activated, or de-activated otherwise.
+   * @type {boolean}
+   * @private
+   */
+  this.activated_ = false;
+
+  /**
    * @type {!cr.ui.Menu}
    * @const
    */
@@ -26,6 +33,8 @@ function SelectionMenuController(selectionMenuButton, menu) {
 
   selectionMenuButton.addEventListener('menushow', this.onShowMenu_.bind(this));
   selectionMenuButton.addEventListener('menuhide', this.onHideMenu_.bind(this));
+  this.menu_.addEventListener(
+      'transitionend', this.onTransitionEnd_.bind(this));
 }
 
 /**
@@ -39,6 +48,7 @@ SelectionMenuController.TOOLBAR_MENU = 'toolbar-menu';
  * @private
  */
 SelectionMenuController.prototype.onShowMenu_ = function() {
+  this.activated_ = true;
   this.menu_.classList.toggle(SelectionMenuController.TOOLBAR_MENU, true);
   this.toggleRipple_.activated = true;
 };
@@ -47,6 +57,15 @@ SelectionMenuController.prototype.onShowMenu_ = function() {
  * @private
  */
 SelectionMenuController.prototype.onHideMenu_ = function() {
-  this.menu_.classList.toggle(SelectionMenuController.TOOLBAR_MENU, false);
+  this.activated_ = false;
   this.toggleRipple_.activated = false;
+};
+
+/**
+ * @private
+ */
+SelectionMenuController.prototype.onTransitionEnd_ = function() {
+  if (!this.activated_)
+    // The fade-out animation has finished.
+    this.menu_.classList.toggle(SelectionMenuController.TOOLBAR_MENU, false);
 };
