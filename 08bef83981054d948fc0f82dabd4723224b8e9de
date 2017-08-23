@@ -16,6 +16,24 @@
       "revId": "08bef83981054d948fc0f82dabd4723224b8e9de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b2db36_bdaaf3a0",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-23T20:14:03Z",
+      "side": 1,
+      "message": "We should have scroll for both FrameView (PaintPropertyTreeBuilder::UpdateProperties(LocalFrameView\u0026...)) and regular boxes (PaintPropertyTreeBuilder::UpdateScrollAndScrollTranslation(const LayoutObject\u0026, ...)).\n\nIn both of these cases, when the scroll node goes away we should end up re-creating the scroll hit test layers. The re-use mechanism saves us from churning (re-allocating new scroll layers on each update) but all scroll hit test layers will reset the did scroll callback here.\n\nThis is not explicit in the code but is implicit in how property updates work. The scroll paint property node has a reference to the did scroll callback and when that changes, we\u0027ll run through this code to update the scroll hit test layers.",
+      "parentUuid": "58225b6b_a54ae05f",
+      "revId": "08bef83981054d948fc0f82dabd4723224b8e9de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
