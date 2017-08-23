@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "6d18d745_202fedd1",
+        "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-23T06:48:46Z",
+      "side": 1,
+      "message": "The creation error should not print out in GetAcceleratorFactories(), because it is called to check if HW acceleration is available, and in this case, |results| in GetAcceleratorFactories() is empty.\nIn fact, GetAcceleratorFactories() is called in IsAcceleratedJpegDecodeSupported().\nPlus, I wouldn\u0027t like to call IsAcceleratedJpegDecodeSupported() to check if JDA is supported, since GetAcceleratedFactories() would be called twice here.\nHence, I consider it is good here to call GetAcceleratorFactories() and check the size of factories().",
+      "parentUuid": "a5f8cc54_c144c65d",
+      "revId": "3aed8e1b8865cb47f440f3cb30f77d5b199ba885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fa80f00_a918c191",
         "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
         "patchSetId": 6
