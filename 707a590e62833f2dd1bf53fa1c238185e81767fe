@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "840fcf1e_9353de0a",
+        "filename": "chrome/browser/client_hints/client_hints_observer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-23T06:02:39Z",
+      "side": 1,
+      "message": "I\u0027m still not sure why this is set in the list value and the dictionary value?",
+      "revId": "707a590e62833f2dd1bf53fa1c238185e81767fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31768b1_9cf5c0ec",
+        "filename": "chrome/browser/client_hints/client_hints_observer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-23T06:02:39Z",
+      "side": 1,
+      "message": "TBH, I don\u0027t quite understand this UMA.",
+      "revId": "707a590e62833f2dd1bf53fa1c238185e81767fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0284289_c0e3cc3d",
+        "filename": "chrome/common/DEPS",
+        "patchSetId": 22
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-23T06:02:39Z",
+      "side": 1,
+      "message": "Looks like there\u0027s trailing whitespace; I think git cl format autoformats gn too now (but I\u0027m not 100% sure)",
+      "revId": "707a590e62833f2dd1bf53fa1c238185e81767fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2e6b062_9ac6d9f7",
+        "filename": "components/content_settings/core/common/BUILD.gn",
+        "patchSetId": 22
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-23T06:02:39Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "revId": "707a590e62833f2dd1bf53fa1c238185e81767fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
