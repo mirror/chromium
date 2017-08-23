@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fad2b347_7ba32ebd",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseChromiumAndroidJUnitRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-23T21:12:13Z",
+      "side": 1,
+      "message": "Add a comment here that this is supported by Android\u0027s RunnerArgs.",
+      "revId": "1d55618731bb5652cf4f076da829c81457261f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c3f3d5_dfa6fee8",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseChromiumAndroidJUnitRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-23T21:12:13Z",
+      "side": 1,
+      "message": "I\u0027m wondering if the Java side should be responsible for this or if it\u0027d be better to handle it on the python side.",
+      "revId": "1d55618731bb5652cf4f076da829c81457261f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
