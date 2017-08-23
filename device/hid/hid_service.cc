@@ -25,16 +25,10 @@
 namespace device {
 
 void HidService::Observer::OnDeviceAdded(
-    scoped_refptr<HidDeviceInfo> device_info) {
-}
+    device::mojom::HidDeviceInfoPtr device_info) {}
 
 void HidService::Observer::OnDeviceRemoved(
-    scoped_refptr<HidDeviceInfo> device_info) {
-}
-
-void HidService::Observer::OnDeviceRemovedCleanup(
-    scoped_refptr<HidDeviceInfo> device_info) {
-}
+    device::mojom::HidDeviceInfoPtr device_info) {}
 
 // static
 constexpr base::TaskTraits HidService::kBlockingTaskTraits;
@@ -53,16 +47,15 @@ std::unique_ptr<HidService> HidService::Create() {
 
 void HidService::GetDevices(const GetDevicesCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  if (enumeration_ready_) {
-    std::vector<scoped_refptr<HidDeviceInfo>> devices;
-    for (const auto& map_entry : devices_) {
-      devices.push_back(map_entry.second);
-    }
+
+  bool was_empty = pending_enumerations_.empty();
+  pending_enumerations_.push_back(callback);
+  if (enumeration_ready_ && was_empty) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(callback, devices));
-  } else {
-    pending_enumerations_.push_back(callback);
+        FROM_HERE,
+        base::Bind(&HidService::RunPendingEnumerations, GetWeakPtr()));
   }
+  enumeration_ready_ = false;
 }
 
 void HidService::AddObserver(HidService::Observer* observer) {
@@ -71,16 +64,6 @@ void HidService::AddObserver(HidService::Observer* observer) {
 
 void HidService::RemoveObserver(HidService::Observer* observer) {
   observer_list_.RemoveObserver(observer);
-}
-
-scoped_refptr<HidDeviceInfo> HidService::GetDeviceInfo(
-    const std::string& device_guid) const {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  DeviceMap::const_iterator it = devices_.find(device_guid);
-  if (it == devices_.end()) {
-    return nullptr;
-  }
-  return it->second;
 }
 
 HidService::HidService() = default;
@@ -107,7 +90,7 @@ void HidService::AddDevice(scoped_refptr<HidDeviceInfo> device_info) {
 
     if (enumeration_ready_) {
       for (auto& observer : observer_list_)
-        observer.OnDeviceAdded(device_info);
+        observer.OnDeviceAdded(device_info->device()->Clone());
     }
   }
 }
@@ -121,33 +104,33 @@ void HidService::RemoveDevice(const HidPlatformDeviceId& platform_device_id) {
                   << "'";
     DCHECK(base::ContainsKey(devices_, device_guid));
 
-    scoped_refptr<HidDeviceInfo> device = devices_[device_guid];
+    scoped_refptr<HidDeviceInfo> device_info = devices_[device_guid];
     if (enumeration_ready_) {
       for (auto& observer : observer_list_)
-        observer.OnDeviceRemoved(device);
+        observer.OnDeviceRemoved(device_info->device()->Clone());
     }
     devices_.erase(device_guid);
-    if (enumeration_ready_) {
-      for (auto& observer : observer_list_)
-        observer.OnDeviceRemovedCleanup(device);
-    }
   }
 }
 
-void HidService::FirstEnumerationComplete() {
-  enumeration_ready_ = true;
-
+void HidService::RunPendingEnumerations() {
   if (!pending_enumerations_.empty()) {
-    std::vector<scoped_refptr<HidDeviceInfo>> devices;
+    std::vector<device::mojom::HidDeviceInfoPtr> devices;
     for (const auto& map_entry : devices_) {
-      devices.push_back(map_entry.second);
+      devices.push_back(map_entry.second->device()->Clone());
     }
 
-    for (const GetDevicesCallback& callback : pending_enumerations_) {
+    std::vector<GetDevicesCallback> callbacks;
+    callbacks.swap(pending_enumerations_);
+    for (const auto& callback : callbacks)
       callback.Run(devices);
-    }
-    pending_enumerations_.clear();
   }
+
+  enumeration_ready_ = true;
+}
+
+void HidService::FirstEnumerationComplete() {
+  RunPendingEnumerations();
 }
 
 std::string HidService::FindDeviceIdByPlatformDeviceId(
