@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7842fe29_c3897b8f",
+        "filename": "chromecast/browser/cast_browser_main_parts.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-08-23T19:37:08Z",
+      "side": 1,
+      "message": "Hmmm, this means it\u0027s inconsistent with Android builds now.\n\nThe question is, why do we need to disable media suspend on Android:\n1) When is it invoked - is it related to Android media focus?  Any other cases?\n2) Are there any unwanted side effects from that.\n\nCould you track down the answer to (1) ... then we can talk about (2) :)",
+      "revId": "165e9a6f468f0f6adfd2f2ff83107f5ea214b989",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
