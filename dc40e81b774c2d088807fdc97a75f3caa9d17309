@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c07c7eeb_bc304330",
+        "filename": "chrome/traffic_annotation/annotations_list.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-23T11:13:53Z",
+      "side": 1,
+      "message": "why not put this file in tools/traffic_annotation/ (or a subdirectory thereof)?",
+      "revId": "dc40e81b774c2d088807fdc97a75f3caa9d17309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967c6a2f_eec7767e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-23T11:13:53Z",
+      "side": 1,
+      "message": "nit. prefer safelist / blocklist over whitelist / blacklist",
+      "revId": "dc40e81b774c2d088807fdc97a75f3caa9d17309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73af7c6_3ffc09bb",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-23T11:13:53Z",
+      "side": 1,
+      "message": "maybe also output something that states why?\n\nis LOG(WARNING) visible if you run this on windows?",
+      "revId": "dc40e81b774c2d088807fdc97a75f3caa9d17309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d097a8be_8b7ddab1",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-23T11:13:53Z",
+      "side": 1,
+      "message": "this could just as well be a namespace with a static method UpdateAnnotationsXML",
+      "revId": "dc40e81b774c2d088807fdc97a75f3caa9d17309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece99c2e_9af74c5e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-23T11:13:53Z",
+      "side": 1,
+      "message": "should be a struct",
+      "revId": "dc40e81b774c2d088807fdc97a75f3caa9d17309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d670acb_83061883",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_exporter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-23T11:13:53Z",
+      "side": 1,
+      "message": "nit, clang format please, also no trailing ; behind functions here and everywhere",
+      "revId": "dc40e81b774c2d088807fdc97a75f3caa9d17309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
