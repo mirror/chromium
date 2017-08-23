@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "381d39cb_25a57a04",
+        "filename": "components/ukm/ukm_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-08-23T16:02:26Z",
+      "side": 1,
+      "message": "I didn\u0027t think we had TSAN for Android, let alone released builds with it.\n\nIn all my coding, I\u0027ve always been asked by reviewers to make things safe or add checks to ensure the assumptions are valid.\n\nI think it\u0027s a bad idea to remove the safety here given its low cost.  Any checks would have to be included in Release builds and thus be far more expensive.",
+      "parentUuid": "3d7191fa_46492eb1",
+      "range": {
+        "startLine": 30,
+        "startChar": 41,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "7d65d1ceddf216944f3a6303250dbd367e822241",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "591274a7_0544ebda",
         "filename": "components/ukm/ukm_source.cc",
         "patchSetId": 2
