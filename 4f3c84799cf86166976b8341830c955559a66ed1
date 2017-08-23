@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7feb02ba_a1f0e734",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-23T07:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33a585fd_4a7a9725",
+      "revId": "4f3c84799cf86166976b8341830c955559a66ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c55524a0_04d54e4e",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "4f3c84799cf86166976b8341830c955559a66ed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755abacb_b6742b30",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-23T07:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c55524a0_04d54e4e",
+      "range": {
+        "startLine": 280,
+        "startChar": 43,
+        "endLine": 280,
+        "endChar": 45
+      },
+      "revId": "4f3c84799cf86166976b8341830c955559a66ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "f61d86f3_11aedf71",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-23T07:46:02Z",
+      "side": 1,
+      "message": "This |frame| access is safe. WebLocalFrame is an Oilpan object, and if a pointer to a WebLocalFrame object is stored in a stack or a register, the object is never garbage-collected.\n\nI\u0027m going to add View() check to DispatchAfterPrintEvent().",
+      "parentUuid": "561cea18_293a566f",
+      "revId": "4f3c84799cf86166976b8341830c955559a66ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d9e820f_38218b78",
         "filename": "components/printing/renderer/print_render_frame_helper.cc",
         "patchSetId": 7
@@ -125,6 +185,24 @@
       "revId": "4f3c84799cf86166976b8341830c955559a66ed1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ddde820_85a8cf02",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-23T07:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9608588d_66c57dd5",
+      "revId": "4f3c84799cf86166976b8341830c955559a66ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
