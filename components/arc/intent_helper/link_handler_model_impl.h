@@ -27,8 +27,7 @@ class LinkHandlerModelImpl : public ash::LinkHandlerModel {
   ~LinkHandlerModelImpl() override;
 
   // ash::LinkHandlerModel overrides:
-  void AddObserver(Observer* observer) override;
-  void OpenLinkWithHandler(const GURL& url, uint32_t handler_id) override;
+  void OpenLinkWithHandler(uint32_t handler_id) override;
 
   // Starts retrieving handler information for the |url| and returns true.
   // Returns false when the information cannot be retrieved. In that case,
@@ -51,7 +50,7 @@ class LinkHandlerModelImpl : public ash::LinkHandlerModel {
 
   content::BrowserContext* const context_;
 
-  base::ObserverList<Observer> observer_list_;
+  GURL url_;
 
   // Url handler info passed from ARC.
   std::vector<mojom::IntentHandlerInfoPtr> handlers_;

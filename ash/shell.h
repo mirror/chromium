@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "ash/ash_export.h"
+#include "ash/link_handler_controller.h"
 #include "ash/metrics/user_metrics_recorder.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/session/session_observer.h"
@@ -110,6 +111,7 @@ class ImmersiveHandlerFactoryAsh;
 class KeyboardBrightnessControlDelegate;
 class KeyboardUI;
 class LaserPointerController;
+class LinkHandlerController;
 class LinkHandlerModelFactory;
 class LocaleNotificationController;
 class LockStateController;
@@ -356,6 +358,9 @@ class ASH_EXPORT Shell : public SessionObserver,
     return window_selector_controller_.get();
   }
   OverlayEventFilter* overlay_filter() { return overlay_filter_.get(); }
+  LinkHandlerController* link_handler_controller() {
+    return &link_handler_controller_;
+  }
   LinkHandlerModelFactory* link_handler_model_factory() {
     return link_handler_model_factory_;
   }
@@ -687,6 +692,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<KeyboardBrightnessControlDelegate>
       keyboard_brightness_control_delegate_;
   std::unique_ptr<KeyboardUI> keyboard_ui_;
+  LinkHandlerController link_handler_controller_;
   std::unique_ptr<LocaleNotificationController> locale_notification_controller_;
   std::unique_ptr<LockScreenController> lock_screen_controller_;
   std::unique_ptr<LogoutConfirmationController> logout_confirmation_controller_;
@@ -723,7 +729,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<PrefService> local_state_mash_;
 
   std::unique_ptr<views::corewm::TooltipController> tooltip_controller_;
-  LinkHandlerModelFactory* link_handler_model_factory_;
+  LinkHandlerModelFactory* link_handler_model_factory_ = nullptr;
   std::unique_ptr<PowerButtonController> power_button_controller_;
   std::unique_ptr<LockStateController> lock_state_controller_;
   std::unique_ptr<ui::UserActivityDetector> user_activity_detector_;
@@ -809,16 +815,16 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   // |native_cursor_manager_| is owned by |cursor_manager_|, but we keep a
   // pointer to vend to test code.
-  NativeCursorManagerAsh* native_cursor_manager_;
+  NativeCursorManagerAsh* native_cursor_manager_ = nullptr;
 
   // Cursor may be hidden on certain key events in Chrome OS, whereas we never
   // hide the cursor on Windows.
   std::unique_ptr<::wm::CursorManager> cursor_manager_;
 
   // For testing only: simulate that a modal window is open
-  bool simulate_modal_window_open_for_testing_;
+  bool simulate_modal_window_open_for_testing_ = false;
 
-  bool is_touch_hud_projection_enabled_;
+  bool is_touch_hud_projection_enabled_ = false;
 
   // See comment for GetRootWindowForNewWindows().
   aura::Window* root_window_for_new_windows_ = nullptr;
@@ -833,7 +839,7 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   base::ObserverList<ShellObserver> shell_observers_;
 
-  base::WeakPtrFactory<Shell> weak_factory_;
+  base::WeakPtrFactory<Shell> weak_factory_{this};
 
   DISALLOW_COPY_AND_ASSIGN(Shell);
 };
