@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a17c092_a8a04a2a",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-23T22:07:54Z",
+      "side": 0,
+      "message": "Oh, crap.\n\nSo this represents a behavior change, and an undesirable one at that :( The way we mark QUIC as broken is when a main job succeeds, but a QUIC job fails. That happens in ReportBrokenAlternativeService.\n\nDO any tests fails with this CL?",
+      "range": {
+        "startLine": 985,
+        "startChar": 37,
+        "endLine": 985,
+        "endChar": 0
+      },
+      "revId": "8a15d0627f4acf9d4bda2791191adce6572dc1c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

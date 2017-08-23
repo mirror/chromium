@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "246fcae5_b60bc899",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-23T22:07:54Z",
+      "side": 1,
+      "message": "fwiw, I\u0027d remove the \"\u0026\u0026 alternative_job_\" clause and just call alternative_job_.reset(). If it\u0027s already nullptr, it\u0027ll be a noop.",
+      "range": {
+        "startLine": 855,
+        "startChar": 57,
+        "endLine": 855,
+        "endChar": 0
+      },
+      "revId": "29d41eb5212c25fd4a195ad0e1257187a7004ff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
