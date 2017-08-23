@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "423e3336_2ad24a35",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-23T00:47:30Z",
+      "side": 1,
+      "message": "#1 looks like the best option to me. Also keeping things as they are seems fine as well...",
+      "parentUuid": "4b25f359_25f809e4",
+      "revId": "b9afb94b112b6a1952993a85de74993f8043ff7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9efee9df_ad62c27f",
         "filename": "ios/chrome/test/earl_grey/chrome_earl_grey.h",
         "patchSetId": 2
