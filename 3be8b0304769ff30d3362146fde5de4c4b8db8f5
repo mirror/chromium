@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a6d5d69e_5638bc3f",
+        "filename": "components/bookmarks/browser/bookmark_reordering_features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-23T08:34:26Z",
+      "side": 1,
+      "message": "To break the dependency, you need to put the file in a separate target inside of bookmarks directory (say \"features\"), and have both //ios/chrome/browser (and maybe //ios/chrome/browser/bookmarks) depend on it.\n\nSo, in ios/chrome/browser/bookmarks/BUILD.gn, add:\n\n  source_set(\"bookmarks\") {\n    sources \u003d ...\n    deps \u003d [\n      # Only add this dependency if it is necessary.\n      # I\u0027ve not checked the CL to see if it is used.\n      \":features\",\n      ...,\n    ]\n  }\n\n  source_set(\"features\") {\n    sources \u003d [\n      \"bookmark_reordering_features.h\",\n      \"bookmark_reordering_features.cc\",\n    ]\n    deps \u003d [\n      \"//base\",\n    ]\n  }\n\nThen, in ios/chrome/browser/BUILD.gn, add a dependency to the new target:\n\n  source_set(\"browser\") {\n    sources \u003d ...\n    deps \u003d [\n      ...,\n      \"//ios/chrome/browser/bookmarks:features\",\n      ...,\n    ]\n  }",
+      "parentUuid": "e7681001_fa14992a",
+      "range": {
+        "startLine": 3,
+        "startChar": 12,
+        "endLine": 3,
+        "endChar": 15
+      },
+      "revId": "3be8b0304769ff30d3362146fde5de4c4b8db8f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b6ed43e_c32ac69f",
         "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.h",
         "patchSetId": 3
