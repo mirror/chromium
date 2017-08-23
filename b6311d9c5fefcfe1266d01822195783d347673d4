@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60d9704a_31167a16",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-23T16:32:11Z",
+      "side": 1,
+      "message": "I\u0027d recommend GetPreferredHeightForWidth(kDesiredBubbleWidth)",
+      "range": {
+        "startLine": 441,
+        "startChar": 39,
+        "endLine": 441,
+        "endChar": 55
+      },
+      "revId": "b6311d9c5fefcfe1266d01822195783d347673d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
