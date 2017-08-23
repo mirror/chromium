@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2f10d8d_132cf0f7",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T20:44:31Z",
+      "side": 1,
+      "message": "Don\u0027t need to set it if no experiment right, I\u0027d prefer:\n\nif (GetParam(...) \u003d\u003d \"true\") {\n  params-\u003epri_adjustement \u003d ...;\n}",
+      "revId": "7b1e06bbea902dee52aa457a280705c557223dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "277aa00f_3966e83c",
+        "filename": "content/renderer/render_process_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-23T20:44:31Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "7b1e06bbea902dee52aa457a280705c557223dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
