@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "54383b66_40193c38",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-23T22:16:04Z",
+      "side": 1,
+      "message": "The fact that I\u0027m using a *.* name make it implicitly create a dictionary, e.g. here\u0027s what I have in my local state file:\n\n  \"tab_stats\":{  \n    \"browser_count_max\":3,\n    \"max_tabs_per_window\":3,\n    \"total_tab_count_max\":7\n  },",
+      "parentUuid": "ca9e339e_550de99a",
+      "range": {
+        "startLine": 53,
+        "startChar": 31,
+        "endLine": 53,
+        "endChar": 36
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4db04461_e60e10d9",
         "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c063d0b7_d1720667",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-23T22:16:04Z",
+      "side": 1,
+      "message": "Nop, fixed.",
+      "parentUuid": "4db04461_e60e10d9",
+      "range": {
+        "startLine": 60,
+        "startChar": 25,
+        "endLine": 60,
+        "endChar": 40
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4de7e6a9_6ad6e660",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-23T22:16:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b757c507_6f9635b8",
+      "range": {
+        "startLine": 133,
+        "startChar": 73,
+        "endLine": 133,
+        "endChar": 75
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2795cf7a_aaea4a30",
         "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
         "patchSetId": 13
@@ -91,6 +163,30 @@
       "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "409233b2_33b1244c",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-23T22:16:04Z",
+      "side": 1,
+      "message": "SGTM, I agree that it\u0027s much cleaner.",
+      "parentUuid": "2795cf7a_aaea4a30",
+      "range": {
+        "startLine": 141,
+        "startChar": 9,
+        "endLine": 141,
+        "endChar": 19
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "88cfc0d4_a0f70132",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-23T22:16:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7b53860_337c3dba",
+      "range": {
+        "startLine": 162,
+        "startChar": 58,
+        "endLine": 162,
+        "endChar": 64
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6286dc9b_534e45b8",
         "filename": "chrome/browser/metrics/tab_stats_tracker.h",
         "patchSetId": 13
@@ -137,6 +257,30 @@
       "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea6df57_2d736f00",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-23T22:16:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6286dc9b_534e45b8",
+      "range": {
+        "startLine": 21,
+        "startChar": 19,
+        "endLine": 21,
+        "endChar": 24
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "5157c562_6c00c3bf",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-23T22:16:04Z",
+      "side": 1,
+      "message": "Yeah, I was confused because I track the windows via chrome::BrowserListObserver::OnBrowser[Added|Removed] so I\u0027ve decided to stick with this semantic, but as discussed offline the rest of the code seems to prefer the term window, so I\u0027ll switch to that.",
+      "parentUuid": "1d8fc2b2_163c1684",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6bded00_da493646",
         "filename": "chrome/browser/metrics/tab_stats_tracker.h",
         "patchSetId": 13
@@ -183,6 +351,30 @@
       "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74affc4_07a0045b",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-23T22:16:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6bded00_da493646",
+      "range": {
+        "startLine": 182,
+        "startChar": 24,
+        "endLine": 182,
+        "endChar": 25
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
