@@ -74,6 +74,10 @@ size_t RegisterCastCrashKeys() {
 
       // Temporary for https://crbug.com/685996.
       {"user-cloud-policy-manager-connect-trace", ::crash_keys::kMediumSize},
+
+      // TODO(bcwhite): Remove after fixing https://crbug.com/736675
+      {"bad_histogram", kMediumSize},
+      {"from_location", kMediumSize},
   };
 
   return base::debug::InitCrashKeys(fixed_keys, arraysize(fixed_keys),
