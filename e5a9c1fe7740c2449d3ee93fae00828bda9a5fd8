@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63ed45b8_891148c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T11:42:19Z",
+      "side": 1,
+      "message": "minor: stray tabs in this file for me (when viewed in gerrit code review).",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "e5a9c1fe7740c2449d3ee93fae00828bda9a5fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c19cb72_2f28ce2d",
+        "filename": "content/browser/renderer_host/database_message_filter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T11:42:19Z",
+      "side": 1,
+      "message": "Stay includes?  (I think these two are stray includes from our earlier attempts to use service manager for connections, let\u0027s try to remove them).",
+      "revId": "e5a9c1fe7740c2449d3ee93fae00828bda9a5fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1edeaa_3427047a",
+        "filename": "content/browser/renderer_host/database_message_filter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T11:42:19Z",
+      "side": 1,
+      "message": "// Callback used to close ...",
+      "revId": "e5a9c1fe7740c2449d3ee93fae00828bda9a5fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "659d3448_4718ca09",
+        "filename": "content/browser/renderer_host/database_message_filter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T11:42:19Z",
+      "side": 1,
+      "message": "Maybe call it CloseDatabaseTracker() ?  (the \"On\" part in the method name doesn\u0027t add much, imho).",
+      "revId": "e5a9c1fe7740c2449d3ee93fae00828bda9a5fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d298a5b_5f451f5f",
+        "filename": "content/browser/renderer_host/database_message_filter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T11:42:19Z",
+      "side": 1,
+      "message": "\"Will establish the connection \" -\u003e \"Creates the WebDatabase connection \"",
+      "revId": "e5a9c1fe7740c2449d3ee93fae00828bda9a5fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af84fcd0_64b5202b",
+        "filename": "content/browser/renderer_host/database_message_filter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T11:42:19Z",
+      "side": 1,
+      "message": "// Our render process host ID.",
+      "revId": "e5a9c1fe7740c2449d3ee93fae00828bda9a5fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4540030_eddf45e9",
+        "filename": "content/browser/renderer_host/database_message_filter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T11:42:19Z",
+      "side": 1,
+      "message": "// Interface to the render process WebDataBase.",
+      "revId": "e5a9c1fe7740c2449d3ee93fae00828bda9a5fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8145989_2bf99ebc",
+        "filename": "content/child/web_database_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T11:42:19Z",
+      "side": 1,
+      "message": "I\u0027ll be fine if you remove the \"// namespace url\" part.  Note we did not use it at line 19 below for the service_manager case.",
+      "revId": "e5a9c1fe7740c2449d3ee93fae00828bda9a5fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3d3a19_38cf989e",
+        "filename": "content/common/database.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T11:42:19Z",
+      "side": 1,
+      "message": "nit sentences: end in a period.",
+      "revId": "e5a9c1fe7740c2449d3ee93fae00828bda9a5fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2726662_f89ce272",
+        "filename": "content/common/database.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T11:42:19Z",
+      "side": 1,
+      "message": "nit sentences: end in a period.\n\n+\n\n\"child process\" -\u003e \"renderer process\" ?",
+      "revId": "e5a9c1fe7740c2449d3ee93fae00828bda9a5fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

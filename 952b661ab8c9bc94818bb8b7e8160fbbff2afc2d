@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7858abdb_911344b5",
+        "filename": "content/common/database_messages.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-23T11:42:19Z",
+      "side": 0,
+      "message": "Two of these messages we removed (since no one used them).  Maybe add a note in your change description mentioning their removal?",
+      "revId": "952b661ab8c9bc94818bb8b7e8160fbbff2afc2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
