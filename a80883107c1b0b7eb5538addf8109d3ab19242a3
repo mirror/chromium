@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2de36098_265ded92",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-23T22:42:50Z",
+      "side": 1,
+      "message": "I don\u0027t think we\u0027ll want to track this if IsInOverlappedSession(). If we\u0027re overlapped now, we might not be when the tab finishes loading, so the metric will contain overlap.",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 50
+      },
+      "revId": "a80883107c1b0b7eb5538addf8109d3ab19242a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a191f6_ae69e1fd",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-23T22:42:50Z",
+      "side": 1,
+      "message": "Do we need to set background_tab_opening_swap_metrics_driver_ \u003d nullptr if in background tab opening session? If this creates an overlapped session, but ends before background tab opening, won\u0027t the background tab opening swap metrics contain overlapped data? (similar case below).\n\nAlso, we probably need to clear |foreground_contents_switched_to_times_| if beginning an overlapped session? Maybe we should add an OnOverlappedSessionStarted() that clears this and sets both drivers to nullptr?.",
+      "range": {
+        "startLine": 126,
+        "startChar": 31,
+        "endLine": 126,
+        "endChar": 65
+      },
+      "revId": "a80883107c1b0b7eb5538addf8109d3ab19242a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9a6d60_0990ac3a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-23T22:42:50Z",
+      "side": 1,
+      "message": "See OnSessionRestoreStartedLoadingTabs()",
+      "range": {
+        "startLine": 139,
+        "startChar": 31,
+        "endLine": 139,
+        "endChar": 67
+      },
+      "revId": "a80883107c1b0b7eb5538addf8109d3ab19242a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
