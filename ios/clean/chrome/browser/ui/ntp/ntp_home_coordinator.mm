@@ -14,6 +14,7 @@
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/content_suggestions/content_suggestions_alert_factory.h"
 #import "ios/chrome/browser/content_suggestions/content_suggestions_mediator.h"
+#import "ios/chrome/browser/content_suggestions/content_suggestions_metrics_recorder.h"
 #include "ios/chrome/browser/favicon/ios_chrome_large_icon_cache_factory.h"
 #include "ios/chrome/browser/favicon/ios_chrome_large_icon_service_factory.h"
 #include "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory.h"
@@ -63,6 +64,7 @@
 @property(nonatomic, strong) ContentSuggestionsViewController* viewController;
 @property(nonatomic, strong)
     ContentSuggestionsHeaderSynchronizer* headerCollectionInteractionHandler;
+@property(nonatomic, strong) ContentSuggestionsMetricsRecorder* metricsRecorder;
 
 @end
 
@@ -75,6 +77,7 @@
 @synthesize suggestionsMediator = _suggestionsMediator;
 @synthesize headerCollectionInteractionHandler =
     _headerCollectionInteractionHandler;
+@synthesize metricsRecorder = _metricsRecorder;
 
 #pragma mark - BrowserCoordinator
 
@@ -126,11 +129,15 @@
   self.suggestionsMediator.headerProvider =
       self.headerCoordinator.headerProvider;
 
+  self.metricsRecorder = [[ContentSuggestionsMetricsRecorder alloc] init];
+  self.metricsRecorder.delegate = self.suggestionsMediator;
+
   [self.viewController setDataSource:self.suggestionsMediator];
   self.viewController.suggestionCommandHandler = self;
   self.viewController.suggestionsDelegate =
       self.headerCoordinator.collectionDelegate;
   self.viewController.audience = self;
+  self.viewController.metricsRecorder = self.metricsRecorder;
 
   [self.viewController
       addChildViewController:self.headerCoordinator.viewController];
@@ -165,7 +172,7 @@
   // TODO: implement this.
 }
 
-- (void)openPageForItem:(CollectionViewItem*)item {
+- (void)openPageForItemAtIndexPath:(NSIndexPath*)indexPath {
   // TODO: implement this.
 }
 
@@ -180,6 +187,14 @@
                         readLaterAction:(BOOL)readLaterAction {
   ContentSuggestionsItem* suggestionsItem =
       base::mac::ObjCCastStrict<ContentSuggestionsItem>(item);
+
+  [self.metricsRecorder
+      onMenuOpenedForSuggestion:suggestionsItem
+                    atIndexPath:indexPath
+          suggestionsShownAbove:[self.viewController
+                                    numberOfSuggestionsAbove:indexPath
+                                                                 .section]];
+
   self.alertCoordinator = [ContentSuggestionsAlertFactory
       alertCoordinatorForSuggestionItem:suggestionsItem
                        onViewController:self.viewController
@@ -227,11 +242,7 @@
 }
 
 - (void)addItemToReadingList:(ContentSuggestionsItem*)item {
-  base::RecordAction(base::UserMetricsAction("MobileReadingListAdd"));
-  ReadingListModel* readingModel = ReadingListModelFactory::GetForBrowserState(
-      self.browser->browser_state());
-  readingModel->AddEntry(item.URL, base::SysNSStringToUTF8(item.title),
-                         reading_list::ADDED_VIA_CURRENT_APP);
+  // TODO: implement this.
 }
 
 - (void)dismissSuggestion:(ContentSuggestionsItem*)item
@@ -243,7 +254,6 @@
         [self.viewController.collectionViewModel indexPathForItem:item];
   }
 
-  // TODO(crbug.com/691979): Add metrics.
   [self.suggestionsMediator dismissSuggestion:item.suggestionIdentifier];
   [self.viewController dismissEntryAtIndexPath:itemIndexPath];
 }
