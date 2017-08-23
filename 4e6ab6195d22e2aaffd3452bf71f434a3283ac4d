@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f5e10e0_cc237c09",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-23T01:50:49Z",
+      "side": 1,
+      "message": "Would these other members need to be cleared/reset in the reused-Webview case?",
+      "range": {
+        "startLine": 191,
+        "startChar": 4,
+        "endLine": 194,
+        "endChar": 43
+      },
+      "revId": "4e6ab6195d22e2aaffd3452bf71f434a3283ac4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb89dd2_b1ab3618",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-23T01:50:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this patch is correct. OnSameDocumentNavigationCompleted() and WillSubmitForm() both call here with form_submitted \u003d true, so if you\u0027re removing the form from the set for the first one then you may wind up calling WillSubmitForm twice (once for WillSendSubmitEvent and once for the latter of the two above callsites).\n\n+tmartino as the author of this code",
+      "range": {
+        "startLine": 273,
+        "startChar": 46,
+        "endLine": 273,
+        "endChar": 60
+      },
+      "revId": "4e6ab6195d22e2aaffd3452bf71f434a3283ac4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac00dd0_763cdb0d",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-23T01:50:49Z",
+      "side": 1,
+      "message": "maybe call this |forms_to_submit_|",
+      "range": {
+        "startLine": 279,
+        "startChar": 7,
+        "endLine": 279,
+        "endChar": 29
+      },
+      "revId": "4e6ab6195d22e2aaffd3452bf71f434a3283ac4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af197d45_083dd851",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-23T01:50:49Z",
+      "side": 1,
+      "message": "nit: I think it\u0027s easier to understand if you put this below L288",
+      "range": {
+        "startLine": 284,
+        "startChar": 3,
+        "endLine": 284,
+        "endChar": 44
+      },
+      "revId": "4e6ab6195d22e2aaffd3452bf71f434a3283ac4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
