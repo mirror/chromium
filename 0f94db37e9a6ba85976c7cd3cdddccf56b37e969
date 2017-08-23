@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c68f6d06_8193f153",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1331,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-08-23T03:36:15Z",
+      "side": 1,
+      "message": "https://bugs.chromium.org/p/chromium/issues/detail?id\u003d698985",
+      "parentUuid": "9cf3aed1_194b2087",
+      "revId": "0f94db37e9a6ba85976c7cd3cdddccf56b37e969",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3b363be_8c5fd32a",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.h",
         "patchSetId": 10
