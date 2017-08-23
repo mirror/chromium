@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63fc7a5d_03f38f42",
+        "filename": "ios/chrome/browser/google/google_logo_service.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-23T16:04:56Z",
+      "side": 1,
+      "message": "Ouch, if this KeyedService depends on another KeyedService, it should be injected from the factory and the proper dependency should be defined in the GoogleLogoServiceFactory. It should probably also directly take the request context as parameter to avoid a dependency on ChromeBrowserState.\n\nPlease change this method to take a TemplateURLService* instead of an ios::ChromeBrowserState* and add the dependency to the factory.\n\nSo, here the code should be:\n\n  GoogleLogoService::GoogleLogoService(\n      TemplateURLService* template_url_service,\n      net::URLRequestContextGetter* request_context_getter)\n      : LogoService(\n            DoodleDirectory(),\n            template_url_service,\n            image_fetcher::CreateIOSImageDecoder(),\n            request_context_getter,\n            /*use_gray_background\u003d*/false) {}\n\nThen the factory should have:\n\n  GoogleLogoServiceFactory::GoogleLogoServiceFactory()\n      : BrowserStateKeyedServiceFactory(\n            \"GoogleLogoService\",\n            BrowserStateDependencyManager::GetInstance()) {\n    DependsOn(ios::TemplateURLServiceFactory::GetInstance());\n  }\n\n  std::unique_ptr\u003cKeyedService\u003e GoogleLogoServiceFactory::BuildServiceInstanceFor(\n      web::BrowserState* context) const {\n    ios::ChromeBrowserState* browser_state \u003d\n        ios::ChromeBrowserState::FromBrowserState(context);\n    return base::MakeUnique\u003cGoogleLogoService\u003e(\n        ios::TemplateURLServiceFactory::GetForBrowserState(browser_state),\n        browser_state-\u003eGetRequestContext());\n  }",
+      "revId": "c1de6a40584d28c4ab90043d3ecedd99d4a5b4d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
