@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9828d52e_61e2de4d",
+        "filename": "ash/wm/overview/window_selector_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-23T00:05:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79403122_f45d4bc6",
+      "range": {
+        "startLine": 86,
+        "startChar": 27,
+        "endLine": 86,
+        "endChar": 34
+      },
+      "revId": "3fcc23c323c65469e54323942aa6046eb620d7e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3004458a_cfc6c9df",
         "filename": "ash/wm/overview/window_selector_controller.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "94e118e2_8816582d",
+        "filename": "ash/wm/overview/window_selector_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-23T00:05:28Z",
+      "side": 1,
+      "message": "The drag controller could not be reset here, otherwise it will cause the same free-after-use problem as before. The call stack will look like: OverviewWindowDragController::SnapWindow() calls SplitViewController::SnapWindow() calls SplitViewController::NotifySplitViewStateChanged() calls WindowSelector::OnSplitViewStateChanged() calls WindowSelector::CancelSelection() calls WindowSelectorController::OnSelectionEnded(). So we could not delete the drag controller here.",
+      "parentUuid": "3004458a_cfc6c9df",
+      "revId": "3fcc23c323c65469e54323942aa6046eb620d7e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "858b9c6b_3b39967e",
         "filename": "ash/wm/overview/window_selector_controller.cc",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-22T20:03:35Z",
       "side": 1,
       "message": "This method is called from selector, and it\u0027s a bit odd to check the selector here. (at least I had to read through twice)",
+      "revId": "3fcc23c323c65469e54323942aa6046eb620d7e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026a40a6_71cfe6e6",
+        "filename": "ash/wm/overview/window_selector_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-23T00:05:28Z",
+      "side": 1,
+      "message": "Modified as you suggested.",
+      "parentUuid": "858b9c6b_3b39967e",
       "revId": "3fcc23c323c65469e54323942aa6046eb620d7e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
