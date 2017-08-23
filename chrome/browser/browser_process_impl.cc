@@ -185,6 +185,10 @@
 #include "chrome/browser/android/physical_web/physical_web_data_source_android.h"
 #endif
 
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/resource_coordinator/window_occlusion_tracker.h"
+#endif
+
 #if (defined(OS_WIN) || defined(OS_LINUX)) && !defined(OS_CHROMEOS)
 // How often to check if the persistent instance of Chrome needs to restart
 // to install an update.
@@ -793,6 +797,20 @@ gcm::GCMDriver* BrowserProcessImpl::gcm_driver() {
   if (!gcm_driver_)
     CreateGCMDriver();
   return gcm_driver_.get();
+}
+
+resource_coordinator::WindowOcclusionTracker*
+BrowserProcessImpl::GetWindowOcclusionTracker() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+#if defined(OS_CHROMEOS)
+  if (!window_occlusion_tracker_) {
+    window_occlusion_tracker_ =
+        std::make_unique<resource_coordinator::WindowOcclusionTracker>();
+  }
+  return window_occlusion_tracker_.get();
+#else
+  return nullptr;
+#endif
 }
 
 resource_coordinator::TabManager* BrowserProcessImpl::GetTabManager() {

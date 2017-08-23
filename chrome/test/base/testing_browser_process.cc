@@ -33,6 +33,10 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/message_center/message_center.h"
 
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/resource_coordinator/window_occlusion_tracker.h"
+#endif
+
 #if BUILDFLAG(ENABLE_BACKGROUND)
 #include "chrome/browser/background/background_mode_manager.h"
 #endif
@@ -393,6 +397,19 @@ TestingBrowserProcess::network_time_tracker() {
 
 gcm::GCMDriver* TestingBrowserProcess::gcm_driver() {
   return nullptr;
+}
+
+resource_coordinator::WindowOcclusionTracker*
+TestingBrowserProcess::GetWindowOcclusionTracker() {
+#if defined(OS_CHROMEOS)
+  if (!window_occlusion_tracker_) {
+    window_occlusion_tracker_ =
+        std::make_unique<resource_coordinator::WindowOcclusionTracker>();
+  }
+  return window_occlusion_tracker_.get();
+#else
+  return nullptr;
+#endif
 }
 
 resource_coordinator::TabManager* TestingBrowserProcess::GetTabManager() {
