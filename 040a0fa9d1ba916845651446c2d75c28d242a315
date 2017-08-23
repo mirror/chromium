@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbefc9cf_4aba6899",
+        "filename": "base/test/android/java/src/org/chromium/base/MultiprocessTestClientLauncher.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-23T16:45:50Z",
+      "side": 1,
+      "message": "Optional: So do you want to annotate the return value with @Nullable?",
+      "revId": "040a0fa9d1ba916845651446c2d75c28d242a315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2485e139_9204d892",
+        "filename": "base/test/android/java/src/org/chromium/base/MultiprocessTestClientLauncher.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-23T16:45:50Z",
+      "side": 1,
+      "message": "Optional: if (mDelegate \u003d\u003d null) return;",
+      "revId": "040a0fa9d1ba916845651446c2d75c28d242a315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca001abc_921b7c5b",
+        "filename": "base/test/android/java/src/org/chromium/base/MultiprocessTestClientServiceDelegate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-23T16:45:50Z",
+      "side": 1,
+      "message": "Optional: if (initClassName \u003d\u003d null) return;",
+      "revId": "040a0fa9d1ba916845651446c2d75c28d242a315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51631b59_bec3a877",
+        "filename": "base/test/android/java/src/org/chromium/base/MultiprocessTestClientServiceDelegate.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-23T16:45:50Z",
+      "side": 1,
+      "message": "Nit: Could you add a comment as to why you skip the first callback?",
+      "revId": "040a0fa9d1ba916845651446c2d75c28d242a315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
