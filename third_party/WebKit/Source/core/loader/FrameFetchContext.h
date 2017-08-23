@@ -31,6 +31,8 @@
 #ifndef FrameFetchContext_h
 #define FrameFetchContext_h
 
+#include <memory>
+
 #include "core/CoreExport.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/loader/BaseFetchContext.h"
@@ -155,6 +157,9 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
 
   std::unique_ptr<WebURLLoader> CreateURLLoader(
       const ResourceRequest&) override;
+  std::unique_ptr<WebURLRequestsTracker> IssueRequestsTracker() {
+    return std::move(requests_tracker_);
+  }
 
   bool IsDetached() const override { return frozen_state_; }
 
@@ -225,6 +230,8 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
 
   Member<DocumentLoader> document_loader_;
   Member<Document> document_;
+  std::unique_ptr<WebURLRequestsTracker> requests_tracker_;
+  bool has_requested_requests_tracker_ = false;
 
   // Non-null only when detached.
   Member<const FrozenState> frozen_state_;
