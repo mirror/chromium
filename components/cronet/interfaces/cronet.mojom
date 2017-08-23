@@ -1,0 +1,12 @@
+module cronet.mojom;
+
+struct CronetEngineParams {
+  string userAgent;
+  string storagePath;
+};
+
+
+interface CronetEngine {
+  CreateWithParams(CronetEngineParams params);
+  StartNetLogToFile(string file);
+};
