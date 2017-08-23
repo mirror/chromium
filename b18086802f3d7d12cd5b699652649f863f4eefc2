@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "38877d5e_c875bbd9",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T13:50:47Z",
+      "side": 1,
+      "message": "This is indeed uncommon.\nI have switched to use base::Callback and lambda expression.",
+      "parentUuid": "14e9bfe7_d733daa6",
+      "revId": "b18086802f3d7d12cd5b699652649f863f4eefc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80c63c02_56afb4ac",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 3
@@ -50,6 +68,24 @@
       "revId": "b18086802f3d7d12cd5b699652649f863f4eefc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ceff951_94570149",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-23T13:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80c63c02_56afb4ac",
+      "revId": "b18086802f3d7d12cd5b699652649f863f4eefc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
