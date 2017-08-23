@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b3bda1e3_87d67c6a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSLazyParsingTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-23T07:37:18Z",
+      "side": 1,
+      "message": "Because streams can\u0027t peek ahead too far, they can only detect empty blocks like {}, not { \u003cspace\u003e }.",
+      "parentUuid": "c2431597_3012e06a",
+      "revId": "a22dec679081f44039e9678ea5183006bcb5e509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7173daa6_7fef4722",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f6ec881d_e47f8084",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-23T07:37:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7173daa6_7fef4722",
+      "revId": "a22dec679081f44039e9678ea5183006bcb5e509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8e2975f_7400dcb4",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "a22dec679081f44039e9678ea5183006bcb5e509",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a2a69ec_4ed2782a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-23T07:37:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8e2975f_7400dcb4",
+      "revId": "a22dec679081f44039e9678ea5183006bcb5e509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
