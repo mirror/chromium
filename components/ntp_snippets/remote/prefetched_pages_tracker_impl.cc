@@ -72,7 +72,7 @@ bool PrefetchedPagesTrackerImpl::PrefetchedOfflinePageExists(
   DCHECK(prefetched_url_counts_.count(url) == 0 ||
          prefetched_url_counts_.find(url)->second > 0);
   // It is enough to check existence of an item (instead of its count), because
-  // the mapping does not contain zero counts.
+  // the mapping does not contain URLs with zero counts.
   return prefetched_url_counts_.count(url) == 1;
 }
 
