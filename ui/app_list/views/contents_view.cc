@@ -453,6 +453,10 @@ bool ContentsView::Back() {
   return true;
 }
 
+void ContentsView::OnFullscreenStateChanged(AppListView::AppListState state) {
+  model_->SetStateFullscreen(state);
+}
+
 gfx::Size ContentsView::GetDefaultContentsSize() const {
   gfx::Size size = apps_container_view_->GetPreferredSize();
   if (is_fullscreen_app_list_enabled_)
