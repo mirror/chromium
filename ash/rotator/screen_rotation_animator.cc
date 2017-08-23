@@ -5,6 +5,7 @@
 #include "ash/rotator/screen_rotation_animator.h"
 
 #include "ash/ash_switches.h"
+#include "ash/display/display_configuration_controller.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/rotator/screen_rotation_animation.h"
 #include "ash/rotator/screen_rotation_animator_observer.h"
@@ -194,7 +195,10 @@ void ScreenRotationAnimator::StartRotationAnimation(
   }
 
   rotation_request->old_rotation = current_rotation;
-  if (has_switch_ash_disable_smooth_screen_rotation_) {
+  if (has_switch_ash_disable_smooth_screen_rotation_ ||
+      Shell::Get()
+          ->display_configuration_controller()
+          ->disable_smooth_screen_rotation()) {
     StartSlowAnimation(std::move(rotation_request));
   } else {
     std::unique_ptr<viz::CopyOutputRequest> copy_output_request =

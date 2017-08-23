@@ -60,6 +60,13 @@ class ASH_EXPORT DisplayConfigurationController
   // WindowTreeHostManager::Observer
   void OnDisplayConfigurationChanged() override;
 
+  void set_disable_smooth_screen_rotation(bool disable) {
+    disable_smooth_screen_rotation_ = disable;
+  }
+  bool disable_smooth_screen_rotation() const {
+    return disable_smooth_screen_rotation_;
+  }
+
  protected:
   friend class DisplayConfigurationControllerTestApi;
 
@@ -88,6 +95,7 @@ class ASH_EXPORT DisplayConfigurationController
   WindowTreeHostManager* window_tree_host_manager_;  // weak ptr
   std::unique_ptr<DisplayAnimator> display_animator_;
   std::unique_ptr<DisplayChangeLimiter> limiter_;
+  bool disable_smooth_screen_rotation_;
 
   base::WeakPtrFactory<DisplayConfigurationController> weak_ptr_factory_;
 

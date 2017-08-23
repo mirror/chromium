@@ -64,6 +64,7 @@ DisplayConfigurationController::DisplayConfigurationController(
     WindowTreeHostManager* window_tree_host_manager)
     : display_manager_(display_manager),
       window_tree_host_manager_(window_tree_host_manager),
+      disable_smooth_screen_rotation_(false),
       weak_ptr_factory_(this) {
   window_tree_host_manager_->AddObserver(this);
   if (chromeos::IsRunningAsSystemCompositor())
