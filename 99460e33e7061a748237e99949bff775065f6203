@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f031220a_e0da4e2a",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-23T05:43:55Z",
+      "side": 1,
+      "message": "Yeah this CL\u0027s target is to implement at least the |Register| method completely.\nWill keep updating this CL continuously, at the same time I\u0027ll probably put some inline questions to ask for your help, and once it\u0027s all OK I\u0027ll ask for an formal review.",
+      "parentUuid": "b2d6117d_4b4fb7e5",
+      "revId": "99460e33e7061a748237e99949bff775065f6203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f821f56_4cd10e94",
         "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "7cf56229_22d50f7f",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-23T05:43:55Z",
+      "side": 1,
+      "message": "Ack and Thanks!",
+      "parentUuid": "7f821f56_4cd10e94",
+      "range": {
+        "startLine": 16,
+        "startChar": 15,
+        "endLine": 16,
+        "endChar": 57
+      },
+      "revId": "99460e33e7061a748237e99949bff775065f6203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3900e371_3521e4ee",
         "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "99460e33e7061a748237e99949bff775065f6203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "078f2fde_6d520354",
+        "filename": "content/common/service_worker/service_worker_provider_interfaces.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-23T05:43:55Z",
+      "side": 1,
+      "message": "Ack and Thanks!",
+      "parentUuid": "3900e371_3521e4ee",
+      "revId": "99460e33e7061a748237e99949bff775065f6203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
