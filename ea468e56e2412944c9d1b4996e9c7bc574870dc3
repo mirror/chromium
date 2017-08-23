@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aeb28c42_5d87a167",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T04:32:28Z",
+      "side": 1,
+      "message": "I argue that the current code is easier to read and more efficient (less string appends).\nYour suggestion is more compact.\nI still prefer the current one.",
+      "parentUuid": "3eddca3c_c4ff040d",
+      "revId": "ea468e56e2412944c9d1b4996e9c7bc574870dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c1feec3_0926e91f",
         "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "ea468e56e2412944c9d1b4996e9c7bc574870dc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa414107_3569baeb",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T04:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c1feec3_0926e91f",
+      "revId": "ea468e56e2412944c9d1b4996e9c7bc574870dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "819996ee_3db064cf",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T04:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04d57885_fe2baec6",
+      "revId": "ea468e56e2412944c9d1b4996e9c7bc574870dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bb547db_7a3d20bd",
         "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-23T04:11:51Z",
       "side": 1,
       "message": "DCHECK(!tokens.empty());",
+      "revId": "ea468e56e2412944c9d1b4996e9c7bc574870dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f08ce9_f6680417",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T04:32:28Z",
+      "side": 1,
+      "message": "I\u0027ve added an explicit check.",
+      "parentUuid": "1bb547db_7a3d20bd",
       "revId": "ea468e56e2412944c9d1b4996e9c7bc574870dc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "98f30e1e_4f6dde84",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T04:32:28Z",
+      "side": 1,
+      "message": "No it\u0027s \"en-US,en,fr,en-CA\". Duplicates are not added.",
+      "parentUuid": "5cfc34e3_14049a7a",
+      "revId": "ea468e56e2412944c9d1b4996e9c7bc574870dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "005c60b3_207655f1",
         "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "ea468e56e2412944c9d1b4996e9c7bc574870dc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9adb08_633a7834",
+        "filename": "chrome/browser/net/chrome_http_user_agent_settings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-08-23T04:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "005c60b3_207655f1",
+      "revId": "ea468e56e2412944c9d1b4996e9c7bc574870dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
