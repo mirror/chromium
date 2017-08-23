@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "244fd2b9_61a78746",
+        "filename": "chrome/app/chromium_strings.grd",
+        "patchSetId": 16
+      },
+      "lineNbr": 1206,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-23T16:47:16Z",
+      "side": 1,
+      "message": "This string isn\u0027t actually different between Chrome and Chromium, but OTOH I wouldn\u0027t want to split this up between {chromium,google_chrome}_strings.grd and generated_resources.grd either... String branding is one of the areas I\u0027m really not happy about I guess :-/",
+      "range": {
+        "startLine": 1206,
+        "startChar": 11,
+        "endLine": 1206,
+        "endChar": 27
+      },
+      "revId": "38a484a148098d10a095105495c7642faae9de84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0c942caf_fc1880a3",
+        "filename": "chrome/browser/ui/framebust_block_infobar_delegate.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-23T16:47:16Z",
+      "side": 1,
+      "message": "base::string16()",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "38a484a148098d10a095105495c7642faae9de84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
