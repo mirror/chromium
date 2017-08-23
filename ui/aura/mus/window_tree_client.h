@@ -129,7 +129,6 @@ class AURA_EXPORT WindowTreeClient
   FocusSynchronizer* focus_synchronizer() { return focus_synchronizer_.get(); }
 
   bool connected() const { return tree_ != nullptr; }
-  ClientSpecificId client_id() const { return client_id_; }
 
   void SetCanFocus(Window* window, bool can_focus);
   void SetCanAcceptDrops(WindowMus* window, bool can_accept_drops);
@@ -579,10 +578,6 @@ class AURA_EXPORT WindowTreeClient
 
   // This may be null in tests.
   service_manager::Connector* connector_;
-
-  // This is set once and only once when we get OnEmbed(). It gives the unique
-  // id for this client.
-  ClientSpecificId client_id_;
 
   // Id assigned to the next window created.
   ClientSpecificId next_window_id_;

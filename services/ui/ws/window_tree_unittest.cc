@@ -285,7 +285,9 @@ TEST_F(WindowTreeTest, FocusOnPointer) {
   EXPECT_EQ("Focused id=2,1",
             ChangesToDescription1(*wm_client()->tracker()->changes())[0]);
   ASSERT_GE(tree1_client->tracker()->changes()->size(), 1u);
-  EXPECT_EQ("Focused id=2,1",
+  // clients that created this window is receiving the event, so client_id part
+  // would be reset to 0 before sending back to clients.
+  EXPECT_EQ("Focused id=0,1",
             ChangesToDescription1(*tree1_client->tracker()->changes())[0]);
 
   DispatchEventAndAckImmediately(CreatePointerUpEvent(21, 22));
@@ -326,9 +328,11 @@ TEST_F(WindowTreeTest, BasicInputEventTarget) {
   EXPECT_EQ("Focused id=2,1",
             ChangesToDescription1(*wm_client()->tracker()->changes())[0]);
   ASSERT_EQ(2u, embed_client->tracker()->changes()->size());
-  EXPECT_EQ("Focused id=2,1",
+  // embed_client created this window that is receiving the event, so client_id
+  // part would be reset to 0 before sending back to clients.
+  EXPECT_EQ("Focused id=0,1",
             ChangesToDescription1(*embed_client->tracker()->changes())[0]);
-  EXPECT_EQ("InputEvent window=2,1 event_action=16",
+  EXPECT_EQ("InputEvent window=0,1 event_action=16",
             ChangesToDescription1(*embed_client->tracker()->changes())[1]);
 }
 
@@ -463,7 +467,9 @@ TEST_F(WindowTreeTest, StartPointerWatcherSendsOnce) {
   // watcher.
   DispatchEventAndAckImmediately(pointer_up);
   ASSERT_EQ(1u, client->tracker()->changes()->size());
-  EXPECT_EQ("InputEvent window=2,1 event_action=18 matches_pointer_watcher",
+  // clients that created this window is receiving the event, so client_id part
+  // would be reset to 0 before sending back to clients.
+  EXPECT_EQ("InputEvent window=0,1 event_action=18 matches_pointer_watcher",
             SingleChangeToDescription(*client->tracker()->changes()));
 }
 
@@ -497,6 +503,8 @@ TEST_F(WindowTreeTest, StartPointerWatcherKeyEventsDisallowed) {
   ui::KeyEvent key_pressed(ui::ET_KEY_PRESSED, ui::VKEY_A, ui::EF_NONE);
   DispatchEventAndAckImmediately(key_pressed);
   EXPECT_EQ(0u, other_binding->client()->tracker()->changes()->size());
+  // clients that created this window is receiving the event, so client_id part
+  // would be reset to 0 before sending back to clients.
   EXPECT_EQ("InputEvent window=0,3 event_action=7",
             SingleChangeToDescription(*wm_client()->tracker()->changes()));
 
@@ -509,6 +517,8 @@ TEST_F(WindowTreeTest, StartPointerWatcherKeyEventsDisallowed) {
 TEST_F(WindowTreeTest, KeyEventSentToWindowManagerWhenNothingFocused) {
   ui::KeyEvent key_pressed(ui::ET_KEY_PRESSED, ui::VKEY_A, ui::EF_NONE);
   DispatchEventAndAckImmediately(key_pressed);
+  // clients that created this window is receiving the event, so client_id part
+  // would be reset to 0 before sending back to clients.
   EXPECT_EQ("InputEvent window=0,3 event_action=7",
             SingleChangeToDescription(*wm_client()->tracker()->changes()));
 }
@@ -682,6 +692,8 @@ TEST_F(WindowTreeTest, EventAck) {
   wm_client()->tracker()->changes()->clear();
   DispatchEventWithoutAck(CreateMouseMoveEvent(21, 22));
   ASSERT_EQ(1u, wm_client()->tracker()->changes()->size());
+  // clients that created this window is receiving the event, so client_id part
+  // would be reset to 0 before sending back to clients.
   EXPECT_EQ("InputEvent window=0,3 event_action=17",
             ChangesToDescription1(*wm_client()->tracker()->changes())[0]);
   wm_client()->tracker()->changes()->clear();
