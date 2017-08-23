@@ -110,6 +110,7 @@ class UIDevToolsDOMAgent : public ui_devtools::UiDevToolsBaseAgent<
   // agent.
   std::unique_ptr<ui::Layer> layer_for_highlighting_;
   gfx::Rect hovered_element_bounds_;
+  gfx::Rect hit_test_window_bounds_;
   std::vector<aura::Window*> root_windows_;
   base::ObserverList<UIDevToolsDOMAgentObserver> observers_;
 
