@@ -264,9 +264,13 @@ ValueStore::Status LazyLevelDb::ToValueStoreError(
 
 bool LazyLevelDb::DeleteDbFile() {
   base::ThreadRestrictions::AssertIOAllowed();
-  db_.reset();  // release any lock on the directory
-  if (!base::DeleteFile(db_path_, true /* recursive */)) {
-    LOG(WARNING) << "Failed to delete leveldb database at " << db_path_.value();
+  db_.reset();  // Close the database.
+
+  leveldb::Status s =
+      leveldb::DestroyDB(db_path_.AsUTF8Unsafe(), leveldb_env::Options());
+  if (!s.ok()) {
+    LOG(WARNING) << "Failed to destroy leveldb database at "
+                 << db_path_.value();
     return false;
   }
   return true;
