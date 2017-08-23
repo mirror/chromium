@@ -22,3 +22,8 @@ struct WindowFeatures {
     bool tool_bar_visible = true;
     bool scrollbars_visible = true;
 };
+
+// Updates the window features of the main frame's render view.
+interface WindowFeaturesClient {
+  SetWindowFeatures(WindowFeatures window_features);
+};

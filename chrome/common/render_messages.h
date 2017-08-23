@@ -131,10 +131,6 @@ IPC_MESSAGE_ROUTED3(ChromeViewMsg_UpdateBrowserControlsState,
                     content::BrowserControlsState /* current */,
                     bool /* animate */)
 
-// Updates the window features of the render view.
-IPC_MESSAGE_ROUTED1(ChromeViewMsg_SetWindowFeatures,
-                    blink::mojom::WindowFeatures /* window_features */)
-
 // Requests application info for the frame. The renderer responds back with
 // ChromeFrameHostMsg_DidGetWebApplicationInfo.
 IPC_MESSAGE_ROUTED0(ChromeFrameMsg_GetWebApplicationInfo)
