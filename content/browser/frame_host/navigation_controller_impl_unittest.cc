@@ -4291,8 +4291,11 @@ TEST_F(NavigationControllerTest, CopyStateFromAndPrune3) {
   EXPECT_EQ(url4, other_controller.GetEntryAtIndex(2)->GetURL());
 }
 
-// Test CopyStateFromAndPrune with 2 urls, 2 entries in the target, with
-// not the last entry selected in the target.
+// Test CopyStateFromAndPrune with the following setup:
+// Source: 1 *2*
+// This: *3* 4
+// Should yield: 1 2 *3*
+// (*n* is selected entry and ~n~ is a pending entry).
 TEST_F(NavigationControllerTest, CopyStateFromAndPruneNotLast) {
   NavigationControllerImpl& controller = controller_impl();
   const GURL url1("http://foo1");
@@ -4323,8 +4326,11 @@ TEST_F(NavigationControllerTest, CopyStateFromAndPruneNotLast) {
   EXPECT_EQ(url3, other_controller.GetEntryAtIndex(2)->GetURL());
 }
 
-// Test CopyStateFromAndPrune with 2 urls, the first selected and 1 entry plus
-// a pending entry in the target.
+// Test CopyStateFromAndPrune with the following setup:
+// Source: *1* 2
+// This: *3* ~4~
+// Should yield: 1 *3* ~4~
+// (*n* is selected entry and ~n~ is a pending entry).
 TEST_F(NavigationControllerTest, CopyStateFromAndPruneTargetPending) {
   NavigationControllerImpl& controller = controller_impl();
   const GURL url1("http://foo1");
@@ -4360,9 +4366,12 @@ TEST_F(NavigationControllerTest, CopyStateFromAndPruneTargetPending) {
   EXPECT_EQ(url4, other_controller.GetPendingEntry()->GetURL());
 }
 
-// Test CopyStateFromAndPrune with 1 url in the source, 1 entry and a pending
-// client redirect entry in the target.  This used to crash
-// (http://crbug.com/234809).
+// Test CopyStateFromAndPrune with the following setup:
+// Source: *1*
+// This: *2a* ~~2b~~
+// Should yield: 1 *2a* ~~2b~~
+// (*n* is the selected entry and ~~n~~ is a pending same site entry).
+// This used to crash (http://crbug.com/234809).
 TEST_F(NavigationControllerTest, CopyStateFromAndPruneTargetPending2) {
   NavigationControllerImpl& controller = controller_impl();
   const GURL url1("http://foo1");
@@ -4374,10 +4383,15 @@ TEST_F(NavigationControllerTest, CopyStateFromAndPruneTargetPending2) {
   std::unique_ptr<TestWebContents> other_contents(
       static_cast<TestWebContents*>(CreateTestWebContents()));
   NavigationControllerImpl& other_controller = other_contents->GetController();
+
+  auto navigation =
+      NavigationSimulator::CreateBrowserInitiated(url2a, other_contents.get());
+  navigation->Commit();
   other_contents->NavigateAndCommit(url2a);
-  // Simulate a client redirect, which has the same page ID as entry 2a.
-  other_controller.LoadURL(
-      url2b, Referrer(), ui::PAGE_TRANSITION_LINK, std::string());
+
+  auto same_site_navigation =
+      NavigationSimulator::CreateBrowserInitiated(url2b, other_contents.get());
+  same_site_navigation->Start();
 
   other_contents->ExpectSetHistoryOffsetAndLength(1, 2);
   other_controller.CopyStateFromAndPrune(&controller, false);
@@ -4396,8 +4410,7 @@ TEST_F(NavigationControllerTest, CopyStateFromAndPruneTargetPending2) {
   EXPECT_EQ(url2b, other_controller.GetPendingEntry()->GetURL());
 
   // Let the pending entry commit.
-  other_contents->TestDidNavigate(other_contents->GetMainFrame(),
-                                  0, false, url2b, ui::PAGE_TRANSITION_LINK);
+  same_site_navigation->Commit();
 }
 
 // Test CopyStateFromAndPrune with 2 urls, a back navigation pending in the
