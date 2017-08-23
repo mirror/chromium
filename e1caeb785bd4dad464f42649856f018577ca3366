@@ -22,6 +22,30 @@
       "revId": "e1caeb785bd4dad464f42649856f018577ca3366",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952b2fff_9f8ee996",
+        "filename": "chrome/browser/browser_process_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-23T03:14:05Z",
+      "side": 1,
+      "message": "Done.  I didn\u0027t do that initially because I was concerned about tear-down order, since I imagine other objects will depend on this (And will be using it on the UI thread, unlike the IOThread, which they use on the...erm...IOThread).  We can just deal with that if/when it turns out to be an issue, though.",
+      "parentUuid": "05d31b1d_da4aa22c",
+      "range": {
+        "startLine": 220,
+        "startChar": 2,
+        "endLine": 222,
+        "endChar": 17
+      },
+      "revId": "e1caeb785bd4dad464f42649856f018577ca3366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
