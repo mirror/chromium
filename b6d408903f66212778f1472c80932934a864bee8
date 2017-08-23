@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e933eafa_62f2d2f2",
+        "filename": "base/android/proguard/disable_obfuscation.flags",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-08-23T15:36:46Z",
+      "side": 1,
+      "message": "The existing WebView version does this for all classes, not just these packages; is it okay to do that instead here? The WebView glue code is not in either of these packages, for a start..",
+      "revId": "b6d408903f66212778f1472c80932934a864bee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
