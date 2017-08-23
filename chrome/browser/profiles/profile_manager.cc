@@ -410,7 +410,15 @@ void ProfileManager::NukeDeletedProfilesFromDisk() {
 // static
 Profile* ProfileManager::GetLastUsedProfile() {
   ProfileManager* profile_manager = g_browser_process->profile_manager();
-  return profile_manager->GetLastUsedProfile(profile_manager->user_data_dir_);
+  return profile_manager->GetLastUsedProfileImpl(
+      profile_manager->user_data_dir_, false);
+}
+
+// static
+Profile* ProfileManager::GetLastUsedOrDefaultProfile() {
+  ProfileManager* profile_manager = g_browser_process->profile_manager();
+  return profile_manager->GetLastUsedProfileImpl(
+      profile_manager->user_data_dir_, true);
 }
 
 // static
@@ -626,6 +634,12 @@ base::FilePath ProfileManager::GetInitialProfileDir() {
 
 Profile* ProfileManager::GetLastUsedProfile(
     const base::FilePath& user_data_dir) {
+  return GetLastUsedProfileImpl(user_data_dir, false);
+}
+
+Profile* ProfileManager::GetLastUsedProfileImpl(
+    const base::FilePath& user_data_dir,
+    bool allow_default_profile) {
 #if defined(OS_CHROMEOS)
   // Use default login profile if user has not logged in yet.
   if (!logged_in_) {
@@ -641,7 +655,15 @@ Profile* ProfileManager::GetLastUsedProfile(
     profile_dir = chromeos::ProfileHelper::Get()->GetActiveUserProfileDir();
 
     base::FilePath profile_path(user_data_dir);
-    Profile* profile = GetProfileByPath(profile_path.Append(profile_dir));
+    profile_path = profile_path.Append(profile_dir);
+    ProfileInfo* profile_info = GetProfileInfoByPath(profile_path);
+    Profile* profile = nullptr;
+    if (profile_info) {
+      if (profile_info->created)
+        profile = profile_info->profile.get();
+      else if (allow_default_profile)
+        profile = GetActiveUserOrOffTheRecordProfileFromPath(user_data_dir);
+    }
 
     // Accessing a user profile before it is loaded may lead to policy exploit.
     // See http://crbug.com/689206.

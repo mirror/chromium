@@ -53,6 +53,10 @@ class ProfileManager : public content::NotificationObserver,
   // GetLastUsedProfileAllowedByPolicy() instead.
   static Profile* GetLastUsedProfile();
 
+  // Same as GetLastUsedProfile() but returns default profile in case user
+  // profile has not been initialized yet.
+  static Profile* GetLastUsedOrDefaultProfile();
+
   // Same as GetLastUsedProfile() but returns the incognito Profile if
   // incognito mode is forced. This should be used if the last used Profile
   // will be used to open new browser windows.
@@ -343,6 +347,9 @@ class ProfileManager : public content::NotificationObserver,
   // about profiles without having to load them from disk.
   // Deprecated, use GetProfileAttributesStorage() instead.
   ProfileInfoCache& GetProfileInfoCache();
+
+  Profile* GetLastUsedProfileImpl(const base::FilePath& user_data_dir,
+                                  bool allow_default_profile);
 
   // Adds |profile| to the profile attributes storage if it hasn't been added
   // yet.
