@@ -442,9 +442,16 @@ class WebContents : public PageNavigator,
   // Get the last time that the WebContents was made hidden.
   virtual base::TimeTicks GetLastHiddenTime() const = 0;
 
-  // Invoked when the WebContents becomes shown/hidden.
+  // Invoked when the WebContents becomes shown/hidden. An hidden WebContents
+  // isn't painted on the screen.
   virtual void WasShown() = 0;
   virtual void WasHidden() = 0;
+
+  // Invoked when the WebContents becomes occluded/unoccluded. An occluded
+  // WebContents isn't painted on the screen, except in a window switching
+  // feature (e.g. Alt-Tab).
+  virtual void WasOccluded() = 0;
+  virtual void WasUnOccluded() = 0;
 
   // Whether the WebContents is visible. This can return true even if the page
   // is still loading, as opposed to RenderWidgetHostView::IsShowing(), which
