@@ -189,8 +189,7 @@ URLRequestContextBuilder::HttpCacheParams::HttpCacheParams()
 URLRequestContextBuilder::HttpCacheParams::~HttpCacheParams() {}
 
 URLRequestContextBuilder::URLRequestContextBuilder()
-    : name_(nullptr),
-      enable_brotli_(false),
+    : enable_brotli_(false),
       network_quality_estimator_(nullptr),
       shared_http_user_agent_settings_(nullptr),
       data_enabled_(false),
