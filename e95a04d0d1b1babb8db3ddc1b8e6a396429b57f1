@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "16bb6b89_3ac95891",
+        "filename": "chrome/browser/extensions/api/input_ime/input_ime_api.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-23T03:36:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09da8611_b8700eb0",
+      "revId": "e95a04d0d1b1babb8db3ddc1b8e6a396429b57f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1678d71e_2abb1400",
         "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.h",
         "patchSetId": 17
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "30cc5715_d5486bcd",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-23T03:36:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1678d71e_2abb1400",
+      "revId": "e95a04d0d1b1babb8db3ddc1b8e6a396429b57f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f5a4a54_8da3cfa2",
         "filename": "chrome/test/data/chromeos/app_mode/virtual_keyboard/update.sh",
         "patchSetId": 17
@@ -50,6 +86,24 @@
       "revId": "e95a04d0d1b1babb8db3ddc1b8e6a396429b57f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e157922_9d22ed62",
+        "filename": "chrome/test/data/chromeos/app_mode/virtual_keyboard/update.sh",
+        "patchSetId": 17
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-23T03:36:49Z",
+      "side": 1,
+      "message": "Removed.\nI added this file intending better automation and documentation, because it was not obvious to me how to create the corresponding packed extension.\nThough I agree that we should use the chrome which is being built.",
+      "parentUuid": "8f5a4a54_8da3cfa2",
+      "revId": "e95a04d0d1b1babb8db3ddc1b8e6a396429b57f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
