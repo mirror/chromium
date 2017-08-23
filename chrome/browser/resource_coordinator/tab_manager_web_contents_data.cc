@@ -59,6 +59,8 @@ void TabManager::WebContentsData::DidStartNavigation(
     return;
 
   SetTabLoadingState(TAB_IS_LOADING);
+  g_browser_process->GetTabManager()->OnDidStartMainFrameNavigation(
+      web_contents());
 }
 
 void TabManager::WebContentsData::DidFinishNavigation(
