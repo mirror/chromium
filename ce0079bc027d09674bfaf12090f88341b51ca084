@@ -1,0 +1,254 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14ef948c_6549f62a",
+        "filename": "ios/clean/chrome/browser/experiment_support.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-23T01:30:05Z",
+      "side": 1,
+      "message": "Let\u0027s stick with exerimental_flags as the namespace/file name for consistency with the ios/chrome implementation.",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6226d036_908e4afa",
+        "filename": "ios/clean/chrome/browser/experiment_support.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-23T01:30:05Z",
+      "side": 1,
+      "message": "Let\u0027s move the string constants for the preference names into NSString* consts in an anonymous namespace.",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f090979b_0d1126bd",
+        "filename": "ios/clean/chrome/browser/experiment_support.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-23T01:30:05Z",
+      "side": 1,
+      "message": "Why not use booleans and NSUserDefaults\u0027 |-boolForKey:|?  I saw that in Experimental.plist, we\u0027ve declared this as multi-value instead of a switch.  Presumably this was to allow us to have the \"default\" option, but the way we\u0027re using the setting here is as a boolean (i.e. enabled iff the value is explicitly set to Enabled).  Typically, we\u0027ll just use switches for these experimental flags so that we can use |-boolForKey:|.  This could be as easy as switching the experiment type in the plist to PSToggleSwitchSpecifier, and setting the default to an appropriate value.",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032d6ece_ce4e1205",
+        "filename": "ios/clean/chrome/browser/ui/tab/basic_tab_container_view_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-23T01:30:05Z",
+      "side": 1,
+      "message": "This could also be simplified by using ternary conditionals.",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b89de6cc_b81fd008",
+        "filename": "ios/clean/chrome/browser/ui/tab/basic_tab_container_view_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-23T01:30:05Z",
+      "side": 1,
+      "message": "Rather than newlines to separate these groups of constraints, how about comments describing what each group does?",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e95c7e78_06afe8cb",
+        "filename": "ios/clean/chrome/browser/ui/tab/basic_tab_container_view_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-23T01:30:05Z",
+      "side": 1,
+      "message": "It looks like there is a lot of duplicated code in these two functions (i.e background view layout, leading/trailing layouts).  Additionally, the fact that we have constraint properties declared in the superclass that are only referenced here in the subclass\u0027s implementation of |-subviewConstraints| is a little confusing to me.  A solution to both of these issues would be to implement |-subviewConstraints| in the superclass.  Then in the subclass, we can have something like |-toolbarConstraints| that would perform the experimental logic.  Then the implementation would be:\n\nNSMutableArray* constraints \u003d [NSMutableArray arrayWithArray:[super subviewConstraints]];\n[constraints addObjectsFromArray:[self toolbarConstraints]];\nreturn [constraints copy];\n\nYes, this does create some object unnecessarily, but since this is only performed once in the view controller\u0027s lifetime, I think the added clarity of only creating constraints in |-subviewConstraints| is worth the performance hit.  WDYT?",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31b1269_5df1f736",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller+internal.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-23T01:30:05Z",
+      "side": 1,
+      "message": "As mentioned, I think it\u0027s better to just implement |-subviewConstraints| in the superclass.  It\u0027s difficult to enforce rules that are stated in category comments because they\u0027re easy to miss unless you add a lot of explicit DCHECKing.",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4e4eb0f_1d9b3f57",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-23T01:30:05Z",
+      "side": 1,
+      "message": "\"ChildViewController\" in camel case like this makes me think it\u0027s a class name (which actually made me do a code search to see if that class was introduced).  How about replacing it with \"Child UIViewController helper methods\"?",
+      "range": {
+        "startLine": 123,
+        "startChar": 15,
+        "endLine": 123,
+        "endChar": 34
+      },
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f090cfb_087db414",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-23T01:30:05Z",
+      "side": 1,
+      "message": "Don\u0027t think this comment is really necessary since it\u0027s pretty much common knowledge.  Is the specific ordering important in some way?",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419e710f_2cbcccec",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-23T01:30:05Z",
+      "side": 1,
+      "message": "Style nit: Curly braces are optional for 1-line conditions.  I prefer not to include them in that case for brevity\u0027s sake, but I know some people have differing opinions.  Since there isn\u0027t an explicit rule in the style guide, I don\u0027t care specifically if you include them or not, but I think we should at least be consistent on a per-file basis.  Since it looks like all the other single-line conditionals don\u0027t use curly braces, let\u0027s remove them here.",
+      "range": {
+        "startLine": 205,
+        "startChar": 2,
+        "endLine": 205,
+        "endChar": 3
+      },
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df0b58c_2f2efb31",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_coordinator.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-23T01:30:05Z",
+      "side": 1,
+      "message": "Is there any guideline on how we decide when to subclass vs. when to use properties like this for experiments?",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ea6e79_8e45b4af",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_strip_tab_container_view_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-23T01:30:05Z",
+      "side": 1,
+      "message": "Style nit: I think it\u0027s pretty common practice to explicitly refer to the actual ivar name with the underscore in property setters.  Other users of the property should call the property getter, but since you\u0027re within the property\u0027s implementation here, using the property accessor is just adding an unnecessary function call.",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a19139_9badb823",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_strip_tab_container_view_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-23T01:30:05Z",
+      "side": 1,
+      "message": "same nits about |-subviewConstraints| subclassing, ternary operators, and curly braces :)",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc670b0f_5fad22ac",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-23T01:30:05Z",
+      "side": 1,
+      "message": "style nit to save a line:\n\nreturn experimental_flags::IsTabStripEnabled\n  ? [[TabStripTabCoordinator alloc] init]\n  : [[TabCoordinator alloc] init];",
+      "revId": "ce0079bc027d09674bfaf12090f88341b51ca084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
