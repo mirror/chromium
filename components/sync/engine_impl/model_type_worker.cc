@@ -422,7 +422,6 @@ void ModelTypeWorker::AdjustCommitProto(sync_pb::SyncEntity* sync_entity) {
     // Remove absolutely everything we can get away with. We do not want to
     // remove |client_defined_unique_tag| yet because the commit contribution
     // needs the id to track the responses. They will remove it instead.
-    sync_entity->clear_attachment_id();
     sync_entity->clear_ctime();
     sync_entity->clear_deleted();
     sync_entity->clear_folder();

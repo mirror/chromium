@@ -11,7 +11,6 @@
 #include "components/sync/base/time.h"
 #include "components/sync/device_info/device_info_util.h"
 #include "components/sync/device_info/local_device_info_provider_mock.h"
-#include "components/sync/model/attachments/attachment_service_proxy_for_test.h"
 #include "components/sync/model/sync_change_processor_wrapper_for_test.h"
 #include "components/sync/model/sync_error_factory_mock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -120,8 +119,7 @@ class DeviceInfoSyncServiceTest : public testing::Test,
         CreateEntitySpecifics(client_id, client_name));
     entity.mutable_device_info()->set_last_updated_timestamp(
         TimeToProtoTime(last_updated_timestamp));
-    return SyncData::CreateRemoteData(1, entity, Time(), AttachmentIdList(),
-                                      AttachmentServiceProxyForTest::Create());
+    return SyncData::CreateRemoteData(1, entity, Time());
   }
 
   void AddInitialData(SyncDataList* sync_data_list,
@@ -430,16 +428,13 @@ TEST_F(DeviceInfoSyncServiceTest, GetLastUpdateTime) {
       TimeToProtoTime(time1));
   SyncData localB(SyncData::CreateLocalData("b", "b", entityB));
 
-  SyncData remoteC(SyncData::CreateRemoteData(
-      1, CreateEntitySpecifics("c", "c"), time2, AttachmentIdList(),
-      AttachmentServiceProxyForTest::Create()));
+  SyncData remoteC(
+      SyncData::CreateRemoteData(1, CreateEntitySpecifics("c", "c"), time2));
 
   EntitySpecifics entityD(CreateEntitySpecifics("d", "d"));
   entityD.mutable_device_info()->set_last_updated_timestamp(
       TimeToProtoTime(time1));
-  SyncData remoteD(
-      SyncData::CreateRemoteData(1, entityD, time2, AttachmentIdList(),
-                                 AttachmentServiceProxyForTest::Create()));
+  SyncData remoteD(SyncData::CreateRemoteData(1, entityD, time2));
 
   EXPECT_EQ(Time(), GetLastUpdateTime(localA));
   EXPECT_EQ(time1, GetLastUpdateTime(localB));
@@ -512,19 +507,15 @@ TEST_F(DeviceInfoSyncServiceTest, CountActiveDevicesModifiedTime) {
   sync_pb::DeviceInfoSpecifics& stale_specifics =
       *stale_entity.mutable_device_info();
   stale_specifics.set_cache_guid("stale");
-  StoreSyncData("stale", SyncData::CreateRemoteData(
-                             1, stale_entity, Time(), AttachmentIdList(),
-                             AttachmentServiceProxyForTest::Create()));
+  StoreSyncData("stale", SyncData::CreateRemoteData(1, stale_entity, Time()));
 
   sync_pb::EntitySpecifics active_entity;
   sync_pb::DeviceInfoSpecifics& active_specifics =
       *active_entity.mutable_device_info();
   active_specifics.set_cache_guid("active");
-  StoreSyncData(
-      "active",
-      SyncData::CreateRemoteData(
-          1, active_entity, Time() + (DeviceInfoUtil::kActiveThreshold / 2),
-          AttachmentIdList(), AttachmentServiceProxyForTest::Create()));
+  StoreSyncData("active", SyncData::CreateRemoteData(
+                              1, active_entity,
+                              Time() + (DeviceInfoUtil::kActiveThreshold / 2)));
 
   EXPECT_EQ(1, CountActiveDevices(Time() + DeviceInfoUtil::kActiveThreshold));
 }
