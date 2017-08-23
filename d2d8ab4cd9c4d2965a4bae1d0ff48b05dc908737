@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aa058e0_a838e6ae",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1719,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-23T19:03:48Z",
+      "side": 1,
+      "message": "optional nit: the second sentence is unnecessary (redundant)",
+      "range": {
+        "startLine": 1719,
+        "startChar": 35,
+        "endLine": 1719,
+        "endChar": 0
+      },
+      "revId": "d2d8ab4cd9c4d2965a4bae1d0ff48b05dc908737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
