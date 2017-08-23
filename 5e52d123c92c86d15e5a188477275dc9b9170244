@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0daf04ec_99b0e399",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1543,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-23T01:42:18Z",
+      "side": 1,
+      "message": ".. to display the specified content in a new tab only if the tab switcher is currently visible.",
+      "range": {
+        "startLine": 1543,
+        "startChar": 52,
+        "endLine": 1543,
+        "endChar": 76
+      },
+      "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caacd51f_ecf4098d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-23T01:42:18Z",
+      "side": 1,
+      "message": "nit: \"Whether a new tab should be created to display...\"",
+      "range": {
+        "startLine": 1547,
+        "startChar": 29,
+        "endLine": 1547,
+        "endChar": 33
+      },
+      "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3bf2d8_086199df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1550,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-23T01:42:18Z",
+      "side": 1,
+      "message": "If we keep this method, let\u0027s check #isInOverviewMode() \u0026\u0026 !mNtpController.isShowingNewTabUi()",
+      "range": {
+        "startLine": 1550,
+        "startChar": 12,
+        "endLine": 1550,
+        "endChar": 53
+      },
+      "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d14b190_4e3c0432",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-23T01:42:18Z",
+      "side": 1,
+      "message": "Can we fold the logic in BottomSheet#displayContentInNewTab() into #showContentAndOpenSheet() rather than introducing two new methods?\n\nI think we should be able to check here whether we need to display in a new tab here by checking mActivity#isInOverviewMode() \u0026\u0026 !mBottomSheet#isShowingNewTabUi(), so we could do something like\n\npublic void showContentAndOpenSheet(int itemId) {\n   // Some comment about why we need to open a new tab.\n   if (mActivity#isInOverviewMode() \u0026\u0026 !mBottomSheet#isShowingNewTabUi() {\n       mBottomSheet#displayNewTabUi(isIncognito, actionId);\n       return;\n   }\n\n   // everything else\n}",
+      "range": {
+        "startLine": 246,
+        "startChar": 1,
+        "endLine": 252,
+        "endChar": 9
+      },
+      "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e817130_a063eecf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-23T01:42:18Z",
+      "side": 1,
+      "message": "I think this can be simplified to:\n\nmActivity.getBottomSheetContentController().selectItem(actionId);\n\nif (actionId !\u003d R.id.action_home) mBottomSheet.defocusOmnibox();",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 9
+      },
+      "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ae145d_2566b132",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-23T01:42:18Z",
+      "side": 1,
+      "message": "nit: Can we put the 1-param method above the 2-param method?",
+      "range": {
+        "startLine": 169,
+        "startChar": 16,
+        "endLine": 169,
+        "endChar": 31
+      },
+      "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
