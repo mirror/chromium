@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5924da75_eeea0328",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-23T06:40:27Z",
+      "side": 1,
+      "message": "This is a workaround and will be removed once the fix is landed:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/627523",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 29
+      },
+      "revId": "f4a6bd9de334e26dc21c55bd44f195e697e05399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
