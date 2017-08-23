@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f32b1b6e_b0dd9c4c",
+        "filename": "chrome/browser/accessibility/accessibility_permission_context.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-08-23T03:10:11Z",
+      "side": 1,
+      "message": "This override looks redundant.",
+      "revId": "6aae1a2bca12b6472f0d0b924ad680f292e9e57a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1948ab76_a90f33b1",
+        "filename": "chrome/browser/permissions/permission_request_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-08-23T03:10:11Z",
+      "side": 1,
+      "message": "Sorry if I wasn\u0027t clear earlier, there\u0027s a separate branches for Android in this function and GetMessageText below is only called on Android.",
+      "revId": "6aae1a2bca12b6472f0d0b924ad680f292e9e57a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
