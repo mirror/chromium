@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "db94af3e_f15b1d88",
+        "filename": "components/autofill/content/renderer/autofill_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-08-23T19:05:39Z",
+      "side": 1,
+      "message": "I missed this part, if both OnSameDocumentNavigationCompleted() and WillSubmitForm() call here, do we expect AutofillAgent fired one WillSubmitForm() but two FormSubmitted()?",
+      "parentUuid": "0eb89dd2_b1ab3618",
+      "range": {
+        "startLine": 273,
+        "startChar": 46,
+        "endLine": 273,
+        "endChar": 60
+      },
+      "revId": "4e6ab6195d22e2aaffd3452bf71f434a3283ac4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ac00dd0_763cdb0d",
         "filename": "components/autofill/content/renderer/autofill_agent.cc",
         "patchSetId": 2
