@@ -160,7 +160,7 @@ volumeManagerUtil.createVolumeInfo = function(volumeMetadata) {
             /** @type {VolumeManagerCommon.Source} */
             (volumeMetadata.source),
             /** @type {VolumeManagerCommon.FileSystemType} */
-            (volumeMetadata.diskFileSystemType));
+            (volumeMetadata.diskFileSystem));
   })
   .catch(
       /**
@@ -184,7 +184,7 @@ volumeManagerUtil.createVolumeInfo = function(volumeMetadata) {
             /** @type {VolumeManagerCommon.Source} */
             (volumeMetadata.source),
             /** @type {VolumeManagerCommon.FileSystemType} */
-            (volumeMetadata.diskFileSystemType));
+            (volumeMetadata.diskFileSystem));
       });
 };
 
