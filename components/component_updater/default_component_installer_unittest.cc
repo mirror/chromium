@@ -7,9 +7,16 @@
 #include <utility>
 #include <vector>
 
+#if defined(OS_ANDROID)
+#include "base/android/jni_android.h"
+#include "base/android/jni_string.h"
+#include "jni/ComponentUpdater_jni.h"
+#endif
+
 #include "base/callback.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
+#include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
@@ -212,6 +219,84 @@ void DefaultComponentInstallerTest::UnpackComplete(
 }
 
 }  // namespace
+
+TEST(DefaultComponentInstallerTest, VerifyAPKSignature) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+
+  base::FilePath test_data_dir;
+  PathService::Get(base::DIR_SOURCE_ROOT, &test_data_dir);
+  test_data_dir = test_data_dir.AppendASCII("components")
+                      .AppendASCII("test")
+                      .AppendASCII("data")
+                      .AppendASCII("component_updater");
+
+  auto cert1_path = base::android::ConvertUTF8ToJavaString(
+      env, test_data_dir.AppendASCII("1.crt").MaybeAsASCII());
+  auto cert2_path = base::android::ConvertUTF8ToJavaString(
+      env, test_data_dir.AppendASCII("2.crt").MaybeAsASCII());
+
+  // An APK signed with certificate #1.
+  auto signed1_apk = base::android::ConvertUTF8ToJavaString(
+      env, test_data_dir.AppendASCII("signed-1.apk").MaybeAsASCII());
+  // Signed with #2.
+  auto signed2_apk = base::android::ConvertUTF8ToJavaString(
+      env, test_data_dir.AppendASCII("signed-2.apk").MaybeAsASCII());
+  // Signed with both certificates.
+  auto signed_both_apk = base::android::ConvertUTF8ToJavaString(
+      env, test_data_dir.AppendASCII("signed-1-2.apk").MaybeAsASCII());
+
+  auto unsigned_apk = base::android::ConvertUTF8ToJavaString(
+      env, test_data_dir.AppendASCII("unsigned.apk").MaybeAsASCII());
+
+  auto pk1 = Java_ComponentUpdater_loadPublicKey(env, cert1_path);
+  auto pk2 = Java_ComponentUpdater_loadPublicKey(env, cert2_path);
+
+  // Signed APKs should verify with the corresponding public key.
+  Java_ComponentUpdater_verify(env, signed1_apk, pk1);
+  EXPECT_FALSE(base::android::ClearException(env));
+
+  Java_ComponentUpdater_verify(env, signed2_apk, pk2);
+  EXPECT_FALSE(base::android::ClearException(env));
+
+  // APKs signed with multiple certificates should verify with either
+  // corresponding public key.
+  Java_ComponentUpdater_verify(env, signed_both_apk, pk1);
+  EXPECT_FALSE(base::android::ClearException(env));
+
+  Java_ComponentUpdater_verify(env, signed_both_apk, pk2);
+  EXPECT_FALSE(base::android::ClearException(env));
+
+  // InvalidKeyException should be thrown when none of the signing certificates
+  // match the given public key.
+  auto invalid_key_exception =
+      base::android::GetClass(env, "java/security/InvalidKeyException");
+  // ApkSignatureSchemeV2Verifier.SignatureNotFoundException should be thrown
+  // when an APK isn't signed at all.
+  auto signature_not_found_exception = base::android::GetClass(
+      env,
+      "org/chromium/third_party/android/util/apk/"
+      "ApkSignatureSchemeV2Verifier$SignatureNotFoundException");
+
+  // Signed APKs shouldn't verify given the wrong public key.
+  Java_ComponentUpdater_verify(env, signed1_apk, pk2);
+  EXPECT_TRUE(base::android::HasException(env));
+  EXPECT_TRUE(
+      env->IsInstanceOf(env->ExceptionOccurred(), invalid_key_exception.obj()));
+  base::android::ClearException(env);
+
+  Java_ComponentUpdater_verify(env, signed2_apk, pk1);
+  EXPECT_TRUE(base::android::HasException(env));
+  EXPECT_TRUE(
+      env->IsInstanceOf(env->ExceptionOccurred(), invalid_key_exception.obj()));
+  base::android::ClearException(env);
+
+  // Unsigned APKs shouldn't verify.
+  Java_ComponentUpdater_verify(env, unsigned_apk, pk1);
+  EXPECT_TRUE(base::android::HasException(env));
+  EXPECT_TRUE(env->IsInstanceOf(env->ExceptionOccurred(),
+                                signature_not_found_exception.obj()));
+  base::android::ClearException(env);
+}
 
 // Tests that the component metadata is propagated from the default
 // component installer and its component traits, through the instance of the
