@@ -210,4 +210,17 @@ void WindowTreeHostMus::MoveCursorToScreenLocationInPixels(
   Env::GetInstance()->set_last_mouse_location(location_in_pixels);
 }
 
+gfx::Transform WindowTreeHostMus::GetRootTransformForLocalEventCoordinates()
+    const {
+  if (WindowMus::Get(window())->window_mus_type() !=
+      WindowMusType::DISPLAY_MANUALLY_CREATED) {
+    return WindowTreeHost::GetRootTransformForLocalEventCoordinates();
+  }
+  // For events
+  gfx::Transform transform;
+  const float scale = window()->layer()->device_scale_factor();
+  transform.Scale(scale, scale);
+  return transform;
+}
+
 }  // namespace aura
