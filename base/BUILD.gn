@@ -1373,6 +1373,8 @@ component("base") {
       "power_monitor/power_monitor_device_source_win.cc",
       "profiler/win32_stack_frame_unwinder.cc",
       "profiler/win32_stack_frame_unwinder.h",
+      "task_scheduler/scheduler_worker_pool_windows_impl.cc",
+      "task_scheduler/scheduler_worker_pool_windows_impl.h",
       "time/time_win.cc",
     ]
 
