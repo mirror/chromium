@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e9f21821_9247c6e3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-23T18:54:44Z",
+      "side": 1,
+      "message": "Yes, but with the switch to using the StickyConstraintsMap to track registered stickys, we cannot clear the map as we walk. So we need to figure out a different approach to making sure stickies on the the scroller are properly invalidated.",
+      "parentUuid": "533841b4_0fa14a71",
+      "revId": "bece829d4fed48bb8efd6dd54a0e125612451ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be89eb89_7cdc9194",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBlockFlowLine.cpp",
         "patchSetId": 8
@@ -67,6 +85,24 @@
       "revId": "bece829d4fed48bb8efd6dd54a0e125612451ab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb4b5616_9243f3a6",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-23T18:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c099aacc_50047d91",
+      "revId": "bece829d4fed48bb8efd6dd54a0e125612451ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
