@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e204f03_1c46802a",
+        "filename": "ash/wm/event_client_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-23T21:16:21Z",
+      "side": 1,
+      "message": "Can you update the class name to match the variable?",
+      "revId": "c1d4e1e331b589a22713f0ea75d20b381b1dc74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d31970d_616822e6",
+        "filename": "ash/wm/tablet_mode/scoped_ignore_process_events_checks.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-23T21:16:21Z",
+      "side": 1,
+      "message": "and the comment as well.",
+      "revId": "c1d4e1e331b589a22713f0ea75d20b381b1dc74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
