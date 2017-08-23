@@ -55,12 +55,6 @@ QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_respect_http2_settings_frame,
           true)
 
-// If true, only open limited number of quic sessions per epoll event. Leave the
-// rest to next event.
-QUIC_FLAG(bool,
-          FLAGS_quic_reloadable_flag_quic_limit_num_new_sessions_per_epoll_loop,
-          true)
-
 // If true, v33 QUIC client uses 1 bit to specify 8-byte connection id in
 // public flag.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_remove_v33_hacks2, false)
