@@ -19,6 +19,7 @@
 #include "chrome/browser/offline_pages/android/prerendering_offliner.h"
 #include "chrome/browser/offline_pages/background_loader_offliner.h"
 #include "chrome/browser/offline_pages/offline_page_model_factory.h"
+#include "chrome/browser/offline_pages/offline_pages_ukm_reporter_impl.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_constants.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
@@ -31,6 +32,7 @@
 #include "components/offline_pages/core/background/scheduler.h"
 #include "components/offline_pages/core/downloads/download_notifying_observer.h"
 #include "components/offline_pages/core/offline_page_feature.h"
+#include "components/offline_pages/core/offline_pages_ukm_reporter.h"
 #include "net/nqe/network_quality_estimator.h"
 
 namespace offline_pages {
@@ -86,9 +88,11 @@ KeyedService* RequestCoordinatorFactory::BuildServiceInstanceFor(
   net::NetworkQualityEstimator::NetworkQualityProvider*
       network_quality_estimator =
           UINetworkQualityEstimatorServiceFactory::GetForProfile(profile);
+  std::unique_ptr<OfflinePagesUkmReporter> ukm_reporter(
+      new OfflinePagesUkmReporterImpl());
   RequestCoordinator* request_coordinator = new RequestCoordinator(
       std::move(policy), std::move(offliner), std::move(queue),
-      std::move(scheduler), network_quality_estimator);
+      std::move(scheduler), network_quality_estimator, std::move(ukm_reporter));
 
   DownloadNotifyingObserver::CreateAndStartObserving(
       request_coordinator,
