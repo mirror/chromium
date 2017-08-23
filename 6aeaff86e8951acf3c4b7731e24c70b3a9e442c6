@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d253479_5b2d50f4",
+        "filename": "mojo/edk/test/test_utils_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T23:30:46Z",
+      "side": 1,
+      "message": "Note that Fuchsia doesn\u0027t actually have signals, so I suspect that we can\u0027t get EINTR, but it may be simpler to use HANDLE_EINTR() anyway, to avoid there being a mix of handled and un-handled call sites.",
+      "revId": "6aeaff86e8951acf3c4b7731e24c70b3a9e442c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
