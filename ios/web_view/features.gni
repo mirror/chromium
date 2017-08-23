@@ -7,5 +7,5 @@ declare_args() {
   include_cronet = false
 
   # Controls if features that require sync are included.
-  enable_sync = false
+  enable_sync = true
 }
