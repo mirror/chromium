@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dddf5732_9de792bb",
+        "filename": "components/metrics/proto/extension_install.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-23T23:18:03Z",
+      "side": 1,
+      "message": "I assume this is a copy of the internal code and not re-review it.",
+      "revId": "e3fbdaf4f39065d8e4f03df2a5f9b085cfe28f24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
