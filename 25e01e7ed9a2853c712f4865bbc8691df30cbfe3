@@ -22,6 +22,30 @@
       "revId": "25e01e7ed9a2853c712f4865bbc8691df30cbfe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb62c3d7_43b66011",
+        "filename": "chrome/browser/extensions/external_pref_loader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-23T23:44:34Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "1ececff1_6a808e1b",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 79,
+        "endChar": 11
+      },
+      "revId": "25e01e7ed9a2853c712f4865bbc8691df30cbfe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
