@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69887bbb_817374a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:37:19Z",
+      "side": 1,
+      "message": "nit: Capitalization.\n\nCan we make the CL title a little more specific?  We already have child process support, via LaunchPprocess - this is specifically adding support to the content/ layer for launching child processes, right?",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0caee11_f07928b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:37:19Z",
+      "side": 1,
+      "message": "nit: In future it\u0027d be helpful to break out these dependency changes into another CL (or more), so that we can have them reviewed in parallel, and so that if e.g. someone else is working on a change that happens to need the same things fixing, we\u0027re less likely to duplicate effort, \u0027cos they\u0027ll land in a snap. :)",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9de73d_e0646329",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:37:19Z",
+      "side": 1,
+      "message": "It\u0027s necessary when we want to spawn a child process that either:\na) runs the same executable.\nb) runs an executable that we expect should be at the same path as the current executable.",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec90118_5afbd4d8",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:37:19Z",
+      "side": 1,
+      "message": "nit: Wrap this case block in { } so that |bin_dir| is scoped to it.\n\nnit: char bin_dir[...] \u003d {}; so that it\u0027s initialized no matter what.",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f737ae_4ccb2b1b",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:37:19Z",
+      "side": 1,
+      "message": "Sometimes gl cl format makes me happy, this time it makes me sad. Q.Q",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496f2144_a841362c",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:37:19Z",
+      "side": 1,
+      "message": "MX_HANDLE_INVALID",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610cda6e_3d360c18",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:37:19Z",
+      "side": 1,
+      "message": "As we discussed it, the idea was to have a wrapper to get the \"default\" job, which would either call mx_job_default(), or return the job previously set by e.g. the content main runner.\n\nIf this is going to be an on-demand-created job object, specifically for use when creating new content child processes, then I think the API belongs in content/, and you\u0027ll need to use a LazyInstance, or wrap the mx_job_create() into a call which returns the mx_handle_t and use C++11 safe static initialization, e.g this would become:\n\n  static g_job_handle \u003d InternalCreateJobHandle();\n  return g_job_handle;",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70fda798_c1a6dab7",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:37:19Z",
+      "side": 1,
+      "message": "mx_status_get_string(result) plz :)",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55f72a6_c2dea650",
+        "filename": "base/fuchsia/child_job.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:37:19Z",
+      "side": 1,
+      "message": "Defining this as the job used to create \"child processes\" seems too specific, and if that\u0027s what we want this to be then we should just add a Fuchsia-specific setter function in base/process/launch.h and avoid the need for an extra .cc and .h.\n\nHowever, as we discussed it, this was more of a wrapper around mx_job_default, that allows us to set our own preferred \"default job\" for the rest of the Chromium code to use - if we take that model then the .h/.cc make more sense to me, but could we check with the Fuchsia team whether an mx_job_set_default() API would be plausible before we work-around that lack in the Chromium-side?",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220537ea_36621f4d",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:37:19Z",
+      "side": 1,
+      "message": "Does the base class require us to specifically implement this, or could we just not-override a default no-op impl?",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec123b3_74d1949f",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:37:19Z",
+      "side": 1,
+      "message": "nit: Missing thread check?",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58fcded0_d4cc9966",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:37:19Z",
+      "side": 1,
+      "message": "As discussed offline, I thought we were going to have LaunchProcess() launch processes using either the supplied job_handle, or default to calling base::GetDefaultJob() to determine the job to create them under?",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72db21ef_fe819930",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:37:19Z",
+      "side": 1,
+      "message": "FWIW we\u0027ve rolled an SDK that fixes that, I think.",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd6df94_28ea5c38",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-23T00:37:19Z",
+      "side": 1,
+      "message": "ignore_result(...) here, and preferably a comment explaining that the |mojo_client_handle_| has been passed to the child process, not copied.\n\nYou might also consider moving this to AfterLaunchOnLauncherThread, as a form of post-launch cleanup.\n\nNote that the same is true of any other handles passed via options.handles_to_transfer, so are there callers or other components that need to know to relinquish passed handles here?  (This would be so much nicer if we rework LaunchProcess into a ProcessLauncher helper class...)",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
