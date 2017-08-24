@@ -22,6 +22,30 @@
       "revId": "1853e218a9f3634c89f476f0b5aad4b8a87eca08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdce52e1_1d20e5da",
+        "filename": "chrome/common/child_process_logging_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-24T22:15:13Z",
+      "side": 1,
+      "message": "It turns out that at the very lowest level of this sequence of calls, in crashpad.cc, the code converts from StringPiece to const char*. I filed crbug.com/758724 to track this but it is not a problem in practice at the moment because I believe all of the StringPiece objects passed down come from char[] or std::string objects with no substring operations being performed.\n\nThat said, converting from StringPiece to const char* and then back to StringPiece makes no sense, so I\u0027m simplifying that.",
+      "parentUuid": "9910be41_6b627629",
+      "range": {
+        "startLine": 39,
+        "startChar": 20,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "1853e218a9f3634c89f476f0b5aad4b8a87eca08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
