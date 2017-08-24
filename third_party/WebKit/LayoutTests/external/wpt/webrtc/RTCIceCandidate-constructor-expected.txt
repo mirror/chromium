@@ -1,5 +1,5 @@
 This is a testharness.js-based test.
-PASS new RTCIceCandidate() 
+PASS new RTCIceCandidate()
 FAIL new RTCIceCandidate({}) assert_throws: function "() => new RTCIceCandidate({})" threw object "TypeMismatchError: Failed to construct 'RTCIceCandidate': The 'candidate' property is not a string, or is empty." ("TypeMismatchError") expected object "TypeError" ("TypeError")
 FAIL new RTCIceCandidate({ ... }) with manually filled default values assert_throws: function "() => new RTCIceCandidate({
         candidate: '',

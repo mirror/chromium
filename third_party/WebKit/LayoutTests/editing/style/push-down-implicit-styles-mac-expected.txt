@@ -8,7 +8,7 @@ PASS bold on first word of <b><div>hello</div>world</b> yields <div style="">hel
 PASS bold on first word of <b><div>hello</div><em>world</em></b> yields <div style="">hello</div><em style="font-weight: bold;">world</em>
 PASS bold on second word of <b>hello <div>world</div></b> yields <b>hello </b><div style="">world</div>
 PASS bold on second word of <b><em>hello</em> <div>world</div></b> yields <em style="font-weight: bold;">hello</em> <div style="">world</div>
-PASS bold on all of <b> <div>text</div> </b> yields  <div style="">text</div> 
+PASS bold on all of <b> <div>text</div> </b> yields  <div style="">text</div>
 PASS bold on all of <b><strike><div>text</div></strike></b> yields <strike style=""><div style="">text</div></strike>
 PASS bold on first word of <b><div>hello</div><div>world</div></b> yields <div style="">hello</div><div style="font-weight: bold;">world</div>
 PASS bold on first word of <b><div>hello</div><div style="font-weight: normal;">world</div>webkit</b> yields <div style="">hello</div><div style="font-weight: normal;">world</div><b>webkit</b>

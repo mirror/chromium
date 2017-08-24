@@ -154,7 +154,7 @@ PASS JSON.stringify(tests[i](nativeJSON)) is JSON.stringify(tests[i](JSON))
 function (jsonObject){
         return jsonObject.parse('"a\nz"');
     }
-PASS tests[i](nativeJSON) threw exception SyntaxError: Unexpected token 
+PASS tests[i](nativeJSON) threw exception SyntaxError: Unexpected token
  in JSON at position 2.
 function (jsonObject){
         return jsonObject.parse('"a\\nz"');
@@ -163,7 +163,7 @@ PASS JSON.stringify(tests[i](nativeJSON)) is JSON.stringify(tests[i](JSON))
 function (jsonObject){
         return jsonObject.parse('"a\rz"');
     }
-PASS tests[i](nativeJSON) threw exception SyntaxError: Unexpected token 
+PASS tests[i](nativeJSON) threw exception SyntaxError: Unexpected token
  in JSON at position 2.
 function (jsonObject){
         return jsonObject.parse('"a\\rz"');
@@ -189,7 +189,7 @@ PASS JSON.stringify(tests[i](nativeJSON)) is JSON.stringify(tests[i](JSON))
 function (jsonObject){
         return jsonObject.parse('"a\rz"');
     }
-PASS tests[i](nativeJSON) threw exception SyntaxError: Unexpected token 
+PASS tests[i](nativeJSON) threw exception SyntaxError: Unexpected token
  in JSON at position 2.
 function (jsonObject){
         return jsonObject.parse('"a\\rz"');

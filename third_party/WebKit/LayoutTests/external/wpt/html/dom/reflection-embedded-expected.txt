@@ -89,7 +89,7 @@ FAIL iframe.allowUserMedia: IDL set to undefined assert_equals: hasAttribute() e
 FAIL iframe.allowUserMedia: IDL set to null assert_equals: hasAttribute() expected false but got true
 FAIL iframe.allowUserMedia: IDL set to 7 assert_equals: IDL get expected (boolean) true but got (number) 7
 FAIL iframe.allowUserMedia: IDL set to 1.5 assert_equals: IDL get expected (boolean) true but got (number) 1.5
-PASS iframe.allowUserMedia: IDL set to true 
+PASS iframe.allowUserMedia: IDL set to true
 FAIL iframe.allowUserMedia: IDL set to false assert_equals: hasAttribute() expected false but got true
 FAIL iframe.allowUserMedia: IDL set to object "[object Object]" assert_equals: IDL get expected (boolean) true but got (object) object "[object Object]"
 FAIL iframe.allowUserMedia: IDL set to NaN assert_equals: hasAttribute() expected false but got true
@@ -178,7 +178,7 @@ FAIL object.typeMustMatch: IDL set to undefined assert_equals: hasAttribute() ex
 FAIL object.typeMustMatch: IDL set to null assert_equals: hasAttribute() expected false but got true
 FAIL object.typeMustMatch: IDL set to 7 assert_equals: IDL get expected (boolean) true but got (number) 7
 FAIL object.typeMustMatch: IDL set to 1.5 assert_equals: IDL get expected (boolean) true but got (number) 1.5
-PASS object.typeMustMatch: IDL set to true 
+PASS object.typeMustMatch: IDL set to true
 FAIL object.typeMustMatch: IDL set to false assert_equals: hasAttribute() expected false but got true
 FAIL object.typeMustMatch: IDL set to object "[object Object]" assert_equals: IDL get expected (boolean) true but got (object) object "[object Object]"
 FAIL object.typeMustMatch: IDL set to NaN assert_equals: hasAttribute() expected false but got true
@@ -278,9 +278,9 @@ PASS canvas.width: 18 tests
 FAIL canvas.width: setAttribute() to "\v7" assert_equals: IDL get expected 300 but got 7
 PASS canvas.width: 6 tests
 FAIL canvas.width: setAttribute() to " 7" assert_equals: IDL get expected 300 but got 7
-PASS canvas.width: setAttribute() to " 7" 
+PASS canvas.width: setAttribute() to " 7"
 FAIL canvas.width: setAttribute() to " 7" assert_equals: IDL get expected 300 but got 7
-PASS canvas.width: setAttribute() to "᠎7" 
+PASS canvas.width: setAttribute() to "᠎7"
 FAIL canvas.width: setAttribute() to " 7" assert_equals: IDL get expected 300 but got 7
 FAIL canvas.width: setAttribute() to " 7" assert_equals: IDL get expected 300 but got 7
 FAIL canvas.width: setAttribute() to " 7" assert_equals: IDL get expected 300 but got 7
@@ -292,7 +292,7 @@ FAIL canvas.width: setAttribute() to " 7" assert_equals: IDL get expected 300 
 FAIL canvas.width: setAttribute() to " 7" assert_equals: IDL get expected 300 but got 7
 FAIL canvas.width: setAttribute() to " 7" assert_equals: IDL get expected 300 but got 7
 FAIL canvas.width: setAttribute() to " 7" assert_equals: IDL get expected 300 but got 7
-PASS canvas.width: setAttribute() to " 7" 
+PASS canvas.width: setAttribute() to " 7"
 FAIL canvas.width: setAttribute() to "　7" assert_equals: IDL get expected 300 but got 7
 PASS canvas.width: 16 tests
 FAIL canvas.width: IDL set to 2147483648 assert_equals: getAttribute() expected "300" but got "-2147483648"
@@ -301,9 +301,9 @@ PASS canvas.height: 18 tests
 FAIL canvas.height: setAttribute() to "\v7" assert_equals: IDL get expected 150 but got 7
 PASS canvas.height: 6 tests
 FAIL canvas.height: setAttribute() to " 7" assert_equals: IDL get expected 150 but got 7
-PASS canvas.height: setAttribute() to " 7" 
+PASS canvas.height: setAttribute() to " 7"
 FAIL canvas.height: setAttribute() to " 7" assert_equals: IDL get expected 150 but got 7
-PASS canvas.height: setAttribute() to "᠎7" 
+PASS canvas.height: setAttribute() to "᠎7"
 FAIL canvas.height: setAttribute() to " 7" assert_equals: IDL get expected 150 but got 7
 FAIL canvas.height: setAttribute() to " 7" assert_equals: IDL get expected 150 but got 7
 FAIL canvas.height: setAttribute() to " 7" assert_equals: IDL get expected 150 but got 7
@@ -315,7 +315,7 @@ FAIL canvas.height: setAttribute() to " 7" assert_equals: IDL get expected 150
 FAIL canvas.height: setAttribute() to " 7" assert_equals: IDL get expected 150 but got 7
 FAIL canvas.height: setAttribute() to " 7" assert_equals: IDL get expected 150 but got 7
 FAIL canvas.height: setAttribute() to " 7" assert_equals: IDL get expected 150 but got 7
-PASS canvas.height: setAttribute() to " 7" 
+PASS canvas.height: setAttribute() to " 7"
 FAIL canvas.height: setAttribute() to "　7" assert_equals: IDL get expected 150 but got 7
 PASS canvas.height: 16 tests
 FAIL canvas.height: IDL set to 2147483648 assert_equals: getAttribute() expected "150" but got "-2147483648"

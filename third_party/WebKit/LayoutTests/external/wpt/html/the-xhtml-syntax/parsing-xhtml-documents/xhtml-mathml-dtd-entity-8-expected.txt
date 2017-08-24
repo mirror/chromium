@@ -26,7 +26,7 @@ FAIL MathML parsing &alpha; assert_true: expected true got false
 FAIL MathML parsing &Amacr; assert_true: expected true got false
 FAIL MathML parsing &amacr; assert_true: expected true got false
 FAIL MathML parsing &amalg; assert_true: expected true got false
-PASS MathML parsing &amp; 
+PASS MathML parsing &amp;
 FAIL MathML parsing &AMP; assert_true: expected true got false
 FAIL MathML parsing &andand; assert_true: expected true got false
 FAIL MathML parsing &And; assert_true: expected true got false
@@ -61,7 +61,7 @@ FAIL MathML parsing &ap; assert_true: expected true got false
 FAIL MathML parsing &apE; assert_true: expected true got false
 FAIL MathML parsing &ape; assert_true: expected true got false
 FAIL MathML parsing &apid; assert_true: expected true got false
-PASS MathML parsing &apos; 
+PASS MathML parsing &apos;
 FAIL MathML parsing &ApplyFunction; assert_true: expected true got false
 FAIL MathML parsing &approx; assert_true: expected true got false
 FAIL MathML parsing &approxeq; assert_true: expected true got false
@@ -648,7 +648,7 @@ FAIL MathML parsing &gsime; assert_true: expected true got false
 FAIL MathML parsing &gsiml; assert_true: expected true got false
 FAIL MathML parsing &gtcc; assert_true: expected true got false
 FAIL MathML parsing &gtcir; assert_true: expected true got false
-PASS MathML parsing &gt; 
+PASS MathML parsing &gt;
 FAIL MathML parsing &GT; assert_true: expected true got false
 FAIL MathML parsing &Gt; assert_true: expected true got false
 FAIL MathML parsing &gtdot; assert_true: expected true got false
@@ -1006,7 +1006,7 @@ FAIL MathML parsing &Lstrok; assert_true: expected true got false
 FAIL MathML parsing &lstrok; assert_true: expected true got false
 FAIL MathML parsing &ltcc; assert_true: expected true got false
 FAIL MathML parsing &ltcir; assert_true: expected true got false
-PASS MathML parsing &lt; 
+PASS MathML parsing &lt;
 FAIL MathML parsing &LT; assert_true: expected true got false
 FAIL MathML parsing &Lt; assert_true: expected true got false
 FAIL MathML parsing &ltdot; assert_true: expected true got false
@@ -1477,7 +1477,7 @@ FAIL MathML parsing &quaternions; assert_true: expected true got false
 FAIL MathML parsing &quatint; assert_true: expected true got false
 FAIL MathML parsing &quest; assert_true: expected true got false
 FAIL MathML parsing &questeq; assert_true: expected true got false
-PASS MathML parsing &quot; 
+PASS MathML parsing &quot;
 FAIL MathML parsing &QUOT; assert_true: expected true got false
 FAIL MathML parsing &rAarr; assert_true: expected true got false
 FAIL MathML parsing &race; assert_true: expected true got false

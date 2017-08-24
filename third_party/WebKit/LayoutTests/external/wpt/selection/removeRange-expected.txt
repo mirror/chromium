@@ -27,6 +27,6 @@ FAIL removeRange() with Range 36 assert_throws: Removing a different range shoul
 FAIL removeRange() with Range 37 assert_throws: Removing a different range should throw function "function () { selection.removeRange(equivalentRange) }" did not throw
 FAIL removeRange() with Range 38 assert_throws: Removing a different range should throw function "function () { selection.removeRange(equivalentRange) }" did not throw
 FAIL removeRange() with Range 39 assert_throws: Removing a different range should throw function "function () { selection.removeRange(equivalentRange) }" did not throw
-PASS removeRange() argument is non-optional Range 
+PASS removeRange() argument is non-optional Range
 Harness: the test ran to completion.
 

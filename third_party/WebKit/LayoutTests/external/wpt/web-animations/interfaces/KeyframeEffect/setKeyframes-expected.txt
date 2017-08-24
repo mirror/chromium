@@ -40,11 +40,11 @@ FAIL Keyframes can be replaced with a keyframe sequence where greater shorthand 
 FAIL Keyframes can be replaced with a two property keyframe sequence where one property is missing from the first keyframe effect.setKeyframes is not a function
 FAIL Keyframes can be replaced with a two property keyframe sequence where one property is missing from the last keyframe effect.setKeyframes is not a function
 FAIL Keyframes can be replaced with a keyframe sequence with repeated values at offset 1 with different easings effect.setKeyframes is not a function
-PASS KeyframeEffect constructor throws with keyframes with an out-of-bounded positive offset 
-PASS KeyframeEffect constructor throws with keyframes with an out-of-bounded negative offset 
-PASS KeyframeEffect constructor throws with keyframes not loosely sorted by offset 
-PASS KeyframeEffect constructor throws with property-indexed keyframes with an invalid easing value 
-PASS KeyframeEffect constructor throws with a keyframe sequence with an invalid easing value 
-PASS KeyframeEffect constructor throws with keyframes with an invalid composite value 
+PASS KeyframeEffect constructor throws with keyframes with an out-of-bounded positive offset
+PASS KeyframeEffect constructor throws with keyframes with an out-of-bounded negative offset
+PASS KeyframeEffect constructor throws with keyframes not loosely sorted by offset
+PASS KeyframeEffect constructor throws with property-indexed keyframes with an invalid easing value
+PASS KeyframeEffect constructor throws with a keyframe sequence with an invalid easing value
+PASS KeyframeEffect constructor throws with keyframes with an invalid composite value
 Harness: the test ran to completion.
 

@@ -21,7 +21,7 @@ PASS base.className (<base class>): 32 tests
 PASS base.hidden: 33 tests
 PASS base.accessKey: 32 tests
 PASS base.tabIndex: 24 tests
-PASS base.href: typeof IDL attribute 
+PASS base.href: typeof IDL attribute
 FAIL base.href: IDL get with DOM attribute unset assert_equals: expected "" but got "http://web-platform.test:8001/html/dom/reflection-metadata.html"
 PASS base.href: 18 tests
 PASS base.target: 32 tests
@@ -56,7 +56,7 @@ PASS link.as: 5 tests
 FAIL link.as: setAttribute() to "serviceworker" assert_equals: IDL get expected "serviceworker" but got ""
 PASS link.as: 3 tests
 FAIL link.as: setAttribute() to "SERVICEWORKER" assert_equals: IDL get expected "serviceworker" but got ""
-PASS link.as: setAttribute() to "serviceworKer" 
+PASS link.as: setAttribute() to "serviceworKer"
 FAIL link.as: setAttribute() to "sharedworker" assert_equals: IDL get expected "sharedworker" but got ""
 PASS link.as: 3 tests
 FAIL link.as: setAttribute() to "SHAREDWORKER" assert_equals: IDL get expected "sharedworker" but got ""
@@ -64,7 +64,7 @@ PASS link.as: 17 tests
 FAIL link.as: setAttribute() to "worker" assert_equals: IDL get expected "worker" but got ""
 PASS link.as: 3 tests
 FAIL link.as: setAttribute() to "WORKER" assert_equals: IDL get expected "worker" but got ""
-PASS link.as: setAttribute() to "worKer" 
+PASS link.as: setAttribute() to "worKer"
 FAIL link.as: setAttribute() to "xslt" assert_equals: IDL get expected "xslt" but got ""
 PASS link.as: 3 tests
 FAIL link.as: setAttribute() to "XSLT" assert_equals: IDL get expected "xslt" but got ""
@@ -89,7 +89,7 @@ PASS link.as: 5 tests
 FAIL link.as: IDL set to "serviceworker" assert_equals: IDL get expected "serviceworker" but got ""
 PASS link.as: 3 tests
 FAIL link.as: IDL set to "SERVICEWORKER" assert_equals: IDL get expected "serviceworker" but got ""
-PASS link.as: IDL set to "serviceworKer" 
+PASS link.as: IDL set to "serviceworKer"
 FAIL link.as: IDL set to "sharedworker" assert_equals: IDL get expected "sharedworker" but got ""
 PASS link.as: 3 tests
 FAIL link.as: IDL set to "SHAREDWORKER" assert_equals: IDL get expected "sharedworker" but got ""
@@ -97,7 +97,7 @@ PASS link.as: 17 tests
 FAIL link.as: IDL set to "worker" assert_equals: IDL get expected "worker" but got ""
 PASS link.as: 3 tests
 FAIL link.as: IDL set to "WORKER" assert_equals: IDL get expected "worker" but got ""
-PASS link.as: IDL set to "worKer" 
+PASS link.as: IDL set to "worKer"
 FAIL link.as: IDL set to "xslt" assert_equals: IDL get expected "xslt" but got ""
 PASS link.as: 3 tests
 FAIL link.as: IDL set to "XSLT" assert_equals: IDL get expected "xslt" but got ""
@@ -117,7 +117,7 @@ FAIL link.nonce: IDL set to -Infinity assert_equals: getAttribute() expected "-I
 FAIL link.nonce: IDL set to "\0" assert_equals: getAttribute() expected "\0" but got "test-valueOf"
 FAIL link.nonce: IDL set to null assert_equals: getAttribute() expected "null" but got "test-valueOf"
 FAIL link.nonce: IDL set to object "test-toString" assert_equals: getAttribute() expected "test-toString" but got "test-valueOf"
-PASS link.nonce: IDL set to object "test-valueOf" 
+PASS link.nonce: IDL set to object "test-valueOf"
 PASS link.integrity: 32 tests
 PASS link.hreflang: 32 tests
 PASS link.type: 32 tests
@@ -298,7 +298,7 @@ FAIL style.nonce: IDL set to -Infinity assert_equals: getAttribute() expected "-
 FAIL style.nonce: IDL set to "\0" assert_equals: getAttribute() expected "\0" but got "test-valueOf"
 FAIL style.nonce: IDL set to null assert_equals: getAttribute() expected "null" but got "test-valueOf"
 FAIL style.nonce: IDL set to object "test-toString" assert_equals: getAttribute() expected "test-toString" but got "test-valueOf"
-PASS style.nonce: IDL set to object "test-valueOf" 
+PASS style.nonce: IDL set to object "test-valueOf"
 PASS style.type: 32 tests
 Harness: the test ran to completion.
 

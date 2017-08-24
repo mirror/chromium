@@ -1,6 +1,6 @@
 This is a testharness.js-based test.
-PASS Service worker test setup 
-PASS getReader({mode: "byob"}) throws on non-bytes streams 
+PASS Service worker test setup
+PASS getReader({mode: "byob"}) throws on non-bytes streams
 FAIL ReadableStream with byte source can be constructed with no errors bytes type is not yet implemented
 FAIL getReader({mode}) must perform ToString() bytes type is not yet implemented
 FAIL ReadableStream with byte source: Construct and expect start and pull being called bytes type is not yet implemented

@@ -443,7 +443,7 @@ CONSOLE ERROR: line 63: Error: <feTurbulence> attribute numOctaves: Expected int
 CONSOLE ERROR: line 63: Error: <feTurbulence> attribute numOctaves: Expected integer, "   +32)90".
 CONSOLE ERROR: line 63: Error: <feTurbulence> attribute numOctaves: Expected integer, "   1241245)90".
 This is a testharness.js-based test.
-PASS Test <integer> valid value: -47 
+PASS Test <integer> valid value: -47
 FAIL Test <integer> valid value: -47em assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value: -47ex assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value: -47px assert_equals: expected -47 but got 0
@@ -453,6 +453,46 @@ FAIL Test <integer> valid value: -47mm assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value: -47pt assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value: -47pc assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value: -47% assert_equals: expected -47 but got 0
+PASS Test <integer> valid value: 0
+PASS Test <integer> valid value: 0em
+PASS Test <integer> valid value: 0ex
+PASS Test <integer> valid value: 0px
+PASS Test <integer> valid value: 0in
+PASS Test <integer> valid value: 0cm
+PASS Test <integer> valid value: 0mm
+PASS Test <integer> valid value: 0pt
+PASS Test <integer> valid value: 0pc
+PASS Test <integer> valid value: 0%
+PASS Test <integer> valid value: +32
+FAIL Test <integer> valid value: +32em assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value: +32ex assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value: +32px assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value: +32in assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value: +32cm assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value: +32mm assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value: +32pt assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value: +32pc assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value: +32% assert_equals: expected 32 but got 0
+PASS Test <integer> valid value: 1241245
+FAIL Test <integer> valid value: 1241245em assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value: 1241245ex assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value: 1241245px assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value: 1241245in assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value: 1241245cm assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value: 1241245mm assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value: 1241245pt assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value: 1241245pc assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value: 1241245% assert_equals: expected 1241245 but got 0
+PASS Test <integer> valid value: -47 
+FAIL Test <integer> valid value: -47em  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value: -47ex  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value: -47px  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value: -47in  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value: -47cm  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value: -47mm  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value: -47pt  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value: -47pc  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value: -47%  assert_equals: expected -47 but got 0
 PASS Test <integer> valid value: 0 
 PASS Test <integer> valid value: 0em 
 PASS Test <integer> valid value: 0ex 
@@ -464,46 +504,6 @@ PASS Test <integer> valid value: 0pt
 PASS Test <integer> valid value: 0pc 
 PASS Test <integer> valid value: 0% 
 PASS Test <integer> valid value: +32 
-FAIL Test <integer> valid value: +32em assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value: +32ex assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value: +32px assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value: +32in assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value: +32cm assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value: +32mm assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value: +32pt assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value: +32pc assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value: +32% assert_equals: expected 32 but got 0
-PASS Test <integer> valid value: 1241245 
-FAIL Test <integer> valid value: 1241245em assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value: 1241245ex assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value: 1241245px assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value: 1241245in assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value: 1241245cm assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value: 1241245mm assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value: 1241245pt assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value: 1241245pc assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value: 1241245% assert_equals: expected 1241245 but got 0
-PASS Test <integer> valid value: -47  
-FAIL Test <integer> valid value: -47em  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value: -47ex  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value: -47px  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value: -47in  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value: -47cm  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value: -47mm  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value: -47pt  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value: -47pc  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value: -47%  assert_equals: expected -47 but got 0
-PASS Test <integer> valid value: 0  
-PASS Test <integer> valid value: 0em  
-PASS Test <integer> valid value: 0ex  
-PASS Test <integer> valid value: 0px  
-PASS Test <integer> valid value: 0in  
-PASS Test <integer> valid value: 0cm  
-PASS Test <integer> valid value: 0mm  
-PASS Test <integer> valid value: 0pt  
-PASS Test <integer> valid value: 0pc  
-PASS Test <integer> valid value: 0%  
-PASS Test <integer> valid value: +32  
 FAIL Test <integer> valid value: +32em  assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value: +32ex  assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value: +32px  assert_equals: expected 32 but got 0
@@ -513,7 +513,7 @@ FAIL Test <integer> valid value: +32mm  assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value: +32pt  assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value: +32pc  assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value: +32%  assert_equals: expected 32 but got 0
-PASS Test <integer> valid value: 1241245  
+PASS Test <integer> valid value: 1241245 
 FAIL Test <integer> valid value: 1241245em  assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value: 1241245ex  assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value: 1241245px  assert_equals: expected 1241245 but got 0
@@ -523,7 +523,7 @@ FAIL Test <integer> valid value: 1241245mm  assert_equals: expected 1241245 but 
 FAIL Test <integer> valid value: 1241245pt  assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value: 1241245pc  assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value: 1241245%  assert_equals: expected 1241245 but got 0
-PASS Test <integer> valid value: -47    
+PASS Test <integer> valid value: -47   
 FAIL Test <integer> valid value: -47em    assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value: -47ex    assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value: -47px    assert_equals: expected -47 but got 0
@@ -533,17 +533,17 @@ FAIL Test <integer> valid value: -47mm    assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value: -47pt    assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value: -47pc    assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value: -47%    assert_equals: expected -47 but got 0
-PASS Test <integer> valid value: 0    
-PASS Test <integer> valid value: 0em    
-PASS Test <integer> valid value: 0ex    
-PASS Test <integer> valid value: 0px    
-PASS Test <integer> valid value: 0in    
-PASS Test <integer> valid value: 0cm    
-PASS Test <integer> valid value: 0mm    
-PASS Test <integer> valid value: 0pt    
-PASS Test <integer> valid value: 0pc    
-PASS Test <integer> valid value: 0%    
-PASS Test <integer> valid value: +32    
+PASS Test <integer> valid value: 0   
+PASS Test <integer> valid value: 0em   
+PASS Test <integer> valid value: 0ex   
+PASS Test <integer> valid value: 0px   
+PASS Test <integer> valid value: 0in   
+PASS Test <integer> valid value: 0cm   
+PASS Test <integer> valid value: 0mm   
+PASS Test <integer> valid value: 0pt   
+PASS Test <integer> valid value: 0pc   
+PASS Test <integer> valid value: 0%   
+PASS Test <integer> valid value: +32   
 FAIL Test <integer> valid value: +32em    assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value: +32ex    assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value: +32px    assert_equals: expected 32 but got 0
@@ -553,7 +553,7 @@ FAIL Test <integer> valid value: +32mm    assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value: +32pt    assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value: +32pc    assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value: +32%    assert_equals: expected 32 but got 0
-PASS Test <integer> valid value: 1241245    
+PASS Test <integer> valid value: 1241245   
 FAIL Test <integer> valid value: 1241245em    assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value: 1241245ex    assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value: 1241245px    assert_equals: expected 1241245 but got 0
@@ -563,23 +563,23 @@ FAIL Test <integer> valid value: 1241245mm    assert_equals: expected 1241245 bu
 FAIL Test <integer> valid value: 1241245pt    assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value: 1241245pc    assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value: 1241245%    assert_equals: expected 1241245 but got 0
-PASS Test <integer> trailing garbage, value: -47a 
-PASS Test <integer> trailing garbage, value: 0a 
-PASS Test <integer> trailing garbage, value: +32a 
-PASS Test <integer> trailing garbage, value: 1241245a 
-PASS Test <integer> trailing garbage, value: -47e 
-PASS Test <integer> trailing garbage, value: 0e 
-PASS Test <integer> trailing garbage, value: +32e 
-PASS Test <integer> trailing garbage, value: 1241245e 
-PASS Test <integer> trailing garbage, value: -47foo 
-PASS Test <integer> trailing garbage, value: 0foo 
-PASS Test <integer> trailing garbage, value: +32foo 
-PASS Test <integer> trailing garbage, value: 1241245foo 
-PASS Test <integer> trailing garbage, value: -47)90 
-PASS Test <integer> trailing garbage, value: 0)90 
-PASS Test <integer> trailing garbage, value: +32)90 
-PASS Test <integer> trailing garbage, value: 1241245)90 
-PASS Test <integer> valid value:  -47 
+PASS Test <integer> trailing garbage, value: -47a
+PASS Test <integer> trailing garbage, value: 0a
+PASS Test <integer> trailing garbage, value: +32a
+PASS Test <integer> trailing garbage, value: 1241245a
+PASS Test <integer> trailing garbage, value: -47e
+PASS Test <integer> trailing garbage, value: 0e
+PASS Test <integer> trailing garbage, value: +32e
+PASS Test <integer> trailing garbage, value: 1241245e
+PASS Test <integer> trailing garbage, value: -47foo
+PASS Test <integer> trailing garbage, value: 0foo
+PASS Test <integer> trailing garbage, value: +32foo
+PASS Test <integer> trailing garbage, value: 1241245foo
+PASS Test <integer> trailing garbage, value: -47)90
+PASS Test <integer> trailing garbage, value: 0)90
+PASS Test <integer> trailing garbage, value: +32)90
+PASS Test <integer> trailing garbage, value: 1241245)90
+PASS Test <integer> valid value:  -47
 FAIL Test <integer> valid value:  -47em assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:  -47ex assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:  -47px assert_equals: expected -47 but got 0
@@ -589,6 +589,46 @@ FAIL Test <integer> valid value:  -47mm assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:  -47pt assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:  -47pc assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:  -47% assert_equals: expected -47 but got 0
+PASS Test <integer> valid value:  0
+PASS Test <integer> valid value:  0em
+PASS Test <integer> valid value:  0ex
+PASS Test <integer> valid value:  0px
+PASS Test <integer> valid value:  0in
+PASS Test <integer> valid value:  0cm
+PASS Test <integer> valid value:  0mm
+PASS Test <integer> valid value:  0pt
+PASS Test <integer> valid value:  0pc
+PASS Test <integer> valid value:  0%
+PASS Test <integer> valid value:  +32
+FAIL Test <integer> valid value:  +32em assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value:  +32ex assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value:  +32px assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value:  +32in assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value:  +32cm assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value:  +32mm assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value:  +32pt assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value:  +32pc assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value:  +32% assert_equals: expected 32 but got 0
+PASS Test <integer> valid value:  1241245
+FAIL Test <integer> valid value:  1241245em assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value:  1241245ex assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value:  1241245px assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value:  1241245in assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value:  1241245cm assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value:  1241245mm assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value:  1241245pt assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value:  1241245pc assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value:  1241245% assert_equals: expected 1241245 but got 0
+PASS Test <integer> valid value:  -47 
+FAIL Test <integer> valid value:  -47em  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value:  -47ex  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value:  -47px  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value:  -47in  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value:  -47cm  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value:  -47mm  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value:  -47pt  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value:  -47pc  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value:  -47%  assert_equals: expected -47 but got 0
 PASS Test <integer> valid value:  0 
 PASS Test <integer> valid value:  0em 
 PASS Test <integer> valid value:  0ex 
@@ -600,46 +640,6 @@ PASS Test <integer> valid value:  0pt
 PASS Test <integer> valid value:  0pc 
 PASS Test <integer> valid value:  0% 
 PASS Test <integer> valid value:  +32 
-FAIL Test <integer> valid value:  +32em assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value:  +32ex assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value:  +32px assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value:  +32in assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value:  +32cm assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value:  +32mm assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value:  +32pt assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value:  +32pc assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value:  +32% assert_equals: expected 32 but got 0
-PASS Test <integer> valid value:  1241245 
-FAIL Test <integer> valid value:  1241245em assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value:  1241245ex assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value:  1241245px assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value:  1241245in assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value:  1241245cm assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value:  1241245mm assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value:  1241245pt assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value:  1241245pc assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value:  1241245% assert_equals: expected 1241245 but got 0
-PASS Test <integer> valid value:  -47  
-FAIL Test <integer> valid value:  -47em  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value:  -47ex  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value:  -47px  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value:  -47in  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value:  -47cm  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value:  -47mm  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value:  -47pt  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value:  -47pc  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value:  -47%  assert_equals: expected -47 but got 0
-PASS Test <integer> valid value:  0  
-PASS Test <integer> valid value:  0em  
-PASS Test <integer> valid value:  0ex  
-PASS Test <integer> valid value:  0px  
-PASS Test <integer> valid value:  0in  
-PASS Test <integer> valid value:  0cm  
-PASS Test <integer> valid value:  0mm  
-PASS Test <integer> valid value:  0pt  
-PASS Test <integer> valid value:  0pc  
-PASS Test <integer> valid value:  0%  
-PASS Test <integer> valid value:  +32  
 FAIL Test <integer> valid value:  +32em  assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:  +32ex  assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:  +32px  assert_equals: expected 32 but got 0
@@ -649,7 +649,7 @@ FAIL Test <integer> valid value:  +32mm  assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:  +32pt  assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:  +32pc  assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:  +32%  assert_equals: expected 32 but got 0
-PASS Test <integer> valid value:  1241245  
+PASS Test <integer> valid value:  1241245 
 FAIL Test <integer> valid value:  1241245em  assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value:  1241245ex  assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value:  1241245px  assert_equals: expected 1241245 but got 0
@@ -659,7 +659,7 @@ FAIL Test <integer> valid value:  1241245mm  assert_equals: expected 1241245 but
 FAIL Test <integer> valid value:  1241245pt  assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value:  1241245pc  assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value:  1241245%  assert_equals: expected 1241245 but got 0
-PASS Test <integer> valid value:  -47    
+PASS Test <integer> valid value:  -47   
 FAIL Test <integer> valid value:  -47em    assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:  -47ex    assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:  -47px    assert_equals: expected -47 but got 0
@@ -669,17 +669,17 @@ FAIL Test <integer> valid value:  -47mm    assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:  -47pt    assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:  -47pc    assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:  -47%    assert_equals: expected -47 but got 0
-PASS Test <integer> valid value:  0    
-PASS Test <integer> valid value:  0em    
-PASS Test <integer> valid value:  0ex    
-PASS Test <integer> valid value:  0px    
-PASS Test <integer> valid value:  0in    
-PASS Test <integer> valid value:  0cm    
-PASS Test <integer> valid value:  0mm    
-PASS Test <integer> valid value:  0pt    
-PASS Test <integer> valid value:  0pc    
-PASS Test <integer> valid value:  0%    
-PASS Test <integer> valid value:  +32    
+PASS Test <integer> valid value:  0   
+PASS Test <integer> valid value:  0em   
+PASS Test <integer> valid value:  0ex   
+PASS Test <integer> valid value:  0px   
+PASS Test <integer> valid value:  0in   
+PASS Test <integer> valid value:  0cm   
+PASS Test <integer> valid value:  0mm   
+PASS Test <integer> valid value:  0pt   
+PASS Test <integer> valid value:  0pc   
+PASS Test <integer> valid value:  0%   
+PASS Test <integer> valid value:  +32   
 FAIL Test <integer> valid value:  +32em    assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:  +32ex    assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:  +32px    assert_equals: expected 32 but got 0
@@ -689,7 +689,7 @@ FAIL Test <integer> valid value:  +32mm    assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:  +32pt    assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:  +32pc    assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:  +32%    assert_equals: expected 32 but got 0
-PASS Test <integer> valid value:  1241245    
+PASS Test <integer> valid value:  1241245   
 FAIL Test <integer> valid value:  1241245em    assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value:  1241245ex    assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value:  1241245px    assert_equals: expected 1241245 but got 0
@@ -699,59 +699,59 @@ FAIL Test <integer> valid value:  1241245mm    assert_equals: expected 1241245 b
 FAIL Test <integer> valid value:  1241245pt    assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value:  1241245pc    assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value:  1241245%    assert_equals: expected 1241245 but got 0
-PASS Test <integer> WS invalid value: -47 em 
-PASS Test <integer> WS invalid value: 0 em 
-PASS Test <integer> WS invalid value: +32 em 
-PASS Test <integer> WS invalid value: 1241245 em 
-PASS Test <integer> WS invalid value: -47 ex 
-PASS Test <integer> WS invalid value: 0 ex 
-PASS Test <integer> WS invalid value: +32 ex 
-PASS Test <integer> WS invalid value: 1241245 ex 
-PASS Test <integer> WS invalid value: -47 px 
-PASS Test <integer> WS invalid value: 0 px 
-PASS Test <integer> WS invalid value: +32 px 
-PASS Test <integer> WS invalid value: 1241245 px 
-PASS Test <integer> WS invalid value: -47 in 
-PASS Test <integer> WS invalid value: 0 in 
-PASS Test <integer> WS invalid value: +32 in 
-PASS Test <integer> WS invalid value: 1241245 in 
-PASS Test <integer> WS invalid value: -47 cm 
-PASS Test <integer> WS invalid value: 0 cm 
-PASS Test <integer> WS invalid value: +32 cm 
-PASS Test <integer> WS invalid value: 1241245 cm 
-PASS Test <integer> WS invalid value: -47 mm 
-PASS Test <integer> WS invalid value: 0 mm 
-PASS Test <integer> WS invalid value: +32 mm 
-PASS Test <integer> WS invalid value: 1241245 mm 
-PASS Test <integer> WS invalid value: -47 pt 
-PASS Test <integer> WS invalid value: 0 pt 
-PASS Test <integer> WS invalid value: +32 pt 
-PASS Test <integer> WS invalid value: 1241245 pt 
-PASS Test <integer> WS invalid value: -47 pc 
-PASS Test <integer> WS invalid value: 0 pc 
-PASS Test <integer> WS invalid value: +32 pc 
-PASS Test <integer> WS invalid value: 1241245 pc 
-PASS Test <integer> WS invalid value: -47 % 
-PASS Test <integer> WS invalid value: 0 % 
-PASS Test <integer> WS invalid value: +32 % 
-PASS Test <integer> WS invalid value: 1241245 % 
-PASS Test <integer> trailing garbage, value:  -47a 
-PASS Test <integer> trailing garbage, value:  0a 
-PASS Test <integer> trailing garbage, value:  +32a 
-PASS Test <integer> trailing garbage, value:  1241245a 
-PASS Test <integer> trailing garbage, value:  -47e 
-PASS Test <integer> trailing garbage, value:  0e 
-PASS Test <integer> trailing garbage, value:  +32e 
-PASS Test <integer> trailing garbage, value:  1241245e 
-PASS Test <integer> trailing garbage, value:  -47foo 
-PASS Test <integer> trailing garbage, value:  0foo 
-PASS Test <integer> trailing garbage, value:  +32foo 
-PASS Test <integer> trailing garbage, value:  1241245foo 
-PASS Test <integer> trailing garbage, value:  -47)90 
-PASS Test <integer> trailing garbage, value:  0)90 
-PASS Test <integer> trailing garbage, value:  +32)90 
-PASS Test <integer> trailing garbage, value:  1241245)90 
-PASS Test <integer> valid value:    -47 
+PASS Test <integer> WS invalid value: -47 em
+PASS Test <integer> WS invalid value: 0 em
+PASS Test <integer> WS invalid value: +32 em
+PASS Test <integer> WS invalid value: 1241245 em
+PASS Test <integer> WS invalid value: -47 ex
+PASS Test <integer> WS invalid value: 0 ex
+PASS Test <integer> WS invalid value: +32 ex
+PASS Test <integer> WS invalid value: 1241245 ex
+PASS Test <integer> WS invalid value: -47 px
+PASS Test <integer> WS invalid value: 0 px
+PASS Test <integer> WS invalid value: +32 px
+PASS Test <integer> WS invalid value: 1241245 px
+PASS Test <integer> WS invalid value: -47 in
+PASS Test <integer> WS invalid value: 0 in
+PASS Test <integer> WS invalid value: +32 in
+PASS Test <integer> WS invalid value: 1241245 in
+PASS Test <integer> WS invalid value: -47 cm
+PASS Test <integer> WS invalid value: 0 cm
+PASS Test <integer> WS invalid value: +32 cm
+PASS Test <integer> WS invalid value: 1241245 cm
+PASS Test <integer> WS invalid value: -47 mm
+PASS Test <integer> WS invalid value: 0 mm
+PASS Test <integer> WS invalid value: +32 mm
+PASS Test <integer> WS invalid value: 1241245 mm
+PASS Test <integer> WS invalid value: -47 pt
+PASS Test <integer> WS invalid value: 0 pt
+PASS Test <integer> WS invalid value: +32 pt
+PASS Test <integer> WS invalid value: 1241245 pt
+PASS Test <integer> WS invalid value: -47 pc
+PASS Test <integer> WS invalid value: 0 pc
+PASS Test <integer> WS invalid value: +32 pc
+PASS Test <integer> WS invalid value: 1241245 pc
+PASS Test <integer> WS invalid value: -47 %
+PASS Test <integer> WS invalid value: 0 %
+PASS Test <integer> WS invalid value: +32 %
+PASS Test <integer> WS invalid value: 1241245 %
+PASS Test <integer> trailing garbage, value:  -47a
+PASS Test <integer> trailing garbage, value:  0a
+PASS Test <integer> trailing garbage, value:  +32a
+PASS Test <integer> trailing garbage, value:  1241245a
+PASS Test <integer> trailing garbage, value:  -47e
+PASS Test <integer> trailing garbage, value:  0e
+PASS Test <integer> trailing garbage, value:  +32e
+PASS Test <integer> trailing garbage, value:  1241245e
+PASS Test <integer> trailing garbage, value:  -47foo
+PASS Test <integer> trailing garbage, value:  0foo
+PASS Test <integer> trailing garbage, value:  +32foo
+PASS Test <integer> trailing garbage, value:  1241245foo
+PASS Test <integer> trailing garbage, value:  -47)90
+PASS Test <integer> trailing garbage, value:  0)90
+PASS Test <integer> trailing garbage, value:  +32)90
+PASS Test <integer> trailing garbage, value:  1241245)90
+PASS Test <integer> valid value:    -47
 FAIL Test <integer> valid value:    -47em assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:    -47ex assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:    -47px assert_equals: expected -47 but got 0
@@ -761,6 +761,46 @@ FAIL Test <integer> valid value:    -47mm assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:    -47pt assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:    -47pc assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:    -47% assert_equals: expected -47 but got 0
+PASS Test <integer> valid value:    0
+PASS Test <integer> valid value:    0em
+PASS Test <integer> valid value:    0ex
+PASS Test <integer> valid value:    0px
+PASS Test <integer> valid value:    0in
+PASS Test <integer> valid value:    0cm
+PASS Test <integer> valid value:    0mm
+PASS Test <integer> valid value:    0pt
+PASS Test <integer> valid value:    0pc
+PASS Test <integer> valid value:    0%
+PASS Test <integer> valid value:    +32
+FAIL Test <integer> valid value:    +32em assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value:    +32ex assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value:    +32px assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value:    +32in assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value:    +32cm assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value:    +32mm assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value:    +32pt assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value:    +32pc assert_equals: expected 32 but got 0
+FAIL Test <integer> valid value:    +32% assert_equals: expected 32 but got 0
+PASS Test <integer> valid value:    1241245
+FAIL Test <integer> valid value:    1241245em assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value:    1241245ex assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value:    1241245px assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value:    1241245in assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value:    1241245cm assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value:    1241245mm assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value:    1241245pt assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value:    1241245pc assert_equals: expected 1241245 but got 0
+FAIL Test <integer> valid value:    1241245% assert_equals: expected 1241245 but got 0
+PASS Test <integer> valid value:    -47 
+FAIL Test <integer> valid value:    -47em  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value:    -47ex  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value:    -47px  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value:    -47in  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value:    -47cm  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value:    -47mm  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value:    -47pt  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value:    -47pc  assert_equals: expected -47 but got 0
+FAIL Test <integer> valid value:    -47%  assert_equals: expected -47 but got 0
 PASS Test <integer> valid value:    0 
 PASS Test <integer> valid value:    0em 
 PASS Test <integer> valid value:    0ex 
@@ -772,46 +812,6 @@ PASS Test <integer> valid value:    0pt
 PASS Test <integer> valid value:    0pc 
 PASS Test <integer> valid value:    0% 
 PASS Test <integer> valid value:    +32 
-FAIL Test <integer> valid value:    +32em assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value:    +32ex assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value:    +32px assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value:    +32in assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value:    +32cm assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value:    +32mm assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value:    +32pt assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value:    +32pc assert_equals: expected 32 but got 0
-FAIL Test <integer> valid value:    +32% assert_equals: expected 32 but got 0
-PASS Test <integer> valid value:    1241245 
-FAIL Test <integer> valid value:    1241245em assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value:    1241245ex assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value:    1241245px assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value:    1241245in assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value:    1241245cm assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value:    1241245mm assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value:    1241245pt assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value:    1241245pc assert_equals: expected 1241245 but got 0
-FAIL Test <integer> valid value:    1241245% assert_equals: expected 1241245 but got 0
-PASS Test <integer> valid value:    -47  
-FAIL Test <integer> valid value:    -47em  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value:    -47ex  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value:    -47px  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value:    -47in  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value:    -47cm  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value:    -47mm  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value:    -47pt  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value:    -47pc  assert_equals: expected -47 but got 0
-FAIL Test <integer> valid value:    -47%  assert_equals: expected -47 but got 0
-PASS Test <integer> valid value:    0  
-PASS Test <integer> valid value:    0em  
-PASS Test <integer> valid value:    0ex  
-PASS Test <integer> valid value:    0px  
-PASS Test <integer> valid value:    0in  
-PASS Test <integer> valid value:    0cm  
-PASS Test <integer> valid value:    0mm  
-PASS Test <integer> valid value:    0pt  
-PASS Test <integer> valid value:    0pc  
-PASS Test <integer> valid value:    0%  
-PASS Test <integer> valid value:    +32  
 FAIL Test <integer> valid value:    +32em  assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:    +32ex  assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:    +32px  assert_equals: expected 32 but got 0
@@ -821,7 +821,7 @@ FAIL Test <integer> valid value:    +32mm  assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:    +32pt  assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:    +32pc  assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:    +32%  assert_equals: expected 32 but got 0
-PASS Test <integer> valid value:    1241245  
+PASS Test <integer> valid value:    1241245 
 FAIL Test <integer> valid value:    1241245em  assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value:    1241245ex  assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value:    1241245px  assert_equals: expected 1241245 but got 0
@@ -831,7 +831,7 @@ FAIL Test <integer> valid value:    1241245mm  assert_equals: expected 1241245 b
 FAIL Test <integer> valid value:    1241245pt  assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value:    1241245pc  assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value:    1241245%  assert_equals: expected 1241245 but got 0
-PASS Test <integer> valid value:    -47    
+PASS Test <integer> valid value:    -47   
 FAIL Test <integer> valid value:    -47em    assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:    -47ex    assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:    -47px    assert_equals: expected -47 but got 0
@@ -841,17 +841,17 @@ FAIL Test <integer> valid value:    -47mm    assert_equals: expected -47 but got
 FAIL Test <integer> valid value:    -47pt    assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:    -47pc    assert_equals: expected -47 but got 0
 FAIL Test <integer> valid value:    -47%    assert_equals: expected -47 but got 0
-PASS Test <integer> valid value:    0    
-PASS Test <integer> valid value:    0em    
-PASS Test <integer> valid value:    0ex    
-PASS Test <integer> valid value:    0px    
-PASS Test <integer> valid value:    0in    
-PASS Test <integer> valid value:    0cm    
-PASS Test <integer> valid value:    0mm    
-PASS Test <integer> valid value:    0pt    
-PASS Test <integer> valid value:    0pc    
-PASS Test <integer> valid value:    0%    
-PASS Test <integer> valid value:    +32    
+PASS Test <integer> valid value:    0   
+PASS Test <integer> valid value:    0em   
+PASS Test <integer> valid value:    0ex   
+PASS Test <integer> valid value:    0px   
+PASS Test <integer> valid value:    0in   
+PASS Test <integer> valid value:    0cm   
+PASS Test <integer> valid value:    0mm   
+PASS Test <integer> valid value:    0pt   
+PASS Test <integer> valid value:    0pc   
+PASS Test <integer> valid value:    0%   
+PASS Test <integer> valid value:    +32   
 FAIL Test <integer> valid value:    +32em    assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:    +32ex    assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:    +32px    assert_equals: expected 32 but got 0
@@ -861,7 +861,7 @@ FAIL Test <integer> valid value:    +32mm    assert_equals: expected 32 but got 
 FAIL Test <integer> valid value:    +32pt    assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:    +32pc    assert_equals: expected 32 but got 0
 FAIL Test <integer> valid value:    +32%    assert_equals: expected 32 but got 0
-PASS Test <integer> valid value:    1241245    
+PASS Test <integer> valid value:    1241245   
 FAIL Test <integer> valid value:    1241245em    assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value:    1241245ex    assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value:    1241245px    assert_equals: expected 1241245 but got 0
@@ -871,57 +871,57 @@ FAIL Test <integer> valid value:    1241245mm    assert_equals: expected 1241245
 FAIL Test <integer> valid value:    1241245pt    assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value:    1241245pc    assert_equals: expected 1241245 but got 0
 FAIL Test <integer> valid value:    1241245%    assert_equals: expected 1241245 but got 0
-PASS Test <integer> WS invalid value: -47   em 
-PASS Test <integer> WS invalid value: 0   em 
-PASS Test <integer> WS invalid value: +32   em 
-PASS Test <integer> WS invalid value: 1241245   em 
-PASS Test <integer> WS invalid value: -47   ex 
-PASS Test <integer> WS invalid value: 0   ex 
-PASS Test <integer> WS invalid value: +32   ex 
-PASS Test <integer> WS invalid value: 1241245   ex 
-PASS Test <integer> WS invalid value: -47   px 
-PASS Test <integer> WS invalid value: 0   px 
-PASS Test <integer> WS invalid value: +32   px 
-PASS Test <integer> WS invalid value: 1241245   px 
-PASS Test <integer> WS invalid value: -47   in 
-PASS Test <integer> WS invalid value: 0   in 
-PASS Test <integer> WS invalid value: +32   in 
-PASS Test <integer> WS invalid value: 1241245   in 
-PASS Test <integer> WS invalid value: -47   cm 
-PASS Test <integer> WS invalid value: 0   cm 
-PASS Test <integer> WS invalid value: +32   cm 
-PASS Test <integer> WS invalid value: 1241245   cm 
-PASS Test <integer> WS invalid value: -47   mm 
-PASS Test <integer> WS invalid value: 0   mm 
-PASS Test <integer> WS invalid value: +32   mm 
-PASS Test <integer> WS invalid value: 1241245   mm 
-PASS Test <integer> WS invalid value: -47   pt 
-PASS Test <integer> WS invalid value: 0   pt 
-PASS Test <integer> WS invalid value: +32   pt 
-PASS Test <integer> WS invalid value: 1241245   pt 
-PASS Test <integer> WS invalid value: -47   pc 
-PASS Test <integer> WS invalid value: 0   pc 
-PASS Test <integer> WS invalid value: +32   pc 
-PASS Test <integer> WS invalid value: 1241245   pc 
-PASS Test <integer> WS invalid value: -47   % 
-PASS Test <integer> WS invalid value: 0   % 
-PASS Test <integer> WS invalid value: +32   % 
-PASS Test <integer> WS invalid value: 1241245   % 
-PASS Test <integer> trailing garbage, value:    -47a 
-PASS Test <integer> trailing garbage, value:    0a 
-PASS Test <integer> trailing garbage, value:    +32a 
-PASS Test <integer> trailing garbage, value:    1241245a 
-PASS Test <integer> trailing garbage, value:    -47e 
-PASS Test <integer> trailing garbage, value:    0e 
-PASS Test <integer> trailing garbage, value:    +32e 
-PASS Test <integer> trailing garbage, value:    1241245e 
-PASS Test <integer> trailing garbage, value:    -47foo 
-PASS Test <integer> trailing garbage, value:    0foo 
-PASS Test <integer> trailing garbage, value:    +32foo 
-PASS Test <integer> trailing garbage, value:    1241245foo 
-PASS Test <integer> trailing garbage, value:    -47)90 
-PASS Test <integer> trailing garbage, value:    0)90 
-PASS Test <integer> trailing garbage, value:    +32)90 
-PASS Test <integer> trailing garbage, value:    1241245)90 
+PASS Test <integer> WS invalid value: -47   em
+PASS Test <integer> WS invalid value: 0   em
+PASS Test <integer> WS invalid value: +32   em
+PASS Test <integer> WS invalid value: 1241245   em
+PASS Test <integer> WS invalid value: -47   ex
+PASS Test <integer> WS invalid value: 0   ex
+PASS Test <integer> WS invalid value: +32   ex
+PASS Test <integer> WS invalid value: 1241245   ex
+PASS Test <integer> WS invalid value: -47   px
+PASS Test <integer> WS invalid value: 0   px
+PASS Test <integer> WS invalid value: +32   px
+PASS Test <integer> WS invalid value: 1241245   px
+PASS Test <integer> WS invalid value: -47   in
+PASS Test <integer> WS invalid value: 0   in
+PASS Test <integer> WS invalid value: +32   in
+PASS Test <integer> WS invalid value: 1241245   in
+PASS Test <integer> WS invalid value: -47   cm
+PASS Test <integer> WS invalid value: 0   cm
+PASS Test <integer> WS invalid value: +32   cm
+PASS Test <integer> WS invalid value: 1241245   cm
+PASS Test <integer> WS invalid value: -47   mm
+PASS Test <integer> WS invalid value: 0   mm
+PASS Test <integer> WS invalid value: +32   mm
+PASS Test <integer> WS invalid value: 1241245   mm
+PASS Test <integer> WS invalid value: -47   pt
+PASS Test <integer> WS invalid value: 0   pt
+PASS Test <integer> WS invalid value: +32   pt
+PASS Test <integer> WS invalid value: 1241245   pt
+PASS Test <integer> WS invalid value: -47   pc
+PASS Test <integer> WS invalid value: 0   pc
+PASS Test <integer> WS invalid value: +32   pc
+PASS Test <integer> WS invalid value: 1241245   pc
+PASS Test <integer> WS invalid value: -47   %
+PASS Test <integer> WS invalid value: 0   %
+PASS Test <integer> WS invalid value: +32   %
+PASS Test <integer> WS invalid value: 1241245   %
+PASS Test <integer> trailing garbage, value:    -47a
+PASS Test <integer> trailing garbage, value:    0a
+PASS Test <integer> trailing garbage, value:    +32a
+PASS Test <integer> trailing garbage, value:    1241245a
+PASS Test <integer> trailing garbage, value:    -47e
+PASS Test <integer> trailing garbage, value:    0e
+PASS Test <integer> trailing garbage, value:    +32e
+PASS Test <integer> trailing garbage, value:    1241245e
+PASS Test <integer> trailing garbage, value:    -47foo
+PASS Test <integer> trailing garbage, value:    0foo
+PASS Test <integer> trailing garbage, value:    +32foo
+PASS Test <integer> trailing garbage, value:    1241245foo
+PASS Test <integer> trailing garbage, value:    -47)90
+PASS Test <integer> trailing garbage, value:    0)90
+PASS Test <integer> trailing garbage, value:    +32)90
+PASS Test <integer> trailing garbage, value:    1241245)90
 Harness: the test ran to completion.
 

@@ -12,7 +12,7 @@ PASS Referer: http://127.0.0.1:8000/sendbeacon/beacon-cross-origin.html
 PASS Request-Method: POST
 PASS Length: 11
 PASS Body: CrossOrigin
-PASS 
+PASS
 PASS successfullyParsed is true
 
 TEST COMPLETE

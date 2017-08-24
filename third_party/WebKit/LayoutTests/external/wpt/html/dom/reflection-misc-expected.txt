@@ -36,7 +36,7 @@ FAIL script.nonce: IDL set to -Infinity assert_equals: getAttribute() expected "
 FAIL script.nonce: IDL set to "\0" assert_equals: getAttribute() expected "\0" but got "test-valueOf"
 FAIL script.nonce: IDL set to null assert_equals: getAttribute() expected "null" but got "test-valueOf"
 FAIL script.nonce: IDL set to object "test-toString" assert_equals: getAttribute() expected "test-toString" but got "test-valueOf"
-PASS script.nonce: IDL set to object "test-valueOf" 
+PASS script.nonce: IDL set to object "test-valueOf"
 PASS script.integrity: 32 tests
 PASS script.event: 32 tests
 PASS script.htmlFor (<script for>): 32 tests

@@ -1,6 +1,6 @@
 This is a testharness.js-based test.
 Found 65 tests; 1 PASS, 64 FAIL, 0 TIMEOUT, 0 NOTRUN.
-PASS Basic check 
+PASS Basic check
 FAIL WebSocket blocked port test 1 Failed to construct 'WebSocket': The port 1 is not allowed.
 FAIL WebSocket blocked port test 7 Failed to construct 'WebSocket': The port 7 is not allowed.
 FAIL WebSocket blocked port test 9 Failed to construct 'WebSocket': The port 9 is not allowed.

@@ -447,9 +447,9 @@ PASS marquee.scrollAmount: 19 tests
 FAIL marquee.scrollAmount: setAttribute() to "\v7" assert_equals: IDL get expected 6 but got 7
 PASS marquee.scrollAmount: 6 tests
 FAIL marquee.scrollAmount: setAttribute() to " 7" assert_equals: IDL get expected 6 but got 7
-PASS marquee.scrollAmount: setAttribute() to " 7" 
+PASS marquee.scrollAmount: setAttribute() to " 7"
 FAIL marquee.scrollAmount: setAttribute() to " 7" assert_equals: IDL get expected 6 but got 7
-PASS marquee.scrollAmount: setAttribute() to "᠎7" 
+PASS marquee.scrollAmount: setAttribute() to "᠎7"
 FAIL marquee.scrollAmount: setAttribute() to " 7" assert_equals: IDL get expected 6 but got 7
 FAIL marquee.scrollAmount: setAttribute() to " 7" assert_equals: IDL get expected 6 but got 7
 FAIL marquee.scrollAmount: setAttribute() to " 7" assert_equals: IDL get expected 6 but got 7
@@ -461,7 +461,7 @@ FAIL marquee.scrollAmount: setAttribute() to " 7" assert_equals: IDL get expec
 FAIL marquee.scrollAmount: setAttribute() to " 7" assert_equals: IDL get expected 6 but got 7
 FAIL marquee.scrollAmount: setAttribute() to " 7" assert_equals: IDL get expected 6 but got 7
 FAIL marquee.scrollAmount: setAttribute() to " 7" assert_equals: IDL get expected 6 but got 7
-PASS marquee.scrollAmount: setAttribute() to " 7" 
+PASS marquee.scrollAmount: setAttribute() to " 7"
 FAIL marquee.scrollAmount: setAttribute() to "　7" assert_equals: IDL get expected 6 but got 7
 PASS marquee.scrollAmount: 17 tests
 FAIL marquee.scrollAmount: IDL set to 2147483648 Failed to set the 'scrollAmount' property on 'HTMLMarqueeElement': The provided value (-2147483648) is negative.
@@ -470,9 +470,9 @@ PASS marquee.scrollDelay: 19 tests
 FAIL marquee.scrollDelay: setAttribute() to "\v7" assert_equals: IDL get expected 85 but got 7
 PASS marquee.scrollDelay: 6 tests
 FAIL marquee.scrollDelay: setAttribute() to " 7" assert_equals: IDL get expected 85 but got 7
-PASS marquee.scrollDelay: setAttribute() to " 7" 
+PASS marquee.scrollDelay: setAttribute() to " 7"
 FAIL marquee.scrollDelay: setAttribute() to " 7" assert_equals: IDL get expected 85 but got 7
-PASS marquee.scrollDelay: setAttribute() to "᠎7" 
+PASS marquee.scrollDelay: setAttribute() to "᠎7"
 FAIL marquee.scrollDelay: setAttribute() to " 7" assert_equals: IDL get expected 85 but got 7
 FAIL marquee.scrollDelay: setAttribute() to " 7" assert_equals: IDL get expected 85 but got 7
 FAIL marquee.scrollDelay: setAttribute() to " 7" assert_equals: IDL get expected 85 but got 7
@@ -484,7 +484,7 @@ FAIL marquee.scrollDelay: setAttribute() to " 7" assert_equals: IDL get expect
 FAIL marquee.scrollDelay: setAttribute() to " 7" assert_equals: IDL get expected 85 but got 7
 FAIL marquee.scrollDelay: setAttribute() to " 7" assert_equals: IDL get expected 85 but got 7
 FAIL marquee.scrollDelay: setAttribute() to " 7" assert_equals: IDL get expected 85 but got 7
-PASS marquee.scrollDelay: setAttribute() to " 7" 
+PASS marquee.scrollDelay: setAttribute() to " 7"
 FAIL marquee.scrollDelay: setAttribute() to "　7" assert_equals: IDL get expected 85 but got 7
 PASS marquee.scrollDelay: 17 tests
 FAIL marquee.scrollDelay: IDL set to 2147483648 Failed to set the 'scrollDelay' property on 'HTMLMarqueeElement': The provided value (-2147483648) is negative.

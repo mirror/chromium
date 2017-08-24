@@ -12,7 +12,7 @@ PASS successfullyParsed is true
 
 TEST COMPLETE
 PASS consumesResult is true
-PASS window.getSelection().toString() is not 
+PASS window.getSelection().toString() is not
 PASS plainResult is false
 PASS window.getSelection().toString() is ""
 
