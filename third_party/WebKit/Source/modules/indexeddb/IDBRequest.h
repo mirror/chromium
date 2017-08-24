@@ -32,6 +32,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "bindings/core/v8/ScriptPromiseProperty.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "core/dom/DOMStringList.h"
 #include "core/dom/SuspendableObject.h"
@@ -179,6 +180,15 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   enum ReadyState { PENDING = 1, DONE = 2, kEarlyDeath = 3 };
 
   const String& readyState() const;
+  ScriptPromise ready(ScriptState*);
+
+  ScriptPromise then(ScriptState*,
+                     const ScriptValue& onFulfilled,
+                     const ScriptValue& onRejected = ScriptValue());
+  ScriptPromise catchFunction(ScriptState* script_state,
+                              const ScriptValue& onRejected) {
+    return then(script_state, ScriptValue(), onRejected);
+  }
 
   // Returns a new WebIDBCallbacks for this request.
   //
@@ -369,6 +379,11 @@ class MODULES_EXPORT IDBRequest : public EventTargetWithInlineData,
   Member<IDBAny> source_;
   Member<IDBAny> result_;
   Member<DOMException> error_;
+
+  using ReadyPromise = ScriptPromiseProperty<Member<IDBRequest>,
+                                             Member<IDBAny>,
+                                             Member<DOMException>>;
+  Member<ReadyPromise> ready_promise_;
 
   bool has_pending_activity_ = true;
   HeapVector<Member<Event>> enqueued_events_;

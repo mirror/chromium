@@ -9,6 +9,7 @@
 #define SCRIPT_PROMISE_PROPERTIES(P, ...)    \
   P(ScriptPromise, kReady##__VA_ARGS__)      \
   P(ScriptPromise, kClosed##__VA_ARGS__)     \
+  P(ScriptPromise, kComplete##__VA_ARGS__)   \
   P(ScriptPromise, kFinished##__VA_ARGS__)   \
   P(ScriptPromise, kLoaded##__VA_ARGS__)     \
   P(ScriptPromise, kReleased##__VA_ARGS__)   \

@@ -46,6 +46,11 @@ enum IDBTransactionMode {
     [SameObject] readonly attribute IDBDatabase db;
     readonly attribute DOMException error;
 
+    // https://github.com/inexorabletash/indexeddb-promises
+    [RuntimeEnabled=IDBPromises, CallWith=ScriptState] readonly attribute Promise<void> complete;
+    [RuntimeEnabled=IDBPromises, CallWith=ScriptState] Promise<any> then(any onFulfilled, optional any onRejected);
+    [RuntimeEnabled=IDBPromises, CallWith=ScriptState, ImplementedAs=catchFunction] Promise<any> catch(any onRejected);
+
     // Methods
     [RaisesException] IDBObjectStore objectStore (DOMString name);
     [RaisesException] void abort ();

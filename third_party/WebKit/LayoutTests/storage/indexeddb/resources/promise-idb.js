@@ -7,18 +7,18 @@ var pdb = {
       request.onsuccess = function() {
         resolve(request.result);
       };
-      request.onerror = reject;
-    })
+      request.onerror = function() {
+        reject(request.error);
+      };
+    });
   },
 
-  transact: function(db, objectStores, style) {
-    return Promise.resolve(db.transaction(objectStores, style));
-  },
-
-  openCursor: function(txn, indexOrObjectStore, keyrange, callback) {
+  openCursor: function(txn, source, query, callback) {
     return new Promise(function(resolve, reject) {
-      var request = indexOrObjectStore.openCursor(keyrange);
-      request.onerror = reject;
+      var request = source.openCursor(query);
+      request.onerror = function() {
+        reject(request.error);
+      };
       request.onsuccess = function() {
         var cursor = request.result;
         var cont = false;
@@ -39,39 +39,40 @@ var pdb = {
     });
   },
 
-  get: function(indexOrObjectStore, key) {
-    return this._transformRequestToPromise(indexOrObjectStore, indexOrObjectStore.get, [key]);
+  get: function(source, query) {
+    return this._transformRequestToPromise(source, source.get, [query]);
   },
 
-  count: function(indexOrObjectStore, key) {
-    return this._transformRequestToPromise(indexOrObjectStore, indexOrObjectStore.count, [key]);
+  getKey: function(source, query) {
+    return this._transformRequestToPromise(source, source.getKey, [query]);
   },
 
-  put: function(objectStore, key, value) {
-    return this._transformRequestToPromise(objectStore, objectStore.put, [key, value]);
+  count: function(source, query) {
+    return this._transformRequestToPromise(source, source.count, [query]);
   },
 
-  add: function(objectStore, key, value) {
-    return this._transformRequestToPromise(objectStore, objectStore.add, [key, value]);
+  put: function(objectStore, value, key) {
+    return this._transformRequestToPromise(objectStore, objectStore.put, [value, key]);
   },
 
-  delete: function(objectStore, key) {
-    return this._transformRequestToPromise(objectStore, objectStore.delete, [key]);
+  add: function(objectStore, value, key) {
+    return this._transformRequestToPromise(objectStore, objectStore.add, [value, key]);
+  },
+
+  delete: function(objectStore, query) {
+    return this._transformRequestToPromise(objectStore, objectStore.delete, [query]);
   },
 
   clear: function(objectStore) {
     return this._transformRequestToPromise(objectStore, objectStore.clear, []);
   },
 
-  getKey: function(index, key) {
-    return this._transformRequestToPromise(index, index.getKey, [key]);
-  },
-
   waitForTransaction: function(txn) {
     return new Promise(function(resolve, reject) {
       txn.oncomplete = resolve;
-      txn.onerror = reject;
-      txn.onabort = reject;
+      txn.onabort = function() {
+        reject(txn.error);
+      };
     });
   }
-}
+};

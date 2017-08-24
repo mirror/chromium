@@ -47,6 +47,11 @@ enum IDBRequestReadyState {
     readonly attribute IDBTransaction transaction;
     readonly attribute IDBRequestReadyState readyState;
 
+    // https://github.com/inexorabletash/indexeddb-promises
+    [RuntimeEnabled=IDBPromises, CallWith=ScriptState] readonly attribute Promise<any> ready;
+    [RuntimeEnabled=IDBPromises, CallWith=ScriptState] Promise<any> then(any onFulfilled, optional any onRejected);
+    [RuntimeEnabled=IDBPromises, CallWith=ScriptState, ImplementedAs=catchFunction] Promise<any> catch(any onRejected);
+
     // Events
     attribute EventHandler onsuccess;
     attribute EventHandler onerror;
