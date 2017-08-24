@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "00f8b1c2_82edea1f",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 2
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-24T22:00:29Z",
+      "side": 1,
+      "message": "Move this to line 2909.",
+      "revId": "053d1835029c72bd3fe0266d0c23982269f1f390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f786df50_fddb122f",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-log-linkify-stack-in-errors-expected.txt",
         "patchSetId": 2
@@ -47,6 +64,23 @@
       "writtenOn": "2017-08-24T21:10:49Z",
       "side": 1,
       "message": "Should be a 404 based on test precondition.",
+      "revId": "053d1835029c72bd3fe0266d0c23982269f1f390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dfd2b2c_b3454370",
+        "filename": "third_party/WebKit/Source/devtools/scripts/migrate_test/tests.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-24T22:00:29Z",
+      "side": 1,
+      "message": "Clear this one :)",
       "revId": "053d1835029c72bd3fe0266d0c23982269f1f390",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
