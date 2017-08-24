@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1fa33dc_f2a1eeea",
+        "filename": "components/cronet/android/api/src/org/chromium/net/NetworkException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-08-24T17:56:49Z",
+      "side": 1,
+      "message": "We should not change the value of ERROR_OTHER code since the existing clients may have special handling of this error code in their logic.",
+      "revId": "b08ef7a15ef0429490afcd75487393a9d994d0eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
