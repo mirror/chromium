@@ -89,7 +89,6 @@ ButtonStickerSheet::~ButtonStickerSheet() {}
 
 void ButtonStickerSheet::CreateExampleView(View* container) {
   GridLayout* layout = MakeStretchyGridLayout(container, 3);
-  container->SetLayoutManager(layout);
 
   if (!ui::MaterialDesignController::IsSecondaryUiMaterial()) {
     const char* kNeedsMdWarning =

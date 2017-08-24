@@ -117,7 +117,6 @@ void GlobalErrorBubbleView::Init() {
   }
 
   views::GridLayout* layout = new views::GridLayout(this);
-  SetLayoutManager(layout);
 
   // First row, message labels.
   views::ColumnSet* cs = layout->AddColumnSet(0);

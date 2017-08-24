@@ -62,7 +62,6 @@ void TextfieldExample::CreateExampleView(View* container) {
   password_->set_controller(this);
 
   GridLayout* layout = new GridLayout(container);
-  container->SetLayoutManager(layout);
 
   ColumnSet* column_set = layout->AddColumnSet(0);
   column_set->AddColumn(GridLayout::LEADING, GridLayout::FILL,

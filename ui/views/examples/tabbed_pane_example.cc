@@ -28,7 +28,6 @@ void TabbedPaneExample::CreateExampleView(View* container) {
   select_at_ = new LabelButton(this, ASCIIToUTF16("Select At 1"));
 
   GridLayout* layout = new GridLayout(container);
-  container->SetLayoutManager(layout);
 
   const int tabbed_pane_column = 0;
   ColumnSet* column_set = layout->AddColumnSet(tabbed_pane_column);

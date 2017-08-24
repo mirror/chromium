@@ -276,7 +276,6 @@ class WindowTypeLauncherView : public views::WidgetDelegateView,
         jank_duration_field_(new views::Textfield) {
     SetBorder(views::CreateEmptyBorder(gfx::Insets(5)));
     views::GridLayout* layout = new views::GridLayout(this);
-    SetLayoutManager(layout);
     views::ColumnSet* column_set = layout->AddColumnSet(0);
     column_set->AddColumn(views::GridLayout::LEADING,
                           views::GridLayout::CENTER,

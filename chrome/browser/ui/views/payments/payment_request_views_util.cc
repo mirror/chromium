@@ -185,7 +185,6 @@ std::unique_ptr<views::View> CreateSheetHeaderView(
     views::ButtonListener* listener) {
   std::unique_ptr<views::View> container = base::MakeUnique<views::View>();
   views::GridLayout* layout = new views::GridLayout(container.get());
-  container->SetLayoutManager(layout);
 
   constexpr int kHeaderTopVerticalInset = 14;
   constexpr int kHeaderBottomVerticalInset = 8;

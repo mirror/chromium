@@ -58,7 +58,6 @@ std::unique_ptr<views::View> CreateLineItemView(const base::string16& label,
       row_insets));
 
   views::GridLayout* layout = new views::GridLayout(row.get());
-  row->SetLayoutManager(layout);
 
   views::ColumnSet* columns = layout->AddColumnSet(0);
   // The first column has resize_percent = 1 so that it stretches all the way
@@ -109,7 +108,6 @@ std::unique_ptr<views::View> CreateLineItemView(const base::string16& label,
   currency_text->set_id(static_cast<int>(currency_label_id));
   wrapper_layout->AddView(currency_text.release());
   wrapper_layout->AddView(amount_text.release());
-  amount_wrapper->SetLayoutManager(wrapper_layout);
 
   layout->AddView(label_text.release());
   layout->AddView(amount_wrapper.release());

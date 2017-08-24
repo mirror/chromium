@@ -100,12 +100,10 @@ class VIEWS_EXPORT GridLayout : public LayoutManager {
     USE_PREF
   };
 
+  // Also installs the newly-created GridLayout as the LayoutManager for |host|.
   explicit GridLayout(View* host);
-  ~GridLayout() override;
 
-  // Creates a GridLayout, assigns it as the LayoutManager of |host|, and gives
-  // it a INSETS_PANEL-sized padding border.
-  static GridLayout* CreatePanel(View* host);
+  ~GridLayout() override;
 
   // Creates a new column set with the specified id and returns it.
   // The id is later used when starting a new row.
