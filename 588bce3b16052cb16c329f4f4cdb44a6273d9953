@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bfa7935_d5287461",
+        "filename": "ui/display/mojo/display_snapshot.typemap",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-24T14:35:34Z",
+      "side": 1,
+      "message": "So... do we have a line-breaking rule for this?",
+      "revId": "588bce3b16052cb16c329f4f4cdb44a6273d9953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ccfe84_8fb58b76",
+        "filename": "ui/ozone/platform/drm/gpu/drm_thread_message_proxy.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-24T14:35:34Z",
+      "side": 1,
+      "message": "yay",
+      "revId": "588bce3b16052cb16c329f4f4cdb44a6273d9953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3b74627_94cec875",
+        "filename": "ui/ozone/platform/drm/mus_thread_proxy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-24T14:35:34Z",
+      "side": 1,
+      "message": "while you\u0027re here, perhaps you could use MovableDisplaySnapshots instead",
+      "revId": "588bce3b16052cb16c329f4f4cdb44a6273d9953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

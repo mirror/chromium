@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26c65e7c_aa520796",
+        "filename": "ui/ozone/platform/drm/common/drm_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-24T14:35:34Z",
+      "side": 0,
+      "message": "my recollection is that this string wends its way up into display manager code and is used for something. Am I misremembering?",
+      "revId": "0e81350f5bd49d7ef465040667b5626f26258bf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
