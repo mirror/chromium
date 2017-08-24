@@ -39,6 +39,22 @@ class SearchAnswerWebView : public views::WebView {
     holder()->set_can_process_events_within_subtree(false);
   }
 
+  void OnVisibilityEvent(bool is_removed_from_widget_event) {
+    // Need to check for |is_removed_from_widget_event| because inside
+    // RemovedFromWidget() callback, GetWidget() still returns a non-null value.
+    if (!is_removed_from_widget_event && GetWidget() &&
+        GetWidget()->IsActive() && GetWidget()->IsVisible() && IsDrawn()) {
+      if (shown_time_.is_null())
+        shown_time_ = base::TimeTicks::Now();
+    } else {
+      if (!shown_time_.is_null()) {
+        UMA_HISTOGRAM_MEDIUM_TIMES("SearchAnswer.AnswerVisibleTime",
+                                   base::TimeTicks::Now() - shown_time_);
+        shown_time_ = base::TimeTicks();
+      }
+    }
+  }
+
   // views::WebView overrides:
   void AddedToWidget() override {
     WebView::AddedToWidget();
@@ -50,18 +66,20 @@ class SearchAnswerWebView : public views::WebView {
     while (window->parent() != app_list_window)
       window = window->parent();
     AppListView::ExcludeWindowFromEventHandling(window);
-    if (shown_time_.is_null())
-      shown_time_ = base::TimeTicks::Now();
+
+    OnVisibilityEvent(false);
   }
 
   void RemovedFromWidget() override {
-    if (!shown_time_.is_null()) {
-      UMA_HISTOGRAM_MEDIUM_TIMES("SearchAnswer.AnswerVisibleTime",
-                                 base::TimeTicks::Now() - shown_time_);
-      shown_time_ = base::TimeTicks();
-    }
+    OnVisibilityEvent(true);
 
     WebView::RemovedFromWidget();
+  }
+
+  void VisibilityChanged(View* starting_from, bool is_visible) override {
+    WebView::VisibilityChanged(starting_from, is_visible);
+
+    OnVisibilityEvent(false);
   }
 
   const char* GetClassName() const override { return "SearchAnswerWebView"; }
