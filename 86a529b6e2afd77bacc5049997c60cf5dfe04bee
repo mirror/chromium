@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c15ddd3_7de7ecf3",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T20:49:36Z",
+      "side": 1,
+      "message": "Won\u0027t this maximize *all* popups? Do you really need to do that?",
+      "range": {
+        "startLine": 337,
+        "startChar": 2,
+        "endLine": 343,
+        "endChar": 3
+      },
+      "revId": "86a529b6e2afd77bacc5049997c60cf5dfe04bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

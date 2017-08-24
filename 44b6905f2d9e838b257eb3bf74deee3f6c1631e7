@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ca08d2a5_943a9d91",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T20:49:36Z",
+      "side": 1,
+      "message": "I think the right place for the change is ShouldUseImmersiveFullscreenForUrl. It likely makes more sense for that function to be a static on ImmersiveModeController so you can have the implementation entirely here.",
+      "parentUuid": "b70f57cd_8d962d5f",
+      "range": {
+        "startLine": 124,
+        "startChar": 5,
+        "endLine": 124,
+        "endChar": 43
+      },
+      "revId": "44b6905f2d9e838b257eb3bf74deee3f6c1631e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c18b201_9dd7b2e3",
         "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash.cc",
         "patchSetId": 6
