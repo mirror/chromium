@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d2a304da_a6d1a494",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-24T20:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c8ba7c1_c46281bf",
+      "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05217219_94663e9c",
         "filename": "chrome/common/conflicts/module_watcher_win.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3eb6413c_da72f4c1",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-24T20:01:27Z",
+      "side": 1,
+      "message": "Sounds good",
+      "parentUuid": "05217219_94663e9c",
+      "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5a13e0a_e511b42f",
         "filename": "chrome/common/conflicts/module_watcher_win.cc",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c5643e_1ffec8bc",
+        "filename": "chrome/common/conflicts/module_watcher_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-24T20:01:27Z",
+      "side": 1,
+      "message": "After reconsideration, I changed back this change to its original code and added a comment.",
+      "parentUuid": "a5a13e0a_e511b42f",
+      "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "1501214d_b2accef5",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-24T20:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96542c81_acc9929c",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 12
+      },
+      "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "540d2eff_6e48825a",
         "filename": "chrome/common/conflicts/module_watcher_win.h",
         "patchSetId": 6
@@ -96,6 +174,30 @@
       "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc1037b9_4fb63a55",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-24T20:01:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "540d2eff_6e48825a",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 71
+      },
+      "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "ecccd197_359a8f45",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-24T20:01:27Z",
+      "side": 1,
+      "message": "The whole story is that while writing this code, Chris did some testing to check if the loader\u0027s lock was held during the dll notification callback by directly inspecting the CRITICAL_SECTION in memory and found that is wasn\u0027t held.\n\nNow Siggi says that trying to inspect the CRITICAL_SECTION directly is no longer possible because of some change made by MS. Something about the loader\u0027s lock not being a real CRITICAL_SECTION anymore. Which may be why Chris got an incorrect assumption.\n\nIt\u0027s also totally possible that Chris is right and that another lock is held instead. One specific to the one memory-mapped dll, which causes a deadlock when creating a snapshot because it must also be accessed. It\u0027s pretty much pure speculation on internal implementation of the loader code.\n\nAnyways, the end result is comparable to as-if the loader lock is held, so I\u0027m just writing this everywhere.",
+      "parentUuid": "1338ccc2_03ac8d27",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 28
+      },
+      "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a4d889b_4439ffc6",
         "filename": "chrome/common/conflicts/module_watcher_win.h",
         "patchSetId": 6
@@ -142,6 +268,30 @@
       "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00b68aff_ce83bbe9",
+        "filename": "chrome/common/conflicts/module_watcher_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-24T20:01:27Z",
+      "side": 1,
+      "message": "Yeah no reason to add the \"very unlikely\" part.",
+      "parentUuid": "6a4d889b_4439ffc6",
+      "range": {
+        "startLine": 65,
+        "startChar": 33,
+        "endLine": 65,
+        "endChar": 50
+      },
+      "revId": "807beed1ae71fd59e1e52584caa8fe8dae09b9ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
