@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_RESOURCE_COORDINATOR_TAB_MANAGER_STATS_COLLECTOR_H_
 #define CHROME_BROWSER_RESOURCE_COORDINATOR_TAB_MANAGER_STATS_COLLECTOR_H_
 
+#include <algorithm>
 #include <cstdint>
 #include <memory>
 #include <unordered_map>
@@ -56,6 +57,30 @@ class TabManagerStatsCollector : public SessionRestoreObserver {
     kBackgroundTabOpening
   };
 
+  // Houses all of the tab count statistics gathered by TabManagerStatsCollector
+  // for background tabs.
+  struct BackgroundTabCountStats {
+    // Reset everything to zero. This is called when a background tabs loading
+    // session starts.
+    void Reset();
+
+    // The max number of background tabs pending or loading in a background
+    // tab opening session.
+    size_t tab_count;
+
+    // The max number of background tabs that were paused to load in a
+    // background tab opening session due to memory pressure.
+    size_t tabs_paused;
+
+    // The number of backgrund tabs whose loading was triggered by TabManager
+    // automatically.
+    size_t tabs_load_auto_started;
+
+    // The number of background tabs whose loading was triggered by user
+    // selection.
+    size_t tabs_load_user_initiated;
+  };
+
   TabManagerStatsCollector();
   ~TabManagerStatsCollector();
 
@@ -77,6 +102,22 @@ class TabManagerStatsCollector : public SessionRestoreObserver {
   // opening session.
   void OnBackgroundTabOpeningSessionStarted();
   void OnBackgroundTabOpeningSessionEnded();
+
+  // Track background tabs and update background tab count stats.
+  void TrackNewBackgroundTab(size_t pending_tabs, size_t loading_tabs) {
+    background_tab_count_stats_.tab_count = std::max(
+        background_tab_count_stats_.tab_count, pending_tabs + loading_tabs + 1);
+  }
+  void TrackPausedBackgroundTabs(size_t paused_tabs) {
+    background_tab_count_stats_.tabs_paused =
+        std::max(background_tab_count_stats_.tabs_paused, paused_tabs);
+  }
+  void TrackBackgroundTabLoadAutoStarted() {
+    background_tab_count_stats_.tabs_load_auto_started++;
+  }
+  void TrackBackgroundTabLoadUserInitiated() {
+    background_tab_count_stats_.tabs_load_user_initiated++;
+  }
 
   // The following record UMA histograms for system swap metrics.
   void OnSwapInCount(SessionType type,
@@ -157,6 +198,18 @@ class TabManagerStatsCollector : public SessionRestoreObserver {
   // track each foreground tab and its corresponding switch-to time.
   std::unordered_map<content::WebContents*, base::TimeTicks>
       foreground_contents_switched_to_times_;
+
+  BackgroundTabCountStats background_tab_count_stats_;
+  bool ignore_tab_count_in_overlapped_session_;
+
+  // This records the number of overlapped sessions between SessionRestore and
+  // BackgroundTabOpening session. This is recorded at the end of each
+  // SessionRestore. Since SessionRestore usually happens only once at the
+  // beginning of the browser start, there should usually be 0 overlap,
+  // sometimes 1 overlap and rarely more than 1 overlap. One example of more
+  // than 1 overlap happens when more BackgroundTabOpening sessions occur in
+  // a SessionRestore.
+  size_t num_overlapped_sessions_;
 };
 
 }  // namespace resource_coordinator
