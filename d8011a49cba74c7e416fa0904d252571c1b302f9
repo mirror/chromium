@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5beef50_234b2fb8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/extensions/extensions-events.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1118132
+      },
+      "writtenOn": "2017-08-24T23:17:24Z",
+      "side": 1,
+      "message": "edit-me.js was returning a 404. Rather than work out the correct relative I switched to the test script file in the http/tests/inspector/extensions directory.",
+      "range": {
+        "startLine": 6,
+        "startChar": 48,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "d8011a49cba74c7e416fa0904d252571c1b302f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
