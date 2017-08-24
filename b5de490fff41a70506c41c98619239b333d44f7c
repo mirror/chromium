@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5226a3f1_16cd9931",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/rule_indexing_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-24T03:14:22Z",
+      "side": 1,
+      "message": "Why is it recommended for ChromeTestExtensionLoader to be used on stack and not as a test suite member?",
+      "range": {
+        "startLine": 168,
+        "startChar": 18,
+        "endLine": 168,
+        "endChar": 43
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5017586_d28c382b",
+        "filename": "chrome/browser/extensions/unpacked_installer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-24T03:14:22Z",
+      "side": 1,
+      "message": "This parses JSON in the browser process for unpacked extensions. I think we do the same for manifest files, so this is probably ok?",
+      "range": {
+        "startLine": 321,
+        "startChar": 2,
+        "endLine": 321,
+        "endChar": 27
+      },
+      "revId": "b5de490fff41a70506c41c98619239b333d44f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
