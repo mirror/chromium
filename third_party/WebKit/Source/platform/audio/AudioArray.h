@@ -30,6 +30,7 @@
 #define AudioArray_h
 
 #include <string.h>
+#include "base/memory/aligned_memory.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/allocator/Partitions.h"
@@ -48,7 +49,13 @@ class AudioArray {
     Allocate(n);
   }
 
-  ~AudioArray() { WTF::Partitions::FastFree(allocation_); }
+  ~AudioArray() {
+#if 0
+    WTF::Partitions::FastFree(allocation_);
+#else
+    base::AlignedFree(allocation_);
+#endif
+  }
 
   // It's OK to call allocate() multiple times, but data will *not* be copied
   // from an initial allocation if re-allocated. Allocations are
@@ -67,9 +74,15 @@ class AudioArray {
     const size_t kAlignment = 16;
 #endif
 
-    if (allocation_)
+    if (allocation_) {
+#if 0
       WTF::Partitions::FastFree(allocation_);
+#else
+      base::AlignedFree(allocation_);
+#endif
+    }
 
+#if 0
     bool is_allocation_good = false;
 
     while (!is_allocation_good) {
@@ -99,6 +112,17 @@ class AudioArray {
         WTF::Partitions::FastFree(allocation);
       }
     }
+#else
+    unsigned rounded_up = (initial_size + kAlignment - 1) & ~(kAlignment - 1);
+    T* allocation = static_cast<T*>(base::AlignedAlloc(rounded_up, kAlignment));
+    CHECK_GE(rounded_up, initial_size);
+    CHECK(allocation);
+    T* aligned_data = AlignedAddress(allocation, kAlignment);
+    CHECK_EQ(allocation, aligned_data);
+    allocation_ = allocation;
+    aligned_data_ = aligned_data;
+    size_ = n;
+#endif
   }
 
   T* Data() { return aligned_data_; }
