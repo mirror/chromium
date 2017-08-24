@@ -16,6 +16,24 @@
       "revId": "752c9e56de72aa942af29ea859fda009109a3f85",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b459190d_43f58194",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-24T21:57:06Z",
+      "side": 0,
+      "message": "Yes, it\u0027s intentional. To delete a WindowSelector object, it\u0027s supposed to call WindowSelector::Shutdown() first and then call the destructor. The observers have been removed in Shutdown() function in line 369 in this patch. So there is no need to remove it here again.",
+      "parentUuid": "03e85285_16f5ed5e",
+      "revId": "752c9e56de72aa942af29ea859fda009109a3f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

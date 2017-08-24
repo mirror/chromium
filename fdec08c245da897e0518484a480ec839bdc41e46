@@ -16,6 +16,24 @@
       "revId": "fdec08c245da897e0518484a480ec839bdc41e46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be32977_5a4b328b",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-24T21:57:06Z",
+      "side": 1,
+      "message": "There are two forms of DeleteSoon. One accepts a raw pointer and the other accepts an unique_ptr. If I change it to std::move(), it will call into the second form of DeleteSoon, and then call .release() there (first form of DeleteSoon). So there is no difference to use .release() and std::move() here.\n\nDone.",
+      "parentUuid": "95c79c65_cbd047c4",
+      "revId": "fdec08c245da897e0518484a480ec839bdc41e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

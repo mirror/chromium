@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a07db9f6_0cba7461",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-24T21:57:06Z",
+      "side": 1,
+      "message": "I change the order of these two lines codes so that WindowSelectorTest.DragOverviewWindowToSnap will crash without this DeleteSoon() change in this CL.",
+      "revId": "7938d042df06e3514366437079f194ca4f7b2c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
