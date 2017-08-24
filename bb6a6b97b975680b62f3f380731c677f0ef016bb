@@ -141,6 +141,30 @@
       "revId": "bb6a6b97b975680b62f3f380731c677f0ef016bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "522dc90b_8a85823e",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-08-24T16:39:03Z",
+      "side": 1,
+      "message": "Thank you for detailed explanation!\nI re-updated them as per your comment in my latest patch.",
+      "parentUuid": "61821db4_df89af72",
+      "range": {
+        "startLine": 561,
+        "startChar": 14,
+        "endLine": 561,
+        "endChar": 15
+      },
+      "revId": "bb6a6b97b975680b62f3f380731c677f0ef016bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
