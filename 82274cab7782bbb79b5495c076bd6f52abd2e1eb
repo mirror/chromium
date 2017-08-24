@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e56c4c13_d28424cb",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 18092,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T07:15:25Z",
+      "side": 1,
+      "message": "nit: For all of these added metrics, please add a dot after \"Webapp\", unless you feel very strongly about matching the naming style of the action above.  (Ideally, the action above would also have a dot after \"Webapp\", but it might be more trouble to rename it than it\u0027s worth?)",
+      "range": {
+        "startLine": 18092,
+        "startChar": 14,
+        "endLine": 18092,
+        "endChar": 20
+      },
+      "revId": "82274cab7782bbb79b5495c076bd6f52abd2e1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f7dfae6_808f09cb",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 18097,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T07:15:25Z",
+      "side": 1,
+      "message": "nit: I\u0027d probably name this \"Focused\" rather than \"Focus\"",
+      "revId": "82274cab7782bbb79b5495c076bd6f52abd2e1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ebd1be_bb2061e9",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 18102,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T07:15:25Z",
+      "side": 1,
+      "message": "nit: Rather than writing \"Tracks taps\", I\u0027d probably phrase this as something like \"The user tapped\".",
+      "range": {
+        "startLine": 18102,
+        "startChar": 4,
+        "endLine": 18102,
+        "endChar": 15
+      },
+      "revId": "82274cab7782bbb79b5495c076bd6f52abd2e1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
