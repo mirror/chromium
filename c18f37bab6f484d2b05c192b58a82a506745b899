@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fd06e89_85f96a47",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-24T15:41:05Z",
+      "side": 1,
+      "message": "view.view is heap allocated and the caller is taking ownership. This should be cleaerer documented at  CreateViews(), too.",
+      "range": {
+        "startLine": 81,
+        "startChar": 15,
+        "endLine": 81,
+        "endChar": 22
+      },
+      "revId": "c18f37bab6f484d2b05c192b58a82a506745b899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
