@@ -32,4 +32,16 @@ interface MediaController {
   // Sets the current playback position. |time| must be less than or equal to
   // the duration of the media. Is a no-op if the media doesn't support seeking.
   Seek(mojo.common.mojom.TimeDelta time);
+
+  // Requests additional interface for commands used only for Hangouts routes.
+  ConnectHangoutsMediaRouteController(
+      HangoutsMediaRouteController& controller_request);
+};
+
+// Controller commands specific to Hangouts routes. The interface is obtained
+// by calling MediaController::ConnectHangoutsMediaRouteController.
+interface HangoutsMediaRouteController {
+  // Sets the "local present" (aka "smooth motion") mode of the Hangouts
+  // associated with the MediaRoute.
+  SetLocalPresent(bool local_present);
 };
