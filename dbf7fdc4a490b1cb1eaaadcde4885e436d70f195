@@ -441,6 +441,24 @@
       "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5c7fef_655c990c",
+        "filename": "third_party/WebKit/Source/modules/permissions/Permissions.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-24T12:56:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure what kind of unexpected impact that other CL should have. I would like us to not have this check in the permissions code in Blink as the logic is meant to live in the service. Regarding LayoutTests, because permissions live in //chrome, it\u0027s usually expected that they are tested in //chrome. You can always add some logic in the ShellPermissionManager or implement a mock permission service in your layout tests if that can make things simpler.",
+      "parentUuid": "cbb7b1e0_d1f13d95",
+      "revId": "dbf7fdc4a490b1cb1eaaadcde4885e436d70f195",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
