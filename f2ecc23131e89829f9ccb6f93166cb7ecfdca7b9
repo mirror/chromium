@@ -88,6 +88,24 @@
       "revId": "f2ecc23131e89829f9ccb6f93166cb7ecfdca7b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae3e9a8_5f8c1cc6",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-24T21:04:51Z",
+      "side": 1,
+      "message": "That explanation makes sense to me. Thank you for exploring those options. I think this will still get some push back because it\u0027s so specific to a particular use (a tab-bar; that is likely to be a one-off).\n\nI\u0027d be ok with this slot getting a name that could be applied more broadly. Maybe: \"header\", \"body-top\", \"upper-body\" or something. A name that says: this is above the scrolling part of the body, but it\u0027s not limited to -- or specifically for a tab-bar (but works just fine as a place for the tab-bar).",
+      "parentUuid": "36e40834_ddb115da",
+      "revId": "f2ecc23131e89829f9ccb6f93166cb7ecfdca7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
