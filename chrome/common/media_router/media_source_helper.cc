@@ -87,10 +87,11 @@ bool IsMirroringMediaSource(const MediaSource& source) {
 
 bool CanConnectToMediaSource(const MediaSource& source) {
   // Compare host, port, scheme, and path prefix for source.url().
-  return source.url().SchemeIs(url::kHttpsScheme) &&
-         source.url().DomainIs(kCastPresentationUrlDomain) &&
-         source.url().has_path() &&
-         source.url().path() == kCastPresentationUrlPath;
+  return source.url().SchemeIs(kCastScheme) ||
+         (source.url().SchemeIs(url::kHttpsScheme) &&
+          source.url().DomainIs(kCastPresentationUrlDomain) &&
+          source.url().has_path() &&
+          source.url().path() == kCastPresentationUrlPath);
 }
 
 int TabIdFromMediaSource(const MediaSource& source) {
