@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17889eb3_529c45ba",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-24T04:46:52Z",
+      "side": 1,
+      "message": "Basically here we\u0027re doing an inverse rotation of what the client told us (the wayland client told us the contents are rotated by -pi/2, so we need to rotate them back by pi/2).\n\nWe happened to invert the rotation in surface_set_buffer_transform. And now the angle of the rotation happens to match the rotation that we\u0027re setting to the matrix.\n\nWouldn\u0027t it be clearer to maintain the rotation we got from wayland and make it clear why we need an inverse rotation here (similarly to why we need the inverse of the scale)?\n\nWe could probably avoid using display::Display::Rotation since that seems to imply clockwise rotation.",
+      "revId": "60657982e4592d4c031de9fc8ad6f9e99b28ec21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79006ea7_94e5ebcb",
+        "filename": "components/exo/wayland/clients/client_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-24T04:46:52Z",
+      "side": 1,
+      "message": "This is a slightly misleading name since if we have a TRANSFORM_180 rotated_ would be false.\nShould we keep around a rotated_buffer_size instead?",
+      "revId": "60657982e4592d4c031de9fc8ad6f9e99b28ec21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd261b34_370d35cb",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-24T04:46:52Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we post an error if there is a transform the server doesn\u0027t support?\nWouldn\u0027t this kill the browser if a client sends a valid, but not implemented yet transform, when DCHECKs are on.",
+      "revId": "60657982e4592d4c031de9fc8ad6f9e99b28ec21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1532ac33_b9f13440",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-24T04:46:52Z",
+      "side": 1,
+      "message": "Trigonometric functions are usually defined with a positive angle going counter-clockwise too.",
+      "revId": "60657982e4592d4c031de9fc8ad6f9e99b28ec21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
