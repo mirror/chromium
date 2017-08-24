@@ -224,6 +224,23 @@
     Unknown policy.
   </message>
 
+  <!-- chrome://policy-tool -->
+  <message name="IDS_POLICY_TOOL_TITLE" desc="Admin page title and the title of the section that lists policies">
+    Policy management
+  </message>
+  <message name="IDS_POLICY_TOOL_EDIT" desc="Label for the button to change policy value in current session">
+    Edit
+  </message>
+  <message name="IDS_POLICY_TOOL_SAVE" desc="Label for the button to save policy value after editing it">
+    Save
+  </message>
+  <message name="IDS_POLICY_TOOL_LOAD_SESSION" desc="Label for the button that loads specified session.">
+    Load session
+  </message>
+  <message name="IDS_POLICY_TOOL_SESSION_NAME_PLACEHOLDER" desc="Placeholder for the input field that lets the user change policy management sessions">
+    Session name
+  </message>
+  
   <!-- chrome://policy -->
   <message name="IDS_POLICY_TITLE" desc="Page title and the title of the section that lists policies.">
     Policies
