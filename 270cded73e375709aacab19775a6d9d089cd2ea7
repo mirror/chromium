@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "c7ee99b8_8f3bed0a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/extensions/ExtensionServer.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-24T20:13:03Z",
+      "side": 1,
+      "message": "So you\u0027re sending a DevTools object (Source.Selection) to client. We don\u0027t do this, as we assume the client side to not have any knowledge of DevTools types, not to mention it\u0027s somewhat difficult to assert it\u0027s serializable to JSON and will make it through postMessage(). Please spell out the properties you need to pass to the remote party, you can perhaps use _makeResource() as en example.",
+      "revId": "270cded73e375709aacab19775a6d9d089cd2ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ffb72bd_5d393ac8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/TabbedEditorContainer.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-24T20:13:03Z",
+      "side": 1,
+      "message": "You don\u0027t need it here.",
+      "revId": "270cded73e375709aacab19775a6d9d089cd2ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4741e0e6_ec886f81",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/TabbedEditorContainer.js",
         "patchSetId": 1
@@ -13,6 +47,41 @@
       "writtenOn": "2017-08-24T00:32:39Z",
       "side": 1,
       "message": "I\u0027m sure this is the wrong place for this class. let me know where you would like this class and what name you would like for it.",
+      "revId": "270cded73e375709aacab19775a6d9d089cd2ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69068e77_448d7100",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/TabbedEditorContainer.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-24T20:13:03Z",
+      "side": 1,
+      "message": "Why, as long as you need some type shared between Sources module and its clients (and as a flavor type), I think it\u0027s fine here.",
+      "parentUuid": "4741e0e6_ec886f81",
+      "revId": "270cded73e375709aacab19775a6d9d089cd2ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee23b4d_85b04b94",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/TabbedEditorContainer.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-24T20:13:03Z",
+      "side": 1,
+      "message": "one assignment per statement please, and one statement per line :-)\nI think you can make things simpler here by just keeping textRange reference as is here, (i.e. this.textRange \u003d textRange) and later decomposing it in the ExtensionServer.",
       "revId": "270cded73e375709aacab19775a6d9d089cd2ea7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
