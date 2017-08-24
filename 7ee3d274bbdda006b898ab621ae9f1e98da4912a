@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "208579e4_16719b57",
+        "filename": "components/navigation_interception/navigation_params.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T05:20:27Z",
+      "side": 1,
+      "message": "OK, the above conversation granted, I think this is the right approach but probably the wrong name.\n\n\"started from context menu\" seems much too arbitrary to include as a fundamental flag in a navigation. What if you name it after what it does, rather than where it came from: prevent_opening_in_app or similar.\n\nAs discussed offline, this wouldn\u0027t be necessary if the actual disposition was included in this params set (as it would be redundant).",
+      "range": {
+        "startLine": 20,
+        "startChar": 24,
+        "endLine": 20,
+        "endChar": 53
+      },
+      "revId": "7ee3d274bbdda006b898ab621ae9f1e98da4912a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
