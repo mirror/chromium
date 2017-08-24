@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7d2b239_7d4d334d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-24T21:53:58Z",
+      "side": 1,
+      "message": "Can we show extra user-defined properties instead of ignoring them all? E.g.\n\nvar s \u003d new String(\"foo\");\ns.bar \u003d 42;",
+      "revId": "e7a7cb3e44950012876afd32b012faad4af7d3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
