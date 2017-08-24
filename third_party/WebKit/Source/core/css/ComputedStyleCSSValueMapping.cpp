@@ -2938,8 +2938,19 @@ const CSSValue* ComputedStyleCSSValueMapping::Get(
       return CurrentColorOrValidColor(style, style.TextFillColor());
     case CSSPropertyWebkitTextEmphasisColor:
       return CurrentColorOrValidColor(style, style.TextEmphasisColor());
-    case CSSPropertyWebkitTextEmphasisPosition:
-      return CSSIdentifierValue::Create(style.GetTextEmphasisPosition());
+    case CSSPropertyWebkitTextEmphasisPosition: {
+      TextEmphasisPosition text_emphasis_position =
+          style.GetTextEmphasisPosition();
+      CSSValueList* list = CSSValueList::CreateSpaceSeparated();
+      list->Append(EnumHasFlags(text_emphasis_position, kOver)
+                       ? *CSSIdentifierValue::Create(CSSValueOver)
+                       : *CSSIdentifierValue::Create(CSSValueUnder));
+      list->Append(EnumHasFlags(text_emphasis_position, kRight)
+                       ? *CSSIdentifierValue::Create(CSSValueRight)
+                       : *CSSIdentifierValue::Create(CSSValueLeft));
+
+      return list;
+    }
     case CSSPropertyWebkitTextEmphasisStyle:
       switch (style.GetTextEmphasisMark()) {
         case TextEmphasisMark::kNone:
