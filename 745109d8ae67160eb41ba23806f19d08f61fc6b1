@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e353cde9_3caab243",
+        "filename": "chrome/browser/plugins/pdf_plugin_placeholder_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-24T21:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b2dd6f1_0e4a8df7",
+      "revId": "745109d8ae67160eb41ba23806f19d08f61fc6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d02b27ea_5446e07c",
         "filename": "chrome/browser/plugins/pdf_plugin_placeholder_observer.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "745109d8ae67160eb41ba23806f19d08f61fc6b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9f0211_608b5ba9",
+        "filename": "chrome/browser/plugins/pdf_plugin_placeholder_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-24T21:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d02b27ea_5446e07c",
+      "revId": "745109d8ae67160eb41ba23806f19d08f61fc6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f613226a_88a3e4c9",
+        "filename": "chrome/browser/plugins/pdf_plugin_placeholder_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-24T21:30:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c31eabba_0d16c6ef",
+      "revId": "745109d8ae67160eb41ba23806f19d08f61fc6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c5cd165_e5dd7a98",
         "filename": "chrome/browser/plugins/pdf_plugin_placeholder_observer.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "745109d8ae67160eb41ba23806f19d08f61fc6b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f4f356_7e7e1096",
+        "filename": "chrome/browser/plugins/pdf_plugin_placeholder_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1232077
+      },
+      "writtenOn": "2017-08-24T21:30:29Z",
+      "side": 1,
+      "message": "Got rid of this since OnDownloadStarted is no longer part of the class.",
+      "parentUuid": "9c5cd165_e5dd7a98",
+      "revId": "745109d8ae67160eb41ba23806f19d08f61fc6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
