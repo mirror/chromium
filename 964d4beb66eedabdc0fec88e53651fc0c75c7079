@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6c1a1a43_e41697a8",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-24T01:16:16Z",
+      "side": 1,
+      "message": "Actually, if we do this, we still have to prevent the other marker types from being re-added on top of a suggestion marker. Does that sound like a reasonable thing to do?",
+      "parentUuid": "3d9cdb61_867485c3",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "964d4beb66eedabdc0fec88e53651fc0c75c7079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afb32390_143a5267",
         "filename": "third_party/WebKit/Source/core/testing/Internals.idl",
         "patchSetId": 9
