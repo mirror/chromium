@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0814925e_428b425d",
+        "filename": "gpu/config/software_rendering_list.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1538,
+      "author": {
+        "id": 1116061
+      },
+      "writtenOn": "2017-08-24T20:31:08Z",
+      "side": 1,
+      "message": "nit: typo in \"issues\".",
+      "revId": "9d7c20dd181c37c8f50a302908ca7a15c6e3220c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
