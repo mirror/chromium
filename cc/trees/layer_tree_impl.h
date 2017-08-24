@@ -387,7 +387,7 @@ class CC_EXPORT LayerTreeImpl {
 
   // These should be called by LayerImpl's ctor/dtor.
   void RegisterLayer(LayerImpl* layer);
-  void UnregisterLayer(LayerImpl* layer);
+  void UnregisterLayer(LayerImpl* layer, ElementId element_id);
 
   // These manage ownership of the LayerImpl.
   void AddLayer(std::unique_ptr<LayerImpl> layer);
@@ -593,13 +593,6 @@ class CC_EXPORT LayerTreeImpl {
   std::unordered_set<LayerImpl*> layers_that_should_push_properties_;
 
   std::unordered_map<ElementId, int, ElementIdHash> element_layers_map_;
-
-  std::unordered_map<ElementId, float, ElementIdHash>
-      element_id_to_opacity_animations_;
-  std::unordered_map<ElementId, gfx::Transform, ElementIdHash>
-      element_id_to_transform_animations_;
-  std::unordered_map<ElementId, FilterOperations, ElementIdHash>
-      element_id_to_filter_animations_;
 
   struct ScrollbarLayerIds {
     int horizontal = Layer::INVALID_ID;

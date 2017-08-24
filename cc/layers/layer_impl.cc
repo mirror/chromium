@@ -95,7 +95,7 @@ LayerImpl::LayerImpl(LayerTreeImpl* tree_impl, int id)
 LayerImpl::~LayerImpl() {
   DCHECK_EQ(DRAW_MODE_NONE, current_draw_mode_);
 
-  layer_tree_impl_->UnregisterLayer(this);
+  layer_tree_impl_->UnregisterLayer(this, element_id());
 
   layer_tree_impl_->RemoveFromElementMap(this);
 

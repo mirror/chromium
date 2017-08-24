@@ -583,7 +583,6 @@ void LayerTreeImpl::SetTransformMutated(ElementId element_id,
                                         const gfx::Transform& transform) {
   DCHECK_EQ(1u, property_trees()->element_id_to_transform_node_index.count(
                     element_id));
-  element_id_to_transform_animations_[element_id] = transform;
   if (property_trees()->transform_tree.OnTransformAnimated(element_id,
                                                            transform))
     set_needs_update_draw_properties();
@@ -592,7 +591,6 @@ void LayerTreeImpl::SetTransformMutated(ElementId element_id,
 void LayerTreeImpl::SetOpacityMutated(ElementId element_id, float opacity) {
   DCHECK_EQ(
       1u, property_trees()->element_id_to_effect_node_index.count(element_id));
-  element_id_to_opacity_animations_[element_id] = opacity;
   if (property_trees()->effect_tree.OnOpacityAnimated(element_id, opacity))
     set_needs_update_draw_properties();
 }
@@ -601,7 +599,6 @@ void LayerTreeImpl::SetFilterMutated(ElementId element_id,
                                      const FilterOperations& filters) {
   DCHECK_EQ(
       1u, property_trees()->element_id_to_effect_node_index.count(element_id));
-  element_id_to_filter_animations_[element_id] = filters;
   if (property_trees()->effect_tree.OnFilterAnimated(element_id, filters))
     set_needs_update_draw_properties();
 }
@@ -649,62 +646,6 @@ float LayerTreeImpl::ClampPageScaleFactorToLimits(
 }
 
 void LayerTreeImpl::UpdatePropertyTreeAnimationFromMainThread() {
-  // TODO(enne): This should get replaced by pulling out animations into their
-  // own trees.  Then animations would have their own ways of synchronizing
-  // across commits.  This occurs to push updates from animations that have
-  // ticked since begin frame to a newly-committed property tree.
-  if (layer_list_.empty())
-    return;
-
-  auto element_id_to_opacity = element_id_to_opacity_animations_.begin();
-  while (element_id_to_opacity != element_id_to_opacity_animations_.end()) {
-    const ElementId id = element_id_to_opacity->first;
-    if (EffectNode* node =
-            property_trees_.effect_tree.FindNodeFromElementId(id)) {
-      if (!node->is_currently_animating_opacity ||
-          node->opacity == element_id_to_opacity->second) {
-        element_id_to_opacity_animations_.erase(element_id_to_opacity++);
-        continue;
-      }
-      node->opacity = element_id_to_opacity->second;
-      property_trees_.effect_tree.set_needs_update(true);
-    }
-    ++element_id_to_opacity;
-  }
-
-  auto element_id_to_filter = element_id_to_filter_animations_.begin();
-  while (element_id_to_filter != element_id_to_filter_animations_.end()) {
-    const ElementId id = element_id_to_filter->first;
-    if (EffectNode* node =
-            property_trees_.effect_tree.FindNodeFromElementId(id)) {
-      if (!node->is_currently_animating_filter ||
-          node->filters == element_id_to_filter->second) {
-        element_id_to_filter_animations_.erase(element_id_to_filter++);
-        continue;
-      }
-      node->filters = element_id_to_filter->second;
-      property_trees_.effect_tree.set_needs_update(true);
-    }
-    ++element_id_to_filter;
-  }
-
-  auto element_id_to_transform = element_id_to_transform_animations_.begin();
-  while (element_id_to_transform != element_id_to_transform_animations_.end()) {
-    const ElementId id = element_id_to_transform->first;
-    if (TransformNode* node =
-            property_trees_.transform_tree.FindNodeFromElementId(id)) {
-      if (!node->is_currently_animating ||
-          node->local == element_id_to_transform->second) {
-        element_id_to_transform_animations_.erase(element_id_to_transform++);
-        continue;
-      }
-      node->local = element_id_to_transform->second;
-      node->needs_local_transform_update = true;
-      property_trees_.transform_tree.set_needs_update(true);
-    }
-    ++element_id_to_transform;
-  }
-
   LayerTreeHostCommon::CallFunctionForEveryLayer(this, [](LayerImpl* layer) {
     layer->UpdatePropertyTreeForAnimationIfNeeded();
   });
@@ -1202,12 +1143,16 @@ void LayerTreeImpl::RegisterLayer(LayerImpl* layer) {
   layer_id_map_[layer->id()] = layer;
 }
 
-void LayerTreeImpl::UnregisterLayer(LayerImpl* layer) {
+void LayerTreeImpl::UnregisterLayer(LayerImpl* layer, ElementId element_id) {
   DCHECK(LayerById(layer->id()));
   layers_that_should_push_properties_.erase(layer);
-  element_id_to_transform_animations_.erase(layer->element_id());
-  element_id_to_opacity_animations_.erase(layer->element_id());
-  element_id_to_filter_animations_.erase(layer->element_id());
+  // As part of transitioning to SPv2 we're removing references to
+  // element id on layer when possible. During transition let's make
+  // sure we still match the element id set on the layer. We don't
+  // have to worry about the situation in which a layer is deleted and
+  // a new one is created with the same element id, because element
+  // ids should be unique to the renderer process.
+  DCHECK_EQ(layer->element_id(), element_id);
   layer_id_map_.erase(layer->id());
 }
 
