@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "c0d8cff5_b2ad444a",
+        "filename": "components/cronet/cronet_prefs_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-24T20:35:02Z",
+      "side": 1,
+      "message": "I see. Could you file a bug and add a TODO? When we remove Sdch code in M63, we can refactor this part.",
+      "parentUuid": "753b7098_41ff6c1a",
+      "range": {
+        "startLine": 404,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 33
+      },
+      "revId": "c0dd5553c8bbb65d9daab46b3575213540575268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e2ee9d4_c4ca2a05",
         "filename": "components/cronet/cronet_prefs_manager.h",
         "patchSetId": 4
