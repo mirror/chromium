@@ -70,6 +70,30 @@
       "revId": "f2896550b3fd9b60fb1a38c1119b711be05815b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0454560d_e4773282",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-24T16:17:38Z",
+      "side": 1,
+      "message": "done. modified the calculation so it considers margins of 1/2 a kTileSpacing.",
+      "parentUuid": "f8b96754_5a7ae9a6",
+      "range": {
+        "startLine": 91,
+        "startChar": 30,
+        "endLine": 91,
+        "endChar": 34
+      },
+      "revId": "f2896550b3fd9b60fb1a38c1119b711be05815b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
