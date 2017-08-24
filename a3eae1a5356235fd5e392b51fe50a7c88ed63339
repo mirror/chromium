@@ -16,6 +16,24 @@
       "revId": "a3eae1a5356235fd5e392b51fe50a7c88ed63339",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f4f1f4_dc91f35c",
+        "filename": "ash/rotator/screen_rotation_animator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-24T17:46:47Z",
+      "side": 1,
+      "message": "The boolean parameter need to passed every time when requesting rotation. Because we cache the animator with root_window, this ctor only called once.\n\nHow about I add a new enum (slow/fast) in the rotation request structure?",
+      "parentUuid": "337f5133_5b538ec2",
+      "revId": "a3eae1a5356235fd5e392b51fe50a7c88ed63339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
