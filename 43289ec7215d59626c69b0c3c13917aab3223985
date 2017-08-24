@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "629f211f_39087f50",
+        "filename": "third_party/WebKit/LayoutTests/fast/rootscroller/remove-rootscroller-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-24T17:56:56Z",
+      "side": 1,
+      "message": "\u003c!DOCTYPE html\u003e?",
+      "revId": "43289ec7215d59626c69b0c3c13917aab3223985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
