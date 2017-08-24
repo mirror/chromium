@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5ddfda1_bd969bb0",
+        "filename": "media/test/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-08-24T15:55:00Z",
+      "side": 1,
+      "message": "Is it still relevant?",
+      "range": {
+        "startLine": 184,
+        "startChar": 7,
+        "endLine": 184,
+        "endChar": 18
+      },
+      "revId": "c204e4e755b430da2d868126be8e86441244d905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
