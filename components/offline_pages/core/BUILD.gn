@@ -45,6 +45,8 @@ static_library("core") {
     "task.h",
     "task_queue.cc",
     "task_queue.h",
+    "tasks/create_archive_task.cc",
+    "tasks/create_archive_task.h",
   ]
 
   deps = [
@@ -106,6 +108,7 @@ source_set("unit_tests") {
     "snapshot_controller_unittest.cc",
     "task_queue_unittest.cc",
     "task_unittest.cc",
+    "tasks/create_archive_task_unittest.cc",
   ]
 
   deps = [
