@@ -34,6 +34,24 @@
       "revId": "41a9d93e866c7b437cb13018ef2942845928a7d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb25b361_5ef5790e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_item.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-24T06:46:51Z",
+      "side": 1,
+      "message": "Thanks, can you add comment? Why this is needed wasn\u0027t obvious to me.",
+      "parentUuid": "eea1ff5e_5eb41c24",
+      "revId": "41a9d93e866c7b437cb13018ef2942845928a7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
