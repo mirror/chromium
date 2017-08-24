@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "01d07424_e289409a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1543,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-24T00:41:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0daf04ec_99b0e399",
+      "range": {
+        "startLine": 1543,
+        "startChar": 52,
+        "endLine": 1543,
+        "endChar": 76
+      },
+      "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caacd51f_ecf4098d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-23T01:42:18Z",
       "side": 1,
       "message": "nit: \"Whether a new tab should be created to display...\"",
+      "range": {
+        "startLine": 1547,
+        "startChar": 29,
+        "endLine": 1547,
+        "endChar": 33
+      },
+      "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "712fddfc_531fd3fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-24T00:41:46Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "caacd51f_ecf4098d",
       "range": {
         "startLine": 1547,
         "startChar": 29,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "926ef0d5_ccbacd3d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1550,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-24T00:41:46Z",
+      "side": 1,
+      "message": "Moved to showContentInNewTabIfNecessary",
+      "parentUuid": "1a3bf2d8_086199df",
+      "range": {
+        "startLine": 1550,
+        "startChar": 12,
+        "endLine": 1550,
+        "endChar": 53
+      },
+      "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d14b190_4e3c0432",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-23T01:42:18Z",
       "side": 1,
       "message": "Can we fold the logic in BottomSheet#displayContentInNewTab() into #showContentAndOpenSheet() rather than introducing two new methods?\n\nI think we should be able to check here whether we need to display in a new tab here by checking mActivity#isInOverviewMode() \u0026\u0026 !mBottomSheet#isShowingNewTabUi(), so we could do something like\n\npublic void showContentAndOpenSheet(int itemId) {\n   // Some comment about why we need to open a new tab.\n   if (mActivity#isInOverviewMode() \u0026\u0026 !mBottomSheet#isShowingNewTabUi() {\n       mBottomSheet#displayNewTabUi(isIncognito, actionId);\n       return;\n   }\n\n   // everything else\n}",
+      "range": {
+        "startLine": 246,
+        "startChar": 1,
+        "endLine": 252,
+        "endChar": 9
+      },
+      "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d07dde6_ef96d408",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-24T00:41:46Z",
+      "side": 1,
+      "message": "If we can\u0027t remove showContentAndOpenSheet in displayNewTabUi, I don\u0027t think we can move the logic to showContentAndOpenSheet.",
+      "parentUuid": "0d14b190_4e3c0432",
       "range": {
         "startLine": 246,
         "startChar": 1,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a59ca4c2_ca9d1d6a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-24T00:41:46Z",
+      "side": 1,
+      "message": "I suspect mActivity.getBottomSheetContentController().selectItem(R.id.action_home) actually do anything because it seems never escape the mShouldOpenSheetOnNextContentChange check in BottomSheetContentController#onNavigationItemSelected, so I can only call showContentAndOpenSheet() since it seems to be the only place setting mShouldOpenSheetOnNextContentChange to true.\n\nmBottomSheet.defocusOmnibox() will actually be called during showContentAndOpenSheet() too.",
+      "parentUuid": "4e817130_a063eecf",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 9
+      },
+      "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85ae145d_2566b132",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ae8394_b6387a3b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-24T00:41:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85ae145d_2566b132",
+      "range": {
+        "startLine": 169,
+        "startChar": 16,
+        "endLine": 169,
+        "endChar": 31
+      },
+      "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
