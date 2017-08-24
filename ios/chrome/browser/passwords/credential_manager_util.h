@@ -8,6 +8,10 @@
 #include "base/values.h"
 #include "components/password_manager/core/common/credential_manager_types.h"
 
+namespace web {
+class WebState;
+}
+
 namespace credential_manager {
 
 // Keys for obtaining common Credential's fields from DictionaryValue
@@ -78,6 +82,8 @@ bool ParseCredentialType(const base::DictionaryValue& json,
 // CredentialInfo.
 bool ParseCredentialDictionary(const base::DictionaryValue& json,
                                password_manager::CredentialInfo* credential);
+
+bool IsContextSecure(web::WebState* web_state);
 
 }  // namespace credential_manager
 
