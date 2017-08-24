@@ -112,6 +112,7 @@
 using base::TimeDelta;
 using blink::WebFrame;
 using blink::WebFrameContentDumper;
+using blink::WebGestureEvent;
 using blink::WebInputEvent;
 using blink::WebLocalFrame;
 using blink::WebMouseEvent;
@@ -149,6 +150,10 @@ int ConvertMockKeyboardModifier(MockKeyboard::Modifiers modifiers) {
   return flags;
 }
 #endif
+
+void Wait(scoped_refptr<MessageLoopRunner> runner) {
+  runner->Quit();
+}
 
 class WebUITestWebUIControllerFactory : public WebUIControllerFactory {
  public:
@@ -1432,8 +1437,56 @@ TEST_F(RenderViewImplTest, ContextMenu) {
   mouse_event.SetType(WebInputEvent::kMouseUp);
   SendWebMouseEvent(mouse_event);
 
+  scoped_refptr<content::MessageLoopRunner> message_loop_runner =
+      new content::MessageLoopRunner;
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&Wait, message_loop_runner));
+
+  EXPECT_FALSE(render_thread_->sink().GetUniqueMessageMatching(
+      FrameHostMsg_ContextMenu::ID));
+
+  message_loop_runner->Run();
+
   EXPECT_TRUE(render_thread_->sink().GetUniqueMessageMatching(
       FrameHostMsg_ContextMenu::ID));
+}
+
+TEST_F(RenderViewImplTest, ContextMenuSelectionOrdering) {
+  LoadHTML("<div>Page A</div><div id=result>Not selected</div>");
+
+  ExecuteJavaScriptForTests(
+      "document.onselectionchange = function() { "
+      "document.getElementById('result').innerHTML = 'Selected'}");
+
+  // Create a long press in the center of the iframe. (I'm hoping this will
+  // make this a bit more robust in case of some other formatting or other bug.)
+  WebGestureEvent gesture_event(
+      WebInputEvent::kGestureLongPress, WebInputEvent::kNoModifiers,
+      ui::EventTimeStampToSeconds(ui::EventTimeForNow()));
+  gesture_event.x = 250;
+  gesture_event.y = 250;
+
+  SendWebGestureEvent(gesture_event);
+
+  scoped_refptr<content::MessageLoopRunner> message_loop_runner =
+      new content::MessageLoopRunner;
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&Wait, message_loop_runner));
+
+  EXPECT_FALSE(render_thread_->sink().GetUniqueMessageMatching(
+      FrameHostMsg_ContextMenu::ID));
+
+  message_loop_runner->Run();
+
+  EXPECT_TRUE(render_thread_->sink().GetUniqueMessageMatching(
+      FrameHostMsg_ContextMenu::ID));
+
+  int did_select = -1;
+  base::string16 check_did_select = base::ASCIIToUTF16(
+      "Number(document.getElementById('result').innerHTML == 'Selected')");
+  EXPECT_TRUE(
+      ExecuteJavaScriptAndReturnIntValue(check_did_select, &did_select));
+  EXPECT_EQ(1, did_select);
 }
 
 TEST_F(RenderViewImplTest, TestBackForward) {
