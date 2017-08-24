@@ -248,9 +248,11 @@ void AppCacheRequestHandler::MaybeCompleteCrossSiteTransferInOldProcess(
 
 AppCacheJob* AppCacheRequestHandler::MaybeCreateSubresourceLoader(
     std::unique_ptr<SubresourceLoadInfo> subresource_load_info,
-    URLLoaderFactoryGetter* loader_factory_getter) {
+    URLLoaderFactoryGetter* loader_factory_getter,
+    AppCacheSubresourceURLFactory* subresource_factory) {
   DCHECK(!is_main_resource());
   DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
+  job_ = nullptr;
 
   subresource_load_info_ = std::move(subresource_load_info);
   network_url_loader_factory_getter_ = loader_factory_getter;
@@ -261,8 +263,8 @@ AppCacheJob* AppCacheRequestHandler::MaybeCreateSubresourceLoader(
 
   AppCacheURLLoaderJob* loader_job = job->AsURLLoaderJob();
   // The job takes ownership of the handler.
-  loader_job->set_request_handler(
-      std::unique_ptr<AppCacheRequestHandler>(this));
+  loader_job->SetRequestHandlerAndFactory(
+      std::unique_ptr<AppCacheRequestHandler>(this), subresource_factory);
   return job;
 }
 
