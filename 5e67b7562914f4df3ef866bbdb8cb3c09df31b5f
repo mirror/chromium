@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2202b40f_54e2492e",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-24T00:27:47Z",
+      "side": 1,
+      "message": "This comment seems misleading. The more direct one would be something like:\n\n\"Convert size to int64)t because this is what is used in OfflinePages Prefetch. Check for overflow.\"",
+      "revId": "5e67b7562914f4df3ef866bbdb8cb3c09df31b5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc43aed3_42b8ec10",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-24T00:27:47Z",
+      "side": 1,
+      "message": "same here.",
+      "revId": "5e67b7562914f4df3ef866bbdb8cb3c09df31b5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "214bd4b6_c257212c",
+        "filename": "components/offline_pages/core/prefetch/download_cleanup_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-24T00:27:47Z",
+      "side": 1,
+      "message": "this is hard to read. It\u0027d be better to assign into variables before calling MarkDownloadAsCompletedSync or add a comment to the end of line indicating what is stored in those.  // Like this.",
+      "revId": "5e67b7562914f4df3ef866bbdb8cb3c09df31b5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
