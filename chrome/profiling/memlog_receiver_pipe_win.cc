@@ -22,6 +22,19 @@ namespace {
 // worked).
 const int kReadBufferSize = 1024 * 64;
 
+// Called on the receiver task runner's thread to call the OnStreamData
+// function and post the error back to the pipe if one occurs.
+void StreamDataThunk(scoped_refptr<base::TaskRunner> pipe_task_runner,
+                     scoped_refptr<MemlogReceiverPipe> pipe,
+                     scoped_refptr<MemlogStreamReceiver> receiver,
+                     std::unique_ptr<char[]> data,
+                     size_t size) {
+  if (!receiver->OnStreamData(std::move(data), size)) {
+    pipe_task_runner->PostTask(
+        FROM_HERE, base::BindOnce(&MemlogReceiverPipe::ReportError, pipe));
+  }
+}
+
 }  // namespace
 
 MemlogReceiverPipe::MemlogReceiverPipe(base::ScopedPlatformFile handle)
@@ -42,6 +55,10 @@ void MemlogReceiverPipe::SetReceiver(
     scoped_refptr<MemlogStreamReceiver> receiver) {
   receiver_task_runner_ = task_runner;
   receiver_ = receiver;
+}
+
+void MemlogReceiverPipe::ReportError() {
+  handle_.Close();
 }
 
 void MemlogReceiverPipe::ReadUntilBlocking() {
@@ -85,7 +102,9 @@ void MemlogReceiverPipe::OnIOCompleted(
 
   if (bytes_transfered && receiver_) {
     receiver_task_runner_->PostTask(
-        FROM_HERE, base::BindOnce(&MemlogStreamReceiver::OnStreamData,
+        FROM_HERE, base::BindOnce(&StreamDataThunk,
+                                  base::MessageLoop::current()->task_runner(),
+                                  scoped_refptr<MemlogReceiverPipe>(this),
                                   receiver_, std::move(read_buffer_),
                                   static_cast<size_t>(bytes_transfered)));
     read_buffer_.reset(new char[kReadBufferSize]);

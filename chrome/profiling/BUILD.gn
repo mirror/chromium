@@ -51,6 +51,7 @@ source_set("unit_tests") {
   sources = [
     "backtrace_storage_unittest.cc",
     "json_exporter_unittest.cc",
+    "memlog_stream_parser_unittest.cc",
   ]
   deps = [
     ":profiling",
