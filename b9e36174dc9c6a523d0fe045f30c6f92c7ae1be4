@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a5cecc0_593d8441",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1195481
+      },
+      "writtenOn": "2017-08-24T13:04:49Z",
+      "side": 1,
+      "message": "Actually spec said exact this. So it might be better to comment as spec said.\n(please see https://www.w3.org/TR/css-text-decor-3/#text-emphasis-position-property)\nBut current implementation can support without \u0027right\u0027 or \u0027left\u0027 and I just followed previous implementation. Should I follow the spec strictly ?",
+      "parentUuid": "44c12b79_b2e57407",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e252f3b_20fd2167",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "89a5dd9e_b9b02d98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1195481
+      },
+      "writtenOn": "2017-08-24T13:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e252f3b_20fd2167",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edbdf678_46121e21",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-24T08:13:54Z",
       "side": 1,
       "message": "You should add the \u0027?\u0027 behind [ right | left ]",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6396005b_a8b201e3",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1195481
+      },
+      "writtenOn": "2017-08-24T13:04:49Z",
+      "side": 1,
+      "message": "Actually spec said exact this. So it might be better to comment as spec said.\n(please see https://www.w3.org/TR/css-text-decor-3/#text-emphasis-position-property)\nBut current implementation can support without \u0027right\u0027 or \u0027left\u0027 and I just followed previous implementation. Should I follow the spec strictly ?",
+      "parentUuid": "edbdf678_46121e21",
       "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "01577121_71c69b04",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1195481
+      },
+      "writtenOn": "2017-08-24T13:04:49Z",
+      "side": 1,
+      "message": "Right, I misunderstood it. It said \u0027A double ampersand (\u0026\u0026) separates two or more components, all of which must occur, in any order.\u0027 - https://www.w3.org/TR/css3-values/",
+      "parentUuid": "bbc036e6_90ceb6f9",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23ddf6be_b66eea43",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dde5f79_db7a9782",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1195481
+      },
+      "writtenOn": "2017-08-24T13:04:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23ddf6be_b66eea43",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "d30891f7_28cb48a2",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleBuilderConverter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1195481
+      },
+      "writtenOn": "2017-08-24T13:04:49Z",
+      "side": 1,
+      "message": "I think, if I use enum values for TextEmphasisPosition this change will not be necessary.",
+      "parentUuid": "16033f91_7d0da9c5",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f46ccad_9fafa642",
         "filename": "third_party/WebKit/Source/core/style/ComputedStyleConstants.h",
         "patchSetId": 3
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-24T08:13:54Z",
       "side": 1,
       "message": "There are four valid combinations:\n\nover right\nover left\nunder right\nunder left\n\nWhy not use four enum values for those combinations instead of the bit operations?",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0b7c08_7a0c08ee",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyleConstants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1195481
+      },
+      "writtenOn": "2017-08-24T13:04:49Z",
+      "side": 1,
+      "message": "Right, I will try to use enum values.",
+      "parentUuid": "7f46ccad_9fafa642",
       "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
