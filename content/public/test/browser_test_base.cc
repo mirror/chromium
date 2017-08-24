@@ -378,6 +378,7 @@ bool BrowserTestBase::UsingSoftwareGL() const {
 }
 
 void BrowserTestBase::InitializeNetworkProcess() {
+  net::EmbeddedTestServer::RegisterTestCerts();
   const testing::TestInfo* const test_info =
       testing::UnitTest::GetInstance()->current_test_info();
   bool network_service =

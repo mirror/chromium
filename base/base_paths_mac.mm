@@ -15,6 +15,7 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/logging.h"
+#include "base/mac/bundle_locations.h"
 #include "base/mac/foundation_util.h"
 #include "base/path_service.h"
 #include "base/strings/string_util.h"
@@ -81,19 +82,27 @@ bool PathProviderMac(int key, base::FilePath* result) {
       return success;
     }
     case base::DIR_SOURCE_ROOT:
+      LOG(ERROR) << "Here?";
       // Go through PathService to catch overrides.
       if (!PathService::Get(base::FILE_EXE, result))
         return false;
 
       // Start with the executable's directory.
       *result = result->DirName();
+      LOG(ERROR) << "Here 2?";
 
 #if !defined(OS_IOS)
       if (base::mac::AmIBundled()) {
+        LOG(ERROR) << "Here 3?";
+        LOG(ERROR) << "BUNDLE:  " << base::mac::OuterBundlePath();
+        LOG(ERROR) << "BUNDLE:  " << base::mac::FrameworkBundlePath();
+        LOG(ERROR) << *result;
         // The bundled app executables (Chromium, TestShell, etc) live five
         // levels down, eg:
         // src/xcodebuild/{Debug|Release}/Chromium.app/Contents/MacOS/Chromium
         *result = result->DirName().DirName().DirName().DirName().DirName();
+        LOG(ERROR) << *result;
+	//CHECK(false);
       } else {
         // Unit tests execute two levels deep from the source root, eg:
         // src/xcodebuild/{Debug|Release}/base_unittests

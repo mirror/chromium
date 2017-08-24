@@ -54,6 +54,13 @@ void OverrideChildProcessPath() {
   PathService::Override(content::CHILD_PROCESS_EXE, helper_path);
 }
 
+void OverrideSourceRootPath() {
+  base::FilePath helper_path =
+      GetFrameworksPath().DirName().DirName().DirName().DirName().DirName();
+
+  PathService::Override(base::DIR_SOURCE_ROOT, helper_path);
+}
+
 base::FilePath GetResourcesPakFilePath() {
   NSString* pak_path =
       [base::mac::FrameworkBundle() pathForResource:@"content_shell"

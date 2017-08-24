@@ -796,7 +796,7 @@ void LogMessage::Init(const char* file, int line) {
   // TODO(darin): It might be nice if the columns were fixed width.
 
   stream_ <<  '[';
-  if (g_log_process_id)
+  if (g_log_process_id || true)
     stream_ << CurrentProcessId() << ':';
   if (g_log_thread_id)
     stream_ << base::PlatformThread::CurrentId() << ':';

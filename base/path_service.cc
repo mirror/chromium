@@ -191,6 +191,8 @@ bool PathService::Get(int key, FilePath* result) {
     return GetCurrentDirectory(result);
 
   Provider* provider = NULL;
+  LOG(WARNING) << "Key: " << key;
+  LOG(WARNING) << 1;
   {
     AutoLock scoped_lock(path_data->lock);
     if (LockedGetFromCache(key, path_data, result))
@@ -202,6 +204,7 @@ bool PathService::Get(int key, FilePath* result) {
     // Get the beginning of the list while it is still locked.
     provider = path_data->providers;
   }
+  LOG(WARNING) << 2;
 
   FilePath path;
 
@@ -213,6 +216,7 @@ bool PathService::Get(int key, FilePath* result) {
     DCHECK(path.empty()) << "provider should not have modified path";
     provider = provider->next;
   }
+  LOG(WARNING) << "3 " << path;
 
   if (path.empty())
     return false;
@@ -224,10 +228,12 @@ bool PathService::Get(int key, FilePath* result) {
       return false;
   }
   *result = path;
+  LOG(WARNING) << 4;
 
   AutoLock scoped_lock(path_data->lock);
   if (!path_data->cache_disabled)
     path_data->cache[key] = path;
+  LOG(WARNING) << path;
 
   return true;
 }
