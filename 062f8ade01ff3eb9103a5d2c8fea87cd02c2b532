@@ -46,6 +46,30 @@
       "revId": "062f8ade01ff3eb9103a5d2c8fea87cd02c2b532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a9e0038_4c4f1a4d",
+        "filename": "components/sync/protocol/user_event_specifics.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-24T20:01:37Z",
+      "side": 1,
+      "message": "Actually, I just realized that I should keep the Sync prefix because the event is to detect the reuse of sync password. Hence the name: SyncPasswordReuseEvent.\n\nI am going to revert that CL and upload another one with SyncPasswordReuseEvent -\u003e SyncPasswordReuse. Is that OK?",
+      "parentUuid": "1e5bda8f_26f43421",
+      "range": {
+        "startLine": 177,
+        "startChar": 4,
+        "endLine": 178,
+        "endChar": 59
+      },
+      "revId": "062f8ade01ff3eb9103a5d2c8fea87cd02c2b532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
