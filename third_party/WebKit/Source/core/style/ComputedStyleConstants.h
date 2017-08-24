@@ -294,6 +294,25 @@ enum SnapAlignment {
   kSnapAlignmentCenter
 };
 
+/*
+enum TextEmphasisPosition {
+  kOver = 0x1,
+  kUnder = 0x2,
+  kRight = 0x4,
+  kLeft = 0x8,
+  kDefault = kOver | kRight,
+};
+
+inline TextEmphasisPosition operator|(TextEmphasisPosition a,
+                                      TextEmphasisPosition b) {
+  return TextEmphasisPosition(int(a) | int(b));
+}
+inline TextEmphasisPosition& operator|=(TextEmphasisPosition& a,
+                                        TextEmphasisPosition b) {
+  return a = a | b;
+}
+*/
+
 }  // namespace blink
 
 #endif  // ComputedStyleConstants_h

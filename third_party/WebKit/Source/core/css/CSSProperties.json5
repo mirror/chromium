@@ -3380,12 +3380,13 @@
     },
     {
       name: "-webkit-text-emphasis-position",
-      api_class: "CSSPropertyAPIInherited",
+      api_class: "CSSPropertyAPITextEmphasisPosition",
+      api_methods: ["ParseSingleValue"],
       inherited: true,
       field_template: "keyword",
       type_name: "TextEmphasisPosition",
-      default_value: "over",
-      keywords: ["over", "under"],
+      default_value: "over-right",
+      keywords: ["over-right", "over-left","under-right","under-left"],
       field_group: "rare-inherited",
     },
     {

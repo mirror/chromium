@@ -838,6 +838,12 @@
     // -webkit-text-emphasis-position
     "over",
     "under",
+    //right,
+    //left,
+    "over-right",
+    "over-left",
+    "under-right",
+    "under-left",
 
     // -webkit-text-emphasis-style
     "filled",
