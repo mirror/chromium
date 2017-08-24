@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5104db9d_a8fa05fc",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1351,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T18:10:39Z",
+      "side": 1,
+      "message": "Keep sorted.",
+      "range": {
+        "startLine": 1351,
+        "startChar": 14,
+        "endLine": 1351,
+        "endChar": 36
+      },
+      "revId": "ad1a8978bf8075204c958788f4cba5c27ec25d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "784e9a59_7de3e024",
+        "filename": "chromeos/chromeos_switches.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T18:10:39Z",
+      "side": 1,
+      "message": "Keep sorted.",
+      "range": {
+        "startLine": 91,
+        "startChar": 31,
+        "endLine": 91,
+        "endChar": 48
+      },
+      "revId": "ad1a8978bf8075204c958788f4cba5c27ec25d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
