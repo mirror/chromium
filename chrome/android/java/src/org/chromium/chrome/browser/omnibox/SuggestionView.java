@@ -33,6 +33,7 @@ import android.widget.TextView.BufferType;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.omnibox.OmniboxResultsAdapter.OmniboxResultItem;
 import org.chromium.chrome.browser.omnibox.OmniboxResultsAdapter.OmniboxSuggestionDelegate;
 import org.chromium.chrome.browser.omnibox.OmniboxSuggestion.MatchClassification;
@@ -71,6 +72,9 @@ class SuggestionView extends ViewGroup {
     private static final long RELAYOUT_DELAY_MS = 20;
 
     private static final float ANSWER_IMAGE_SCALING_FACTOR = 1.15f;
+
+    private static final int CHROME_HOME_REFINE_VIEW_OFFSET_DP = 2;
+    private static final int CHROME_HOME_SUGGESTIONS_OFFSET_DP = 11;
 
     private final LocationBar mLocationBar;
     private UrlBar mUrlBar;
@@ -201,15 +205,20 @@ class SuggestionView extends ViewGroup {
             mContentsView.resetTextWidths();
         }
 
+        float density = getResources().getDisplayMetrics().density;
+
         boolean refineVisible = mRefineView.getVisibility() == VISIBLE;
         boolean isRtl = ApiCompatibilityUtils.isLayoutRtl(this);
         int contentsViewOffsetX = isRtl && refineVisible ? mRefineWidth : 0;
-        mContentsView.layout(
-                contentsViewOffsetX,
-                0,
+        mContentsView.layout(contentsViewOffsetX, 0,
                 contentsViewOffsetX + mContentsView.getMeasuredWidth(),
                 mContentsView.getMeasuredHeight());
-        int refineViewOffsetX = isRtl ? 0 : getMeasuredWidth() - mRefineWidth;
+
+        int rightOffsetPx = ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT)
+                        && ChromeFeatureList.isInitialized()
+                ? (int) 0
+                : 0;
+        int refineViewOffsetX = isRtl ? 0 : getMeasuredWidth() - mRefineWidth - rightOffsetPx;
         mRefineView.layout(
                 refineViewOffsetX,
                 0,
@@ -653,7 +662,6 @@ class SuggestionView extends ViewGroup {
             super(context);
 
             ApiCompatibilityUtils.setLayoutDirection(this, View.LAYOUT_DIRECTION_INHERIT);
-
             setBackground(backgroundDrawable);
             setClickable(true);
             setFocusable(true);
@@ -724,6 +732,13 @@ class SuggestionView extends ViewGroup {
             mTextLine2.setVisibility(INVISIBLE);
             ApiCompatibilityUtils.setTextAlignment(mTextLine2, TEXT_ALIGNMENT_VIEW_START);
             addView(mTextLine2);
+
+            if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT)
+                    && ChromeFeatureList.isInitialized()) {
+                float density = getResources().getDisplayMetrics().density;
+                mTextLine1.setPadding((int) (CHROME_HOME_SUGGESTIONS_OFFSET_DP * density), 0, 0, 0);
+                mTextLine2.setPadding((int) (CHROME_HOME_SUGGESTIONS_OFFSET_DP * density), 0, 0, 0);
+            }
 
             mAnswerImage = new ImageView(context);
             mAnswerImage.setVisibility(GONE);

@@ -14,6 +14,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.download.ui.DownloadManagerUi.DownloadUiObserver;
+import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 import org.chromium.chrome.browser.widget.selection.SelectableListToolbar;
 
 import java.util.List;
@@ -125,5 +126,12 @@ public class DownloadManagerToolbar extends SelectableListToolbar<DownloadHistor
     @VisibleForTesting
     public Spinner getSpinnerForTests() {
         return mSpinner;
+    }
+
+    @Override
+    public void onDisplayStyleChanged(UiConfig.DisplayStyle newDisplayStyle) {
+        super.onDisplayStyleChanged(newDisplayStyle);
+        float density = getResources().getDisplayMetrics().density;
+        setPadding((int) (density * 4), 0, 0, 0);
     }
 }

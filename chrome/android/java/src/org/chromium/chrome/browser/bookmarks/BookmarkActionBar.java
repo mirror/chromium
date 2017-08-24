@@ -17,6 +17,7 @@ import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkModelObserve
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.document.TabDelegate;
+import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 import org.chromium.chrome.browser.widget.selection.SelectableListToolbar;
 import org.chromium.chrome.browser.widget.selection.SelectionDelegate;
 import org.chromium.components.bookmarks.BookmarkId;
@@ -161,6 +162,13 @@ public class BookmarkActionBar extends SelectableListToolbar<BookmarkId>
         }
 
         setNavigationButton(NAVIGATION_BUTTON_BACK);
+    }
+
+    @Override
+    public void onDisplayStyleChanged(UiConfig.DisplayStyle newDisplayStyle) {
+        super.onDisplayStyleChanged(newDisplayStyle);
+        float density = getResources().getDisplayMetrics().density;
+        setPadding((int) (density * 4), 0, 0, 0);
     }
 
     @Override
