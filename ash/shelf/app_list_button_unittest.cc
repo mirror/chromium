@@ -129,6 +129,7 @@ TEST_F(VoiceInteractionAppListButtonTest,
 
   // Notify voice interaction settings disabled.
   Shell::Get()->NotifyVoiceInteractionEnabled(false);
+  Shell::Get()->NotifyVoiceInteractionValuePropAccepted();
 
   ui::GestureEvent long_press =
       CreateGestureEvent(ui::GestureEventDetails(ui::ET_GESTURE_LONG_PRESS));

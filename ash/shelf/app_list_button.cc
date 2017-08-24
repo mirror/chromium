@@ -509,6 +509,11 @@ void AppListButton::OnVoiceInteractionEnabled(bool enabled) {
   SchedulePaint();
 }
 
+void AppListButton::OnVoiceInteractionValuePropAccepted() {
+  voice_interaction_value_prop_accepted_ = true;
+  SchedulePaint();
+}
+
 void AppListButton::OnActiveUserSessionChanged(const AccountId& account_id) {
   SchedulePaint();
 
@@ -544,7 +549,8 @@ void AppListButton::StartVoiceInteractionAnimation() {
   bool show_icon =
       (alignment == SHELF_ALIGNMENT_BOTTOM ||
        alignment == SHELF_ALIGNMENT_BOTTOM_LOCKED) &&
-      (voice_interaction_state_ == ash::VoiceInteractionState::STOPPED);
+      (voice_interaction_state_ == ash::VoiceInteractionState::STOPPED) &&
+      voice_interaction_value_prop_accepted_;
   voice_interaction_overlay_->StartAnimation(show_icon);
 }
 
@@ -586,8 +592,15 @@ void AppListButton::GenerateAndSendBackEvent(
 }
 
 bool AppListButton::IsVoiceInteractionActive() {
+  // The voice interaction is treated as active if:
+  // - Voice interaction is enabled in chromeos switches
+  // - Current user is the primary user
+  // - Voice interaction is enabled in system settings or the value prop has
+  //   not been accepted yet.
   if (chromeos::switches::IsVoiceInteractionEnabled() &&
-      is_primary_user_active_ && voice_interaction_settings_enabled_) {
+      is_primary_user_active_ &&
+      (voice_interaction_settings_enabled_ ||
+       !voice_interaction_value_prop_accepted_)) {
     DCHECK(voice_interaction_overlay_);
     return true;
   }
