@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e6dfb1fb_247adbba",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-08-24T12:46:48Z",
+      "side": 1,
+      "message": "I\u0027m confused, do you want me to remove this line (and inline the ownership string) even if I leave the code below to add type: \"ownership\" to the trace?",
+      "parentUuid": "dec39d18_9c643d60",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "30051f03e17d69da5fd77d56dd625334a3b9ae5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fb3315f_5df78641",
         "filename": "base/trace_event/process_memory_dump.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-22T01:13:52Z",
       "side": 1,
       "message": "Did you check that the UI never uses this field? Else we might just want to leave this line.",
+      "range": {
+        "startLine": 352,
+        "startChar": 22,
+        "endLine": 352,
+        "endChar": 26
+      },
+      "revId": "30051f03e17d69da5fd77d56dd625334a3b9ae5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76d7f7b_3aeb0152",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-08-24T12:46:48Z",
+      "side": 1,
+      "message": "Yes this is used by the UI: https://cs.corp.google.com/github/catapult-project/catapult/tracing/tracing/extras/importer/trace_event_importer.html?type\u003dcs\u0026q\u003d+edge.type+file:%5Ecatapult-project/catapult/+package:%5Egithub$\u0026l\u003d3242 so my plan was to leave this line just stop storing the pointer in the edge struct.",
+      "parentUuid": "6fb3315f_5df78641",
       "range": {
         "startLine": 352,
         "startChar": 22,
