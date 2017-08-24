@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "7a012b04_9a63075c",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-24T14:47:34Z",
+      "side": 1,
+      "message": "Sorry, correction:\n  sys.path.insert(0, descriptor_pool_path)\n  sys.path.append(symbol_database_path)\n  sys.path.append(chrome_device_policy_pb2_path)",
+      "parentUuid": "1a93ffa3_189382c9",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 29
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6d8294c_1344226f",
         "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
         "patchSetId": 15
