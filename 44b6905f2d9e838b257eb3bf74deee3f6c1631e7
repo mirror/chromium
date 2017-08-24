@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b70f57cd_8d962d5f",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-24T18:23:41Z",
+      "side": 1,
+      "message": "That is true it is after the fact. I did it this way because the caller of this case [1] is in a file with no ash includes, so I was not sure if I should/could stick a ash::shell::tabletmodecontroller()-\u003eShouldAutoHideTitlebars() in there, but if that is ok im happy to move this.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/ui/views/frame/browser_view.cc?rcl\u003d6b97da56e2a874a7a55cfba927102c55d0ba553e\u0026l\u003d2357",
+      "parentUuid": "14c1291f_f7fb09b1",
+      "range": {
+        "startLine": 124,
+        "startChar": 5,
+        "endLine": 124,
+        "endChar": 43
+      },
+      "revId": "44b6905f2d9e838b257eb3bf74deee3f6c1631e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c18b201_9dd7b2e3",
         "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash.cc",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-24T17:28:36Z",
       "side": 1,
       "message": "Won\u0027t this be pretty jarring? Say a bubble comes up and activation is lost, won\u0027t that trigger disabling immersive?",
+      "revId": "44b6905f2d9e838b257eb3bf74deee3f6c1631e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f69f1e8d_2cc3c82e",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-24T18:23:41Z",
+      "side": 1,
+      "message": "I tried to address this, the only test case I came up with is opening the fullscreen launcher.",
+      "parentUuid": "4c18b201_9dd7b2e3",
       "revId": "44b6905f2d9e838b257eb3bf74deee3f6c1631e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
