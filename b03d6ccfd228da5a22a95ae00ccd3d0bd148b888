@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d73071d_84ce978e",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-24T16:31:50Z",
+      "side": 1,
+      "message": "Sorry this didn\u0027t occur to me earlier, but we should clear both sets of headers after building devtools info.\n\nWe should also probably have a test for that (Have a redirect to an HTTP URL that then does an HSTS redirect to another URL.  The HSTS redirect shouldn\u0027t inherit request headers.  Not sure about a case where inheriting response headers could happen).",
+      "range": {
+        "startLine": 257,
+        "startChar": 21,
+        "endLine": 257,
+        "endChar": 22
+      },
+      "revId": "b03d6ccfd228da5a22a95ae00ccd3d0bd148b888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf588463_765383e2",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-24T16:31:50Z",
+      "side": 1,
+      "message": "Where is this being bound and passed to the URLRequest?  Are there any integration tests that depend on this?",
+      "range": {
+        "startLine": 484,
+        "startChar": 20,
+        "endLine": 484,
+        "endChar": 41
+      },
+      "revId": "b03d6ccfd228da5a22a95ae00ccd3d0bd148b888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b82839_5e514bbe",
+        "filename": "net/url_request/url_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-24T16:31:50Z",
+      "side": 1,
+      "message": "Put this in http_response_headers.h?",
+      "range": {
+        "startLine": 682,
+        "startChar": 40,
+        "endLine": 682,
+        "endChar": 59
+      },
+      "revId": "b03d6ccfd228da5a22a95ae00ccd3d0bd148b888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1e2437_b1b67ebb",
+        "filename": "net/url_request/url_request.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-24T16:31:50Z",
+      "side": 1,
+      "message": "scoped_refptr\u003cconst HttpResponseHeaders\u003e.  We really don\u0027t want to let consumers modify the headers.  Or could just pass them as const HttpResponseHeaders\u0026, or pass in a new copy - since this is just for devtools, the extra copy isn\u0027t too concerning.",
+      "range": {
+        "startLine": 682,
+        "startChar": 60,
+        "endLine": 682,
+        "endChar": 61
+      },
+      "revId": "b03d6ccfd228da5a22a95ae00ccd3d0bd148b888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bc3ab5_d9d1692c",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11716,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-24T16:31:50Z",
+      "side": 1,
+      "message": "Add a test that gets a 304, and make sure we get the 304 response headers, rather than the headers from the cache?",
+      "range": {
+        "startLine": 11716,
+        "startChar": 7,
+        "endLine": 11716,
+        "endChar": 25
+      },
+      "revId": "b03d6ccfd228da5a22a95ae00ccd3d0bd148b888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
