@@ -4,6 +4,7 @@
 
 #include "build/build_config.h"
 #include "core/frame/LocalFrameView.h"
+#include "core/frame/VisualViewport.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutView.h"
@@ -46,6 +47,33 @@ TEST_F(ScrollbarsTest, DocumentStyleRecalcPreservesScrollbars) {
 
   Compositor().BeginFrame();
   ASSERT_TRUE(plsa->VerticalScrollbar() && plsa->HorizontalScrollbar());
+}
+
+TEST_F(ScrollbarsTest, ScrollbarSizeForUseZoomDSF) {
+  WebView().Resize(WebSize(800, 600));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete("<style> body { width: 1600px; height: 1200px; } </style>");
+
+  Compositor().BeginFrame();
+  VisualViewport& visual_viewport =
+      GetDocument().GetPage()->GetVisualViewport();
+  int horizontal_scrollbar_size =
+      (int)visual_viewport.LayerForHorizontalScrollbar()->Size().Height();
+  int vertical_scrollbar_size =
+      (int)visual_viewport.LayerForVerticalScrollbar()->Size().Width();
+
+  float devicePixelRatio = 2.625f;
+  WebView().SetDeviceScaleFactor(devicePixelRatio);
+  WebView().Resize(IntSize(400, 300));
+
+  EXPECT_EQ(
+      static_cast<int>(static_cast<float>(horizontal_scrollbar_size) *
+                       devicePixelRatio),
+      (int)visual_viewport.LayerForHorizontalScrollbar()->Size().Height());
+  EXPECT_EQ(static_cast<int>(static_cast<float>(vertical_scrollbar_size) *
+                             devicePixelRatio),
+            (int)visual_viewport.LayerForVerticalScrollbar()->Size().Width());
 }
 
 // Ensure that causing a change in scrollbar existence causes a nested layout
