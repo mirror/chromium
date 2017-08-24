@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44ad954c_478a0547",
+        "filename": "ash/fast_ink/fast_ink_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-24T20:30:46Z",
+      "side": 1,
+      "message": "Can you do this when computing screen_to_buffer_transform_ instead? ie. in the ctor. We currently assume that the view will only show for a short amount of time so it should be fine to take this into account at that time just like we take the transform into account at that time. It would be more consistent that way.",
+      "revId": "1f4c768c382c0e0a448eb428566f0bc790b0a813",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
