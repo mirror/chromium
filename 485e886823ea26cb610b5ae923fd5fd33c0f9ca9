@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4f4e564_a88f0f9d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-08-24T02:59:08Z",
+      "side": 1,
+      "message": "Maybe this could be under 80 chars:\n\nComboboxes should have a role of LISTBOX and their items a role of LISTITEM",
+      "revId": "485e886823ea26cb610b5ae923fd5fd33c0f9ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2b3b66_509b16a7",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3633,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-08-24T02:59:08Z",
+      "side": 1,
+      "message": "nit: is there a bug number we could reference?",
+      "range": {
+        "startLine": 3633,
+        "startChar": 7,
+        "endLine": 3633,
+        "endChar": 8
+      },
+      "revId": "485e886823ea26cb610b5ae923fd5fd33c0f9ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9e6a51_b82fa0e8",
+        "filename": "ui/accessibility/platform/ax_platform_node_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3640,
+      "author": {
+        "id": 1214309
+      },
+      "writtenOn": "2017-08-24T02:59:08Z",
+      "side": 1,
+      "message": "FromNativeViewAccessible is safe to call with nullptr.  You could simplfiy this a bit and simply call:\n\nauto* parent \u003d\n      static_cast\u003cAXPlatformNodeWin*\u003e(FromNativeViewAccessible(GetParent()));",
+      "revId": "485e886823ea26cb610b5ae923fd5fd33c0f9ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
