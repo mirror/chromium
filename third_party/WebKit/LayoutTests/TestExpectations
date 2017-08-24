@@ -340,6 +340,9 @@ crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/005.html [ Failure
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/block-inside-inline/001.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/block-inside-inline/005.html [ Failure ]
 
+# Regression while changing the line breaker behavior.
+crbug.com/758306 virtual/layout_ng/fast/block/float/editable-text-overlapping-float.html [ Failure ]
+
 ### virtual/layout_ng/external/wpt/css/CSS2/linebox
 
 # 1px glyph position diff at box boundary. Check if they need fix.

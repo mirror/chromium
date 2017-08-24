@@ -37,30 +37,6 @@ inline bool IsHangableSpace(UChar ch) {
   return ch == kSpaceCharacter || ch == kTabulationCharacter;
 }
 
-unsigned PreviousSafeToBreakAfter(const UChar* text,
-                                  unsigned start,
-                                  unsigned offset) {
-  // TODO(eae): This is quite incorrect. It should be changed to use the
-  // HarfBuzzHarfBuzz safe to break info when available.
-  for (; offset > start; offset--) {
-    if (text[offset - 1] == kSpaceCharacter)
-      break;
-  }
-  return offset;
-}
-
-unsigned NextSafeToBreakBefore(const UChar* text,
-                               unsigned end,
-                               unsigned offset) {
-  // TODO(eae): This is quite incorrect. It should be changed to use the
-  // HarfBuzzHarfBuzz safe to break info when available.
-  for (; offset < end; offset++) {
-    if (text[offset] == kSpaceCharacter)
-      break;
-  }
-  return offset;
-}
-
 // ShapingLineBreaker computes using visual positions. This function flips
 // logical advance to visual, or vice versa.
 LayoutUnit FlipRtl(LayoutUnit value, TextDirection direction) {
@@ -190,8 +166,7 @@ PassRefPtr<ShapeResult> ShapingLineBreaker::ShapeLine(
   // the start and the next safe-to-break boundary needs to be reshaped and the
   // available space adjusted to take the reshaping into account.
   RefPtr<ShapeResult> line_start_result;
-  unsigned first_safe =
-      NextSafeToBreakBefore(shaper_->GetText(), shaper_->TextLength(), start);
+  unsigned first_safe = result_->NextSafeToBreakOffset(start);
   DCHECK_GE(first_safe, start);
   // Reshape takes place only when first_safe is before the break opportunity.
   // Otherwise reshape will be part of line_end_result.
@@ -212,9 +187,8 @@ PassRefPtr<ShapeResult> ShapingLineBreaker::ShapeLine(
     // boundary reshape between the safe-to-break offset and the valid break
     // offset. If the resulting width exceeds the available space the
     // preceding boundary is tried until the available space is sufficient.
-    unsigned previous_safe = std::max(
-        PreviousSafeToBreakAfter(shaper_->GetText(), start, break_opportunity),
-        start);
+    unsigned previous_safe =
+        std::max(result_->PreviousSafeToBreakOffset(break_opportunity), start);
     DCHECK_LE(previous_safe, break_opportunity);
     if (previous_safe != break_opportunity) {
       LayoutUnit safe_position = SnapStart(
@@ -275,22 +249,28 @@ PassRefPtr<ShapeResult> ShapingLineBreaker::ShapeToEnd(
     unsigned start,
     LayoutUnit start_position,
     unsigned range_end) {
-  unsigned first_safe =
-      NextSafeToBreakBefore(shaper_->GetText(), shaper_->TextLength(), start);
-  DCHECK_GE(first_safe, start);
+  unsigned first_safe = result_->NextSafeToBreakOffset(start);
+  // TODO(layout-dev): NextSafeToBreakOffset should never return a value less
+  // than start yet for fast/block/basic/adding-near-anonymous-block.html and
+  // a few more layout tests it does as the start value given exceeds the
+  // length of the string in the result. Investigate why that is. Until then
+  // force a full re-shape in cases where first_safe < start.
+  // DCHECK_GE(first_safe, start);
 
   RefPtr<ShapeResult> line_result;
   TextDirection direction = result_->Direction();
   if (first_safe == start) {
-    // If |start| is safe-to-break, reshape is not needed.
+    // If |start| is safe-to-break no reshape is needed.
     line_result = ShapeResult::Create(font_, 0, direction);
     result_->CopyRange(start, range_end, line_result.Get());
-  } else if (first_safe < range_end) {
-    // Otherwise reshape to the first safe, then copy the rest.
+  } else if (first_safe < range_end && first_safe > start) {
+    // Otherwise reshape to |first_safe|, then copy the rest.
+    // TODO(layout-dev): Remove the first_safe > start condition above once the
+    // first_safe is guaranteed to be greather than or equal to start.
     line_result = Shape(direction, start, first_safe);
     result_->CopyRange(first_safe, range_end, line_result.Get());
   } else {
-    // If no safe-to-break in the ragne, reshape the whole range.
+    // If no safe-to-break offset is found in range, reshape the entire range.
     line_result = Shape(direction, start, range_end);
   }
   return line_result;
