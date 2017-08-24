@@ -16,6 +16,24 @@
       "revId": "aa55fe82cf025786ff329480e5d1fd54824a1034",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d391687_6237eee1",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-24T13:36:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6264af7_60c442d4",
+      "revId": "aa55fe82cf025786ff329480e5d1fd54824a1034",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
