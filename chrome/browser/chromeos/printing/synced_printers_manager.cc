@@ -263,6 +263,7 @@ void SyncedPrintersManager::RegisterProfilePrefs(
   registry->RegisterListPref(prefs::kPrintingDevices,
                              user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterListPref(prefs::kRecommendedNativePrinters);
+  registry->RegisterDictionaryPref(prefs::kRecommendedNativePrintersPolicy);
 }
 
 // static
