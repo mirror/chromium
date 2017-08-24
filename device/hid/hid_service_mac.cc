@@ -85,7 +85,8 @@ scoped_refptr<HidDeviceInfo> CreateDeviceInfo(
       GetIntProperty(service, CFSTR(kIOHIDProductIDKey)),
       GetStringProperty(service, CFSTR(kIOHIDProductKey)),
       GetStringProperty(service, CFSTR(kIOHIDSerialNumberKey)),
-      kHIDBusTypeUSB,  // TODO(reillyg): Detect Bluetooth. crbug.com/443335
+      device::mojom::HidBusType::kHIDBusTypeUSB,  // TODO(reillyg): Detect
+                                                  // Bluetooth. crbug.com/443335
       report_descriptor);
 }
 
@@ -143,6 +144,10 @@ void HidServiceMac::Connect(const std::string& device_guid,
       base::Bind(&HidServiceMac::OpenOnBlockingThread, map_entry->second),
       base::Bind(&HidServiceMac::DeviceOpened, weak_factory_.GetWeakPtr(),
                  map_entry->second, callback));
+}
+
+base::WeakPtr<HidService> HidServiceMac::GetWeakPtr() {
+  return weak_factory_.GetWeakPtr();
 }
 
 // static
