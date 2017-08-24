@@ -22,4 +22,11 @@ interface Memlog {
   // under the "metadata" key.
   DumpProcess(mojo.common.mojom.ProcessId pid, handle output_file,
               mojo.common.mojom.DictionaryValue metadata);
+
+  // Dumps the memory log of the process with the given |pid| into a data
+  // pipe. The format is a JSON string compatible with TRACE_EVENT* macros.
+  // On success, returns a valid data_pipe_consumer handle and the size of the
+  // data written. On failure, returns an invalid data_pipe_consumer handle.
+  DumpProcessForTracing(mojo.common.mojom.ProcessId pid) =>
+      (handle<data_pipe_consumer> consumer, uint32 size);
 };
