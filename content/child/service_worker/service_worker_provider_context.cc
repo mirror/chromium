@@ -60,8 +60,8 @@ struct ServiceWorkerProviderContext::ControllerState {
 ServiceWorkerProviderContext::ServiceWorkerProviderContext(
     int provider_id,
     ServiceWorkerProviderType provider_type,
-    mojom::ServiceWorkerProviderAssociatedRequest request,
-    mojom::ServiceWorkerProviderHostAssociatedPtrInfo host_ptr_info,
+    mojom::ServiceWorkerContainerAssociatedRequest request,
+    mojom::ServiceWorkerContainerHostAssociatedPtrInfo host_ptr_info,
     ServiceWorkerDispatcher* dispatcher,
     scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter)
     : provider_id_(provider_id),

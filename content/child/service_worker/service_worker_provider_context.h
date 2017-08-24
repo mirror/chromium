@@ -15,8 +15,8 @@
 #include "content/child/child_url_loader_factory_getter.h"
 #include "content/child/service_worker/service_worker_dispatcher.h"
 #include "content/common/content_export.h"
+#include "content/common/service_worker/service_worker_container.mojom.h"
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
-#include "content/common/service_worker/service_worker_provider_interfaces.mojom.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 
@@ -56,7 +56,7 @@ struct ServiceWorkerProviderContextDeleter;
 class CONTENT_EXPORT ServiceWorkerProviderContext
     : public base::RefCountedThreadSafe<ServiceWorkerProviderContext,
                                         ServiceWorkerProviderContextDeleter>,
-      public mojom::ServiceWorkerProvider {
+      public mojom::ServiceWorkerContainer {
  public:
   // |provider_id| is used to identify this provider in IPC messages to the
   // browser process. |request| is an endpoint which is connected to
@@ -73,8 +73,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   ServiceWorkerProviderContext(
       int provider_id,
       ServiceWorkerProviderType provider_type,
-      mojom::ServiceWorkerProviderAssociatedRequest request,
-      mojom::ServiceWorkerProviderHostAssociatedPtrInfo host_ptr_info,
+      mojom::ServiceWorkerContainerAssociatedRequest request,
+      mojom::ServiceWorkerContainerHostAssociatedPtrInfo host_ptr_info,
       ServiceWorkerDispatcher* dispatcher,
       scoped_refptr<ChildURLLoaderFactoryGetter> default_loader_factory_getter);
 
@@ -140,9 +140,9 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // Mojo binding for the |request| passed to the constructor. This keeps the
   // connection to the content::ServiceWorkerProviderHost in the browser process
   // alive.
-  mojo::AssociatedBinding<mojom::ServiceWorkerProvider> binding_;
+  mojo::AssociatedBinding<mojom::ServiceWorkerContainer> binding_;
   // Browser-side Mojo endpoint for provider host.
-  mojom::ServiceWorkerProviderHostAssociatedPtr provider_host_;
+  mojom::ServiceWorkerContainerHostAssociatedPtr provider_host_;
 
   // Either |controllee_state_| or |controller_state_| is non-null.
   std::unique_ptr<ControlleeState> controllee_state_;
