@@ -138,7 +138,8 @@ class PluginObserver::PluginPlaceholderHost : public PluginInstallerObserver {
   }
 
   void DownloadFinished() override {
-    observer_->Send(new ChromeViewMsg_FinishedDownloadingPlugin(routing_id_));
+    observer_->web_contents()->GetRenderViewHost()->Send(
+        new ChromeViewMsg_FinishedDownloadingPlugin(routing_id_));
   }
 
  private:
@@ -170,16 +171,16 @@ class PluginObserver::ComponentObserver
       return;
     switch (event) {
       case Events::COMPONENT_UPDATED:
-        observer_->Send(
+        observer_->web_contents()->GetRenderViewHost()->Send(
             new ChromeViewMsg_PluginComponentUpdateSuccess(routing_id_));
         observer_->RemoveComponentObserver(routing_id_);
         break;
       case Events::COMPONENT_UPDATE_FOUND:
-        observer_->Send(
+        observer_->web_contents()->GetRenderViewHost()->Send(
             new ChromeViewMsg_PluginComponentUpdateDownloading(routing_id_));
         break;
       case Events::COMPONENT_NOT_UPDATED:
-        observer_->Send(
+        observer_->web_contents()->GetRenderViewHost()->Send(
             new ChromeViewMsg_PluginComponentUpdateFailure(routing_id_));
         observer_->RemoveComponentObserver(routing_id_);
         break;
