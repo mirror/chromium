@@ -1581,11 +1581,14 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
     if (proxy_delegate_ &&
         proxy_delegate_->IsTrustedSpdyProxy(
             ProxyServer(ProxyServer::SCHEME_HTTPS, host_port_pair()))) {
-      // Disallow pushing of HTTPS content by trusted proxy.
-      if (gurl.SchemeIs("https")) {
+      bool cryptographic_content = gurl.SchemeIsCryptographic();
+      UMA_HISTOGRAM_BOOLEAN("Net.TrustedProxy.CrosssOriginPushAccepted",
+                            !cryptographic_content);
+      // Disallow pushing of secure content by trusted proxy.
+      if (cryptographic_content) {
         EnqueueResetStreamFrame(
             stream_id, request_priority, ERROR_CODE_REFUSED_STREAM,
-            SpdyStringPrintf("Rejected push of cross origin HTTPS content %d "
+            SpdyStringPrintf("Rejected push of cross origin secure content %d "
                              "from trusted proxy",
                              associated_stream_id));
         return;
