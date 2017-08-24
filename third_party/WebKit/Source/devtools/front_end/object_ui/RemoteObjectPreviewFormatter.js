@@ -79,16 +79,68 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
    * @param {!Protocol.Runtime.ObjectPreview} preview
    */
   _appendObjectPropertiesPreview(parentElement, preview) {
-    var properties = preview.properties.filter(p => p.type !== 'accessor')
-                         .stableSort(ObjectUI.RemoteObjectPreviewFormatter._objectPropertyComparator);
-    for (var i = 0; i < properties.length; ++i) {
+    var properties = [];
+    var property;
+    for (var i = 0; i < preview.properties.length; ++i) {
+      property = preview.properties[i];
+      if (property.name === ObjectUI.RemoteObjectPreviewFormatter._internalName.PrimitiveValue) {
+        parentElement.appendChild(this._renderPropertyPreviewOrAccessor([property]));
+        return;
+      }
+      if (property.type !== 'accessor')
+        properties.push(property);
+    }
+
+    var remainingProperties = properties;
+    if (preview.subtype === 'promise')
+      remainingProperties = appendPromiseProperties.call(this);
+    else if (preview.subtype === 'generator')
+      remainingProperties = appendGeneratorProperties();
+    if (remainingProperties.length > 0 && remainingProperties.length < properties.length)
+      parentElement.createTextChild(', ');
+    remainingProperties.stableSort(ObjectUI.RemoteObjectPreviewFormatter._objectPropertyComparator);
+
+    for (var i = 0; i < remainingProperties.length; ++i) {
       if (i > 0)
         parentElement.createTextChild(', ');
 
-      var property = properties[i];
+      property = remainingProperties[i];
       parentElement.appendChild(this._renderDisplayName(property.name));
       parentElement.createTextChild(': ');
       parentElement.appendChild(this._renderPropertyPreviewOrAccessor([property]));
+    }
+
+    /**
+     * @this {!ObjectUI.RemoteObjectPreviewFormatter}
+     * @return {!Array<!Protocol.Runtime.PropertyPreview>}
+     */
+    function appendPromiseProperties() {
+      var statusIndex =
+          properties.findIndex(p => p.name === ObjectUI.RemoteObjectPreviewFormatter._internalName.PromiseStatus);
+      var valueIndex =
+          properties.findIndex(p => p.name === ObjectUI.RemoteObjectPreviewFormatter._internalName.PromiseValue);
+      var statusText;
+      if (statusIndex !== -1) {
+        statusText = properties[statusIndex].value;
+        parentElement.createChild('span', 'name').textContent = '<' + statusText + '>';
+      }
+      if (valueIndex !== -1 && statusText && statusText !== 'pending') {
+        parentElement.createTextChild(': ');
+        parentElement.appendChild(this._renderPropertyPreviewOrAccessor([properties[valueIndex]]));
+      }
+      return properties.filter((p, index) => index !== statusIndex && index !== valueIndex);
+    }
+
+    /**
+     * @return {!Array<!Protocol.Runtime.PropertyPreview>}
+     */
+    function appendGeneratorProperties() {
+      var statusIndex =
+          properties.findIndex(p => p.name === ObjectUI.RemoteObjectPreviewFormatter._internalName.GeneratorStatus);
+      if (statusIndex === -1)
+        return properties;
+      parentElement.createChild('span', 'name').textContent = '<' + properties[statusIndex].value + '>';
+      return properties.filter((p, index) => index !== statusIndex);
     }
   }
 
@@ -254,4 +306,12 @@ ObjectUI.RemoteObjectPreviewFormatter = class {
     span.textContent = description;
     return span;
   }
+};
+
+/** @enum {string} */
+ObjectUI.RemoteObjectPreviewFormatter._internalName = {
+  GeneratorStatus: '[[GeneratorStatus]]',
+  PrimitiveValue: '[[PrimitiveValue]]',
+  PromiseStatus: '[[PromiseStatus]]',
+  PromiseValue: '[[PromiseValue]]'
 };
