@@ -86689,6 +86689,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Webapp.NavigationStatus" enum="WebappNavigationStatus">
+  <owner>piotrs@chromium.org</owner>
+  <summary>
+    Records whether the top-level navigations in standalone Web Apps resulted in
+    showing the error page to the user.
+  </summary>
+</histogram>
+
 <histogram name="Webapp.Splashscreen.BackgroundColor"
     enum="SplashscreenColorStatus">
   <owner>mlamouri@chromium.org</owner>
