@@ -117,6 +117,30 @@
       "revId": "eb07226a1216d2efb0fab2e6fc5483587c67ed59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e17a54_beaff419",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-24T17:07:25Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure this is about let, which indeed has reasonable scope. The scope of var is whole function, and pre EC6 Style Guide explicitly recommended to move var keywords to the top.",
+      "parentUuid": "c49723f3_7360f3ba",
+      "range": {
+        "startLine": 132,
+        "startChar": 6,
+        "endLine": 132,
+        "endChar": 16
+      },
+      "revId": "eb07226a1216d2efb0fab2e6fc5483587c67ed59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
