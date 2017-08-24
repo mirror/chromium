@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0be0114_dae52248",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-24T20:33:18Z",
+      "side": 1,
+      "message": "update the comment.",
+      "range": {
+        "startLine": 547,
+        "startChar": 41,
+        "endLine": 547,
+        "endChar": 74
+      },
+      "revId": "c193e5aa5d8e7d7f7f757908903098d895dc7f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "195e8fbd_f7229440",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-24T20:33:18Z",
+      "side": 1,
+      "message": "not related to this cl, but before I forget, why do we set the default to true here?",
+      "range": {
+        "startLine": 126,
+        "startChar": 45,
+        "endLine": 126,
+        "endChar": 49
+      },
+      "revId": "c193e5aa5d8e7d7f7f757908903098d895dc7f28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
