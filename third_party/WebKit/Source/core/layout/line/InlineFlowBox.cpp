@@ -823,11 +823,20 @@ void InlineFlowBox::PlaceBoxesInBlockDirection(
         if (ToInlineTextBox(curr)->GetEmphasisMarkPosition(
                 curr->GetLineLayoutItem().StyleRef(IsFirstLineStyle()),
                 emphasis_mark_position)) {
-          bool emphasis_mark_is_over =
-              emphasis_mark_position == TextEmphasisPosition::kOver;
-          if (emphasis_mark_is_over != curr->GetLineLayoutItem()
-                                           .Style(IsFirstLineStyle())
-                                           ->IsFlippedLinesWritingMode())
+          bool isFlippedLinesWritingMode = curr->GetLineLayoutItem()
+                                               .Style(IsFirstLineStyle())
+                                               ->IsFlippedLinesWritingMode();
+          bool isFlippedBlocksWritingMode = curr->GetLineLayoutItem()
+                                                .Style(IsFirstLineStyle())
+                                                ->IsFlippedBlocksWritingMode();
+          if ((IsHorizontal() && EnumHasFlags(emphasis_mark_position,
+                                              TextEmphasisPosition::kOver)) ||
+              (isFlippedLinesWritingMode &&
+               EnumHasFlags(emphasis_mark_position,
+                            TextEmphasisPosition::kLeft)) ||
+              (isFlippedBlocksWritingMode &&
+               EnumHasFlags(emphasis_mark_position,
+                            TextEmphasisPosition::kRight)))
             has_annotations_before = true;
           else
             has_annotations_after = true;
@@ -1051,12 +1060,19 @@ inline void InlineFlowBox::AddTextBoxVisualOverflow(
       text_box->GetEmphasisMarkPosition(style, emphasis_mark_position)) {
     float emphasis_mark_height =
         style.GetFont().EmphasisMarkHeight(style.TextEmphasisMarkString());
-    if ((emphasis_mark_position == TextEmphasisPosition::kOver) ==
-        (!style.IsFlippedLinesWritingMode()))
+    bool isFlippedLinesWritingMode = style.IsFlippedLinesWritingMode();
+    bool isFlippedBlocksWritingMode = style.IsFlippedBlocksWritingMode();
+    if ((IsHorizontal() &&
+         EnumHasFlags(emphasis_mark_position, TextEmphasisPosition::kOver)) ||
+        (isFlippedLinesWritingMode &&
+         EnumHasFlags(emphasis_mark_position, TextEmphasisPosition::kLeft)) ||
+        (isFlippedBlocksWritingMode &&
+         EnumHasFlags(emphasis_mark_position, TextEmphasisPosition::kRight))) {
       top_glyph_overflow = std::min(top_glyph_overflow, -emphasis_mark_height);
-    else
+    } else {
       bottom_glyph_overflow =
           std::max(bottom_glyph_overflow, emphasis_mark_height);
+    }
   }
 
   // If letter-spacing is negative, we should factor that into right layout
@@ -1553,7 +1569,9 @@ LayoutUnit InlineFlowBox::ComputeOverAnnotationAdjustment(
       if (style.GetTextEmphasisMark() != TextEmphasisMark::kNone &&
           ToInlineTextBox(curr)->GetEmphasisMarkPosition(
               style, emphasis_mark_position) &&
-          emphasis_mark_position == TextEmphasisPosition::kOver) {
+          EnumHasFlags(
+              emphasis_mark_position,
+              TextEmphasisPosition::kOver | TextEmphasisPosition::kRight)) {
         if (!style.IsFlippedLinesWritingMode()) {
           int top_of_emphasis_mark =
               (curr->LogicalTop() - style.GetFont().EmphasisMarkHeight(
@@ -1621,7 +1639,9 @@ LayoutUnit InlineFlowBox::ComputeUnderAnnotationAdjustment(
       const ComputedStyle& style =
           curr->GetLineLayoutItem().StyleRef(IsFirstLineStyle());
       if (style.GetTextEmphasisMark() != TextEmphasisMark::kNone &&
-          style.GetTextEmphasisPosition() == TextEmphasisPosition::kUnder) {
+          EnumHasFlags(
+              style.GetTextEmphasisPosition(),
+              TextEmphasisPosition::kUnder | TextEmphasisPosition::kLeft)) {
         if (!style.IsFlippedLinesWritingMode()) {
           LayoutUnit bottom_of_emphasis_mark =
               curr->LogicalBottom() + style.GetFont().EmphasisMarkHeight(

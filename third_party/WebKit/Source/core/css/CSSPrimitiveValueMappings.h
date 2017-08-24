@@ -736,20 +736,6 @@ inline EVerticalAlign CSSIdentifierValue::ConvertTo() const {
   NOTREACHED();
   return EVerticalAlign::kTop;
 }
-
-template <>
-inline CSSIdentifierValue::CSSIdentifierValue(TextEmphasisPosition position)
-    : CSSValue(kIdentifierClass) {
-  switch (position) {
-    case TextEmphasisPosition::kOver:
-      value_id_ = CSSValueOver;
-      break;
-    case TextEmphasisPosition::kUnder:
-      value_id_ = CSSValueUnder;
-      break;
-  }
-}
-
 template <>
 inline TextEmphasisPosition CSSIdentifierValue::ConvertTo() const {
   switch (value_id_) {
@@ -757,6 +743,10 @@ inline TextEmphasisPosition CSSIdentifierValue::ConvertTo() const {
       return TextEmphasisPosition::kOver;
     case CSSValueUnder:
       return TextEmphasisPosition::kUnder;
+    case CSSValueLeft:
+      return TextEmphasisPosition::kLeft;
+    case CSSValueRight:
+      return TextEmphasisPosition::kRight;
     default:
       break;
   }
