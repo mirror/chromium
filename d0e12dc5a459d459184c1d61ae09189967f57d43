@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e001962_31307d7b",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-08-24T10:29:47Z",
+      "side": 1,
+      "message": "This is fine while waiting for the TODO but (like below) I think we shouldn\u0027t DCHECK on IPC failure.",
+      "revId": "d0e12dc5a459d459184c1d61ae09189967f57d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "233029d8_8c49cc9a",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-08-24T10:29:47Z",
+      "side": 1,
+      "message": "I feel like this might be too strong, this callback can fail for reasons like a renderer going away before calling the callback which we don\u0027t want to cause the browser to die. Maybe replace with a VLOG?",
+      "revId": "d0e12dc5a459d459184c1d61ae09189967f57d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a113f2b6_2cfb0f95",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-08-24T10:29:47Z",
+      "side": 1,
+      "message": "This seems kind of racy, if someone calls EnableHeapProfiling at the same time as a new process registers we might get into a weird state. How hard would it be to move the source of truth to this class? Either I\u0027m fine for that to be a follow up with a TODO.",
+      "range": {
+        "startLine": 245,
+        "startChar": 40,
+        "endLine": 245,
+        "endChar": 66
+      },
+      "revId": "d0e12dc5a459d459184c1d61ae09189967f57d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
