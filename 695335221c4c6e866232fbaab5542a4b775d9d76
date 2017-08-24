@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b4730e61_a6313b9d",
+        "filename": "ui/display/display.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-24T22:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "828c16bf_5f7f9b89",
+      "revId": "695335221c4c6e866232fbaab5542a4b775d9d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f046c16f_c82b31f1",
         "filename": "ui/display/display.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-24T22:01:17Z",
       "side": 1,
       "message": "This shouldn\u0027t be here. Move it to ScreenRotationAnimator or DisplayConfiguratonCOntroller",
+      "revId": "695335221c4c6e866232fbaab5542a4b775d9d76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be3b446_0ffee77d",
+        "filename": "ui/display/display.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-24T22:50:18Z",
+      "side": 1,
+      "message": "Moved to DisplayConfiguratonController.",
+      "parentUuid": "f046c16f_c82b31f1",
       "revId": "695335221c4c6e866232fbaab5542a4b775d9d76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
