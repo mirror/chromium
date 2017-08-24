@@ -87,10 +87,6 @@ class MOJO_SYSTEM_IMPL_EXPORT PlatformChannelPair {
       base::CommandLine* command_line,
       HandlePassingInformation* handle_passing_info) const;
 
-  // Like above, but returns a string instead of changing the command line.
-  std::string PrepareToPassClientHandleToChildProcessAsString(
-      HandlePassingInformation* handle_passing_info) const;
-
 #if defined(OS_FUCHSIA)
   // Like above, but accepts a caller-supplied client |handle|.
   // TODO(wez): Consider incorporating this call into other platform
