@@ -39,6 +39,24 @@
       "revId": "ac0e575a2e66936159e5f48d5fdcb6eccb6496a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a93a936_669002c7",
+        "filename": "third_party/WebKit/Source/core/editing/SurroundingTextTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-24T02:09:38Z",
+      "side": 1,
+      "message": "The DOM tree in the test was produced experimentally from the only crash that I could reproduce reliably (there are also intermittent ones). In Chrome, I saw an empty input tag with potential autofill values in a drop-down box. The cursor was in the input tag. In this situation the empty surrounding text seems correct since I want to restrict it by the content of the input element.",
+      "parentUuid": "d35244ed_3ed83d47",
+      "revId": "ac0e575a2e66936159e5f48d5fdcb6eccb6496a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
