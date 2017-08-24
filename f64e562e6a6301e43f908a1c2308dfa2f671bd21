@@ -22,6 +22,30 @@
       "revId": "f64e562e6a6301e43f908a1c2308dfa2f671bd21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c65eb2_6158d87b",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-24T23:51:06Z",
+      "side": 1,
+      "message": "It can be! Thanks!",
+      "parentUuid": "63c7060c_de65b902",
+      "range": {
+        "startLine": 486,
+        "startChar": 11,
+        "endLine": 486,
+        "endChar": 12
+      },
+      "revId": "f64e562e6a6301e43f908a1c2308dfa2f671bd21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
