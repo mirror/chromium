@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "88887931_e7d0d0b4",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-24T14:47:39Z",
+      "side": 1,
+      "message": "Oh, ok. I have already done it.",
+      "parentUuid": "1a93ffa3_189382c9",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 29
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6d8294c_1344226f",
         "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
         "patchSetId": 15
