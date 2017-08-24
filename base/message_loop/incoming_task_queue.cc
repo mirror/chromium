@@ -112,7 +112,7 @@ int IncomingTaskQueue::ReloadWorkQueue(TaskQueue* work_queue) {
 }
 
 void IncomingTaskQueue::WillDestroyCurrentMessageLoop() {
-  base::subtle::AutoWriteLock lock(message_loop_lock_);
+  AutoLock message_loop_auto_lock(message_loop_lock_);
   message_loop_ = NULL;
 }
 
@@ -144,7 +144,7 @@ bool IncomingTaskQueue::PostPendingTask(PendingTask* pending_task) {
   // into this queue.
 
   // Ensures |message_loop_| isn't destroyed while running.
-  base::subtle::AutoReadLock hold_message_loop(message_loop_lock_);
+  AutoLock message_loop_auto_lock(message_loop_lock_);
 
   if (!message_loop_) {
     pending_task->task.Reset();
