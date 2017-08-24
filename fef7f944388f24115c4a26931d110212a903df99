@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55ee5668_4bde714a",
+        "filename": "chrome/android/java/res/layout/bottom_control_container.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T16:36:11Z",
+      "side": 1,
+      "message": "nit: Let\u0027s use modern_primary_color so that if we every change from white to something else (e.g. a very, very, very light grey ;) ) there are fewer places to change.",
+      "range": {
+        "startLine": 17,
+        "startChar": 28,
+        "endLine": 17,
+        "endChar": 48
+      },
+      "revId": "fef7f944388f24115c4a26931d110212a903df99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca0e785_ef0ff098",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T16:36:11Z",
+      "side": 1,
+      "message": "here too",
+      "revId": "fef7f944388f24115c4a26931d110212a903df99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
