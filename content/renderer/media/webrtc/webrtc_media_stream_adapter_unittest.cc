@@ -11,7 +11,6 @@
 #include "base/message_loop/message_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/child/child_process.h"
-#include "content/renderer/media/media_stream.h"
 #include "content/renderer/media/media_stream_video_source.h"
 #include "content/renderer/media/media_stream_video_track.h"
 #include "content/renderer/media/mock_audio_device_factory.h"
@@ -92,7 +91,6 @@ class WebRtcMediaStreamAdapterTest : public ::testing::Test {
     blink::WebMediaStream stream_desc;
     stream_desc.Initialize("media stream", audio_track_vector,
                            video_track_vector);
-    stream_desc.SetExtraData(new MediaStream());
     return stream_desc;
   }
 
@@ -151,7 +149,6 @@ TEST_F(WebRtcMediaStreamAdapterTest,
 
   blink::WebMediaStream blink_stream;
   blink_stream.Initialize("new stream", audio_tracks, video_tracks);
-  blink_stream.SetExtraData(new content::MediaStream());
   CreateWebRtcMediaStream(blink_stream, 0, 0);
 }
 
@@ -159,24 +156,22 @@ TEST_F(WebRtcMediaStreamAdapterTest, RemoveAndAddTrack) {
   blink::WebMediaStream blink_stream = CreateBlinkMediaStream(true, true);
   CreateWebRtcMediaStream(blink_stream, 1, 1);
 
-  MediaStream* native_stream = MediaStream::GetMediaStream(blink_stream);
-
   blink::WebVector<blink::WebMediaStreamTrack> audio_tracks;
   blink_stream.AudioTracks(audio_tracks);
 
-  native_stream->RemoveTrack(audio_tracks[0]);
+  blink_stream.RemoveTrack(audio_tracks[0]);
   EXPECT_TRUE(webrtc_stream()->GetAudioTracks().empty());
 
   blink::WebVector<blink::WebMediaStreamTrack> video_tracks;
   blink_stream.VideoTracks(video_tracks);
 
-  native_stream->RemoveTrack(video_tracks[0]);
+  blink_stream.RemoveTrack(video_tracks[0]);
   EXPECT_TRUE(webrtc_stream()->GetVideoTracks().empty());
 
-  native_stream->AddTrack(audio_tracks[0]);
+  blink_stream.AddTrack(audio_tracks[0]);
   EXPECT_EQ(1u, webrtc_stream()->GetAudioTracks().size());
 
-  native_stream->AddTrack(video_tracks[0]);
+  blink_stream.AddTrack(video_tracks[0]);
   EXPECT_EQ(1u, webrtc_stream()->GetVideoTracks().size());
 }
 

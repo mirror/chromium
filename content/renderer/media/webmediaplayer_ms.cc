@@ -201,11 +201,8 @@ WebMediaPlayerMS::~WebMediaPlayerMS() {
   DVLOG(1) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (!web_stream_.IsNull()) {
-    MediaStream* native_stream = MediaStream::GetMediaStream(web_stream_);
-    if (native_stream)
-      native_stream->RemoveObserver(this);
-  }
+  if (!web_stream_.IsNull())
+    web_stream_.RemoveObserver(this);
 
   // Destruct compositor resources in the proper order.
   get_client()->SetWebLayer(nullptr);
@@ -241,11 +238,8 @@ void WebMediaPlayerMS::Load(LoadType load_type,
   // once Blink-side changes land.
   DCHECK_NE(load_type, kLoadTypeMediaSource);
   web_stream_ = GetWebMediaStreamFromWebMediaPlayerSource(source);
-  if (!web_stream_.IsNull()) {
-    MediaStream* native_stream = MediaStream::GetMediaStream(web_stream_);
-    if (native_stream)
-      native_stream->AddObserver(this);
-  }
+  if (!web_stream_.IsNull())
+    web_stream_.AddObserver(this);
 
   compositor_ = new WebMediaPlayerMSCompositor(
       compositor_task_runner_, io_task_runner_, web_stream_, AsWeakPtr());
