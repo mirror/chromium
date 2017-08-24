@@ -31,9 +31,11 @@ constexpr char kCastPresentationUrlPath[] = "/cast";
 // component extension.
 constexpr char kAutoJoinPresentationId[] = "auto-join";
 
+constexpr char kCastScheme[] = "cast";
+
 // List of non-http(s) schemes that are allowed in a Presentation URL.
 constexpr std::array<const char* const, 5> kAllowedSchemes{
-    {"cast", "cast-dial", "dial", "remote-playback", "test"}};
+    {kCastScheme, "cast-dial", "dial", "remote-playback", "test"}};
 
 bool IsSchemeAllowed(const GURL& url) {
   return url.SchemeIsHTTPOrHTTPS() ||
@@ -87,10 +89,11 @@ bool IsMirroringMediaSource(const MediaSource& source) {
 
 bool CanConnectToMediaSource(const MediaSource& source) {
   // Compare host, port, scheme, and path prefix for source.url().
-  return source.url().SchemeIs(url::kHttpsScheme) &&
-         source.url().DomainIs(kCastPresentationUrlDomain) &&
-         source.url().has_path() &&
-         source.url().path() == kCastPresentationUrlPath;
+  return source.url().SchemeIs(kCastScheme) ||
+         (source.url().SchemeIs(url::kHttpsScheme) &&
+          source.url().DomainIs(kCastPresentationUrlDomain) &&
+          source.url().has_path() &&
+          source.url().path() == kCastPresentationUrlPath);
 }
 
 int TabIdFromMediaSource(const MediaSource& source) {
