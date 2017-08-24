@@ -10,6 +10,7 @@
 #include "base/callback.h"
 #include "base/cancelable_callback.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "components/viz/common/resources/transferable_resource.h"
 #include "ui/gfx/geometry/size.h"
@@ -55,8 +56,10 @@ class Buffer : public base::SupportsWeakPtr<Buffer> {
   bool ProduceTransferableResource(
       LayerTreeFrameSinkHolder* layer_tree_frame_sink_holder,
       bool secure_output_only,
-      bool client_usage,
-      viz::TransferableResource* resource);
+      bool client_usage);
+
+  void ReallocateTransferableResourceId(
+      LayerTreeFrameSinkHolder* layer_tree_frame_sink_holder);
 
   // This should be called when the buffer is attached to a Surface.
   void OnAttach();
@@ -70,6 +73,12 @@ class Buffer : public base::SupportsWeakPtr<Buffer> {
   // Returns the format of the buffer.
   gfx::BufferFormat GetFormat() const;
 
+  bool is_attached() const { return attach_count_; }
+
+  bool is_resource_returned() const { return resource_returned_; }
+
+  const viz::TransferableResource& resource() const { return resource_; }
+
   // Returns a trace value representing the state of the buffer.
   std::unique_ptr<base::trace_event::TracedValue> AsTracedValue() const;
 
@@ -82,13 +91,17 @@ class Buffer : public base::SupportsWeakPtr<Buffer> {
 
   // This is used by ProduceTextureMailbox() to produce a release callback
   // that releases a texture so it can be destroyed or reused.
-  void ReleaseTexture(std::unique_ptr<Texture> texture);
+  void ReleaseTexture(const scoped_refptr<Texture>& texture,
+                      const gpu::SyncToken& sync_token,
+                      bool is_lost);
 
   // This is used by ProduceTextureMailbox() to produce a release callback
   // that releases the buffer contents referenced by a texture before the
   // texture is destroyed or reused.
-  void ReleaseContentsTexture(std::unique_ptr<Texture> texture,
-                              const base::Closure& callback);
+  void ReleaseContentsTexture(const scoped_refptr<Texture>& texture,
+                              const base::Closure& callback,
+                              const gpu::SyncToken& sync_token,
+                              bool is_lost);
 
   // Notifies the client that buffer has been released if no longer attached
   // to a surface.
@@ -112,13 +125,17 @@ class Buffer : public base::SupportsWeakPtr<Buffer> {
   // This keeps track of how many Surfaces the buffer is attached to.
   unsigned attach_count_ = 0;
 
+  bool resource_returned_ = true;
+
   // The last used texture. ProduceTransferableResource() will use this
   // instead of creating a new texture when possible.
-  std::unique_ptr<Texture> texture_;
+  scoped_refptr<Texture> texture_;
 
   // The last used contents texture. ProduceTransferableResource() will use this
   // instead of creating a new texture when possible.
-  std::unique_ptr<Texture> contents_texture_;
+  scoped_refptr<Texture> contents_texture_;
+
+  viz::TransferableResource resource_;
 
   // The client release callback.
   base::Closure release_callback_;

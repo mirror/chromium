@@ -96,7 +96,8 @@ void CreateGLTextureMailbox(gpu::gles2::GLES2Interface* gles2,
 // Buffer::Texture
 
 // Encapsulates the state and logic needed to bind a buffer to a GLES2 texture.
-class Buffer::Texture : public ui::ContextFactoryObserver {
+class Buffer::Texture : public base::RefCounted<Buffer::Texture>,
+                        public ui::ContextFactoryObserver {
  public:
   Texture(ui::ContextFactory* context_factory,
           viz::ContextProvider* context_provider);
@@ -105,7 +106,6 @@ class Buffer::Texture : public ui::ContextFactoryObserver {
           gfx::GpuMemoryBuffer* gpu_memory_buffer,
           unsigned texture_target,
           unsigned query_type);
-  ~Texture() override;
 
   // Overridden from ui::ContextFactoryObserver:
   void OnLostResources() override;
@@ -115,9 +115,7 @@ class Buffer::Texture : public ui::ContextFactoryObserver {
 
   // Allow texture to be reused after |sync_token| has passed and runs
   // |callback|.
-  void Release(const base::Closure& callback,
-               const gpu::SyncToken& sync_token,
-               bool is_lost);
+  void OnRelease(const gpu::SyncToken& sync_token, bool is_lost);
 
   // Binds the contents referenced by |image_id_| to the texture returned by
   // mailbox(). Returns a sync token that can be used when accessing texture
@@ -126,20 +124,23 @@ class Buffer::Texture : public ui::ContextFactoryObserver {
 
   // Releases the contents referenced by |image_id_| after |sync_token| has
   // passed and runs |callback| when completed.
-  void ReleaseTexImage(const base::Closure& callback,
-                       const gpu::SyncToken& sync_token,
-                       bool is_lost);
+  void OnReleaseTexImage(const base::Closure& callback,
+                         const gpu::SyncToken& sync_token,
+                         bool is_lost);
 
   // Copy the contents of texture to |destination| and runs |callback| when
   // completed. Returns a sync token that can be used when accessing texture
   // from a different context.
-  gpu::SyncToken CopyTexImage(Texture* destination,
+  gpu::SyncToken CopyTexImage(const scoped_refptr<Texture>& destination,
                               const base::Closure& callback);
 
   // Returns the mailbox for this texture.
   gpu::Mailbox mailbox() const { return mailbox_; }
 
  private:
+  friend class base::RefCounted<Buffer::Texture>;
+  ~Texture() override;
+
   void DestroyResources();
   void ReleaseWhenQueryResultIsAvailable(const base::Closure& callback);
   void Released();
@@ -227,18 +228,13 @@ bool Buffer::Texture::IsLost() {
   return true;
 }
 
-void Buffer::Texture::Release(const base::Closure& callback,
-                              const gpu::SyncToken& sync_token,
-                              bool is_lost) {
+void Buffer::Texture::OnRelease(const gpu::SyncToken& sync_token,
+                                bool is_lost) {
   if (context_provider_) {
     gpu::gles2::GLES2Interface* gles2 = context_provider_->ContextGL();
     if (sync_token.HasData())
       gles2->WaitSyncTokenCHROMIUM(sync_token.GetConstData());
   }
-
-  // Run callback as texture can be reused immediately after waiting for sync
-  // token.
-  callback.Run();
 }
 
 gpu::SyncToken Buffer::Texture::BindTexImage() {
@@ -264,9 +260,9 @@ gpu::SyncToken Buffer::Texture::BindTexImage() {
   return sync_token;
 }
 
-void Buffer::Texture::ReleaseTexImage(const base::Closure& callback,
-                                      const gpu::SyncToken& sync_token,
-                                      bool is_lost) {
+void Buffer::Texture::OnReleaseTexImage(const base::Closure& callback,
+                                        const gpu::SyncToken& sync_token,
+                                        bool is_lost) {
   if (context_provider_) {
     gpu::gles2::GLES2Interface* gles2 = context_provider_->ContextGL();
     if (sync_token.HasData())
@@ -277,9 +273,9 @@ void Buffer::Texture::ReleaseTexImage(const base::Closure& callback,
     gles2->BeginQueryEXT(query_type_, query_id_);
     gles2->ReleaseTexImage2DCHROMIUM(texture_target_, image_id_);
     gles2->EndQueryEXT(query_type_);
-    // Run callback when query result is available and ReleaseTexImage has been
-    // handled if sync token has data and buffer has been used. If buffer was
-    // never used then run the callback immediately.
+    // Run callback when query result is available and OnReleaseTexImage has
+    // been handled if sync token has data and buffer has been used. If buffer
+    // was never used then run the callback immediately.
     if (sync_token.HasData()) {
       ReleaseWhenQueryResultIsAvailable(callback);
       return;
@@ -288,8 +284,9 @@ void Buffer::Texture::ReleaseTexImage(const base::Closure& callback,
   callback.Run();
 }
 
-gpu::SyncToken Buffer::Texture::CopyTexImage(Texture* destination,
-                                             const base::Closure& callback) {
+gpu::SyncToken Buffer::Texture::CopyTexImage(
+    const scoped_refptr<Texture>& destination,
+    const base::Closure& callback) {
   gpu::SyncToken sync_token;
   if (context_provider_) {
     gpu::gles2::GLES2Interface* gles2 = context_provider_->ContextGL();
@@ -304,8 +301,8 @@ gpu::SyncToken Buffer::Texture::CopyTexImage(Texture* destination,
     gles2->BeginQueryEXT(query_type_, query_id_);
     gles2->ReleaseTexImage2DCHROMIUM(texture_target_, image_id_);
     gles2->EndQueryEXT(query_type_);
-    // Run callback when query result is available and ReleaseTexImage has been
-    // handled.
+    // Run callback when query result is available and OnReleaseTexImage has
+    // been handled.
     ReleaseWhenQueryResultIsAvailable(callback);
     // Create and return a sync token that can be used to ensure that the
     // CopyTextureCHROMIUM call is processed before issuing any commands
@@ -415,19 +412,18 @@ Buffer::~Buffer() {}
 bool Buffer::ProduceTransferableResource(
     LayerTreeFrameSinkHolder* layer_tree_frame_sink_holder,
     bool secure_output_only,
-    bool client_usage,
-    viz::TransferableResource* resource) {
+    bool client_usage) {
   TRACE_EVENT0("exo", "Buffer::ProduceTransferableResource");
 
-  DCHECK(attach_count_);
-  DLOG_IF(WARNING, !release_contents_callback_.IsCancelled() && client_usage)
+  DCHECK(is_attached());
+  DCHECK(release_contents_callback_.IsCancelled() || !client_usage)
       << "Producing a texture mailbox for a buffer that has not been released";
 
   // If textures are lost, destroy them to ensure that we create new ones below.
   if (contents_texture_ && contents_texture_->IsLost())
-    contents_texture_.reset();
+    contents_texture_ = nullptr;
   if (texture_ && texture_->IsLost())
-    texture_.reset();
+    texture_ = nullptr;
 
   ui::ContextFactory* context_factory =
       aura::Env::GetInstance()->context_factory();
@@ -436,25 +432,24 @@ bool Buffer::ProduceTransferableResource(
       context_factory->SharedMainThreadContextProvider();
   if (!context_provider) {
     DLOG(WARNING) << "Failed to acquire a context provider";
-    resource->id = 0;
-    resource->size = gfx::Size();
+    resource_.id = 0;
+    resource_.size = gfx::Size();
     return false;
   }
 
-  resource->id = layer_tree_frame_sink_holder->AllocateResourceId();
-  resource->format = viz::RGBA_8888;
-  resource->filter = GL_LINEAR;
-  resource->size = gpu_memory_buffer_->GetSize();
+  resource_.id = layer_tree_frame_sink_holder->AllocateResourceId();
+  resource_.format = viz::RGBA_8888;
+  resource_.filter = GL_LINEAR;
+  resource_.size = gpu_memory_buffer_->GetSize();
 
   // Create a new image texture for |gpu_memory_buffer_| with |texture_target_|
   // if one doesn't already exist. The contents of this buffer are copied to
   // |texture| using a call to CopyTexImage.
   if (!contents_texture_) {
-    contents_texture_ = base::MakeUnique<Texture>(
+    contents_texture_ = base::MakeRefCounted<Texture>(
         context_factory, context_provider.get(), gpu_memory_buffer_.get(),
         texture_target_, query_type_);
   }
-  Texture* contents_texture = contents_texture_.get();
 
   if (release_contents_callback_.IsCancelled())
     TRACE_EVENT_ASYNC_BEGIN0("exo", "BufferInUse", gpu_memory_buffer_.get());
@@ -465,51 +460,58 @@ bool Buffer::ProduceTransferableResource(
 
   // Zero-copy means using the contents texture directly.
   if (use_zero_copy_) {
-    // This binds the latest contents of this buffer to |contents_texture|.
-    gpu::SyncToken sync_token = contents_texture->BindTexImage();
-    resource->mailbox_holder = gpu::MailboxHolder(contents_texture->mailbox(),
+    // This binds the latest contents of this buffer to |contents_texture_|.
+    gpu::SyncToken sync_token = contents_texture_->BindTexImage();
+    resource_.mailbox_holder = gpu::MailboxHolder(contents_texture_->mailbox(),
                                                   sync_token, texture_target_);
-    resource->is_overlay_candidate = is_overlay_candidate_;
-    resource->buffer_format = gpu_memory_buffer_->GetFormat();
+    resource_.is_overlay_candidate = is_overlay_candidate_;
+    resource_.buffer_format = gpu_memory_buffer_->GetFormat();
+    ReallocateTransferableResourceId(layer_tree_frame_sink_holder);
 
-    // The contents texture will be released when no longer used by the
-    // compositor.
-    layer_tree_frame_sink_holder->SetResourceReleaseCallback(
-        resource->id,
-        base::Bind(&Buffer::Texture::ReleaseTexImage,
-                   base::Unretained(contents_texture),
-                   base::Bind(&Buffer::ReleaseContentsTexture, AsWeakPtr(),
-                              base::Passed(&contents_texture_),
-                              release_contents_callback_.callback())));
     return true;
   }
 
   // Create a mailbox texture that we copy the buffer contents to.
   if (!texture_) {
     texture_ =
-        base::MakeUnique<Texture>(context_factory, context_provider.get());
+        base::MakeRefCounted<Texture>(context_factory, context_provider.get());
   }
-  Texture* texture = texture_.get();
-
-  // Copy the contents of |contents_texture| to |texture| and produce a
-  // texture mailbox from the result in |texture|. The contents texture will
+  // Copy the contents of |contents_texture_| to |texture_| and produce a
+  // texture mailbox from the result in |texture_|. The contents texture will
   // be released when copy has completed.
-  gpu::SyncToken sync_token = contents_texture->CopyTexImage(
-      texture, base::Bind(&Buffer::ReleaseContentsTexture, AsWeakPtr(),
-                          base::Passed(&contents_texture_),
-                          release_contents_callback_.callback()));
-  resource->mailbox_holder =
-      gpu::MailboxHolder(texture->mailbox(), sync_token, GL_TEXTURE_2D);
-  resource->is_overlay_candidate = false;
+  gpu::SyncToken sync_token = contents_texture_->CopyTexImage(
+      texture_,
+      base::Bind(&Buffer::ReleaseContentsTexture, AsWeakPtr(),
+                 contents_texture_, release_contents_callback_.callback(),
+                 gpu::SyncToken(), false));
+  resource_.mailbox_holder =
+      gpu::MailboxHolder(texture_->mailbox(), sync_token, GL_TEXTURE_2D);
+  resource_.is_overlay_candidate = false;
 
-  // The mailbox texture will be released when no longer used by the
-  // compositor.
-  layer_tree_frame_sink_holder->SetResourceReleaseCallback(
-      resource->id,
-      base::Bind(&Buffer::Texture::Release, base::Unretained(texture),
-                 base::Bind(&Buffer::ReleaseTexture, AsWeakPtr(),
-                            base::Passed(&texture_))));
+  ReallocateTransferableResourceId(layer_tree_frame_sink_holder);
   return true;
+}
+
+void Buffer::ReallocateTransferableResourceId(
+    LayerTreeFrameSinkHolder* layer_tree_frame_sink_holder) {
+  DCHECK(resource_.id);
+  DCHECK(resource_returned_);
+  if (use_zero_copy_) {
+    // The contents texture will be released when no longer used by the
+    // compositor.
+    layer_tree_frame_sink_holder->SetResourceReleaseCallback(
+        resource_.id,
+        base::Bind(&Buffer::ReleaseContentsTexture, AsWeakPtr(),
+                   contents_texture_, release_contents_callback_.callback()));
+
+  } else {
+    // The mailbox texture will be released when no longer used by the
+    // compositor.
+    layer_tree_frame_sink_holder->SetResourceReleaseCallback(
+        resource_.id,
+        base::Bind(&Buffer::ReleaseTexture, AsWeakPtr(), texture_));
+  }
+  resource_returned_ = false;
 }
 
 void Buffer::OnAttach() {
@@ -524,7 +526,7 @@ void Buffer::OnDetach() {
 
   // Release buffer if no longer attached to a surface and content has been
   // released.
-  if (!attach_count_ && release_contents_callback_.IsCancelled())
+  if (!is_attached() && release_contents_callback_.IsCancelled())
     Release();
 }
 
@@ -558,14 +560,46 @@ void Buffer::Release() {
     release_callback_.Run();
 }
 
-void Buffer::ReleaseTexture(std::unique_ptr<Texture> texture) {
-  texture_ = std::move(texture);
+void Buffer::ReleaseTexture(const scoped_refptr<Texture>& texture,
+                            const gpu::SyncToken& sync_token,
+                            bool is_lost) {
+  DCHECK(!use_zero_copy_);
+  if (texture == texture_) {
+    // If the buffer is not attached from a surface, the |texture_| could be
+    // sent to the compositor again, so should not release it.
+    if (!is_attached())
+      texture_->OnRelease(sync_token, is_lost);
+
+    resource_returned_ = true;
+  } else {
+    texture->OnRelease(sync_token, is_lost);
+  }
 }
 
-void Buffer::ReleaseContentsTexture(std::unique_ptr<Texture> texture,
-                                    const base::Closure& callback) {
-  contents_texture_ = std::move(texture);
-  callback.Run();
+void Buffer::ReleaseContentsTexture(const scoped_refptr<Texture>& texture,
+                                    const base::Closure& callback,
+                                    const gpu::SyncToken& sync_token,
+                                    bool is_lost) {
+  DCHECK_EQ(texture, contents_texture_);
+  if (use_zero_copy_) {
+    if (texture == contents_texture_) {
+      // If zero copy is used, we sent the |contents_texture_| to compositor
+      // directly, so if the buffer is not detached from a surface, the
+      // |contents_texture_| could be sent to the compositor again, so should
+      // not release it.
+      if (!is_attached())
+        contents_texture_->OnReleaseTexImage(callback, sync_token, is_lost);
+      resource_returned_ = true;
+    } else {
+      texture->OnReleaseTexImage(callback, sync_token, is_lost);
+    }
+  } else {
+    // If zero copy is not used, at this moment, the contents of the
+    // |contents_texture_| should have been copied to |texture_|, so we can
+    // release the |texture| safely.
+    texture->OnRelease(sync_token, is_lost);
+    callback.Run();
+  }
 }
 
 void Buffer::ReleaseContents() {
@@ -574,7 +608,8 @@ void Buffer::ReleaseContents() {
   // Cancel callback to indicate that buffer has been released.
   release_contents_callback_.Cancel();
 
-  if (attach_count_) {
+  if (is_attached()) {
+    // Do not release buffer until the buffer is detach from the surface.
     TRACE_EVENT_ASYNC_STEP_INTO0("exo", "BufferInUse", gpu_memory_buffer_.get(),
                                  "attached");
   } else {

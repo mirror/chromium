@@ -483,15 +483,21 @@ void Surface::CommitSurfaceHierarchy(
         frame_sink_holder, frame, frame_callbacks, presentation_callbacks);
   }
 
+  if (current_buffer_.buffer() &&
+      current_buffer_.buffer()->is_resource_returned()) {
+    current_buffer_.buffer()->ReallocateTransferableResourceId(
+        frame_sink_holder);
+  }
+
   AppendContentsToFrame(origin, frame, needs_full_damage);
 
   // Reset damage.
   if (needs_commit)
     pending_damage_.setEmpty();
 
-  DCHECK(
-      !current_resource_.id ||
-      frame_sink_holder->HasReleaseCallbackForResource(current_resource_.id));
+  DCHECK(!current_buffer_.buffer() ||
+         frame_sink_holder->HasReleaseCallbackForResource(
+             current_buffer_.buffer()->resource().id));
 }
 
 bool Surface::IsSynchronized() const {
@@ -640,14 +646,10 @@ void Surface::UpdateResource(LayerTreeFrameSinkHolder* frame_sink_holder,
                              bool client_usage) {
   if (current_buffer_.buffer() &&
       current_buffer_.buffer()->ProduceTransferableResource(
-          frame_sink_holder, state_.only_visible_on_secure_output, client_usage,
-          &current_resource_)) {
+          frame_sink_holder, state_.only_visible_on_secure_output,
+          client_usage)) {
     current_resource_has_alpha_ =
         FormatHasAlpha(current_buffer_.buffer()->GetFormat());
-  } else {
-    current_resource_.id = 0;
-    current_resource_.size = gfx::Size();
-    current_resource_has_alpha_ = false;
   }
 }
 
@@ -678,12 +680,13 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
       false /* is_clipped */, state_.alpha /* opacity */,
       SkBlendMode::kSrcOver /* blend_mode */, 0 /* sorting_context_id */);
 
-  if (current_resource_.id) {
+  if (current_buffer_.buffer()) {
+    const auto& resource = current_buffer_.buffer()->resource();
     gfx::PointF uv_top_left(0.f, 0.f);
     gfx::PointF uv_bottom_right(1.f, 1.f);
     if (!state_.crop.IsEmpty()) {
-      gfx::SizeF scaled_buffer_size(gfx::ScaleSize(
-          gfx::SizeF(current_resource_.size), 1.0f / state_.buffer_scale));
+      gfx::SizeF scaled_buffer_size(gfx::ScaleSize(gfx::SizeF(resource.size),
+                                                   1.0f / state_.buffer_scale));
       uv_top_left = state_.crop.origin();
 
       uv_top_left.Scale(1.f / scaled_buffer_size.width(),
@@ -707,14 +710,14 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
       }
 
       texture_quad->SetNew(
-          quad_state, quad_rect, opaque_rect, quad_rect, current_resource_.id,
+          quad_state, quad_rect, opaque_rect, quad_rect, resource.id,
           true /* premultiplied_alpha */, uv_top_left, uv_bottom_right,
           SK_ColorTRANSPARENT /* background_color */, vertex_opacity,
           false /* y_flipped */, false /* nearest_neighbor */,
           state_.only_visible_on_secure_output);
-      if (current_resource_.is_overlay_candidate)
-        texture_quad->set_resource_size_in_pixels(current_resource_.size);
-      frame->resource_list.push_back(current_resource_);
+      if (resource.is_overlay_candidate)
+        texture_quad->set_resource_size_in_pixels(resource.size);
+      frame->resource_list.push_back(resource);
     }
   } else {
     cc::SolidColorDrawQuad* solid_quad =
@@ -726,7 +729,9 @@ void Surface::AppendContentsToFrame(const gfx::Point& origin,
 
 void Surface::UpdateContentSize() {
   gfx::Size content_size;
-  gfx::Size buffer_size = current_resource_.size;
+  gfx::Size buffer_size;
+  if (current_buffer_.buffer())
+    buffer_size = current_buffer_.buffer()->resource().size;
   gfx::SizeF scaled_buffer_size(
       gfx::ScaleSize(gfx::SizeF(buffer_size), 1.0f / state_.buffer_scale));
   if (!state_.viewport.IsEmpty()) {
