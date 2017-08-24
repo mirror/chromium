@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a58a7308_adb55435",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T22:20:41Z",
+      "side": 1,
+      "message": "DoIncreaseWorkerCapacity()\nSince this method increases worker capacity, in isn\u0027t called \"when the worker capacity is increased\".",
+      "range": {
+        "startLine": 464,
+        "startChar": 4,
+        "endLine": 464,
+        "endChar": 40
+      },
+      "revId": "3782c1c696364f416d1f646c09d93bdd6b5ccba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e95646c_c62cf812",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T22:20:41Z",
+      "side": 1,
+      "message": "See comment in other CL. Always increment capacity. Just make sure that you don\u0027t create more than kMaxWorkerCapacity workers in MaintainAtLeastOneIdleWorkerLockRequired().",
+      "range": {
+        "startLine": 466,
+        "startChar": 2,
+        "endLine": 468,
+        "endChar": 58
+      },
+      "revId": "3782c1c696364f416d1f646c09d93bdd6b5ccba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09a31b8f_28bf24ff",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T22:20:41Z",
+      "side": 1,
+      "message": "It would be worth it to have a separate per-SchedulerWorkerDelegateImpl |blocking_lock_| to avoid acquiring the PQ and pool locks when |blocking_type| is MAY_BLOCK.",
+      "range": {
+        "startLine": 519,
+        "startChar": 2,
+        "endLine": 521,
+        "endChar": 45
+      },
+      "revId": "3782c1c696364f416d1f646c09d93bdd6b5ccba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfcc0200_a8b70187",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T22:20:41Z",
+      "side": 1,
+      "message": "Do you agree that this code is easier to understand?\n\nif (blocking_type \u003d\u003d BlockingType::MAY_BLOCK) {\n  AutoSchedulerLock auto_lock(blocking_lock_);\n  DCHECK(!increase_worker_capacity_since_blocked_);\n  may_block_start_time_ \u003d TimeTicks::Now();\n  return;\n}\n\nDCHECK_EQ(blocking_type, BlockingType::WILL_BLOCK);\n\nstd::unique_ptr\u003cPriorityQueue::Transaction\u003e shared_transaction(\n    outer_-\u003eshared_priority_queue_.BeginTransaction());\nAutoSchedulerLock auto_lock(outer_-\u003elock_);\nAutoSchedulerLock auto_lock(blocking_lock_);\n\nDCHECK(!increase_worker_capacity_since_blocked_);\nOnIncreaseWorkerCapacityLockRequired();\n\n...\n\nNotice that I don\u0027t set blocked_start_time_ \u003d TimeTicks::Now(); in the WILL_BLOCK case. Do you agree that this isn\u0027t required?",
+      "range": {
+        "startLine": 519,
+        "startChar": 2,
+        "endLine": 532,
+        "endChar": 41
+      },
+      "revId": "3782c1c696364f416d1f646c09d93bdd6b5ccba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7865c37_ef396224",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T22:20:41Z",
+      "side": 1,
+      "message": "Mention that this is only for MAY_BLOCK.",
+      "range": {
+        "startLine": 695,
+        "startChar": 2,
+        "endLine": 696,
+        "endChar": 24
+      },
+      "revId": "3782c1c696364f416d1f646c09d93bdd6b5ccba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ef06556_855ff3ca",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T22:20:41Z",
+      "side": 1,
+      "message": "Add comment to mention that this is an arbitrary threshold, not chosen based on experimental data. That way, it will be clear that this could be improved by running an experiment.",
+      "range": {
+        "startLine": 719,
+        "startChar": 2,
+        "endLine": 719,
+        "endChar": 41
+      },
+      "revId": "3782c1c696364f416d1f646c09d93bdd6b5ccba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe96eff3_aa5baeb3",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T22:20:41Z",
+      "side": 1,
+      "message": "Instead of acquiring/releasing |worker_pool_-\u003elock_| in AdjustWorkerCapacity() and then re-acquiring it below, change AdjustWorkerCapacity to AdjustWorkerCapacityLockRequired().",
+      "range": {
+        "startLine": 732,
+        "startChar": 11,
+        "endLine": 732,
+        "endChar": 48
+      },
+      "revId": "3782c1c696364f416d1f646c09d93bdd6b5ccba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cadf140_a9aa16a1",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T22:20:41Z",
+      "side": 1,
+      "message": "Braces needed because of multiline condition.",
+      "range": {
+        "startLine": 737,
+        "startChar": 12,
+        "endLine": 741,
+        "endChar": 77
+      },
+      "revId": "3782c1c696364f416d1f646c09d93bdd6b5ccba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f5d973_99d3958e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T22:20:41Z",
+      "side": 1,
+      "message": "This is specifically for MAY_BLOCK, not WILL_BLOCK. Maybe:\n\n// Sets to TimeDelta::Max() the threshold after which the worker capacity is increased to compensate for a worker that has entered a MAY_BLOCK ScopedBlockingCall.",
+      "range": {
+        "startLine": 114,
+        "startChar": 5,
+        "endLine": 115,
+        "endChar": 48
+      },
+      "revId": "3782c1c696364f416d1f646c09d93bdd6b5ccba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c60965f_4a2fe598",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T22:20:41Z",
+      "side": 1,
+      "message": "MaximizeMayBlockThresholdForTesting()\n\n(to match new name suggested at https://chromium-review.googlesource.com/c/chromium/src/+/633277/4/base/task_scheduler/scheduler_worker_pool_impl.h#176)",
+      "range": {
+        "startLine": 116,
+        "startChar": 7,
+        "endLine": 116,
+        "endChar": 41
+      },
+      "revId": "3782c1c696364f416d1f646c09d93bdd6b5ccba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbcfc2ba_a6acccb5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T22:20:41Z",
+      "side": 1,
+      "message": "// The frequency at which AdjustWorkerCapacity() is called when the pool is at capacity.\n\nThe SchedulerWorkerPoolImpl doesn\u0027t know that it\u0027s the |delayed_task_manager_| that does this.",
+      "range": {
+        "startLine": 123,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 72
+      },
+      "revId": "3782c1c696364f416d1f646c09d93bdd6b5ccba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f187f533_7bfbfcf7",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T22:20:41Z",
+      "side": 1,
+      "message": "Returns the threshold after which the worker capacity is increased to compensate for a worker that has entered a MAY_BLOCK ScopedBlockingCall.",
+      "range": {
+        "startLine": 174,
+        "startChar": 2,
+        "endLine": 175,
+        "endChar": 68
+      },
+      "revId": "3782c1c696364f416d1f646c09d93bdd6b5ccba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d6a07c_aeec701f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T22:20:41Z",
+      "side": 1,
+      "message": "MayBlockThreshold()",
+      "range": {
+        "startLine": 176,
+        "startChar": 12,
+        "endLine": 176,
+        "endChar": 30
+      },
+      "revId": "3782c1c696364f416d1f646c09d93bdd6b5ccba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f538ee_cef393b0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T22:20:41Z",
+      "side": 1,
+      "message": "Merge comments.\n\n// Friend tests so that they can access |kBlockedWorkersPollPeriod| and BlockedThreshold().\n\nAlso, we typically put friend declarations just after type declarations (line 122 in this case).",
+      "range": {
+        "startLine": 267,
+        "startChar": 2,
+        "endLine": 273,
+        "endChar": 50
+      },
+      "revId": "3782c1c696364f416d1f646c09d93bdd6b5ccba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef2b731_b2135be9",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T22:20:41Z",
+      "side": 1,
+      "message": "We prefer composition to multiple inheritance. If possible, rename TaskSchedulerWorkerPoolImplTestBase to TaskSchedulerWorkerPoolImplTestHelper and add it as a member to all tests (instead of as a parent class).",
+      "range": {
+        "startLine": 113,
+        "startChar": 6,
+        "endLine": 114,
+        "endChar": 26
+      },
+      "revId": "3782c1c696364f416d1f646c09d93bdd6b5ccba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd5968e9_e1d02de6",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T22:20:41Z",
+      "side": 1,
+      "message": "Use the function in base/task_scheduler/test_utils.h?",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 142,
+        "endChar": 41
+      },
+      "revId": "3782c1c696364f416d1f646c09d93bdd6b5ccba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
