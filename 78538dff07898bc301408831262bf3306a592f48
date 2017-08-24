@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "39ffdb0f_b5c5e9b5",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_interactive.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-24T15:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "831b6ed5_46f49e7e",
+      "range": {
+        "startLine": 91,
+        "startChar": 32,
+        "endLine": 91,
+        "endChar": 42
+      },
+      "revId": "78538dff07898bc301408831262bf3306a592f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27c01ad3_29e5b776",
         "filename": "chrome/android/java/res/layout/password_entry_editor_interactive.xml",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "78538dff07898bc301408831262bf3306a592f48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f7b7db_550c7dc6",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_interactive.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-24T15:28:52Z",
+      "side": 1,
+      "message": "Yeah. I\u0027ve tried several from go/clankstyle. Unfortunately, nothing matches. \nSo, I\u0027ve used similar font as in other textviews in this layout.\n\nFor the context: there are plans to rewrite this screen to be PreferenceScreen similarly to all views in settings. This will inherently solve problems with styles for this page.",
+      "parentUuid": "27c01ad3_29e5b776",
+      "revId": "78538dff07898bc301408831262bf3306a592f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "78538dff07898bc301408831262bf3306a592f48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc582a18_838fc7f5",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_interactive.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-24T15:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45ddd34b_b321fa17",
+      "range": {
+        "startLine": 101,
+        "startChar": 1,
+        "endLine": 101,
+        "endChar": 5
+      },
+      "revId": "78538dff07898bc301408831262bf3306a592f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "1acde36b_b35a1956",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-24T15:28:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd25a731_9bfe4721",
+      "range": {
+        "startLine": 121,
+        "startChar": 25,
+        "endLine": 121,
+        "endChar": 46
+      },
+      "revId": "78538dff07898bc301408831262bf3306a592f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d66e90c_d9553459",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
         "patchSetId": 3
@@ -159,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "657b4b15_f07be519",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-24T15:28:52Z",
+      "side": 1,
+      "message": "no title is visible by default.",
+      "parentUuid": "6d66e90c_d9553459",
+      "range": {
+        "startLine": 122,
+        "startChar": 48,
+        "endLine": 122,
+        "endChar": 62
+      },
+      "revId": "78538dff07898bc301408831262bf3306a592f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "034e3be9_40b4eafd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
         "patchSetId": 3
@@ -170,6 +284,30 @@
       "writtenOn": "2017-08-23T18:05:15Z",
       "side": 1,
       "message": "This seems fairly similar to https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/preferences/password/SavePasswordsPreferences.java?l\u003d295\n\nIs it possible to share code?",
+      "range": {
+        "startLine": 127,
+        "startChar": 23,
+        "endLine": 148,
+        "endChar": 97
+      },
+      "revId": "78538dff07898bc301408831262bf3306a592f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7881218b_ae32ca65",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-24T15:28:52Z",
+      "side": 1,
+      "message": "I\u0027m planning to remove this code. Users should use native view or we\u0027ll show link in place.",
+      "parentUuid": "034e3be9_40b4eafd",
       "range": {
         "startLine": 127,
         "startChar": 23,
