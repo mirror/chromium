@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "cf4f9534_723ebb06",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-24T19:29:30Z",
+      "side": 1,
+      "message": "Add a comment saying that framework service would make sure it\u0027s only synced once.",
+      "range": {
+        "startLine": 317,
+        "startChar": 1,
+        "endLine": 317,
+        "endChar": 26
+      },
+      "revId": "97857591a0bbc7e3b53d471bb53fc7708aa987c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2425726_c479f52c",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 1
