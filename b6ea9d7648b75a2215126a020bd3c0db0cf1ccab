@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cac90435_56d7901f",
+        "filename": "ios/chrome/browser/ui/autofill/card_unmask_prompt_view_bridge.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-08-24T15:39:00Z",
+      "side": 0,
+      "message": "Just to be sure, if not set, the accessibility label will be the same as the button\u0027s title?",
+      "revId": "b6ea9d7648b75a2215126a020bd3c0db0cf1ccab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
