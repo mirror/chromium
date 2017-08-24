@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "529b1675_059fd4e5",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:11:46Z",
+      "side": 1,
+      "message": "This seems like more buckets than is strictly useful. Can we limit it to around 5?\n\nAlso, there\u0027s no numeric histogram that does what we want?",
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19bdd141_1c2e2406",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:11:46Z",
+      "side": 1,
+      "message": "These numbers aren\u0027t consistent. LESS_THAN_50 should be 0.",
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe87c04_8c7d417e",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:11:46Z",
+      "side": 1,
+      "message": "Can it be even easier?  Just return int(ratio * 100) capped betwseen 0 and 201",
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c7e7cb7_0f82101b",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:11:46Z",
+      "side": 1,
+      "message": "This DCHECK seems unnecessary.  The function works even if it\u0027s 1.0 and then we won\u0027t be crashing in debug for weird double precision bugs.",
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bb27289_e102abf7",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:11:46Z",
+      "side": 1,
+      "message": "This is really confusing.  I\u0027d rather be consistent across all the enum values.",
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c50c491_c0de8723",
         "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
         "patchSetId": 3
@@ -88,6 +173,23 @@
         "endLine": 165,
         "endChar": 35
       },
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836e52cb_00f041dc",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:11:46Z",
+      "side": 1,
+      "message": "kMaxPossibleRetries?",
       "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
