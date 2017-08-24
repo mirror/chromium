@@ -11,6 +11,10 @@ source_set("internal") {
   sources = [
     "download_driver_impl.cc",
     "download_driver_impl.h",
+
+    # TODO(xingliu): Should navigation_monitor_impl lives in components/download/internal?
+    "navigation_monitor_impl.cc",
+    "navigation_monitor_impl.h",
   ]
 
   public_deps = [
