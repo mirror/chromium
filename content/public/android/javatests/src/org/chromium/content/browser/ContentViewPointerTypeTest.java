@@ -6,6 +6,7 @@ package org.chromium.content.browser;
 
 import android.graphics.Rect;
 import android.os.SystemClock;
+import android.support.test.filters.SmallTest;
 import android.view.InputDevice;
 import android.view.MotionEvent;
 
@@ -15,7 +16,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.chromium.base.test.util.DisabledTest;
+import org.chromium.base.test.util.CallbackHelper;
+import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.UrlUtils;
 import org.chromium.blink_public.web.WebCursorInfoType;
 import org.chromium.content.browser.test.ContentJUnit4ClassRunner;
@@ -31,16 +33,49 @@ public class ContentViewPointerTypeTest {
     @Rule
     public ContentShellActivityTestRule mActivityTestRule = new ContentShellActivityTestRule();
 
-    private static final String CURSOR_PAGE = UrlUtils.encodeHtmlDataUri("<html>"
-            + "<body><a id=\"hand\" href=\"about:blank\">pointer</a>"
-            + "<span id=\"text\">text</span>"
-            + "<span id=\"help\" style=\"cursor:help;\">help</span></body>"
-            + "</html>");
+    private static final String CURSOR_PAGE = UrlUtils.encodeHtmlDataUri("<html><body>"
+            + "<style> div {height:33%; width:100%;} </style>"
+            + "<div id=\"hand\" style=\"cursor:pointer;\"></div>"
+            + "<div id=\"text\" style=\"cursor:text;\"></div>"
+            + "<div id=\"help\" style=\"cursor:help;\"></div>"
+            + "</body></html>");
+
+    private static class CoordinatesHelper extends CallbackHelper {
+        private float mFromLocalCssToPix;
+
+        public float getFromLocalCssToPix() {
+            assert getCallCount() > 0;
+            return mFromLocalCssToPix;
+        }
+
+        public void notifyCalled(float fromLocalCssToPix) {
+            mFromLocalCssToPix = fromLocalCssToPix;
+            notifyCalled();
+        }
+    }
+
+    private CoordinatesHelper mCoordinatesHelper;
 
     @Before
     public void setUp() throws Exception {
         mActivityTestRule.launchContentShellWithUrl(CURSOR_PAGE);
         mActivityTestRule.waitForActiveShellToBeDoneLoading();
+
+        mCoordinatesHelper = new CoordinatesHelper();
+        final int callCount = mCoordinatesHelper.getCallCount();
+        try {
+            mActivityTestRule.runOnUiThreadForTestCommon(new Runnable() {
+                @Override
+                public void run() {
+                    mCoordinatesHelper.notifyCalled(mActivityTestRule.getContentViewCore()
+                                                            .getRenderCoordinates()
+                                                            .fromLocalCssToPix(1.0f));
+                }
+            });
+        } catch (Throwable e) {
+            throw new Exception(e);
+        }
+        mCoordinatesHelper.waitForCallback(callCount);
     }
 
     private void moveCursor(final float x, final float y) throws Throwable {
@@ -74,8 +109,9 @@ public class ContentViewPointerTypeTest {
 
     private void checkPointerTypeForNode(final String nodeId, final int type) throws Throwable {
         Rect rect = DOMUtils.getNodeBounds(mActivityTestRule.getWebContents(), nodeId);
-        float x = (float) (rect.left + rect.right) / 2.0f;
-        float y = (float) (rect.top + rect.bottom) / 2.0f;
+        float scale = mCoordinatesHelper.getFromLocalCssToPix();
+        float x = scale * (float) (rect.left + rect.right) / 2.0f;
+        float y = scale * (float) (rect.top + rect.bottom) / 2.0f;
 
         OnCursorUpdateHelper onCursorUpdateHelper = mActivityTestRule.getOnCursorUpdateHelper();
         int onCursorUpdateCount = onCursorUpdateHelper.getCallCount();
@@ -85,9 +121,8 @@ public class ContentViewPointerTypeTest {
     }
 
     @Test
-    //@SmallTest
-    //@Feature({"Main"})
-    @DisabledTest(message = "crbug.com/755112")
+    @SmallTest
+    @Feature({"Main"})
     public void testPointerType() throws Throwable {
         checkPointerTypeForNode("hand", WebCursorInfoType.TYPE_HAND);
         checkPointerTypeForNode("text", WebCursorInfoType.TYPE_I_BEAM);
