@@ -22,6 +22,30 @@
       "revId": "f2896550b3fd9b60fb1a38c1119b711be05815b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2fc1b39_d385c215",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-24T15:20:44Z",
+      "side": 1,
+      "message": "The way the calculation works, with a +1, removes the need for a MAX call unless I\u0027m mistaken.\nThe max number of sites shown in the NTP is 8 (4*2 rows) and we don\u0027t want to show sites in the widget that aren\u0027t in the NTP since people could wonder where they came from/how to remove them (I don\u0027t even know if the service can provide more than 8...).",
+      "parentUuid": "4e6e93ac_bc2c54a8",
+      "range": {
+        "startLine": 91,
+        "startChar": 30,
+        "endLine": 91,
+        "endChar": 34
+      },
+      "revId": "f2896550b3fd9b60fb1a38c1119b711be05815b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
