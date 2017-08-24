@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/web/sad_tab_tab_helper.h"
 
 #import "ios/chrome/browser/ui/sad_tab/sad_tab_view.h"
+#import "ios/chrome/browser/web/sad_tab_tab_helper_delegate.h"
 #import "ios/web/public/test/fakes/test_web_state.h"
 #import "ios/web/public/web_state/ui/crw_generic_content_view.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -14,6 +15,23 @@
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
+
+// Delegate for testing.
+@interface SadTabTabHelperTestDelegate : NSObject<SadTabTabHelperDelegate>
+@end
+
+@implementation SadTabTabHelperTestDelegate
+- (void)presentSadTabWithWebState:(web::WebState*)webState
+               ForRepeatedFailure:(BOOL)repeatedFailure {
+  SadTabView* sadTabview = [[SadTabView alloc]
+           initWithMode:repeatedFailure ? SadTabViewMode::FEEDBACK
+                                        : SadTabViewMode::RELOAD
+      navigationManager:webState->GetNavigationManager()];
+  CRWContentView* contentView =
+      [[CRWGenericContentView alloc] initWithView:sadTabview];
+  webState->ShowTransientContentView(contentView);
+}
+@end
 
 // Verifies that provided |content_view| exists, contains the expected
 // view and matches the desired |mode|.
@@ -27,13 +45,16 @@ void VerifyContentViewMatchesMode(CRWContentView* content_view,
 
 class SadTabTabHelperTest : public PlatformTest {
  protected:
-  SadTabTabHelperTest() : application_(OCMClassMock([UIApplication class])) {
-    SadTabTabHelper::CreateForWebState(&web_state_);
+  SadTabTabHelperTest()
+      : application_(OCMClassMock([UIApplication class])),
+        delegate_([[SadTabTabHelperTestDelegate alloc] init]) {
+    SadTabTabHelper::CreateForWebState(&web_state_, delegate_);
     OCMStub([application_ sharedApplication]).andReturn(application_);
   }
   ~SadTabTabHelperTest() override { [application_ stopMocking]; }
   web::TestWebState web_state_;
   id application_;
+  SadTabTabHelperTestDelegate* delegate_;
 };
 
 // Tests that SadTab is not presented for not shown web states.
@@ -124,8 +145,10 @@ TEST_F(SadTabTabHelperTest, FailureInterval) {
 
   // N.B. The test fixture web_state_ is not used for this test as a custom
   // |repeat_failure_interval| is required.
+  SadTabTabHelperTestDelegate* delegate =
+      [[SadTabTabHelperTestDelegate alloc] init];
   web::TestWebState web_state;
-  SadTabTabHelper::CreateForWebState(&web_state, 0.0f);
+  SadTabTabHelper::CreateForWebState(&web_state, 0.0f, delegate);
   web_state.WasShown();
 
   // Helper should get notified of render process failure.
