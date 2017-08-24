@@ -32,6 +32,7 @@ import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ObserverList;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.toolbar.ActionModeController;
 import org.chromium.chrome.browser.toolbar.ToolbarActionModeCallback;
 import org.chromium.chrome.browser.widget.NumberRollView;
@@ -98,6 +99,8 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
     public static final int NAVIGATION_BUTTON_BACK = 2;
     /** Button to clear the selection. **/
     public static final int NAVIGATION_BUTTON_SELECTION_BACK = 3;
+
+    private static final int CHROME_HOME_NAVIGATION_BUTTON_OFFSET_DP = 4;
 
     /** An observer list for this toolbar. */
     private final ObserverList<SelectableListToolbarObserver> mObservers = new ObserverList<>();
@@ -470,8 +473,19 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
             paddingStartOffset = mWideDisplayStartOffsetPx;
         }
 
-        ApiCompatibilityUtils.setPaddingRelative(this, padding + paddingStartOffset,
-                this.getPaddingTop(), padding, this.getPaddingBottom());
+        int paddingForChromeHomePx = 0;
+        if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT)
+                && ChromeFeatureList.isInitialized()) {
+            if (mNavigationButton == NAVIGATION_BUTTON_BACK
+                    || mNavigationButton == NAVIGATION_BUTTON_SELECTION_BACK) {
+                float density = getResources().getDisplayMetrics().density;
+                paddingForChromeHomePx = (int) (density * CHROME_HOME_NAVIGATION_BUTTON_OFFSET_DP);
+            }
+        }
+
+        ApiCompatibilityUtils.setPaddingRelative(this,
+                padding + paddingStartOffset + paddingForChromeHomePx, this.getPaddingTop(),
+                padding, this.getPaddingBottom());
     }
 
     /**
