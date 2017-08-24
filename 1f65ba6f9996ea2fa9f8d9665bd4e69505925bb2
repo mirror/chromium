@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9665d19_53070445",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-24T18:12:26Z",
+      "side": 1,
+      "message": "We\u0027re setting the opaque_rect only if the whole contents are opaque now.\nAre we doing that since we were not really using the opaque_rect in any other way but when it covers the whole output_rect? Is that right?",
+      "revId": "1f65ba6f9996ea2fa9f8d9665bd4e69505925bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e2339a_08b029cc",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-24T18:12:26Z",
+      "side": 1,
+      "message": "This parameter might end up resulting in an unexpected rotation, since the server will end up applying a reverse transform.",
+      "revId": "1f65ba6f9996ea2fa9f8d9665bd4e69505925bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
