@@ -129,10 +129,26 @@ blink::mojom::PermissionStatus LayoutTestPermissionManager::GetPermissionStatus(
 
   base::AutoLock lock(permissions_lock_);
 
+  // TODO(peter): The PUSH_MESSAGING and NOTIFICATIONS permissions are now
+  // identical. Remove this conditional once PUSH_MESSAGING has been deleted.
+  if (permission == PermissionType::PUSH_MESSAGING)
+    permission = PermissionType::NOTIFICATIONS;
+
   auto it = permissions_.find(
       PermissionDescription(permission, requesting_origin, embedding_origin));
   if (it == permissions_.end())
     return blink::mojom::PermissionStatus::DENIED;
+
+  // Immitates the behaviour of the NotificationPermissionContext in that
+  // permission cannot be requested from cross-origin iframes, which the current
+  // permission status should reflect when it's status is ASK.
+  if (permission == PermissionType::NOTIFICATIONS) {
+    if (requesting_origin != embedding_origin &&
+        it->second == blink::mojom::PermissionStatus::ASK) {
+      return blink::mojom::PermissionStatus::DENIED;
+    }
+  }
+
   return it->second;
 }
 
