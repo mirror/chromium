@@ -22,6 +22,30 @@
       "revId": "9ed5b1ff2e74057cc93dbbeec9a0113420d51e72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f014174e_18917eed",
+        "filename": "net/test/embedded_test_server/embedded_test_server.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-24T20:31:10Z",
+      "side": 0,
+      "message": "CERT_CHAIN_WRONG_ROOT is a test that\u0027s been supplanted by the CertVerifier tests on path building.\n\nCERT_BAD_VALIDITY (which is \u0027server sent me something I can\u0027t parse into an X.509 certificate\u0027) is being addressed by the X509Certificate unittests.\n\nSo I actually was going to remove those tests as well, but thought it best to send this part as cleanup first :) I can do it more holistically if it\u0027d be easier :)",
+      "parentUuid": "f613939a_d87c0bc6",
+      "range": {
+        "startLine": 105,
+        "startChar": 22,
+        "endLine": 105,
+        "endChar": 0
+      },
+      "revId": "9ed5b1ff2e74057cc93dbbeec9a0113420d51e72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
