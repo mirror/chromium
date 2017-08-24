@@ -25,6 +25,7 @@
 #include "base/run_loop.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/histogram_tester.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/test/test_file_util.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -8235,6 +8236,7 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthSpdyProxy) {
 // Test that an explicitly trusted SPDY proxy can push a resource from an
 // origin that is different from that of its associated resource.
 TEST_F(HttpNetworkTransactionTest, CrossOriginSPDYProxyPush) {
+  base::HistogramTester histogram_tester;
   // Configure the proxy delegate to allow cross-origin SPDY pushes.
   auto proxy_delegate = base::MakeUnique<TestProxyDelegate>();
   proxy_delegate->set_trusted_spdy_proxy(net::ProxyServer::FromURI(
@@ -8348,10 +8350,13 @@ TEST_F(HttpNetworkTransactionTest, CrossOriginSPDYProxyPush) {
   trans.reset();
   push_trans.reset();
   session->CloseAllConnections();
+  histogram_tester.ExpectUniqueSample(
+      "Net.TrustedProxy.CrosssOriginPushAccepted", 1, 1);
 }
 
 // Test that an explicitly trusted SPDY proxy cannot push HTTPS content.
 TEST_F(HttpNetworkTransactionTest, CrossOriginProxyPushCorrectness) {
+  base::HistogramTester histogram_tester;
   // Configure the proxy delegate to allow cross-origin SPDY pushes.
   auto proxy_delegate = base::MakeUnique<TestProxyDelegate>();
   proxy_delegate->set_trusted_spdy_proxy(net::ProxyServer::FromURI(
@@ -8427,6 +8432,8 @@ TEST_F(HttpNetworkTransactionTest, CrossOriginProxyPushCorrectness) {
 
   trans.reset();
   session->CloseAllConnections();
+  histogram_tester.ExpectUniqueSample(
+      "Net.TrustedProxy.CrosssOriginPushAccepted", 0, 1);
 }
 
 // Test that an explicitly trusted SPDY proxy can push same-origin HTTPS

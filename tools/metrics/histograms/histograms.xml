@@ -43705,6 +43705,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Net.TrustedProxy.CrosssOriginPushAccepted"
+    enum="BooleanAccepted">
+  <obsolete/>
+  <owner>tbansal@chromium.org</owner>
+  <summary>
+    Whether a cross-origin push made by a trusted SPDY proxy was accepted or
+    not.
+  </summary>
+</histogram>
+
 <histogram name="Net.UdpSocketBindErrorFromPosix" units="PosixError">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <summary>Posix error code from call to bind() UDP socket.</summary>
