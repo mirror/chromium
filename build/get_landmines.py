@@ -71,7 +71,7 @@ def print_landmines():
   print 'Clobber to fix GN not picking up increased ID range (crbug.com/444902)'
   print 'Remove NaCl toolchains from the output dir (crbug.com/456902)'
   if platform() == 'ios':
-    print 'Clobber iOS to workaround Xcode deps bug (crbug.com/485435)'
+    print 'Clobber to clean up today ext after re-using CFBundleIdentifier.'
   if platform() == 'win':
     print 'Clobber to delete stale generated files (crbug.com/510086)'
   if platform() == 'android' and gyp_defines().get('target_arch') == 'arm64':
