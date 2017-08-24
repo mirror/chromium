@@ -11,10 +11,7 @@
 namespace content {
 
 bool IsBrowserSideNavigationEnabled() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-             switches::kEnableBrowserSideNavigation) ||
-         base::FeatureList::IsEnabled(features::kBrowserSideNavigation) ||
-         base::FeatureList::IsEnabled(features::kNetworkService);
+  return true;
 }
 
 }  // namespace content
