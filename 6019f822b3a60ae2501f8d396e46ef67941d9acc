@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b059114_b16d990b",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-24T04:47:24Z",
+      "side": 1,
+      "message": "Can this just be \"\u0027Percent\u0027 in  property_[\u0027typedom_types\u0027]\"? AFAIK A in B should return a boolean.",
+      "revId": "6019f822b3a60ae2501f8d396e46ef67941d9acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
