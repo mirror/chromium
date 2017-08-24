@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0985566a_67bf7bfd",
+        "filename": "chrome/test/chromedriver/server/http_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-08-24T03:51:22Z",
+      "side": 1,
+      "message": "Should be kGet",
+      "revId": "0fcf9b857dbaf5b803372672bcc58d3dc97d917c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
