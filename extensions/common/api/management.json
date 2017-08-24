@@ -26,7 +26,7 @@
         "id": "ExtensionDisabledReason",
         "description": "A reason the item is disabled.",
         "type": "string",
-        "enum": ["unknown", "permissions_increase"]
+        "enum": ["unknown", "permissions_increase", "blocked_by_policy"]
       },
       {
         "id": "ExtensionType",
