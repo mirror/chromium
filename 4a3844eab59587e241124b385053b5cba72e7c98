@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf45aff0_54abacaf",
+        "filename": "third_party/WebKit/Source/core/page/CreateWindow.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-24T21:42:32Z",
+      "side": 1,
+      "message": "This is copied out of ScriptLoader, right? I wonder if it\u0027s worth adding a helper to the CSP object to make sure these don\u0027t diverge in the future. Maybe next time we copy it? :)",
+      "revId": "4a3844eab59587e241124b385053b5cba72e7c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
