@@ -130,14 +130,16 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
             @Override
             public void onContentShown(boolean isFirstShown) {
                 if (isFirstShown) {
-                    mRecyclerView.setAdapter(adapter);
-
-                    mRecyclerView.scrollToPosition(0);
                     adapter.refreshSuggestions();
                     mSuggestionsUiDelegate.getEventReporter().onSurfaceOpened();
-                    mRecyclerView.getScrollEventReporter().reset();
 
                     maybeUpdateContextualSuggestions();
+
+                    // Set the adapter on the recyclerView after updating it, to avoid sending
+                    // notifications that might confuse its internal state. See crbug.com/756514
+                    mRecyclerView.setAdapter(adapter);
+                    mRecyclerView.scrollToPosition(0);
+                    mRecyclerView.getScrollEventReporter().reset();
                 }
 
                 SuggestionsMetrics.recordSurfaceVisible();
