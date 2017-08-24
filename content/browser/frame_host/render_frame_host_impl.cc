@@ -469,6 +469,7 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       frame_tree_(frame_tree),
       frame_tree_node_(frame_tree_node),
       parent_(nullptr),
+      document_id_(0),
       render_widget_host_(nullptr),
       routing_id_(routing_id),
       is_waiting_for_swapout_ack_(false),
@@ -671,6 +672,10 @@ const GURL& RenderFrameHostImpl::GetLastCommittedURL() {
 
 const url::Origin& RenderFrameHostImpl::GetLastCommittedOrigin() {
   return last_committed_origin_;
+}
+
+int64_t RenderFrameHostImpl::GetDocumentId() {
+  return document_id_;
 }
 
 gfx::NativeView RenderFrameHostImpl::GetNativeView() {
@@ -1318,6 +1323,11 @@ void RenderFrameHostImpl::OnCreateChildFrame(
 void RenderFrameHostImpl::SetLastCommittedOrigin(const url::Origin& origin) {
   last_committed_origin_ = origin;
   CSPContext::SetSelf(origin);
+}
+
+void RenderFrameHostImpl::SetNewDocumentId() {
+  static int64_t unique_id_counter_ = 0;
+  document_id_ = ++unique_id_counter_;
 }
 
 void RenderFrameHostImpl::SetLastCommittedUrl(const GURL& url) {
