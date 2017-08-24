@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b660d14_97664012",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-08-24T14:24:16Z",
+      "side": 1,
+      "message": "yeah I just realised the same. It used to be needed, but now we pass everything over to DelegateProxy along with the GUID so we can just simplify this code massively.",
+      "parentUuid": "f5de8c09_387ae9a7",
+      "range": {
+        "startLine": 192,
+        "startChar": 38,
+        "endLine": 192,
+        "endChar": 64
+      },
+      "revId": "f326fba8498228cce07ba71ad3ea51dc941af84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ca27dc3_4cb5f181",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "43aa1971_c86cb0a7",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-08-24T14:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ca27dc3_4cb5f181",
+      "range": {
+        "startLine": 312,
+        "startChar": 20,
+        "endLine": 312,
+        "endChar": 25
+      },
+      "revId": "f326fba8498228cce07ba71ad3ea51dc941af84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb136be5_74c27a1a",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
         "patchSetId": 10
@@ -62,6 +110,24 @@
       "revId": "f326fba8498228cce07ba71ad3ea51dc941af84b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d0ffc6_48a1f9df",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-08-24T14:24:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb136be5_74c27a1a",
+      "revId": "f326fba8498228cce07ba71ad3ea51dc941af84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

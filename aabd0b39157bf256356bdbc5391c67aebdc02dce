@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f38a430_eb0dbdc3",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-08-24T14:24:16Z",
+      "side": 0,
+      "message": "Done with some modifications to prevent them getting detached again.",
+      "parentUuid": "34f2544b_5186e613",
+      "range": {
+        "startLine": 176,
+        "startChar": 12,
+        "endLine": 176,
+        "endChar": 17
+      },
+      "revId": "aabd0b39157bf256356bdbc5391c67aebdc02dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c171de1_d26c24e3",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "24aa4677_4877129f",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-08-24T14:24:16Z",
+      "side": 0,
+      "message": "Thanks for catching this. This is very wrong. I\u0027m surprised the tests pass with this...",
+      "parentUuid": "4c171de1_d26c24e3",
+      "range": {
+        "startLine": 187,
+        "startChar": 54,
+        "endLine": 187,
+        "endChar": 69
+      },
+      "revId": "aabd0b39157bf256356bdbc5391c67aebdc02dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4a44cc9_b5fd2a94",
         "filename": "content/browser/background_fetch/background_fetch_request_info.cc",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "aabd0b39157bf256356bdbc5391c67aebdc02dce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a422f93_af3b8d3d",
+        "filename": "content/browser/background_fetch/background_fetch_request_info.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-08-24T14:24:16Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "f4a44cc9_b5fd2a94",
+      "range": {
+        "startLine": 102,
+        "startChar": 9,
+        "endLine": 102,
+        "endChar": 33
+      },
+      "revId": "aabd0b39157bf256356bdbc5391c67aebdc02dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
