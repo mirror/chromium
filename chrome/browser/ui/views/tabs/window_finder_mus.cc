@@ -10,14 +10,24 @@
 #include "ui/aura/window.h"
 #include "ui/views/mus/mus_client.h"
 
+#if defined(USE_AURA)
+#include "ui/aura/env.h"
+#endif
+
+bool IsUsingMus() {
+#if defined(USE_AURA)
+  return aura::Env::GetInstance()->mode() == aura::Env::Mode::MUS;
+#else
+  return false;
+#endif
+}
+
 bool GetLocalProcessWindowAtPointMus(
     const gfx::Point& screen_point,
     const std::set<gfx::NativeWindow>& ignore,
     gfx::NativeWindow* mus_result) {
   *mus_result = nullptr;
-  content::ServiceManagerConnection* service_manager_connection =
-      content::ServiceManagerConnection::GetForProcess();
-  if (!service_manager_connection || !service_manager::ServiceManagerIsRemote())
+  if (!IsUsingMus())
     return false;
 
   std::set<aura::Window*> root_windows =
