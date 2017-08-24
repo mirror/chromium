@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dd0f3c3_4d597c7a",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-24T12:37:37Z",
+      "side": 1,
+      "message": "Can you DCHECK that if the error is a certificate error, ssl_info value has been set?",
+      "revId": "99f79234548803fe97d2bb0ba4f5fef6ad706f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b52935_16c743de",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-24T12:37:37Z",
+      "side": 1,
+      "message": "Why this change?",
+      "revId": "99f79234548803fe97d2bb0ba4f5fef6ad706f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4642b7_cd45a3ed",
+        "filename": "content/browser/loader/navigation_url_loader_delegate.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-24T12:37:37Z",
+      "side": 1,
+      "message": "I don\u0027t think this include is needed.",
+      "revId": "99f79234548803fe97d2bb0ba4f5fef6ad706f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed79b0b7_856dbe76",
+        "filename": "content/browser/loader/navigation_url_loader_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-24T12:37:37Z",
+      "side": 1,
+      "message": "This include is no longer needed.",
+      "revId": "99f79234548803fe97d2bb0ba4f5fef6ad706f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8824b512_cf58c3a7",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-24T12:37:37Z",
+      "side": 1,
+      "message": "Remove unneeded include.",
+      "revId": "99f79234548803fe97d2bb0ba4f5fef6ad706f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a56cb5_4178998b",
+        "filename": "content/browser/loader/navigation_url_loader_impl_core.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-24T12:37:37Z",
+      "side": 1,
+      "message": "nit: remove extra dot",
+      "revId": "99f79234548803fe97d2bb0ba4f5fef6ad706f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a082e9_abc5e3b7",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-24T12:37:37Z",
+      "side": 1,
+      "message": "Remove unneeded include.",
+      "revId": "99f79234548803fe97d2bb0ba4f5fef6ad706f05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
