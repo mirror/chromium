@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "28a49f10_b918ef0a",
+        "filename": "ui/base/cocoa/hover_button.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-24T04:48:06Z",
+      "side": 1,
+      "message": "Done, constant\u0027d.",
+      "parentUuid": "c60570b7_7097b59a",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 16
+      },
+      "revId": "4fda2e6113cc9b3ab61b125521b5d057d32f5b40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f407743b_a754fa3e",
         "filename": "ui/base/cocoa/hover_button.mm",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-23T00:19:51Z",
       "side": 1,
       "message": "What if the drag is ended by hitting Esc but the mouse is still over the button? Shouldn\u0027t this be hit-tested again?",
+      "revId": "4fda2e6113cc9b3ab61b125521b5d057d32f5b40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e82d3b_b9a480be",
+        "filename": "ui/base/cocoa/hover_button.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-24T04:48:06Z",
+      "side": 1,
+      "message": "I haven\u0027t figured out exactly how -[NSView beginDraggingSessionWithItems:event:source:] interacts with the run loop, but it\u0027s asynchronous — if I hit test here, the button goes right back into kHoverStateMouseOver (as the drag begins). Same behavior if I do this, surprisingly:\n\n    [self performSelector:@selector(checkImageState)\n               withObject:nil\n               afterDelay:0\n                  inModes:@[ NSDefaultRunLoopMode ]];\n\nI don\u0027t see a nice way to hit test only once the drag ends, and I think the current behavior (respond as soon as the mouse moves) is good enough.\n\nAm I missing another option?",
+      "parentUuid": "f407743b_a754fa3e",
       "revId": "4fda2e6113cc9b3ab61b125521b5d057d32f5b40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
