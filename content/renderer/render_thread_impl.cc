@@ -238,6 +238,31 @@ using blink::WebSecurityPolicy;
 using blink::WebString;
 using blink::WebView;
 
+#if defined(OS_WIN)
+
+#ifndef PROCESS_POWER_THROTTLING_CURRENT_VERSION
+#define PROCESS_POWER_THROTTLING_CURRENT_VERSION 1
+#endif
+
+#ifndef PROCESS_POWER_THROTTLING_EXECUTION_SPEED
+#define PROCESS_POWER_THROTTLING_EXECUTION_SPEED 0x1
+#endif
+
+#ifndef PROCESS_POWER_THROTTLING_VALID_FLAGS
+#define PROCESS_POWER_THROTTLING_VALID_FLAGS \
+  (PROCESS_POWER_THROTTLING_EXECUTION_SPEED)
+#endif
+
+#ifndef PROCESS_POWER_THROTTLING_STATE
+typedef struct _PROCESS_POWER_THROTTLING_STATE {
+  ULONG Version;
+  ULONG ControlMask;
+  ULONG StateMask;
+} PROCESS_POWER_THROTTLING_STATE, *PPROCESS_POWER_THROTTLING_STATE;
+#endif
+
+#endif
+
 namespace content {
 
 namespace {
@@ -1718,6 +1743,33 @@ void RenderThreadImpl::OnProcessBackgrounded(bool backgrounded) {
   } else {
     process_foregrounded_count_++;
   }
+
+#if defined(OS_WIN)
+  PROCESS_POWER_THROTTLING_STATE PowerThrottling;
+  RtlZeroMemory(&PowerThrottling, sizeof(PowerThrottling));
+  PowerThrottling.Version = PROCESS_POWER_THROTTLING_CURRENT_VERSION;
+
+  // Turn ExecutionSpeed throttling off. ControlMask selects the mechanism and
+  // StateMask is set to zero as mechanisms should be turned off.
+  PowerThrottling.ControlMask = PROCESS_POWER_THROTTLING_EXECUTION_SPEED;
+  if (backgrounded)
+    PowerThrottling.StateMask = PROCESS_POWER_THROTTLING_EXECUTION_SPEED;
+  else
+    PowerThrottling.StateMask = 0;
+
+  BOOL Success = SetProcessInformation(
+      GetCurrentProcess(),
+      ProcessActivityThrottleStateInfo,  // ProcessActivityThrottleStateInfo is
+                                         // renamed to ProcessPowerThrottling
+      &PowerThrottling, sizeof(PowerThrottling));
+
+  if (!Success) {
+    DWORD ErrorCode = GetLastError();
+    LOG(ERROR) << "Set PPM render_thread_impl failed " << ErrorCode;
+  } else {
+    LOG(ERROR) << "Set PPM render_thread_impl succeed ";
+  }
+#endif
 }
 
 void RenderThreadImpl::OnProcessPurgeAndSuspend() {
