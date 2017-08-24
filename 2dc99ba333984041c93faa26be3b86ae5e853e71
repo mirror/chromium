@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65d6171b_1a7e51f7",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-24T23:15:51Z",
+      "side": 1,
+      "message": "Not so sure how this can be done.\nInside UpdateContainerPolicy, it would call either ConstructContainerPolicy() or ConstructIFrameContainerPolicy(messages). To make that possible, ConstructIFrameContainerPolicy need to be made static, then I will have to drop the const in the function signature, but then I am not so sure if I can still call non-static function like GetOriginForFeaturePolicy() and stuff.",
+      "parentUuid": "a893520f_f5a09ba8",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 48
+      },
+      "revId": "2dc99ba333984041c93faa26be3b86ae5e853e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03b8d9f9_9d19a5bb",
         "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "79e9b5f4_e4282ce8",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-24T23:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03b8d9f9_9d19a5bb",
+      "range": {
+        "startLine": 239,
+        "startChar": 8,
+        "endLine": 239,
+        "endChar": 19
+      },
+      "revId": "2dc99ba333984041c93faa26be3b86ae5e853e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc940e60_2f520433",
         "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
         "patchSetId": 9
@@ -68,6 +116,30 @@
       "revId": "2dc99ba333984041c93faa26be3b86ae5e853e71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82444aef_54c44932",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-24T23:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc940e60_2f520433",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 8
+      },
+      "revId": "2dc99ba333984041c93faa26be3b86ae5e853e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

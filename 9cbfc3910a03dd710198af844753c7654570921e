@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "f0a8162f_2982f4f5",
+        "filename": "content/test/data/feature-policy-main.html.mock-http-headers",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-24T23:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39028c74_18ad5b63",
+      "range": {
+        "startLine": 2,
+        "startChar": 30,
+        "endLine": 2,
+        "endChar": 31
+      },
+      "revId": "9cbfc3910a03dd710198af844753c7654570921e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb4071f5_11a5cc6b",
         "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy-experimental-features/vibrate-allowed-by-container-policy-relocate-and-no-reload-expected.txt",
         "patchSetId": 7
@@ -62,6 +86,24 @@
       "revId": "9cbfc3910a03dd710198af844753c7654570921e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c5eac0b_a39e774e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy-experimental-features/vibrate-allowed-by-container-policy-relocate-and-no-reload-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-24T23:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb4071f5_11a5cc6b",
+      "revId": "9cbfc3910a03dd710198af844753c7654570921e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +153,30 @@
     },
     {
       "key": {
+        "uuid": "6f396610_042f4cbc",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-24T23:15:51Z",
+      "side": 1,
+      "message": "This is what UseCounter uses, which is why I used it here. I think it scales well. Not so sure which one is better. Lemme get back to you on this one.",
+      "parentUuid": "08b63452_71350ee1",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 11
+      },
+      "revId": "9cbfc3910a03dd710198af844753c7654570921e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e52e8b65_7036244c",
         "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.h",
         "patchSetId": 7
@@ -125,6 +191,24 @@
       "revId": "9cbfc3910a03dd710198af844753c7654570921e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e8a2e4_6762e81b",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-24T23:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e52e8b65_7036244c",
+      "revId": "9cbfc3910a03dd710198af844753c7654570921e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "48956d9b_eb4c5c1f",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-24T23:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0b0e23b_b013873e",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 27
+      },
+      "revId": "9cbfc3910a03dd710198af844753c7654570921e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73a3c30e_7e742d98",
         "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.h",
         "patchSetId": 7
@@ -174,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "dc656bc3_f68cd60f",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-24T23:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73a3c30e_7e742d98",
+      "range": {
+        "startLine": 55,
+        "startChar": 1,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "revId": "9cbfc3910a03dd710198af844753c7654570921e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b090149_94316ccf",
         "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyTest.cpp",
         "patchSetId": 7
@@ -194,6 +326,30 @@
       "revId": "9cbfc3910a03dd710198af844753c7654570921e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e3d842_85a5315f",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-24T23:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b090149_94316ccf",
+      "range": {
+        "startLine": 43,
+        "startChar": 21,
+        "endLine": 43,
+        "endChar": 27
+      },
+      "revId": "9cbfc3910a03dd710198af844753c7654570921e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

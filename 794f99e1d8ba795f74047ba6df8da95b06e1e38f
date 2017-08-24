@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "093632ff_6fec45d6",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-24T23:15:51Z",
+      "side": 1,
+      "message": "Good point. Done. Thanks\n\nNow should only print messages when allow is updated.",
+      "parentUuid": "616640cb_fdf11f7e",
+      "revId": "794f99e1d8ba795f74047ba6df8da95b06e1e38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6b1d1a3_d751305d",
         "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-24T14:07:19Z",
       "side": 1,
       "message": "Can you also add a deprecation message to messages in this case? (And I\u0027d like to have a use counter for it as well, but there should be a way to do that in Deprecation.cpp)",
+      "revId": "794f99e1d8ba795f74047ba6df8da95b06e1e38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca259a29_e8bb8487",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-24T23:15:51Z",
+      "side": 1,
+      "message": "I did add a deprecation message, in ParseOldAllowSyntax()\n\nI will add a UseCounter in a separate CL",
+      "parentUuid": "d6b1d1a3_d751305d",
       "revId": "794f99e1d8ba795f74047ba6df8da95b06e1e38f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "917c0dd6_0ab5c992",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-24T23:15:51Z",
+      "side": 1,
+      "message": "Yes. This looks simpler.\nDone. Thanks",
+      "parentUuid": "e4da5374_99c9134d",
+      "revId": "794f99e1d8ba795f74047ba6df8da95b06e1e38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb138da8_c4b5da65",
         "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyTest.cpp",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "794f99e1d8ba795f74047ba6df8da95b06e1e38f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006a52de_85bf18f7",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-24T23:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb138da8_c4b5da65",
+      "revId": "794f99e1d8ba795f74047ba6df8da95b06e1e38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "31a24589_102bca36",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-24T23:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60e6f818_63fbb6cf",
+      "revId": "794f99e1d8ba795f74047ba6df8da95b06e1e38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0acf628a_f74934b1",
         "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyTest.cpp",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "794f99e1d8ba795f74047ba6df8da95b06e1e38f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d4c5975_43334797",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-24T23:15:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0acf628a_f74934b1",
+      "revId": "794f99e1d8ba795f74047ba6df8da95b06e1e38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
