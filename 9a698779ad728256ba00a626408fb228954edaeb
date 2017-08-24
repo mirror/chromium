@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc4bac9e_9479830c",
+        "filename": "chromeos/dbus/arc_midis_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-08-24T14:47:30Z",
+      "side": 1,
+      "message": "Nit: \"purpose\". \"Setting up a Mojo channel\" is singular.",
+      "range": {
+        "startLine": 19,
+        "startChar": 68,
+        "endLine": 19,
+        "endChar": 76
+      },
+      "revId": "9a698779ad728256ba00a626408fb228954edaeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
