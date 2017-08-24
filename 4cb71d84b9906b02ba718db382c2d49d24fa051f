@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e20451b9_8024d6bf",
+        "filename": "chrome/browser/chromeos/preferences_chromeos_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-24T16:49:31Z",
+      "side": 1,
+      "message": "(aside) huh, this variant thing is weird",
+      "revId": "4cb71d84b9906b02ba718db382c2d49d24fa051f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f95525_c8098371",
+        "filename": "chrome/common/pref_names.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-24T16:49:31Z",
+      "side": 1,
+      "message": "if it\u0027s not stated somewhere else already, mind explicitly documenting what \"reverse scrolling\" means here? i\u0027m assuming it\u0027s something like this:\n\n  // A boolean pref set to true if rolling the mouse wheel downward\n  // should scroll the page upward (as opposed to scrolling downward,\n  // the usual behavior for mouse wheels since time immemorial).",
+      "revId": "4cb71d84b9906b02ba718db382c2d49d24fa051f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
