@@ -228,6 +228,10 @@ class BASE_EXPORT ProcessMetrics {
 #if defined(OS_LINUX) || defined(OS_ANDROID)
   // Bytes of swap as reported by /proc/[pid]/status.
   uint64_t GetVmSwapBytes() const;
+
+  // Minor and major page fault count as reported by /proc/[pid]/stat.
+  // Excludes children. Returns {-1, -1} if /proc/[pid]/stat cannot be read.
+  std::pair<int64_t, int64_t> GetPageFaultCount() const;
 #endif  // defined(OS_LINUX) || defined(OS_ANDROID)
 
   // Returns total memory usage of malloc.

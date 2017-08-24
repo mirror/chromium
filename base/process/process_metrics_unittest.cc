@@ -7,8 +7,10 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <numeric>
 #include <sstream>
 #include <string>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/command_line.h"
@@ -611,6 +613,30 @@ TEST(ProcessMetricsTest, GetOpenFdCount) {
   ASSERT_TRUE(child.Terminate(0, true));
 }
 #endif  // defined(OS_LINUX)
+
+#if defined(OS_ANDROID) || defined(OS_LINUX)
+TEST(ProcessMetricsTestLinux, GetPageFaultCount) {
+  std::unique_ptr<base::ProcessMetrics> process_metrics(
+      base::ProcessMetrics::CreateProcessMetrics(
+          base::GetCurrentProcessHandle()));
+
+  auto minor_major = process_metrics->GetPageFaultCount();
+  ASSERT_GT(minor_major.first, 0);
+  ASSERT_GE(minor_major.second, 0);
+
+  // Allocates and touches 8MB of RAM. This is set to be above the malloc()
+  // threshold to call mmap(). Since we touch the memory, the number of minor
+  // page faults has to go up. The sum is here to fool the compiler.
+  const size_t vector_size = 1e6;
+  std::vector<size_t> dummy_vector(vector_size, 1);
+  CHECK_EQ(vector_size,
+           std::accumulate(dummy_vector.begin(), dummy_vector.end(), 0UL));
+
+  auto minor_major_after = process_metrics->GetPageFaultCount();
+  ASSERT_GT(minor_major_after.first, minor_major.first);
+  ASSERT_GE(minor_major_after.second, minor_major.second);
+}
+#endif  // defined(OS_ANDROID) || defined(OS_LINUX)
 
 }  // namespace debug
 }  // namespace base
