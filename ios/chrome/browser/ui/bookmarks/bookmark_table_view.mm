@@ -8,8 +8,10 @@
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "ios/chrome/browser/bookmarks/bookmarks_utils.h"
 #include "ios/chrome/browser/ui/bookmarks/bookmark_collection_view_background.h"
+#import "ios/chrome/browser/ui/bookmarks/bookmark_home_waiting_view.h"
 #include "ios/chrome/browser/ui/bookmarks/bookmark_model_bridge_observer.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h"
+#import "ios/chrome/browser/ui/sync/synced_sessions_bridge.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 
@@ -19,14 +21,23 @@
 
 using bookmarks::BookmarkNode;
 
-@interface BookmarkTableView ()<UITableViewDataSource,
-                                UITableViewDelegate,
-                                BookmarkModelBridgeObserver> {
+@interface BookmarkTableView ()<BookmarkModelBridgeObserver,
+                                SyncedSessionsObserver,
+                                UITableViewDataSource,
+                                UITableViewDelegate> {
   // A vector of bookmark nodes to display in the table view.
   std::vector<const BookmarkNode*> _bookmarkItems;
   const BookmarkNode* _currentRootNode;
+
+  // True if the loading spinner background is visible.
+  BOOL _spinnerVisible;
+
   // Bridge to register for bookmark changes.
   std::unique_ptr<bookmarks::BookmarkModelBridge> _modelBridge;
+
+  // Observer to keep track of the signin and syncing status.
+  std::unique_ptr<synced_sessions::SyncedSessionsObserverBridge>
+      _syncedSessionsObserver;
 }
 
 // The UITableView to show bookmarks.
@@ -72,6 +83,8 @@ using bookmarks::BookmarkNode;
     // Set up observers.
     _modelBridge.reset(
         new bookmarks::BookmarkModelBridge(self, _bookmarkModel));
+    _syncedSessionsObserver.reset(
+        new synced_sessions::SyncedSessionsObserverBridge(self, _browserState));
 
     [self computeBookmarkTableViewData];
 
@@ -93,8 +106,11 @@ using bookmarks::BookmarkNode;
         UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     self.emptyTableBackgroundView.text =
         l10n_util::GetNSString(IDS_IOS_BOOKMARK_NO_BOOKMARKS_LABEL);
-    [self updateEmptyBackground];
-    [self addSubview:self.emptyTableBackgroundView];
+    self.emptyTableBackgroundView.frame = self.tableView.bounds;
+    // self.emptyTableBackgroundView.alpha = 0;
+    [self showEmptyOrLoadingSpinnerBackgroundIfNeeded];
+    // self.tableView.backgroundView = self.emptyTableBackgroundView;
+    //[self addSubview:self.emptyTableBackgroundView];
   }
   return self;
 }
@@ -231,7 +247,7 @@ using bookmarks::BookmarkNode;
 
 - (void)refreshContents {
   [self computeBookmarkTableViewData];
-  [self updateEmptyBackground];
+  [self showEmptyOrLoadingSpinnerBackgroundIfNeeded];
   [self.tableView reloadData];
 }
 
@@ -244,9 +260,16 @@ using bookmarks::BookmarkNode;
   return nullptr;
 }
 
+- (BOOL)bookmarkModelHasNoURLsAndFolders {
+  return (self.bookmarkModel->mobile_node()->child_count() == 0 &&
+          self.bookmarkModel->other_node()->child_count() == 0 &&
+          self.bookmarkModel->bookmark_bar_node()->child_count() == 0);
+}
+
 // Computes the bookmarks table view based on the current root node.
 - (void)computeBookmarkTableViewData {
-  if (!self.bookmarkModel->loaded() || _currentRootNode == NULL)
+  if (!self.bookmarkModel->loaded() || _currentRootNode == NULL ||
+      [self bookmarkModelHasNoURLsAndFolders])
     return;
 
   // Regenerate the list of all bookmarks.
@@ -258,9 +281,78 @@ using bookmarks::BookmarkNode;
   }
 }
 
-- (void)updateEmptyBackground {
-  self.emptyTableBackgroundView.alpha =
-      _currentRootNode != NULL && _currentRootNode->child_count() > 0 ? 0 : 1;
+//- (void)showEmptyOrLoadingSpinnerBackgroundIfNeeded {
+//  self.emptyTableBackgroundView.alpha =
+//      _currentRootNode != NULL && _currentRootNode->child_count() > 0 ? 0 : 1;
+//}
+//
+// If the collection view is not empty, hide the empty bookmarks and loading
+// spinner background. If the collection view is empty, shows the loading
+// spinner background (if syncing) or the empty bookmarks background (if not
+// syncing).
+- (void)showEmptyOrLoadingSpinnerBackgroundIfNeeded {
+  const BOOL isEmpty = _currentRootNode == NULL ||
+                       _currentRootNode->child_count() == 0 ||
+                       [self bookmarkModelHasNoURLsAndFolders];
+
+  if (!isEmpty) {
+    [self hideLoadingSpinnerBackground];
+    [self hideEmptyBackground];
+    return;
+  }
+  if (_currentRootNode == self.bookmarkModel->root_node() &&
+      _syncedSessionsObserver->IsSyncing()) {
+    [self showLoadingSpinnerBackground];
+    return;
+  }
+  [self showEmptyBackground];
+}
+
+// Shows loading spinner background view
+- (void)showLoadingSpinnerBackground {
+  if (!_spinnerVisible) {
+    BookmarkHomeWaitingView* spinnerView =
+        [[BookmarkHomeWaitingView alloc] initWithFrame:self.tableView.bounds];
+    [spinnerView startWaiting];
+    spinnerView.alpha = 1;
+    self.tableView.backgroundView = spinnerView;
+    self.emptyTableBackgroundView.alpha = 0;
+    _spinnerVisible = YES;
+    [self.delegate tableViewIsShowingSpinner:YES];
+  }
+}
+
+// Hides loading spinner background view
+- (void)hideLoadingSpinnerBackground {
+  if (_spinnerVisible) {
+    self.tableView.backgroundView = self.emptyTableBackgroundView;
+    _spinnerVisible = NO;
+    [self.delegate tableViewIsShowingSpinner:NO];
+  }
+}
+
+- (void)showEmptyBackground {
+  [self hideLoadingSpinnerBackground];
+  self.emptyTableBackgroundView.alpha = 1;
+  self.tableView.backgroundView = self.emptyTableBackgroundView;
+}
+
+- (void)hideEmptyBackground {
+  self.emptyTableBackgroundView.alpha = 0;
+}
+
+#pragma mark - Exposed to the SyncedSessionsObserver
+
+- (void)reloadSessions {
+}
+
+- (void)onSyncStateChanged {
+  if (_currentRootNode == self.bookmarkModel->root_node() &&
+      _bookmarkItems.size() == 0) {
+    [self refreshContents];
+    return;
+  }
+  [self showEmptyOrLoadingSpinnerBackgroundIfNeeded];
 }
 
 @end
