@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2e41705_62664eea",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1274,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-24T22:56:04Z",
+      "side": 1,
+      "message": "Can\u0027t share code?",
+      "revId": "2964c8eb1ec7bd58d81f6e2c763417ea7a43397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad2518d_6a11ee50",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1289,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-24T22:56:04Z",
+      "side": 1,
+      "message": "Why not clip_rects_context.SetIgnoreOverflowClip like in the other\nmethod?",
+      "revId": "2964c8eb1ec7bd58d81f6e2c763417ea7a43397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c0d169_ee971a8b",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingInputsUpdater.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-24T22:56:04Z",
+      "side": 1,
+      "message": "Why would it ever not have a clip related property? Also,\nthis seems to undo the fix in my re-land patch to add ClipParent():\n\nhttps://chromium.googlesource.com/chromium/src/+/acb18647cf8156a88797504f483e3c8afb3f385e",
+      "revId": "2964c8eb1ec7bd58d81f6e2c763417ea7a43397e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
