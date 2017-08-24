@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6e08eae_b2c14d26",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-24T21:33:38Z",
+      "side": 1,
+      "message": "This can be moved out of loop with |drag_amount_above_peeking| as well.",
+      "revId": "31f72914e602dfcb6c678702a94b9f76c1284f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -256,6 +256,24 @@
       "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570412aa_a08587aa",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-24T21:33:38Z",
+      "side": 1,
+      "message": "Right. But shouldn\u0027t the |drag_amount_above_peeking| range check already serve the purpose?\n\nSetting a flag in once class and resets it in another class makes the code hard to follow.",
+      "parentUuid": "0548f43c_23ecb3a3",
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
