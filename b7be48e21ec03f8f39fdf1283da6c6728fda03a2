@@ -36,6 +36,40 @@
     },
     {
       "key": {
+        "uuid": "17e66b68_c0d9ed60",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T17:13:28Z",
+      "side": 1,
+      "message": "What\u0027s the alternative to OneWay?  When would we have a TwoWayBinding?",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cfcdf67_f1c73d8d",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T17:13:28Z",
+      "side": 1,
+      "message": "Sanity check.  Keeping a copy of the data here means the types have to be copyable.  Is that part of the reason for the (future) vector specialization?  What if, instead, we relied on the target object to offer both a setter and getter?  The binding could ask both sides for their values and compare them, calling the setter if needed.\n\nThen, vectors wouldn\u0027t be a special case.  We could typedef a vector of some type, define a comparison operator, and have the custom setter propagate changes as it sees fit.\n\nI am likely missing something though.",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "307d633a_431a3557",
         "filename": "chrome/browser/vr/databinding/one_way_binding.h",
         "patchSetId": 1
@@ -47,6 +81,154 @@
       "writtenOn": "2017-08-24T16:58:25Z",
       "side": 1,
       "message": "Nit: Comment for this as well? Maybe with example?",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e0a73a_d39e0a71",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T17:13:28Z",
+      "side": 1,
+      "message": "What you\u0027re doing with Set here is, ummm, scary(?).   Shouldn\u0027t you pass in a lambda/callback that sets one T to equal another?  Also, that means it doesn\u0027t have to be a macro anymore.  More like:\n\nstd::unique_ptr\u003cOneWayBinding\u003cT\u003e\u003e VrBind(...args...) {\n    auto a \u003d std::MakeUnique\u003c \u003e(bind bind bind bind);\n    return std::move(a); \n}",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6015fda8_0c514919",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T17:13:28Z",
+      "side": 1,
+      "message": "Even if it stays a macro, it should probably be intended propertly for readability.",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a520732b_66a6f800",
+        "filename": "chrome/browser/vr/databinding/one_way_binding_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T17:13:28Z",
+      "side": 1,
+      "message": "Should set \u0027a\u0027 to true explicitly like b.value  - one extra line of code, and safer if you ever change TestModel.",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555a6274_85a57b78",
+        "filename": "chrome/browser/vr/databinding/one_way_binding_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T17:13:28Z",
+      "side": 1,
+      "message": "I think you\u0027d need a special license for this. :)",
+      "range": {
+        "startLine": 34,
+        "startChar": 58,
+        "endLine": 34,
+        "endChar": 71
+      },
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b5657b_c3290957",
+        "filename": "chrome/browser/vr/databinding/one_way_binding_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T17:13:28Z",
+      "side": 1,
+      "message": "Is this just verifying your own code above, or ensuring that the binding didn\u0027t fire upon creation?",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1943bb_3832549f",
+        "filename": "chrome/browser/vr/databinding/one_way_binding_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T17:13:28Z",
+      "side": 1,
+      "message": "Now I see that you explicitly don\u0027t want to rely on the View to tell you its current value.  But why not?  When should a view be allowed to change the value it\u0027s tied to a binding?",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aac5f1f_09b93803",
+        "filename": "chrome/browser/vr/databinding/one_way_binding_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T17:13:28Z",
+      "side": 1,
+      "message": "This should also test that b is true, as per your comment, no?",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12b4483_1fbdae5a",
+        "filename": "chrome/browser/vr/databinding/one_way_binding_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T17:13:28Z",
+      "side": 1,
+      "message": "Comment here to say you\u0027re testing the weak pointer?  Or better, why not make this little check a separate test, so it\u0027s obvious and you don\u0027t have to scope the rest of the test body above?",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 14
+      },
       "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
