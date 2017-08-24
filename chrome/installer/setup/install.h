@@ -44,16 +44,16 @@ enum InstallShortcutLevel {
   ALL_USERS,
 };
 
-// Escape |att_value| as per the XML AttValue production
-// (http://www.w3.org/TR/2008/REC-xml-20081126/#NT-AttValue) for a value in
-// single quotes.
-void EscapeXmlAttributeValueInSingleQuotes(base::string16* att_value);
-
 // Creates VisualElementsManifest.xml beside chrome.exe in |src_path| if
 // |src_path|\VisualElements exists.
 // Returns true unless the manifest is supposed to be created, but fails to be.
 bool CreateVisualElementsManifest(const base::FilePath& src_path,
-                                  const base::Version& version);
+                                  const base::Version& version,
+                                  bool supports_dark_text);
+
+void UpdateVisualElementsManifest(const base::FilePath& target_path,
+                                  const base::Version& version,
+                                  bool supports_dark_text);
 
 // Overwrites shortcuts (desktop, quick launch, and start menu) if they are
 // present on the system.
