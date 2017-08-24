@@ -212,6 +212,8 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
     app_list_animation_duration_ms_ = app_list_animation_duration_ms;
   }
 
+  bool drag_started_from_peeking() const { return drag_started_from_peeking_; }
+
  private:
   // A widget observer that is responsible for keeping the AppListView state up
   // to date on closing.
@@ -359,6 +361,9 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   // Animation duration in milliseconds.
   int app_list_animation_duration_ms_;
+
+  // True if the dragging started from PEEKING state.
+  bool drag_started_from_peeking_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(AppListView);
 };
