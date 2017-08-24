@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c2e75251_de06c08f",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/dialog_configuration_identifier.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-24T22:22:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17ab5799_b3820398",
+      "revId": "5c9f7ec8b5af26cd514c7e994c77f09e65febdb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98931056_bdc0f795",
         "filename": "ios/clean/chrome/browser/ui/dialogs/test_helpers/BUILD.gn",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "5c9f7ec8b5af26cd514c7e994c77f09e65febdb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33926c77_0b57b532",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/test_helpers/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-24T22:22:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98931056_bdc0f795",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "5c9f7ec8b5af26cd514c7e994c77f09e65febdb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a74dab2e_453c8023",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/test_helpers/test_dialog_mediator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-24T22:22:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f7436e0_355408fb",
+      "range": {
+        "startLine": 15,
+        "startChar": 21,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "5c9f7ec8b5af26cd514c7e994c77f09e65febdb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88e212aa_c4dcc788",
         "filename": "ios/clean/chrome/browser/ui/dialogs/test_helpers/test_dialog_view_controller.h",
         "patchSetId": 6
@@ -76,6 +142,24 @@
       "writtenOn": "2017-08-21T13:59:27Z",
       "side": 1,
       "message": "NS_DESIGNATED_INITIALIZER?",
+      "revId": "5c9f7ec8b5af26cd514c7e994c77f09e65febdb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec0e687_75f663f2",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/test_helpers/test_dialog_view_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-24T22:22:25Z",
+      "side": 1,
+      "message": "Unfortunately, that cannot be used here.  The only way to set a UIAlertController is by creating it via |+alertControllerWithTitle:message:|, so we\u0027ll get compiler warnings if we try to use designated initializers because you don\u0027t call the superclass\u0027s initializer.  I\u0027ll add a comment to DialogViewController explaining this.",
+      "parentUuid": "88e212aa_c4dcc788",
       "revId": "5c9f7ec8b5af26cd514c7e994c77f09e65febdb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
