@@ -708,6 +708,10 @@ public class BottomSheet
 
         mBottomSheetContentContainer = (FrameLayout) findViewById(R.id.bottom_sheet_content);
 
+        if (FeatureUtilities.isChromeHomeModernEnabled()) {
+            mBottomSheetContentContainer.setBackgroundColor(Color.WHITE);
+        }
+
         // Listen to height changes on the root.
         root.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             private int mPreviousKeyboardHeight;
@@ -1009,7 +1013,7 @@ public class BottomSheet
         // Temporarily make the background of the toolbar holder a solid color so the transition
         // doesn't appear to show a hole in the toolbar.
         int colorId = content.isIncognitoThemedContent() ? R.color.incognito_primary_color
-                                                         : R.color.modern_light_grey;
+                                                         : android.R.color.white;
         mToolbarHolder.setBackgroundColor(ApiCompatibilityUtils.getColor(getResources(), colorId));
         mBottomSheetContentContainer.setBackgroundColor(
                 ApiCompatibilityUtils.getColor(getResources(), colorId));
