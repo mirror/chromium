@@ -22,6 +22,30 @@
       "revId": "839058c3cefaff2cf03d81a64089bece357e61c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97181408_468316eb",
+        "filename": "net/url_request/url_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-24T18:14:32Z",
+      "side": 1,
+      "message": "on headers received was considered, but rejected, because it\u0027d miss cases where we have network visible effects (which is important to consider in the Blink process story)\n\nThat said, I hadn\u0027t though of on destruction; since we have to clean up all URLRequest\u0027s before the URLRequestContext, so that should work, and would cover both success and error cases... I\u0027ll do that, which I agree, would make the metrics cleaner :)",
+      "parentUuid": "5e801fee_68c85d98",
+      "range": {
+        "startLine": 985,
+        "startChar": 25,
+        "endLine": 985,
+        "endChar": 26
+      },
+      "revId": "839058c3cefaff2cf03d81a64089bece357e61c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
