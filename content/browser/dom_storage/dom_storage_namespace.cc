@@ -40,15 +40,17 @@ DOMStorageNamespace::~DOMStorageNamespace() {
 DOMStorageArea* DOMStorageNamespace::OpenStorageArea(const GURL& origin) {
   if (AreaHolder* holder = GetAreaHolder(origin)) {
     ++(holder->open_count_);
+    if (holder->open_count_ > 1)
+      holder->area_->SetCacheOnlyKeys(false);
     return holder->area_.get();
   }
   DOMStorageArea* area;
   if (namespace_id_ == kLocalStorageNamespaceId) {
     area = new DOMStorageArea(origin, directory_, task_runner_.get());
   } else {
-    area = new DOMStorageArea(
-        namespace_id_, persistent_namespace_id_, origin,
-        session_storage_database_.get(), task_runner_.get());
+    area = new DOMStorageArea(namespace_id_, persistent_namespace_id_, nullptr,
+                              origin, session_storage_database_.get(),
+                              task_runner_.get());
   }
   areas_[origin] = AreaHolder(area, 1);
   return area;
@@ -59,8 +61,8 @@ void DOMStorageNamespace::CloseStorageArea(DOMStorageArea* area) {
   DCHECK(holder);
   DCHECK_EQ(holder->area_.get(), area);
   --(holder->open_count_);
-  // TODO(michaeln): Clean up areas that aren't needed in memory anymore.
-  // The in-process-webkit based impl didn't do this either, but would be nice.
+  // TODO(ssid): disable caching when the open count goes to 0 and it's safe,
+  // crbug.com/743187.
 }
 
 DOMStorageArea* DOMStorageNamespace::GetOpenStorageArea(const GURL& origin) {
@@ -90,9 +92,8 @@ DOMStorageNamespace* DOMStorageNamespace::Clone(
     task_runner_->PostShutdownBlockingTask(
         FROM_HERE, DOMStorageTaskRunner::COMMIT_SEQUENCE,
         base::BindOnce(
-            base::IgnoreResult(&SessionStorageDatabase::CloneNamespace),
-            session_storage_database_.get(), persistent_namespace_id_,
-            clone_persistent_namespace_id));
+            &DOMStorageNamespace::CloneSessionStorageOnCommitSequence, this,
+            base::RetainedRef(clone), clone_persistent_namespace_id));
   }
   return clone;
 }
@@ -172,8 +173,8 @@ DOMStorageNamespace::UsageStatistics DOMStorageNamespace::GetUsageStatistics()
     const {
   UsageStatistics stats = {0};
   for (AreaMap::const_iterator it = areas_.begin(); it != areas_.end(); ++it) {
-    if (it->second.area_->IsLoadedInMemory()) {
-      stats.total_cache_size += it->second.area_->map_usage_in_bytes();
+    if (it->second.area_->map_memory_used()) {
+      stats.total_cache_size += it->second.area_->map_memory_used();
       ++stats.total_area_count;
       if (it->second.open_count_ == 0)
         ++stats.inactive_area_count;
@@ -211,6 +212,24 @@ DOMStorageNamespace::GetAreaHolder(const GURL& origin) {
   return &(found->second);
 }
 
+void DOMStorageNamespace::CloneSessionStorageOnCommitSequence(
+    scoped_refptr<DOMStorageNamespace> clone,
+    const std::string& clone_persistent_namespace_id) {
+  session_storage_database_->CloneNamespace(persistent_namespace_id_,
+                                            clone_persistent_namespace_id);
+  task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&DOMStorageNamespace::OnCloneStorageDone,
+                                base::RetainedRef(clone)));
+}
+
+void DOMStorageNamespace::OnCloneStorageDone() {
+  task_runner_->AssertIsRunningOnPrimarySequence();
+  // Shallow copy of commit batches are no longer needed since the database is
+  // cloned.
+  for (AreaMap::const_iterator it = areas_.begin(); it != areas_.end(); ++it)
+    it->second.area_->ClearShallowCopiedCommitBatches();
+}
+
 // AreaHolder
 
 DOMStorageNamespace::AreaHolder::AreaHolder()
@@ -222,7 +241,12 @@ DOMStorageNamespace::AreaHolder::AreaHolder(
     : area_(area), open_count_(count) {
 }
 
-DOMStorageNamespace::AreaHolder::AreaHolder(const AreaHolder& other) = default;
+DOMStorageNamespace::AreaHolder& DOMStorageNamespace::AreaHolder::operator=(
+    AreaHolder&& other) {
+  area_ = std::move(other.area_);
+  open_count_ = other.open_count_;
+  return *this;
+}
 
 DOMStorageNamespace::AreaHolder::~AreaHolder() {
 }
