@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "8fca5944_bb9177ae",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-24T17:43:15Z",
+      "side": 1,
+      "message": "It is useful to document your expectation around success and error callbacks as they are part of the classes contract.  You should be explicit about whether someone is allowed to destroy an instance as part of the callback or not, otherwise you could have an access violation during an error condition that is difficult to trigger / test and would cause instability in prod.\n\nWRT placement, I would either document at the class level (i.e. instance is safe / not safe to be destroyed as part of a callback being run) or add the comment to the Init() method itself.",
+      "parentUuid": "e4862d50_40239aff",
+      "range": {
+        "startLine": 91,
+        "startChar": 67,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9e300b8_5960f624",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 4
@@ -648,6 +672,30 @@
       "side": 1,
       "message": "DCHECK(false) sounds nice to me.",
       "parentUuid": "aff48ac8_b0d45212",
+      "range": {
+        "startLine": 315,
+        "startChar": 40,
+        "endLine": 315,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0e5768f_be4511eb",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-24T17:43:15Z",
+      "side": 1,
+      "message": "I think you want NOTREACHED(); instead of DCHECK(false) as the implication is that no code will trigger this state.",
+      "parentUuid": "315aed95_30adf96a",
       "range": {
         "startLine": 315,
         "startChar": 40,
