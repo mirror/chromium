@@ -14,7 +14,9 @@
 #import "ios/chrome/browser/open_url_util.h"
 #include "ios/chrome/browser/web/features.h"
 #import "ios/chrome/browser/web/legacy_mailto_url_rewriter.h"
+#import "ios/chrome/browser/web/mailto_handler.h"
 #import "ios/chrome/browser/web/mailto_url_rewriter.h"
+#import "ios/chrome/browser/web/nullable_mailto_url_rewriter.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "net/base/mac/url_conversions.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -176,7 +178,38 @@ NSString* PromptActionString(NSString* scheme) {
   if (base::FeatureList::IsEnabled(kMailtoUrlRewriting) &&
       gURL.SchemeIs(url::kMailToScheme)) {
     MailtoURLRewriter* rewriter =
-        [[LegacyMailtoURLRewriter alloc] initWithStandardHandlers];
+        [[NullableMailtoURLRewriter alloc] initWithStandardHandlers];
+    if (![rewriter defaultHandlerID]) {
+      // No user chosen default. Prompt user now.
+      UIAlertController* alertController = [UIAlertController
+          alertControllerWithTitle:nil
+                           message:@"Create mail with:"
+                    preferredStyle:UIAlertControllerStyleActionSheet];
+      GURL capturedURL(gURL);
+      for (MailtoHandler* handler in [rewriter defaultHandlers]) {
+        if (![handler isAvailable])
+          continue;
+        UIAlertAction* action = [UIAlertAction
+            actionWithTitle:[handler appName]
+                      style:UIAlertActionStyleDefault
+                    handler:^(UIAlertAction* _Nonnull action) {
+                      DCHECK(handler);
+                      [rewriter setDefaultHandlerID:[handler appStoreID]];
+                      NSString* launchURL =
+                          [rewriter rewriteMailtoURL:capturedURL];
+                      UMA_HISTOGRAM_BOOLEAN("IOS.MailtoURLRewritten",
+                                            launchURL != nil);
+                      [[UIApplication sharedApplication]
+                          openURL:[NSURL URLWithString:launchURL]];
+                    }];
+        [alertController addAction:action];
+      }
+      [[[[UIApplication sharedApplication] keyWindow] rootViewController]
+          presentViewController:alertController
+                       animated:YES
+                     completion:nil];
+      return YES;
+    }
     NSString* launchURL = [rewriter rewriteMailtoURL:gURL];
     if (launchURL)
       URL = [NSURL URLWithString:launchURL];
