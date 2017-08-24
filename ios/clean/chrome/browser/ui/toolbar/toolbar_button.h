@@ -24,6 +24,10 @@
 + (instancetype)toolbarButtonWithImageForNormalState:(UIImage*)normalImage
                             imageForHighlightedState:(UIImage*)highlightedImage
                                imageForDisabledState:(UIImage*)disabledImage;
+// Changes the button appearance so it uses its highlightedImage for its
+// normal state and viceversa. This way the button looks as if its actively
+// being pressed.
+- (void)setHighlightedAppearance:(BOOL)highlighted;
 // Checks if the ToolbarButton should be visible in the current SizeClass,
 // afterwards it calls setHiddenForCurrentStateAndSizeClass if needed.
 - (void)updateHiddenInCurrentSizeClass;
