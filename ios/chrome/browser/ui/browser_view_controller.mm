@@ -133,7 +133,7 @@
 #import "ios/chrome/browser/ui/history_popup/tab_history_legacy_coordinator.h"
 #import "ios/chrome/browser/ui/key_commands_provider.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
-#import "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_panel_view_controller.h"
+#import "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_handset_view_controller.h"
 #include "ios/chrome/browser/ui/omnibox/page_info_model.h"
 #import "ios/chrome/browser/ui/omnibox/page_info_view_controller.h"
 #import "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.h"
@@ -4403,10 +4403,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
       if (IsIPadIdiom()) {
         [self showNTPPanel:NewTabPage::kOpenTabsPanel];
       } else {
-        UIViewController* controller = [RecentTabsPanelViewController
-            controllerToPresentForBrowserState:_browserState
-                                        loader:self
-                                    dispatcher:self.dispatcher];
+        UIViewController* controller = [[RecentTabsHandsetViewController alloc]
+            initWithLoader:self
+              browserState:_browserState
+                dispatcher:self.dispatcher];
         controller.modalPresentationStyle = UIModalPresentationFormSheet;
         controller.modalPresentationCapturesStatusBarAppearance = YES;
         [self presentViewController:controller animated:YES completion:nil];
