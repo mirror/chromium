@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d4b6024_1b92ca9e",
+        "filename": "base/metrics/histogram_samples.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-24T19:41:15Z",
+      "side": 1,
+      "message": "Nit: Maybe expand comment to explain the new logic in the if (i.e. mention we store the absolute value and a bool).",
+      "range": {
+        "startLine": 106,
+        "startChar": 72,
+        "endLine": 106,
+        "endChar": 77
+      },
+      "revId": "d41aa12ef3c7cbc26433af18b7271a384e2d1c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
