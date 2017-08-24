@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ded4bd2_3e291d5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omaha/UpdateMenuItemHelper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T23:32:04Z",
+      "side": 1,
+      "message": "nit: Do you need 100 buckets, or would 50 suffice?  (FWIW, 100 buckets seems like way too many for the histogram above... though it\u0027s hard to change at this point.)  (Also, do you specifically need linearly-spaced rather than exponentially-spaced buckets?)",
+      "range": {
+        "startLine": 427,
+        "startChar": 77,
+        "endLine": 427,
+        "endChar": 80
+      },
+      "revId": "468f03f737743415c824e05f40ab29ca1f94afdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb74edc6_bde7ee5b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 24362,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T23:32:04Z",
+      "side": 1,
+      "message": "Optional: It might be nice to clarify what exactly \"available memory\" means in the context of this histogram; otherwise people might misunderstand the data.",
+      "revId": "468f03f737743415c824e05f40ab29ca1f94afdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e81f21e4_c5a3e49f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 24369,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T23:32:04Z",
+      "side": 1,
+      "message": "Hmm, I still see this being recorded in the code.  Did you mean to remove it?",
+      "range": {
+        "startLine": 24369,
+        "startChar": 13,
+        "endLine": 24369,
+        "endChar": 0
+      },
+      "revId": "468f03f737743415c824e05f40ab29ca1f94afdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
