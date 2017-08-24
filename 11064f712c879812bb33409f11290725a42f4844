@@ -34,6 +34,24 @@
       "revId": "11064f712c879812bb33409f11290725a42f4844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba9ea7a_b1032f53",
+        "filename": "content/shell/app/paths_mac.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-24T17:19:44Z",
+      "side": 1,
+      "message": "Oh. Wow. OK then - guess this is no worse than that :)",
+      "parentUuid": "fdffef0c_e713f8c8",
+      "revId": "11064f712c879812bb33409f11290725a42f4844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
