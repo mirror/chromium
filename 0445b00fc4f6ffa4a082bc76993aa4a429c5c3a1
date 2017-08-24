@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cf11de2_d7a986ec",
+        "filename": "third_party/WebKit/Source/build/scripts/make_style_builder.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-24T06:57:40Z",
+      "side": 1,
+      "message": "Nit: we can remove this bracket, which is used to group the two components of \"and\".",
+      "range": {
+        "startLine": 77,
+        "startChar": 36,
+        "endLine": 77,
+        "endChar": 39
+      },
+      "revId": "0445b00fc4f6ffa4a082bc76993aa4a429c5c3a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
