@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f5ee2ef4_e8638f36",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-24T17:45:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7476ebf_ce6b798d",
+      "revId": "b266172df966090bdb5808e445eb2d22bcc3f04a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86804031_46a986ba",
         "filename": "ios/chrome/browser/web/sad_tab_tab_helper.mm",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-23T13:51:20Z",
       "side": 1,
       "message": "I think \"RemoveApplicationDidBecomeActiveObserver()\" should be called from destructor to ensure that the helper is unregistered from the NSNotificationCenter. Or at least DCHECK that application_did_become_active_observer_ is nil.",
+      "revId": "b266172df966090bdb5808e445eb2d22bcc3f04a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df9aecc_9961f47e",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-24T17:45:17Z",
+      "side": 1,
+      "message": "I will DCHECK, not receiving WebStateDestroyed seems like a logic error to me.",
+      "parentUuid": "86804031_46a986ba",
       "revId": "b266172df966090bdb5808e445eb2d22bcc3f04a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
