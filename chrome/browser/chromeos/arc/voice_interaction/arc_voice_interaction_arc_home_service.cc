@@ -23,6 +23,7 @@
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/common/pref_names.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
@@ -267,7 +268,9 @@ void ArcVoiceInteractionArcHomeService::GetVoiceInteractionStructure(
 
   auto* framework_service =
       ArcVoiceInteractionFrameworkService::GetForBrowserContext(context_);
-  if (!framework_service->ValidateTimeSinceUserInteraction()) {
+  if (!framework_service->ValidateTimeSinceUserInteraction() ||
+      !Profile::FromBrowserContext(context_)->GetPrefs()->GetBoolean(
+          prefs::kVoiceInteractionContextEnabled)) {
     callback.Run(mojom::VoiceInteractionStructure::New());
     return;
   }
@@ -299,7 +302,8 @@ void ArcVoiceInteractionArcHomeService::GetVoiceInteractionStructure(
       web_contents->GetLastCommittedURL().spec()));
 }
 
-void ArcVoiceInteractionArcHomeService::OnVoiceInteractionOobeSetupComplete() {
+void ArcVoiceInteractionArcHomeService::OnVoiceInteractionOobeSetupComplete(
+    bool onboarding_accepted) {
   VLOG(1) << "Assistant wizard is completed.";
   UnlockPai();
   chromeos::first_run::MaybeLaunchDialogImmediately();
@@ -307,7 +311,11 @@ void ArcVoiceInteractionArcHomeService::OnVoiceInteractionOobeSetupComplete() {
       arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(context_);
   if (!framework_service)
     return;  // Happens in unit tests.
-  framework_service->UpdateVoiceInteractionPrefs();
+
+  Profile::FromBrowserContext(context_)->GetPrefs()->SetBoolean(
+      prefs::kArcVoiceInteractionValuePropAccepted, onboarding_accepted);
+  if (onboarding_accepted)
+    framework_service->UpdateVoiceInteractionPrefs();
 }
 
 // static
