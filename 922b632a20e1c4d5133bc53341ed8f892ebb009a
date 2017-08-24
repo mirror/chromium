@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "afd4ecd2_b0b99659",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-24T19:59:46Z",
+      "side": 1,
+      "message": "I actually found a better fix, patch uploaded PTAL.",
+      "parentUuid": "1ae1fed6_92c98fae",
+      "revId": "922b632a20e1c4d5133bc53341ed8f892ebb009a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "793b66c7_3e21aea9",
         "filename": "chrome/test/data/webui/extensions/extension_navigation_helper_test.js",
         "patchSetId": 9
