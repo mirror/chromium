@@ -52,6 +52,10 @@ public class BottomToolbarPhone extends ToolbarPhone {
     private final BottomSheetObserver mBottomSheetObserver = new EmptyBottomSheetObserver() {
         @Override
         public void onSheetOpened() {
+            if (!FeatureUtilities.isChromeHomeModernEnabled()) {
+                mToolbarShadowPermanentlyHidden = false;
+            }
+
             onPrimaryColorChanged(true);
             if (mUseToolbarHandle) {
                 // If the toolbar is focused, switch focus to the bottom sheet before changing the
@@ -64,6 +68,10 @@ public class BottomToolbarPhone extends ToolbarPhone {
 
         @Override
         public void onSheetClosed() {
+            if (!FeatureUtilities.isChromeHomeModernEnabled()) {
+                mToolbarShadowPermanentlyHidden = true;
+            }
+
             onPrimaryColorChanged(true);
 
             updateMenuButtonClickableState();
@@ -217,6 +225,9 @@ public class BottomToolbarPhone extends ToolbarPhone {
                 getResources().getDimensionPixelOffset(R.dimen.bottom_location_bar_vertical_margin);
         mUseToolbarHandle = true;
         mToolbarButtonVisibilityPercent = 1.f;
+
+        // Start off hidden since the shadow is off-screen anyway.
+        mToolbarShadowPermanentlyHidden = true;
     }
 
     /**
@@ -586,7 +597,9 @@ public class BottomToolbarPhone extends ToolbarPhone {
             updateContentDescription();
         }
 
-        if (mUseModernDesign) initModernDesign();
+        if (mUseModernDesign) {
+            initModernDesign();
+        }
     }
 
     /**
@@ -615,7 +628,6 @@ public class BottomToolbarPhone extends ToolbarPhone {
         mLocationBarContentVerticalInset = (mLocationBarBackgroundCornerRadius / 2)
                 - res.getDimensionPixelSize(R.dimen.bottom_toolbar_background_lateral_inset);
 
-        mToolbarShadowPermanentlyHidden = true;
         mToolbarShadow.setVisibility(View.GONE);
 
         mNewTabButton.setIsModern();
