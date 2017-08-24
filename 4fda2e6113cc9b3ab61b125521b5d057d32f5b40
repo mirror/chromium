@@ -99,6 +99,24 @@
       "revId": "4fda2e6113cc9b3ab61b125521b5d057d32f5b40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e88b39a5_e90915b7",
+        "filename": "ui/base/cocoa/hover_button.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-24T05:36:50Z",
+      "side": 1,
+      "message": "Thanks for the insight, that’s super interesting! I’ll leave it as it is.",
+      "parentUuid": "dff6e45c_c3c2c3aa",
+      "revId": "4fda2e6113cc9b3ab61b125521b5d057d32f5b40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
