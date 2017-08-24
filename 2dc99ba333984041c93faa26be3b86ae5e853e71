@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a893520f_f5a09ba8",
+        "filename": "third_party/WebKit/Source/core/html/HTMLFrameOwnerElement.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T18:51:22Z",
+      "side": 1,
+      "message": "If this should only be called there, and no other subclass should implement it, why not just move it to HTMLIFrameElement completely? It could even be called ConstructIframeContainerPolicy(messages) there.",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 48
+      },
+      "revId": "2dc99ba333984041c93faa26be3b86ae5e853e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b8d9f9_9d19a5bb",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T18:51:22Z",
+      "side": 1,
+      "message": "I think it\u0027s still okay to put these in the messages vector -- maybe reword them to say something like \"allow attribute is overriding allowpaymentrequest\"?",
+      "range": {
+        "startLine": 239,
+        "startChar": 8,
+        "endLine": 239,
+        "endChar": 19
+      },
+      "revId": "2dc99ba333984041c93faa26be3b86ae5e853e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc940e60_2f520433",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T18:51:22Z",
+      "side": 1,
+      "message": "This could be false -- the code should probably use\nif (messages)\n  message-\u003epush_back(....",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 8
+      },
+      "revId": "2dc99ba333984041c93faa26be3b86ae5e853e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
