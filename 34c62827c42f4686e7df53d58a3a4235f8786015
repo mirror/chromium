@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a69a472a_ba2a62b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T20:33:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf1af28a_49324509",
+      "range": {
+        "startLine": 157,
+        "startChar": 72,
+        "endLine": 157,
+        "endChar": 86
+      },
+      "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc9c854e_52942434",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2d42bd9_32feca7f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T20:33:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc9c854e_52942434",
+      "range": {
+        "startLine": 173,
+        "startChar": 12,
+        "endLine": 173,
+        "endChar": 28
+      },
+      "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "749317f1_27f5f1d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T20:33:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a9e5536_b46574c9",
+      "range": {
+        "startLine": 177,
+        "startChar": 36,
+        "endLine": 177,
+        "endChar": 97
+      },
+      "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05d79a96_d455cec2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c55e1c4_9d9e1ba0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T20:33:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05d79a96_d455cec2",
+      "range": {
+        "startLine": 181,
+        "startChar": 36,
+        "endLine": 181,
+        "endChar": 94
+      },
+      "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "33dfda3a_d27f3d82",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T20:33:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfc4165e_6aadf22e",
+      "range": {
+        "startLine": 188,
+        "startChar": 52,
+        "endLine": 188,
+        "endChar": 59
+      },
+      "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54e3f9ed_bc6f4c2d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
         "patchSetId": 5
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "cbdc8897_cc7b78f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T20:33:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54e3f9ed_bc6f4c2d",
+      "range": {
+        "startLine": 201,
+        "startChar": 8,
+        "endLine": 201,
+        "endChar": 23
+      },
+      "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50e30b04_06ef0c96",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -157,6 +301,24 @@
     },
     {
       "key": {
+        "uuid": "740f2f70_a9e9707e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 86171,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T20:33:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50e30b04_06ef0c96",
+      "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "758b20a2_c95820e6",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -171,6 +333,24 @@
       "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf0558f_be623a4d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 86178,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T20:33:48Z",
+      "side": 1,
+      "message": "I thought in most failure cases, the available space is closed to the marginal line (i.e. 50kb space available while webapk size is 100kb).\n\nThanks for the discussion offline.",
+      "parentUuid": "758b20a2_c95820e6",
+      "revId": "34c62827c42f4686e7df53d58a3a4235f8786015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
