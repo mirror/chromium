@@ -104,13 +104,14 @@ bool HistogramSamples::AtomicSingleSample::Accumulate(
     return true;
 
   // Convert the parameters to 16-bit variables because it's all 16-bit below.
-  if (count < std::numeric_limits<uint16_t>::min() ||
+  if (count < -std::numeric_limits<uint16_t>::max() ||
       count > std::numeric_limits<uint16_t>::max() ||
       bucket > std::numeric_limits<uint16_t>::max()) {
     return false;
   }
+  bool count_is_negative = count < 0;
+  uint16_t count16 = static_cast<uint16_t>(count_is_negative ? -count : count);
   uint16_t bucket16 = static_cast<uint16_t>(bucket);
-  uint16_t count16 = static_cast<uint16_t>(count);
 
   // A local, unshared copy of the single-sample is necessary so the parts
   // can be manipulated without worrying about atomicity.
@@ -135,7 +136,10 @@ bool HistogramSamples::AtomicSingleSample::Accumulate(
 
     // Update count, making sure that it doesn't overflow.
     CheckedNumeric<uint16_t> new_count(single_sample.as_parts.count);
-    new_count += count16;
+    if (count_is_negative)
+      new_count -= count16;
+    else
+      new_count += count16;
     if (!new_count.AssignIfValid(&single_sample.as_parts.count))
       return false;
 
