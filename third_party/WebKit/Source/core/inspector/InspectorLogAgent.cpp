@@ -48,6 +48,8 @@ String MessageSourceValue(MessageSource source) {
       return protocol::Log::LogEntry::SourceEnum::Violation;
     case kInterventionMessageSource:
       return protocol::Log::LogEntry::SourceEnum::Intervention;
+    case kDOMMessageSource:
+      return protocol::Log::LogEntry::SourceEnum::Dom;
     default:
       return protocol::Log::LogEntry::SourceEnum::Other;
   }
@@ -123,7 +125,13 @@ void InspectorLogAgent::ConsoleMessageAdded(ConsoleMessage* message) {
       message->RequestIdentifier())
     entry->setNetworkRequestId(
         IdentifiersFactory::RequestId(message->RequestIdentifier()));
-
+  if (message->Source() == kDOMMessageSource) {
+    std::unique_ptr<protocol::Array<int>> node_ids =
+        protocol::Array<int>::create();
+    for (DOMNodeId node_id : message->BackendNodeIds())
+      node_ids->addItem(node_id);
+    entry->setBackendNodeIds(std::move(node_ids));
+  }
   GetFrontend()->entryAdded(std::move(entry));
   GetFrontend()->flush();
 }
