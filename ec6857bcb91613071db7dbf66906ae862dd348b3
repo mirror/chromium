@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89820369_3be51bdc",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T04:17:40Z",
+      "side": 1,
+      "message": "ASSERT_FALSE(strings.empty());",
+      "range": {
+        "startLine": 538,
+        "startChar": 2,
+        "endLine": 538,
+        "endChar": 11
+      },
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "916e2209_d4f19d76",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T04:17:40Z",
+      "side": 1,
+      "message": "Why is this ssize_t? (I\u0027m not quite sure what that is but it looks like it\u0027s supposed to be a string length.)\n\nGetStringWidth returns an int. Write a comment that width is the width in pixels.",
+      "range": {
+        "startLine": 542,
+        "startChar": 8,
+        "endLine": 542,
+        "endChar": 15
+      },
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98608936_2275ab57",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T04:17:40Z",
+      "side": 1,
+      "message": "// Try eliding at all widths, one pixel at a time.",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a69bc9b_71db35b7",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T04:17:40Z",
+      "side": 1,
+      "message": "This i check isn\u0027t necessary because it\u0027s always checked below whenever i is incremented.",
+      "range": {
+        "startLine": 549,
+        "startChar": 50,
+        "endLine": 549,
+        "endChar": 68
+      },
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe4e2df_2efdef9b",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T04:17:40Z",
+      "side": 1,
+      "message": "I think (re the other CL) we\u0027ll want this for normal elision as well. Could you make the elider be a std::function parameter that gets passed into this function?",
+      "range": {
+        "startLine": 551,
+        "startChar": 33,
+        "endLine": 551,
+        "endChar": 58
+      },
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b086fe15_19632653",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T04:17:40Z",
+      "side": 1,
+      "message": "This code is quite hard to read / mentally prove correct.\n\nFor one thing, while it will *check* the first string it won\u0027t ever fail on it. If the initial elide fails to deliver the whole string, the error will be that it didn\u0027t match the *second* expected output.\n\nFor another, if it doesn\u0027t match the last string, it will just exit without checking.\n\nHow about the following algorithm (pseudocode):\n\n  width \u003d total_width;\n  elided \u003d \"\";\n\n  // Outer loop is once per string.\n  for (i \u003d 0; i \u003c strings.size(); ++i) {\n    // Inner loop shaves off pixels until the string changes.\n    do {\n      new_elided \u003d elide(url, width);\n      if (width \u003c\u003d 0)\n        break;\n\n      --width;\n    } while (new_elided \u003d\u003d elided);\n    elided \u003d new_elided;\n\n    EXPECT_EQ(strings[i], elided);\n  }",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d51a6eb_19d548a5",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T04:17:40Z",
+      "side": 1,
+      "message": "As above, this could be a function parameter to share code with RunUrlTest.",
+      "range": {
+        "startLine": 602,
+        "startChar": 33,
+        "endLine": 602,
+        "endChar": 58
+      },
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb52692c_a067f10e",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T04:17:40Z",
+      "side": 1,
+      "message": "Could these all be progressive elision tests? There are only 5 different URLs tested here; it would be a bit longer but much better to move away from the weird elision-length-is-the-length-of-the-output style tests (and we can migrate the other tests in this file to progressive tests later).",
+      "range": {
+        "startLine": 612,
+        "startChar": 2,
+        "endLine": 612,
+        "endChar": 10
+      },
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
