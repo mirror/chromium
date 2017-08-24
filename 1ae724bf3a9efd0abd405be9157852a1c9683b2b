@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "25b05c70_8eba41bd",
+        "filename": "chrome/browser/component_updater/third_party_module_list_component_installer_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-08-24T21:24:25Z",
+      "side": 1,
+      "message": "You could move this class out of the header and into an anonymous namespace in the cc, since nothing outside this compilation unit depends on it; that would leave the header as just declaring RegisterThirdPartyModuleListComponent.",
+      "range": {
+        "startLine": 33,
+        "startChar": 50,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "1ae724bf3a9efd0abd405be9157852a1c9683b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0fe42a0_0db6bdb4",
         "filename": "chrome/browser/conflicts/module_list_manager_win.h",
         "patchSetId": 3
