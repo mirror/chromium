@@ -10,6 +10,7 @@ import pipes
 import posixpath
 import re
 import shlex
+import subprocess
 import sys
 
 import devil_chromium
@@ -347,6 +348,39 @@ def _RunDiskUsage(devices, devices_obj, apk_package, verbose):
     print 'Total: %skb (%.1fmb)' % (total, total / 1024.0)
 
 
+def _RunLogcat(device, apk_package, verbose):
+  def get_my_pids():
+    my_pids = []
+    for pids in device.GetPids(apk_package).values():
+      my_pids.extend(pids)
+    return my_pids
+
+  if not get_my_pids():
+    print 'No processes found.'
+    return
+  adb_path = adb_wrapper.AdbWrapper.GetAdbPath()
+  cmd = [adb_path, '-s', device.serial, 'logcat', '-T', '1']
+  process = subprocess.Popen(cmd, stdout=subprocess.PIPE, bufsize=1)
+  known_pids = {}
+  try:
+    with process.stdout:
+      for line in iter(process.stdout.readline, b''):
+        if verbose:
+          sys.stdout.write(line)
+        else:
+          if line.startswith('------'):
+            continue
+          pid = int(line.split()[2])
+          if pid not in known_pids:
+            # This does not work when pids are reused by the OS. In the
+            # short-term it should be fine.
+            known_pids[pid] = (pid in get_my_pids())
+          if known_pids[pid]:
+            sys.stdout.write(line)
+  except KeyboardInterrupt:
+    process.terminate()
+
+
 def _RunPs(devices, devices_obj, apk_package):
   all_pids = devices_obj.GetPids(apk_package).pGet(None)
   for proc_map in _PrintPerDeviceOutput(devices, all_pids):
@@ -670,9 +704,7 @@ def Run(output_directory, apk_path, incremental_install_json_path,
     _RunGdb(apk_name, apk_package, devices[0], target_cpu, extra_args,
             args.verbose_count)
   elif command == 'logcat':
-    adb_path = adb_wrapper.AdbWrapper.GetAdbPath()
-    cmd = [adb_path, '-s', devices[0].serial, 'logcat']
-    os.execv(adb_path, cmd)
+    _RunLogcat(devices[0], apk_package, args.verbose_count)
   elif command == 'mem-usage':
     _RunMemUsage(devices, devices_obj, apk_package)
   elif command == 'disk-usage':
