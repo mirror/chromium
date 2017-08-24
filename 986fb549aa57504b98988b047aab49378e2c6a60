@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "155eaa1d_7941e88c",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-08-24T22:56:54Z",
+      "side": 1,
+      "message": "SVGInlineTextBoxPainter needs to have access to this (unless we call this from PaintDocumentMarkers(), which gets called twice; we probably only want to run this method once though).",
+      "parentUuid": "132efdd7_36bfdf03",
+      "range": {
+        "startLine": 642,
+        "startChar": 43,
+        "endLine": 642,
+        "endChar": 64
+      },
+      "revId": "986fb549aa57504b98988b047aab49378e2c6a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b50837d3_84ad5528",
         "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
         "patchSetId": 11
