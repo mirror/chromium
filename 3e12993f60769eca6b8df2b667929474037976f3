@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac215959_ceb85584",
+        "filename": "third_party/WebKit/LayoutTests/paint/markers/suggestion-marker-basic.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T23:43:25Z",
+      "side": 1,
+      "message": "Should we add contenteditable to these divs, since the markers tested in this file are not supposed to be added to non-editable text?\n\nThere was a patch (abandoned) trying to skip marker painting on non-editable nodes, to fix spellcheck marker leftovers after editability is removed. We might pick up this approach in the future, though.",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "3e12993f60769eca6b8df2b667929474037976f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f30b8b_01be838d",
+        "filename": "third_party/WebKit/LayoutTests/paint/markers/suggestion-marker-basic.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T23:43:25Z",
+      "side": 1,
+      "message": "nit: lower case",
+      "range": {
+        "startLine": 26,
+        "startChar": 75,
+        "endLine": 26,
+        "endChar": 76
+      },
+      "revId": "3e12993f60769eca6b8df2b667929474037976f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0d9c46_5ea2dfba",
+        "filename": "third_party/WebKit/LayoutTests/paint/markers/suggestion-marker-split.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T23:43:25Z",
+      "side": 1,
+      "message": "Add contenteditable to these two divs?",
+      "range": {
+        "startLine": 6,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 4
+      },
+      "revId": "3e12993f60769eca6b8df2b667929474037976f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68b8031b_f8b27117",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T23:43:25Z",
+      "side": 1,
+      "message": "nit: remove braces.",
+      "revId": "3e12993f60769eca6b8df2b667929474037976f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
