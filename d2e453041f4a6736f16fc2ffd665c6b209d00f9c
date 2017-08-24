@@ -88,6 +88,24 @@
       "revId": "d2e453041f4a6736f16fc2ffd665c6b209d00f9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "105ad704_8fe054a0",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-24T21:54:29Z",
+      "side": 1,
+      "message": "For each test noted, comments:\n\n1.\n   LayerTreeHostAnimationTestAnimationFinishesDuringCommit.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest_animation.cc:1653)\n\n  Same as (3) below.\n\n2.\n   LayerTreeHostAnimationTestChangeAnimationPlayer.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest_animation.cc:1845)\n    LayerTreeHostAnimationTestChangeAnimationPlayer.RunSingleThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest_animation.cc:1845)\n\nThis one has a comment explaining its goals as:\n\n// Check that transform sync happens correctly at commit when we remove and add\n// a different animation player to an element.\n\nI\u0027m not sure whether we care about this. Do we ever actually do this? If no tests\nare failing other than this one, maybe we can just delete the test as obsolete and\ncovering a use case we don\u0027t need to support.\n\n3.\n    LayerTreeHostAnimationTestImplSideInvalidation.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest_animation.cc:1731)\n\nAppears to be checking transform being copied to impl side as an extra checkpoint. Unless you think there\u0027s value to that, perhaps we can just remove that expect.\n\nThe other involved comments (can see inline in the test, added revision to patch) are:\n\n      // Block until the animation finishes on the compositor thread. Since\n      // animations have already been ticked on the main thread, when the commit\n      // happens the state on the main thread will be consistent with having a\n      // running animation but the state on the compositor thread will be\n      // consistent with having only a finished animation.\n\n      // The animation on the active tree has finished, now request an impl-side\n      // invalidation and make sure it finishes before the main thread is\n      // released.\n\n4.\n    LayerTreeHostTestEffectTreeSync.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest.cc:1508)\n    LayerTreeHostTestEffectTreeSync.RunSingleThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest.cc:1508)\n    LayerTreeHostTestTransformTreeSync.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest.cc:1586)\n    LayerTreeHostTestTransformTreeSync.RunSingleThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest.cc:1586)\n\nDeleted these four as obsolete.",
+      "parentUuid": "3a1e657e_c9736a3c",
+      "revId": "d2e453041f4a6736f16fc2ffd665c6b209d00f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
