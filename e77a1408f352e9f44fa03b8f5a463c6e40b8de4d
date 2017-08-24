@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4c8aa96_b1fad19c",
+        "filename": "chrome/browser/component_updater/third_party_module_list_component_installer_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-24T21:11:17Z",
+      "side": 1,
+      "message": "Nit: Move this comment inside the function.",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 71
+      },
+      "revId": "e77a1408f352e9f44fa03b8f5a463c6e40b8de4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c3b39f_6b710afc",
+        "filename": "chrome/browser/conflicts/module_list_manager_win_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-24T21:11:17Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(MockObserver);",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 2
+      },
+      "revId": "e77a1408f352e9f44fa03b8f5a463c6e40b8de4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f780dcd_f776673c",
+        "filename": "chrome/browser/conflicts/module_list_manager_win_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-24T21:11:17Z",
+      "side": 1,
+      "message": "Remove whitespace.",
+      "range": {
+        "startLine": 44,
+        "startChar": 36,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "e77a1408f352e9f44fa03b8f5a463c6e40b8de4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d694e1ba_4cf258b7",
+        "filename": "chrome/browser/conflicts/module_list_manager_win_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-24T21:11:17Z",
+      "side": 1,
+      "message": "Create a constant for this since it\u0027s reused on line 85",
+      "range": {
+        "startLine": 63,
+        "startChar": 26,
+        "endLine": 63,
+        "endChar": 35
+      },
+      "revId": "e77a1408f352e9f44fa03b8f5a463c6e40b8de4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

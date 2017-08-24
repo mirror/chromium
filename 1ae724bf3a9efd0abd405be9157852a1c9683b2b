@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0fe42a0_0db6bdb4",
+        "filename": "chrome/browser/conflicts/module_list_manager_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-08-24T21:11:17Z",
+      "side": 1,
+      "message": "Nit: Remove",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 15
+      },
+      "revId": "1ae724bf3a9efd0abd405be9157852a1c9683b2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
