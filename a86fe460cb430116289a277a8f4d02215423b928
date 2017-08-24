@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9afbcca2_28017f35",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T04:29:31Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "a86fe460cb430116289a277a8f4d02215423b928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a042169_2914a8b8",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T04:29:31Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "revId": "a86fe460cb430116289a277a8f4d02215423b928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b630ff7_6cfb4700",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T04:29:31Z",
+      "side": 1,
+      "message": "Let me make sure-- so this would make sure the callback fires when it goes out of scope if it\u0027s not passed to another owner?",
+      "revId": "a86fe460cb430116289a277a8f4d02215423b928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8d54d9_377f77c9",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T04:29:31Z",
+      "side": 1,
+      "message": "nit/optional: I slightly prefer early return pattern (here and below)\n\nif (!ConnectToOutputProtection())\n  return false;\noutput_protection_-\u003e...",
+      "revId": "a86fe460cb430116289a277a8f4d02215423b928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
