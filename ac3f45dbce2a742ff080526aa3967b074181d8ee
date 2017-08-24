@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c29a298_e62cb07e",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-24T16:57:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7fb98e7_d7b9ca53",
+      "revId": "ac3f45dbce2a742ff080526aa3967b074181d8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbeea719_05bfb252",
         "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-24T01:21:58Z",
       "side": 1,
       "message": "high-level question: what do we use the bluetooth address for? right now, i think (but could be wrong) that it\u0027s used for notification IDs and for doing a substring match against ui::TouchscreenDevice\u0027s path.\n\nif that\u0027s correct, would it be simpler to always just use the full, raw device path for notification IDs, and only extract/reverse the bluetooth address in IsStylusDevice()? that seems like it could make the code simpler -- we could have an e.g. ExtractBluetoothAddressFromBatteryPath() function that only gets called by IsStylusDevice().",
+      "revId": "ac3f45dbce2a742ff080526aa3967b074181d8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f2c90d_dbd75eb8",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-24T16:57:06Z",
+      "side": 1,
+      "message": "Its also used at [1] when the bluetooth adapter sends a event with the bluetooth address, the address is used right away to cancel the associated notification. Then we would have to append the prefix and suffix and reverse the address if we use the device path.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/chromeos/power/peripheral_battery_observer.cc?rcl\u003d141d03d732e7e24714f186abb34805f71a9d43bc\u0026l\u003d206",
+      "parentUuid": "dbeea719_05bfb252",
       "revId": "ac3f45dbce2a742ff080526aa3967b074181d8ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
