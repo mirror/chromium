@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7aca3e5_285d835e",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-24T21:22:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1404781_12a855d7",
+      "range": {
+        "startLine": 53,
+        "startChar": 22,
+        "endLine": 53,
+        "endChar": 32
+      },
+      "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8b6be18_47b570cd",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5230d6c0_90eec1e9",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-24T21:22:27Z",
+      "side": 1,
+      "message": "I started merging all the callbacks into one \"DoneCallback\" in another change, and I made a kCreatingFile state to keep track of when the file is actually created, but it made the state transitions a lot more complicated, so I\u0027d rather not add another state. I agree that the name could be better though, what it really means is that CreateFile() was called and the file may or may not exist yet. I could call it kCreateFileCalled, but none of the other states have \"called\" on the end of their name. I think that if the comment on kFileCreated is good enough, then it should be clear. I will update the comment.",
+      "parentUuid": "b8b6be18_47b570cd",
+      "range": {
+        "startLine": 140,
+        "startChar": 3,
+        "endLine": 140,
+        "endChar": 25
+      },
+      "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "86c13073_7ecc9324",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-24T21:22:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5dcd677_9c80f24a",
+      "range": {
+        "startLine": 186,
+        "startChar": 2,
+        "endLine": 186,
+        "endChar": 3
+      },
+      "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd46a94e_a5530687",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53348df_248bb050",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-24T21:22:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd46a94e_a5530687",
+      "range": {
+        "startLine": 217,
+        "startChar": 42,
+        "endLine": 217,
+        "endChar": 68
+      },
+      "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8e9548e9_4b731f9e",
+        "filename": "remoting/host/file_proxy_wrapper_linux_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-24T21:22:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cecf9e6c_346844c7",
+      "range": {
+        "startLine": 106,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 45
+      },
+      "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e80fe66a_75a3cdc7",
         "filename": "remoting/host/file_proxy_wrapper_linux_unittest.cc",
         "patchSetId": 6
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ff4ef277_b85a474f",
+        "filename": "remoting/host/file_proxy_wrapper_linux_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-24T21:22:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e80fe66a_75a3cdc7",
+      "range": {
+        "startLine": 125,
+        "startChar": 1,
+        "endLine": 125,
+        "endChar": 13
+      },
+      "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c6f60a2_040556df",
         "filename": "remoting/host/file_proxy_wrapper_linux_unittest.cc",
         "patchSetId": 6
@@ -160,6 +304,30 @@
       "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04cdceb1_d237a359",
+        "filename": "remoting/host/file_proxy_wrapper_linux_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-24T21:22:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c6f60a2_040556df",
+      "range": {
+        "startLine": 178,
+        "startChar": 3,
+        "endLine": 178,
+        "endChar": 12
+      },
+      "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
