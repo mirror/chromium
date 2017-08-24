@@ -99,9 +99,5 @@ static void Delete(JNIEnv* env,
   delete reinterpret_cast<WatcherImpl*>(watcher_ptr);
 }
 
-bool RegisterWatcherImpl(JNIEnv* env) {
-  return RegisterNativesImpl(env);
-}
-
 }  // namespace android
 }  // namespace mojo

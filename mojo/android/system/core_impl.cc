@@ -323,9 +323,5 @@ static jint GetNativeBufferOffset(JNIEnv* env,
   return alignment - offset;
 }
 
-bool RegisterCoreImpl(JNIEnv* env) {
-  return RegisterNativesImpl(env);
-}
-
 }  // namespace android
 }  // namespace mojo

@@ -70,10 +70,6 @@ static void DeleteMessageLoop(JNIEnv* env,
   delete message_loop;
 }
 
-bool RegisterBaseRunLoop(JNIEnv* env) {
-  return RegisterNativesImpl(env);
-}
-
 }  // namespace android
 }  // namespace mojo
 

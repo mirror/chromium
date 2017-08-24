@@ -20,10 +20,6 @@ using base::android::ScopedJavaLocalRef;
 namespace mojo {
 namespace android {
 
-bool RegisterValidationTestUtil(JNIEnv* env) {
-  return RegisterNativesImpl(env);
-}
-
 ScopedJavaLocalRef<jobject> ParseData(
     JNIEnv* env,
     const JavaParamRef<jclass>& jcaller,
