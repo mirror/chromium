@@ -14,7 +14,6 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "content/renderer/media/media_stream.h"
 #include "content/renderer/media/media_stream_track.h"
 #include "content/renderer/media/media_stream_video_track.h"
 #include "content/renderer/media/remote_media_stream_track_adapter.h"
@@ -186,7 +185,6 @@ void RemoteMediaStreamImpl::InitializeOnMainThread(const std::string& label,
 
   webkit_stream_.Initialize(blink::WebString::FromUTF8(label), web_audio_tracks,
                             web_video_tracks);
-  webkit_stream_.SetExtraData(new MediaStream());
 }
 
 void RemoteMediaStreamImpl::OnChanged(AdapterRefMap new_adapter_refs) {

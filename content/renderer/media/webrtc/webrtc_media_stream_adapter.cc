@@ -35,14 +35,11 @@ WebRtcMediaStreamAdapter::WebRtcMediaStreamAdapter(
   for (blink::WebMediaStreamTrack& video_track : video_tracks)
     TrackAdded(video_track);
 
-  MediaStream* const native_stream = MediaStream::GetMediaStream(web_stream_);
-  DCHECK(native_stream);
-  native_stream->AddObserver(this);
+  web_stream_.AddObserver(this);
 }
 
 WebRtcMediaStreamAdapter::~WebRtcMediaStreamAdapter() {
-  MediaStream* const native_stream = MediaStream::GetMediaStream(web_stream_);
-  native_stream->RemoveObserver(this);
+  web_stream_.RemoveObserver(this);
 
   blink::WebVector<blink::WebMediaStreamTrack> audio_tracks;
   web_stream_.AudioTracks(audio_tracks);

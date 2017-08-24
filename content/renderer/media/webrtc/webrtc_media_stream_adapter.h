@@ -12,7 +12,6 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "content/common/content_export.h"
-#include "content/renderer/media/media_stream.h"
 #include "content/renderer/media/webrtc/webrtc_media_stream_track_adapter_map.h"
 #include "third_party/WebKit/public/platform/WebMediaStream.h"
 #include "third_party/webrtc/api/mediastreaminterface.h"
@@ -29,7 +28,8 @@ class PeerConnectionDependencyFactory;
 // added to an RTCPeerConnection object
 // Instances of this class is owned by the RTCPeerConnectionHandler object that
 // created it.
-class CONTENT_EXPORT WebRtcMediaStreamAdapter : public MediaStreamObserver {
+class CONTENT_EXPORT WebRtcMediaStreamAdapter
+    : public blink::WebMediaStreamObserver {
  public:
   WebRtcMediaStreamAdapter(
       PeerConnectionDependencyFactory* factory,
@@ -38,7 +38,8 @@ class CONTENT_EXPORT WebRtcMediaStreamAdapter : public MediaStreamObserver {
   ~WebRtcMediaStreamAdapter() override;
 
   bool IsEqual(const blink::WebMediaStream& web_stream) const {
-    return web_stream_.GetExtraData() == web_stream.GetExtraData();
+    return (web_stream_.IsNull() && web_stream.IsNull()) ||
+           (web_stream_.Id() == web_stream.Id());
   }
 
   webrtc::MediaStreamInterface* webrtc_media_stream() const {
@@ -48,8 +49,8 @@ class CONTENT_EXPORT WebRtcMediaStreamAdapter : public MediaStreamObserver {
   const blink::WebMediaStream& web_stream() const { return web_stream_; }
 
  protected:
-  // MediaStreamObserver implementation. Also used as a helper functions when
-  // adding/removing all tracks in the constructor/destructor.
+  // blink::WebMediaStreamObserver implementation. Also used as a helper
+  // functions when adding/removing all tracks in the constructor/destructor.
   void TrackAdded(const blink::WebMediaStreamTrack& web_track) override;
   void TrackRemoved(const blink::WebMediaStreamTrack& web_track) override;
 
@@ -63,7 +64,7 @@ class CONTENT_EXPORT WebRtcMediaStreamAdapter : public MediaStreamObserver {
   // necessary.
   scoped_refptr<WebRtcMediaStreamTrackAdapterMap> track_adapter_map_;
 
-  const blink::WebMediaStream web_stream_;
+  blink::WebMediaStream web_stream_;
   scoped_refptr<webrtc::MediaStreamInterface> webrtc_media_stream_;
   // A map between track IDs and references to track adapters for any tracks
   // that belong to this stream. Keeping an adapter reference alive ensures the
