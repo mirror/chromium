@@ -274,6 +274,24 @@
       "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81a921b3_96ca3dba",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-24T21:44:53Z",
+      "side": 1,
+      "message": "I don\u0027t think the |drag_amount_above_peeking| range check is enough here. So if we only check the drag amount, during the drag only if the drag amount is in the target range, the opacity of the first row will always need to multiply |opacity_factor|. But except the first time, the following ones don\u0027t need to do the multiply.",
+      "parentUuid": "570412aa_a08587aa",
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
