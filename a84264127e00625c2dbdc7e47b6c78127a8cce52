@@ -297,6 +297,24 @@
       "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00d0d87_0645dc4c",
+        "filename": "chrome/browser/vr/vr_url_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-24T19:19:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f55f2eb8_6c956190",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
