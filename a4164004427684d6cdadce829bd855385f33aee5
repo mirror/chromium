@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31078258_63bb5c98",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2003,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T18:23:02Z",
+      "side": 1,
+      "message": "This one may be fine... I guess? Because it\u0027s canonicalized again by MostForwardCaretPosition.",
+      "range": {
+        "startLine": 2003,
+        "startChar": 31,
+        "endLine": 2003,
+        "endChar": 46
+      },
+      "revId": "a4164004427684d6cdadce829bd855385f33aee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

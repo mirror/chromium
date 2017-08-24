@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f35f95b3_76174cb4",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T18:23:02Z",
+      "side": 0,
+      "message": "This seems to be an irrelevant change. I\u0027m not sure if its completely OK, either.\n\nCould you put it in another patch?",
+      "range": {
+        "startLine": 1004,
+        "startChar": 41,
+        "endLine": 1004,
+        "endChar": 74
+      },
+      "revId": "5b4d98eb6cf64b6c5e17047703cfdc0417167a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d82bb1d_5b9120df",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T18:23:02Z",
+      "side": 0,
+      "message": "I don\u0027t fully understand (yet) what\u0027s done in the creation of ReplacementFragment.\n\nThe old code passes a stored |selection| to SetUpStyle, which does not necessarily equal EndingSelection()/EndingVisibleSelection().\n\nTo minimize the change of regression, I think this should be put into another patch.",
+      "range": {
+        "startLine": 1154,
+        "startChar": 13,
+        "endLine": 1154,
+        "endChar": 22
+      },
+      "revId": "5b4d98eb6cf64b6c5e17047703cfdc0417167a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7892762_b5293b49",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1168,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T18:23:02Z",
+      "side": 0,
+      "message": "This canonicalization may be necessary. Could you keep it in this patch?",
+      "range": {
+        "startLine": 1168,
+        "startChar": 27,
+        "endLine": 1168,
+        "endChar": 49
+      },
+      "revId": "5b4d98eb6cf64b6c5e17047703cfdc0417167a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5210571_37790449",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T18:23:02Z",
+      "side": 0,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 1182,
+        "startChar": 15,
+        "endLine": 1182,
+        "endChar": 37
+      },
+      "revId": "5b4d98eb6cf64b6c5e17047703cfdc0417167a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9866f3_eb65b95b",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1986,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T18:23:02Z",
+      "side": 0,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 1986,
+        "startChar": 10,
+        "endLine": 1986,
+        "endChar": 32
+      },
+      "revId": "5b4d98eb6cf64b6c5e17047703cfdc0417167a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81019397_b63cd493",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1999,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T18:23:02Z",
+      "side": 0,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 1999,
+        "startChar": 19,
+        "endLine": 1999,
+        "endChar": 41
+      },
+      "revId": "5b4d98eb6cf64b6c5e17047703cfdc0417167a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
