@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cef8ef8e_aa55850f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9972,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-24T13:09:33Z",
+      "side": 0,
+      "message": "I actually already noticed some invalid characters at our \"Policy List\" web page, and they are present for a bunch of other policies:\n\nhttps://www.chromium.org/administrators/policy-list-3#HomepageLocation\nhttps://www.chromium.org/administrators/policy-list-3#DefaultSearchProviderEnabled\n\nnotice:\n\n  MicrosoftÂ® Active DirectoryÂ®\n\nIt\u0027s probably a different issue, but could please you also check the UTF validity for those policies?",
+      "range": {
+        "startLine": 9972,
+        "startChar": 112,
+        "endLine": 9972,
+        "endChar": 113
+      },
+      "revId": "ce6499f1d2d448514412c4d292c5914741fd77c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
