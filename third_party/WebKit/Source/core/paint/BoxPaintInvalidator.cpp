@@ -208,7 +208,10 @@ void BoxPaintInvalidator::InvalidateScrollingContentsBackgroundIfNeeded() {
   LayoutRect new_layout_overflow = box_.LayoutOverflowRect();
 
   bool should_fully_invalidate_on_scrolling_contents_layer = false;
-  if (box_.BackgroundChangedSinceLastPaintInvalidation()) {
+  if (paints_onto_scrolling_contents_layer &&
+      box_.ShouldDoFullPaintInvalidation()) {
+    should_fully_invalidate_on_scrolling_contents_layer = true;
+  } else if (box_.BackgroundChangedSinceLastPaintInvalidation()) {
     if (!paints_onto_scrolling_contents_layer) {
       // The box should have been set needing full invalidation on style change.
       DCHECK(box_.ShouldDoFullPaintInvalidation());
