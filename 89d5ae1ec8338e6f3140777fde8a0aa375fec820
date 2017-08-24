@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90d61508_38968fad",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-24T23:48:14Z",
+      "side": 1,
+      "message": "please do not assign a group manually",
+      "revId": "89d5ae1ec8338e6f3140777fde8a0aa375fec820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64eb3bc3_c7b6fc2c",
+        "filename": "third_party/WebKit/Source/build/scripts/update_css_ranking.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-24T23:48:14Z",
+      "side": 1,
+      "message": "witht -\u003e with",
+      "revId": "89d5ae1ec8338e6f3140777fde8a0aa375fec820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
