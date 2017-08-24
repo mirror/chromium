@@ -30,6 +30,10 @@
 #include "media/video/picture.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_image.h"
+#if defined(USE_OZONE)
+#include "ui/ozone/public/ozone_platform.h"
+#include "ui/ozone/public/surface_factory_ozone.h"
+#endif
 
 namespace media {
 
@@ -347,6 +351,20 @@ bool VaapiVideoDecodeAccelerator::Initialize(const Config& config,
   switch (config.output_mode) {
     case Config::OutputMode::ALLOCATE:
       output_format_ = kAllocatePictureFormat;
+#if defined(USE_OZONE)
+      {
+        ui::OzonePlatform* platform = ui::OzonePlatform::GetInstance();
+        ui::SurfaceFactoryOzone* factory = platform->GetSurfaceFactoryOzone();
+        std::vector<gfx::BufferFormat> formats =
+            factory->GetScanoutFormats(gfx::kNullAcceleratedWidget);
+        for (auto scanout_format : formats) {
+          if (scanout_format == gfx::BufferFormat::YUV_420_BIPLANAR) {
+            output_format_ = gfx::BufferFormat::YUV_420_BIPLANAR;
+            break;
+          }
+        }
+      }
+#endif
       break;
 
     case Config::OutputMode::IMPORT:
@@ -701,6 +719,9 @@ static VideoPixelFormat BufferFormatToVideoPixelFormat(
 
     case gfx::BufferFormat::YVU_420:
       return PIXEL_FORMAT_YV12;
+
+    case gfx::BufferFormat::YUV_420_BIPLANAR:
+      return PIXEL_FORMAT_NV12;
 
     default:
       LOG(FATAL) << "Add more cases as needed";

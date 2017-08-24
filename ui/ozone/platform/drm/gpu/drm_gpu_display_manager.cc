@@ -108,8 +108,10 @@ void DrmGpuDisplayManager::GetScanoutFormats(
       drm_device_manager_->GetDrmDevice(widget)
           ->plane_manager()
           ->GetSupportedFormats();
-  for (auto& fourcc : fourcc_formats)
-    scanout_formats->push_back(GetBufferFormatFromFourCCFormat(fourcc));
+  for (auto& fourcc : fourcc_formats) {
+    if (IsSupportedFourCCFormat(fourcc))
+      scanout_formats->push_back(GetBufferFormatFromFourCCFormat(fourcc));
+  }
 }
 
 bool DrmGpuDisplayManager::TakeDisplayControl() {
