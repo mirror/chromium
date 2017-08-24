@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac93a299_8ac3af5a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-24T15:39:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef12d5fa_fb5bc5aa",
+      "range": {
+        "startLine": 7,
+        "startChar": 15,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "746bf192_14a7d061",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f154d3_e32b9c46",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-24T15:39:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "746bf192_14a7d061",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 4
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "19c5131d_31a2b587",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-24T15:39:29Z",
+      "side": 1,
+      "message": "Is this understandable?",
+      "parentUuid": "7a112c10_dbdcda69",
+      "range": {
+        "startLine": 30,
+        "startChar": 14,
+        "endLine": 30,
+        "endChar": 23
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6147cb3b_0edc828d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
         "patchSetId": 1
@@ -106,6 +178,30 @@
       "writtenOn": "2017-08-24T12:31:04Z",
       "side": 1,
       "message": "do you need to remeasure if you just did it at line 30?",
+      "range": {
+        "startLine": 34,
+        "startChar": 18,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec72a05d_a6792e0c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-24T15:39:29Z",
+      "side": 1,
+      "message": "The view pager doesnt measure them. Is tells them what height to be depending on what height it was told to be from the height specification. -.-\n\nSo now we measure what  height they want to be - as if their height attribute is wrap_content, which is what MeasureSpec.UNSPECIFIED denotes. And then at the end give that EXACT measurement to the super method to calculate everything and organise its children.",
+      "parentUuid": "6147cb3b_0edc828d",
       "range": {
         "startLine": 34,
         "startChar": 18,
@@ -165,6 +261,54 @@
     },
     {
       "key": {
+        "uuid": "33e74ec9_5753e7f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-24T15:39:29Z",
+      "side": 1,
+      "message": "Or we could iterate through all the children and sum the heights of the decor + the height of one page? Or leave it as it is :)",
+      "parentUuid": "6a192dde_4ee709ee",
+      "range": {
+        "startLine": 40,
+        "startChar": 35,
+        "endLine": 40,
+        "endChar": 36
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e4a0e8_0f378060",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-24T15:39:29Z",
+      "side": 1,
+      "message": "The first child (at position 0) is the TabLayout. The child at position 1 is the first page.",
+      "parentUuid": "56f6c755_909a871c",
+      "range": {
+        "startLine": 40,
+        "startChar": 35,
+        "endLine": 40,
+        "endChar": 36
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64658779_0c3c12a7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
         "patchSetId": 1
@@ -188,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "00ce65b3_11bfcb96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-24T15:39:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64658779_0c3c12a7",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 11
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f35f964_72179261",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
         "patchSetId": 1
@@ -199,6 +367,30 @@
       "writtenOn": "2017-08-24T12:31:04Z",
       "side": 1,
       "message": "same: if we measured children earlier, do we need to explicitly remeasure this one? If we do need to explicitly call measure like here, with UNSPECIFIED, maybe do it as a single measureChild loop and don\u0027t call super.onMeasure or measureChildren at all?",
+      "range": {
+        "startLine": 43,
+        "startChar": 21,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "138c87e6_0ff071e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-24T15:39:29Z",
+      "side": 1,
+      "message": "We need the first super.onMeasure() to initialize the pages. Then we need to measure them, because ViewPager doesn\u0027t. And then we need to call super.onMeasure() again to give it the exact height and let it layout everything properly. I tried to requestLayout() after setMeasuredDimensions(), but then nothing is shown.",
+      "parentUuid": "3f35f964_72179261",
       "range": {
         "startLine": 43,
         "startChar": 21,
@@ -231,6 +423,30 @@
       "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d10b3934_1af55fb7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-24T15:39:29Z",
+      "side": 1,
+      "message": "Doesn\u0027t work. Leaving it with super.onMeasure()",
+      "parentUuid": "58e60ea2_f678986c",
+      "range": {
+        "startLine": 54,
+        "startChar": 14,
+        "endLine": 54,
+        "endChar": 23
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
