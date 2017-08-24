@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "035e4e7c_912f43aa",
+        "filename": "chrome/browser/ui/libgtkui/nav_button_layout_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-08-24T17:12:32Z",
+      "side": 1,
+      "message": "explicitly document this class and how it exists just as a switch between the two subclasses.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 28
+      },
+      "revId": "4c9076f3d5cba146f02ca7623a998cf798eaf30a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
