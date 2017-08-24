@@ -2341,10 +2341,12 @@ WebRequestInternalEventHandledFunction::Run() {
           OnError(event_name, sub_event_name, request_id, std::move(response));
           return RespondNow(Error(keys::kInvalidHeaderValue, name));
         }
-        if (has_request_headers)
+        if (has_request_headers) {
           request_headers->SetHeader(name, value);
-        else
-          response_headers->push_back(helpers::ResponseHeader(name, value));
+        } else {
+          if (name != "X-Chrome-ID-Consistency-Response")
+            response_headers->push_back(helpers::ResponseHeader(name, value));
+        }
       }
       if (has_request_headers)
         response->request_headers = std::move(request_headers);

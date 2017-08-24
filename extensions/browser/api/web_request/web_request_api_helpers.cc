@@ -347,6 +347,8 @@ EventResponseDelta* CalculateOnHeadersReceivedDelta(
     std::string value;
     while (old_response_headers->EnumerateHeaderLines(&iter, &name, &value)) {
       std::string name_lowercase = base::ToLowerASCII(name);
+      if (name_lowercase == "x-chrome-id-consistency-response")
+        continue;
 
       bool header_found = false;
       for (const auto& i : *new_response_headers) {
@@ -365,6 +367,8 @@ EventResponseDelta* CalculateOnHeadersReceivedDelta(
   {
     for (const auto& i : *new_response_headers) {
       std::string name_lowercase = base::ToLowerASCII(i.first);
+      if (name_lowercase == "x-chrome-id-consistency-response")
+        continue;
       size_t iter = 0;
       std::string name;
       std::string value;
@@ -783,6 +787,8 @@ void MergeOnBeforeSendHeadersResponses(
         for (key = (*delta)->deleted_request_headers.begin();
              key != (*delta)->deleted_request_headers.end();
              ++key) {
+          DCHECK_NE(0, base::CompareCaseInsensitiveASCII(
+                           *key, "X-Chrome-ID-Consistency-Response"));
           request_headers->RemoveHeader(*key);
           removed_headers.insert(*key);
         }
