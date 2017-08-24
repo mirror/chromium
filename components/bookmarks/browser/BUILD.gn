@@ -17,6 +17,8 @@ static_library("browser") {
     "bookmark_model.cc",
     "bookmark_model.h",
     "bookmark_model_observer.h",
+    "bookmark_new_generation_features.cc",
+    "bookmark_new_generation_features.h",
     "bookmark_node.cc",
     "bookmark_node.h",
     "bookmark_node_data.cc",

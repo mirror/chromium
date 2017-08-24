@@ -182,6 +182,7 @@ source_set("eg_tests") {
   deps = [
     "//base",
     "//base/test:test_support",
+    "//components/bookmarks/browser",
     "//components/signin/core/browser",
     "//ios/chrome/app/strings",
     "//ios/chrome/browser",
