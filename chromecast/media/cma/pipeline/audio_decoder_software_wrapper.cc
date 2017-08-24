@@ -15,6 +15,12 @@
 namespace chromecast {
 namespace media {
 
+namespace {
+const int kMonoChannelCount = 1;
+const int kStereoChannelCount = 2;
+const int k5_1ChannelCount = 6;
+} // namespace
+
 AudioDecoderSoftwareWrapper::AudioDecoderSoftwareWrapper(
     MediaPipelineBackend::AudioDecoder* backend_decoder)
     : backend_decoder_(backend_decoder),
@@ -72,7 +78,7 @@ bool AudioDecoderSoftwareWrapper::SetConfig(const AudioConfig& config) {
 
   output_config_.codec = media::kCodecPCM;
   output_config_.sample_format = media::kSampleFormatS16;
-  output_config_.channel_number = 2;
+  output_config_.channel_number = config.channel_number;
   output_config_.bytes_per_channel = 2;
   output_config_.samples_per_second = config.samples_per_second;
   output_config_.encryption_scheme = Unencrypted();
@@ -90,8 +96,11 @@ AudioDecoderSoftwareWrapper::GetRenderingDelay() {
 
 bool AudioDecoderSoftwareWrapper::CreateSoftwareDecoder(
     const AudioConfig& config) {
-  if (config.channel_number > 2) {
-    LOG(ERROR) << "Multi-channel software audio decoding is not supported";
+  if (config.channel_number != kMonoChannelCount &&
+      config.channel_number != kStereoChannelCount &&
+      config.channel_number != k5_1ChannelCount) {
+    LOG(ERROR) << "Software audio decoding is not supported for channel setup: "
+               << config.channel_number;
     return false;
   }
   // TODO(kmackay) Consider using planar float instead.
