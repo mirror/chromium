@@ -327,8 +327,8 @@ LayoutReplaced* LayoutImage::EmbeddedReplacedContent() const {
     return nullptr;
 
   ImageResourceContent* cached_image = image_resource_->CachedImage();
-  if (cached_image && cached_image->GetImage() &&
-      cached_image->GetImage()->IsSVGImage())
+  if (cached_image && !cached_image->IsCacheValidator() &&
+      cached_image->GetImage() && cached_image->GetImage()->IsSVGImage())
     return ToSVGImage(cached_image->GetImage())->EmbeddedReplacedContent();
 
   return nullptr;
