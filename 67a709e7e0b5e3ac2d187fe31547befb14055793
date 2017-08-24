@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "98d76d4d_1bbe6b45",
+        "filename": "cc/layers/solid_color_layer_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-24T18:09:28Z",
+      "side": 1,
+      "message": "We have SolidColorLayerImplTest.VerifyEliminateTransparentOpacity, where opacity is set to 0.f; and SolidColorLayerImplTest.VerifyCorrectOpacityInQuad where opacity is set to 0.5f, I can add a check to verify if ShouldDrawWithBlending() \u003d true. Thank you for the suggestion.",
+      "parentUuid": "f6528ade_ced99d68",
+      "revId": "67a709e7e0b5e3ac2d187fe31547befb14055793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5146f483_9145f28d",
         "filename": "cc/layers/texture_layer_impl.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "67a709e7e0b5e3ac2d187fe31547befb14055793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c1236f7_292c3340",
+        "filename": "cc/layers/texture_layer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-24T18:09:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5146f483_9145f28d",
+      "revId": "67a709e7e0b5e3ac2d187fe31547befb14055793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b1150adb_5d87185c",
+        "filename": "cc/quads/nine_patch_generator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-24T18:09:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc3c29ed_7bb2f5d1",
+      "revId": "67a709e7e0b5e3ac2d187fe31547befb14055793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a098a99c_9841f383",
         "filename": "cc/quads/solid_color_draw_quad.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-24T17:43:20Z",
       "side": 1,
       "message": "nit: !\u003d",
+      "revId": "67a709e7e0b5e3ac2d187fe31547befb14055793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ab92cb3_fb455535",
+        "filename": "cc/quads/solid_color_draw_quad.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-24T18:09:28Z",
+      "side": 1,
+      "message": "true, it\u0027s easier to read. Thanks",
+      "parentUuid": "a098a99c_9841f383",
       "revId": "67a709e7e0b5e3ac2d187fe31547befb14055793",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
