@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "96106b25_729a7118",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-24T21:43:21Z",
+      "side": 1,
+      "message": "Ah, I see. Maybe add a comment mentioning that it doesn\u0027t use IncrementPrefValue() because since the function is static.",
+      "parentUuid": "f4ab02e0_bf861a17",
+      "range": {
+        "startLine": 173,
+        "startChar": 1,
+        "endLine": 173,
+        "endChar": 0
+      },
+      "revId": "b7ed7d18c423e2d30394b23f488d65ff1fc1083b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab1603aa_f37ffd79",
         "filename": "components/metrics/stability_metrics_helper.h",
         "patchSetId": 24
