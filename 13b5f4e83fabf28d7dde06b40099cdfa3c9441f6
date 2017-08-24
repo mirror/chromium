@@ -16,6 +16,24 @@
       "revId": "13b5f4e83fabf28d7dde06b40099cdfa3c9441f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f6b778_c506ddc4",
+        "filename": "ui/base/cocoa/hover_button.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-24T05:30:14Z",
+      "side": 1,
+      "message": "See other comments.",
+      "parentUuid": "2c1a8dd7_609b121a",
+      "revId": "13b5f4e83fabf28d7dde06b40099cdfa3c9441f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
