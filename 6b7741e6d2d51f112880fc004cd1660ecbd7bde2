@@ -16,6 +16,24 @@
       "revId": "6b7741e6d2d51f112880fc004cd1660ecbd7bde2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4784c604_f3033602",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapingLineBreaker.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-08-24T01:14:09Z",
+      "side": 1,
+      "message": "Figured out a way to re-enable it :)",
+      "parentUuid": "76272833_5168ded3",
+      "revId": "6b7741e6d2d51f112880fc004cd1660ecbd7bde2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
