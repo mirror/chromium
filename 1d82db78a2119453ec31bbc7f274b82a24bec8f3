@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fe6fb46_0c585b26",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T07:51:02Z",
+      "side": 1,
+      "message": "nit: I\u0027d use \"Count\" rather than \"Max\", as \"max\" is typically used as an alias for the last entry in an enum, whereas \"count\" is typically used to count the number of entries.  (Ditto below.)",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 24
+      },
+      "revId": "1d82db78a2119453ec31bbc7f274b82a24bec8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b850c4a4_f40fef3f",
+        "filename": "chrome/browser/signin/dice_response_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T07:51:02Z",
+      "side": 1,
+      "message": "nit: The UMA_HISTOGRAM_* macros expand to a fair bit of code, so it would be nice to create a small wrapper function invoked along the lines of RecordDiceTokenFetchResult(kFetchFailure).",
+      "range": {
+        "startLine": 164,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 54
+      },
+      "revId": "1d82db78a2119453ec31bbc7f274b82a24bec8f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
