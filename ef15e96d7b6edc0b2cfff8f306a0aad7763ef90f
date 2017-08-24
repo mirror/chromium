@@ -209,6 +209,190 @@
     },
     {
       "key": {
+        "uuid": "c2749518_535389fa",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-24T17:01:54Z",
+      "side": 1,
+      "message": "nit: it\u0027s.  Also one of the two usages below.  (Just in case this is confusing--it took me a while to learn it: The form is \"it\u0027s\" if one is contracting \"it is\" and \"its\" if one is making the possessive of \"it\"; this paragraph has both cases.)",
+      "range": {
+        "startLine": 401,
+        "startChar": 65,
+        "endLine": 401,
+        "endChar": 71
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c082b42_598412d3",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-24T17:01:54Z",
+      "side": 1,
+      "message": "suggestion: Wrap the epilogue to the routine and do an early exit on the inverse of this conditional here?  I think it\u0027ll make the code a bit easier to read.\n\nAlso (another suggestion, though I\u0027m even less certain that this is useful): Maybe wrap this test (effectively SelfInEntrySharedWriters()) in a helper function?  the idiom is used in a lot of places.",
+      "range": {
+        "startLine": 406,
+        "startChar": 14,
+        "endLine": 406,
+        "endChar": 21
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89061b2b_c0176001",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-24T17:01:54Z",
+      "side": 1,
+      "message": "Suggestion: A comment parallel to the ones above about what happened to get us to this state might be useful?",
+      "range": {
+        "startLine": 430,
+        "startChar": 16,
+        "endLine": 430,
+        "endChar": 17
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd700ad7_8169e329",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1248,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-24T17:01:54Z",
+      "side": 1,
+      "message": "This comment seems out of date--willing to update?",
+      "range": {
+        "startLine": 1248,
+        "startChar": 26,
+        "endLine": 1248,
+        "endChar": 29
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a175ff_b3d11f07",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2011,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-24T17:01:54Z",
+      "side": 1,
+      "message": "It looks to me as if reading_ being true means that Read() has been called at some point int he past, but not necessarily that we\u0027re inside of a call to Read().  Given that, does transition to a reading state make sense?  I think of those as only being driven by consumer requests for data (i.e. calls to Read()).  Won\u0027t read_buf_ be null if that isn\u0027t true?",
+      "range": {
+        "startLine": 2011,
+        "startChar": 6,
+        "endLine": 2011,
+        "endChar": 14
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716b89bd_bfbf877b",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2082,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-24T17:01:54Z",
+      "side": 1,
+      "message": "Given its usage in DoNetworkReadComplete() implies that this function can take care of all of the results of a partial completion, would it make sense to test for partial earlier in this function, dispatch to this one at that point, and assume !partial_ in the rest of the function (before the \"if (result \u003c 0...\")?",
+      "range": {
+        "startLine": 2082,
+        "startChar": 9,
+        "endLine": 2082,
+        "endChar": 41
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f710b0_0fe485f4",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2088,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-24T17:01:54Z",
+      "side": 1,
+      "message": "nit: Could you make it clear whether it\u0027s the inside of the conditional or the rest of the function that the \"last request\" comment applies to?  I think it\u0027s the rest of the function, but it took me a couple of reads through.\n\nAlso, thought: I wonder if separating out the conditionals and adding comments for each would make it clearer what\u0027s happening here.",
+      "range": {
+        "startLine": 2088,
+        "startChar": 21,
+        "endLine": 2088,
+        "endChar": 25
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cefa633_f727cb43",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2120,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-24T17:01:54Z",
+      "side": 1,
+      "message": "What modifies read_offset_ along this path?  The code in DoNetworkReadCacheWriteComplete() implies that that needs to happen for a partial request.",
+      "range": {
+        "startLine": 2120,
+        "startChar": 9,
+        "endLine": 2120,
+        "endChar": 41
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a77ec73_ec4ed7dc",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 11
