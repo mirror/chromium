@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d207e70f_1deedd53",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-24T13:33:03Z",
+      "side": 1,
+      "message": "Hrm, I hoped to be able to eliminate the other method soon.\nAll in all, following the https://chromium.googlesource.com/chromiumos/docs/+/master/dbus_best_practices.md , the whole process would be:\n(1) cryptohomed: introduce MigrateToDircryptoEx\n(2) chrome: change to use MigrateToDircryptoEx method\n(3) cryptohomed: add additional argument to MigrateToDircrypto\n    This doesn\u0027t break anyone, as no one is using MigrateToDircrypto\n(4) chrome: change to use MigrateToDircrypto\n(5) cryptohomed: remove MigrateToDircryptoEx.\n\nThis way we can have just one method in the long run, and not introduce changes breaking the chrome client in any step.\n\nI\u0027d rather not rename these methods, because then I\u0027d have to rename them back in step (4).\n\nWDYT?",
+      "parentUuid": "b37b54f1_3c021b6d",
+      "revId": "43af230dceb373eef21d0f7952a07600f0e5468e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3af8dc90_512d70b7",
         "filename": "chromeos/dbus/cryptohome_client.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-24T00:52:03Z",
       "side": 1,
       "message": "Please add a new constant.",
+      "revId": "43af230dceb373eef21d0f7952a07600f0e5468e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cb7c4ab_613362a6",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-24T13:33:03Z",
+      "side": 1,
+      "message": "Good point - this has to be done in cros_system_api which is pulled from the Chrome OS side.\nI\u0027ll add this in \nhttps://chromium-review.googlesource.com/c/chromiumos/platform/system_api/+/632476\nand switch to using that constant when it lands.",
+      "parentUuid": "3af8dc90_512d70b7",
       "revId": "43af230dceb373eef21d0f7952a07600f0e5468e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +92,30 @@
       "revId": "43af230dceb373eef21d0f7952a07600f0e5468e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f30a999_93d5ce10",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 10766,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-24T13:33:03Z",
+      "side": 1,
+      "message": "Done (also in 10755)",
+      "parentUuid": "d33f5c82_53a8f822",
+      "range": {
+        "startLine": 10766,
+        "startChar": 23,
+        "endLine": 10766,
+        "endChar": 26
+      },
+      "revId": "43af230dceb373eef21d0f7952a07600f0e5468e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
