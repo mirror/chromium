@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4741e0e6_ec886f81",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/TabbedEditorContainer.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1118132
+      },
+      "writtenOn": "2017-08-24T00:32:39Z",
+      "side": 1,
+      "message": "I\u0027m sure this is the wrong place for this class. let me know where you would like this class and what name you would like for it.",
+      "revId": "270cded73e375709aacab19775a6d9d089cd2ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
