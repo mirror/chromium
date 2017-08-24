@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cf2b2dd_7a06d9fd",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 2590,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T11:40:00Z",
+      "side": 1,
+      "message": "It looks like too much todo for one test :). Could you please combine this todos in one (anyway they are for the same bug).",
+      "range": {
+        "startLine": 2589,
+        "startChar": 0,
+        "endLine": 2590,
+        "endChar": 60
+      },
+      "revId": "2e05c11770e3800258e0ec21574bd1c119e7adb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
