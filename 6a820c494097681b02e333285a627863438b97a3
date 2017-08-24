@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f92b1c7f_f8471539",
+        "filename": "chrome/browser/android/ntp/android_content_suggestions_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-24T16:48:43Z",
+      "side": 1,
+      "message": "\u003e You\u0027re not using std::string in the header though - you\u0027re only using base::string16.\n\nOh, right. Removed, thanks.",
+      "parentUuid": "810c7126_c96c3dde",
+      "revId": "6a820c494097681b02e333285a627863438b97a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b276cec_834f4b29",
         "filename": "chrome/browser/android/ntp/content_suggestions_notifier.cc",
         "patchSetId": 3
