@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "1a93ffa3_189382c9",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-24T14:45:37Z",
+      "side": 1,
+      "message": "I meant, can\u0027t we do this:\nsys.path.append(symbol_database_path)\nsys.path.append(descriptor_pool_path)\nBecause \"insert at the very beginning\" is a hack, and it\u0027s better to minimize its scope :)",
+      "parentUuid": "e139257b_446117f9",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 29
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6d8294c_1344226f",
         "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
         "patchSetId": 15
