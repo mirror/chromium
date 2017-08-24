@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "19eb775a_595e1e03",
+        "filename": "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-24T18:44:24Z",
+      "side": 1,
+      "message": "Since this is in clean, the risk of introducing a bug is not as high as in legacy code. Let\u0027s make the change. Can you add a unit test for stop?",
+      "parentUuid": "1408adb7_dc98067c",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 5
+      },
+      "revId": "76512d7ebff3fe3a44e112fcf70d143b5d07da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9962ea74_c2940570",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button.h",
         "patchSetId": 2
@@ -272,6 +296,24 @@
     },
     {
       "key": {
+        "uuid": "58b1bd3c_72558b1e",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-24T18:44:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d2bf89fc_493662f5",
+      "revId": "76512d7ebff3fe3a44e112fcf70d143b5d07da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd69f391_dad436ff",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.mm",
         "patchSetId": 2
@@ -354,6 +396,30 @@
       "side": 1,
       "message": "You\u0027re right! Since clean doesn\u0027t support any of that functionality yet I didn\u0027t use it. Once we implement it some dispatcher calls here should do the trick.",
       "parentUuid": "99db1c23_45e9e841",
+      "range": {
+        "startLine": 444,
+        "startChar": 15,
+        "endLine": 444,
+        "endChar": 37
+      },
+      "revId": "76512d7ebff3fe3a44e112fcf70d143b5d07da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54037e33_19b7200c",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-24T18:44:24Z",
+      "side": 1,
+      "message": "We should at least support the keyboard dismissal, no?",
+      "parentUuid": "0a99f574_2cd02583",
       "range": {
         "startLine": 444,
         "startChar": 15,
