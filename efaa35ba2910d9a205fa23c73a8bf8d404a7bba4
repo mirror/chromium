@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ceb5a909_dec85cba",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-24T20:58:20Z",
+      "side": 1,
+      "message": "Great idea! We also special-case generators, too. I\u0027ve updated the code, description, and screenshot.",
+      "parentUuid": "27f8f14c_7205e3d2",
+      "revId": "efaa35ba2910d9a205fa23c73a8bf8d404a7bba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3901c000_33313499",
         "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-24T18:31:41Z",
       "side": 1,
       "message": "Why this? Doesn\u0027t this affect more codepaths than just primitive values?",
+      "revId": "efaa35ba2910d9a205fa23c73a8bf8d404a7bba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e70dfb8_4439e8d7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-24T20:58:20Z",
+      "side": 1,
+      "message": "Undone.  You\u0027re right, I don\u0027t really want this.",
+      "parentUuid": "3901c000_33313499",
       "revId": "efaa35ba2910d9a205fa23c73a8bf8d404a7bba4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
