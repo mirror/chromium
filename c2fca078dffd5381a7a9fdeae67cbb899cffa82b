@@ -70,6 +70,24 @@
       "revId": "c2fca078dffd5381a7a9fdeae67cbb899cffa82b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406304a0_059d6db2",
+        "filename": "base/files/file_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-24T22:16:52Z",
+      "side": 1,
+      "message": "FYI this is the code that calls it: https://codesearch.chromium.org/chromium/src/net/disk_cache/simple/simple_synchronous_entry.cc?q\u003dSimpleSynchronousEntry::Close\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d688",
+      "parentUuid": "e0ebcfd8_7b65d38b",
+      "revId": "c2fca078dffd5381a7a9fdeae67cbb899cffa82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
