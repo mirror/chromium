@@ -628,7 +628,7 @@ void FrameSelection::SelectFrameElementInParentIfFullySelected() {
   page->GetFocusController().SetFocusedFrame(parent);
   // setFocusedFrame can dispatch synchronous focus/blur events.  The document
   // tree might be modified.
-  if (new_selection.IsNonOrphanedCaretOrRange())
+  if (new_selection.IsNone() && new_selection.IsValidFor(GetDocument()))
     ToLocalFrame(parent)->Selection().SetSelection(new_selection.AsSelection());
 }
 
