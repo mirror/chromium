@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "019355dd_de9c9f91",
+        "filename": "chrome/test/base/chrome_test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-24T22:33:11Z",
+      "side": 1,
+      "message": "This doesn\u0027t work at all on Mac, since service processes are apparently not launched with the same binary (On other OSes there are).  Don\u0027t suppose anyone here is familiar with how things work on OSX?",
+      "range": {
+        "startLine": 158,
+        "startChar": 7,
+        "endLine": 158,
+        "endChar": 34
+      },
+      "revId": "c4dc2d09bd5461d5827f900023d264869427ca17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
