@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c45d8cd_c242e01b",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-24T00:52:43Z",
+      "side": 1,
+      "message": "Please update the comment.",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c41cb8a5_b2b1cca5",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-24T00:52:43Z",
+      "side": 1,
+      "message": "In other tasks, prefetch_dispatcher is the 1st argument. Would you please consider doing so?",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e3b0e4_081e5133",
+        "filename": "components/offline_pages/core/prefetch/mark_operation_done_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-24T00:52:43Z",
+      "side": 1,
+      "message": "Add comment.",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2024683c_071c88ac",
+        "filename": "components/offline_pages/core/prefetch/mark_operation_done_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-24T00:52:43Z",
+      "side": 1,
+      "message": "Update the comment.",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2dd1288_0d5eb58c",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-24T00:52:43Z",
+      "side": 1,
+      "message": "Comment.",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af2681e_9dd42d97",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-24T00:52:43Z",
+      "side": 1,
+      "message": "Why not just NO_WORK and HAS_WORK for easier understanding?",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f98299_70d50552",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-24T00:52:43Z",
+      "side": 1,
+      "message": "nit: add const modifier",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
