@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c71aa28_d276dad0",
+        "filename": "chrome/browser/password_manager/password_manager_interactive_uitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-24T10:47:17Z",
+      "side": 1,
+      "message": "RenderViewHost is deprecated. And you don\u0027t need it, content::ExecuteScript can accept WebContents",
+      "range": {
+        "startLine": 43,
+        "startChar": 47,
+        "endLine": 43,
+        "endChar": 61
+      },
+      "revId": "a84d36cde010d71324fae98ef47b6d31347dea69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4782d4_8a618c6c",
+        "filename": "chrome/browser/password_manager/password_manager_test_base.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-24T10:47:17Z",
+      "side": 1,
+      "message": "This is confusing because you don\u0027t always quit on inactive state (e.g. a navigation). You can do two things\n- make this method do what\u0027s expected. That is, handle navigation too.\n- Wait for OnHideManualFallbackForSaving()",
+      "range": {
+        "startLine": 103,
+        "startChar": 42,
+        "endLine": 103,
+        "endChar": 50
+      },
+      "revId": "a84d36cde010d71324fae98ef47b6d31347dea69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0611d51a_7ee29da8",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-24T10:47:17Z",
+      "side": 1,
+      "message": "Can we inline this function to the embedder (that is, ManagePasswordsUIController). \"Manual fallback\" is a term that makes sense there. But there is no special state for it. Thus, it seems strange that ManagePasswordsState makes the decision itself.",
+      "range": {
+        "startLine": 182,
+        "startChar": 27,
+        "endLine": 182,
+        "endChar": 56
+      },
+      "revId": "a84d36cde010d71324fae98ef47b6d31347dea69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da58f374_fa8c4987",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-24T10:47:17Z",
+      "side": 1,
+      "message": "The tests should go to the controller. Maybe you can complement the existing tests written by Maxim.",
+      "range": {
+        "startLine": 483,
+        "startChar": 7,
+        "endLine": 483,
+        "endChar": 57
+      },
+      "revId": "a84d36cde010d71324fae98ef47b6d31347dea69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
