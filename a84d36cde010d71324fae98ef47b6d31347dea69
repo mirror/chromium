@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c39921e7_67a06b5d",
+        "filename": "chrome/browser/password_manager/password_manager_interactive_uitest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-24T13:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c71aa28_d276dad0",
+      "range": {
+        "startLine": 43,
+        "startChar": 47,
+        "endLine": 43,
+        "endChar": 61
+      },
+      "revId": "a84d36cde010d71324fae98ef47b6d31347dea69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b4782d4_8a618c6c",
         "filename": "chrome/browser/password_manager/password_manager_test_base.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "a84d36cde010d71324fae98ef47b6d31347dea69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d7c6b6_8c3e1b22",
+        "filename": "chrome/browser/password_manager/password_manager_test_base.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-24T13:02:27Z",
+      "side": 1,
+      "message": "I have chosen the former, I think it is cleaner.",
+      "parentUuid": "8b4782d4_8a618c6c",
+      "range": {
+        "startLine": 103,
+        "startChar": 42,
+        "endLine": 103,
+        "endChar": 50
+      },
+      "revId": "a84d36cde010d71324fae98ef47b6d31347dea69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8223290a_821108fc",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_state.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-24T13:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0611d51a_7ee29da8",
+      "range": {
+        "startLine": 182,
+        "startChar": 27,
+        "endLine": 182,
+        "endChar": 56
+      },
+      "revId": "a84d36cde010d71324fae98ef47b6d31347dea69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da58f374_fa8c4987",
         "filename": "chrome/browser/ui/passwords/manage_passwords_state_unittest.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "a84d36cde010d71324fae98ef47b6d31347dea69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962f9741_8c629f1a",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_state_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-08-24T13:02:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da58f374_fa8c4987",
+      "range": {
+        "startLine": 483,
+        "startChar": 7,
+        "endLine": 483,
+        "endChar": 57
+      },
+      "revId": "a84d36cde010d71324fae98ef47b6d31347dea69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
