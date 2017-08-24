@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44c12b79_b2e57407",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-24T08:13:54Z",
+      "side": 1,
+      "message": "Add a \u0027?\u0027 at the end.",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e252f3b_20fd2167",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-24T08:13:54Z",
+      "side": 1,
+      "message": "\"This CL adds support for the full syntax.\"?",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edbdf678_46121e21",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-24T08:13:54Z",
+      "side": 1,
+      "message": "You should add the \u0027?\u0027 behind [ right | left ]",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc036e6_90ceb6f9",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-24T08:13:54Z",
+      "side": 1,
+      "message": "If I read the spec for \u0026\u0026 correctly it says the components may appear in any order. That means \u0027right over\u0027 should be valid.",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ddf6be_b66eea43",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-24T08:13:54Z",
+      "side": 1,
+      "message": "Single line statements for \u0027if\u0027 do not need braces.",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16033f91_7d0da9c5",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleBuilderConverter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-24T08:13:54Z",
+      "side": 1,
+      "message": "Not sure I understand this change.",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f46ccad_9fafa642",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyleConstants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-24T08:13:54Z",
+      "side": 1,
+      "message": "There are four valid combinations:\n\nover right\nover left\nunder right\nunder left\n\nWhy not use four enum values for those combinations instead of the bit operations?",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
