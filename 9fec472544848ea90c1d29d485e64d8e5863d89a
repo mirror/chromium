@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "67a56af1_787e3ef3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T17:50:44Z",
+      "side": 1,
+      "message": "...and a new tab is not currently being displayed.",
+      "range": {
+        "startLine": 246,
+        "startChar": 79,
+        "endLine": 247,
+        "endChar": 21
+      },
+      "revId": "9fec472544848ea90c1d29d485e64d8e5863d89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57f907cd_d750eda7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
         "patchSetId": 4
@@ -13,6 +36,30 @@
       "writtenOn": "2017-08-24T17:37:47Z",
       "side": 1,
       "message": "This is added for the case when a tab is half opened and we click the download notification. We should have a full opened sheet instead of keeping it half opened for consistency?",
+      "range": {
+        "startLine": 264,
+        "startChar": 16,
+        "endLine": 264,
+        "endChar": 39
+      },
+      "revId": "9fec472544848ea90c1d29d485e64d8e5863d89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "581a86cf_ab8815be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T17:50:44Z",
+      "side": 1,
+      "message": "I think that scenario can be covered by showContentAndOpenSheet and the BottomSheetNewTabController changes if we modify showContentAndOpenSheet to set the sheet state to full if the current state isn\u0027t already full, which I think is fine for all of the places where we currently call #showContentAndOpenSheet.",
+      "parentUuid": "57f907cd_d750eda7",
       "range": {
         "startLine": 264,
         "startChar": 16,
