@@ -22,6 +22,30 @@
       "revId": "68b7ace1398d8a58e6ba32cacc9082395722e0a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d9dd32_014fceaa",
+        "filename": "chrome/common/extensions/api/file_manager_private.idl",
+        "patchSetId": 19
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-24T17:32:45Z",
+      "side": 1,
+      "message": "I missed the comment history when I made my comment. I should clarify that if we use different name we should do so consistently / throughout and/or clearly comment; it was just confusing to me before.",
+      "parentUuid": "a02c8363_2d0e0d96",
+      "range": {
+        "startLine": 371,
+        "startChar": 13,
+        "endLine": 371,
+        "endChar": 31
+      },
+      "revId": "68b7ace1398d8a58e6ba32cacc9082395722e0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
