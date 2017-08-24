@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35fadd85_27b90a5e",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-24T13:52:52Z",
+      "side": 1,
+      "message": "You should also rename function with IOSurface in the name, and call them \"GpuMemoryBuffer\" since we\u0027re using that platform-neutral abstraction.",
+      "range": {
+        "startLine": 213,
+        "startChar": 7,
+        "endLine": 213,
+        "endChar": 39
+      },
+      "revId": "c6aa998b1ea6143d82c9eb5e94845645f0c964e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
