@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cde33fbe_60c5b981",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T23:17:47Z",
+      "side": 1,
+      "message": "We have to set it so the location is updated correctly, and then we unset it as consumers of this code aren\u0027t going to use it. I believe we decided it\u0027s best not to include the target in the event as the target may not always be available. Although that\u0027s a bit of a weak argument, I could be wrong there. I don\u0027t think it would actually matter if I left it non-null.\n\nThis code path is unique to the window-manager as clients currently don\u0027t have the secondary transform set on the WindowTreeHost. http://crbug.com/758399 may mean we can unify the code paths.",
+      "parentUuid": "feceeab8_9f3c510b",
+      "revId": "c6f61f93be6aa678c17ab416eb1ee92142a282ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ac9e1e0_1bc03a84",
         "filename": "ui/aura/mus/window_tree_client.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2498cb63_dfcc745e",
+        "filename": "ui/aura/mus/window_tree_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T23:17:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac9e1e0_1bc03a84",
+      "revId": "c6f61f93be6aa678c17ab416eb1ee92142a282ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c6c40eb_f8337b87",
         "filename": "ui/aura/mus/window_tree_host_mus.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-24T21:44:21Z",
       "side": 1,
       "message": "Should this happen only if |init_params.display_id| is invalid? Or, would it be possible to get rid of |init_params.display_id| instead? Or maybe a DCHECK() that both fields are in agreement, if we need to keep both?",
+      "revId": "c6f61f93be6aa678c17ab416eb1ee92142a282ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bbb4eb5_129f228a",
+        "filename": "ui/aura/mus/window_tree_host_mus.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T23:17:47Z",
+      "side": 1,
+      "message": "Both are needed, so updated test and added DCHECK.",
+      "parentUuid": "7c6c40eb_f8337b87",
       "revId": "c6f61f93be6aa678c17ab416eb1ee92142a282ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
