@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "107d7242_e05cf655",
+        "filename": "device/bluetooth/bluetooth_adapter_mac_metrics.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-24T20:43:53Z",
+      "side": 1,
+      "message": "We always build with the 10.12 SDK and require the 10.12 SDK as far as I know (https://bugs.chromium.org/p/chromium/issues/detail?id\u003d669240). But maybe not all bots have that yet, in that case you\u0027ll need something like this.\n\nSee the comment in https://opensource.apple.com/source/CarbonHeaders/CarbonHeaders-18.1/AvailabilityMacros.h -- we could in theory choose to compile with the 10.11 sdk (which would cause this macro to be defined) but then define MAC_OS_X_VERSION_MAX_ALLOWED to a value that says \"we want to allow at most 10.10 APIs\". In that case MAC_OS_X_VERSION_10_11 would be defined, but CBErrorMaxConnection wouldn\u0027t exist. That\u0027s why we use the pattern scheib linked to. (In practice, we\u0027ve never done what I just described, so the better argument is \"be consistent\", I suppose ;-) )",
+      "range": {
+        "startLine": 15,
+        "startChar": 24,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "891350b9f8e818a80280aeb98ed4bb4335205a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c70e3af_01a548d1",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
