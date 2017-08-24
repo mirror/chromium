@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e218114a_e8f5d551",
+        "filename": "base/feature_list.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-24T05:45:36Z",
+      "side": 1,
+      "message": "Nit: constexpr",
+      "range": {
+        "startLine": 285,
+        "startChar": 9,
+        "endLine": 285,
+        "endChar": 14
+      },
+      "revId": "d5c2fdabf1d59b9588121068c7a5443ad6444349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d8774c_2ab179b6",
+        "filename": "base/logging.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-24T05:45:36Z",
+      "side": 1,
+      "message": "Nit: enabled",
+      "range": {
+        "startLine": 355,
+        "startChar": 13,
+        "endLine": 355,
+        "endChar": 19
+      },
+      "revId": "d5c2fdabf1d59b9588121068c7a5443ad6444349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a1539a_e089f978",
+        "filename": "base/logging.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-24T05:45:36Z",
+      "side": 1,
+      "message": "Nit: can we format this consistently with the other macros, or does clang-format force a single line here?",
+      "revId": "d5c2fdabf1d59b9588121068c7a5443ad6444349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a0047b_601c0804",
+        "filename": "base/logging_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-24T05:45:36Z",
+      "side": 1,
+      "message": "Would be nice if we could check the default value, as well as testing toggling the feature on somehow...",
+      "revId": "d5c2fdabf1d59b9588121068c7a5443ad6444349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
