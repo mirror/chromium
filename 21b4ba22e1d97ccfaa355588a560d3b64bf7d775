@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1761ba39_70ea0265",
+        "filename": "chrome/browser/app_controller_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-24T16:47:19Z",
+      "side": 1,
+      "message": "Maybe? But singletons don\u0027t typically have constructor arguments. I don\u0027t see an advantage to using one.",
+      "parentUuid": "3328b891_c476ccff",
+      "revId": "21b4ba22e1d97ccfaa355588a560d3b64bf7d775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68cd86b5_4e63cb61",
         "filename": "chrome/browser/app_controller_mac.mm",
         "patchSetId": 2
