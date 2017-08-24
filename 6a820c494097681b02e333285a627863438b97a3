@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "910407d8_f02052fb",
+        "filename": "chrome/browser/android/ntp/android_content_suggestions_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-24T15:51:56Z",
+      "side": 1,
+      "message": "Do you need either of these includes for the header?",
+      "revId": "6a820c494097681b02e333285a627863438b97a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b276cec_834f4b29",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-24T15:51:56Z",
+      "side": 1,
+      "message": "Can these not go in the header? Or maybe the style guide says they should be in a cc file.",
+      "range": {
+        "startLine": 9,
+        "startChar": 28,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "6a820c494097681b02e333285a627863438b97a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3189ff3_3b74b77c",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-24T15:51:56Z",
+      "side": 1,
+      "message": "Again, I\u0027m not sure you use these in the header.",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "6a820c494097681b02e333285a627863438b97a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0aa4537_953ace04",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-08-24T15:51:56Z",
+      "side": 1,
+      "message": "Maybe make the comment a bit more platform agnostic - I\u0027m assuming it\u0027s only the AndroidContentSuggestionsNotifier that moves Java metrics into native histograms?",
+      "revId": "6a820c494097681b02e333285a627863438b97a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
