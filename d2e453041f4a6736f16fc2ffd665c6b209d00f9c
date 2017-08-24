@@ -70,6 +70,24 @@
       "revId": "d2e453041f4a6736f16fc2ffd665c6b209d00f9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a1e657e_c9736a3c",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-24T21:26:36Z",
+      "side": 1,
+      "message": "On \"I think we can still delete the code here. Right?\":\n\n1. Blink animation/transition layout tests still pass.\n\n2. compositor unit tests, which include some layer animator tests, still pass.\n\n3. cc unit tests that fail:\n\n    LayerTreeHostAnimationTestAnimationFinishesDuringCommit.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest_animation.cc:1653)\n    LayerTreeHostAnimationTestChangeAnimationPlayer.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest_animation.cc:1845)\n    LayerTreeHostAnimationTestChangeAnimationPlayer.RunSingleThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest_animation.cc:1845)\n    LayerTreeHostAnimationTestImplSideInvalidation.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest_animation.cc:1731)\n    LayerTreeHostTestEffectTreeSync.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest.cc:1508)\n    LayerTreeHostTestEffectTreeSync.RunSingleThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest.cc:1508)\n    LayerTreeHostTestTransformTreeSync.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest.cc:1586)\n    LayerTreeHostTestTransformTreeSync.RunSingleThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest.cc:1586)\n\n  LayerTreeHostTestEffectTreeSync and LayerTreeHostTestTransformTreeSync seem like\n  tests that are just explicitly testing the logic we\u0027re proposing to remove,\n  but some of the others are less clear and would require deeper investigation\n  and perhaps rewrite if they\u0027re depending on this sync behavior we\u0027d be removing.\n  Worth pursuing now?",
+      "parentUuid": "89d51873_12f5331d",
+      "revId": "d2e453041f4a6736f16fc2ffd665c6b209d00f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
