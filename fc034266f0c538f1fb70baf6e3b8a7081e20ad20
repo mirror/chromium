@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de98451a_89dd8991",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-24T16:49:29Z",
+      "side": 1,
+      "message": "Why do we pass a File and a FilePath? It\u0027s not really clear what the difference is (or if there is one). I would suggest documenting this better in the header.\n\nIt would be ideal if we didn\u0027t need FilePath and we just used File of course: then we wouldn\u0027t need the DeleteFile business below.",
+      "revId": "fc034266f0c538f1fb70baf6e3b8a7081e20ad20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

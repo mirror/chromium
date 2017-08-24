@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ba28cf6_f093922e",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-24T16:49:29Z",
+      "side": 1,
+      "message": "brettw: This seems like an unavoidable consequence of the base::Value changes, but it makes me a little sad that we can\u0027t really assert that a base::Value is of a certain subtype at a compile time anymore.",
+      "range": {
+        "startLine": 205,
+        "startChar": 7,
+        "endLine": 205,
+        "endChar": 22
+      },
+      "revId": "290bb3787ac389c3df4e05acc36b944b3453e45e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
