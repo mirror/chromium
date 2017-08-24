@@ -5,12 +5,14 @@
 #include "components/ntp_tiles/most_visited_sites.h"
 
 #include <algorithm>
+#include <iterator>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/feature_list.h"
 #include "base/metrics/user_metrics.h"
+#include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/history/core/browser/top_sites.h"
 #include "components/ntp_tiles/constants.h"
@@ -33,6 +35,19 @@ namespace {
 const base::Feature kDisplaySuggestionsServiceTiles{
     "DisplaySuggestionsServiceTiles", base::FEATURE_ENABLED_BY_DEFAULT};
 
+// A simple collection of prefixes that is often used as prefix for mobile pages
+// or redirects usually to a page with equal contents.
+// When used for popular sites, the popular site would only be excluded if the
+// user has visited a page with similar URL. Even if the URL does not point to
+// the exact same page, the user will have a personalized suggestion that is
+// more likely to be of use for them.
+// A cleaner way could be check the history for redirects but this requires the
+// page to be visited on the device.
+const char* kKnownGenericPagePrefixes[] = {
+    "m.", "mobile.",  // Common prefixes among popular sites.
+    "edition.",       // Used among news papers (CNN, Independent, ...)
+    "www."};          // Usually no-www domains redirect to www or vice-versa.
+
 // Determine whether we need any tiles from PopularSites to fill up a grid of
 // |num_tiles| tiles. If exploration sections are used, we need popular sites
 // regardless of how many tiles we already have.
@@ -50,6 +65,37 @@ bool HasHomeTile(const NTPTilesVector& tiles) {
   for (const auto& tile : tiles) {
     if (tile.source == TileSource::HOMEPAGE) {
       return true;
+    }
+  }
+  return false;
+}
+
+// This function tries to match the given |host| to a close fit in
+// |hosts_to_skip| by removing a prefix that is commonly used to redirect from
+// or to mobile pages (m.xyz.com --> xyz.com).
+// If this approach fails, the prefix is replaced by another prefix.
+// That way, www.xyz.com would not be used if m.xyz.com has been used already.
+bool IsHostOrMobilePageKnown(const std::set<std::string>& hosts_to_skip,
+                             const std::string& host) {
+  if (hosts_to_skip.count(host)) {
+    return true;  // Perfect match.
+  }
+  // Remove if prefix is known and look again.
+  std::string no_prefix_host = host;
+  for (const char* prefix : kKnownGenericPagePrefixes) {
+    if (base::StartsWith(host, prefix, base::CompareCase::INSENSITIVE_ASCII)) {
+      no_prefix_host = std::string(
+          base::TrimString(host, prefix, base::TrimPositions::TRIM_LEADING));
+      if (hosts_to_skip.count(no_prefix_host)) {
+        return true;
+      }
+      break;  // Don't try to trim the prefix more than once.
+    }
+  }
+  // Add a known prefix and look again.
+  for (const char* prefix : kKnownGenericPagePrefixes) {
+    if (hosts_to_skip.count(base::JoinString({prefix, no_prefix_host}, ""))) {
+      return true;  // Perfect match.
     }
   }
   return false;
@@ -399,7 +445,7 @@ NTPTilesVector MostVisitedSites::CreatePopularSitesTiles(
       continue;
 
     const std::string& host = popular_site.url.host();
-    if (hosts_to_skip.count(host)) {
+    if (IsHostOrMobilePageKnown(hosts_to_skip, host)) {
       continue;
     }
 
