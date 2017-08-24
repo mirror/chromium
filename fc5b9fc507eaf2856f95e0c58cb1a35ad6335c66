@@ -22,6 +22,30 @@
       "revId": "fc5b9fc507eaf2856f95e0c58cb1a35ad6335c66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "943c1e11_600e6f1b",
+        "filename": "chrome/browser/ui/libgtkui/nav_button_layout_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-24T00:22:23Z",
+      "side": 1,
+      "message": "ok, moved ParseButtonLayout to gtk_util.  I still kept the base class though, only because I think it\u0027s cleaner than having\n\n#if GTK_MAJOR_VERSION \u003d\u003d 3\nstd::unique_ptr\u003cNavButtonLayoutManagerGtk3\u003e nav_button_layout_manager_gtk3_;\n#endif\n#if defined(USE_GCONF)\nstd::unique_ptr\u003cNavButtonLayoutManagerGconf\u003e nav_button_layout_manager_gconf_;\n#endif\n\nBut I\u0027m still open to changing it to the above if you believe that\u0027s better",
+      "parentUuid": "5ce2431c_76446cc0",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 30
+      },
+      "revId": "fc5b9fc507eaf2856f95e0c58cb1a35ad6335c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
