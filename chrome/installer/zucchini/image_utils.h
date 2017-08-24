@@ -88,6 +88,13 @@ class ReferenceWriter {
   virtual void PutNext(Reference reference) = 0;
 };
 
+class ReferenceMasker {
+ public:
+  virtual ~ReferenceMasker() = default;
+
+  virtual void Mask(Reference reference, MutableBufferView output) = 0;
+};
+
 // Position of the most significant bit of offset_t.
 constexpr offset_t kIndexMarkBitPosition = sizeof(offset_t) * 8 - 1;
 

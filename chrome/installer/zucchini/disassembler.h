@@ -32,6 +32,9 @@ class ReferenceGroup {
   using WriterFactory = std::unique_ptr<ReferenceWriter> (Disassembler::*)(
       MutableBufferView image);
 
+  // Member function pointer used to obtain a ReferenceMasker.
+  using MaskerFactory = std::unique_ptr<ReferenceMasker> (Disassembler::*)();
+
   ReferenceGroup() = default;
 
   // RefinedGeneratorFactory and RefinedReceptorFactory don't have to be
@@ -44,7 +47,20 @@ class ReferenceGroup {
                  RefinedWriterFactory writer_factory)
       : traits_(traits),
         reader_factory_(static_cast<ReaderFactory>(reader_factory)),
-        writer_factory_(static_cast<WriterFactory>(writer_factory)) {}
+        writer_factory_(static_cast<WriterFactory>(writer_factory)),
+        masker_factory_(nullptr) {}
+
+  template <class RefinedReaderFactory,
+            class RefinedWriterFactory,
+            class RefinedMaskerFactory>
+  ReferenceGroup(ReferenceTypeTraits traits,
+                 RefinedReaderFactory reader_factory,
+                 RefinedWriterFactory writer_factory,
+                 RefinedMaskerFactory masker_factory)
+      : traits_(traits),
+        reader_factory_(static_cast<ReaderFactory>(reader_factory)),
+        writer_factory_(static_cast<WriterFactory>(writer_factory)),
+        masker_factory_(static_cast<MaskerFactory>(masker_factory)) {}
 
   // Returns a reader for all references in the binary.
   // Invalidates any other writer or reader previously obtained for |disasm|.
@@ -62,6 +78,8 @@ class ReferenceGroup {
   // Invalidates any other writer or reader previously obtained for |disasm|.
   std::unique_ptr<ReferenceWriter> GetWriter(MutableBufferView image,
                                              Disassembler* disasm) const;
+
+  std::unique_ptr<ReferenceMasker> GetMasker() const;
 
   // Returns traits describing the reference type.
   const ReferenceTypeTraits& traits() const { return traits_; }
