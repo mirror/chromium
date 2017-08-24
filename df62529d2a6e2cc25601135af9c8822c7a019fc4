@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea3504a1_35e82c78",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/subresource-integrity/subresource-ed25519-with-csp.tentative.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-24T21:48:05Z",
+      "side": 1,
+      "message": "\"CSP policy\" \u003d\u003e \"Content Security Policy policy\"",
+      "revId": "df62529d2a6e2cc25601135af9c8822c7a019fc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
