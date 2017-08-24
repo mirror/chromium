@@ -1755,11 +1755,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
                 navigationContext:navigationContext.get()];
 }
 
-- (void)willLoadCurrentItemWithParams:
-            (const NavigationManager::WebLoadParams&)params
-                  isInitialNavigation:(BOOL)isInitialNavigation {
-  [_delegate webDidUpdateSessionForLoadWithParams:params
-                             wasInitialNavigation:isInitialNavigation];
+- (void)willLoadCurrentItemWithURL:(const GURL&)url {
+  [_delegate webDidUpdateSessionForLoadWithURL:url];
 }
 
 - (void)loadCurrentURL {
