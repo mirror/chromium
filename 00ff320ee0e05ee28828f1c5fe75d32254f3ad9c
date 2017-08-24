@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "984c9440_4d08eff8",
+        "filename": "services/device/generic_sensor/platform_sensor_and_provider_unittest_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-24T17:21:00Z",
+      "side": 1,
+      "message": "Add a comment explaining the difference between Chrome OS and Linux? If the ACCELEROMETER interprets values from the platform differently between platforms then maybe we should provide different input data rather than expect a different result.",
+      "revId": "00ff320ee0e05ee28828f1c5fe75d32254f3ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "973b1d74_c816243e",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-24T17:21:00Z",
+      "side": 1,
+      "message": "nit: space between functions",
+      "revId": "00ff320ee0e05ee28828f1c5fe75d32254f3ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566f9049_a8af2956",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-24T17:21:00Z",
+      "side": 1,
+      "message": "fusion_algorithm",
+      "range": {
+        "startLine": 279,
+        "startChar": 49,
+        "endLine": 279,
+        "endChar": 60
+      },
+      "revId": "00ff320ee0e05ee28828f1c5fe75d32254f3ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c76c5aab_77cfdbbd",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-24T17:21:00Z",
+      "side": 1,
+      "message": "Given that we don\u0027t actually implement any of the fallbacks mentioned above I think we should just put the calls to base::MakeUnique\u003c...\u003e() here.",
+      "range": {
+        "startLine": 281,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 12
+      },
+      "revId": "00ff320ee0e05ee28828f1c5fe75d32254f3ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22c7494_7bf2dab4",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-24T17:21:00Z",
+      "side": 1,
+      "message": "Rename this variable |fusion_algorithm| here and below.",
+      "range": {
+        "startLine": 54,
+        "startChar": 14,
+        "endLine": 54,
+        "endChar": 84
+      },
+      "revId": "00ff320ee0e05ee28828f1c5fe75d32254f3ad9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
