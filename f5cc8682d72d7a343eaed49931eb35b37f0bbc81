@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08334076_9063a87f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastReceiver.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-24T23:54:14Z",
+      "side": 1,
+      "message": "missing blank line above this, and all the function javadocs",
+      "revId": "f5cc8682d72d7a343eaed49931eb35b37f0bbc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6a0dc3_f8dc8a03",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-24T23:54:14Z",
+      "side": 1,
+      "message": "ditto and for other files",
+      "revId": "f5cc8682d72d7a343eaed49931eb35b37f0bbc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
