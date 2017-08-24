@@ -68,6 +68,31 @@
 #include "ui/ozone/public/client_native_pixmap_factory_ozone.h"
 #endif
 
+#if defined(OS_WIN)
+
+#ifndef PROCESS_POWER_THROTTLING_CURRENT_VERSION
+#define PROCESS_POWER_THROTTLING_CURRENT_VERSION 1
+#endif
+
+#ifndef PROCESS_POWER_THROTTLING_EXECUTION_SPEED
+#define PROCESS_POWER_THROTTLING_EXECUTION_SPEED 0x1
+#endif
+
+#ifndef PROCESS_POWER_THROTTLING_VALID_FLAGS
+#define PROCESS_POWER_THROTTLING_VALID_FLAGS \
+  (PROCESS_POWER_THROTTLING_EXECUTION_SPEED)
+#endif
+
+#ifndef PROCESS_POWER_THROTTLING_STATE
+typedef struct _PROCESS_POWER_THROTTLING_STATE {
+  ULONG Version;
+  ULONG ControlMask;
+  ULONG StateMask;
+} PROCESS_POWER_THROTTLING_STATE, *PPROCESS_POWER_THROTTLING_STATE;
+#endif
+
+#endif
+
 namespace content {
 namespace {
 // This function provides some ways to test crash and assertion handling
@@ -90,6 +115,29 @@ base::LazyInstance<std::unique_ptr<gfx::ClientNativePixmapFactory>>::
 
 // mainline routine for running as the Renderer process
 int RendererMain(const MainFunctionParams& parameters) {
+#if defined(OS_WIN)
+  PROCESS_POWER_THROTTLING_STATE PowerThrottling;
+  RtlZeroMemory(&PowerThrottling, sizeof(PowerThrottling));
+  PowerThrottling.Version = PROCESS_POWER_THROTTLING_CURRENT_VERSION;
+
+  // Turn ExecutionSpeed throttling off. ControlMask selects the mechanism and
+  // StateMask is set to zero as mechanisms should be turned off.
+  PowerThrottling.ControlMask = PROCESS_POWER_THROTTLING_EXECUTION_SPEED;
+  PowerThrottling.StateMask = 0;
+
+  BOOL Success = SetProcessInformation(
+      GetCurrentProcess(),
+      ProcessActivityThrottleStateInfo,  // renamed to ProcessPowerThrottling
+      &PowerThrottling, sizeof(PowerThrottling));
+
+  if (!Success) {
+    DWORD ErrorCode = GetLastError();
+    LOG(ERROR) << "Set PPM render main failed " << ErrorCode;
+  } else {
+    LOG(ERROR) << "Set PPM render main succeed ";
+  }
+#endif
+
   // Don't use the TRACE_EVENT0 macro because the tracing infrastructure doesn't
   // expect synchronous events around the main loop of a thread.
   TRACE_EVENT_ASYNC_BEGIN0("startup", "RendererMain", 0);
