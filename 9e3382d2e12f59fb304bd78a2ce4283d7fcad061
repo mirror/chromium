@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "028a7274_b9067d42",
+        "filename": "chrome/test/data/subresource_filter/frame_set_special_urls.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-24T18:13:19Z",
+      "side": 1,
+      "message": "Does this test actually fail without your change? Doesn\u0027t this need to be \"iframe\"?",
+      "range": {
+        "startLine": 15,
+        "startChar": 45,
+        "endLine": 15,
+        "endChar": 50
+      },
+      "revId": "9e3382d2e12f59fb304bd78a2ce4283d7fcad061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09a1883_50ccbcab",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-24T18:13:19Z",
+      "side": 1,
+      "message": "Move this comment above the while loop.",
+      "range": {
+        "startLine": 326,
+        "startChar": 7,
+        "endLine": 326,
+        "endChar": 13
+      },
+      "revId": "9e3382d2e12f59fb304bd78a2ce4283d7fcad061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "320ba5b9_2be46e35",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-24T18:13:19Z",
+      "side": 1,
+      "message": "Add a comment explaining why this should not be reached.",
+      "range": {
+        "startLine": 334,
+        "startChar": 2,
+        "endLine": 334,
+        "endChar": 12
+      },
+      "revId": "9e3382d2e12f59fb304bd78a2ce4283d7fcad061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d4b3ac_0d3c3971",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-24T18:13:19Z",
+      "side": 1,
+      "message": "Please comment that we give it a null filter.",
+      "range": {
+        "startLine": 146,
+        "startChar": 7,
+        "endLine": 146,
+        "endChar": 39
+      },
+      "revId": "9e3382d2e12f59fb304bd78a2ce4283d7fcad061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18363dab_4bc3cfc9",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-24T18:13:19Z",
+      "side": 1,
+      "message": "Why is this reverted?",
+      "range": {
+        "startLine": 171,
+        "startChar": 31,
+        "endLine": 171,
+        "endChar": 43
+      },
+      "revId": "9e3382d2e12f59fb304bd78a2ce4283d7fcad061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
