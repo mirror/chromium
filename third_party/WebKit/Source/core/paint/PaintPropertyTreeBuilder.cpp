@@ -16,6 +16,8 @@
 #include "core/layout/svg/SVGLayoutSupport.h"
 #include "core/layout/svg/SVGResources.h"
 #include "core/layout/svg/SVGResourcesCache.h"
+#include "core/page/Page.h"
+#include "core/page/scrolling/ScrollingCoordinator.h"
 #include "core/paint/FindPaintOffsetAndVisualRectNeedingUpdate.h"
 #include "core/paint/FindPropertiesNeedingUpdate.h"
 #include "core/paint/ObjectPaintProperties.h"
@@ -85,8 +87,7 @@ static bool UpdateScroll(
     const IntSize& bounds,
     bool user_scrollable_horizontal,
     bool user_scrollable_vertical,
-    MainThreadScrollingReasons main_thread_scrolling_reasons,
-    WebLayerScrollClient* scroll_client) {
+    MainThreadScrollingReasons main_thread_scrolling_reasons) {
   DCHECK(!RuntimeEnabledFeatures::RootLayerScrollingEnabled());
   auto element_id = CompositorElementIdFromLayoutObjectId(
       frame_view.GetLayoutView()->UniqueId(),
@@ -96,13 +97,13 @@ static bool UpdateScroll(
     existing_scroll->Update(
         std::move(parent), IntPoint(), clip, bounds, user_scrollable_horizontal,
         user_scrollable_vertical, main_thread_scrolling_reasons, element_id,
-        scroll_client);
+        frame_view.GetPage()->GetScrollingCoordinator());
     return existing_reasons != main_thread_scrolling_reasons;
   }
   frame_view.SetScrollNode(ScrollPaintPropertyNode::Create(
       std::move(parent), IntPoint(), clip, bounds, user_scrollable_horizontal,
       user_scrollable_vertical, main_thread_scrolling_reasons, element_id,
-      scroll_client));
+      frame_view.GetPage()->GetScrollingCoordinator()));
   return true;
 }
 
@@ -193,8 +194,7 @@ void PaintPropertyTreeBuilder::UpdateProperties(
 
       full_context.force_subtree_update |= UpdateScroll(
           frame_view, context.current.scroll, scroll_clip, scroll_bounds,
-          user_scrollable_horizontal, user_scrollable_vertical, reasons,
-          frame_view.GetScrollableArea());
+          user_scrollable_horizontal, user_scrollable_vertical, reasons);
     } else if (frame_view.ScrollNode()) {
       // Ensure pre-existing properties are cleared if there is no scrolling.
       frame_view.SetScrollNode(nullptr);
@@ -1018,14 +1018,14 @@ void PaintPropertyTreeBuilder::UpdateScrollAndScrollTranslation(
           force_subtree_update = true;
       }
 
-      auto element_id = CompositorElementIdFromLayoutObjectId(
-          object.UniqueId(), CompositorElementIdNamespace::kScroll);
+      auto element_id = scrollable_area->GetCompositorElementId();
 
       // TODO(pdr): Set the correct compositing reasons here.
       auto result = properties.UpdateScroll(
           context.current.scroll, bounds_offset, container_bounds,
           scroll_bounds, user_scrollable_horizontal, user_scrollable_vertical,
-          reasons, element_id, scrollable_area);
+          reasons, element_id,
+          object.GetFrameView()->GetPage()->GetScrollingCoordinator());
       force_subtree_update |= result.NewNodeCreated();
     } else {
       // Ensure pre-existing properties are cleared.

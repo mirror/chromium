@@ -769,9 +769,9 @@ class FakeScrollClient : public WebLayerScrollClient {
  public:
   FakeScrollClient() : did_scroll_count(0) {}
 
-  void DidScroll(const gfx::ScrollOffset& scroll_offset) final {
+  void DidScroll(float x, float y, const CompositorElementId&) final {
     did_scroll_count++;
-    last_scroll_offset = scroll_offset;
+    last_scroll_offset = gfx::ScrollOffset(x, y);
   };
 
   gfx::ScrollOffset last_scroll_offset;
