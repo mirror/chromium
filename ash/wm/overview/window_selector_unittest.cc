@@ -921,6 +921,8 @@ TEST_F(WindowSelectorTest, SkipOverviewWindow) {
 
   // Exit overview.
   ToggleOverview();
+  base::RunLoop().RunUntilIdle();
+
   EXPECT_TRUE(window1->IsVisible());
   EXPECT_TRUE(window2->IsVisible());
 }
@@ -1238,15 +1240,15 @@ TEST_F(WindowSelectorTest, Shutdown) {
   gfx::Rect bounds(0, 0, 400, 400);
   // These windows will be deleted when the test exits and the Shell instance
   // is shut down.
-  aura::Window* window1(CreateWindow(bounds));
-  aura::Window* window2(CreateWindow(bounds));
-  aura::Window* window3(CreatePanelWindow(bounds));
-  aura::Window* window4(CreatePanelWindow(bounds));
+  std::unique_ptr<aura::Window> window1(CreateWindow(bounds));
+  std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
+  std::unique_ptr<aura::Window> window3(CreatePanelWindow(bounds));
+  std::unique_ptr<aura::Window> window4(CreatePanelWindow(bounds));
 
-  wm::ActivateWindow(window4);
-  wm::ActivateWindow(window3);
-  wm::ActivateWindow(window2);
-  wm::ActivateWindow(window1);
+  wm::ActivateWindow(window4.get());
+  wm::ActivateWindow(window3.get());
+  wm::ActivateWindow(window2.get());
+  wm::ActivateWindow(window1.get());
 
   ToggleOverview();
 }
