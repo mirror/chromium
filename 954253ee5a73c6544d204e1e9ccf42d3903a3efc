@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d11cbb7f_6c20135c",
+        "filename": "ash/shell.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-24T17:23:49Z",
+      "side": 1,
+      "message": "Yue is added methods here in https://chromium-review.googlesource.com/c/chromium/src/+/631057 as well. I think it\u0027s time to pull this stuff out of Shell. Can you coordinate with him on that?",
+      "parentUuid": "7f45a5a0_d1810982",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edb0da3c_2cb92cd1",
         "filename": "ash/shell_observer.h",
         "patchSetId": 4
