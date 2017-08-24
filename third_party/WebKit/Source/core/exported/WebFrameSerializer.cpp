@@ -147,6 +147,15 @@ bool MHTMLFrameSerializerDelegate::ShouldIgnoreElement(const Element& element) {
 
 bool MHTMLFrameSerializerDelegate::ShouldIgnoreHiddenElement(
     const Element& element) {
+  // If an iframe is in the head, it will be moved to the body when the page is
+  // being loaded. But if an iframe is injected into the head later, it will
+  // stay there and not been displayed. To prevent it from being brought to the
+  // saved page and cause it being displayed, we should not include it.
+  if (isHTMLIFrameElement(element) &&
+      isHTMLHeadElement(element.parentElement())) {
+    return true;
+  }
+
   // Do not include the element that is marked with hidden attribute.
   if (element.FastHasAttribute(HTMLNames::hiddenAttr))
     return true;
