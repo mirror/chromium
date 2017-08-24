@@ -16,6 +16,24 @@
       "revId": "d2e453041f4a6736f16fc2ffd665c6b209d00f9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ce5a92_eb468b21",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-24T20:00:46Z",
+      "side": 1,
+      "message": "I pursued the proposal with tenacity and verisimilitude (spoken mellifluously). khushalsagar@ and I looked at this in person. There are two issues that came up in failing unit tests:\n\n1. In single thread mode, ToT logic map use essentially keeps a cache of the values to apply. Without those maps, and with only a single LayerTreeImpl as we commit directly to the active tree in for example the ui compositor, we lose the new animated value that we need to apply.\n\n2. Currently the value to override is updated only when the animation system informs us that it had mutated that value. But if we use the new logic, if the main thread implies the animation is currently animating, we will always override.\n\nWe could explore the other option discussed w/ enne@ of removing maps and asking AnimationHost to re-apply animation values to the property tree nodes after they\u0027ve been clobbered, but from review, it actually looks like the way we\u0027re using maps fits with the design of the animation system, since AnimationPlayer::TickAnimation and the various NotifyXxx calls are what drive the population of the maps and otherwise the animation\u0027s precise current value is not clearly stored and would perhaps need to be recomputed.\n\nCould explore in subsequent patch if we think priority warrants?",
+      "parentUuid": "078eae32_101c88b0",
+      "revId": "d2e453041f4a6736f16fc2ffd665c6b209d00f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
