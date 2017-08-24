@@ -46,6 +46,7 @@
 #include "content/public/common/resource_request_body.h"
 #include "content/public/common/resource_response.h"
 #include "content/public/common/url_constants.h"
+#include "content/public/common/url_utils.h"
 #include "content/public/common/web_preferences.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
@@ -439,7 +440,7 @@ void NavigationRequest::BeginNavigation() {
 
   CreateNavigationHandle();
 
-  if (ShouldMakeNetworkRequestForURL(common_params_.url) &&
+  if (IsURLHandledByNetworkRequest(common_params_.url) &&
       !navigation_handle_->IsSameDocument()) {
     // It's safe to use base::Unretained because this NavigationRequest owns
     // the NavigationHandle where the callback will be stored.
@@ -983,7 +984,7 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
 }
 
 void NavigationRequest::CommitNavigation() {
-  DCHECK(response_ || !ShouldMakeNetworkRequestForURL(common_params_.url) ||
+  DCHECK(response_ || !IsURLHandledByNetworkRequest(common_params_.url) ||
          navigation_handle_->IsSameDocument());
   DCHECK(!common_params_.url.SchemeIs(url::kJavaScriptScheme));
 
