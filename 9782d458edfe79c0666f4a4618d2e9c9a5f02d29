@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e315da9e_7dde637d",
+        "filename": "ios/tools/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-24T22:45:28Z",
+      "side": 1,
+      "message": "There should be at least 2 owners for the directory",
+      "revId": "9782d458edfe79c0666f4a4618d2e9c9a5f02d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
