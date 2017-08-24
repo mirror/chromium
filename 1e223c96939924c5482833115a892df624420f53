@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d362f14f_1b8dcb1f",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-24T22:04:58Z",
+      "side": 1,
+      "message": "Make sure you remove all other places that set this value before you merge this cl.",
+      "range": {
+        "startLine": 315,
+        "startChar": 0,
+        "endLine": 316,
+        "endChar": 73
+      },
+      "revId": "1e223c96939924c5482833115a892df624420f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7db9f1b5_dcbb0975",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-24T22:04:58Z",
+      "side": 1,
+      "message": "Now you do sync it.",
+      "range": {
+        "startLine": 300,
+        "startChar": 30,
+        "endLine": 301,
+        "endChar": 58
+      },
+      "revId": "1e223c96939924c5482833115a892df624420f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "386f6c52_92fe1e4f",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-24T22:04:58Z",
+      "side": 1,
+      "message": "Update the comment with:\n\nExisting users before prefs::kVoiceInteractionEnabled and prefs::kVoiceInteractionContextEnabled are introduced will have default \"false\" value.  To avoid breaking existing users, if they have already accepted value prop (prefs::kArcVoiceInteractionValuePropAccepted \u003d\u003d true), but prefs::kVoiceInteractionEnabled and prefs::kVoiceInteractionContextEnabled are not set, we set them to true. \n\nprefs::kArcVoiceInteractionValuePropAccepted \u003d\u003d true, but prefs::kVoiceInteractionEnabled and prefs::kVoiceInteractionContextEnabled are not set, is an invalid state.",
+      "range": {
+        "startLine": 308,
+        "startChar": 7,
+        "endLine": 308,
+        "endChar": 37
+      },
+      "revId": "1e223c96939924c5482833115a892df624420f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
