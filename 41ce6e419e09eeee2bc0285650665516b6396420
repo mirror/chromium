@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f940b146_c2d22900",
+        "filename": "ui/base/cocoa/hover_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-24T01:57:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4935b18_4ff551c9",
+      "range": {
+        "startLine": 41,
+        "startChar": 10,
+        "endLine": 41,
+        "endChar": 31
+      },
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70f318e8_48300b3c",
         "filename": "ui/base/cocoa/hover_button.mm",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3909949_def89144",
+        "filename": "ui/base/cocoa/hover_button.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-24T01:57:52Z",
+      "side": 1,
+      "message": "Done… but it triggers a presubmit warning. I\u0027m pretty partial to letting clang-format do its thing except in exceptional circumstances (is there a way to mark sections that shouldn\u0027t be formatted, in that case?).",
+      "parentUuid": "70f318e8_48300b3c",
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "32d354e8_c1c1793d",
+        "filename": "ui/base/cocoa/hover_button_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-24T01:57:52Z",
+      "side": 1,
+      "message": "Most HoverButton instances won\u0027t have a custom hitbox, so HoverButton just implements -hitbox to return NSZeroRect — no storage needed. When a button *does* want to specify a hitbox, it may be dynamic: the MD download shelf close button overrides -hitbox to return a value based on whether its window is in fullscreen, which ends up being cleaner than observing the window\u0027s fullscreen state and assigning values to hitbox.\n\nSo far, only this test returns a value for -hitbox that can\u0027t be determined on the fly.",
+      "parentUuid": "32633392_4bfe4503",
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2556334_f5c16ea0",
         "filename": "ui/base/cocoa/hover_button_unittest.mm",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74c60a1_e78c555b",
+        "filename": "ui/base/cocoa/hover_button_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-24T01:57:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2556334_f5c16ea0",
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "dcba54cb_ecde169a",
+        "filename": "ui/base/cocoa/hover_button_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-24T01:57:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59370c74_195362b0",
+      "range": {
+        "startLine": 118,
+        "startChar": 10,
+        "endLine": 118,
+        "endChar": 24
+      },
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6757c90a_113a61d5",
         "filename": "ui/base/cocoa/hover_button_unittest.mm",
         "patchSetId": 2
@@ -110,6 +212,30 @@
       "writtenOn": "2017-08-23T23:38:23Z",
       "side": 1,
       "message": "This is copying the tracking areas array each time. Pull this out into a local.",
+      "range": {
+        "startLine": 123,
+        "startChar": 66,
+        "endLine": 123,
+        "endChar": 71
+      },
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8966274_07dd5e4d",
+        "filename": "ui/base/cocoa/hover_button_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-24T01:57:52Z",
+      "side": 1,
+      "message": "This is intentional — changing the hitbox may result in a new tracking area being created.",
+      "parentUuid": "6757c90a_113a61d5",
       "range": {
         "startLine": 123,
         "startChar": 66,
