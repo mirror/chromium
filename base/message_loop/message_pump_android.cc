@@ -117,11 +117,8 @@ static void DoIdleWork(JNIEnv* env,
 
 namespace base {
 
-MessagePumpForUI::MessagePumpForUI()
-    : run_loop_(nullptr), should_abort_(false) {}
-
-MessagePumpForUI::~MessagePumpForUI() {
-}
+MessagePumpForUI::MessagePumpForUI() = default;
+MessagePumpForUI::~MessagePumpForUI() = default;
 
 void MessagePumpForUI::Run(Delegate* delegate) {
   NOTREACHED() << "UnitTests should rely on MessagePumpForUIStub in"
@@ -143,6 +140,7 @@ JNIEnv* MessagePumpForUI::StartInternal() {
 }
 
 void MessagePumpForUI::Start(Delegate* delegate) {
+  DCHECK(!quit_);
   JNIEnv* env = StartInternal();
   system_message_handler_obj_.Reset(Java_SystemMessageHandler_create(
       env, reinterpret_cast<intptr_t>(delegate),
@@ -159,6 +157,7 @@ void MessagePumpForUI::StartForUnitTest(
 }
 
 void MessagePumpForUI::Quit() {
+  quit_ = true;
   if (!system_message_handler_obj_.is_null()) {
     JNIEnv* env = base::android::AttachCurrentThread();
     DCHECK(env);
@@ -176,6 +175,8 @@ void MessagePumpForUI::Quit() {
 }
 
 void MessagePumpForUI::ScheduleWork() {
+  if (quit_)
+    return;
   DCHECK(!system_message_handler_obj_.is_null());
 
   JNIEnv* env = base::android::AttachCurrentThread();
@@ -185,6 +186,8 @@ void MessagePumpForUI::ScheduleWork() {
 }
 
 void MessagePumpForUI::ScheduleDelayedWork(const TimeTicks& delayed_work_time) {
+  if (quit_)
+    return;
   DCHECK(!system_message_handler_obj_.is_null());
 
   JNIEnv* env = base::android::AttachCurrentThread();
