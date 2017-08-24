@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7b740f9_0cebe75a",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-24T18:14:15Z",
+      "side": 1,
+      "message": "Checking every 2 minute feels like pretty frequently for a daily event. But I am not strongly against this number.",
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be125b29_75fe8d77",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-24T18:14:15Z",
+      "side": 1,
+      "message": "Why not just use //base/memory/singleton.h?",
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4690ae3e_ff5b8db4",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-24T18:14:15Z",
+      "side": 1,
+      "message": "nit: Would DCHECK(pref_service) be enough?",
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
