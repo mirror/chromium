@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "components/offline_pages/core/offline_time_utils.h"
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store.h"
@@ -49,8 +50,7 @@ struct PrefetchItemStats {
   int64_t file_size;
 };
 
-std::unique_ptr<std::vector<PrefetchItemStats>> FetchUrlsSync(
-    sql::Connection* db) {
+std::vector<PrefetchItemStats> FetchUrlsSync(sql::Connection* db) {
   static const char kSql[] = R"(
   SELECT offline_id, generate_bundle_attempts, get_operation_attempts,
     download_initiation_attempts, archive_body_length, creation_time,
@@ -61,9 +61,9 @@ std::unique_ptr<std::vector<PrefetchItemStats>> FetchUrlsSync(
   sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql));
   statement.BindInt(0, static_cast<int>(PrefetchItemState::FINISHED));
 
-  auto urls = base::MakeUnique<std::vector<PrefetchItemStats>>();
+  std::vector<PrefetchItemStats> urls;
   while (statement.Step()) {
-    PrefetchItemStats stats(
+    urls.emplace_back(
         statement.ColumnInt64(0),  // offline_id
         statement.ColumnInt(1),    // generate_bundle_attempts
         statement.ColumnInt(2),    // get_operation_attempts
@@ -74,8 +74,6 @@ std::unique_ptr<std::vector<PrefetchItemStats>> FetchUrlsSync(
             statement.ColumnInt(6)),  // error_code
         statement.ColumnInt64(7)      // file_size
         );
-
-    urls->push_back(stats);
   }
 
   return urls;
@@ -94,6 +92,83 @@ bool MarkUrlAsZombie(sql::Connection* db,
   return statement.Run();
 }
 
+enum class FileSizePercentRange {
+  LESS_THAN_50 = 49,
+  FROM_50_TO_75 = 50,
+  FROM_75_TO_90 = 75,
+  FROM_90_TO_99 = 90,
+  FROM_99_TO_100 = 99,
+  FROM_100_TO_101 = 101,
+  FROM_101_TO_110 = 110,
+  FROM_110_TO_130 = 130,
+  FROM_130_TO_200 = 200,
+  MORE_THAN_200 = 201,
+  MAX = MORE_THAN_200
+};
+
+FileSizePercentRange GetRangeForRatio(double ratio) {
+  DCHECK_NE(1.0, ratio);
+  // These ranges are closed on the lower limit and open on the upper one.
+  if (ratio < .5)
+    return FileSizePercentRange::LESS_THAN_50;
+  if (ratio < .75)
+    return FileSizePercentRange::FROM_50_TO_75;
+  if (ratio < .9)
+    return FileSizePercentRange::FROM_75_TO_90;
+  if (ratio < .99)
+    return FileSizePercentRange::FROM_90_TO_99;
+  if (ratio < 1.0)
+    return FileSizePercentRange::FROM_99_TO_100;
+  // These ranges are open on the lower limit and closed on the upper one.
+  if (ratio <= 1.01)
+    return FileSizePercentRange::FROM_100_TO_101;
+  if (ratio <= 1.1)
+    return FileSizePercentRange::FROM_101_TO_110;
+  if (ratio <= 1.3)
+    return FileSizePercentRange::FROM_110_TO_130;
+  if (ratio <= 2.0)
+    return FileSizePercentRange::FROM_130_TO_200;
+
+  return FileSizePercentRange::MORE_THAN_200;
+}
+
+void ReportMetricsFor(const PrefetchItemStats& url, const base::Time now) {
+  // Lifetime reporting.
+  static const int four_weeks_in_seconds = 60 * 60 * 24 * 28;
+  const bool successful = url.error_code == PrefetchItemErrorCode::SUCCESS;
+  base::TimeDelta lifetime = now - url.creation_time;
+  UMA_HISTOGRAM_CUSTOM_COUNTS(
+      (successful ? "OfflinePages.Prefetching.ItemLifetime.Successful"
+                  : "OfflinePages.Prefetching.ItemLifetime.Failed"),
+      lifetime.InSeconds(), 1, four_weeks_in_seconds, 50);
+
+  // Error code reporting.
+  UMA_HISTOGRAM_ENUMERATION("OfflinePages.Prefetching.FinishedItemErrorCode",
+                            url.error_code, PrefetchItemErrorCode::MAX);
+
+  // Unexpected file size reporting.
+  if (successful && url.archive_body_length > 0 && url.file_size >= 0 &&
+      url.archive_body_length != url.file_size) {
+    FileSizePercentRange difference_range =
+        GetRangeForRatio(double(url.file_size) / url.archive_body_length);
+    UMA_HISTOGRAM_ENUMERATION(
+        "OfflinePages.Prefetching.DownloadedArchiveSizeVsExpected",
+        difference_range, FileSizePercentRange::MAX);
+  }
+
+  // Attempt counts reporting.
+  static const int max_retries_ever = 20;
+  UMA_HISTOGRAM_EXACT_LINEAR(
+      "OfflinePages.Prefetching.ActionRetryAttempts.GeneratePageBundle",
+      url.generate_bundle_attempts, max_retries_ever);
+  UMA_HISTOGRAM_EXACT_LINEAR(
+      "OfflinePages.Prefetching.ActionRetryAttempts.GetOperation",
+      url.get_operation_attempts, max_retries_ever);
+  UMA_HISTOGRAM_EXACT_LINEAR(
+      "OfflinePages.Prefetching.ActionRetryAttempts.DownloadInitiation",
+      url.download_initiation_attempts, max_retries_ever);
+}
+
 bool SelectUrlsToPrefetchSync(sql::Connection* db) {
   if (!db)
     return false;
@@ -102,16 +177,15 @@ bool SelectUrlsToPrefetchSync(sql::Connection* db) {
   if (!transaction.Begin())
     return false;
 
-  auto urls = FetchUrlsSync(db);
+  const std::vector<PrefetchItemStats> urls = FetchUrlsSync(db);
 
   base::Time now = base::Time::Now();
-  for (const auto& url : *urls) {
+  for (const auto& url : urls) {
     MarkUrlAsZombie(db, now, url.offline_id);
   }
 
   if (transaction.Commit()) {
-    // TODO(dewittj): Report interesting UMA metrics for each prefetch item.
-    for (const auto& url : *urls) {
+    for (const auto& url : urls) {
       DVLOG(1) << "Finalized prefetch item: (" << url.offline_id << ", "
                << url.generate_bundle_attempts << ", "
                << url.get_operation_attempts << ", "
@@ -119,8 +193,8 @@ bool SelectUrlsToPrefetchSync(sql::Connection* db) {
                << url.archive_body_length << ", " << url.creation_time << ", "
                << static_cast<int>(url.error_code) << ", " << url.file_size
                << ")";
+      ReportMetricsFor(url, now);
     }
-
     return true;
   }
 
