@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "380410f1_91d1e4cd",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-24T12:39:56Z",
+      "side": 1,
+      "message": "nit: base::nullopt\n\nSince closeNotification() on the Java side won\u0027t query the WebAPK package unless |scopeUrl| is set, wouldn\u0027t we now fail to close notifications shown for previous process instances of the WebAPK?",
+      "revId": "0d4435e07231b2f992c0946ef6ecf101fae5ab40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24de19e4_70f60c4d",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-24T12:39:56Z",
+      "side": 1,
+      "message": "I think it\u0027s valid to just pass webapk_package, as the Optional constructor deliberately wasn\u0027t marked as being explicit.",
+      "revId": "0d4435e07231b2f992c0946ef6ecf101fae5ab40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a051a0_f1f346f5",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-24T12:39:56Z",
+      "side": 1,
+      "message": "(ditto for both comments; elsewhere too)",
+      "revId": "0d4435e07231b2f992c0946ef6ecf101fae5ab40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7d3cbd_8f8b1957",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-24T12:39:56Z",
+      "side": 1,
+      "message": "While it reads odd, using the same names in initialization lists is allowed. By renaming them the argument names in the .h and .cc files differ. Please either revert the renames (my very mild preference) or update the header file.",
+      "revId": "0d4435e07231b2f992c0946ef6ecf101fae5ab40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86b48f9_1ba7ae6f",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-24T12:39:56Z",
+      "side": 1,
+      "message": "service_worker_scope?",
+      "revId": "0d4435e07231b2f992c0946ef6ecf101fae5ab40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9bfc53c_830e241e",
+        "filename": "chrome/browser/notifications/notification_platform_bridge_android.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-24T12:39:56Z",
+      "side": 1,
+      "message": "nit: here too, define that |scope| is the Service Worker\u0027s scope. The word itself is rather broad.",
+      "revId": "0d4435e07231b2f992c0946ef6ecf101fae5ab40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
