@@ -36,8 +36,8 @@ class RespondWithCallbacks
         binding_(this),
         weak_ptr_factory_(this) {
     request_id_ = service_worker_version->StartRequest(
-        event_type, base::Bind(&RespondWithCallbacks::OnErrorStatus,
-                               weak_ptr_factory_.GetWeakPtr()));
+        event_type, base::BindOnce(&RespondWithCallbacks::OnErrorStatus,
+                                   weak_ptr_factory_.GetWeakPtr()));
   }
 
   RespondWithCallbacks(
@@ -49,8 +49,8 @@ class RespondWithCallbacks
         binding_(this),
         weak_ptr_factory_(this) {
     request_id_ = service_worker_version->StartRequest(
-        event_type, base::Bind(&RespondWithCallbacks::OnErrorStatus,
-                               weak_ptr_factory_.GetWeakPtr()));
+        event_type, base::BindOnce(&RespondWithCallbacks::OnErrorStatus,
+                                   weak_ptr_factory_.GetWeakPtr()));
   }
 
   payments::mojom::PaymentHandlerResponseCallbackPtr
@@ -165,7 +165,7 @@ void DispatchAbortPaymentEvent(
 
   int event_finish_id = active_version->StartRequest(
       ServiceWorkerMetrics::EventType::CAN_MAKE_PAYMENT,
-      base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+      base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
 
   // This object self-deletes after either success or error callback is invoked.
   RespondWithCallbacks* invocation_callbacks =
@@ -194,7 +194,7 @@ void DispatchCanMakePaymentEvent(
 
   int event_finish_id = active_version->StartRequest(
       ServiceWorkerMetrics::EventType::CAN_MAKE_PAYMENT,
-      base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+      base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
 
   // This object self-deletes after either success or error callback is invoked.
   RespondWithCallbacks* invocation_callbacks = new RespondWithCallbacks(
@@ -226,7 +226,7 @@ void DispatchPaymentRequestEvent(
 
   int event_finish_id = active_version->StartRequest(
       ServiceWorkerMetrics::EventType::PAYMENT_REQUEST,
-      base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+      base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
 
   // This object self-deletes after either success or error callback is invoked.
   RespondWithCallbacks* invocation_callbacks =
