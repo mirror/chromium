@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "0a2f2575_97330a73",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-24T14:54:44Z",
+      "side": 1,
+      "message": "If we can\u0027t decode to the exact size, then we go down the GetScaledImageDecode path. The first step of that is to create a draw image such that it is the supported size and has no subset, which calls back to this function and uses GetExactImageDecode. It then scales/subsets that decode.",
+      "parentUuid": "fe06854b_ace4fee4",
+      "range": {
+        "startLine": 462,
+        "startChar": 7,
+        "endLine": 462,
+        "endChar": 67
+      },
+      "revId": "d3ae310814724d4461b3a8a8298ab77ada0eda8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fecc13be_047b390a",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
