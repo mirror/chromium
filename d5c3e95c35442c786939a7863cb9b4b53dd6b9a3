@@ -52,6 +52,24 @@
       "revId": "d5c3e95c35442c786939a7863cb9b4b53dd6b9a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb3effd_a02f8911",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-24T22:21:38Z",
+      "side": 1,
+      "message": "im not sure what statuses this code handles. from what i can read, this code handles a bunch of cases\n\n1. randomstuff - logs Unsupported battery path\n2. prefix-nothing-suffix - logs No valid battery address at path\n3. prefix-notaddress|notstylusname-suffix - Notifies with notificationid notaddress|notstylusname.\n4. prefix-address-suffix -Notifies with notficationid address.\n5. prefix-stylusname-suffix - Notifies with notification kStylus\n\ni\u0027d suppose 1,2 and maybe 3 dont get called a whole bunch, but i dont know. based on the existing impl, i think we do need a method that trims the strings, since 2-5 need to act on the middle part, and it would be unefficient to do it each times\n\nOnPeripheral(...) \n\nif (!IsHIDBattery()) log, return;\nstr middle \u003d GetMiddle();\nif (middle.empty) log, return;\nif (IsStylus(middle)) id \u003d kStylus;\nelif (IsBT(middle, address)) id \u003d adress;\nelse id \u003d path;\n\nwould that make more sense? shuffling the early exits?",
+      "parentUuid": "93b4b9a5_f202e29e",
+      "revId": "d5c3e95c35442c786939a7863cb9b4b53dd6b9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
