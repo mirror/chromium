@@ -57,10 +57,19 @@ public abstract class NetworkException extends CronetException {
      */
     public static final int ERROR_QUIC_PROTOCOL_FAILED = 10;
     /**
+     * Error code indicating that an HTTP2 PING failed.
+     */
+    public static final int ERROR_HTTP2_PING_FAILED = 11;
+    /**
+     * Error code indicating an error related to QUIC crypto handshake. This means that
+     * the server was unable to read any requests sent, so they may be resent.
+     */
+    public static final int ERROR_QUIC_HANDSHAKE_FAILED = 12;
+    /**
      * Error code indicating another type of error was encountered.
      * {@link #getCronetInternalErrorCode} can be consulted to get a more specific cause.
      */
-    public static final int ERROR_OTHER = 11;
+    public static final int ERROR_OTHER = 13;
 
     /**
      * Constructs an exception that is caused by a network error.
