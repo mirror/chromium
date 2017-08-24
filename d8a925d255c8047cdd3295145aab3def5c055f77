@@ -85,6 +85,24 @@
       "revId": "d8a925d255c8047cdd3295145aab3def5c055f77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4adbfba_3903da94",
+        "filename": "third_party/WebKit/Source/platform/fonts/opentype/OS2TableCJKFontTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-24T11:09:27Z",
+      "side": 1,
+      "message": "Thanks for listing those, that\u0027s helpful. I looked at this list on Wikipedia but with Windows 10 things are changing to be installed optionally on demand, so indeed, bot availability will be limited. I\u0027ll try adding a few more fonts.\n\nI agree that the OS/2 code codepage bitfield is not reliable  in general but we do not need it to be reliable for all fonts/all web fonts. We only need it to have CJK flags set for those CJK fonts for which we want to keep displaying embedded bitmaps. SimSun and Dotum for example, and perhaps other ones from your list above.\n\nA simple alternative would be to hardcode \"Calibri\" as the font for which we want to suppress embedded bitmaps, which would solve the immediate problem. This approach is probably a bit hacky, and FF decided to avoid such an explicit blacklisting by name (in their discussion on the bug).\n\nWhat do you think, Koji, Emil?",
+      "parentUuid": "a70ef5e9_c159d615",
+      "revId": "d8a925d255c8047cdd3295145aab3def5c055f77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
