@@ -18,7 +18,7 @@ import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkItem;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkModelObserver;
-import org.chromium.chrome.browser.signin.SigninPromoView;
+import org.chromium.chrome.browser.signin.PersonalizedSigninPromoView;
 import org.chromium.components.bookmarks.BookmarkId;
 
 import java.lang.annotation.Retention;
@@ -35,10 +35,11 @@ class BookmarkItemsAdapter
      * Specifies the view types that the bookmark manager screen can contain.
      */
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({ViewType.NEW_PROMO, ViewType.OLD_PROMO, ViewType.FOLDER, ViewType.BOOKMARK})
+    @IntDef({ViewType.PERSONALIZED_SIGNIN_PROMO, ViewType.SIGNIN_AND_SYNC_PROMO, ViewType.FOLDER,
+            ViewType.BOOKMARK})
     private @interface ViewType {
-        int NEW_PROMO = 0;
-        int OLD_PROMO = 1;
+        int PERSONALIZED_SIGNIN_PROMO = 0;
+        int SIGNIN_AND_SYNC_PROMO = 1;
         int FOLDER = 2;
         int BOOKMARK = 3;
     }
@@ -57,7 +58,7 @@ class BookmarkItemsAdapter
     private final List<BookmarkId> mTopLevelFolders = new ArrayList<>();
 
     private BookmarkDelegate mDelegate;
-    private Context mContext;
+    private final Context mContext;
     private BookmarkPromoHeader mPromoHeaderManager;
     private String mSearchText;
 
@@ -204,10 +205,10 @@ class BookmarkItemsAdapter
         assert mDelegate != null;
 
         switch (viewType) {
-            case ViewType.NEW_PROMO:
-                return mPromoHeaderManager.createNewPromoHolder(parent);
-            case ViewType.OLD_PROMO:
-                return mPromoHeaderManager.createOldPromoHolder(parent);
+            case ViewType.PERSONALIZED_SIGNIN_PROMO:
+                return mPromoHeaderManager.createPersonalizedPromoHolder(parent);
+            case ViewType.SIGNIN_AND_SYNC_PROMO:
+                return mPromoHeaderManager.createGenericPromoHolder(parent);
             case ViewType.FOLDER:
                 BookmarkFolderRow folder = (BookmarkFolderRow) LayoutInflater.from(
                         parent.getContext()).inflate(R.layout.bookmark_folder_row, parent, false);
@@ -228,10 +229,11 @@ class BookmarkItemsAdapter
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         switch (holder.getItemViewType()) {
-            case ViewType.NEW_PROMO:
-                mPromoHeaderManager.setupSigninPromo((SigninPromoView) holder.itemView);
+            case ViewType.PERSONALIZED_SIGNIN_PROMO:
+                mPromoHeaderManager.setupPersonalizedSigninPromo(
+                        (PersonalizedSigninPromoView) holder.itemView);
                 break;
-            case ViewType.OLD_PROMO:
+            case ViewType.SIGNIN_AND_SYNC_PROMO:
                 break;
             case ViewType.FOLDER:
                 ((BookmarkRow) holder.itemView).setBookmarkId(getItem(position));
@@ -342,14 +344,14 @@ class BookmarkItemsAdapter
         switch (mPromoHeaderManager.getPromoState()) {
             case BookmarkPromoHeader.PromoState.PROMO_NONE:
                 return;
-            case BookmarkPromoHeader.PromoState.PROMO_SIGNIN_NEW:
-                mPromoHeaderSection.add(ViewType.NEW_PROMO);
+            case BookmarkPromoHeader.PromoState.PROMO_SIGNIN_PERSONALIZED:
+                mPromoHeaderSection.add(ViewType.PERSONALIZED_SIGNIN_PROMO);
                 return;
-            case BookmarkPromoHeader.PromoState.PROMO_SIGNIN_OLD:
-                mPromoHeaderSection.add(ViewType.OLD_PROMO);
+            case BookmarkPromoHeader.PromoState.PROMO_SIGNIN_GENERIC:
+                mPromoHeaderSection.add(ViewType.SIGNIN_AND_SYNC_PROMO);
                 return;
             case BookmarkPromoHeader.PromoState.PROMO_SYNC:
-                mPromoHeaderSection.add(ViewType.OLD_PROMO);
+                mPromoHeaderSection.add(ViewType.SIGNIN_AND_SYNC_PROMO);
                 return;
             default:
                 assert false : "Unexpected value for promo state!";
