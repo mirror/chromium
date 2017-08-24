@@ -935,7 +935,10 @@ action("extract_cronet_jars") {
   ]
 
   deps = [
+    ":cronet_api_java",
+    ":cronet_impl_common_java",
     ":cronet_impl_native_java",
+    ":cronet_impl_platform_java",
     "//base:base_java",
     "//net/android:net_java",
     "//url:url_java",
