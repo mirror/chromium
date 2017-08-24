@@ -22,6 +22,30 @@
       "revId": "a5e62560afbfadcfb43d7f400b1bff1a733f8a99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f9fcfd_4db5ee85",
+        "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-24T16:27:51Z",
+      "side": 1,
+      "message": "This was a recent change caused by my CL clearing the cryptohome data when disabling login.",
+      "parentUuid": "ab655623_65e13f45",
+      "range": {
+        "startLine": 772,
+        "startChar": 40,
+        "endLine": 772,
+        "endChar": 0
+      },
+      "revId": "a5e62560afbfadcfb43d7f400b1bff1a733f8a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
