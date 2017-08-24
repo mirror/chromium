@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6557a00b_1d39f3d0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-24T23:31:39Z",
+      "side": 1,
+      "message": "I agree, that sounds reasonable.",
+      "parentUuid": "09cea28a_43e8f46e",
+      "revId": "6eea9322a675dd39cba7fd564c533bd23d557d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85dc7bc4_1802d7a4",
         "filename": "third_party/WebKit/Tools/Scripts/wpt-import",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-24T17:40:36Z",
       "side": 1,
       "message": "Kinda irrelevant question here: isn\u0027t the purpose of using vpython provided by depot_tools to ensure Python version? Why do we still need to check version this way?",
+      "revId": "6eea9322a675dd39cba7fd564c533bd23d557d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f02e5df_5c65481c",
+        "filename": "third_party/WebKit/Tools/Scripts/wpt-import",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-24T23:31:39Z",
+      "side": 1,
+      "message": "You\u0027re right, I actually don\u0027t think it\u0027s necessary to check version here.\n\nNow, despite the vpython shebang, if somebody invokes this script with an old version of python, e.g. `python2.4 wpt-import` then it won\u0027t work.\n\nBut I\u0027m pretty sure that\u0027s very unlikely to happen, and we\u0027ve been assuming python2.7 everywhere on the bots for a long time now.",
+      "parentUuid": "85dc7bc4_1802d7a4",
       "revId": "6eea9322a675dd39cba7fd564c533bd23d557d9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
