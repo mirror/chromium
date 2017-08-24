@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f99465e8_49f37a24",
+        "filename": "base/files/file_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-24T21:13:12Z",
+      "side": 1,
+      "message": "I\u0027m not too familiar with pwrite(). Is it possible a 0-byte pwrite() call could be implying a synch/flush/etc?\n\nOtherwise, lgtm.",
+      "revId": "c2fca078dffd5381a7a9fdeae67cbb899cffa82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
