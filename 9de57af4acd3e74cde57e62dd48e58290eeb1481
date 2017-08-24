@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c354e2eb_332d33d1",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1205294
+      },
+      "writtenOn": "2017-08-24T23:13:59Z",
+      "side": 0,
+      "message": "I think the bot should have the iphone 5s ios 11.0 simulator. (Just sshed into the bot). Can we replace the iphone 5 to iphone 5s here?",
+      "range": {
+        "startLine": 107,
+        "startChar": 7,
+        "endLine": 107,
+        "endChar": 31
+      },
+      "revId": "9de57af4acd3e74cde57e62dd48e58290eeb1481",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
