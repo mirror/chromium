@@ -46,6 +46,30 @@
       "revId": "a88f02cb5b00a9e4bef0fee0253110079aa4573c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e01cc59_515257c1",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-24T16:51:16Z",
+      "side": 1,
+      "message": "I agree, thanks Peiyong and Zhen:\n1) I added IsSameDocument()\n2) Not doing anything with IsErrorPage() because it\u0027s still a loading page and I think the state should change.\n3) Not checking HasCommitted() because that isn\u0027t known here. If we want to handle that case, we\u0027d need to adding a state change in DidFinishNavigation(). But, I think it\u0027s fine to wait until DidStopLoading()?\n\nAFA going thru TabManager: I chose this approach because currently everything else goes through TabManager, TabManager does not have a getter for |tab_manager_stats_collector_|, and I wasn\u0027t sure if we\u0027d want to expose this. We could maybe leave it as is and change it if we find more cases where WebContentsData needs to talk to the stats collector directly? WDYT?",
+      "parentUuid": "7239a498_551b7460",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 63,
+        "endChar": 22
+      },
+      "revId": "a88f02cb5b00a9e4bef0fee0253110079aa4573c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
