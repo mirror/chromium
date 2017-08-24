@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ae8e383_2db132f0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptCustomElementDefinition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-08-24T00:47:37Z",
+      "side": 1,
+      "message": "Does this exception have any kind of stack trace? Will this information be enough to get lineNumber and columnNumber when we generate v8::Message from this exception?",
+      "revId": "ed91cd814ecfa8cbbf4a6ff5c8153981cec8c082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
