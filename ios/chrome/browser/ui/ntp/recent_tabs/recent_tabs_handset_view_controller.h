@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef IOS_CHROME_BROWSER_UI_NTP_RECENT_TABS_RECENT_TABS_PANEL_VIEW_CONTROLLER_H_
-#define IOS_CHROME_BROWSER_UI_NTP_RECENT_TABS_RECENT_TABS_PANEL_VIEW_CONTROLLER_H_
+#ifndef IOS_CHROME_BROWSER_UI_NTP_RECENT_TABS_RECENT_TABS_HANDSET_VIEW_CONTROLLER_H_
+#define IOS_CHROME_BROWSER_UI_NTP_RECENT_TABS_RECENT_TABS_HANDSET_VIEW_CONTROLLER_H_
 
 #import <UIKit/UIKit.h>
 
@@ -15,7 +15,7 @@ class ChromeBrowserState;
 @protocol ApplicationCommands;
 
 // UIViewController wrapper for RecentTabsPanelController for modal display.
-@interface RecentTabsPanelViewController : UIViewController
+@interface RecentTabsHandsetViewController : UIViewController
 
 - (instancetype)initWithLoader:(id<UrlLoader>)loader
                   browserState:(ios::ChromeBrowserState*)browserState
@@ -26,11 +26,6 @@ class ChromeBrowserState;
                          bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
 - (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
 
-+ (UIViewController*)
-controllerToPresentForBrowserState:(ios::ChromeBrowserState*)browserState
-                            loader:(id<UrlLoader>)loader
-                        dispatcher:(id<ApplicationCommands>)dispatcher;
-
 @end
 
-#endif  // IOS_CHROME_BROWSER_UI_NTP_RECENT_TABS_RECENT_TABS_PANEL_VIEW_CONTROLLER_H_
+#endif  // IOS_CHROME_BROWSER_UI_NTP_RECENT_TABS_RECENT_TABS_HANDSET_VIEW_CONTROLLER_H_
