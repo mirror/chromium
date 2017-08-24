@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef713b73_143e5455",
+        "filename": "ios/chrome/browser/passwords/password_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-24T03:29:45Z",
+      "side": 1,
+      "message": "Optional nit: add \"nonatomic\" to the rest of properties in a separate CL.",
+      "range": {
+        "startLine": 53,
+        "startChar": 10,
+        "endLine": 53,
+        "endChar": 19
+      },
+      "revId": "2c9b49c55d336b47c1e1eb50678740f245018109",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c116e3ec_09f1272f",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-24T03:29:45Z",
+      "side": 1,
+      "message": "nit: passwordGenerationAgent_.dispatcher \u003d dispatcher;\n\nfor consistent usage of dot syntax.",
+      "range": {
+        "startLine": 376,
+        "startChar": 3,
+        "endLine": 376,
+        "endChar": 27
+      },
+      "revId": "2c9b49c55d336b47c1e1eb50678740f245018109",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
