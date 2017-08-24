@@ -231,8 +231,8 @@ void ServerWindow::SetCanAcceptDrops(bool accepts_drops) {
   accepts_drops_ = accepts_drops;
 }
 
-const ServerWindow* ServerWindow::GetRoot() const {
-  return delegate_->GetRootWindow(this);
+const ServerWindow* ServerWindow::GetRootForDrawn() const {
+  return delegate_->GetRootWindowForDrawn(this);
 }
 
 ServerWindow* ServerWindow::GetChildWindow(const WindowId& window_id) {
@@ -414,7 +414,7 @@ void ServerWindow::SetTextInputState(const ui::TextInputState& state) {
 }
 
 bool ServerWindow::IsDrawn() const {
-  const ServerWindow* root = delegate_->GetRootWindow(this);
+  const ServerWindow* root = delegate_->GetRootWindowForDrawn(this);
   if (!root || !root->visible())
     return false;
   const ServerWindow* window = this;
@@ -459,10 +459,14 @@ std::string ServerWindow::GetDebugWindowInfo() const {
   if (has_created_compositor_frame_sink_)
     frame_sink = " [" + frame_sink_id_.ToString() + "]";
 
-  return base::StringPrintf("id=%s visible=%s bounds=%s name=%s%s",
+  std::string transform;
+  if (!transform_.IsIdentity())
+    transform = " {Transformed}";
+
+  return base::StringPrintf("id=%s visible=%s bounds=%s name=%s%s%s",
                             id_.ToString().c_str(), visible_ ? "true" : "false",
                             bounds_.ToString().c_str(), name.c_str(),
-                            frame_sink.c_str());
+                            frame_sink.c_str(), transform.c_str());
 }
 
 void ServerWindow::BuildDebugInfo(const std::string& depth,

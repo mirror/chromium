@@ -97,6 +97,20 @@ gfx::Transform WindowTreeHost::GetInverseRootTransform() const {
   return invert;
 }
 
+gfx::Transform WindowTreeHost::GetRootTransformForLocalEventCoordinates()
+    const {
+  return GetRootTransform();
+}
+
+gfx::Transform WindowTreeHost::GetInverseRootTransformForLocalEventCoordinates()
+    const {
+  gfx::Transform invert;
+  gfx::Transform transform = GetRootTransformForLocalEventCoordinates();
+  if (!transform.GetInverse(&invert))
+    return transform;
+  return invert;
+}
+
 void WindowTreeHost::SetOutputSurfacePaddingInPixels(
     const gfx::Insets& padding_in_pixels) {
   if (output_surface_padding_in_pixels_ == padding_in_pixels)
@@ -369,6 +383,10 @@ void WindowTreeHost::OnDisplayMetricsChanged(const display::Display& display,
 
 void WindowTreeHost::MoveCursorToInternal(const gfx::Point& root_location,
                                           const gfx::Point& host_location) {
+  // This is cross platform code here. But I'm unsure if this is r
+
+  LOG(ERROR) << "WTH::MoveCursorToInternal(" << root_location.ToString()
+             << ", " << host_location.ToString() << ")";
   last_cursor_request_position_in_host_ = host_location;
   MoveCursorToScreenLocationInPixels(host_location);
   client::CursorClient* cursor_client = client::GetCursorClient(window());

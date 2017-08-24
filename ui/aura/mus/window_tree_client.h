@@ -207,6 +207,21 @@ class AURA_EXPORT WindowTreeClient
 
   bool IsWindowKnown(aura::Window* window);
 
+  // Updates the coordinates of |event| to be in DIPs. |window| is the source
+  // of the event, and may be null. A null |window| means either there is no
+  // local window the event is targeted at *or* |window| was valid at the time
+  // the event was generated at the server but was deleted locally before the
+  // event was received.
+  void ConvertPointerEventLocationToDip(int64_t display_id,
+                                        WindowMus* window,
+                                        ui::LocatedEvent* event);
+
+  // Variant of ConvertPointerEventLocationToDip() that is used when in
+  // the window-manager.
+  void ConvertPointerEventLocationToDipInWindowManager(int64_t display_id,
+                                                       WindowMus* window,
+                                                       ui::LocatedEvent* event);
+
   // Returns the oldest InFlightChange that matches |change|.
   InFlightChange* GetOldestInFlightChangeMatching(const InFlightChange& change);
 
@@ -235,6 +250,8 @@ class AURA_EXPORT WindowTreeClient
   void SetLocalPropertiesFromServerProperties(
       WindowMus* window,
       const ui::mojom::WindowData& window_data);
+
+  WindowTreeHostMus* GetWindowTreeHostForDisplayId(int64_t display_id);
 
   // Creates a new WindowTreeHostMus.
   std::unique_ptr<WindowTreeHostMus> CreateWindowTreeHost(

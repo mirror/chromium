@@ -1426,6 +1426,11 @@ uint32_t WindowTree::GenerateEventAckId() {
 void WindowTree::DispatchInputEventImpl(ServerWindow* target,
                                         const ui::Event& event,
                                         DispatchEventCallback callback) {
+  // if (event.IsLocatedEvent()) {
+  //   const ui::LocatedEvent* l = event.AsLocatedEvent();
+  //   LOG(ERROR) << "Outbound loc=" << l->location().ToString() << ", root="
+  //              << l->root_location().ToString();
+  // }
   // DispatchInputEventImpl() is called so often that log level 4 is used.
   DVLOG(4) << "DispatchInputEventImpl client=" << id_;
   GenerateEventAckId();

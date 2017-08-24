@@ -73,14 +73,16 @@ bool IsLocationInExtendedHitRegion(EventSource event_source,
 
 gfx::Transform TransformFromParent(const ServerWindow* window,
                                    const gfx::Transform& current_transform) {
-  gfx::Transform transform = current_transform;
+  gfx::Transform result = current_transform;
+  if (window->bounds().origin() != gfx::Point()) {
+    gfx::Transform translation;
+    translation.Translate(static_cast<float>(window->bounds().x()),
+                          static_cast<float>(window->bounds().y()));
+    result.PreconcatTransform(translation);
+  }
   if (!window->transform().IsIdentity())
-    transform.ConcatTransform(window->transform());
-  gfx::Transform translation;
-  translation.Translate(static_cast<float>(window->bounds().x()),
-                        static_cast<float>(window->bounds().y()));
-  transform.ConcatTransform(translation);
-  return transform;
+    result.PreconcatTransform(window->transform());
+  return result;
 }
 
 bool FindDeepestVisibleWindowForLocationImpl(
@@ -115,7 +117,7 @@ bool FindDeepestVisibleWindowForLocationImpl(
       const gfx::Transform child_transform =
           TransformFromParent(child, transform_from_parent);
       gfx::Point3F location_in_child3(gfx::PointF{location_in_root});
-      child_transform.TransformPointReverse(&location_in_child3);
+      CHECK(child_transform.TransformPointReverse(&location_in_child3));
       const gfx::Point location_in_child =
           gfx::ToFlooredPoint(location_in_child3.AsPointF());
       if (IsLocationInExtendedHitRegion(event_source, child,
@@ -152,9 +154,22 @@ bool FindDeepestVisibleWindowForLocationImpl(
 DeepestWindow FindDeepestVisibleWindowForLocation(ServerWindow* root_window,
                                                   EventSource event_source,
                                                   const gfx::Point& location) {
+  gfx::Point initial_location = location;
+  gfx::Transform root_transform = root_window->transform();
+  if (!root_transform.IsIdentity()) {
+    gfx::Point3F transformed_location(gfx::PointF{initial_location});
+    root_transform.TransformPointReverse(&transformed_location);
+    initial_location = gfx::ToFlooredPoint(transformed_location.AsPointF());
+  }
   DeepestWindow result;
+  // Allow the root to have a transform, which mirrors what happens with
+  // WindowManagerDisplayRoot.
   FindDeepestVisibleWindowForLocationImpl(root_window, event_source, location,
-                                          location, gfx::Transform(), &result);
+                                          initial_location, root_transform,
+                                          &result);
+
+  // LOG(ERROR) << "Finding: screen_loc=" << location.ToString();
+
   return result;
 }
 

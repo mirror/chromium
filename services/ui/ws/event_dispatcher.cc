@@ -80,6 +80,10 @@ void EventDispatcher::Reset() {
 void EventDispatcher::SetMousePointerDisplayLocation(
     const gfx::Point& display_location,
     int64_t display_id) {
+  // We're taking a location here and are pumping this directly to
+  // ProcessEvent(). Is that wrong?
+
+  LOG(ERROR) << "Setting Display location: " << display_location.ToString();
   // Create a synthetic mouse event and dispatch it directly to ourselves so we
   // update internal caches and possibly send exit events in case the window
   // the cursor is over changes.
@@ -357,7 +361,7 @@ LocationTarget EventDispatcher::AdjustLocationTargetForModal(
   updated_target.deepest_window.window =
       location_target.deepest_window.window
           ? delegate_->GetFallbackTargetForEventBlockedByModal(
-                location_target.deepest_window.window->GetRoot())
+                location_target.deepest_window.window->GetRootForDrawn())
           : nullptr;
   return updated_target;
 }
@@ -433,6 +437,15 @@ void EventDispatcher::HideCursorOnMatchedKeyEvent(const ui::KeyEvent& event) {
 void EventDispatcher::ProcessPointerEventOnFoundTarget(
     const ui::PointerEvent& event,
     const LocationTarget& found_location_target) {
+  // std::string name = "(untargeted)";
+  // if (found_location_target.deepest_window.window)
+  //   name = found_location_target.deepest_window.window->GetName();
+
+  // LOG(ERROR) << "EventDispatcher::ProcessFound event.loc=" << event.location().ToString()
+  //            << ", event.root_loc=" << event.root_location().ToString()
+  //            << " -> target={in_root=" << found_location_target.location_in_root.ToString()
+  //            << ", in_target=" <<  found_location_target.location_in_target.ToString() << ", name=" << name << "}";
+
   const LocationTarget location_target =
       AdjustLocationTargetForModal(found_location_target);
   PointerTarget pointer_target;
@@ -691,7 +704,9 @@ void EventDispatcher::DispatchToPointerTarget(const PointerTarget& target,
 void EventDispatcher::DispatchToClient(ServerWindow* window,
                                        ClientSpecificId client_id,
                                        const ui::LocatedEvent& event) {
-  gfx::Point location = ConvertPointFromRoot(window, event.location());
+  gfx::Point location = ConvertPointFromRootForEventDispatch(
+      delegate_->GetRootWindowForEventDispatch(window), window,
+      event.location());
   std::unique_ptr<ui::Event> clone = ui::Event::Clone(event);
   clone->AsLocatedEvent()->set_location(location);
   // TODO(jonross): add post-target accelerator support once accelerators
@@ -799,7 +814,7 @@ void EventDispatcher::OnWillChangeWindowHierarchy(ServerWindow* window,
   //   sending exit as necessary.
   // http://crbug.com/613646 .
   if (!new_parent || !new_parent->IsDrawn() ||
-      new_parent->GetRoot() != old_parent->GetRoot()) {
+      new_parent->GetRootForDrawn() != old_parent->GetRootForDrawn()) {
     CancelPointerEventsToTarget(window);
   }
 }

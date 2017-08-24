@@ -232,12 +232,20 @@ void WindowEventDispatcher::OnHostLostMouseGrab() {
 
 void WindowEventDispatcher::OnCursorMovedToRootLocation(
     const gfx::Point& root_location) {
+  // This doesn't seem to be a root location. It seems like a local location
+  // instead. The coordinates are wrong here?
+
+  LOG(ERROR) << "OnCursorMovedToRootLocation(" << root_location.ToString() << ")";
   Env::GetInstance()->env_controller()->SetLastMouseLocation(window(),
                                                              root_location);
 
   // Synthesize a mouse move in case the cursor's location in root coordinates
   // changed but its position in WindowTreeHost coordinates did not.
-  PostSynthesizeMouseMove();
+
+
+  /// THIS IS IT RIGHT HERE. OUR SYNTHESIZED MOVE IS WRONG!!!!!!!!! HOW DO WE
+  /// BUILD A PROPER SYNTHESIZED MOVE?
+  //PostSynthesizeMouseMove();
 }
 
 void WindowEventDispatcher::OnPostNotifiedWindowDestroying(Window* window) {
@@ -257,7 +265,9 @@ const Window* WindowEventDispatcher::window() const {
 
 void WindowEventDispatcher::TransformEventForDeviceScaleFactor(
     ui::LocatedEvent* event) {
-  event->UpdateForRootTransform(host_->GetInverseRootTransform());
+  event->UpdateForRootTransform(
+      host_->GetInverseRootTransform(),
+      host_->GetInverseRootTransformForLocalEventCoordinates());
 }
 
 void WindowEventDispatcher::DispatchMouseExitToHidingWindow(Window* window) {
@@ -581,7 +591,9 @@ void WindowEventDispatcher::DispatchSyntheticTouchEvent(ui::TouchEvent* event) {
   // the pointer, in dips. OnEventFromSource expects events with co-ordinates
   // in raw pixels, so we convert back to raw pixels here.
   DCHECK(event->type() == ui::ET_TOUCH_CANCELLED);
-  event->UpdateForRootTransform(host_->GetRootTransform());
+  event->UpdateForRootTransform(
+      host_->GetRootTransform(),
+      host_->GetRootTransformForLocalEventCoordinates());
   DispatchDetails details = OnEventFromSource(event);
   if (details.dispatcher_destroyed)
     return;
@@ -770,6 +782,8 @@ ui::EventDispatchDetails WindowEventDispatcher::SynthesizeMouseMoveEvent() {
     return details;
   synthesize_mouse_move_ = false;
 
+  LOG(ERROR) << " ----- SYNTHESIZING MOUSE MOVE ----- ";
+
   // No need to generate mouse event if the cursor is invisible.
   client::CursorClient* cursor_client =
       client::GetCursorClient(host_->window());
@@ -790,7 +804,11 @@ ui::EventDispatchDetails WindowEventDispatcher::SynthesizeMouseMoveEvent() {
   if (!window()->bounds().Contains(root_mouse_location))
     return details;
   gfx::Point host_mouse_location = root_mouse_location;
+
+  // This doesn't actually help!?
+  // window()->GetHost()->GetRootTransform().TransformPointReverse(&host_mouse_location);
   host_->ConvertDIPToPixels(&host_mouse_location);
+  // I believe this needs a transform?
   ui::MouseEvent event(ui::ET_MOUSE_MOVED, host_mouse_location,
                        host_mouse_location, ui::EventTimeForNow(),
                        ui::EF_IS_SYNTHESIZED, 0);

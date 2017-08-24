@@ -42,7 +42,18 @@ void MusMouseLocationUpdater::OnEventProcessingStarted(const ui::Event& event) {
     return;
   }
 
+  // Two theories on what might be going on here:
+  //
+  // - Our MoveCursorToLocationInPixels() call is wrong, and we're receiving
+  //   the secondary actions from that.
+  //
+  // - There are multiple places where we try to set Env::last_mouse_location
+  //   (which is a glorified global variable in a singleton wrapper). We get a
+  //   weird jump when viewed from just logs of set_last_mouse_location().
+
   is_processing_trigger_event_ = true;
+  LOG(ERROR) << "MMLU::OnEventProcessingStarted -> "
+             << event.AsMouseEvent()->root_location().ToString();
   Env::GetInstance()->set_last_mouse_location(
       event.AsMouseEvent()->root_location());
   Env::GetInstance()->get_last_mouse_location_from_mus_ = false;
