@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a4d1eb5b_4d03c8c6",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-24T14:12:47Z",
+      "side": 1,
+      "message": "No, that\u0027s fine.",
+      "parentUuid": "c41677d1_940524d5",
+      "range": {
+        "startLine": 73,
+        "startChar": 6,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74e47cb5_48179cb6",
         "filename": "ios/chrome/browser/metrics/tab_usage_recorder.h",
         "patchSetId": 2
