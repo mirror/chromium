@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5edf3b30_9e6570d9",
+        "filename": "chrome/browser/vr/databinding/binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-24T22:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ec0deeb_5f7d118a",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f95cb77c_918b36ca",
         "filename": "chrome/browser/vr/databinding/one_way_binding.h",
         "patchSetId": 1
