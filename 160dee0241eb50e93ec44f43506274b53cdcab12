@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7345330c_b7444f24",
+        "filename": "content/browser/browser_main_runner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-24T23:21:25Z",
+      "side": 1,
+      "message": "the stuff that needs to run at startup is generally in browser_main_loop.cc, can you move it there?",
+      "revId": "160dee0241eb50e93ec44f43506274b53cdcab12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
