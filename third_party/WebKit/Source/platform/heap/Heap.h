@@ -510,10 +510,10 @@ class GarbageCollected {
     return ThreadHeap::Allocate<T>(size, eagerly_sweep);
   }
 
-  void operator delete(void* p) { NOTREACHED(); }
-
  protected:
   GarbageCollected() {}
+
+  void operator delete(void* p) { NOTREACHED(); }
 };
 
 // Assigning class types to their arenas.
