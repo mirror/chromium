@@ -620,6 +620,8 @@ public class ChromeTabbedActivity
 
     @Override
     public void onStopWithNative() {
+        Log.d("Peter", "ChromeTabbedActivity.onStopWithNative");
+
         super.onStopWithNative();
 
         if (getActivityTab() != null) getActivityTab().setIsAllowedToReturnToExternalApp(false);

@@ -1414,6 +1414,16 @@ public class Tab
         attachTabContentManager(null);
     }
 
+    public void sever() {
+        TabModelSelector tabModelSelector = getTabModelSelector();
+        if (tabModelSelector != null) {
+            // TODO(peconn): What happens if we don't do this?
+            tabModelSelector.getModel(mIncognito).removeTab(this);
+        }
+        if (mContentViewCore != null) mContentViewCore.updateWindowAndroid(null);
+        attachTabContentManager(null);
+    }
+
     /**
      * Finishes the tab reparenting process. Attaches the tab to the new activity, and updates the
      * tab and related objects to reference the new activity. This updates many delegates inside the
