@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "601f5e54_868650ca",
+        "filename": "ui/base/cocoa/hover_button.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-24T04:49:31Z",
+      "side": 1,
+      "message": "There\u0027s \"// clang-format off\" and \"// clang-format on\" but I just usually ignore the presubmit warning in these one-off cases, since that adds noise to the code. I will use the comments for lists in things like table-driven tests.",
+      "parentUuid": "c3909949_def89144",
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32633392_4bfe4503",
         "filename": "ui/base/cocoa/hover_button_unittest.mm",
         "patchSetId": 2
@@ -116,6 +134,24 @@
       "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add095f9_dda34953",
+        "filename": "ui/base/cocoa/hover_button_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-24T04:49:31Z",
+      "side": 1,
+      "message": "Makes sense.",
+      "parentUuid": "32d354e8_c1c1793d",
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -245,6 +281,30 @@
       "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d98c27_132f063f",
+        "filename": "ui/base/cocoa/hover_button_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-24T04:49:31Z",
+      "side": 1,
+      "message": "Right, but you could pull it out into a local after each assignment to hitbox. Doesn\u0027t matter to much in test code, but this use of dot notation IMO hides the cost of the array copy.",
+      "parentUuid": "a8966274_07dd5e4d",
+      "range": {
+        "startLine": 123,
+        "startChar": 66,
+        "endLine": 123,
+        "endChar": 71
+      },
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
