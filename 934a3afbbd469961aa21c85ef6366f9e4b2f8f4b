@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ea5e4a3_43c07cd7",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-24T17:51:04Z",
+      "side": 1,
+      "message": "Just a question. Do we have any plan to make splitview state persistent?",
+      "revId": "934a3afbbd469961aa21c85ef6366f9e4b2f8f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca9b44de_55d15010",
+        "filename": "ash/wm/splitview/split_view_divider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-24T17:51:04Z",
+      "side": 1,
+      "message": "You can look into as a separate issue, but I believe we should \"block rotation\" while dragging the divider to avoid interfering user action.",
+      "revId": "934a3afbbd469961aa21c85ef6366f9e4b2f8f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb8fd6b2_e9f4074e",
+        "filename": "ash/wm/splitview/split_view_divider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-24T17:51:04Z",
+      "side": 1,
+      "message": "is_dragging \u003d divider_widget_-\u003eGetWindowBoundsInScreen().width() \u003d\u003d\n      kDividerEnlargedShortSideLength;",
+      "revId": "934a3afbbd469961aa21c85ef6366f9e4b2f8f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
