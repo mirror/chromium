@@ -75,6 +75,9 @@ ActivationState SubresourceFilterAgent::GetParentActivationState(
     content::RenderFrame* render_frame) {
   blink::WebFrame* parent =
       render_frame ? render_frame->GetWebFrame()->Parent() : nullptr;
+  while (parent && !parent->IsWebLocalFrame()) {
+    parent = parent->Parent();
+  }
   if (parent && parent->IsWebLocalFrame()) {
     auto* agent = SubresourceFilterAgent::Get(
         content::RenderFrame::FromWebFrame(parent->ToWebLocalFrame()));

@@ -51,9 +51,7 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterSpecialSubframeNavigationsBrowserTest,
 }
 
 // Navigate to a site with site hierarchy a(b(c)). Let a navigate c to a data
-// URL, and expect that the resulting frame has activation. We expect to fail in
-// --site-per-process because c is navigated to a's process. Therefore we can't
-// sniff b's activation state from c. See crbug.com/739777.
+// URL, and expect that the resulting frame has activation.
 IN_PROC_BROWSER_TEST_F(SubresourceFilterSpecialSubframeNavigationsBrowserTest,
                        NavigateCrossProcessDataUrl_MaintainsActivation) {
   const GURL main_url(embedded_test_server()->GetURL(
@@ -84,8 +82,47 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterSpecialSubframeNavigationsBrowserTest,
   ASSERT_NE(target, nullptr);
   EXPECT_TRUE(target->GetLastCommittedOrigin().unique());
 
-  EXPECT_EQ(content::AreAllSitesIsolatedForTesting(),
-            WasParsedScriptElementLoaded(target));
+  EXPECT_FALSE(WasParsedScriptElementLoaded(target));
+}
+
+// Navigate to a site with site hierarchy a(b(c)). Let a navigate c to a blank
+// URL, and expect that the resulting frame has activation.
+IN_PROC_BROWSER_TEST_F(SubresourceFilterSpecialSubframeNavigationsBrowserTest,
+                       NavigateCrossProcessBlankUrl_MaintainsActivation) {
+  const GURL main_url(embedded_test_server()->GetURL(
+      "a.com", "/cross_site_iframe_factory.html?a(b(c))"));
+  ConfigureAsPhishingURL(main_url);
+  ASSERT_NO_FATAL_FAILURE(
+      SetRulesetToDisallowURLsWithPathSuffix("included_script.js"));
+  const GURL included_url(embedded_test_server()->GetURL(
+      "a.com", "/subresource_filter/included_script.js"));
+
+  ui_test_utils::NavigateToURL(browser(), main_url);
+
+  // The root node will initiate the navigation; its grandchild node will be the
+  // target of the navigation.
+  content::TestNavigationObserver navigation_observer(web_contents(), 1);
+  EXPECT_TRUE(content::ExecuteScript(
+      web_contents()->GetMainFrame(),
+      base::StringPrintf("var blank_url = 'about:blank';"
+                         "window.frames[0][0].location.href = blank_url;")));
+  navigation_observer.Wait();
+
+  content::RenderFrameHost* target = content::FrameMatchingPredicate(
+      web_contents(), base::Bind([](content::RenderFrameHost* rfh) {
+        return rfh->GetLastCommittedURL() == "about:blank";
+      }));
+  ASSERT_NE(target, nullptr);
+  EXPECT_TRUE(target->GetLastCommittedOrigin().unique());
+
+  EXPECT_TRUE(content::ExecuteScript(
+      target,
+      base::StringPrintf("let script = document.createElement(\"script\");"
+                         "script.src = \"%s\";"
+                         "document.body.appendChild(script);",
+                         included_url.spec().c_str())));
+
+  EXPECT_FALSE(WasParsedScriptElementLoaded(target));
 }
 
 }  // namespace subresource_filter
