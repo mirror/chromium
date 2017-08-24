@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78908ff4_a5b24f93",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-24T01:53:19Z",
+      "side": 1,
+      "message": "nit: maybe, const\u0026 ?",
+      "revId": "a859759c657b7a6ca22ed39c98220eff959de7db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62d24cc_d5068d6c",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-24T01:53:19Z",
+      "side": 1,
+      "message": "Could you comment that this should be called on app launching,\nbecause you take TimeTicks::Now() as app launching request time?",
+      "revId": "a859759c657b7a6ca22ed39c98220eff959de7db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c9a844b_4e1280ab",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-24T01:53:19Z",
+      "side": 1,
+      "message": "nit: Maybe, Reset() is enough meaningful?",
+      "revId": "a859759c657b7a6ca22ed39c98220eff959de7db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
