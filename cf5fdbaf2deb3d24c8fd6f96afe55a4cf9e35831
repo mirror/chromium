@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f6bb2d04_a5181fcb",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-08-24T16:29:31Z",
+      "side": 1,
+      "message": "Yes, thanks for catching that.",
+      "parentUuid": "59fd3848_593db07d",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 50
+      },
+      "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df127964_3a05de02",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "077e688f_fd9464aa",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-08-24T16:29:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df127964_3a05de02",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 67
+      },
+      "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9446a2b1_58d89df6",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-08-24T16:29:31Z",
+      "side": 1,
+      "message": "That\u0027s odd. I would have thought the formatter would do that.",
+      "parentUuid": "01e4e032_a0e29811",
+      "range": {
+        "startLine": 245,
+        "startChar": 38,
+        "endLine": 245,
+        "endChar": 41
+      },
+      "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c349503_38fb2034",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab4d587_9bb8aa2a",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-08-24T16:29:31Z",
+      "side": 1,
+      "message": "Done with one addition, when I used this listener before it caused me problems because it would trigger when the browser navigated to the file that was being opened. I have however solved that with a quick check.",
+      "parentUuid": "4c349503_38fb2034",
+      "range": {
+        "startLine": 252,
+        "startChar": 1,
+        "endLine": 252,
+        "endChar": 2
+      },
+      "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6c0e6478_c3994392",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-08-24T16:29:31Z",
+      "side": 1,
+      "message": "Nope. Most definitely not. That could have been bad :P",
+      "parentUuid": "abbb9529_d7225fce",
+      "range": {
+        "startLine": 709,
+        "startChar": 0,
+        "endLine": 710,
+        "endChar": 79
+      },
+      "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db20d4cb_461ceeda",
         "filename": "chrome/test/media_router/resources/local_media_sink.json",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "457f1b31_c735e4d2",
+        "filename": "chrome/test/media_router/resources/local_media_sink.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-08-24T16:29:31Z",
+      "side": 1,
+      "message": "These config files for the tests. They tell the fake extension what it ought to accept and return. I have removed some un-needed code from this one.",
+      "parentUuid": "db20d4cb_461ceeda",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 2
+      },
+      "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3437536b_7461e73a",
         "filename": "chrome/test/media_router/resources/local_media_sink_route_fail.json",
         "patchSetId": 3
@@ -160,6 +304,30 @@
       "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c84145_d195d612",
+        "filename": "chrome/test/media_router/resources/local_media_sink_route_fail.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-08-24T16:29:31Z",
+      "side": 1,
+      "message": "This is a new config file that has the provider not connect so we can test that the fullscreen will only trigger if the casting starts.",
+      "parentUuid": "3437536b_7461e73a",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 4
+      },
+      "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
