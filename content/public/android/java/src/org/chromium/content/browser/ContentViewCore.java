@@ -10,7 +10,6 @@ import android.app.assist.AssistStructure.ViewNode;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -604,53 +603,9 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         mContainerViewInternals = internalDispatcher;
     }
 
-    @VisibleForTesting
-    void initPopupZoomer(Context context) {
-        mPopupZoomer = new PopupZoomer(context);
-        mPopupZoomer.setOnVisibilityChangedListener(new PopupZoomer.OnVisibilityChangedListener() {
-            // mContainerView can change, but this OnVisibilityChangedListener can only be used
-            // to add and remove views from the mContainerViewAtCreation.
-            private final ViewGroup mContainerViewAtCreation = mContainerView;
-
-            @Override
-            public void onPopupZoomerShown(final PopupZoomer zoomer) {
-                mContainerViewAtCreation.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mContainerViewAtCreation.indexOfChild(zoomer) == -1) {
-                            mContainerViewAtCreation.addView(zoomer);
-                        }
-                    }
-                });
-            }
-
-            @Override
-            public void onPopupZoomerHidden(final PopupZoomer zoomer) {
-                mContainerViewAtCreation.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mContainerViewAtCreation.indexOfChild(zoomer) != -1) {
-                            mContainerViewAtCreation.removeView(zoomer);
-                            mContainerViewAtCreation.invalidate();
-                        }
-                    }
-                });
-            }
-        });
-        PopupZoomer.OnTapListener listener = new PopupZoomer.OnTapListener() {
-            // mContainerView can change, but this OnTapListener can only be used
-            // with the mContainerViewAtCreation.
-            private final ViewGroup mContainerViewAtCreation = mContainerView;
-
-            @Override
-            public void onResolveTapDisambiguation(
-                    long timeMs, float x, float y, boolean isLongPress) {
-                if (mNativeContentViewCore == 0) return;
-                mContainerViewAtCreation.requestFocus();
-                nativeResolveTapDisambiguation(mNativeContentViewCore, timeMs, x, y, isLongPress);
-            }
-        };
-        mPopupZoomer.setOnTapListener(listener);
+    private void initPopupZoomer(Context context) {
+        mPopupZoomer = new PopupZoomer(context, mWebContents);
+        mPopupZoomer.initOptionalListeners(mContainerView);
     }
 
     @VisibleForTesting
@@ -1641,13 +1596,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
 
     @SuppressWarnings("unused")
     @CalledByNative
-    private void showDisambiguationPopup(Rect targetRect, Bitmap zoomedBitmap) {
-        mPopupZoomer.setBitmap(zoomedBitmap);
-        mPopupZoomer.show(targetRect);
-    }
-
-    @SuppressWarnings("unused")
-    @CalledByNative
     private void performLongPressHapticFeedback() {
         mContainerView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
     }
@@ -2072,11 +2020,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         return mIsMobileOptimizedHint;
     }
 
-    @CalledByNative
-    private static Rect createRect(int x, int y, int right, int bottom) {
-        return new Rect(x, y, right, bottom);
-    }
-
     public void setBackgroundOpaque(boolean opaque) {
         if (mNativeContentViewCore != 0) {
             nativeSetBackgroundOpaque(mNativeContentViewCore, opaque);
@@ -2244,9 +2187,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
             long nativeContentViewCore, long timeMs, boolean fromGamepad);
 
     private native void nativeDoubleTap(long nativeContentViewCore, long timeMs, float x, float y);
-
-    private native void nativeResolveTapDisambiguation(
-            long nativeContentViewCore, long timeMs, float x, float y, boolean isLongPress);
 
     private native void nativePinchBegin(long nativeContentViewCore, long timeMs, float x, float y);
 
