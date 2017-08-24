@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4b3f9b2_376c3626",
+        "filename": "chrome/browser/devtools/device/devtools_device_discovery.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-24T18:26:55Z",
+      "side": 1,
+      "message": "std::string message?",
+      "revId": "dad65036ae4f37f6ae4919b19504be0ce14c46b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db24d3e1_2130e6bf",
+        "filename": "chrome/browser/devtools/device/devtools_device_discovery.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-24T18:26:55Z",
+      "side": 1,
+      "message": "and std::move() it here",
+      "revId": "dad65036ae4f37f6ae4919b19504be0ce14c46b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd082ace_b053f4fc",
+        "filename": "chrome/browser/devtools/device/devtools_device_discovery.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-24T18:26:55Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "dad65036ae4f37f6ae4919b19504be0ce14c46b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd026b5_058cb084",
+        "filename": "chrome/browser/devtools/device/devtools_device_discovery.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-24T18:26:55Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "dad65036ae4f37f6ae4919b19504be0ce14c46b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236c72c3_2bab4cae",
+        "filename": "chrome/browser/devtools/device/devtools_device_discovery.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-24T18:26:55Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003cWebSoecketProxy\u003e web_socket_proxy \u003d ...",
+      "revId": "dad65036ae4f37f6ae4919b19504be0ce14c46b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
