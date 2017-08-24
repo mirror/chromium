@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "703eef1b_ccd32fb1",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-24T17:20:56Z",
+      "side": 1,
+      "message": "nit: is the double parens necessary?",
+      "range": {
+        "startLine": 39,
+        "startChar": 5,
+        "endLine": 39,
+        "endChar": 7
+      },
+      "revId": "f1b82dcdd5e0f16c9a178867cf848059af57f597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb27f3b_7cf9f079",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-24T17:20:56Z",
+      "side": 1,
+      "message": "Could this be a property accessor?",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 11
+      },
+      "revId": "f1b82dcdd5e0f16c9a178867cf848059af57f597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09627c87_04a65c0b",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-24T17:20:56Z",
+      "side": 1,
+      "message": "Could this be a readonly property?",
+      "revId": "f1b82dcdd5e0f16c9a178867cf848059af57f597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040961dc_f717e9e4",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-24T17:20:56Z",
+      "side": 1,
+      "message": "We\u0027ve been making these weak. Does this one need to be strong?",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "f1b82dcdd5e0f16c9a178867cf848059af57f597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e0dba8_b5ed0335",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/java_script_dialogs/dialog_blocking/java_script_dialog_blocking_confirmation_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-24T17:20:56Z",
+      "side": 1,
+      "message": "Where is this used?",
+      "range": {
+        "startLine": 61,
+        "startChar": 26,
+        "endLine": 61,
+        "endChar": 41
+      },
+      "revId": "f1b82dcdd5e0f16c9a178867cf848059af57f597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
