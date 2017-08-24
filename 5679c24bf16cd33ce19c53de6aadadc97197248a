@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b4df00e1_58eeb58d",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontCustomPlatformData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-24T07:43:04Z",
+      "side": 1,
+      "message": "Comment updated.",
+      "parentUuid": "43ea3b9c_46fb80a6",
+      "range": {
+        "startLine": 76,
+        "startChar": 49,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "5679c24bf16cd33ce19c53de6aadadc97197248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3d0c0fd_87c8fd09",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "fe7c6e0a_e69ef7a0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 6029,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-24T07:43:04Z",
+      "side": 1,
+      "message": "Description updated, second sentence removed, and clarified what I mean by \"conventional\".",
+      "parentUuid": "a3d0c0fd_87c8fd09",
+      "revId": "5679c24bf16cd33ce19c53de6aadadc97197248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "393671e2_80aca7d5",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-23T22:06:12Z",
       "side": 1,
       "message": "Is this last sentence true?  (I merely ask because it\u0027s surprising to me.  For example, you have an enum value labeled conventional font.  I assume these are built-in and don\u0027t need to be passed around by web blobs.",
+      "revId": "5679c24bf16cd33ce19c53de6aadadc97197248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d458213_4733a049",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 6030,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-24T07:43:04Z",
+      "side": 1,
+      "message": "By conventional here I mean \"non-variable\", an OpenType font that does not have variation axes, More info here: https://medium.com/@tiro/https-medium-com-tiro-introducing-opentype-variable-fonts-12ba6cd2369\n\nI hope the new summary makes this clearer. The location of recording the metric is in a part of the code that only instantiates web fonts. System font instantiation is handled elsewhere.",
+      "parentUuid": "393671e2_80aca7d5",
       "revId": "5679c24bf16cd33ce19c53de6aadadc97197248a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
