@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f10974f_8b75fc5b",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-24T01:47:25Z",
+      "side": 1,
+      "message": "I just noticed this bug happening: crbug.com/758440\n\nThis was happening from before this CL, it seems like changes aren\u0027t triggering the binding unless we assign it a completely different object instance. PTAL at the fix below.",
+      "revId": "922b632a20e1c4d5133bc53341ed8f892ebb009a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
