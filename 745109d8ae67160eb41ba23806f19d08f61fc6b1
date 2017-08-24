@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b2dd6f1_0e4a8df7",
+        "filename": "chrome/browser/plugins/pdf_plugin_placeholder_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-24T20:45:31Z",
+      "side": 1,
+      "message": "Since this function does not access any member variables, can we make this a free function within the anonymous namespace?\n\nThen we can also get rid of the weak_ptr_factory_",
+      "revId": "745109d8ae67160eb41ba23806f19d08f61fc6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02b27ea_5446e07c",
+        "filename": "chrome/browser/plugins/pdf_plugin_placeholder_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-24T20:45:31Z",
+      "side": 1,
+      "message": "#else  // !BUILDFLAG(ENABLE_PLUGINS)\n#endif  // BUILDFLAG(ENABLE_PLUGINS)",
+      "revId": "745109d8ae67160eb41ba23806f19d08f61fc6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c31eabba_0d16c6ef",
+        "filename": "chrome/browser/plugins/pdf_plugin_placeholder_observer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-24T20:45:31Z",
+      "side": 1,
+      "message": "Add a comment explaining that Android auto-opens PDFs downloaded with a user gesture.",
+      "revId": "745109d8ae67160eb41ba23806f19d08f61fc6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c5cd165_e5dd7a98",
+        "filename": "chrome/browser/plugins/pdf_plugin_placeholder_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-24T20:45:31Z",
+      "side": 1,
+      "message": "Since it\u0027s just a pointer, can we fwd declare and include in the cc file?",
+      "revId": "745109d8ae67160eb41ba23806f19d08f61fc6b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
