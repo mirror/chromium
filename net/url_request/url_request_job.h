@@ -234,7 +234,12 @@ class NET_EXPORT URLRequestJob : public base::PowerObserver {
   // be actually sent and will receive actual request headers that are about
   // to hit the wire, including SPDY/QUIC internal headers and any additional
   // request headers set via BeforeSendHeaders hooks.
-  virtual void SetRequestHeadersCallback(RequestHeadersCallback callback);
+  virtual void SetRequestHeadersCallback(RequestHeadersCallback callback) {}
+
+  // Sets a callback that will be invoked each time the response is received
+  // from the remote party with the actual response headers recieved.
+  using ResponseHeadersCallback = URLRequest::ResponseHeadersCallback;
+  virtual void SetResponseHeadersCallback(ResponseHeadersCallback callback) {}
 
   // Given |policy|, |referrer|, and |destination|, returns the
   // referrer URL mandated by |request|'s referrer policy.
@@ -449,9 +454,6 @@ class NET_EXPORT URLRequestJob : public base::PowerObserver {
   // Non-null if ReadRawData() returned ERR_IO_PENDING, and the read has not
   // completed.
   CompletionCallback read_raw_callback_;
-
-  // See SetRequestHeadersCallback() above for details.
-  RequestHeadersCallback request_headers_callback_;
 
   base::WeakPtrFactory<URLRequestJob> weak_factory_;
 

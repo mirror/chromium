@@ -22,6 +22,7 @@
 #include "url/gurl.h"
 
 namespace net {
+class HttpResponseHeaders;
 class X509Certificate;
 }
 
@@ -114,6 +115,7 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
   void ResponseCompleted();
   void CallDidFinishLoading();
   void RecordHistograms();
+  void SetRawResponseHeaders(scoped_refptr<net::HttpResponseHeaders> headers);
 
   bool is_deferred() const { return deferred_stage_ != DEFERRED_NONE; }
 
@@ -180,6 +182,7 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
   int read_buffer_size_;
 
   net::HttpRawRequestHeaders raw_request_headers_;
+  scoped_refptr<net::HttpResponseHeaders> raw_response_headers_;
 
   base::ThreadChecker thread_checker_;
 
