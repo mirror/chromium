@@ -145,6 +145,7 @@ InProcessCommandBuffer::Service::Service(
       mailbox_manager_(mailbox_manager),
       share_group_(share_group),
       shader_translator_cache_(gpu_preferences_) {
+  DCHECK(false);
   if (!mailbox_manager_) {
     // TODO(piman): have embedders own the mailbox manager.
     owned_mailbox_manager_ = gles2::MailboxManager::Create(gpu_preferences_);
