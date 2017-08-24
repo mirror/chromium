@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "05fa451d_736a3f30",
+        "filename": "components/offline_pages/core/prefetch/mark_operation_done_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-24T01:02:42Z",
+      "side": 1,
+      "message": "This is not readable... Maybe assign first into a variable with meaningful name?",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99e3b0e4_081e5133",
         "filename": "components/offline_pages/core/prefetch/mark_operation_done_task.cc",
         "patchSetId": 2
@@ -47,6 +64,23 @@
       "writtenOn": "2017-08-24T00:52:43Z",
       "side": 1,
       "message": "Add comment.",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ab916e5_6339337d",
+        "filename": "components/offline_pages/core/prefetch/mark_operation_done_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-24T01:02:42Z",
+      "side": 1,
+      "message": "One could wonder why don\u0027t we *also* call dispatcher-\u003eSchedulePipelineProcessing() here? We are ready to send GetOperation at this point, especially considering the GCM just came so network is likely available. \nI think not calling it is right (we don\u0027t have much time budget on GCM handler), but lets add comment to that effect.",
       "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -81,6 +115,57 @@
       "writtenOn": "2017-08-24T00:52:43Z",
       "side": 1,
       "message": "Comment.",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48b189a9_65bf0911",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-24T01:02:42Z",
+      "side": 1,
+      "message": "This needs a comment. This class works with 2 types of tasks - DB and background. A comment may clarify.",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c93f9a_c3a38528",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-24T01:02:42Z",
+      "side": 1,
+      "message": "If you want this to remain, lets make the text more specific, this is not just any finalization result... If you used it for debugging, lets remove. Same above in MoreWorkInQueue().",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d018276_be51c3d6",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-24T01:02:42Z",
+      "side": 1,
+      "message": "You don\u0027t use UNFINISHED. Also, for simplicity sake, I\u0027d return a bool that means \"more work\".\nSUCCESS_NO_WORK_IN_QUEUE -\u003e !\"more work\"\nSUCCESS -\u003e \"more work\"\nSTORE_FAILURE -\u003e \"!\"more work\"",
       "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
