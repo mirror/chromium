@@ -305,6 +305,30 @@
       "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "94c224de_c5d03e72",
+        "filename": "ui/base/cocoa/hover_button_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-24T16:05:18Z",
+      "side": 1,
+      "message": "Oh, I understand. Locals added, but I don\u0027t believe an array copy is guaranteed to happen here — the \"copy\" attribute just means that the setter copies on assignment, right? The getter is free to return the same NSArray each time. Buuuut in this case it looks like -trackingAreas makes a new one each time, so…",
+      "parentUuid": "90d98c27_132f063f",
+      "range": {
+        "startLine": 123,
+        "startChar": 66,
+        "endLine": 123,
+        "endChar": 71
+      },
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
