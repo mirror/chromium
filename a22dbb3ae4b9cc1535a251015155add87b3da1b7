@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7879f9d_83f30b09",
+        "filename": "content/browser/download/resource_downloader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-24T00:51:11Z",
+      "side": 1,
+      "message": "this is being called on the IO thread for the network service case, causing \n)] Check failed: ::content::BrowserThread::CurrentlyOn(BrowserThread::UI). Must be called on Chrome_UIThread; actually called on Chrome_IOThread.\n16:41:42.481 24382   #0 0x000001b1e247 base::debug::StackTrace::StackTrace()\n16:41:42.481 24382   #1 0x000001b35051 logging::LogMessage::~LogMessage()\n16:41:42.481 24382   #2 0x0000015c519e content::RenderFrameHostImpl::FromID()\n16:41:42.481 24382   #3 0x0000015766c6 content::CreateResourceRequest()\n16:41:42.481 24382   #4 0x00000157f60f content::ResourceDownloader::Start()\n16:41:42.481 24382   #5 0x00000157f4a0 content::ResourceDownloader::BeginDownload()\n16:41:42.481 24382   #6 0x00000156b588 content::(anonymous namespace)::BeginResourceDownload()\n\n\nsee \nhttps://build.chromium.org/p/chromium.fyi/builders/Mojo%20Linux/builds/4530",
+      "revId": "a22dbb3ae4b9cc1535a251015155add87b3da1b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
