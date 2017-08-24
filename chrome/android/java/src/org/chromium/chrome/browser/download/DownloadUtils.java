@@ -54,6 +54,7 @@ import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.document.TabDelegate;
 import org.chromium.chrome.browser.util.ConversionUtils;
 import org.chromium.chrome.browser.util.IntentUtils;
+import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.components.feature_engagement.EventConstants;
 import org.chromium.components.feature_engagement.Tracker;
 import org.chromium.components.offline_items_collection.OfflineItem.Progress;
@@ -133,7 +134,7 @@ public class DownloadUtils {
                 && ((ChromeActivity) activity).getBottomSheet() != null) {
             ((ChromeActivity) activity)
                     .getBottomSheetContentController()
-                    .showContentAndOpenSheet(R.id.action_downloads);
+                    .showContentAndOpenSheet(R.id.action_downloads, BottomSheet.SHEET_STATE_FULL);
         } else if (DeviceFormFactor.isTablet()) {
             // Download Home shows up as a tab on tablets.
             LoadUrlParams params = new LoadUrlParams(UrlConstants.DOWNLOADS_URL);
