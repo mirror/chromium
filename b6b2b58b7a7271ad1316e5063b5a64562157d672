@@ -70,6 +70,30 @@
       "revId": "b6b2b58b7a7271ad1316e5063b5a64562157d672",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5be3821d_fe18a327",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 41963,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-24T20:58:35Z",
+      "side": 1,
+      "message": "FWIW I agree with Matt here. \"redirects\" is really what we\u0027re measuring.",
+      "parentUuid": "976b6a52_c9a214f9",
+      "range": {
+        "startLine": 41963,
+        "startChar": 21,
+        "endLine": 41963,
+        "endChar": 40
+      },
+      "revId": "b6b2b58b7a7271ad1316e5063b5a64562157d672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
