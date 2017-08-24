@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f40bd71f_e7826877",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-24T16:08:24Z",
+      "side": 1,
+      "message": "nit: SearchBoxView* const search_box_view_;",
+      "range": {
+        "startLine": 194,
+        "startChar": 2,
+        "endLine": 194,
+        "endChar": 16
+      },
+      "revId": "7ea4dcaa26f089fff483ff894ca7ee1d602f7f54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
