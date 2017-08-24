@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3328b891_c476ccff",
+        "filename": "chrome/browser/app_controller_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-24T16:07:21Z",
+      "side": 1,
+      "message": "isn\u0027t it more common to use LeakySingleton?",
+      "revId": "21b4ba22e1d97ccfaa355588a560d3b64bf7d775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68cd86b5_4e63cb61",
+        "filename": "chrome/browser/app_controller_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-24T16:07:21Z",
+      "side": 1,
+      "message": "nice. probably should have done this a year ago, but better late than never.",
+      "revId": "21b4ba22e1d97ccfaa355588a560d3b64bf7d775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
