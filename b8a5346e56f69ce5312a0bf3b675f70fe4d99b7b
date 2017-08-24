@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75448417_ee380d96",
+        "filename": "chrome/android/java/res/layout/suggestions_site_explore.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-24T22:41:03Z",
+      "side": 1,
+      "message": "It doesn\u0027t work. So I will have to come up with a way to restrict the width in NTP and not in Chrome Home. But I will do it in another CL. Filed a bug to meself -\n https://bugs.chromium.org/p/gerrit/issues/detail?id\u003d7092",
+      "parentUuid": "377fff7a_716b5b9e",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 56
+      },
+      "revId": "b8a5346e56f69ce5312a0bf3b675f70fe4d99b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9436e31_2406c0c4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "b8a5346e56f69ce5312a0bf3b675f70fe4d99b7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b50fac_9a90c87f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-08-24T22:41:03Z",
+      "side": 1,
+      "message": "This is much better. And after rebasing, I tried it and it works with the dotted tab indicators :)",
+      "parentUuid": "c9436e31_2406c0c4",
+      "range": {
+        "startLine": 38,
+        "startChar": 63,
+        "endLine": 39,
+        "endChar": 49
+      },
+      "revId": "b8a5346e56f69ce5312a0bf3b675f70fe4d99b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
