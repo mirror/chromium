@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bba4d22_2b556d27",
+        "filename": "chrome/common/render_frame_observer.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-24T15:05:31Z",
+      "side": 1,
+      "message": "nit: move this to line 11, since this interface should gain more methods",
+      "revId": "e9e805c05555971b62f789db8af2cb37ed7951ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "441952c7_01a3e09d",
+        "filename": "chrome/common/render_frame_observer.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-24T15:05:31Z",
+      "side": 1,
+      "message": "nit: RenderFrameObserver is the name of a content/public/interface. How about chrome_render_frame.mojom and name the interface ChromeRenderFrame to clarify what the interface is used for?",
+      "revId": "e9e805c05555971b62f789db8af2cb37ed7951ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59bc3855_a84f32ac",
+        "filename": "third_party/WebKit/public/web/window_features.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-24T15:05:31Z",
+      "side": 1,
+      "message": "nit: no need to change",
+      "revId": "e9e805c05555971b62f789db8af2cb37ed7951ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
