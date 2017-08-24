@@ -16,4 +16,4 @@ RefPtr<NGLayoutResult> NGColumnLayoutAlgorithm::Layout() {
   return nullptr;
 }
 
-}  // namespace Blink
+}  // namespace blink
