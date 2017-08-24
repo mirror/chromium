@@ -106,6 +106,15 @@ enum class PrefetchItemState {
 // Error codes used to identify the reason why a prefetch entry has finished
 // processing in the pipeline. This values are only meaningful for entries in
 // the "finished" state.
+//
+// New entries can be added anywhere as long as they are assigned unique values
+// and kept in ascending order. Deprecated entries should be labeled as such but
+// never removed. Assigned values should never be reused. Remember to update the
+// MAX value if adding a new trailing item.
+//
+// Changes to this enum must be reflected in the respective metrics enum named
+// PrefetchItemErrorCode in enums.xml. Use the exact same integer value for each
+// mirrored entry.
 enum class PrefetchItemErrorCode {
   // The entry had gone through the pipeline and successfully completed
   // prefetching. Explicitly setting to 0 as that is the default value for the
@@ -139,6 +148,8 @@ enum class PrefetchItemErrorCode {
   GET_OPERATION_MAX_ATTEMPTS_REACHED = 1200,
   // Exceeded maximum retries limit for generate page bundle request.
   GENERATE_PAGE_BUNDLE_REQUEST_MAX_ATTEMPTS_REACHED = 1300,
+  // Note: Must always have the same value as the last actual entry.
+  MAX = GENERATE_PAGE_BUNDLE_REQUEST_MAX_ATTEMPTS_REACHED
 };
 
 // Callback invoked upon completion of a prefetch request.
