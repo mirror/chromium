@@ -109,7 +109,7 @@ IN_PROC_BROWSER_TEST_F(MAYBE_SitePerProcessAccessibilityBrowserTest,
 
   BrowserAccessibility* ax_group = ax_root->PlatformGetChild(0);
   EXPECT_EQ(ui::AX_ROLE_GENERIC_CONTAINER, ax_group->GetRole());
-  ASSERT_EQ(2U, ax_group->PlatformChildCount());
+  ASSERT_EQ(3U, ax_group->PlatformChildCount());
 
   BrowserAccessibility* ax_iframe = ax_group->PlatformGetChild(0);
   EXPECT_EQ(ui::AX_ROLE_IFRAME, ax_iframe->GetRole());

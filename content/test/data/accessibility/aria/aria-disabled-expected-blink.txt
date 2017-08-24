@@ -1,13 +1,25 @@
 rootWebArea
 ++genericContainer
 ++++textField
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++textField restriction=disabled
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++textField
 ++genericContainer restriction=disabled
 ++++textField restriction=disabled
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++textField restriction=disabled
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++textField
 ++genericContainer
 ++++textField
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++textField restriction=disabled
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++textField
