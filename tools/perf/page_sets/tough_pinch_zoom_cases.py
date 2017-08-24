@@ -17,16 +17,14 @@ class ToughPinchZoomCasesPage(page_module.Page):
         credentials_path = 'data/credentials.json')
     self.target_scale_factor = page_set.target_scale_factor
 
-  def RunPinchGesture(self, action_runner, left_anchor_ratio=0.5,
-                      top_anchor_ratio=0.5, scale_factor=None,
-                      speed_in_pixels_per_second=800):
+  def RunPinchGesture(self, action_runner, scale_factor):
       with action_runner.CreateGestureInteraction('PinchAction',
                                                   repeatable=True):
         action_runner.PinchPage(
-            left_anchor_ratio=left_anchor_ratio,
-            top_anchor_ratio=top_anchor_ratio,
+            left_anchor_ratio=0.1,
+            top_anchor_ratio=0.1,
             scale_factor=scale_factor,
-            speed_in_pixels_per_second=speed_in_pixels_per_second)
+            speed_in_pixels_per_second=800)
 
   def RunPageInteractions(self, action_runner):
     action_runner.tab.WaitForDocumentReadyStateToBeInteractiveOrBetter()
