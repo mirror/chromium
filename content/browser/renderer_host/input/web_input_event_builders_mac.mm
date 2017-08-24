@@ -320,6 +320,8 @@ blink::WebMouseEvent WebMouseEventBuilder::Build(
   SetWebEventLocationFromEventInView(&result, event, view);
 
   result.pointer_type = pointerType;
+  result.id = [event deviceID];
+
   if ((type == NSMouseExited || type == NSMouseEntered) ||
       ([event subtype] != NSTabletPointEventSubtype &&
        [event subtype] != NSTabletProximityEventSubtype)) {
@@ -329,7 +331,6 @@ blink::WebMouseEvent WebMouseEventBuilder::Build(
   // Set stylus properties for events with a subtype of
   // NSTabletPointEventSubtype.
   NSEventSubtype subtype = [event subtype];
-  result.id = [event deviceID];
   if (subtype == NSTabletPointEventSubtype) {
     result.force = [event pressure];
     NSPoint tilt = [event tilt];
