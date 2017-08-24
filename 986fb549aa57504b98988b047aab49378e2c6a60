@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "132efdd7_36bfdf03",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T21:37:01Z",
+      "side": 1,
+      "message": "It seems better to make it a local function taking a |Node| parameter.",
+      "range": {
+        "startLine": 642,
+        "startChar": 43,
+        "endLine": 642,
+        "endChar": 64
+      },
+      "revId": "986fb549aa57504b98988b047aab49378e2c6a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50837d3_84ad5528",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T21:37:01Z",
+      "side": 1,
+      "message": "Why mixing all markers together? This function can be much simpler as:\n\n1. Get two sorted array of start/end offsets of suggestion markers (so you don\u0027t even need to write lambdas for sorting)\n2. Scan the spelling and composition markers and compare them against the sorted offsets to detect intersection. There\u0027s no need to sort spelling and composition markers since they are already sorted.\n3. Add all other markers that don\u0027t need filtering.",
+      "range": {
+        "startLine": 643,
+        "startChar": 30,
+        "endLine": 643,
+        "endChar": 54
+      },
+      "revId": "986fb549aa57504b98988b047aab49378e2c6a60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

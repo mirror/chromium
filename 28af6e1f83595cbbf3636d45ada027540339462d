@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef4e8831_e7722bf5",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T21:37:01Z",
+      "side": 1,
+      "message": "nit: no need to add braces",
+      "range": {
+        "startLine": 762,
+        "startChar": 37,
+        "endLine": 762,
+        "endChar": 39
+      },
+      "revId": "28af6e1f83595cbbf3636d45ada027540339462d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
