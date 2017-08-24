@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4862c5f9_1a7ac4b2",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-08-24T20:31:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86d92ab8_3879333e",
+      "range": {
+        "startLine": 212,
+        "startChar": 30,
+        "endLine": 212,
+        "endChar": 0
+      },
+      "revId": "c0dd5553c8bbb65d9daab46b3575213540575268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc2aba30_fbc39b55",
         "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "876cac21_2af2a5d8",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-08-24T20:31:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc2aba30_fbc39b55",
+      "range": {
+        "startLine": 425,
+        "startChar": 30,
+        "endLine": 425,
+        "endChar": 31
+      },
+      "revId": "c0dd5553c8bbb65d9daab46b3575213540575268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "051b5ce1_681df917",
         "filename": "components/cronet/cronet_prefs_manager.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-24T20:08:08Z",
       "side": 1,
       "message": "Can we just delete |this| here instead of destroying |host_cache_persistence_manager_|?",
+      "range": {
+        "startLine": 404,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 33
+      },
+      "revId": "c0dd5553c8bbb65d9daab46b3575213540575268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "753b7098_41ff6c1a",
+        "filename": "components/cronet/cronet_prefs_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-08-24T20:31:07Z",
+      "side": 1,
+      "message": "We cannot because the SdchOwner owned, that is owned by CronetUrlRequestAdapter, should be destroyed first. SdchOwner owns SdchOwnerPrefsStorage that has weak reference to JsonPrefStore. JsonPrefStore is owned by this class, so destroying it will leave SdchOwnerPrefsStorage referencing an invalid object.",
+      "parentUuid": "051b5ce1_681df917",
       "range": {
         "startLine": 404,
         "startChar": 2,
@@ -91,6 +163,30 @@
       "revId": "c0dd5553c8bbb65d9daab46b3575213540575268",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0815826_3df7904f",
+        "filename": "components/cronet/cronet_prefs_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-08-24T20:31:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e2ee9d4_c4ca2a05",
+      "range": {
+        "startLine": 36,
+        "startChar": 50,
+        "endLine": 36,
+        "endChar": 60
+      },
+      "revId": "c0dd5553c8bbb65d9daab46b3575213540575268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
