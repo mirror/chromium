@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "198875ba_bf46339e",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-24T21:33:21Z",
+      "side": 1,
+      "message": "Yeah, makes sense. Quoting the man page: \"The  memmove()  function  copies n bytes from memory area src to memory area dest.  The memory areas may overlap...\".\n\nOn the other hand, a VMOV has quite a different meaning than a VLD (which is what is done in the function).",
+      "parentUuid": "5e5240ef_1a68af7c",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9baac76_f46126e6",
         "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-24T08:22:49Z",
       "side": 1,
       "message": "This parameter (period) seems to be called \"dist\" elsewhere.\nAs I understand it, both here and in chunkunroll_relaxed (where it is called \"dist\"), it represents the size to be copied before using the chunk-sized copies.\n\nThe difference seems to be the places where it is called \"dist\" we still copy chunks. But I imagine that isn\u0027t significant. In fact, that seems to be the only difference between this and chunkcopy_lapped_relaxed. Are both of these functions needed?",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b33fa37_083729be",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-24T21:33:21Z",
+      "side": 1,
+      "message": "IIRC, the compressed segments can have quite a few different cases.\n\nEach chunk_function() were carefully optimized for those.",
+      "parentUuid": "f9baac76_f46126e6",
       "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "44968647_302b5bb8",
+        "filename": "third_party/zlib/contrib/arm/inffast.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-24T21:33:21Z",
+      "side": 1,
+      "message": "Indeed is something we could try to squeeze even more performance (e.g. a \u0027vld\u0027 using the D0-D31 registers) after we land this current patch. \n\nOn the other hand, it is an open question how common are data segments of that tiny size. It may require some code without major gains (not to mention that is more intrusive on vanilla zlib code).\n\nAbout 601694: it assumes that unaligned 64bits loads are cheap and readily available, no?\n\nUnfortunately, not all platforms have \u0027free\u0027 cost unaligned loads (i.e. Intel).\n\nLast time I checked, unaligned access had many restrictions on ARMv7 (i.e. only word-aligned *or* using the SIMD path as we have in this patch, otherwise it generates an alignment fault).\n\nThe few instructions that could work (LDR, PUSH, STR) would pretty much overload the bus: the memory access would be broken down into multiple accesses, bringing penalty forcing cache reloads, etc.\n\nUnfortunately, optimization strategies (i.e. loading more data) may be common between the architectures, but not necessarily the optimal implementation.",
+      "parentUuid": "20c504d4_34978136",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a788724_acbea8a5",
         "filename": "third_party/zlib/contrib/arm/inflate.c",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-24T05:56:12Z",
       "side": 1,
       "message": "Is there a summary somewhere of how this inflate.c differs from the top level inflate.c?",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46ba553_2afb8a8b",
+        "filename": "third_party/zlib/contrib/arm/inflate.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-24T21:33:21Z",
+      "side": 1,
+      "message": "No, but changes are minimal, targeting easy of rebase with new release of zlib.\n\nPlease check: https://gist.github.com/Adenilson/1d53394d2cad6632287bd88ef6f4b7d6",
+      "parentUuid": "2a788724_acbea8a5",
       "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
