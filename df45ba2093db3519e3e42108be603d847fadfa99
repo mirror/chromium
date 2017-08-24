@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bb7f174a_bda8cd94",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-24T18:53:37Z",
+      "side": 1,
+      "message": "+1.... this could be far less often. 15 mins? 30? 60?\n\nAlso, this should be a base::TimeDelta directly, as they are constexpr constructible.",
+      "parentUuid": "c7b740f9_0cebe75a",
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be125b29_75fe8d77",
         "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
         "patchSetId": 18
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "64f73b8c_b3ef0fe2",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-24T18:53:37Z",
+      "side": 1,
+      "message": "I imagine because there\u0027s no default constructor?",
+      "parentUuid": "be125b29_75fe8d77",
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4690ae3e_ff5b8db4",
         "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
         "patchSetId": 18
@@ -47,6 +83,282 @@
       "writtenOn": "2017-08-24T18:14:15Z",
       "side": 1,
       "message": "nit: Would DCHECK(pref_service) be enough?",
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e67852a_d64c1e31",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-24T18:53:37Z",
+      "side": 1,
+      "message": "Maybe just a DCHECK that there are none? With a comment describing that this is to be created before any windows exist? No need to write code that we don\u0027t expect/want to run.",
+      "range": {
+        "startLine": 146,
+        "startChar": 41,
+        "endLine": 146,
+        "endChar": 47
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6bb6dda_8e7e5d18",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-24T18:53:37Z",
+      "side": 1,
+      "message": "This isn\u0027t actually a weak pointer? If the concern is that the pref service can go out of scope then we need to have an actual weak pointer that invalidates itself.",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 12
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d454433f_aa271f4b",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-24T18:53:37Z",
+      "side": 1,
+      "message": "Comment about lifetime of the PrefService, and that it must outlive this object?",
+      "range": {
+        "startLine": 101,
+        "startChar": 11,
+        "endLine": 101,
+        "endChar": 26
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e9801b2_0270711e",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-24T18:53:37Z",
+      "side": 1,
+      "message": "Please document lifetime requirements for these objects.",
+      "range": {
+        "startLine": 116,
+        "startChar": 26,
+        "endLine": 116,
+        "endChar": 44
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cea28c2_b0b28391",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-24T18:53:37Z",
+      "side": 1,
+      "message": "Again, not actually a weak pointer?",
+      "range": {
+        "startLine": 124,
+        "startChar": 14,
+        "endLine": 124,
+        "endChar": 22
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a76058_6e4439a0",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-24T18:53:37Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 127,
+        "startChar": 9,
+        "endLine": 127,
+        "endChar": 14
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aee5003_00874ced",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-24T18:53:37Z",
+      "side": 1,
+      "message": "ASSERT(tab_stats_tracker_) is sufficient.",
+      "range": {
+        "startLine": 33,
+        "startChar": 4,
+        "endLine": 33,
+        "endChar": 13
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff370c74_4ab384ba",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-24T18:53:37Z",
+      "side": 1,
+      "message": "times*",
+      "range": {
+        "startLine": 84,
+        "startChar": 22,
+        "endLine": 84,
+        "endChar": 27
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab16dd4f_db28494b",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-24T18:53:37Z",
+      "side": 1,
+      "message": "as*",
+      "range": {
+        "startLine": 114,
+        "startChar": 71,
+        "endLine": 114,
+        "endChar": 75
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee46c49_b45838e5",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-24T18:53:37Z",
+      "side": 1,
+      "message": "Oof... still? Do we have better ways to do this now with ScopedTaskSchedulerEnvironment? They\u0027re in the process of deprecating MessageLoop. Talk to fdoray@?",
+      "range": {
+        "startLine": 129,
+        "startChar": 20,
+        "endLine": 129,
+        "endChar": 33
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd273289_bf7a8a49",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-24T18:53:37Z",
+      "side": 1,
+      "message": "window*",
+      "range": {
+        "startLine": 160,
+        "startChar": 30,
+        "endLine": 160,
+        "endChar": 38
+      },
+      "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e050feb_63039a69",
+        "filename": "chrome/browser/metrics/tab_stats_tracker_unittests.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-24T18:53:37Z",
+      "side": 1,
+      "message": "reinitializes*",
+      "range": {
+        "startLine": 248,
+        "startChar": 23,
+        "endLine": 248,
+        "endChar": 36
+      },
       "revId": "df45ba2093db3519e3e42108be603d847fadfa99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
