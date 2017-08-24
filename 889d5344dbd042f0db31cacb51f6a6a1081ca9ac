@@ -88,6 +88,24 @@
       "revId": "889d5344dbd042f0db31cacb51f6a6a1081ca9ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95645d5f_e0d3195c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-24T19:11:20Z",
+      "side": 1,
+      "message": "I\u0027m afraid you have an ocean to boil for CL titles too:\n\n[(cd03f8e...)] sgraham@river:/work/cr/src$ git log --oneline --after\u003d\"2015\" | grep \u0027\\.$\u0027 | wc -l\n70129\n[(cd03f8e...)] sgraham@river:/work/cr/src$ git log --oneline --after\u003d\"2015\" | grep -v \u0027\\.$\u0027 | wc -l\n83308",
+      "parentUuid": "6e4251d5_6d658f4f",
+      "revId": "889d5344dbd042f0db31cacb51f6a6a1081ca9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
