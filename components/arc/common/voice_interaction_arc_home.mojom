@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-// Next MinVersion: 3
+// Next MinVersion: 4
 
 module arc.mojom;
 
@@ -63,7 +63,7 @@ interface VoiceInteractionArcHomeHost {
 
   // Notifies VoiceInteractionArcHomeHost that voice interaction OOBE setup
   // is done.
-  [MinVersion=1] OnVoiceInteractionOobeSetupComplete@2();
+  [MinVersion=1] OnVoiceInteractionOobeSetupComplete@2([MinVersion=3] bool onboarding_accepted);
 };
 
 // Connects with ArcHome.
