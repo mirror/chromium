@@ -13,6 +13,8 @@
 #include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/web_contents.h"
 #include "mojo/common/time.mojom.h"
 
 namespace content {
@@ -70,6 +72,8 @@ class RespondWithCallbacks
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(std::move(invoke_payment_app_callback_),
                        std::move(response)));
+
+    CloseClientWindows();
     delete this;
   }
 
@@ -94,6 +98,8 @@ class RespondWithCallbacks
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(std::move(payment_event_result_callback_),
                        payment_aborted));
+
+    CloseClientWindows();
     delete this;
   }
 
@@ -113,6 +119,8 @@ class RespondWithCallbacks
           BrowserThread::UI, FROM_HERE,
           base::BindOnce(std::move(payment_event_result_callback_), false));
     }
+
+    CloseClientWindows();
     delete this;
   }
 
@@ -120,6 +128,40 @@ class RespondWithCallbacks
 
  private:
   ~RespondWithCallbacks() override {}
+
+  // Close all the windows opened by the payment handler.
+  void CloseClientWindows() {
+    std::vector<std::pair<int, int>> ids;
+    for (auto& controllee : service_worker_version_->controllee_map()) {
+      if (controllee.second->provider_type() ==
+          SERVICE_WORKER_PROVIDER_FOR_WINDOW) {
+        ids.emplace_back(std::make_pair(controllee.second->process_id(),
+                                        controllee.second->frame_id()));
+      }
+    }
+    if(ids.size() == 0) return;
+
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(&RespondWithCallbacks::CloseClientWindowsOnUIThread,
+                       ids));
+  }
+
+  static void CloseClientWindowsOnUIThread(
+      const std::vector<std::pair<int, int>>& ids) {
+    for (const auto& id : ids) {
+      RenderFrameHost* frame_host =
+          RenderFrameHost::FromID(id.first, id.second);
+      if (frame_host == nullptr)
+        continue;
+
+      WebContents* web_contents = WebContents::FromRenderFrameHost(frame_host);
+      if (web_contents == nullptr)
+        continue;
+
+      web_contents->Close();
+    }
+  }
 
   int request_id_;
   ServiceWorkerMetrics::EventType event_type_;
