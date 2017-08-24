@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c62fdfd4_dd6919f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-24T16:06:57Z",
+      "side": 1,
+      "message": "Any reason for not using NoUnderlineClickableSpan? It looks like it would simplify handling the style and clickability of the link here. Different appearance?",
+      "revId": "37410a146a9adb2525ebc2da4e7a75d3934eceb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
