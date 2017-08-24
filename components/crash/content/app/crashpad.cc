@@ -50,11 +50,14 @@ crashpad::CrashReportDatabase* g_database;
 
 void SetCrashKeyValue(const base::StringPiece& key,
                       const base::StringPiece& value) {
-  g_simple_string_dictionary->SetKeyValue(key.data(), value.data());
+  // Convert from StringPiece to string to ensure null-termination.
+  g_simple_string_dictionary->SetKeyValue(key.as_string().c_str(),
+                                          value.as_string().c_str());
 }
 
 void ClearCrashKey(const base::StringPiece& key) {
-  g_simple_string_dictionary->RemoveKey(key.data());
+  // Convert from StringPiece to string to ensure null-termination.
+  g_simple_string_dictionary->RemoveKey(key.as_string().c_str());
 }
 
 bool LogMessageHandler(int severity,
@@ -387,7 +390,8 @@ void ClearCrashKeyValueImpl(const wchar_t* key) {
   crash_reporter::ClearCrashKey(base::UTF16ToUTF8(key));
 }
 
-void SetCrashKeyValueImplEx(const char* key, const char* value) {
+void SetCrashKeyValueImplEx(const base::StringPiece& key,
+                            const base::StringPiece& value) {
   crash_reporter::SetCrashKeyValue(key, value);
 }
 
