@@ -88,6 +88,24 @@
       "revId": "d5c3e95c35442c786939a7863cb9b4b53dd6b9a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307d0142_ac6045ab",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-24T22:47:53Z",
+      "side": 1,
+      "message": "that does, i just have a couple questions\nthis mean we are consolidating the two different path related logs (does not match prefix suffix \u0026 empty in between) right?\n\nshould we create the path on remove (append prefix and suffix) and just use find or is that harder to follow and not particular helpful since so few notifications?",
+      "parentUuid": "f925e710_5099e612",
+      "revId": "d5c3e95c35442c786939a7863cb9b4b53dd6b9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
