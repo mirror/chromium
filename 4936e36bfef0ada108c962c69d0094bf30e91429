@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f13c6ec5_ccfb97e5",
+        "filename": "chrome/browser/extensions/api/debugger/debugger_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-24T16:58:48Z",
+      "side": 1,
+      "message": "FindExtensionClientHost",
+      "revId": "4936e36bfef0ada108c962c69d0094bf30e91429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
