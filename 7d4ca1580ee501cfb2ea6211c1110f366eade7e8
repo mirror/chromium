@@ -16,6 +16,24 @@
       "revId": "7d4ca1580ee501cfb2ea6211c1110f366eade7e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08757e6f_85caa988",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewPointerTypeTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-08-24T06:52:47Z",
+      "side": 1,
+      "message": "I updated this once more because the test was flaky. It seems the direct access to mActivityTestRule.getContentViewCore() causes a timing issue (am I right?).",
+      "parentUuid": "cc07122b_29b589fc",
+      "revId": "7d4ca1580ee501cfb2ea6211c1110f366eade7e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
