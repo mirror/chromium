@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "358feb98_4aff0dcc",
+        "filename": "android_webview/browser/aw_print_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T17:05:29Z",
+      "side": 1,
+      "message": "This class already makes an assumption that WCO::web_contents is not null (i.e. PrintNow method doesn\u0027t perform null checks).\n\nI don\u0027t see calls to WCO::ResetWebContents or WCO::Observe.\n\nI assume that the constructor always receives a non-null WebContents* pointer.",
+      "range": {
+        "startLine": 91,
+        "startChar": 30,
+        "endLine": 91,
+        "endChar": 44
+      },
+      "revId": "400fcc4fde9748d2a2c4d6de1c300015d191b58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0f5063e_723cc7b9",
+        "filename": "android_webview/browser/renderer_host/aw_render_view_host_ext.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T17:05:29Z",
+      "side": 1,
+      "message": "This class already makes an assumption that WCO::web_contents is not null (i.e. DocumentHasImages method doesn\u0027t perform null checks).\n\nI don\u0027t see calls to WCO::ResetWebContents or WCO::Observe.\n\nI assume that the constructor always receives a non-null WebContents* pointer.",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "400fcc4fde9748d2a2c4d6de1c300015d191b58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7076a512_4b45e31c",
+        "filename": "chrome/browser/guest_view/web_view/chrome_web_view_permission_helper_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T17:05:29Z",
+      "side": 1,
+      "message": "Hmmm.... this can probably return null...  Let me fix this in the most recent patchset...",
+      "range": {
+        "startLine": 305,
+        "startChar": 2,
+        "endLine": 305,
+        "endChar": 34
+      },
+      "revId": "400fcc4fde9748d2a2c4d6de1c300015d191b58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec545e45_5c9e28dc",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T17:05:29Z",
+      "side": 1,
+      "message": "PluginObserver class already makes an assumption that WCO::web_contents is not null (i.e. PluginObserver::PluginCrashed method doesn\u0027t perform null checks).\n\nI don\u0027t see calls to WCO::ResetWebContents or WCO::Observe.\n\nI assume that the constructor of PluginObserver always receives a non-null WebContents* pointer.",
+      "range": {
+        "startLine": 141,
+        "startChar": 15,
+        "endLine": 141,
+        "endChar": 29
+      },
+      "revId": "400fcc4fde9748d2a2c4d6de1c300015d191b58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a15e9ca_e231d666",
+        "filename": "chrome/browser/printing/print_view_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T17:05:29Z",
+      "side": 1,
+      "message": "This class already makes an assumption that WCO::web_contents is not null (i.e. PrintViewManager::RenderFrameCreated method doesn\u0027t perform null checks).\n\nI don\u0027t see calls to WCO::ResetWebContents or WCO::Observe.\n\nI assume that the constructor of PrintViewManager always receives a non-null WebContents* pointer (I see that the constructor dereferences this pointer).",
+      "range": {
+        "startLine": 260,
+        "startChar": 30,
+        "endLine": 260,
+        "endChar": 44
+      },
+      "revId": "400fcc4fde9748d2a2c4d6de1c300015d191b58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01bae299_238e8764",
+        "filename": "content/browser/browser_plugin/browser_plugin_guest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T17:05:29Z",
+      "side": 1,
+      "message": "This class already makes an assumption that WCO::web_contents is not null (i.e. BrowserPluginGuest::OnSetFocus method doesn\u0027t perform null checks).\n\nI don\u0027t see calls to WCO::ResetWebContents or WCO::Observe.\n\nI assume that the constructor always receives a non-null WebContents* pointer (the constructor dereferences this pointer when calling web_contents-\u003eSetBrowserPluginGuest(this)).",
+      "range": {
+        "startLine": 1000,
+        "startChar": 4,
+        "endLine": 1000,
+        "endChar": 18
+      },
+      "revId": "400fcc4fde9748d2a2c4d6de1c300015d191b58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab5d28b9_876d1800",
+        "filename": "content/browser/media/media_web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T17:05:29Z",
+      "side": 1,
+      "message": "I think that this is an okay pointer.  In particular I see that the implementation of MediaWebContentsObserver::RenderFrameDeleted would reset |fullscreen_player_|.",
+      "range": {
+        "startLine": 144,
+        "startChar": 19,
+        "endLine": 144,
+        "endChar": 31
+      },
+      "revId": "400fcc4fde9748d2a2c4d6de1c300015d191b58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef654f8f_ea055c8d",
+        "filename": "content/browser/media/session/media_session_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T17:05:29Z",
+      "side": 1,
+      "message": "I think that this is an okay pointer - I think that MediaSessionControllersManager::RenderFrameDeleted should take care of removing stale MediaSessionController objects.",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 11
+      },
+      "revId": "400fcc4fde9748d2a2c4d6de1c300015d191b58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc9f83d5_7dc91307",
+        "filename": "extensions/browser/guest_view/web_view/web_view_guest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T17:05:29Z",
+      "side": 1,
+      "message": "Even before this CL we already make an assumption that web_contents() is non-null (when calculating one of the arguments for the constructor of the IPC message: |web_contents()-\u003eGetRenderViewHost()-\u003eGetRoutingID()|).\n\nI don\u0027t see calls to WCO::ResetWebContents or WCO::Observe.",
+      "range": {
+        "startLine": 499,
+        "startChar": 2,
+        "endLine": 499,
+        "endChar": 16
+      },
+      "revId": "400fcc4fde9748d2a2c4d6de1c300015d191b58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b35a5eff_a58e9ace",
+        "filename": "headless/lib/browser/headless_print_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T17:05:29Z",
+      "side": 1,
+      "message": "We\u0027ve separately analyzed that the parent class (PrintManager) makes an assumption that WCO::web_contents is not null.\n\nI don\u0027t see calls to WCO::ResetWebContents or WCO::Observe.\n\nI assume that the constructor always receives a non-null WebContents* pointer.",
+      "range": {
+        "startLine": 321,
+        "startChar": 30,
+        "endLine": 321,
+        "endChar": 44
+      },
+      "revId": "400fcc4fde9748d2a2c4d6de1c300015d191b58b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74e902a0_fe76c0a4",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2943,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T17:05:29Z",
+      "side": 0,
+      "message": "Hmmm... can GetRenderViewHost() ever return null?\n\n\nAFAICT:\n\n- WebContentsImpl::frame_tree_ is never null (for example - I see that it is dereferenced without any checks in WebContentsImpl::GetRenderManage)\n\n- Same for frame_tree_.root()\n\n- RenderFrameHostManager is embedded inside FrameTreeNode - it cannot physically be null\n\n- RenderFrameHost::render_view_host() is never null (I see a comment in render_frame_host_impl.h that says that RenderFrameHosts indirectly keep RenderViewHosts alive via a refcount)\n\n\nOTOH:\n\n- It seems that RenderFrameHostManager::current_host() can return null when RenderFrameHostManager::render_frame_host_ is null.  I *think* that it can only be null 1) before the first call to RenderFrameHostManager::SetRenderFrameHost and 2) after a call to RenderFrameHostManager::SetRenderFrameHost(nullptr).",
+      "range": {
+        "startLine": 2943,
+        "startChar": 6,
+        "endLine": 2943,
+        "endChar": 26
+      },
+      "revId": "2cc486ba80af7379eba21d88b6ef5feb107ebc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c22357_a3122b94",
+        "filename": "content/public/browser/web_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T17:05:29Z",
+      "side": 0,
+      "message": "AFAICT |web_contents_| field of WebContentsObserver can become null in the following cases:\n\n- Construction via the default constructor of WebContentsObserver (the other constructor will set |web_contents_| field via the Observe method)\n\n- After a call to WCO::ResetWebContents() or a call to WCO::Observer(nullptr)",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 20
+      },
+      "revId": "2cc486ba80af7379eba21d88b6ef5feb107ebc89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
