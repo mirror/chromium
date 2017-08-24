@@ -5,7 +5,7 @@
 #ifndef COMPONENTS_INFOBARS_CORE_INFOBAR_DELEGATE_H_
 #define COMPONENTS_INFOBARS_CORE_INFOBAR_DELEGATE_H_
 
-#include "base/macros.h"
+#include <base/macros.h>
 #include "base/strings/string16.h"
 #include "build/build_config.h"
 #include "ui/base/window_open_disposition.h"
@@ -214,6 +214,10 @@ class InfoBarDelegate {
   // Called when the user clicks on the close button to dismiss the infobar.
   virtual void InfoBarDismissed();
 
+  // Should be called every time the InfoBarService is notified of a navigation
+  // entry being committed.
+  void OnNavigation(const NavigationDetails& details);
+
   // Type-checking downcast routines:
   virtual ConfirmInfoBarDelegate* AsConfirmInfoBarDelegate();
   virtual HungRendererInfoBarDelegate* AsHungRendererInfoBarDelegate();
@@ -248,6 +252,13 @@ class InfoBarDelegate {
 
   // The ID of the active navigation entry at the time we became owned.
   int nav_entry_id_;
+
+  // The ID of the navigation entry at the time we were launched.
+  int launch_entry_id_;
+
+  // The user has navigated away from the URL this infobar was launched at,
+  // one of the conditions for allowing the infobar to expire.
+  bool navigated_away_from_launch_url_;
 
   DISALLOW_COPY_AND_ASSIGN(InfoBarDelegate);
 };
