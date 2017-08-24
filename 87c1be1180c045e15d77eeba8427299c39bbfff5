@@ -34,6 +34,23 @@
       "revId": "87c1be1180c045e15d77eeba8427299c39bbfff5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e7f101_3ac20152",
+        "filename": "chrome/browser/ui/aura/accessibility/automation_manager_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-24T23:40:07Z",
+      "side": 1,
+      "message": "How about a switch on session_state with no default?\nThat way if anyone ever adds a new state they\u0027ll have to\nupdate this switch or it won\u0027t compile.",
+      "revId": "87c1be1180c045e15d77eeba8427299c39bbfff5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
