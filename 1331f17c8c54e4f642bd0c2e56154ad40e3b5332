@@ -52,6 +52,23 @@
       "revId": "1331f17c8c54e4f642bd0c2e56154ad40e3b5332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bcd7c377_72d1ee77",
+        "filename": "net/base/net_string_util_icu_alternatives_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-24T16:13:14Z",
+      "side": 1,
+      "message": "I inferred to remove .obj() based on the error. But I don\u0027t understand why this is different to eg. line 46 where java_charset is passed with .obj() the types on both sides are the same?",
+      "revId": "1331f17c8c54e4f642bd0c2e56154ad40e3b5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
