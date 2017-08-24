@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a70ab228_c5a96f9d",
+        "filename": "third_party/WebKit/LayoutTests/editing/execCommand/insert-list-with-progress-crash.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-24T01:30:10Z",
+      "side": 1,
+      "message": "Could you remove |\u003d\"false\"| since \"hidden\" is reflecting IDL boolean \nattribute thus its value doesn\u0027t affect the value of attribute[1]?\n\n[1] https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#reflect",
+      "revId": "70d432e94f2981a4499d2cee36c0bc2821019761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
