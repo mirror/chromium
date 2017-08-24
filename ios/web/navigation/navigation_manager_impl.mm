@@ -325,4 +325,15 @@ NavigationManagerImpl::CreateNavigationItemWithRewriters(
   return item;
 }
 
+NavigationItem* NavigationManagerImpl::GetLastCommittedNonAppSpecificItem()
+    const {
+  WebClient* client = GetWebClient();
+  for (int index = GetLastCommittedItemIndex(); index >= 0; index--) {
+    NavigationItem* item = GetItemAtIndex(index);
+    if (!client->IsAppSpecificURL(item->GetVirtualURL()))
+      return item;
+  }
+  return nullptr;
+}
+
 }  // namespace web
