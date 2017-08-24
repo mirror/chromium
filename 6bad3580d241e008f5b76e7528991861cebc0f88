@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17204c33_45e63b36",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:39:49Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like you\u0027re using StackTrace.",
+      "revId": "6bad3580d241e008f5b76e7528991861cebc0f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6152ea29_e7bc0ef4",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:39:49Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like you\u0027re using this.",
+      "revId": "6bad3580d241e008f5b76e7528991861cebc0f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae2f93e_3655ed2e",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:39:49Z",
+      "side": 1,
+      "message": "I think you just want child_process_launcher_helper.h here.",
+      "revId": "6bad3580d241e008f5b76e7528991861cebc0f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa86f4ea_229ce29c",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:39:49Z",
+      "side": 1,
+      "message": "I don\u0027t think you need any of these either, any more.",
+      "revId": "6bad3580d241e008f5b76e7528991861cebc0f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73163a9_e9325fe4",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:39:49Z",
+      "side": 1,
+      "message": "nit: Add a TODO() for implementing sandboxed process launch here?",
+      "revId": "6bad3580d241e008f5b76e7528991861cebc0f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
