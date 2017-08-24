@@ -39434,6 +39434,11 @@ would be helpful to identify which type is being sent.
   <int value="3" label="Dismiss to open a newly installed WebAPK"/>
 </enum>
 
+<enum name="WebappNavigationStatus">
+  <int value="0" label="Success"/>
+  <int value="1" label="Error Page"/>
+</enum>
+
 <enum name="WebAudioAutoplayStatus">
   <int value="0" label="The AudioContext failed to autoplay"/>
   <int value="1" label="Failed to autoplay but start() called on user gesture"/>

@@ -14,24 +14,29 @@ import java.util.concurrent.TimeUnit;
  * Centralizes UMA data collection for web apps.
  */
 public class WebappUma {
-    // SplashscreenColorStatus defined in tools/metrics/histograms/histograms.xml.
+    // SplashscreenColorStatus defined in tools/metrics/histograms/enums.xml.
     public static final int SPLASHSCREEN_COLOR_STATUS_DEFAULT = 0;
     public static final int SPLASHSCREEN_COLOR_STATUS_CUSTOM = 1;
     public static final int SPLASHSCREEN_COLOR_STATUS_MAX = 2;
 
-    // SplashscreenHidesReason defined in tools/metrics/histograms/histograms.xml.
+    // SplashscreenHidesReason defined in tools/metrics/histograms/enums.xml.
     public static final int SPLASHSCREEN_HIDES_REASON_PAINT = 0;
     public static final int SPLASHSCREEN_HIDES_REASON_LOAD_FINISHED = 1;
     public static final int SPLASHSCREEN_HIDES_REASON_LOAD_FAILED = 2;
     public static final int SPLASHSCREEN_HIDES_REASON_CRASH = 3;
     public static final int SPLASHSCREEN_HIDES_REASON_MAX = 4;
 
-    // SplashscreenBackgroundColorType defined in tools/metrics/histograms/histograms.xml.
+    // SplashscreenBackgroundColorType defined in tools/metrics/histograms/enums.xml.
     public static final int SPLASHSCREEN_ICON_TYPE_NONE = 0;
     public static final int SPLASHSCREEN_ICON_TYPE_FALLBACK = 1;
     public static final int SPLASHSCREEN_ICON_TYPE_CUSTOM = 2;
     public static final int SPLASHSCREEN_ICON_TYPE_CUSTOM_SMALL = 3;
     public static final int SPLASHSCREEN_ICON_TYPE_MAX = 4;
+
+    // WebappNavigationStatus defined in tools/metrics/histograms/enums.xml.
+    public static final int NAVIGATION_STATUS_SUCCESS = 0;
+    public static final int NAVIGATION_STATUS_ERROR_PAGE = 1;
+    public static final int NAVIGATION_STATUS_MAX = 2;
 
     // Histogram names are defined in tools/metrics/histograms/histograms.xml.
     public static final String HISTOGRAM_SPLASHSCREEN_BACKGROUNDCOLOR =
@@ -46,6 +51,19 @@ public class WebappUma {
             "Webapp.Splashscreen.Icon.Size";
     public static final String HISTOGRAM_SPLASHSCREEN_THEMECOLOR =
             "Webapp.Splashscreen.ThemeColor";
+    public static final String HISTOGRAM_NAVIGATION_STATUS = "Webapp.NavigationStatus";
+
+    /**
+     * Records the result of the top level navigation. It is safe to do outside of
+     * {@link #commitMetrics} as native library is ensured to be loaded if browser finished the
+     * top level navigation.
+     */
+    public static void recordCommittedNavigation(boolean isErrorPage) {
+        RecordHistogram.recordEnumeratedHistogram(WebappUma.HISTOGRAM_NAVIGATION_STATUS,
+                isErrorPage ? WebappUma.NAVIGATION_STATUS_ERROR_PAGE
+                            : WebappUma.NAVIGATION_STATUS_SUCCESS,
+                WebappUma.NAVIGATION_STATUS_MAX);
+    }
 
     private int mSplashScreenBackgroundColor = SPLASHSCREEN_COLOR_STATUS_MAX;
     private int mSplashScreenIconType = SPLASHSCREEN_ICON_TYPE_MAX;
