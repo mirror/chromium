@@ -48,7 +48,10 @@
 
 namespace content {
 
+// TODO: Remove StatusCallback when {Start,Stop}Worker can take
+//       StatusOnceCallback and rename StatusOnceCallback to StatusCallback.
 using StatusCallback = ServiceWorkerVersion::StatusCallback;
+using StatusOnceCallback = ServiceWorkerVersion::StatusOnceCallback;
 
 namespace {
 
@@ -91,25 +94,18 @@ void RunCallbacks(ServiceWorkerVersion* version,
                   const Arg& arg) {
   CallbackArray callbacks;
   callbacks.swap(*callbacks_ptr);
-  for (const auto& callback : callbacks)
-    callback.Run(arg);
-}
-
-void RunStartWorkerCallback(
-    const StatusCallback& callback,
-    scoped_refptr<ServiceWorkerRegistration> protect,
-    ServiceWorkerStatusCode status) {
-  callback.Run(status);
+  for (auto& callback : callbacks)
+    std::move(callback).Run(arg);
 }
 
 // A callback adapter to start a |task| after StartWorker.
 void RunTaskAfterStartWorker(base::WeakPtr<ServiceWorkerVersion> version,
-                             const StatusCallback& error_callback,
+                             StatusOnceCallback error_callback,
                              base::OnceClosure task,
                              ServiceWorkerStatusCode status) {
   if (status != SERVICE_WORKER_OK) {
     if (!error_callback.is_null())
-      error_callback.Run(status);
+      std::move(error_callback).Run(status);
     return;
   }
   if (version->running_status() != EmbeddedWorkerStatus::RUNNING) {
@@ -117,7 +113,7 @@ void RunTaskAfterStartWorker(base::WeakPtr<ServiceWorkerVersion> version,
     // it looks it's not running yet.
     NOTREACHED() << "The worker's not running after successful StartWorker";
     if (!error_callback.is_null())
-      error_callback.Run(SERVICE_WORKER_ERROR_START_WORKER_FAILED);
+      std::move(error_callback).Run(SERVICE_WORKER_ERROR_START_WORKER_FAILED);
     return;
   }
   std::move(task).Run();
@@ -311,9 +307,10 @@ ServiceWorkerVersion::~ServiceWorkerVersion() {
   // user closed the tab before the SW could start up.
   if (!start_callbacks_.empty()) {
     // RecordStartWorkerResult must be the first element of start_callbacks_.
-    StatusCallback record_start_worker_result = start_callbacks_[0];
+    StatusOnceCallback record_start_worker_result =
+        std::move(start_callbacks_[0]);
     start_callbacks_.clear();
-    record_start_worker_result.Run(SERVICE_WORKER_ERROR_ABORT);
+    std::move(record_start_worker_result).Run(SERVICE_WORKER_ERROR_ABORT);
   }
 
   if (context_)
@@ -534,14 +531,14 @@ void ServiceWorkerVersion::DeferScheduledUpdate() {
 
 int ServiceWorkerVersion::StartRequest(
     ServiceWorkerMetrics::EventType event_type,
-    const StatusCallback& error_callback) {
-  return StartRequestWithCustomTimeout(event_type, error_callback,
+    StatusOnceCallback error_callback) {
+  return StartRequestWithCustomTimeout(event_type, std::move(error_callback),
                                        kRequestTimeout, KILL_ON_TIMEOUT);
 }
 
 int ServiceWorkerVersion::StartRequestWithCustomTimeout(
     ServiceWorkerMetrics::EventType event_type,
-    const StatusCallback& error_callback,
+    StatusOnceCallback error_callback,
     const base::TimeDelta& timeout,
     TimeoutBehavior timeout_behavior) {
   DCHECK_EQ(EmbeddedWorkerStatus::RUNNING, running_status())
@@ -553,8 +550,9 @@ int ServiceWorkerVersion::StartRequestWithCustomTimeout(
       << "Event of type " << static_cast<int>(event_type)
       << " can only be dispatched to an active worker: " << status();
 
-  int request_id = pending_requests_.Add(base::MakeUnique<PendingRequest>(
-      error_callback, clock_->Now(), tick_clock_->NowTicks(), event_type));
+  int request_id = pending_requests_.Add(
+      base::MakeUnique<PendingRequest>(std::move(error_callback), clock_->Now(),
+                                       tick_clock_->NowTicks(), event_type));
   TRACE_EVENT_ASYNC_BEGIN2("ServiceWorker", "ServiceWorkerVersion::Request",
                            pending_requests_.Lookup(request_id), "Request id",
                            request_id, "Event type",
@@ -644,15 +642,15 @@ ServiceWorkerVersion::CreateSimpleEventCallback(int request_id) {
 void ServiceWorkerVersion::RunAfterStartWorker(
     ServiceWorkerMetrics::EventType purpose,
     base::OnceClosure task,
-    const StatusCallback& error_callback) {
+    StatusOnceCallback error_callback) {
   if (running_status() == EmbeddedWorkerStatus::RUNNING) {
     DCHECK(start_callbacks_.empty());
     std::move(task).Run();
     return;
   }
-  StartWorker(purpose,
-              base::Bind(&RunTaskAfterStartWorker, weak_factory_.GetWeakPtr(),
-                         error_callback, base::Passed(std::move(task))));
+  StartWorker(purpose, base::AdaptCallbackForRepeating(base::BindOnce(
+                           &RunTaskAfterStartWorker, weak_factory_.GetWeakPtr(),
+                           std::move(error_callback), std::move(task))));
 }
 
 void ServiceWorkerVersion::AddControllee(
@@ -843,11 +841,11 @@ bool ServiceWorkerVersion::RequestInfo::operator>(
 }
 
 ServiceWorkerVersion::PendingRequest::PendingRequest(
-    const StatusCallback& callback,
+    StatusOnceCallback callback,
     base::Time time,
     const base::TimeTicks& time_ticks,
     ServiceWorkerMetrics::EventType event_type)
-    : error_callback(callback),
+    : error_callback(std::move(callback)),
       start_time(time),
       start_time_ticks(time_ticks),
       event_type(event_type) {}
@@ -1063,11 +1061,11 @@ void ServiceWorkerVersion::OnSimpleEventFinished(
   if (!request)
     return;
   // Copy error callback before calling FinishRequest.
-  StatusCallback callback = request->error_callback;
+  StatusOnceCallback callback = std::move(request->error_callback);
 
   FinishRequest(request_id, status == SERVICE_WORKER_OK, dispatch_event_time);
 
-  callback.Run(status);
+  std::move(callback).Run(status);
 }
 
 void ServiceWorkerVersion::CountFeature(uint32_t feature) {
@@ -1413,7 +1411,7 @@ void ServiceWorkerVersion::DidEnsureLiveRegistrationForStartWorker(
     ServiceWorkerMetrics::EventType purpose,
     Status prestart_status,
     bool is_browser_startup_complete,
-    const StatusCallback& callback,
+    StatusOnceCallback callback,
     ServiceWorkerStatusCode status,
     scoped_refptr<ServiceWorkerRegistration> registration) {
   scoped_refptr<ServiceWorkerRegistration> protect = registration;
@@ -1431,14 +1429,16 @@ void ServiceWorkerVersion::DidEnsureLiveRegistrationForStartWorker(
   if (status != SERVICE_WORKER_OK) {
     RecordStartWorkerResult(purpose, prestart_status, kInvalidTraceId,
                             is_browser_startup_complete, status);
-    RunSoon(base::BindOnce(callback, SERVICE_WORKER_ERROR_START_WORKER_FAILED));
+    RunSoon(base::BindOnce(std::move(callback),
+                           SERVICE_WORKER_ERROR_START_WORKER_FAILED));
     return;
   }
   if (is_redundant()) {
     RecordStartWorkerResult(purpose, prestart_status, kInvalidTraceId,
                             is_browser_startup_complete,
                             SERVICE_WORKER_ERROR_REDUNDANT);
-    RunSoon(base::BindOnce(callback, SERVICE_WORKER_ERROR_REDUNDANT));
+    RunSoon(
+        base::BindOnce(std::move(callback), SERVICE_WORKER_ERROR_REDUNDANT));
     return;
   }
 
@@ -1446,7 +1446,7 @@ void ServiceWorkerVersion::DidEnsureLiveRegistrationForStartWorker(
 
   switch (running_status()) {
     case EmbeddedWorkerStatus::RUNNING:
-      RunSoon(base::BindOnce(callback, SERVICE_WORKER_OK));
+      RunSoon(base::BindOnce(std::move(callback), SERVICE_WORKER_OK));
       return;
     case EmbeddedWorkerStatus::STARTING:
       DCHECK(!start_callbacks_.empty());
@@ -1462,16 +1462,15 @@ void ServiceWorkerVersion::DidEnsureLiveRegistrationForStartWorker(
         DCHECK(!start_worker_first_purpose_);
         start_worker_first_purpose_ = purpose;
         start_callbacks_.push_back(
-            base::Bind(&ServiceWorkerVersion::RecordStartWorkerResult,
-                       weak_factory_.GetWeakPtr(), purpose, prestart_status,
-                       trace_id, is_browser_startup_complete));
+            base::BindOnce(&ServiceWorkerVersion::RecordStartWorkerResult,
+                           weak_factory_.GetWeakPtr(), purpose, prestart_status,
+                           trace_id, is_browser_startup_complete));
       }
       break;
   }
 
   // Keep the live registration while starting the worker.
-  start_callbacks_.push_back(
-      base::Bind(&RunStartWorkerCallback, callback, protect));
+  start_callbacks_.push_back(std::move(callback));
 
   if (running_status() == EmbeddedWorkerStatus::STOPPED)
     StartWorkerInternal();
@@ -1758,7 +1757,7 @@ bool ServiceWorkerVersion::MaybeTimeOutRequest(const RequestInfo& info) {
 
   TRACE_EVENT_ASYNC_END1("ServiceWorker", "ServiceWorkerVersion::Request",
                          request, "Error", "Timeout");
-  request->error_callback.Run(SERVICE_WORKER_ERROR_TIMEOUT);
+  std::move(request->error_callback).Run(SERVICE_WORKER_ERROR_TIMEOUT);
   pending_requests_.Remove(info.id);
   return true;
 }
@@ -1882,7 +1881,8 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
   while (!iter.IsAtEnd()) {
     TRACE_EVENT_ASYNC_END1("ServiceWorker", "ServiceWorkerVersion::Request",
                            iter.GetCurrentValue(), "Error", "Worker Stopped");
-    iter.GetCurrentValue()->error_callback.Run(SERVICE_WORKER_ERROR_FAILED);
+    std::move(iter.GetCurrentValue()->error_callback)
+        .Run(SERVICE_WORKER_ERROR_FAILED);
     iter.Advance();
   }
   pending_requests_.Clear();
