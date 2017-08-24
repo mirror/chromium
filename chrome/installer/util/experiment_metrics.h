@@ -96,7 +96,7 @@ struct ExperimentMetrics {
   bool operator==(const ExperimentMetrics& other) const;
 
   // The number of experiment groups (including the  holdback group).
-  enum : int { kNumGroups = 16 };
+  enum : int { kNumGroups = 17 };
 
   // The index of the holdback group.
   enum : int { kHoldbackGroup = kNumGroups - 1 };
@@ -135,9 +135,9 @@ struct ExperimentMetrics {
 
   enum : int { kToastLocationBits = 1 };
 
-  enum : int { kStateBits = 4 };
+  enum : int { kStateBits = 5 };
 
-  enum : int { kGroupBits = 4 };
+  enum : int { kGroupBits = 5 };
 
   // The group to which this install has been assigned.
   int group = 0;
