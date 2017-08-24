@@ -663,14 +663,12 @@ public class ChromeTabbedActivity
     @Override
     public ChromeTabCreator getTabCreator(boolean incognito) {
         TabCreator tabCreator = super.getTabCreator(incognito);
-        assert tabCreator instanceof ChromeTabCreator;
         return (ChromeTabCreator) tabCreator;
     }
 
     @Override
     public ChromeTabCreator getCurrentTabCreator() {
         TabCreator tabCreator = super.getCurrentTabCreator();
-        assert tabCreator instanceof ChromeTabCreator;
         return (ChromeTabCreator) tabCreator;
     }
 

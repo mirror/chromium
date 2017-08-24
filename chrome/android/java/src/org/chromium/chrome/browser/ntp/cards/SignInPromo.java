@@ -94,7 +94,6 @@ public class SignInPromo extends OptionalLeaf
 
     @Override
     protected void onBindViewHolder(NewTabPageViewHolder holder) {
-        assert holder instanceof StatusCardViewHolder;
         ((StatusCardViewHolder) holder).onBindViewHolder(this);
         mImpressionTracker.reset(mImpressionTracker.wasTriggered() ? null : holder.itemView);
     }
