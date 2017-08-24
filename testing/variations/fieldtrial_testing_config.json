@@ -3534,6 +3534,26 @@
             ]
         }
     ],
+    "WheelScrollLatchingAndAsyncWheelEvents": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Experiment",
+                    "enable_features": [
+                        "AsyncWheelEvents",
+                        "TouchpadAndWheelScrollLatching"
+                    ]
+                }
+            ]
+        }
+    ],
     "XGEOVisibleNetworks": [
         {
             "platforms": [
