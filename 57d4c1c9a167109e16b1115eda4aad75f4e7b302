@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "225add9b_24bfcf8f",
+        "filename": "chrome/browser/ui/android/infobars/notify_infobar_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-24T09:08:57Z",
+      "side": 1,
+      "message": "base::MakeUnique\u003c\u003e",
+      "range": {
+        "startLine": 49,
+        "startChar": 21,
+        "endLine": 49,
+        "endChar": 64
+      },
+      "revId": "57d4c1c9a167109e16b1115eda4aad75f4e7b302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79c9ea1_e82e6e35",
+        "filename": "chrome/browser/ui/android/infobars/notify_infobar_android.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-24T09:08:57Z",
+      "side": 1,
+      "message": "And explicit isn\u0027t necessary anymore :)",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "57d4c1c9a167109e16b1115eda4aad75f4e7b302",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
