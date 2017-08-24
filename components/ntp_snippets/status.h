@@ -9,11 +9,16 @@
 
 namespace ntp_snippets {
 
-// This enum indicates how an operation was completed.
+// This enum indicates how an operation was completed. These values are written
+// to logs.  New enum values can be added, but existing enums must never be
+// renumbered or deleted and reused.
 enum class StatusCode {
-  SUCCESS,          // The operation has been completed successfully.
-  TEMPORARY_ERROR,  // The operation failed but retrying might solve the error.
-  PERMANENT_ERROR,  // The operation failed and would fail again if retried.
+  SUCCESS = 0,  // The operation has been completed successfully.
+  TEMPORARY_ERROR =
+      1,  // The operation failed but retrying might solve the error.
+  PERMANENT_ERROR = 2,  // The operation failed and would fail again if retried.
+
+  MAX_STATUS_CODE
 };
 
 // This struct provides the status code of a request and an optional message

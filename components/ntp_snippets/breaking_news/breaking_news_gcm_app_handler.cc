@@ -12,6 +12,7 @@
 #include "components/gcm_driver/gcm_profile_service.h"
 #include "components/gcm_driver/instance_id/instance_id.h"
 #include "components/gcm_driver/instance_id/instance_id_driver.h"
+#include "components/ntp_snippets/breaking_news/breaking_news_metrics.h"
 #include "components/ntp_snippets/features.h"
 #include "components/ntp_snippets/pref_names.h"
 #include "components/ntp_snippets/time_serialization.h"
@@ -158,6 +159,8 @@ void BreakingNewsGCMAppHandler::Subscribe(bool force_token_retrieval) {
 void BreakingNewsGCMAppHandler::DidRetrieveToken(
     const std::string& subscription_token,
     InstanceID::Result result) {
+  metrics::OnTokenRetrieval(result);
+
   switch (result) {
     case InstanceID::SUCCESS:
       // The received token is assumed to be valid, therefore, we reschedule
@@ -202,11 +205,14 @@ void BreakingNewsGCMAppHandler::ResubscribeIfInvalidToken() {
 void BreakingNewsGCMAppHandler::DidReceiveTokenForValidation(
     const std::string& new_token,
     InstanceID::Result result) {
-  // TODO(crbug.com/744557): Add a metric to record time from last validation.
+  metrics::OnTokenRetrieval(result);
+
+  const base::Time last_validation_time = DeserializeTime(
+      pref_service_->GetInt64(prefs::kBreakingNewsGCMLastTokenValidationTime));
+  metrics::OnTokenValidation(/*time_since_last_validation=*/clock_->Now() -
+                             last_validation_time);
 
   // We intentionally reschedule as normal even if we don't get a token.
-  // TODO(crbug.com/744557): Add a metric to record number of failed token
-  // retrievals. Consider rescheduling next validation sooner.
   pref_service_->SetInt64(prefs::kBreakingNewsGCMLastTokenValidationTime,
                           SerializeTime(clock_->Now()));
   ScheduleNextTokenValidation();
@@ -216,6 +222,9 @@ void BreakingNewsGCMAppHandler::DidReceiveTokenForValidation(
   }
   const std::string old_token =
       pref_service_->GetString(prefs::kBreakingNewsGCMSubscriptionTokenCache);
+
+  metrics::OnSuccessfulTokenValidation(old_token == new_token);
+
   if (old_token != new_token) {
     // TODO(crbug.com/744557): Add a metric to record time since last validation
     // when the token was valid.
@@ -284,10 +293,12 @@ void BreakingNewsGCMAppHandler::OnMessage(const std::string& app_id,
   if (it == message.data.end()) {
     LOG(WARNING)
         << "Receiving pushed content failure: Breaking News ID missing.";
+    metrics::OnMessageReceived(/*our_payload_characters_count=*/0);
     return;
   }
 
   std::string news = it->second;
+  metrics::OnMessageReceived(/*our_payload_characters_count=*/news.size());
 
   parse_json_callback_.Run(news,
                            base::Bind(&BreakingNewsGCMAppHandler::OnJsonSuccess,
