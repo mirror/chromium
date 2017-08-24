@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc07122b_29b589fc",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewPointerTypeTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-24T05:16:48Z",
+      "side": 1,
+      "message": "just call fromLocalCssToPix here instead? caching the ratio seems unnecessary",
+      "revId": "7d4ca1580ee501cfb2ea6211c1110f366eade7e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
