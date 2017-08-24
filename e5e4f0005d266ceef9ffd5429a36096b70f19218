@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c7ee41e4_07944f44",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-24T04:42:33Z",
+      "side": 1,
+      "message": "Yeah it just means that we\u0027ll stay around even when we probably should die :(.  The notification will always go away when the service dies unless you use the newer stopForeground(int) API, although you can\u0027t use that on older versions of Android.  There are a few workarounds, like showing the notification again after the service dies/in on destroy perhaps?",
+      "parentUuid": "3a7046e9_66d3ce53",
+      "range": {
+        "startLine": 97,
+        "startChar": 16,
+        "endLine": 97,
+        "endChar": 30
+      },
+      "revId": "e5e4f0005d266ceef9ffd5429a36096b70f19218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d698e27d_97a8bd62",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 2
