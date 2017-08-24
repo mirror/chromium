@@ -128,9 +128,10 @@ void InitSchemes(std::vector<std::string>** schemes,
 void InitSchemesWithType(std::vector<SchemeWithType>** schemes,
                          const SchemeWithType* initial_schemes,
                          size_t size) {
-  *schemes = new std::vector<SchemeWithType>(size);
+  *schemes = new std::vector<SchemeWithType>();
+  (*schemes)->reserve(size);
   for (size_t i = 0; i < size; i++) {
-    (*(*schemes))[i] = initial_schemes[i];
+    (*schemes)->push_back(initial_schemes[i]);
   }
 }
 
@@ -501,13 +502,16 @@ void DoAddSchemeWithType(const char* new_scheme,
   ANNOTATE_LEAKING_OBJECT_PTR(dup_scheme);
   memcpy(dup_scheme, new_scheme, scheme_len + 1);
 
-  SchemeWithType scheme_with_type;
-  scheme_with_type.scheme = dup_scheme;
-  scheme_with_type.type = type;
-  schemes->push_back(scheme_with_type);
+  schemes->emplace_back(dup_scheme, type);
 }
 
 }  // namespace
+
+SchemeWithType::SchemeWithType(base::StringPiece scheme, SchemeType type)
+    : scheme(scheme), type(type) {}
+
+SchemeWithType::SchemeWithType(const SchemeWithType& other)
+    : SchemeWithType(other.scheme, other.type) {}
 
 void Initialize() {
   if (initialized)
