@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caa02da7_b0af5e71",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 3386,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-24T23:12:55Z",
+      "side": 1,
+      "message": "Change this to field_template: \"storage_only\".",
+      "revId": "72be88ca58ba3ad9060bced87feeb8edae0a25fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "752dacbb_f87e5072",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 3388,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-24T23:12:55Z",
+      "side": 1,
+      "message": "Change this to \"TextEmphasisPosition::kOverRight\".",
+      "revId": "72be88ca58ba3ad9060bced87feeb8edae0a25fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32f85bc_b91cea20",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 3389,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-24T23:12:55Z",
+      "side": 1,
+      "message": "Remove this line.",
+      "revId": "72be88ca58ba3ad9060bced87feeb8edae0a25fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c86d0dc2_6a6a7c4d",
+        "filename": "third_party/WebKit/Source/core/css/CSSValueKeywords.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-24T23:12:55Z",
+      "side": 1,
+      "message": "Not sure about this, but I think to properly implement the spec, over/under and left/right need to be separate keywords (I think this is what you did before)?",
+      "revId": "72be88ca58ba3ad9060bced87feeb8edae0a25fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01b957c_24072191",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyleConstants.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-24T23:12:55Z",
+      "side": 1,
+      "message": "You\u0027ll have to handwrite the enum:\n\nenum TextEmphasisPosition {\n  kOverRight,\n  kOverLeft,\n  ...\n}",
+      "revId": "72be88ca58ba3ad9060bced87feeb8edae0a25fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

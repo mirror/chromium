@@ -298,6 +298,24 @@
       "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e229d5_f59370c9",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyleConstants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-24T23:12:55Z",
+      "side": 1,
+      "message": "Unfortunately, the generator doesn\u0027t support the \u0026\u0026 syntax, so you\u0027ll have to go old school. I\u0027ve commented inline in the JSON about how to do that.",
+      "parentUuid": "7f1b5910_34a3afbb",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
