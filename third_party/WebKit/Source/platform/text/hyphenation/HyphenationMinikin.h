@@ -20,7 +20,7 @@ class Hyphenator;
 
 namespace blink {
 
-class PLATFORM_EXPORT HyphenationMinikin final : public Hyphenation {
+class PLATFORM_EXPORT HyphenationMinikin : public Hyphenation {
  public:
   bool OpenDictionary(const AtomicString& locale);
 

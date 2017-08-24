@@ -201,6 +201,10 @@ NS_INLINE void AnimateInViews(NSArray* views,
   [[toolsCell starredButton] setHidden:!_isCurrentPageBookmarked];
 }
 
+- (void)setCanUseReaderMode:(BOOL)enabled {
+  [self setItemEnabled:enabled withTag:TOOLS_READER_MODE];
+}
+
 - (void)setCanShowFindBar:(BOOL)enabled {
   [self setItemEnabled:enabled withTag:IDC_FIND];
 }

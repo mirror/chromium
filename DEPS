@@ -40,11 +40,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': '76323bc0615044a5921afef0e19a350f3d04ffe0',
+  'skia_revision': 'ba9741d46718c44d6e95e990c476d865c1cf4e55',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': 'f914089eae2ea692c6ae29d1ee4d1fe8aea59629',
+  'v8_revision': '3094538c6e322741c58943ab3c5d8daf0ce84585',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -96,7 +96,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '92387bc7d0acf29859000ead5254b1c8beff0ade',
+  'catapult_revision': 'b9777c776dee43db2063ad97c9eb7a8a09afd0f3',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -1133,16 +1133,6 @@ hooks_os = {
                  'download',
                  '-b', 'chromium-sqlite4java',
                  '-l', 'third_party/sqlite4java'
-      ],
-    },
-    {
-      'name': 'gson',
-      'pattern': '.',
-      'action': ['python',
-                 'src/build/android/update_deps/update_third_party_deps.py',
-                 'download',
-                 '-b', 'chromium-gson',
-                 '-l', 'third_party/gson',
       ],
     },
     {

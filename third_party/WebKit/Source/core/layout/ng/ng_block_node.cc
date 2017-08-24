@@ -10,7 +10,6 @@
 #include "core/layout/MinMaxSize.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
-#include "core/layout/ng/legacy_layout_tree_walking.h"
 #include "core/layout/ng/ng_block_break_token.h"
 #include "core/layout/ng/ng_block_layout_algorithm.h"
 #include "core/layout/ng/ng_box_fragment.h"
@@ -31,7 +30,7 @@ namespace {
 
 RefPtr<NGLayoutResult> LayoutWithAlgorithm(const ComputedStyle& style,
                                            NGBlockNode node,
-                                           const NGConstraintSpace& space,
+                                           NGConstraintSpace* space,
                                            NGBreakToken* break_token) {
   if (style.SpecifiesColumns())
     return NGColumnLayoutAlgorithm(node, space,
@@ -76,12 +75,11 @@ void UpdateLegacyMultiColumnFlowThread(LayoutBox* layout_box,
 
 NGBlockNode::NGBlockNode(LayoutBox* box) : NGLayoutInputNode(box, kBlock) {}
 
-RefPtr<NGLayoutResult> NGBlockNode::Layout(
-    const NGConstraintSpace& constraint_space,
-    NGBreakToken* break_token) {
+RefPtr<NGLayoutResult> NGBlockNode::Layout(NGConstraintSpace* constraint_space,
+                                           NGBreakToken* break_token) {
   // Use the old layout code and synthesize a fragment.
   if (!CanUseNewLayout()) {
-    return RunOldLayout(constraint_space);
+    return RunOldLayout(*constraint_space);
   }
   RefPtr<NGLayoutResult> layout_result;
   if (box_->IsLayoutNGBlockFlow()) {
@@ -100,7 +98,7 @@ RefPtr<NGLayoutResult> NGBlockNode::Layout(
 
   if (layout_result->Status() == NGLayoutResult::kSuccess &&
       layout_result->UnpositionedFloats().IsEmpty())
-    CopyFragmentDataToLayoutBox(constraint_space, layout_result.Get());
+    CopyFragmentDataToLayoutBox(*constraint_space, layout_result.Get());
 
   return layout_result;
 }
@@ -131,13 +129,13 @@ MinMaxSize NGBlockNode::ComputeMinMaxSize() {
           .ToConstraintSpace(FromPlatformWritingMode(Style().GetWritingMode()));
 
   // TODO(cbiesinger): For orthogonal children, we need to always synthesize.
-  NGBlockLayoutAlgorithm minmax_algorithm(*this, *constraint_space);
+  NGBlockLayoutAlgorithm minmax_algorithm(*this, constraint_space.Get());
   Optional<MinMaxSize> maybe_sizes = minmax_algorithm.ComputeMinMaxSize();
   if (maybe_sizes.has_value())
     return *maybe_sizes;
 
   // Have to synthesize this value.
-  RefPtr<NGLayoutResult> layout_result = Layout(*constraint_space);
+  RefPtr<NGLayoutResult> layout_result = Layout(constraint_space.Get());
   NGPhysicalFragment* physical_fragment =
       layout_result->PhysicalFragment().Get();
   NGBoxFragment min_fragment(FromPlatformWritingMode(Style().GetWritingMode()),
@@ -154,7 +152,7 @@ MinMaxSize NGBlockNode::ComputeMinMaxSize() {
           .SetPercentageResolutionSize({LayoutUnit(), LayoutUnit()})
           .ToConstraintSpace(FromPlatformWritingMode(Style().GetWritingMode()));
 
-  layout_result = Layout(*constraint_space);
+  layout_result = Layout(constraint_space.Get());
   physical_fragment = layout_result->PhysicalFragment().Get();
   NGBoxFragment max_fragment(FromPlatformWritingMode(Style().GetWritingMode()),
                              ToNGPhysicalBoxFragment(physical_fragment));
@@ -172,16 +170,26 @@ NGLayoutInputNode NGBlockNode::NextSibling() const {
 }
 
 NGLayoutInputNode NGBlockNode::FirstChild() {
-  auto* block = ToLayoutNGBlockFlow(box_);
-  auto* child = GetLayoutObjectForFirstChildNode(block);
-  if (!child)
-    return nullptr;
-  if (AreNGBlockFlowChildrenInline(block))
-    return NGInlineNode(block);
-  return NGBlockNode(ToLayoutBox(child));
+  LayoutObject* child = box_->SlowFirstChild();
+  if (child) {
+    if (box_->ChildrenInline()) {
+      LayoutNGBlockFlow* block_flow = ToLayoutNGBlockFlow(GetLayoutObject());
+      return NGInlineNode(block_flow);
+    } else {
+      return NGBlockNode(ToLayoutBox(child));
+    }
+  }
+
+  return nullptr;
 }
 
 bool NGBlockNode::CanUseNewLayout() const {
+  // [Multicol]: for the 1st phase of LayoutNG's multicol implementation we want
+  // to utilize the existing ColumnBalancer class. That's why a multicol block
+  // should be processed by Legacy Layout engine.
+  if (Style().SpecifiesColumns())
+    return false;
+
   if (!box_->IsLayoutNGBlockFlow())
     return false;
 
@@ -365,14 +373,6 @@ RefPtr<NGLayoutResult> NGBlockNode::RunOldLayout(
                             box_->StyleRef().Direction());
   builder.SetSize(box_size)
       .SetOverflowSize(overflow_size);
-
-  // For now we copy the exclusion space straight through, this is incorrect
-  // but needed as not all elements which participate in a BFC are switched
-  // over to LayoutNG yet.
-  // TODO(ikilpatrick): Remove this once the above isn't true.
-  builder.SetExclusionSpace(
-      WTF::WrapUnique(new NGExclusionSpace(constraint_space.ExclusionSpace())));
-
   CopyBaselinesFromOldLayout(constraint_space, &builder);
   return builder.ToBoxFragment();
 }

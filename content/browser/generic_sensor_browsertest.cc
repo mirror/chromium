@@ -174,8 +174,7 @@ class GenericSensorBrowserTest : public ContentBrowserTest {
             base::WaitableEvent::ResetPolicy::AUTOMATIC,
             base::WaitableEvent::InitialState::NOT_SIGNALED) {
     base::CommandLine* cmd_line = base::CommandLine::ForCurrentProcess();
-    cmd_line->AppendSwitchASCII(switches::kEnableFeatures,
-                                "GenericSensor, GenericSensorExtraClasses");
+    cmd_line->AppendSwitchASCII(switches::kEnableFeatures, "GenericSensor");
   }
 
   void SetUpOnMainThread() override {

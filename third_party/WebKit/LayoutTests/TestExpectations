@@ -524,7 +524,6 @@ crbug.com/635619 virtual/layout_ng/fast/block/float/float-inserted-into-clean-li
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-list-changed-before-layout-crash.html [ Crash ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-not-removed-from-first-letter.html [ Crash Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-not-removed-from-next-sibling-crash.html [ Failure ]
-crbug.com/635619 virtual/layout_ng/fast/block/float/float-not-removed-from-next-sibling4.html [ Crash ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-not-removed-from-next-sibling5.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-on-empty-line.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-on-line-obeys-container-padding.html [ Failure ]
@@ -533,7 +532,7 @@ crbug.com/635619 virtual/layout_ng/fast/block/float/float-overflow-hidden-contai
 crbug.com/635619 virtual/layout_ng/fast/block/float/float-reparent-during-detach-crash.html [ Crash ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/floats-and-text-indent-rl.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/floats-and-text-indent.html [ Failure ]
-crbug.com/757767 virtual/layout_ng/fast/block/float/floats-do-not-overhang-from-block-formatting-context.html [ Crash Timeout Failure ]
+crbug.com/635619 virtual/layout_ng/fast/block/float/floats-do-not-overhang-from-block-formatting-context.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/floats-offset-image-quirk-line-height.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/floats-offset-image-quirk.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/floats-offset-image-strict-line-height.html [ Failure ]
@@ -548,7 +547,6 @@ crbug.com/635619 virtual/layout_ng/fast/block/float/floats-wrap-inside-inline-00
 crbug.com/635619 virtual/layout_ng/fast/block/float/formatting-context-changes.html [ Failure Crash ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/independent-align-positioning.html [ Failure ]
 crbug.com/635619 [ Mac ] virtual/layout_ng/fast/block/float/intruding-painted-twice.html [ Failure ]
-crbug.com/635619 virtual/layout_ng/fast/block/float/line-break-after-white-space-crash.html [ Crash ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/logical-bottom-exceeds-layoutunit-max.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/marquee-shrink-to-avoid-floats.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/negative-margin-on-element-avoiding-floats-with-margin-on-parent.html [ Failure ]
@@ -567,7 +565,7 @@ crbug.com/635619 virtual/layout_ng/fast/block/float/rubybase-children-moved-cras
 crbug.com/635619 virtual/layout_ng/fast/block/float/rubybase-children-moved-crash.html [ Crash Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/shrink-to-avoid-float-complexity.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/shrink-to-fit-width.html [ Failure ]
-crbug.com/635619 virtual/layout_ng/fast/block/float/trailing-float-with-columns.html [ Crash Failure ]
+crbug.com/635619 virtual/layout_ng/fast/block/float/trailing-float-with-columns.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/float/width-update-after-clear.html [ Failure ]
 
 ### virtual/layout_ng/fast/block/margin-collapse
@@ -577,7 +575,6 @@ crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/057.html [ Failure
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/103.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/bfc-beside-float-complex-margin-collapsing.html [ Failure ]
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/self-collapsing-block-with-overflow-hidden-and-float-child.html [ Failure ]
-crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/self-collapsing-cols-creates-block-formatting-context.html [ Failure ]
 
 ### virtual/layout_ng/fast/block/margin-collapse/block-inside-inline
 crbug.com/635619 virtual/layout_ng/fast/block/margin-collapse/block-inside-inline/006.html [ Failure ]
@@ -1187,6 +1184,7 @@ crbug.com/574283 [ Mac ] virtual/scroll_customization/fast/scroll-behavior/smoot
 crbug.com/574283 [ Mac ] virtual/threaded/fast/scroll-behavior/first-scroll-runs-on-compositor.html [ Skip ]
 crbug.com/574283 [ Mac ] virtual/threaded/fast/scroll-behavior/smooth-scroll/fixed-background-in-iframe.html [ Skip ]
 crbug.com/574283 [ Mac ] virtual/threaded/fast/scroll-behavior/smooth-scroll/horizontal-smooth-scroll-in-rtl.html [ Skip ]
+crbug.com/574283 [ Mac ] virtual/threaded/fast/scroll-behavior/smooth-scroll/main-thread-scrolling-reason-added.html [ Skip ]
 crbug.com/574283 [ Mac ] virtual/threaded/fast/scroll-behavior/smooth-scroll/main-thread-scrolling-reason-correctness.html [ Skip ]
 crbug.com/574283 [ Mac ] virtual/threaded/fast/scroll-behavior/smooth-scroll/mousewheel-scroll-interrupted.html [ Skip ]
 crbug.com/574283 [ Mac ] virtual/threaded/fast/scroll-behavior/smooth-scroll/ongoing-smooth-scroll-anchors.html [ Skip ]
@@ -2503,7 +2501,7 @@ crbug.com/688670 media/track/track-cue-rendering-after-controls-removed.html [ P
 # Possible duplicate of crbug.com/665577
 # crbug.com/664858 virtual/threaded/fast/scroll-behavior/overflow-scroll-animates.html [ Pass Failure ]
 # crbug.com/664858 virtual/threaded/fast/scroll-behavior/smooth-scroll/horizontal-smooth-scroll-in-rtl.html [ Pass Failure ]
-crbug.com/664858 virtual/threaded/fast/scroll-behavior/smooth-scroll/main-thread-scrolling-reason-added.html [ Skip ]
+# crbug.com/664858 virtual/threaded/fast/scroll-behavior/smooth-scroll/main-thread-scrolling-reason-added.html [ Pass Failure ]
 # crbug.com/664858 virtual/threaded/fast/scroll-behavior/smooth-scroll/ongoing-smooth-scroll-anchors.html [ Pass Failure ]
 # crbug.com/664858 virtual/threaded/fast/scroll-behavior/smooth-scroll/ongoing-smooth-scroll-vertical-rl-anchors.html [ Pass Failure ]
 # crbug.com/664858 virtual/threaded/fast/scroll-behavior/smooth-scroll/scroll-during-selection.html [ Pass Failure ]
@@ -3047,9 +3045,6 @@ crbug.com/717643 external/wpt/html/semantics/scripting-1/the-script-element/modu
 # Geolocation tests
 crbug.com/745079 external/wpt/geolocation-API/PositionOptions.https.html [ Failure ]
 
-# LAP(Lazy Accessor Pair) sensitive tests
-crbug.com/v8/6156 fast/dom/cross-frame-accessor-throw.html [ Skip ]
-
 # Sheriff failures 2017-07-03
 crbug.com/708994 http/tests/security/cross-frame-mouse-source-capabilities.html [ Timeout Pass ]
 crbug.com/708994 virtual/mojo-loading/http/tests/security/cross-frame-mouse-source-capabilities.html [ Timeout Pass ]
@@ -3433,11 +3428,6 @@ crbug.com/686118 http/tests/security/contentSecurityPolicy/register-bypassing-sc
 crbug.com/686118 virtual/mojo-loading/http/tests/security/contentSecurityPolicy/register-bypassing-scheme-script.https.html [ Pass Crash ]
 
 crbug.com/757868 [ Linux ] virtual/threaded/animations/animations-parsing.html [ Pass Failure ]
-
-# For Skia roll
-crbug.com/630695 css3/blending/background-blend-mode-crossfade-image-gradient.html [ NeedsManualRebaseline ]
-crbug.com/630695 images/cross-fade-background-size.html [ NeedsManualRebaseline ]
-crbug.com/630695 virtual/exotic-color-space/images/cross-fade-background-size.html [ NeedsManualRebaseline ]
 
 # Tests currently failing on Windows when run on Swarming
 crbug.com/757165 [ Win ] compositing/culling/filter-occlusion-blur.html [ Skip ]

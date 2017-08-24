@@ -28,7 +28,7 @@ public class SystemDownloadNotifier implements DownloadNotifier {
 
     @Override
     public void notifyDownloadCanceled(ContentId id) {
-        mDownloadNotificationService.notifyDownloadCanceled(id, false);
+        mDownloadNotificationService.notifyDownloadCanceled(id);
     }
 
     @Override
@@ -63,14 +63,14 @@ public class SystemDownloadNotifier implements DownloadNotifier {
     @Override
     public void notifyDownloadPaused(DownloadInfo info) {
         mDownloadNotificationService.notifyDownloadPaused(info.getContentId(), info.getFileName(),
-                true, false, info.isOffTheRecord(), info.getIsTransient(), info.getIcon(), false);
+                true, false, info.isOffTheRecord(), info.getIsTransient(), info.getIcon());
     }
 
     @Override
     public void notifyDownloadInterrupted(DownloadInfo info, boolean isAutoResumable) {
         mDownloadNotificationService.notifyDownloadPaused(info.getContentId(), info.getFileName(),
                 info.isResumable(), isAutoResumable, info.isOffTheRecord(), info.getIsTransient(),
-                info.getIcon(), false);
+                info.getIcon());
     }
 
     @Override

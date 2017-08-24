@@ -15,7 +15,6 @@
 
 namespace blink {
 
-class NGExclusionSpace;
 struct NGUnpositionedFloat;
 
 // The NGLayoutResult stores the resulting data from layout. This includes
@@ -60,10 +59,6 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
     return unpositioned_floats_;
   }
 
-  const NGExclusionSpace* ExclusionSpace() const {
-    return exclusion_space_.get();
-  }
-
   NGLayoutResultStatus Status() const {
     return static_cast<NGLayoutResultStatus>(status_);
   }
@@ -83,16 +78,14 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
                  Vector<NGOutOfFlowPositionedDescendant>
                      out_of_flow_positioned_descendants,
                  Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats,
-                 std::unique_ptr<const NGExclusionSpace> exclusion_space,
                  const WTF::Optional<NGLogicalOffset> bfc_offset,
                  const NGMarginStrut end_margin_strut,
                  NGLayoutResultStatus status);
 
   RefPtr<NGPhysicalFragment> physical_fragment_;
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
-  Vector<NGOutOfFlowPositionedDescendant> oof_positioned_descendants_;
 
-  const std::unique_ptr<const NGExclusionSpace> exclusion_space_;
+  Vector<NGOutOfFlowPositionedDescendant> oof_positioned_descendants_;
   const WTF::Optional<NGLogicalOffset> bfc_offset_;
   const NGMarginStrut end_margin_strut_;
 

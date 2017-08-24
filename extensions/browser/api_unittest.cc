@@ -30,7 +30,7 @@ namespace utils = extensions::api_test_utils;
 namespace extensions {
 
 ApiUnitTest::ApiUnitTest()
-    : ExtensionsTest(std::make_unique<content::TestBrowserThreadBundle>()) {}
+    : ExtensionsTest(base::MakeUnique<content::TestBrowserThreadBundle>()) {}
 
 ApiUnitTest::~ApiUnitTest() {}
 

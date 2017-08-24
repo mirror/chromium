@@ -930,9 +930,6 @@ Handoff must also be enabled in the General section of Settings, and your device
       <message name="IDS_IOS_PHOTO_LIBRARY_USAGE_DESCRIPTION" desc="Specifies the reason for accessing the user's photo library while the app is in use [Length: unlimited] [iOS only].">
         This lets you save and upload photos.
       </message>
-      <message name="IDS_IOS_PHOTO_LIBRARY_ADD_USAGE_DESCRIPTION" desc="Specifies the reason for writing to the user's photo library while the app is in use [Length: unlimited] [iOS only].">
-        This lets you save photos to your photo library.
-      </message>
       <message name="IDS_IOS_PLACEHOLDER_FIND_IN_PAGE" desc="The iOS placeholder for searching in the current page [Length: 30em] [iOS only]">
         Find in page...
       </message>
@@ -1509,6 +1506,9 @@ Your data was encrypted with your sync passphrase on <ph name="TIME">$2<ex>Sept 
       </message>
       <message name="IDS_IOS_TOOLS_MENU_NEW_TAB" desc="The iOS menu item for opening a new tab [Length: 15em] [iOS only]" meaning="Tools menu entry to create a new tab.">
         New Tab
+      </message>
+      <message name="IDS_IOS_TOOLS_MENU_READER_MODE" desc="The iOS menu item for entering reader mode [Length: 15em] [iOS only]">
+        Reader mode
       </message>
       <message name="IDS_IOS_TOOLS_MENU_READING_LIST" desc="The iOS menu item for opening the reading list [Length: 15em] [iOS only]">
         Reading List

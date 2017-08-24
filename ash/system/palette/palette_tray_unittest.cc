@@ -74,6 +74,16 @@ class PaletteTrayTest : public AshTestBase {
     return static_cast<TestPaletteDelegate*>(Shell::Get()->palette_delegate());
   }
 
+  bool ToolExists(PaletteToolId tool_id) {
+    std::vector<PaletteToolView> views =
+        test_api_->GetPaletteToolManager()->CreateViews();
+    for (const PaletteToolView& view : views) {
+      if (view.tool_id == tool_id)
+        return true;
+    }
+    return false;
+  }
+
   PaletteTray* palette_tray_ = nullptr;  // not owned
   TestingPrefServiceSimple pref_service_;
 
@@ -193,8 +203,7 @@ TEST_F(PaletteTrayTest, ModeToolDeactivatedAutomatically) {
 }
 
 TEST_F(PaletteTrayTest, NoMetalayerToolViewCreated) {
-  EXPECT_FALSE(
-      test_api_->GetPaletteToolManager()->HasTool(PaletteToolId::METALAYER));
+  EXPECT_FALSE(ToolExists(PaletteToolId::METALAYER));
 }
 
 // Base class for tests that rely on voice interaction enabled.
@@ -211,8 +220,7 @@ class PaletteTrayTestWithVoiceInteraction : public PaletteTrayTest {
 };
 
 TEST_F(PaletteTrayTestWithVoiceInteraction, MetalayerToolViewCreated) {
-  EXPECT_TRUE(
-      test_api_->GetPaletteToolManager()->HasTool(PaletteToolId::METALAYER));
+  EXPECT_TRUE(ToolExists(PaletteToolId::METALAYER));
 }
 
 TEST_F(PaletteTrayTestWithVoiceInteraction, MetalayerToolActivatesHighlighter) {

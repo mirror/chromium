@@ -4,8 +4,6 @@
 
 #include "chromeos/components/tether/host_scanner_operation.h"
 
-#include "base/metrics/histogram_macros.h"
-#include "base/time/default_clock.h"
 #include "chromeos/components/tether/host_scan_device_prioritizer.h"
 #include "chromeos/components/tether/message_wrapper.h"
 #include "chromeos/components/tether/proto/tether.pb.h"
@@ -119,8 +117,7 @@ HostScannerOperation::HostScannerOperation(
     : MessageTransferOperation(
           PrioritizeDevices(devices_to_connect, host_scan_device_prioritizer),
           connection_manager),
-      tether_host_response_recorder_(tether_host_response_recorder),
-      clock_(base::MakeUnique<base::DefaultClock>()) {}
+      tether_host_response_recorder_(tether_host_response_recorder) {}
 
 HostScannerOperation::~HostScannerOperation() {}
 
@@ -142,12 +139,6 @@ void HostScannerOperation::NotifyObserversOfScannedDeviceList(
 
 void HostScannerOperation::OnDeviceAuthenticated(
     const cryptauth::RemoteDevice& remote_device) {
-  DCHECK(!base::ContainsKey(
-      device_id_to_tether_availability_request_start_time_map_,
-      remote_device.GetDeviceId()));
-  device_id_to_tether_availability_request_start_time_map_[remote_device
-                                                               .GetDeviceId()] =
-      clock_->Now();
   SendMessageToDevice(remote_device, base::MakeUnique<MessageWrapper>(
                                          TetherAvailabilityRequest()));
 }
@@ -189,8 +180,6 @@ void HostScannerOperation::OnMessageReceived(
     NotifyObserversOfScannedDeviceList(false /* is_final_scan_result */);
   }
 
-  RecordTetherAvailabilityResponseDuration(remote_device.GetDeviceId());
-
   // Unregister the device after a TetherAvailabilityResponse has been received.
   UnregisterDevice(remote_device);
 }
@@ -209,30 +198,6 @@ void HostScannerOperation::OnOperationFinished() {
 
 MessageType HostScannerOperation::GetMessageTypeForConnection() {
   return MessageType::TETHER_AVAILABILITY_REQUEST;
-}
-
-void HostScannerOperation::SetClockForTest(
-    std::unique_ptr<base::Clock> clock_for_test) {
-  clock_ = std::move(clock_for_test);
-}
-
-void HostScannerOperation::RecordTetherAvailabilityResponseDuration(
-    const std::string device_id) {
-  if (!base::ContainsKey(
-          device_id_to_tether_availability_request_start_time_map_,
-          device_id) ||
-      device_id_to_tether_availability_request_start_time_map_[device_id]
-          .is_null()) {
-    LOG(ERROR) << "Failed to record TetherAvailabilityResponse duration: "
-               << "start time is invalid";
-    return;
-  }
-
-  UMA_HISTOGRAM_TIMES(
-      "InstantTethering.Performance.TetherAvailabilityResponseDuration",
-      clock_->Now() -
-          device_id_to_tether_availability_request_start_time_map_[device_id]);
-  device_id_to_tether_availability_request_start_time_map_.erase(device_id);
 }
 
 }  // namespace tether

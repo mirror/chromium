@@ -31,7 +31,7 @@ base::ListValue* GetOrCreateList(base::DictionaryValue* dictionary,
   base::ListValue* list = nullptr;
   if (!dictionary->GetListWithoutPathExpansion(key, &list)) {
     list = dictionary->SetListWithoutPathExpansion(
-        key, std::make_unique<base::ListValue>());
+        key, base::MakeUnique<base::ListValue>());
   }
   return list;
 }
@@ -96,7 +96,7 @@ void RawDataPresenter::FeedNextBytes(const char* bytes, size_t size) {
 void RawDataPresenter::FeedNextFile(const std::string& filename) {
   // Insert the file path instead of the contents, which may be too large.
   subtle::AppendKeyValuePair(keys::kRequestBodyRawFileKey,
-                             std::make_unique<base::Value>(filename),
+                             base::MakeUnique<base::Value>(filename),
                              list_.get());
 }
 

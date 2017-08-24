@@ -61,7 +61,7 @@ TEST_F(FeatureCacheTest, Basic) {
 
   // Update extension b's permissions and invalidate the cache.
   extension_b->permissions_data()->SetPermissions(
-      std::make_unique<PermissionSet>(), std::make_unique<PermissionSet>());
+      base::MakeUnique<PermissionSet>(), base::MakeUnique<PermissionSet>());
   cache.InvalidateExtension(extension_b->id());
 
   // Now, neither context should have storage access.

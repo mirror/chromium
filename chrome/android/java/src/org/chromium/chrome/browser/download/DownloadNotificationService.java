@@ -160,7 +160,7 @@ public class DownloadNotificationService {
             long bytesReceived, long timeRemainingInMillis, long startTime, boolean isOffTheRecord,
             boolean canDownloadWhileMetered, boolean isTransient, Bitmap icon) {
         updateActiveDownloadNotification(id, fileName, progress, timeRemainingInMillis, startTime,
-                isOffTheRecord, canDownloadWhileMetered, false, isTransient, icon, false);
+                isOffTheRecord, canDownloadWhileMetered, false, isTransient, icon);
     }
 
     /**
@@ -173,11 +173,10 @@ public class DownloadNotificationService {
      *                                downloads home.
      * @param icon                    A {@link Bitmap} to be used as the large icon for display.
      */
-    void notifyDownloadPending(ContentId id, String fileName, boolean isOffTheRecord,
-            boolean canDownloadWhileMetered, boolean isTransient, Bitmap icon,
-            boolean hasUserGesture) {
+    private void notifyDownloadPending(ContentId id, String fileName, boolean isOffTheRecord,
+            boolean canDownloadWhileMetered, boolean isTransient, Bitmap icon) {
         updateActiveDownloadNotification(id, fileName, Progress.createIndeterminateProgress(), 0, 0,
-                isOffTheRecord, canDownloadWhileMetered, true, isTransient, icon, hasUserGesture);
+                isOffTheRecord, canDownloadWhileMetered, true, isTransient, icon);
     }
 
     /**
@@ -199,7 +198,7 @@ public class DownloadNotificationService {
     private void updateActiveDownloadNotification(ContentId id, String fileName, Progress progress,
             long timeRemainingInMillis, long startTime, boolean isOffTheRecord,
             boolean canDownloadWhileMetered, boolean isDownloadPending, boolean isTransient,
-            Bitmap icon, boolean hasUserGesture) {
+            Bitmap icon) {
         int notificationId = getNotificationId(id);
         Context context = ContextUtils.getApplicationContext();
 
@@ -218,12 +217,6 @@ public class DownloadNotificationService {
         Notification notification = DownloadNotificationFactory.buildNotification(
                 context, DownloadNotificationFactory.DownloadStatus.IN_PROGRESS, downloadUpdate);
 
-        // If called from DownloadBroadcastManager, only update notification, not tracking.
-        if (hasUserGesture) {
-            updateNotification(notificationId, notification);
-            return;
-        }
-
         updateNotification(notificationId, notification, id,
                 new DownloadSharedPreferenceEntry(id, notificationId, isOffTheRecord,
                         canDownloadWhileMetered, fileName, true, isTransient));
@@ -235,10 +228,6 @@ public class DownloadNotificationService {
         startTrackingInProgressDownload(id);
     }
 
-    public void cancelNotification(int notificationId) {
-        mNotificationManager.cancel(NOTIFICATION_NAMESPACE, notificationId);
-    }
-
     /**
      * Removes a download notification and all associated tracking.  This method relies on the
      * caller to provide the notification id, which is useful in the case where the internal
@@ -248,7 +237,7 @@ public class DownloadNotificationService {
      * @param id The {@link ContentId} of the download.
      */
     public void cancelNotification(int notificationId, ContentId id) {
-        cancelNotification(notificationId);
+        mNotificationManager.cancel(NOTIFICATION_NAMESPACE, notificationId);
         mDownloadSharedPreferenceHelper.removeSharedPreferenceEntry(id);
 
         stopTrackingInProgressDownload(id);
@@ -260,17 +249,10 @@ public class DownloadNotificationService {
      * @param id The {@link ContentId} of the download.
      */
     @VisibleForTesting
-    public void notifyDownloadCanceled(ContentId id, boolean hasUserGesture) {
+    public void notifyDownloadCanceled(ContentId id) {
         DownloadSharedPreferenceEntry entry =
                 mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id);
         if (entry == null) return;
-
-        // If called from DownloadBroadcastManager, only update notification, not tracking.
-        if (hasUserGesture) {
-            cancelNotification(entry.notificationId);
-            return;
-        }
-
         cancelNotification(entry.notificationId, id);
         mDownloadForegroundServiceManager.updateDownloadStatus(ContextUtils.getApplicationContext(),
                 DownloadForegroundServiceManager.DownloadStatus.CANCEL, entry.notificationId, null);
@@ -288,8 +270,7 @@ public class DownloadNotificationService {
      */
     @VisibleForTesting
     void notifyDownloadPaused(ContentId id, String fileName, boolean isResumable,
-            boolean isAutoResumable, boolean isOffTheRecord, boolean isTransient, Bitmap icon,
-            boolean hasUserGesture) {
+            boolean isAutoResumable, boolean isOffTheRecord, boolean isTransient, Bitmap icon) {
         DownloadSharedPreferenceEntry entry =
                 mDownloadSharedPreferenceHelper.getDownloadSharedPreferenceEntry(id);
         if (!isResumable) {
@@ -302,7 +283,7 @@ public class DownloadNotificationService {
         // If download is interrupted due to network disconnection, show download pending state.
         if (isAutoResumable) {
             notifyDownloadPending(id, fileName, isOffTheRecord, canDownloadWhileMetered,
-                    isTransient, icon, hasUserGesture);
+                    isTransient, icon);
             stopTrackingInProgressDownload(id);
             return;
         }
@@ -324,13 +305,6 @@ public class DownloadNotificationService {
         updateNotification(notificationId, notification, id,
                 new DownloadSharedPreferenceEntry(id, notificationId, isOffTheRecord,
                         canDownloadWhileMetered, fileName, isAutoResumable, isTransient));
-
-        // If called from DownloadBroadcastManager, only update notification, not tracking.
-        if (hasUserGesture) {
-            updateNotification(notificationId, notification);
-            return;
-        }
-
         mDownloadForegroundServiceManager.updateDownloadStatus(context,
                 DownloadForegroundServiceManager.DownloadStatus.PAUSE, notificationId,
                 notification);

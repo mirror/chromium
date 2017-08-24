@@ -87,9 +87,9 @@ class DataItemTest : public testing::Test {
     task_runner_ = GetBackendTaskRunner();
     ASSERT_TRUE(test_dir_.CreateUniqueTempDir());
 
-    context_ = std::make_unique<content::TestBrowserContext>();
+    context_ = base::MakeUnique<content::TestBrowserContext>();
     extensions_browser_client_ =
-        std::make_unique<TestExtensionsBrowserClient>(context_.get());
+        base::MakeUnique<TestExtensionsBrowserClient>(context_.get());
     BrowserContextDependencyManager::GetInstance()->MarkBrowserContextLive(
         context_.get());
 
@@ -97,7 +97,7 @@ class DataItemTest : public testing::Test {
 
     value_store_factory_ = base::MakeRefCounted<TestValueStoreFactory>();
     value_store_cache_ =
-        std::make_unique<LocalValueStoreCache>(value_store_factory_);
+        base::MakeUnique<LocalValueStoreCache>(value_store_factory_);
 
     extension_ = CreateTestExtension(kPrimaryExtensionId);
   }
@@ -127,7 +127,7 @@ class DataItemTest : public testing::Test {
   std::unique_ptr<DataItem> CreateDataItem(const std::string& item_id,
                                            const std::string& extension_id,
                                            const std::string& crypto_key) {
-    return std::make_unique<DataItem>(item_id, extension_id, context_.get(),
+    return base::MakeUnique<DataItem>(item_id, extension_id, context_.get(),
                                       value_store_cache_.get(),
                                       task_runner_.get(), crypto_key);
   }

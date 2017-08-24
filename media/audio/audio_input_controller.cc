@@ -117,13 +117,13 @@ class AudioInputController::AudioCallback
  private:
   void OnData(AudioInputStream* stream,
               const AudioBus* source,
-              base::TimeTicks capture_time,
+              uint32_t hardware_delay_bytes,
               double volume) override {
     TRACE_EVENT0("audio", "AC::OnData");
 
     received_callback_ = true;
 
-    DeliverDataToSyncWriter(source, capture_time, volume);
+    DeliverDataToSyncWriter(source, hardware_delay_bytes, volume);
 
 #if BUILDFLAG(ENABLE_WEBRTC)
     controller_->debug_recording_helper_.OnData(source);
@@ -138,10 +138,11 @@ class AudioInputController::AudioCallback
   }
 
   void DeliverDataToSyncWriter(const AudioBus* source,
-                               base::TimeTicks capture_time,
+                               uint32_t hardware_delay_bytes,
                                double volume) {
     bool key_pressed = controller_->CheckForKeyboardInput();
-    controller_->sync_writer_->Write(source, volume, key_pressed, capture_time);
+    controller_->sync_writer_->Write(source, volume, key_pressed,
+                                     hardware_delay_bytes);
 
     // The way the two classes interact here, could be done in a nicer way.
     // As is, we call the AIC here to check the audio power, return  and then

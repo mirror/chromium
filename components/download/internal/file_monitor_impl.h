@@ -23,6 +23,8 @@
 
 namespace download {
 
+struct Entry;
+
 // An utility class containing various file cleanup methods.
 class FileMonitorImpl : public FileMonitor {
  public:
@@ -37,7 +39,7 @@ class FileMonitorImpl : public FileMonitor {
   void DeleteUnknownFiles(
       const Model::EntryList& known_entries,
       const std::vector<DriverEntry>& known_driver_entries) override;
-  void CleanupFilesForCompletedEntries(
+  std::vector<Entry*> CleanupFilesForCompletedEntries(
       const Model::EntryList& entries,
       const base::Closure& completion_callback) override;
   void DeleteFiles(const std::set<base::FilePath>& files_to_remove,
@@ -45,6 +47,8 @@ class FileMonitorImpl : public FileMonitor {
   void HardRecover(const InitCallback& callback) override;
 
  private:
+  bool ReadyForCleanup(const Entry* entry);
+
   const base::FilePath download_file_dir_;
   const base::TimeDelta file_keep_alive_time_;
 

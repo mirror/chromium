@@ -52,7 +52,7 @@ storage::FileSystemURL CreateNativeLocalFileSystemURL(
 class FileHandlersMimeUtilTest : public ExtensionsTest {
  protected:
   FileHandlersMimeUtilTest()
-      : ExtensionsTest(std::make_unique<content::TestBrowserThreadBundle>()) {}
+      : ExtensionsTest(base::MakeUnique<content::TestBrowserThreadBundle>()) {}
   ~FileHandlersMimeUtilTest() override {}
 
   void SetUp() override {

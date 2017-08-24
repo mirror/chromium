@@ -170,7 +170,7 @@ class TestExtensionsAPIClient : public ShellExtensionsAPIClient {
 
   std::unique_ptr<DevicePermissionsPrompt> CreateDevicePermissionsPrompt(
       content::WebContents* web_contents) const override {
-    return std::make_unique<TestDevicePermissionsPrompt>(web_contents);
+    return base::MakeUnique<TestDevicePermissionsPrompt>(web_contents);
   }
 };
 

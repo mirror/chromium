@@ -48,7 +48,6 @@
 #include "components/reading_list/core/reading_list_model.h"
 #include "components/search_engines/search_engines_pref_names.h"
 #include "components/search_engines/template_url_service.h"
-#include "components/sessions/core/session_types.h"
 #include "components/sessions/core/tab_restore_service_helper.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/toolbar/toolbar_model_impl.h"
@@ -82,7 +81,6 @@
 #include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
 #include "ios/chrome/browser/search_engines/template_url_service_factory.h"
 #include "ios/chrome/browser/sessions/ios_chrome_tab_restore_service_factory.h"
-#include "ios/chrome/browser/sessions/session_util.h"
 #include "ios/chrome/browser/sessions/tab_restore_service_delegate_impl_ios.h"
 #include "ios/chrome/browser/sessions/tab_restore_service_delegate_impl_ios_factory.h"
 #import "ios/chrome/browser/snapshots/snapshot_cache.h"
@@ -545,6 +543,8 @@ bool IsURLAllowedInIncognito(const GURL& url) {
 @property(nonatomic, strong, readonly) DialogPresenter* dialogPresenter;
 // The object that manages keyboard commands on behalf of the BVC.
 @property(nonatomic, strong, readonly) KeyCommandsProvider* keyCommandsProvider;
+// Whether the current tab can enable the reader mode menu item.
+@property(nonatomic, assign, readonly) BOOL canUseReaderMode;
 // Whether the current tab can enable the request desktop menu item.
 @property(nonatomic, assign, readonly) BOOL canUseDesktopUserAgent;
 // Whether the sharing menu should be enabled.
@@ -1120,6 +1120,14 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
 - (DialogPresenter*)dialogPresenter {
   return _dialogPresenter;
+}
+
+- (BOOL)canUseReaderMode {
+  Tab* tab = [_model currentTab];
+  if ([self isTabNativePage:tab])
+    return NO;
+
+  return [tab canSwitchToReaderMode];
 }
 
 - (BOOL)canUseDesktopUserAgent {
@@ -3972,12 +3980,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 - (void)loadSessionTab:(const sessions::SessionTab*)sessionTab {
-  WebStateList* webStateList = [_model webStateList];
-  webStateList->ReplaceWebStateAt(
-      webStateList->active_index(),
-      session_util::CreateWebStateWithNavigationEntries(
-          [_model browserState], sessionTab->current_navigation_index,
-          sessionTab->navigations));
+  [[_model currentTab] loadSessionTab:sessionTab];
 }
 
 - (void)openJavascript:(NSString*)javascript {
@@ -4194,6 +4197,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     BOOL isBookmarked = _toolbarModelIOS->IsCurrentTabBookmarked();
     [toolsPopupController setIsCurrentPageBookmarked:isBookmarked];
     [toolsPopupController setCanShowFindBar:self.canShowFindBar];
+    [toolsPopupController setCanUseReaderMode:self.canUseReaderMode];
     [toolsPopupController setCanShowShareMenu:self.canShowShareMenu];
 
     if (!IsIPadIdiom())
@@ -4272,6 +4276,10 @@ bubblePresenterForFeature:(const base::Feature&)feature
                           loader:self];
 
   [_readingListCoordinator start];
+}
+
+- (void)switchToReaderMode {
+  [[_model currentTab] switchToReaderMode];
 }
 
 - (void)preloadVoiceSearch {

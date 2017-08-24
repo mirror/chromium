@@ -328,16 +328,7 @@ const char kEnableEnumeratingAudioDevicesDescription[] =
 
 const char kEnableGenericSensorName[] = "Generic Sensor";
 const char kEnableGenericSensorDescription[] =
-    "Enables motion sensor classes based on Generic Sensor API, i.e. "
-    "Accelerometer, LinearAccelerationSensor, Gyroscope, "
-    "AbsoluteOrientationSensor and RelativeOrientationSensor interfaces.";
-
-const char kEnableGenericSensorExtraClassesName[] =
-    "Generic Sensor Extra Classes";
-const char kEnableGenericSensorExtraClassesDescription[] =
-    "Enables an extra set of sensor classes based on Generic Sensor API, which "
-    "expose previously unavailable platform features, i.e. AmbientLightSensor "
-    "and Magnetometer interfaces.";
+    "Enable sensor APIs based on Generic Sensor API.";
 
 const char kEnableHDRName[] = "HDR mode";
 const char kEnableHDRDescription[] =
@@ -930,18 +921,6 @@ const char kOverlayScrollbarsDescription[] =
     "Enable the experimental overlay scrollbars implementation. You must also "
     "enable threaded compositing to have the scrollbars animate.";
 
-const char kOverlayScrollbarsFlashAfterAnyScrollUpdateName[] =
-    "Flash Overlay Scrollbars After Any Scroll Update";
-const char kOverlayScrollbarsFlashAfterAnyScrollUpdateDescription[] =
-    "Flash Overlay Scrollbars After any scroll update happends in page. You"
-    " must also enable Overlay Scrollbars.";
-
-const char kOverlayScrollbarsFlashWhenMouseEnterName[] =
-    "Flash Overlay Scrollbars When Mouse Enter";
-const char kOverlayScrollbarsFlashWhenMouseEnterDescription[] =
-    "Flash Overlay Scrollbars When Mouse Enter a scrollable area. You must also"
-    " enable Overlay Scrollbars.";
-
 const char kOverscrollHistoryNavigationName[] = "Overscroll history navigation";
 const char kOverscrollHistoryNavigationDescription[] =
     "Experimental history navigation in response to horizontal overscroll.";
@@ -1323,10 +1302,6 @@ const char kTrySupportedChannelLayoutsDescription[] =
 
 const char kUiPartialSwapName[] = "Partial swap";
 const char kUiPartialSwapDescription[] = "Sets partial swap behavior.";
-
-const char kUseDdljsonApiName[] = "Use new ddljson API for Doodles";
-const char kUseDdljsonApiDescription[] =
-    "Enables the new ddljson API to fetch Doodles for the NTP.";
 
 const char kUserConsentForExtensionScriptsName[] =
     "User consent for extension scripts";
@@ -1955,6 +1930,10 @@ const char kUseAndroidMidiApiDescription[] =
     "Use Android Midi API for WebMIDI (effective only with Android M+ "
     "devices).";
 
+const char kUseDdljsonApiName[] = "Use new ddljson API for Doodles";
+const char kUseDdljsonApiDescription[] =
+    "Enables the new ddljson API to fetch Doodles for the NTP.";
+
 const char kThirdPartyDoodlesName[] =
     "Enable Doodles for third-party search engines";
 const char kThirdPartyDoodlesDescription[] =
@@ -1977,11 +1956,6 @@ const char kAccountConsistencyDescription[] =
     "When enabled, the browser manages signing in and out of Google accounts.";
 const char kAccountConsistencyChoiceMirror[] = "Mirror";
 const char kAccountConsistencyChoiceDice[] = "Dice";
-
-const char kDoodlesOnLocalNtpName[] = "Enable doodles on the local NTP";
-const char kDoodlesOnLocalNtpDescription[] =
-    "Show doodles on the local New Tab page if Google is the default search "
-    "engine.";
 
 const char kEnableAudioFocusName[] = "Manage audio focus across tabs";
 const char kEnableAudioFocusDescription[] =

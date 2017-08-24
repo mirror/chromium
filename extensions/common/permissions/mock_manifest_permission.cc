@@ -30,7 +30,7 @@ bool MockManifestPermission::FromValue(const base::Value* value) {
 }
 
 std::unique_ptr<base::Value> MockManifestPermission::ToValue() const {
-  return std::make_unique<base::Value>();
+  return base::MakeUnique<base::Value>();
 }
 
 ManifestPermission* MockManifestPermission::Diff(

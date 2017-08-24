@@ -140,8 +140,6 @@ class VIEWS_EXPORT AXAuraObjCache
 
   Delegate* delegate_;
 
-  aura::Window* root_window_;
-
   DISALLOW_COPY_AND_ASSIGN(AXAuraObjCache);
 };
 

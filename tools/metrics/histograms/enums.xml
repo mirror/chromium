@@ -3919,17 +3919,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="10" label="GPUAccelerated2DCanvasSurfaceCreationFailed"/>
 </enum>
 
-<enum name="CanvasCreateImageBitmapSource">
-  <int value="0" label="CreateImageBitmapFromBlob"/>
-  <int value="1" label="CreateImageBitmapFromImageBitmap"/>
-  <int value="2" label="CreateImageBitmapFromImageData"/>
-  <int value="3" label="CreateImageBitmapFromHTMLCanvasElement"/>
-  <int value="4" label="CreateImageBitmapFromHTMLImageElement"/>
-  <int value="5" label="CreateImageBitmapFromHTMLVideoElement"/>
-  <int value="6" label="CreateImageBitmapFromOffscreenCanvas"/>
-  <int value="7" label="CreateImageBitmapFromSVGImageElement"/>
-</enum>
-
 <enum name="CanvasDisplayListFallbackReason">
   <int value="0" label="Unknown (Should not be seen in production)."/>
   <int value="1" label="Canvas not cleared between consecutive frames."/>
@@ -8488,9 +8477,6 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="DoodleConfigDownloadOutcome">
-  <obsolete>
-    Removed from code 2017-08.
-  </obsolete>
   <summary>
     These values are defined in the DownloadOutcome enum in
     components/doodle/doodle_service.h.
@@ -16166,7 +16152,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2117" label="ARIAValueNowAttribute"/>
   <int value="2118" label="ARIAValueTextAttribute"/>
   <int value="2119" label="V8LabeledExpressionStatement"/>
-  <int value="2120" label="PaymentRequestSupportedMethodsArray"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -21115,11 +21100,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2" label="SubframeBlocked"/>
 </enum>
 
-<enum name="IOSNTPImpression">
-  <int value="0" label="Local suggestions"/>
-  <int value="1" label="Remote suggestions"/>
-</enum>
-
 <enum name="IOSSearchExtensionAction">
   <int value="0" label="No Action"/>
   <int value="1" label="New Search"/>
@@ -22954,8 +22934,6 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="UploadCrashReportsUsingJobScheduler:disabled"/>
   <int value="-1912999136" label="enable-automatic-password-saving:enabled"/>
   <int value="-1911153473" label="enable-easy-signin"/>
-  <int value="-1909356390"
-      label="OverlayScrollbarFlashAfterAnyScrollUpdate:enabled"/>
   <int value="-1907342706" label="ReadItLaterInMenu:disabled"/>
   <int value="-1892555086" label="disable-compositor-animation-timelines"/>
   <int value="-1892000374" label="SeccompSandboxAndroid:enabled"/>
@@ -23252,7 +23230,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-996673716" label="enable-web-app-frame"/>
   <int value="-991253797"
       label="OmniboxSpeculativeServiceWorkerStartOnQueryInput:disabled"/>
-  <int value="-984052166" label="DoodlesOnLocalNtp:enabled"/>
   <int value="-980260493" label="NTPSnippets:disabled"/>
   <int value="-979313250" label="enable-google-branded-context-menu"/>
   <int value="-979057409" label="enable-seccomp-filter-sandbox"/>
@@ -23377,7 +23354,6 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="ContentSuggestionsFaviconsFromNewServer:enabled"/>
   <int value="-604068396" label="disable-input-ime-api"/>
   <int value="-601384286" label="disable-contextual-search"/>
-  <int value="-599932554" label="DoodlesOnLocalNtp:disabled"/>
   <int value="-598050737" label="disable-es3-apis"/>
   <int value="-589096918" label="ash-enable-fullscreen-app-list"/>
   <int value="-579192400" label="disable-input-view"/>
@@ -23662,7 +23638,6 @@ from previous Chrome versions.
   <int value="360599302" label="enable-gpu-rasterization"/>
   <int value="365467768" label="prefetch-search-results"/>
   <int value="368854020" label="ash-screen-rotation-animation"/>
-  <int value="369352033" label="GenericSensorExtraClasses:enabled"/>
   <int value="370486304" label="enable-origin-chip-on-srp"/>
   <int value="371268743" label="OmniboxUIExperimentVerticalMargin:disabled"/>
   <int value="372460068" label="QuickUnlockFingerprint:disabled"/>
@@ -23673,7 +23648,6 @@ from previous Chrome versions.
   <int value="387178525" label="VideoFullscreenOrientationLock:enabled"/>
   <int value="388996324" label="CustomContextMenu:disabled"/>
   <int value="393704200" label="account-consistency"/>
-  <int value="398903399" label="GenericSensorExtraClasses:disabled"/>
   <int value="400322063" label="ash-disable-screen-orientation-lock"/>
   <int value="401983950" label="enable-spdy4"/>
   <int value="402143634" label="enable-search-button-in-omnibox-always"/>
@@ -23705,8 +23679,6 @@ from previous Chrome versions.
       label="enable-non-validating-reload-on-refresh-content"/>
   <int value="470011024" label="NonValidatingReloadOnNormalReload:enabled"/>
   <int value="474743272" label="material-design-ink-drop"/>
-  <int value="475858648"
-      label="OverlayScrollbarFlashAfterAnyScrollUpdate:disabled"/>
   <int value="477967119" label="enable-unified-media-pipeline"/>
   <int value="479906041" label="RunAllFlashInAllowMode:disabled"/>
   <int value="480544447" label="NonValidatingReloadOnRefreshContentV2:enabled"/>
@@ -23770,7 +23742,6 @@ from previous Chrome versions.
   <int value="651421878" label="VideoRotateToFullscreen:enabled"/>
   <int value="651844675" label="EasyUnlockPromotions:enabled"/>
   <int value="652561231" label="CustomContextMenu:enabled"/>
-  <int value="659086147" label="OverlayScrollbarFlashWhenMouseEnter:enabled"/>
   <int value="684806628" label="TranslateLanguageByULP:disabled"/>
   <int value="685916283" label="enable-zip-archiver-on-file-manager"/>
   <int value="687838135" label="ThirdPartyDoodles:disabled"/>
@@ -24111,7 +24082,6 @@ from previous Chrome versions.
   <int value="1730416578" label="NTPCondensedLayout:enabled"/>
   <int value="1731522433" label="enable-offer-store-unmasked-wallet-cards"/>
   <int value="1733390925" label="force-enable-stylus-tools"/>
-  <int value="1735934914" label="OverlayScrollbarFlashWhenMouseEnter:disabled"/>
   <int value="1747279677" label="disable-delegated-renderer"/>
   <int value="1752168018" label="enable-stale-while-revalidate"/>
   <int value="1762320532" label="AutofillKeyboardAccessory:enabled"/>
@@ -34706,21 +34676,6 @@ from previous Chrome versions.
   <int value="0" label="Cancel"/>
   <int value="1" label="Continue"/>
   <int value="2" label="New Profile"/>
-</enum>
-
-<enum name="SigninDiceResponseHeader">
-  <int value="0" label="Signin"/>
-  <int value="1" label="SignoutPrimary">
-    Signout including the primary account.
-  </int>
-  <int value="2" label="SignoutSecondary">Signout only secondary accounts.</int>
-</enum>
-
-<enum name="SigninDiceTokenFetchResult">
-  <int value="0" label="Success"/>
-  <int value="1" label="Abort"/>
-  <int value="2" label="Failure">Failed with Gaia error.</int>
-  <int value="3" label="Timeout"/>
 </enum>
 
 <enum name="SigninFlowConfirmations">

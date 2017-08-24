@@ -330,14 +330,11 @@ void ArcSessionImpl::SendStartArcInstanceDBusMessage(
     const chromeos::SessionManagerClient::StartArcInstanceCallback& cb) {
   chromeos::SessionManagerClient* session_manager_client =
       chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
-  const bool native_bridge_experiment =
-      base::FeatureList::IsEnabled(arc::kNativeBridgeExperimentFeature);
   if (instance_is_for_login_screen) {
     session_manager_client->StartArcInstance(
         chromeos::SessionManagerClient::ArcStartupMode::LOGIN_SCREEN,
         // All variables below except |cb| will be ignored.
-        cryptohome::Identification(), false, false,
-        native_bridge_experiment, cb);
+        cryptohome::Identification(), false, false, cb);
     return;
   }
 
@@ -356,8 +353,7 @@ void ArcSessionImpl::SendStartArcInstanceDBusMessage(
 
   session_manager_client->StartArcInstance(
       chromeos::SessionManagerClient::ArcStartupMode::FULL, cryptohome_id,
-      skip_boot_completed_broadcast, scan_vendor_priv_app,
-      native_bridge_experiment, cb);
+      skip_boot_completed_broadcast, scan_vendor_priv_app, cb);
 }
 
 void ArcSessionImpl::OnInstanceStarted(bool instance_is_for_login_screen,

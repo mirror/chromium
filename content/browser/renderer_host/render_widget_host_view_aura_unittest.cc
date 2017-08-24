@@ -4128,8 +4128,7 @@ void RenderWidgetHostViewAuraOverscrollTest::WheelScrollOverscrollToggle() {
   EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
 
   // Continue to scroll in the reverse direction enough to initiate overscroll
-  // in that direction. However, overscroll should not be initiated as the
-  // overscroll mode is locked to east mode.
+  // in that direction.
   SimulateWheelEventPossiblyIncludingPhase(-55, 0, 0, true,
                                            WebMouseWheelEvent::kPhaseChanged);
   if (wheel_scrolling_mode_ == kAsyncWheelEvents) {
@@ -4156,11 +4155,11 @@ void RenderWidgetHostViewAuraOverscrollTest::WheelScrollOverscrollToggle() {
     ExpectGestureScrollEndForWheelScrolling(true);
   }
 
-  EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
-  EXPECT_EQ(OverscrollSource::NONE, overscroll_source());
-  EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
+  EXPECT_EQ(OVERSCROLL_WEST, overscroll_mode());
+  EXPECT_EQ(OverscrollSource::TOUCHPAD, overscroll_source());
+  EXPECT_EQ(OVERSCROLL_WEST, overscroll_delegate()->current_mode());
   EXPECT_EQ(-75.f, overscroll_delta_x());
-  EXPECT_EQ(0.f, overscroll_delegate()->delta_x());
+  EXPECT_EQ(-25.f, overscroll_delegate()->delta_x());
   EXPECT_EQ(0.f, overscroll_delegate()->delta_y());
 }
 TEST_F(RenderWidgetHostViewAuraOverscrollTest, WheelScrollOverscrollToggle) {
@@ -4947,37 +4946,31 @@ void RenderWidgetHostViewAuraOverscrollTest::
                     INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
   ExpectGestureScrollEndForWheelScrolling(false);
 
-  // ScrollUpdate is not consumed, however, overscroll controller will not
-  // initiate west overscroll as it is now locked in east mode.
-  EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
-  EXPECT_EQ(OverscrollSource::NONE, overscroll_source());
-  EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
+  // Since it was unhandled; the overscroll should now be west
+  EXPECT_EQ(OVERSCROLL_WEST, overscroll_mode());
+  EXPECT_EQ(OverscrollSource::TOUCHPAD, overscroll_source());
+  EXPECT_EQ(OVERSCROLL_WEST, overscroll_delegate()->current_mode());
 
   SimulateWheelEventPossiblyIncludingPhase(-20, 0, 0, true,
                                            WebMouseWheelEvent::kPhaseChanged);
-  if (wheel_scrolling_mode_ == kAsyncWheelEvents) {
-    // MouseWheel and ScrollUpdate will be queued events.
-    EXPECT_EQ(2U, GetSentMessageCountAndResetSink());
-  } else {
-    // MouseWheel will be queued event.
-    EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
+  EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
+  if (wheel_scrolling_mode_ != kAsyncWheelEvents) {
     SendInputEventACK(WebInputEvent::kMouseWheel,
                       INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
-
-    // Wheel event ack generates gesture scroll update; which is not consumed by
-    // the overscroll controller.
-    if (wheel_scroll_latching_enabled_) {
-      // ScrollUpdate will be queued event.
-      EXPECT_EQ(1U, GetSentMessageCountAndResetSink());
-    } else {
-      // ScrollBegin and ScrollUpdate will be queued events.
-      EXPECT_EQ(2U, GetSentMessageCountAndResetSink());
-    }
   }
 
-  EXPECT_EQ(OVERSCROLL_NONE, overscroll_mode());
-  EXPECT_EQ(OverscrollSource::NONE, overscroll_source());
-  EXPECT_EQ(OVERSCROLL_NONE, overscroll_delegate()->current_mode());
+  // wheel event ack generates gesture scroll update; which gets consumed
+  // solely by the overflow controller.
+  if (!wheel_scroll_latching_enabled_) {
+    // No ScrollUpdates, only ScrollBegin and ScrollEnd will be queued events.
+    EXPECT_EQ(2U, GetSentMessageCountAndResetSink());
+  } else {
+    EXPECT_EQ(0U, GetSentMessageCountAndResetSink());
+  }
+
+  EXPECT_EQ(OVERSCROLL_WEST, overscroll_mode());
+  EXPECT_EQ(OverscrollSource::TOUCHPAD, overscroll_source());
+  EXPECT_EQ(OVERSCROLL_WEST, overscroll_delegate()->current_mode());
 }
 TEST_F(RenderWidgetHostViewAuraOverscrollTest,
        OverscrollDirectionChangeMouseWheel) {

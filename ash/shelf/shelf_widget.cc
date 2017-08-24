@@ -96,8 +96,14 @@ void ShelfWidget::DelegateView::SetParentLayer(ui::Layer* layer) {
 }
 
 bool ShelfWidget::DelegateView::CanActivate() const {
-  // Only allow activation from the focus cycler, not from mouse events, etc.
-  return focus_cycler_ && focus_cycler_->widget_activating() == GetWidget();
+  // Allow to activate as fallback.
+  if (shelf_widget_->activating_as_fallback_)
+    return true;
+  // Allow to activate from the focus cycler.
+  if (focus_cycler_ && focus_cycler_->widget_activating() == GetWidget())
+    return true;
+  // Disallow activating in other cases, especially when using mouse.
+  return false;
 }
 
 void ShelfWidget::DelegateView::ReorderChildLayers(ui::Layer* parent_layer) {
@@ -122,7 +128,8 @@ ShelfWidget::ShelfWidget(aura::Window* shelf_container, Shelf* shelf)
       shelf_view_(new ShelfView(Shell::Get()->shelf_model(), shelf_, this)),
       background_animator_(SHELF_BACKGROUND_DEFAULT,
                            shelf_,
-                           Shell::Get()->wallpaper_controller()) {
+                           Shell::Get()->wallpaper_controller()),
+      activating_as_fallback_(false) {
   DCHECK(shelf_container);
   DCHECK(shelf_);
 
@@ -306,6 +313,7 @@ ShelfWidget::GetDragAndDropHostForAppList() {
 
 void ShelfWidget::OnWidgetActivationChanged(views::Widget* widget,
                                             bool active) {
+  activating_as_fallback_ = false;
   if (active)
     delegate_view_->SetPaneFocusAndFocusDefault();
   else

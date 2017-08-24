@@ -325,7 +325,6 @@ ObjectUI.JavaScriptAutocomplete.completionsForExpression = async function(expres
         'monitor',
         'unmonitor',
         'table',
-        'queryObjects',
         '$',
         '$$',
         '$x'

@@ -698,7 +698,7 @@ class CORE_EXPORT Document : public ContainerNode,
   enum DocumentReadyState { kLoading, kInteractive, kComplete };
 
   void SetReadyState(DocumentReadyState);
-  bool IsLoadCompleted() const;
+  bool IsLoadCompleted();
 
   enum ParsingState { kParsing, kInDOMContentLoaded, kFinishedParsing };
   void SetParsingState(ParsingState);
@@ -1190,9 +1190,8 @@ class CORE_EXPORT Document : public ContainerNode,
   void DidLoadAllImports();
 
   void AdjustFloatQuadsForScrollAndAbsoluteZoom(Vector<FloatQuad>&,
-                                                const LayoutObject&) const;
-  void AdjustFloatRectForScrollAndAbsoluteZoom(FloatRect&,
-                                               const LayoutObject&) const;
+                                                LayoutObject&);
+  void AdjustFloatRectForScrollAndAbsoluteZoom(FloatRect&, LayoutObject&);
 
   void SetContextFeatures(ContextFeatures&);
   ContextFeatures& GetContextFeatures() const { return *context_features_; }

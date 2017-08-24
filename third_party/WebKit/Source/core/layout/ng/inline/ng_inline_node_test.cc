@@ -100,7 +100,7 @@ class NGInlineNodeTest : public RenderingTest {
         NGConstraintSpaceBuilder(kHorizontalTopBottom, icb_size)
             .ToConstraintSpace(kHorizontalTopBottom);
     RefPtr<NGLayoutResult> result =
-        NGInlineLayoutAlgorithm(node, *constraint_space).Layout();
+        NGInlineLayoutAlgorithm(node, constraint_space.Get()).Layout();
 
     const NGPhysicalBoxFragment* container =
         ToNGPhysicalBoxFragment(result->PhysicalFragment().Get());

@@ -49,7 +49,6 @@
 #include "core/svg/graphics/SVGImage.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/CrossThreadFunctional.h"
-#include "platform/Histogram.h"
 #include "platform/SharedBuffer.h"
 #include "platform/image-decoders/ImageDecoder.h"
 #include "platform/threading/BackgroundTaskRunner.h"
@@ -60,36 +59,16 @@
 
 namespace blink {
 
-// This enum is used in a UMA histogram.
-enum CreateImageBitmapSource {
-  kCreateImageBitmapSourceBlob = 0,
-  kCreateImageBitmapSourceImageBitmap = 1,
-  kCreateImageBitmapSourceImageData = 2,
-  kCreateImageBitmapSourceHTMLCanvasElement = 3,
-  kCreateImageBitmapSourceHTMLImageElement = 4,
-  kCreateImageBitmapSourceHTMLVideoElement = 5,
-  kCreateImageBitmapSourceOffscreenCanvas = 6,
-  kCreateImageBitmapSourceSVGImageElement = 7,
-  kCreateImageBitmapSourceCount,
-};
-
 static inline ImageBitmapSource* ToImageBitmapSourceInternal(
     const ImageBitmapSourceUnion& value,
     ExceptionState& exception_state,
     const ImageBitmapOptions& options,
     bool has_crop_rect) {
   ImageElementBase* image_element = nullptr;
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(
-      EnumerationHistogram, image_bitmap_source_histogram,
-      ("Canvas.CreateImageBitmapSource", kCreateImageBitmapSourceCount));
   if (value.isHTMLImageElement()) {
-    image_bitmap_source_histogram.Count(
-        kCreateImageBitmapSourceHTMLImageElement);
     if (!(image_element = value.getAsHTMLImageElement()))
       return nullptr;
   } else if (value.isSVGImageElement()) {
-    image_bitmap_source_histogram.Count(
-        kCreateImageBitmapSourceSVGImageElement);
     if (!(image_element = value.getAsSVGImageElement()))
       return nullptr;
   }
@@ -114,33 +93,18 @@ static inline ImageBitmapSource* ToImageBitmapSourceInternal(
     }
     return image_element;
   }
-  if (value.isHTMLVideoElement()) {
-    image_bitmap_source_histogram.Count(
-        kCreateImageBitmapSourceHTMLVideoElement);
+  if (value.isHTMLVideoElement())
     return value.getAsHTMLVideoElement();
-  }
-  if (value.isHTMLCanvasElement()) {
-    image_bitmap_source_histogram.Count(
-        kCreateImageBitmapSourceHTMLCanvasElement);
+  if (value.isHTMLCanvasElement())
     return value.getAsHTMLCanvasElement();
-  }
-  if (value.isBlob()) {
-    image_bitmap_source_histogram.Count(kCreateImageBitmapSourceBlob);
+  if (value.isBlob())
     return value.getAsBlob();
-  }
-  if (value.isImageData()) {
-    image_bitmap_source_histogram.Count(kCreateImageBitmapSourceImageData);
+  if (value.isImageData())
     return value.getAsImageData();
-  }
-  if (value.isImageBitmap()) {
-    image_bitmap_source_histogram.Count(kCreateImageBitmapSourceImageBitmap);
+  if (value.isImageBitmap())
     return value.getAsImageBitmap();
-  }
-  if (value.isOffscreenCanvas()) {
-    image_bitmap_source_histogram.Count(
-        kCreateImageBitmapSourceOffscreenCanvas);
+  if (value.isOffscreenCanvas())
     return value.getAsOffscreenCanvas();
-  }
   NOTREACHED();
   return nullptr;
 }

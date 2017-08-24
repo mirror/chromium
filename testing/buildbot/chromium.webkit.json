@@ -740,9 +740,7 @@
     "isolated_scripts": [
       {
         "args": [
-          "--debug",
-          "--time-out-ms",
-          "60000"
+          "--debug"
         ],
         "isolate_name": "webkit_layout_tests_exparchive",
         "merge": {
@@ -760,7 +758,7 @@
               "os": "Windows-7-SP1"
             }
           ],
-          "shards": 10
+          "shards": 5
         }
       }
     ],

@@ -104,20 +104,19 @@ class OfflinePageBridge : public OfflinePageModel::Observer,
       int tab_id,
       const base::android::JavaParamRef<jobject>& j_callback_obj);
 
-  void SavePage(JNIEnv* env,
-                const base::android::JavaParamRef<jobject>& obj,
-                const base::android::JavaParamRef<jobject>& j_callback_obj,
-                const base::android::JavaParamRef<jobject>& j_web_contents,
-                const base::android::JavaParamRef<jstring>& j_namespace,
-                const base::android::JavaParamRef<jstring>& j_client_id,
-                const base::android::JavaParamRef<jstring>& j_origin);
+  void SavePage(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      const base::android::JavaParamRef<jobject>& j_callback_obj,
+      const base::android::JavaParamRef<jobject>& j_web_contents,
+      const base::android::JavaParamRef<jstring>& j_namespace,
+      const base::android::JavaParamRef<jstring>& j_client_id);
 
   void SavePageLater(JNIEnv* env,
                      const base::android::JavaParamRef<jobject>& obj,
                      const base::android::JavaParamRef<jstring>& url,
                      const base::android::JavaParamRef<jstring>& j_namespace,
                      const base::android::JavaParamRef<jstring>& j_client_id,
-                     const base::android::JavaParamRef<jstring>& j_origin,
                      jboolean user_requested);
 
   jboolean IsShowingOfflinePreview(

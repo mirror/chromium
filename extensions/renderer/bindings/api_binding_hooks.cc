@@ -169,7 +169,7 @@ v8::Local<v8::Object> GetJSHookInterfaceObject(
       return v8::Local<v8::Object>();
 
     auto api_data =
-        std::make_unique<APIHooksPerContextData>(context->GetIsolate());
+        base::MakeUnique<APIHooksPerContextData>(context->GetIsolate());
     data = api_data.get();
     per_context_data->SetUserData(kExtensionAPIHooksPerContextKey,
                                   std::move(api_data));

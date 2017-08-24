@@ -24,7 +24,6 @@
 #include "core/CSSPropertyNames.h"
 #include "core/css/CSSPropertyMetadata.h"
 #include "core/css/CSSValue.h"
-#include "core/css/properties/CSSPropertyAPI.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/text/TextDirection.h"
 #include "platform/text/WritingMode.h"
@@ -77,7 +76,7 @@ class CSSProperty {
                   index_in_shorthands_vector,
                   important,
                   implicit,
-                  CSSPropertyAPI::Get(property_id).IsInherited()),
+                  CSSPropertyMetadata::IsInheritedProperty(property_id)),
         value_(value) {}
 
   // FIXME: Remove this.

@@ -578,6 +578,7 @@ component("platform") {
     "exported/WebAudioBus.cpp",
     "exported/WebAudioDevice.cpp",
     "exported/WebBlobData.cpp",
+    "exported/WebBlobRegistry.cpp",
     "exported/WebCORS.cpp",
     "exported/WebCORSPreflightResultCache.cpp",
     "exported/WebCache.cpp",
@@ -1076,8 +1077,6 @@ component("platform") {
     "graphics/gpu/DrawingBuffer.h",
     "graphics/gpu/Extensions3DUtil.cpp",
     "graphics/gpu/Extensions3DUtil.h",
-    "graphics/gpu/GraphicsContext3DUtils.cpp",
-    "graphics/gpu/GraphicsContext3DUtils.h",
     "graphics/gpu/ImageLayerBridge.cpp",
     "graphics/gpu/ImageLayerBridge.h",
     "graphics/gpu/SharedContextRateLimiter.cpp",
@@ -2147,8 +2146,6 @@ source_set("unit_tests") {
   visibility = [ "//third_party/WebKit/Source/*" ]
   sources = [
     "graphics/Canvas2DLayerBridgeTest.cpp",
-    "graphics/CanvasColorParamsTest.cpp",
-    "graphics/ColorCorrectionTestUtils.cpp",
     "graphics/DeferredImageDecoderTest.cpp",
     "graphics/GraphicsLayerTest.cpp",
     "graphics/ImageDecodingStoreTest.cpp",

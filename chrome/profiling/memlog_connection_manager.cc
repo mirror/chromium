@@ -91,7 +91,7 @@ void MemlogConnectionManager::OnConnectionCompleteThunk(
                             weak_factory_.GetWeakPtr(), pid));
 }
 
-bool MemlogConnectionManager::DumpProcess(
+void MemlogConnectionManager::DumpProcess(
     base::ProcessId pid,
     std::unique_ptr<base::DictionaryValue> metadata,
     const std::vector<memory_instrumentation::mojom::VmRegionPtr>& maps,
@@ -111,7 +111,7 @@ bool MemlogConnectionManager::DumpProcess(
   auto it = connections_.find(pid);
   if (it == connections_.end()) {
     LOG(ERROR) << "No connections found for memory dump for pid:" << pid;
-    return false;
+    return;
   }
 
   Connection* connection = it->second.get();
@@ -130,15 +130,8 @@ bool MemlogConnectionManager::DumpProcess(
   int fd = platform_file;
 #endif
   gzFile gz_file = gzdopen(fd, "w");
-  if (!gz_file) {
-    LOG(ERROR) << "Cannot compress trace file";
-    return false;
-  }
-
-  size_t written_bytes = gzwrite(gz_file, reply.c_str(), reply.size());
+  gzwrite(gz_file, reply.c_str(), reply.size());
   gzclose(gz_file);
-
-  return written_bytes == reply.size();
 }
 
 }  // namespace profiling

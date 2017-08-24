@@ -272,10 +272,7 @@ component("gpu") {
       deps += [ ":libv4l2_generate_stubs" ]
     }
     if (use_v4l2_codec) {
-      deps += [
-        "//third_party/libyuv",
-        "//ui/ozone",
-      ]
+      deps += [ "//third_party/libyuv" ]
       sources += [
         "generic_v4l2_device.cc",
         "generic_v4l2_device.h",
@@ -537,7 +534,6 @@ if (is_chromeos) {
       "//base",
       "//media:test_support",
       "//media/gpu",
-      "//media/gpu/ipc/service",
       "//testing/gtest",
       "//third_party/libyuv",
       "//ui/base",

@@ -38,7 +38,7 @@ void ParseUpdateManifest(const std::string& xml,
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(callback);
 
-  auto process = std::make_unique<UtilityProcess>(
+  auto process = base::MakeUnique<UtilityProcess>(
       l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_MANIFEST_PARSER_NAME));
   auto* utility_process = process.get();
   auto done = base::Bind(&ParseDone, base::Passed(&process), callback);

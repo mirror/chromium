@@ -20,6 +20,7 @@ class FilePath;
 namespace download {
 
 struct DriverEntry;
+struct Entry;
 
 // An utility class containing various file cleanup methods.
 class FileMonitor {
@@ -35,8 +36,9 @@ class FileMonitor {
       const Model::EntryList& known_entries,
       const std::vector<DriverEntry>& known_driver_entries) = 0;
 
-  // Deletes the files associated with the |entries|.
-  virtual void CleanupFilesForCompletedEntries(
+  // Deletes the files for the database entries which have been completed and
+  // ready for cleanup. Returns the entries eligible for clean up.
+  virtual std::vector<Entry*> CleanupFilesForCompletedEntries(
       const Model::EntryList& entries,
       const base::Closure& completion_callback) = 0;
 

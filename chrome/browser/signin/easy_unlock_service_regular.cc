@@ -761,21 +761,16 @@ EasyUnlockServiceRegular::GetCryptAuthDeviceManager() {
 
 void EasyUnlockServiceRegular::RefreshCryptohomeKeysIfPossible() {
 #if defined(OS_CHROMEOS)
-  // If the user reauthed on the settings page, then the UserContext will be
-  // cached.
   if (short_lived_user_context_ && short_lived_user_context_->user_context()) {
-    // We only sync the remote devices to cryptohome if the user has enabled
-    // EasyUnlock on the login screen.
-    base::ListValue empty_list;
-    const base::ListValue* remote_devices_list = GetRemoteDevices();
-    if (!IsChromeOSLoginEnabled() || !remote_devices_list)
-      remote_devices_list = &empty_list;
-
+    // If the user reauthed on the settings page, then the UserContext will be
+    // cached.
     chromeos::UserSessionManager::GetInstance()
         ->GetEasyUnlockKeyManager()
         ->RefreshKeys(
             *short_lived_user_context_->user_context(),
-            base::ListValue(remote_devices_list->GetList()),
+            IsChromeOSLoginEnabled()
+                ? base::ListValue(GetRemoteDevices()->GetList())
+                : base::ListValue(),
             base::Bind(&EasyUnlockServiceRegular::SetHardlockAfterKeyOperation,
                        weak_ptr_factory_.GetWeakPtr(),
                        EasyUnlockScreenlockStateHandler::NO_HARDLOCK));

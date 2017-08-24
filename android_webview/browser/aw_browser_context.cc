@@ -7,7 +7,6 @@
 #include <utility>
 
 #include "android_webview/browser/aw_browser_policy_connector.h"
-#include "android_webview/browser/aw_download_manager_delegate.h"
 #include "android_webview/browser/aw_form_database_service.h"
 #include "android_webview/browser/aw_metrics_service_client.h"
 #include "android_webview/browser/aw_permission_manager.h"
@@ -63,8 +62,6 @@ const char kWebRestrictionsAuthority[] = "web_restrictions_authority";
 }  // namespace prefs
 
 namespace {
-
-const void* const kDownloadManagerDelegateKey = &kDownloadManagerDelegateKey;
 
 // Shows notifications which correspond to PersistentPrefStore's reading errors.
 void HandleReadError(PersistentPrefStore::PrefReadError error) {
@@ -280,12 +277,7 @@ content::ResourceContext* AwBrowserContext::GetResourceContext() {
 
 content::DownloadManagerDelegate*
 AwBrowserContext::GetDownloadManagerDelegate() {
-  if (!GetUserData(kDownloadManagerDelegateKey)) {
-    SetUserData(kDownloadManagerDelegateKey,
-                base::MakeUnique<AwDownloadManagerDelegate>());
-  }
-  return static_cast<AwDownloadManagerDelegate*>(
-      GetUserData(kDownloadManagerDelegateKey));
+  return &download_manager_delegate_;
 }
 
 content::BrowserPluginGuestManager* AwBrowserContext::GetGuestManager() {

@@ -66,7 +66,7 @@ class ExtensionUnpackerImpl : public extensions::mojom::ExtensionUnpacker {
   ~ExtensionUnpackerImpl() override = default;
 
   static void Create(extensions::mojom::ExtensionUnpackerRequest request) {
-    mojo::MakeStrongBinding(std::make_unique<ExtensionUnpackerImpl>(),
+    mojo::MakeStrongBinding(base::MakeUnique<ExtensionUnpackerImpl>(),
                             std::move(request));
   }
 
@@ -170,7 +170,7 @@ class ManifestParserImpl : public extensions::mojom::ManifestParser {
   ~ManifestParserImpl() override = default;
 
   static void Create(extensions::mojom::ManifestParserRequest request) {
-    mojo::MakeStrongBinding(std::make_unique<ManifestParserImpl>(),
+    mojo::MakeStrongBinding(base::MakeUnique<ManifestParserImpl>(),
                             std::move(request));
   }
 

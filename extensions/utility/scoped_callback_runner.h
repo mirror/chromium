@@ -89,7 +89,7 @@ inline base::OnceCallback<T> ScopedCallbackRunner(base::OnceCallback<T> cb,
                                                   Args&&... args) {
   return base::BindOnce(
       &internal::ScopedCallbackRunnerHelper<T>::Run,
-      std::make_unique<internal::ScopedCallbackRunnerHelper<T>>(
+      base::MakeUnique<internal::ScopedCallbackRunnerHelper<T>>(
           std::move(cb), std::forward<Args>(args)...));
 }
 

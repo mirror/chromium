@@ -37,7 +37,6 @@
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
-#include "public/web/WebFileChooserParams.h"
 
 namespace blink {
 
@@ -60,13 +59,26 @@ struct FileChooserFileInfo {
   const FileMetadata metadata;
 };
 
+struct FileChooserSettings {
+  DISALLOW_NEW();
+  bool allows_multiple_files;
+  bool allows_directory_upload;
+  Vector<String> accept_mime_types;
+  Vector<String> accept_file_extensions;
+  Vector<String> selected_files;
+  bool use_media_capture;
+
+  // Returns a combined vector of acceptMIMETypes and acceptFileExtensions.
+  Vector<String> AcceptTypes() const;
+};
+
 class FileChooserClient : public GarbageCollectedMixin {
  public:
   virtual void FilesChosen(const Vector<FileChooserFileInfo>&) = 0;
   virtual ~FileChooserClient();
 
  protected:
-  FileChooser* NewFileChooser(const WebFileChooserParams&);
+  FileChooser* NewFileChooser(const FileChooserSettings&);
 
  private:
   RefPtr<FileChooser> chooser_;
@@ -75,7 +87,7 @@ class FileChooserClient : public GarbageCollectedMixin {
 class FileChooser : public RefCounted<FileChooser> {
  public:
   static PassRefPtr<FileChooser> Create(FileChooserClient*,
-                                        const WebFileChooserParams&);
+                                        const FileChooserSettings&);
   ~FileChooser();
 
   void DisconnectClient() { client_ = 0; }
@@ -84,13 +96,13 @@ class FileChooser : public RefCounted<FileChooser> {
   // with proper display names rather than passing structs.
   void ChooseFiles(const Vector<FileChooserFileInfo>& files);
 
-  const WebFileChooserParams& Params() const { return params_; }
+  const FileChooserSettings& GetSettings() const { return settings_; }
 
  private:
-  FileChooser(FileChooserClient*, const WebFileChooserParams&);
+  FileChooser(FileChooserClient*, const FileChooserSettings&);
 
   WeakPersistent<FileChooserClient> client_;
-  WebFileChooserParams params_;
+  FileChooserSettings settings_;
 };
 
 }  // namespace blink

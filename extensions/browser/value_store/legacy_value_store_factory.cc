@@ -167,12 +167,12 @@ bool LegacyValueStoreFactory::StateDBExists() const {
 }
 
 std::unique_ptr<ValueStore> LegacyValueStoreFactory::CreateRulesStore() {
-  return std::make_unique<LeveldbValueStore>(kRulesDatabaseUMAClientName,
+  return base::MakeUnique<LeveldbValueStore>(kRulesDatabaseUMAClientName,
                                              GetRulesDBPath());
 }
 
 std::unique_ptr<ValueStore> LegacyValueStoreFactory::CreateStateStore() {
-  return std::make_unique<LeveldbValueStore>(kStateDatabaseUMAClientName,
+  return base::MakeUnique<LeveldbValueStore>(kStateDatabaseUMAClientName,
                                              GetStateDBPath());
 }
 
@@ -183,7 +183,7 @@ std::unique_ptr<ValueStore> LegacyValueStoreFactory::CreateSettingsStore(
   const ModelSettings* settings_root =
       GetSettingsRoot(settings_namespace).GetModel(model_type);
   DCHECK(settings_root != nullptr);
-  return std::make_unique<LeveldbValueStore>(
+  return base::MakeUnique<LeveldbValueStore>(
       kSettingsDatabaseUMAClientName, settings_root->GetDBPath(extension_id));
 }
 

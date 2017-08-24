@@ -969,9 +969,7 @@ void ArcSessionManager::MaybeStartArcDataRemoval() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK(profile_);
   // Data removal cannot run in parallel with ARC session.
-  // LoginScreen instance does not use data directory, so removing should work.
-  DCHECK(arc_session_runner_->IsStopped() ||
-         arc_session_runner_->IsLoginScreenInstanceStarting());
+  DCHECK(arc_session_runner_->IsStopped());
   DCHECK_EQ(state_, State::STOPPED);
 
   // TODO(hidehiko): Extract the implementation of data removal, so that

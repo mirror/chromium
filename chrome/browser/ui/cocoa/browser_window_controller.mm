@@ -1801,13 +1801,6 @@ bool IsTabDetachingInFullscreenEnabled() {
 - (void)windowDidMove:(NSNotification*)notification {
   [self saveWindowPositionIfNeeded];
 
-  // When dragging tabs, the window is repositioned with direct setFrame: calls
-  // which don't automatically reposition child windows. Most dialogs block tab
-  // dragging or dismiss on focus loss. Permission bubbles do not, so ensure
-  // they are anchored correctly.
-  if ([self isDragSessionActive])
-    [self updatePermissionBubbleAnchor];
-
   NSWindow* window = [self window];
   NSRect windowFrame = [window frame];
   NSRect workarea = [[window screen] visibleFrame];

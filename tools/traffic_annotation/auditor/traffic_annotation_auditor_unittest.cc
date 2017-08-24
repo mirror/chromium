@@ -171,31 +171,33 @@ TEST_F(TrafficAnnotationAuditorTest, RelevantFilesReceived) {
   EXPECT_EQ(file_paths.size(), 0u);
 }
 
-// Tests if TrafficAnnotationFileFilter::IsSafeListed works as expected.
-// Inherently checks if TrafficAnnotationFileFilter::LoadSafeList works and
+// Tests if TrafficAnnotationFileFilter::IsWhitelisted works as expected.
+// Inherently checks if TrafficAnnotationFileFilter::LoadWhiteList works and
 // AuditorException rules are correctly deserialized.
-TEST_F(TrafficAnnotationAuditorTest, IsSafeListed) {
+TEST_F(TrafficAnnotationAuditorTest, IsWhitelisted) {
   for (unsigned int i = 0;
        i < static_cast<unsigned int>(
                AuditorException::ExceptionType::EXCEPTION_TYPE_LAST);
        i++) {
     AuditorException::ExceptionType type =
         static_cast<AuditorException::ExceptionType>(i);
-    // Anything in /tools directory is safelisted for all types.
-    EXPECT_TRUE(auditor().IsSafeListed("tools/something.cc", type));
-    EXPECT_TRUE(auditor().IsSafeListed("tools/somewhere/something.mm", type));
+    // Anything in /tools directory is whitelisted for all types.
+    EXPECT_TRUE(auditor().IsWhitelisted("tools/something.cc", type));
+    EXPECT_TRUE(auditor().IsWhitelisted("tools/somewhere/something.mm", type));
 
-    // Anything in a general folder is not safelisted for any type
-    EXPECT_FALSE(auditor().IsSafeListed("something.cc", type));
-    EXPECT_FALSE(auditor().IsSafeListed("content/something.mm", type));
+    // Anything in a general folder is not whitelisted for any type
+    EXPECT_FALSE(auditor().IsWhitelisted("something.cc", type));
+    EXPECT_FALSE(auditor().IsWhitelisted("content/something.mm", type));
   }
 
   // Files defining missing annotation functions in net/ are exceptions of
   // 'missing' type.
-  EXPECT_TRUE(auditor().IsSafeListed("net/url_request/url_fetcher.cc",
-                                     AuditorException::ExceptionType::MISSING));
-  EXPECT_TRUE(auditor().IsSafeListed("net/url_request/url_request_context.cc",
-                                     AuditorException::ExceptionType::MISSING));
+  EXPECT_TRUE(
+      auditor().IsWhitelisted("net/url_request/url_fetcher.cc",
+                              AuditorException::ExceptionType::MISSING));
+  EXPECT_TRUE(
+      auditor().IsWhitelisted("net/url_request/url_request_context.cc",
+                              AuditorException::ExceptionType::MISSING));
 }
 
 // Tests if annotation instances are corrrectly deserialized.
@@ -541,22 +543,22 @@ TEST_F(TrafficAnnotationAuditorTest, CheckAllRequiredFunctionsAreAnnotated) {
           // Error should be issued if all the following is met:
           //   1- Function is not annotated.
           //   2- It's a unittest or chrome::chrome depends on it.
-          //   3- The filepath is not safelisted.
+          //   3- The filepath is not whitelisted.
           //   4- Function name is either of the two specified ones.
           bool is_unittest = file_path.find("unittest") != std::string::npos;
-          bool is_safelist =
+          bool is_whitelist =
               file_path == "net/url_request/url_fetcher.cc" ||
               file_path == "net/url_request/url_request_context.cc";
           bool monitored_function =
               function_name == "net::URLFetcher::Create" ||
               function_name == "net::URLRequestContext::CreateRequest";
           EXPECT_EQ(auditor().errors().size() == 1,
-                    !annotated && (dependent || is_unittest) && !is_safelist &&
+                    !annotated && (dependent || is_unittest) && !is_whitelist &&
                         monitored_function)
               << base::StringPrintf(
                      "Annotated:%i, Depending:%i, IsUnitTest:%i, "
-                     "IsSafeListed:%i, MonitoredFunction:%i",
-                     annotated, dependent, is_unittest, is_safelist,
+                     "IsWhitelisted:%i, MonitoredFunction:%i",
+                     annotated, dependent, is_unittest, is_whitelist,
                      monitored_function);
         }
       }

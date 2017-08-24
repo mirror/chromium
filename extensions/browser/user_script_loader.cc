@@ -336,7 +336,7 @@ std::unique_ptr<base::SharedMemory> UserScriptLoader::Serialize(
   if (!readonly_handle.IsValid())
     return std::unique_ptr<base::SharedMemory>();
 
-  return std::make_unique<base::SharedMemory>(readonly_handle,
+  return base::MakeUnique<base::SharedMemory>(readonly_handle,
                                               /*read_only=*/true);
 }
 

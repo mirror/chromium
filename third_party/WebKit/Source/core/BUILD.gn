@@ -461,13 +461,9 @@ css_properties("make_core_generated_css_value_id_mappings") {
 
 css_properties("make_core_generated_css_property_api_baseclass") {
   script = "../build/scripts/core/css/properties/make_css_property_api_base.py"
-  other_inputs = [
-    "../build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
-    "../build/scripts/core/css/properties/templates/CSSPropertyAPI.h.tmpl",
-  ]
+  other_inputs = [ "../build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl" ]
   outputs = [
     "$blink_core_output_dir/css/properties/CSSPropertyAPI.cpp",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPI.h",
   ]
 }
 
@@ -1588,7 +1584,6 @@ jumbo_source_set("unit_tests") {
     "page/scrolling/ScrollingCoordinatorTest.cpp",
     "page/scrolling/SmoothScrollTest.cpp",
     "page/scrolling/SnapCoordinatorTest.cpp",
-    "paint/BlockPainterTest.cpp",
     "paint/BoxPaintInvalidatorTest.cpp",
     "paint/FirstMeaningfulPaintDetectorTest.cpp",
     "paint/HTMLCanvasPainterTest.cpp",

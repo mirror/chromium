@@ -151,7 +151,7 @@ class FakeExtensionSystem : public MockExtensionSystem {
 class UpdateServiceTest : public ExtensionsTest {
  public:
   UpdateServiceTest()
-      : ExtensionsTest(std::make_unique<content::TestBrowserThreadBundle>()) {}
+      : ExtensionsTest(base::MakeUnique<content::TestBrowserThreadBundle>()) {}
   ~UpdateServiceTest() override {}
 
   void SetUp() override {

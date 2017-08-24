@@ -116,7 +116,6 @@ class GPU_EXPORT FeatureInfo : public base::RefCounted<FeatureInfo> {
     bool arb_robustness = false;
     bool khr_robustness = false;
     bool ext_robustness = false;
-    bool ext_pixel_buffer_object = false;
   };
 
   FeatureInfo();

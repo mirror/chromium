@@ -32,10 +32,10 @@ NGBaseLayoutAlgorithmTest::RunBlockLayoutAlgorithmForElement(Element* element) {
   RefPtr<NGConstraintSpace> space =
       NGConstraintSpace::CreateFromLayoutObject(*block_flow);
 
-  RefPtr<NGLayoutResult> result = NGBlockLayoutAlgorithm(node, *space).Layout();
+  RefPtr<NGLayoutResult> result =
+      NGBlockLayoutAlgorithm(node, space.Get()).Layout();
   return std::make_pair(
-      ToNGPhysicalBoxFragment(result->PhysicalFragment().Get()),
-      std::move(space));
+      ToNGPhysicalBoxFragment(result->PhysicalFragment().Get()), space);
 }
 
 }  // namespace blink

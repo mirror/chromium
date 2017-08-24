@@ -409,8 +409,8 @@ void GetImageResourcesOnUIThread(
       base::BindOnce(std::move(io_task), std::move(result)));
 }
 
-void SetWorkspaceIconOnWorkerThread(const base::FilePath& apps_directory,
-                                    std::unique_ptr<ResourceIDToImage> images) {
+void SetWorkspaceIconOnFILEThread(const base::FilePath& apps_directory,
+                                  std::unique_ptr<ResourceIDToImage> images) {
   base::ThreadRestrictions::AssertIOAllowed();
 
   base::scoped_nsobject<NSImage> folder_icon_image([[NSImage alloc] init]);
@@ -450,11 +450,11 @@ void SetWorkspaceIconOnWorkerThread(const base::FilePath& apps_directory,
 // | + .localized
 // | | en.strings
 // | | de.strings
-bool UpdateAppShortcutsSubdirLocalizedName(
+void UpdateAppShortcutsSubdirLocalizedName(
     const base::FilePath& apps_directory) {
   base::FilePath localized = apps_directory.Append(".localized");
   if (!base::CreateDirectory(localized))
-    return false;
+    return;
 
   base::FilePath directory_name = apps_directory.BaseName().RemoveExtension();
   base::string16 localized_name =
@@ -476,8 +476,7 @@ bool UpdateAppShortcutsSubdirLocalizedName(
       content::BrowserThread::UI, FROM_HERE,
       base::BindOnce(
           &GetImageResourcesOnUIThread,
-          base::BindOnce(&SetWorkspaceIconOnWorkerThread, apps_directory)));
-  return true;
+          base::BindOnce(&SetWorkspaceIconOnFILEThread, apps_directory)));
 }
 
 void DeletePathAndParentIfEmpty(const base::FilePath& app_path) {
@@ -689,11 +688,7 @@ bool WebAppShortcutCreator::CreateShortcuts(
     return false;
   }
 
-  // Only set folder icons and a localized name once. This avoids concurrent
-  // calls to -[NSWorkspace setIcon:..], which is not reentrant.
-  static bool once = UpdateAppShortcutsSubdirLocalizedName(applications_dir);
-  if (!once)
-    LOG(ERROR) << "Failed to localize " << applications_dir.value();
+  UpdateAppShortcutsSubdirLocalizedName(applications_dir);
 
   // If non-nil, this path is added to the OSX Dock after creating shortcuts.
   NSString* path_to_add_to_dock = nil;

@@ -222,9 +222,6 @@ extern const char kEnableEnumeratingAudioDevicesDescription[];
 extern const char kEnableGenericSensorName[];
 extern const char kEnableGenericSensorDescription[];
 
-extern const char kEnableGenericSensorExtraClassesName[];
-extern const char kEnableGenericSensorExtraClassesDescription[];
-
 extern const char kEnableHDRName[];
 extern const char kEnableHDRDescription[];
 
@@ -576,12 +573,6 @@ extern const char kOriginTrialsDescription[];
 extern const char kOverlayScrollbarsName[];
 extern const char kOverlayScrollbarsDescription[];
 
-extern const char kOverlayScrollbarsFlashAfterAnyScrollUpdateName[];
-extern const char kOverlayScrollbarsFlashAfterAnyScrollUpdateDescription[];
-
-extern const char kOverlayScrollbarsFlashWhenMouseEnterName[];
-extern const char kOverlayScrollbarsFlashWhenMouseEnterDescription[];
-
 extern const char kOverscrollHistoryNavigationName[];
 extern const char kOverscrollHistoryNavigationDescription[];
 extern const char kOverscrollHistoryNavigationSimpleUi[];
@@ -807,9 +798,6 @@ extern const char kTrySupportedChannelLayoutsDescription[];
 
 extern const char kUiPartialSwapName[];
 extern const char kUiPartialSwapDescription[];
-
-extern const char kUseDdljsonApiName[];
-extern const char kUseDdljsonApiDescription[];
 
 extern const char kUserConsentForExtensionScriptsName[];
 extern const char kUserConsentForExtensionScriptsDescription[];
@@ -1188,6 +1176,9 @@ extern const char kUpdateMenuItemDescription[];
 extern const char kUseAndroidMidiApiName[];
 extern const char kUseAndroidMidiApiDescription[];
 
+extern const char kUseDdljsonApiName[];
+extern const char kUseDdljsonApiDescription[];
+
 extern const char kThirdPartyDoodlesName[];
 extern const char kThirdPartyDoodlesDescription[];
 
@@ -1202,9 +1193,6 @@ extern const char kAccountConsistencyName[];
 extern const char kAccountConsistencyDescription[];
 extern const char kAccountConsistencyChoiceMirror[];
 extern const char kAccountConsistencyChoiceDice[];
-
-extern const char kDoodlesOnLocalNtpName[];
-extern const char kDoodlesOnLocalNtpDescription[];
 
 extern const char kEnableAudioFocusName[];
 extern const char kEnableAudioFocusDescription[];

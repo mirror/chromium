@@ -4,8 +4,6 @@
 
 #include "chromeos/components/tether/ble_connection_manager.h"
 
-#include "base/test/histogram_tester.h"
-#include "base/test/simple_test_clock.h"
 #include "base/timer/mock_timer.h"
 #include "chromeos/components/tether/ble_constants.h"
 #include "chromeos/components/tether/proto/tether.pb.h"
@@ -39,11 +37,6 @@ const char kUserId[] = "userId";
 const char kBluetoothAddress1[] = "11:22:33:44:55:66";
 const char kBluetoothAddress2[] = "22:33:44:55:66:77";
 const char kBluetoothAddress3[] = "33:44:55:66:77:88";
-
-constexpr base::TimeDelta kStatusConnectedTime =
-    base::TimeDelta::FromSeconds(1);
-constexpr base::TimeDelta kStatusAuthenticatedTime =
-    base::TimeDelta::FromSeconds(3);
 
 struct SecureChannelStatusChange {
   SecureChannelStatusChange(const cryptauth::RemoteDevice& remote_device,
@@ -334,10 +327,6 @@ class BleConnectionManagerTest : public testing::Test {
         mock_bluetooth_throttler_.get()));
     test_observer_ = base::WrapUnique(new TestObserver());
     manager_->AddObserver(test_observer_.get());
-
-    test_clock_ = new base::SimpleTestClock();
-    test_clock_->SetNow(base::Time::UnixEpoch());
-    manager_->SetClockForTest(base::WrapUnique(test_clock_));
   }
 
   void TearDown() override {
@@ -456,8 +445,6 @@ class BleConnectionManagerTest : public testing::Test {
       const cryptauth::RemoteDevice& remote_device,
       const std::string& bluetooth_address,
       const MessageType connection_reason) {
-    test_clock_->SetNow(base::Time::UnixEpoch());
-
     manager_->RegisterRemoteDevice(remote_device, connection_reason);
     VerifyAdvertisingTimeoutSet(remote_device);
     VerifyConnectionStateChanges(std::vector<SecureChannelStatusChange>{
@@ -491,24 +478,10 @@ class BleConnectionManagerTest : public testing::Test {
     FakeSecureChannel* channel = GetChannelForDevice(remote_device);
     DCHECK(channel);
 
-    num_expected_authenticated_channels_++;
-
-    test_clock_->SetNow(base::Time::UnixEpoch());
     channel->ChangeStatus(cryptauth::SecureChannel::Status::CONNECTING);
-
-    test_clock_->Advance(kStatusConnectedTime);
     channel->ChangeStatus(cryptauth::SecureChannel::Status::CONNECTED);
-    histogram_tester_.ExpectTimeBucketCount(
-        "InstantTethering.Performance.AdvertisementToConnectionDuration",
-        kStatusConnectedTime, num_expected_authenticated_channels_);
-
-    test_clock_->Advance(kStatusAuthenticatedTime);
     channel->ChangeStatus(cryptauth::SecureChannel::Status::AUTHENTICATING);
     channel->ChangeStatus(cryptauth::SecureChannel::Status::AUTHENTICATED);
-    histogram_tester_.ExpectTimeBucketCount(
-        "InstantTethering.Performance.ConnectionToAuthenticationDuration",
-        kStatusAuthenticatedTime, num_expected_authenticated_channels_);
-
     VerifyConnectionStateChanges(std::vector<SecureChannelStatusChange>{
         {remote_device, cryptauth::SecureChannel::Status::CONNECTING,
          cryptauth::SecureChannel::Status::CONNECTED},
@@ -538,16 +511,6 @@ class BleConnectionManagerTest : public testing::Test {
     EXPECT_EQ(sequence_number, sent_sequence_numbers_after_finished.back());
   }
 
-  void VerifyAdvertisingToConnectionDurationMetricNotRecorded() {
-    histogram_tester_.ExpectTotalCount(
-        "InstantTethering.Performance.AdvertisementToConnectionDuration", 0);
-  }
-
-  void VerifyConnectionToAuthenticationDurationMetricNotRecorded() {
-    histogram_tester_.ExpectTotalCount(
-        "InstantTethering.Performance.ConnectionToAuthenticationDuration", 0);
-  }
-
   const std::vector<cryptauth::RemoteDevice> test_devices_;
 
   std::unique_ptr<cryptauth::FakeCryptAuthService> fake_cryptauth_service_;
@@ -556,7 +519,6 @@ class BleConnectionManagerTest : public testing::Test {
   MockBleAdvertiser* mock_ble_advertiser_;
   BleAdvertisementDeviceQueue* device_queue_;
   MockTimerFactory* mock_timer_factory_;
-  base::SimpleTestClock* test_clock_;
   std::unique_ptr<MockBluetoothThrottler> mock_bluetooth_throttler_;
   std::unique_ptr<FakeConnectionFactory> fake_connection_factory_;
   std::unique_ptr<FakeSecureChannelFactory> fake_secure_channel_factory_;
@@ -566,9 +528,6 @@ class BleConnectionManagerTest : public testing::Test {
   std::vector<ReceivedMessage> verified_received_messages_;
 
   std::unique_ptr<BleConnectionManager> manager_;
-
-  int num_expected_authenticated_channels_ = 0;
-  base::HistogramTester histogram_tester_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(BleConnectionManagerTest);
@@ -586,9 +545,6 @@ TEST_F(BleConnectionManagerTest, TestCannotScan) {
   VerifyConnectionStateChanges(std::vector<SecureChannelStatusChange>{
       {test_devices_[0], cryptauth::SecureChannel::Status::DISCONNECTED,
        cryptauth::SecureChannel::Status::CONNECTING}});
-
-  VerifyAdvertisingToConnectionDurationMetricNotRecorded();
-  VerifyConnectionToAuthenticationDurationMetricNotRecorded();
 }
 
 TEST_F(BleConnectionManagerTest, TestCannotAdvertise) {
@@ -603,9 +559,6 @@ TEST_F(BleConnectionManagerTest, TestCannotAdvertise) {
   VerifyConnectionStateChanges(std::vector<SecureChannelStatusChange>{
       {test_devices_[0], cryptauth::SecureChannel::Status::DISCONNECTED,
        cryptauth::SecureChannel::Status::CONNECTING}});
-
-  VerifyAdvertisingToConnectionDurationMetricNotRecorded();
-  VerifyConnectionToAuthenticationDurationMetricNotRecorded();
 }
 
 TEST_F(BleConnectionManagerTest, TestRegistersButNoResult) {
@@ -620,9 +573,6 @@ TEST_F(BleConnectionManagerTest, TestRegistersButNoResult) {
   VerifyConnectionStateChanges(std::vector<SecureChannelStatusChange>{
       {test_devices_[0], cryptauth::SecureChannel::Status::DISCONNECTED,
        cryptauth::SecureChannel::Status::CONNECTING}});
-
-  VerifyAdvertisingToConnectionDurationMetricNotRecorded();
-  VerifyConnectionToAuthenticationDurationMetricNotRecorded();
 }
 
 TEST_F(BleConnectionManagerTest, TestRegistersAndUnregister_NoConnection) {
@@ -648,9 +598,6 @@ TEST_F(BleConnectionManagerTest, TestRegistersAndUnregister_NoConnection) {
   VerifyConnectionStateChanges(std::vector<SecureChannelStatusChange>{
       {test_devices_[0], cryptauth::SecureChannel::Status::CONNECTING,
        cryptauth::SecureChannel::Status::DISCONNECTED}});
-
-  VerifyAdvertisingToConnectionDurationMetricNotRecorded();
-  VerifyConnectionToAuthenticationDurationMetricNotRecorded();
 }
 
 TEST_F(BleConnectionManagerTest, TestRegisterWithNoConnection_TimeoutOccurs) {
@@ -686,9 +633,6 @@ TEST_F(BleConnectionManagerTest, TestRegisterWithNoConnection_TimeoutOccurs) {
   VerifyConnectionStateChanges(std::vector<SecureChannelStatusChange>{
       {test_devices_[0], cryptauth::SecureChannel::Status::CONNECTING,
        cryptauth::SecureChannel::Status::DISCONNECTED}});
-
-  VerifyAdvertisingToConnectionDurationMetricNotRecorded();
-  VerifyConnectionToAuthenticationDurationMetricNotRecorded();
 }
 
 TEST_F(BleConnectionManagerTest, TestSuccessfulConnection_FailsAuthentication) {
@@ -734,8 +678,6 @@ TEST_F(BleConnectionManagerTest, TestSuccessfulConnection_FailsAuthentication) {
        cryptauth::SecureChannel::Status::DISCONNECTED},
       {test_devices_[0], cryptauth::SecureChannel::Status::DISCONNECTED,
        cryptauth::SecureChannel::Status::CONNECTING}});
-
-  VerifyConnectionToAuthenticationDurationMetricNotRecorded();
 }
 
 TEST_F(BleConnectionManagerTest, TestSuccessfulConnection_SendAndReceive) {
@@ -981,9 +923,6 @@ TEST_F(BleConnectionManagerTest, TwoDevices_NeitherCanAdvertise) {
   VerifyConnectionStateChanges(std::vector<SecureChannelStatusChange>{
       {test_devices_[1], cryptauth::SecureChannel::Status::DISCONNECTED,
        cryptauth::SecureChannel::Status::CONNECTING}});
-
-  VerifyAdvertisingToConnectionDurationMetricNotRecorded();
-  VerifyConnectionToAuthenticationDurationMetricNotRecorded();
 }
 
 TEST_F(BleConnectionManagerTest,
@@ -1055,9 +994,6 @@ TEST_F(BleConnectionManagerTest,
   VerifyConnectionStateChanges(std::vector<SecureChannelStatusChange>{
       {test_devices_[1], cryptauth::SecureChannel::Status::CONNECTING,
        cryptauth::SecureChannel::Status::DISCONNECTED}});
-
-  VerifyAdvertisingToConnectionDurationMetricNotRecorded();
-  VerifyConnectionToAuthenticationDurationMetricNotRecorded();
 }
 
 TEST_F(BleConnectionManagerTest, TwoDevices_OneConnects) {

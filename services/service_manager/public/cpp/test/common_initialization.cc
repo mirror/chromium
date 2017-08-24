@@ -15,6 +15,7 @@
 
 #if defined(OS_ANDROID)
 #include "base/android/jni_android.h"
+#include "mojo/android/system/mojo_jni_registrar.h"
 #endif
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
@@ -35,6 +36,10 @@ int InitializeAndLaunchUnitTests(
 #if defined(OS_MACOSX) && !defined(OS_IOS)
   mojo::edk::SetMachPortProvider(
       service_manager::MachBroker::GetInstance()->port_provider());
+#endif
+
+#if defined(OS_ANDROID)
+  mojo::android::RegisterSystemJni(base::android::AttachCurrentThread());
 #endif
 
   base::Thread ipc_thread("IPC thread");

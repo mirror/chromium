@@ -123,7 +123,7 @@ void ExtensionViewGuest::DidFinishNavigation(
 
   std::unique_ptr<base::DictionaryValue> args(new base::DictionaryValue());
   args->SetString(guest_view::kUrl, url_.spec());
-  DispatchEventToView(std::make_unique<GuestViewEvent>(
+  DispatchEventToView(base::MakeUnique<GuestViewEvent>(
       extensionview::kEventLoadCommit, std::move(args)));
 }
 

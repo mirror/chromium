@@ -173,7 +173,8 @@ class PLATFORM_EXPORT Canvas2DLayerBridge : public cc::TextureLayerClient,
   struct ImageInfo;
 
   struct MailboxInfo {
-    RefPtr<StaticBitmapImage> image_;
+    gpu::Mailbox mailbox_;
+    sk_sp<SkImage> image_;
 
     // If this mailbox wraps an IOSurface-backed texture, the ids of the
     // CHROMIUM image and the texture.
@@ -222,7 +223,7 @@ class PLATFORM_EXPORT Canvas2DLayerBridge : public cc::TextureLayerClient,
 
   // Returns whether the mailbox was successfully prepared from the SkImage.
   // The mailbox is an out parameter only populated on success.
-  bool PrepareMailboxFromImage(RefPtr<StaticBitmapImage>&&,
+  bool PrepareMailboxFromImage(sk_sp<SkImage>,
                                MailboxInfo*,
                                viz::TextureMailbox*);
 

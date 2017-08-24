@@ -20,10 +20,6 @@ PaletteToolManager::PaletteToolManager(Delegate* delegate)
 
 PaletteToolManager::~PaletteToolManager() {}
 
-bool PaletteToolManager::HasTool(PaletteToolId tool_id) {
-  return FindToolById(tool_id);
-}
-
 void PaletteToolManager::AddTool(std::unique_ptr<PaletteTool> tool) {
   // The same PaletteToolId cannot be registered twice.
   DCHECK_EQ(0, std::count_if(tools_.begin(), tools_.end(),

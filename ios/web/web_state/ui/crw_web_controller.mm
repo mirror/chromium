@@ -3988,6 +3988,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
   [self loadHTML:HTML forURL:URL];
 }
 
+- (void)loadHTMLForCurrentURL:(NSString*)HTML {
+  [self loadHTML:HTML forURL:self.currentURL];
+}
+
 - (void)stopLoading {
   _stoppedWKNavigation = [_navigationStates lastAddedNavigation];
 

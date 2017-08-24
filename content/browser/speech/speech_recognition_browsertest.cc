@@ -161,8 +161,7 @@ class SpeechRecognitionBrowserTest :
     audio_bus->FromInterleaved(&audio_buffer.get()[0],
                                audio_bus->frames(),
                                audio_params.bits_per_sample() / 8);
-    controller->sync_writer()->Write(audio_bus.get(), 0.0, false,
-                                     base::TimeTicks::Now());
+    controller->sync_writer()->Write(audio_bus.get(), 0.0, false, 0);
   }
 
   void FeedAudioController(int duration_ms, bool feed_with_noise) {

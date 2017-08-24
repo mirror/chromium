@@ -30,7 +30,7 @@ TEST_F(EventEmitterUnittest, TestDispatchMethod) {
   v8::HandleScope handle_scope(isolate());
   v8::Local<v8::Context> context = MainContext();
 
-  auto listeners = std::make_unique<UnfilteredEventListeners>(
+  auto listeners = base::MakeUnique<UnfilteredEventListeners>(
       base::Bind(&DoNothingOnListenerChange), binding::kNoListenerMax, true);
 
   // The test util methods enforce that functions always throw or always don't

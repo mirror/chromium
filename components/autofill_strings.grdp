@@ -63,7 +63,7 @@
   <message name="IDS_AUTOFILL_CC_DISCOVER" desc="Discover credit card name." formatter_data="android_java">
     Discover
   </message>
-  <message name="IDS_AUTOFILL_CC_ELO" desc="Elo credit card name.">
+  <message name="IDS_AUTOFILL_CC_ELO" desc="Elo credit card name." formatter_data="android_java">
     Elo
   </message>
   <message name="IDS_AUTOFILL_CC_JCB" desc="JCB credit card name." formatter_data="android_java">
@@ -152,6 +152,10 @@
 
   <message name="IDS_AUTOFILL_OPTIONS_CONTENT_DESCRIPTION" desc="The text verbalised by a screen reader for the button that directs the user to the Autofill settings UI. This string is not displayed.">
     settings
+  </message>
+
+  <message name="IDS_AUTOFILL_POPUP_CONTENT_DESCRIPTION" desc="The text announced by the screen reader when the Autofill popup is shown." formatter_data="android_java">
+    Showing Autofill popup
   </message>
 
   <message name="IDS_AUTOFILL_SCAN_CREDIT_CARD" desc="An item in the autofill popup that triggers a new credit card to be scanned using the camera on the device." formatter_data="android_java">
@@ -345,12 +349,12 @@
   </if>
   <if expr="is_ios">
     <if expr="_google_chrome">
-      <message name="IDS_AUTOFILL_CARD_UNMASK_PROMPT_STORAGE_TOOLTIP" desc="Text that provides further explanation on iOS for the option in the card unmasking dialog that allows user to store a Wallet card on their local device.">
+      <message name="IDS_AUTOFILL_CARD_UNMASK_PROMPT_STORAGE_TOOLTIP" desc="Text that provides further explanation on iOS for the option in the card unmasking dialog that allows user to store a Wallet card on their local device." formatter_data="android_java">
         If enabled, Chrome will store a copy of your card on this device for faster form filling.
       </message>
     </if>
     <if expr="not _google_chrome">
-      <message name="IDS_AUTOFILL_CARD_UNMASK_PROMPT_STORAGE_TOOLTIP" desc="Text that provides further explanation on iOS for the option in the card unmasking dialog that allows user to store a Wallet card on their local device.">
+      <message name="IDS_AUTOFILL_CARD_UNMASK_PROMPT_STORAGE_TOOLTIP" desc="Text that provides further explanation on iOS for the option in the card unmasking dialog that allows user to store a Wallet card on their local device." formatter_data="android_java">
         If enabled, Chromium will store a copy of your card on this device for faster form filling.
       </message>
     </if>

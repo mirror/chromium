@@ -135,9 +135,7 @@ PaymentDetailsModifier BuildPaymentDetailsModifierForTest(
     item = BuildPaymentItemForTest();
 
   PaymentDetailsModifier modifier;
-  StringOrStringSequence supportedMethods;
-  supportedMethods.setStringSequence(Vector<String>(1, "foo"));
-  modifier.setSupportedMethods(supportedMethods);
+  modifier.setSupportedMethods(Vector<String>(1, "foo"));
   modifier.setTotal(total);
   modifier.setAdditionalDisplayItems(HeapVector<PaymentItem>(1, item));
   return modifier;
@@ -193,9 +191,7 @@ PaymentDetailsUpdate BuildPaymentDetailsErrorMsgForTest(
 
 HeapVector<PaymentMethodData> BuildPaymentMethodDataForTest() {
   HeapVector<PaymentMethodData> method_data(1, PaymentMethodData());
-  StringOrStringSequence supportedMethods;
-  supportedMethods.setStringSequence(Vector<String>(1, "foo"));
-  method_data[0].setSupportedMethods(supportedMethods);
+  method_data[0].setSupportedMethods(Vector<String>(1, "foo"));
   return method_data;
 }
 

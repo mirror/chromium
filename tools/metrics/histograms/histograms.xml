@@ -7362,14 +7362,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="BrowserRenderProcessHost.KeepAliveDuration" units="ms">
-  <owner>horo@chromium.org</owner>
-  <summary>
-    How long a render process is kept alive by additional customers such as
-    shared workers and service workers.
-  </summary>
-</histogram>
-
 <histogram name="Bubbles.Close.Accepted" enum="BubbleType">
   <owner>hcarmona@chromium.org</owner>
   <summary>An open bubble was closed because the user accepted it.</summary>
@@ -7446,15 +7438,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>kbr@chromium.org</owner>
   <summary>
     Records the context type names used to create canvas rendering contexts.
-  </summary>
-</histogram>
-
-<histogram name="Canvas.CreateImageBitmapSource"
-    enum="CanvasCreateImageBitmapSource">
-  <owner>junov@chromium.org</owner>
-  <owner>zakerinasab@chromium.org</owner>
-  <summary>
-    The source from which an ImageBitmap is created by a createImageBitmap call.
   </summary>
 </histogram>
 
@@ -15126,17 +15109,11 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Doodle.ConfigDownloadOutcome"
     enum="DoodleConfigDownloadOutcome">
-  <obsolete>
-    Removed from code 2017-08.
-  </obsolete>
   <owner>treib@chromium.org</owner>
   <summary>Outcome of downloading the Doodle config.</summary>
 </histogram>
 
 <histogram name="Doodle.ConfigDownloadTime" units="ms">
-  <obsolete>
-    Removed from code 2017-08.
-  </obsolete>
   <owner>treib@chromium.org</owner>
   <summary>
     The time it took to download the Doodle config. Recorded only if the
@@ -15895,14 +15872,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>xingliu@chromium.org</owner>
   <summary>
     The interrupt reason for failed downloads in download service.
-  </summary>
-</histogram>
-
-<histogram name="Download.Service.Files.Cleanup.Attempts" units="attempts">
-  <owner>shaktisahu@chromium.org</owner>
-  <summary>
-    The number of times download service tried to delete the download file
-    before successfully deleting it.
   </summary>
 </histogram>
 
@@ -27955,35 +27924,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram
-    name="InstantTethering.Performance.AdvertisementToConnectionDuration"
-    units="ms">
-  <owner>hansberry@chromium.org</owner>
-  <summary>
-    The duration of time between when a client began advertising to a host, and
-    connected to that host (before authentication).
-  </summary>
-</histogram>
-
-<histogram
-    name="InstantTethering.Performance.ConnectionToAuthenticationDuration"
-    units="ms">
-  <owner>hansberry@chromium.org</owner>
-  <summary>
-    The duration of time between when a client connects to a host,  and
-    authenticates with that host.
-  </summary>
-</histogram>
-
-<histogram name="InstantTethering.Performance.ConnectTetheringResponseDuration"
-    units="ms">
-  <owner>hansberry@chromium.org</owner>
-  <summary>
-    The duration of time between when a client authenticates with a host, and
-    receives a ConnectTetheringResponse.
-  </summary>
-</histogram>
-
 <histogram name="InstantTethering.Performance.ConnectToHotspotDuration"
     units="ms">
   <owner>hansberry@chromium.org</owner>
@@ -28001,25 +27941,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The duration of time it takes for the client to send off a
     DisconnectTetheringRequest.
-  </summary>
-</histogram>
-
-<histogram name="InstantTethering.Performance.KeepAliveTickleResponseDuration"
-    units="ms">
-  <owner>hansberry@chromium.org</owner>
-  <summary>
-    The duration of time between when a client authenticates with a host, and
-    receives a KeepAliveTickleResponse.
-  </summary>
-</histogram>
-
-<histogram
-    name="InstantTethering.Performance.TetherAvailabilityResponseDuration"
-    units="ms">
-  <owner>hansberry@chromium.org</owner>
-  <summary>
-    The duration of time between when a client authenticates with a host, and
-    receives a TetherAvailabilityResponse.
   </summary>
 </histogram>
 
@@ -28416,14 +28337,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Counts the times when a mailto: URL is tapped by user and whether the URL
     has been rewritten for an available native Mail client app or not.
-  </summary>
-</histogram>
-
-<histogram name="IOS.NTP.Impression" enum="IOSNTPImpression">
-  <owner>gambard@chromium.org</owner>
-  <summary>
-    The type of NTP impressions on iOS, split by type of suggestions shown
-    (local vs remote).
   </summary>
 </histogram>
 
@@ -46748,17 +46661,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram
-    name="NewTabPage.ContentSuggestions.CountOnNtpOpenedIfVisible.Articles.Prefetched.Offline">
-  <owner>vitaliii@chromium.org</owner>
-  <summary>
-    Android: The number of prefetched suggestion cards that were available in
-    Articles category if it was visible at the time an NTP was opened and the
-    user was offline. Analogous to
-    NewTabPage.ContentSuggestions.CountOnNtpOpenedIfVisible.
-  </summary>
-</histogram>
-
 <histogram name="NewTabPage.ContentSuggestions.DismissedUnvisited"
     units="index">
   <owner>treib@chromium.org</owner>
@@ -46916,21 +46818,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram
-    name="NewTabPage.ContentSuggestions.Opened.Articles.Prefetched.Offline"
-    units="index">
-  <owner>vitaliii@chromium.org</owner>
-  <summary>
-    Android: The position of the prefetched suggestion card on the NTP, that is
-    clicked through to the host website of the content, when the user is
-    offline. Analogous to NewTabPage.ContentSuggestions.Opened. That is we track
-    the position the card had in the list when it was first seen by the user.
-    This tracked position can be different from the position observed by the
-    user, e.g. when the user dismissed some suggestions from the list or
-    requested more that got inserted in the middle of the feed.
-  </summary>
-</histogram>
-
 <histogram name="NewTabPage.ContentSuggestions.OpenedAge" units="ms">
   <owner>treib@chromium.org</owner>
   <summary>
@@ -47003,22 +46890,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Android: The position of a suggestion card that was shown on the NTP. A card
     is considered shown when at least 1/3 of its height is visible on the
-    screen. For each card, at most one impression is recorded per NTP instance.
-    We track the position the card had in the list when it was first seen by the
-    user. This tracked position can be different from the position observed by
-    the user, e.g. when the user dismissed some suggestions from the list or
-    requested more that got inserted in the middle of the feed.
-  </summary>
-</histogram>
-
-<histogram
-    name="NewTabPage.ContentSuggestions.Shown.Articles.Prefetched.Offline"
-    units="index">
-  <owner>vitaliii@chromium.org</owner>
-  <summary>
-    Android: The position of a prefetched suggestion card that was shown on the
-    NTP when offline. Analogous to NewTabPage.ContentSuggestions.Shown. That is
-    a card is considered shown when at least 1/3 of its height is visible on the
     screen. For each card, at most one impression is recorded per NTP instance.
     We track the position the card had in the list when it was first seen by the
     user. This tracked position can be different from the position observed by
@@ -73847,9 +73718,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="SharedWorker.RendererSurviveForWorkerTime" units="ms">
-  <obsolete>
-    Replaced with BrowserRenderProcessHost.KeepAliveDuration as of Aug 2017.
-  </obsolete>
   <owner>horo@chromium.org</owner>
   <summary>
     A survival time of RenderProcessHostImpl for the In-renderer Shared Worker
@@ -74108,16 +73976,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="Signin.CookieJar.TotalCount" units="accounts">
   <owner>skym@chromium.org</owner>
   <summary>The total number of accounts in the cookie jar.</summary>
-</histogram>
-
-<histogram name="Signin.DiceResponseHeader" enum="SigninDiceResponseHeader">
-  <owner>droger@chromium.org</owner>
-  <summary>Records Dice responses (signin and signout).</summary>
-</histogram>
-
-<histogram name="Signin.DiceTokenFetchResult" enum="SigninDiceTokenFetchResult">
-  <owner>droger@chromium.org</owner>
-  <summary>Outcome of the token fetch in Dice signin.</summary>
 </histogram>
 
 <histogram name="Signin.DuringFirstRun">
@@ -85375,14 +85233,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="V8.GCIncrementalMarkingStart" units="ms">
   <owner>hpayer@chromium.org</owner>
   <summary>Time spent in starting incremental marking.</summary>
-</histogram>
-
-<histogram name="V8.GCIncrementalMarkingSum" units="ms">
-  <owner>ulan@chromium.org</owner>
-  <summary>
-    The total time spent in incremental marking steps in one GC cycle. It is
-    only recorded if the time is non-zero.
-  </summary>
 </histogram>
 
 <histogram name="V8.GCLowMemoryNotification" units="ms">
@@ -101567,20 +101417,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="Data" label="Data"/>
   <affected-histogram name="WebRTC.PeerConnection.SrtpCryptoSuite"/>
   <affected-histogram name="WebRTC.PeerConnection.SslCipherSuite"/>
-</histogram_suffixes>
-
-<histogram_suffixes name="WebRTCVideoSimulcastId" separator=".">
-  <suffix name="S0"/>
-  <suffix name="S1"/>
-  <suffix name="S2"/>
-  <affected-histogram name="WebRTC.Video.EndToEndDelayInMs"/>
-  <affected-histogram name="WebRTC.Video.EndToEndDelayMaxInMs"/>
-  <affected-histogram name="WebRTC.Video.InterframeDelayInMs"/>
-  <affected-histogram name="WebRTC.Video.InterframeDelayMaxInMs"/>
-  <affected-histogram name="WebRTC.Video.Screenshare.EndToEndDelayInMs"/>
-  <affected-histogram name="WebRTC.Video.Screenshare.EndToEndDelayMaxInMs"/>
-  <affected-histogram name="WebRTC.Video.Screenshare.InterframeDelayInMs"/>
-  <affected-histogram name="WebRTC.Video.Screenshare.InterframeDelayMaxInMs"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="WebSocketErrorCodesVariants" separator="_">

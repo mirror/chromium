@@ -69,7 +69,8 @@ class BrowsingHistoryService : public HistoryServiceObserver,
                  const std::string& client_id,
                  bool is_search_result,
                  const base::string16& snippet,
-                 bool blocked_visit);
+                 bool blocked_visit,
+                 base::Clock* clock);
     HistoryEntry();
     HistoryEntry(const HistoryEntry& other);
     virtual ~HistoryEntry();
@@ -103,6 +104,8 @@ class BrowsingHistoryService : public HistoryServiceObserver,
 
     // Whether this entry was blocked when it was attempted.
     bool blocked_visit;
+
+    base::Clock* clock;  // Weak reference.
   };
 
   // Contains information about a completed history query.
@@ -169,8 +172,8 @@ class BrowsingHistoryService : public HistoryServiceObserver,
 
   // Callback from the WebHistoryService when a query has completed.
   void WebHistoryQueryComplete(const base::string16& search_text,
-                               const history::QueryOptions& options,
-                               base::Time start_time,
+                               const QueryOptions& options,
+                               base::TimeTicks start_time,
                                WebHistoryService::Request* request,
                                const base::DictionaryValue* results_value);
 

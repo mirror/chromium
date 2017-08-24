@@ -102,7 +102,8 @@ TEST_F(SentGetOperationCleanupTaskTest, NoRetryForOngoingRequest) {
   std::unique_ptr<PrefetchItem> store_item =
       store_util()->GetPrefetchItem(item.offline_id);
   ASSERT_TRUE(store_item);
-  EXPECT_EQ(item, *store_item);
+  EXPECT_EQ(PrefetchItemState::SENT_GET_OPERATION, store_item->state);
+  EXPECT_EQ(item.get_operation_attempts, store_item->get_operation_attempts);
 }
 
 TEST_F(SentGetOperationCleanupTaskTest, ErrorOnMaxAttempts) {
@@ -145,29 +146,27 @@ TEST_F(SentGetOperationCleanupTaskTest, SkipForOngoingRequestWithMaxAttempts) {
   std::unique_ptr<PrefetchItem> store_item =
       store_util()->GetPrefetchItem(item.offline_id);
   ASSERT_TRUE(store_item);
-  EXPECT_EQ(item, *store_item);
+  EXPECT_EQ(PrefetchItemState::SENT_GET_OPERATION, store_item->state);
+  EXPECT_EQ(item.get_operation_attempts, store_item->get_operation_attempts);
 }
 
 TEST_F(SentGetOperationCleanupTaskTest, NoUpdateForOtherStates) {
-  std::set<PrefetchItem> items;
-  std::vector<PrefetchItemState> all_other_states =
-      TaskTestBase::GetAllStatesExcept(PrefetchItemState::SENT_GET_OPERATION);
-  for (const auto& state : all_other_states) {
-    PrefetchItem item = item_generator()->CreateItem(state);
-    item.get_operation_attempts =
-        SentGetOperationCleanupTask::kMaxGetOperationAttempts;
-    ASSERT_TRUE(store_util()->InsertPrefetchItem(item));
-    items.insert(item);
-  }
+  PrefetchItem item =
+      item_generator()->CreateItem(PrefetchItemState::NEW_REQUEST);
+  item.get_operation_attempts =
+      SentGetOperationCleanupTask::kMaxGetOperationAttempts;
+  ASSERT_TRUE(store_util()->InsertPrefetchItem(item));
 
   SentGetOperationCleanupTask task(store(), prefetch_request_factory());
   ExpectTaskCompletes(&task);
   task.Run();
   RunUntilIdle();
 
-  std::set<PrefetchItem> store_items;
-  store_util()->GetAllItems(&store_items);
-  EXPECT_EQ(items, store_items);
+  std::unique_ptr<PrefetchItem> store_item =
+      store_util()->GetPrefetchItem(item.offline_id);
+  ASSERT_TRUE(store_item);
+  EXPECT_EQ(PrefetchItemState::NEW_REQUEST, store_item->state);
+  EXPECT_EQ(item.get_operation_attempts, store_item->get_operation_attempts);
 }
 
 }  // namespace offline_pages

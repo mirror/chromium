@@ -337,7 +337,6 @@ class CC_EXPORT LayerTreeHostImpl
   void UnregisterScrollbarAnimationController(ElementId scroll_element_id);
   ScrollbarAnimationController* ScrollbarAnimationControllerForElementId(
       ElementId scroll_element_id) const;
-  void FlashAllScrollbars(bool did_scroll);
 
   DrawMode GetDrawMode() const;
 

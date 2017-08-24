@@ -15,7 +15,6 @@ namespace features {
 // The features should be documented alongside the definition of their values
 // in the .cc file.
 extern const base::Feature kGenericSensor;
-extern const base::Feature kGenericSensorExtraClasses;
 
 }  // namespace features
 

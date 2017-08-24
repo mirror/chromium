@@ -6,7 +6,6 @@
 
 #include "base/allocator/features.h"
 #include "base/command_line.h"
-#include "base/files/file_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
@@ -31,23 +30,6 @@
 #include "mojo/public/cpp/system/platform_handle.h"
 
 namespace profiling {
-
-namespace {
-const size_t kMaxTraceSizeUploadInBytes = 10 * 1024 * 1024;
-
-void UploadTraceToCrashServer(base::FilePath file_path) {
-  std::string file_contents;
-  if (!base::ReadFileToStringWithMaxSize(file_path, &file_contents,
-                                         kMaxTraceSizeUploadInBytes)) {
-    LOG(ERROR) << "Cannot read trace file contents.";
-    return;
-  }
-
-  // TODO(bug 753514): Upload the trace |file_contents| to crash server (slow
-  // reports).
-}
-
-}  // namespace
 
 ProfilingProcessHost::ProfilingProcessHost() {
   Add(this);
@@ -193,32 +175,10 @@ void ProfilingProcessHost::RequestProcessDump(base::ProcessId pid,
         << "Requesting process dump when profiling process hasn't started.";
     return;
   }
-
-  const bool kNoUpload = false;
   base::PostTaskWithTraits(
       FROM_HERE, {base::TaskPriority::USER_VISIBLE, base::MayBlock()},
       base::BindOnce(&ProfilingProcessHost::GetOutputFileOnBlockingThread,
-                     base::Unretained(this), pid, dest, kNoUpload));
-}
-
-void ProfilingProcessHost::RequestProcessReport(base::ProcessId pid) {
-  if (!connector_) {
-    LOG(ERROR)
-        << "Requesting process dump when profiling process hasn't started.";
-    return;
-  }
-
-  base::FilePath output_path;
-  if (!CreateTemporaryFile(&output_path)) {
-    LOG(ERROR) << "Cannot create temporary file for memory dump.";
-    return;
-  }
-
-  const bool kUpload = true;
-  base::PostTaskWithTraits(
-      FROM_HERE, {base::TaskPriority::BACKGROUND, base::MayBlock()},
-      base::BindOnce(&ProfilingProcessHost::GetOutputFileOnBlockingThread,
-                     base::Unretained(this), pid, output_path, kUpload));
+                     base::Unretained(this), pid, dest));
 }
 
 void ProfilingProcessHost::MakeConnector(
@@ -253,44 +213,19 @@ void ProfilingProcessHost::LaunchAsService() {
 
 void ProfilingProcessHost::GetOutputFileOnBlockingThread(
     base::ProcessId pid,
-    const base::FilePath& dest,
-    bool upload) {
+    const base::FilePath& dest) {
   base::File file(dest,
                   base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&ProfilingProcessHost::HandleDumpProcessOnIOThread,
-                     base::Unretained(this), pid, std::move(dest),
-                     std::move(file), upload));
+                     base::Unretained(this), pid, std::move(file)));
 }
 
 void ProfilingProcessHost::HandleDumpProcessOnIOThread(base::ProcessId pid,
-                                                       base::FilePath file_path,
-                                                       base::File file,
-                                                       bool upload) {
+                                                       base::File file) {
   mojo::ScopedHandle handle = mojo::WrapPlatformFile(file.TakePlatformFile());
-  memlog_->DumpProcess(
-      pid, std::move(handle), GetMetadataJSONForTrace(),
-      base::BindOnce(&ProfilingProcessHost::OnProcessDumpComplete,
-                     base::Unretained(this), std::move(file_path), upload));
-}
-
-void ProfilingProcessHost::OnProcessDumpComplete(base::FilePath file_path,
-                                                 bool upload,
-                                                 bool success) {
-  if (!success) {
-    LOG(ERROR) << "Cannot dump process.";
-    // On any errors, the requested trace output file is deleted.
-    base::DeleteFile(file_path, false);
-    return;
-  }
-
-  if (upload) {
-    UploadTraceToCrashServer(file_path);
-
-    // Uploaded file is a temporary file and must be deleted.
-    base::DeleteFile(file_path, false);
-  }
+  memlog_->DumpProcess(pid, std::move(handle), GetMetadataJSONForTrace());
 }
 
 void ProfilingProcessHost::SetMode(Mode mode) {

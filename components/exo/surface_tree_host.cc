@@ -292,7 +292,8 @@ void SurfaceTreeHost::SubmitCompositorFrame(Surface::FrameType frame_type) {
       gfx::Rect(root_surface_->content_size());
   host_window_->layer()->SetFillsBoundsOpaquely(
       root_surface_->FillsBoundsOpaquely());
-  frame.metadata.device_scale_factor = 1.0f;
+  frame.metadata.device_scale_factor =
+      host_window_->layer()->device_scale_factor();
   layer_tree_frame_sink_holder_->frame_sink()->SubmitCompositorFrame(
       std::move(frame));
 

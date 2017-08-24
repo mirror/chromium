@@ -17,7 +17,7 @@ std::string ValueStoreChange::ToJson(
   for (ValueStoreChangeList::const_iterator it = changes.begin();
       it != changes.end(); ++it) {
     std::unique_ptr<base::DictionaryValue> change_value =
-        std::make_unique<base::DictionaryValue>();
+        base::MakeUnique<base::DictionaryValue>();
     if (it->old_value()) {
       change_value->SetKey("oldValue", it->old_value()->Clone());
     }

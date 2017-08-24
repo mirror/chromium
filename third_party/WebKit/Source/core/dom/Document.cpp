@@ -1436,7 +1436,7 @@ void Document::SetReadyState(DocumentReadyState ready_state) {
   DispatchEvent(Event::Create(EventTypeNames::readystatechange));
 }
 
-bool Document::IsLoadCompleted() const {
+bool Document::IsLoadCompleted() {
   return ready_state_ == kComplete;
 }
 
@@ -6461,7 +6461,7 @@ Node* EventTargetNodeForDocument(Document* doc) {
 
 void Document::AdjustFloatQuadsForScrollAndAbsoluteZoom(
     Vector<FloatQuad>& quads,
-    const LayoutObject& layout_object) const {
+    LayoutObject& layout_object) {
   if (!View())
     return;
 
@@ -6475,7 +6475,7 @@ void Document::AdjustFloatQuadsForScrollAndAbsoluteZoom(
 
 void Document::AdjustFloatRectForScrollAndAbsoluteZoom(
     FloatRect& rect,
-    const LayoutObject& layout_object) const {
+    LayoutObject& layout_object) {
   if (!View())
     return;
 

@@ -21,9 +21,7 @@ void TestPrefetchDownloader::StartDownload(
 void TestPrefetchDownloader::CancelDownload(const std::string& download_id) {}
 
 void TestPrefetchDownloader::OnDownloadServiceReady(
-    const std::set<std::string>& outstanding_download_ids,
-    const std::map<std::string, std::pair<base::FilePath, int64_t>>&
-        success_downloads) {}
+    const std::vector<std::string>& outstanding_download_ids) {}
 
 void TestPrefetchDownloader::OnDownloadServiceUnavailable() {}
 
@@ -32,7 +30,7 @@ void TestPrefetchDownloader::OnDownloadServiceShutdown() {}
 void TestPrefetchDownloader::OnDownloadSucceeded(
     const std::string& download_id,
     const base::FilePath& file_path,
-    int64_t file_size) {}
+    uint64_t file_size) {}
 
 void TestPrefetchDownloader::OnDownloadFailed(const std::string& download_id) {}
 

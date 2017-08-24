@@ -118,7 +118,7 @@ ExtensionFunction::ResponseAction HidGetUserSelectedDevicesFunction::Run() {
 
   content::WebContents* web_contents = GetSenderWebContents();
   if (!web_contents || !user_gesture()) {
-    return RespondNow(OneArgument(std::make_unique<base::ListValue>()));
+    return RespondNow(OneArgument(base::MakeUnique<base::ListValue>()));
   }
 
   bool multiple = false;
@@ -270,7 +270,7 @@ void HidReceiveFunction::OnFinished(bool success,
     int report_id = reinterpret_cast<uint8_t*>(buffer->data())[0];
 
     Respond(TwoArguments(
-        std::make_unique<base::Value>(report_id),
+        base::MakeUnique<base::Value>(report_id),
         base::Value::CreateWithCopiedBuffer(buffer->data() + 1, size - 1)));
   } else {
     Respond(Error(kErrorTransfer));

@@ -27,7 +27,7 @@
 #include "base/time/time.h"
 #include "base/values.h"
 #include "chrome/browser/android/chrome_feature_list.h"
-#include "chrome/browser/android/ntp/android_content_suggestions_notifier.h"
+#include "chrome/browser/android/ntp/content_suggestions_notification_helper.h"
 #include "chrome/browser/ntp_snippets/content_suggestions_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_features.h"
@@ -52,6 +52,7 @@ using ntp_snippets::Category;
 using ntp_snippets::CategoryInfo;
 using ntp_snippets::CategoryStatus;
 using ntp_snippets::ContentSuggestion;
+using ntp_snippets::ContentSuggestionsNotificationHelper;
 using ntp_snippets::KnownCategories;
 using ntp_snippets::RemoteSuggestion;
 using ntp_snippets::RemoteSuggestionsProvider;
@@ -410,7 +411,7 @@ void SnippetsInternalsMessageHandler::HandleResetNotificationsState(
   pref_service_->SetInteger(prefs::kContentSuggestionsNotificationsSentCount,
                             0);
   pref_service_->SetInteger(prefs::kContentSuggestionsNotificationsSentDay, 0);
-  AndroidContentSuggestionsNotifier().HideAllNotifications(
+  ContentSuggestionsNotificationHelper::HideAllNotifications(
       ContentSuggestionsNotificationAction::CONTENT_SUGGESTIONS_HIDE_FRONTMOST);
 }
 

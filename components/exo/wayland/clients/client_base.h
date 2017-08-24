@@ -40,7 +40,6 @@ class ClientBase {
     size_t width = 256;
     size_t height = 256;
     int scale = 1;
-    int transform = WL_OUTPUT_TRANSFORM_NORMAL;
     bool fullscreen = false;
     bool transparent_background = false;
     bool use_drm = false;
@@ -94,8 +93,6 @@ class ClientBase {
 
   gfx::Size size_ = gfx::Size(256, 256);
   int scale_ = 1;
-  int transform_ = WL_OUTPUT_TRANSFORM_NORMAL;
-  gfx::Size surface_size_ = gfx::Size(256, 256);
   bool fullscreen_ = false;
   bool transparent_background_ = false;
 

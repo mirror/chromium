@@ -50,7 +50,7 @@ bool IncognitoHandler::Parse(Extension* extension, base::string16* error) {
           : IncognitoInfo::Mode::SPANNING;
   if (!extension->manifest()->HasKey(keys::kIncognito)) {
     extension->SetManifestData(keys::kIncognito,
-                               std::make_unique<IncognitoInfo>(mode));
+                               base::MakeUnique<IncognitoInfo>(mode));
     return true;
   }
 
@@ -72,7 +72,7 @@ bool IncognitoHandler::Parse(Extension* extension, base::string16* error) {
   }
 
   extension->SetManifestData(keys::kIncognito,
-                             std::make_unique<IncognitoInfo>(mode));
+                             base::MakeUnique<IncognitoInfo>(mode));
   return true;
 }
 

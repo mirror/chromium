@@ -195,7 +195,7 @@ RefPtr<NGLayoutResult> NGOutOfFlowLayoutPart::GenerateFragment(
     builder.SetIsFixedSizeBlock(true);
   RefPtr<NGConstraintSpace> space = builder.ToConstraintSpace(writing_mode);
 
-  return descendant.Layout(*space);
+  return descendant.Layout(space.Get());
 }
 
 }  // namespace blink

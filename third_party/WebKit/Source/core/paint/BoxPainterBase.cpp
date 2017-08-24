@@ -462,9 +462,7 @@ inline bool PaintFastBottomLayer(const DisplayItemClient& image_client,
       image_tile, border.Rect(), intrinsic_tile_size);
 
   TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("devtools.timeline"), "PaintImage",
-               "data",
-               InspectorPaintImageEvent::Data(node, *info.image, image->Rect(),
-                                              FloatRect(rect)));
+               "data", InspectorPaintImageEvent::Data(node, *info.image));
   context.DrawImageRRect(image, border, src_rect, composite_op);
 
   return true;
@@ -491,10 +489,8 @@ void BoxPainterBase::PaintFillLayerBackground(
 
   // No progressive loading of the background image.
   if (info.should_paint_image && !geometry.DestRect().IsEmpty()) {
-    TRACE_EVENT1(
-        TRACE_DISABLED_BY_DEFAULT("devtools.timeline"), "PaintImage", "data",
-        InspectorPaintImageEvent::Data(node_, *info.image, image->Rect(),
-                                       FloatRect(scrolled_paint_rect)));
+    TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("devtools.timeline"), "PaintImage",
+                 "data", InspectorPaintImageEvent::Data(node_, *info.image));
     context.DrawTiledImage(image, FloatRect(geometry.DestRect()),
                            FloatPoint(geometry.Phase()),
                            FloatSize(geometry.TileSize()), composite_op,

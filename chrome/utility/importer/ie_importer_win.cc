@@ -761,8 +761,8 @@ void IEImporter::ImportSearchEngines() {
 }
 
 void IEImporter::ImportHomepage() {
-  static constexpr wchar_t kIEHomepage[] = L"Start Page";
-  static constexpr wchar_t kIEDefaultHomepage[] = L"Default_Page_URL";
+  const wchar_t* kIEHomepage = L"Start Page";
+  const wchar_t* kIEDefaultHomepage = L"Default_Page_URL";
 
   base::string16 key_path(importer::GetIESettingsKey());
 

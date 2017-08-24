@@ -31,8 +31,6 @@ TestWebState::TestWebState()
     : browser_state_(nullptr),
       web_usage_enabled_(false),
       is_loading_(false),
-      is_crashed_(false),
-      is_evicted_(false),
       trust_level_(kAbsolute),
       content_is_html_(true) {}
 
@@ -59,8 +57,6 @@ bool TestWebState::IsWebUsageEnabled() const {
 
 void TestWebState::SetWebUsageEnabled(bool enabled) {
   web_usage_enabled_ = enabled;
-  if (!web_usage_enabled_)
-    SetIsEvicted(true);
 }
 
 bool TestWebState::ShouldSuppressDialogs() const {
@@ -112,16 +108,6 @@ void TestWebState::SetNavigationManager(
 
 void TestWebState::SetView(UIView* view) {
   view_ = view;
-}
-
-void TestWebState::SetIsCrashed(bool value) {
-  is_crashed_ = value;
-  if (is_crashed_)
-    SetIsEvicted(true);
-}
-
-void TestWebState::SetIsEvicted(bool value) {
-  is_evicted_ = value;
 }
 
 CRWJSInjectionReceiver* TestWebState::GetJSInjectionReceiver() const {
@@ -187,11 +173,7 @@ double TestWebState::GetLoadingProgress() const {
 }
 
 bool TestWebState::IsCrashed() const {
-  return is_crashed_;
-}
-
-bool TestWebState::IsEvicted() const {
-  return is_evicted_;
+  return false;
 }
 
 bool TestWebState::IsBeingDestroyed() const {

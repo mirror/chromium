@@ -97,7 +97,6 @@ public class AccountManagerFacade {
      */
     private AccountManagerFacade(AccountManagerDelegate delegate) {
         mDelegate = delegate;
-        mDelegate.registerObservers();
     }
 
     /**

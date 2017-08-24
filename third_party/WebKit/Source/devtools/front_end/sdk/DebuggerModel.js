@@ -64,6 +64,8 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
     Common.moduleSetting('pauseOnCaughtException').addChangeListener(this._pauseOnExceptionStateChanged, this);
     Common.moduleSetting('disableAsyncStackTraces').addChangeListener(this._asyncStackTracesStateChanged, this);
 
+    /** @type {!Map<string, string>} */
+    this._fileURLToNodeJSPath = new Map();
     this._enableDebugger();
 
     /** @type {!Map<string, string>} */
@@ -220,8 +222,8 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
    */
   async setBreakpointByURL(url, lineNumber, columnNumber, condition, callback) {
     // Convert file url to node-js path.
-    if (this.target().isNodeJS() && SDK.DebuggerModel._fileURLToNodeJSPath.has(url))
-      url = SDK.DebuggerModel._fileURLToNodeJSPath.get(url);
+    if (this.target().isNodeJS() && this._fileURLToNodeJSPath.has(url))
+      url = this._fileURLToNodeJSPath.get(url);
     // Adjust column if needed.
     var minColumnNumber = 0;
     var scripts = this._scriptsBySourceURL.get(url) || [];
@@ -485,7 +487,7 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
       var nodeJSPath = sourceURL;
       sourceURL = Common.ParsedURL.platformPathToURL(nodeJSPath);
       sourceURL = this._internString(sourceURL);
-      SDK.DebuggerModel._fileURLToNodeJSPath.set(sourceURL, nodeJSPath);
+      this._fileURLToNodeJSPath.set(sourceURL, nodeJSPath);
     } else {
       sourceURL = this._internString(sourceURL);
     }
@@ -812,9 +814,6 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
     return this._stringMap.get(string);
   }
 };
-
-/** @type {!Map<string, string>} */
-SDK.DebuggerModel._fileURLToNodeJSPath = new Map();
 
 SDK.SDKModel.register(SDK.DebuggerModel, SDK.Target.Capability.JS, true);
 

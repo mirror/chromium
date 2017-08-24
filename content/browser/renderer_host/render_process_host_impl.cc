@@ -3037,7 +3037,7 @@ void RenderProcessHostImpl::Cleanup() {
 #endif
 
   if (!keep_alive_start_time_.is_null()) {
-    UMA_HISTOGRAM_LONG_TIMES("BrowserRenderProcessHost.KeepAliveDuration",
+    UMA_HISTOGRAM_LONG_TIMES("SharedWorker.RendererSurviveForWorkerTime",
                              base::TimeTicks::Now() - keep_alive_start_time_);
   }
 

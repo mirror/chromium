@@ -76,7 +76,10 @@ TemplateURLParserTest::~TemplateURLParserTest() {
 
 void TemplateURLParserTest::SetUp() {
   ASSERT_TRUE(PathService::Get(chrome::DIR_TEST_DATA, &osdd_dir_));
-  osdd_dir_ = osdd_dir_.AppendASCII("osdd");
+  // TODO(https://crbug.com/739331): Rename the path to "osdd" after most
+  // developers have synced over the removal of the old osdd directory from the
+  // internal repository.
+  osdd_dir_ = osdd_dir_.AppendASCII("osdd_new");
   ASSERT_TRUE(base::PathExists(osdd_dir_));
 }
 

@@ -235,7 +235,7 @@ IPCMessageSender::~IPCMessageSender() = default;
 // static
 std::unique_ptr<IPCMessageSender>
 IPCMessageSender::CreateMainThreadIPCMessageSender() {
-  return std::make_unique<MainThreadIPCMessageSender>();
+  return base::MakeUnique<MainThreadIPCMessageSender>();
 }
 
 // static
@@ -243,7 +243,7 @@ std::unique_ptr<IPCMessageSender>
 IPCMessageSender::CreateWorkerThreadIPCMessageSender(
     WorkerThreadDispatcher* dispatcher,
     int64_t service_worker_version_id) {
-  return std::make_unique<WorkerThreadIPCMessageSender>(
+  return base::MakeUnique<WorkerThreadIPCMessageSender>(
       dispatcher, service_worker_version_id);
 }
 

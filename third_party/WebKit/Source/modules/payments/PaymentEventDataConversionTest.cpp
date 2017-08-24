@@ -70,16 +70,8 @@ TEST(PaymentEventDataConversionTest, ToCanMakePaymentEventData) {
   ASSERT_TRUE(data.hasMethodData());
   ASSERT_EQ(1UL, data.methodData().size());
   ASSERT_TRUE(data.methodData().front().hasSupportedMethods());
-  ASSERT_EQ(1UL, data.methodData()
-                     .front()
-                     .supportedMethods()
-                     .getAsStringSequence()
-                     .size());
-  ASSERT_EQ("foo", data.methodData()
-                       .front()
-                       .supportedMethods()
-                       .getAsStringSequence()
-                       .front());
+  ASSERT_EQ(1UL, data.methodData().front().supportedMethods().size());
+  ASSERT_EQ("foo", data.methodData().front().supportedMethods().front());
   ASSERT_TRUE(data.methodData().front().hasData());
   ASSERT_TRUE(data.methodData().front().data().IsObject());
   String stringified_data = V8StringToWebCoreString<String>(
@@ -111,16 +103,8 @@ TEST(PaymentEventDataConversionTest, ToPaymentRequestEventData) {
   ASSERT_TRUE(data.hasMethodData());
   ASSERT_EQ(1UL, data.methodData().size());
   ASSERT_TRUE(data.methodData().front().hasSupportedMethods());
-  ASSERT_EQ(1UL, data.methodData()
-                     .front()
-                     .supportedMethods()
-                     .getAsStringSequence()
-                     .size());
-  ASSERT_EQ("foo", data.methodData()
-                       .front()
-                       .supportedMethods()
-                       .getAsStringSequence()
-                       .front());
+  ASSERT_EQ(1UL, data.methodData().front().supportedMethods().size());
+  ASSERT_EQ("foo", data.methodData().front().supportedMethods().front());
   ASSERT_TRUE(data.methodData().front().hasData());
   ASSERT_TRUE(data.methodData().front().data().IsObject());
   String stringified_data = V8StringToWebCoreString<String>(

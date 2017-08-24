@@ -1142,32 +1142,19 @@ const FeatureEntry::FeatureParam kUseDdljsonApiTest3[] = {
 const FeatureEntry::FeatureParam kUseDdljsonApiTest4[] = {
     {search_provider_logos::features::kDdljsonOverrideUrlParam,
      "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_android4.json"}};
-#else
-const FeatureEntry::FeatureParam kUseDdljsonApiTest0[] = {
-    {search_provider_logos::features::kDdljsonOverrideUrlParam,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_desktop0.json"}};
-const FeatureEntry::FeatureParam kUseDdljsonApiTest1[] = {
-    {search_provider_logos::features::kDdljsonOverrideUrlParam,
-     "https://www.gstatic.com/chrome/ntp/doodle_test/ddljson_desktop1.json"}};
-#endif  // defined(OS_ANDROID)
 
 const FeatureEntry::FeatureVariation kUseDdljsonApiVariations[] = {
     {"(force test doodle 0)", kUseDdljsonApiTest0,
      arraysize(kUseDdljsonApiTest0), nullptr},
     {"(force test doodle 1)", kUseDdljsonApiTest1,
      arraysize(kUseDdljsonApiTest1), nullptr},
-#if defined(OS_ANDROID)
-    // Interactive doodles: Android-only for now.
     {"(force test doodle 2)", kUseDdljsonApiTest2,
      arraysize(kUseDdljsonApiTest2), nullptr},
     {"(force test doodle 3)", kUseDdljsonApiTest3,
      arraysize(kUseDdljsonApiTest3), nullptr},
     {"(force test doodle 4)", kUseDdljsonApiTest4,
-     arraysize(kUseDdljsonApiTest4), nullptr},
-#endif  // defined(OS_ANDROID)
-};
+     arraysize(kUseDdljsonApiTest4), nullptr}};
 
-#if defined(OS_ANDROID)
 const FeatureEntry::FeatureParam kThirdPartyDoodlesTestSimple[] = {
     {search_provider_logos::features::kThirdPartyDoodlesOverrideUrlParam,
      "https://www.gstatic.com/chrome/ntp/doodle_test/third_party_simple.json"}};
@@ -1181,7 +1168,7 @@ const FeatureEntry::FeatureVariation kThirdPartyDoodlesVariations[] = {
      arraysize(kThirdPartyDoodlesTestSimple), nullptr},
     {"(force animated test doodle)", kThirdPartyDoodlesTestAnimated,
      arraysize(kThirdPartyDoodlesTestAnimated), nullptr}};
-#endif  // defined(OS_ANDROID)
+#endif  // OS_ANDROID
 
 // RECORDING USER METRICS FOR FLAGS:
 // -----------------------------------------------------------------------------
@@ -1342,16 +1329,6 @@ const FeatureEntry kFeatureEntries[] = {
      // Uses the system preference on Mac (a different implementation).
      // On Android, this is always enabled.
      kOsAura, FEATURE_VALUE_TYPE(features::kOverlayScrollbar)},
-    {"overlay-scrollbars-flash-after-scroll-update",
-     flag_descriptions::kOverlayScrollbarsFlashAfterAnyScrollUpdateName,
-     flag_descriptions::kOverlayScrollbarsFlashAfterAnyScrollUpdateDescription,
-     kOsAura,
-     FEATURE_VALUE_TYPE(features::kOverlayScrollbarFlashAfterAnyScrollUpdate)},
-    {"overlay-scrollbars-flash-when-mouse-enter",
-     flag_descriptions::kOverlayScrollbarsFlashWhenMouseEnterName,
-     flag_descriptions::kOverlayScrollbarsFlashWhenMouseEnterDescription,
-     kOsAura,
-     FEATURE_VALUE_TYPE(features::kOverlayScrollbarFlashWhenMouseEnter)},
 #endif  // USE_AURA
     {   // See http://crbug.com/120416 for how to remove this flag.
      "save-page-as-mhtml", flag_descriptions::kSavePageAsMhtmlName,
@@ -2794,10 +2771,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-generic-sensor", flag_descriptions::kEnableGenericSensorName,
      flag_descriptions::kEnableGenericSensorDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kGenericSensor)},
-    {"enable-generic-sensor-extra-classes",
-     flag_descriptions::kEnableGenericSensorExtraClassesName,
-     flag_descriptions::kEnableGenericSensorExtraClassesDescription, kOsAll,
-     FEATURE_VALUE_TYPE(features::kGenericSensorExtraClasses)},
     {"expensive-background-timer-throttling",
      flag_descriptions::kExpensiveBackgroundTimerThrottlingName,
      flag_descriptions::kExpensiveBackgroundTimerThrottlingDescription, kOsAll,
@@ -3291,12 +3264,14 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableOutOfBlinkCORSDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kOutOfBlinkCORS)},
 
+#if defined(OS_ANDROID)
     {"use-ddljson-api", flag_descriptions::kUseDdljsonApiName,
-     flag_descriptions::kUseDdljsonApiDescription, kOsAll,
+     flag_descriptions::kUseDdljsonApiDescription, kOsAndroid,
      FEATURE_WITH_PARAMS_VALUE_TYPE(
          search_provider_logos::features::kUseDdljsonApi,
          kUseDdljsonApiVariations,
          "NTPUseDdljsonApi")},
+#endif  // defined(OS_ANDROID)
 
 #if defined(OS_ANDROID)
     {"spannable-inline-autocomplete",
@@ -3410,12 +3385,6 @@ const FeatureEntry kFeatureEntries[] = {
          kThirdPartyDoodlesVariations,
          "NTPThirdPartyDoodles")},
 #endif  // defined(OS_ANDROID)
-
-#if !defined(OS_ANDROID)
-    {"doodles-on-local-ntp", flag_descriptions::kDoodlesOnLocalNtpName,
-     flag_descriptions::kDoodlesOnLocalNtpDescription, kOsDesktop,
-     FEATURE_VALUE_TYPE(features::kDoodlesOnLocalNtp)},
-#endif  // !defined(OS_ANDROID)
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in

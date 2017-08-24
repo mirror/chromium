@@ -246,11 +246,8 @@ class FakeV4LocalDatabaseManager : public V4LocalDatabaseManager {
  public:
   FakeV4LocalDatabaseManager(
       const base::FilePath& base_path,
-      ExtendedReportingLevelCallback extended_reporting_level_callback,
-      scoped_refptr<base::SequencedTaskRunner> task_runner)
-      : V4LocalDatabaseManager(base_path,
-                               extended_reporting_level_callback,
-                               task_runner),
+      ExtendedReportingLevelCallback extended_reporting_level_callback)
+      : V4LocalDatabaseManager(base_path, extended_reporting_level_callback),
         perform_full_hash_check_called_(false) {}
 
   // V4LocalDatabaseManager impl:
@@ -288,8 +285,9 @@ class V4LocalDatabaseManagerTest : public PlatformTest {
         base::Bind(&V4LocalDatabaseManagerTest::GetExtendedReportingLevel,
                    base::Unretained(this));
 
-    v4_local_database_manager_ = make_scoped_refptr(new V4LocalDatabaseManager(
-        base_dir_.GetPath(), erl_callback_, task_runner_));
+    v4_local_database_manager_ = make_scoped_refptr(
+        new V4LocalDatabaseManager(base_dir_.GetPath(), erl_callback_));
+    SetTaskRunnerForTest();
 
     StartLocalDatabaseManager();
   }
@@ -340,13 +338,18 @@ class V4LocalDatabaseManagerTest : public PlatformTest {
 
   void ResetLocalDatabaseManager() {
     StopLocalDatabaseManager();
-    v4_local_database_manager_ = make_scoped_refptr(new V4LocalDatabaseManager(
-        base_dir_.GetPath(), erl_callback_, task_runner_));
+    v4_local_database_manager_ = make_scoped_refptr(
+        new V4LocalDatabaseManager(base_dir_.GetPath(), erl_callback_));
+    SetTaskRunnerForTest();
     StartLocalDatabaseManager();
   }
 
   void ResetV4Database() {
     V4Database::Destroy(std::move(v4_local_database_manager_->v4_database_));
+  }
+
+  void SetTaskRunnerForTest() {
+    v4_local_database_manager_->SetTaskRunnerForTest(task_runner_);
   }
 
   void StartLocalDatabaseManager() {
@@ -375,9 +378,9 @@ class V4LocalDatabaseManagerTest : public PlatformTest {
     // StopLocalDatabaseManager before resetting it because that's what
     // ~V4LocalDatabaseManager expects.
     StopLocalDatabaseManager();
-    v4_local_database_manager_ =
-        make_scoped_refptr(new FakeV4LocalDatabaseManager(
-            base_dir_.GetPath(), erl_callback_, task_runner_));
+    v4_local_database_manager_ = make_scoped_refptr(
+        new FakeV4LocalDatabaseManager(base_dir_.GetPath(), erl_callback_));
+    SetTaskRunnerForTest();
     StartLocalDatabaseManager();
     WaitForTasksOnTaskRunner();
   }

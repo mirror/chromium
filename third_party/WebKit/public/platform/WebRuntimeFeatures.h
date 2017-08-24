@@ -69,6 +69,7 @@ class WebRuntimeFeatures {
 
   BLINK_PLATFORM_EXPORT static void EnableDisplayList2dCanvas(bool);
   BLINK_PLATFORM_EXPORT static void ForceDisplayList2dCanvas(bool);
+  BLINK_PLATFORM_EXPORT static void ForceDisable2dCanvasCopyOnWrite(bool);
 
   BLINK_PLATFORM_EXPORT static void EnableOriginTrials(bool);
   BLINK_PLATFORM_EXPORT static bool IsOriginTrialsEnabled();
@@ -87,7 +88,6 @@ class WebRuntimeFeatures {
   BLINK_PLATFORM_EXPORT static void EnableForceTallerSelectPopup(bool);
   BLINK_PLATFORM_EXPORT static void EnableGamepadExtensions(bool);
   BLINK_PLATFORM_EXPORT static void EnableGenericSensor(bool);
-  BLINK_PLATFORM_EXPORT static void EnableGenericSensorExtraClasses(bool);
   BLINK_PLATFORM_EXPORT static void EnableHeapCompaction(bool);
   BLINK_PLATFORM_EXPORT static void EnableInputMultipleFieldsUI(bool);
   BLINK_PLATFORM_EXPORT static void EnableLazyParseCSS(bool);

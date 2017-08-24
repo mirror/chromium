@@ -5,6 +5,8 @@
 #ifndef COMPONENTS_EXO_WM_HELPER_H_
 #define COMPONENTS_EXO_WM_HELPER_H_
 
+#include <memory>
+
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "ui/aura/client/drag_drop_delegate.h"

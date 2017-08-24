@@ -343,8 +343,7 @@ IntRect PaintLayerScrollableArea::ScrollCornerRect() const {
   return IntRect();
 }
 
-IntRect
-PaintLayerScrollableArea::ConvertFromScrollbarToContainingEmbeddedContentView(
+IntRect PaintLayerScrollableArea::ConvertFromScrollbarToParentView(
     const Scrollbar& scrollbar,
     const IntRect& scrollbar_rect) const {
   LayoutView* view = Box().View();
@@ -358,8 +357,7 @@ PaintLayerScrollableArea::ConvertFromScrollbarToContainingEmbeddedContentView(
                                                      rect);
 }
 
-IntPoint
-PaintLayerScrollableArea::ConvertFromScrollbarToContainingEmbeddedContentView(
+IntPoint PaintLayerScrollableArea::ConvertFromScrollbarToParentView(
     const Scrollbar& scrollbar,
     const IntPoint& scrollbar_point) const {
   LayoutView* view = Box().View();
@@ -372,8 +370,7 @@ PaintLayerScrollableArea::ConvertFromScrollbarToContainingEmbeddedContentView(
                                                      point);
 }
 
-IntPoint
-PaintLayerScrollableArea::ConvertFromContainingEmbeddedContentViewToScrollbar(
+IntPoint PaintLayerScrollableArea::ConvertFromParentViewToScrollbar(
     const Scrollbar& scrollbar,
     const IntPoint& parent_point) const {
   LayoutView* view = Box().View();
@@ -1466,6 +1463,7 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
   if (!HasScrollbar() && !Box().CanResize())
     return false;
 
+  // Hit test resize corner.
   IntRect resize_control_rect;
   if (Box().Style()->Resize() != EResize::kNone) {
     resize_control_rect = ResizerCornerRect(
@@ -1475,9 +1473,11 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
       return true;
   }
 
-  int resize_control_size = max(resize_control_rect.Height(), 0);
+  Scrollbar* scrollbar = nullptr;
+
   if (HasVerticalScrollbar() &&
       VerticalScrollbar()->ShouldParticipateInHitTesting()) {
+    int resize_control_size = max(resize_control_rect.Height(), 0);
     LayoutRect v_bar_rect(VerticalScrollbarStart(0, Layer()->size().Width()),
                           Box().BorderTop().ToInt(),
                           VerticalScrollbar()->ScrollbarThickness(),
@@ -1485,15 +1485,12 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
                               (HasHorizontalScrollbar()
                                    ? HorizontalScrollbar()->ScrollbarThickness()
                                    : resize_control_size));
-    if (v_bar_rect.Contains(local_point)) {
-      result.SetScrollbar(VerticalScrollbar());
-      return true;
-    }
+    if (v_bar_rect.Contains(local_point))
+      scrollbar = VerticalScrollbar();
   }
-
-  resize_control_size = max(resize_control_rect.Width(), 0);
-  if (HasHorizontalScrollbar() &&
+  if (!scrollbar && HasHorizontalScrollbar() &&
       HorizontalScrollbar()->ShouldParticipateInHitTesting()) {
+    int resize_control_size = max(resize_control_rect.Width(), 0);
     // TODO(crbug.com/638981): Are the conversions to int intentional?
     LayoutRect h_bar_rect(
         HorizontalScrollbarStart(0),
@@ -1502,16 +1499,27 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
             (HasVerticalScrollbar() ? VerticalScrollbar()->ScrollbarThickness()
                                     : resize_control_size),
         HorizontalScrollbar()->ScrollbarThickness());
-    if (h_bar_rect.Contains(local_point)) {
-      result.SetScrollbar(HorizontalScrollbar());
-      return true;
-    }
+    if (h_bar_rect.Contains(local_point))
+      scrollbar = HorizontalScrollbar();
   }
+
+  if (!scrollbar)
+    return false;
+
+  // For Aura Overlay Scrollbar, only scrollbar thumb should participate hit
+  // test.
+  if (scrollbar->IsOverlayScrollbar()) {
+    if (scrollbar->GetTheme().HitTestWithParentPoint(
+            *scrollbar, result.RoundedPointInContent()) == kNoPart)
+      return false;
+  }
+
+  result.SetScrollbar(scrollbar);
 
   // FIXME: We should hit test the m_scrollCorner and pass it back through the
   // result.
 
-  return false;
+  return true;
 }
 
 IntRect PaintLayerScrollableArea::ResizerCornerRect(
@@ -1765,7 +1773,7 @@ LayoutRect PaintLayerScrollableArea::ScrollLocalRectIntoView(
   ScrollOffset new_scroll_offset(ClampScrollOffset(RoundedIntSize(
       ToScrollOffset(FloatPoint(r.Location()) + old_scroll_offset))));
   if (is_for_scroll_sequence) {
-    DCHECK(scroll_type == kProgrammaticScroll);
+    DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll);
     ScrollBehavior behavior =
         is_smooth ? kScrollBehaviorSmooth : kScrollBehaviorInstant;
     GetSmoothScrollSequencer()->QueueAnimation(this, new_scroll_offset,

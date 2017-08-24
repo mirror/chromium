@@ -352,7 +352,7 @@ MultiplexRouter::MultiplexRouter(
       &MultiplexRouter::OnPipeConnectionError, base::Unretained(this)));
 
   std::unique_ptr<MessageHeaderValidator> header_validator =
-      std::make_unique<MessageHeaderValidator>();
+      base::MakeUnique<MessageHeaderValidator>();
   header_validator_ = header_validator.get();
   filters_.Append(std::move(header_validator));
 }

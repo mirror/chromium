@@ -54,6 +54,10 @@
 // Shows the Reading List UI.
 - (void)showReadingList;
 
+// Asks the active tab to enter into reader mode, presenting a streamlined view
+// of the current content.
+- (void)switchToReaderMode;
+
 // Preloads voice search on the current BVC.
 - (void)preloadVoiceSearch;
 

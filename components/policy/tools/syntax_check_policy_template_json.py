@@ -450,8 +450,8 @@ class PolicyTemplateChecker(object):
 
   def Main(self, filename, options):
     try:
-      with open(filename, "rb") as f:
-        data = eval(f.read().decode("UTF-8"))
+      with open(filename) as f:
+        data = eval(f.read())
     except:
       import traceback
       traceback.print_exc(file=sys.stdout)

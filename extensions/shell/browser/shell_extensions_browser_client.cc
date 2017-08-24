@@ -202,7 +202,7 @@ void ShellExtensionsBrowserClient::RegisterExtensionInterfaces(
 std::unique_ptr<RuntimeAPIDelegate>
 ShellExtensionsBrowserClient::CreateRuntimeAPIDelegate(
     content::BrowserContext* context) const {
-  return std::make_unique<ShellRuntimeAPIDelegate>();
+  return base::MakeUnique<ShellRuntimeAPIDelegate>();
 }
 
 const ComponentExtensionResourceManager*

@@ -388,13 +388,7 @@ void EasyUnlockServiceSignin::OnSuspendDoneInternal() {
 }
 
 void EasyUnlockServiceSignin::OnBluetoothAdapterPresentChanged() {
-  // Because the BluetoothAdapter state change may change whether EasyUnlock is
-  // allowed, we want to treat the user pod as though it were focused for the
-  // first time. This allows the correct flow (loading cryptohome keys,
-  // initializing ProximityAuthSystem, etc.) to take place.
-  AccountId current_account_id = account_id_;
-  account_id_ = AccountId();
-  OnFocusedUserChanged(current_account_id);
+  OnFocusedUserChanged(account_id_);
 }
 
 void EasyUnlockServiceSignin::OnScreenDidLock(
@@ -436,6 +430,11 @@ void EasyUnlockServiceSignin::OnFocusedUserChanged(
   pref_manager_->SetActiveUser(account_id);
   user_pod_last_focused_timestamp_ = base::TimeTicks::Now();
   SetProximityAuthDevices(account_id_, cryptauth::RemoteDeviceList());
+  ResetScreenlockState();
+
+  if (!IsAllowed() || !IsEnabled())
+    return;
+
   ResetScreenlockState();
 
   pref_manager_->SetActiveUser(account_id);
@@ -487,7 +486,7 @@ void EasyUnlockServiceSignin::LoadCurrentUserDataIfNeeded() {
 
   UserData* data = user_data_[account_id_].get();
 
-  if (data->state == USER_DATA_STATE_LOADING)
+  if (data->state != USER_DATA_STATE_INITIAL)
     return;
   data->state = USER_DATA_STATE_LOADING;
 

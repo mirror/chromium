@@ -37,6 +37,7 @@ NSString* const kEnableNewClearBrowsingDataUI = @"EnableNewClearBrowsingDataUI";
 NSString* const kEnableStartupCrash = @"EnableStartupCrash";
 NSString* const kEnableViewCopyPasswords = @"EnableViewCopyPasswords";
 NSString* const kFirstRunForceEnabled = @"FirstRunForceEnabled";
+NSString* const kForceResetContextualSearch = @"ForceResetContextualSearch";
 NSString* const kGaiaEnvironment = @"GAIAEnvironment";
 NSString* const kOriginServerHost = @"AlternateOriginServerHost";
 NSString* const kSafariVCSignInDisabled = @"SafariVCSignInDisabled";
@@ -102,6 +103,12 @@ bool IsLRUSnapshotCacheEnabled() {
   return NO;
 }
 
+bool IsMDMIntegrationEnabled() {
+  // TODO(crbug.com/752073): Remove this function and its associated code,
+  // or convert it into a base::Feature.
+  return YES;
+}
+
 bool IsMemoryDebuggingEnabled() {
 // Always return true for Chromium builds, but check the user default for
 // official builds because memory debugging should never be enabled on stable.
@@ -150,6 +157,11 @@ bool IsPhysicalWebEnabled() {
       base::FieldTrialList::FindFullName("PhysicalWebEnabled");
   return base::StartsWith(group_name, "Enabled",
                           base::CompareCase::INSENSITIVE_ASCII);
+}
+
+bool IsReaderModeEnabled() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kEnableReaderModeToolbarIcon);
 }
 
 bool IsSafariVCSignInEnabled() {
