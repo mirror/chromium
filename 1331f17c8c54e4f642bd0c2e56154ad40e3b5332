@@ -16,6 +16,24 @@
       "revId": "1331f17c8c54e4f642bd0c2e56154ad40e3b5332",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6a77ef_3192e286",
+        "filename": "net/base/net_string_util_icu_alternatives_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-08-24T15:21:18Z",
+      "side": 1,
+      "message": "It looks like there was spurious s/java_result/new_str_result/ above.",
+      "parentUuid": "f75bcbe6_22bc0915",
+      "revId": "1331f17c8c54e4f642bd0c2e56154ad40e3b5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
