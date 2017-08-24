@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39cbc360_9c7694af",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-24T16:28:33Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e for std::unique_ptr",
+      "range": {
+        "startLine": 8,
+        "startChar": 1,
+        "endLine": 8,
+        "endChar": 8
+      },
+      "revId": "dbbef1255ed2500f7ee4cb00af1bfe0cd66e0103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65f41f9_0be56f6d",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-24T16:28:33Z",
+      "side": 1,
+      "message": "Nit: \"handles\", s/tracking/reporting/",
+      "revId": "dbbef1255ed2500f7ee4cb00af1bfe0cd66e0103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
