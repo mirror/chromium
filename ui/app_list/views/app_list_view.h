@@ -212,6 +212,12 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
     app_list_animation_duration_ms_ = app_list_animation_duration_ms;
   }
 
+  bool should_smooth_opacity_change() { return should_smooth_opacity_change_; }
+
+  void set_should_smooth_opacity_change(bool should_smooth_opacity_change) {
+    should_smooth_opacity_change_ = should_smooth_opacity_change;
+  }
+
  private:
   // A widget observer that is responsible for keeping the AppListView state up
   // to date on closing.
@@ -359,6 +365,9 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   // Animation duration in milliseconds.
   int app_list_animation_duration_ms_;
+
+  // True if the dragging starts with PEEKING state.
+  bool should_smooth_opacity_change_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(AppListView);
 };

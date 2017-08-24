@@ -1880,6 +1880,30 @@ void AppsGridView::UpdateOpacity() {
                        (kAllAppsOpacityEndPx - kAllAppsOpacityStartPx),
                    0.f),
           1.0f);
+
+      // Make the first row of apps not be shown suddenly if start with dragging
+      // up from PEEKING, and they should never be shown if start with dragging
+      // down from PEEKING.
+      Index index = GetIndexOfView(item_view);
+      if (index.page == 0 && index.slot < cols_ &&
+          contents_view_->app_list_view()->should_smooth_opacity_change()) {
+        float drag_amount_above_peeking = work_area_bottom + kShelfSize -
+                                          app_list_y_position_in_screen -
+                                          kPeekingAppListHeight;
+        float opacity_factor = 1.0f;
+        if ((drag_amount_above_peeking >= 0 &&
+             drag_amount_above_peeking <= kShelfSize) ||
+            (drag_amount_above_peeking < 0 &&
+             centerline_above_work_area >= kAllAppsOpacityStartPx)) {
+          opacity_factor = 1.0f / kShelfSize * drag_amount_above_peeking;
+          opacity *= opacity_factor;
+        } else {
+          // Only smoothing the opaicty change at the beginning of dragging.
+          contents_view_->app_list_view()->set_should_smooth_opacity_change(
+              false);
+        }
+      }
+
       item_view->layer()->SetOpacity(is_in_drag ? opacity : 1.0f);
     }
   }
