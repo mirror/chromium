@@ -211,10 +211,10 @@ useful on third_party projects that use another style.
 
 Now when you save a C++ file, red dots should appear next to lines that
 invalidate the style. You can change this behavior with Choose Lint Mode (`Ctrl
-+ Shift + P > "lint mode"`).
+\+ Shift + P > "lint mode"`).
 
 You can also see and navigate all the linter errors with Show All Errors (`Ctrl
-+ Shift + P > "show all"`). You can also use Next Error/Previous Error (and
+\+ Shift + P > "show all"`). You can also use Next Error/Previous Error (and
 their associated shortcuts) to navigate the errors. The gutter at the bottom of
 the screen shows the message for the error on the current line.
 
