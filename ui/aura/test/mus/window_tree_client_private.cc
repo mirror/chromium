@@ -91,11 +91,8 @@ WindowTreeClientPrivate::CallCreateInitParamsForNewDisplay() {
   return tree_client_impl_->CreateInitParamsForNewDisplay();
 }
 
-void WindowTreeClientPrivate::SetTreeAndClientId(
-    ui::mojom::WindowTree* window_tree,
-    ClientSpecificId client_id) {
+void WindowTreeClientPrivate::SetTree(ui::mojom::WindowTree* window_tree) {
   tree_client_impl_->WindowTreeConnectionEstablished(window_tree);
-  tree_client_impl_->client_id_ = client_id;
 }
 
 void WindowTreeClientPrivate::SetWindowManagerClient(

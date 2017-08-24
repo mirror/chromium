@@ -482,7 +482,9 @@ TEST_F(WindowManagerStateTest, DeleteNonRootTree) {
   DispatchInputEventToWindow(target, display->GetId(), key, accelerator.get());
   TestChangeTracker* tracker = embed_connection->tracker();
   ASSERT_EQ(1u, tracker->changes()->size());
-  EXPECT_EQ("InputEvent window=2,1 event_action=7",
+  // clients that created this window is receiving the event, so client_id part
+  // would be reset to 0 before sending back to clients.
+  EXPECT_EQ("InputEvent window=0,1 event_action=7",
             ChangesToDescription1(*tracker->changes())[0]);
   EXPECT_TRUE(wm_client()->tracker()->changes()->empty());
 
