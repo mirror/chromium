@@ -860,6 +860,19 @@ message DeviceOffHoursProto {
   repeated string ignored_policy = 3;
 }
 
+// External data policy for the printers configuration file.
+message NativeDevicePrintersProto {
+  optional string url = 1;
+  optional string hash = 2;
+}
+
+// A collection of ids definining restrictions over entries in the printer
+// configuration file from NativeDevicePrintersProto.
+message NativeDevicePrintersPolicyProto {
+  repeated string whitelist = 1;
+  repeated string blacklist = 2;
+}
+
 message ChromeDeviceSettingsProto {
   optional DevicePolicyRefreshRateProto device_policy_refresh_rate = 1;
   optional UserWhitelistProto user_whitelist = 2;
@@ -924,4 +937,6 @@ message ChromeDeviceSettingsProto {
       device_second_factor_authentication = 52;
   optional CastReceiverNameProto cast_receiver_name = 53;
   optional DeviceOffHoursProto device_off_hours = 54;
+  optional NativeDevicePrintersProto native_device_printers = 55;
+  optional NativeDevicePrintersPolicyProto native_device_printers_policy = 56;
 }

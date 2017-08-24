@@ -955,6 +955,36 @@ void DecodeGenericPolicies(const em::ChromeDeviceSettingsProto& policy,
                     POLICY_SCOPE_MACHINE, POLICY_SOURCE_CLOUD,
                     base::MakeUnique<base::Value>(container.name()), nullptr);
   }
+
+  if (policy.has_native_device_printers()) {
+    const em::NativeDevicePrintersProto& container(
+        policy.native_device_printers());
+    auto printers = base::MakeUnique<base::DictionaryValue>();
+    printers->SetString("url", container.url());
+    printers->SetString("hash", container.hash());
+    policies->Set(key::kNativeDevicePrinters, POLICY_LEVEL_MANDATORY,
+                  POLICY_SCOPE_MACHINE, POLICY_SOURCE_CLOUD,
+                  std::move(printers), nullptr);
+  }
+
+  if (policy.has_native_device_printers_policy()) {
+    const em::NativeDevicePrintersPolicyProto& container(
+        policy.native_device_printers_policy());
+    auto policy = base::MakeUnique<base::DictionaryValue>();
+    auto whitelist = base::MakeUnique<base::Value>();
+    for (const std::string& whitelist_id : container.whitelist()) {
+      whitelist->GetList().emplace_back(whitelist_id);
+    }
+    auto blacklist = base::MakeUnique<base::Value>();
+    for (const std::string& blacklist_id : container.blacklist()) {
+      blacklist->GetList().emplace_back(blacklist_id);
+    }
+    policy->Set("whitelist", std::move(whitelist));
+    policy->Set("blacklist", std::move(blacklist));
+    policies->Set(key::kNativeDevicePrintersPolicy, POLICY_LEVEL_MANDATORY,
+                  POLICY_SCOPE_MACHINE, POLICY_SOURCE_CLOUD, std::move(policy),
+                  nullptr);
+  }
 }
 }  // namespace
 
