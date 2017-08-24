@@ -18,6 +18,7 @@
 #include "build/build_config.h"
 #include "components/crash/content/app/crash_reporter_client.h"
 #include "components/crash/content/app/crash_switches.h"
+#include "components/crash/content/app/crash_export_thunks.h"
 #include "third_party/crashpad/crashpad/client/crashpad_client.h"
 #include "third_party/crashpad/crashpad/client/crashpad_info.h"
 #include "third_party/crashpad/crashpad/client/simulate_crash_win.h"
@@ -204,16 +205,6 @@ MSVC_ENABLE_OPTIMIZE()
 
 extern "C" {
 
-// Crashes the process after generating a dump for the provided exception. Note
-// that the crash reporter should be initialized before calling this function
-// for it to do anything.
-// NOTE: This function is used by SyzyASAN to invoke a crash. If you change the
-// the name or signature of this function you will break SyzyASAN instrumented
-// releases of Chrome. Please contact syzygy-team@chromium.org before doing so!
-int CrashForException(EXCEPTION_POINTERS* info) {
-  crash_reporter::GetCrashpadClient().DumpAndCrash(info);
-  return EXCEPTION_CONTINUE_SEARCH;
-}
 
 // Injects a thread into a remote process to dump state when there is no crash.
 // |serialized_crash_keys| is a nul terminated string that represents serialized
