@@ -22,10 +22,7 @@
 #include "ios/chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "ios/chrome/browser/pref_names.h"
 #import "ios/chrome/browser/ui/browser_view_controller.h"
-#import "ios/chrome/browser/ui/settings/clear_browsing_data_collection_view_controller.h"
-#import "ios/chrome/browser/ui/settings/settings_collection_view_controller.h"
 #include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
-#import "ios/chrome/browser/ui/tools_menu/tools_popup_controller.h"
 #include "ios/chrome/grit/ios_chromium_strings.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/chrome/grit/ios_theme_resources.h"
@@ -37,6 +34,7 @@
 #import "ios/chrome/test/earl_grey/chrome_earl_grey.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
+#import "ios/chrome/test/earl_grey/chrome_settings_matchers.h"
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
 #import "ios/testing/wait_util.h"
 #import "ios/web/public/test/http_server/http_server.h"
@@ -61,6 +59,23 @@ using chrome_test_util::ContentSettingsButton;
 using chrome_test_util::NavigationBarDoneButton;
 using chrome_test_util::SettingsMenuBackButton;
 using chrome_test_util::SettingsMenuPrivacyButton;
+using chrome_test_util::ClearBrowsingDataButton;
+using chrome_test_util::ConfirmClearBrowsingDataButton;
+using chrome_test_util::ClearBrowsingDataCell;
+using chrome_test_util::ClearBrowsingHistoryButton;
+using chrome_test_util::ClearCacheButton;
+using chrome_test_util::ClearCookiesButton;
+using chrome_test_util::ClearSavedPasswordsButton;
+using chrome_test_util::BlockPopupsButton;
+using chrome_test_util::BandwidthSettingsButton;
+using chrome_test_util::TranslateSettingsButton;
+using chrome_test_util::PrivacyHandoffButton;
+using chrome_test_util::BandwidthPreloadWebpagesButton;
+using chrome_test_util::SearchEngineButton;
+using chrome_test_util::AutofillButton;
+using chrome_test_util::GoogleChromeButton;
+using chrome_test_util::VoiceSearchButton;
+using chrome_test_util::SendUsageDataButton;
 
 namespace {
 
@@ -78,80 +93,6 @@ enum MetricsServiceType {
   kBreakpad,
   kBreakpadFirstLaunch,
 };
-
-// Matcher for the clear browsing history cell on the clear browsing data panel.
-id<GREYMatcher> ClearBrowsingHistoryButton() {
-  return grey_allOf(grey_accessibilityID(kClearBrowsingHistoryCellId),
-                    grey_sufficientlyVisible(), nil);
-}
-// Matcher for the clear cookies cell on the clear browsing data panel.
-id<GREYMatcher> ClearCookiesButton() {
-  return grey_accessibilityID(kClearCookiesCellId);
-}
-// Matcher for the clear cache cell on the clear browsing data panel.
-id<GREYMatcher> ClearCacheButton() {
-  return grey_allOf(grey_accessibilityID(kClearCacheCellId),
-                    grey_sufficientlyVisible(), nil);
-}
-// Matcher for the clear saved passwords cell on the clear browsing data panel.
-id<GREYMatcher> ClearSavedPasswordsButton() {
-  return grey_allOf(grey_accessibilityID(kClearSavedPasswordsCellId),
-                    grey_sufficientlyVisible(), nil);
-}
-// Matcher for the clear browsing data button on the clear browsing data panel.
-id<GREYMatcher> ClearBrowsingDataButton() {
-  return ButtonWithAccessibilityLabelId(IDS_IOS_CLEAR_BUTTON);
-}
-// Matcher for the clear browsing data action sheet item.
-id<GREYMatcher> ConfirmClearBrowsingDataButton() {
-  return ButtonWithAccessibilityLabelId(IDS_IOS_CONFIRM_CLEAR_BUTTON);
-}
-// Matcher for the Send Usage Data cell on the Privacy screen.
-id<GREYMatcher> SendUsageDataButton() {
-  return ButtonWithAccessibilityLabelId(IDS_IOS_OPTIONS_SEND_USAGE_DATA);
-}
-// Matcher for the Clear Browsing Data cell on the Privacy screen.
-id<GREYMatcher> ClearBrowsingDataCell() {
-  return ButtonWithAccessibilityLabelId(IDS_IOS_CLEAR_BROWSING_DATA_TITLE);
-}
-// Matcher for the Search Engine cell on the main Settings screen.
-id<GREYMatcher> SearchEngineButton() {
-  return ButtonWithAccessibilityLabelId(IDS_IOS_SEARCH_ENGINE_SETTING_TITLE);
-}
-// Matcher for the Autofill Forms cell on the main Settings screen.
-id<GREYMatcher> AutofillButton() {
-  return ButtonWithAccessibilityLabelId(IDS_IOS_AUTOFILL);
-}
-// Matcher for the Google Chrome cell on the main Settings screen.
-id<GREYMatcher> GoogleChromeButton() {
-  return ButtonWithAccessibilityLabelId(IDS_IOS_PRODUCT_NAME);
-}
-// Matcher for the Google Chrome cell on the main Settings screen.
-id<GREYMatcher> VoiceSearchButton() {
-  return grey_allOf(grey_accessibilityID(kSettingsVoiceSearchCellId),
-                    grey_accessibilityTrait(UIAccessibilityTraitButton), nil);
-}
-// Matcher for the Preload Webpages button on the bandwidth UI.
-id<GREYMatcher> BandwidthPreloadWebpagesButton() {
-  return ButtonWithAccessibilityLabelId(IDS_IOS_OPTIONS_PRELOAD_WEBPAGES);
-}
-// Matcher for the Privacy Handoff button on the privacy UI.
-id<GREYMatcher> PrivacyHandoffButton() {
-  return ButtonWithAccessibilityLabelId(
-      IDS_IOS_OPTIONS_ENABLE_HANDOFF_TO_OTHER_DEVICES);
-}
-// Matcher for the Privacy Block Popups button on the privacy UI.
-id<GREYMatcher> BlockPopupsButton() {
-  return ButtonWithAccessibilityLabelId(IDS_IOS_BLOCK_POPUPS);
-}
-// Matcher for the Privacy Translate Settings button on the privacy UI.
-id<GREYMatcher> TranslateSettingsButton() {
-  return ButtonWithAccessibilityLabelId(IDS_IOS_TRANSLATE_SETTING);
-}
-// Matcher for the Bandwidth Settings button on the main Settings screen.
-id<GREYMatcher> BandwidthSettingsButton() {
-  return ButtonWithAccessibilityLabelId(IDS_IOS_BANDWIDTH_MANAGEMENT_SETTINGS);
-}
 
 // Run as a task to check if a certificate has been added to the ChannelIDStore.
 // Signals the given |semaphore| if the cert was added, or reposts itself
@@ -630,8 +571,7 @@ bool IsCertificateCleared() {
   chrome_test_util::OpenNewIncognitoTab();
 
   [ChromeEarlGreyUI openSettingsMenu];
-  [[EarlGrey
-      selectElementWithMatcher:grey_accessibilityID(kSettingsCollectionViewId)]
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::SettingsView()]
       assertWithMatcher:grey_notNil()];
 
   [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
@@ -763,8 +703,7 @@ bool IsCertificateCleared() {
 // not when it itslef presents something.
 - (void)testSettingsKeyboardCommands {
   [ChromeEarlGreyUI openSettingsMenu];
-  [[EarlGrey
-      selectElementWithMatcher:grey_accessibilityID(kSettingsCollectionViewId)]
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::SettingsView()]
       assertWithMatcher:grey_notNil()];
 
   // Verify that the Settings register keyboard commands.

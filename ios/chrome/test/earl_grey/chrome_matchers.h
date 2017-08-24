@@ -95,9 +95,6 @@ id<GREYMatcher> AccountConsistencyConfirmationOkButton();
 // Returns matcher for the sign out accounts button.
 id<GREYMatcher> SignOutAccountsButton();
 
-// Returns matcher for the clear browsing data collection view.
-id<GREYMatcher> ClearBrowsingDataCollectionView();
-
 // Returns matcher for the settings button in the tools menu.
 id<GREYMatcher> SettingsMenuButton();
 
@@ -106,49 +103,6 @@ id<GREYMatcher> ToolsMenuView();
 
 // Returns matcher for the OK button.
 id<GREYMatcher> OKButton();
-
-// Returns matcher for the signin button in the settings menu.
-id<GREYMatcher> SignInMenuButton();
-
-// Returns SignInMenuButton() as long as the sign-in promo is not enabled for
-// UI tests. When the sign-in promo will be enabled, it will returns matcher for
-// the secondary button in the sign-in promo view. This is "Sign in into Chrome"
-// button for a cold state, or "Continue as John Doe" for a warm state.
-id<GREYMatcher> PrimarySignInButton();
-
-// Returns SignInMenuButton() as long as the sign-in promo is not enabled for
-// UI tests. When the sign-in promo will be enabled, it will returns matcher for
-// the secondary button in the sign-in promo view. This is
-// "Not johndoe@example.com" button.
-id<GREYMatcher> SecondarySignInButton();
-
-// Returns matcher for the button for the currently signed in account in the
-// settings menu.
-id<GREYMatcher> SettingsAccountButton();
-
-// Returns matcher for the accounts collection view.
-id<GREYMatcher> SettingsAccountsCollectionView();
-
-// Returns matcher for the Import Data cell in switch sync account view.
-id<GREYMatcher> SettingsImportDataImportButton();
-
-// Returns matcher for the Keep Data Separate cell in switch sync account view.
-id<GREYMatcher> SettingsImportDataKeepSeparateButton();
-
-// Returns matcher for the menu button to sync accounts.
-id<GREYMatcher> AccountsSyncButton();
-
-// Returns matcher for the Content Settings button on the main Settings screen.
-id<GREYMatcher> ContentSettingsButton();
-
-// Returns matcher for the back button on a settings menu.
-id<GREYMatcher> SettingsMenuBackButton();
-
-// Returns matcher for the Privacy cell on the main Settings screen.
-id<GREYMatcher> SettingsMenuPrivacyButton();
-
-// Returns matcher for the Save passwords cell on the main Settings screen.
-id<GREYMatcher> SettingsMenuPasswordsButton();
 
 }  // namespace chrome_test_util
 

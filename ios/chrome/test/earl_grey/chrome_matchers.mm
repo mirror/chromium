@@ -22,6 +22,7 @@
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
+#include "ios/chrome/grit/ios_chromium_strings.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/chrome/test/app/chrome_test_util.h"
 #import "ios/testing/wait_util.h"
@@ -182,10 +183,6 @@ id<GREYMatcher> SignOutAccountsButton() {
   return grey_accessibilityID(kSettingsAccountsSignoutCellId);
 }
 
-id<GREYMatcher> ClearBrowsingDataCollectionView() {
-  return grey_accessibilityID(kClearBrowsingDataCollectionViewId);
-}
-
 id<GREYMatcher> SettingsMenuButton() {
   return grey_accessibilityID(kToolsMenuSettingsId);
 }
@@ -198,54 +195,5 @@ id<GREYMatcher> OKButton() {
   return ButtonWithAccessibilityLabelId(IDS_OK);
 }
 
-id<GREYMatcher> SignInMenuButton() {
-  return grey_accessibilityID(kSettingsSignInCellId);
-}
-
-id<GREYMatcher> PrimarySignInButton() {
-  return SignInMenuButton();
-}
-
-id<GREYMatcher> SecondarySignInButton() {
-  return SignInMenuButton();
-}
-
-id<GREYMatcher> SettingsAccountButton() {
-  return grey_accessibilityID(kSettingsAccountCellId);
-}
-
-id<GREYMatcher> SettingsAccountsCollectionView() {
-  return grey_accessibilityID(kSettingsAccountsId);
-}
-
-id<GREYMatcher> SettingsImportDataImportButton() {
-  return grey_accessibilityID(kImportDataImportCellId);
-}
-
-id<GREYMatcher> SettingsImportDataKeepSeparateButton() {
-  return grey_accessibilityID(kImportDataKeepSeparateCellId);
-}
-
-id<GREYMatcher> AccountsSyncButton() {
-  return grey_accessibilityID(kSettingsAccountsSyncCellId);
-}
-
-id<GREYMatcher> ContentSettingsButton() {
-  return ButtonWithAccessibilityLabelId(IDS_IOS_CONTENT_SETTINGS_TITLE);
-}
-
-id<GREYMatcher> SettingsMenuBackButton() {
-  return grey_allOf(grey_accessibilityID(@"ic_arrow_back"),
-                    grey_accessibilityTrait(UIAccessibilityTraitButton), nil);
-}
-
-id<GREYMatcher> SettingsMenuPrivacyButton() {
-  return ButtonWithAccessibilityLabelId(
-      IDS_OPTIONS_ADVANCED_SECTION_TITLE_PRIVACY);
-}
-
-id<GREYMatcher> SettingsMenuPasswordsButton() {
-  return ButtonWithAccessibilityLabelId(IDS_IOS_SAVE_PASSWORDS);
-}
 
 }  // namespace chrome_test_util

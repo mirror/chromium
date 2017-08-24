@@ -5,13 +5,12 @@
 #import <EarlGrey/EarlGrey.h>
 #import <XCTest/XCTest.h>
 
-#import "ios/chrome/browser/ui/settings/settings_collection_view_controller.h"
 #include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
-#import "ios/chrome/browser/ui/tools_menu/tools_popup_controller.h"
 #include "ios/chrome/grit/ios_strings.h"
 #include "ios/chrome/test/earl_grey/accessibility_util.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h"
 #import "ios/chrome/test/earl_grey/chrome_matchers.h"
+#import "ios/chrome/test/earl_grey/chrome_settings_matchers.h"
 #import "ios/chrome/test/earl_grey/chrome_test_case.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
