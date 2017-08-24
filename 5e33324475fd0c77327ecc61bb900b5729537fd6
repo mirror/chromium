@@ -70,6 +70,41 @@
       "revId": "5e33324475fd0c77327ecc61bb900b5729537fd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d472157_033654e5",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-24T15:47:43Z",
+      "side": 1,
+      "message": "I see... AudioDestination class is heavily threaded. It involves 3 threads: main thread, device thread and rendering thread. In addition, this doesn\u0027t explicitly manage the mutex lock. This model seems to be making it difficult to read. To be honest, I don\u0027t have the 100% confidence this is safe.\n\nCould you consider if it\u0027s possible to separate this class into per-thread objects or to limit the number of the involved threads to at most 2 threads later?",
+      "parentUuid": "1d1d9eeb_66868e93",
+      "revId": "5e33324475fd0c77327ecc61bb900b5729537fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef8d95e_524148ab",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-24T15:47:43Z",
+      "side": 1,
+      "message": "Can you add a comment like this?\n\n// This is never called after Stop() is called.",
+      "revId": "5e33324475fd0c77327ecc61bb900b5729537fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
