@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c45317f4_5c83a2e5",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-24T20:45:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c53a4fd_29cd2390",
+      "range": {
+        "startLine": 592,
+        "startChar": 4,
+        "endLine": 592,
+        "endChar": 33
+      },
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8611a17d_0c78bd44",
         "filename": "ui/app_list/views/app_list_view.h",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd22bfb5_bc5b6c25",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-24T20:45:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8611a17d_0c78bd44",
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "dd7d0508_46834e21",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1873,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-24T20:45:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9701eb5f_0acd8d4f",
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "054d770c_2e94cf24",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36377fd2_7c92376a",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1890,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-24T20:45:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "054d770c_2e94cf24",
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "b8b773e4_54c692df",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1898,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-24T20:45:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b851918_27f5b0dd",
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3157caf_2773e91e",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 1
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "19a84cd9_9772ae37",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1899,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-24T20:45:02Z",
+      "side": 1,
+      "message": "There are DCHECK in SetOpacity, I think I need to make it as non-negative.",
+      "parentUuid": "f3157caf_2773e91e",
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c11475fa_4d305f14",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 1
@@ -121,6 +235,24 @@
       "writtenOn": "2017-08-24T20:02:14Z",
       "side": 1,
       "message": "I think we should keep this logic inside AppListView and reset it when the drag ends.",
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0548f43c_23ecb3a3",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-24T20:45:02Z",
+      "side": 1,
+      "message": "we only want the |opacity| to multiple the |opacity_factor| at the beginning of the drag (if dragging in the target area, dragging up 48px, or dragging down to make centroid of the app to above less than 8px of the screen bottom). After that, before the drag ends, if the first row go through the target area should keep it change as |opacity|. Its opacity should change as the other rows after the beginning of the drag.",
+      "parentUuid": "c11475fa_4d305f14",
       "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
