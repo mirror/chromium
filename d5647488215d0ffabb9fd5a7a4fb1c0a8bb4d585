@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "f9baac76_f46126e6",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-08-24T08:22:49Z",
+      "side": 1,
+      "message": "This parameter (period) seems to be called \"dist\" elsewhere.\nAs I understand it, both here and in chunkunroll_relaxed (where it is called \"dist\"), it represents the size to be copied before using the chunk-sized copies.\n\nThe difference seems to be the places where it is called \"dist\" we still copy chunks. But I imagine that isn\u0027t significant. In fact, that seems to be the only difference between this and chunkcopy_lapped_relaxed. Are both of these functions needed?",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20c504d4_34978136",
         "filename": "third_party/zlib/contrib/arm/inffast.c",
         "patchSetId": 5
