@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83a0dd27_b5acb95f",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T22:35:12Z",
+      "side": 1,
+      "message": "Previously I was trying to calculate the correct insets but it\u0027s pretty challenging since we just center the location bar and can\u0027t rely on it\u0027s location to determine where we\u0027re actually showing text or the security icon. These values cover all of the content while keeping the anonymize rect completely contained within the location bar background.\n\nLong-term (e.g. after we no longer have BottomToolbarPhone and ToolbarPhone forks) I\u0027d like to get rid of the concept of \"location bar vertical margin\" and all of these manual calculations and use a normal XML layout since we now have a much simpler URL expansion animation.",
+      "range": {
+        "startLine": 271,
+        "startChar": 4,
+        "endLine": 272,
+        "endChar": 72
+      },
+      "revId": "b801c872296537787765c9d1cf373f275a7acf6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b03367_40140eb2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T22:35:12Z",
+      "side": 1,
+      "message": "nit: locationBarBackgroundHeight is a better name.",
+      "range": {
+        "startLine": 559,
+        "startChar": 22,
+        "endLine": 559,
+        "endChar": 39
+      },
+      "revId": "b801c872296537787765c9d1cf373f275a7acf6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
