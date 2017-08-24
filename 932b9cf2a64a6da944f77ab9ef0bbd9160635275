@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cf3c44a_422b372c",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-24T21:55:13Z",
+      "side": 1,
+      "message": "You don\u0027t need to initialize std::unique_ptr\u003c\u003e to nullptr.",
+      "revId": "932b9cf2a64a6da944f77ab9ef0bbd9160635275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "994d9c4d_85687757",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-24T21:55:13Z",
+      "side": 1,
+      "message": "Is there a reason to not include the rest in InitParams?",
+      "revId": "932b9cf2a64a6da944f77ab9ef0bbd9160635275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
