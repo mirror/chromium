@@ -11,6 +11,7 @@
 #include "ash/system/system_notifier.h"
 #include "base/bind.h"
 #include "base/macros.h"
+#include "base/strings/pattern.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_piece.h"
 #include "base/strings/string_split.h"
@@ -46,42 +47,58 @@ constexpr base::TimeDelta kNotificationInterval =
 const char kNotificationOriginUrl[] = "chrome://peripheral-battery";
 const char kNotifierId[] = "power.peripheral-battery";
 
-// HID Bluetooth device's battery sysfs entry path looks like
-// "/sys/class/power_supply/hid-AA:BB:CC:DD:EE:FF-battery".
+// HID device's battery sysfs entry path looks like
+// /sys/class/power_supply/hid-{AA:BB:CC:DD:EE:FF|AAAA:BBBB:CCCC.DDDD}-battery.
 // Here the bluetooth address is showed in reverse order and its true
 // address "FF:EE:DD:CC:BB:AA".
 const char kHIDBatteryPathPrefix[] = "/sys/class/power_supply/hid-";
 const char kHIDBatteryPathSuffix[] = "-battery";
 
-bool IsBluetoothHIDBattery(const std::string& path) {
+bool IsHIDBattery(const std::string& path) {
   return base::StartsWith(path, kHIDBatteryPathPrefix,
                           base::CompareCase::INSENSITIVE_ASCII) &&
          base::EndsWith(path, kHIDBatteryPathSuffix,
                         base::CompareCase::INSENSITIVE_ASCII);
 }
 
-std::string ExtractBluetoothAddress(const std::string& path) {
+// Retrieve the unique identifier between the HID battery path prefix and
+// suffix.
+std::string TrimHIDBatteryPrefixAndSuffix(const std::string& path) {
   int header_size = strlen(kHIDBatteryPathPrefix);
   int end_size = strlen(kHIDBatteryPathSuffix);
   int key_len = path.size() - header_size - end_size;
   if (key_len <= 0)
     return std::string();
-  std::string reverse_address =
-      base::ToLowerASCII(path.substr(header_size, key_len));
-  std::vector<base::StringPiece> result = base::SplitStringPiece(
-      reverse_address, ":", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+
+  return path.substr(header_size, key_len);
+}
+
+// If the device is a bluetooth device, the string extracted from
+// TrimHIDBatteryPrefixAndSuffix will be the bluetooth address, but reversed.
+// This method returns the true bluetooth address.
+std::string ExtractBluetoothAddressFromTrimmedPath(
+    const std::string& reversed_address) {
+  if (reversed_address.empty())
+    return std::string();
+
+  std::string lowered_reversed_address = base::ToLowerASCII(reversed_address);
+  std::vector<base::StringPiece> result =
+      base::SplitStringPiece(lowered_reversed_address, ":",
+                             base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
   std::reverse(result.begin(), result.end());
   std::string address = base::JoinString(result, ":");
   return address;
 }
 
 // Checks if the device is an external stylus.
-bool IsStylusDevice(const std::string& bluetooth_address,
+bool IsStylusDevice(const std::string& trimmed_path,
                     const std::string& model_name) {
   for (const ui::TouchscreenDevice& device :
        ui::InputDeviceManager::GetInstance()->GetTouchscreenDevices()) {
-    if (device.is_stylus && device.name == model_name &&
-        ExtractBluetoothAddress(device.sys_path.value()) == bluetooth_address) {
+    if (device.is_stylus &&
+        (device.name == model_name ||
+         device.name.find(model_name) != std::string::npos) &&
+        device.sys_path.value().find(trimmed_path) != std::string::npos) {
       return true;
     }
   }
@@ -150,10 +167,19 @@ void PeripheralBatteryObserver::PeripheralBatteryStatusReceived(
     int level) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   std::string address;
-  if (IsBluetoothHIDBattery(path)) {
-    // For HID bluetooth device, device address is used as key to index
-    // BatteryInfo.
-    address = ExtractBluetoothAddress(path);
+  bool is_stylus_device;
+
+  if (IsHIDBattery(path)) {
+    std::string id = TrimHIDBatteryPrefixAndSuffix(path);
+    if (IsStylusDevice(id, name)) {
+      is_stylus_device = true;
+      address = id;
+    } else {
+      is_stylus_device = false;
+      // For HID bluetooth device, device address is used as key to index
+      // BatteryInfo.
+      address = ExtractBluetoothAddressFromTrimmedPath(id);
+    }
   } else {
     LOG(ERROR) << "Unsupported battery path " << path;
     return;
@@ -180,8 +206,7 @@ void PeripheralBatteryObserver::PeripheralBatteryStatusReceived(
   //    below kLowBatteryLevel.
   // 2. The battery level is in record and it drops below kLowBatteryLevel.
   if (batteries_.find(address) == batteries_.end()) {
-    BatteryInfo battery{name, level, base::TimeTicks(),
-                        IsStylusDevice(address, name)};
+    BatteryInfo battery{name, level, base::TimeTicks(), is_stylus_device};
     if (level <= kLowBatteryLevel) {
       if (PostNotification(address, battery)) {
         battery.last_notification_timestamp = testing_clock_ ?

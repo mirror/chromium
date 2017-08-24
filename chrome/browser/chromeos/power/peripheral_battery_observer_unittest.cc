@@ -150,13 +150,15 @@ TEST_F(PeripheralBatteryObserverTest, DeviceRemove) {
 }
 
 TEST_F(PeripheralBatteryObserverTest, StylusNotification) {
+  const std::string kTestStylusBatteryPath =
+      "/sys/class/power_supply/hid-AAAA:BBBB:CCCC.DDDD-battery";
   const std::string kTestStylusName = "test_stylus";
 
   // Add an external stylus to our test device manager.
   ui::TouchscreenDevice stylus(0 /* id */, ui::INPUT_DEVICE_EXTERNAL,
                                kTestStylusName, gfx::Size(),
                                1 /* touch_points */);
-  stylus.sys_path = base::FilePath(kTestBatteryPath);
+  stylus.sys_path = base::FilePath(kTestStylusBatteryPath);
   stylus.is_stylus = true;
 
   ui::test::DeviceDataManagerTestAPI test_api;
@@ -167,16 +169,16 @@ TEST_F(PeripheralBatteryObserverTest, StylusNotification) {
 
   // Verify that when the battery level is 50, no stylus low battery
   // notification is shown.
-  observer_->PeripheralBatteryStatusReceived(kTestBatteryPath, kTestStylusName,
-                                             50);
+  observer_->PeripheralBatteryStatusReceived(kTestStylusBatteryPath,
+                                             kTestStylusName, 50);
   EXPECT_TRUE(message_center->FindVisibleNotificationById(
                   PeripheralBatteryObserver::kStylusNotificationId) == nullptr);
 
   // Verify that when the battery level is 5, a stylus low battery notification
   // is shown. Also check that a non stylus device low battery notification will
   // not show up.
-  observer_->PeripheralBatteryStatusReceived(kTestBatteryPath, kTestStylusName,
-                                             5);
+  observer_->PeripheralBatteryStatusReceived(kTestStylusBatteryPath,
+                                             kTestStylusName, 5);
   EXPECT_TRUE(message_center->FindVisibleNotificationById(
                   PeripheralBatteryObserver::kStylusNotificationId) != nullptr);
   EXPECT_TRUE(message_center->FindVisibleNotificationById(
@@ -184,8 +186,8 @@ TEST_F(PeripheralBatteryObserverTest, StylusNotification) {
 
   // Verify that when the battery level is -1, the previous stylus low battery
   // notification is cancelled.
-  observer_->PeripheralBatteryStatusReceived(kTestBatteryPath, kTestStylusName,
-                                             -1);
+  observer_->PeripheralBatteryStatusReceived(kTestStylusBatteryPath,
+                                             kTestStylusName, -1);
   EXPECT_TRUE(message_center->FindVisibleNotificationById(
                   PeripheralBatteryObserver::kStylusNotificationId) == nullptr);
 }
