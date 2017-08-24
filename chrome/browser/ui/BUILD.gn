@@ -2198,6 +2198,8 @@ split_static_library("ui") {
     }
     if (is_chromeos) {
       sources += [ "webui/print_preview/printer_backend_proxy_chromeos.cc" ]
+    } else if (is_win) {
+      sources += [ "webui/print_preview/printer_backend_proxy_win.cc" ]
     } else {
       sources += [ "webui/print_preview/printer_backend_proxy.cc" ]
     }
