@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "431a1ffe_b0a1ad93",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-08-24T10:48:24Z",
+      "side": 1,
+      "message": "Just realized that this could be folded back into Core now that it uses the GUID to find its data. Since I\u0027m going to remove it altogether later, I\u0027ll leave it as it is now.",
+      "range": {
+        "startLine": 145,
+        "startChar": 4,
+        "endLine": 145,
+        "endChar": 71
+      },
+      "revId": "e0f60bcd013b33631eec6d5726dacb2d0970c0bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
