@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "448e1bdf_e0b38030",
+        "filename": "components/autofill/content/renderer/DEPS",
+        "patchSetId": 13
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T16:59:51Z",
+      "side": 1,
+      "message": "this comment applies only to \"+components/security_state/core\", could you please move it before \"+components/security_state/core\"",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 38
+      },
+      "revId": "ebf246b6b3d7e787c69ecd8f6f55b3350f1f26c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc6c0f6_42a712e0",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T16:59:51Z",
+      "side": 1,
+      "message": "Nit: This is a comment to InputHint, so you can just write\n// Represents ... \nor\n// InputHint ... (without |)\n if you like\n\nThe same with other structs.",
+      "range": {
+        "startLine": 126,
+        "startChar": 3,
+        "endLine": 126,
+        "endChar": 15
+      },
+      "revId": "ebf246b6b3d7e787c69ecd8f6f55b3350f1f26c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd410b86_0941c8f1",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T16:59:51Z",
+      "side": 1,
+      "message": "Nit: const re2::RE2*",
+      "range": {
+        "startLine": 134,
+        "startChar": 12,
+        "endLine": 134,
+        "endChar": 27
+      },
+      "revId": "ebf246b6b3d7e787c69ecd8f6f55b3350f1f26c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ee65d6_ac50157e",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T16:59:51Z",
+      "side": 1,
+      "message": "this is constructore, so |tokens| are empty before this line. So you can just write \u003d rather than +\u003d",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 33
+      },
+      "revId": "ebf246b6b3d7e787c69ecd8f6f55b3350f1f26c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01af6a32_27759801",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T16:59:51Z",
+      "side": 1,
+      "message": "According to Google C++ style guide reference parameter should be const (https://google.github.io/styleguide/cppguide.html#Reference_Arguments ). Please change parameters to pointers.",
+      "range": {
+        "startLine": 167,
+        "startChar": 3,
+        "endLine": 168,
+        "endChar": 33
+      },
+      "revId": "ebf246b6b3d7e787c69ecd8f6f55b3350f1f26c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3230a3d_29c77b9a",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T16:59:51Z",
+      "side": 1,
+      "message": "According to Google C++ style guide reference parameter should be const (https://google.github.io/styleguide/cppguide.html#Reference_Arguments ). Please change parameters to pointers.\n\nhttps://google.github.io/styleguide/cppguide.html#Function_Parameter_Ordering\nAt first should be input parameters (i.e. |autocomplete_suggestions| should be the last parameter)\n\nThe same with other functions.",
+      "range": {
+        "startLine": 258,
+        "startChar": 25,
+        "endLine": 258,
+        "endChar": 80
+      },
+      "revId": "ebf246b6b3d7e787c69ecd8f6f55b3350f1f26c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3b9321_b6a60c0c",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T16:59:51Z",
+      "side": 1,
+      "message": "It looks that even there are autocomplete suggestion on a form, but on another fields from our guess, suggestions would be still shown. Am I wrong? Probably we should skip autocomplete suggestion if at least one password field is marked with them. WDYT?",
+      "range": {
+        "startLine": 312,
+        "startChar": 1,
+        "endLine": 312,
+        "endChar": 27
+      },
+      "revId": "ebf246b6b3d7e787c69ecd8f6f55b3350f1f26c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3022252_a55d24a6",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T16:59:51Z",
+      "side": 1,
+      "message": "Nit: bool has_text_field \u003d !text_inputs.empty()",
+      "range": {
+        "startLine": 347,
+        "startChar": 7,
+        "endLine": 347,
+        "endChar": 21
+      },
+      "revId": "ebf246b6b3d7e787c69ecd8f6f55b3350f1f26c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f6da7c_6aaa029b",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T16:59:51Z",
+      "side": 1,
+      "message": "it looks like it should be\nif (has_text_field || ...)",
+      "range": {
+        "startLine": 349,
+        "startChar": 6,
+        "endLine": 349,
+        "endChar": 21
+      },
+      "revId": "ebf246b6b3d7e787c69ecd8f6f55b3350f1f26c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d9d74d_3cc063db",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T16:59:51Z",
+      "side": 1,
+      "message": "It\u0027s not exactly Lazily, when DevTools are open, it\u0027s analyzed immediately. Probably it\u0027s better to call something like AnalyseIfDevtoolsOpen",
+      "range": {
+        "startLine": 415,
+        "startChar": 36,
+        "endLine": 415,
+        "endChar": 60
+      },
+      "revId": "ebf246b6b3d7e787c69ecd8f6f55b3350f1f26c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9149ee1_608b11ca",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T16:59:51Z",
+      "side": 1,
+      "message": "It looks these headers are not needed anymore",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 58
+      },
+      "revId": "ebf246b6b3d7e787c69ecd8f6f55b3350f1f26c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6cfe6ee_707e4d4f",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T16:59:51Z",
+      "side": 1,
+      "message": "Could you please add comment for this field? (something like, if true, the page will be analyzed when DevTools are opened).",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "ebf246b6b3d7e787c69ecd8f6f55b3350f1f26c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3467b103_3dfff017",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T16:59:51Z",
+      "side": 1,
+      "message": "Nit: GetDevToolsAgent (method names start usually from verb)",
+      "range": {
+        "startLine": 290,
+        "startChar": 0,
+        "endLine": 290,
+        "endChar": 42
+      },
+      "revId": "ebf246b6b3d7e787c69ecd8f6f55b3350f1f26c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
