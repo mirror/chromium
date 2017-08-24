@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19500721_9e6f2f55",
+        "filename": "chrome/browser/resources/settings/controls/settings_checkbox.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-24T19:24:29Z",
+      "side": 1,
+      "message": "I\u0027d expect this to be in a properties: {}, block since it\u0027s used in binding.",
+      "revId": "ada7aaf677e4ee9ce5ff384f755565a990898c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c0084f_0c0eb4be",
+        "filename": "chrome/browser/resources/settings/controls/settings_checkbox.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-24T19:24:29Z",
+      "side": 1,
+      "message": "Will this potentially add multiple event listeners? e.g. if the instance has three \u0027secondary.label a\u0027 (I\u0027ll call them A,B,C) and the observer is called for each, will we have listeners added for\n\nA (now has 1 function in A in callback list)\nthen \nA,B (now has 2 functions in A, 1 function in B in callback list)\nthen\nA,B,C (now has 3 functions in A, 2 function in B, 1 function in C in callback list)\n\nfor a total of six callbacks? (I believe that\u0027s true, because addEventListener sees each new function as a separate function (because each is a separate function)).\n\nThis can be avoided by creating a single function on |this| like:\n\n  myFunction: (event) \u003d\u003e { event.stopPropagation(); },\n\nAnd passing that function to the addEventListener like:\n\n  link.addEventListener(\u0027tap\u0027, this.myFunction);\n\nThen addEventListener will see that it\u0027s the *same* function and not keep attaching functions to the event.\n\nA (now has 1 function in A in callback list)\nthen \nA,B (now has 1 function in A, 1 function in B in callback list)\nthen\nA,B,C (now has 1 function in A, 1 function in B, 1 function in C in callback list)",
+      "revId": "ada7aaf677e4ee9ce5ff384f755565a990898c95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
