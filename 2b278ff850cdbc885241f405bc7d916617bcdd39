@@ -48,6 +48,52 @@
     },
     {
       "key": {
+        "uuid": "1253bddc_7d693174",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-24T12:31:04Z",
+      "side": 1,
+      "message": "use measureChildren instead? calling the full method twice looks wrong to me.",
+      "range": {
+        "startLine": 30,
+        "startChar": 14,
+        "endLine": 30,
+        "endChar": 23
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6147cb3b_0edc828d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-24T12:31:04Z",
+      "side": 1,
+      "message": "do you need to remeasure if you just did it at line 30?",
+      "range": {
+        "startLine": 34,
+        "startChar": 18,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56f6c755_909a871c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
         "patchSetId": 1
@@ -59,6 +105,30 @@
       "writtenOn": "2017-08-24T11:07:40Z",
       "side": 1,
       "message": "Isn\u0027t that the _second_ page?",
+      "range": {
+        "startLine": 40,
+        "startChar": 35,
+        "endLine": 40,
+        "endChar": 36
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a192dde_4ee709ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-24T12:31:04Z",
+      "side": 1,
+      "message": "Good point, I don\u0027t really know how the ViewPager differentiates the decor and page views, WRT getChildAt and getCurrentItem. Maybe a way around it would be to use resource ids rather than child position to identify the tabs and page dots?",
+      "parentUuid": "56f6c755_909a871c",
       "range": {
         "startLine": 40,
         "startChar": 35,
@@ -87,6 +157,52 @@
         "startChar": 8,
         "endLine": 41,
         "endChar": 11
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f35f964_72179261",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-24T12:31:04Z",
+      "side": 1,
+      "message": "same: if we measured children earlier, do we need to explicitly remeasure this one? If we do need to explicitly call measure like here, with UNSPECIFIED, maybe do it as a single measureChild loop and don\u0027t call super.onMeasure or measureChildren at all?",
+      "range": {
+        "startLine": 43,
+        "startChar": 21,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e60ea2_f678986c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-24T12:31:04Z",
+      "side": 1,
+      "message": "There is setMeasuredDimension() if you just need to set the dimensions and don\u0027t want the whole measure pass to run again.",
+      "range": {
+        "startLine": 54,
+        "startChar": 14,
+        "endLine": 54,
+        "endChar": 23
       },
       "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
