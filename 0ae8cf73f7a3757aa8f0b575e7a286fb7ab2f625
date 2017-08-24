@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1652979_7c544e97",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T08:04:05Z",
+      "side": 1,
+      "message": "nit: we there -\u003e there",
+      "revId": "0ae8cf73f7a3757aa8f0b575e7a286fb7ab2f625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522bb2d7_5fb147ee",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T08:04:05Z",
+      "side": 1,
+      "message": "nit: no {} for consistency\n\nWhy getting removed before being added results in a crash (aside that it may hit DCHECK)?",
+      "revId": "0ae8cf73f7a3757aa8f0b575e7a286fb7ab2f625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d68e4187_41cfc2bd",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T08:04:05Z",
+      "side": 1,
+      "message": "kInitial, kAddedToContext, kRemovedFromContext\n\n+ crbug number for a bit of more context?",
+      "revId": "0ae8cf73f7a3757aa8f0b575e7a286fb7ab2f625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
