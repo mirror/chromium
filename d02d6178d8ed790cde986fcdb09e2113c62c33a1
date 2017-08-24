@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63ca4e86_34ad0654",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:16:46Z",
+      "side": 1,
+      "message": "nit: Title implies that there\u0027s a class we\u0027re adding methods to, whereas we are actually adding a \"default job\" concept that defaults to the Magenta default job for the process, but which can also be overridden if necessary.",
+      "revId": "d02d6178d8ed790cde986fcdb09e2113c62c33a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0250c0f5_b15dfcb2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:16:46Z",
+      "side": 1,
+      "message": "nit: Suggest making clear the reason why we want to do that, i.e. that a process which launches child processes can set its own enumerable job as the default, so that APIs like base::Process::Open() can then look up child processes by Id, with the right scoping.\n\nYou might also introduce with something like \"Fuchsia uses the concept of jobs to scope groups of related processes (see \u003clink\u003e).\"",
+      "revId": "d02d6178d8ed790cde986fcdb09e2113c62c33a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bcbf74_0a1c7d54",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:16:46Z",
+      "side": 1,
+      "message": "default_jerb.h",
+      "revId": "d02d6178d8ed790cde986fcdb09e2113c62c33a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "756d1b58_d5227fa2",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:16:46Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like you need any syscalls?",
+      "revId": "d02d6178d8ed790cde986fcdb09e2113c62c33a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0281987d_7af85554",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:16:46Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like you do any logging in here?",
+      "revId": "d02d6178d8ed790cde986fcdb09e2113c62c33a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f1ee2f8_fe7bc62f",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:16:46Z",
+      "side": 1,
+      "message": "You don\u0027t need both |static| _and_ |namespace|, just one or the other.",
+      "revId": "d02d6178d8ed790cde986fcdb09e2113c62c33a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdcebee5_378647a2",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:16:46Z",
+      "side": 1,
+      "message": "I don\u0027t think you want to set g_job here, just return mx_job_default directly.",
+      "revId": "d02d6178d8ed790cde986fcdb09e2113c62c33a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "659ba109_a37b522c",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:16:46Z",
+      "side": 1,
+      "message": "If the caller is permitted to call this more than once, e.g. to replace a default job they previously provided, then you need to arrange to release g_job before overwriting it.\n\nOtherwise, just DCHECK_EQ(...) that |g_job| is invalid.",
+      "revId": "d02d6178d8ed790cde986fcdb09e2113c62c33a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c5c7ff_417ec4aa",
+        "filename": "base/fuchsia/child_job.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:16:46Z",
+      "side": 1,
+      "message": "nit: You don\u0027t need this explicitly, since by definition scoped_mx_handle.h must already have included it, in order to function.",
+      "revId": "d02d6178d8ed790cde986fcdb09e2113c62c33a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680b0a36_d461977c",
+        "filename": "base/fuchsia/child_job.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:16:46Z",
+      "side": 1,
+      "message": "nit: No need for \"Fuchsia\"; this is Fuchsia specific code. You might say \"handle to the job object\" or just \"job handle\".\n\nYou might also generalize this comment to \"Gets/sets the job handle to use ...\" so a single comment can apply to both APIs.\n\nIt would also be good to state that the value from mx_job_default() will be used if SetDefaultJob() is never called, or if it is called with MX_HANDLE_INVALID.",
+      "revId": "d02d6178d8ed790cde986fcdb09e2113c62c33a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
