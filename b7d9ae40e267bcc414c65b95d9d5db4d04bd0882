@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f0caa9f_c17093ec",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-24T04:38:24Z",
+      "side": 1,
+      "message": "Looks like you still need to rebase this CL...",
+      "revId": "b7d9ae40e267bcc414c65b95d9d5db4d04bd0882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335a143a_c89e175d",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-24T04:38:24Z",
+      "side": 1,
+      "message": "Likewise here, these aren\u0027t different from what\u0027s in the loop any more either...",
+      "revId": "b7d9ae40e267bcc414c65b95d9d5db4d04bd0882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76339c3f_e9ca5bdc",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-24T04:38:24Z",
+      "side": 1,
+      "message": "ditto...",
+      "revId": "b7d9ae40e267bcc414c65b95d9d5db4d04bd0882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586fdced_ac183a22",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIApplyAtRule.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-24T04:38:24Z",
+      "side": 1,
+      "message": "s/2016/2017, happy new year :p",
+      "revId": "b7d9ae40e267bcc414c65b95d9d5db4d04bd0882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
