@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ddd37c91_186249ee",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:32:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c45d8cd_c242e01b",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c41cb8a5_b2b1cca5",
         "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093848de_fa01e879",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:32:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c41cb8a5_b2b1cca5",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "200cb8b5_0ac1c6d8",
+        "filename": "components/offline_pages/core/prefetch/mark_operation_done_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:32:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05fa451d_736a3f30",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99e3b0e4_081e5133",
         "filename": "components/offline_pages/core/prefetch/mark_operation_done_task.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35953791_42aa6a4f",
+        "filename": "components/offline_pages/core/prefetch/mark_operation_done_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:32:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99e3b0e4_081e5133",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "cd4b2d2b_53854e5c",
+        "filename": "components/offline_pages/core/prefetch/mark_operation_done_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:32:02Z",
+      "side": 1,
+      "message": "I think that the right strategy is to schedule pipeline processing iff we are in the background task.  That can be left for a future patch.",
+      "parentUuid": "9ab916e5_6339337d",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2024683c_071c88ac",
         "filename": "components/offline_pages/core/prefetch/mark_operation_done_task.h",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-24T00:52:43Z",
       "side": 1,
       "message": "Update the comment.",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1608108_552deddb",
+        "filename": "components/offline_pages/core/prefetch/mark_operation_done_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:32:02Z",
+      "side": 1,
+      "message": "Comment still stands, action tasks are unaffected by this patch. I will reword it though.",
+      "parentUuid": "2024683c_071c88ac",
       "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "ed41530b_e82f20be",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:32:02Z",
+      "side": 1,
+      "message": "Doh! Definitely needs a comment.",
+      "parentUuid": "48b189a9_65bf0911",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8c93f9a_c3a38528",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
         "patchSetId": 2
@@ -149,6 +275,24 @@
       "writtenOn": "2017-08-24T01:02:42Z",
       "side": 1,
       "message": "If you want this to remain, lets make the text more specific, this is not just any finalization result... If you used it for debugging, lets remove. Same above in MoreWorkInQueue().",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938b99c4_8eec194d",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:32:02Z",
+      "side": 1,
+      "message": "I\u0027ll leave one in (they are removed in real Chrome) but improve the message.",
+      "parentUuid": "d8c93f9a_c3a38528",
       "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "fce0f03d_2986de8e",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:32:02Z",
+      "side": 1,
+      "message": "I like the two-value enum a little better for readability.",
+      "parentUuid": "4d018276_be51c3d6",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5af2681e_9dd42d97",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.h",
         "patchSetId": 2
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "15f56654_eabea301",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:32:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5af2681e_9dd42d97",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65f98299_70d50552",
         "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.h",
         "patchSetId": 2
@@ -203,6 +383,24 @@
       "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a666bcb_05486a8a",
+        "filename": "components/offline_pages/core/prefetch/stale_entry_finalizer_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-24T18:32:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65f98299_70d50552",
+      "revId": "df633d33ad54e499f638adcc38f925dac2096eb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
