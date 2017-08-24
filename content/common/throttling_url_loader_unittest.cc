@@ -612,5 +612,19 @@ TEST_F(ThrottlingURLLoaderTest, ResumeNoOpIfAlreadyCanceled) {
   EXPECT_EQ(1u, client_.on_complete_called());
 }
 
+// A simple smoke test to validate that multiple throttles are supported.  See
+// MultiURLLoaderThrottle and associated tests for more comprehensive tests.
+TEST_F(ThrottlingURLLoaderTest, MultipleThrottlesSupportedSmoke) {
+  throttles_.push_back(base::MakeUnique<TestURLLoaderThrottle>());
+  auto* throttle2 =
+      static_cast<TestURLLoaderThrottle*>(throttles_.back().get());
+
+  CreateLoaderAndStart();
+  factory_.NotifyClientOnReceiveResponse();
+
+  EXPECT_EQ(1u, throttle_->will_start_request_called());
+  EXPECT_EQ(1u, throttle2->will_start_request_called());
+}
+
 }  // namespace
 }  // namespace content

@@ -5,6 +5,7 @@
 #include "content/common/throttling_url_loader.h"
 
 #include "base/single_thread_task_runner.h"
+#include "content/common/multi_url_loader_throttle.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 
 namespace content {
@@ -119,13 +120,14 @@ ThrottlingURLLoader::ThrottlingURLLoader(
     : forwarding_client_(client),
       client_binding_(this),
       traffic_annotation_(traffic_annotation) {
-  if (throttles.size() > 0) {
-    // TODO(yzshen): Implement a URLLoaderThrottle subclass which handles a list
-    // of URLLoaderThrottles.
-    CHECK_EQ(1u, throttles.size());
+  if (throttles.size() == 1) {
     throttle_ = std::move(throttles[0]);
-    throttle_->set_delegate(this);
+  } else if (throttles.size() > 1) {
+    throttle_ = base::MakeUnique<MultiURLLoaderThrottle>(std::move(throttles));
   }
+
+  if (throttle_)
+    throttle_->set_delegate(this);
 }
 
 void ThrottlingURLLoader::Start(
