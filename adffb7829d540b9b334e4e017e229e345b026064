@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fdb5941_c14a152e",
+        "filename": "chrome/browser/guest_view/web_view/chrome_web_view_permission_helper_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T17:56:19Z",
+      "side": 1,
+      "message": "Sadly - all tryjobs were green in patchset #3 (even after commenting out handling of the 3 messages here).",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 68
+      },
+      "revId": "adffb7829d540b9b334e4e017e229e345b026064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
