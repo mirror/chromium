@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d4b9d15_6536f005",
+        "filename": "ui/ozone/platform/drm/mus_thread_proxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-24T15:35:28Z",
+      "side": 1,
+      "message": "nit: Maybe change this variable name too?",
+      "range": {
+        "startLine": 132,
+        "startChar": 33,
+        "endLine": 132,
+        "endChar": 45
+      },
+      "revId": "f1ad289ed1fda3c17005bd570bf0c8c0576e9c49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
