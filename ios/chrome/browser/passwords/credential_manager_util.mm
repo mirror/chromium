@@ -4,13 +4,20 @@
 
 #include "ios/chrome/browser/passwords/credential_manager_util.h"
 
+#include "components/security_state/core/security_state.h"
+#include "ios/chrome/browser/ssl/ios_security_state_tab_helper.h"
 #import "ios/web/public/origin_util.h"
+#import "ios/web/public/web_state/web_state.h"
 #include "url/origin.h"
+
+// TODO: move the file
+#include "ios/chrome/browser/web/origin_security_checker.h"
 
 using password_manager::CredentialManagerError;
 using password_manager::CredentialInfo;
 using password_manager::CredentialType;
 using password_manager::CredentialMediationRequirement;
+using web::OriginSecurityChecker;
 
 namespace credential_manager {
 
@@ -152,6 +159,43 @@ bool ParseCredentialDictionary(const base::DictionaryValue& json,
     credential->federation = url::Origin(GURL(federation));
   }
   return true;
+}
+
+security_state::SecurityLevel GetSecurityLevelForWebState(
+    web::WebState* web_state) {
+  if (!web_state) {
+    return security_state::NONE;
+  }
+  auto* client = IOSSecurityStateTabHelper::FromWebState(web_state);
+  security_state::SecurityInfo result;
+  client->GetSecurityInfo(&result);
+  return result.security_level;
+}
+
+bool IsContextSecure(web::WebState* web_state) {
+  if (!web_state) {
+    return false;
+  }
+
+  if (!web_state->ContentIsHTML()) {
+    return false;
+  }
+
+  const GURL lastCommittedUrl = web_state->GetLastCommittedURL();
+  security_state::SecurityLevel security_level =
+      GetSecurityLevelForWebState(web_state);
+
+  if (!OriginSecurityChecker::IsContextSecure(lastCommittedUrl)) {
+    return false;
+  }
+
+  if (!OriginSecurityChecker::IsSchemeCryptographic(lastCommittedUrl) &&
+      !OriginSecurityChecker::IsOriginLocalhostOrFile(lastCommittedUrl)) {
+    return false;
+  }
+
+  return !OriginSecurityChecker::IsSchemeCryptographic(lastCommittedUrl) ||
+         OriginSecurityChecker::IsSSLCertificateValid(security_level);
 }
 
 }  // namespace credential_manager
