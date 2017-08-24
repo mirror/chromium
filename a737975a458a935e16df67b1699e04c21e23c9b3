@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "644a8541_c082afe9",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-24T18:26:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8eeff748_c83e2ff0",
+      "range": {
+        "startLine": 38,
+        "startChar": 55,
+        "endLine": 38,
+        "endChar": 61
+      },
+      "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f18671eb_bb2eef88",
         "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-24T05:34:07Z",
       "side": 1,
       "message": "Is it possible that size \u003e max data pipe buffer size?",
+      "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "064b7c13_84e2d72a",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-24T18:26:53Z",
+      "side": 1,
+      "message": "please clarify. Are you asking if the second conditional will ever evaluate to true?\n\nProbably not, as long as the profiling process isn\u0027t compromised. The check is there to make sure that line 161 don\u0027t go out of bounds.",
+      "parentUuid": "f18671eb_bb2eef88",
       "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "649eb9e5_d4573dbb",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-24T18:26:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1646b24_d0b51a06",
+      "range": {
+        "startLine": 166,
+        "startChar": 63,
+        "endLine": 166,
+        "endChar": 68
+      },
+      "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3425f13f_3ef343a9",
         "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
         "patchSetId": 3
@@ -76,6 +142,30 @@
       "writtenOn": "2017-08-24T05:34:07Z",
       "side": 1,
       "message": "The tracing framework passes std::unique_ptr ownership... by mutable pointer?\n\nso confused.",
+      "range": {
+        "startLine": 175,
+        "startChar": 32,
+        "endLine": 175,
+        "endChar": 38
+      },
+      "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e092e0f_819a0c61",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-24T18:26:53Z",
+      "side": 1,
+      "message": "*shrug*",
+      "parentUuid": "3425f13f_3ef343a9",
       "range": {
         "startLine": 175,
         "startChar": 32,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "836851af_e8e60a6d",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-24T18:26:53Z",
+      "side": 1,
+      "message": "right. leaving as is. sometimes our style guide feels a bit antiquated.",
+      "parentUuid": "3bb6e58b_23ef3cbe",
+      "range": {
+        "startLine": 262,
+        "startChar": 16,
+        "endLine": 262,
+        "endChar": 17
+      },
+      "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afa5abb7_7e010d88",
         "filename": "chrome/profiling/json_exporter.cc",
         "patchSetId": 3
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "621c66d2_52903347",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-24T18:26:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afa5abb7_7e010d88",
+      "range": {
+        "startLine": 270,
+        "startChar": 11,
+        "endLine": 270,
+        "endChar": 14
+      },
+      "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b57207f0_093d0987",
         "filename": "chrome/profiling/memlog_connection_manager.cc",
         "patchSetId": 3
@@ -145,6 +283,24 @@
       "writtenOn": "2017-08-24T05:34:07Z",
       "side": 1,
       "message": "To answer my earlier question, I guess we\u0027ll fail here--though depending on the trust levels between browser and profiling (usually browser is consider the most trusted), that means a bad profiler reply would cause an infinite loop of post tasks.",
+      "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6912aa1_8dc8ff41",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-24T18:26:53Z",
+      "side": 1,
+      "message": "yeah...I guess we could put in a back-off for waiting for the pipe to have sufficient data...but really I wish that data pipes were slightly more convenient to use. [and compromised processes have always been able to DOS the browser]",
+      "parentUuid": "b57207f0_093d0987",
       "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -171,6 +327,30 @@
       "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab910120_2688824b",
+        "filename": "chrome/profiling/memlog_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-24T18:26:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11db8362_248ebd0a",
+      "range": {
+        "startLine": 51,
+        "startChar": 56,
+        "endLine": 51,
+        "endChar": 75
+      },
+      "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
