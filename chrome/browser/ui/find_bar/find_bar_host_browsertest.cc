@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/files/file_util.h"
+#include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/string16.h"
@@ -204,6 +205,8 @@ class FindInPageControllerTest : public InProcessBrowserTest {
             base::Bind(&base::RunLoop::QuitCurrentWhenIdleDeprecated));
     content::RunMessageLoop();
   }
+
+  DISALLOW_COPY_AND_ASSIGN(FindInPageControllerTest);
 };
 
 // This test loads a page with frames and starts FindInPage requests.
