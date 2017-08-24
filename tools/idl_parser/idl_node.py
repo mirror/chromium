@@ -96,7 +96,11 @@ class IDLNode(object):
   # Return a string representation of this node
   def __str__(self):
     name = self.GetProperty('NAME','')
-    return '%s(%s)' % (self._cls, name)
+    value = self.GetProperty('VALUE', '')
+    if value == '':
+      return '%s(%s)' % (self._cls, name)
+    else:
+      return '%s(%s)= %s' % (self._cls, name, value)
 
   def GetLogLine(self, msg):
     filename, lineno = self.GetFileAndLine()
