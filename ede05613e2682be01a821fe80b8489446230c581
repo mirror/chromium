@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57028847_e3f5ff26",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:01:08Z",
+      "side": 1,
+      "message": "This implementation is not valid in the Debug/component build, so please include a TODO for us to fix that.",
+      "revId": "ede05613e2682be01a821fe80b8489446230c581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca303afd_e129e203",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:01:08Z",
+      "side": 1,
+      "message": "Hmmm, you\u0027re changing behaviour here without changing any test - does that mean we don\u0027t test e.g. that FILE_EXE returns different values in different exes..?",
+      "revId": "ede05613e2682be01a821fe80b8489446230c581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
