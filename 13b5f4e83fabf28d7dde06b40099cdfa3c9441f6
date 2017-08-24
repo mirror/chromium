@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c1a8dd7_609b121a",
+        "filename": "ui/base/cocoa/hover_button.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-24T04:59:55Z",
+      "side": 1,
+      "message": "What happens if the drag is aborted with Esc and the mouse is still over the button? Should this be updated with a call to -checkImageState?",
+      "revId": "13b5f4e83fabf28d7dde06b40099cdfa3c9441f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
