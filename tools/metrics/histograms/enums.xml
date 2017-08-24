@@ -7169,6 +7169,11 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2" label="Has enough SCTs"/>
 </enum>
 
+<enum name="CustomTabsClient">
+  <int value="0" label="All except AGSA"/>
+  <int value="1" label="AGSA"/>
+</enum>
+
 <enum name="CustomTabsSpeculationStatusOnStart">
   <int value="0"
       label="Speculation allowed. If started, the kind will also be recorded"/>
