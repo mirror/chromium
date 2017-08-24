@@ -69,7 +69,7 @@ LayoutUnit LayoutListBox::DefaultItemHeight() const {
   const SimpleFontData* font_data = Style()->GetFont().PrimaryFont();
   if (!font_data)
     return LayoutUnit();
-  return LayoutUnit(font_data->GetFontMetrics().Height() +
+  return LayoutUnit(font_data->GetFontMetrics().FloatHeight() +
                     kDefaultPaddingBottom);
 }
 

@@ -321,6 +321,14 @@ void InlineTextBoxPainter::Paint(const PaintInfo& paint_info,
 
   LayoutPoint box_origin(inline_text_box_.PhysicalLocation() + paint_offset);
 
+  // Set our font.
+  const Font& font = style_to_use.GetFont();
+  const SimpleFontData* font_data = font.PrimaryFont();
+  DCHECK(font_data);
+
+  float ascent = font_data ? font_data->GetFontMetrics().FloatAscent() : 0;
+  LayoutPoint text_origin(box_origin.X(), LayoutUnit(box_origin.Y() + ascent));
+
   if (inline_text_box_.IsHorizontal()) {
     box_origin.SetY(LayoutUnit(box_origin.Y().Round()));
   } else {
@@ -370,6 +378,7 @@ void InlineTextBoxPainter::Paint(const PaintInfo& paint_info,
           LayoutSize offset =
               LayoutSize(LayoutUnit(), LayoutUnit::FromFloatRound(expansion));
           box_origin.Move(offset);
+          text_origin.Move(offset);
           box_rect.Move(offset);
         }
       }
@@ -390,14 +399,6 @@ void InlineTextBoxPainter::Paint(const PaintInfo& paint_info,
   bool paint_selected_text_only = (paint_info.phase == kPaintPhaseSelection);
   bool paint_selected_text_separately =
       !paint_selected_text_only && text_style != selection_style;
-
-  // Set our font.
-  const Font& font = style_to_use.GetFont();
-  const SimpleFontData* font_data = font.PrimaryFont();
-  DCHECK(font_data);
-
-  int ascent = font_data ? font_data->GetFontMetrics().Ascent() : 0;
-  LayoutPoint text_origin(box_origin.X(), box_origin.Y() + ascent);
 
   // 1. Paint backgrounds behind text if needed. Examples of such backgrounds
   // include selection and composition highlights.
@@ -1152,7 +1153,8 @@ void InlineTextBoxPainter::PaintTextMatchMarkerForeground(
   LayoutRect box_rect(box_origin, LayoutSize(inline_text_box_.LogicalWidth(),
                                              inline_text_box_.LogicalHeight()));
   LayoutPoint text_origin(
-      box_origin.X(), box_origin.Y() + font_data->GetFontMetrics().Ascent());
+      box_origin.X(),
+      LayoutUnit(box_origin.Y() + font_data->GetFontMetrics().FloatAscent()));
   TextPainter text_painter(paint_info.context, font, run, text_origin, box_rect,
                            inline_text_box_.IsHorizontal());
 

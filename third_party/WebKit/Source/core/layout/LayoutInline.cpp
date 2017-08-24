@@ -645,9 +645,9 @@ static inline void ComputeItemTopHeight(const LayoutInline* container,
   }
   auto metrics = font_data->GetFontMetrics();
   auto container_metrics = container_font_data->GetFontMetrics();
-  *top =
-      root_box.LogicalTop() + (metrics.Ascent() - container_metrics.Ascent());
-  *height = LayoutUnit(container_metrics.Height());
+  *top = root_box.LogicalTop() +
+         LayoutUnit(metrics.FloatAscent() - container_metrics.FloatAscent());
+  *height = LayoutUnit(container_metrics.FloatHeight());
 }
 
 template <typename GeneratorContext>
@@ -1391,11 +1391,11 @@ LayoutUnit LayoutInline::BaselinePosition(
   if (!font_data)
     return LayoutUnit(-1);
   const FontMetrics& font_metrics = font_data->GetFontMetrics();
-  return LayoutUnit((font_metrics.Ascent(baseline_type) +
-                     (LineHeight(first_line, direction, line_position_mode) -
-                      font_metrics.Height()) /
-                         2)
-                        .ToInt());
+  return LayoutUnit(
+      font_metrics.FloatAscent(baseline_type) +
+      floorf((LineHeight(first_line, direction, line_position_mode) -
+              font_metrics.FloatHeight()) /
+             2));
 }
 
 LayoutSize LayoutInline::OffsetForInFlowPositionedInline(

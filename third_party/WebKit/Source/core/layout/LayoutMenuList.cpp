@@ -44,7 +44,6 @@ LayoutMenuList::LayoutMenuList(Element* element)
       inner_block_(nullptr),
       is_empty_(false),
       has_updated_active_option_(false),
-      inner_block_height_(LayoutUnit()),
       options_width_(0),
       last_active_index_(-1) {
   DCHECK(isHTMLSelectElement(element));
@@ -170,8 +169,9 @@ void LayoutMenuList::StyleDidChange(StyleDifference diff,
 void LayoutMenuList::UpdateInnerBlockHeight() {
   const SimpleFontData* font_data = Style()->GetFont().PrimaryFont();
   DCHECK(font_data);
-  inner_block_height_ = (font_data ? font_data->GetFontMetrics().Height() : 0) +
-                        inner_block_->BorderAndPaddingHeight();
+  inner_block_height_ =
+      LayoutUnit(font_data ? font_data->GetFontMetrics().FloatHeight() : 0) +
+      inner_block_->BorderAndPaddingHeight();
 }
 
 void LayoutMenuList::UpdateOptionsWidth() const {
