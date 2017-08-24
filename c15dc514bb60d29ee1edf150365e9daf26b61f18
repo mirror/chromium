@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "2051d1e0_f6fdcbfa",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-24T18:06:55Z",
+      "side": 1,
+      "message": "I\u0027ll move it to a class comment.",
+      "parentUuid": "8fca5944_bb9177ae",
+      "range": {
+        "startLine": 91,
+        "startChar": 67,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9e300b8_5960f624",
         "filename": "remoting/host/file_proxy_wrapper_linux.cc",
         "patchSetId": 4
@@ -696,6 +720,30 @@
       "side": 1,
       "message": "I think you want NOTREACHED(); instead of DCHECK(false) as the implication is that no code will trigger this state.",
       "parentUuid": "315aed95_30adf96a",
+      "range": {
+        "startLine": 315,
+        "startChar": 40,
+        "endLine": 315,
+        "endChar": 0
+      },
+      "revId": "c15dc514bb60d29ee1edf150365e9daf26b61f18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "20094746_25f8f572",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-24T18:06:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0e5768f_be4511eb",
       "range": {
         "startLine": 315,
         "startChar": 40,
