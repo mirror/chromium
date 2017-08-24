@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4af5c0a9_89d6b7ec",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ListControl.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-24T01:24:28Z",
+      "side": 1,
+      "message": "Invalidate range might remove item elements from DOM and re-add them.  Doing so loses their focus.",
+      "range": {
+        "startLine": 141,
+        "startChar": 9,
+        "endLine": 141,
+        "endChar": 24
+      },
+      "revId": "87bdc16b65ebe8eda5c16f846c84326554cacd63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
