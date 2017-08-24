@@ -17,7 +17,8 @@ interface ExtensionUnpacker {
         mojo.common.mojom.FilePath path) => (bool success);
 
   // Unpack and sanitize the extension in directory |path|, and return its
-  // parsed manifest.json file in |manifest|. The supplied |location|, and
+  // parsed manifest.json file in |manifest| and its parsed JSON ruleset for
+  // the Declarative Net Request API in |json_ruleset|. The supplied |location|,
   // and the |creation_flags| defined by Extension::InitFromValueFlags are
   // passed into Extension::Create() when unpacking the extension. Decoded
   // image and message catalog data from the extension is written to files
@@ -26,6 +27,7 @@ interface ExtensionUnpacker {
   // explanation of what went wrong.
   // |channel| and |type| are needed to initialize the global state of the
   // extension system, which is needed while creating the Extension object.
+  // COMMENT: Transferring a large base::Value over IPC may be expensive?
   Unpack(FeatureChannel channel,
          FeatureSessionType type,
          mojo.common.mojom.FilePath path,
@@ -33,7 +35,8 @@ interface ExtensionUnpacker {
          ManifestLocation location,
          int32 creation_flags)
       => (mojo.common.mojom.String16 error,
-          mojo.common.mojom.DictionaryValue? manifest);
+          mojo.common.mojom.DictionaryValue? manifest,
+          mojo.common.mojom.Value? json_ruleset);
 };
 
 [Native]

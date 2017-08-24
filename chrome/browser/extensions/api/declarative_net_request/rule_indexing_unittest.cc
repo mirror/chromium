@@ -10,7 +10,6 @@
 #include "base/files/file_util.h"
 #include "base/json/json_file_value_serializer.h"
 #include "base/memory/ptr_util.h"
-#include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
 #include "chrome/browser/extensions/chrome_test_extension_loader.h"
@@ -33,8 +32,8 @@ namespace extensions {
 namespace declarative_net_request {
 namespace {
 
-// COMMENT: Will introduce INSTALLED in the next CL.
 enum class ExtensionLoadType {
+  INSTALL,
   UNPACKED,
 };
 
@@ -43,8 +42,8 @@ const base::FilePath::CharType kJSONRulesetFilepath[] =
     FILE_PATH_LITERAL("rules_file.json");
 
 // Fixure testing that declarative rules corresponding to the Declarative Net
-// Request API are correctly indexed. Currently only unpacked extensions are
-// tested.
+// Request API are correctly indexed, for both packed and unpacked
+// extensions.
 class RuleIndexingTest
     : public ExtensionServiceTestBase,
       public ::testing::WithParamInterface<ExtensionLoadType> {
@@ -56,8 +55,14 @@ class RuleIndexingTest
     InitializeEmptyExtensionService();
 
     loader_ = base::MakeUnique<ChromeTestExtensionLoader>(browser_context());
-    EXPECT_EQ(ExtensionLoadType::UNPACKED, GetParam());
-    loader_->set_pack_extension(false);
+    switch (GetParam()) {
+      case ExtensionLoadType::INSTALL:
+        loader_->set_pack_extension(true);
+        break;
+      case ExtensionLoadType::UNPACKED:
+        loader_->set_pack_extension(false);
+        break;
+    }
   }
 
  protected:
@@ -92,7 +97,7 @@ class RuleIndexingTest
                              expected_indexed_rules_count, 1);
   }
 
-  void LoadAndExpectError(const std::string& expected_error_suffix) {
+  void LoadAndExpectError(const std::string& expected_error) {
     base::HistogramTester tester;
     WriteManifestAndRuleset();
 
@@ -104,15 +109,14 @@ class RuleIndexingTest
     extension_ = loader_->LoadExtension(extension_dir_);
     EXPECT_FALSE(extension_.get());
 
-    // Verify the error. ExtensionErrorReporter may prepend some text to the
-    // actual load error.
+    // Verify the error. Only verify if the |expected_error| is a substring of
+    // the actual error, since some string may be prepended/appended while
+    // creating the actual error.
     const std::vector<base::string16>* errors = error_reporter()->GetErrors();
     ASSERT_EQ(1u, errors->size());
-    EXPECT_TRUE(base::EndsWith(errors->at(0),
-                               base::UTF8ToUTF16(expected_error_suffix),
-                               base::CompareCase::SENSITIVE))
-        << "expected: " << expected_error_suffix
-        << " actual: " << errors->at(0);
+    EXPECT_NE(base::string16::npos,
+              errors->at(0).find(base::UTF8ToUTF16(expected_error)))
+        << "expected: " << expected_error << " actual: " << errors->at(0);
 
     tester.ExpectTotalCount(kIndexRulesDurationHistogram, 0u);
     tester.ExpectTotalCount(kIndexAndPersistRulesDurationHistogram, 0u);
@@ -298,11 +302,15 @@ TEST_P(RuleIndexingTest, InvalidJSONRule) {
   extension_loader()->set_ignore_manifest_warnings(true);
   LoadAndExpectSuccess(1);
 
-  ASSERT_EQ(1u, extension()->install_warnings().size());
-  EXPECT_EQ(InstallWarning(kRulesNotParsedWarning,
-                           manifest_keys::kDeclarativeNetRequestKey,
-                           manifest_keys::kDeclarativeRuleResourcesKey),
-            extension()->install_warnings()[0]);
+  // TODO(crbug.com/696822): CrxInstaller reloads the extension after moving it,
+  // which causes it to lose the install warning. This should be fixed.
+  if (GetParam() != ExtensionLoadType::INSTALL) {
+    ASSERT_EQ(1u, extension()->install_warnings().size());
+    EXPECT_EQ(InstallWarning(kRulesNotParsedWarning,
+                             manifest_keys::kDeclarativeNetRequestKey,
+                             manifest_keys::kDeclarativeRuleResourcesKey),
+              extension()->install_warnings()[0]);
+  }
 }
 
 TEST_P(RuleIndexingTest, InvalidJSONFile) {
@@ -343,8 +351,16 @@ TEST_P(RuleIndexingTest, ReloadExtension) {
   service()->ReloadExtension(extension()->id());
   registry_observer.WaitForExtensionLoaded();
 
-  int expected_histogram_count = 1;
-  EXPECT_EQ(ExtensionLoadType::UNPACKED, GetParam());
+  int expected_histogram_count = -1;
+  switch (GetParam()) {
+    case ExtensionLoadType::INSTALL:
+      expected_histogram_count = 0;
+      break;
+    case ExtensionLoadType::UNPACKED:
+      expected_histogram_count = 1;
+      break;
+  }
+
   tester.ExpectTotalCount(kIndexRulesDurationHistogram,
                           expected_histogram_count);
   tester.ExpectTotalCount(kIndexAndPersistRulesDurationHistogram,
@@ -355,7 +371,8 @@ TEST_P(RuleIndexingTest, ReloadExtension) {
 
 INSTANTIATE_TEST_CASE_P(,
                         RuleIndexingTest,
-                        ::testing::Values(ExtensionLoadType::UNPACKED));
+                        ::testing::Values(ExtensionLoadType::INSTALL,
+                                          ExtensionLoadType::UNPACKED));
 
 }  // namespace
 }  // namespace declarative_net_request
