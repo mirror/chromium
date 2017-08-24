@@ -22,6 +22,30 @@
       "revId": "b6b2b58b7a7271ad1316e5063b5a64562157d672",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2fa9276_e7857258",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 41963,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-24T20:46:18Z",
+      "side": 1,
+      "message": "Could you expand on your concern? That is, are you reading it as \"4 distinct URLs loaded\" vs \"4 redirects\"?\n\nPageLoad.Navigation.RedirectChainLength\nServiceWorker.MainFramePageLoad.RedirectChainLength\nSubresourceFilter.PageLoad.RedirectChainLength\n\nmeasure in \"urls\" (although they synthesize from the size of the url list, which is incremented each redirect)\n\nPrerender.NoStatePrefetchMainResourceRedirects\nPrerender.NoStatePrefetchSubResourceRedirects\n\nmeasure in \"redirects\" (but used the same implementation as the above measurements)\n\nI don\u0027t have a strong preference, but I went with the existing (and active) histogram unit measure.",
+      "parentUuid": "09657b74_8004ee92",
+      "range": {
+        "startLine": 41963,
+        "startChar": 21,
+        "endLine": 41963,
+        "endChar": 40
+      },
+      "revId": "b6b2b58b7a7271ad1316e5063b5a64562157d672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
