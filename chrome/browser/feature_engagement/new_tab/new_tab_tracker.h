@@ -37,8 +37,6 @@ class NewTabTracker : public FeatureTracker {
   void OnOmniboxFocused();
   // Clears the flag for whether there is any in-product help being displayed.
   void OnPromoClosed();
-  // Returns whether or not the promo should be displayed.
-  bool ShouldShowPromo();
 
  protected:
   // Alternate constructor to support unit testing.
@@ -47,12 +45,13 @@ class NewTabTracker : public FeatureTracker {
 
  private:
   FRIEND_TEST_ALL_PREFIXES(NewTabTrackerEventTest, TestOnSessionTimeMet);
+  FRIEND_TEST_ALL_PREFIXES(NewTabTrackerTest, TestSessionTimeFromFieldTrial);
   FRIEND_TEST_ALL_PREFIXES(NewTabTrackerTest, TestShouldNotShowPromo);
   FRIEND_TEST_ALL_PREFIXES(NewTabTrackerTest, TestShouldShowPromo);
   FRIEND_TEST_ALL_PREFIXES(NewTabTrackerBrowserTest, TestShowPromo);
 
   // FeatureTracker:
-  int GetSessionTimeRequiredToShowInMinutes() override;
+  base::TimeDelta GetSessionTimeRequiredToShowInMinutes() override;
   void OnSessionTimeMet() override;
 
   // Sets the NewTabInProductHelp pref to true and calls the New Tab Promo.
