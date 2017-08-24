@@ -64,6 +64,30 @@ SessionController::~SessionController() {
     std::move(start_lock_callback_).Run(false /* locked */);
 }
 
+void SessionController::ConnectToSigninScreenPrefService() {
+  // Null in tests.
+  if (!connector_)
+    return;
+
+  // Check if already connected.
+  if (signin_screen_prefs_.get())
+    return;
+
+  // Connect to the PrefService for the signin profile.
+  auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
+  Shell::RegisterProfilePrefs(pref_registry.get());
+  ash::mojom::PrefConnectorPtr pref_connector_connector;
+  connector_->BindInterface(mojom::kPrefConnectorServiceName,
+                            &pref_connector_connector);
+  prefs::mojom::PrefStoreConnectorPtr pref_connector;
+  pref_connector_connector->GetPrefStoreConnectorForSigninScreen(
+      mojo::MakeRequest(&pref_connector));
+  prefs::ConnectToPrefService(
+      std::move(pref_connector), std::move(pref_registry),
+      base::Bind(&SessionController::OnSigninScreenPrefServiceInitialized,
+                 weak_ptr_factory_.GetWeakPtr()));
+}
+
 void SessionController::BindRequest(mojom::SessionControllerRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
@@ -399,6 +423,9 @@ void SessionController::SetSessionState(SessionState state) {
     for (auto& observer : observers_)
       observer.OnLockStateChanged(locked);
   }
+
+  if (state_ == SessionState::OOBE || state_ == SessionState::LOGIN_PRIMARY)
+    ConnectToSigninScreenPrefService();
 }
 
 void SessionController::AddUserSession(mojom::UserSessionPtr user_session) {
@@ -500,6 +527,21 @@ void SessionController::UpdateLoginStatus() {
 void SessionController::OnLockAnimationFinished() {
   if (!start_lock_callback_.is_null())
     std::move(start_lock_callback_).Run(true /* locked */);
+}
+
+void SessionController::OnSigninScreenPrefServiceInitialized(
+    std::unique_ptr<PrefService> pref_service) {
+  // |pref_service| can be null when running standalone without chrome.
+  if (!pref_service)
+    return;
+
+  signin_screen_prefs_ = std::move(pref_service);
+
+  // Chrome's ProfileManager::GetActiveUserProfile() can return the signin
+  // screen profile, so do the same thing here with signin screen profile prefs.
+  last_active_user_prefs_ = signin_screen_prefs_.get();
+  for (auto& observer : observers_)
+    observer.OnActiveUserPrefServiceChanged(last_active_user_prefs_);
 }
 
 void SessionController::OnProfilePrefServiceInitialized(
