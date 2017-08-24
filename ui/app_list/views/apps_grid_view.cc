@@ -8,6 +8,8 @@
 #include <set>
 #include <string>
 
+#include <iostream>
+
 #include "base/guid.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
@@ -1020,9 +1022,14 @@ void AppsGridView::OnGestureEvent(ui::GestureEvent* event) {
       pagination_model_.total_pages() <= 0) {
     return;
   }
-
-  if (pagination_controller_->OnGestureEvent(*event, GetContentsBounds()))
+  std::cout << "1" << std::endl;
+  if (!contents_view_->app_list_view()->is_in_drag() &&
+      pagination_controller_->OnGestureEvent(*event, GetContentsBounds())) {
     event->SetHandled();
+  } else {
+    std::cout << "Setnt to AppListView" << std::endl;
+    contents_view_->app_list_view()->OnGestureEvent(event);
+  }
 }
 
 void AppsGridView::OnScrollEvent(ui::ScrollEvent* event) {
