@@ -802,8 +802,13 @@ void QuicStreamFactory::set_require_confirmation(bool require_confirmation) {
 
 base::TimeDelta QuicStreamFactory::GetTimeDelayForWaitingJob(
     const QuicServerId& server_id) {
-  if (require_confirmation_)
-    return base::TimeDelta();
+  if (require_confirmation_) {
+    IPAddress last_address;
+    if (!check_persisted_supports_quic_ ||
+        !http_server_properties_->GetSupportsQuic(&last_address)) {
+      return base::TimeDelta();
+    }
+  }
 
   int64_t srtt =
       1.5 * GetServerNetworkStatsSmoothedRttInMicroseconds(server_id);
