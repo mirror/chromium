@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "33b5ff6a_f24690f8",
+        "filename": "chrome/browser/client_hints/client_hints_observer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-24T21:27:21Z",
+      "side": 1,
+      "message": "OK, I\u0027m just not sure what the values here mean (or why this can\u0027t use one of the UMA histogram counts macros). *shrug*",
+      "parentUuid": "d5495cac_c871c3fe",
+      "revId": "707a590e62833f2dd1bf53fa1c238185e81767fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0284289_c0e3cc3d",
         "filename": "chrome/common/DEPS",
         "patchSetId": 22
