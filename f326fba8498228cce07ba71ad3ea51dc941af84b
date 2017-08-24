@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5de8c09_387ae9a7",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-24T12:55:40Z",
+      "side": 1,
+      "message": "What\u0027s this map for? There\u0027s a bunch of code that updates it, but I can\u0027t see anything that actually uses its values. Is it redundant now that the DelegateProxy has its own map?",
+      "range": {
+        "startLine": 192,
+        "startChar": 38,
+        "endLine": 192,
+        "endChar": 64
+      },
+      "revId": "f326fba8498228cce07ba71ad3ea51dc941af84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca27dc3_4cb5f181",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-24T12:55:40Z",
+      "side": 1,
+      "message": "Nit: it\u0027s a little unusual to have a unique_ptr to a const, since having the unique_ptr means you own the thing, and the owner should have full access to the public methods. If the intent is for responses to be immutable, that would normally be achieved by just omitting any setters on response, and making any public member variables const as you already have done.\n\nDitto on Result below.",
+      "range": {
+        "startLine": 312,
+        "startChar": 20,
+        "endLine": 312,
+        "endChar": 25
+      },
+      "revId": "f326fba8498228cce07ba71ad3ea51dc941af84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb136be5_74c27a1a",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-24T12:55:40Z",
+      "side": 1,
+      "message": "Micro-nit: Rename request to request_info, move it above job_controller, and remove the blank line, for consistency with OnDownloadComplete :)",
+      "revId": "f326fba8498228cce07ba71ad3ea51dc941af84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -271,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "232f4bea_1c2e988b",
+        "filename": "content/browser/background_fetch/background_fetch_request_info.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-24T12:55:40Z",
+      "side": 1,
+      "message": "If processing is the concern, you could just move all the logic from this method into the constructor of BackgroundFetchResponse?",
+      "parentUuid": "ea9acaf9_31c0643e",
+      "range": {
+        "startLine": 29,
+        "startChar": 9,
+        "endLine": 29,
+        "endChar": 19
+      },
+      "revId": "2ac65f5e0ca73bc693ebc119ec3606b5de000452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "572a53f9_62488aef",
         "filename": "content/browser/background_fetch/background_fetch_request_info.cc",
         "patchSetId": 8
