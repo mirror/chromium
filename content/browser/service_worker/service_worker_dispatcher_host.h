@@ -132,6 +132,7 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
 
   using StatusCallback = base::Callback<void(ServiceWorkerStatusCode status)>;
   enum class ProviderStatus { OK, NO_CONTEXT, DEAD_HOST, NO_HOST, NO_URL };
+  enum class Phase { kInitial, kAdded, kRemoved };
 
   // mojom::ServiceWorkerDispatcherHost implementation
   void OnProviderCreated(ServiceWorkerProviderHostInfo info) override;
@@ -279,6 +280,8 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
 
   const int render_process_id_;
   ResourceContext* resource_context_;
+  // Only accessed on the IO thread.
+  Phase phase_ = Phase::kInitial;
   // Only accessed on the IO thread.
   scoped_refptr<ServiceWorkerContextWrapper> context_wrapper_;
 
