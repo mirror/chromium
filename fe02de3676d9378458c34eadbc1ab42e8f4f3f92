@@ -22,6 +22,30 @@
       "revId": "fe02de3676d9378458c34eadbc1ab42e8f4f3f92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1afa87_cc6b85f3",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-24T23:55:56Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "fb8a16da_9020abd0",
+      "range": {
+        "startLine": 175,
+        "startChar": 4,
+        "endLine": 175,
+        "endChar": 41
+      },
+      "revId": "fe02de3676d9378458c34eadbc1ab42e8f4f3f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

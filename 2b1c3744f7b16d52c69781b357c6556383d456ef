@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9cbdb651_9011aa70",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-24T23:55:56Z",
+      "side": 1,
+      "message": "Yes, but I prefer this approach to prevent the extra complexity of multiple constructors.",
+      "parentUuid": "b6011b91_c058e288",
+      "range": {
+        "startLine": 231,
+        "startChar": 46,
+        "endLine": 231,
+        "endChar": 62
+      },
+      "revId": "2b1c3744f7b16d52c69781b357c6556383d456ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ca09d2_c76a1775",
         "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "2b1c3744f7b16d52c69781b357c6556383d456ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38380089_7c322f2f",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-24T23:55:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6ca09d2_c76a1775",
+      "range": {
+        "startLine": 586,
+        "startChar": 4,
+        "endLine": 586,
+        "endChar": 42
+      },
+      "revId": "2b1c3744f7b16d52c69781b357c6556383d456ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "200dd05a_5ba4676b",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-24T23:55:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9320429_444b01b7",
+      "range": {
+        "startLine": 637,
+        "startChar": 4,
+        "endLine": 637,
+        "endChar": 45
+      },
+      "revId": "2b1c3744f7b16d52c69781b357c6556383d456ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68557fa9_8d05c7d1",
         "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-24T22:16:20Z",
       "side": 1,
       "message": "Why did you remove the swap trick?",
+      "range": {
+        "startLine": 656,
+        "startChar": 2,
+        "endLine": 657,
+        "endChar": 33
+      },
+      "revId": "2b1c3744f7b16d52c69781b357c6556383d456ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951e3d2f_e90750f7",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-24T23:55:56Z",
+      "side": 1,
+      "message": "It doesn\u0027t work since we have a queue of unique_ptr\u003c\u003es now (queue doesn\u0027t have access to the destructor).",
+      "parentUuid": "68557fa9_8d05c7d1",
       "range": {
         "startLine": 656,
         "startChar": 2,
@@ -114,6 +210,30 @@
       "revId": "2b1c3744f7b16d52c69781b357c6556383d456ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c15986_67941687",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-24T23:55:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29b65295_338807dc",
+      "range": {
+        "startLine": 689,
+        "startChar": 25,
+        "endLine": 689,
+        "endChar": 45
+      },
+      "revId": "2b1c3744f7b16d52c69781b357c6556383d456ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
