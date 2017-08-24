@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "49415d1c_4609654d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-08-24T20:42:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb230cd8_fcfb1d3d",
+      "range": {
+        "startLine": 7,
+        "startChar": 36,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "094b2638151aad0c4dfe5876efcbe7416de5d2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "427d9954_b6f83915",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "57c98038_29b42b30",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-08-24T20:42:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "427d9954_b6f83915",
+      "range": {
+        "startLine": 9,
+        "startChar": 22,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "094b2638151aad0c4dfe5876efcbe7416de5d2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67dfb80f_7f875a57",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -62,6 +110,24 @@
       "revId": "094b2638151aad0c4dfe5876efcbe7416de5d2df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fa3ecf6_febd2029",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-08-24T20:42:38Z",
+      "side": 1,
+      "message": "Done\nThe GetArchiveManager() was meant to be used when OfflinePageModel is passed into task constructor for grabbing pointers to other classes. But seems it\u0027s better to pass in pointers directly, so I\u0027m going to remove this.",
+      "parentUuid": "67dfb80f_7f875a57",
+      "revId": "094b2638151aad0c4dfe5876efcbe7416de5d2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +151,30 @@
       "revId": "094b2638151aad0c4dfe5876efcbe7416de5d2df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea44124_c9acbf20",
+        "filename": "components/offline_pages/core/archive_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-08-24T20:42:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94be9c1d_c318791c",
+      "range": {
+        "startLine": 67,
+        "startChar": 32,
+        "endLine": 67,
+        "endChar": 46
+      },
+      "revId": "094b2638151aad0c4dfe5876efcbe7416de5d2df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
