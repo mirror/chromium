@@ -22,6 +22,30 @@
       "revId": "719e00890fb1b097efd443ac0fd7a6b00da1dc44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df21d638_81587008",
+        "filename": "content/common/sandbox_linux/bpf_cros_amd_gpu_policy_linux.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1163397
+      },
+      "writtenOn": "2017-08-24T16:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe17b911_cd7737f7",
+      "range": {
+        "startLine": 149,
+        "startChar": 19,
+        "endLine": 149,
+        "endChar": 45
+      },
+      "revId": "719e00890fb1b097efd443ac0fd7a6b00da1dc44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
