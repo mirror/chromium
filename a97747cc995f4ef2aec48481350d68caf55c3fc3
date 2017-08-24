@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22840955_b3035593",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-24T19:58:14Z",
+      "side": 1,
+      "message": "The filters for these frames are set to nullptr.",
+      "range": {
+        "startLine": 145,
+        "startChar": 61,
+        "endLine": 145,
+        "endChar": 72
+      },
+      "revId": "a97747cc995f4ef2aec48481350d68caf55c3fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b6d531d_6a761bbf",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-24T19:58:14Z",
+      "side": 1,
+      "message": "Add \"It is possible for a frame to have a null filter.\"",
+      "revId": "a97747cc995f4ef2aec48481350d68caf55c3fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
