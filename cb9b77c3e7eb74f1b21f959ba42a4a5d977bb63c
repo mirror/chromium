@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "65d9015d_604fd369",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4224,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-24T20:14:03Z",
+      "side": 1,
+      "message": "Do you need on demand mode?",
+      "range": {
+        "startLine": 4224,
+        "startChar": 41,
+        "endLine": 4224,
+        "endChar": 0
+      },
+      "revId": "cb9b77c3e7eb74f1b21f959ba42a4a5d977bb63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad71431a_a3cd5024",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4231,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-24T20:14:03Z",
+      "side": 1,
+      "message": "nit: you can inline trans.Start() if you wish.",
+      "range": {
+        "startLine": 4231,
+        "startChar": 14,
+        "endLine": 4231,
+        "endChar": 16
+      },
+      "revId": "cb9b77c3e7eb74f1b21f959ba42a4a5d977bb63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d5036e_80a11af3",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4250,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-24T20:14:03Z",
+      "side": 1,
+      "message": "Since the IP is different, this should not disable confirmation required, as you say. Do we have a test for that somewhere else? (I kinda think we do)",
+      "range": {
+        "startLine": 4250,
+        "startChar": 71,
+        "endLine": 4250,
+        "endChar": 0
+      },
+      "revId": "cb9b77c3e7eb74f1b21f959ba42a4a5d977bb63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79cae32_dc6a8d5f",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4282,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-24T20:14:03Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 4282,
+        "startChar": 8,
+        "endLine": 4282,
+        "endChar": 9
+      },
+      "revId": "cb9b77c3e7eb74f1b21f959ba42a4a5d977bb63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49349e5c_3c353f8f",
         "filename": "net/quic/chromium/quic_stream_factory.cc",
         "patchSetId": 1
@@ -13,6 +105,24 @@
       "writtenOn": "2017-08-24T07:14:19Z",
       "side": 1,
       "message": "If we have already checked server properties and we still require confirmation，the local IP must be different from the most recent IP address on which QUIC is supported. (as require_confirmation_ is set to true when IP address changed, or network changed)\n\nIf we never checked server properties, then possibly we have never configure a socket before, thus local address is unknown.",
+      "revId": "cb9b77c3e7eb74f1b21f959ba42a4a5d977bb63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf76bc8d_2c9c66d8",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-24T20:14:03Z",
+      "side": 1,
+      "message": "We should consider renaming check_persisted_supports_quic_. It seems to mean \"need_to_check_if_http_server_properties_supports_quic_\" but I read it initially as \"have_we_checked_if_http_server_properties_supports_quic_\"",
+      "parentUuid": "49349e5c_3c353f8f",
       "revId": "cb9b77c3e7eb74f1b21f959ba42a4a5d977bb63c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
