@@ -279,6 +279,24 @@
       "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55f2eb8_6c956190",
+        "filename": "chrome/browser/vr/vr_url_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T18:35:52Z",
+      "side": 1,
+      "message": "That sounds fine to me.  Sorry that changing requirements are churning this CL.  :)",
+      "parentUuid": "4ed646bf_0b92de66",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

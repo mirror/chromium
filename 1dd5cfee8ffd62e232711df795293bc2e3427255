@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e51c6489_7de306f1",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T18:35:52Z",
+      "side": 1,
+      "message": "I will rename this to non-experimental in a separate CL.",
+      "range": {
+        "startLine": 114,
+        "startChar": 33,
+        "endLine": 114,
+        "endChar": 69
+      },
+      "revId": "1dd5cfee8ffd62e232711df795293bc2e3427255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
