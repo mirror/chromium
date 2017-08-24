@@ -22,6 +22,30 @@
       "revId": "bb7c7f6a7a5e5f6a6cb03e3713c72e4e44f034c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a2fc6fe_4c449527",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlRemainingTimeDisplayElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-08-24T18:33:17Z",
+      "side": 1,
+      "message": "Much cleaner. Thanks!",
+      "parentUuid": "457151e0_5781b1eb",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 44
+      },
+      "revId": "bb7c7f6a7a5e5f6a6cb03e3713c72e4e44f034c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
