@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e01bf0cd_902b5008",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-24T20:29:33Z",
+      "side": 1,
+      "message": "Let\u0027s not remove the one-by-one (and note you still have line 174 that removes all children)",
+      "revId": "ae7694095d0f0ee3989580b376e6478b17022fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67cdd09b_95ff2fcb",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-24T20:29:33Z",
+      "side": 1,
+      "message": "style: \u0027.\u0027 at the end of the comment.",
+      "revId": "ae7694095d0f0ee3989580b376e6478b17022fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "796e2dcd_d1c86278",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-24T20:29:33Z",
+      "side": 1,
+      "message": "drop \u0027path.length \u003e 0\u0027 clause.",
+      "revId": "ae7694095d0f0ee3989580b376e6478b17022fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
