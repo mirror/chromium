@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "120e42ca_1779e456",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-24T09:28:46Z",
+      "side": 1,
+      "message": "nit: Returns -\u003e Returns true\nnit: will !\u003d should. Will it defer, or it may defer? Please either update comment or rename the method.",
+      "range": {
+        "startLine": 152,
+        "startChar": 27,
+        "endLine": 152,
+        "endChar": 31
+      },
+      "revId": "25b959e342fac7118de1ab8d01a5dcfb8004519f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7c1d4f_f3d22c44",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-24T09:28:46Z",
+      "side": 1,
+      "message": "Can runner ever be null?",
+      "revId": "25b959e342fac7118de1ab8d01a5dcfb8004519f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53b48c5_79f0abdf",
+        "filename": "chrome/browser/chromeos/fileapi/recent_arc_media_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-24T09:28:46Z",
+      "side": 1,
+      "message": "ditto. Method naming suggests that deferring is not guaranteed. Should we rename to will_defer?",
+      "range": {
+        "startLine": 370,
+        "startChar": 18,
+        "endLine": 370,
+        "endChar": 30
+      },
+      "revId": "25b959e342fac7118de1ab8d01a5dcfb8004519f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
