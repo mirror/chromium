@@ -22,6 +22,30 @@
       "revId": "90bde55187fc57552dac24640dfdf36091d69c48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1220195_59ef9eb2",
+        "filename": "tools/perf/benchmarks/dummy_benchmark.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-24T21:12:21Z",
+      "side": 1,
+      "message": "As mentioned offline, this should be done w/ story expectations given that it\u0027s a short-term disable. If it was something where the benchmark was actually unsupported on a given platform, you\u0027d use SUPPORTED_PLATFORMS\u003d[story.expectations.ALL_MAC], as an example\n\n+rnephew@chromium.org, can we change that presubmit text to reflect the new state of the world?",
+      "parentUuid": "557f904d_ca16677d",
+      "range": {
+        "startLine": 80,
+        "startChar": 19,
+        "endLine": 80,
+        "endChar": 20
+      },
+      "revId": "90bde55187fc57552dac24640dfdf36091d69c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
