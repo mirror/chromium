@@ -686,6 +686,7 @@ Extensions.ExtensionServer = class extends Common.Object {
     this._registerSubscriptionHandler(
         Extensions.extensionAPI.Events.PanelObjectSelected + 'elements', onElementsSubscriptionStarted.bind(this),
         onElementsSubscriptionStopped.bind(this));
+
     this._registerResourceContentCommittedHandler(this._notifyUISourceCodeContentCommitted);
 
     SDK.targetManager.addEventListener(SDK.TargetManager.Events.InspectedURLChanged, this._inspectedURLChanged, this);
@@ -714,6 +715,20 @@ Extensions.ExtensionServer = class extends Common.Object {
 
   _notifyElementsSelectionChanged() {
     this._postNotification(Extensions.extensionAPI.Events.PanelObjectSelected + 'elements');
+  }
+
+  /**
+   * @param {string} url
+   * @param {!TextUtils.TextRange} range
+   */
+  sourceSelectionChanged(url, range) {
+    this._postNotification(Extensions.extensionAPI.Events.PanelObjectSelected + 'sources', {
+      startLine: range.startLine,
+      startColumn: range.startColumn,
+      endLine: range.endLine,
+      endColumn: range.endColumn,
+      url: url,
+    });
   }
 
   /**
