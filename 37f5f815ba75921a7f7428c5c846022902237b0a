@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0940f22_dc134ccd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 50142,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-08-24T20:34:57Z",
+      "side": 1,
+      "message": "Drive by - Does this mean that we don\u0027t know how often the size is correct, only the distribution when it is incorrect?  It seems useful to know how often it was correct.",
+      "range": {
+        "startLine": 50142,
+        "startChar": 66,
+        "endLine": 50142,
+        "endChar": 67
+      },
+      "revId": "37f5f815ba75921a7f7428c5c846022902237b0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
