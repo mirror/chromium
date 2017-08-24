@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7e1367d_68afee0f",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-08-24T14:44:13Z",
+      "side": 0,
+      "message": "Why the renaming to .mm?",
+      "revId": "5810be56be7a6f842df0c5b3c5246bf050987b13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
