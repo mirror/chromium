@@ -218,8 +218,13 @@ void DirectRenderer::DecideRenderPassAllocationsForFrame(
 
   for (auto& pass : render_passes_in_draw_order) {
     auto& resource = render_pass_textures_[pass->id];
-    if (!resource)
+    if (!resource) {
       resource = base::MakeUnique<ScopedResource>(resource_provider_);
+      // If a texture did not exist in previous frame, we should not reuse the
+      // newly allocated texture. Set the |has_damage_from_contributing_content|
+      // true.
+      pass->has_damage_from_contributing_content = true;
+    }
   }
 }
 
