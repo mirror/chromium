@@ -11,6 +11,7 @@
 #include "base/run_loop.h"
 #include "base/sequenced_task_runner.h"
 #include "base/test/scoped_feature_list.h"
+#include "base/time/time.h"
 #include "chrome/browser/feature_engagement/feature_tracker.h"
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
 #include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
@@ -156,21 +157,22 @@ class NewTabTrackerTest : public testing::Test {
     ASSERT_EQ(new_tab_trial,
               base::FeatureList::GetFieldTrial(kIPHNewTabFeature));
 
-    std::map<std::string, std::string> new_tab_params;
-    new_tab_params["event_new_tab_opened"] =
+    std::map<std::string, std::string> new_tab_params_;
+    new_tab_params_["event_new_tab_opened"] =
         "name:new_tab_opened;comparator:==0;window:3650;storage:3650";
-    new_tab_params["event_omnibox_used"] =
+    new_tab_params_["event_omnibox_used"] =
         "name:omnibox_used;comparator:>=1;window:3650;storage:3650";
-    new_tab_params["event_new_tab_session_time_met"] =
+    new_tab_params_["event_new_tab_session_time_met"] =
         "name:new_tab_session_time_met;comparator:>=1;window:3650;storage:3650";
-    new_tab_params["event_trigger"] =
+    new_tab_params_["event_trigger"] =
         "name:new_tab_trigger;comparator:any;window:3650;storage:3650";
-    new_tab_params["event_used"] =
+    new_tab_params_["event_used"] =
         "name:new_tab_clicked;comparator:any;window:3650;storage:3650";
-    new_tab_params["session_rate"] = "<=3";
-    new_tab_params["availability"] = "any";
+    new_tab_params_["session_rate"] = "<=3";
+    new_tab_params_["availability"] = "any";
+    new_tab_params_["x_minutes"] = "1";
 
-    SetFeatureParams(kIPHNewTabFeature, new_tab_params);
+    SetFeatureParams(kIPHNewTabFeature, new_tab_params_);
 
     // Start the DesktopSessionDurationTracker to track active session time.
     metrics::DesktopSessionDurationTracker::Initialize();
@@ -232,28 +234,36 @@ class NewTabTrackerTest : public testing::Test {
 // Test that a promo is not shown if the user uses a New Tab.
 // If OnNewTabOpened() is called, the ShouldShowPromo() should return false.
 TEST_F(NewTabTrackerTest, TestShouldNotShowPromo) {
-  EXPECT_FALSE(new_tab_tracker_->ShouldShowPromo());
+  EXPECT_FALSE(new_tab_tracker_->ShouldShowPromo(kIPHNewTabFeature));
 
   new_tab_tracker_->OnSessionTimeMet();
   new_tab_tracker_->OnOmniboxNavigation();
 
-  EXPECT_TRUE(new_tab_tracker_->ShouldShowPromo());
+  EXPECT_TRUE(new_tab_tracker_->ShouldShowPromo(kIPHNewTabFeature));
 
   new_tab_tracker_->OnNewTabOpened();
 
-  EXPECT_FALSE(new_tab_tracker_->ShouldShowPromo());
+  EXPECT_FALSE(new_tab_tracker_->ShouldShowPromo(kIPHNewTabFeature));
 }
 
 // Test that a promo is shown if the session time is met and an omnibox
 // navigation occurs. If OnSessionTimeMet() and OnOmniboxNavigation()
 // are called, ShouldShowPromo() should return true.
 TEST_F(NewTabTrackerTest, TestShouldShowPromo) {
-  EXPECT_FALSE(new_tab_tracker_->ShouldShowPromo());
+  EXPECT_FALSE(new_tab_tracker_->ShouldShowPromo(kIPHNewTabFeature));
 
   new_tab_tracker_->OnSessionTimeMet();
   new_tab_tracker_->OnOmniboxNavigation();
 
-  EXPECT_TRUE(new_tab_tracker_->ShouldShowPromo());
+  EXPECT_TRUE(new_tab_tracker_->ShouldShowPromo(kIPHNewTabFeature));
+}
+
+// Test that a promo is shown if the session time is met and an omnibox
+// navigation occurs. If OnSessionTimeMet() and OnOmniboxNavigation()
+// are called, ShouldShowPromo() should return true.
+TEST_F(NewTabTrackerTest, TestSessionTimeFromFieldTrial) {
+  EXPECT_EQ(new_tab_tracker_->GetSessionTimeRequiredToShowInMinutes(),
+            base::TimeDelta::FromMinutes(1));
 }
 
 }  // namespace feature_engagement

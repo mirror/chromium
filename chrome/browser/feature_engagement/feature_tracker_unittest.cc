@@ -11,6 +11,7 @@
 #include "base/run_loop.h"
 #include "base/sequenced_task_runner.h"
 #include "base/test/scoped_feature_list.h"
+#include "base/time/time.h"
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
 #include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
@@ -46,8 +47,8 @@ class TestFeatureTracker : public FeatureTracker {
     SessionDurationUpdater::RegisterProfilePrefs(pref_service_->registry());
   }
 
-  int GetSessionTimeRequiredToShowInMinutes() override {
-    return kTestTimeInMinutes;
+  base::TimeDelta GetSessionTimeRequiredToShowInMinutes() override {
+    return base::TimeDelta::FromMinutes(kTestTimeInMinutes);
   }
 
   void OnSessionTimeMet() override {}
