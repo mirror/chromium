@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8bd2ae2_66fde4c5",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-24T02:22:04Z",
+      "side": 1,
+      "message": "You can add \"See https://crbug.com/758455\"",
+      "revId": "d17a3417bfb5c418b2a3736ebe895b9360baf0f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3445b1da_3c707bca",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-24T02:22:04Z",
+      "side": 1,
+      "message": "\"Start writing the body stream, then abort before finishing.\"",
+      "revId": "d17a3417bfb5c418b2a3736ebe895b9360baf0f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2070f71d_4a78a1d6",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-24T02:22:04Z",
+      "side": 1,
+      "message": "Ah I guess this is better as a TODO instead:\n\n// TODO(falken): This should be an error, see https://crbug.com/758455",
+      "revId": "d17a3417bfb5c418b2a3736ebe895b9360baf0f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
