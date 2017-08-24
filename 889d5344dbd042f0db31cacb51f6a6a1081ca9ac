@@ -70,6 +70,24 @@
       "revId": "889d5344dbd042f0db31cacb51f6a6a1081ca9ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e4251d5_6d658f4f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T19:03:04Z",
+      "side": 1,
+      "message": "I\u0027m indifferent about \"fuchsia\", so long as we\u0027re consistent. (Hint: We\u0027re not)\n\nFor the rest of the title, we should start with a capital and end with . since the title is one sentence summary, and an independent clause, as you note, from the \"fuchsia\".\n\n(Mainly I just want us to be consistent!)",
+      "parentUuid": "6bbfa48e_361dcd94",
+      "revId": "889d5344dbd042f0db31cacb51f6a6a1081ca9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
