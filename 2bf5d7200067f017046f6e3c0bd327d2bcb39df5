@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89b5624a_3dd400e0",
+        "filename": "tools/sublime/compile_current_file.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-24T21:38:44Z",
+      "side": 0,
+      "message": "This isn\u0027t used anywhere afaik, seems like a remnant of this patchset: https://codereview.chromium.org/2006563002/diff2/80001:100001/tools/sublime/compile_current_file.py (notice the call to find_ninja_file that got removed).",
+      "range": {
+        "startLine": 22,
+        "startChar": 20,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "2bf5d7200067f017046f6e3c0bd327d2bcb39df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
