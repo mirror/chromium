@@ -5,7 +5,9 @@
 package org.chromium.android_webview.variations;
 
 import android.os.ParcelFileDescriptor;
+import android.util.Base64;
 
+import org.chromium.android_webview.variations.AwVariationsDataHandler.VariationsSeedData;
 import org.chromium.base.CollectionUtil;
 import org.chromium.base.FileUtils;
 import org.chromium.base.Log;
@@ -14,12 +16,14 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.components.variations.firstrun.VariationsSeedFetcher.SeedInfo;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -226,5 +230,50 @@ public class AwVariationsUtils {
             Log.e(TAG, "Failed to parse the time. " + e);
         }
         return lastSeedFetchTime;
+    }
+
+    public static byte[] encodeSeedData(byte[] seedData) {
+        return Base64.encodeToString(seedData, Base64.NO_WRAP).getBytes();
+    }
+
+    public static byte[] encodeSeedPref(SeedPreference in) {
+        StringBuilder out = new StringBuilder();
+        out.append(in.signature);
+        out.append('\n');
+        out.append(in.country);
+        out.append('\n');
+        out.append(in.date);
+        out.append('\n');
+        // Placeholder for gzip field
+        out.append("");
+        out.append('\n');
+        return out.toString().getBytes();
+    }
+
+    public static VariationsSeedData decodeVariationsSeedData(byte[] seedData, byte[] seedPref) {
+        String data = new String(seedData);
+        final SimpleDateFormat dateFormat =
+                new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
+
+        BufferedReader reader =
+                new BufferedReader(new InputStreamReader(new ByteArrayInputStream(seedPref)));
+
+        String signature = null;
+        String country = null;
+        Date seedFetchTime = null;
+        try {
+            signature = reader.readLine();
+            country = reader.readLine();
+            seedFetchTime = dateFormat.parse(reader.readLine());
+        } catch (IOException e) {
+            Log.e(TAG, "Failed to read data from seed pref. " + e);
+            return new VariationsSeedData();
+        } catch (ParseException e) {
+            Log.e(TAG, "Failed to parse fetch time from seed pref. " + e);
+            return new VariationsSeedData();
+        }
+        long fetchTime = seedFetchTime.getTime() * 1000;
+
+        return new VariationsSeedData(data, signature, country, fetchTime);
     }
 }

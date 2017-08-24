@@ -19,7 +19,6 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.ParcelFileDescriptor;
 import android.os.RemoteException;
-import android.util.Base64;
 
 import org.chromium.android_webview.AwBrowserProcess;
 import org.chromium.base.ContextUtils;
@@ -31,10 +30,9 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.components.background_task_scheduler.TaskIds;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +101,8 @@ public class AwVariationsConfigurationService extends Service {
             if (seedData == null) {
                 Log.e(TAG, "Variations seed data is null.");
             } else {
-                storeSeedDataToFile(seedData, webViewVariationsDir);
+                storeSeedDataToFile(
+                        AwVariationsUtils.encodeSeedData(seedData), webViewVariationsDir);
             }
             AwVariationsUtils.SeedPreference seedPref =
                     AwVariationsUtils.SeedPreference.fromList(seedPrefAsList);
@@ -203,12 +202,12 @@ public class AwVariationsConfigurationService extends Service {
      */
     @VisibleForTesting
     public static void storeSeedDataToFile(byte[] seedData, File variationsDir) throws IOException {
-        BufferedWriter writer = null;
+        FileOutputStream writer = null;
         try {
             File seedDataTempFile =
                     File.createTempFile(AwVariationsUtils.SEED_DATA_FILENAME, null, variationsDir);
-            writer = new BufferedWriter(new FileWriter(seedDataTempFile));
-            writer.write(Base64.encodeToString(seedData, Base64.NO_WRAP));
+            writer = new FileOutputStream(seedDataTempFile);
+            writer.write(AwVariationsUtils.encodeSeedData(seedData));
             AwVariationsUtils.renameTempFile(seedDataTempFile,
                     new File(variationsDir, AwVariationsUtils.SEED_DATA_FILENAME));
         } finally {
@@ -230,15 +229,13 @@ public class AwVariationsConfigurationService extends Service {
             return;
         }
         List<String> seedPrefAsList = seedPref.toArrayList();
-        BufferedWriter writer = null;
+        FileOutputStream writer = null;
         try {
             File seedPrefTempFile =
                     File.createTempFile(AwVariationsUtils.SEED_PREF_FILENAME, null, variationsDir);
-            writer = new BufferedWriter(new FileWriter(seedPrefTempFile));
-            for (String s : seedPrefAsList) {
-                writer.write(s);
-                writer.newLine();
-            }
+            writer = new FileOutputStream(seedPrefTempFile);
+            byte[] rawData = AwVariationsUtils.encodeSeedPref(seedPref);
+            writer.write(rawData);
             AwVariationsUtils.renameTempFile(seedPrefTempFile,
                     new File(variationsDir, AwVariationsUtils.SEED_PREF_FILENAME));
         } finally {
