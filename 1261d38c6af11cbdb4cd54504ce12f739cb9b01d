@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f4849b3_991c0350",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-24T17:31:34Z",
+      "side": 1,
+      "message": "My bad. constexpr does not fly because we call this to initialize it. But I don\u0027t think using a call to init a global variable is allowed.\n\nSince this is used in only one place, maybe move it down to where it is used and restore to use const.",
+      "range": {
+        "startLine": 21,
+        "startChar": 32,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "1261d38c6af11cbdb4cd54504ce12f739cb9b01d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
