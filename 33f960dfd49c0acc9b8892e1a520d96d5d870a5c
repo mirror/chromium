@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9828f8f6_cd44c4d4",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-24T22:05:05Z",
+      "side": 1,
+      "message": "There\u0027s no ready made histogram format that does what we want. I switched to a uniformly distributed histogram ranging from 0 to 200% (including the 100%/match case) with a special case bucket for when archive_body_length is 0.",
+      "parentUuid": "529b1675_059fd4e5",
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19bdd141_1c2e2406",
         "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b07bf8aa_e0e3dcb1",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-24T22:05:05Z",
+      "side": 1,
+      "message": "Arguably... :) But not applicable anymore.",
+      "parentUuid": "19bdd141_1c2e2406",
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "73def7ab_7a25c302",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-24T22:05:05Z",
+      "side": 1,
+      "message": "This wouldn\u0027t fit the enum I had. But N/A anymore.",
+      "parentUuid": "cfe87c04_8c7d417e",
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c7e7cb7_0f82101b",
         "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3cac89dc_1501944a",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-24T22:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c7e7cb7_0f82101b",
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bb27289_e102abf7",
         "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561b124f_e6dcabc4",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-24T22:05:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4bb27289_e102abf7",
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "a0752ff3_4440998d",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-24T22:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c50c491_c0de8723",
+      "range": {
+        "startLine": 137,
+        "startChar": 19,
+        "endLine": 137,
+        "endChar": 40
+      },
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c93747c_3d10a0c5",
         "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
         "patchSetId": 3
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "b7848b9a_bd8bdc38",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-24T22:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c93747c_3d10a0c5",
+      "range": {
+        "startLine": 152,
+        "startChar": 20,
+        "endLine": 152,
+        "endChar": 21
+      },
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1038d044_e167f629",
         "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
         "patchSetId": 3
@@ -153,6 +291,30 @@
       "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0889ebe9_3ee1e76d",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-24T22:05:05Z",
+      "side": 1,
+      "message": "Thanks. I finally switched to a simpler solution using uniform 10%-sized buckets.",
+      "parentUuid": "1038d044_e167f629",
+      "range": {
+        "startLine": 161,
+        "startChar": 53,
+        "endLine": 161,
+        "endChar": 0
+      },
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -193,6 +355,48 @@
       "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b5d5ab1_05dc575d",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-24T22:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe39b91a_8d94ab60",
+      "range": {
+        "startLine": 165,
+        "startChar": 19,
+        "endLine": 165,
+        "endChar": 35
+      },
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a67e179a_999569d4",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-24T22:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "836e52cb_00f041dc",
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
