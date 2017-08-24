@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f724915_fe20cc08",
+        "filename": "chrome/profiling/memlog_receiver_pipe_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-24T20:36:31Z",
+      "side": 1,
+      "message": "It\u0027s a scoped handle, so this shouldn\u0027t be necessary.",
+      "parentUuid": "9bd65711_0cf6e5b1",
+      "revId": "2ac9294c9efcb80d57f5bbf5609d99ed522a5ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5625069c_82eadbee",
         "filename": "chrome/profiling/memlog_stream_parser_unittest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "2ac9294c9efcb80d57f5bbf5609d99ed522a5ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ffe605_342b1cbc",
+        "filename": "chrome/profiling/memlog_stream_parser_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-24T20:36:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5625069c_82eadbee",
+      "revId": "2ac9294c9efcb80d57f5bbf5609d99ed522a5ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
