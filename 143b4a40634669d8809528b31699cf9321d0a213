@@ -42,6 +42,29 @@
     },
     {
       "key": {
+        "uuid": "37554b38_c110a3db",
+        "filename": "ios/chrome/browser/passwords/DEPS",
+        "patchSetId": 12
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-24T16:35:22Z",
+      "side": 1,
+      "message": "Only ios/web/public includes are allowed. Everything else inside ios/web is private implementation and unit tests should not rely on it.",
+      "range": {
+        "startLine": 4,
+        "startChar": 12,
+        "endLine": 4,
+        "endChar": 21
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ac4a55b_797a3011",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 12
@@ -53,6 +76,29 @@
       "writtenOn": "2017-08-24T14:44:13Z",
       "side": 1,
       "message": "Missing ARC #error check.",
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e8f21a_d79c1a4f",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-24T16:35:22Z",
+      "side": 1,
+      "message": "This test heavily relies on private implementation details of ios/web, which will become a technical debt if this change lands.\n\nUnless I\u0027m missing something, IsContextSecure relies only on URL and SSLStatus. And these can be mocked with TestWebState and TestNavigationItem",
+      "range": {
+        "startLine": 23,
+        "startChar": 11,
+        "endLine": 23,
+        "endChar": 44
+      },
       "revId": "143b4a40634669d8809528b31699cf9321d0a213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +128,30 @@
     },
     {
       "key": {
+        "uuid": "05cee74f_bdf7748a",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-24T16:35:22Z",
+      "side": 1,
+      "message": "Nope, acronyms should be all-caps only in Objective-C code. This code is C++ and should use CamelCase for acronyms.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/objective-c/objective-c.md#objective_c_style-matches-the-language",
+      "parentUuid": "7b747837_c6c9b3e7",
+      "range": {
+        "startLine": 64,
+        "startChar": 15,
+        "endLine": 64,
+        "endChar": 30
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4deb15d4_7459e1dd",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 12
@@ -99,6 +169,46 @@
         "endLine": 146,
         "endChar": 45
       },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322302fa_daff1718",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-24T16:35:22Z",
+      "side": 1,
+      "message": "Please add comments",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 20
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d95a8b76_5e1b0adb",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-24T16:35:22Z",
+      "side": 1,
+      "message": "Why? Security should be is orthogonal to mime type. I understand that CM API will not work in PDF file, but \"content type\" can be checked somewhere else. Right?",
       "revId": "143b4a40634669d8809528b31699cf9321d0a213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -137,6 +247,98 @@
         "startLine": 5,
         "startChar": 27,
         "endLine": 5,
+        "endChar": 35
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b461eb_356b0b2c",
+        "filename": "ios/chrome/browser/web/origin_security_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-24T16:35:22Z",
+      "side": 1,
+      "message": "In C++ classes should not be used for namespacing things. All these functions can be simple C-functions.",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61de9148_337192e7",
+        "filename": "ios/chrome/browser/web/origin_security_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-24T16:35:22Z",
+      "side": 1,
+      "message": "I found this function in components and it seems to be code duplication to me. How about moving this code to shared directory in components?\n\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/payments/origin_security_checker.h?q\u003dIsContextSecure\u0026dr\u003dCSs\n\nSame apply for the rest of these functions",
+      "range": {
+        "startLine": 21,
+        "startChar": 14,
+        "endLine": 21,
+        "endChar": 29
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26521055_d9913125",
+        "filename": "ios/chrome/browser/web/origin_security_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-24T16:35:22Z",
+      "side": 1,
+      "message": "How is this different from web::IsOriginSecure?",
+      "range": {
+        "startLine": 24,
+        "startChar": 14,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc1e585e_8fc12fc6",
+        "filename": "ios/chrome/browser/web/origin_security_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-24T16:35:22Z",
+      "side": 1,
+      "message": "This function looks unrelated to all other functions from this header and needs some other place to live.",
+      "range": {
+        "startLine": 36,
+        "startChar": 14,
+        "endLine": 36,
         "endChar": 35
       },
       "revId": "143b4a40634669d8809528b31699cf9321d0a213",
