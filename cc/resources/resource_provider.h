@@ -97,8 +97,6 @@ class CC_EXPORT ResourceProvider
     return type != ResourceProvider::RESOURCE_TYPE_BITMAP;
   }
 
-  void Initialize();
-
   void DidLoseVulkanContextProvider() { lost_context_provider_ = true; }
 
   int max_texture_size() const { return settings_.max_texture_size; }
