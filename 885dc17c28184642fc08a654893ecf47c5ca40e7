@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b1ae026_07619d77",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T20:29:53Z",
+      "side": 1,
+      "message": "nit: 1 or 10?  Just double-checking as your previous comment mentioned 10.",
+      "range": {
+        "startLine": 34,
+        "startChar": 63,
+        "endLine": 34,
+        "endChar": 64
+      },
+      "revId": "885dc17c28184642fc08a654893ecf47c5ca40e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

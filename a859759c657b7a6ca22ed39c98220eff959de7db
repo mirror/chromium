@@ -126,6 +126,30 @@
     },
     {
       "key": {
+        "uuid": "af28e10b_3b3c1e9e",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T20:29:53Z",
+      "side": 1,
+      "message": "Right, it\u0027s fine to record values of zero, even though the specified min is higher.",
+      "parentUuid": "dea58b08_057fa004",
+      "range": {
+        "startLine": 34,
+        "startChar": 61,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "a859759c657b7a6ca22ed39c98220eff959de7db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fce7eef_e72dfd16",
         "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.cc",
         "patchSetId": 4
