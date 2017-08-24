@@ -341,6 +341,39 @@ LayoutBox* CollectInlinesInternal(
   return next_box;
 }
 
+Vector<const NGPhysicalTextFragment*> CollectTextFragments(
+    const NGPhysicalFragment* fragment) {
+  if (!fragment || !fragment->IsBox())
+    return {};
+
+  Vector<const NGPhysicalTextFragment*> result;
+  for (auto& wrapper : ToNGPhysicalBoxFragment(*fragment).Children()) {
+    if (!wrapper || !wrapper->IsBox())
+      continue;
+
+    for (auto& line : ToNGPhysicalBoxFragment(*wrapper).Children()) {
+      if (!line || !line->IsLineBox())
+        continue;
+
+      for (auto& text : ToNGPhysicalLineBoxFragment(*line).Children()) {
+        if (!text || !text->IsText())
+          continue;
+        result.push_back(ToNGPhysicalTextFragment(text.Get()));
+      }
+    }
+    break;
+  }
+
+  // Sort the text fragments in DOM order.
+  std::sort(
+      result.begin(), result.end(),
+      [](const NGPhysicalTextFragment* lhs, const NGPhysicalTextFragment* rhs) {
+        return lhs->StartOffset() < rhs->StartOffset();
+      });
+
+  return result;
+}
+
 }  // namespace
 
 NGInlineNode::NGInlineNode(LayoutNGBlockFlow* block)
@@ -396,6 +429,19 @@ const NGOffsetMappingResult& NGInlineNode::ComputeOffsetMappingIfNeeded() {
   }
 
   return *Data().offset_mapping_;
+}
+
+const Vector<const NGPhysicalTextFragment*>&
+NGInlineNode::CollectTextFragmentsIfNeeded() {
+  DCHECK(!GetLayoutBlockFlow()->GetDocument().NeedsLayoutTreeUpdate());
+
+  if (!Data().fragments_collected_) {
+    MutableData()->text_fragments_ = CollectTextFragments(
+        ToLayoutNGBlockFlow(GetLayoutBlockFlow())->RootFragment().Get());
+    MutableData()->fragments_collected_ = true;
+  }
+
+  return Data().text_fragments_;
 }
 
 // Depth-first-scan of all LayoutInline and LayoutText nodes that make up this
@@ -768,6 +814,44 @@ size_t NGInlineNode::GetTextContentOffset(const Node& node, unsigned offset) {
   if (!unit)
     return kNotFound;
   return unit->ConvertDOMOffsetToTextContent(offset);
+}
+
+const NGPhysicalTextFragment* NGInlineNode::GetTextFragmentForDOMOffset(
+    const Node& node,
+    unsigned dom_offset,
+    TextAffinity affinity) {
+  size_t text_content_offset = GetTextContentOffset(node, dom_offset);
+  if (text_content_offset == kNotFound)
+    return nullptr;
+
+  Vector<const NGPhysicalTextFragment*> text_fragments =
+      CollectTextFragmentsIfNeeded();
+  if (text_fragments.IsEmpty() ||
+      text_fragments.front()->StartOffset() > text_content_offset ||
+      text_fragments.back()->EndOffset() < text_content_offset)
+    return nullptr;
+
+  if (affinity == TextAffinity::kDownstream) {
+    // Find the last text fragment whose StartOffset() <= |text_content_offset|
+    const NGPhysicalTextFragment* result = *std::prev(std::upper_bound(
+        text_fragments.begin(), text_fragments.end(), text_content_offset,
+        [](unsigned offset, const NGPhysicalTextFragment* fragment) {
+          return offset < fragment->StartOffset();
+        }));
+    if (result->EndOffset() < text_content_offset)
+      return nullptr;
+    return result;
+  }
+
+  // Find the first text fragment whose EndOffset() >= |text_content_offset|
+  const NGPhysicalTextFragment* result = *std::lower_bound(
+      text_fragments.begin(), text_fragments.end(), text_content_offset,
+      [](const NGPhysicalTextFragment* fragment, unsigned offset) {
+        return fragment->EndOffset() < offset;
+      });
+  if (result->StartOffset() > text_content_offset)
+    return nullptr;
+  return result;
 }
 
 }  // namespace blink

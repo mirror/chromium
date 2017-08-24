@@ -6,6 +6,7 @@
 #define NGInlineNode_h
 
 #include "core/CoreExport.h"
+#include "core/editing/TextAffinity.h"
 #include "core/layout/ng/inline/ng_inline_item.h"
 #include "core/layout/ng/inline/ng_inline_node_data.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
@@ -93,6 +94,15 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   size_t GetTextContentOffset(const Node&, unsigned);
 
   // TODO(xiaochengh): Add APIs for reverse mapping.
+
+  // ------ Fragment Mapping APIs -----
+
+  const Vector<const NGPhysicalTextFragment*>& CollectTextFragmentsIfNeeded();
+
+  const NGPhysicalTextFragment* GetTextFragmentForDOMOffset(
+      const Node&,
+      unsigned,
+      TextAffinity = TextAffinity::kDownstream);
 
  protected:
   // Prepare inline and text content for layout. Must be called before
