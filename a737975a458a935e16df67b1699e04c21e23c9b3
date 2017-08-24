@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8eeff748_c83e2ff0",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-24T05:34:07Z",
+      "side": 1,
+      "message": "This copies, you need to use std::move() here as well.\n\nHowever, in general, passing a rvalue reference is a violation of the style guide, since this isn\u0027t a move constructor / assignment operator. So I would say this should probably be pass by value as well.",
+      "range": {
+        "startLine": 38,
+        "startChar": 55,
+        "endLine": 38,
+        "endChar": 61
+      },
+      "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18671eb_bb2eef88",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-24T05:34:07Z",
+      "side": 1,
+      "message": "Is it possible that size \u003e max data pipe buffer size?",
+      "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1646b24_d0b51a06",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-24T05:34:07Z",
+      "side": 1,
+      "message": "Maybe another variable name would be more appropriate here?",
+      "range": {
+        "startLine": 166,
+        "startChar": 63,
+        "endLine": 166,
+        "endChar": 68
+      },
+      "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3425f13f_3ef343a9",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-24T05:34:07Z",
+      "side": 1,
+      "message": "The tracing framework passes std::unique_ptr ownership... by mutable pointer?\n\nso confused.",
+      "range": {
+        "startLine": 175,
+        "startChar": 32,
+        "endLine": 175,
+        "endChar": 38
+      },
+      "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb6e58b_23ef3cbe",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-24T05:34:07Z",
+      "side": 1,
+      "message": "We don\u0027t allow mutable references\n\nThough I actually don\u0027t care and I\u0027m OK with leaving this as-is, as a person who\u0027s OK with Blink\u0027s position on mutable references ;-)",
+      "range": {
+        "startLine": 262,
+        "startChar": 16,
+        "endLine": 262,
+        "endChar": 17
+      },
+      "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afa5abb7_7e010d88",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-24T05:34:07Z",
+      "side": 1,
+      "message": "Nit: just write R\"(\n\nI wouldn\u0027t use an additional token here unless needed for disambiguation with )\" embedded in the literal itself.",
+      "range": {
+        "startLine": 270,
+        "startChar": 11,
+        "endLine": 270,
+        "endChar": 14
+      },
+      "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b57207f0_093d0987",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-24T05:34:07Z",
+      "side": 1,
+      "message": "To answer my earlier question, I guess we\u0027ll fail here--though depending on the trust levels between browser and profiling (usually browser is consider the most trusted), that means a bad profiler reply would cause an infinite loop of post tasks.",
+      "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11db8362_248ebd0a",
+        "filename": "chrome/profiling/memlog_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-24T05:34:07Z",
+      "side": 1,
+      "message": "If you want to save a few bytes, you can write base::Passed(\u0026metadata)",
+      "range": {
+        "startLine": 51,
+        "startChar": 56,
+        "endLine": 51,
+        "endChar": 75
+      },
+      "revId": "a737975a458a935e16df67b1699e04c21e23c9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
