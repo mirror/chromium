@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61df858e_b6be3b73",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-24T19:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12e8ffe8_e6415ada",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "599129b0_32aacbb1",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-24T18:32:14Z",
       "side": 1,
       "message": "Was this a typo in the previous code?",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6722fb5d_f5f7bd9a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-24T19:12:24Z",
+      "side": 1,
+      "message": "Oh, I can remove the definition from the inclusion and move it back to this forward declaration. A good catch.",
+      "parentUuid": "599129b0_32aacbb1",
       "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c167421f_3176cc63",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-24T19:12:24Z",
+      "side": 1,
+      "message": "|Data| was too vague. This clarifies the argument is a form of |Vector|.",
+      "parentUuid": "1149d33b_6d8e7a06",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d22d502_6057219c",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.cpp",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-24T18:32:14Z",
       "side": 1,
       "message": "Maybe DCHECK(IsProcessorRegistered(name)) ?",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ec2f84_c7997a06",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-24T19:12:24Z",
+      "side": 1,
+      "message": "A good catch. Done.",
+      "parentUuid": "2d22d502_6057219c",
       "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "13b7bced_f1a9421f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-24T19:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32412580_e090fc46",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8762fa11_6c850934",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.h",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05794479_228d53d5",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-24T19:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8762fa11_6c850934",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "812031c4_8698212a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-24T19:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "316fdea3_52fb2ac2",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e23da571_1b650fb2",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorDefinition.h",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2017-08-24T18:32:14Z",
       "side": 1,
       "message": "Can\u0027t quite tell from the blink style guide if this should be SetIsSynchronized().",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b8bf5d_4f47579d",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorDefinition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-24T19:12:24Z",
+      "side": 1,
+      "message": "I don\u0027t have a preference. Perhaps I should think of a better name.",
+      "parentUuid": "e23da571_1b650fb2",
       "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "2d5e8e2c_9977463b",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-24T19:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "398c12a7_5b3deb1e",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81d46db7_252e5874",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
         "patchSetId": 3
@@ -166,6 +328,24 @@
       "writtenOn": "2017-08-24T18:32:14Z",
       "side": 1,
       "message": "Brief description of what these slots represent would be nice.",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8849bd38_bbf4f458",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-24T19:12:24Z",
+      "side": 1,
+      "message": "This is almost identical to |AudioParamDescriptor| which is on the spec. I think it is quite obvious.",
+      "parentUuid": "81d46db7_252e5874",
       "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "ba02c16e_bca30bec",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-24T19:12:24Z",
+      "side": 1,
+      "message": "Done.\n\nI did not want to create another file only for 5 lines of codes.",
+      "parentUuid": "0911a6f3_94216b43",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0d4e6c8_d5e31006",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
         "patchSetId": 3
@@ -203,6 +401,24 @@
       "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82af36a1_c7ed8d06",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-24T19:12:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0d4e6c8_d5e31006",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
