@@ -16,6 +16,24 @@
       "revId": "df4a35f321f32bd67bd37c5ae62ef62530d9e3cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a93593_1f5248cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-24T17:37:47Z",
+      "side": 1,
+      "message": "Ha okay, I don\u0027t aware there is such a short cut..",
+      "parentUuid": "c9b0a6cb_47fc148b",
+      "revId": "df4a35f321f32bd67bd37c5ae62ef62530d9e3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

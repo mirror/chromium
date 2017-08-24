@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "bd78dd17_c35a5133",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-24T17:37:47Z",
+      "side": 1,
+      "message": "Oh right... this would work!",
+      "parentUuid": "e2789de2_fda00e7f",
+      "range": {
+        "startLine": 246,
+        "startChar": 1,
+        "endLine": 252,
+        "endChar": 9
+      },
+      "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e817130_a063eecf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
         "patchSetId": 1
@@ -282,6 +306,30 @@
       "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fac948d_f886c2af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-24T17:37:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60aef8a5_bc223525",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 9
+      },
+      "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
