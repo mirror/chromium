@@ -109,6 +109,17 @@ Process LaunchProcess(const std::vector<std::string>& argv,
     to_clone |= LP_CLONE_MXIO_CWD;
   }
 
+  if (to_clone & LP_CLONE_DEFAULT_JOB) {
+    // Override Fuchsia's built in default job cloning behavior with our own
+    // logic which uses |options.job_handle| instead of mx_job_default().
+    mx_handle_t job;
+    if (mx_handle_duplicate(options.job_handle, MX_RIGHT_SAME_RIGHTS, &job) ==
+        MX_OK) {
+      launchpad_add_handle(lp, job, PA_HND(PA_JOB_DEFAULT, 0));
+    }
+    to_clone &= ~LP_CLONE_DEFAULT_JOB;
+  }
+
   if (!environ_modifications.empty())
     new_environ = AlterEnvironment(old_environ, environ_modifications);
 
