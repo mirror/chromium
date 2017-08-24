@@ -346,10 +346,16 @@ public class RenderTestRule extends TestWatcher {
                 int goldenColor = goldenImage.getPixel(x, y);
                 int testColor = testImage.getPixel(x, y);
 
-                int redDiff = Math.abs(Color.red(goldenColor) - Color.red(testColor));
-                int blueDiff = Math.abs(Color.green(goldenColor) - Color.green(testColor));
-                int greenDiff = Math.abs(Color.blue(goldenColor) - Color.blue(testColor));
-                int alphaDiff = Math.abs(Color.alpha(goldenColor) - Color.alpha(testColor));
+                // Premultiply the color values so that transparent pixels compare correctly.
+                int goldenAlpha = Color.alpha(goldenColor);
+                int testAlpha = Color.alpha(testColor);
+                int redDiff = Math.abs(
+                        Color.red(goldenColor) * goldenAlpha - Color.red(testColor) * testAlpha);
+                int blueDiff = Math.abs(Color.green(goldenColor) * goldenAlpha
+                        - Color.green(testColor) * testAlpha);
+                int greenDiff = Math.abs(
+                        Color.blue(goldenColor) * goldenAlpha - Color.blue(testColor) * testAlpha);
+                int alphaDiff = Math.abs(goldenAlpha - testAlpha);
 
                 if (redDiff > diffThreshold || blueDiff > diffThreshold || greenDiff > diffThreshold
                         || alphaDiff > diffThreshold) {
