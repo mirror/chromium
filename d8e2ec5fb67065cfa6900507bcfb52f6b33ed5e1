@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8baf7b1f_637f0f94",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-08-24T20:10:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b992db19_7264032b",
+      "revId": "d8e2ec5fb67065cfa6900507bcfb52f6b33ed5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba84ec54_012cc51f",
         "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3b61a9c8_aec2ce32",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-08-24T20:10:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba84ec54_012cc51f",
+      "revId": "d8e2ec5fb67065cfa6900507bcfb52f6b33ed5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abc14737_bc04aa9e",
         "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-24T18:07:46Z",
       "side": 1,
       "message": "nit: Do you want to roll these checks together? i.e. return request_info \u0026\u0026 (request_info-\u003eGetPreviewsState() \u0026 content::SERVER_LOFI_ON || request_info-\u003eGetPreviewsState() \u0026 content::SERVER_LITE_PAGE_ON);",
+      "revId": "d8e2ec5fb67065cfa6900507bcfb52f6b33ed5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff745941_b0c7ec92",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-08-24T20:10:56Z",
+      "side": 1,
+      "message": "I find easier to read as is - separate recognizable pattern to just check if there is request info and otherwise easier to read semantic condition. But I can change if you feel strongly.",
+      "parentUuid": "abc14737_bc04aa9e",
       "revId": "d8e2ec5fb67065cfa6900507bcfb52f6b33ed5e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0dab69c0_f891bfeb",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-08-24T20:10:56Z",
+      "side": 1,
+      "message": "Actually, in a follow-up, I want to remove both of these ShouldEnable* methods and just call ShouldAcceptServerPreviews from host delegate - so don\u0027t want to parameterize type in that method. Then sometime later, as part of cacao if not before, I think we should be returning a PreviewsState value here with the two server bits set or not.",
+      "parentUuid": "db9a8fd0_ad792368",
+      "revId": "d8e2ec5fb67065cfa6900507bcfb52f6b33ed5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2795e0fb_d21dcff7",
         "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
         "patchSetId": 7
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-24T18:07:46Z",
       "side": 1,
       "message": "Want to use SERVER_LOFI and LITE_PAGE here instead of always LITE_PAGE, see comment above.",
+      "revId": "d8e2ec5fb67065cfa6900507bcfb52f6b33ed5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c8c44d_c40ab380",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-08-24T20:10:56Z",
+      "side": 1,
+      "message": "Done - but note that there is no PreviewsType::SERVER_LOFI - just LOFI. \nSeems ok given http vs. https context so added LOFI check.",
+      "parentUuid": "2795e0fb_d21dcff7",
       "revId": "d8e2ec5fb67065cfa6900507bcfb52f6b33ed5e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
