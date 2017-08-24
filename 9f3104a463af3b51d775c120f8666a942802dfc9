@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de366bda_094bdbde",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1584,
+      "author": {
+        "id": 1236460
+      },
+      "writtenOn": "2017-08-24T22:21:00Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer s/cryptographic_content/cryptographic_scheme/",
+      "revId": "9f3104a463af3b51d775c120f8666a942802dfc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1ba7b2_5ac7f7f4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 43712,
+      "author": {
+        "id": 1236460
+      },
+      "writtenOn": "2017-08-24T22:21:00Z",
+      "side": 1,
+      "message": "Maybe mention that pushes are not accepted for secure requests. That would allow someone lookign at this to understand it more.",
+      "revId": "9f3104a463af3b51d775c120f8666a942802dfc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
