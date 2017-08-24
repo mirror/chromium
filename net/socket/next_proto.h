@@ -22,6 +22,10 @@ enum NextProto {
   kProtoLast = kProtoQUIC
 };
 
+// The protocol ID string for advertising QUIC as an alt-svc according to IETF
+// specifications.
+const char IETF_FORMAT_QUIC_PROTOCOL_ID[] = "h2q";
+
 // List of protocols to use for NPN, used for configuring HttpNetworkSessions.
 typedef std::vector<NextProto> NextProtoVector;
 
