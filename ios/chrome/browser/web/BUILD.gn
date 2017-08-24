@@ -36,6 +36,7 @@ source_set("web") {
   ]
   deps = [
     ":placeholder_overlay_tab_helper_delegate",
+    ":repost_form_tab_helper_delegate",
     "//base",
     "//components/strings",
     "//ios/chrome/app/strings:ios_strings_grit",
@@ -55,6 +56,13 @@ source_set("placeholder_overlay_tab_helper_delegate") {
   configs += [ "//build/config/compiler:enable_arc" ]
   sources = [
     "page_placeholder_tab_helper_delegate.h",
+  ]
+}
+
+source_set("repost_form_tab_helper_delegate") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  sources = [
+    "repost_form_tab_helper_delegate.h",
   ]
 }
 
