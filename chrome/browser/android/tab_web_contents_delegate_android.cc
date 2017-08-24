@@ -24,9 +24,11 @@
 #include "chrome/browser/prerender/prerender_manager_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/android/bluetooth_chooser_android.h"
+#include "chrome/browser/ui/android/infobars/notify_infobar_android.h"
 #include "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h"
 #include "chrome/browser/ui/find_bar/find_notification_details.h"
 #include "chrome/browser/ui/find_bar/find_tab_helper.h"
+#include "chrome/browser/ui/framebust_block_infobar_delegate.h"
 #include "chrome/browser/ui/tab_helpers.h"
 #include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/common/chrome_switches.h"
@@ -109,6 +111,11 @@ TabWebContentsDelegateAndroid::~TabWebContentsDelegateAndroid() {
 void TabWebContentsDelegateAndroid::LoadingStateChanged(
     WebContents* source, bool to_different_document) {
   bool has_stopped = source == nullptr || !source->IsLoading();
+
+  // TODO(dgn): Remove
+  // if (has_stopped)
+  //   OnDidBlockFramebust(source, GURL("https://www.badsite.biz"));
+
   WebContentsDelegateAndroid::LoadingStateChanged(
       source, to_different_document);
   LoadProgressChanged(source, has_stopped ? 1 : 0);
@@ -413,6 +420,13 @@ void TabWebContentsDelegateAndroid::RequestAppBannerFromDevTools(
       banners::AppBannerManagerAndroid::FromWebContents(web_contents);
   DCHECK(manager);
   manager->RequestAppBanner(web_contents->GetLastCommittedURL(), true);
+}
+
+void TabWebContentsDelegateAndroid::OnDidBlockFramebust(
+    content::WebContents* web_contents,
+    const GURL& url) {
+  NotifyInfoBarAndroid::Show(
+      web_contents, base::MakeUnique<FramebustBlockInfoBarDelegate>(url));
 }
 
 }  // namespace android
