@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dae16c11_ce43ffad",
+        "filename": "chrome/browser/metrics/metrics_service_browsertest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-24T18:37:58Z",
+      "side": 1,
+      "message": "Sorry, this is still not what I had in mind.\n\nMy suggestion is something like:\n\nsize_t GetRendererCrashCount(histogram_tester, prefs) {\n  size_t value \u003d prefs-\u003eGetInteger(metrics::prefs::kStabilityRendererCrashCount);\n#if defined(OS_ANDROID)\n  size_t histogram_value \u003d histogram_tester.GetAllSamples(...).size();\n  EXPECT_EQ(value, histogram_value);\n#endif\n  return value;\n}\n\nAnd then in the code in the tests, it would be:\n\nEXPECT_EQ(1u, GetRendererCrashCount(histogram_tester, prefs));",
+      "range": {
+        "startLine": 66,
+        "startChar": 1,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "b7ed7d18c423e2d30394b23f488d65ff1fc1083b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912109d4_dfb082a3",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-24T18:37:58Z",
+      "side": 1,
+      "message": "|increase_crash_cb|",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "b7ed7d18c423e2d30394b23f488d65ff1fc1083b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd63a549_d1b73367",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-24T18:37:58Z",
+      "side": 1,
+      "message": "base -\u003e based",
+      "range": {
+        "startLine": 17,
+        "startChar": 68,
+        "endLine": 17,
+        "endChar": 72
+      },
+      "revId": "b7ed7d18c423e2d30394b23f488d65ff1fc1083b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc9335b_f0835902",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-24T18:37:58Z",
+      "side": 1,
+      "message": "Can this just call IncrementPrefValue(prefs::kStabilityRendererCrashCount);",
+      "range": {
+        "startLine": 173,
+        "startChar": 1,
+        "endLine": 173,
+        "endChar": 0
+      },
+      "revId": "b7ed7d18c423e2d30394b23f488d65ff1fc1083b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab1603aa_f37ffd79",
+        "filename": "components/metrics/stability_metrics_helper.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-24T18:37:58Z",
+      "side": 1,
+      "message": "Increments",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "b7ed7d18c423e2d30394b23f488d65ff1fc1083b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa4566e4_e9f8f693",
+        "filename": "components/metrics/stability_metrics_helper.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-24T18:37:58Z",
+      "side": 1,
+      "message": "IncreaseRendererCrashCount().",
+      "range": {
+        "startLine": 52,
+        "startChar": 14,
+        "endLine": 52,
+        "endChar": 32
+      },
+      "revId": "b7ed7d18c423e2d30394b23f488d65ff1fc1083b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
