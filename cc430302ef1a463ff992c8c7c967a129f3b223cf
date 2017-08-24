@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2e9d4f9_101ce8b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T22:50:15Z",
+      "side": 1,
+      "message": "\u003cjedi\u003eThis is not the bug you were looking for.\u003c/jedi\u003e",
+      "revId": "cc430302ef1a463ff992c8c7c967a129f3b223cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
