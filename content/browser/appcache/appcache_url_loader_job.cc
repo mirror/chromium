@@ -134,8 +134,13 @@ AppCacheURLLoaderJob* AppCacheURLLoaderJob::AsURLLoaderJob() {
 }
 
 void AppCacheURLLoaderJob::FollowRedirect() {
-  if (network_loader_)
-    network_loader_->FollowRedirect();
+  if (subresource_factory_.get()) {
+    subresource_load_info_->client = std::move(client_);
+    subresource_factory_->Restart(last_subresource_redirect_info_,
+                                  std::move(sub_resource_handler_),
+                                  std::move(subresource_load_info_));
+  }
+  base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
 }
 
 void AppCacheURLLoaderJob::SetPriority(net::RequestPriority priority,
@@ -170,6 +175,8 @@ void AppCacheURLLoaderJob::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
     const ResourceResponseHead& response_head) {
   appcache_request_->set_response(response_head);
+  last_subresource_redirect_info_ = redirect_info;
+
   // The MaybeLoadFallbackForRedirect() call below can pass a fallback
   // response to us. Reset the delivery_type_ to ensure that we can
   // receive it
@@ -225,6 +232,13 @@ void AppCacheURLLoaderJob::OnComplete(
   client_->OnComplete(status);
 }
 
+void AppCacheURLLoaderJob::SetRequestHandlerAndFactory(
+    std::unique_ptr<AppCacheRequestHandler> handler,
+    AppCacheSubresourceURLFactory* subresource_factory) {
+  sub_resource_handler_ = std::move(handler);
+  subresource_factory_ = subresource_factory->GetWeakPtr();
+}
+
 void AppCacheURLLoaderJob::BindRequest(mojom::URLLoaderClientPtr client,
                                        mojom::URLLoaderRequest request) {
   DCHECK(!binding_.is_bound());
@@ -264,6 +278,7 @@ AppCacheURLLoaderJob::AppCacheURLLoaderJob(
   if (subresource_load_info.get()) {
     DCHECK(loader_factory_getter);
     subresource_load_info_ = std::move(subresource_load_info);
+    request_ = subresource_load_info_->request;
 
     binding_.Bind(std::move(subresource_load_info_->url_loader_request));
     binding_.set_connection_error_handler(base::Bind(
