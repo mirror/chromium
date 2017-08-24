@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "972265eb_598d9a73",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-24T01:05:21Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused. AudioDestination::Render() accesses |worklet_backing_thread_| on non-main thread according to DCHECK at line 113, and AudioDestination::Stop() nullifies |worklet_backing_thread_| on the main thread. How do we ensure the thread safety of |worklet_backing_thread_|?",
+      "revId": "5e33324475fd0c77327ecc61bb900b5729537fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
