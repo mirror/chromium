@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da89a2e1_61749837",
+        "filename": "chrome/browser/metrics/metrics_service_browsertest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T21:14:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dae16c11_ce43ffad",
+      "range": {
+        "startLine": 66,
+        "startChar": 1,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "b7ed7d18c423e2d30394b23f488d65ff1fc1083b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "912109d4_dfb082a3",
         "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
         "patchSetId": 24
@@ -45,6 +69,30 @@
       "revId": "b7ed7d18c423e2d30394b23f488d65ff1fc1083b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "603fcd8c_07be49b1",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T21:14:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "912109d4_dfb082a3",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "b7ed7d18c423e2d30394b23f488d65ff1fc1083b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "76aaddfd_fb23a662",
+        "filename": "components/crash/content/browser/child_process_crash_observer_android.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T21:14:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd63a549_d1b73367",
+      "range": {
+        "startLine": 17,
+        "startChar": 68,
+        "endLine": 17,
+        "endChar": 72
+      },
+      "revId": "b7ed7d18c423e2d30394b23f488d65ff1fc1083b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cc9335b_f0835902",
         "filename": "components/metrics/stability_metrics_helper.cc",
         "patchSetId": 24
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-24T18:37:58Z",
       "side": 1,
       "message": "Can this just call IncrementPrefValue(prefs::kStabilityRendererCrashCount);",
+      "range": {
+        "startLine": 173,
+        "startChar": 1,
+        "endLine": 173,
+        "endChar": 0
+      },
+      "revId": "b7ed7d18c423e2d30394b23f488d65ff1fc1083b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ab02e0_bf861a17",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T21:14:04Z",
+      "side": 1,
+      "message": "This is a static function so we can bind it in chrome_browser_main_android.cc without creating an instance. Should we also change the implementation of IncrementPrefValue to be static or just leave as it is?\nhttps://chromium-review.googlesource.com/c/chromium/src/+/568101/24/chrome/browser/chrome_browser_main_android.cc#72",
+      "parentUuid": "6cc9335b_f0835902",
       "range": {
         "startLine": 173,
         "startChar": 1,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "77c51bff_8d2e12c7",
+        "filename": "components/metrics/stability_metrics_helper.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T21:14:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab1603aa_f37ffd79",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 51,
+        "endChar": 14
+      },
+      "revId": "b7ed7d18c423e2d30394b23f488d65ff1fc1083b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa4566e4_e9f8f693",
         "filename": "components/metrics/stability_metrics_helper.h",
         "patchSetId": 24
@@ -137,6 +257,30 @@
       "revId": "b7ed7d18c423e2d30394b23f488d65ff1fc1083b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2472f12_1c8cdde2",
+        "filename": "components/metrics/stability_metrics_helper.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T21:14:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa4566e4_e9f8f693",
+      "range": {
+        "startLine": 52,
+        "startChar": 14,
+        "endLine": 52,
+        "endChar": 32
+      },
+      "revId": "b7ed7d18c423e2d30394b23f488d65ff1fc1083b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
