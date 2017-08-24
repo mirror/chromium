@@ -41,7 +41,6 @@ public class IntentionalCrashTest {
         }
     }
 
-    @DisabledTest
     @SmallTest
     @Test
     public void testBrowserCrash() {
