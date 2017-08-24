@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "ee96cf14_56553b00",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-24T09:26:25Z",
+      "side": 1,
+      "message": "Sorry I just realized I did not reply to the comment chain when I wrote my reply:\n\n\nCurrently, the violation data is always overridden using the result from CheckCSPForRequest which means that (if I understand correctly), a race condition might be introduced where the violation data of a frame will override the one of another frame before it processed by the ResourceClient.\n\nIt seems that attempting to fix this might cause bigger problems from what I understand.\n\nIs it possible to save the violation data per FetchContext and then have the ResourceClient retrieve the appropriate violation data for that FetchContext?",
+      "parentUuid": "0cba313f_06806543",
+      "revId": "a0b572236d7ddc5ec26b5ae36c813fcc6a548693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed4a108d_04083ae6",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 6
