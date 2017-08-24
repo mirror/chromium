@@ -2,17 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_BACKGROUND_FETCH_REQUEST_INFO_H_
-#define CONTENT_BROWSER_BACKGROUND_FETCH_REQUEST_INFO_H_
+#ifndef CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_REQUEST_INFO_H_
+#define CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_REQUEST_INFO_H_
 
+#include <map>
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted_delete_on_sequence.h"
 #include "base/sequence_checker.h"
-#include "base/time/time.h"
 #include "content/browser/background_fetch/background_fetch_constants.h"
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_types.h"
@@ -22,7 +23,7 @@
 
 namespace content {
 
-class DownloadItem;
+struct BackgroundFetchResponse;
 
 // Simple class to encapsulate the components of a fetch request.
 // TODO(peter): This can likely change to have a single owner, and thus become
@@ -33,16 +34,13 @@ class CONTENT_EXPORT BackgroundFetchRequestInfo
   BackgroundFetchRequestInfo(int request_index,
                              const ServiceWorkerFetchRequest& fetch_request);
 
-  // Populates the cached state for the in-progress |download_item|.
-  void PopulateDownloadStateOnUI(
-      DownloadItem* download_item,
-      DownloadInterruptReason download_interrupt_reason);
+  // Populates the cached state for the in-progress download.
+  void PopulateWithResponse(
+      std::unique_ptr<const BackgroundFetchResponse> response);
+
+  void SetPathAndSize(base::FilePath path, uint64_t size);
 
   void SetDownloadStatePopulated();
-
-  // Populates the response portion of this object from the information made
-  // available in the |download_item|.
-  void PopulateResponseFromDownloadItemOnUI(DownloadItem* download_item);
 
   void SetResponseDataPopulated();
 
@@ -74,9 +72,6 @@ class CONTENT_EXPORT BackgroundFetchRequestInfo
 
   // Returns the size of the file containing the response, in bytes.
   int64_t GetFileSize() const;
-
-  // Returns the time at which the response was completed.
-  const base::Time& GetResponseTime() const;
 
  private:
   friend class base::RefCountedDeleteOnSequence<BackgroundFetchRequestInfo>;
@@ -110,7 +105,6 @@ class CONTENT_EXPORT BackgroundFetchRequestInfo
   std::vector<GURL> url_chain_;
   base::FilePath file_path_;
   int64_t file_size_ = 0;
-  base::Time response_time_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
@@ -119,4 +113,4 @@ class CONTENT_EXPORT BackgroundFetchRequestInfo
 
 }  // namespace content
 
-#endif  // CONTENT_BROWSER_BACKGROUND_FETCH_REQUEST_INFO_H_
+#endif  // CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_REQUEST_INFO_H_

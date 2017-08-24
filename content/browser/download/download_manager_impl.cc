@@ -289,8 +289,9 @@ void DownloadManagerImpl::Shutdown() {
     return;
   shutdown_needed_ = false;
 
-  for (auto& observer : observers_)
+  for (auto& observer : observers_) {
     observer.ManagerGoingDown(this);
+  }
   // TODO(benjhayden): Consider clearing observers_.
 
   // If there are in-progress downloads, cancel them. This also goes for
