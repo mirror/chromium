@@ -16,6 +16,24 @@
       "revId": "952b661ab8c9bc94818bb8b7e8160fbbff2afc2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7259bee_faedddc9",
+        "filename": "content/common/database_messages.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-08-24T01:15:58Z",
+      "side": 0,
+      "message": "I did it in another CL, re base should take care of it from a diffs perspective.",
+      "parentUuid": "7858abdb_911344b5",
+      "revId": "952b661ab8c9bc94818bb8b7e8160fbbff2afc2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
