@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/files/file_util.h"
+#include "base/json/json_file_value_serializer.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
@@ -23,6 +24,7 @@
 #include "components/crx_file/id_util.h"
 #include "components/sync/model/string_ordinal.h"
 #include "content/public/browser/browser_thread.h"
+#include "extensions/browser/api/declarative_net_request/utils.h"
 #include "extensions/browser/extension_file_task_runner.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
@@ -31,6 +33,7 @@
 #include "extensions/browser/policy_check.h"
 #include "extensions/browser/preload_check_group.h"
 #include "extensions/browser/requirements_checker.h"
+#include "extensions/common/api/declarative_net_request/dnr_manifest_data.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_l10n_util.h"
 #include "extensions/common/file_util.h"
@@ -155,12 +158,7 @@ bool UnpackedInstaller::LoadFromCommandLine(const base::FilePath& path_in,
   }
 
   std::string error;
-  extension_ = file_util::LoadExtension(extension_path_, Manifest::COMMAND_LINE,
-                                        GetFlags(), &error);
-
-  if (!extension() ||
-      !extension_l10n_util::ValidateExtensionLocales(
-          extension_path_, extension()->manifest()->value(), &error)) {
+  if (!LoadExtension(Manifest::COMMAND_LINE, GetFlags(), &error)) {
     ReportExtensionLoadError(error);
     return false;
   }
@@ -292,6 +290,47 @@ int UnpackedInstaller::GetFlags() {
   return result;
 }
 
+bool UnpackedInstaller::LoadExtension(Manifest::Location location,
+                                      int flags,
+                                      std::string* error) {
+  base::ThreadRestrictions::AssertIOAllowed();
+
+  extension_ =
+      file_util::LoadExtension(extension_path_, location, flags, error);
+  if (!extension() ||
+      !extension_l10n_util::ValidateExtensionLocales(
+          extension_path_, extension()->manifest()->value(), error)) {
+    return false;
+  }
+
+  return IndexAndPersistRulesIfNeeded(error);
+}
+
+bool UnpackedInstaller::IndexAndPersistRulesIfNeeded(std::string* error) {
+  DCHECK(extension());
+  base::ThreadRestrictions::AssertIOAllowed();
+
+  const ExtensionResource* resource =
+      declarative_net_request::DNRManifestData::GetRulesetResource(extension());
+  // The extension did not provide a ruleset.
+  if (!resource)
+    return true;
+
+  // COMMENT: We are parsing JSON in browser process. But we do the same for
+  // manifests and it needs to be sync for the command line case.
+  JSONFileValueDeserializer deserializer(resource->GetFilePath());
+  std::unique_ptr<base::Value> parsed_rules =
+      deserializer.Deserialize(nullptr, error);
+  if (!parsed_rules)
+    return false;
+
+  std::vector<InstallWarning> warnings;
+  const bool success = declarative_net_request::IndexAndPersistRules(
+      *parsed_rules, extension(), error, &warnings);
+  extension_->AddInstallWarnings(warnings);
+  return success;
+}
+
 bool UnpackedInstaller::IsLoadingUnpackedAllowed() const {
   if (!service_weak_.get())
     return true;
@@ -338,12 +377,7 @@ void UnpackedInstaller::LoadWithFileAccess(int flags) {
   base::ThreadRestrictions::AssertIOAllowed();
 
   std::string error;
-  extension_ = file_util::LoadExtension(extension_path_, Manifest::UNPACKED,
-                                        flags, &error);
-
-  if (!extension() ||
-      !extension_l10n_util::ValidateExtensionLocales(
-          extension_path_, extension()->manifest()->value(), &error)) {
+  if (!LoadExtension(Manifest::UNPACKED, flags, &error)) {
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&UnpackedInstaller::ReportExtensionLoadError, this,
