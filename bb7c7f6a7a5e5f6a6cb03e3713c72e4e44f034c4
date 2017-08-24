@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "457151e0_5781b1eb",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlRemainingTimeDisplayElement.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-08-24T17:42:12Z",
+      "side": 1,
+      "message": "I believe you could write this as just:\n\nreturn \"/ \" + MediaControlTimeDisplayElement::FormatTime();\n\nsaving one String allocation.\n(May need to include platform/wtf/text/StringOperators.h)",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 44
+      },
+      "revId": "bb7c7f6a7a5e5f6a6cb03e3713c72e4e44f034c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
