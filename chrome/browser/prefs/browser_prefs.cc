@@ -697,6 +697,14 @@ void MigrateObsoleteBrowserPrefs(Profile* profile, PrefService* local_state) {
   local_state->ClearPref(prefs::kTouchscreenEnabled);
   local_state->ClearPref(prefs::kTouchpadEnabled);
 #endif  // defined(OS_CHROMEOS)
+
+#if defined(OS_ANDROID)
+  // Added 8/2017.
+  local_state->ClearPref(prefs::kStabilityForegroundActivityType);
+  local_state->ClearPref(prefs::kStabilityLaunchedActivityFlags);
+  local_state->ClearPref(prefs::kStabilityLaunchedActivityCounts);
+  local_state->ClearPref(prefs::kStabilityCrashedActivityCounts);
+#endif  // defined(OS_ANDROID)
 }
 
 // This method should be periodically pruned of year+ old migrations.

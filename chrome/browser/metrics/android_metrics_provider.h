@@ -6,7 +6,6 @@
 #define CHROME_BROWSER_METRICS_ANDROID_METRICS_PROVIDER_H_
 
 #include "base/macros.h"
-#include "chrome/browser/android/activity_type_ids.h"
 #include "components/metrics/metrics_provider.h"
 
 class PrefService;
@@ -29,19 +28,12 @@ class AndroidMetricsProvider : public metrics::MetricsProvider {
   void ProvideCurrentSessionData(
       metrics::ChromeUserMetricsExtension* uma_proto) override;
 
-  // Called when the Activity that the user interacts with is swapped out.
-  // TODO(asvitkine): Expose a way for Android code to actually invoke this.
-  void OnForegroundActivityChanged(ActivityTypeIds::Type type);
-
   // Registers local state prefs used by this class.
   static void RegisterPrefs(PrefRegistrySimple* registry);
 
  private:
   // Called to log launch and crash stats to preferences.
   void LogStabilityToPrefs();
-
-  // Converts crash stats stored in the preferences into histograms.
-  void ConvertStabilityPrefsToHistograms();
 
   // Weak pointer to the local state prefs store.
   PrefService* local_state_;
