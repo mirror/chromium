@@ -2151,8 +2151,7 @@ void RenderWidgetHostViewAura::InternalSetBounds(const gfx::Rect& rect) {
   // a Window::SetBoundsInternal call.
   if (!in_bounds_changed_)
     window_->SetBounds(rect);
-  if (IsMus())
-    local_surface_id_ = aura::WindowMus::Get(window_)->GetLocalSurfaceId();
+  local_surface_id_ = window_->GetLocalSurfaceId();
   host_->WasResized();
   if (delegated_frame_host_)
     delegated_frame_host_->WasResized();
