@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "0d23ac15_bb93bb00",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-24T09:52:45Z",
+      "side": 1,
+      "message": "Please clarify that this is about notifications that Chrome shows informing the user that these web apps are running, not about notifications shown *for* web apps, which includes their own.",
+      "revId": "82274cab7782bbb79b5495c076bd6f52abd2e1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f908cd_88f75c9c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-24T09:52:45Z",
+      "side": 1,
+      "message": "nit: Why don\u0027t you prefer a NotificationCompatBuilder? We\u0027re trying to move everything to using that.",
+      "revId": "82274cab7782bbb79b5495c076bd6f52abd2e1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7200be1d_d7f655bd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-24T09:52:45Z",
+      "side": 1,
+      "message": "nit: you use a mixture of \"PWA\" and \"Web App\" to refer to the same thing. It\u0027d be cool if you could pick one",
+      "revId": "82274cab7782bbb79b5495c076bd6f52abd2e1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e56c4c13_d28424cb",
         "filename": "tools/metrics/actions/actions.xml",
         "patchSetId": 5
