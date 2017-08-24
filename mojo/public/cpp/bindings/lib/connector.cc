@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/run_loop.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_local.h"
@@ -275,6 +276,7 @@ bool Connector::Accept(Message* message) {
   if (!message_pipe_.is_valid() || drop_writes_)
     return true;
 
+  UMA_HISTOGRAM_COUNTS_100000("Experiment.MojoBindingsMessageSize", message->data_num_bytes());
   MojoResult rv =
       WriteMessageNew(message_pipe_.get(), message->TakeMojoMessage(),
                       MOJO_WRITE_MESSAGE_FLAG_NONE);

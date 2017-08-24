@@ -602,6 +602,8 @@ void NodeController::DropPeer(const ports::NodeName& name,
 void NodeController::SendPeerEvent(const ports::NodeName& name,
                                    ports::ScopedEvent event) {
   Channel::MessagePtr event_message = SerializeEventMessage(std::move(event));
+  UMA_HISTOGRAM_COUNTS_100000("Experiment.MojoEDKMessageSize",
+                              event_message->data_num_bytes());
   if (!event_message)
     return;
   scoped_refptr<NodeChannel> peer = GetPeerChannel(name);

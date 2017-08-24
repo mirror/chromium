@@ -16,6 +16,7 @@
 #include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/process/process_handle.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -377,6 +378,7 @@ bool ChannelMojo::Send(Message* message) {
   if (!message_reader_)
     return false;
 
+  UMA_HISTOGRAM_COUNTS_100000("Experiment.IPCMessageSize", message->size());
   // Comment copied from ipc_channel_posix.cc:
   // We can't close the pipe here, because calling OnChannelError may destroy
   // this object, and that would be bad if we are called from Send(). Instead,
