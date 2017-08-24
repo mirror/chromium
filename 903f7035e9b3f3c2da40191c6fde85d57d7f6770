@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "864d3e1d_5ace7438",
+        "filename": "build/android/gyp/util/proguard_util.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-24T02:09:45Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s probably better. Done",
+      "parentUuid": "591b00f0_40ea2ea1",
+      "revId": "903f7035e9b3f3c2da40191c6fde85d57d7f6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3d0e277_1cf76d5f",
         "filename": "build/android/pylib/instrumentation/instrumentation_test_instance.py",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-23T21:43:10Z",
       "side": 1,
       "message": "nit: can we just create the deobfuscator here and forgo enable_java_deobfuscation?",
+      "revId": "903f7035e9b3f3c2da40191c6fde85d57d7f6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d38b7b6d_cde242a5",
+        "filename": "build/android/pylib/instrumentation/instrumentation_test_instance.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-24T02:09:45Z",
+      "side": 1,
+      "message": "We could, but I don\u0027t like the idea that a function that\u0027s meant to read command-line flags winds up starting a subprocess :/. setUp() seems like a better spot for that, especially since we rely on tearDown to call Close()",
+      "parentUuid": "b3d0e277_1cf76d5f",
       "revId": "903f7035e9b3f3c2da40191c6fde85d57d7f6770",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "890c621b_7bd08384",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-24T02:09:45Z",
+      "side": 1,
+      "message": "I\u0027m likewise concerned about this. Was planning to address in a follow-up, but might as well do it now I suppose (done).",
+      "parentUuid": "6ad59f18_6386e473",
+      "revId": "903f7035e9b3f3c2da40191c6fde85d57d7f6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10df97eb_e645b718",
         "filename": "build/android/pylib/symbols/deobfuscator.py",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "1b56c038_a7876ccb",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-24T02:09:45Z",
+      "side": 1,
+      "message": "I\u0027ve never actually hit this case. But given the scheme of \"Write 3 lines, then read 3 lines\", the case I\u0027m afraid of is that it doesn\u0027t output all the lines (in which case it wouldn\u0027t be good to re-use). Haven\u0027t seen this happen in practice though.",
+      "parentUuid": "10df97eb_e645b718",
+      "revId": "903f7035e9b3f3c2da40191c6fde85d57d7f6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df276f1d_33a43307",
         "filename": "build/android/pylib/symbols/deobfuscator.py",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-23T21:43:10Z",
       "side": 1,
       "message": "Is this right? Don\u0027t we expect the process to have terminated -- i.e., have a non-None exit code -- at this point?",
+      "revId": "903f7035e9b3f3c2da40191c6fde85d57d7f6770",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e65e13a_5ed486c2",
+        "filename": "build/android/pylib/symbols/deobfuscator.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-24T02:09:45Z",
+      "side": 1,
+      "message": "You\u0027re right, this is backwards :P",
+      "parentUuid": "df276f1d_33a43307",
       "revId": "903f7035e9b3f3c2da40191c6fde85d57d7f6770",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
