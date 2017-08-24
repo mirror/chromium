@@ -129,6 +129,11 @@ ServiceWorkerProviderContext::event_dispatcher() {
   return controllee_state_->event_dispatcher.get();
 }
 
+mojom::ServiceWorkerProviderHost* ServiceWorkerProviderContext::provider_host()
+    const {
+  return provider_host_.get();
+}
+
 void ServiceWorkerProviderContext::CountFeature(uint32_t feature) {
   // ServiceWorkerProviderContext keeps track of features in order to propagate
   // it to WebServiceWorkerProviderClient, which actually records the

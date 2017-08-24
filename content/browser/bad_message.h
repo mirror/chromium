@@ -199,6 +199,8 @@ enum BadMessageReason {
   SWDH_PROVIDER_CREATED_ILLEGAL_TYPE_CONTROLLER = 175,
   SWDH_PROVIDER_CREATED_DUPLICATE_ID = 176,
   SWDH_PROVIDER_CREATED_BAD_ID = 177,
+  SWPH_REGISTER_BAD_URL = 178,
+  SWPH_REGISTER_CANNOT = 179,
 
   // Please add new elements here. The naming convention is abbreviated class
   // name (e.g. RenderFrameHost becomes RFH) plus a unique description of the

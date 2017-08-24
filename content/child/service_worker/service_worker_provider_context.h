@@ -109,6 +109,11 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // occur and ensuring the Clients API doesn't return the client).
   void OnNetworkProviderDestroyed();
 
+  // For service worker clients. Gets the mojom::ServiceWorkerProviderHost* for
+  // sending requests to browser-side ServiceWorkerProviderHost. May be nullptr
+  // if above OnNetworkProviderDestroyed() has already been called.
+  mojom::ServiceWorkerProviderHost* provider_host() const;
+
  private:
   friend class base::DeleteHelper<ServiceWorkerProviderContext>;
   friend class base::RefCountedThreadSafe<ServiceWorkerProviderContext,
