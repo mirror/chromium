@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5bae8464_3a5c3960",
+        "filename": "chrome/browser/metrics/metrics_service_browsertest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T18:14:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d54a1d03_86d62973",
+      "range": {
+        "startLine": 65,
+        "startChar": 15,
+        "endLine": 65,
+        "endChar": 20
+      },
+      "revId": "3cdfb208f571f30797a9b249a8f368c6343edf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4fffca3_c5a9d630",
         "filename": "components/metrics/stability_metrics_helper.cc",
         "patchSetId": 23
@@ -45,6 +69,30 @@
       "revId": "3cdfb208f571f30797a9b249a8f368c6343edf13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135b1b9f_ac07feaf",
+        "filename": "components/metrics/stability_metrics_helper.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T18:14:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4fffca3_c5a9d630",
+      "range": {
+        "startLine": 201,
+        "startChar": 11,
+        "endLine": 201,
+        "endChar": 32
+      },
+      "revId": "3cdfb208f571f30797a9b249a8f368c6343edf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4881cca9_ba9570e1",
+        "filename": "components/metrics/stability_metrics_helper_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T18:14:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1167590_e04a14ee",
+      "range": {
+        "startLine": 113,
+        "startChar": 3,
+        "endLine": 113,
+        "endChar": 20
+      },
+      "revId": "3cdfb208f571f30797a9b249a8f368c6343edf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e58fd93_1c9c32e4",
         "filename": "components/metrics/stability_metrics_helper_unittest.cc",
         "patchSetId": 23
@@ -91,6 +163,30 @@
       "revId": "3cdfb208f571f30797a9b249a8f368c6343edf13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78e6846_ce44a184",
+        "filename": "components/metrics/stability_metrics_helper_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-08-24T18:14:08Z",
+      "side": 1,
+      "message": "I run the test and they passed in local. The build flag does not affect the test results, as we didn\u0027t wrap it before.\n\nhttps://cs.chromium.org/chromium/src/components/metrics/stability_metrics_helper_unittest.cc?l\u003d96",
+      "parentUuid": "1e58fd93_1c9c32e4",
+      "range": {
+        "startLine": 114,
+        "startChar": 33,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "3cdfb208f571f30797a9b249a8f368c6343edf13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
