@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9128f54f_2bb3ada1",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-24T14:13:11Z",
+      "side": 1,
+      "message": "I think we may not need this if we just implement the Flush() as a blocking command with the normal command timeout that will exist anyway for the ConnectionOpen if something goes terribly wrong.",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04dd668d_12c2bbbc",
+        "filename": "tools/battor_agent/battor_agent.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-24T14:13:11Z",
+      "side": 1,
+      "message": "I think we may want to just implement this as part of Flush(). Flush is currently only needed to kill off the serial data from the last connection when we open a new connection, the slow flush is the behavior that we are actually looking for when we Flush() rather than what we currently have implemented as Flush().",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7b8a22_b8a2e83e",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-24T14:13:11Z",
+      "side": 1,
+      "message": "I imagine this would be sufficient, since the main constraint is the round trip time which is about 1 millisecond. However, have you done testing to ensure that this is sufficient?",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84127c2_23bf8a33",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-24T14:13:11Z",
+      "side": 1,
+      "message": "I don\u0027t understand why we need this delay. Don\u0027t we just setup a read, and if there is no reply in the quiet period threshold, then the slow flush is done?",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc216cb2_1715d09f",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-24T14:13:11Z",
+      "side": 1,
+      "message": "This code depends on the timeout set for the serial connection (which is not noted here). It\u0027s not noted in the comment what this timeout is. I am a bit concerned that it may be longer than the quiet period you desire (50 ms). Is there any particular reason why you do not want to implement the quiet period timeout as an async timer (like the command timeout).\n\nDoes the serial timeout work on all platforms too? If I recall there was something weird going on where some platforms the serial code didn\u0027t properly timeout.",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93efdd3e_76a3bbf6",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-24T14:13:11Z",
+      "side": 1,
+      "message": "I think this could be simplified by moving to the model where we have an async timeout. In that case you always continue issuing new when reads terminate (even if it\u0027s due to a serial timeout) until the async timeout expires, then you can cancel the read.\n\nHowever, I recall that perhaps we ran into an issue where serial read callbacks were still being issued even after we canceled the callback. Not sure though.",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "056252bb_650c0231",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-24T14:13:11Z",
+      "side": 1,
+      "message": "again I\u0027m not quite sure why we need a delay, is this just to avoid an infinite loop that uses up 100% of the CPU?",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df605e2e_7943d0a1",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-24T14:13:11Z",
+      "side": 1,
+      "message": "Can you clarify what is done here (it doesn\u0027t need to be in a comment, just for my understanding). Does this test the slow flush with a RESET control message coming from the BattOr? Normally one would expect the BattOr doesn\u0027t send control messages back to the host, just CONTROL_ACKs and SAMPLE frames. Ideally I think we would perform this test with ACKs in this first test, and sample frames with the multiple data test below.",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
