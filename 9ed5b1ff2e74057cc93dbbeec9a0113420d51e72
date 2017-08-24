@@ -34,6 +34,24 @@
       "revId": "9ed5b1ff2e74057cc93dbbeec9a0113420d51e72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "485cdd6b_dcdd9bff",
+        "filename": "components/web_contents_delegate_android/android/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-24T13:30:28Z",
+      "side": 0,
+      "message": "\u003e I merged it into components/web_contents_delegate_android/DEPS, do you mean I should add it to components/web_contents_delegate_android/java/DEPS instead?\n\nyes",
+      "parentUuid": "899c9260_e9eeb72c",
+      "revId": "9ed5b1ff2e74057cc93dbbeec9a0113420d51e72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
