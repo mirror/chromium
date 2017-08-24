@@ -19,6 +19,10 @@
 #include "base/win/scoped_com_initializer.h"
 #endif
 
+#if defined(OS_POSIX)
+#include "base/files/file_descriptor_watcher_posix.h"
+#endif
+
 namespace content {
 
 TestBrowserThreadBundle::TestBrowserThreadBundle()
@@ -119,6 +123,15 @@ void TestBrowserThreadBundle::Init() {
             options_ & IO_MAINLOOP
                 ? base::test::ScopedTaskEnvironment::MainThreadType::IO
                 : base::test::ScopedTaskEnvironment::MainThreadType::UI);
+#if defined(OS_POSIX)
+    // If the main thread is an IO thread, allow it to use FileDescriptorWatcher
+    // API.
+    if (options_ & IO_MAINLOOP) {
+      DCHECK(base::MessageLoopForIO::current());
+      file_descriptor_watcher_.reset(
+          new base::FileDescriptorWatcher(base::MessageLoopForIO::current()));
+    }
+#endif
   }
   CHECK(base::MessageLoop::current()->IsType(options_ & IO_MAINLOOP
                                                  ? base::MessageLoop::TYPE_IO
