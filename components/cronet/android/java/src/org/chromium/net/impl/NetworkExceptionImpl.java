@@ -55,6 +55,8 @@ public class NetworkExceptionImpl extends NetworkException {
             case ERROR_CONNECTION_CLOSED:
             case ERROR_CONNECTION_TIMED_OUT:
             case ERROR_CONNECTION_RESET:
+            case ERROR_HTTP2_PING_FAILED:
+            case ERROR_QUIC_HANDSHAKE_FAILED:
                 return true;
         }
     }
