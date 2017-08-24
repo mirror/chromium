@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03e85285_16f5ed5e",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-24T18:00:05Z",
+      "side": 0,
+      "message": "Is this intentional? Don\u0027t you still have to remove observers?",
+      "revId": "752c9e56de72aa942af29ea859fda009109a3f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

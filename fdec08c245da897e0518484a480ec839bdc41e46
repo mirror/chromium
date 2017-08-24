@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95c79c65_cbd047c4",
+        "filename": "ash/wm/overview/window_selector.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-24T18:00:05Z",
+      "side": 1,
+      "message": "does std::move work? (if not, you may leave as is)\n\ncan you also reset the window_selector in window drag controller here\nto make troubleshooting easier in case it crashes?",
+      "revId": "fdec08c245da897e0518484a480ec839bdc41e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
