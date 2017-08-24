@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd1e0dd8_e72c87dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1728,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T19:29:43Z",
+      "side": 1,
+      "message": "Let\u0027s use ChromeFeatureList#isChromeHomeModernEnabled()",
+      "range": {
+        "startLine": 1727,
+        "startChar": 16,
+        "endLine": 1728,
+        "endChar": 84
+      },
+      "revId": "964a0643333f211c86927a8f41b87beb1a0951f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2359195f_d6118516",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T19:29:43Z",
+      "side": 1,
+      "message": "Put this in dimens.xml so that we can use Resources#getDimensionPixelSize()",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 67
+      },
+      "revId": "964a0643333f211c86927a8f41b87beb1a0951f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4751f7e_5644d5f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T19:29:43Z",
+      "side": 1,
+      "message": "What is this doing?",
+      "range": {
+        "startLine": 217,
+        "startChar": 8,
+        "endLine": 220,
+        "endChar": 20
+      },
+      "revId": "964a0643333f211c86927a8f41b87beb1a0951f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc84083_605e4d20",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T19:29:43Z",
+      "side": 1,
+      "message": "I think we can indent the navigation button regardless of whether Chrome Home is enabled. Let\u0027s grab these screenshots \u0026 confirm with design that it looks good:\n\n1) Chrome Home enabled regular display\n2) Chrome Home enabled wide display\n3) Chrome Home not enabled regular display\n4) Chrome Home not enabled wide display",
+      "range": {
+        "startLine": 477,
+        "startChar": 8,
+        "endLine": 478,
+        "endChar": 55
+      },
+      "revId": "964a0643333f211c86927a8f41b87beb1a0951f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
