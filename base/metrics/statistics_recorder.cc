@@ -449,13 +449,15 @@ std::vector<HistogramBase*> StatisticsRecorder::GetKnownHistograms(
   std::vector<HistogramBase*> known;
   base::AutoLock auto_lock(lock_.Get());
 
-  known.reserve(histograms_->size());
-  for (const auto& h : *histograms_) {
-    if (!include_persistent &&
-        (h.second->flags() & HistogramBase::kIsPersistent)) {
-      continue;
+  if (histograms_ && histograms_->size() > 0) {
+    known.reserve(histograms_->size());
+    for (const auto& h : *histograms_) {
+      if (!include_persistent &&
+          (h.second->flags() & HistogramBase::kIsPersistent)) {
+        continue;
+      }
+      known.push_back(h.second);
     }
-    known.push_back(h.second);
   }
 
   return known;
