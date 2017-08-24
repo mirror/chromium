@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "138503f5_ca1f82ae",
+        "filename": "services/ui/ws/window_manager_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-24T00:41:51Z",
+      "side": 1,
+      "message": "Yea |window| is with window_manager(). But when we create it in the client side, only the low 16 bits in server_id is valid, high 16 bits would always be 0. In this case, after Embed(window_manager(), window) in line 384 reaches WindowTree::Embed, MakeClientWindowId would change the id for |window| from (0,1) to (1,1) (and back to (0,1) if it\u0027s going to communicate back to WindowTreeClient) where 1 is the id_ for window_manager(). Did I misunderstand it?",
+      "parentUuid": "e2a31b46_c3b5d3f3",
+      "range": {
+        "startLine": 392,
+        "startChar": 31,
+        "endLine": 392,
+        "endChar": 40
+      },
+      "revId": "0e2cc9a6cd3def87cb99e4d9b3954b8e65e2e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d825b86_25f634fb",
         "filename": "services/ui/ws/window_tree.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-23T22:22:57Z",
       "side": 1,
       "message": "This should be ClientWindowIdToTransportId and it should return Id and it should replace WindowIdToTransportId() in ids.h.",
+      "range": {
+        "startLine": 431,
+        "startChar": 2,
+        "endLine": 431,
+        "endChar": 41
+      },
+      "revId": "0e2cc9a6cd3def87cb99e4d9b3954b8e65e2e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35347fad_6c947650",
+        "filename": "services/ui/ws/window_tree.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-24T00:41:51Z",
+      "side": 1,
+      "message": "Renamed it to ClientWindowIdToTransportId and return Id.\nRight now WindowIdToTransportId() in ids.h is used in a lot of tests to convert WindowId to Id, which I feel like is more generic than this ClientWindowIdToTransportId. ClientWindowIdToTransportId is more like MakeClientWindowId where we need to check the id_ of this specific window tree to make decisions? WDYT?",
+      "parentUuid": "6d825b86_25f634fb",
       "range": {
         "startLine": 431,
         "startChar": 2,
