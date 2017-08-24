@@ -16,6 +16,24 @@
       "revId": "6a01ee8496255cf2e1916282c1b446c74fa43d21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853c83fa_c748e8d4",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_pane.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-24T18:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a16debd_e47de65d",
+      "revId": "6a01ee8496255cf2e1916282c1b446c74fa43d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
