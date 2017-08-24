@@ -284,8 +284,7 @@ SystemRequestContextLeakChecker::~SystemRequestContextLeakChecker() {
 
 IOThread::Globals::Globals()
     : system_request_context(nullptr),
-      system_request_context_leak_checker(this),
-      enable_brotli(false) {}
+      system_request_context_leak_checker(this) {}
 
 IOThread::Globals::~Globals() {}
 
@@ -528,8 +527,6 @@ void IOThread::Init() {
   RegisterSTHObserver(ct_tree_tracker_.get());
 
   globals_->dns_probe_service.reset(new chrome_browser_net::DnsProbeService());
-  globals_->enable_brotli =
-      base::FeatureList::IsEnabled(features::kBrotliEncoding);
 
   // Check for OS support of TCP FastOpen, and turn it on for all connections if
   // indicated by user.
@@ -765,8 +762,6 @@ void IOThread::ConstructSystemRequestContext() {
 
   builder->set_network_quality_estimator(
       globals_->network_quality_estimator.get());
-  builder->set_enable_brotli(globals_->enable_brotli);
-  builder->set_name("system");
 
   builder->set_user_agent(GetUserAgent());
   std::unique_ptr<ChromeNetworkDelegate> chrome_network_delegate(
