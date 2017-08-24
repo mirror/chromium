@@ -33,6 +33,24 @@
       "revId": "8840633344ff009b6fba2a356e0e555977a29d15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6b7c018_4b28d07e",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-24T00:34:48Z",
+      "side": 1,
+      "message": "Done here, also added CLONE_MXIO_STDIO for sandboxed processes.",
+      "parentUuid": "75d33409_7f7292b4",
+      "revId": "8840633344ff009b6fba2a356e0e555977a29d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
