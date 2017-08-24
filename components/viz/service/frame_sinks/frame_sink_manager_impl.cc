@@ -74,6 +74,36 @@ void FrameSinkManagerImpl::RegisterFrameSinkId(
   surface_manager_.RegisterFrameSinkId(frame_sink_id);
 }
 
+void FrameSinkManagerImpl::SubmitHitTestRegionList(
+    SurfaceId surface_id,
+    mojom::HitTestRegionListPtr hit_test_region_list) {
+  // debug to be removed
+  LOG(ERROR) << "------ FSM:Looking up RootCFS ";
+
+  FrameSinkId frame_sink_id = surface_id.frame_sink_id();
+
+  for (auto iter = root_compositor_frame_sinks_.begin();
+       iter != root_compositor_frame_sinks_.end(); ++iter) {
+    auto root_frame_sink_id = iter->first;
+    if (root_frame_sink_id == frame_sink_id ||
+        ChildContains(root_frame_sink_id, frame_sink_id)) {
+      RootCompositorFrameSinkImpl* root_compositor_frame_sink_impl =
+          iter->second.get();
+
+      // debug to be removed
+      LOG(ERROR) << "------ FSM:Sending HTD to RootCFS";
+
+      root_compositor_frame_sink_impl->SubmitHitTestRegionList(
+          surface_id, std::move(hit_test_region_list));
+      return;
+    }
+  }
+
+  // debug to be removed
+  LOG(ERROR) << "oooooo FSM:No RootCFS found for "
+             << surface_id.frame_sink_id();
+}
+
 void FrameSinkManagerImpl::InvalidateFrameSinkId(
     const FrameSinkId& frame_sink_id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -97,7 +127,10 @@ void FrameSinkManagerImpl::CreateRootCompositorFrameSink(
   auto display = display_provider_->CreateDisplay(
       frame_sink_id, surface_handle, renderer_settings, &begin_frame_source);
 
-  compositor_frame_sinks_[frame_sink_id] =
+  // debug to be removed
+  LOG(ERROR) << "FSM::CreateRootCompositorFrameSink for " << frame_sink_id;
+
+  root_compositor_frame_sinks_[frame_sink_id] =
       base::MakeUnique<RootCompositorFrameSinkImpl>(
           this, frame_sink_id, std::move(display),
           std::move(begin_frame_source), std::move(request), std::move(client),

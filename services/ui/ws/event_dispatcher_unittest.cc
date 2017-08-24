@@ -430,6 +430,7 @@ void EventDispatcherTest::RunTasks() {
 void EventDispatcherTest::SetUp() {
   bool enable_async_event_targeting = GetParam();
   if (enable_async_event_targeting) {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch("ws-use-viz-hit-test");
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kUseAsyncEventTargeting);
   }

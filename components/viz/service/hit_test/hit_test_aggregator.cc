@@ -18,7 +18,7 @@ constexpr uint32_t kMaxRegionsPerSurface = 1024;
 constexpr uint32_t kMaxSize = 100 * 1024;
 
 bool ValidateHitTestRegion(const mojom::HitTestRegionPtr& hit_test_region) {
-  if (hit_test_region->flags == mojom::kHitTestChildSurface) {
+  if (hit_test_region->flags & mojom::kHitTestChildSurface) {
     if (!hit_test_region->surface_id.is_valid())
       return false;
   }
@@ -47,13 +47,18 @@ HitTestAggregator::HitTestAggregator(HitTestAggregatorDelegate* delegate)
 HitTestAggregator::~HitTestAggregator() = default;
 
 void HitTestAggregator::SubmitHitTestRegionList(
-    const SurfaceId& frame_sink_id,
+    const SurfaceId& surface_id,
     mojom::HitTestRegionListPtr hit_test_region_list) {
   DCHECK(ValidateHitTestRegionList(hit_test_region_list));
   // TODO(gklassen): Runtime validation that hit_test_region_list is valid.
   // TODO(gklassen): Inform FrameSink that the hit_test_region_list is invalid.
   // TODO(gklassen): FrameSink needs to inform the host of a difficult renderer.
-  pending_[frame_sink_id] = std::move(hit_test_region_list);
+  pending_[surface_id] = std::move(hit_test_region_list);
+
+  // debug to be removed
+  LOG(ERROR) << "oooooo HTA:HTD Submitted for " << surface_id;
+
+  OnSurfaceActivated(surface_id);
 }
 
 void HitTestAggregator::PostTaskAggregate(const SurfaceId& display_surface_id) {
@@ -76,9 +81,13 @@ void HitTestAggregator::Aggregate(const SurfaceId& display_surface_id) {
   }
 
   AppendRoot(display_surface_id);
+  Swap();
 }
 
 void HitTestAggregator::Swap() {
+  // debug to be removed
+  LOG(ERROR) << "oooooo HTA:Swap";
+
   SwapHandles();
   if (!handle_replaced_) {
     delegate_->SwitchActiveAggregatedHitTestRegionList(active_handle_index_);
@@ -100,6 +109,9 @@ bool HitTestAggregator::OnSurfaceDamaged(const SurfaceId& surface_id,
 }
 
 void HitTestAggregator::OnSurfaceDiscarded(const SurfaceId& surface_id) {
+  // debug to be removed
+  LOG(ERROR) << "oooooo HTA:SurfaceDiscarded";
+
   // Update the region count.
   auto active_search = active_.find(surface_id);
   if (active_search != active_.end()) {
@@ -112,7 +124,11 @@ void HitTestAggregator::OnSurfaceDiscarded(const SurfaceId& surface_id) {
   active_.erase(surface_id);
 }
 
-void HitTestAggregator::OnSurfaceWillDraw(const SurfaceId& surface_id) {
+void HitTestAggregator::OnSurfaceWillDraw(const SurfaceId& surface_id) {}
+void HitTestAggregator::OnSurfaceActivated(const SurfaceId& surface_id) {
+  // debug to be removed
+  LOG(ERROR) << "oooooo HTA:SurfaceActivated";
+
   auto pending_search = pending_.find(surface_id);
   if (pending_search == pending_.end()) {
     // Have already activated pending hit_test_region_list objects for this
@@ -129,6 +145,9 @@ void HitTestAggregator::OnSurfaceWillDraw(const SurfaceId& surface_id) {
   }
   active_region_count_ += hit_test_region_list->regions.size();
   DCHECK_GE(active_region_count_, 0u);
+
+  // debug to be removed
+  LOG(ERROR) << "oooooo HTA:HTD moved to active list";
 
   active_[surface_id] = std::move(pending_[surface_id]);
   pending_.erase(surface_id);
@@ -163,8 +182,13 @@ void HitTestAggregator::SwapHandles() {
 
 void HitTestAggregator::AppendRoot(const SurfaceId& surface_id) {
   auto search = active_.find(surface_id);
-  if (search == active_.end())
+  if (search == active_.end()) {
+    // debug to be removed
+    LOG(ERROR) << "oooooo HTA:Aggregate - no active surface found for "
+               << surface_id;
+
     return;
+  }
 
   mojom::HitTestRegionList* hit_test_region_list = search->second.get();
 
@@ -186,6 +210,10 @@ void HitTestAggregator::AppendRoot(const SurfaceId& surface_id) {
   DCHECK_GE(region_index, 1u);
   regions[0].child_count = region_index - 1;
   regions[region_index].child_count = kEndOfList;
+
+  // debug to be removed
+  LOG(ERROR) << "oooooo HTA:Aggregate - tree has " << region_index
+             << " regions";
 }
 
 size_t HitTestAggregator::AppendRegion(AggregatedHitTestRegion* regions,
@@ -198,17 +226,27 @@ size_t HitTestAggregator::AppendRegion(AggregatedHitTestRegion* regions,
   element->rect = region->rect;
   element->transform = region->transform;
 
+  // debug to be removed
+  LOG(ERROR) << "oooooo HTA:AppendRegion for "
+             << region->surface_id.frame_sink_id() << " "
+             << region->rect.ToString();
+
   size_t parent_index = region_index++;
   if (region_index >= write_size_ - 1) {
     element->child_count = 0;
     return region_index;
   }
 
-  if (region->flags == mojom::kHitTestChildSurface) {
+  if (region->flags & mojom::kHitTestChildSurface) {
     auto search = active_.find(region->surface_id);
     if (search == active_.end()) {
       // Surface HitTestRegionList not found - it may be late.
       // Don't include this region so that it doesn't receive events.
+
+      // debug to be removed
+      LOG(ERROR) << "oooooo HTA:HTD not found for "
+                 << region->surface_id.frame_sink_id();
+
       return parent_index;
     }
 

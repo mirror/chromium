@@ -189,6 +189,7 @@ class WindowManagerStateTestAsync : public WindowManagerStateTest {
 
   // WindowManagerStateTest:
   void SetUp() override {
+    base::CommandLine::ForCurrentProcess()->AppendSwitch("ws-use-viz-hit-test");
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kUseAsyncEventTargeting);
     WindowManagerStateTest::SetUp();

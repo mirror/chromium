@@ -67,6 +67,10 @@ class RootCompositorFrameSinkImpl : public CompositorFrameSinkSupportClient,
   void SwitchActiveAggregatedHitTestRegionList(
       uint8_t active_handle_index) override;
 
+  void SubmitHitTestRegionList(
+      SurfaceId surface_id,
+      mojom::HitTestRegionListPtr hit_test_region_list);
+
  private:
   // DisplayClient:
   void DisplayOutputSurfaceLost() override;

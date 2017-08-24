@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/browser/renderer_host/render_widget_host_view_child_frame.h"
+#include "content/browser/frame_host/render_widget_host_view_child_frame.h"
 
 #include <algorithm>
 #include <utility>
@@ -23,8 +23,8 @@
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/browser_plugin/browser_plugin_guest.h"
 #include "content/browser/compositor/surface_utils.h"
+#include "content/browser/frame_host/cross_process_frame_connector.h"
 #include "content/browser/gpu/compositor_util.h"
-#include "content/browser/renderer_host/frame_connector_delegate.h"
 #include "content/browser/renderer_host/input/touch_selection_controller_client_child_frame.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
@@ -115,8 +115,8 @@ void RenderWidgetHostViewChildFrame::
   selection_controller_client_.reset();
 }
 
-void RenderWidgetHostViewChildFrame::SetFrameConnectorDelegate(
-    FrameConnectorDelegate* frame_connector) {
+void RenderWidgetHostViewChildFrame::SetCrossProcessFrameConnector(
+    CrossProcessFrameConnector* frame_connector) {
   if (frame_connector_ == frame_connector)
     return;
 
@@ -217,18 +217,12 @@ void RenderWidgetHostViewChildFrame::Show() {
     return;
 
   host_->WasShown(ui::LatencyInfo());
-
-  if (frame_connector_)
-    frame_connector_->SetVisibilityForChildViews(true);
 }
 
 void RenderWidgetHostViewChildFrame::Hide() {
   if (host_->is_hidden())
     return;
   host_->WasHidden();
-
-  if (frame_connector_)
-    frame_connector_->SetVisibilityForChildViews(false);
 }
 
 bool RenderWidgetHostViewChildFrame::IsShowing() {
@@ -363,8 +357,8 @@ void RenderWidgetHostViewChildFrame::Destroy() {
   // have already been cleared when RenderWidgetHostViewBase notified its
   // observers of our impending destruction.
   if (frame_connector_) {
-    frame_connector_->SetView(nullptr);
-    SetFrameConnectorDelegate(nullptr);
+    frame_connector_->set_view(nullptr);
+    SetCrossProcessFrameConnector(nullptr);
   }
 
   // We notify our observers about shutdown here since we are about to release
@@ -418,7 +412,7 @@ void RenderWidgetHostViewChildFrame::UpdateViewportIntersection(
 void RenderWidgetHostViewChildFrame::SetIsInert() {
   if (host_ && frame_connector_) {
     host_->Send(new ViewMsg_SetIsInert(host_->GetRoutingID(),
-                                       frame_connector_->IsInert()));
+                                       frame_connector_->is_inert()));
   }
 }
 
@@ -477,9 +471,10 @@ void RenderWidgetHostViewChildFrame::DidCreateNewRendererCompositorFrameSink(
 void RenderWidgetHostViewChildFrame::ProcessCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
     cc::CompositorFrame frame) {
-  current_surface_size_ = frame.size_in_pixels();
-  current_surface_scale_factor_ = frame.device_scale_factor();
+  current_surface_size_ = frame.render_pass_list.back()->output_rect.size();
+  current_surface_scale_factor_ = frame.metadata.device_scale_factor;
 
+  // TODO(gdk)
   bool result = support_->SubmitCompositorFrame(local_surface_id,
                                                 std::move(frame), nullptr);
   DCHECK(result);
@@ -691,7 +686,7 @@ void RenderWidgetHostViewChildFrame::WillSendScreenRects() {
   // spammy way to do this, but triggering on SendScreenRects() is reasonable
   // until somebody figures that out. RWHVCF::Init() is too early.
   if (frame_connector_) {
-    UpdateViewportIntersection(frame_connector_->ViewportIntersection());
+    UpdateViewportIntersection(frame_connector_->viewport_intersection());
     SetIsInert();
   }
 }
@@ -944,7 +939,7 @@ bool RenderWidgetHostViewChildFrame::CanBecomeVisible() {
   if (!frame_connector_)
     return true;
 
-  if (frame_connector_->IsHidden())
+  if (frame_connector_->is_hidden())
     return false;
 
   RenderWidgetHostViewBase* parent_view = GetParentView();

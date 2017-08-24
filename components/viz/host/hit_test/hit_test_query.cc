@@ -30,18 +30,37 @@ void HitTestQuery::OnAggregatedHitTestRegionListUpdated(
     return;
   }
   SwitchActiveAggregatedHitTestRegionList(0);
+
+  // debug to be removed
+  LOG(ERROR) << "oooooo HTQ:Aggregated Data Updated";
 }
 
 void HitTestQuery::SwitchActiveAggregatedHitTestRegionList(
     uint8_t active_handle_index) {
+  // debug to be removed
+  LOG(ERROR) << "oooooo HTQ:SwitchActiveAggregatedHitTestRegionList";
+
   DCHECK(active_handle_index == 0u || active_handle_index == 1u);
   active_hit_test_list_ = static_cast<AggregatedHitTestRegion*>(
       handle_buffers_[active_handle_index].get());
   active_hit_test_list_size_ = handle_buffer_sizes_[active_handle_index];
+
+  // debug to be removed
+  AggregatedHitTestRegion* region = active_hit_test_list_;
+  int i = 0;
+  while (region->child_count != -1) {
+    LOG(ERROR) << "CLT: REGION: " << i << " " << region->rect.ToString();
+    region++;
+    i++;
+  }
 }
 
 Target HitTestQuery::FindTargetForLocation(
     const gfx::Point& location_in_root) const {
+  // debug to be removed
+  LOG(ERROR) << "oooooo HTQ:FindTargetForLocation "
+             << location_in_root.ToString();
+
   Target target;
   if (!active_hit_test_list_size_)
     return target;
@@ -55,16 +74,34 @@ bool HitTestQuery::FindTargetInRegionForLocation(
     const gfx::Point& location_in_parent,
     AggregatedHitTestRegion* region,
     Target* target) const {
+  // debug to be removed
+  LOG(ERROR) << "oooooo HTQ:FindTargetInRegionForLocation"
+             << location_in_parent.ToString();
+
   gfx::Point location_transformed(location_in_parent);
   region->transform.TransformPoint(&location_transformed);
-  if (!region->rect.Contains(location_transformed))
-    return false;
 
+  // debug to be removed
+  LOG(ERROR) << "oooooo HTQ:Region " << region->rect.ToString();
+
+  if (!region->rect.Contains(location_transformed)) {
+    // debug to be removed
+    LOG(ERROR) << "oooooo HTQ: point not in rect - return false";
+
+    return false;
+  }
   if (region->child_count < 0 ||
       region->child_count >
           (active_hit_test_list_ + active_hit_test_list_size_ - region - 1)) {
+    // debug to be removed
+    LOG(ERROR) << "oooooo point has no children - return false";
+
     return false;
   }
+
+  // debug to be removed
+  LOG(ERROR) << "oooooo HTQ: test children";
+
   AggregatedHitTestRegion* child_region = region + 1;
   AggregatedHitTestRegion* child_region_end =
       child_region + region->child_count;
@@ -87,8 +124,16 @@ bool HitTestQuery::FindTargetInRegionForLocation(
     target->frame_sink_id = region->frame_sink_id;
     target->location_in_target = location_in_target;
     target->flags = region->flags;
+
+    // debug to be removed
+    LOG(ERROR) << "oooooo HTQ: point found in region";
+
     return true;
   }
+
+  // debug to be removed
+  LOG(ERROR) << "oooooo HTQ: point not found return false";
+
   return false;
 }
 

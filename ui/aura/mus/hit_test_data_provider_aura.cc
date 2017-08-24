@@ -92,6 +92,9 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
               window_port,
               flags | viz::mojom::kHitTestMouse | viz::mojom::kHitTestTouch,
               rect));
+
+          // debug to be removed
+          LOG(ERROR) << "+ REGION";
         }
       } else {
         // The |child| has possibly same mouse and touch hit-test areas.
@@ -106,6 +109,9 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
         if (!touch_and_mouse_are_same && !rect_touch.IsEmpty()) {
           hit_test_region_list->regions.push_back(CreateHitTestRegion(
               window_port, flags | viz::mojom::kHitTestTouch, rect_touch));
+
+          // debug to be removed
+          LOG(ERROR) << "+ REGION";
         }
       }
     }
