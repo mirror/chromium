@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34e3ccfb_206b477f",
+        "filename": "third_party/WebKit/Source/platform/mhtml/MHTMLArchive.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-24T22:26:46Z",
+      "side": 1,
+      "message": "Yes. As explained in the doc, the purpose of adding this is to avoid the complicated parsing into the first multipart body.",
+      "parentUuid": "d403a71b_57f5792d",
+      "range": {
+        "startLine": 163,
+        "startChar": 25,
+        "endLine": 163,
+        "endChar": 52
+      },
+      "revId": "92de18119eef5d8046ee5ae88ce7d648ba984181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90f9016d_d9d6ab88",
         "filename": "third_party/WebKit/Source/platform/mhtml/MHTMLArchive.cpp",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-24T01:39:32Z",
       "side": 1,
       "message": "Would it be possible to use the existing (I assume standardized) Subject header instead of introducing a new, custom X-Snapshot-Title header?",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 62
+      },
+      "revId": "92de18119eef5d8046ee5ae88ce7d648ba984181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e77ef2c_a45e3123",
+        "filename": "third_party/WebKit/Source/platform/mhtml/MHTMLArchive.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-08-24T22:26:46Z",
+      "side": 1,
+      "message": "No. We can\u0027t do that because MHTML headers have to contain all printable ASCII characters. So we need to use certain encoding to represent the title that could contain non-printable ASCII chars. We can\u0027t put the encoded title in Subject header since it might break other clients.",
+      "parentUuid": "90f9016d_d9d6ab88",
       "range": {
         "startLine": 166,
         "startChar": 0,
