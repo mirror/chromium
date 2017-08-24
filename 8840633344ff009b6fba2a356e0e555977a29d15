@@ -16,6 +16,23 @@
       "revId": "8840633344ff009b6fba2a356e0e555977a29d15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d33409_7f7292b4",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T00:14:59Z",
+      "side": 1,
+      "message": "If we are going to use LaunchProcess() to launch sandboxed processes then we should make this stdio-cloning dependent on the caller setting LP_CLONE_MXIO_STDIO in the clone_flags, and put it there by default.",
+      "revId": "8840633344ff009b6fba2a356e0e555977a29d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
