@@ -261,6 +261,7 @@ int File::ReadAtCurrentPosNoBestEffort(char* data, int size) {
 
 int File::Write(int64_t offset, const char* data, int size) {
   ThreadRestrictions::AssertIOAllowed();
+  DCHECK(size == 0 || data);
 
   if (IsOpenAppend(file_.get()))
     return WriteAtCurrentPos(data, size);
@@ -273,14 +274,14 @@ int File::Write(int64_t offset, const char* data, int size) {
 
   int bytes_written = 0;
   int rv;
-  do {
+  while (bytes_written < size) {
     rv = HANDLE_EINTR(pwrite(file_.get(), data + bytes_written,
                              size - bytes_written, offset + bytes_written));
     if (rv <= 0)
       break;
 
     bytes_written += rv;
-  } while (bytes_written < size);
+  }
 
   return bytes_written ? bytes_written : rv;
 }
@@ -288,6 +289,8 @@ int File::Write(int64_t offset, const char* data, int size) {
 int File::WriteAtCurrentPos(const char* data, int size) {
   ThreadRestrictions::AssertIOAllowed();
   DCHECK(IsValid());
+  DCHECK(size == 0 || data);
+
   if (size < 0)
     return -1;
 
@@ -295,14 +298,14 @@ int File::WriteAtCurrentPos(const char* data, int size) {
 
   int bytes_written = 0;
   int rv;
-  do {
+  while (bytes_written < size) {
     rv = HANDLE_EINTR(write(file_.get(), data + bytes_written,
                             size - bytes_written));
     if (rv <= 0)
       break;
 
     bytes_written += rv;
-  } while (bytes_written < size);
+  }
 
   return bytes_written ? bytes_written : rv;
 }

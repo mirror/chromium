@@ -177,6 +177,10 @@ TEST(FileTest, ReadWrite) {
   int bytes_written = file.Write(0, data_to_write, 0);
   EXPECT_EQ(0, bytes_written);
 
+  // Write 0 bytes from nullptr buffer.
+  bytes_written = file.Write(0, nullptr, 0);
+  EXPECT_EQ(0, bytes_written);
+
   // Write "test" to the file.
   bytes_written = file.Write(0, data_to_write, kTestDataSize);
   EXPECT_EQ(kTestDataSize, bytes_written);
@@ -247,6 +251,10 @@ TEST(FileTest, Append) {
   int bytes_written = file.Write(0, data_to_write, 0);
   EXPECT_EQ(0, bytes_written);
 
+  // Write 0 bytes from nullptr buffer.
+  bytes_written = file.Write(0, nullptr, 0);
+  EXPECT_EQ(0, bytes_written);
+
   // Write "test" to the file.
   bytes_written = file.Write(0, data_to_write, kTestDataSize);
   EXPECT_EQ(kTestDataSize, bytes_written);
@@ -279,7 +287,6 @@ TEST(FileTest, Append) {
   for (int i = 0; i < kAppendDataSize; i++)
     EXPECT_EQ(append_data_to_write[i], data_read_1[kTestDataSize + i]);
 }
-
 
 TEST(FileTest, Length) {
   base::ScopedTempDir temp_dir;

@@ -10,7 +10,6 @@
 -CertNetFetcherImplTest*
 -CertVerifyProcInternalTest.*
 -CloseOnConnectHttpServerTest.ServerImmediatelyClosesConnection
--DiskCache*
 -EffectiveConnectionTypeTest*
 -EmbeddedTestServer*
 -HostResolverImplDnsTest.DnsTask
