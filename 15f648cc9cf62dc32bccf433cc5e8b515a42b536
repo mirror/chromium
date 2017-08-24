@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e3a9eaa_a56275f9",
+        "filename": "media/mojo/services/media_capabilities_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-24T23:12:27Z",
+      "side": 1,
+      "message": "StringPrintf or string builder so you don\u0027t create so many temporaries.",
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91762fea_a24d398e",
+        "filename": "media/mojo/services/media_capabilities_database.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-24T23:12:27Z",
+      "side": 1,
+      "message": "Classes/structs should be private?",
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f04ac70e_bacea7c4",
+        "filename": "media/mojo/services/media_capabilities_database.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-24T23:12:27Z",
+      "side": 1,
+      "message": "const\u0026 on size.",
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e84075d_9c51cadb",
+        "filename": "media/mojo/services/media_capabilities_database.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-24T23:12:27Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "15f648cc9cf62dc32bccf433cc5e8b515a42b536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
