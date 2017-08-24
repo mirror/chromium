@@ -12,4 +12,8 @@ include_rules = [
   # For unit tests.
   "+ios/testing",
   "+third_party/ocmock",
+  "+ios/web/test",
+  "+ios/web/net",
+  "+ios/web/navigation",
+  "+ios/web/web_state",
 ]
