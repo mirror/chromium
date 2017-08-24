@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ce10fd2_156314f9",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 2286,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-08-24T00:40:30Z",
+      "side": 1,
+      "message": "should it also have \"\u0026\u0026 is_android\"?",
+      "revId": "6bc405cd62bc72e76ac763b79b82423f1895dd0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
