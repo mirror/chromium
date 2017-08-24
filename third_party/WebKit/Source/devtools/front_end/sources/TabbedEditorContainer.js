@@ -41,6 +41,16 @@ Sources.TabbedEditorContainerDelegate.prototype = {
 /**
  * @unrestricted
  */
+Sources.Selection = class {
+  constructor(textRange, url) {
+    this.startLine = textRange.startLine, this.startColumn = textRange.startColumn, this.endLine = textRange.endLine,
+    this.endColumn = textRange.endColumn, this.url = url;
+  }
+}
+
+/**
+ * @unrestricted
+ */
 Sources.TabbedEditorContainer = class extends Common.Object {
   /**
    * @param {!Sources.TabbedEditorContainerDelegate} delegate
@@ -240,6 +250,8 @@ Sources.TabbedEditorContainer = class extends Common.Object {
     var range = /** @type {!TextUtils.TextRange} */ (event.data);
     this._history.updateSelectionRange(this._currentFile.url(), range);
     this._history.save(this._previouslyViewedFilesSetting);
+
+    UI.context.setFlavor(Sources.Selection, new Sources.Selection(range, this._currentFile.url()));
   }
 
   /**

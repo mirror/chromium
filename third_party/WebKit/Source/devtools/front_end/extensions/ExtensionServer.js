@@ -683,9 +683,28 @@ Extensions.ExtensionServer = class extends Common.Object {
       UI.context.removeFlavorChangeListener(SDK.DOMNode, this._notifyElementsSelectionChanged, this);
     }
 
+    /**
+     * @this {Extensions.ExtensionServer}
+     */
+    function onSourcesSubscriptionStarted() {
+      UI.context.addFlavorChangeListener(Sources.Selection, this._notifySourcesSelectionChanged, this);
+    }
+
+    /**
+     * @this {Extensions.ExtensionServer}
+     */
+    function onSourcesSubscriptionStopped() {
+      UI.context.removeFlavorChangeListener(Sources.Selection, this._notifySourcesSelectionChanged, this);
+    }
+
     this._registerSubscriptionHandler(
         Extensions.extensionAPI.Events.PanelObjectSelected + 'elements', onElementsSubscriptionStarted.bind(this),
         onElementsSubscriptionStopped.bind(this));
+
+    this._registerSubscriptionHandler(
+        Extensions.extensionAPI.Events.PanelObjectSelected + 'sources', onSourcesSubscriptionStarted.bind(this),
+        onSourcesSubscriptionStopped.bind(this));
+
     this._registerResourceContentCommittedHandler(this._notifyUISourceCodeContentCommitted);
 
     SDK.targetManager.addEventListener(SDK.TargetManager.Events.InspectedURLChanged, this._inspectedURLChanged, this);
@@ -714,6 +733,13 @@ Extensions.ExtensionServer = class extends Common.Object {
 
   _notifyElementsSelectionChanged() {
     this._postNotification(Extensions.extensionAPI.Events.PanelObjectSelected + 'elements');
+  }
+
+  /**
+   * @param {!Source.Selection} selection
+   */
+  _notifySourcesSelectionChanged(selection) {
+    this._postNotification(Extensions.extensionAPI.Events.PanelObjectSelected + 'sources', selection);
   }
 
   /**
