@@ -73,4 +73,11 @@ bool ConvertToUTF16WithSubstitutions(const std::string& text,
   return false;
 }
 
+bool ToUpper(const base::string16& str, base::string16* output) {
+  base::ScopedCFTypeRef<CFStringRef> cfstring(base::SysUTF16ToCFStringRef(str));
+  CFStringUppercase(cfstring.get(), NULL);
+  *output = base::SysCFStringRefToUTF16(cfstring.get());
+  return true;
+}
+
 }  // namespace net
