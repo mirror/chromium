@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e389deb0_16975e07",
+        "filename": "components/web_contents_delegate_android/android/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-24T13:24:16Z",
+      "side": 0,
+      "message": "why delete this? should move this to java instead?",
+      "revId": "9ed5b1ff2e74057cc93dbbeec9a0113420d51e72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
