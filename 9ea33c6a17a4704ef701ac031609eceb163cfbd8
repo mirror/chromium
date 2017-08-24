@@ -16,6 +16,24 @@
       "revId": "9ea33c6a17a4704ef701ac031609eceb163cfbd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4dcf658_c801691a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-24T23:13:12Z",
+      "side": 0,
+      "message": "Talked offline. This is fine as WebContentsData is declared inside TabManager.",
+      "parentUuid": "e8a3c39a_29bb1e5d",
+      "revId": "9ea33c6a17a4704ef701ac031609eceb163cfbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
