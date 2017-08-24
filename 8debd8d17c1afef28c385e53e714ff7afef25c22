@@ -16,6 +16,24 @@
       "revId": "8debd8d17c1afef28c385e53e714ff7afef25c22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f5be9dd_3484160a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptCustomElementDefinition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115851
+      },
+      "writtenOn": "2017-08-24T22:15:26Z",
+      "side": 0,
+      "message": "See https://bugs.chromium.org/p/chromium/issues/detail?id\u003d639739#c21 for the case you were worried about.",
+      "parentUuid": "5b59d9a3_6ea3da23",
+      "revId": "8debd8d17c1afef28c385e53e714ff7afef25c22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

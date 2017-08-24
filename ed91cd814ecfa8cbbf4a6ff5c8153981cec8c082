@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "17534a80_fe36c139",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptCustomElementDefinition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115851
+      },
+      "writtenOn": "2017-08-24T22:15:26Z",
+      "side": 1,
+      "message": "See my comment on the bug: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d639739#c21\n\nI believe in this case there is actually script on the stack (since we\u0027re inside a call to customElements.define()), and that\u0027s where this gets the stack information.",
+      "parentUuid": "9ae8e383_2db132f0",
+      "revId": "ed91cd814ecfa8cbbf4a6ff5c8153981cec8c082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee4502d0_d7a23548",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "ed91cd814ecfa8cbbf4a6ff5c8153981cec8c082",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d3e389_01d7f029",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115851
+      },
+      "writtenOn": "2017-08-24T22:15:26Z",
+      "side": 1,
+      "message": "This code depends on V8Initializer.cpp, which is in bindings/core/v8, so I can\u0027t trivially move it to V8ThrowException, which is in platform/bindings. I\u0027ve added a TODO for now, but let me know if you\u0027d like me to do more movement in this CL.",
+      "parentUuid": "ee4502d0_d7a23548",
+      "revId": "ed91cd814ecfa8cbbf4a6ff5c8153981cec8c082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
