@@ -133,7 +133,7 @@
 #import "ios/chrome/browser/ui/history_popup/tab_history_legacy_coordinator.h"
 #import "ios/chrome/browser/ui/key_commands_provider.h"
 #import "ios/chrome/browser/ui/ntp/new_tab_page_controller.h"
-#import "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_panel_view_controller.h"
+#import "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_handset_view_controller.h"
 #include "ios/chrome/browser/ui/omnibox/page_info_model.h"
 #import "ios/chrome/browser/ui/omnibox/page_info_view_controller.h"
 #import "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.h"
@@ -363,6 +363,7 @@ bool IsURLAllowedInIncognito(const GURL& url) {
                                     PassKitDialogProvider,
                                     PreloadControllerDelegate,
                                     QRScannerPresenting,
+                                    RecentTabsHandsetViewControllerCommand,
                                     SKStoreProductViewControllerDelegate,
                                     SnapshotOverlayProvider,
                                     StoreKitLauncher,
@@ -577,6 +578,8 @@ bool IsURLAllowedInIncognito(const GURL& url) {
 // for the presentation of a new tab. Can be used to record performance metrics.
 @property(nonatomic, strong, nullable)
     ProceduralBlock foregroundTabWasAddedCompletionBlock;
+// View controller for Recent Tabs.
+@property(nonatomic, strong) UIViewController* recentTabsViewController;
 
 // The user agent type used to load the currently visible page. User agent type
 // is NONE if there is no visible page or visible page is a native page.
@@ -959,6 +962,7 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
     _foregroundTabWasAddedCompletionBlock;
 @synthesize tabTipBubblePresenter = _tabTipBubblePresenter;
 @synthesize incognitoTabTipBubblePresenter = _incognitoTabTipBubblePresenter;
+@synthesize recentTabsViewController = _recentTabsViewController;
 
 #pragma mark - Object lifecycle
 
@@ -4403,13 +4407,16 @@ bubblePresenterForFeature:(const base::Feature&)feature
       if (IsIPadIdiom()) {
         [self showNTPPanel:NewTabPage::kOpenTabsPanel];
       } else {
-        UIViewController* controller = [RecentTabsPanelViewController
-            controllerToPresentForBrowserState:_browserState
-                                        loader:self
-                                    dispatcher:self.dispatcher];
+        RecentTabsHandsetViewController* controller =
+            [[RecentTabsHandsetViewController alloc]
+                initWithLoader:self
+                  browserState:_browserState
+                    dispatcher:self.dispatcher];
+        controller.commandHandler = self;
         controller.modalPresentationStyle = UIModalPresentationFormSheet;
         controller.modalPresentationCapturesStatusBarAppearance = YES;
         [self presentViewController:controller animated:YES completion:nil];
+        self.recentTabsViewController = controller;
       }
       break;
     }
@@ -4717,6 +4724,14 @@ bubblePresenterForFeature:(const base::Feature&)feature
     }
     _isToolbarControllerRelinquished = NO;
   }
+}
+
+#pragma mark - RecentTabsHandsetViewControllerCommand
+
+- (void)dismissRecentTabs {
+  [self.recentTabsViewController dismissViewControllerAnimated:YES
+                                                    completion:nil];
+  self.recentTabsViewController = nil;
 }
 
 #pragma mark - TabModelObserver methods
