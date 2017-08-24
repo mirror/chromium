@@ -73,8 +73,8 @@ void LayerTreeFrameSinkLocal::SubmitCompositorFrame(cc::CompositorFrame frame) {
     device_scale_factor_ = frame.metadata.device_scale_factor;
     local_surface_id_ = id_allocator_.GenerateId();
   }
-  bool result =
-      support_->SubmitCompositorFrame(local_surface_id_, std::move(frame));
+  bool result = support_->SubmitCompositorFrame(local_surface_id_,
+                                                std::move(frame), nullptr);
   DCHECK(result);
 
   if (local_surface_id_ != old_local_surface_id) {

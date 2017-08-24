@@ -16,6 +16,7 @@
 #include "base/threading/thread_checker.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/service/frame_sinks/primary_begin_frame_source.h"
+#include "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "components/viz/service/surfaces/surface_observer.h"
 #include "components/viz/service/viz_service_export.h"
@@ -140,6 +141,10 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   // by value avoids this.
   void DestroyCompositorFrameSink(FrameSinkId frame_sink_id);
 
+  void SubmitHitTestRegionList(
+      SurfaceId surface_id,
+      mojom::HitTestRegionListPtr hit_test_region_list);
+
  private:
   friend class cc::test::SurfaceSynchronizationTest;
 
@@ -189,6 +194,11 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
                      std::unique_ptr<mojom::CompositorFrameSink>,
                      FrameSinkIdHash>
       compositor_frame_sinks_;
+
+  std::unordered_map<FrameSinkId,
+                     std::unique_ptr<RootCompositorFrameSinkImpl>,
+                     FrameSinkIdHash>
+      root_compositor_frame_sinks_;
 
   THREAD_CHECKER(thread_checker_);
 

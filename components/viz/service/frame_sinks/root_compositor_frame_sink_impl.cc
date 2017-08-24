@@ -78,6 +78,16 @@ void RootCompositorFrameSinkImpl::SetNeedsBeginFrame(bool needs_begin_frame) {
   support_->SetNeedsBeginFrame(needs_begin_frame);
 }
 
+void RootCompositorFrameSinkImpl::SubmitHitTestRegionList(
+    SurfaceId surface_id,
+    mojom::HitTestRegionListPtr hit_test_region_list) {
+  // debug to be removed
+  LOG(ERROR) << "------ RootCFS:Submitting HTD to Aggregator";
+
+  hit_test_aggregator_.SubmitHitTestRegionList(surface_id,
+                                               std::move(hit_test_region_list));
+}
+
 void RootCompositorFrameSinkImpl::SubmitCompositorFrame(
     const LocalSurfaceId& local_surface_id,
     cc::CompositorFrame frame,
@@ -85,8 +95,12 @@ void RootCompositorFrameSinkImpl::SubmitCompositorFrame(
     uint64_t submit_time) {
   // This call to SubmitCompositorFrame is only used for CompositorFrames
   // created by FrameGenerator that do not require hit test information.
-  DCHECK(!hit_test_region_list);
-  if (!support_->SubmitCompositorFrame(local_surface_id, std::move(frame))) {
+
+  // debug to be removed
+  LOG(ERROR) << "------ RootCFS:SCF from FG ";
+
+  if (!support_->SubmitCompositorFrame(local_surface_id, std::move(frame),
+                                       std::move(hit_test_region_list))) {
     compositor_frame_sink_binding_.Close();
     OnClientConnectionLost();
   }

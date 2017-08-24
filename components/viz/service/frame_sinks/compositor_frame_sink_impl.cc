@@ -39,8 +39,12 @@ void CompositorFrameSinkImpl::SubmitCompositorFrame(
     cc::CompositorFrame frame,
     mojom::HitTestRegionListPtr hit_test_region_list,
     uint64_t submit_time) {
-  // TODO(gklassen): Route hit-test data to the appropriate HitTestAggregator.
-  if (!support_->SubmitCompositorFrame(local_surface_id, std::move(frame))) {
+  // debug to be removed
+  if (hit_test_region_list)
+    LOG(ERROR) << "oooooo CFS:SCF HTD received";
+
+  if (!support_->SubmitCompositorFrame(local_surface_id, std::move(frame),
+                                       std::move(hit_test_region_list))) {
     compositor_frame_sink_binding_.CloseWithReason(
         1, "Surface invariants violation");
     OnClientConnectionLost();
