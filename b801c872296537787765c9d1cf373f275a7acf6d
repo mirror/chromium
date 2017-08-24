@@ -45,6 +45,29 @@
       "revId": "b801c872296537787765c9d1cf373f275a7acf6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d47757_2933c163",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T22:40:12Z",
+      "side": 1,
+      "message": "As a reminder for myself, I need to update the background corner radius here.",
+      "range": {
+        "startLine": 693,
+        "startChar": 8,
+        "endLine": 693,
+        "endChar": 30
+      },
+      "revId": "b801c872296537787765c9d1cf373f275a7acf6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
