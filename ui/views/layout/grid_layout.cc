@@ -632,6 +632,13 @@ void ColumnSet::Resize(int delta) {
 
 // GridLayout -------------------------------------------------------------
 
+// static
+GridLayout* GridLayout::CreateAndInstall(View* host) {
+  GridLayout* result = new GridLayout(host);
+  host->SetLayoutManager(result);
+  return result;
+}
+
 GridLayout::GridLayout(View* host)
     : host_(host),
       calculated_master_columns_(false),
@@ -644,15 +651,6 @@ GridLayout::GridLayout(View* host)
 }
 
 GridLayout::~GridLayout() {
-}
-
-// static
-GridLayout* GridLayout::CreatePanel(View* host) {
-  GridLayout* layout = new GridLayout(host);
-  host->SetBorder(CreateEmptyBorder(
-      LayoutProvider::Get()->GetInsetsMetric(INSETS_DIALOG_CONTENTS)));
-  host->SetLayoutManager(layout);
-  return layout;
 }
 
 ColumnSet* GridLayout::AddColumnSet(int id) {

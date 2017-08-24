@@ -164,7 +164,6 @@ bool IntentPickerBubbleView::Close() {
 
 void IntentPickerBubbleView::Init() {
   views::GridLayout* layout = new views::GridLayout(this);
-  SetLayoutManager(layout);
 
   // Creates a view to hold the views for each app.
   views::View* scrollable_view = new views::View();
