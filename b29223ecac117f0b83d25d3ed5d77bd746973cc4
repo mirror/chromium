@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c081b68_1510526c",
+        "filename": "chromecast/media/cma/base/decoder_config_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-08-24T21:47:19Z",
+      "side": 1,
+      "message": "Hmm, my original intent was to makes it consistent with the other conversion methods (e.g. toMediaSamppleFormat) within this file. And have the upper layer (AudioDecoderSoftwareWrapper) check for the valid channel layout and fail gracefully if unsupported.\n\nApparently my assumption is not 100% correct, not all conversion methods uses NOTREACHED for unsupported value. Since NOTREACHED is basically a DCHECK, will only crash on a debug build. I am leaning towards leaving it as is.\n\nWhat do you think?",
+      "parentUuid": "792459b2_8f952519",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "b29223ecac117f0b83d25d3ed5d77bd746973cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b53cadc_55dfe41c",
         "filename": "chromecast/media/cma/pipeline/audio_decoder_software_wrapper.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-24T21:22:07Z",
       "side": 1,
       "message": "This would allow 6 channels for any codec, but we actually specifically want to allow only Opus 5.1 for now. We don\u0027t want 5.1 AAC to be allowed here. So let\u0027s change the condition, it should be (mono | stereo | (5.1 \u0026\u0026 codec \u003d\u003d opus))",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 50
+      },
+      "revId": "b29223ecac117f0b83d25d3ed5d77bd746973cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e444e7a1_7eb9ad3d",
+        "filename": "chromecast/media/cma/pipeline/audio_decoder_software_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-08-24T21:47:19Z",
+      "side": 1,
+      "message": "Make sense. Will update.",
+      "parentUuid": "2b53cadc_55dfe41c",
       "range": {
         "startLine": 99,
         "startChar": 0,
