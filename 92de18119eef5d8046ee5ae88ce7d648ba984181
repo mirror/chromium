@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07fb7569_8320ae4b",
+        "filename": "ash/palette_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-24T17:00:11Z",
+      "side": 0,
+      "message": "Hooray for fewer ash-to-chrome delegate methods!",
+      "revId": "92de18119eef5d8046ee5ae88ce7d648ba984181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5f4afd_e0694d4e",
+        "filename": "ash/system/palette/tools/metalayer_mode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-24T17:00:11Z",
+      "side": 0,
+      "message": "Hooray for fewer weak pointers!",
+      "revId": "92de18119eef5d8046ee5ae88ce7d648ba984181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f45a5a0_d1810982",
+        "filename": "ash/shell.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-24T17:00:11Z",
+      "side": 1,
+      "message": "There are getting to be a lot of voice interaction methods on ash::Shell. Maybe not for this CL, but I think it\u0027s time to move these methods and the observer methods to a separate voice interaction controller (or somewhere else if a logical place exists).",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb0da3c_2cb92cd1",
+        "filename": "ash/shell_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-24T17:00:11Z",
+      "side": 1,
+      "message": "Please document what \"context\" means. Is it some sort of user personalization?\n\nsuper-nit: end comments with period",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea25fc9_53d165b9",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-24T17:00:11Z",
+      "side": 1,
+      "message": "This is confusing. I think better names would help",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8ff3dde_79249245",
+        "filename": "ash/system/palette/tools/metalayer_mode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-24T17:00:11Z",
+      "side": 1,
+      "message": "\"feature_enabled()\"? rename the other one to tool_selected()?",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00cb0e88_f09a460f",
+        "filename": "ash/system/palette/tools/metalayer_mode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-24T17:00:11Z",
+      "side": 1,
+      "message": "nit: ash:: not needed, here and elsewhere",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85724271_b585ef64",
+        "filename": "ash/system/palette/tools/metalayer_mode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-24T17:00:11Z",
+      "side": 1,
+      "message": "nit: usually no blank lines between overridden methods",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d541408d_0d597fb8",
+        "filename": "ash/system/palette/tools/metalayer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-24T17:00:11Z",
+      "side": 1,
+      "message": "non-plain-old-data statics are banned by the style guide. This will need to be a member variable, or just inline all the calls.",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e62c7c9_993164e5",
+        "filename": "ash/system/palette/tools/metalayer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-24T17:00:11Z",
+      "side": 1,
+      "message": "I think we have an arraysize() macro.\n\nAlternately, I think \"for (const VoiceInteractionState\u0026 state : kStates)\" might work.",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "197b3ec3_643109ff",
+        "filename": "ash/system/palette/tools/metalayer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-24T17:00:11Z",
+      "side": 1,
+      "message": "Nice test. I like the table-driven iteration.",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ed8545_3098bc6e",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-24T17:00:11Z",
+      "side": 1,
+      "message": "Just FYI for future CLs -- it\u0027s possible to use prefs directly inside ash. See ash_pref_names.h. This will be useful when addressing the bug above.",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e077740f_bc12a382",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-24T17:00:11Z",
+      "side": 1,
+      "message": "This pref is poorly named -- I don\u0027t know what \"context\" means and the comment by the pref doesn\u0027t help. Can you document the pref better? (I don\u0027t think you need additional owners for that file -- tbr it if you do.)",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
