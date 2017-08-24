@@ -32,6 +32,7 @@ class NGInlineNodeForTest : public NGInlineNode {
     MutableData()->items_.push_back(NGInlineItem(NGInlineItem::kText, start,
                                                  start + text.length(), style,
                                                  layout_object));
+    MutableData()->is_empty_inline_ = false;
   }
 
   void Append(UChar character) {
@@ -40,6 +41,7 @@ class NGInlineNodeForTest : public NGInlineNode {
     MutableData()->items_.push_back(
         NGInlineItem(NGInlineItem::kBidiControl, end - 1, end, nullptr));
     MutableData()->is_bidi_enabled_ = true;
+    MutableData()->is_empty_inline_ = false;
   }
 
   void ClearText() {
