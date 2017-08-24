@@ -140,6 +140,30 @@
       "revId": "5fcfba8075fc82f8bef6229ab499d6b0e925b43e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "69254efe_0bae17ba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsRecyclerView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-24T16:25:08Z",
+      "side": 1,
+      "message": "\"We build systems like the Wright brothers built airplanes — build the whole thing, push it off the cliff, let it crash, and start over again.\" — R.M. Graham",
+      "parentUuid": "2bd4c16d_052867c8",
+      "range": {
+        "startLine": 218,
+        "startChar": 16,
+        "endLine": 219,
+        "endChar": 24
+      },
+      "revId": "5fcfba8075fc82f8bef6229ab499d6b0e925b43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
