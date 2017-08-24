@@ -34,6 +34,7 @@
 #include "components/signin/core/common/signin_switches.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/chrome_switches.h"
+#include "ios/chrome/browser/drag_and_drop/drag_and_drop_flag.h"
 #include "ios/chrome/browser/ios_chrome_flag_descriptions.h"
 #include "ios/chrome/browser/ssl/captive_portal_features.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -155,7 +156,10 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
      FEATURE_WITH_PARAMS_VALUE_TYPE(
          search_provider_logos::features::kUseDdljsonApi,
          kUseDdljsonApiVariations,
-         "NTPUseDdljsonApi")}};
+         "NTPUseDdljsonApi")},
+    {"drag_and_drop", flag_descriptions::kDragAndDropName,
+     flag_descriptions::kDragAndDropDescription, flags_ui::kOsIos,
+     FEATURE_VALUE_TYPE(kDragAndDrop)}};
 
 // Add all switches from experimental flags to |command_line|.
 void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
