@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7384a2f5_6eb12fb7",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-24T01:01:38Z",
+      "side": 0,
+      "message": "I moved this comment down to OrphanUnboundJob(). Mentioning it when we are actually orphaning the |alternative_job_| seems to be clearer.",
+      "revId": "1bbddf9adae9f4bafab406767a2b8dfd2a233f8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
