@@ -31,13 +31,6 @@
 
 using base::android::ConvertUTF16ToJavaString;
 
-namespace {
-
-// Key for querying variations for whether a modal should require a gesture.
-const char kModalParamsUserGestureKey[] = "require_gesture";
-
-}
-
 // static
 void PermissionDialogDelegate::Create(
     content::WebContents* web_contents,
@@ -106,17 +99,8 @@ void PermissionDialogDelegate::CreateMediaStreamDialog(
 }
 
 // static
-bool PermissionDialogDelegate::ShouldShowDialog(bool has_user_gesture) {
-  if (!base::FeatureList::IsEnabled(features::kModalPermissionPrompts))
-    return false;
-
-  // Only use modals when the prompt is triggered by a user gesture, unless the
-  // kModalParamsUserGestureKey is set to false.
-  std::string require_gesture = variations::GetVariationParamValueByFeature(
-      features::kModalPermissionPrompts, kModalParamsUserGestureKey);
-  if (require_gesture == "false")
-    return true;
-  return has_user_gesture;
+bool PermissionDialogDelegate::ShouldShowDialog() {
+  return base::FeatureList::IsEnabled(features::kModalPermissionPrompts);
 }
 
 void PermissionDialogDelegate::CreateJavaDelegate(JNIEnv* env) {
