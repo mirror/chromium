@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c41677d1_940524d5",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-24T13:56:13Z",
+      "side": 1,
+      "message": "This is the first CL of a multiple part refactoring. I plan to eventually rename the class and the function, but wanted to avoid doing this in this first CL to make it smaller and easier to read.\n\nI can rename the class and the methods now if you think this would not make it too hard for you to review (gerrit may be confused and think I\u0027m creating new files altogether which is why I decided not to rename now).",
+      "parentUuid": "e807be4c_8060a0c7",
+      "range": {
+        "startLine": 73,
+        "startChar": 6,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74e47cb5_48179cb6",
         "filename": "ios/chrome/browser/metrics/tab_usage_recorder.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c334e97_39a12ebc",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-24T13:56:13Z",
+      "side": 1,
+      "message": "The spell checker integrated in my editor marks \"Initializes\" as incorrect and instead suggests I use \"Initialises\". It makes me sad that proper English (a.k.a. UK English) is considered incorrect in a code review.",
+      "parentUuid": "74e47cb5_48179cb6",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 16
+      },
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a2af07a8_f65cd5df",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-24T13:56:13Z",
+      "side": 1,
+      "message": "I\u0027ve renamed back the variables (will renamed them at the same time as the class).",
+      "parentUuid": "61984f9d_36bae59d",
+      "range": {
+        "startLine": 218,
+        "startChar": 17,
+        "endLine": 218,
+        "endChar": 29
+      },
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90e49410_5d492678",
         "filename": "ios/chrome/browser/metrics/tab_usage_recorder.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe394fc_494f1b0d",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-24T13:56:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90e49410_5d492678",
+      "range": {
+        "startLine": 239,
+        "startChar": 30,
+        "endLine": 239,
+        "endChar": 39
+      },
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "0f098140_d54ae0ff",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-24T13:56:13Z",
+      "side": 1,
+      "message": "The only case when this method is called with nullptr is when the last tab is closed. In that case, WebStateActivateAt is called with user_action set to false, and RecordTabSwitched is not called.\n\nI\u0027ve added a check in RecordTabSwitched to check that new_tab is not nullptr to protect against mistakes during refactoring.",
+      "parentUuid": "cc9f4180_a59dc7c7",
+      "range": {
+        "startLine": 136,
+        "startChar": 6,
+        "endLine": 136,
+        "endChar": 21
+      },
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "047a6453_e49252b2",
         "filename": "ios/chrome/browser/metrics/tab_usage_recorder.mm",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "7002941d_7412daaa",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-24T13:56:13Z",
+      "side": 1,
+      "message": "Uncommented and converted to use PrerenderService instead of Tab -isPrerenderTab method.",
+      "parentUuid": "047a6453_e49252b2",
+      "range": {
+        "startLine": 141,
+        "startChar": 22,
+        "endLine": 141,
+        "endChar": 36
+      },
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "512a6fc9_0276b5c7",
         "filename": "ios/chrome/browser/metrics/tab_usage_recorder.mm",
         "patchSetId": 2
@@ -154,6 +298,24 @@
       "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd517ffa_d00a4229",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-24T13:56:13Z",
+      "side": 1,
+      "message": "This is a C++ class and we appear not to use #pragma mark in C++ classes.",
+      "parentUuid": "512a6fc9_0276b5c7",
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -177,6 +339,30 @@
       "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "330ab93d_6168e827",
+        "filename": "ios/chrome/browser/tabs/tab_model.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-08-24T13:56:13Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "581d7053_4a62c0c3",
+      "range": {
+        "startLine": 262,
+        "startChar": 16,
+        "endLine": 262,
+        "endChar": 26
+      },
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
