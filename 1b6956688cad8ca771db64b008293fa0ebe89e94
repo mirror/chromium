@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26e5cf67_49e1c92b",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-24T23:01:30Z",
+      "side": 1,
+      "message": "nit: remove ?",
+      "revId": "1b6956688cad8ca771db64b008293fa0ebe89e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772e7a62_53e8570f",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-24T23:01:30Z",
+      "side": 1,
+      "message": "Do we need to care the case where shelf is auto hide? Would we always make shelf show up when we show app list?",
+      "range": {
+        "startLine": 1871,
+        "startChar": 42,
+        "endLine": 1871,
+        "endChar": 71
+      },
+      "revId": "1b6956688cad8ca771db64b008293fa0ebe89e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1701abf5_98340682",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-24T23:01:30Z",
+      "side": 1,
+      "message": "Combine this with line 1874 and make it a const.",
+      "revId": "1b6956688cad8ca771db64b008293fa0ebe89e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
