@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6271b73_5477ed55",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-24T05:12:13Z",
+      "side": 1,
+      "message": "You can just have StatusReporter here, and put the three concrete classes in an anonymous namespace in the cc.",
+      "revId": "5f8dd3e8062b1861406e54899d59316cc0a06e30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
