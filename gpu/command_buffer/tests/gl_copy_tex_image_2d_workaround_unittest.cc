@@ -10,7 +10,6 @@
 #include <GLES2/gl2ext.h>
 #include <GLES2/gl2extchromium.h>
 
-#include "base/command_line.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringize_macros.h"
 #include "base/strings/stringprintf.h"
@@ -87,11 +86,9 @@ class GLCopyTexImage2DWorkaroundTest : public testing::TestWithParam<GLenum> {
 
  protected:
   void SetUp() override {
-    base::CommandLine command_line(0, nullptr);
-    command_line.AppendSwitchASCII(
-        switches::kGpuDriverBugWorkarounds,
-        base::IntToString(gpu::USE_INTERMEDIARY_FOR_COPY_TEXTURE_IMAGE));
-    gl_.InitializeWithCommandLine(GLManager::Options(), command_line);
+    GpuDriverBugWorkarounds workarounds;
+    workarounds.use_intermediary_for_copy_texture_image = true;
+    gl_.InitializeWithWorkarounds(GLManager::Options(), workarounds);
     gl_.set_use_iosurface_memory_buffers(true);
     DCHECK(gl_.workarounds().use_intermediary_for_copy_texture_image);
   }
