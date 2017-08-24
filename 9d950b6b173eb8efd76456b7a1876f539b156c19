@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3b60199_76d4760b",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api_headers.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-24T04:42:14Z",
+      "side": 1,
+      "message": "Same comment as your other CL... can we pass the whole property_ into the template instead of making a new template argument for each piece of data?",
+      "revId": "9d950b6b173eb8efd76456b7a1876f539b156c19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
