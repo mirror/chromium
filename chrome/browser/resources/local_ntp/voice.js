@@ -114,7 +114,7 @@ speech.messages = {
  */
 speech.State_ = {
   // Initial state of the controller. Is never re-entered.
-  // The only state from which the speech.init() method can be called.
+  // The only state from which the |speech.init_()| method can be called.
   // The UI overlay is hidden, recognition is inactive.
   UNINITIALIZED: -1,
   // Represents a ready to be activated state. If voice search is unsuccessful
@@ -257,10 +257,58 @@ speech.recognition_;
 
 
 /**
+ * @param {!Object} configData The NTP configuration.
+ * @param {HTMLElement} fakeboxSpeech icon div
+ * @param {!Object} searchboxApiHandle searchBoxApi
+ * @param {!boolean|undefined} opt_init should also initialize
+ */
+speech.listen = function(
+    configData, fakeboxSpeech, searchboxApiHandle, opt_init) {
+  fakeboxSpeech.hidden = false;
+  fakeboxSpeech.title = configData.translatedStrings.fakeboxSpeechTooltip;
+
+  if (!!opt_init) {
+    speech.init_(configData);
+  }
+
+  fakeboxSpeech.onmouseup = function(event) {
+    // If propagated, closes the overlay (click on the background).
+    event.stopPropagation();
+    speech.toggleStartStop();
+  };
+
+  window.addEventListener('keydown', speech.onKeyDown);
+
+  if (searchboxApiHandle.onfocuschange) {
+    throw new Error('OnFocusChange handler already set on searchbox.');
+  }
+  searchboxApiHandle.onfocuschange = speech.onOmniboxFocused;
+};
+
+
+/**
+ * Disables the speech recognition interface. Only used for testing.
+ * @private
+ */
+speech.unlisten_ = function(fakeboxSpeech, searchboxApiHandle) {
+  speech.reset_();
+  speech.googleBaseUrl_ = null;
+  speech.messages = {};
+  speech.currentState_ = speech.State_.UNINITIALIZED;
+  fakeboxSpeech.hidden = true;
+  fakeboxSpeech.title = '';
+  fakeboxSpeech.onmouseup = null;
+  window.removeEventListener('keydown', speech.onKeyDown);
+  searchboxApiHandle.onfocuschange = null;
+  speech.recognition_ = null;
+};
+
+
+/**
  * Initializes the speech module.
  * @param {!Object} configData The NTP configuration.
  */
-speech.init = function(configData) {
+speech.init_ = function(configData) {
   if (speech.currentState_ != speech.State_.UNINITIALIZED) {
     throw new Error(
         'Trying to re-initialize speech when not in UNINITIALIZED state.');
@@ -383,8 +431,8 @@ speech.reset_ = function() {
   speech.currentState_ = speech.State_.READY;
 
   // TODO(oskopek): Is this even needed? Avoid calling it twice
-  // on a |speech.abort_()| call.
-  speech.recognition_.abort();
+  // on a |speech.abort_()| call. Verify and remove.
+  // speech.recognition_.abort();
 };
 
 
