@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ddf8209d_4b78c43d",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-24T22:18:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c515e078_8df12ce1",
+      "range": {
+        "startLine": 74,
+        "startChar": 8,
+        "endLine": 74,
+        "endChar": 34
+      },
+      "revId": "095b25dc38496ac149e90a7dc6a8d74dbfaaaee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0eb871d_41aa5c27",
         "filename": "services/resource_coordinator/coordination_unit/metrics_collector.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "9d05afdc_ba53772a",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-24T22:18:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0eb871d_41aa5c27",
+      "range": {
+        "startLine": 77,
+        "startChar": 14,
+        "endLine": 77,
+        "endChar": 18
+      },
+      "revId": "095b25dc38496ac149e90a7dc6a8d74dbfaaaee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1d609a9_49c23ce4",
         "filename": "services/resource_coordinator/coordination_unit/metrics_collector.h",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-24T19:02:10Z",
       "side": 1,
       "message": "Why do we need separate reported_ and ukm_reported_? Will the conditions ever occur that one gets reported and not the other (other than an error condition)?",
+      "range": {
+        "startLine": 130,
+        "startChar": 9,
+        "endLine": 130,
+        "endChar": 22
+      },
+      "revId": "095b25dc38496ac149e90a7dc6a8d74dbfaaaee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ff27da_6b07ffa3",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-24T22:18:34Z",
+      "side": 1,
+      "message": "There\u0027s no guaranteed that ukm source id is set.",
+      "parentUuid": "a1d609a9_49c23ce4",
       "range": {
         "startLine": 130,
         "startChar": 9,
@@ -91,6 +163,30 @@
       "revId": "095b25dc38496ac149e90a7dc6a8d74dbfaaaee8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd26743f_d22b133c",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-24T22:18:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c76153cb_d2bc7ea1",
+      "range": {
+        "startLine": 134,
+        "startChar": 33,
+        "endLine": 134,
+        "endChar": 47
+      },
+      "revId": "095b25dc38496ac149e90a7dc6a8d74dbfaaaee8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
