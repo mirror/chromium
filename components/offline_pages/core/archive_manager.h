@@ -63,6 +63,9 @@ class ArchiveManager {
       const base::Callback<void(const StorageStats& storage_sizes)>& callback)
       const;
 
+  // Gets the archive directory.
+  const base::FilePath& GetArchivesDir() const;
+
  protected:
   ArchiveManager();
 
