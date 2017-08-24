@@ -82,6 +82,7 @@ void PerformanceObserver::observe(const PerformanceObserverInit& observer_init,
     performance_->UpdatePerformanceObserverFilterOptions();
   else
     performance_->RegisterPerformanceObserver(*this);
+  buffered_ = observer_init.buffered();
   is_registered_ = true;
 }
 
@@ -113,10 +114,27 @@ void PerformanceObserver::Deliver() {
     return;
 
   PerformanceEntryVector performance_entries;
-  performance_entries.swap(performance_entries_);
+  if (RuntimeEnabledFeatures::BufferLongTasksBeforeOnLoadEnabled()) {
+    if (buffered_) {
+      if (Observing(PerformanceEntry::kLongTask)) {
+        performance_entries.AppendVector(
+            performance_->GetBufferedLongTaskEntries());
+      }
+    }
+    performance_entries.AppendVector(performance_entries_);
+    performance_entries_.clear();
+  } else {
+    performance_entries.swap(performance_entries_);
+  }
+
   PerformanceObserverEntryList* entry_list =
       new PerformanceObserverEntryList(performance_entries);
   callback_->call(this, entry_list, this);
+}
+
+bool PerformanceObserver::Observing(
+    PerformanceEntry::EntryType entryType) const {
+  return entryType & filter_options_;
 }
 
 DEFINE_TRACE(PerformanceObserver) {
