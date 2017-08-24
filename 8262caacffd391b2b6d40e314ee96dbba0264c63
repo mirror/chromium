@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5cce2449_2163c51d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-24T19:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41ed5178_1a9e8796",
+      "range": {
+        "startLine": 152,
+        "startChar": 31,
+        "endLine": 152,
+        "endChar": 43
+      },
+      "revId": "8262caacffd391b2b6d40e314ee96dbba0264c63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca511c46_f3fed1f3",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/HTTPSTabsOpenedFromExternalAppTest.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-24T18:45:51Z",
       "side": 1,
       "message": "why not put this into TabsOpenedFromExternalAppTest?",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 75
+      },
+      "revId": "8262caacffd391b2b6d40e314ee96dbba0264c63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776faec5_67df3417",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/HTTPSTabsOpenedFromExternalAppTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-24T19:33:43Z",
+      "side": 1,
+      "message": "The testserver has to be https and it wasnt possible to reuse the one for TabsOpenedFromExternalAppTest that was created as http in setUp. This server makes a service connection and the service side is a singleton I believe and I was running into issues with tearDown, if I were to stop and reinitialize the http server as https.\n\nHere in this file, we always use an https server.",
+      "parentUuid": "ca511c46_f3fed1f3",
       "range": {
         "startLine": 55,
         "startChar": 16,
@@ -68,6 +116,30 @@
       "revId": "8262caacffd391b2b6d40e314ee96dbba0264c63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "000d8f72_b6ae66d0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabActivityTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-08-24T19:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c431fa2_118231b1",
+      "range": {
+        "startLine": 1069,
+        "startChar": 5,
+        "endLine": 1069,
+        "endChar": 19
+      },
+      "revId": "8262caacffd391b2b6d40e314ee96dbba0264c63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
