@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2a89d9b_1fa296da",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T06:57:09Z",
+      "side": 1,
+      "message": "Optional: You could add a new enum value PAGE_TRANSITION_FIRST \u003d 0 to PageTransition; I think that would be conventional and then you shouldn\u0027t need a static_assert at all.",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 13
+      },
+      "revId": "c39c57eff37c26868c0baddd2865b76cb91ad866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e9345b2_e737dabd",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T06:57:09Z",
+      "side": 1,
+      "message": "Great! Are there any tests that are redundant due to this now that can be deleted? Or are they all supersets of this basic functionality? (That would be fine.)",
+      "range": {
+        "startLine": 260,
+        "startChar": 4,
+        "endLine": 260,
+        "endChar": 31
+      },
+      "revId": "c39c57eff37c26868c0baddd2865b76cb91ad866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
