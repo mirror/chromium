@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab655623_65e13f45",
+        "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1132401
+      },
+      "writtenOn": "2017-08-24T09:32:17Z",
+      "side": 1,
+      "message": "Currently, every time the login was enabled we would have a crash turning off the feature (because we reset the remote device before calling this method), right? \n\nHow come we didn\u0027t notice this before? Did some of our more recent changes started triggering this?",
+      "range": {
+        "startLine": 772,
+        "startChar": 40,
+        "endLine": 772,
+        "endChar": 0
+      },
+      "revId": "a5e62560afbfadcfb43d7f400b1bff1a733f8a99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
