@@ -192,6 +192,11 @@ class TabManager : public TabStripModelObserver,
   content::NavigationThrottle::ThrottleCheckResult MaybeThrottleNavigation(
       BackgroundTabNavigationThrottle* throttle);
 
+  // Notifies TabManager that a navigation has started in the main frame.
+  // TabManager forwards this signal to TabManagerStatsCollector to clean up
+  // stat tracking if the navigation occurs in the foreground tab.
+  void OnDidStartMainFrameNavigation(content::WebContents* contents);
+
   // Notifies TabManager that one navigation has finished (committed, aborted or
   // replaced). TabManager should clean up the NavigationHandle objects bookkept
   // before.
