@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d4e59030_2a9e2022",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-24T00:56:37Z",
+      "side": 1,
+      "message": "Yeah I think that is much nicer :)",
+      "parentUuid": "ae3e1aca_6a0aefcc",
+      "range": {
+        "startLine": 589,
+        "startChar": 5,
+        "endLine": 589,
+        "endChar": 26
+      },
+      "revId": "c59a08b2703a9dca59c9e153b7aa35777461c0d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4eb695a_42ff08bf",
         "filename": "chrome/browser/installable/installable_manager.cc",
         "patchSetId": 1
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "Yes. There are two ways of looking at this:\n\n1. WorkOnTask assumes that there is a current task, so we need to avoid calling it if there isn\u0027t one.\n\n2. This is a natural result of refactoring the existing code: previously, we returned early if there were no tasks to unpause, so WorkOnTask was not called in that case.  Now, we call UnpauseAll even when there are 0 items to unpause, but use this task_queue_.HasCurrent() check to avoid calling WorkOnTask when there were no tasks to unpause.\n\nHowever, I think there are a couple of concepts that are being intertwined here, and they could be separated to make it clearer and easier to comment the code. See my reply to your previous comment.",
       "parentUuid": "e4eb695a_42ff08bf",
+      "revId": "c59a08b2703a9dca59c9e153b7aa35777461c0d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9329dad4_b63d00ec",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-24T00:56:37Z",
+      "side": 1,
+      "message": "Ah, OK. Maybe we could make WorkOnTask just do nothing if there is no task.",
+      "parentUuid": "86741eb7_a90c0407",
       "revId": "c59a08b2703a9dca59c9e153b7aa35777461c0d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
