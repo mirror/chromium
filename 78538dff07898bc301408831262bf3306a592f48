@@ -42,6 +42,29 @@
     },
     {
       "key": {
+        "uuid": "45ddd34b_b321fa17",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_interactive.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-24T10:43:37Z",
+      "side": 1,
+      "message": "nit: Is the indentation wrong now? Seems like 5 spaces now.",
+      "range": {
+        "startLine": 101,
+        "startChar": 1,
+        "endLine": 101,
+        "endChar": 5
+      },
+      "revId": "78538dff07898bc301408831262bf3306a592f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fce29ee1_a930eede",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
         "patchSetId": 3
@@ -53,6 +76,30 @@
       "writtenOn": "2017-08-23T18:05:15Z",
       "side": 1,
       "message": "flip the condition? prefer not using negation when avoidable.",
+      "range": {
+        "startLine": 121,
+        "startChar": 25,
+        "endLine": 121,
+        "endChar": 46
+      },
+      "revId": "78538dff07898bc301408831262bf3306a592f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61dfecf1_25e43da3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-24T10:43:37Z",
+      "side": 1,
+      "message": "Hmm... I don\u0027t agree with that recommendation.\n\nIf this were isNotPasswordSyncingUser() then the next time someone wants to update this code and needs the negated version they either end up having to flip the function and all the callers or use a double negative:\n\nif (!isNotPasswordSyncingUser()) ...\n\nThe temptation to just turn a blind eye and go for the latter would be very strong, and would result in less readable code.",
+      "parentUuid": "fce29ee1_a930eede",
       "range": {
         "startLine": 121,
         "startChar": 25,
