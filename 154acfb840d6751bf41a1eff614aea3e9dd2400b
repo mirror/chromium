@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db05f63c_ad6a2222",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-24T18:14:00Z",
+      "side": 1,
+      "message": "As discussed offline we should remove this logic because it doesn\u0027t make sense after your fix.",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 5
+      },
+      "revId": "154acfb840d6751bf41a1eff614aea3e9dd2400b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb20dc4_b10a0665",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/detached-frame.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-24T18:14:00Z",
+      "side": 1,
+      "message": "nit: intent two spaces",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 4
+      },
+      "revId": "154acfb840d6751bf41a1eff614aea3e9dd2400b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04a3c383_ecdfac9d",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/detached-frame.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-24T18:14:00Z",
+      "side": 1,
+      "message": "nit: indent 4 spaces",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 4
+      },
+      "revId": "154acfb840d6751bf41a1eff614aea3e9dd2400b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37f7e32_95fb7bea",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/motion/detached-frame.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-24T18:14:00Z",
+      "side": 1,
+      "message": "This needs to be written as test.step_func_done(checkMotion) so that the assert_equals statements in checkMotion properly trigger test failure. Since test.done() is called you can use step_func_done (which creates a test step that always ends the test) instead of step_func.",
+      "range": {
+        "startLine": 57,
+        "startChar": 46,
+        "endLine": 60,
+        "endChar": 7
+      },
+      "revId": "154acfb840d6751bf41a1eff614aea3e9dd2400b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
