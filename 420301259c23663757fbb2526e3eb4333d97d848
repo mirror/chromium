@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4fbe559_ca54708c",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-24T04:36:02Z",
+      "side": 1,
+      "message": "Instead of making a new template argument for each of these metadata functions, can we instead pass in the whole property_? Then here we can check property.is_descriptor etc.",
+      "revId": "420301259c23663757fbb2526e3eb4333d97d848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
