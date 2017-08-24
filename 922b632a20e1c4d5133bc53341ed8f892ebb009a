@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1ae1fed6_92c98fae",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-24T19:06:33Z",
+      "side": 1,
+      "message": "I tried notifyPath, I also tried making an itemList_ property and then doing this.set(itemList_, extensions/apps), neither worked. \n\nAlternatively, your previous suggestion to make each of these two their own page would solve this problem (because then we can bind it directly to [[extensions]] and [[apps]] directly, and live with the duplicated \u003cextensions-items-list\u003es instead of these .slice(0)s.\n\nThoughts on that?",
+      "parentUuid": "6d366813_c3b0a39d",
+      "revId": "922b632a20e1c4d5133bc53341ed8f892ebb009a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "793b66c7_3e21aea9",
         "filename": "chrome/test/data/webui/extensions/extension_navigation_helper_test.js",
         "patchSetId": 9
@@ -51,6 +69,24 @@
       "revId": "922b632a20e1c4d5133bc53341ed8f892ebb009a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0207bdb0_6ad32b8a",
+        "filename": "chrome/test/data/webui/extensions/extension_navigation_helper_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-24T19:06:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "793b66c7_3e21aea9",
+      "revId": "922b632a20e1c4d5133bc53341ed8f892ebb009a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
