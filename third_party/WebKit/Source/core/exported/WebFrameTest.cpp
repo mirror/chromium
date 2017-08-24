@@ -8112,7 +8112,12 @@ TEST_P(ParameterizedWebFrameTest, MaximumScrollPositionCanBeNegative) {
   web_view_helper.WebView()->UpdateAllLifecyclePhases();
 
   LocalFrameView* frame_view = web_view_helper.LocalMainFrame()->GetFrameView();
-  EXPECT_LT(frame_view->MaximumScrollOffset().Width(), 0);
+  // LocalFrameView ScrollOrigin should always be 0 incase of RLS.
+  EXPECT_EQ(frame_view->MaximumScrollOffset().Width(), 0);
+  // ScrollOrigin should be applied to root PaintLayerScrollableArea
+  // incase of RLS.
+  ScrollableArea* layout_viewport = frame_view->LayoutViewportScrollableArea();
+  EXPECT_LT(layout_viewport->MaximumScrollOffset().Width(), 0);
 }
 
 TEST_P(ParameterizedWebFrameTest, FullscreenLayerSize) {
