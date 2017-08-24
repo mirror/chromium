@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "df9e8205_1a322fc3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ListControl.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-24T21:58:53Z",
+      "side": 1,
+      "message": "That makes a lot of sense",
+      "parentUuid": "986671ab_94362b64",
+      "range": {
+        "startLine": 141,
+        "startChar": 9,
+        "endLine": 141,
+        "endChar": 24
+      },
+      "revId": "87bdc16b65ebe8eda5c16f846c84326554cacd63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4bbcf54_1b9177a7",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/ListControl.js",
         "patchSetId": 2
@@ -77,6 +101,24 @@
       "writtenOn": "2017-08-24T18:25:56Z",
       "side": 1,
       "message": "Hmm... This assumes that selected and focused are the same. Is that even true?",
+      "revId": "87bdc16b65ebe8eda5c16f846c84326554cacd63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ebb1ad_f1f5f3dd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ListControl.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-24T21:58:53Z",
+      "side": 1,
+      "message": "Nope!",
+      "parentUuid": "f4bbcf54_1b9177a7",
       "revId": "87bdc16b65ebe8eda5c16f846c84326554cacd63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
