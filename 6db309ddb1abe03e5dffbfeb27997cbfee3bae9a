@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "394f032b_b34248dc",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-24T15:40:15Z",
+      "side": 1,
+      "message": "OnTokenRetrieved? (To me, it sounds weird without a verb)",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e141556_856e8aef",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-24T15:40:15Z",
+      "side": 1,
+      "message": "Similarly, OnTokenValidated?\n\nAlso, the separate OnSuccessful method seems weird to me. It sounds like validation should imply success.\nMaybe have a single metrics::OnTokenValidated method that takes both the time and the result?",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bc2d17_fff09694",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-24T15:40:15Z",
+      "side": 1,
+      "message": "Do we really need an exact histogram for the sizes? That seems excessive, and very wasteful in terms of memory.",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36e7222_4595aeff",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-24T15:40:15Z",
+      "side": 1,
+      "message": "size_t?\nAlso, why \"our\"?\ns/characters_count/size_bytes/?",
+      "range": {
+        "startLine": 18,
+        "startChar": 57,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30942b0c_f178aae2",
+        "filename": "components/ntp_snippets/status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-24T15:40:15Z",
+      "side": 1,
+      "message": "nit: This line break looks very weird. Maybe move the comments to separate lines?",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a936c8_b9d7d2f6",
+        "filename": "components/ntp_snippets/status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-24T15:40:15Z",
+      "side": 1,
+      "message": "That\u0027ll be 3, i.e. one more than the actual max status count.\nSTATUS_CODE_COUNT?",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea0fe3f_16bf0997",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5927,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-24T15:40:15Z",
+      "side": 1,
+      "message": "\"Token was and still is valid\", or just \"Token was revalidated\"?",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1cb46b_a98cf7ce",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 46693,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-24T15:40:15Z",
+      "side": 1,
+      "message": "\"The result of a subscription request for breaking news at the content suggestions server\"?",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451229bf_02100ded",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 46706,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-24T15:40:15Z",
+      "side": 1,
+      "message": "This isn\u0027t very clear to me. When do we receive a token for validation?",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "120ca71b_a38d2139",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 46716,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-24T15:40:15Z",
+      "side": 1,
+      "message": "Similar here, what does it mean to \"receive a token\"?",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "515a7e13_847ef11f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 46737,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-24T15:40:15Z",
+      "side": 1,
+      "message": "When wouldn\u0027t a token be retrieved?",
+      "revId": "6db309ddb1abe03e5dffbfeb27997cbfee3bae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
