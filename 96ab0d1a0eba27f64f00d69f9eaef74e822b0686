@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54f55a7a_a0156507",
+        "filename": "tools/sublime/compile_current_file.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-24T21:53:11Z",
+      "side": 1,
+      "message": "Since you\u0027re running ninja.exe directly now, could you instead set shell\u003dFalse in the subprocess.Popen() call on line 108? (And add a comment there about it needing to be False for this reason there.)",
+      "revId": "96ab0d1a0eba27f64f00d69f9eaef74e822b0686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
