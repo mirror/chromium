@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ae0cc7be_2e9db5aa",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T13:38:10Z",
+      "side": 1,
+      "message": "I don\u0027t believe that is the case. Ash\u0027s accelerator controller has a crack at events *before* the widget (pre target handler). The pre-targeting happens through a delegate on AcceleratorFilter. Not all accelerators are processed during this phase, but ash certainly has the opportunity.",
+      "parentUuid": "b6c154dc_f2a3a17a",
+      "range": {
+        "startLine": 154,
+        "startChar": 2,
+        "endLine": 154,
+        "endChar": 29
+      },
+      "revId": "2a3d8ff4fb2ce797e45c723c169a97857ddf7853",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c12869b_600421cd",
         "filename": "ui/views/bubble/tray_bubble_view.cc",
         "patchSetId": 21
