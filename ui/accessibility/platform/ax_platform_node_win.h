@@ -746,6 +746,8 @@ class AX_EXPORT __declspec(uuid("26f5641a-246d-457b-a96d-07f3fae6acf2"))
                                      long** selected,
                                      long* n_selected);
 
+  bool IsAncestorComboBox();
+
   // Relationships between this node and other nodes.
   std::vector<ui::AXPlatformNodeRelationWin*> relations_;
 };

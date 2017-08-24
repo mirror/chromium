@@ -2641,9 +2641,13 @@ int AXPlatformNodeWin::MSAARole() {
       return ROLE_SYSTEM_MENUITEM;
 
     case ui::AX_ROLE_MENU_LIST_POPUP:
+      if (IsAncestorComboBox())
+        return ROLE_SYSTEM_LIST;
       return ROLE_SYSTEM_MENUPOPUP;
 
     case ui::AX_ROLE_MENU_LIST_OPTION:
+      if (IsAncestorComboBox())
+        return ROLE_SYSTEM_LISTITEM;
       return ROLE_SYSTEM_MENUITEM;
 
     case ui::AX_ROLE_METER:
@@ -3624,6 +3628,20 @@ HRESULT AXPlatformNodeWin::AllocateComArrayFromVector(
   for (long i = 0; i < count; i++)
     (*selected)[i] = results[i];
   return S_OK;
+}
+
+// TODO(dmazzoni): Remove this function once combo box refactoring is complete.
+bool AXPlatformNodeWin::IsAncestorComboBox() {
+  gfx::NativeViewAccessible native_parent = GetParent();
+  if (!native_parent)
+    return false;
+  auto* parent =
+      static_cast<AXPlatformNodeWin*>(FromNativeViewAccessible(native_parent));
+  if (!parent)
+    return false;
+  if (parent->MSAARole() == ROLE_SYSTEM_COMBOBOX)
+    return true;
+  return parent->IsAncestorComboBox();
 }
 
 }  // namespace ui
