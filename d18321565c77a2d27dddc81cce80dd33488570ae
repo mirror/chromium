@@ -16,6 +16,24 @@
       "revId": "d18321565c77a2d27dddc81cce80dd33488570ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2382a7df_cee2ca58",
+        "filename": "cc/output/direct_renderer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-08-24T03:09:12Z",
+      "side": 1,
+      "message": "I can remove the check. It will not cause a problem.\nFlag |has_damage_from_contributing_content| is only used with |cache_render_pass|.\n\nI will add another cl soon avoid deleting textures when caching. Just need more test while doing this.",
+      "parentUuid": "e3623a65_49420439",
+      "revId": "d18321565c77a2d27dddc81cce80dd33488570ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
