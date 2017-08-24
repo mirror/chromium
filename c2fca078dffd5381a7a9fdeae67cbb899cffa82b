@@ -88,6 +88,24 @@
       "revId": "c2fca078dffd5381a7a9fdeae67cbb899cffa82b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92b951ec_3d79d931",
+        "filename": "base/files/file_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T22:36:38Z",
+      "side": 1,
+      "message": "Looks to me like that code just isn\u0027t special-casing the case in which the entry is created but Stream zero is never actually populated (i.e. SetStream0Data() is never called) before it is Close()\u0027d.",
+      "parentUuid": "406304a0_059d6db2",
+      "revId": "c2fca078dffd5381a7a9fdeae67cbb899cffa82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
