@@ -52,6 +52,24 @@
       "revId": "05fb2c5a0215e6df296b61c0c64804b39692d60f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2415d7fe_b5e85f37",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-24T22:24:29Z",
+      "side": 0,
+      "message": "Ah yes, sorry. Brought back this logic.",
+      "parentUuid": "adb7a260_3110bc40",
+      "revId": "05fb2c5a0215e6df296b61c0c64804b39692d60f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

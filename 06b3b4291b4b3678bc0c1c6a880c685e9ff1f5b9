@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1dabd46c_23900423",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-24T22:24:29Z",
+      "side": 1,
+      "message": "Actually DOMStorageArea supports it. I haven\u0027t enabled it. Changed the description.",
+      "parentUuid": "2f45e508_2a96dd7b",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2457157f_bdda9ea0",
         "filename": "content/browser/dom_storage/dom_storage_area.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d894e5_fa9cce66",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-24T22:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2457157f_bdda9ea0",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1a986dd0_272c7cdd",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-24T22:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b94fce91_e766a771",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74ab6d88_fd450023",
         "filename": "content/browser/dom_storage/dom_storage_area.cc",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "99d19985_b8479c4c",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-24T22:24:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "74ab6d88_fd450023",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97d502c4_514c4f8c",
         "filename": "content/browser/dom_storage/dom_storage_area.cc",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-22T02:22:49Z",
       "side": 1,
       "message": "Hmmm... I think there\u0027s a possible race here when we have keys_only? The \u0027actual shallow copy\u0027 referred to in the comment refers to updating the database to reflect the clone. If a caller tries to extract value prior to that database operation happening, we won\u0027t find the area\u0027s data in the database in backing_-\u003eReadAllValues and we\u0027ll get an empty map back.\n\nI\u0027m not sure what do do about that? One idea is the carry forward into the clone the original\u0027s persistent_namespace_id and to use that to ReadAllValues from the database iff destination_persistent_namespace_id has not yet been created?",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe951920_0b035799",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-24T22:24:29Z",
+      "side": 1,
+      "message": "Made the CommitBatch refcounted and shallow coping the commit batches.\nTo delete these references once the namespace is cloned, the namespace notifies back to area saying clean up commit batches.",
+      "parentUuid": "97d502c4_514c4f8c",
       "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "9468da52_f23f85b0",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-24T22:24:29Z",
+      "side": 1,
+      "message": "I think sharing of session storage on Android should be very rare since we do not have OOP HP. Do we have any other cases where the session storage is shared?\nIf this is not common scenario then we do not affect performance since we do not load the data twice. So, I think it is safe to enable for all Android.",
+      "parentUuid": "38c88e0b_6ca76ec1",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61fe9623_1d0a94e3",
         "filename": "content/browser/dom_storage/dom_storage_area.cc",
         "patchSetId": 6
@@ -118,6 +226,24 @@
       "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f2b4ba2_cf8e34ce",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-24T22:24:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "61fe9623_1d0a94e3",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "3defbd5b_7493971c",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-24T22:24:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fcc5546f_b291c71d",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69b8249d_9ee5657b",
         "filename": "content/browser/dom_storage/dom_storage_area.cc",
         "patchSetId": 6
@@ -152,6 +296,24 @@
       "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b1fcdc_b320cc81",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-24T22:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69b8249d_9ee5657b",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "c582ca69_0bc3af5a",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-24T22:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b38e3a79_c80d275f",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91e8d108_900dc76e",
         "filename": "content/browser/dom_storage/dom_storage_area.cc",
         "patchSetId": 6
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "fe878a22_aa2dac7b",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-24T22:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91e8d108_900dc76e",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da63fe51_a323048e",
         "filename": "content/browser/dom_storage/dom_storage_area.cc",
         "patchSetId": 6
@@ -203,6 +401,24 @@
       "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a23ac04d_c2521ce7",
+        "filename": "content/browser/dom_storage/dom_storage_area.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-08-24T22:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da63fe51_a323048e",
+      "revId": "06b3b4291b4b3678bc0c1c6a880c685e9ff1f5b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
