@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a291ec67_c5491c5c",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-24T22:01:41Z",
+      "side": 1,
+      "message": "This will delete client hints for *all* websites, even if the user requests to only clear it for one website. This can be done via the Important sites feature or the Clear-Site-Data header.\n\nSee DATA_TYPE_DURABLE_PERMISSION on how per-website filtering is done.",
+      "range": {
+        "startLine": 701,
+        "startChar": 4,
+        "endLine": 701,
+        "endChar": 58
+      },
+      "revId": "26b67507418d1955abca3a21455d5d894a67beaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
