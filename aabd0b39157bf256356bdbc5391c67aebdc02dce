@@ -45,6 +45,29 @@
       "revId": "aabd0b39157bf256356bdbc5391c67aebdc02dce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4a44cc9_b5fd2a94",
+        "filename": "content/browser/background_fetch/background_fetch_request_info.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-24T12:59:14Z",
+      "side": 0,
+      "message": "Nit: these could remain as DCHECK(result_) ? Mainly as a warning that this can dereference null pointers if called at the wrong stage :D",
+      "range": {
+        "startLine": 102,
+        "startChar": 9,
+        "endLine": 102,
+        "endChar": 33
+      },
+      "revId": "aabd0b39157bf256356bdbc5391c67aebdc02dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
