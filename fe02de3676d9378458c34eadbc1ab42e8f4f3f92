@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb8a16da_9020abd0",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-24T22:16:20Z",
+      "side": 0,
+      "message": "Maybe it would be a good idea to still keep a raw pointer to the WireMessage that this packet belongs to. That way you can do a CHECK() on the WireMessage that you pop, rather than simply trusting that the ordering of |queued_wire_messages_| is correct.",
+      "range": {
+        "startLine": 175,
+        "startChar": 4,
+        "endLine": 175,
+        "endChar": 41
+      },
+      "revId": "fe02de3676d9378458c34eadbc1ab42e8f4f3f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

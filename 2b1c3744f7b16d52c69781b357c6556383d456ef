@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6011b91_c058e288",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-24T22:16:20Z",
+      "side": 1,
+      "message": "Couldn\u0027t this just simply be a test-only constructor?",
+      "range": {
+        "startLine": 231,
+        "startChar": 46,
+        "endLine": 231,
+        "endChar": 62
+      },
+      "revId": "2b1c3744f7b16d52c69781b357c6556383d456ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ca09d2_c76a1775",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-24T22:16:20Z",
+      "side": 1,
+      "message": "Instead of doing this, I would post this observer callback as a delayed task (with 0s delay), so you can escape being on the same stack. This way, you don\u0027t need to check the WeakPtr.\n\nAlthough this changes the semantics somewhat (i.e. you begin processing the next write request right away without waiting for the observer do react), it is safer.",
+      "range": {
+        "startLine": 586,
+        "startChar": 4,
+        "endLine": 586,
+        "endChar": 42
+      },
+      "revId": "2b1c3744f7b16d52c69781b357c6556383d456ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9320429_444b01b7",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-24T22:16:20Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 637,
+        "startChar": 4,
+        "endLine": 637,
+        "endChar": 45
+      },
+      "revId": "2b1c3744f7b16d52c69781b357c6556383d456ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68557fa9_8d05c7d1",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-24T22:16:20Z",
+      "side": 1,
+      "message": "Why did you remove the swap trick?",
+      "range": {
+        "startLine": 656,
+        "startChar": 2,
+        "endLine": 657,
+        "endChar": 33
+      },
+      "revId": "2b1c3744f7b16d52c69781b357c6556383d456ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b65295_338807dc",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-08-24T22:16:20Z",
+      "side": 1,
+      "message": "nit: unpaired BLE device addresss. It\u0027s possible that the user could pair their phone.",
+      "range": {
+        "startLine": 689,
+        "startChar": 25,
+        "endLine": 689,
+        "endChar": 45
+      },
+      "revId": "2b1c3744f7b16d52c69781b357c6556383d456ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
