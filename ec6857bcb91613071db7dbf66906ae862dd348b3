@@ -128,6 +128,24 @@
     },
     {
       "key": {
+        "uuid": "74f8668e_1035a58b",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T14:09:35Z",
+      "side": 1,
+      "message": "Matt, this function body was as WIP as everything else, so sorry for it\u0027s roughness.  Thanks for looking carefully.  :)  I\u0027m happy you like the approach, and I agree it\u0027s a good tool.\n\nI had a variant like yours, and I like it.  Going further down that road, we could also not require that the set of expected strings covers every case - instead, the test could simply ensure that elision passes through all provided strings, in order, while trimming pixels.  Then we could shrink the test input to only the edge cases.  Eg:\n\nhttps://www.google.com/lengthy_path\nhttps://www.google.com/lengthy_p...\nhttps://www.google.com/l...\nhttps://www.google.com/...\nwww.google.com/length...\nwww.google.com/l...\nwww.google.com/...\n...w.google.com/...\n....google.com/...\n...google.com/...\n...e.com/...\n.../...\n...\n\nThoughts?",
+      "parentUuid": "b086fe15_19632653",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d51a6eb_19d548a5",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 2
