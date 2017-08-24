@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06c086d9_b0833141",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-24T00:13:30Z",
+      "side": 1,
+      "message": "Not required anymore?",
+      "range": {
+        "startLine": 9,
+        "startChar": 1,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "06c0fcb8037ac7e490a9466b8298ee18a05e1932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04b2420c_a60d4f41",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-24T00:13:30Z",
+      "side": 1,
+      "message": "Same here. Or you need the SkColorSpace include?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "06c0fcb8037ac7e490a9466b8298ee18a05e1932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0cc8588_120fac86",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-24T00:13:30Z",
+      "side": 1,
+      "message": "Could you update the comment to specify that it will do a copy if its non-lazy image. And a readback if the its texture backed.",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 11
+      },
+      "revId": "06c0fcb8037ac7e490a9466b8298ee18a05e1932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0716c1b6_e924c187",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-24T00:13:30Z",
+      "side": 1,
+      "message": "color space, if provided.",
+      "range": {
+        "startLine": 67,
+        "startChar": 15,
+        "endLine": 67,
+        "endChar": 27
+      },
+      "revId": "06c0fcb8037ac7e490a9466b8298ee18a05e1932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

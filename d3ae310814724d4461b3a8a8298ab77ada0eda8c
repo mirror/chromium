@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "fe06854b_ace4fee4",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-24T00:13:30Z",
+      "side": 1,
+      "message": "I thought GetScaledImageDecode was always decoding to the original size, but it also limits it only for the subset cases.",
+      "parentUuid": "9c1e6e84_d5bddac3",
+      "range": {
+        "startLine": 462,
+        "startChar": 7,
+        "endLine": 462,
+        "endChar": 67
+      },
+      "revId": "d3ae310814724d4461b3a8a8298ab77ada0eda8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fecc13be_047b390a",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 4
