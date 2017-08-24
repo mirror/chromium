@@ -22,6 +22,30 @@
       "revId": "1ef0f30aa8246b246ab02126fc73cfad01227722",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73cd2a2_45d98863",
+        "filename": "media/gpu/android/media_codec_video_decoder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-24T01:13:14Z",
+      "side": 1,
+      "message": "I believe the only difference is whether this can be subclassed. If so I\u0027d probably prefer to leave it like this and make it protected if and when someone wants to do that and can think about the implications.",
+      "parentUuid": "39bbccbb_ec8376a0",
+      "range": {
+        "startLine": 112,
+        "startChar": 2,
+        "endLine": 112,
+        "endChar": 36
+      },
+      "revId": "1ef0f30aa8246b246ab02126fc73cfad01227722",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
