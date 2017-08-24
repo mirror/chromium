@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c47cfd9f_47416329",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-24T16:59:30Z",
+      "side": 1,
+      "message": "I would recommend go directly to stats collector.",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 22
+      },
+      "revId": "c41cc85005eaedaa09c9bfd6e506520a326c9056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
