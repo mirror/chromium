@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f538fc57_b9640b6c",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-24T22:40:16Z",
+      "side": 1,
+      "message": "It is not needed. We early return in this method.",
+      "revId": "3fb92545c07777bbfcd1cbd2d6a997494891f6c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
