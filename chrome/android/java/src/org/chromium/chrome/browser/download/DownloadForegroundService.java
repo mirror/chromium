@@ -12,6 +12,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import org.chromium.base.Log;
 import org.chromium.chrome.browser.AppHooks;
 
 /**
@@ -25,6 +26,7 @@ public class DownloadForegroundService extends Service {
      * @param context The context used to start service.
      */
     public static void startDownloadForegroundService(Context context) {
+        Log.e("joy", "startDownloadForegroundService");
         AppHooks.get().startForegroundService(new Intent(context, DownloadForegroundService.class));
     }
 
@@ -35,6 +37,20 @@ public class DownloadForegroundService extends Service {
      */
     public void startOrUpdateForegroundService(int notificationId, Notification notification) {
         // TODO(jming): Make sure there is not weird UI in switching the pinned notification.
+        Log.e("joy", "startOrUpdateForegroundService: " + notificationId + "," + notification);
+//        NotificationManager notificationManager =
+//                (NotificationManager) ContextUtils.getApplicationContext()
+//                        .getSystemService(Context.NOTIFICATION_SERVICE);
+//        Log.e("joy", "DFS notification manager: " + notificationManager);
+//        Notification notification2 =                 NotificationBuilderFactory
+//                .createChromeNotificationBuilder(
+//                        true /* preferCompat */, ChannelDefinitions.CHANNEL_ID_DOWNLOADS)
+//                .setSmallIcon(org.chromium.chrome.R.drawable.ic_file_download_white_24dp)
+//                .setContentTitle("fake content title")
+//                .setContentText("fake content text")
+//                .build();
+//        notificationManager.notify(notificationId, notification2);
+//        startForeground(notificationId + 1, notification2);
         startForeground(notificationId, notification);
     }
 
@@ -50,8 +66,20 @@ public class DownloadForegroundService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.e("joy", "onStartCommand");
         // This should restart service after Chrome gets killed (except for Android 4.4.2).
         return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        // TODO(jming): Check if
+        super.onDestroy();
+    }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
     }
 
     @Nullable
