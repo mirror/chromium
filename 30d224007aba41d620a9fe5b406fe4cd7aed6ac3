@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea66440e_4d790fbf",
+        "filename": "net/http/http_stream_factory_impl_job.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-24T19:59:59Z",
+      "side": 1,
+      "message": "nit: Called when |this| is orphaned by Delegate.",
+      "revId": "30d224007aba41d620a9fe5b406fe4cd7aed6ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f6b6da_9446ddc4",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-24T19:59:59Z",
+      "side": 1,
+      "message": "Sweet! Thanks for the unittest!",
+      "revId": "30d224007aba41d620a9fe5b406fe4cd7aed6ac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
