@@ -324,6 +324,30 @@
     },
     {
       "key": {
+        "uuid": "20a6fdf9_ddd259ff",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2011,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-24T17:09:53Z",
+      "side": 1,
+      "message": "reading_ set to true *and* being in this state: implies that the consumer has invoked Read() and as part of that Read() we went back to the headers state machine. Note this can only happen for partial requests. So after this the transition needs to be to a reading state.\nIn the current code this maps to the transition to a reading state that happens here https://cs.chromium.org/chromium/src/net/http/http_cache_transaction.cc?q\u003dhttp_cache_transaction.cc\u0026dr\u0026l\u003d1883 in DoPartialHeadersReceived.",
+      "parentUuid": "e2a175ff_b3d11f07",
+      "range": {
+        "startLine": 2011,
+        "startChar": 6,
+        "endLine": 2011,
+        "endChar": 14
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "716b89bd_bfbf877b",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 11
