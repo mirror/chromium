@@ -11,7 +11,9 @@
 #include "base/android/jni_weak_ref.h"
 #include "base/bind.h"
 #include "base/memory/ref_counted.h"
+#include "base/observer_list.h"
 #include "ui/android/ui_android_export.h"
+#include "ui/android/window_android_monitor.h"
 #include "ui/gfx/geometry/rect_f.h"
 
 class SkBitmap;
@@ -30,6 +32,7 @@ class EventForwarder;
 class MotionEventAndroid;
 class ViewClient;
 class WindowAndroid;
+class WindowAndroidMonitor;
 
 // View-related parameters from frame updates.
 struct FrameInfo {
@@ -172,6 +175,9 @@ class UI_ANDROID_EXPORT ViewAndroid {
   // Return the location of the container view in physical pixels.
   gfx::Point GetLocationOfContainerViewOnScreen();
 
+  void AddWindowMonitor(WindowAndroidMonitor* monitor);
+  void RemoveWindowMonitor(WindowAndroidMonitor* monitor);
+
   float GetDipScale();
 
  protected:
@@ -187,6 +193,9 @@ class UI_ANDROID_EXPORT ViewAndroid {
   bool OnMouseWheelEvent(const MotionEventAndroid& event);
 
   void RemoveChild(ViewAndroid* child);
+
+  void OnAttachedToWindow();
+  void OnDetachedFromWindow();
 
   template <typename E>
   using ViewClientCallback =
@@ -227,6 +236,7 @@ class UI_ANDROID_EXPORT ViewAndroid {
       GetViewAndroidDelegate() const;
 
   std::list<ViewAndroid*> children_;
+  base::ObserverList<WindowAndroidMonitor> window_monitors_;
   scoped_refptr<cc::Layer> layer_;
   JavaObjectWeakGlobalRef delegate_;
 

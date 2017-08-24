@@ -4,11 +4,12 @@
 
 #include "content/browser/android/dialog_overlay_impl.h"
 
-#include "content/public/browser/web_contents.h"
+#include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/web_contents_delegate.h"
 #include "gpu/ipc/common/gpu_surface_tracker.h"
 #include "jni/DialogOverlayImpl_jni.h"
 #include "ui/android/window_android.h"
+#include "ui/android/window_android_monitor.h"
 
 using base::android::AttachCurrentThread;
 using base::android::JavaParamRef;
@@ -40,28 +41,21 @@ static jlong Init(JNIEnv* env,
   if (web_contents_impl->HasPersistentVideo())
     return 0;
 
-  ContentViewCore* cvc = ContentViewCore::FromWebContents(web_contents_impl);
-
-  if (!cvc)
-    return 0;
-
   return reinterpret_cast<jlong>(
-      new DialogOverlayImpl(obj, rfhi, web_contents_impl, cvc));
+      new DialogOverlayImpl(obj, rfhi, web_contents_impl));
 }
 
 DialogOverlayImpl::DialogOverlayImpl(const JavaParamRef<jobject>& obj,
                                      RenderFrameHostImpl* rfhi,
-                                     WebContents* web_contents,
-                                     ContentViewCore* cvc)
-    : WebContentsObserver(web_contents), rfhi_(rfhi), cvc_(cvc) {
+                                     WebContents* web_contents)
+    : WebContentsObserver(web_contents), rfhi_(rfhi) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(rfhi_);
-  DCHECK(cvc_);
 
   JNIEnv* env = AttachCurrentThread();
   obj_ = JavaObjectWeakGlobalRef(env, obj);
 
-  cvc_->AddObserver(this);
+  web_contents->GetNativeView()->AddWindowMonitor(this);
 
   // Note that we're not allowed to call back into |obj| before it calls
   // CompleteInit.  However, the observer won't actually call us back until the
@@ -80,18 +74,16 @@ void DialogOverlayImpl::CompleteInit(JNIEnv* env,
 
   // Send the initial token, if there is one.  The observer will notify us about
   // changes only.
-  if (ui::WindowAndroid* window = cvc_->GetWindowAndroid()) {
+  if (auto* window = web_contents()->GetNativeView()->GetWindowAndroid()) {
     ScopedJavaLocalRef<jobject> token = window->GetWindowToken();
     if (!token.is_null())
       Java_DialogOverlayImpl_onWindowToken(env, obj, token);
-    // else we will send one if we get a callback from |cvc_|.
+    // else we will send one if we get a callback from ViewAndroid.
   }
 }
 
 DialogOverlayImpl::~DialogOverlayImpl() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  // We should only be deleted after one unregisters for token callbacks.
-  DCHECK(!cvc_);
 }
 
 void DialogOverlayImpl::Stop() {
@@ -116,11 +108,8 @@ void DialogOverlayImpl::GetCompositorOffset(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& obj,
     const base::android::JavaParamRef<jobject>& rect) {
-  gfx::Point point;
-  if (cvc_) {
-    if (ui::ViewAndroid* view = cvc_->GetViewAndroid())
-      point = view->GetLocationOfContainerViewOnScreen();
-  }
+  gfx::Point point =
+      web_contents()->GetNativeView()->GetLocationOfContainerViewOnScreen();
 
   Java_DialogOverlayImpl_receiveCompositorOffset(env, rect, point.x(),
                                                  point.y());
@@ -128,21 +117,14 @@ void DialogOverlayImpl::GetCompositorOffset(
 
 void DialogOverlayImpl::UnregisterForTokensIfNeeded() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (!cvc_)
-    return;
 
   // We clear overlay mode here rather than in Destroy(), because we may have
   // been called via a WebContentsDestroyed() event, and this might be the last
   // opportunity we have to access web_contents().
   web_contents()->GetDelegate()->SetOverlayMode(false);
 
-  cvc_->RemoveObserver(this);
-  cvc_ = nullptr;
+  web_contents()->GetNativeView()->RemoveWindowMonitor(this);
   rfhi_ = nullptr;
-}
-
-void DialogOverlayImpl::OnContentViewCoreDestroyed() {
-  // We will receive a destruction notification via WebContentsDestroyed().
 }
 
 void DialogOverlayImpl::RenderFrameDeleted(RenderFrameHost* render_frame_host) {
@@ -180,7 +162,7 @@ void DialogOverlayImpl::OnAttachedToWindow() {
 
   ScopedJavaLocalRef<jobject> token;
 
-  if (ui::WindowAndroid* window = cvc_->GetWindowAndroid())
+  if (auto* window = web_contents()->GetNativeView()->GetWindowAndroid())
     token = window->GetWindowToken();
 
   ScopedJavaLocalRef<jobject> obj = obj_.get(env);

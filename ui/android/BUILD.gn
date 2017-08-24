@@ -47,6 +47,7 @@ component("android") {
     "window_android.cc",
     "window_android.h",
     "window_android_compositor.h",
+    "window_android_monitor.h",
     "window_android_observer.h",
   ]
 

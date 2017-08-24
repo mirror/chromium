@@ -87,6 +87,7 @@
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "ui/android/window_android.h"
 #include "ui/android/window_android_compositor.h"
+#include "ui/android/window_android_monitor.h"
 #include "ui/base/layout.h"
 #include "ui/base/ui_base_types.h"
 #include "ui/events/android/motion_event_android.h"
@@ -2107,12 +2108,12 @@ void RenderWidgetHostViewAndroid::SetContentViewCore(
     if (content_view_core_ || is_size_initialized)
       resize = true;
     if (content_view_core_) {
-      content_view_core_->RemoveObserver(this);
+      view_.RemoveWindowMonitor(this);
       view_.RemoveFromParent();
       view_.GetLayer()->RemoveFromParent();
     }
     if (content_view_core) {
-      content_view_core->AddObserver(this);
+      view_.AddWindowMonitor(this);
       ui::ViewAndroid* parent_view = content_view_core->GetViewAndroid();
       parent_view->AddChild(&view_);
       parent_view->GetLayer()->AddChild(view_.GetLayer());
@@ -2223,6 +2224,9 @@ void RenderWidgetHostViewAndroid::OnRootWindowVisibilityChanged(bool visible) {
 }
 
 void RenderWidgetHostViewAndroid::OnAttachedToWindow() {
+  if (!content_view_core_)
+    return;
+
   if (is_showing_)
     StartObservingRootWindow();
   DCHECK(view_.GetWindowAndroid());
