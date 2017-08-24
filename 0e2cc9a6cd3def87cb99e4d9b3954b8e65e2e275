@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "24b523ce_7f81b34f",
+        "filename": "services/ui/ws/window_manager_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T17:24:03Z",
+      "side": 1,
+      "message": "I thought the window manager connection is the one that uses it\u0027s id in the high bits?",
+      "parentUuid": "138503f5_ca1f82ae",
+      "range": {
+        "startLine": 392,
+        "startChar": 31,
+        "endLine": 392,
+        "endChar": 40
+      },
+      "revId": "0e2cc9a6cd3def87cb99e4d9b3954b8e65e2e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d825b86_25f634fb",
         "filename": "services/ui/ws/window_tree.h",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Renamed it to ClientWindowIdToTransportId and return Id.\nRight now WindowIdToTransportId() in ids.h is used in a lot of tests to convert WindowId to Id, which I feel like is more generic than this ClientWindowIdToTransportId. ClientWindowIdToTransportId is more like MakeClientWindowId where we need to check the id_ of this specific window tree to make decisions? WDYT?",
       "parentUuid": "6d825b86_25f634fb",
+      "range": {
+        "startLine": 431,
+        "startChar": 2,
+        "endLine": 431,
+        "endChar": 41
+      },
+      "revId": "0e2cc9a6cd3def87cb99e4d9b3954b8e65e2e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf719ea_f0ae797a",
+        "filename": "services/ui/ws/window_tree.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T17:24:03Z",
+      "side": 1,
+      "message": "Keeping both is confusing and error prone. It\u0027s probably ok for tests to use WindowIdToTransportId, but I would rather we didn\u0027t have it.",
+      "parentUuid": "35347fad_6c947650",
       "range": {
         "startLine": 431,
         "startChar": 2,
