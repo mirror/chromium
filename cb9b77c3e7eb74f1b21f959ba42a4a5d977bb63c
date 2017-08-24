@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4309abe8_0fc755f7",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4224,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-24T22:02:06Z",
+      "side": 1,
+      "message": "Yeah.. I need the on demand mode so that I could hang QUIC job, resume main job with delay and manually resolve host resolution @4233. \n\nQUIC job starts and stalls in host resolution, then TCP job is unblocked, and should be delayed, when host resolution for QUIC completes, QUIC figures out confirmation is no longer needed and succeed immediately.",
+      "parentUuid": "65d9015d_604fd369",
+      "range": {
+        "startLine": 4224,
+        "startChar": 41,
+        "endLine": 4224,
+        "endChar": 0
+      },
+      "revId": "cb9b77c3e7eb74f1b21f959ba42a4a5d977bb63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad71431a_a3cd5024",
         "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "cb9b77c3e7eb74f1b21f959ba42a4a5d977bb63c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b67cee4_f0b16686",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4231,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-24T22:02:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad71431a_a3cd5024",
+      "range": {
+        "startLine": 4231,
+        "startChar": 14,
+        "endLine": 4231,
+        "endChar": 16
+      },
+      "revId": "cb9b77c3e7eb74f1b21f959ba42a4a5d977bb63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9388e02d_bf796613",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4250,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-24T22:02:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d3d5036e_80a11af3",
+      "range": {
+        "startLine": 4250,
+        "startChar": 71,
+        "endLine": 4250,
+        "endChar": 0
+      },
+      "revId": "cb9b77c3e7eb74f1b21f959ba42a4a5d977bb63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c79cae32_dc6a8d5f",
         "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "cb9b77c3e7eb74f1b21f959ba42a4a5d977bb63c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f759464a_834cc50c",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4282,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-24T22:02:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c79cae32_dc6a8d5f",
+      "range": {
+        "startLine": 4282,
+        "startChar": 8,
+        "endLine": 4282,
+        "endChar": 9
+      },
+      "revId": "cb9b77c3e7eb74f1b21f959ba42a4a5d977bb63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -126,6 +222,24 @@
       "revId": "cb9b77c3e7eb74f1b21f959ba42a4a5d977bb63c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6675439_d8b4c5d0",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-24T22:02:06Z",
+      "side": 1,
+      "message": "Changed to need_to_check_persisted_supports_quic, hope that makes more sense.",
+      "parentUuid": "bf76bc8d_2c9c66d8",
+      "revId": "cb9b77c3e7eb74f1b21f959ba42a4a5d977bb63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
