@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2da1bfaa_12874403",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-24T11:12:14Z",
+      "side": 1,
+      "message": "There is no |weekly_time| parameter anymore.",
+      "range": {
+        "startLine": 60,
+        "startChar": 63,
+        "endLine": 60,
+        "endChar": 76
+      },
+      "revId": "c4cfeadbe205d7114164539b2b84eeaa5133ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee19dab_e96c391e",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-24T11:12:14Z",
+      "side": 1,
+      "message": "nit: \"Ignoring ...\"",
+      "range": {
+        "startLine": 88,
+        "startChar": 23,
+        "endLine": 88,
+        "endChar": 27
+      },
+      "revId": "c4cfeadbe205d7114164539b2b84eeaa5133ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273b1851_d4d96eeb",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-08-24T11:12:14Z",
+      "side": 1,
+      "message": "nit: off_hours_policy? As off_hours is also a namespace in this string.",
+      "range": {
+        "startLine": 891,
+        "startChar": 9,
+        "endLine": 891,
+        "endChar": 18
+      },
+      "revId": "c4cfeadbe205d7114164539b2b84eeaa5133ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
