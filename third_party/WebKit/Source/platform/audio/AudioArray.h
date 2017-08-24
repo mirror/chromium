@@ -30,6 +30,7 @@
 #define AudioArray_h
 
 #include <string.h>
+#include "base/memory/aligned_memory.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/allocator/Partitions.h"
@@ -42,13 +43,12 @@ class AudioArray {
   WTF_MAKE_NONCOPYABLE(AudioArray);
 
  public:
-  AudioArray() : allocation_(nullptr), aligned_data_(nullptr), size_(0) {}
-  explicit AudioArray(size_t n)
-      : allocation_(nullptr), aligned_data_(nullptr), size_(0) {
+  AudioArray() : allocation_(nullptr), size_(0) {}
+  explicit AudioArray(size_t n) : allocation_(nullptr), size_(0) {
     Allocate(n);
   }
 
-  ~AudioArray() { WTF::Partitions::FastFree(allocation_); }
+  ~AudioArray() { base::AlignedFree(allocation_); }
 
   // It's OK to call allocate() multiple times, but data will *not* be copied
   // from an initial allocation if re-allocated. Allocations are
@@ -59,7 +59,7 @@ class AudioArray {
     // overflow.
     CHECK_LE(n, std::numeric_limits<unsigned>::max() / sizeof(T));
 
-    unsigned initial_size = sizeof(T) * n;
+    unsigned bytes_to_allocate = sizeof(T) * n;
 
 #if defined(WTF_USE_WEBAUDIO_FFMPEG) || defined(WTF_USE_WEBAUDIO_OPENMAX_DL_FFT)
     const size_t kAlignment = 32;
@@ -67,42 +67,20 @@ class AudioArray {
     const size_t kAlignment = 16;
 #endif
 
-    if (allocation_)
-      WTF::Partitions::FastFree(allocation_);
-
-    bool is_allocation_good = false;
-
-    while (!is_allocation_good) {
-      // Initially we try to allocate the exact size, but if it's not aligned
-      // then we'll have to reallocate and from then on allocate extra.
-      static size_t extra_allocation_bytes = 0;
-
-      // Again, check for integer overflow.
-      CHECK_GE(initial_size + extra_allocation_bytes, initial_size);
-
-      T* allocation = static_cast<T*>(WTF::Partitions::FastMalloc(
-          initial_size + extra_allocation_bytes,
-          WTF_HEAP_PROFILER_TYPE_NAME(AudioArray<T>)));
-      CHECK(allocation);
-
-      T* aligned_data = AlignedAddress(allocation, kAlignment);
-
-      if (aligned_data == allocation || extra_allocation_bytes == kAlignment) {
-        allocation_ = allocation;
-        aligned_data_ = aligned_data;
-        size_ = n;
-        is_allocation_good = true;
-        Zero();
-      } else {
-        // always allocate extra after the first alignment failure.
-        extra_allocation_bytes = kAlignment;
-        WTF::Partitions::FastFree(allocation);
-      }
+    if (allocation_) {
+      base::AlignedFree(allocation_);
     }
+
+    T* allocation =
+        static_cast<T*>(base::AlignedAlloc(bytes_to_allocate, kAlignment));
+    CHECK(allocation);
+    memset(allocation, 0, bytes_to_allocate);
+    allocation_ = allocation;
+    size_ = n;
   }
 
-  T* Data() { return aligned_data_; }
-  const T* Data() const { return aligned_data_; }
+  T* Data() { return allocation_; }
+  const T* Data() const { return allocation_; }
   size_t size() const { return size_; }
 
   T& at(size_t i) {
@@ -148,7 +126,6 @@ class AudioArray {
   }
 
   T* allocation_;
-  T* aligned_data_;
   size_t size_;
 };
 
