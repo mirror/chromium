@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d09b1bc_c4591810",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-24T15:48:17Z",
+      "side": 1,
+      "message": "Nit: Capitalize RecyclerView",
+      "range": {
+        "startLine": 138,
+        "startChar": 46,
+        "endLine": 138,
+        "endChar": 47
+      },
+      "revId": "5fcfba8075fc82f8bef6229ab499d6b0e925b43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7b9ec4_bb841781",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-24T15:48:17Z",
+      "side": 1,
+      "message": "Nit: https://",
+      "range": {
+        "startLine": 139,
+        "startChar": 80,
+        "endLine": 139,
+        "endChar": 85
+      },
+      "revId": "5fcfba8075fc82f8bef6229ab499d6b0e925b43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09cb32db_8d38de4b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsRecyclerView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-24T15:48:17Z",
+      "side": 1,
+      "message": "assert + continue means you are never going to learn about this in a release build. If we think this can never happen, we can just remove the check completely -- if it fails, we\u0027ll get a NullPointerException on the next line.",
+      "range": {
+        "startLine": 218,
+        "startChar": 16,
+        "endLine": 219,
+        "endChar": 24
+      },
+      "revId": "5fcfba8075fc82f8bef6229ab499d6b0e925b43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
