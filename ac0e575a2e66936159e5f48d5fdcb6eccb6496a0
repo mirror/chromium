@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d5ec521_a5b7c4b5",
+        "filename": "third_party/WebKit/Source/core/editing/SurroundingTextTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-24T02:25:31Z",
+      "side": 1,
+      "message": "\u003e if we pass Position::FirstPositionInNode(*inner_editor) instead, does the crash reproduce?\nYes.",
+      "parentUuid": "ceabc534_b4a662e9",
+      "range": {
+        "startLine": 324,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 80
+      },
+      "revId": "ac0e575a2e66936159e5f48d5fdcb6eccb6496a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d35244ed_3ed83d47",
         "filename": "third_party/WebKit/Source/core/editing/SurroundingTextTest.cpp",
         "patchSetId": 5
