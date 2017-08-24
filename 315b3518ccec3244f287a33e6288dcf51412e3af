@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aea08439_c8c6a596",
+        "filename": "content/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-08-24T03:54:29Z",
+      "side": 1,
+      "message": "are you sure these can be specified at top level? I thought these have to be changed in the same directory as the file",
+      "revId": "315b3518ccec3244f287a33e6288dcf51412e3af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
