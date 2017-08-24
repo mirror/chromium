@@ -376,13 +376,11 @@ void BubbleFrameView::Layout() {
 
   const int title_available_width =
       std::max(1, title_label_right - title_label_x);
-  const int title_preferred_height =
-      title()->GetHeightForWidth(title_available_width);
   const int title_height =
-      std::max(title_icon_pref_size.height(), title_preferred_height);
-  title()->SetBounds(title_label_x,
-                     bounds.y() + (title_height - title_preferred_height) / 2,
-                     title_available_width, title_height);
+      std::max(title_icon_pref_size.height(),
+               title()->GetHeightForWidth(title_available_width));
+  title()->SetBounds(title_label_x, bounds.y(), title_available_width,
+                     title_height);
 
   title_icon_->SetBounds(bounds.x(), bounds.y(), title_icon_pref_size.width(),
                          title_height);
