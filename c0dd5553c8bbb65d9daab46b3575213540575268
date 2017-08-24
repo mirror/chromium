@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86d92ab8_3879333e",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-24T20:08:08Z",
+      "side": 1,
+      "message": "nit: omit the curly braces for one-line statement.",
+      "range": {
+        "startLine": 212,
+        "startChar": 30,
+        "endLine": 212,
+        "endChar": 0
+      },
+      "revId": "c0dd5553c8bbb65d9daab46b3575213540575268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc2aba30_fbc39b55",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-24T20:08:08Z",
+      "side": 1,
+      "message": "nit: same here. Suggest getting rid of curly braces to be consistent with the style of e.g. line 419.",
+      "range": {
+        "startLine": 425,
+        "startChar": 30,
+        "endLine": 425,
+        "endChar": 31
+      },
+      "revId": "c0dd5553c8bbb65d9daab46b3575213540575268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051b5ce1_681df917",
+        "filename": "components/cronet/cronet_prefs_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-24T20:08:08Z",
+      "side": 1,
+      "message": "Can we just delete |this| here instead of destroying |host_cache_persistence_manager_|?",
+      "range": {
+        "startLine": 404,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 33
+      },
+      "revId": "c0dd5553c8bbb65d9daab46b3575213540575268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e2ee9d4_c4ca2a05",
+        "filename": "components/cronet/cronet_prefs_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-24T20:08:08Z",
+      "side": 1,
+      "message": "s/associates/associated?",
+      "range": {
+        "startLine": 36,
+        "startChar": 50,
+        "endLine": 36,
+        "endChar": 60
+      },
+      "revId": "c0dd5553c8bbb65d9daab46b3575213540575268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
