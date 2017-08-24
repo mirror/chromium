@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "283b61af_b1fcc215",
+        "filename": "chrome/browser/media_galleries/fileapi/itunes_file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-24T05:48:01Z",
+      "side": 1,
+      "message": "This seems to be necessary for the tests to succeed. Looks like itunes_data_provider is a multi-threaded kind of thing.",
+      "parentUuid": "d143bdbb_3216b664",
+      "revId": "965854c6158722e6d9dd0be78b68f65a243fd486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0538cb0b_44cba68d",
         "filename": "chrome/browser/media_galleries/fileapi/itunes_file_util_unittest.cc",
         "patchSetId": 3
@@ -51,6 +69,24 @@
       "revId": "965854c6158722e6d9dd0be78b68f65a243fd486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257ccabc_4ef6ac01",
+        "filename": "chrome/browser/media_galleries/fileapi/itunes_file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-24T05:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0538cb0b_44cba68d",
+      "revId": "965854c6158722e6d9dd0be78b68f65a243fd486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "fecfd17a_6c13cbe6",
+        "filename": "chrome/browser/media_galleries/fileapi/media_file_system_backend.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-24T05:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6753569f_a06f37ab",
+      "revId": "965854c6158722e6d9dd0be78b68f65a243fd486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78f22c05_ed9e63d1",
         "filename": "chrome/browser/media_galleries/fileapi/native_media_file_util_unittest.cc",
         "patchSetId": 3
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "f0a03a10_5da953ef",
+        "filename": "chrome/browser/media_galleries/fileapi/native_media_file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-24T05:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78f22c05_ed9e63d1",
+      "revId": "965854c6158722e6d9dd0be78b68f65a243fd486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6d03d85_db3088e9",
         "filename": "chrome/browser/media_galleries/fileapi/native_media_file_util_unittest.cc",
         "patchSetId": 3
@@ -102,6 +174,24 @@
       "revId": "965854c6158722e6d9dd0be78b68f65a243fd486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "464cdb6c_8f7418ab",
+        "filename": "chrome/browser/media_galleries/fileapi/native_media_file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-24T05:48:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6d03d85_db3088e9",
+      "revId": "965854c6158722e6d9dd0be78b68f65a243fd486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
