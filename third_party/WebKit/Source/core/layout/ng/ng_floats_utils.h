@@ -31,6 +31,7 @@ PositionFloat(LayoutUnit origin_block_offset,
               LayoutUnit parent_bfc_block_offset,
               NGUnpositionedFloat*,
               const NGConstraintSpace& parent_space,
+              LayoutUnit container_size,
               NGExclusionSpace* exclusion_space);
 
 // Positions the list of {@code unpositioned_floats}. Adds them as exclusions to
@@ -40,6 +41,7 @@ CORE_EXPORT const Vector<NGPositionedFloat> PositionFloats(
     LayoutUnit container_block_offset,
     const Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats,
     const NGConstraintSpace& space,
+    LayoutUnit container_size,
     NGExclusionSpace* exclusion_space);
 
 }  // namespace blink

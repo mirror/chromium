@@ -404,7 +404,7 @@ TEST_F(NGLengthUtilsTest, testAutoMargins) {
       ConstructConstraintSpace(200, 300));
 
   NGBoxStrut margins;
-  ApplyAutoMargins(*constraint_space, *style_, kInlineSize, &margins);
+  ApplyAutoMargins(*constraint_space, *style_, *style_, kInlineSize, &margins);
 
   EXPECT_EQ(LayoutUnit(), margins.block_start);
   EXPECT_EQ(LayoutUnit(), margins.block_end);
@@ -413,14 +413,14 @@ TEST_F(NGLengthUtilsTest, testAutoMargins) {
 
   style_->SetMarginLeft(Length(0, kFixed));
   margins = NGBoxStrut();
-  ApplyAutoMargins(*constraint_space, *style_, kInlineSize, &margins);
+  ApplyAutoMargins(*constraint_space, *style_, *style_, kInlineSize, &margins);
   EXPECT_EQ(LayoutUnit(0), margins.inline_start);
   EXPECT_EQ(LayoutUnit(50), margins.inline_end);
 
   style_->SetMarginLeft(Length(kAuto));
   style_->SetMarginRight(Length(0, kFixed));
   margins = NGBoxStrut();
-  ApplyAutoMargins(*constraint_space, *style_, kInlineSize, &margins);
+  ApplyAutoMargins(*constraint_space, *style_, *style_, kInlineSize, &margins);
   EXPECT_EQ(LayoutUnit(50), margins.inline_start);
   EXPECT_EQ(LayoutUnit(0), margins.inline_end);
 
@@ -430,7 +430,7 @@ TEST_F(NGLengthUtilsTest, testAutoMargins) {
   style_->SetMarginRight(Length(5000, kFixed));
   margins = NGBoxStrut();
   margins.inline_end = LayoutUnit(5000);
-  ApplyAutoMargins(*constraint_space, *style_, kInlineSize, &margins);
+  ApplyAutoMargins(*constraint_space, *style_, *style_, kInlineSize, &margins);
   EXPECT_EQ(LayoutUnit(0), margins.inline_start);
   EXPECT_EQ(LayoutUnit(5000), margins.inline_end);
 }

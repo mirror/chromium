@@ -475,6 +475,7 @@ NGBoxStrut ComputePadding(const NGConstraintSpace& constraint_space,
 }
 
 void ApplyAutoMargins(const NGConstraintSpace& constraint_space,
+                      const ComputedStyle& parent_style,
                       const ComputedStyle& style,
                       const LayoutUnit& inline_size,
                       NGBoxStrut* margins) {
@@ -484,12 +485,13 @@ void ApplyAutoMargins(const NGConstraintSpace& constraint_space,
       constraint_space.AvailableSize().inline_size - used_space;
   if (available_space < LayoutUnit())
     return;
-  if (style.MarginStart().IsAuto() && style.MarginEnd().IsAuto()) {
+  if (style.MarginStartUsing(parent_style).IsAuto() &&
+      style.MarginEndUsing(parent_style).IsAuto()) {
     margins->inline_start = available_space / 2;
     margins->inline_end = available_space - margins->inline_start;
-  } else if (style.MarginStart().IsAuto()) {
+  } else if (style.MarginStartUsing(parent_style).IsAuto()) {
     margins->inline_start = available_space;
-  } else if (style.MarginEnd().IsAuto()) {
+  } else if (style.MarginEndUsing(parent_style).IsAuto()) {
     margins->inline_end = available_space;
   }
 }
