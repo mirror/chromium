@@ -40,6 +40,8 @@ static_library("internal") {
     "model.h",
     "model_impl.cc",
     "model_impl.h",
+    "navigation_monitor_impl.cc",
+    "navigation_monitor_impl.h",
     "proto_conversions.cc",
     "proto_conversions.h",
     "scheduler/device_status.cc",
