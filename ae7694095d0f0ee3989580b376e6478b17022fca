@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5725afe2_eb66ff05",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-24T21:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e01bf0cd_902b5008",
+      "revId": "ae7694095d0f0ee3989580b376e6478b17022fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67cdd09b_95ff2fcb",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "54c42b80_fff2b26c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-24T21:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67cdd09b_95ff2fcb",
+      "revId": "ae7694095d0f0ee3989580b376e6478b17022fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "796e2dcd_d1c86278",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "ae7694095d0f0ee3989580b376e6478b17022fca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1724698f_51fe240b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ServiceWorkerCacheViews.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-08-24T21:20:00Z",
+      "side": 1,
+      "message": "Actually, it should be \u003e 1 - there should not be empty entries in the table.",
+      "parentUuid": "796e2dcd_d1c86278",
+      "revId": "ae7694095d0f0ee3989580b376e6478b17022fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
