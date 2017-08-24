@@ -378,8 +378,7 @@ void PermissionQueueController::ShowQueuedInfoBarForTab(
     if (ArePermissionRequestsForSameTab(i->id(), id) && !i->has_infobar()) {
       // When using modal permission prompts, Java controls the display queue,
       // so infobar notifications are not relevant.
-      bool show_dialog =
-          PermissionDialogDelegate::ShouldShowDialog(i->has_gesture());
+      bool show_dialog = PermissionDialogDelegate::ShouldShowDialog();
       if (!show_dialog)
         RegisterForInfoBarNotifications(infobar_service);
 
