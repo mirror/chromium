@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ffe4a8b_4fc0b044",
+        "filename": "chrome/common/media_router/media_source_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-24T23:23:34Z",
+      "side": 1,
+      "message": "Nit: Consider moving this declaration above with the other kCast constants, and adding a comment that this will replace the existing constants.",
+      "revId": "d199ae91ec13f0ccf0c9fe14947e2a1c8428b5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c89a3587_b27cae7b",
+        "filename": "chrome/common/media_router/media_source_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-24T23:23:34Z",
+      "side": 1,
+      "message": "Maybe declare a const GURL\u0026 url here?  Unsure if the compiler can share a temporary across invocations below.  I don\u0027t feel strongly.",
+      "revId": "d199ae91ec13f0ccf0c9fe14947e2a1c8428b5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
