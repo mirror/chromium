@@ -52,6 +52,24 @@
       "revId": "889d5344dbd042f0db31cacb51f6a6a1081ca9ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bbfa48e_361dcd94",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-24T18:47:57Z",
+      "side": 1,
+      "message": "However! APA indicates capitalization following a colon when what follows is an independent clause http://blog.apastyle.org/apastyle/2012/03/title-case-and-sentence-case-capitalization-in-apa-style.html, which would apply here.\n\nWe\u0027ll have to take this to chromium-dev@chromium.org for a ruling. ;)",
+      "parentUuid": "27b25f12_e1ba2b3b",
+      "revId": "889d5344dbd042f0db31cacb51f6a6a1081ca9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
