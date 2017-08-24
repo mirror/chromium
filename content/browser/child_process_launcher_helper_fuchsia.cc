@@ -9,6 +9,8 @@
 #include "base/fuchsia/child_job.h"
 #include "base/process/launch.h"
 #include "content/browser/child_process_launcher_helper_posix.h"
+#include "content/common/sandbox_policy_fuchsia.h"
+#include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "mojo/edk/embedder/platform_channel_pair.h"
 
 #include <magenta/process.h>
@@ -84,6 +86,7 @@ void ChildProcessLauncherHelper::BeforeLaunchOnLauncherThread(
       mojo_client_handle(), command_line(), &options->handles_to_transfer);
 
   options->job_handle = base::GetDefaultJob();
+  options->clone_flags = GetClonePolicyForSandbox(delegate_->GetSandboxType());
 }
 
 ChildProcessLauncherHelper::Process
