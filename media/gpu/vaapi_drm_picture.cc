@@ -51,6 +51,9 @@ static unsigned BufferFormatToInternalFormat(gfx::BufferFormat format) {
     case gfx::BufferFormat::YVU_420:
       return GL_RGB_YCRCB_420_CHROMIUM;
 
+    case gfx::BufferFormat::YUV_420_BIPLANAR:
+      return GL_RGB_YCBCR_420V_CHROMIUM;
+
     default:
       NOTREACHED();
       return GL_BGRA_EXT;
@@ -102,8 +105,9 @@ bool VaapiDrmPicture::Initialize() {
 bool VaapiDrmPicture::Allocate(gfx::BufferFormat format) {
   ui::OzonePlatform* platform = ui::OzonePlatform::GetInstance();
   ui::SurfaceFactoryOzone* factory = platform->GetSurfaceFactoryOzone();
-  pixmap_ = factory->CreateNativePixmap(gfx::kNullAcceleratedWidget, size_,
-                                        format, gfx::BufferUsage::SCANOUT);
+  pixmap_ =
+      factory->CreateNativePixmap(gfx::kNullAcceleratedWidget, size_, format,
+                                  gfx::BufferUsage::SCANOUT_VDA_WRITE);
   if (!pixmap_) {
     DVLOG(1) << "Failed allocating a pixmap";
     return false;
