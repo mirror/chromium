@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "5cf1d1d2_e857b4d3",
+        "filename": "chrome/browser/resources/settings/controls/settings_boolean_control_behavior.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-24T15:38:08Z",
+      "side": 1,
+      "message": "Right, it is not that much html and css but I think most of it is needed for the CBD checkboxes.",
+      "parentUuid": "af357c96_7b623c08",
+      "revId": "fabd3fa341d7d90e787653d2b9791f358349d1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6015a251_8616f7b1",
         "filename": "chrome/browser/resources/settings/controls/settings_checkbox.html",
         "patchSetId": 7
