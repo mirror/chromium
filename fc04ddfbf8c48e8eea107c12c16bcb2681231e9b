@@ -46,6 +46,30 @@
       "revId": "fc04ddfbf8c48e8eea107c12c16bcb2681231e9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39c04c6_ec0d069f",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-24T23:47:19Z",
+      "side": 1,
+      "message": "Done - I had a TODO in test_site_settings_prefs_browser_proxy.js that kind of covered all of this, so I just updated that one with the link to the bug.",
+      "parentUuid": "59872e67_546f1858",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "fc04ddfbf8c48e8eea107c12c16bcb2681231e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
