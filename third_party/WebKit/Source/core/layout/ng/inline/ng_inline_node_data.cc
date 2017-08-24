@@ -5,6 +5,7 @@
 #include "core/layout/ng/inline/ng_inline_node_data.h"
 
 #include "core/layout/ng/inline/ng_offset_mapping_result.h"
+#include "core/layout/ng/inline/ng_physical_text_fragment.h"
 
 namespace blink {
 

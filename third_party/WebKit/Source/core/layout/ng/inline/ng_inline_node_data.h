@@ -13,6 +13,7 @@ namespace blink {
 
 class LayoutBox;
 class NGOffsetMappingResult;
+class NGPhysicalTextFragment;
 
 // Data which is required for inline nodes.
 struct CORE_EXPORT NGInlineNodeData {
@@ -43,6 +44,12 @@ struct CORE_EXPORT NGInlineNodeData {
 
   // The DOM to text content offset mapping of this inline node.
   std::unique_ptr<NGOffsetMappingResult> offset_mapping_;
+
+  // The PhysicalTextFragments sorted in DOM order.
+  // We can store raw pointers here, because this vector is constructed after
+  // layout, and be accessed only with clean layout.
+  Vector<const NGPhysicalTextFragment*> text_fragments_;
+  bool fragments_collected_ = false;
 
   // next_sibling_ is only valid after NGInlineNode::PrepareLayout is called.
   // Calling NGInlineNode::NextSibling will trigger this.
