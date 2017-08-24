@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86982e92_9f7da5c1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/permissions/MediaTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-24T16:14:18Z",
+      "side": 1,
+      "message": "Nit: \"creates\"",
+      "range": {
+        "startLine": 73,
+        "startChar": 48,
+        "endLine": 73,
+        "endChar": 54
+      },
+      "revId": "773414401467959118a0e77baa07b0da8df0449c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1edba670_3df0e788",
+        "filename": "chrome/browser/permissions/permission_dialog_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-24T16:14:18Z",
+      "side": 1,
+      "message": "I think you can ditch this include now.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 61
+      },
+      "revId": "773414401467959118a0e77baa07b0da8df0449c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "609e212a_7660111e",
+        "filename": "chrome/browser/permissions/permission_queue_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-08-24T16:14:18Z",
+      "side": 1,
+      "message": "You could remove this method now I think, though this whole class is disappearing soon enough anyway.",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 6
+      },
+      "revId": "773414401467959118a0e77baa07b0da8df0449c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
