@@ -28,10 +28,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// https://wicg.github.io/entries-api/#html-forms
+#ifndef DataTransferItemFileSystem_h
+#define DataTransferItemFileSystem_h
 
-[
-    RuntimeEnabled=FileSystem
-] partial interface HTMLInputElement {
-    [CallWith=ScriptState, Measure] readonly attribute FrozenArray<Entry> webkitEntries;
+#include "platform/heap/Handle.h"
+#include "platform/wtf/Allocator.h"
+
+namespace blink {
+
+class DataTransferItem;
+class FileSystemEntry;
+class ScriptState;
+
+class DataTransferItemFileSystem {
+  STATIC_ONLY(DataTransferItemFileSystem);
+
+ public:
+  static FileSystemEntry* webkitGetAsEntry(ScriptState*, DataTransferItem&);
 };
+
+}  // namespace blink
+
+#endif  // DataTransferItemFileSystem_h
