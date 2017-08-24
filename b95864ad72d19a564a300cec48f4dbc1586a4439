@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aea2955d_3bc86878",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/webp/WEBPImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-08-24T17:41:15Z",
+      "side": 1,
+      "message": "I was tempted to add a DCHECK here. It would look something like:\n\n#ifdef DCHECK\n  const char* segment;\n  GetSomeData(segment, 0);\n  DCHECK_NE(consolidated_data_-\u003edata(), segment);\n#endif",
+      "range": {
+        "startLine": 197,
+        "startChar": 66,
+        "endLine": 197,
+        "endChar": 76
+      },
+      "revId": "b95864ad72d19a564a300cec48f4dbc1586a4439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
