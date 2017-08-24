@@ -22,6 +22,30 @@
       "revId": "fc04ddfbf8c48e8eea107c12c16bcb2681231e9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59872e67_546f1858",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-24T20:50:11Z",
+      "side": 1,
+      "message": "Maybe a TODO comment. Someone else is more likely to see a comment than this review note (optional)",
+      "parentUuid": "b83418de_2e192d07",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "fc04ddfbf8c48e8eea107c12c16bcb2681231e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
