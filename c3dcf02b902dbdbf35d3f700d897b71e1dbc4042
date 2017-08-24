@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "bd1c8877_0d886ade",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintWorklet.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-24T16:22:11Z",
+      "side": 1,
+      "message": "You can use PaintWorklet::From(ToLocalDOMWindow(script_state-\u003eGetContext())).",
+      "revId": "c3dcf02b902dbdbf35d3f700d897b71e1dbc4042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc90665b_7ac9bbef",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintWorklet.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-24T16:22:11Z",
+      "side": 1,
+      "message": "Do we need this method?",
+      "revId": "c3dcf02b902dbdbf35d3f700d897b71e1dbc4042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef1a7090_65db4ec6",
         "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintWorklet.h",
         "patchSetId": 5
@@ -42,6 +76,23 @@
         "endLine": 1,
         "endChar": 17
       },
+      "revId": "c3dcf02b902dbdbf35d3f700d897b71e1dbc4042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2d805d_46a116a7",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintWorklet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-24T16:22:11Z",
+      "side": 1,
+      "message": "Add STATIC_ONLY",
       "revId": "c3dcf02b902dbdbf35d3f700d897b71e1dbc4042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
