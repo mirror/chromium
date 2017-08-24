@@ -573,8 +573,11 @@ class CHROMEOS_EXPORT CryptohomeClient : public DBusClient {
   // status flag indicating the completion.
   // MigrateToDircrypto attempts to migrate the home dir to the new "dircrypto"
   // encryption.
+  // If |minimal_migration| is true, cryptohomed will perform a minimal
+  // migration (preserving only vital profile data).
   virtual void MigrateToDircrypto(
       const cryptohome::Identification& cryptohome_id,
+      bool minimal_migration,
       VoidDBusMethodCallback callback) = 0;
 
   // Asynchronously calls RemoveFirmwareManagementParameters method. |callback|

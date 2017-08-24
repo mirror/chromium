@@ -18,7 +18,8 @@ class EncryptionMigrationScreen
     : public BaseScreen,
       public EncryptionMigrationScreenView::Delegate {
  public:
-  using ContinueLoginCallback = base::OnceCallback<void(const UserContext&)>;
+  using ContinueLoginCallback =
+      base::OnceCallback<void(const UserContext&, bool)>;
 
   EncryptionMigrationScreen(BaseScreenDelegate* base_screen_delegate,
                             EncryptionMigrationScreenView* view);
