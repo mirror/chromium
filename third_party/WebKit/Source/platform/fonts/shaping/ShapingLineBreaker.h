@@ -15,6 +15,7 @@ namespace blink {
 class Font;
 class ShapeResult;
 class HarfBuzzShaper;
+class Hyphenation;
 class LazyLineBreakIterator;
 enum class LineBreakType;
 template <typename TextContainerType>
@@ -38,18 +39,38 @@ class PLATFORM_EXPORT ShapingLineBreaker final {
                      const Font*,
                      const ShapeResult*,
                      const LazyLineBreakIterator*,
-                     ShapeResultSpacing<String>* = nullptr);
+                     ShapeResultSpacing<String>* = nullptr,
+                     const Hyphenation* = nullptr);
   ~ShapingLineBreaker() {}
+
+  struct Result {
+    STACK_ALLOCATED();
+    unsigned break_offset;
+    bool is_hyphenated;
+    bool has_hanging_spaces;
+  };
 
   // Shapes a line of text by finding a valid and appropriate break opportunity
   // based on the shaping results for the entire paragraph.
   // The output parameter breakOffset indicates the resulting break offset.
   PassRefPtr<ShapeResult> ShapeLine(unsigned start_offset,
                                     LayoutUnit available_space,
-                                    unsigned* break_offset,
-                                    bool* has_hanging_spaces_out = nullptr);
+                                    Result* result_out);
 
  private:
+  const String& GetText() const;
+
+  unsigned PreviousBreakOpportunity(unsigned offset,
+                                    unsigned start,
+                                    bool* is_hyphenated);
+  unsigned NextBreakOpportunity(unsigned offset,
+                                unsigned start,
+                                bool* is_hyphenated);
+  unsigned Hyphenate(unsigned offset,
+                     unsigned start,
+                     bool backwards,
+                     bool* is_hyphenated);
+
   PassRefPtr<ShapeResult> Shape(TextDirection, unsigned start, unsigned end);
   PassRefPtr<ShapeResult> ShapeToEnd(unsigned start,
                                      LayoutUnit start_position,
@@ -59,10 +80,10 @@ class PLATFORM_EXPORT ShapingLineBreaker final {
   const Font* font_;
   const ShapeResult* result_;
   const LazyLineBreakIterator* break_iterator_;
-  String text_;
   // TODO(kojii): ShapeResultSpacing is not const because it's stateful when it
   // has expansions. Split spacing and expansions to make this const.
   ShapeResultSpacing<String>* spacing_;
+  const Hyphenation* hyphenation_;
 };
 
 }  // namespace blink
