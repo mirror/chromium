@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "8adaca51_386dbcec",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-24T18:01:50Z",
+      "side": 1,
+      "message": "nit: rename the variable name to lock? according to the style guide: name should avoid abbreviation. (https://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead#General_Naming_Rules)",
+      "revId": "dd12f215318cb52805026efa914479461eeb0f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f77c92bd_98fedc00",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-24T18:01:50Z",
+      "side": 1,
+      "message": "The same as Justin\u0027s comment below. Does std::move cause any problem to get id()?",
+      "revId": "dd12f215318cb52805026efa914479461eeb0f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a2954ff_f0182256",
         "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.cc",
         "patchSetId": 3
@@ -13,6 +47,23 @@
       "writtenOn": "2017-08-24T17:08:01Z",
       "side": 1,
       "message": "Is the ordering of std::move() vs printer-\u003eid() well defined here?  (I don\u0027t think it is?)",
+      "revId": "dd12f215318cb52805026efa914479461eeb0f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da49d698_fd3306b8",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-08-24T18:01:50Z",
+      "side": 1,
+      "message": "nit: Stores\nAnd other function comments in the same file. (Should be descriptive rather than imperative)",
       "revId": "dd12f215318cb52805026efa914479461eeb0f4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
