@@ -329,6 +329,30 @@
       "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59064c6a_2b12e88c",
+        "filename": "ui/base/cocoa/hover_button_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-24T16:36:53Z",
+      "side": 1,
+      "message": "Generally when returning arrays, AppKit does [[array copy] autorelease] so that it can\u0027t be mutated, if it were backed by a mutable array.",
+      "parentUuid": "94c224de_c5d03e72",
+      "range": {
+        "startLine": 123,
+        "startChar": 66,
+        "endLine": 123,
+        "endChar": 71
+      },
+      "revId": "41ce6e419e09eeee2bc0285650665516b6396420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
