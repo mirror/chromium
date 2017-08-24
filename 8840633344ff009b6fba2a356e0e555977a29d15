@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eca729a_945f0953",
+        "filename": "base/process/launch.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T00:00:00Z",
+      "side": 1,
+      "message": "There is no concept of \"set\" or \"not set\" now. :)\n\nRather than describing the zero and default cases, how about just saying \"see \u003cmagenta/processargs.h\u003e for valid flags\" (or whatever the correct header is)?",
+      "revId": "8840633344ff009b6fba2a356e0e555977a29d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
