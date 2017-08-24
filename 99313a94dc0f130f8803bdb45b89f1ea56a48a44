@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57e77c6d_d1d7945c",
+        "filename": "components/offline_pages/core/archive_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-24T21:43:43Z",
+      "side": 1,
+      "message": "nit: This could use DISALLOW_COPY_AND_ASSIGN",
+      "revId": "99313a94dc0f130f8803bdb45b89f1ea56a48a44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
