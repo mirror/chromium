@@ -140,6 +140,10 @@ management::ExtensionInfo CreateExtensionInfo(
     if (prefs->DidExtensionEscalatePermissions(extension.id())) {
       info.disabled_reason =
           management::EXTENSION_DISABLED_REASON_PERMISSIONS_INCREASE;
+    } else if (prefs->HasDisableReason(
+                   extension.id(), disable_reason::DISABLE_BLOCKED_BY_POLICY)) {
+      info.disabled_reason =
+          management::EXTENSION_DISABLED_REASON_BLOCKED_BY_POLICY;
     } else {
       info.disabled_reason = management::EXTENSION_DISABLED_REASON_UNKNOWN;
     }
