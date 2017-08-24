@@ -2,10 +2,12 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//ios/build/config.gni")
 import("//build/buildflag_header.gni")
 import("//build/config/features.gni")
 import("//build/config/ios/rules.gni")
 import("//rlz/features/features.gni")
+import("//testing/test.gni")
 import("//third_party/protobuf/proto_library.gni")
 
 source_set("chrome_paths") {
@@ -195,6 +197,7 @@ source_set("browser_impl") {
     "//ios/web/public/app",
     "//net",
     "//rlz/features",
+    "//third_party/google_toolbox_for_mac",
     "//ui/base",
   ]
 
