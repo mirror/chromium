@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d813469_9989a912",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 7274,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-24T15:12:01Z",
+      "side": 1,
+      "message": "Please use \u003cobsolete\u003e tag instead.",
+      "range": {
+        "startLine": 7274,
+        "startChar": 16,
+        "endLine": 7274,
+        "endChar": 20
+      },
+      "revId": "00871998a3cd74960eab213f004e56265b7c9ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
