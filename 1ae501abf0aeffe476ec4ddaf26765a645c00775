@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9740fcb2_0db53e47",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3739,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T00:52:12Z",
+      "side": 1,
+      "message": "Note: I added this here and below, for consistency with the above two tests (not relevant to the GetRunListDebugString change).",
+      "revId": "1ae501abf0aeffe476ec4ddaf26765a645c00775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

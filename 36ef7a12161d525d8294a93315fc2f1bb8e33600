@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0cc41137_53cf88b8",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T00:52:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d612748_7fb73860",
+      "revId": "36ef7a12161d525d8294a93315fc2f1bb8e33600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09481c55_5687d61d",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "36ef7a12161d525d8294a93315fc2f1bb8e33600",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3590251f_fff1e067",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T00:52:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09481c55_5687d61d",
+      "revId": "36ef7a12161d525d8294a93315fc2f1bb8e33600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "74100616_646a86a2",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3725,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T00:52:12Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t actually notice what that line was doing. Do you think I should remove the following line then? (It\u0027s kind of redundant.)\n\nTechnically these are testing slightly different code paths; GetRuns uses GetFontSpansForTesting, which conditionally uses UTF16OffsetToIndex and apparently in this case that does nothing (from my brief testing); ultimately this just returns the run ranges. The only thing RunListDebugString adds is testing reordering due to RTL characters (as well as showing the directionality of the runs), which is important in the above tests, but not here.\n\nThe previous code that explicitly tests the 3 ranges doesn\u0027t actually test anything that GetRuns() isn\u0027t testing.\n\nOh well, leaving this for now, since redundancy doesn\u0027t hurt in a test.",
+      "parentUuid": "72568f06_6d66588f",
+      "revId": "36ef7a12161d525d8294a93315fc2f1bb8e33600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f78a1207_6cd2fcfe",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "36ef7a12161d525d8294a93315fc2f1bb8e33600",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8eeb55e_257d1c8f",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3744,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T00:52:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f78a1207_6cd2fcfe",
+      "revId": "36ef7a12161d525d8294a93315fc2f1bb8e33600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
