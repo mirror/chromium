@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37b4fc37_687f8859",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-24T15:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ff3329d_78797e12",
+      "range": {
+        "startLine": 138,
+        "startChar": 33,
+        "endLine": 138,
+        "endChar": 50
+      },
+      "revId": "5395a1f9db57159a7f8a3951f2135ffad1cc2b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b2f4e21_c632ce03",
         "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c2df3d24_704cc2ec",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-24T15:55:38Z",
+      "side": 1,
+      "message": "Changed the call above to ALLOW.",
+      "parentUuid": "1b2f4e21_c632ce03",
+      "range": {
+        "startLine": 507,
+        "startChar": 37,
+        "endLine": 507,
+        "endChar": 58
+      },
+      "revId": "5395a1f9db57159a7f8a3951f2135ffad1cc2b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efa3501e_fd25af1c",
         "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "5395a1f9db57159a7f8a3951f2135ffad1cc2b16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad466f1_c41b1410",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-08-24T15:55:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efa3501e_fd25af1c",
+      "range": {
+        "startLine": 390,
+        "startChar": 25,
+        "endLine": 390,
+        "endChar": 46
+      },
+      "revId": "5395a1f9db57159a7f8a3951f2135ffad1cc2b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
