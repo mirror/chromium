@@ -10,12 +10,14 @@
 #include <unistd.h>
 
 #include "base/command_line.h"
+#include "base/fuchsia/child_job.h"
 #include "base/logging.h"
 
 namespace base {
 
 namespace {
 
+// TODO(crbug.com/758683): Replace this with a call to LaunchProcess().
 bool GetAppOutputInternal(const std::vector<std::string>& argv,
                           bool include_stderr,
                           std::string* output,
@@ -29,7 +31,7 @@ bool GetAppOutputInternal(const std::vector<std::string>& argv,
   argv_cstr.push_back(nullptr);
 
   launchpad_t* lp;
-  launchpad_create(MX_HANDLE_INVALID, argv_cstr[0], &lp);
+  launchpad_create(GetDefaultJob(), argv_cstr[0], &lp);
   launchpad_load_from_file(lp, argv_cstr[0]);
   launchpad_set_args(lp, argv.size(), argv_cstr.data());
   launchpad_clone(lp, LP_CLONE_MXIO_NAMESPACE | LP_CLONE_MXIO_CWD |
@@ -90,7 +92,14 @@ Process LaunchProcess(const std::vector<std::string>& argv,
   // status is tracked in the launchpad_t object, and launchpad_go() reports on
   // the final status, and cleans up |lp| (assuming it was even created).
   launchpad_t* lp;
-  launchpad_create(options.job_handle, argv_cstr[0], &lp);
+  mx_handle_t job = options.job_handle != MX_HANDLE_INVALID ? options.job_handle
+                                                            : GetDefaultJob();
+  if (job == MX_HANDLE_INVALID) {
+    LOG(ERROR) << "Can't launch a process with an invalid job handle.";
+    return Process();
+  }
+
+  launchpad_create(job, argv_cstr[0], &lp);
   launchpad_load_from_file(lp, argv_cstr[0]);
   launchpad_set_args(lp, argv.size(), argv_cstr.data());
 
@@ -107,6 +116,20 @@ Process LaunchProcess(const std::vector<std::string>& argv,
     environ_modifications["PWD"] = options.current_directory.value();
   } else {
     to_clone |= LP_CLONE_MXIO_CWD;
+  }
+
+  if (to_clone & LP_CLONE_DEFAULT_JOB) {
+    // Override Fuchsia's built in default job cloning behavior with our own
+    // logic which uses |job| instead of mx_job_default().
+    mx_handle_t job_duplicate;
+    mx_status_t status =
+        mx_handle_duplicate(job, MX_RIGHT_SAME_RIGHTS, &job_duplicate);
+    if (status != MX_OK) {
+      LOG(ERROR) << "Couldn't duplicate job handle, reason: " << status;
+      return Process();
+    }
+    launchpad_add_handle(lp, job_duplicate, PA_HND(PA_JOB_DEFAULT, 0));
+    to_clone &= ~LP_CLONE_DEFAULT_JOB;
   }
 
   if (!environ_modifications.empty())
