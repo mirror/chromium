@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de14d4e2_43340450",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T11:07:02Z",
+      "side": 1,
+      "message": "Since we take anyway the 1st password fields, I think we could remove this words.",
+      "range": {
+        "startLine": 241,
+        "startChar": 46,
+        "endLine": 241,
+        "endChar": 56
+      },
+      "revId": "032e4c8afeecfa55e299e1fdfc39077fe0d80039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17fcb8ac_8e0938c1",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T11:07:02Z",
+      "side": 1,
+      "message": "Usually bugs are mentioned only for todo. Since it\u0027s going to be implemented soon, it\u0027s better to remove link to bug.",
+      "range": {
+        "startLine": 242,
+        "startChar": 50,
+        "endLine": 242,
+        "endChar": 68
+      },
+      "revId": "032e4c8afeecfa55e299e1fdfc39077fe0d80039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec54c77_f1aa254d",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T11:07:02Z",
+      "side": 1,
+      "message": "Nit: WebFormControlElement\u0026 or event better to remove this variable at all.",
+      "range": {
+        "startLine": 349,
+        "startChar": 10,
+        "endLine": 349,
+        "endChar": 31
+      },
+      "revId": "032e4c8afeecfa55e299e1fdfc39077fe0d80039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15500007_756e970f",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T11:07:02Z",
+      "side": 1,
+      "message": "Some part of this method looks like duplicating of lines 490-600. Wouldn\u0027t it be better to fill |passwords_without_heuristics| (or something like that)  immediately in lines 490-600 (and in that case it would be apparent what\u0027s the difference between with and without heuristics.",
+      "range": {
+        "startLine": 402,
+        "startChar": 4,
+        "endLine": 402,
+        "endChar": 39
+      },
+      "revId": "032e4c8afeecfa55e299e1fdfc39077fe0d80039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a8c625_3f4adf61",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T11:07:02Z",
+      "side": 1,
+      "message": "Nit: WebFormControlElement\u0026 or event better to remove this variable control_element at all.",
+      "range": {
+        "startLine": 417,
+        "startChar": 4,
+        "endLine": 418,
+        "endChar": 79
+      },
+      "revId": "032e4c8afeecfa55e299e1fdfc39077fe0d80039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f3d547_ca58eebb",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-24T11:07:02Z",
+      "side": 1,
+      "message": "What could be these reasons? I see only when there are only credit card fields. If this is the only option, please add this in comment.",
+      "range": {
+        "startLine": 605,
+        "startChar": 0,
+        "endLine": 608,
+        "endChar": 40
+      },
+      "revId": "032e4c8afeecfa55e299e1fdfc39077fe0d80039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
