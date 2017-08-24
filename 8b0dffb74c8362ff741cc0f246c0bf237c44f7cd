@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c84491f9_1b7e39ea",
+        "filename": "extensions/browser/api/alarms/alarms_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-24T16:21:45Z",
+      "side": 1,
+      "message": "We can remove this now, yes?  (For most of the files here that include it, unless they use WrapUnique)",
+      "revId": "8b0dffb74c8362ff741cc0f246c0bf237c44f7cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
