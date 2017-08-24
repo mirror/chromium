@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f3f2555_db356945",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T07:43:26Z",
+      "side": 1,
+      "message": "Could this be UMA_HISTOGRAM_SPARSE_SLOWLY, so that you don\u0027t need to preallocate 100 buckets, most of which will typically be unused?",
+      "range": {
+        "startLine": 295,
+        "startChar": 2,
+        "endLine": 295,
+        "endChar": 28
+      },
+      "revId": "8aab8d128879330df84bb87efd3c42ce4084a86f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
