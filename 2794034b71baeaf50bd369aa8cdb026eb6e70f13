@@ -22,6 +22,30 @@
       "revId": "2794034b71baeaf50bd369aa8cdb026eb6e70f13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e415ab_68124551",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 100896,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-24T12:37:53Z",
+      "side": 1,
+      "message": "Oh cool, I didn\u0027t realize that. Done.",
+      "parentUuid": "a7673d1e_c8132d83",
+      "range": {
+        "startLine": 100896,
+        "startChar": 15,
+        "endLine": 100896,
+        "endChar": 0
+      },
+      "revId": "2794034b71baeaf50bd369aa8cdb026eb6e70f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
