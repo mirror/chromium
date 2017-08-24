@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "7a112c10_dbdcda69",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-24T13:04:45Z",
+      "side": 1,
+      "message": "So we discussed the need to call super.onMeasure offline, add a bit more doc to detail that initialisation of children? Mention that the pages need to be populated for example.",
+      "parentUuid": "1253bddc_7d693174",
+      "range": {
+        "startLine": 30,
+        "startChar": 14,
+        "endLine": 30,
+        "endChar": 23
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6147cb3b_0edc828d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
         "patchSetId": 1
