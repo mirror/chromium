@@ -804,6 +804,17 @@ TEST_F(StructTraitsTest, QuadListBasic) {
   EXPECT_EQ(matrix, out_stream_video_draw_quad->matrix);
 }
 
+TEST_F(StructTraitsTest, SurfaceId) {
+  static constexpr FrameSinkId frame_sink_id(1337, 1234);
+  static LocalSurfaceId local_surface_id(0xfbadbeef,
+                                         base::UnguessableToken::Create());
+  SurfaceId input(frame_sink_id, local_surface_id);
+  SurfaceId output;
+  SerializeAndDeserialize<mojom::SurfaceId>(input, &output);
+  EXPECT_EQ(frame_sink_id, output.frame_sink_id());
+  EXPECT_EQ(local_surface_id, output.local_surface_id());
+}
+
 TEST_F(StructTraitsTest, TransferableResource) {
   const uint32_t id = 1337;
   const ResourceFormat format = ALPHA_8;
