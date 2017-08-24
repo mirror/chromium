@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9a31ccf_44895915",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T13:49:28Z",
+      "side": 1,
+      "message": "No new blank line.",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e3687d_97f3c45e",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T13:49:28Z",
+      "side": 1,
+      "message": "Please restore the original comment.",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a02059ec_30e0a80b",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T13:49:28Z",
+      "side": 1,
+      "message": "Thanks for fixing the incorrect lower-case!",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a12236_2204a3e8",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T13:49:28Z",
+      "side": 1,
+      "message": "I think this save/restore can now be removed, and you can put the scale() operation right before the icon\u0027s translate() call.",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b1c229a_dca25d73",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T13:49:28Z",
+      "side": 1,
+      "message": "I think this should go away, since there is no need to dynamically position anything on this texture.  IF you define kIconFieldWidth, the icon can be drawn at half that width, and the URL can start at the width.  We should always be drawing an icon in this scenario, and if for some short time at init there\u0027s no icon, we can still leave space for it.  Thoughts?",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d3c539_97f4e667",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T13:49:28Z",
+      "side": 1,
+      "message": "Are you sure you want to maintain offline page support (here and elsewhere)?  We don\u0027t show the security text, so it\u0027s a half-implementation anyway.  And from the sound of it, we might be okay to drop https:// unconditionally anyway.",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79631717_d7731960",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T13:49:28Z",
+      "side": 1,
+      "message": "I think RenderUrlHelper should set *mode always, meaning no initialization is needed here (it\u0027s misleading).",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ffbb039_a6ad9bb8",
+        "filename": "chrome/browser/vr/vr_url_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T13:49:28Z",
+      "side": 1,
+      "message": "I think we should set failure_reason to kCount here to be safe.",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
