@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e5240ef_1a68af7c",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-08-24T05:56:12Z",
+      "side": 1,
+      "message": "I\u0027m confused why you mentioned memset. Did you mean memmove instead?",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20c504d4_34978136",
+        "filename": "third_party/zlib/contrib/arm/inffast.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-08-24T05:56:12Z",
+      "side": 1,
+      "message": "FYI in https://chromium-review.googlesource.com/c/chromium/src/+/601694 I found significant improvement in loading the bits 8 bytes at a time instead of 1 byte at a time. This optimization is similar to but independent of the 8 byte or 16 byte wider load / stores when resolving a length-distance pair (a copy).\n\n601694 is also not ARM-specific, and applies to x86_64 too.",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a788724_acbea8a5",
+        "filename": "third_party/zlib/contrib/arm/inflate.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-08-24T05:56:12Z",
+      "side": 1,
+      "message": "Is there a summary somewhere of how this inflate.c differs from the top level inflate.c?",
+      "revId": "d5647488215d0ffabb9fd5a7a4fb1c0a8bb4d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
