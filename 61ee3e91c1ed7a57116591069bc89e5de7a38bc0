@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bc36c20_c170066a",
+        "filename": "cc/test/layer_tree_pixel_resource_test.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-24T23:29:50Z",
+      "side": 1,
+      "message": "This test case becomes identical to GL_ZERO_COPY_2D_DRAW. Are we losing coverage, or were they essentially identical before?",
+      "revId": "61ee3e91c1ed7a57116591069bc89e5de7a38bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b36adaa_016bce14",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_texture_buffer.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-24T23:29:50Z",
+      "side": 1,
+      "message": "So, I would actually prefer a new entrypoint, e.g. glTexStorage2DImageCHROMIUM(target, width, height, internalformat, buffer_usage)\n\nThe reason is 2-fold:\n1- TexParameter* is meant to change properties of the textures even after the images are set. As is, it is a special case in that the value is only looked at when creating the texture (and if we\u0027re not careful it could cause issues, because we still accept TexParameter(..., TEXTURE_BUFFER_USAGE_CHROMIUM, ...) calls after the TexStorage2D\n2- in the implementation it takes a completely different path anyway, might as well do a different function.\n\nWDYT?",
+      "revId": "61ee3e91c1ed7a57116591069bc89e5de7a38bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2faf1d6d_f05dea94",
+        "filename": "gpu/GLES2/extensions/CHROMIUM/CHROMIUM_texture_buffer.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-24T23:29:50Z",
+      "side": 1,
+      "message": "note: that\u0027s not checked... should we? Should we specify the error if it\u0027s not?",
+      "revId": "61ee3e91c1ed7a57116591069bc89e5de7a38bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
