@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d108218_62311ad8",
+        "filename": "chrome/browser/extensions/tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-24T11:03:33Z",
+      "side": 1,
+      "message": "Nit: I think you can remove the above two lines",
+      "revId": "a2a7c86caba70013915479aafbc328b168742faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f49c54_8924996b",
+        "filename": "chrome/browser/extensions/tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-24T11:03:33Z",
+      "side": 1,
+      "message": "Nit: and this",
+      "revId": "a2a7c86caba70013915479aafbc328b168742faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
