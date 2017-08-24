@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "90c53d18_34b1cfbe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-24T18:37:15Z",
+      "side": 1,
+      "message": "Done, this happened post upload.",
+      "parentUuid": "9ddc3f92_232dc731",
+      "revId": "41c5ddf7b6b454306f2e98a85b99522f61858f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cb13396_73ebb5a7",
         "filename": "chrome/browser/extensions/api/bookmark_manager_private/bookmark_manager_private_api.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "41c5ddf7b6b454306f2e98a85b99522f61858f98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2908239_d8fd3748",
+        "filename": "chrome/browser/extensions/api/bookmark_manager_private/bookmark_manager_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-24T18:37:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cb13396_73ebb5a7",
+      "revId": "41c5ddf7b6b454306f2e98a85b99522f61858f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
