@@ -140,6 +140,13 @@ class ContentSubresourceFilterThrottleManager
   void OnActivationThrottleDestroyed(
       content::NavigationHandle* navigation_handle);
 
+  // Adds the navigation's RenderFrameHost to activated_frame_hosts_ if it is a
+  // special navigation which did not go through navigation throttles and its
+  // parent frame is activated as well. The filter for these navigations is set
+  // to nullptr.
+  void MaybeActivateSubframeSpecialUrls(
+      content::NavigationHandle* navigation_handle);
+
   // For each RenderFrameHost where the last committed load has subresource
   // filtering activated, owns the corresponding AsyncDocumentSubresourceFilter.
   std::unordered_map<content::RenderFrameHost*,
