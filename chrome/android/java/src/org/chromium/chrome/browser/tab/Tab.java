@@ -19,7 +19,6 @@ import android.provider.Browser;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
@@ -2023,7 +2022,6 @@ public class Tab
     @CalledByNative
     public boolean loadIfNeeded() {
         if (getActivity() == null) {
-            Log.e(TAG, "Tab couldn't be loaded because Context was null.");
             return false;
         }
 

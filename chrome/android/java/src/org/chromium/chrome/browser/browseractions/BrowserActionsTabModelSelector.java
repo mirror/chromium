@@ -48,7 +48,7 @@ public class BrowserActionsTabModelSelector
 
     /** This flag signifies the object has gotten an onNativeReady callback and
     /* has not been destroyed. */
-    private boolean mActiveState;
+    private static boolean sActiveState;
 
     /**
      * Builds a {@link BrowserActionsTabModelSelector} instance.
@@ -85,6 +85,14 @@ public class BrowserActionsTabModelSelector
         return sInstance;
     }
 
+    /**
+     * @return The {@link BrowserActionsTabModelSelector} if it has been initialized.
+     */
+    public static BrowserActionsTabModelSelector getInstanceIfActive() {
+        if (sActiveState && sInstance != null) return sInstance;
+        return null;
+    }
+
     @Override
     public void markTabStateInitialized() {
         super.markTabStateInitialized();
@@ -105,7 +113,7 @@ public class BrowserActionsTabModelSelector
      * Initializes the selectors for the {@link BrowserActionsTabModelSelector}.
      */
     public void initializeSelector() {
-        assert !mActiveState : "onNativeLibraryReady called twice!";
+        assert !sActiveState : "onNativeLibraryReady called twice!";
         BrowserActionsTabCreator regularTabCreator =
                 (BrowserActionsTabCreator) mTabCreatorManager.getTabCreator(false);
         BrowserActionsTabCreator incognitoTabCreator =
@@ -116,13 +124,18 @@ public class BrowserActionsTabModelSelector
                 new IncognitoTabModel(new IncognitoTabModelImplCreator(regularTabCreator,
                         incognitoTabCreator, null, mOrderController, null, mTabSaver, this));
         initialize(isIncognitoSelected(), normalModel, incognitoModel);
-        mActiveState = true;
+        sActiveState = true;
         TabModelObserver tabModelObserver = new EmptyTabModelObserver() {
             @Override
             public void didAddTab(Tab tab, TabLaunchType type) {
                 if (type == TabLaunchType.FROM_BROWSER_ACTIONS) {
                     notifyNewTabCreated(tab);
                 }
+            }
+
+            @Override
+            public void tabRemoved(Tab tab) {
+                mTabSaver.addTabToSaveQueue(null);
             }
         };
         normalModel.addObserver(tabModelObserver);
@@ -132,7 +145,7 @@ public class BrowserActionsTabModelSelector
      * @return Whether the selector has been initialized.
      */
     public boolean isActiveState() {
-        return mActiveState;
+        return sActiveState;
     }
 
     private void notifyNewTabCreated(Tab tab) {
@@ -197,7 +210,7 @@ public class BrowserActionsTabModelSelector
     @Override
     @VisibleForTesting
     protected void clearData() {
-        mActiveState = false;
+        sActiveState = false;
         sInstance = null;
         super.clearData();
     }
