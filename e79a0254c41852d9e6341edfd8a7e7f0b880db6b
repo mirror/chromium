@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e2e9210_c53dc304",
+        "filename": "chrome/browser/plugins/pdf_plugin_placeholder_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-24T21:34:28Z",
+      "side": 1,
+      "message": "This can also be #if ed out for ENABLE_PLUGINS",
+      "revId": "e79a0254c41852d9e6341edfd8a7e7f0b880db6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b6d4c5_86e868bd",
+        "filename": "chrome/browser/plugins/pdf_plugin_placeholder_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-24T21:34:28Z",
+      "side": 1,
+      "message": "nitpick, but maybe we can add some a new line before and after to improve readability? experiment a bit to make it the least confusing for a reader.",
+      "revId": "e79a0254c41852d9e6341edfd8a7e7f0b880db6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
