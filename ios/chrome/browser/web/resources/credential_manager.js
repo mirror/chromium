@@ -110,21 +110,92 @@ function Credential() {
  * PasswordCredential interace, for more information see
  * https://w3c.github.io/webappsec-credential-management/#passwordcredential-interface
  * @extends {Credential}
+ * @param {PasswordCredentialInit} init Either a PasswordCredentialData or
+ *     HTMLFormElement to create PasswordCredential from.
  * @constructor
  */
-// TODO(crbug.com/435046) Implement two constructors: from
-// HTMLFormElement and from PasswordCredentialData
-function PasswordCredential() {
+function PasswordCredential(init) {
+  /** @type {!PasswordCredentialData} */
+  var data;
+  var formData;
+  var elements;
+  var elementIndex;
+  var newPasswordObserved;
+  var field;
+  var name;
+  var autocompleteTokens;
+  var token;
+  var tokenIndex;
+
+  if (init instanceof HTMLFormElement) {
+    // Performs following steps:
+    // https://www.w3.org/TR/credential-management-1/#abstract-opdef-create-a-passwordcredential-from-an-htmlformelement
+    data = /** @type {!PasswordCredentialData} */ ({});
+    formData = /** @type {?} */ (new FormData(init));
+    elements = init.querySelectorAll( // all submittable elements
+        'button, input, object, select, textarea');
+    newPasswordObserved = false;
+    for (elementIndex = 0; elementIndex < elements.length; elementIndex++) {
+      field = elements.item(elementIndex);
+      if (!field.hasAttribute('autocomplete')) {
+        continue;
+      }
+      name = field.name;
+      if (!formData.has(name)) {
+        continue;
+      }
+      autocompleteTokens = field.getAttribute('autocomplete').split();
+      for (tokenIndex = 0; tokenIndex < autocompleteTokens.length;
+          tokenIndex++) {
+        token = autocompleteTokens[tokenIndex];
+        if (token.toLowerCase() === 'new-password') {
+          data.password = formData.get(name);
+          newPasswordObserved = true;
+        }
+        if (token.toLowerCase() === 'current-password') {
+          if (!newPasswordObserved) {
+            data.password = formData.get(name);
+          }
+        }
+        if (token.toLowerCase() === 'photo') {
+          data.iconURL = formData.get(name);
+        }
+        if (token.toLowerCase() === 'name') {
+          data.name = formData.get(name);
+        }
+        if (token.toLowerCase() === 'nickname') {
+          data.name = formData.get(name);
+        }
+        if (token.toLowerCase() === 'username') {
+          data.id = formData.get(name);
+        }
+      }
+    }
+  } else {
+    // |init| was not HTMLFormElement so assuming it is PasswordCredentialData.
+    // Not checking with instanceof because any dictionary with required fields
+    // should be accepted.
+    data = /** @type {!PasswordCredentialData} */ (init);
+  }
+
+  // Perform following steps:
+  // https://w3c.github.io/webappsec-credential-management/#abstract-opdef-create-a-passwordcredential-from-passwordcredentialdata
+  if (!data.id) {
+    throw new TypeError('id must be a non-empty string');
+  }
+  if (!data.password) {
+    throw new TypeError('password must be a non-empty string');
+  }
   /** @type {string} */
-  this.id;
+  this.id = data.id;
   /** @type {string} */
-  this.type;
+  this.type = 'PasswordCredential';
   /** @type {string} */
-  this.name;
+  this.password = data.password;
   /** @type {string} */
-  this.iconURL;
+  this.iconURL = data.iconURL;
   /** @type {string} */
-  this.password;
+  this.name = data.name;
 }
 
 PasswordCredential.prototype = {
@@ -133,8 +204,20 @@ PasswordCredential.prototype = {
 Object.defineProperty(PasswordCredential, 'prototype', { writable: false });
 
 PasswordCredential.prototype.constructor = PasswordCredential;
-Object.defineProperty(
-    PasswordCredential.prototype, 'constructor', { enumerable: false });
+Object.defineProperties(
+  PasswordCredential.prototype,
+  {
+    'constructor': {
+      enumerable: false
+    },
+    'password': {
+      value: '' // Required for IDL tests to recognize the type as string.
+      // TODO(crbug.com/435046): IDL tests require that getting property
+      // |provider| on PasswordCredential.prototype throws TypeError. Implement
+      // getter conforming to those tests.
+    }
+  }
+);
 
 /**
  * FederatedCredential interface, for more information see
@@ -212,6 +295,14 @@ var CredentialData;
  * }}
  */
 var PasswordCredentialData;
+
+/**
+ * Either PasswordCredentialData or HTMLFormElement used for constructing
+ * a new PasswordCredential
+ * https://www.w3.org/TR/credential-management-1/#typedefdef-passwordcredentialinit
+ * @typedef {!PasswordCredentialData|HTMLFormElement}
+ */
+var PasswordCredentialInit;
 
 /**
  * FederatedCredentialInit used for constructing FederatedCredential objects
