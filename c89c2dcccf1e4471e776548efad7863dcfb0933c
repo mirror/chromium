@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "030ce33d_b90e05d2",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-24T21:36:40Z",
+      "side": 1,
+      "message": "nit: nuke the white space",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 4
+      },
+      "revId": "c89c2dcccf1e4471e776548efad7863dcfb0933c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
