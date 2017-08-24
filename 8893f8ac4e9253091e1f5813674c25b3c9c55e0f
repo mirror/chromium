@@ -16,6 +16,24 @@
       "revId": "8893f8ac4e9253091e1f5813674c25b3c9c55e0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08dc8f4e_f6acf5e4",
+        "filename": "base/task_scheduler/platform_native_worker_pool_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T01:25:07Z",
+      "side": 1,
+      "message": "We start pools one after the other. It\u0027s possible that another pool has been started and has run a task before this pool is started.\n\nAnyways, the loop below accesses the local variable |local_num_sequences_before_start| and the member |work_| which is set at the beginning of Start() and never modified after. Why would that require synchronization?",
+      "parentUuid": "71b1aae5_29555e14",
+      "revId": "8893f8ac4e9253091e1f5813674c25b3c9c55e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
