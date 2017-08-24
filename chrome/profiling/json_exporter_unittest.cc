@@ -21,6 +21,8 @@ namespace {
 
 using MemoryMap = std::vector<memory_instrumentation::mojom::VmRegionPtr>;
 
+static constexpr size_t kNoParent = static_cast<size_t>(-1);
+
 // Finds the first period_interval trace event in the given JSON trace.
 // Returns null on failure.
 const base::Value* FindFirstPeriodicInterval(const base::Value& root) {
@@ -72,6 +74,25 @@ const base::Value* FindFirstRegionWithAnyName(
   return nullptr;
 }
 
+bool IsBacktraceInList(const base::Value* backtraces,
+                       size_t id,
+                       size_t parent) {
+  for (const auto& backtrace : backtraces->GetList()) {
+    const base::Value* backtrace_id =
+        backtrace.FindKeyOfType("id", base::Value::Type::INTEGER);
+    const base::Value* backtrace_parent =
+        backtrace.FindKeyOfType("parent", base::Value::Type::INTEGER);
+
+    size_t backtrace_parent_int = kNoParent;
+    if (backtrace_parent)
+      backtrace_parent_int = backtrace_parent->GetInt();
+
+    if (backtrace_id->GetInt() == id && backtrace_parent_int == parent)
+      return true;
+  }
+  return false;
+}
+
 }  // namespace
 
 TEST(ProfilingJsonExporterTest, Simple) {
@@ -83,7 +104,9 @@ TEST(ProfilingJsonExporterTest, Simple) {
   const Backtrace* bt1 = backtrace_storage.Insert(std::move(stack1));
 
   std::vector<Address> stack2;
+  stack2.push_back(Address(1234));
   stack2.push_back(Address(9012));
+  stack2.push_back(Address(9013));
   const Backtrace* bt2 = backtrace_storage.Insert(std::move(stack2));
 
   AllocationEventSet events;
@@ -121,6 +144,20 @@ TEST(ProfilingJsonExporterTest, Simple) {
                counts->GetList()[1].GetInt() == 2) ||
               (counts->GetList()[0].GetInt() == 2 &&
                counts->GetList()[1].GetInt() == 1));
+
+  // Nodes should be a list with 4 items.
+  //   [1] => address: 1234  parent: none
+  //   [2] => address: 5678  parent: 1
+  //   [3] => address: 9012  parent: 1
+  //   [4] => address: 9013  parent: 3
+  const base::Value* nodes =
+      heaps_v2->FindPath({"allocators", "malloc", "nodes"});
+  ASSERT_TRUE(nodes);
+  EXPECT_EQ(4u, counts->GetList().size());
+  EXPECT_TRUE(IsBacktraceInList(nodes, 1, kNoParent));
+  EXPECT_TRUE(IsBacktraceInList(nodes, 2, 1));
+  EXPECT_TRUE(IsBacktraceInList(nodes, 3, 1));
+  EXPECT_TRUE(IsBacktraceInList(nodes, 4, 3));
 }
 
 TEST(ProfilingJsonExporterTest, MemoryMaps) {
