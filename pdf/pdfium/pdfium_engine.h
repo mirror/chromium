@@ -409,12 +409,6 @@ class PDFiumEngine : public PDFEngine,
   // visible, an empty rectangle is returned.
   pp::Rect GetScreenRect(const pp::Rect& rect) const;
 
-  // Highlights the given rectangle.
-  void Highlight(void* buffer,
-                 int stride,
-                 const pp::Rect& rect,
-                 std::vector<pp::Rect>* highlighted_rects);
-
   // Helper function to convert a device to page coordinates.  If the page is
   // not yet loaded, page_x and page_y will be set to 0.
   void DeviceToPage(int page_index,
