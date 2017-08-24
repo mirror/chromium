@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ff3329d_78797e12",
+        "filename": "chrome/browser/notifications/notification_permission_context_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-24T15:02:22Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the third parameter be requesting_origin again, assuming you want to test the primary case? It\u0027ll be quite unusual to get permission grants with a cross-origin embedder, though other content settings providers like policy/extensions might sometimes do that, and it may be worth testing that as well.",
+      "range": {
+        "startLine": 138,
+        "startChar": 33,
+        "endLine": 138,
+        "endChar": 50
+      },
+      "revId": "5395a1f9db57159a7f8a3951f2135ffad1cc2b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b2f4e21_c632ce03",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-24T15:02:22Z",
+      "side": 1,
+      "message": "The code above is trying to set this to BLOCK. So checking that it\u0027s still BLOCK doesn\u0027t prove it wasn\u0027t changed. Would it be easier to stick with SiteSettingSource::kDefault and ASK instead?",
+      "range": {
+        "startLine": 507,
+        "startChar": 37,
+        "endLine": 507,
+        "endChar": 58
+      },
+      "revId": "5395a1f9db57159a7f8a3951f2135ffad1cc2b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efa3501e_fd25af1c",
+        "filename": "third_party/WebKit/Source/modules/notifications/Notification.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-24T15:02:22Z",
+      "side": 1,
+      "message": "Can you add a TODO with bug number for removing this IsCrossOriginSubframe check and instead re-using the logic from NotificationPermissionContext::GetPermissionStatusInternal (since I understand that\u0027ll involve a bunch of extra work to make the Mojo connection frame-associated).",
+      "range": {
+        "startLine": 390,
+        "startChar": 25,
+        "endLine": 390,
+        "endChar": 46
+      },
+      "revId": "5395a1f9db57159a7f8a3951f2135ffad1cc2b16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
