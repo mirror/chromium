@@ -1,0 +1,197 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c313b122_2cfd2f29",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T03:33:07Z",
+      "side": 1,
+      "message": "We can\u0027t do this, since it will result in a static initializer, won\u0027t it?\n\nWe can initialize this to MX_HANDLE_INVALID, and if it is still set to that when GetDefaultJob() is called then return mx_job_default().",
+      "revId": "852d825407b611446e4d1914160c9e09d68af13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db20074_5aab7dcb",
+        "filename": "base/fuchsia/child_job.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T03:33:07Z",
+      "side": 1,
+      "message": "s/a/the, to make it clear that the handle remains owned by GetDefaultJob(), it is now a duplicate owned by the caller.\n\nThis is really the Fuchsia job that will be used to launch processes, by default, and to look them up by process-Id.",
+      "revId": "852d825407b611446e4d1914160c9e09d68af13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983b335c_28f0caf4",
+        "filename": "base/fuchsia/child_job.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T03:33:07Z",
+      "side": 1,
+      "message": "Suggest: \"Sets the default handle to use when launching processes, resolving them by Id, etc.\"\n\nIf this API accepted a base::ScopedMxHandle then it would be clear that the API takes ownership of |job|, rather than duplicating it.\n\nI don\u0027t think you need to mention the browser process using this, since this is //base and this is more generally useful to binaries that need to run child processes.",
+      "revId": "852d825407b611446e4d1914160c9e09d68af13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13903210_b9dc593c",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T03:33:07Z",
+      "side": 1,
+      "message": "This causes launchpad to use mx_job_default, so technically this should be GetDefaultJob() as well.\n\nHowever, this entire function looks like it can be replaced with a LaunchProcess call, so perhaps we can just leave a TODO here and clean that up later.",
+      "revId": "852d825407b611446e4d1914160c9e09d68af13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee850a8c_5c9f04e1",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T03:33:07Z",
+      "side": 1,
+      "message": "You\u0027ll need to check |job_handle| here, to determine whether to use it, or GetDefaultJob() here, and below in case of LP_CLONE_DEFAULT_JOB.",
+      "revId": "852d825407b611446e4d1914160c9e09d68af13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111ccb9c_e1c5268a",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T03:33:07Z",
+      "side": 1,
+      "message": "This means we\u0027ll launch a process with no default job in the case that this call fails - isn\u0027t it better to handle the failure by printing an error and returning a null Process() here?\n\nAlso, we don\u0027t want to try to duplicate the |job_handle| if the caller set it to MX_HANDLE_INVALID, rather we want to duplicate GetDefaultJob() in that case.",
+      "revId": "852d825407b611446e4d1914160c9e09d68af13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7163c8ff_d02e7fc9",
+        "filename": "content/browser/browser_main_runner.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T03:33:07Z",
+      "side": 1,
+      "message": "base::ScopedMxHandle here, handle.receive() to mx_job_create, and then std::move() it into SetDefaultJob. :)",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 13
+      },
+      "revId": "852d825407b611446e4d1914160c9e09d68af13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21df7933_fabab29e",
+        "filename": "content/browser/browser_main_runner.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T03:33:07Z",
+      "side": 1,
+      "message": "LOG(FATAL) is just a slightly more expensive CHECK(), so CHECK_EQ(result, MX_OK) \u003c\u003c ... here?",
+      "revId": "852d825407b611446e4d1914160c9e09d68af13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d0c9902_a25abfdb",
+        "filename": "content/browser/browser_main_runner.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T03:33:07Z",
+      "side": 1,
+      "message": "Can we add a comment here to clarify that this needs to happen before any threads are started, otherwise SetDefaultJob/GetDefaultJob are not thread safe.",
+      "revId": "852d825407b611446e4d1914160c9e09d68af13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ceed8fd_500281c6",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T03:33:07Z",
+      "side": 1,
+      "message": "Surely there is no need to do this, since it\u0027s already the default job to use when launching processes?",
+      "revId": "852d825407b611446e4d1914160c9e09d68af13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba85b687_c7e09e30",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T03:33:07Z",
+      "side": 1,
+      "message": "This suggests we\u0027re doing something here that transfers it - we\u0027re trying to get across that the handle already has been transferred, during process launch.",
+      "revId": "852d825407b611446e4d1914160c9e09d68af13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

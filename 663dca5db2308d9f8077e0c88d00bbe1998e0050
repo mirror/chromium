@@ -216,6 +216,24 @@
     },
     {
       "key": {
+        "uuid": "5d049969_80fe7b75",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T03:33:07Z",
+      "side": 1,
+      "message": "mx_job_default() is a function, so that would result in a static initializer.",
+      "parentUuid": "dedb6b6b_27520885",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37a64170_465d98dd",
         "filename": "base/fuchsia/child_job.cc",
         "patchSetId": 4
@@ -275,6 +293,30 @@
       "side": 1,
       "message": "\u003ewhat happens if the browser spawns a child and then the child (say a service process) wants to spawn children?\n\nWez and I had a discussion in person yesterday. We\u0027ll be creating a Chromium wrapper around mx_default_job. Calls to GetDefaultJob() will return mx_default_job OR an override job.\n\nThe content/browser process\u0027 init code sets the override to a new job meant for spawning all its child processes and their descendants.\n\nAll other processes will use mx_default_job() if they can spawn their own processes, or no job at all (indeed, jamesr said it\u0027s MX_HANDLE_INVALID).",
       "parentUuid": "37a64170_465d98dd",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 30
+      },
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ade24d_f1d6e8c3",
+        "filename": "base/fuchsia/child_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T03:33:07Z",
+      "side": 1,
+      "message": "Child processes will still call GetDefaultJob(), it\u0027ll just return mx_job_default() in most cases, surely?",
+      "parentUuid": "0e898325_764150f0",
       "range": {
         "startLine": 17,
         "startChar": 12,
@@ -508,6 +550,24 @@
       "side": 1,
       "message": "This specifies a partial implementation of a class, not a subclass. Adding inheritance \u0026 making some methods virtual would probably be more trouble than it\u0027s worth.",
       "parentUuid": "220537ea_36621f4d",
+      "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e15c2734_502158b1",
+        "filename": "content/browser/child_process_launcher_helper_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T03:33:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "de16f61a_918bcf62",
       "revId": "663dca5db2308d9f8077e0c88d00bbe1998e0050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
