@@ -34,6 +34,24 @@
       "revId": "d5c3e95c35442c786939a7863cb9b4b53dd6b9a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b4b9a5_f202e29e",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-24T21:36:22Z",
+      "side": 1,
+      "message": "i\u0027m not sure i understand. this code doesn\u0027t actually receive statuses for prefix-suffix, does it? do we ever receive statuses that aren\u0027t matched by prefix-foo-suffix?\n\nin the worst case, couldn\u0027t we just have one more trivial method that we call at the beginning of PeripheralBatteryStatusReceived?\n\n  bool IsHIDBatteryPath(const base::FilePath\u0026 path) {\n    return base::StartsWith(path.value(), kHIDBatteryPathPrefix,\n                            base::CompareCase::SENSITIVE) \u0026\u0026\n           base::EndsWith(path.value(), kHIDBatteryPathSuffix,\n                          base::CompareCase::SENSITIVE);\n  }\n\nand then:\n\n  if (!IsHIDBatteryPath(path))\n    return;",
+      "parentUuid": "d89994ad_6c29d66d",
+      "revId": "d5c3e95c35442c786939a7863cb9b4b53dd6b9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
