@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6102c375_dd339128",
+        "filename": "media/gpu/generic_v4l2_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-24T02:58:02Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a1042214_dda9b887",
+      "revId": "6f66ae45f53e9dc298f2f883367463d840f8c2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3cc14f1_bad7ea4a",
         "filename": "media/gpu/generic_v4l2_device.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-23T22:54:26Z",
       "side": 1,
       "message": "This seems a bit scary since it seems to imply you can silently mess up the number of dmabuf_fds? Are there any stricter checks you can add here?",
+      "revId": "6f66ae45f53e9dc298f2f883367463d840f8c2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f48e2992_0bfd2fb3",
+        "filename": "media/gpu/generic_v4l2_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-24T02:58:02Z",
+      "side": 1,
+      "message": "It is possible that we have less dmabufs than planes. In that case the remaining planes are stored in the last buffer.\n\nThis is consistent with what we do when creating an eglImage at line 250.\nI added the same comment we have there to clarify why we\u0027re doing this.",
+      "parentUuid": "e3cc14f1_bad7ea4a",
       "revId": "6f66ae45f53e9dc298f2f883367463d840f8c2e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "edc6e57d_4a29f9bd",
+        "filename": "media/gpu/generic_v4l2_device.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-24T02:58:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc59154a_6f702e03",
+      "revId": "6f66ae45f53e9dc298f2f883367463d840f8c2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c80fccfb_cf03798f",
         "filename": "media/gpu/v4l2_device.h",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-23T22:54:26Z",
       "side": 1,
       "message": "Can it be pure virtual?",
+      "revId": "6f66ae45f53e9dc298f2f883367463d840f8c2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "613a0a51_d76afe1d",
+        "filename": "media/gpu/v4l2_device.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-24T02:58:02Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c80fccfb_cf03798f",
       "revId": "6f66ae45f53e9dc298f2f883367463d840f8c2e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "6f66ae45f53e9dc298f2f883367463d840f8c2e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19ab5a9_71b333e7",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-24T02:58:02Z",
+      "side": 1,
+      "message": "output_buffer_map_.resize will use the move constructor.",
+      "parentUuid": "ed7283b5_2f9a43d0",
+      "revId": "6f66ae45f53e9dc298f2f883367463d840f8c2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
