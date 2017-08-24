@@ -34,6 +34,24 @@
       "revId": "889d5344dbd042f0db31cacb51f6a6a1081ca9ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b25f12_e1ba2b3b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-24T18:44:17Z",
+      "side": 1,
+      "message": "[\nFor the F, I tend away from capitalization, as it\u0027s a tag, not part of the description.\n\nFor the T, per US-ian customs, at least CMOS indicates no capitalization: http://www.chicagomanualofstyle.org/qanda/data/faq/topics/Capitalization/faq0008.html .\n]",
+      "parentUuid": "cd906d2f_b132e27e",
+      "revId": "889d5344dbd042f0db31cacb51f6a6a1081ca9ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
