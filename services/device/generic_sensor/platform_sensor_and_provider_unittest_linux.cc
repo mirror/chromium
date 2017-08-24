@@ -561,6 +561,48 @@ TEST_F(PlatformSensorAndProviderLinuxTest,
 #endif
 }
 
+// Tests that LinearAcceleration sensor is successfully created and works.
+TEST_F(PlatformSensorAndProviderLinuxTest, CheckLinearAcceleration) {
+  mojo::ScopedSharedBufferHandle handle = provider_->CloneSharedBufferHandle();
+  mojo::ScopedSharedBufferMapping mapping = handle->MapAtOffset(
+      sizeof(SensorReadingSharedBuffer),
+      SensorReadingSharedBuffer::GetOffset(SensorType::LINEAR_ACCELERATION));
+
+  double sensor_values[3] = {0, 0, -kMeanGravity};
+  InitializeSupportedSensor(SensorType::ACCELEROMETER,
+                            kAccelerometerFrequencyValue, kZero, kZero,
+                            sensor_values);
+
+  InitializeMockUdevMethods(sensors_dir_.GetPath());
+  SetServiceStart();
+
+  auto sensor = CreateSensor(SensorType::LINEAR_ACCELERATION);
+  EXPECT_TRUE(sensor);
+  EXPECT_EQ(sensor->GetReportingMode(), mojom::ReportingMode::CONTINUOUS);
+
+  auto client = base::MakeUnique<NiceMock<MockPlatformSensorClient>>(sensor);
+  PlatformSensorConfiguration configuration(10);
+  EXPECT_TRUE(sensor->StartListening(client.get(), configuration));
+
+  // The actual accceration is around 0 but the algorithm needs several
+  // iterations to isolate gravity properly.
+  int kApproximateExpectedAcceleration = 6;
+  WaitOnSensorReadingChangedEvent(client.get(), sensor->GetType());
+  EXPECT_TRUE(sensor->StopListening(client.get(), configuration));
+
+  SensorReadingSharedBuffer* buffer =
+      static_cast<SensorReadingSharedBuffer*>(mapping.get());
+  EXPECT_THAT(buffer->reading.accel.x, 0.0);
+  EXPECT_THAT(buffer->reading.accel.y, 0.0);
+#if defined(OS_CHROMEOS)
+  EXPECT_THAT(static_cast<int>(buffer->reading.accel.z / -kMeanGravity),
+              kApproximateExpectedAcceleration);
+#else
+  EXPECT_THAT(static_cast<int>(buffer->reading.accel.z),
+              kApproximateExpectedAcceleration);
+#endif
+}
+
 // Tests that Gyroscope readings are correctly converted.
 TEST_F(PlatformSensorAndProviderLinuxTest, CheckGyroscopeReadingConversion) {
   mojo::ScopedSharedBufferHandle handle = provider_->CloneSharedBufferHandle();

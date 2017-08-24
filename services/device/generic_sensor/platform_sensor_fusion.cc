@@ -33,6 +33,17 @@ PlatformSensorFusion::PlatformSensorFusion(
     }
   }
 }
+// static
+void PlatformSensorFusion::Create(
+    mojo::ScopedSharedBufferMapping mapping,
+    PlatformSensorProvider* provider,
+    std::unique_ptr<PlatformSensorFusionAlgorithm> fusion_algorithm,
+    const PlatformSensorProviderBase::CreateSensorCallback& callback) {
+  // TODO(Mikhail): Consider splitting PlatformSensorFusion construction and
+  // fetching source sensors.
+  scoped_refptr<PlatformSensor>(new PlatformSensorFusion(
+      std::move(mapping), provider, callback, std::move(fusion_algorithm)));
+}
 
 mojom::ReportingMode PlatformSensorFusion::GetReportingMode() {
   return reporting_mode_;
