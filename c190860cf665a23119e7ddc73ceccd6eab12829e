@@ -34,6 +34,24 @@
       "revId": "c190860cf665a23119e7ddc73ceccd6eab12829e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de564d09_fd800816",
+        "filename": "ash/system/palette/palette_tool_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-24T17:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8e5aa9c_1224c892",
+      "revId": "c190860cf665a23119e7ddc73ceccd6eab12829e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
