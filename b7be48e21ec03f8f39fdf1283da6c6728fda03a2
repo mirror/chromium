@@ -104,6 +104,24 @@
     },
     {
       "key": {
+        "uuid": "a8f1aaa6_a237da49",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T18:27:33Z",
+      "side": 1,
+      "message": "I\u0027m retracting my comment.  I should have looked at how the code looks without the macro, and now it\u0027s much more clear why this is a good idea.",
+      "parentUuid": "b7e0a73a_d39e0a71",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6015fda8_0c514919",
         "filename": "chrome/browser/vr/databinding/one_way_binding.h",
         "patchSetId": 1
@@ -115,6 +133,24 @@
       "writtenOn": "2017-08-24T17:13:28Z",
       "side": 1,
       "message": "Even if it stays a macro, it should probably be intended propertly for readability.",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a925f93d_e6d26c68",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-08-24T18:27:33Z",
+      "side": 1,
+      "message": "...and I\u0027m wrong here, and blind.  This is right.",
+      "parentUuid": "6015fda8_0c514919",
       "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
