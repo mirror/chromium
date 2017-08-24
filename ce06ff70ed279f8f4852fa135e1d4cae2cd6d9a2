@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "860cd0b5_e42724da",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T05:04:48Z",
+      "side": 1,
+      "message": "nullptr /* error_message */",
+      "revId": "ce06ff70ed279f8f4852fa135e1d4cae2cd6d9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8448b95c_e104a1a5",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.h",
         "patchSetId": 15
@@ -13,6 +30,40 @@
       "writtenOn": "2017-08-24T04:40:37Z",
       "side": 1,
       "message": "I would create a \"response\" class at this point, which replaces ModuleScriptCreationParams.\n\nclass ModuleScriptFetchResponse {\n public:\n  bool IsErrored() const; ...\n\n private:\n  const KURL response_url_;\n  const String source_text_;\n  const WebURLRequest::FetchCredentialsMode fetch_credentials_mode_;\n  const AccessControlStatus access_control_status_;\n  ConsoleMessage* error_message_;\n};\n\nstatic ModuleScript* CreateModuleScriptFromFetchResponse(const ModuleScriptFetchResponse\u0026);",
+      "revId": "ce06ff70ed279f8f4852fa135e1d4cae2cd6d9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6293b4_a7b7dfb3",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T05:04:48Z",
+      "side": 1,
+      "message": "Or do we want to split methods for success and failure cases? In error cases we always just seem to pass nullopt (and vice versa)",
+      "revId": "ce06ff70ed279f8f4852fa135e1d4cae2cd6d9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10fb51ff_1b554a33",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T05:04:48Z",
+      "side": 1,
+      "message": "const FetchParameters\u0026 (and copy in by the caller when necessary?)",
       "revId": "ce06ff70ed279f8f4852fa135e1d4cae2cd6d9a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
