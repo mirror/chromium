@@ -1037,7 +1037,7 @@
                   '|chrome/test/data/webui/settings/',
     },
     'media': {
-      'filepath': 'media/|third_party/(ffmpeg|openmax)/|webmediaplayer|'\
+      'filepath': 'media/|third_party/(ffmpeg|libvpx|opus)/|webmediaplayer|'\
         'audio_message_filter|video_layer|media_internals',
     },
     'media_capture_from_element': {
