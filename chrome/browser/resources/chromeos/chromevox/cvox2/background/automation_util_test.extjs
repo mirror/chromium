@@ -150,7 +150,8 @@ TEST_F('AutomationUtilE2ETest', 'VisitContainer', function() {
                  AutomationUtil.findNextNode(back, 'backward', pred));
 
     var forward = AutomationUtil.findNextNode(back, 'forward', pred);
-    assertEquals('Forward', forward.name);
+    var afterWhitespace = AutomationUtil.findNextNode(forward, 'forward', pred);
+    assertEquals('Forward', afterWhitespace.name);
     assertEquals(back,
                  AutomationUtil.findNextNode(forward, 'backward', pred));
   });

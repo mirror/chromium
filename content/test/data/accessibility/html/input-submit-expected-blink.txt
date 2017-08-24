@@ -1,4 +1,6 @@
 rootWebArea
 ++form
 ++++textField
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++button name='Submit'

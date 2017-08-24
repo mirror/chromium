@@ -9,5 +9,9 @@ rootWebArea
 ++++radioButton name='Radio2' checkedState=false
 ++menu
 ++++radioButton name='Radio3' checkedState=false
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++menuItemRadio checkedState=false
+++++staticText name=' '
+++++++inlineTextBox name=' '
 ++++menuItemRadio checkedState=true

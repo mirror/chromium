@@ -82,6 +82,8 @@ AXRole: AXWebArea
     AXRole: AXStaticText " I have a bike "
         AXRole: AXInlineTextBox " I have a bike "
     AXRole: AXButton "Click me"
+    AXRole: AXStaticText " "
+        AXRole: AXInlineTextBox " "
     AXRole: AXStaticText " Male "
         AXRole: AXInlineTextBox " Male "
     AXRole: AXStaticText " Female"
