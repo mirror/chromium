@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2eed2c67_8ce90f07",
+        "filename": "chrome/installer/util/experiment_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-24T10:07:25Z",
+      "side": 1,
+      "message": "should we move this forward a bit, too?",
+      "range": {
+        "startLine": 107,
+        "startChar": 45,
+        "endLine": 107,
+        "endChar": 55
+      },
+      "revId": "4fea390b4d634f111695e5c730e8aa4a115289a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
