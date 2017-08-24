@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fdd5c83_024cc6be",
+        "filename": "services/device/public/cpp/generic_sensor/sensor_reading.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-24T18:27:57Z",
+      "side": 1,
+      "message": "nit: remove \"the\" here and below",
+      "range": {
+        "startLine": 90,
+        "startChar": 44,
+        "endLine": 90,
+        "endChar": 47
+      },
+      "revId": "68546bb314f754b7bb28b10eb3523143e445aac2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
