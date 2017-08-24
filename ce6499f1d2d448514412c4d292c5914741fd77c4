@@ -22,6 +22,30 @@
       "revId": "ce6499f1d2d448514412c4d292c5914741fd77c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c3915b_b63adc94",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9972,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-24T13:53:48Z",
+      "side": 0,
+      "message": "Hrm, I suspect that this is either an issue with replacing the MS_AD_NAME placeholder when generating the policy list, or with encoding settings in the resulting html. I\u0027ll check that. Thanks for bringing this to my attention!",
+      "parentUuid": "cef8ef8e_aa55850f",
+      "range": {
+        "startLine": 9972,
+        "startChar": 112,
+        "endLine": 9972,
+        "endChar": 113
+      },
+      "revId": "ce6499f1d2d448514412c4d292c5914741fd77c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
