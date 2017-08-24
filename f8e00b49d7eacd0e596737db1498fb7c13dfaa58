@@ -316,6 +316,30 @@
       "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c6c30f_2cb6dcdc",
+        "filename": "components/arc/common/video_encode_accelerator.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-24T16:25:20Z",
+      "side": 1,
+      "message": "As long as exactly zero consumers of this interface appear in the meantime, I\u0027m ok.\n\nThe problem is that once you publish an interface, adding a callback to a method constitutes a breaking API change. If there is at least one consumer, the window of opportunity to clean up the interface closes, and I\u0027d like to avoid it.\n\nPlease add TODOs to indicate this cleanup.",
+      "parentUuid": "19f3998e_f75e1e95",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 52
+      },
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

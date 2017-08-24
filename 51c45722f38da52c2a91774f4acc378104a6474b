@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8f441ca_ad2cfc97",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-24T16:25:20Z",
+      "side": 1,
+      "message": "nit: space before.",
+      "range": {
+        "startLine": 62,
+        "startChar": 47,
+        "endLine": 62,
+        "endChar": 49
+      },
+      "revId": "51c45722f38da52c2a91774f4acc378104a6474b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab858c07_723aee59",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-24T16:25:20Z",
+      "side": 1,
+      "message": "nit: just one space around the arrow and manually wordwrap to 80 cols. sorry, we don\u0027t have clang-format for this. maybe we should.",
+      "range": {
+        "startLine": 72,
+        "startChar": 62,
+        "endLine": 72,
+        "endChar": 103
+      },
+      "revId": "51c45722f38da52c2a91774f4acc378104a6474b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd345bc5_cd1d31b2",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-24T16:25:20Z",
+      "side": 1,
+      "message": "nit: just one space around the arrow.",
+      "range": {
+        "startLine": 76,
+        "startChar": 47,
+        "endLine": 76,
+        "endChar": 49
+      },
+      "revId": "51c45722f38da52c2a91774f4acc378104a6474b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd487628_39ca271b",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-24T16:25:20Z",
+      "side": 1,
+      "message": "nit: \"the callback will be invoked\"",
+      "range": {
+        "startLine": 78,
+        "startChar": 29,
+        "endLine": 79,
+        "endChar": 57
+      },
+      "revId": "51c45722f38da52c2a91774f4acc378104a6474b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0df1ba1_60255703",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-24T16:25:20Z",
+      "side": 1,
+      "message": "nit: \"the callback will be invoked\"",
+      "range": {
+        "startLine": 83,
+        "startChar": 30,
+        "endLine": 84,
+        "endChar": 11
+      },
+      "revId": "51c45722f38da52c2a91774f4acc378104a6474b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
