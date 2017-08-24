@@ -330,14 +330,8 @@ bool Update(sql::Connection* db, const OfflinePageItem& item) {
   return statement.Run() && db->GetLastChangeCount() > 0;
 }
 
-bool InitDatabase(sql::Connection* db, base::FilePath path) {
-  db->set_page_size(4096);
-  db->set_cache_size(500);
-  db->set_histogram_tag("OfflinePageMetadata");
-  db->set_exclusive_locking();
-
+bool PrepareDirectory(const base::FilePath& path) {
   base::File::Error error = base::File::FILE_OK;
-
   if (!base::DirectoryExists(path.DirName())) {
     if (!base::CreateDirectoryAndGetError(path.DirName(), &error)) {
       LOG(ERROR) << "Failed to create offline pages db directory: "
@@ -348,6 +342,18 @@ bool InitDatabase(sql::Connection* db, base::FilePath path) {
 
   UMA_HISTOGRAM_ENUMERATION("OfflinePages.SQLStorage.CreateDirectoryResult",
                             -error, -base::File::FILE_ERROR_MAX);
+
+  return true;
+}
+
+bool InitDatabase(sql::Connection* db, const base::FilePath& path) {
+  db->set_page_size(4096);
+  db->set_cache_size(500);
+  db->set_histogram_tag("OfflinePageMetadata");
+  db->set_exclusive_locking();
+
+  if (!PrepareDirectory(path))
+    return false;
 
   if (!db->Open(path)) {
     LOG(ERROR) << "Failed to open database";
@@ -369,6 +375,9 @@ void RecordLoadResult(OfflinePageMetadataStore::LoadStatus status,
   }
 }
 
+// TODO(fgorski): This is overcomplicated... we need to fix this stuff.
+// Just like in prefetch store, this is probably not even necessary... also
+// passing the runner should not be required, when this is done right.
 void OpenConnectionSync(
     sql::Connection* db,
     scoped_refptr<base::SingleThreadTaskRunner> runner,
@@ -669,6 +678,33 @@ void OfflinePageMetadataStoreSQL::SetState(StoreState state) {
 
 bool OfflinePageMetadataStoreSQL::CheckDb() const {
   return db_ && state_ == StoreState::LOADED;
+}
+
+void OfflinePageMetadataStoreSQL::InitializeInternal(
+    base::OnceClosure pending_command) {
+  DCHECK_EQ(state_, StoreState::NOT_LOADED);
+
+  // TODO(fgorski): Set state to initializing/loading.
+  base::PostTaskAndReplyWithResult(
+      background_task_runner_.get(), FROM_HERE,
+      base::BindOnce(&InitDatabase, db_.get(), db_file_path_),
+      base::BindOnce(&OfflinePageMetadataStoreSQL::OnInitializeInternalDone,
+                     weak_ptr_factory_.GetWeakPtr(),
+                     std::move(pending_command)));
+}
+
+void OfflinePageMetadataStoreSQL::OnInitializeInternalDone(
+    base::OnceClosure pending_command,
+    bool success) {
+  // TODO(fgorski): DCHECK initialization is in progress, once we have a
+  // relevant value for the store state.
+  state_ = success ? StoreState::LOADED : StoreState::FAILED_LOADING;
+
+  CHECK(!pending_command.is_null());
+  std::move(pending_command).Run();
+
+  if (state_ == StoreState::FAILED_LOADING)
+    state_ = StoreState::NOT_LOADED;
 }
 
 }  // namespace offline_pages
