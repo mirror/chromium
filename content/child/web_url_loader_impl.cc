@@ -671,20 +671,28 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
           base::WaitableEvent::ResetPolicy::MANUAL,
           base::WaitableEvent::InitialState::NOT_SIGNALED);
 
-      // TODO(reillyg): Support passing URLLoaderThrottles to this task.
-      DCHECK_EQ(0u, extra_data->TakeURLLoaderThrottles().size());
+      // Prepare the configured throttles for use on a separate thread.
+      std::vector<std::unique_ptr<URLLoaderThrottle>> throttles =
+          extra_data->TakeURLLoaderThrottles();
+      for (const auto& throttle : throttles)
+        throttle->DetachFromCurrentThread();
 
       // A task is posted to a separate thread to execute the request so that
       // this thread may block on a waitable event. It is safe to pass raw
       // pointers to |sync_load_response| and |event| as this stack frame will
       // survive until the request is complete.
+      //
+      // TODO(reillyg): Change this to CreateSequencedTaskRunnerWithTraits when
+      // we no longer need a SingleThreadTaskRunner to construct a
+      // ResourceDispatcher.
       base::CreateSingleThreadTaskRunnerWithTraits({})->PostTask(
           FROM_HERE,
           base::BindOnce(
               &SyncLoadContext::StartAsyncWithWaitableEvent,
               std::move(resource_request), routing_id,
               extra_data->frame_origin(), std::move(url_loader_factory_copy),
-              base::Unretained(sync_load_response), base::Unretained(&event)));
+              std::move(throttles), base::Unretained(sync_load_response),
+              base::Unretained(&event)));
 
       event.Wait();
     } else {
