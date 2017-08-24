@@ -22,6 +22,30 @@
       "revId": "317f16329ee796b7d1120fce00a8472ed7ef9e93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d6e54e_cdfd6f38",
+        "filename": "gpu/command_buffer/tests/gl_set_aggressively_free_resources_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-24T00:14:45Z",
+      "side": 1,
+      "message": "Fair point. There\u0027s also value in the combination, because it test cases where different types of things end up within the same mapped memory chunk. But it\u0027s easy to have several tests, so I\u0027ll do that.",
+      "parentUuid": "812349f7_a1724200",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 8
+      },
+      "revId": "317f16329ee796b7d1120fce00a8472ed7ef9e93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
