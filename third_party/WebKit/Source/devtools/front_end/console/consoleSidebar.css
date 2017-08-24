@@ -18,10 +18,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
     padding: 6px 6px 6px 16px;
-    height: 28px;
+    height: 26px;
 }
 
 .context-item.selected {
+    background-color: #ddd;
+}
+
+.context-item.selected:focus {
     background-color: #3c7bd6;
 }
 
@@ -31,6 +35,6 @@
     margin-bottom: 10px;
 }
 
-.context-item.selected .name {
+.context-item.selected:focus .name {
     color: white;
 }

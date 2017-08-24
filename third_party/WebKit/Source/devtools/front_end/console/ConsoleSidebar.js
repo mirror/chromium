@@ -91,8 +91,9 @@ Console.ConsoleSidebar = class extends UI.VBox {
    */
   createElementForItem(item) {
     var element = createElementWithClass('div', 'context-item');
-    element.createChild('div', 'name').textContent = item.name;
+    element.createChild('div', 'name').textContent = item.name.trimMiddle(30);
     element.title = item.name;
+    element.tabIndex = 0;
     return element;
   }
 
@@ -102,7 +103,7 @@ Console.ConsoleSidebar = class extends UI.VBox {
    * @return {number}
    */
   heightForItem(item) {
-    return 28;
+    return 26;
   }
 
   /**
