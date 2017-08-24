@@ -16,6 +16,24 @@
       "revId": "bbbde46f80d0b07673c675b1708e20c3d03e2aec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff53b87_8d1ff0f9",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-24T15:16:59Z",
+      "side": 1,
+      "message": "Nothing. It is just temporary disabled for this switching. I don\u0027t want to spend too much efforts to make VerifyDmabuf support both formats at the same time. \n\nWe will enable the verification after this switching complete.\n\nThere is another CL in minigbm related to this:\nhttps://chromium-review.googlesource.com/c/chromiumos/platform/minigbm/+/544489\n\nTo ensure the video playback on ARC++ is not affected by this switching, (Since chrome and chromeos version is not always synced.) We will:\n\n1. Merge this CL in Chrome\n2. After Chrome with this CL is picked in ChromeOS, we merge the minigbm CL.\n3. Enable the verification again.",
+      "parentUuid": "421e81d2_ad76b1ee",
+      "revId": "bbbde46f80d0b07673c675b1708e20c3d03e2aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
