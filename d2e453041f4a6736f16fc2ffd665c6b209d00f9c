@@ -106,6 +106,24 @@
       "revId": "d2e453041f4a6736f16fc2ffd665c6b209d00f9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53eee80b_e37c2ec1",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-24T22:09:04Z",
+      "side": 1,
+      "message": "\u003e For each test noted, comments:\n\u003e \n\u003e 1.\n\u003e    LayerTreeHostAnimationTestAnimationFinishesDuringCommit.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest_animation.cc:1653)\n\u003e \n\u003e   Same as (3) below.\n\u003e \n\u003e 2.\n\u003e    LayerTreeHostAnimationTestChangeAnimationPlayer.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest_animation.cc:1845)\n\u003e     LayerTreeHostAnimationTestChangeAnimationPlayer.RunSingleThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest_animation.cc:1845)\n\u003e \n\u003e This one has a comment explaining its goals as:\n\u003e \n\u003e // Check that transform sync happens correctly at commit when we remove and add\n\u003e // a different animation player to an element.\n\u003e \n\u003e I\u0027m not sure whether we care about this. Do we ever actually do this? If no tests\n\u003e are failing other than this one, maybe we can just delete the test as obsolete and\n\u003e covering a use case we don\u0027t need to support.\n\nHow does it fail? The transform is not translate(5, 5)? Is that because of an old entry?\n\nDetaching and re-adding a player shouldn\u0027t result in a layer being deleted. I guess\nit\u0027s a callsite in Layer::SetLayerTreeHost. Instead of that, the player it seems should\nremove the animation value in the hash map when being deleted...\n\nShould we just move element_id_to_transform_animations_ etc to the AnimationHost for it to\nmanage?\n\n\u003e \n\u003e 3.\n\u003e     LayerTreeHostAnimationTestImplSideInvalidation.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest_animation.cc:1731)\n\u003e \n\u003e Appears to be checking transform being copied to impl side as an extra checkpoint. Unless you think there\u0027s value to that, perhaps we can just remove that expect.\n\u003e \n\u003e The other involved comments (can see inline in the test, added revision to patch) are:\n\u003e \n\u003e       // Block until the animation finishes on the compositor thread. Since\n\u003e       // animations have already been ticked on the main thread, when the commit\n\u003e       // happens the state on the main thread will be consistent with having a\n\u003e       // running animation but the state on the compositor thread will be\n\u003e       // consistent with having only a finished animation.\n\u003e \n\u003e       // The animation on the active tree has finished, now request an impl-side\n\u003e       // invalidation and make sure it finishes before the main thread is\n\u003e       // released.\n\u003e \n\u003e 4.\n\u003e     LayerTreeHostTestEffectTreeSync.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest.cc:1508)\n\u003e     LayerTreeHostTestEffectTreeSync.RunSingleThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest.cc:1508)\n\u003e     LayerTreeHostTestTransformTreeSync.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest.cc:1586)\n\u003e     LayerTreeHostTestTransformTreeSync.RunSingleThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest.cc:1586)\n\u003e \n\u003e Deleted these four as obsolete.",
+      "parentUuid": "105ad704_8fe054a0",
+      "revId": "d2e453041f4a6736f16fc2ffd665c6b209d00f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
