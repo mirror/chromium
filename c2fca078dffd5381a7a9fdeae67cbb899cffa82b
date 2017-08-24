@@ -34,6 +34,24 @@
       "revId": "c2fca078dffd5381a7a9fdeae67cbb899cffa82b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69775131_6a4d921d",
+        "filename": "base/files/file_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-24T21:53:48Z",
+      "side": 1,
+      "message": "It is permitted and may be useful in some cases, but I don\u0027t think it means that we have to call [p]write() for File::Write(0). base::File provides cross-platform FS access. It doesn\u0027t have to mirror system API behavior. Treating Write(0) as no-op seems to be appropriate here. If any code needs to use write(0) for something useful then it shouldn\u0027t be using base::File.\nFWIW MSDN says that null writes are FS-dependent, i.e. some file systems may not allow it.",
+      "parentUuid": "684e1eee_e46a0be3",
+      "revId": "c2fca078dffd5381a7a9fdeae67cbb899cffa82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
