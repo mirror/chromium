@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a021cb3d_45c07b20",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-08-24T12:23:30Z",
+      "side": 1,
+      "message": "Done.\n\n(If should_use_channels_ is false it means the phone is \u003cO* so we shouldn\u0027t have migrated and the existing condition will catch it, but I agree adding this check is worthwhile for clarity and consistency)\n\n*perhaps \u0027should_use_channels_\u0027 should be renamed platform_supports_channels_, wdyt? Right now it\u0027s a bit confusing with the flag too..",
+      "parentUuid": "e1865107_56dfec28",
+      "revId": "e29dcb1a0a3775627def3a8f4c16cf6b776d924f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78b37a3b_296e3676",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4b1e3706_54bcca56",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-08-24T12:23:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78b37a3b_296e3676",
+      "range": {
+        "startLine": 213,
+        "startChar": 46,
+        "endLine": 213,
+        "endChar": 68
+      },
+      "revId": "e29dcb1a0a3775627def3a8f4c16cf6b776d924f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36fb2d50_216f2117",
         "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
         "patchSetId": 1
@@ -56,6 +98,24 @@
       "revId": "e29dcb1a0a3775627def3a8f4c16cf6b776d924f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809aa2e1_26bce948",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-08-24T12:23:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36fb2d50_216f2117",
+      "revId": "e29dcb1a0a3775627def3a8f4c16cf6b776d924f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "d0fffc94_4ffe65e0",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-08-24T12:23:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eac87e0_ea0b8b3c",
+      "revId": "e29dcb1a0a3775627def3a8f4c16cf6b776d924f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a5c6c3b_85fc36c0",
         "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
         "patchSetId": 1
@@ -87,6 +165,24 @@
       "writtenOn": "2017-08-23T17:18:46Z",
       "side": 1,
       "message": "Should we ASSERT_FALSE(it-\u003eHasNext())?",
+      "revId": "e29dcb1a0a3775627def3a8f4c16cf6b776d924f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911d0ac7_99622180",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-08-24T12:23:30Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "4a5c6c3b_85fc36c0",
       "revId": "e29dcb1a0a3775627def3a8f4c16cf6b776d924f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
