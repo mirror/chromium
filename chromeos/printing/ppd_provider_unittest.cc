@@ -312,6 +312,39 @@ TEST_F(PpdProviderTest, LocalizationAndFallbacks) {
   RunLocalizationTest("bogus", "en");
 }
 
+TEST_F(PpdProviderTest, RepeatedMakeModel) {
+  StartFakePpdServer();
+  auto provider = CreateProvider("en");
+
+  PpdProvider::PrinterSearchData unrecognized_printer;
+  unrecognized_printer.make_and_model = {"Printer Printer"};
+
+  PpdProvider::PrinterSearchData recognized_printer;
+  recognized_printer.make_and_model = {"printer_a_ref"};
+
+  PpdProvider::PrinterSearchData mixed;
+  mixed.make_and_model = {"printer_a_ref", "Printer Printer"};
+
+  // Resolve the same thing repeatedly.
+  provider->ResolvePpdReference(
+      unrecognized_printer,
+      base::Bind(&PpdProviderTest::CaptureResolvePpdReference,
+                 base::Unretained(this)));
+  provider->ResolvePpdReference(
+      mixed,
+      base::Bind(&PpdProviderTest::CaptureResolvePpdReference,
+                 base::Unretained(this)));
+  provider->ResolvePpdReference(
+      recognized_printer,
+      base::Bind(&PpdProviderTest::CaptureResolvePpdReference,
+                 base::Unretained(this)));
+  provider->ResolvePpdReference(
+      recognized_printer,
+      base::Bind(&PpdProviderTest::CaptureResolvePpdReference,
+                 base::Unretained(this)));
+  scoped_task_environment_.RunUntilIdle();
+}
+
 // Test successful and unsuccessful usb resolutions.
 TEST_F(PpdProviderTest, UsbResolution) {
   StartFakePpdServer();
