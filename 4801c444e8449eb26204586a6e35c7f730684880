@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "385f5be0_f267151f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1022,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-24T22:56:54Z",
+      "side": 1,
+      "message": "No, because if it has not responded it lets the request go with no changes. (ie: this is a fallthrough if no registered interceptors wants to handle it)",
+      "parentUuid": "631b9ac8_bdd36f22",
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ad538f7_a38bd4f1",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
         "patchSetId": 3
@@ -50,6 +68,24 @@
       "revId": "4801c444e8449eb26204586a6e35c7f730684880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be96bd3_c5db3ad4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-24T22:56:54Z",
+      "side": 1,
+      "message": "It was, but I\u0027ll remove it until it is needed.",
+      "parentUuid": "4ad538f7_a38bd4f1",
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "abce9633_416b8fc4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-24T22:56:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "351e8768_2af043b3",
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52cd3863_cba68177",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
         "patchSetId": 3
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "e96a6d3a_4e61d971",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-24T22:56:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52cd3863_cba68177",
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c518c3f_35c47e50",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
         "patchSetId": 3
@@ -101,6 +173,24 @@
       "revId": "4801c444e8449eb26204586a6e35c7f730684880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c5bd0f_0ab7b439",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-24T22:56:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c518c3f_35c47e50",
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +217,30 @@
     },
     {
       "key": {
+        "uuid": "7ee8cdb7_067ec9d3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-24T22:56:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bf7cc08_b361c9b1",
+      "range": {
+        "startLine": 1107,
+        "startChar": 12,
+        "endLine": 1107,
+        "endChar": 16
+      },
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85d3c4a6_5a3b5675",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
         "patchSetId": 3
@@ -150,6 +264,30 @@
     },
     {
       "key": {
+        "uuid": "e39aa3f8_0f8866d5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1109,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-24T22:56:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85d3c4a6_5a3b5675",
+      "range": {
+        "startLine": 1109,
+        "startChar": 8,
+        "endLine": 1109,
+        "endChar": 24
+      },
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53a8f66f_a0b6d07d",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
         "patchSetId": 3
@@ -161,6 +299,24 @@
       "writtenOn": "2017-08-12T00:19:58Z",
       "side": 1,
       "message": "Do you really need a special case for that?",
+      "revId": "4801c444e8449eb26204586a6e35c7f730684880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62bb2e26_c4a42d7f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-08-24T22:56:54Z",
+      "side": 1,
+      "message": "I did this for two reasons...\n1) Urls are usually only different at the end.\n2) I would have to do a check anyway after the loop to make sure that pos has consumed it all, so I might aswell do it first.",
+      "parentUuid": "53a8f66f_a0b6d07d",
       "revId": "4801c444e8449eb26204586a6e35c7f730684880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
