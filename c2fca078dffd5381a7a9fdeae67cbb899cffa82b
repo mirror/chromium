@@ -16,6 +16,24 @@
       "revId": "c2fca078dffd5381a7a9fdeae67cbb899cffa82b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "684e1eee_e46a0be3",
+        "filename": "base/files/file_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:30:19Z",
+      "side": 1,
+      "message": "Writing zero bytes _is_ permitted by write(), and is specifically called-out as being a way of testing for certain error conditions.\n\nIt almost seems that we should be passing a dummy pointer in the zero-bytes case, rather than not calling write(), but at that point I\u0027d be tempted to just make Fuchsia compatible with everything else. :-/",
+      "parentUuid": "f99465e8_49f37a24",
+      "revId": "c2fca078dffd5381a7a9fdeae67cbb899cffa82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
