@@ -243,7 +243,6 @@ class AccessibilityManager
       extensions::api::braille_display_private::BrailleController* controller);
 
   // Enables/disables system sounds.
-  void EnableSystemSounds(bool system_sounds_enabled);
 
   // Initiates play of shutdown sound and returns it's duration.
   base::TimeDelta PlayShutdownSound();
@@ -419,8 +418,6 @@ class AccessibilityManager
   bool switch_access_enabled_;
 
   ash::AccessibilityNotificationVisibility spoken_feedback_notification_;
-
-  bool system_sounds_enabled_;
 
   AccessibilityStatusCallbackList callback_list_;
 
