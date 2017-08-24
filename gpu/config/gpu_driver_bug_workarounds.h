@@ -24,7 +24,7 @@ namespace gpu {
 class GPU_EXPORT GpuDriverBugWorkarounds {
  public:
   GpuDriverBugWorkarounds();
-  explicit GpuDriverBugWorkarounds(const std::vector<int>&);
+  explicit GpuDriverBugWorkarounds(const std::vector<int32_t>&);
   explicit GpuDriverBugWorkarounds(const base::CommandLine* command_line);
 
   GpuDriverBugWorkarounds(const GpuDriverBugWorkarounds& other);

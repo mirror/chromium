@@ -8,7 +8,6 @@
 #include <GLES3/gl3.h>
 #include <stdint.h>
 
-#include "base/command_line.h"
 #include "gpu/command_buffer/service/context_group.h"
 #include "gpu/command_buffer/tests/gl_manager.h"
 #include "gpu/command_buffer/tests/gl_test_utils.h"
@@ -29,8 +28,7 @@ class ES3MapBufferRangeTest : public testing::Test {
     options.size = gfx::Size(kCanvasSize, kCanvasSize);
     options.context_type = gles2::CONTEXT_TYPE_OPENGLES3;
 
-    base::CommandLine cmd_line(*base::CommandLine::ForCurrentProcess());
-    gl_.InitializeWithCommandLine(options, cmd_line);
+    gl_.Initialize(options);
   }
 
   bool ShouldSkipTest() const {

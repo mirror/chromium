@@ -13,7 +13,6 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include "base/command_line.h"
 #include "gpu/command_buffer/tests/gl_manager.h"
 #include "gpu/command_buffer/tests/gl_test_utils.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -75,9 +74,8 @@ class GLApplyScreenSpaceAntialiasingCHROMIUMTest : public testing::Test {
   }
 
   void SetUp() override {
-    base::CommandLine command_line(*base::CommandLine::ForCurrentProcess());
     GLManager::Options options;
-    gl_.InitializeWithCommandLine(options, command_line);
+    gl_.Initialize(options);
     CheckStatus();
   }
 
@@ -102,10 +100,9 @@ class GLApplyScreenSpaceAntialiasingCHROMIUMES3Test
     : public GLApplyScreenSpaceAntialiasingCHROMIUMTest {
  protected:
   void SetUp() override {
-    base::CommandLine command_line(*base::CommandLine::ForCurrentProcess());
     GLManager::Options options;
     options.context_type = gles2::CONTEXT_TYPE_OPENGLES3;
-    gl_.InitializeWithCommandLine(options, command_line);
+    gl_.Initialize(options);
     CheckStatus();
   }
 };
