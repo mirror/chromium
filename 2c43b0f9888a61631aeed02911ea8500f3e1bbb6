@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75457b4c_584d674a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 11047,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T07:36:22Z",
+      "side": 1,
+      "message": "nit: Would be nice to expand out the CCT acronym within this file, as viewers of the histogram might not immediately recognize it.",
+      "range": {
+        "startLine": 11047,
+        "startChar": 4,
+        "endLine": 11047,
+        "endChar": 7
+      },
+      "revId": "2c43b0f9888a61631aeed02911ea8500f3e1bbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
