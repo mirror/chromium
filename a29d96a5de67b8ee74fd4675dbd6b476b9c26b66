@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d534f8a_52d9cd14",
+        "filename": "chrome/browser/media_galleries/fileapi/itunes_file_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T09:29:53Z",
+      "side": 1,
+      "message": "Why does this need to be protected but not private? (wasn\u0027t able to find where it\u0027s referenced in tests)",
+      "revId": "a29d96a5de67b8ee74fd4675dbd6b476b9c26b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b50b51_a50e559e",
+        "filename": "chrome/browser/media_galleries/fileapi/itunes_file_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T09:29:53Z",
+      "side": 1,
+      "message": "This is neat, didn\u0027t know this",
+      "revId": "a29d96a5de67b8ee74fd4675dbd6b476b9c26b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0a4206_fbc4e189",
+        "filename": "chrome/browser/media_galleries/fileapi/native_media_file_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T09:29:53Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "a29d96a5de67b8ee74fd4675dbd6b476b9c26b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6cdba0_5dbbc40a",
+        "filename": "chrome/browser/media_galleries/fileapi/picasa_file_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T09:29:53Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "a29d96a5de67b8ee74fd4675dbd6b476b9c26b66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
