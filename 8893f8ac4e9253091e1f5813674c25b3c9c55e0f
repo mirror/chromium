@@ -34,6 +34,24 @@
       "revId": "8893f8ac4e9253091e1f5813674c25b3c9c55e0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d6a9d3b_88fe3877",
+        "filename": "base/task_scheduler/platform_native_worker_pool_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-24T18:07:44Z",
+      "side": 1,
+      "message": "Ah I see now, yeah no race, please ignore :).",
+      "parentUuid": "08dc8f4e_f6acf5e4",
+      "revId": "8893f8ac4e9253091e1f5813674c25b3c9c55e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
