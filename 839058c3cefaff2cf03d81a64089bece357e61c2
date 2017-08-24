@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e801fee_68c85d98",
+        "filename": "net/url_request/url_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-24T17:55:48Z",
+      "side": 1,
+      "message": "I think this makes for a confusing histogram.  I\u0027d suggest just logging this in the destructor or on headers received.\n\nAs it is, if we see:\n\n0 \u003d 20%\n1 \u003d 20%\n2 \u003d 20%\n3 \u003d 20%\n4 \u003d 10%\n5 \u003d 10%\n\nIt\u0027s difficult to extract from that the fact that 50% of redirects had 4 redirects (Not 3, as one would suspect), and 50% had 6 redirects.  And we\u0027d also not know the percent of total requests that were redirected, without looking at the raw counts of yet another histogram, and comparing it to the raw counts of the 0 bucket in this histogram (Admittedly, any number we get here is confusing, due to weird things like Service Worker, data URLs, chrome URLs, etc, but nice to have at least some number to get a very rough idea of what portion of requests we\u0027re talking about in the first place).\n\nIf we just recorded number of redirects, if any, on destruction, we\u0027d have something like:\n0 \u003d 80%\n4 \u003d 10%\n6 \u003d 10%\n\nAnd from that, we\u0027d know that 80% of requests were not redirected (With the aforementioned caveats).  10% had 4 redirects (Half of redirected requests), and another 10% had 6 redirects.  Much easier to deal with data that way.",
+      "range": {
+        "startLine": 985,
+        "startChar": 25,
+        "endLine": 985,
+        "endChar": 26
+      },
+      "revId": "839058c3cefaff2cf03d81a64089bece357e61c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
