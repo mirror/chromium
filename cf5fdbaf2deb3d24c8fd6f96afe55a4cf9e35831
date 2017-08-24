@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59fd3848_593db07d",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-24T03:18:59Z",
+      "side": 1,
+      "message": "Looks like this can be removed?",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 50
+      },
+      "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df127964_3a05de02",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-24T03:18:59Z",
+      "side": 1,
+      "message": "nit: Now that we\u0027ve made this change, I\u0027ve noticed we can move L147-151 inside of the then-clause. (No need to create/set-up a WebMouseEvent until we\u0027re certain it\u0027ll get used.)",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 67
+      },
+      "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e4e032_a0e29811",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-24T03:18:59Z",
+      "side": 1,
+      "message": "nit: Space between \"override\" and \"{}\".",
+      "range": {
+        "startLine": 245,
+        "startChar": 38,
+        "endLine": 245,
+        "endChar": 41
+      },
+      "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c349503_38fb2034",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-24T03:18:59Z",
+      "side": 1,
+      "message": "You asked about users racing to take over the new tab (that our feature has opened) and navigating it elsewhere. Seems like that should cause us to cancel the fullscreen operation, so I suggest adding:\n\n  void DidStartNavigation(NavigationHandle* navigation_handle) override {\n    // User took over the tab by navigating it elsewhere. Cancel waiting for the\n    // DidStopLoading() notification.\n    delete this;\n  }",
+      "range": {
+        "startLine": 252,
+        "startChar": 1,
+        "endLine": 252,
+        "endChar": 2
+      },
+      "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abbb9529_d7225fce",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-24T03:18:59Z",
+      "side": 1,
+      "message": "This statement seems duplicated (the MaybeReportFileInformation callback). Is that intentional?",
+      "range": {
+        "startLine": 709,
+        "startChar": 0,
+        "endLine": 710,
+        "endChar": 79
+      },
+      "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db20d4cb_461ceeda",
+        "filename": "chrome/test/media_router/resources/local_media_sink.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-24T03:18:59Z",
+      "side": 1,
+      "message": "It looks like unrelated changes got pulled into the patch?",
+      "range": {
+        "startLine": 10,
+        "startChar": 1,
+        "endLine": 10,
+        "endChar": 2
+      },
+      "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3437536b_7461e73a",
+        "filename": "chrome/test/media_router/resources/local_media_sink_route_fail.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-24T03:18:59Z",
+      "side": 1,
+      "message": "Here too: It looks like unrelated changes got pulled into the patch?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 4
+      },
+      "revId": "cf5fdbaf2deb3d24c8fd6f96afe55a4cf9e35831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
