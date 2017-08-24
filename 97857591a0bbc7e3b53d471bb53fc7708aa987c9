@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bed14e6_3a26f145",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-24T19:26:26Z",
+      "side": 1,
+      "message": "is this fast?",
+      "range": {
+        "startLine": 272,
+        "startChar": 7,
+        "endLine": 273,
+        "endChar": 49
+      },
+      "revId": "97857591a0bbc7e3b53d471bb53fc7708aa987c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2425726_c479f52c",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-24T19:26:26Z",
+      "side": 1,
+      "message": "We would need to do this same treatment for kVoiceInteractionContextEnabled.  I think an alternative approach would be if value prop is accepted and these two prefs are not set, we do an initial sync from Android container like what we would do in normal value prop accepted flow.",
+      "range": {
+        "startLine": 307,
+        "startChar": 0,
+        "endLine": 311,
+        "endChar": 66
+      },
+      "revId": "97857591a0bbc7e3b53d471bb53fc7708aa987c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
