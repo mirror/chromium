@@ -25,11 +25,7 @@ using base::allocator::AllocatorDispatch;
 
 MemlogSenderPipe* g_sender_pipe = nullptr;
 
-// This maximum number of stack entries to log. Long-term we will likely want
-// to raise this to avoid truncation. This matches the current value in the
-// in-process heap profiler (heap_profiler_allocation_context.h) so the two
-// systems performance and memory overhead can be compared consistently.
-constexpr int kMaxStackEntries = 48;
+constexpr int kMaxStackEntries = 256;
 
 #if defined(OS_WIN)
 // Matches the native buffer size on the pipe.
