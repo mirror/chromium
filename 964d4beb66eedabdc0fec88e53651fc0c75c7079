@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3d9cdb61_867485c3",
+        "filename": "third_party/WebKit/Source/core/paint/InlineTextBoxPainter.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T00:07:28Z",
+      "side": 1,
+      "message": "It seems better to remove other markers when adding a suggestion marker. It\u0027s more intuitive than leaving invisible spelling/composition markers there.\n\nBtw, in any case we won\u0027t need an interval tree since the problem is offline.",
+      "parentUuid": "d7d6755c_fe1f55c9",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 35
+      },
+      "revId": "964d4beb66eedabdc0fec88e53651fc0c75c7079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afb32390_143a5267",
         "filename": "third_party/WebKit/Source/core/testing/Internals.idl",
         "patchSetId": 9
