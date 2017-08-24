@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//ios/web/js_compile.gni")
+import("//testing/test.gni")
 
 source_set("passwords") {
   configs += [ "//build/config/compiler:enable_arc" ]
@@ -55,6 +56,7 @@ source_set("passwords") {
     "//components/password_manager/core/common",
     "//components/password_manager/sync/browser",
     "//components/prefs",
+    "//components/security_state/core:core",
     "//components/signin/core/browser",
     "//components/strings",
     "//components/sync",
@@ -67,11 +69,13 @@ source_set("passwords") {
     "//ios/chrome/browser/browser_state",
     "//ios/chrome/browser/infobars",
     "//ios/chrome/browser/signin",
+    "//ios/chrome/browser/ssl:ssl",
     "//ios/chrome/browser/sync/glue",
     "//ios/chrome/browser/ui",
     "//ios/chrome/browser/ui/commands",
     "//ios/chrome/browser/ui/elements",
     "//ios/chrome/browser/ui/infobars",
+    "//ios/chrome/browser/web",
     "//ios/public/provider/chrome/browser",
     "//ios/public/provider/chrome/browser/ui",
     "//ios/web",
@@ -102,7 +106,7 @@ source_set("unit_tests") {
   configs += [ "//build/config/compiler:enable_arc" ]
   testonly = true
   sources = [
-    "credential_manager_util_unittest.cc",
+    "credential_manager_unittest.mm",
     "password_controller_js_unittest.mm",
     "password_controller_off_the_record_unittest.mm",
     "password_controller_unittest.mm",
