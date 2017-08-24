@@ -22,6 +22,30 @@
       "revId": "9a698779ad728256ba00a626408fb228954edaeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a35d53c_ef68e441",
+        "filename": "chromeos/dbus/arc_midis_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-08-24T17:32:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc4bac9e_9479830c",
+      "range": {
+        "startLine": 19,
+        "startChar": 68,
+        "endLine": 19,
+        "endChar": 76
+      },
+      "revId": "9a698779ad728256ba00a626408fb228954edaeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
