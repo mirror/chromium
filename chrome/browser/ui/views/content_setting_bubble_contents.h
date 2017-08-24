@@ -64,6 +64,10 @@ class ContentSettingBubbleContents : public content::WebContentsObserver,
   void OnListItemRemovedAt(int index) override;
 
  protected:
+  // views::WidgetDelegate:
+  base::string16 GetWindowTitle() const override;
+  bool ShouldShowCloseButton() const override;
+
   // views::BubbleDialogDelegateView:
   void Init() override;
   View* CreateExtraView() override;
