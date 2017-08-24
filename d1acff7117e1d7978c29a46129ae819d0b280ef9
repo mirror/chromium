@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "075bf683_f6c1a969",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-24T21:10:57Z",
+      "side": 1,
+      "message": "(parens) or some more verbiage: “ per”, ”, see”, or similar.",
+      "range": {
+        "startLine": 171,
+        "startChar": 5,
+        "endLine": 171,
+        "endChar": 29
+      },
+      "revId": "d1acff7117e1d7978c29a46129ae819d0b280ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8643d99_28f2c926",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-24T21:10:57Z",
+      "side": 1,
+      "message": "Reword",
+      "revId": "d1acff7117e1d7978c29a46129ae819d0b280ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
