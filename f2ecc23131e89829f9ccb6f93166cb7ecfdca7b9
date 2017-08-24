@@ -70,6 +70,24 @@
       "revId": "f2ecc23131e89829f9ccb6f93166cb7ecfdca7b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e40834_ddb115da",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-24T10:54:08Z",
+      "side": 1,
+      "message": "The issue is that there is the close button next to the title slot. I don\u0027t think I can add something to the title slot that needs to span the whole width of the dialog?\n\nhttps://screenshot.googleplex.com/YoR7E2Vv62D.png\n\nThe body slot also doesn\u0027t work. As you mentioned it would behave incorrectly with scrolling. The tab bar would disappear when scrolling down.",
+      "parentUuid": "bf7e9569_e45ba6c7",
+      "revId": "f2ecc23131e89829f9ccb6f93166cb7ecfdca7b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

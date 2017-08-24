@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2504edfa_77ff1cb1",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-24T10:54:08Z",
+      "side": 1,
+      "message": "My goal is to set the dialog to a fixed height to be able to add different tabs to it which have content with different height. Using --cr-dialog-body-container for this works as well, so I removed this. Thanks",
+      "parentUuid": "e4690bae_f909242d",
+      "revId": "af1692d72eff795367d30ffe462b1a06cd85e331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30c17a70_91eb6039",
         "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-23T22:43:41Z",
       "side": 1,
       "message": "what are you planning on setting this to?",
+      "revId": "af1692d72eff795367d30ffe462b1a06cd85e331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b89adf86_d9fa3429",
+        "filename": "ui/webui/resources/cr_elements/cr_dialog/cr_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-08-24T10:54:08Z",
+      "side": 1,
+      "message": "I reduced the height of the title to 42px when I added the tab bar below. It is specified this way in the mocks and I think it looks better as the title + tabs use a bit less space.",
+      "parentUuid": "30c17a70_91eb6039",
       "revId": "af1692d72eff795367d30ffe462b1a06cd85e331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
