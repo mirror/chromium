@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a87d393_c1ebb2d2",
+        "filename": "chrome/browser/chromeos/arc/video/gpu_arc_video_service_host.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-24T07:00:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5fc1dcb_f607f495",
+      "range": {
+        "startLine": 78,
+        "startChar": 24,
+        "endLine": 78,
+        "endChar": 75
+      },
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eea301d7_abf839a7",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 19
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3210e379_0c15f587",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-24T07:00:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eea301d7_abf839a7",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 5
+      },
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "427e49e8_c297349e",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 19
@@ -62,6 +110,24 @@
       "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf88940_392fd785",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-24T07:00:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "427e49e8_c297349e",
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "9b2006a8_569b31b6",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-24T07:00:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97430276_d71d0fe6",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 28
+      },
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "253bbe30_7cf43988",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 19
@@ -108,6 +198,30 @@
       "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef1b6e3e_60d2a014",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-24T07:00:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "253bbe30_7cf43988",
+      "range": {
+        "startLine": 305,
+        "startChar": 13,
+        "endLine": 305,
+        "endChar": 24
+      },
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "a0f1ed83_fc0fc9f2",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-24T07:00:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d90ca22b_3e7aaf7f",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 11
+      },
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c54eda1_69596ed0",
         "filename": "components/arc/common/video_encode_accelerator.mojom",
         "patchSetId": 19
@@ -145,6 +283,30 @@
       "writtenOn": "2017-08-23T15:21:39Z",
       "side": 1,
       "message": "Same here, does it make sense to have the methods in VEA \"return\" the error in a callback?",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 52
+      },
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f3998e_f75e1e95",
+        "filename": "components/arc/common/video_encode_accelerator.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-24T07:00:34Z",
+      "side": 1,
+      "message": "In this CL, we mainly work for decoder, not encoder. Please let us do this in another CL.",
+      "parentUuid": "9c54eda1_69596ed0",
       "range": {
         "startLine": 144,
         "startChar": 0,

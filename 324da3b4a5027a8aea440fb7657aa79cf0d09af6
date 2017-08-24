@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "d54c1b8f_311455fb",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-08-24T07:00:34Z",
+      "side": 1,
+      "message": "I looked into Android codes and I found the passed buffer_size is used. https://googleplex-android-review.git.corp.google.com/c/platform/frameworks/av/+/2694160/9/media/libstagefright/ArcCodec.cpp#1362\nThen, buffer_size should be passed.",
+      "parentUuid": "02a58705_51a49117",
+      "revId": "324da3b4a5027a8aea440fb7657aa79cf0d09af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3484bdf_a83e36cb",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 18
