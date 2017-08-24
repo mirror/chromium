@@ -80,10 +80,8 @@ bool IsPositionInTextArea(const Position& position) {
   return isHTMLTextAreaElement(text_control);
 }
 
-static bool IsSpellCheckingEnabledFor(const VisibleSelection& selection) {
-  if (selection.IsNone())
-    return false;
-  return SpellChecker::IsSpellCheckingEnabledAt(selection.Start());
+static bool IsSpellCheckingEnabledFor(const Position& start_position) {
+  return SpellChecker::IsSpellCheckingEnabledAt(start_position);
 }
 
 SelectionInDOMTree SelectWord(const VisiblePosition& position) {
@@ -361,7 +359,8 @@ void SpellChecker::MarkMisspellingsForMovingParagraphs(
 }
 
 void SpellChecker::MarkMisspellingsInternal(const VisibleSelection& selection) {
-  if (!IsSpellCheckingEnabled() || !IsSpellCheckingEnabledFor(selection))
+  if (!IsSpellCheckingEnabled() || selection.IsNone() ||
+      !IsSpellCheckingEnabledFor(selection.Start()))
     return;
 
   const EphemeralRange& range = selection.ToNormalizedEphemeralRange();
@@ -385,7 +384,8 @@ void SpellChecker::MarkMisspellingsAfterApplyingCommand(
 
   if (!IsSpellCheckingEnabled())
     return;
-  if (!IsSpellCheckingEnabledFor(cmd.EndingVisibleSelection()))
+  if (cmd.EndingSelection().IsNone() ||
+      !IsSpellCheckingEnabledFor(cmd.EndingSelection().Start()))
     return;
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
@@ -423,9 +423,8 @@ void SpellChecker::MarkMisspellingsAfterTypingCommand(
   // selection is never marked, this does a check to see if typing made a new
   // word that is not in the current selection.  Basically, you get this by
   // being at the end of a word and typing a space.
-  VisiblePosition start =
-      CreateVisiblePosition(cmd.EndingVisibleSelection().Start(),
-                            cmd.EndingVisibleSelection().Affinity());
+  VisiblePosition start = CreateVisiblePosition(
+      cmd.EndingSelection().Start(), cmd.EndingSelection().Affinity());
   VisiblePosition previous = PreviousPositionOf(start);
 
   VisiblePosition word_start_of_previous =
@@ -710,8 +709,11 @@ void SpellChecker::UpdateMarkersForWordsAffectedByEditing(
   // updateStyleAndLayoutIgnorePendingStylesheets to caller. See
   // http://crbug.com/590369 for more details.
   GetFrame().GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
-  if (!IsSpellCheckingEnabledFor(
-          GetFrame().Selection().ComputeVisibleSelectionInDOMTree()))
+
+  const VisibleSelection& visible_selection =
+      GetFrame().Selection().ComputeVisibleSelectionInDOMTree();
+  if (visible_selection.IsNone() ||
+      !IsSpellCheckingEnabledFor(visible_selection.Start()))
     return;
 
   Document* document = GetFrame().GetDocument();
