@@ -49,8 +49,10 @@ void OpaqueBrowserFrameViewLinux::OnWindowButtonOrderingChange(
   // to a Widget. We need a Widget because layout crashes due to dependencies
   // on a ui::ThemeProvider().
   if (view_->GetWidget()) {
-    view_->Layout();
-    view_->SchedulePaint();
+    views::View* view = view_->parent();
+    DCHECK(view);
+    view->Layout();
+    view->SchedulePaint();
   }
 }
 
