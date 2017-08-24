@@ -16,6 +16,24 @@
       "revId": "d5c3e95c35442c786939a7863cb9b4b53dd6b9a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d89994ad_6c29d66d",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-24T21:07:57Z",
+      "side": 1,
+      "message": "the existing impl does not send notifications for prefix-suffix but it does for prefix-jibberish-suffix. Also, IsStylusDevice requires a trimmed string as well, so it is hard to get around the \"trimmed paths\" bit if we just want to do it once. i tried your suggestion (which is really clean) but the edge cases got in the way a bit :-P.",
+      "parentUuid": "2ea89848_7b251e3e",
+      "revId": "d5c3e95c35442c786939a7863cb9b4b53dd6b9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
