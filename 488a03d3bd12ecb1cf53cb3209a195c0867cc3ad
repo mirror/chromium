@@ -117,6 +117,24 @@
       "revId": "488a03d3bd12ecb1cf53cb3209a195c0867cc3ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a8a6e33_643683d4",
+        "filename": "third_party/WebKit/Source/modules/csspaint/ContextAttributes.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-24T15:29:52Z",
+      "side": 1,
+      "message": "Skimming the spec, it\u0027s probably not a bad idea to use the IDL dictionary logic to read that object, because reading a dictionary correctly per the IDL spec isn\u0027t trivial. (But you\u0027ll probably end up calling it in your own code instead of in an IDL interface if you don\u0027t expose anything else.)\n\nI don\u0027t see that in this CL yet, though. (And agreed that there\u0027s probably no benefit to having |alpha| be RuntimeEnabled.)",
+      "parentUuid": "27ee37af_ebaec77c",
+      "revId": "488a03d3bd12ecb1cf53cb3209a195c0867cc3ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
