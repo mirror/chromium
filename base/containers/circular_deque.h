@@ -311,7 +311,9 @@ class circular_deque_iterator : public circular_deque_const_iterator<T> {
 
   // Dereferencing.
   T& operator*() { return const_cast<T&>(base::operator*()); }
+  const T& operator*() const { return base::operator*(); }
   T* operator->() { return const_cast<T*>(base::operator->()); }
+  const T* operator->() const { return base::operator->(); }
 
   // Random access mutation.
   friend circular_deque_iterator operator+(const circular_deque_iterator& iter,
