@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "abaa3de2_545e3e2a",
+        "filename": "testing/buildbot/chromium.android.fyi.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-24T01:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a872d24_a55845da",
+      "range": {
+        "startLine": 422,
+        "startChar": 22,
+        "endLine": 422,
+        "endChar": 23
+      },
+      "revId": "6fa1f3e49e29a403cf7ccc7e1e68325ddd4b6d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62e028c1_c1e3f3bd",
         "filename": "testing/buildbot/chromium.android.json",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "6fa1f3e49e29a403cf7ccc7e1e68325ddd4b6d11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe67669f_b50aeac7",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-24T01:29:14Z",
+      "side": 1,
+      "message": "Android Cronet Builder currently doesn\u0027t run any tests at all; the kitkat builder below runs tests w/ the same build configuration.",
+      "parentUuid": "62e028c1_c1e3f3bd",
+      "range": {
+        "startLine": 192,
+        "startChar": 11,
+        "endLine": 192,
+        "endChar": 17
+      },
+      "revId": "6fa1f3e49e29a403cf7ccc7e1e68325ddd4b6d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "de495712_de3ef149",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-24T01:29:14Z",
+      "side": 1,
+      "message": "We do -- the L and M builders run on those versions, respectively. I\u0027m handling the K bots first because their current capacity is the most strained.",
+      "parentUuid": "fcf2cc74_54bf9f46",
+      "range": {
+        "startLine": 305,
+        "startChar": 15,
+        "endLine": 305,
+        "endChar": 24
+      },
+      "revId": "6fa1f3e49e29a403cf7ccc7e1e68325ddd4b6d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9f8cffd_3a41aba4",
         "filename": "testing/buildbot/chromium.android.json",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "e550e867_226cc9b0",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-24T01:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9f8cffd_3a41aba4",
+      "range": {
+        "startLine": 427,
+        "startChar": 23,
+        "endLine": 427,
+        "endChar": 32
+      },
+      "revId": "6fa1f3e49e29a403cf7ccc7e1e68325ddd4b6d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "624bddac_b6eebd4c",
         "filename": "testing/buildbot/chromium.android.json",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "6fa1f3e49e29a403cf7ccc7e1e68325ddd4b6d11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea2da63_cf3089de",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-24T01:29:14Z",
+      "side": 1,
+      "message": "Build configuration. This is release \u0026 arm v7. (It\u0027s the same as Android Cronet Builder.)",
+      "parentUuid": "624bddac_b6eebd4c",
+      "range": {
+        "startLine": 617,
+        "startChar": 18,
+        "endLine": 617,
+        "endChar": 24
+      },
+      "revId": "6fa1f3e49e29a403cf7ccc7e1e68325ddd4b6d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
