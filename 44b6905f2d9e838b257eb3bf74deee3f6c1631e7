@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14c1291f_f7fb09b1",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T17:28:36Z",
+      "side": 1,
+      "message": "This seems after the fact. Can\u0027t you change the callers to not call SetEnabled(false) if should-auto-hide-titlebars is true?",
+      "range": {
+        "startLine": 124,
+        "startChar": 5,
+        "endLine": 124,
+        "endChar": 43
+      },
+      "revId": "44b6905f2d9e838b257eb3bf74deee3f6c1631e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c18b201_9dd7b2e3",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T17:28:36Z",
+      "side": 1,
+      "message": "Won\u0027t this be pretty jarring? Say a bubble comes up and activation is lost, won\u0027t that trigger disabling immersive?",
+      "revId": "44b6905f2d9e838b257eb3bf74deee3f6c1631e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
