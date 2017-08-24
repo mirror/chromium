@@ -449,6 +449,11 @@ const CGFloat kMenuWidth = 264;
   [self deleteNodes:nodes];
 }
 
+- (void)tableViewIsShowingSpinner:(BOOL)showingSpinner {
+  // TODO this function doesn't work.. investigate later to see why.
+  self.contextBar.alpha = showingSpinner ? 0 : 1;
+}
+
 #pragma mark - BookmarkFolderViewControllerDelegate
 
 - (void)folderPicker:(BookmarkFolderViewController*)folderPicker

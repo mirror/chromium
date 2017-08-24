@@ -35,6 +35,9 @@ class ChromeBrowserState;
     selectedNodesForDeletion:
         (const std::set<const bookmarks::BookmarkNode*>&)nodes;
 
+// Tells the delegates a spinner is showing
+- (void)tableViewIsShowingSpinner:(BOOL)showingSpinner;
+
 @end
 
 @interface BookmarkTableView : UIView
