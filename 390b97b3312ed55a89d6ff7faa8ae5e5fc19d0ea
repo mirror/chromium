@@ -122,6 +122,24 @@
     },
     {
       "key": {
+        "uuid": "b0934299_7cc1c4f6",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T00:07:21Z",
+      "side": 1,
+      "message": "It\u0027s less confusing, which seems to have its own benefit, and that seems to hold regardless of we move common/ into //blink or not (or I actually thought it\u0027s more encouraging now that we\u0027re going to have shorter absolute path).  My assumption is that we basically like to use absolute paths when possible, it\u0027s less confusing and consistent with other directories (except for the ones in third_party).",
+      "parentUuid": "eda2e155_ec649f70",
+      "revId": "390b97b3312ed55a89d6ff7faa8ae5e5fc19d0ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74ec30d5_c0501db7",
         "filename": "third_party/WebKit/Source/platform/exported/DEPS",
         "patchSetId": 8
