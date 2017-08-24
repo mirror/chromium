@@ -181,6 +181,9 @@ struct GPU_EXPORT Capabilities {
 
   bool disable_2d_canvas_copy_on_write = false;
 
+  // Use GL_CHROMIUM_texture_buffer extension if true.
+  bool texture_buffer_chromium = false;
+
   int major_version = 2;
   int minor_version = 0;
 };
