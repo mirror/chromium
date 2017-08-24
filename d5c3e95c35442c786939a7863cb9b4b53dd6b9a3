@@ -70,6 +70,24 @@
       "revId": "d5c3e95c35442c786939a7863cb9b4b53dd6b9a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f925e710_5099e612",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-24T22:29:54Z",
+      "side": 1,
+      "message": "here\u0027s another idea: what about just doing this in OnPeripheral...\n\n  if (!IsHIDBattery())\n    log, return\n  id \u003d path\n\n? you could also store the path directly within BatteryInfo in addition to using it as a unique id; that gets rid of the hidden requirement that bluetooth addresses get used as ids.\n\nit\u0027s not like we\u0027re ever going to have a bunch of notifications, so RemoveBattery can just do this:\n\n  for (auto it : batteries_) {\n    std::string notification_address;\n    if (!ExtractBluetoothAddressFromBatteryPath(it.second-\u003epath,\n             \u0026notification_address) || address !\u003d notification_address) {\n      continue;\n    }\n    // remove notification and battery\n  }\n\ndoes that seem clean?",
+      "parentUuid": "beb3effd_a02f8911",
+      "revId": "d5c3e95c35442c786939a7863cb9b4b53dd6b9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
