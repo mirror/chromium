@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "074a57e0_9881a043",
+        "filename": "chrome/browser/plugins/plugin_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T16:27:13Z",
+      "side": 1,
+      "message": "routing_id_ comes via ChromeViewHostMsg_BlockedOutdatedPlugin sent and obtained by ChromeContentRendererClient::CreatePlugin [1].  I am not sure if using RenderViewHost above is correct.  OTOH, I am also not sure if 1) I should remember the RenderFrame in PluginPlaceholderHost VS 2) make PluginObserver a RenderFrameObserver (currently it is a WebContentsObserver).\n\nHmmmmm.... not sure what to do.  Since this CL tries to mostly preserve the current behavior, maybe I should just leave a TODO here?  WDYT?\n\n[1] https://cs.chromium.org/chromium/src/chrome/renderer/chrome_content_renderer_client.cc?type\u003dcs\u0026q\u003dChromeViewHostMsg_BlockedOutdatedPlugin\u0026l\u003d953",
+      "range": {
+        "startLine": 142,
+        "startChar": 52,
+        "endLine": 142,
+        "endChar": 63
+      },
+      "revId": "67db85c4a0bb5dca314d1e6596f658c446e1b0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71855149_044ec7ef",
+        "filename": "components/guest_view/browser/guest_view_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T16:27:13Z",
+      "side": 1,
+      "message": "Just preserving the current behavior... no idea if sending via RVH matches the routing id (i.e. element_instance_id_)...",
+      "range": {
+        "startLine": 439,
+        "startChar": 24,
+        "endLine": 439,
+        "endChar": 43
+      },
+      "revId": "67db85c4a0bb5dca314d1e6596f658c446e1b0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5786650e_8ad415ef",
+        "filename": "content/browser/media/session/media_session_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T16:27:13Z",
+      "side": 1,
+      "message": "This is a RenderFrameHost.",
+      "range": {
+        "startLine": 80,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 11
+      },
+      "revId": "67db85c4a0bb5dca314d1e6596f658c446e1b0ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

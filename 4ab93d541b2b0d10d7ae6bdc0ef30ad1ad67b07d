@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51bbdf20_00cdb000",
+        "filename": "content/browser/media/media_web_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T16:27:13Z",
+      "side": 0,
+      "message": "first-\u003eGetRoutingID() is a RenderFrameHost::GetRoutingID - we shouldn\u0027t send via RVH (which is what WCO::Send would do).  This is fixed by this CL (I think).",
+      "range": {
+        "startLine": 145,
+        "startChar": 26,
+        "endLine": 145,
+        "endChar": 45
+      },
+      "revId": "4ab93d541b2b0d10d7ae6bdc0ef30ad1ad67b07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b2e9229_e848f292",
+        "filename": "content/browser/plugin_content_origin_whitelist.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T16:27:13Z",
+      "side": 0,
+      "message": "Another fixed bug where a message routed to a frame was sent via RVH.",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "4ab93d541b2b0d10d7ae6bdc0ef30ad1ad67b07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71c66d31_247f0371",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2943,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T16:27:13Z",
+      "side": 0,
+      "message": "After this CL, these null checks are no longer performed.  I think this might be okay:\n1) if needed, the caller can do the checks\n2) tests pass",
+      "range": {
+        "startLine": 2943,
+        "startChar": 2,
+        "endLine": 2943,
+        "endChar": 28
+      },
+      "revId": "4ab93d541b2b0d10d7ae6bdc0ef30ad1ad67b07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e8c497_708fbf70",
+        "filename": "content/public/browser/web_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-08-24T16:27:13Z",
+      "side": 0,
+      "message": "After this CL, these null checks are no longer performed.  I think this might be okay:\n1) if needed, the caller can do the checks\n2) tests pass",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 55,
+        "endChar": 20
+      },
+      "revId": "4ab93d541b2b0d10d7ae6bdc0ef30ad1ad67b07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
