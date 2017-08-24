@@ -45,6 +45,30 @@
       "revId": "38a484a148098d10a095105495c7642faae9de84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29213f22_c48629fc",
+        "filename": "chrome/browser/ui/framebust_block_infobar_delegate.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-24T09:39:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c942caf_fc1880a3",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "38a484a148098d10a095105495c7642faae9de84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
