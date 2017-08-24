@@ -16,6 +16,24 @@
       "revId": "a1dba69371fb1d900f3ef1a5b080b0e03d04a9e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5a63a1e_63802776",
+        "filename": "extensions/browser/api/management/management_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-08-24T18:34:09Z",
+      "side": 1,
+      "message": "Are there reasons that an extension must remain disabled other than by management policy (e.g. UwS blacklist)?\n\nFrom an enterprise perspective what we really care about is whether a user may re-enable an extension. Whether an extension is perma-disabled due to our policy or another mechanism isn\u0027t really important. The mayEnable field sounds like it\u0027d be a good way of conveying this information.",
+      "parentUuid": "604baabb_2667efc3",
+      "revId": "a1dba69371fb1d900f3ef1a5b080b0e03d04a9e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
