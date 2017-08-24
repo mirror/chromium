@@ -443,10 +443,11 @@ static bool GetDeviceChannels(AudioDeviceID device,
 
 class AudioManagerMac::AudioPowerObserver : public base::PowerObserver {
  public:
-  AudioPowerObserver()
+  AudioPowerObserver(AudioManagerMac* manager)
       : is_suspending_(false),
         is_monitoring_(base::PowerMonitor::Get()),
-        num_resume_notifications_(0) {
+        num_resume_notifications_(0),
+        manager_(manager) {
     // The PowerMonitor requires significant setup (a CFRunLoop and preallocated
     // IO ports) so it's not available under unit tests.  See the OSX impl of
     // base::PowerMonitorDeviceSource for more details.
@@ -476,6 +477,13 @@ class AudioManagerMac::AudioPowerObserver : public base::PowerObserver {
     return is_suspending_ || base::TimeTicks::Now() < earliest_start_time_;
   }
 
+  bool ShouldDeferAllStreamOperations() const {
+    DCHECK(thread_checker_.CalledOnValidThread());
+    // TODO: Add experiment and check it.
+    const bool experiment_is_enabled = false;
+    return experiment_is_enabled && is_suspending_;
+  }
+
   bool IsOnBatteryPower() const {
     DCHECK(thread_checker_.CalledOnValidThread());
     return base::PowerMonitor::Get()->IsOnBatteryPower();
@@ -502,6 +510,7 @@ class AudioManagerMac::AudioPowerObserver : public base::PowerObserver {
   base::TimeTicks earliest_start_time_;
   base::ThreadChecker thread_checker_;
   size_t num_resume_notifications_;
+  AudioManagerMac* manager_;
 
   DISALLOW_COPY_AND_ASSIGN(AudioPowerObserver);
 };
@@ -870,7 +879,7 @@ AudioParameters AudioManagerMac::GetPreferredOutputStreamParameters(
 
 void AudioManagerMac::InitializeOnAudioThread() {
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
-  power_observer_.reset(new AudioPowerObserver());
+  power_observer_.reset(new AudioPowerObserver(this));
 }
 
 void AudioManagerMac::HandleDeviceChanges() {
@@ -915,6 +924,11 @@ bool AudioManagerMac::IsSuspending() const {
 bool AudioManagerMac::ShouldDeferStreamStart() const {
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
   return power_observer_->ShouldDeferStreamStart();
+}
+
+bool AudioManagerMac::ShouldDeferAllStreamOperations() const {
+  DCHECK(GetTaskRunner()->BelongsToCurrentThread());
+  return power_observer_->ShouldDeferAllStreamOperations();
 }
 
 bool AudioManagerMac::IsOnBatteryPower() const {
@@ -1044,6 +1058,18 @@ bool AudioManagerMac::MaybeChangeBufferSize(AudioDeviceID device_id,
   }
 
   return (result == noErr);
+}
+
+void AudioManagerMac::OnSuspend() {
+  for (auto* stream : low_latency_input_streams_)
+    stream->Suspend();
+  // TODO: Output and high-latency input.
+}
+
+void AudioManagerMac::OnResume() {
+  for (auto* stream : low_latency_input_streams_)
+    stream->Resume();
+  // TODO: Output and high-latency input.
 }
 
 bool AudioManagerMac::IncreaseIOBufferSizeIfPossible(AudioDeviceID device_id) {

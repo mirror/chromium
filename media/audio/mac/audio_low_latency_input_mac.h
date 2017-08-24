@@ -91,6 +91,10 @@ class MEDIA_EXPORT AUAudioInputStream
   // which exists for output units.
   bool IsRunning();
 
+  // Suspend and resume.
+  void Suspend();
+  void Resume();
+
   AudioDeviceID device_id() const { return input_device_id_; }
   size_t requested_buffer_size() const { return number_of_frames_; }
 
@@ -296,6 +300,12 @@ class MEDIA_EXPORT AUAudioInputStream
 
   // Callback to send statistics info.
   AudioManager::LogCallback log_callback_;
+
+  // For suspend/resume handling. Naming is tentative.
+  enum State { kClosed, kOpened, kStarted };
+  State state_;
+  double volume_at_resume_;
+  AudioInputCallback* callback_at_resume_;  // TODO: maybe just use |sink_|?
 
   // Used to ensure DevicePropertyChangedOnMainThread() is not called when
   // this object is destroyed.
