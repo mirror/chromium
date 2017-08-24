@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab7f39f_75331306",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:42:09Z",
+      "side": 1,
+      "message": "nit: What does \"Chrome-specific\" mean in this context? All of this code is in Chromium, so presumably all we\u0027re saying is to use GetDefaultJob() (rather than mx_job_default())?",
+      "revId": "2fa33b76273db05315d41342f1402c03b2c7558e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
