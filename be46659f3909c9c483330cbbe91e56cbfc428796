@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f62d6dd2_9b5ae800",
+        "filename": "chrome/browser/resources/settings/a11y_page/manage_a11y_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-24T01:32:16Z",
+      "side": 0,
+      "message": "I thought about correcting the typo here and noticed that this is not used anywhere that grep could find.",
+      "revId": "be46659f3909c9c483330cbbe91e56cbfc428796",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
