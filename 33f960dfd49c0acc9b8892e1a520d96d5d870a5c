@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c50c491_c0de8723",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-24T17:57:09Z",
+      "side": 1,
+      "message": "Nit: Use base::TimeDelta::FromDays(28).InSeconds()\n\nAlso, kFourWeeksInSeconds",
+      "range": {
+        "startLine": 137,
+        "startChar": 19,
+        "endLine": 137,
+        "endChar": 40
+      },
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c93747c_3d10a0c5",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-24T17:57:09Z",
+      "side": 1,
+      "message": "Use sparse histogram here too, since error codes are sparse.",
+      "range": {
+        "startLine": 152,
+        "startChar": 20,
+        "endLine": 152,
+        "endChar": 21
+      },
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1038d044_e167f629",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-24T17:57:09Z",
+      "side": 1,
+      "message": "If you want to keep the values as they are in this enum, please use UMA_HISTOGRAM_SPARSE_SLOWLY(). This a version of the histogram that won\u0027t allocate MAX buckets - which is wasteful with the enum values you have - and instead is good at logging sparse values.\n\nThe enum you have is OK otherwise. You could consider just having an array you iterate through rather than 40 lines of enums and if statements.",
+      "range": {
+        "startLine": 161,
+        "startChar": 53,
+        "endLine": 161,
+        "endChar": 0
+      },
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe39b91a_8d94ab60",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-24T17:57:09Z",
+      "side": 1,
+      "message": "Nit: kMaxRetriesEver",
+      "range": {
+        "startLine": 165,
+        "startChar": 19,
+        "endLine": 165,
+        "endChar": 35
+      },
+      "revId": "33f960dfd49c0acc9b8892e1a520d96d5d870a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
