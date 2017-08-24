@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d18a56b_16697bf9",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-24T06:45:03Z",
+      "side": 1,
+      "message": "Immutable (const) args first, then mutable args.\nconst std::string\u0026 line, std::vector\u003cCpuInfo\u003e* info",
+      "revId": "24e0971c3182201c59fa306fe338c0f168cfcc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c551a101_2c2586e2",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-24T06:45:03Z",
+      "side": 1,
+      "message": "info then result.",
+      "revId": "24e0971c3182201c59fa306fe338c0f168cfcc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ff4552_6dba3f36",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-24T06:45:03Z",
+      "side": 1,
+      "message": "... API ... 32-bit",
+      "range": {
+        "startLine": 26,
+        "startChar": 48,
+        "endLine": 26,
+        "endChar": 55
+      },
+      "revId": "24e0971c3182201c59fa306fe338c0f168cfcc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5355edb3_e160282f",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-24T06:45:03Z",
+      "side": 1,
+      "message": "Ah, I found that base::saturated_cast\u003cint32_t\u003e() can do the same thing. Do you want to test if it works as expected?\n\n#include \"base/numerics/safe_conversions.h\"",
+      "revId": "24e0971c3182201c59fa306fe338c0f168cfcc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e34b98_d524242b",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-24T06:45:03Z",
+      "side": 1,
+      "message": "Handles the IO operations.",
+      "revId": "24e0971c3182201c59fa306fe338c0f168cfcc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c8e655_992e3e58",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-24T06:45:03Z",
+      "side": 1,
+      "message": "#include \"base/memory/ref_counted.h\"",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 15
+      },
+      "revId": "24e0971c3182201c59fa306fe338c0f168cfcc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdbe3423_acfc65b1",
+        "filename": "chrome/browser/ui/webui/sys_internals/sys_internals_message_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001853
+      },
+      "writtenOn": "2017-08-24T06:45:03Z",
+      "side": 1,
+      "message": "Calls\n\nOr rephrase to \"Shows warning message on Javascript console.\"\n\nFor function description comments, they should be descriptive (\"Opens the file\") rather than imperative (\"Open the file\"); the comment describes the function, it does not tell the function what to do. On the contrary, for implementation comments, they should be imperative.\n\nhttps://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 9
+      },
+      "revId": "24e0971c3182201c59fa306fe338c0f168cfcc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
