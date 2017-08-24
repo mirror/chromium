@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2defa5d7_38df4c00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-24T13:25:09Z",
+      "side": 1,
+      "message": "The latest ED includes the \u0027?\u0027. According to the spec a resolution from February this year.\n\nhttps://drafts.csswg.org/css-text-decor-3/#propdef-text-emphasis-position",
+      "parentUuid": "4a5cecc0_593d8441",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e252f3b_20fd2167",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Actually spec said exact this. So it might be better to comment as spec said.\n(please see https://www.w3.org/TR/css-text-decor-3/#text-emphasis-position-property)\nBut current implementation can support without \u0027right\u0027 or \u0027left\u0027 and I just followed previous implementation. Should I follow the spec strictly ?",
       "parentUuid": "edbdf678_46121e21",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e05180a_213c197e",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPITextEmphasisPosition.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-24T13:25:09Z",
+      "side": 1,
+      "message": "See my comment on the CL description.",
+      "parentUuid": "6396005b_a8b201e3",
       "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -241,6 +277,24 @@
       "side": 1,
       "message": "Right, I will try to use enum values.",
       "parentUuid": "7f46ccad_9fafa642",
+      "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1b5910_34a3afbb",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyleConstants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-24T13:25:09Z",
+      "side": 1,
+      "message": "Check with shend@ for advice on this one. I\u0027m not that familiar with generating the computed style methods and how that\u0027d fit.",
+      "parentUuid": "6c0b7c08_7a0c08ee",
       "revId": "b9e36174dc9c6a523d0fe045f30c6f92c7ae1be4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
