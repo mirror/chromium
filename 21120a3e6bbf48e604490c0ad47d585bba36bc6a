@@ -22,6 +22,30 @@
       "revId": "21120a3e6bbf48e604490c0ad47d585bba36bc6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ca6b85_44f67e55",
+        "filename": "third_party/WebKit/Source/platform/network/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1177896
+      },
+      "writtenOn": "2017-08-24T13:04:23Z",
+      "side": 1,
+      "message": "Yes, that make sense. I\u0027ll try to do it.",
+      "parentUuid": "afa92575_c3156388",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 14
+      },
+      "revId": "21120a3e6bbf48e604490c0ad47d585bba36bc6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
