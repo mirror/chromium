@@ -9,6 +9,7 @@
 
 #include "base/containers/hash_tables.h"
 #include "base/strings/string16.h"
+#include "content/common/database.mojom.h"
 #include "content/public/browser/browser_message_filter.h"
 #include "ipc/ipc_platform_file.h"
 #include "storage/browser/database/database_tracker.h"
@@ -24,7 +25,8 @@ namespace content {
 class DatabaseMessageFilter : public BrowserMessageFilter,
                               public storage::DatabaseTracker::Observer {
  public:
-  explicit DatabaseMessageFilter(storage::DatabaseTracker* db_tracker);
+  explicit DatabaseMessageFilter(int process_id,
+                                 storage::DatabaseTracker* db_tracker);
 
   // BrowserMessageFilter implementation.
   void OnChannelClosing() override;
@@ -93,6 +95,17 @@ class DatabaseMessageFilter : public BrowserMessageFilter,
                           IPC::Message* reply_msg,
                           int reschedule_count);
 
+  // Callback to ensure we close the connection to the WebDatabase mojo
+  // interface on the db_tracker task runner.
+  void CloseOnDatabaseTracker();
+
+  // Helper function to get the mojo interface for the WebDatabase on the
+  // render process. Will establish the connection if it does not already exist.
+  content::mojom::WebDatabase& GetWebDatabase();
+
+  // The render process ID that we use to bind to the correct render process.
+  const int process_id_;
+
   // The database tracker for the current browser context.
   scoped_refptr<storage::DatabaseTracker> db_tracker_;
 
@@ -102,6 +115,9 @@ class DatabaseMessageFilter : public BrowserMessageFilter,
 
   // Keeps track of all DB connections opened by this renderer
   storage::DatabaseConnections database_connections_;
+
+  // Allows us to call render process to notify change in database state.
+  content::mojom::WebDatabasePtr database_provider_;
 };
 
 }  // namespace content
