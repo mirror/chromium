@@ -22,6 +22,30 @@
       "revId": "cc9f5730ee747c92fb8340818ee185d36bf8a89a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d52115c_d7ccfae5",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-24T22:45:37Z",
+      "side": 0,
+      "message": "The bug attached is specifically for mobile tab clobbered. I don\u0027t think it is worth filing a different bug to track this, since Tab is going away anyway. What do you think?",
+      "parentUuid": "2d2d91b8_c8ebafac",
+      "range": {
+        "startLine": 1378,
+        "startChar": 20,
+        "endLine": 1378,
+        "endChar": 26
+      },
+      "revId": "cc9f5730ee747c92fb8340818ee185d36bf8a89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
