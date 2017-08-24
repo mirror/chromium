@@ -323,3 +323,14 @@ TextUtils.SourceEdit = class {
     return TextUtils.TextRange.fromEdit(this.oldRange, this.newText);
   }
 };
+
+TextUtils.SourceSelection = class {
+  /**
+   * @param {string} sourceURL
+   * @param {!TextUtils.TextRange} range
+   */
+  constructor(sourceURL, range) {
+    this.sourceURL = sourceURL;
+    this.range = range;
+  }
+};

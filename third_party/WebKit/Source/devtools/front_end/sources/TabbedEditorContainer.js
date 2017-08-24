@@ -240,6 +240,8 @@ Sources.TabbedEditorContainer = class extends Common.Object {
     var range = /** @type {!TextUtils.TextRange} */ (event.data);
     this._history.updateSelectionRange(this._currentFile.url(), range);
     this._history.save(this._previouslyViewedFilesSetting);
+
+    UI.context.setFlavor(TextUtils.SourceSelection, new TextUtils.SourceSelection(this._currentFile.url(), range));
   }
 
   /**
