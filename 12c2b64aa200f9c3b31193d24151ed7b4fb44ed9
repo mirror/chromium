@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "cec69a7a_3a461f03",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-08-24T02:53:36Z",
+      "side": 1,
+      "message": "Yep, that\u0027s the one.",
+      "parentUuid": "35f235aa_740b6db9",
+      "revId": "12c2b64aa200f9c3b31193d24151ed7b4fb44ed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c9922ae_e209bbc6",
         "filename": "chrome/browser/permissions/permission_request_manager.h",
         "patchSetId": 6
