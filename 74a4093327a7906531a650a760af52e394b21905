@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9d60eb3_a47e4709",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T18:54:43Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be set if a content transition isn\u0027t happening. How about\n\nmShouldOpenSheetOnNextContentChange \u003d itemId !\u003d mSelectedItemId;",
+      "range": {
+        "startLine": 245,
+        "startChar": 8,
+        "endLine": 245,
+        "endChar": 43
+      },
+      "revId": "74a4093327a7906531a650a760af52e394b21905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbecd29c_658dc8c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T18:54:43Z",
+      "side": 1,
+      "message": "We only want to set the sheet state to full here if we\u0027re not changing content. If we call this while the content is changing I think too many things will be animating at once.\n\nIf we are changing content, either #displayNewTabUi() or this class\u0027s #onSheetContentChanged() can set the state to full.",
+      "range": {
+        "startLine": 255,
+        "startChar": 8,
+        "endLine": 255,
+        "endChar": 75
+      },
+      "revId": "74a4093327a7906531a650a760af52e394b21905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
