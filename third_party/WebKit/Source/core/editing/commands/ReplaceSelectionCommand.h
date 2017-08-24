@@ -137,7 +137,7 @@ class CORE_EXPORT ReplaceSelectionCommand final : public CompositeEditCommand {
                                     EditingState*);
 
   bool PerformTrivialReplace(const ReplacementFragment&, EditingState*);
-  void SetUpStyle(const VisibleSelection&);
+  void SetUpStyle();
   void InsertParagraphSeparatorIfNeeds(const VisibleSelection&,
                                        const ReplacementFragment&,
                                        EditingState*);
