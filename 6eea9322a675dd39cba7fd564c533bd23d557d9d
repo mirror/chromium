@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09cea28a_43e8f46e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-24T17:40:36Z",
+      "side": 1,
+      "message": "Can we put this into setUp()? It seems we need to set up this mock host in almost every test case, and all the setups are the same.",
+      "revId": "6eea9322a675dd39cba7fd564c533bd23d557d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85dc7bc4_1802d7a4",
+        "filename": "third_party/WebKit/Tools/Scripts/wpt-import",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-24T17:40:36Z",
+      "side": 1,
+      "message": "Kinda irrelevant question here: isn\u0027t the purpose of using vpython provided by depot_tools to ensure Python version? Why do we still need to check version this way?",
+      "revId": "6eea9322a675dd39cba7fd564c533bd23d557d9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
