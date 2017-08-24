@@ -429,10 +429,7 @@ void Shell::UpdateShelfVisibility() {
 }
 
 PrefService* Shell::GetLocalStatePrefService() const {
-  if (shell_port_->GetAshConfig() == Config::MASH)
-    return local_state_mash_.get();
-
-  return local_state_non_mash_;
+  return local_state_.get();
 }
 
 WebNotificationTray* Shell::GetWebNotificationTray() {
@@ -596,15 +593,6 @@ void Shell::NotifyShelfAutoHideBehaviorChanged(aura::Window* root_window) {
 // static
 void Shell::SetIsBrowserProcessWithMash() {
   g_is_browser_process_with_mash = true;
-}
-
-void Shell::SetLocalStatePrefService(PrefService* local_state) {
-  DCHECK(GetAshConfig() != Config::MASH);
-  DCHECK(local_state);
-  local_state_non_mash_ = local_state;
-
-  for (auto& observer : shell_observers_)
-    observer.OnLocalStatePrefServiceInitialized(local_state_non_mash_);
 }
 
 void Shell::NotifyAppListVisibilityChanged(bool visible,
@@ -855,8 +843,7 @@ Shell::~Shell() {
   // NightLightController depeneds on the PrefService and must be destructed
   // before it. crbug.com/724231.
   night_light_controller_ = nullptr;
-  local_state_mash_.reset();
-  local_state_non_mash_ = nullptr;
+  local_state_.reset();
   shell_delegate_.reset();
 
   for (auto& observer : shell_observers_)
@@ -877,7 +864,7 @@ void Shell::Init(const ShellInitParams& init_params) {
   wallpaper_delegate_ = shell_delegate_->CreateWallpaperDelegate();
 
   // Connector can be null in tests.
-  if (config == Config::MASH && shell_delegate_->GetShellConnector()) {
+  if (shell_delegate_->GetShellConnector()) {
     // Connect to local state prefs now, but wait for an active user before
     // connecting to the profile pref service. The login screen has a temporary
     // user profile that is not associated with a real user.
@@ -1301,13 +1288,16 @@ void Shell::InitializeShelf() {
 
 void Shell::OnLocalStatePrefServiceInitialized(
     std::unique_ptr<::PrefService> pref_service) {
-  DCHECK(GetAshConfig() == Config::MASH);
+  DCHECK(!local_state_);
   // |pref_service| is null if can't connect to Chrome (as happens when
   // running mash outside of chrome --mash and chrome isn't built).
-  local_state_mash_ = std::move(pref_service);
+  if (!pref_service)
+    return;
+
+  local_state_ = std::move(pref_service);
 
   for (auto& observer : shell_observers_)
-    observer.OnLocalStatePrefServiceInitialized(local_state_mash_.get());
+    observer.OnLocalStatePrefServiceInitialized(local_state_.get());
 }
 
 }  // namespace ash

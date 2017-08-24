@@ -130,10 +130,6 @@ void Preferences::RegisterPrefs(PrefRegistrySimple* registry) {
       enterprise_management::SystemTimezoneProto::USERS_DECIDE);
 
   registry->RegisterStringPref(prefs::kCastReceiverName, "");
-
-  // Register ash prefs.
-  if (!ash_util::IsRunningInMash())
-    ash::Shell::RegisterLocalStatePrefs(registry);
 }
 
 // static
