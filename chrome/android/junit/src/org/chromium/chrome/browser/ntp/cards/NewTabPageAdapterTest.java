@@ -960,12 +960,10 @@ public class NewTabPageAdapterTest {
 
     @Test
     @Feature({"Ntp"})
-    // TODO(https://crbug.com/754778) improve annotation processor, flags repeated to enable modern.
-    @Features({@Features.Register(value = ChromeFeatureList.NTP_CONDENSED_LAYOUT, enabled = false),
-            @Features.Register(value = ChromeFeatureList.CHROME_HOME),
-            @Features.Register(value = ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT),
-            @Features.Register(value = ChromeFeatureList.CONTENT_SUGGESTIONS_SCROLL_TO_LOAD,
-                    enabled = false)})
+    @Features({
+            @Features.Register(ChromeFeatureList.CHROME_HOME),
+            @Features.Register(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT)
+    })
     public void testSigninPromoModern() {
         when(mMockSigninManager.isSignInAllowed()).thenReturn(true);
         when(mMockSigninManager.isSignedInOnNative()).thenReturn(false);
@@ -1132,11 +1130,10 @@ public class NewTabPageAdapterTest {
     @Test
     @Feature({"Ntp"})
     // TODO(https://crbug.com/754778) improve annotation processor, flags repeated to enable modern.
-    @Features({@Features.Register(value = ChromeFeatureList.NTP_CONDENSED_LAYOUT, enabled = false),
+    @Features({
             @Features.Register(value = ChromeFeatureList.CHROME_HOME),
-            @Features.Register(value = ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT),
-            @Features.Register(value = ChromeFeatureList.CONTENT_SUGGESTIONS_SCROLL_TO_LOAD,
-                    enabled = false)})
+            @Features.Register(value = ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT)
+    })
     public void testAllDismissedModern() {
         when(mUiDelegate.isVisible()).thenReturn(true);
 
