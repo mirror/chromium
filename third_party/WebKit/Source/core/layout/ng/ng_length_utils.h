@@ -121,6 +121,7 @@ CORE_EXPORT NGBoxStrut ComputePadding(const NGConstraintSpace&,
 // compute the margins that are auto, if any, and adjusts
 // the given NGBoxStrut accordingly.
 CORE_EXPORT void ApplyAutoMargins(const NGConstraintSpace&,
+                                  const ComputedStyle& parent_style,
                                   const ComputedStyle&,
                                   const LayoutUnit& inline_size,
                                   NGBoxStrut* margins);
