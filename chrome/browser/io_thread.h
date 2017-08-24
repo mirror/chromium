@@ -26,7 +26,6 @@
 #include "chrome/common/features.h"
 #include "components/metrics/data_use_tracker.h"
 #include "components/prefs/pref_member.h"
-#include "components/ssl_config/ssl_config_service_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/browser_thread_delegate.h"
 #include "content/public/common/network_service.mojom.h"
@@ -77,7 +76,6 @@ class LoggingNetworkChangeObserver;
 class NetworkQualityEstimator;
 class ProxyConfigService;
 class RTTAndThroughputEstimatesObserver;
-class SSLConfigService;
 class URLRequestContext;
 class URLRequestContextBuilderMojo;
 class URLRequestContextGetter;
@@ -238,9 +236,6 @@ class IOThread : public content::BrowserThreadDelegate {
   std::unique_ptr<net::HttpAuthHandlerFactory> CreateDefaultAuthHandlerFactory(
       net::HostResolver* host_resolver);
 
-  // Returns an SSLConfigService instance.
-  net::SSLConfigService* GetSSLConfigService();
-
   void ChangedToOnTheRecordOnIOThread();
 
   void UpdateDnsClientEnabled();
@@ -319,11 +314,6 @@ class IOThread : public content::BrowserThreadDelegate {
   // the IO thread.
   content::mojom::NetworkContextRequest network_context_request_;
   content::mojom::NetworkContextParamsPtr network_context_params_;
-
-  // This is an instance of the default SSLConfigServiceManager for the current
-  // platform and it gets SSL preferences from local_state object.
-  std::unique_ptr<ssl_config::SSLConfigServiceManager>
-      ssl_config_service_manager_;
 
   // These member variables are initialized by a task posted to the IO thread,
   // which gets posted by calling certain member functions of IOThread.

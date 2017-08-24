@@ -29,12 +29,17 @@ class NET_EXPORT SSLConfigService
     // data in SSLConfig, just those that qualify as a user config change.
     // The following settings are considered user changes:
     //     rev_checking_enabled
+    //     rev_checking_required_local_anchors
+    //     sha1_local_anchors_enabled
+    //     common_name_fallback_local_anchors_enabled
     //     version_min
     //     version_max
+    //     tls13_variant
     //     disabled_cipher_suites
     //     channel_id_enabled
     //     false_start_enabled
     //     require_forward_secrecy
+    //     require_ecdhe
     virtual void OnSSLConfigChanged() = 0;
 
    protected:
@@ -59,6 +64,11 @@ class NET_EXPORT SSLConfigService
   // Calls the OnSSLConfigChanged method of registered observers. Should only be
   // called on the IO thread.
   void NotifySSLConfigChange();
+
+  // Compares if two SSLConfigs are the same, in terms of user configuration
+  // (See Observer for list of checked fields).
+  static bool UserConfigsAreEqualForTesting(const SSLConfig& config1,
+                                            const SSLConfig& config2);
 
  protected:
   friend class base::RefCountedThreadSafe<SSLConfigService>;

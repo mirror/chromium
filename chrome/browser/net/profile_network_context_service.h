@@ -6,10 +6,12 @@
 #define CHROME_BROWSER_NET_PROFILE_NETWORK_CONTEXT_SERVICE_H_
 
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/prefs/pref_member.h"
 #include "content/public/common/network_service.mojom.h"
 
+class ChromeSSLConfigTracker;
 class Profile;
 
 namespace user_prefs {
@@ -57,6 +59,11 @@ class ProfileNetworkContextService : public KeyedService {
   // Checks |quic_allowed_|, and disables QUIC if needed.
   void DisableQuicIfNotAllowed();
 
+  // Create the NetworkContextParams for the main NetworkContext (Either the
+  // network service one one, if the network service is enabled, or the in
+  // process once, if it's not).
+  content::mojom::NetworkContextParamsPtr CreateMainNetworkContextParams();
+
   Profile* const profile_;
 
   // This is a NetworkContext interface that uses ProfileIOData's
@@ -70,6 +77,9 @@ class ProfileNetworkContextService : public KeyedService {
   content::mojom::NetworkContextRequest profile_io_data_context_request_;
 
   BooleanPrefMember quic_allowed_;
+
+  // Sends SSLConfig updates to the NetworkContext.
+  std::unique_ptr<ChromeSSLConfigTracker> ssl_config_tracker_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfileNetworkContextService);
 };

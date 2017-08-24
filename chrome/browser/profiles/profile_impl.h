@@ -54,10 +54,6 @@ class ProfilePolicyConnector;
 class SchemaRegistryService;
 }
 
-namespace ssl_config {
-class SSLConfigServiceManager;
-}
-
 namespace sync_preferences {
 class PrefServiceSyncable;
 }
@@ -131,7 +127,6 @@ class ProfileImpl : public Profile {
   PrefService* GetReadOnlyOffTheRecordPrefs() override;
   net::URLRequestContextGetter* GetRequestContext() override;
   net::URLRequestContextGetter* GetRequestContextForExtensions() override;
-  net::SSLConfigService* GetSSLConfigService() override;
   bool IsSameProfile(Profile* profile) override;
   base::Time GetStartTime() const override;
   base::FilePath last_selected_directory() override;
@@ -242,8 +237,6 @@ class ProfileImpl : public Profile {
   scoped_refptr<ExtensionSpecialStoragePolicy>
       extension_special_storage_policy_;
 #endif
-  std::unique_ptr<ssl_config::SSLConfigServiceManager>
-      ssl_config_service_manager_;
 
   // Exit type the last time the profile was opened. This is set only once from
   // prefs.

@@ -361,6 +361,7 @@ mojom("interfaces") {
     "network_service.mojom",
     "network_service_test.mojom",
     "push_messaging_status.mojom",
+    "ssl_config.mojom",
     "url_loader.mojom",
     "url_loader_factory.mojom",
     "window_container_type.mojom",
