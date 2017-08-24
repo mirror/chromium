@@ -623,6 +623,11 @@ void Shell::NotifyVoiceInteractionEnabled(bool enabled) {
     observer.OnVoiceInteractionEnabled(enabled);
 }
 
+void Shell::NotifyVoiceInteractionValuePropAccepted() {
+  for (auto& observer : shell_observers_)
+    observer.OnVoiceInteractionValuePropAccepted();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Shell, private:
 
