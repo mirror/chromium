@@ -81088,6 +81088,30 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="TabManager.BackgroundTabOpening.CompressedPagesPerSecond"
+    units="pages/s">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The number of pages compressed per second when opening background tabs. This
+    is recorded at the end of background tab opening session as an average over
+    the entire period, which is defined as the period of time when background
+    tabs are being loaded. This does not include session restore period. Only
+    recorded on macOS.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpening.DecompressedPagesPerSecond"
+    units="pages/s">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The number of pages decompressed per second when opening background tabs.
+    This is recorded at the end of background tab opening session as an average
+    over the entire period, which is defined as the period of time when
+    background tabs are being loaded. This does not include session restore
+    period. Only recorded on macOS.
+  </summary>
+</histogram>
+
 <histogram
     name="TabManager.BackgroundTabOpening.ForegroundTab.ExpectedTaskQueueingDuration"
     units="ms">
@@ -81099,6 +81123,30 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     respond to inputs faster. This metric is equal to
     RendererScheduler.ExpectedTaskQueueingDuration. It is emitted once for all
     tasks in each 1000-ms window.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpening.SwapInPerSecond"
+    units="swaps/s">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The number of swap-ins per second when opening background tabs. This is
+    recorded at the end of background tab opening session as an average over the
+    entire period, which is defined as the period of time when background tabs
+    are being loaded. This does not include session restore period. Only
+    recorded on macOS.
+  </summary>
+</histogram>
+
+<histogram name="TabManager.BackgroundTabOpening.SwapOutPerSecond"
+    units="swaps/s">
+  <owner>zhenw@chromium.org</owner>
+  <summary>
+    The number of swap-outs per second when opening background tabs. This is
+    recorded at the end of background tab opening session as an average over the
+    entire period, which is defined as the period of time when background tabs
+    are being loaded. This does not include session restore period. Only
+    recorded on macOS.
   </summary>
 </histogram>
 
