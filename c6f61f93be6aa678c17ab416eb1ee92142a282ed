@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feceeab8_9f3c510b",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-24T21:44:21Z",
+      "side": 1,
+      "message": "Setting target, then unsetting again, feels pretty weird here. Why does this conversion need to be different for the window manager?",
+      "revId": "c6f61f93be6aa678c17ab416eb1ee92142a282ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac9e1e0_1bc03a84",
+        "filename": "ui/aura/mus/window_tree_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-24T21:44:21Z",
+      "side": 1,
+      "message": "These could be const methods I think?",
+      "revId": "c6f61f93be6aa678c17ab416eb1ee92142a282ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6c40eb_f8337b87",
+        "filename": "ui/aura/mus/window_tree_host_mus.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-24T21:44:21Z",
+      "side": 1,
+      "message": "Should this happen only if |init_params.display_id| is invalid? Or, would it be possible to get rid of |init_params.display_id| instead? Or maybe a DCHECK() that both fields are in agreement, if we need to keep both?",
+      "revId": "c6f61f93be6aa678c17ab416eb1ee92142a282ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
