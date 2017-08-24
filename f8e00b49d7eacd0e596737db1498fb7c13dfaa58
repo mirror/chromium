@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "427e49e8_c297349e",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-24T01:17:38Z",
+      "side": 1,
+      "message": "Where is this struct used? Remove it?",
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97430276_d71d0fe6",
         "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
         "patchSetId": 19
@@ -64,6 +81,29 @@
         "startChar": 5,
         "endLine": 77,
         "endChar": 28
+      },
+      "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253bbe30_7cf43988",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-24T01:17:38Z",
+      "side": 1,
+      "message": "client_ is also notified in UnwrapFdFromMojoHandle. Please remove it.",
+      "range": {
+        "startLine": 305,
+        "startChar": 13,
+        "endLine": 305,
+        "endChar": 24
       },
       "revId": "f8e00b49d7eacd0e596737db1498fb7c13dfaa58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
