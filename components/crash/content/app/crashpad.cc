@@ -50,10 +50,12 @@ crashpad::CrashReportDatabase* g_database;
 
 void SetCrashKeyValue(const base::StringPiece& key,
                       const base::StringPiece& value) {
+  // This assumes that the StringPiece objects are NUL-terminated.
   g_simple_string_dictionary->SetKeyValue(key.data(), value.data());
 }
 
 void ClearCrashKey(const base::StringPiece& key) {
+  // This assumes that the StringPiece object is NUL-terminated.
   g_simple_string_dictionary->RemoveKey(key.data());
 }
 
@@ -387,7 +389,8 @@ void ClearCrashKeyValueImpl(const wchar_t* key) {
   crash_reporter::ClearCrashKey(base::UTF16ToUTF8(key));
 }
 
-void SetCrashKeyValueImplEx(const char* key, const char* value) {
+void SetCrashKeyValueImplEx(const base::StringPiece& key,
+                            const base::StringPiece& value) {
   crash_reporter::SetCrashKeyValue(key, value);
 }
 
