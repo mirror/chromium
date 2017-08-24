@@ -61,38 +61,12 @@ namespace blink {
 
 static inline ImageBitmapSource* ToImageBitmapSourceInternal(
     const ImageBitmapSourceUnion& value,
-    ExceptionState& exception_state,
     const ImageBitmapOptions& options,
     bool has_crop_rect) {
-  ImageElementBase* image_element = nullptr;
-  if (value.isHTMLImageElement()) {
-    if (!(image_element = value.getAsHTMLImageElement()))
-      return nullptr;
-  } else if (value.isSVGImageElement()) {
-    if (!(image_element = value.getAsSVGImageElement()))
-      return nullptr;
-  }
-  if (image_element) {
-    if (!image_element->CachedImage()) {
-      exception_state.ThrowDOMException(
-          kInvalidStateError,
-          "No image can be retrieved from the provided element.");
-      return nullptr;
-    }
-    if (image_element->CachedImage()->GetImage()->IsSVGImage()) {
-      SVGImage* image = ToSVGImage(image_element->CachedImage()->GetImage());
-      if (!image->HasIntrinsicDimensions() &&
-          (!has_crop_rect &&
-           (!options.hasResizeWidth() || !options.hasResizeHeight()))) {
-        exception_state.ThrowDOMException(
-            kInvalidStateError,
-            "The image element contains an SVG image without intrinsic "
-            "dimensions, and no resize options or crop region are specified.");
-        return nullptr;
-      }
-    }
-    return image_element;
-  }
+  if (value.isHTMLImageElement())
+    return value.getAsHTMLImageElement();
+  if (value.isSVGImageElement())
+    return value.getAsSVGImageElement();
   if (value.isHTMLVideoElement())
     return value.getAsHTMLVideoElement();
   if (value.isHTMLCanvasElement())
@@ -114,14 +88,7 @@ ScriptPromise ImageBitmapFactories::CreateImageBitmapFromBlob(
     EventTarget& event_target,
     ImageBitmapSource* bitmap_source,
     Optional<IntRect> crop_rect,
-    const ImageBitmapOptions& options,
-    ExceptionState& exception_state) {
-  if (crop_rect &&
-      !ImageBitmap::IsSourceSizeValid(crop_rect->Width(), crop_rect->Height(),
-                                      exception_state))
-    return ScriptPromise();
-  if (!ImageBitmap::IsResizeOptionValid(options, exception_state))
-    return ScriptPromise();
+    const ImageBitmapOptions& options) {
   Blob* blob = static_cast<Blob*>(bitmap_source);
   ImageBitmapLoader* loader = ImageBitmapFactories::ImageBitmapLoader::Create(
       From(event_target), crop_rect, options, script_state);
@@ -135,16 +102,15 @@ ScriptPromise ImageBitmapFactories::createImageBitmap(
     ScriptState* script_state,
     EventTarget& event_target,
     const ImageBitmapSourceUnion& bitmap_source,
-    const ImageBitmapOptions& options,
-    ExceptionState& exception_state) {
+    const ImageBitmapOptions& options) {
   WebFeature feature = WebFeature::kCreateImageBitmap;
   UseCounter::Count(ExecutionContext::From(script_state), feature);
-  ImageBitmapSource* bitmap_source_internal = ToImageBitmapSourceInternal(
-      bitmap_source, exception_state, options, false);
+  ImageBitmapSource* bitmap_source_internal =
+      ToImageBitmapSourceInternal(bitmap_source, options, false);
   if (!bitmap_source_internal)
     return ScriptPromise();
   return createImageBitmap(script_state, event_target, bitmap_source_internal,
-                           Optional<IntRect>(), options, exception_state);
+                           Optional<IntRect>(), options);
 }
 
 ScriptPromise ImageBitmapFactories::createImageBitmap(
@@ -155,17 +121,16 @@ ScriptPromise ImageBitmapFactories::createImageBitmap(
     int sy,
     int sw,
     int sh,
-    const ImageBitmapOptions& options,
-    ExceptionState& exception_state) {
+    const ImageBitmapOptions& options) {
   WebFeature feature = WebFeature::kCreateImageBitmap;
   UseCounter::Count(ExecutionContext::From(script_state), feature);
-  ImageBitmapSource* bitmap_source_internal = ToImageBitmapSourceInternal(
-      bitmap_source, exception_state, options, true);
+  ImageBitmapSource* bitmap_source_internal =
+      ToImageBitmapSourceInternal(bitmap_source, options, true);
   if (!bitmap_source_internal)
     return ScriptPromise();
   Optional<IntRect> crop_rect = IntRect(sx, sy, sw, sh);
   return createImageBitmap(script_state, event_target, bitmap_source_internal,
-                           crop_rect, options, exception_state);
+                           crop_rect, options);
 }
 
 ScriptPromise ImageBitmapFactories::createImageBitmap(
@@ -173,14 +138,35 @@ ScriptPromise ImageBitmapFactories::createImageBitmap(
     EventTarget& event_target,
     ImageBitmapSource* bitmap_source,
     Optional<IntRect> crop_rect,
-    const ImageBitmapOptions& options,
-    ExceptionState& exception_state) {
-  if (bitmap_source->IsBlob())
+    const ImageBitmapOptions& options) {
+  if (crop_rect && (crop_rect->Width() == 0 || crop_rect->Height() == 0)) {
+    return ScriptPromise::Reject(
+        script_state,
+        V8ThrowException::CreateRangeError(
+            script_state->GetIsolate(),
+            String::Format("The crop rect %s is 0.",
+                           crop_rect->Width() ? "height" : "width")));
+  }
+
+  if (bitmap_source->IsBlob()) {
     return CreateImageBitmapFromBlob(script_state, event_target, bitmap_source,
-                                     crop_rect, options, exception_state);
+                                     crop_rect, options);
+  }
+
+  if (bitmap_source->BitmapSourceSize().Width() == 0 ||
+      bitmap_source->BitmapSourceSize().Height() == 0) {
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(
+            kInvalidStateError,
+            String::Format("The source image %s is 0.",
+                           bitmap_source->BitmapSourceSize().Width()
+                               ? "height"
+                               : "width")));
+  }
 
   return bitmap_source->CreateImageBitmap(script_state, event_target, crop_rect,
-                                          options, exception_state);
+                                          options);
 }
 
 const char* ImageBitmapFactories::SupplementName() {
@@ -240,23 +226,34 @@ DEFINE_TRACE(ImageBitmapFactories) {
   Supplement<WorkerGlobalScope>::Trace(visitor);
 }
 
-void ImageBitmapFactories::ImageBitmapLoader::RejectPromise() {
-  resolver_->Reject(DOMException::Create(
-      kInvalidStateError, "The source image cannot be decoded."));
+void ImageBitmapFactories::ImageBitmapLoader::RejectPromise(
+    ImageBitmapRejectionReason reason) {
+  switch (reason) {
+    case kUndecodableImageBitmapRejectionReason:
+      resolver_->Reject(DOMException::Create(
+          kInvalidStateError, "The source image could not be decoded."));
+      break;
+    case kAllocationFailureImageBitmapRejectionReason:
+      resolver_->Reject(DOMException::Create(
+          kInvalidStateError, "The ImageBitmap could not be allocated."));
+      break;
+    default:
+      NOTREACHED();
+  }
   factory_->DidFinishLoading(this);
 }
 
 void ImageBitmapFactories::ImageBitmapLoader::DidFinishLoading() {
   DOMArrayBuffer* array_buffer = loader_->ArrayBufferResult();
   if (!array_buffer) {
-    RejectPromise();
+    RejectPromise(kAllocationFailureImageBitmapRejectionReason);
     return;
   }
   ScheduleAsyncImageBitmapDecoding(array_buffer);
 }
 
 void ImageBitmapFactories::ImageBitmapLoader::DidFail(FileError::ErrorCode) {
-  RejectPromise();
+  RejectPromise(kUndecodableImageBitmapRejectionReason);
 }
 
 void ImageBitmapFactories::ImageBitmapLoader::ScheduleAsyncImageBitmapDecoding(
@@ -305,7 +302,7 @@ void ImageBitmapFactories::ImageBitmapLoader::DecodeImageOnDecoderThread(
 void ImageBitmapFactories::ImageBitmapLoader::ResolvePromiseOnOriginalThread(
     sk_sp<SkImage> frame) {
   if (!frame) {
-    RejectPromise();
+    RejectPromise(kUndecodableImageBitmapRejectionReason);
     return;
   }
   DCHECK(frame->width());
@@ -317,7 +314,7 @@ void ImageBitmapFactories::ImageBitmapLoader::ResolvePromiseOnOriginalThread(
   if (image_bitmap && image_bitmap->BitmapImage()) {
     resolver_->Resolve(image_bitmap);
   } else {
-    RejectPromise();
+    RejectPromise(kAllocationFailureImageBitmapRejectionReason);
     return;
   }
   factory_->DidFinishLoading(this);
