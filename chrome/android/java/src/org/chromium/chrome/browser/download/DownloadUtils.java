@@ -133,7 +133,7 @@ public class DownloadUtils {
                 && ((ChromeActivity) activity).getBottomSheet() != null) {
             ((ChromeActivity) activity)
                     .getBottomSheetContentController()
-                    .showContentAndOpenSheet(R.id.action_downloads);
+                    .showContentInNewTabIfNecessary(R.id.action_downloads);
         } else if (DeviceFormFactor.isTablet()) {
             // Download Home shows up as a tab on tablets.
             LoadUrlParams params = new LoadUrlParams(UrlConstants.DOWNLOADS_URL);
