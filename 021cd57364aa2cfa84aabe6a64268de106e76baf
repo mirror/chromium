@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7dcb453_c9946dad",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-24T21:08:32Z",
+      "side": 1,
+      "message": "Style nit: blank lines inside namespaces.",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "021cd57364aa2cfa84aabe6a64268de106e76baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5802bbfb_489a59bc",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-24T21:08:32Z",
+      "side": 1,
+      "message": "I realize you probably do the logging as non-debug since the memlog doesn\u0027t work in debug mode (at least on Windows). But I\u0027m suspicious about how useful these will be and whether they\u0027re worth the code for all users. I bet DLOG is good enough for somebody debugging issues.",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 155,
+        "endChar": 13
+      },
+      "revId": "021cd57364aa2cfa84aabe6a64268de106e76baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c456039_9ce0ecf4",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-24T21:08:32Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "021cd57364aa2cfa84aabe6a64268de106e76baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c970c925_2d0e6003",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-24T21:08:32Z",
+      "side": 1,
+      "message": "Ditto in this file about non-debug LOG statements. Even a simple one is ~100 bytes for all users, and some of these will be much larger.",
+      "range": {
+        "startLine": 162,
+        "startChar": 13,
+        "endLine": 162,
+        "endChar": 15
+      },
+      "revId": "021cd57364aa2cfa84aabe6a64268de106e76baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a88ea00_6f830107",
+        "filename": "chrome/profiling/memlog_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-24T21:08:32Z",
+      "side": 1,
+      "message": "Ditto in this file.",
+      "revId": "021cd57364aa2cfa84aabe6a64268de106e76baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
