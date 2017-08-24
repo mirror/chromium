@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fa7782c_b7bca401",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1286,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-24T02:36:09Z",
+      "side": 1,
+      "message": "This is only called in 2 cases: One is printing to PDF (when the PDF task is posted), the other is when the system dialog is opened from print preview on non-Windows platforms. Normally the print preview closes itself from Javascript via the \"dialogClose\" message, which is handled by ConstrainedWebDialogUI::OnDialogCloseMessage. If it does this due to the user cancelling the dialog, it will also send the \"closePrintPreviewDialog\" message to update the UMA stats, which will be caught by HandleClosePreviewDialog above. However, for any other resolution (e.g. user prints to local, cloud, or privet/extension printer, or user opens the system dialog on Windows), after print is never dispatched and the DCHECK in DispatchBeforePrintEvent fires if you try to open print preview again.",
+      "range": {
+        "startLine": 1286,
+        "startChar": 26,
+        "endLine": 1286,
+        "endChar": 44
+      },
+      "revId": "849d15c2c481c4bf851333b458e6ab8f5deac29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fead226c_ee9f8538",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1122,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-08-24T02:36:09Z",
+      "side": 1,
+      "message": "FYI, this is not called on Windows, since Windows uses the PDF from print preview for printing from the system dialog if the system dialog is brought up from the link in print preview. So the Windows case will need to be handled separately.",
+      "range": {
+        "startLine": 1122,
+        "startChar": 29,
+        "endLine": 1122,
+        "endChar": 51
+      },
+      "revId": "849d15c2c481c4bf851333b458e6ab8f5deac29a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
