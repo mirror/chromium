@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42af43b7_181ad3cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-24T16:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d09b1bc_c4591810",
+      "range": {
+        "startLine": 138,
+        "startChar": 46,
+        "endLine": 138,
+        "endChar": 47
+      },
+      "revId": "5fcfba8075fc82f8bef6229ab499d6b0e925b43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce7b9ec4_bb841781",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "baeab0d8_f5448156",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-24T16:14:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce7b9ec4_bb841781",
+      "range": {
+        "startLine": 139,
+        "startChar": 80,
+        "endLine": 139,
+        "endChar": 85
+      },
+      "revId": "5fcfba8075fc82f8bef6229ab499d6b0e925b43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09cb32db_8d38de4b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsRecyclerView.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "5fcfba8075fc82f8bef6229ab499d6b0e925b43e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd4c16d_052867c8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsRecyclerView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-24T16:14:10Z",
+      "side": 1,
+      "message": "All right, let\u0027s let it crash",
+      "parentUuid": "09cb32db_8d38de4b",
+      "range": {
+        "startLine": 218,
+        "startChar": 16,
+        "endLine": 219,
+        "endChar": 24
+      },
+      "revId": "5fcfba8075fc82f8bef6229ab499d6b0e925b43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
