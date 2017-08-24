@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "4033f5fb_c2908ba2",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3725,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T06:49:30Z",
+      "side": 1,
+      "message": "OK renamed them both.\n\n\u003e FYI, I forget the precise terminology, but UTF16OffsetToIndex and UTF16IndexToOffset are used to handle index conversions around multi-character glyphs, like surrogate pairs.\n\nYes, sorry I didn\u0027t go into much detail but I checked it out and ran some tests. UTF16OffsetToIndex does indeed convert code unit index to code point index (it would be best if it was named that way), which means in the case of \"x😁y✨\" it should convert 0-\u003e0, 1-\u003e1, 2-\u003e1, 3-\u003e2, etc. It seems that DisplayIndexToTextIndex for some reason only calls UTF16OffsetToIndex if the text is \"obscured\"; if it isn\u0027t, it returns code unit indices. And this text is not \"obscured\". GetRuns assumes that it\u0027s dealing with code unit indices, so everything works out fine here, if you totally ignore the call to UTF16OffsetToIndex. I don\u0027t know why this is all the case, so I decided to ignore it.",
+      "parentUuid": "1dcd8672_dcadd3db",
+      "revId": "36ef7a12161d525d8294a93315fc2f1bb8e33600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f78a1207_6cd2fcfe",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 3
