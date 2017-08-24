@@ -19,7 +19,7 @@ class InstallableTaskQueue {
   ~InstallableTaskQueue();
 
   // Adds task to the end of the active list of tasks to be processed.
-  void Add(InstallableTask task);
+  void Insert(InstallableTask task);
 
   // Moves the current task from the main to the paused list.
   void PauseCurrent();

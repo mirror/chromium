@@ -24,8 +24,8 @@ TEST_F(InstallableTaskQueueUnitTest, PausingMakesNextTaskAvailable) {
   InstallableTask task1 = TaggedTask(1);
   InstallableTask task2 = TaggedTask(2);
 
-  task_queue.Add(task1);
-  task_queue.Add(task2);
+  task_queue.Insert(task1);
+  task_queue.Insert(task2);
 
   EXPECT_EQ(1, Tag(task_queue.Current()));
   // There is another task in the main queue, so it becomes current.
@@ -38,8 +38,8 @@ TEST_F(InstallableTaskQueueUnitTest, PausedTaskCanBeRetrieved) {
   InstallableTask task1 = TaggedTask(1);
   InstallableTask task2 = TaggedTask(2);
 
-  task_queue.Add(task1);
-  task_queue.Add(task2);
+  task_queue.Insert(task1);
+  task_queue.Insert(task2);
 
   EXPECT_EQ(1, Tag(task_queue.Current()));
   task_queue.PauseCurrent();
@@ -56,8 +56,8 @@ TEST_F(InstallableTaskQueueUnitTest, NextDiscardsTask) {
   InstallableTask task1 = TaggedTask(1);
   InstallableTask task2 = TaggedTask(2);
 
-  task_queue.Add(task1);
-  task_queue.Add(task2);
+  task_queue.Insert(task1);
+  task_queue.Insert(task2);
 
   EXPECT_EQ(1, Tag(task_queue.Current()));
   task_queue.Next();

@@ -140,7 +140,7 @@ void InstallableManager::GetData(const InstallableParams& params,
   // Return immediately if we're already working on a task. The new task will be
   // looked at once the current task is finished.
   bool was_active = task_queue_.HasCurrent();
-  task_queue_.Add({params, callback});
+  task_queue_.Insert({params, callback});
   if (was_active)
     return;
 

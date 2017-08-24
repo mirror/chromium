@@ -7,7 +7,7 @@
 InstallableTaskQueue::InstallableTaskQueue() {}
 InstallableTaskQueue::~InstallableTaskQueue() {}
 
-void InstallableTaskQueue::Add(InstallableTask task) {
+void InstallableTaskQueue::Insert(InstallableTask task) {
   tasks_.push_back(task);
 }
 
@@ -18,7 +18,7 @@ void InstallableTaskQueue::Reset() {
 
 void InstallableTaskQueue::UnpauseAll() {
   for (const auto& task : paused_tasks_)
-    Add(task);
+    Insert(task);
 
   paused_tasks_.clear();
 }
