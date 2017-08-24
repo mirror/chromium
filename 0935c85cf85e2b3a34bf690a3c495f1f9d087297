@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3089c00_e437af3d",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-24T14:23:44Z",
+      "side": 1,
+      "message": "As SWProviderHost handles Register IPC now, I think we need to move Register related tests into unit test file of SWProviderHost. But I\u0027d like to keep them here for now and reconstruct all tests for all methods of SWProviderHost mojo interface later in unit test file of SWProviderHost.",
+      "revId": "0935c85cf85e2b3a34bf690a3c495f1f9d087297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
