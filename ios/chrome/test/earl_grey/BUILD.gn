@@ -172,6 +172,8 @@ source_set("test_support") {
     "chrome_earl_grey_ui.mm",
     "chrome_matchers.h",
     "chrome_matchers.mm",
+    "chrome_settings_matchers.h",
+    "chrome_settings_matchers.mm",
     "chrome_test_case.h",
     "chrome_test_case.mm",
   ]
