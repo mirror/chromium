@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5b32ba40_339048d1",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-24T13:46:30Z",
+      "side": 1,
+      "message": "Done\nCompiler doesn\u0027t know FormData type and would throw errors when its methods are called, but this annotation is not needed because there is another one on assignment.",
+      "parentUuid": "e53738c8_766ca492",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 122,
+        "endChar": 10
+      },
+      "revId": "eb07226a1216d2efb0fab2e6fc5483587c67ed59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed8905dd_942bf0fb",
         "filename": "ios/chrome/browser/web/resources/credential_manager.js",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-23T15:01:37Z",
       "side": 1,
       "message": "Can you switch from this C-syntax to more readable one? I mean declare variables when they are needed.",
+      "range": {
+        "startLine": 132,
+        "startChar": 6,
+        "endLine": 132,
+        "endChar": 16
+      },
+      "revId": "eb07226a1216d2efb0fab2e6fc5483587c67ed59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5525a49_970507ab",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-24T13:46:30Z",
+      "side": 1,
+      "message": "Comment from Eugene on a previous patch set:\n\"nit: Do you want to move all vars to the top of this function? JS interpreter does this anyway (hoisting) and it\u0027s a good practice to have all vars in the top.\"",
+      "parentUuid": "ed8905dd_942bf0fb",
       "range": {
         "startLine": 132,
         "startChar": 6,
