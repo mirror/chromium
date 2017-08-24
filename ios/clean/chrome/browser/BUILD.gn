@@ -4,7 +4,14 @@
 
 source_set("browser") {
   sources = [
+    "boxed_url_loader.h",
+    "boxed_url_loader.mm",
     "url_opening.h",
+  ]
+
+  deps = [
+    "//ios/chrome/browser/ui",
+    "//ios/web",
   ]
 
   configs += [ "//build/config/compiler:enable_arc" ]

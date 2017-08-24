@@ -83,19 +83,9 @@
 }
 
 - (void)showNTPBookmarksPanel {
-  // TODO(crbug.com/740793): Remove alert once this feature is implemented.
-  UIAlertController* alertController =
-      [UIAlertController alertControllerWithTitle:@"Bookmarks"
-                                          message:nil
-                                   preferredStyle:UIAlertControllerStyleAlert];
-  UIAlertAction* action =
-      [UIAlertAction actionWithTitle:@"Done"
-                               style:UIAlertActionStyleCancel
-                             handler:nil];
-  [alertController addAction:action];
-  [self.viewController presentViewController:alertController
-                                    animated:YES
-                                  completion:nil];
+  BookmarksCoordinator* panelCoordinator = [[BookmarksCoordinator alloc] init];
+  [self addChildCoordinator:panelCoordinator];
+  [panelCoordinator start];
 }
 
 - (void)showNTPRecentTabsPanel {

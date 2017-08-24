@@ -1124,7 +1124,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   // Deferred tasks.
   [self schedulePrefObserverInitialization];
   [self scheduleMemoryDebuggingTools];
-  [_startupTasks scheduleDeferredBrowserStateInitialization:_mainBrowserState];
+  [StartupTasks scheduleDeferredBrowserStateInitialization:_mainBrowserState];
   [self scheduleAuthenticationServiceNotification];
   [self sendQueuedFeedback];
   [self scheduleSpotlightResync];
