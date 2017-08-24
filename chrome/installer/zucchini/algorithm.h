@@ -5,9 +5,9 @@
 #ifndef CHROME_INSTALLER_ZUCCHINI_ALGORITHM_H_
 #define CHROME_INSTALLER_ZUCCHINI_ALGORITHM_H_
 
-#include <type_traits>
-
 #include <stddef.h>
+
+#include <type_traits>
 
 // Collection of simple utilities used in for low-level computation.
 
