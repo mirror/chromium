@@ -22,6 +22,30 @@
       "revId": "885dc17c28184642fc08a654893ecf47c5ca40e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49690773_755500f3",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-24T23:33:35Z",
+      "side": 1,
+      "message": "I changed to 1 because it seemed simpler and easier to understand.",
+      "parentUuid": "9b1ae026_07619d77",
+      "range": {
+        "startLine": 34,
+        "startChar": 63,
+        "endLine": 34,
+        "endChar": 64
+      },
+      "revId": "885dc17c28184642fc08a654893ecf47c5ca40e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
