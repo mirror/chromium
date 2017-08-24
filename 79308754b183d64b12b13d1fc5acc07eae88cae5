@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a16b1fad_9ffe0206",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-24T20:59:19Z",
+      "side": 1,
+      "message": "I think that\u0027s the way that I\u0027d prefer for this to be implemented, but alas, Chrome makes that *incredibly* difficult to do. I originally tried to implement the BattOr agent this way, thinking that blocking calls would make the code more readable (it would have), but ultimately decided that this wasn\u0027t possible after a few weeks of futzing around. In general, Chrome\u0027s philosophy is \"anything that could take time needs to be done on in a nonblocking way. You can see this in the way that SerialIoHandler is implemented, too.",
+      "parentUuid": "9128f54f_2bb3ada1",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04dd668d_12c2bbbc",
         "filename": "tools/battor_agent/battor_agent.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-24T14:13:11Z",
       "side": 1,
       "message": "I think we may want to just implement this as part of Flush(). Flush is currently only needed to kill off the serial data from the last connection when we open a new connection, the slow flush is the behavior that we are actually looking for when we Flush() rather than what we currently have implemented as Flush().",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf6f2cb_b69775e5",
+        "filename": "tools/battor_agent/battor_agent.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-24T20:59:19Z",
+      "side": 1,
+      "message": "Yea, I thought about this too, and was on the verge of writing it this way. Done.",
+      "parentUuid": "04dd668d_12c2bbbc",
       "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c4f0eb1d_32fa7cbb",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-24T20:59:19Z",
+      "side": 1,
+      "message": "I picked what seemed like a reasonable value - you\u0027ll notice that we don\u0027t actually add a call to Flush() in this CL (that\u0027ll require some changes to the BattOrAgent unit tests, which I wanted to do in a different CL because this one\u0027s already big). I figure that I\u0027ll do some local testing to make sure everything works once that wiring is done. Given the low reproducability of this issue, I\u0027ll probably just locally modify the agent to retry the StopTracing command in the BattOrAgent immediately after starting the download, which we know is a case that currently causes problems.",
+      "parentUuid": "cb7b8a22_b8a2e83e",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d84127c2_23bf8a33",
         "filename": "tools/battor_agent/battor_connection_impl.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-24T14:13:11Z",
       "side": 1,
       "message": "I don\u0027t understand why we need this delay. Don\u0027t we just setup a read, and if there is no reply in the quiet period threshold, then the slow flush is done?",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26a04407_dd66659b",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-24T20:59:19Z",
+      "side": 1,
+      "message": "Done. My original (and only) concern with this is that zero byte reads are common on Mac due to the instantaneous timeout, especially when we\u0027re waiting for the BattOr to send back the EEPROM or start streaming back the saved trace. I worry that 50ms will be long enough for the serial buffer on the Mac to overflow when this happens. Can you confirm that the serial buffer overflowing on Mac won\u0027t crash the drivers, and will instead just drop bytes? (Because we don\u0027t care about these bytes anyhow, dropping them due to buffer overflows is fine.)",
+      "parentUuid": "d84127c2_23bf8a33",
       "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5730eddc_bed8e905",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-24T20:59:19Z",
+      "side": 1,
+      "message": "Done - great point. Added the cancelable-closure style timeout that we have for the BattOrAgent in which there\u0027s a ceiling of 50ms for the timeout.",
+      "parentUuid": "dc216cb2_1715d09f",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93efdd3e_76a3bbf6",
         "filename": "tools/battor_agent/battor_connection_impl.cc",
         "patchSetId": 4
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-24T14:13:11Z",
       "side": 1,
       "message": "I think this could be simplified by moving to the model where we have an async timeout. In that case you always continue issuing new when reads terminate (even if it\u0027s due to a serial timeout) until the async timeout expires, then you can cancel the read.\n\nHowever, I recall that perhaps we ran into an issue where serial read callbacks were still being issued even after we canceled the callback. Not sure though.",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b222c81_5857d9dd",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-24T20:59:19Z",
+      "side": 1,
+      "message": "Done. I\u0027m not sure I remember the issue where serial read callbacks are issued after canceling the callback - if that happens, it\u0027s a bug on our end, because based on my testing it causes a segfault.",
+      "parentUuid": "93efdd3e_76a3bbf6",
       "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c50c7ccd_40eae837",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-24T20:59:19Z",
+      "side": 1,
+      "message": "Yep. However, I changed it so that, if a read times out or reads zero bytes, the next read will happen 50ms later. It seems like the worst that will happen is that 1) the serial buffer overflows (which is okay - we don\u0027t care about those bytes anyway) or 2) bytes will pile up, in which case we will burn through the stored up data really quickly because if any read is successful then we immediately retry it.",
+      "parentUuid": "056252bb_650c0231",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df605e2e_7943d0a1",
         "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
         "patchSetId": 4
@@ -132,6 +258,41 @@
       "writtenOn": "2017-08-24T14:13:11Z",
       "side": 1,
       "message": "Can you clarify what is done here (it doesn\u0027t need to be in a comment, just for my understanding). Does this test the slow flush with a RESET control message coming from the BattOr? Normally one would expect the BattOr doesn\u0027t send control messages back to the host, just CONTROL_ACKs and SAMPLE frames. Ideally I think we would perform this test with ACKs in this first test, and sample frames with the multiple data test below.",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497e172f_ef4bfe5a",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-24T20:59:19Z",
+      "side": 1,
+      "message": "Eh - I think that if you don\u0027t understand it, there\u0027s basically an 100% chance that others won\u0027t as well. The choice of a control message here was actually a poor one - LMK if the comment I added doesn\u0027t clarify things.",
+      "parentUuid": "df605e2e_7943d0a1",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ff66d7_4a299606",
+        "filename": "tools/battor_agent/battor_connection_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-08-24T20:59:19Z",
+      "side": 1,
+      "message": "Added a couple other tests as well.",
       "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
