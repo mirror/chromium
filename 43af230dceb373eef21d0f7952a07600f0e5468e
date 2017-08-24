@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b37b54f1_3c021b6d",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-24T00:52:03Z",
+      "side": 1,
+      "message": "Please reflect the D-Bus method name change.",
+      "revId": "43af230dceb373eef21d0f7952a07600f0e5468e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af8dc90_512d70b7",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-24T00:52:03Z",
+      "side": 1,
+      "message": "Please add a new constant.",
+      "revId": "43af230dceb373eef21d0f7952a07600f0e5468e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
