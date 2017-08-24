@@ -530,6 +530,24 @@
     },
     {
       "key": {
+        "uuid": "0af8e64e_9cfb891d",
+        "filename": "chrome/browser/resources/media_router/media_router_browser_api.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-24T10:26:43Z",
+      "side": 1,
+      "message": "Done. Sorry I missed this the previous round.",
+      "parentUuid": "46203d4a_eb8cc3ac",
+      "revId": "325020d8eba9d052cf7eba6d19d3f49cec5a6c85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78782d35_5847e67d",
         "filename": "chrome/browser/resources/media_router/media_router_browser_api.js",
         "patchSetId": 13
