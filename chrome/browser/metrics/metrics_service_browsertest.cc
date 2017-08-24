@@ -39,9 +39,8 @@
 #include "sandbox/win/src/sandbox_types.h"
 #endif
 
-#if defined(OS_MACOSX) || defined(OS_LINUX)
 namespace {
-
+#if defined(OS_MACOSX) || defined(OS_LINUX)
 // Check CrashExitCodes.Renderer histogram for a single bucket entry and then
 // verify that the bucket entry contains a signal and the signal is |signal|.
 void VerifyRendererExitCodeIsSignal(
@@ -55,9 +54,21 @@ void VerifyRendererExitCodeIsSignal(
   EXPECT_TRUE(WIFSIGNALED(exit_code));
   EXPECT_EQ(signal, WTERMSIG(exit_code));
 }
+#endif  // OS_MACOSX || OS_LINUX
+
+size_t GetRendererCrashCount(const base::HistogramTester& histogram_tester,
+                             const PrefService* prefs) {
+  size_t value =
+      prefs->GetInteger(metrics::prefs::kStabilityRendererCrashCount);
+#if defined(OS_ANDROID)
+  size_t histogram_value =
+      histogram_tester.GetAllSamples("Stability.Android.RendererCrash").size();
+  EXPECT_EQ(value, histogram_value);
+#endif
+  return value;
+}
 
 }  // namespace
-#endif  // OS_MACOSX || OS_LINUX
 
 // This test class verifies that metrics reporting works correctly for various
 // renderer behaviors such as page loads, recording crashed tabs, and browser
@@ -158,7 +169,8 @@ IN_PROC_BROWSER_TEST_F(MetricsServiceBrowserTest, MAYBE_CrashRenderers) {
   EXPECT_EQ(1, prefs->GetInteger(metrics::prefs::kStabilityLaunchCount));
   // The three tabs from OpenTabs() and the one tab to open chrome://crash/.
   EXPECT_EQ(4, prefs->GetInteger(metrics::prefs::kStabilityPageLoadCount));
-  EXPECT_EQ(1, prefs->GetInteger(metrics::prefs::kStabilityRendererCrashCount));
+
+  EXPECT_EQ(1u, GetRendererCrashCount(histogram_tester, prefs));
 
 #if defined(OS_WIN)
   histogram_tester.ExpectUniqueSample(
@@ -181,7 +193,8 @@ IN_PROC_BROWSER_TEST_F(MetricsServiceBrowserTest, MAYBE_CheckCrashRenderers) {
   // The three tabs from OpenTabs() and the one tab to open
   // chrome://checkcrash/.
   EXPECT_EQ(4, prefs->GetInteger(metrics::prefs::kStabilityPageLoadCount));
-  EXPECT_EQ(1, prefs->GetInteger(metrics::prefs::kStabilityRendererCrashCount));
+
+  EXPECT_EQ(1u, GetRendererCrashCount(histogram_tester, prefs));
 
 #if defined(OS_WIN)
   histogram_tester.ExpectUniqueSample(
@@ -211,7 +224,8 @@ IN_PROC_BROWSER_TEST_F(MetricsServiceBrowserTest, OOMRenderers) {
   // The three tabs from OpenTabs() and the one tab to open
   // chrome://memory-exhaust/.
   EXPECT_EQ(4, prefs->GetInteger(metrics::prefs::kStabilityPageLoadCount));
-  EXPECT_EQ(1, prefs->GetInteger(metrics::prefs::kStabilityRendererCrashCount));
+
+  EXPECT_EQ(1u, GetRendererCrashCount(histogram_tester, prefs));
 
 // On 64-bit, the Job object should terminate the renderer on an OOM.
 #if defined(ARCH_CPU_64_BITS)
