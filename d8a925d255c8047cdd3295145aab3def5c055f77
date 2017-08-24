@@ -103,6 +103,24 @@
       "revId": "d8a925d255c8047cdd3295145aab3def5c055f77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd3fbfbb_04d5f7ee",
+        "filename": "third_party/WebKit/Source/platform/fonts/opentype/OS2TableCJKFontTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-24T14:53:29Z",
+      "side": 1,
+      "message": "Thank you for the background.\n\nHow many fonts do we know disabling improves? I haven\u0027t checked Gecko discussion, but if \"Calibri\" is the only font we know atm, I have mild preference to have a list of fonts to disable, than to disable (all - CJK) fonts. If the list keeps increasing, we can revisit.",
+      "parentUuid": "e4adbfba_3903da94",
+      "revId": "d8a925d255c8047cdd3295145aab3def5c055f77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
