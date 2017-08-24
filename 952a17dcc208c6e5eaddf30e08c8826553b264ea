@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d36fc88d_8766586c",
+        "filename": "ios/chrome/browser/content_suggestions/ntp_home_utils.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-24T07:42:33Z",
+      "side": 1,
+      "message": "As a personal preference, I prefer the name to reflect the content of the histogram, but that is not a strong feeling, so I am OK with keeping it that way.",
+      "parentUuid": "404dfdd7_f267865d",
+      "range": {
+        "startLine": 16,
+        "startChar": 37,
+        "endLine": 16,
+        "endChar": 47
+      },
+      "revId": "952a17dcc208c6e5eaddf30e08c8826553b264ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cf42945_cce902e6",
         "filename": "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h",
         "patchSetId": 2
