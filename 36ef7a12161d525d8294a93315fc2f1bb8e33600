@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "4b63aeaa_40a6be7f",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3725,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-24T14:26:03Z",
+      "side": 1,
+      "message": "Just for more context, obscured\u003d\u003dpassword, and that\u0027s treated differently (iirc) because we paint an asterisk or bullet for each code unit, even if multiple code units would comprise a single code point in unobscured (plain) display text. (ie. we approximately want to paint an asterisk for each key pressed, so (eg.) an accent \u0027´\u0027 that would normally change a neighboring glyph renders as a separate \u0027*\u0027 instead of invisibly altering a existing asterisk\u0027s underlying value from \u0027e\u0027 to \u0027é\u0027).",
+      "parentUuid": "4f6f132b_7c7d4480",
+      "revId": "36ef7a12161d525d8294a93315fc2f1bb8e33600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f78a1207_6cd2fcfe",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 3
