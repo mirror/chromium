@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49349e5c_3c353f8f",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-24T07:14:19Z",
+      "side": 1,
+      "message": "If we have already checked server properties and we still require confirmation，the local IP must be different from the most recent IP address on which QUIC is supported. (as require_confirmation_ is set to true when IP address changed, or network changed)\n\nIf we never checked server properties, then possibly we have never configure a socket before, thus local address is unknown.",
+      "revId": "cb9b77c3e7eb74f1b21f959ba42a4a5d977bb63c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
