@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bd65711_0cf6e5b1",
+        "filename": "chrome/profiling/memlog_receiver_pipe_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-24T18:45:53Z",
+      "side": 1,
+      "message": "shouldn\u0027t the handle also be closed in the destructor, in case reporterror isn\u0027t called?",
+      "revId": "2ac9294c9efcb80d57f5bbf5609d99ed522a5ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5625069c_82eadbee",
+        "filename": "chrome/profiling/memlog_stream_parser_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-24T18:45:53Z",
+      "side": 1,
+      "message": "can we expose/check the error state here just to be sure?",
+      "revId": "2ac9294c9efcb80d57f5bbf5609d99ed522a5ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
