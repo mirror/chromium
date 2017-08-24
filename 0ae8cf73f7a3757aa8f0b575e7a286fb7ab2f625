@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8d42bd0_2988808f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-24T08:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1652979_7c544e97",
+      "revId": "0ae8cf73f7a3757aa8f0b575e7a286fb7ab2f625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "522bb2d7_5fb147ee",
         "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-24T08:04:05Z",
       "side": 1,
       "message": "nit: no {} for consistency\n\nWhy getting removed before being added results in a crash (aside that it may hit DCHECK)?",
+      "revId": "0ae8cf73f7a3757aa8f0b575e7a286fb7ab2f625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "254ff60b_a93ec986",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-24T08:42:45Z",
+      "side": 1,
+      "message": "Done. Looking closer, yea I don\u0027t see how it\u0027d result in a crash. The stack trace \u003ccrash/4f88265133c8b8a5\u003e  just says something in \"map\" crashed, and I assumed it was the dispatcher_hosts_.erase(proc_id) call but that should be a no-op.\n\nEmbeddedWorkerRegistry::RemoveProcess looks really heavy and it could be the real culprit. Each OnDetached() call could be doing a lot, the ServiceWorkerVersion may try to restart there.\n\nSo, yea, no very good theory. But I still want these CHECKs to narrow down the issue.",
+      "parentUuid": "522bb2d7_5fb147ee",
       "revId": "0ae8cf73f7a3757aa8f0b575e7a286fb7ab2f625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "0ae8cf73f7a3757aa8f0b575e7a286fb7ab2f625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10551976_b0923dae",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-24T08:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d68e4187_41cfc2bd",
+      "revId": "0ae8cf73f7a3757aa8f0b575e7a286fb7ab2f625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
