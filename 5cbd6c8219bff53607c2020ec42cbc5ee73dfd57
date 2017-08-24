@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be0848b9_16eed4bd",
+        "filename": "chrome/browser/resources/settings/a11y_page/manage_a11y_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-24T18:58:44Z",
+      "side": 1,
+      "message": "Yeah, I agree with that. I\u0027d like to get a fix for the bug in first and do a cleanup afterwards.",
+      "parentUuid": "af0a5720_72a0435d",
+      "revId": "5cbd6c8219bff53607c2020ec42cbc5ee73dfd57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "149b9cbf_8ff56460",
         "filename": "chrome/browser/resources/settings/a11y_page/manage_a11y_page.html",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-24T17:28:24Z",
       "side": 1,
       "message": "This pattern of a list-item in a settings-box confuses me. In the CSS the comment says: \"A list-item is intended to be contained within a list-frame\". Can we either change this (and any others we may come across), or change the comment?",
+      "revId": "5cbd6c8219bff53607c2020ec42cbc5ee73dfd57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f1de37_eb4e717f",
+        "filename": "chrome/browser/resources/settings/a11y_page/manage_a11y_page.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-24T18:58:44Z",
+      "side": 1,
+      "message": "same as above, \"Yeah, I agree with that. I\u0027d like to get a fix for the bug in first and do a cleanup afterwards.\" \nAnd I\u0027ll want to give more thought to which way to go.",
+      "parentUuid": "149b9cbf_8ff56460",
       "revId": "5cbd6c8219bff53607c2020ec42cbc5ee73dfd57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
