@@ -46,6 +46,30 @@
       "revId": "984acfb80506d46acc36aafb011283ce1fb39121",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d64d7a1_96a68cd5",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T23:46:14Z",
+      "side": 1,
+      "message": "Ok, makes sense.\n\nIs there a reason not to make it mac specific?",
+      "parentUuid": "e4127e75_9442c825",
+      "range": {
+        "startLine": 1335,
+        "startChar": 0,
+        "endLine": 1337,
+        "endChar": 12
+      },
+      "revId": "984acfb80506d46acc36aafb011283ce1fb39121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
