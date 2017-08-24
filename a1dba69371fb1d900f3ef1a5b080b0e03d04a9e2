@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "604baabb_2667efc3",
+        "filename": "extensions/browser/api/management/management_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-24T18:21:13Z",
+      "side": 1,
+      "message": "I am not sure if this is a good solution, since a disable reason of blocked_by_policy just means that the extension was disabled because it failed a UserMayLoad check (this may be due to reasons other than a simple blacklisting.) And exposing this, won\u0027t really mean much. \n\nAlternative is to just check MustRemainDisabled. Then blocked_by_management_policy would have better \"semantics\".\n\nAnother alternative which I had suggested was to expose a field mayEnable, similar to the mayDisable we have currently.\n\nWDYT?",
+      "revId": "a1dba69371fb1d900f3ef1a5b080b0e03d04a9e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
