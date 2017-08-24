@@ -93,6 +93,30 @@
       "revId": "eb07226a1216d2efb0fab2e6fc5483587c67ed59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49723f3_7360f3ba",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-24T15:14:30Z",
+      "side": 1,
+      "message": "The Google Javascript style guide disagrees https://google.github.io/styleguide/jsguide.html#features-declared-when-needed\nAnother rule from the doc is that \"var\" should not be used at all in the local scope. I\u0027m afraid \u0027let\u0027 isn\u0027t supported on iOS 9 but maybe \u0027const\u0027 is?",
+      "parentUuid": "c5525a49_970507ab",
+      "range": {
+        "startLine": 132,
+        "startChar": 6,
+        "endLine": 132,
+        "endChar": 16
+      },
+      "revId": "eb07226a1216d2efb0fab2e6fc5483587c67ed59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
