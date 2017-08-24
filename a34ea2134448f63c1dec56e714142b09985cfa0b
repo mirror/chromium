@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a7de2d19_f02d091c",
+        "filename": "cc/resources/video_resource_updater_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-08-24T00:19:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa0d0195_4d6ab135",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66de1e4c_f66e582e",
         "filename": "gpu/ipc/service/gpu_init.cc",
         "patchSetId": 17
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Isn\u0027t the client native pixmap factory what we use for importing/mmapping on the client side?\nWhy would we use something related to that to check if a format/usage is supported?",
       "parentUuid": "de960c68_523f1b90",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28acc3dc_e51f65b4",
+        "filename": "gpu/ipc/service/gpu_init.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-08-24T00:19:31Z",
+      "side": 1,
+      "message": "I agree. removed.",
+      "parentUuid": "4a097e83_ce74e8b6",
       "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "33646ccb_19ce2644",
+        "filename": "media/gpu/vaapi_drm_picture.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-08-24T00:19:31Z",
+      "side": 1,
+      "message": "\u003e Have we added NV12 SCANOUT to minigbm?\n\nminigbm queries scanout format in runtime in following code. It check supported format by atomic plane. NV12 scanout requires kernel support\nhttps://chromium.googlesource.com/chromiumos/platform/minigbm/+/master/i915.c#167\n\n\u003e Is NV12 with TEXTURING supported on all the devices with vaapi?\n\nYes, NV12 texturing is just software implementation by mesa. Kernel doesn\u0027t do nothing for it.\nFrom 1st generation intel core to Kaby Lake all supported.",
+      "parentUuid": "aa4b177f_9656682c",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "318baf58_89192f1d",
         "filename": "media/gpu/vaapi_wrapper.cc",
         "patchSetId": 17
@@ -214,6 +268,24 @@
     },
     {
       "key": {
+        "uuid": "423f465a_fa16bf51",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 657,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-08-24T00:19:31Z",
+      "side": 1,
+      "message": "reverted",
+      "parentUuid": "88196bbe_c45bcbd6",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fc24a88_94681505",
         "filename": "ui/gfx/linux/client_native_pixmap_factory_dmabuf.cc",
         "patchSetId": 17
@@ -225,6 +297,24 @@
       "writtenOn": "2017-08-10T04:10:13Z",
       "side": 1,
       "message": "This check should be for buffers that we try to map in the client. We shouldn\u0027t need to add this format here at this point.",
+      "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f87e1d6_b416d7ba",
+        "filename": "ui/gfx/linux/client_native_pixmap_factory_dmabuf.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-08-24T00:19:31Z",
+      "side": 1,
+      "message": "You\u0027re right. Removed.",
+      "parentUuid": "8fc24a88_94681505",
       "revId": "a34ea2134448f63c1dec56e714142b09985cfa0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
