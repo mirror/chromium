@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b316fda_7e405391",
+        "filename": "ui/android/java/src/org/chromium/ui/base/WindowAndroid.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-24T02:19:00Z",
+      "side": 1,
+      "message": "we generally don\u0027t put internal bugs in code. refer to the crbug, or just say the api is broken on 8.0.0 on some devices",
+      "range": {
+        "startLine": 219,
+        "startChar": 22,
+        "endLine": 219,
+        "endChar": 32
+      },
+      "revId": "7c26fb931804923a36f3d3a3cb66c78b88bc6f12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
