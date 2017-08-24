@@ -30,6 +30,7 @@ using NGInlineItemsBuilder =
 struct NGInlineNodeData;
 class NGLayoutResult;
 class NGOffsetMappingResult;
+class NGOffsetMappingUnit;
 
 // Represents an anonymous block box to be laid out, that contains consecutive
 // inline nodes and their descendants.
