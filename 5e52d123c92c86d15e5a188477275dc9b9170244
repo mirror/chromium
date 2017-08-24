@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "e2789de2_fda00e7f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T14:47:45Z",
+      "side": 1,
+      "message": "I\u0027d like to avoid having two methods so that clients (e.g. downloads) don\u0027t have to determine which method to call. I think we can do something like this:\n\n 1. Client calls BottomSheetContentController#showContentAndOpenSheet()\n 2. We\u0027re in overview mode and NTP isn\u0027t showing, so #showContentAndOpenSheet() sets mShouldOpenSheetOnNextContentChange \u003d true and calls BottomSheet#displayNewTabUi()\n 3. BottomSheetNewTabController calls #selectItem() which is allowed to proceed since mShouldOpenSheetOnNextContentChange is true.",
+      "parentUuid": "5d07dde6_ef96d408",
+      "range": {
+        "startLine": 246,
+        "startChar": 1,
+        "endLine": 252,
+        "endChar": 9
+      },
+      "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e817130_a063eecf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
         "patchSetId": 1
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "I suspect mActivity.getBottomSheetContentController().selectItem(R.id.action_home) actually do anything because it seems never escape the mShouldOpenSheetOnNextContentChange check in BottomSheetContentController#onNavigationItemSelected, so I can only call showContentAndOpenSheet() since it seems to be the only place setting mShouldOpenSheetOnNextContentChange to true.\n\nmBottomSheet.defocusOmnibox() will actually be called during showContentAndOpenSheet() too.",
       "parentUuid": "4e817130_a063eecf",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 9
+      },
+      "revId": "5e52d123c92c86d15e5a188477275dc9b9170244",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60aef8a5_bc223525",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T14:47:45Z",
+      "side": 1,
+      "message": "In BottomSheetContentController, we can set mShouldOpenSheetOnNextContentChange \u003d true before calling BottomSheet#displayNewTabUi() so that BottomSheetNewTabController call to selectItem() doesn\u0027t get tripped up on the mShouldOpenSheetOnNextContentChange check.",
+      "parentUuid": "a59ca4c2_ca9d1d6a",
       "range": {
         "startLine": 143,
         "startChar": 8,

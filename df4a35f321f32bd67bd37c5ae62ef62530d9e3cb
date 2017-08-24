@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9b0a6cb_47fc148b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T14:47:45Z",
+      "side": 1,
+      "message": "The existing code that calls BottomSheetContentController#selectItem(R.id.action_home) is used to ensure that the home tab is shown when the user opened a new tab when something besides the home tab is shown (e.g. open chrome home and go to downloads, then open a new tab via a launcher short cut on Android NMR1+).",
+      "revId": "df4a35f321f32bd67bd37c5ae62ef62530d9e3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
