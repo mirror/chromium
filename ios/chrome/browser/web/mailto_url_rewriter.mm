@@ -19,12 +19,10 @@
 @synthesize observer = _observer;
 
 - (NSString*)defaultHandlerID {
-  NOTREACHED();
   return nil;
 }
 
 - (void)setDefaultHandlerID:(NSString*)defaultHandlerID {
-  NOTREACHED();
 }
 
 + (NSString*)systemMailApp {
@@ -34,22 +32,18 @@
 }
 
 - (instancetype)initWithStandardHandlers {
-  NOTREACHED();
   return self;
 }
 
 - (NSArray<MailtoHandler*>*)defaultHandlers {
-  NOTREACHED();
   return nil;
 }
 
 - (NSString*)defaultHandlerName {
-  NOTREACHED();
   return nil;
 }
 
 - (NSString*)rewriteMailtoURL:(const GURL&)gURL {
-  NOTREACHED();
   return nil;
 }
 
