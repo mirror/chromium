@@ -8,6 +8,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "chromeos/login/login_state.h"
+#include "components/signin/core/browser/signin_header_helper.h"
 #include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/resource_request_info.h"
 #include "extensions/browser/extension_navigation_ui_data.h"
@@ -135,6 +136,13 @@ bool WebRequestPermissions::HideRequest(
   return IsSensitiveURL(
              url, is_request_from_browser || is_request_from_webui_renderer) ||
          !HasWebRequestScheme(url);
+}
+
+// static
+bool HideResponseHeader(const base::StringPiece& header_name) {
+  // The Dice response header may contain an authorization code that can be used
+  // to fetch a new refresh token associated with the user account.
+  return header_name == signin::kDiceResponseHeader;
 }
 
 // static

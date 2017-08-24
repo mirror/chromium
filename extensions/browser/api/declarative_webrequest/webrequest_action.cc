@@ -216,7 +216,8 @@ scoped_refptr<const WebRequestAction> CreateAddResponseHeaderAction(
   std::string value;
   INPUT_FORMAT_VALIDATE(dict->GetString(keys::kNameKey, &name));
   INPUT_FORMAT_VALIDATE(dict->GetString(keys::kValueKey, &value));
-  if (!net::HttpUtil::IsValidHeaderName(name)) {
+  if (!net::HttpUtil::IsValidHeaderName(name) ||
+      name == "X-Chrome-ID-Consistency-Response") {
     *error = extension_web_request_api_constants::kInvalidHeaderName;
     return scoped_refptr<const WebRequestAction>(NULL);
   }
@@ -240,7 +241,8 @@ scoped_refptr<const WebRequestAction> CreateRemoveResponseHeaderAction(
   std::string value;
   INPUT_FORMAT_VALIDATE(dict->GetString(keys::kNameKey, &name));
   bool has_value = dict->GetString(keys::kValueKey, &value);
-  if (!net::HttpUtil::IsValidHeaderName(name)) {
+  if (!net::HttpUtil::IsValidHeaderName(name) ||
+      name == "X-Chrome-ID-Consistency-Response") {
     *error = extension_web_request_api_constants::kInvalidHeaderName;
     return scoped_refptr<const WebRequestAction>(NULL);
   }

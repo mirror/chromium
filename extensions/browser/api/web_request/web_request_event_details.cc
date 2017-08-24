@@ -154,8 +154,11 @@ void WebRequestEventDetails::SetResponseHeaders(
       size_t iter = 0;
       std::string name;
       std::string value;
-      while (response_headers->EnumerateHeaderLines(&iter, &name, &value))
+      while (response_headers->EnumerateHeaderLines(&iter, &name, &value)) {
+        if (name == "X-Chrome-ID-Consistency-Response")
+          continue;
         headers->Append(helpers::CreateHeaderDictionary(name, value));
+      }
     }
     response_headers_.reset(headers);
   }
