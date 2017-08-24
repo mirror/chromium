@@ -97,6 +97,11 @@ PaintImage PaintImage::MakeSubset(const gfx::Rect& subset) const {
   return result;
 }
 
+bool PaintImage::ShouldAnimate() const {
+  return animation_type_ == AnimationType::ANIMATED &&
+         repetition_policy_ != RepetitionPolicy::kLoopNone;
+}
+
 PaintImage::FrameKey PaintImage::GetKeyForFrame(size_t frame_index) const {
   DCHECK_LT(frame_index, FrameCount());
   DCHECK(paint_image_generator_ || paint_record_);
