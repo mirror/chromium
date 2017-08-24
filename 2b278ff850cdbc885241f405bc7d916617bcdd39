@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef12d5fa_fb5bc5aa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-24T11:07:40Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of CL descriptions of the form \"fix bug [...]\", as that conveys little information -- I sure hope you are fixing a bug instead of introducing it ;-) You have a good description below of _what_ you are actually changing, so I would put that as the first line. Then you can reference the bug ID to make the connection to the bug you\u0027re fixing, and optionally explain in words what issue this fixes.",
+      "range": {
+        "startLine": 7,
+        "startChar": 15,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746bf192_14a7d061",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-24T11:07:40Z",
+      "side": 1,
+      "message": "Can you file a bug for this and reference it?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 4
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f6c755_909a871c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-24T11:07:40Z",
+      "side": 1,
+      "message": "Isn\u0027t that the _second_ page?",
+      "range": {
+        "startLine": 40,
+        "startChar": 35,
+        "endLine": 40,
+        "endChar": 36
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64658779_0c3c12a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-24T11:07:40Z",
+      "side": 1,
+      "message": "You could make this final and assign 0 to it in an else branch, so that the compiler will check that you assign exactly one value to it.",
+      "range": {
+        "startLine": 41,
+        "startChar": 8,
+        "endLine": 41,
+        "endChar": 11
+      },
+      "revId": "2b278ff850cdbc885241f405bc7d916617bcdd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
