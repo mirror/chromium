@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12e8ffe8_e6415ada",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-24T18:32:14Z",
+      "side": 1,
+      "message": "Nit: Comment not needed.  Unless you want to say more about why you\u0027re skipping them.",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "599129b0_32aacbb1",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-24T18:32:14Z",
+      "side": 1,
+      "message": "Was this a typo in the previous code?",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1149d33b_6d8e7a06",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-24T18:32:14Z",
+      "side": 1,
+      "message": "Any particular reason for renaming this?",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d22d502_6057219c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-24T18:32:14Z",
+      "side": 1,
+      "message": "Maybe DCHECK(IsProcessorRegistered(name)) ?",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32412580_e090fc46",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-24T18:32:14Z",
+      "side": 1,
+      "message": "Nit: Maybe describe very briefly what the information is? And synchronize from where to where?",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8762fa11_6c850934",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-24T18:32:14Z",
+      "side": 1,
+      "message": "Nit: Comment on what this means.",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "316fdea3_52fb2ac2",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-24T18:32:14Z",
+      "side": 1,
+      "message": "Nit: Add comment on what the key and value for this hashmap are.",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e23da571_1b650fb2",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorDefinition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-24T18:32:14Z",
+      "side": 1,
+      "message": "Can\u0027t quite tell from the blink style guide if this should be SetIsSynchronized().",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398c12a7_5b3deb1e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-24T18:32:14Z",
+      "side": 1,
+      "message": "Blink style is DefaultValue(), unless this collides with something.",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d46db7_252e5874",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-24T18:32:14Z",
+      "side": 1,
+      "message": "Brief description of what these slots represent would be nice.",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0911a6f3_94216b43",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-24T18:32:14Z",
+      "side": 1,
+      "message": "Blink style says to prefer reference parameters to pointers.\nDoes this method also need to be defined inline?",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d4e6c8_d5e31006",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-24T18:32:14Z",
+      "side": 1,
+      "message": "Likewise, blink style prefers Name() and ParamInfoList() for getters.",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
