@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a078116_237ba694",
+        "filename": "chrome/browser/android/instantapps/instant_apps_infobar_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-24T00:31:06Z",
+      "side": 1,
+      "message": "This line makes me concerned about this change.\n\nThe old code would correctly handle the WebContents being destroyed before the infobar (in which case WebContentsFromInfoBar() would start returning null).  This null check implies doing so was actually necessary.  The new code will not handle this correctly.\n\nIf we don\u0027t need to handle this case, I think this null check makes no sense, as I don\u0027t think this should ever be null at construction time.  If we do need to handle it, the current code doesn\u0027t do so, and you need something like the old code.",
+      "revId": "39e3e5d18e666ae2f3d0a384ffc12ab273d29b68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
