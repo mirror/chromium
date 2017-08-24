@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eeee02f_a96ad8d7",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-24T12:33:17Z",
+      "side": 1,
+      "message": "The bug (https://crbug.com/754588) is about focusing the hidden password field when tabbing through the list. This is most likely due to the removal of \"disabled\" in https://crrev.com/c/575143. Since we want the selection on click to work when the password is shown, it is only conditionally enabled.\n\nAnother related bug is https://crbug.com/754597. This is relatively easy re-producable:\n- Open chrome://settings/passwords\n- View any saved passwords via the added eye icon\n- Click the password to select it\n- Start tabbing\n\nWhen the focus is in the omnibar (e.g. \"Chrome Chip\" or URL), the revealed password is also highlighted. I played around with the onBlur event to remove the selection, but no luck so far. Do you happen to know how this can be fixed?\n\nLastly, when tabbing around on the password page I realized that only the first or most recent selected password entry is being tabbed through, whereas all password exception entries (\"Never Saved\") will be highlighted. This strikes me as odd as well, and is probably not expected behavior. Do you know how this could be fixed as well?",
+      "range": {
+        "startLine": 52,
+        "startChar": 14,
+        "endLine": 52,
+        "endChar": 39
+      },
+      "revId": "dfba20664d508e411e2e28e987eaca862dc176a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
