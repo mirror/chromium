@@ -91,7 +91,7 @@ class PrinterBackendProxyChromeos : public PrinterBackendProxy {
                                      base::Bind(cb, ""));
   };
 
-  void EnumeratePrinters(const EnumeratePrintersCallback& cb) override {
+  void EnumeratePrinters(const GetPrintersCallback& cb) override {
     // SyncedPrintersManager is not thread safe and must be called from the UI
     // thread.
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
