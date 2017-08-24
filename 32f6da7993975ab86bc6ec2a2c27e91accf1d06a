@@ -292,6 +292,24 @@
       "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3446b908_a97b38bf",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-24T22:47:29Z",
+      "side": 1,
+      "message": "Thanks. Moved the flag reset in AppListView.",
+      "parentUuid": "81a921b3_96ca3dba",
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
