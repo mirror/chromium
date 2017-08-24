@@ -322,8 +322,31 @@ test("components_unittests") {
     deps += [ "//components/safe_browsing/db:unit_tests_mobile" ]
   }
 
+  # No components should depend on Chrome.
+  if (is_chromeos || is_win) {
+    # ChromeOS depends on chrome via the //chromeos directory, which
+    # both pulls in stuff from Chrome and is a low-level dependency from
+    # //ui/base. This layering is hopelessly tangled.
+    #
+    # TODO(bug 758759) On Windows, one test depends on chrome installer util.
+    # This test should be fixed and all of //chrome/* blacklisted.
+    #
+    # Until these cases are cleaned, we can blacklist the main Chrome targets
+    # which aren't actually used. This should prevent most major regressions.
+    assert_no_deps = [
+      "//chrome:*",  # Catches targets in this file and not subdirs.
+      "//chrome/browser",  # No * due to //chrome/browser/chromeos mess.
+      "//chrome/common/*",
+      "//chrome/renderer/*",
+      "//chrome/test/*",
+    ]
+  } else {
+    # Other platforms have clean dependencies.
+    assert_no_deps = [ "//chrome/*" ]
+  }
+
   if (is_ios) {
-    assert_no_deps = ios_assert_no_deps
+    assert_no_deps += ios_assert_no_deps
   }
 }
 
@@ -491,6 +514,8 @@ if (!is_ios) {
       sources += [ "printing/test/print_render_frame_helper_browsertest.cc" ]
       deps += [ "//components/printing/test:test_support" ]
     }
+
+    assert_no_deps = [ "//chrome/*" ]
   }
 
   test("components_perftests") {
