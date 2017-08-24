@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d225232_8b16ce00",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-24T11:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2da1bfaa_12874403",
+      "range": {
+        "startLine": 60,
+        "startChar": 63,
+        "endLine": 60,
+        "endChar": 76
+      },
+      "revId": "c4cfeadbe205d7114164539b2b84eeaa5133ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cee19dab_e96c391e",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "53bdfae7_84705b6a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-24T11:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cee19dab_e96c391e",
+      "range": {
+        "startLine": 88,
+        "startChar": 23,
+        "endLine": 88,
+        "endChar": 27
+      },
+      "revId": "c4cfeadbe205d7114164539b2b84eeaa5133ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "273b1851_d4d96eeb",
         "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
         "patchSetId": 15
@@ -68,6 +116,30 @@
       "revId": "c4cfeadbe205d7114164539b2b84eeaa5133ccec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678726a9_7d7066be",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-24T11:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "273b1851_d4d96eeb",
+      "range": {
+        "startLine": 891,
+        "startChar": 9,
+        "endLine": 891,
+        "endChar": 18
+      },
+      "revId": "c4cfeadbe205d7114164539b2b84eeaa5133ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
