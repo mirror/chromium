@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dd35542_69e4de61",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_item.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-24T03:36:00Z",
+      "side": 1,
+      "message": "Curious, why do we need this? Probably the same for NGInlineNodeData?",
+      "revId": "41a9d93e866c7b437cb13018ef2942845928a7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
