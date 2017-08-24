@@ -698,6 +698,14 @@ void Highlight(void* buffer,
   pp::Rect new_rect = rect;
   for (const auto& highlighted : *highlighted_rects)
     new_rect = new_rect.Subtract(highlighted);
+  if (new_rect.IsEmpty())
+    return;
+
+  std::vector<size_t> overlapping_rect_indices;
+  for (size_t i = 0; i < highlighted_rects->size(); ++i) {
+    if (new_rect.Intersects((*highlighted_rects)[i]))
+      overlapping_rect_indices.push_back(i);
+  }
 
   highlighted_rects->push_back(new_rect);
   int l = new_rect.x();
@@ -707,6 +715,18 @@ void Highlight(void* buffer,
 
   for (int y = t; y < t + h; ++y) {
     for (int x = l; x < l + w; ++x) {
+      bool overlaps = false;
+      for (size_t i : overlapping_rect_indices) {
+        const auto& highlighted = (*highlighted_rects)[i];
+        if (highlighted.Contains(x, y)) {
+          overlaps = true;
+          break;
+        }
+      }
+
+      if (overlaps)
+        continue;
+
       uint8_t* pixel = static_cast<uint8_t*>(buffer) + y * stride + x * 4;
       pixel[0] = static_cast<uint8_t>(pixel[0] * (kHighlightColorB / 255.0));
       pixel[1] = static_cast<uint8_t>(pixel[1] * (kHighlightColorG / 255.0));
@@ -3198,7 +3218,7 @@ void PDFiumEngine::FinishPaint(int progressive_index,
   DCHECK(image_data);
 
   int page_index = progressive_paints_[progressive_index].page_index;
-  pp::Rect dirty_in_screen = progressive_paints_[progressive_index].rect;
+  const pp::Rect& dirty_in_screen = progressive_paints_[progressive_index].rect;
   FPDF_BITMAP bitmap = progressive_paints_[progressive_index].bitmap;
   int start_x, start_y, size_x, size_y;
   GetPDFiumRect(page_index, dirty_in_screen, &start_x, &start_y, &size_x,
@@ -3235,7 +3255,7 @@ void PDFiumEngine::FillPageSides(int progressive_index) {
   DCHECK_LT(static_cast<size_t>(progressive_index), progressive_paints_.size());
 
   int page_index = progressive_paints_[progressive_index].page_index;
-  pp::Rect dirty_in_screen = progressive_paints_[progressive_index].rect;
+  const pp::Rect& dirty_in_screen = progressive_paints_[progressive_index].rect;
   FPDF_BITMAP bitmap = progressive_paints_[progressive_index].bitmap;
 
   pp::Rect page_rect = pages_[page_index]->rect();
@@ -3283,7 +3303,7 @@ void PDFiumEngine::PaintPageShadow(int progressive_index,
   DCHECK(image_data);
 
   int page_index = progressive_paints_[progressive_index].page_index;
-  pp::Rect dirty_in_screen = progressive_paints_[progressive_index].rect;
+  const pp::Rect& dirty_in_screen = progressive_paints_[progressive_index].rect;
   pp::Rect page_rect = pages_[page_index]->rect();
   pp::Rect shadow_rect(page_rect);
   shadow_rect.Inset(-kPageShadowLeft, -kPageShadowTop, -kPageShadowRight,
@@ -3311,7 +3331,7 @@ void PDFiumEngine::DrawSelections(int progressive_index,
   DCHECK(image_data);
 
   int page_index = progressive_paints_[progressive_index].page_index;
-  pp::Rect dirty_in_screen = progressive_paints_[progressive_index].rect;
+  const pp::Rect& dirty_in_screen = progressive_paints_[progressive_index].rect;
 
   void* region = nullptr;
   int stride;
