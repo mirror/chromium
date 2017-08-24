@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4fe33270_0df32839",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-24T20:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44b6cc8e_ebe30210",
+      "revId": "d554f90100d055f2ef4a4fbfa5e884f463551fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb64f9c8_fe734d81",
         "filename": "cc/trees/layer_tree_impl.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-23T17:17:56Z",
       "side": 1,
       "message": "You can instead loop over all element ids in the various maps in the\nproperty trees owned by this LayerTreeImpl.",
+      "revId": "d554f90100d055f2ef4a4fbfa5e884f463551fca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406b28e7_6fbfd5d1",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-24T20:43:46Z",
+      "side": 1,
+      "message": "Done. We only actually do anything with transform animations here.",
+      "parentUuid": "eb64f9c8_fe734d81",
       "revId": "d554f90100d055f2ef4a4fbfa5e884f463551fca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
