@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8d8d18d_c44360d0",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-24T19:14:48Z",
+      "side": 1,
+      "message": "Do we need any thread safety here? Document why this is safe if so?",
+      "range": {
+        "startLine": 806,
+        "startChar": 7,
+        "endLine": 806,
+        "endChar": 32
+      },
+      "revId": "b123226280085865458c5207e6d8762ddd0a0fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e3000b_f5387381",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-24T19:14:48Z",
+      "side": 1,
+      "message": "Ooh, can we use std::make_unique now? Or are we still using base::MakeUnique?",
+      "range": {
+        "startLine": 808,
+        "startChar": 13,
+        "endLine": 808,
+        "endChar": 24
+      },
+      "revId": "b123226280085865458c5207e6d8762ddd0a0fbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
