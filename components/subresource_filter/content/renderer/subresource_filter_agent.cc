@@ -168,7 +168,9 @@ void SubresourceFilterAgent::DidCommitProvisionalLoad(
   // which require changes to the unit tests.
   const GURL& url = GetDocumentURL();
 
-  bool use_parent_activation = !IsMainFrame() && ShouldUseParentActivation(url);
+  bool use_parent_activation = render_frame() &&
+                               !render_frame()->IsMainFrame() &&
+                               ShouldUseParentActivation(url);
 
   const ActivationState activation_state =
       use_parent_activation ? GetParentActivationState(render_frame())
