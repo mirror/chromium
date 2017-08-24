@@ -42,7 +42,6 @@
 #include "platform/wtf/Vector.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebCompositorSupport.h"
-#include "public/platform/WebThread.h"
 
 namespace base {
 class SimpleTestTickClock;

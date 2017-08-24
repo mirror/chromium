@@ -21,6 +21,24 @@ class MODULES_EXPORT AnimationWorkletThread final
       WorkerReportingProxy&);
   ~AnimationWorkletThread() override;
 
+  WorkerBackingThread& GetWorkerBackingThread() override;
+
+  // The backing thread is cleared by clearSharedBackingThread().
+  void ClearWorkerBackingThread() override {}
+
+  // This may block the main thread.
+  static void CollectAllGarbage();
+
+  static void EnsureSharedBackingThread();
+  static void ClearSharedBackingThread();
+
+  static void CreateSharedBackingThreadForTest();
+
+  // This only can be called after EnsureSharedBackingThread() is performed.
+  // Currently AnimationWorkletThread owns only one thread and it is shared
+  // by all the customers.
+  static WebThread* GetSharedBackingThread();
+
  protected:
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
       std::unique_ptr<GlobalScopeCreationParams>) final;
