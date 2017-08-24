@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "20a37eb0_697f6ee2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-24T18:25:56Z",
+      "side": 1,
+      "message": "You better ask Joel about this one :)",
+      "revId": "87bdc16b65ebe8eda5c16f846c84326554cacd63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4af5c0a9_89d6b7ec",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/ListControl.js",
         "patchSetId": 2
@@ -19,6 +36,47 @@
         "endLine": 141,
         "endChar": 24
       },
+      "revId": "87bdc16b65ebe8eda5c16f846c84326554cacd63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986671ab_94362b64",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ListControl.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-24T18:25:56Z",
+      "side": 1,
+      "message": "I think the focus restoration should go to the actual method which touches the DOM. WDYT?",
+      "parentUuid": "4af5c0a9_89d6b7ec",
+      "range": {
+        "startLine": 141,
+        "startChar": 9,
+        "endLine": 141,
+        "endChar": 24
+      },
+      "revId": "87bdc16b65ebe8eda5c16f846c84326554cacd63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4bbcf54_1b9177a7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ListControl.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-24T18:25:56Z",
+      "side": 1,
+      "message": "Hmm... This assumes that selected and focused are the same. Is that even true?",
       "revId": "87bdc16b65ebe8eda5c16f846c84326554cacd63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
