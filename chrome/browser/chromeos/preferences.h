@@ -125,6 +125,7 @@ class Preferences : public sync_preferences::PrefServiceSyncableObserver,
   BooleanPrefMember three_finger_click_enabled_;
   BooleanPrefMember unified_desktop_enabled_by_default_;
   BooleanPrefMember natural_scroll_;
+  BooleanPrefMember mouse_reverse_scroll_;
   BooleanPrefMember vert_edge_scroll_enabled_;
   IntegerPrefMember speed_factor_;
   IntegerPrefMember mouse_sensitivity_;

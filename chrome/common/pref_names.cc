@@ -538,6 +538,9 @@ const char kNaturalScroll[] = "settings.touchpad.natural_scroll";
 // A boolean pref set to true if primary mouse button is the left button.
 const char kPrimaryMouseButtonRight[] = "settings.mouse.primary_right";
 
+// A boolean pref set to true if mouse reverse scrolling is enabled.
+const char kMouseReverseScroll[] = "settings.mouse.reverse_scroll";
+
 // A integer pref for the touchpad sensitivity.
 const char kMouseSensitivity[] = "settings.mouse.sensitivity2";
 
