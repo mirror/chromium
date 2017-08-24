@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f0f7f3d_70ef3f56",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-24T23:09:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26e5cf67_49e1c92b",
+      "revId": "1b6956688cad8ca771db64b008293fa0ebe89e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "772e7a62_53e8570f",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-24T23:01:30Z",
       "side": 1,
       "message": "Do we need to care the case where shelf is auto hide? Would we always make shelf show up when we show app list?",
+      "range": {
+        "startLine": 1871,
+        "startChar": 42,
+        "endLine": 1871,
+        "endChar": 71
+      },
+      "revId": "1b6956688cad8ca771db64b008293fa0ebe89e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5a2d404_6a8f9afe",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-24T23:09:34Z",
+      "side": 1,
+      "message": "If shelf if auto hide, swipe up on the shelf will show the shelf instead of the app list.",
+      "parentUuid": "772e7a62_53e8570f",
       "range": {
         "startLine": 1871,
         "startChar": 42,
@@ -56,6 +98,24 @@
       "revId": "1b6956688cad8ca771db64b008293fa0ebe89e94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e22a513_0e838aa8",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1900,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-24T23:09:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1701abf5_98340682",
+      "revId": "1b6956688cad8ca771db64b008293fa0ebe89e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
