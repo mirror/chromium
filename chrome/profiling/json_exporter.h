@@ -19,7 +19,9 @@ void ExportAllocationEventSetToJSON(
     const AllocationEventSet& set,
     const std::vector<memory_instrumentation::mojom::VmRegionPtr>& maps,
     std::ostream& out,
-    std::unique_ptr<base::DictionaryValue> metadata);
+    std::unique_ptr<base::DictionaryValue> metadata,
+    size_t min_size_threshold,
+    size_t min_count_threshold);
 
 }  // namespace profiling
 

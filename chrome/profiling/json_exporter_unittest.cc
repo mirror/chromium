@@ -19,6 +19,11 @@ namespace profiling {
 
 namespace {
 
+const size_t kNoSizeThreshold = 0;
+const size_t kNoCountThreshold = 0;
+const size_t kSizeThreshold = 1024;
+const size_t kCountThreshold = 1024;
+
 using MemoryMap = std::vector<memory_instrumentation::mojom::VmRegionPtr>;
 
 // Finds the first period_interval trace event in the given JSON trace.
@@ -92,7 +97,8 @@ TEST(ProfilingJsonExporterTest, Simple) {
   events.insert(AllocationEvent(Address(0x3), 16, bt1));
 
   std::ostringstream stream;
-  ExportAllocationEventSetToJSON(1234, events, MemoryMap(), stream, nullptr);
+  ExportAllocationEventSetToJSON(1234, events, MemoryMap(), stream, nullptr,
+                                 kNoSizeThreshold, kNoCountThreshold);
   std::string json = stream.str();
 
   // JSON should parse.
@@ -123,6 +129,51 @@ TEST(ProfilingJsonExporterTest, Simple) {
                counts->GetList()[1].GetInt() == 1));
 }
 
+TEST(ProfilingJsonExporterTest, SimpleWithFilteredAllocations) {
+  BacktraceStorage backtrace_storage;
+
+  std::vector<Address> stack1;
+  stack1.push_back(Address(1234));
+  const Backtrace* bt1 = backtrace_storage.Insert(std::move(stack1));
+
+  std::vector<Address> stack2;
+  stack2.push_back(Address(5678));
+  const Backtrace* bt2 = backtrace_storage.Insert(std::move(stack2));
+
+  AllocationEventSet events;
+  events.insert(AllocationEvent(Address(0x1), 16, bt1));
+  events.insert(AllocationEvent(Address(0x2), 32, bt1));
+  events.insert(AllocationEvent(Address(0x3), 1024, bt2));
+  events.insert(AllocationEvent(Address(0x4), 1024, bt2));
+
+  std::ostringstream stream;
+  ExportAllocationEventSetToJSON(1234, events, MemoryMap(), stream, nullptr,
+                                 kSizeThreshold, kCountThreshold);
+  std::string json = stream.str();
+
+  // JSON should parse.
+  base::JSONReader reader(base::JSON_PARSE_RFC);
+  std::unique_ptr<base::Value> root = reader.ReadToValue(stream.str());
+  ASSERT_EQ(base::JSONReader::JSON_NO_ERROR, reader.error_code())
+      << reader.GetErrorMessage();
+  ASSERT_TRUE(root);
+
+  // The trace array contains two items, a process_name one and a
+  // periodic_interval one. Find the latter.
+  const base::Value* periodic_interval = FindFirstPeriodicInterval(*root);
+  ASSERT_TRUE(periodic_interval) << "Array contains no periodic_interval";
+
+  const base::Value* heaps_v2 =
+      periodic_interval->FindPath({"args", "dumps", "heaps_v2"});
+  ASSERT_TRUE(heaps_v2);
+
+  // Counts should be a list with one item. Items with |bt1| are filtered.
+  const base::Value* counts =
+      heaps_v2->FindPath({"allocators", "malloc", "counts"});
+  ASSERT_TRUE(counts);
+  EXPECT_EQ(1u, counts->GetList().size());
+}
+
 TEST(ProfilingJsonExporterTest, MemoryMaps) {
   AllocationEventSet events;
   std::vector<memory_instrumentation::mojom::VmRegionPtr> memory_maps =
@@ -131,7 +182,8 @@ TEST(ProfilingJsonExporterTest, MemoryMaps) {
   ASSERT_GT(memory_maps.size(), 2u);
 
   std::ostringstream stream;
-  ExportAllocationEventSetToJSON(1234, events, memory_maps, stream, nullptr);
+  ExportAllocationEventSetToJSON(1234, events, memory_maps, stream, nullptr,
+                                 kNoSizeThreshold, kNoCountThreshold);
   std::string json = stream.str();
 
   // JSON should parse.
@@ -178,7 +230,8 @@ TEST(ProfilingJsonExporterTest, Metadata) {
 
   std::ostringstream stream;
   ExportAllocationEventSetToJSON(1234, events, MemoryMap(), stream,
-                                 std::move(metadata_dict));
+                                 std::move(metadata_dict), kNoSizeThreshold,
+                                 kNoCountThreshold);
   std::string json = stream.str();
 
   // JSON should parse.

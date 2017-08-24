@@ -237,7 +237,9 @@ void ExportAllocationEventSetToJSON(
     const AllocationEventSet& event_set,
     const std::vector<memory_instrumentation::mojom::VmRegionPtr>& maps,
     std::ostream& out,
-    std::unique_ptr<base::DictionaryValue> metadata_dict) {
+    std::unique_ptr<base::DictionaryValue> metadata_dict,
+    size_t min_size_threshold,
+    size_t min_count_threshold) {
   out << "{ \"traceEvents\": [";
   WriteProcessName(pid, out);
   out << ",\n";
@@ -256,14 +258,33 @@ void ExportAllocationEventSetToJSON(
   // We hardcode one type, "[unknown]".
   size_t type_string_id = AddOrGetString("[unknown]", &string_table);
 
-  // Find all backtraces referenced by the set. The backtrace storage will
-  // contain more stacks than we want to write out (it will refer to all
-  // processes, while we're only writing one). So do those only on demand.
+  // Aggregate allocations. Allocations of the same size and stack get grouped.
+  UniqueAllocCount alloc_counts;
+  for (const auto& alloc : event_set) {
+    UniqueAlloc unique_alloc(alloc.backtrace(), alloc.size());
+    alloc_counts[unique_alloc]++;
+  }
+
+  // Filter irrelevant allocations.
+  for (auto alloc = alloc_counts.begin(); alloc != alloc_counts.end();) {
+    size_t alloc_size = alloc->first.size;
+    size_t alloc_count = alloc->second;
+    if (alloc_size < min_size_threshold && alloc_count < min_count_threshold) {
+      alloc = alloc_counts.erase(alloc);
+    } else {
+      ++alloc;
+    }
+  }
+
+  // Find all backtraces referenced by the set and not filtered. The backtrace
+  // storage will contain more stacks than we want to write out (it will refer
+  // to all processes, while we're only writing one). So do those only on
+  // demand.
   //
   // The map maps backtrace keys to node IDs (computed below).
   std::map<const Backtrace*, size_t> backtraces;
-  for (const auto& event : event_set)
-    backtraces.emplace(event.backtrace(), 0);
+  for (const auto& alloc : alloc_counts)
+    backtraces.emplace(alloc.first.backtrace, 0);
 
   // Write each backtrace, converting the string for the stack entry to string
   // IDs. The backtrace -> node ID will be filled in at this time.
@@ -285,13 +306,6 @@ void ExportAllocationEventSetToJSON(
   out << "\"types\":[{\"id\":" << kTypeId << ",\"name_sid\":" << type_string_id
       << "}]";
   out << "},\n";  // End of maps section.
-
-  // Aggregate allocations. Allocations of the same size and stack get grouped.
-  UniqueAllocCount alloc_counts;
-  for (const auto& alloc : event_set) {
-    UniqueAlloc unique_alloc(alloc.backtrace(), alloc.size());
-    alloc_counts[unique_alloc]++;
-  }
 
   // Allocators section.
   out << "\"allocators\":{\"malloc\":{\n";

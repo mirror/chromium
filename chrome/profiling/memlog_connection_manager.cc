@@ -21,6 +21,11 @@
 
 namespace profiling {
 
+namespace {
+const size_t kMinSizeThreshold = 16 * 1024;
+const size_t kMinCountThreshold = 1024;
+}  // namespace
+
 struct MemlogConnectionManager::Connection {
   Connection(AllocationTracker::CompleteCallback complete_cb,
              BacktraceStorage* backtrace_storage,
@@ -118,7 +123,8 @@ bool MemlogConnectionManager::DumpProcess(
 
   std::ostringstream oss;
   ExportAllocationEventSetToJSON(pid, connection->tracker.live_allocs(), maps,
-                                 oss, std::move(metadata));
+                                 oss, std::move(metadata), kMinSizeThreshold,
+                                 kMinCountThreshold);
   std::string reply = oss.str();
 
   // Pass ownership of the underlying fd/HANDLE to zlib.
