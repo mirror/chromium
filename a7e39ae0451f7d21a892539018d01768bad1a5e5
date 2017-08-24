@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b1198f38_bff05b0b",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Done, combined with simplified code.",
+      "parentUuid": "55c1d8a0_5eca968f",
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dce51c38_28963f84",
         "filename": "chrome/installer/zucchini/address_translator.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2e354ab5_4f93f607",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Line 31 was a mistake: It should be kInvalidRva.",
+      "parentUuid": "dce51c38_28963f84",
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c94dd0c1_20cb0952",
         "filename": "chrome/installer/zucchini/address_translator.cc",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf324b4_73d92c2e",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Done, and shortened. Note that CoversDanglingRva(), being a subroutine, does not have caller\u0027s context (that rva \u003e\u003d unit-\u003erva_begin), so has to perform the check rva \u003e\u003d rva_begin again for correctness. But that\u0027s a small price to pay.",
+      "parentUuid": "c94dd0c1_20cb0952",
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "47e74066_c6f46f9f",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Okay, no need to be pedantic with this! Removed.",
+      "parentUuid": "8d00bbcb_71a71808",
+      "range": {
+        "startLine": 44,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 26
+      },
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b34151d_6c8f6578",
         "filename": "chrome/installer/zucchini/address_translator.cc",
         "patchSetId": 3
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "28ebd83b_7676ccdf",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Woot! Done.",
+      "parentUuid": "1b34151d_6c8f6578",
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cf3d9b1_7a07e834",
         "filename": "chrome/installer/zucchini/address_translator.cc",
         "patchSetId": 3
@@ -104,6 +200,24 @@
       "writtenOn": "2017-08-24T09:53:35Z",
       "side": 1,
       "message": "|slow| is never advanced. is that intended? if so, i think \"begin\" is a better name than \"slow\".",
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97aa3304_cca58490",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Nice catch! I need to advance |slow|, indeed. All the failure test cases deals with 2 intervals (and does merging), so those didn\u0027t catch this bug... A case that breaks this is\n\n  A..|a....\n  .A.|..a..\n  .A.|....a\n  \nHere, the RVA ranges (a) don\u0027t merge so we still have 3 intervals. Then the last 2 examples map 2 RVA range to the same offset range. So error is expected, but the buggy code would let that pass. Added the test, and fixed!",
+      "parentUuid": "4cf3d9b1_7a07e834",
       "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "4e0c8325_6a65c129",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Done, though this means that the class is not \"done\" and should not be reused (we don\u0027t reuse it anyway, even for tests). Added comment on Build().",
+      "parentUuid": "346b5d8e_da2c9e23",
+      "range": {
+        "startLine": 241,
+        "startChar": 25,
+        "endLine": 241,
+        "endChar": 44
+      },
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eaeb63d4_d10f1009",
         "filename": "chrome/installer/zucchini/address_translator.cc",
         "patchSetId": 3
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "0538ec7b_e29fcca1",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaeb63d4_d10f1009",
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "840d41cd_d9e47e15",
         "filename": "chrome/installer/zucchini/address_translator.cc",
         "patchSetId": 3
@@ -161,6 +317,30 @@
       "writtenOn": "2017-08-24T09:53:35Z",
       "side": 1,
       "message": "isn\u0027t it the |offset| that is invalid here?",
+      "range": {
+        "startLine": 272,
+        "startChar": 9,
+        "endLine": 272,
+        "endChar": 20
+      },
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd2d35aa_456ba497",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "kInvalidRva is a dummy return value, not a complaint about parameter (which is untrusted by default).  Also this is more consistent with return types (otherwise we\u0027d need to use base::Optional, or return a bool and pass a output pointer param).",
+      "parentUuid": "840d41cd_d9e47e15",
       "range": {
         "startLine": 272,
         "startChar": 9,
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "f64c4bbc_f14b2196",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c67c95fe_563a9aad",
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "442c2c2f_4a07acc4",
         "filename": "chrome/installer/zucchini/address_translator.cc",
         "patchSetId": 3
@@ -210,6 +408,30 @@
       "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd93ddc_9e3b9ca4",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "442c2c2f_4a07acc4",
+      "range": {
+        "startLine": 290,
+        "startChar": 13,
+        "endLine": 290,
+        "endChar": 27
+      },
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -236,6 +458,30 @@
     },
     {
       "key": {
+        "uuid": "3617e112_66cc5942",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca8cb3f4_fd179b47",
+      "range": {
+        "startLine": 41,
+        "startChar": 56,
+        "endLine": 41,
+        "endChar": 63
+      },
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23f4bd14_e70fc6ca",
         "filename": "chrome/installer/zucchini/address_translator.h",
         "patchSetId": 3
@@ -256,6 +502,30 @@
       "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479afb99_8f344b84",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23f4bd14_e70fc6ca",
+      "range": {
+        "startLine": 55,
+        "startChar": 24,
+        "endLine": 55,
+        "endChar": 27
+      },
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -282,6 +552,30 @@
     },
     {
       "key": {
+        "uuid": "1812975a_2a7d8bff",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a85c3154_f94e733f",
+      "range": {
+        "startLine": 61,
+        "startChar": 3,
+        "endLine": 61,
+        "endChar": 5
+      },
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b983a4fe_5cb2e377",
         "filename": "chrome/installer/zucchini/address_translator.h",
         "patchSetId": 3
@@ -302,6 +596,30 @@
       "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ef4712_612a31f2",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b983a4fe_5cb2e377",
+      "range": {
+        "startLine": 65,
+        "startChar": 33,
+        "endLine": 65,
+        "endChar": 36
+      },
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -328,6 +646,30 @@
     },
     {
       "key": {
+        "uuid": "1162183d_9b896838",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb4951d8_d361c96f",
+      "range": {
+        "startLine": 67,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 10
+      },
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "862b5d32_9c99a69f",
         "filename": "chrome/installer/zucchini/address_translator.h",
         "patchSetId": 3
@@ -342,6 +684,24 @@
       "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39602f87_7ca735ab",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Nice! Done.",
+      "parentUuid": "862b5d32_9c99a69f",
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -368,6 +728,30 @@
     },
     {
       "key": {
+        "uuid": "2928de93_5176d7cb",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Done, though kInvalidRVA is correct: It\u0027s a dummy value of RVA, and not a complaint about parameter.",
+      "parentUuid": "903ab6a6_0ae0ef14",
+      "range": {
+        "startLine": 102,
+        "startChar": 51,
+        "endLine": 102,
+        "endChar": 62
+      },
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7ca815d_fb2e2e68",
         "filename": "chrome/installer/zucchini/address_translator.h",
         "patchSetId": 3
@@ -388,6 +772,30 @@
       "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9961dd_3498f1ed",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Done, same.",
+      "parentUuid": "c7ca815d_fb2e2e68",
+      "range": {
+        "startLine": 105,
+        "startChar": 51,
+        "endLine": 105,
+        "endChar": 65
+      },
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -414,6 +822,30 @@
     },
     {
       "key": {
+        "uuid": "7d6917f5_fede3c2b",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f368c40_a3a2b43b",
+      "range": {
+        "startLine": 179,
+        "startChar": 34,
+        "endLine": 179,
+        "endChar": 39
+      },
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26c84c21_494f34e0",
         "filename": "chrome/installer/zucchini/address_translator.h",
         "patchSetId": 3
@@ -428,6 +860,24 @@
       "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac346217_4b513ea1",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-24T15:49:46Z",
+      "side": 1,
+      "message": "Originally I wanted to have the class injected into users (i.e.., Rel32ReaderX86 and Rel32WriterX86), then realized it was simpler to have the user holding on to an instance as member, and initialize fromit.  So copy constructor is now dead code.  Not sure if we\u0027ll need it later, but removing for now.",
+      "parentUuid": "26c84c21_494f34e0",
+      "revId": "a7e39ae0451f7d21a892539018d01768bad1a5e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
