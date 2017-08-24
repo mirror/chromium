@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a463734_45deeb16",
+        "filename": "chrome/browser/ui/aura/accessibility/automation_manager_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-24T22:41:54Z",
+      "side": 1,
+      "message": "How does this compare to the logic in ProfileManager::GetActiveUserProfile()?",
+      "revId": "87c1be1180c045e15d77eeba8427299c39bbfff5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
