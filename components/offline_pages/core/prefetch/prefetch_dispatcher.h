@@ -64,6 +64,8 @@ class PrefetchDispatcher {
   // pipeline again.
   virtual void SchedulePipelineProcessing() = 0;
 
+  virtual void EnsureTaskScheduled() = 0;
+
   // Called when a client has candidate URLs for the system to prefetch, along
   // with the client's unique namespace. URLs that are currently in the system
   // for this client are acceptable but ignored.

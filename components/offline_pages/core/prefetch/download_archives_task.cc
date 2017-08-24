@@ -92,6 +92,8 @@ SelectAndMarkItemsForDownloadSync(sql::Connection* db) {
   // Get current count of concurrent downloads and bail early if we are already
   // downloading more than we can.
   std::unique_ptr<int> concurrent_downloads(CountDownloadsInProgress(db));
+  DVLOG(1) << "Got " << (concurrent_downloads ? *concurrent_downloads : -1)
+           << " concurrent downloads.";
   if (!concurrent_downloads ||
       *concurrent_downloads >= DownloadArchivesTask::kMaxConcurrentDownloads) {
     return nullptr;
@@ -105,10 +107,12 @@ SelectAndMarkItemsForDownloadSync(sql::Connection* db) {
   base::DefaultClock clock;
   PrefetchDownloaderQuota downloader_quota(db, &clock);
   int64_t available_quota = downloader_quota.GetAvailableQuotaBytes();
+  DVLOG(1) << "Got " << available_quota << " available quota.";
   if (available_quota <= 0)
     return nullptr;
 
   ItemsReadyForDownload ready_items = FindItemsReadyForDownload(db);
+  DVLOG(1) << "Got " << ready_items.size() << " ready items.";
   if (ready_items.empty())
     return nullptr;
 

@@ -13,6 +13,7 @@
 #include "components/offline_pages/core/task.h"
 
 namespace offline_pages {
+class PrefetchDispatcher;
 class PrefetchStore;
 struct PrefetchURL;
 
@@ -35,6 +36,7 @@ class AddUniqueUrlsTask : public Task {
   };
 
   AddUniqueUrlsTask(PrefetchStore* prefetch_store,
+                    PrefetchDispatcher* prefetch_dispatcher,
                     const std::string& name_space,
                     const std::vector<PrefetchURL>& prefetch_urls);
   ~AddUniqueUrlsTask() override;
@@ -46,6 +48,8 @@ class AddUniqueUrlsTask : public Task {
 
   // Prefetch store to execute against. Not owned.
   PrefetchStore* prefetch_store_;
+  // Dispatcher to call back to with results. Not owned.
+  PrefetchDispatcher* prefetch_dispatcher_;
   std::string name_space_;
   std::vector<PrefetchURL> prefetch_urls_;
 
