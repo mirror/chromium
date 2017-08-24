@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c53a4fd_29cd2390",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-24T20:02:14Z",
+      "side": 1,
+      "message": "nit: prefer to call this |drag_started_from_peeking_|",
+      "range": {
+        "startLine": 592,
+        "startChar": 4,
+        "endLine": 592,
+        "endChar": 33
+      },
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8611a17d_0c78bd44",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-24T20:02:14Z",
+      "side": 1,
+      "message": "const method",
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9701eb5f_0acd8d4f",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1873,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-24T20:02:14Z",
+      "side": 1,
+      "message": "nit: unrelated to your change. We might save some indent if we reverse the condition and do a continue here.\ni.e. change this to\n  if (item_view \u003d\u003d drag_view_)\n    continue;\n\nand shift the code block under.",
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "054d770c_2e94cf24",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1890,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-24T20:02:14Z",
+      "side": 1,
+      "message": "This can be moved out of the loop and make it a const.",
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b851918_27f5b0dd",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1898,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-24T20:02:14Z",
+      "side": 1,
+      "message": "Isn\u0027t this\n  opacity_factor \u003d drag_amount_above_peeking / kShelfSize;\n?",
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3157caf_2773e91e",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1899,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-24T20:02:14Z",
+      "side": 1,
+      "message": "Looks like |opacity_factor| could be negative. What happens in this case?",
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c11475fa_4d305f14",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-08-24T20:02:14Z",
+      "side": 1,
+      "message": "I think we should keep this logic inside AppListView and reset it when the drag ends.",
+      "revId": "32f6da7993975ab86bc6ec2a2c27e91accf1d06a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
