@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c68c567_e9953e85",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T03:44:47Z",
+      "side": 1,
+      "message": "nit: Capitalization.",
+      "revId": "eda184338d885416ec9bc5ad49958fce066601e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813dd4bd_a2f64607",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T03:44:47Z",
+      "side": 1,
+      "message": "This loop is cloning the fds from options.fds_to_remap; we can\u0027t gate it on LP_CLONE_MXIO_STDIO. We\u0027ll need to run this no matter what, and just put the loop below inside the if.",
+      "revId": "eda184338d885416ec9bc5ad49958fce066601e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
