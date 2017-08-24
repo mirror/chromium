@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f786df50_fddb122f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-log-linkify-stack-in-errors-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-24T21:10:49Z",
+      "side": 1,
+      "message": "@luoe - should be safe to rebaseline this since the actual console message dumped below is source mapped correctly. I believe this is just the raw message text of console getting printed (these are all going away with the new test framework anyway).",
+      "revId": "053d1835029c72bd3fe0266d0c23982269f1f390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3546a93_89f4caab",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-retain-autocomplete-on-typing.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-24T21:10:49Z",
+      "side": 1,
+      "message": "I need to do a copy of editor-test since it can\u0027t be accessed from http tests.",
+      "revId": "053d1835029c72bd3fe0266d0c23982269f1f390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21dde9ac_10d2a625",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-uncaught-promise-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-24T21:10:49Z",
+      "side": 1,
+      "message": "Should be a 404 based on test precondition.",
+      "revId": "053d1835029c72bd3fe0266d0c23982269f1f390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

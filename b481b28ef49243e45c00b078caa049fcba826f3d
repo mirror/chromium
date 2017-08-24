@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18163069_db06ab40",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-context-selector.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-08-24T21:10:49Z",
+      "side": 0,
+      "message": "Not sure how this worked since this is a malformed url (should be comma, instead of semicolon): data:text/html,\u003cscript\u003ealert(\u0027hi\u0027);\u003c/script\u003e",
+      "revId": "b481b28ef49243e45c00b078caa049fcba826f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
