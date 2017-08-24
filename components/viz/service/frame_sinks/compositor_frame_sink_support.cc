@@ -134,7 +134,8 @@ void CompositorFrameSinkSupport::DidNotProduceFrame(const BeginFrameAck& ack) {
 
 bool CompositorFrameSinkSupport::SubmitCompositorFrame(
     const LocalSurfaceId& local_surface_id,
-    cc::CompositorFrame frame) {
+    cc::CompositorFrame frame,
+    mojom::HitTestRegionListPtr hit_test_region_list) {
   TRACE_EVENT0("cc", "CompositorFrameSinkSupport::SubmitCompositorFrame");
   DCHECK(local_surface_id.is_valid());
   DCHECK(!frame.render_pass_list.empty());
@@ -185,6 +186,17 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
     current_surface_id_ = SurfaceId(frame_sink_id_, local_surface_id);
     surface_manager_->SurfaceDamageExpected(current_surface->surface_id(),
                                             last_begin_frame_args_);
+  }
+
+  // debug to be removed
+  if (hit_test_region_list) {
+    LOG(ERROR) << "------ CFS Support:Passing HTD to FSM "
+               << current_surface_id_;
+    frame_sink_manager()->SubmitHitTestRegionList(
+        current_surface_id_, std::move(hit_test_region_list));
+  } else {
+    LOG(ERROR) << "------ CFS Support:SCF with Empty HTD "
+               << current_surface_id_;
   }
 
   bool result = current_surface->QueueFrame(

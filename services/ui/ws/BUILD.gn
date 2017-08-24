@@ -138,6 +138,7 @@ static_library("lib") {
     "//cc",
     "//cc/ipc:interfaces",
     "//components/viz/common",
+    "//components/viz/host",
     "//components/viz/service",
     "//mojo/common:common_base",
     "//mojo/public/cpp/bindings",

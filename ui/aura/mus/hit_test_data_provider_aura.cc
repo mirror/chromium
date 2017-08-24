@@ -59,7 +59,7 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
           targeter->GetHitTestRects(child, &rect_mouse, &rect_touch)) {
         touch_and_mouse_are_same = rect_mouse == rect_touch;
       }
-      if (!rect_mouse.IsEmpty()) {
+      if (surface_id.is_valid() && !rect_mouse.IsEmpty()) {
         auto hit_test_region = viz::mojom::HitTestRegion::New();
         hit_test_region->surface_id = surface_id;
         hit_test_region->flags =
@@ -70,8 +70,12 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
         if (child->layer())
           hit_test_region->transform = child->layer()->transform();
         hit_test_region_list->regions.push_back(std::move(hit_test_region));
+
+        // debug to be removed
+        LOG(ERROR) << "+ REGION";
       }
-      if (!touch_and_mouse_are_same && !rect_touch.IsEmpty()) {
+      if (surface_id.is_valid() && !touch_and_mouse_are_same &&
+          !rect_touch.IsEmpty()) {
         auto hit_test_region = viz::mojom::HitTestRegion::New();
         hit_test_region->surface_id = surface_id;
         hit_test_region->flags = flags | viz::mojom::kHitTestTouch;
@@ -79,6 +83,9 @@ void HitTestDataProviderAura::GetHitTestDataRecursively(
         if (child->layer())
           hit_test_region->transform = child->layer()->transform();
         hit_test_region_list->regions.push_back(std::move(hit_test_region));
+
+        // debug to be removed
+        LOG(ERROR) << "+ REGION";
       }
     }
     if (event_targeting_policy != ui::mojom::EventTargetingPolicy::TARGET_ONLY)

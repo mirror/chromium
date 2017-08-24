@@ -40,7 +40,7 @@ mojom("interfaces") {
 
 If we then build this target:
 ```
-ninja -C out/r services/echo/public/interfaces
+ninja -C out/r services/echo/public/interfaces:interfaces_js
 ```
 
 This will produce several generated source files. The one relevant to JavaScript
