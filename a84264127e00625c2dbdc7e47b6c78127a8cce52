@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fdf86381_85523527",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-24T18:25:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9a31ccf_44895915",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77e3687d_97f3c45e",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31cbde61_3155f1eb",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-24T18:25:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77e3687d_97f3c45e",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f004da30_444be756",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-24T18:25:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a02059ec_30e0a80b",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39a12236_2204a3e8",
         "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b699bc_892b6e64",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-24T18:25:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39a12236_2204a3e8",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "325eec0d_ed21c246",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-24T18:25:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b1c229a_dca25d73",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70d3c539_97f4e667",
         "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-24T13:49:28Z",
       "side": 1,
       "message": "Are you sure you want to maintain offline page support (here and elsewhere)?  We don\u0027t show the security text, so it\u0027s a half-implementation anyway.  And from the sound of it, we might be okay to drop https:// unconditionally anyway.",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6f4387_18b1284c",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-24T18:25:08Z",
+      "side": 1,
+      "message": "https is now removed unconditionally. So removed the offline page check.",
+      "parentUuid": "70d3c539_97f4e667",
       "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "19d4f946_092d382d",
+        "filename": "chrome/browser/vr/elements/webvr_url_toast_texture.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-24T18:25:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79631717_d7731960",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ffbb039_a6ad9bb8",
         "filename": "chrome/browser/vr/vr_url_util.cc",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2017-08-24T13:49:28Z",
       "side": 1,
       "message": "I think we should set failure_reason to kCount here to be safe.",
+      "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed646bf_0b92de66",
+        "filename": "chrome/browser/vr/vr_url_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-24T18:25:08Z",
+      "side": 1,
+      "message": "I think it probably make sense to remove this helper function with the new eliding behavior. The common code is even smaller with the new behavior as we don\u0027t want to bail out of VR for URL with long subdomains for autopresent case. So the error handling for kCouldNotElideURL is not needed for auto present case and the ElideBehavior is also different between the two URL bars.\nI have changed the code in webvr_url_toast_texture to not use this function. But still kept this function for url_bar_texture to use. If you agree that we should just remove this function, I can move the code to url_bar_texture so that we can remove this util files. WDYT?",
+      "parentUuid": "7ffbb039_a6ad9bb8",
       "revId": "a84264127e00625c2dbdc7e47b6c78127a8cce52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
