@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479b26f2_92b99da1",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-24T02:27:57Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure if I should pass around the WebState (since Tab also has access to one). Then I thought that the presenting View might not have access to a webstate, and this also simplifies testing. WDYT?\n\nIn any case, more refactoring could be needed here and it might be something to keep in mind for the new arch.",
+      "range": {
+        "startLine": 115,
+        "startChar": 13,
+        "endLine": 115,
+        "endChar": 48
+      },
+      "revId": "e867cc6a3366523e290df8a0a5263f8d5657141e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
