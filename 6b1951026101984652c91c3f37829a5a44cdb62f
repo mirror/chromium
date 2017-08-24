@@ -331,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "4dd66fb0_f3aa8803",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-24T15:01:58Z",
+      "side": 1,
+      "message": "Ha, and AFAIK we don\u0027t really care about profiles, I initially thought that we\u0027d want to track per-profile metrics but there\u0027s no metrics that require this.",
+      "parentUuid": "5157c562_6c00c3bf",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 28
+      },
+      "revId": "6b1951026101984652c91c3f37829a5a44cdb62f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6bded00_da493646",
         "filename": "chrome/browser/metrics/tab_stats_tracker.h",
         "patchSetId": 13
