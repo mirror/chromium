@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b992db19_7264032b",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-24T18:07:46Z",
+      "side": 1,
+      "message": "nit: move after if (!request_info) check.",
+      "revId": "d8e2ec5fb67065cfa6900507bcfb52f6b33ed5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba84ec54_012cc51f",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-24T18:07:46Z",
+      "side": 1,
+      "message": "Is this just a server previews kill switch? Can this be removed? I imagine we are safe with server decides and delegating the kill switch behavior to them.",
+      "revId": "d8e2ec5fb67065cfa6900507bcfb52f6b33ed5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc14737_bc04aa9e",
+        "filename": "components/data_reduction_proxy/content/browser/content_lofi_decider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-24T18:07:46Z",
+      "side": 1,
+      "message": "nit: Do you want to roll these checks together? i.e. return request_info \u0026\u0026 (request_info-\u003eGetPreviewsState() \u0026 content::SERVER_LOFI_ON || request_info-\u003eGetPreviewsState() \u0026 content::SERVER_LITE_PAGE_ON);",
+      "revId": "d8e2ec5fb67065cfa6900507bcfb52f6b33ed5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db9a8fd0_ad792368",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-24T18:07:46Z",
+      "side": 1,
+      "message": "Can you pass previews type into ShouldAcceptServerPreview here and above. See comment below.",
+      "revId": "d8e2ec5fb67065cfa6900507bcfb52f6b33ed5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2795e0fb_d21dcff7",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_config.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-08-24T18:07:46Z",
+      "side": 1,
+      "message": "Want to use SERVER_LOFI and LITE_PAGE here instead of always LITE_PAGE, see comment above.",
+      "revId": "d8e2ec5fb67065cfa6900507bcfb52f6b33ed5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
