@@ -24,6 +24,7 @@
 #include "ui/aura/window_tree_host.h"
 #include "ui/base/layout.h"
 #include "ui/gfx/canvas.h"
+#include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 #include "ui/views/widget/widget.h"
 
@@ -343,11 +344,18 @@ void FastInkView::UpdateSurface() {
       gpu::MailboxHolder(resource->mailbox, sync_token, GL_TEXTURE_2D);
   transferable_resource.is_overlay_candidate = true;
 
+  float device_scale_factor = widget_->GetLayer()->device_scale_factor();
+  gfx::Transform screen_to_buffer_transform(screen_to_buffer_transform_);
+  screen_to_buffer_transform.Scale(1.f / device_scale_factor,
+                                   1.f / device_scale_factor);
+
   gfx::Transform buffer_to_screen_transform;
-  bool rv = screen_to_buffer_transform_.GetInverse(&buffer_to_screen_transform);
+  bool rv = screen_to_buffer_transform.GetInverse(&buffer_to_screen_transform);
   DCHECK(rv);
 
-  gfx::Rect output_rect(widget_->GetNativeView()->GetBoundsInScreen().size());
+  gfx::Rect output_rect(gfx::ScaleToEnclosingRect(
+      gfx::Rect(widget_->GetNativeView()->GetBoundsInScreen().size()),
+      device_scale_factor));
   // |quad_rect| is under normal cricumstances equal to |buffer_size| but to
   // be more resilient to rounding errors in the compositor that might cause
   // off-by-one problems when the transform is non-trivial we compute this rect
@@ -356,7 +364,7 @@ void FastInkView::UpdateSurface() {
   // would end up outside the screen and we would fail to take advantage of HW
   // overlays.
   gfx::Rect quad_rect = gfx::ToEnclosedRect(cc::MathUtil::MapClippedRect(
-      screen_to_buffer_transform_, gfx::RectF(output_rect)));
+      screen_to_buffer_transform, gfx::RectF(output_rect)));
   quad_rect.Intersect(gfx::Rect(buffer_size));
   gfx::Rect opaque_rect = gfx::Rect();
   bool needs_blending = true;
@@ -382,8 +390,7 @@ void FastInkView::UpdateSurface() {
   // accordingly.
   frame.metadata.begin_frame_ack =
       viz::BeginFrameAck::CreateManualAckWithDamage();
-  frame.metadata.device_scale_factor =
-      widget_->GetLayer()->device_scale_factor();
+  frame.metadata.device_scale_factor = device_scale_factor;
   cc::TextureDrawQuad* texture_quad =
       render_pass->CreateAndAppendDrawQuad<cc::TextureDrawQuad>();
   float vertex_opacity[4] = {1.0, 1.0, 1.0, 1.0};
