@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d57917af_21b550ca",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T18:48:26Z",
+      "side": 1,
+      "message": "Please add \u003c/span\u003e\u003c/span\u003e after \u003cbr\u003e.\n\nWe prefer well-formed HTML in our tests. If a bug reproduces only with broken HTML, at least there should be something wrong with parser/DOM, not just editing.",
+      "range": {
+        "startLine": 973,
+        "startChar": 45,
+        "endLine": 973,
+        "endChar": 57
+      },
+      "revId": "23c42a382786ee1a103b90b758dda577062f3a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "580ecd72_e3e6cf36",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T18:48:26Z",
+      "side": 1,
+      "message": "Please keep all the white space characters (\u0027\\n\u0027, \u0027\\t\u0027) as in the original test.\n\nWhite space characters are not oblivious to TextIterator. Instead, a lot of TextIterator bugs come from incorrect handling of white space characters.",
+      "revId": "23c42a382786ee1a103b90b758dda577062f3a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -69,6 +69,24 @@
       "revId": "b05000c8e5fc7e44e1a4eae96014a958ab9926e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d8e9fd39_15244141",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T18:48:26Z",
+      "side": 1,
+      "message": "I guess some of these tests are repros of bugs when TextIterator was first introduced (since they carry some useless ids and classes).\n\nWhile \u0027line-height\u0027 and \u0027min-height\u0027 no longer seem crucial in the test case, I don\u0027t see a reason of removing them since they are still parts of valid tests. Another reason is that, unlike ids and classes, these styles affect layout, which in turn affect TI.",
+      "parentUuid": "3ff67bae_10b7fc4e",
+      "revId": "b05000c8e5fc7e44e1a4eae96014a958ab9926e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
