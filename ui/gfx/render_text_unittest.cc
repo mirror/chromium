@@ -21,6 +21,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -35,6 +36,7 @@
 #include "ui/gfx/font_names_testing.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/point_f.h"
+#include "ui/gfx/gfx_features.h"
 #include "ui/gfx/range/range.h"
 #include "ui/gfx/range/range_f.h"
 #include "ui/gfx/render_text_harfbuzz.h"
@@ -184,35 +186,6 @@ void SetRTL(bool rtl) {
   // Override the current locale/direction.
   base::i18n::SetICUDefaultLocale(rtl ? "he" : "en");
   EXPECT_EQ(rtl, base::i18n::IsRTL());
-}
-
-// Converts a run list into a human-readable string. Can be used in test
-// assertions for a readable expectation and failure message.
-//
-// The string shows the runs in visual order. Each run is enclosed in square
-// brackets, and shows the begin and end inclusive logical character position,
-// with an arrow indicating the direction of the run. Single-character runs just
-// show the character position.
-//
-// For example, the corresponding run-list for the string
-// "abc+\x05d0\x05d1\x05d2" (those are Hebrew characters) is expressed as
-// "[0->2][3][6<-4]".
-std::string RunListDebugString(const internal::TextRunList& run_list) {
-  std::string result;
-  for (size_t i = 0; i < run_list.size(); ++i) {
-    size_t logical_index = run_list.visual_to_logical(i);
-    const internal::TextRunHarfBuzz& run = *run_list.runs()[logical_index];
-    if (run.range.length() == 1) {
-      result.append(base::StringPrintf("[%d]", run.range.start()));
-    } else if (run.is_rtl) {
-      result.append(base::StringPrintf("[%d<-%d]", run.range.end() - 1,
-                                       run.range.start()));
-    } else {
-      result.append(base::StringPrintf("[%d->%d]", run.range.start(),
-                                       run.range.end() - 1));
-    }
-  }
-  return result;
 }
 
 // Execute MoveCursor on the given |render_text| instance for the given
@@ -490,6 +463,35 @@ class RenderTextTest : public testing::Test,
   internal::TextRunList* GetHarfBuzzRunList() {
     DCHECK_EQ(RENDER_TEXT_HARFBUZZ, GetParam());
     return test_api_->GetHarfBuzzRunList();
+  }
+
+  // Converts the current run list into a human-readable string. Can be used in
+  // test assertions for a readable expectation and failure message.
+  //
+  // The string shows the runs in visual order. Each run is enclosed in square
+  // brackets, and shows the begin and end inclusive logical character position,
+  // with an arrow indicating the direction of the run. Single-character runs
+  // just show the character position.
+  //
+  // For example, the the logical bidirectional string "abc+\x05d0\x05d1\x05d2"
+  // (visual string: "abc+אבג") yields "[0->2][3][6<-4]".
+  std::string GetRunListDebugString() {
+    const internal::TextRunList* run_list = GetHarfBuzzRunList();
+    std::string result;
+    for (size_t i = 0; i < run_list->size(); ++i) {
+      size_t logical_index = run_list->visual_to_logical(i);
+      const internal::TextRunHarfBuzz& run = *run_list->runs()[logical_index];
+      if (run.range.length() == 1) {
+        result.append(base::StringPrintf("[%d]", run.range.start()));
+      } else if (run.is_rtl) {
+        result.append(base::StringPrintf("[%d<-%d]", run.range.end() - 1,
+                                         run.range.start()));
+      } else {
+        result.append(base::StringPrintf("[%d->%d]", run.range.start(),
+                                         run.range.end() - 1));
+      }
+    }
+    return result;
   }
 
   // Returns a vector of text fragments corresponding to the current list of
@@ -1548,6 +1550,9 @@ TEST_P(RenderTextTest, GetDisplayTextDirection) {
       render_text->SetDirectionalityMode(DIRECTIONALITY_FORCE_RTL);
       EXPECT_EQ(render_text->GetDisplayTextDirection(),
                 base::i18n::RIGHT_TO_LEFT);
+      render_text->SetDirectionalityMode(DIRECTIONALITY_AS_URL);
+      EXPECT_EQ(render_text->GetDisplayTextDirection(),
+                base::i18n::LEFT_TO_RIGHT);
     }
   }
 
@@ -3519,14 +3524,14 @@ TEST_P(RenderTextHarfBuzzTest, HarfBuzz_HorizontalPositions) {
     render_text->SetText(WideToUTF16(kTestStrings[i].text));
 
     test_api()->EnsureLayout();
-    const internal::TextRunList* run_list = GetHarfBuzzRunList();
-    EXPECT_EQ(kTestStrings[i].expected_runs, RunListDebugString(*run_list));
+    EXPECT_EQ(kTestStrings[i].expected_runs, GetRunListDebugString());
 
     DrawVisualText();
 
     std::vector<TestSkiaTextRenderer::TextLog> text_log;
     renderer()->GetTextLogAndReset(&text_log);
 
+    const internal::TextRunList* run_list = GetHarfBuzzRunList();
     ASSERT_EQ(2U, run_list->size());
     ASSERT_EQ(2U, text_log.size());
 
@@ -3706,13 +3711,59 @@ TEST_P(RenderTextHarfBuzzTest, HarfBuzz_RunDirection) {
   // Get the run list for both display directions.
   render_text->SetDirectionalityMode(DIRECTIONALITY_FORCE_LTR);
   test_api()->EnsureLayout();
-  internal::TextRunList* run_list = GetHarfBuzzRunList();
-  EXPECT_EQ("[7<-6][2->5][1<-0][8->10]", RunListDebugString(*run_list));
+  EXPECT_EQ("[7<-6][2->5][1<-0][8->10]", GetRunListDebugString());
 
   render_text->SetDirectionalityMode(DIRECTIONALITY_FORCE_RTL);
   test_api()->EnsureLayout();
-  run_list = GetHarfBuzzRunList();
-  EXPECT_EQ("[8->10][7<-6][2->5][1<-0]", RunListDebugString(*run_list));
+  EXPECT_EQ("[8->10][7<-6][2->5][1<-0]", GetRunListDebugString());
+}
+
+TEST_P(RenderTextHarfBuzzTest, HarfBuzz_RunDirection_URLs) {
+  RenderTextHarfBuzz* render_text = GetRenderTextHarfBuzz();
+  const base::string16 mixed = WideToUTF16(
+      L"www.\x05D0\x05D1.\x05D2\x05D3/\x05D4\x05D5"
+      L"abc/def?\x05D6\x05D7=\x05D8\x05D9");
+  render_text->SetText(mixed);
+
+  // Normal LTR text should treat URL syntax as weak (as per the normal Bidi
+  // algorithm).
+  render_text->SetDirectionalityMode(DIRECTIONALITY_FORCE_LTR);
+  test_api()->EnsureLayout();
+
+  // This is complex because a new run is created for each punctuation mark, but
+  // it simplifies down to: [0->3][11<-4][12->16][21<-17]
+  const char kExpectedRunListNormalBidi[] =
+      "[0->2][3][11<-10][9][8<-7][6][5<-4][12->14][15][16->18][19][24<-23][22]"
+      "[21<-20]";
+  EXPECT_EQ(kExpectedRunListNormalBidi, GetRunListDebugString());
+
+  // DIRECTIONALITY_AS_URL should be exactly the same as
+  // DIRECTIONALITY_FORCE_LTR by default.
+  render_text->SetDirectionalityMode(DIRECTIONALITY_AS_URL);
+  test_api()->EnsureLayout();
+  EXPECT_EQ(kExpectedRunListNormalBidi, GetRunListDebugString());
+
+  // Test the above again, but with BidiUrlsLeftToRight feature enabled.
+  base::test::ScopedFeatureList scoped_list;
+  scoped_list.InitAndEnableFeature(features::kBidiUrlsLeftToRight);
+
+  // DIRECTIONALITY_FORCE_LTR should be the same as above.
+  render_text->SetDirectionalityMode(DIRECTIONALITY_FORCE_LTR);
+  test_api()->EnsureLayout();
+  EXPECT_EQ(kExpectedRunListNormalBidi, GetRunListDebugString());
+
+  // DIRECTIONALITY_AS_URL should treat URL syntax as strong LTR, to ensure
+  // isolation between RTL characters in different components of the URL.
+  render_text->SetDirectionalityMode(DIRECTIONALITY_AS_URL);
+  test_api()->EnsureLayout();
+  // TODO(mgiuca): Consider whether the rule should instead be "treat URL syntax
+  // as delimiters for FIRST STRONG ISOLATEs", which would result in [12->14]
+  // appearing to the left of [11<-10] (because the first strong character in
+  // the range 10--14 is RTL).
+  const char kExpectedRunListURLLayout[] =
+      "[0->2][3][5<-4][6][8<-7][9][11<-10][12->14][15][16->18][19][21<-20][22]"
+      "[24<-23]";
+  EXPECT_EQ(kExpectedRunListURLLayout, GetRunListDebugString());
 }
 
 TEST_P(RenderTextHarfBuzzTest, HarfBuzz_BreakRunsByUnicodeBlocks) {
@@ -3721,15 +3772,13 @@ TEST_P(RenderTextHarfBuzzTest, HarfBuzz_BreakRunsByUnicodeBlocks) {
   // The '\x25B6' "play character" should break runs. http://crbug.com/278913
   render_text->SetText(WideToUTF16(L"x\x25B6y"));
   test_api()->EnsureLayout();
-  internal::TextRunList* run_list = GetHarfBuzzRunList();
   EXPECT_EQ(ToString16Vec({"x", "▶", "y"}), GetRuns());
-  EXPECT_EQ("[0][1][2]", RunListDebugString(*run_list));
+  EXPECT_EQ("[0][1][2]", GetRunListDebugString());
 
   render_text->SetText(WideToUTF16(L"x \x25B6 y"));
   test_api()->EnsureLayout();
-  run_list = GetHarfBuzzRunList();
   EXPECT_EQ(ToString16Vec({"x", " ", "▶", " ", "y"}), GetRuns());
-  EXPECT_EQ("[0][1][2][3][4]", RunListDebugString(*run_list));
+  EXPECT_EQ("[0][1][2][3][4]", GetRunListDebugString());
 }
 
 TEST_P(RenderTextHarfBuzzTest, HarfBuzz_BreakRunsByEmoji) {
@@ -3740,10 +3789,9 @@ TEST_P(RenderTextHarfBuzzTest, HarfBuzz_BreakRunsByEmoji) {
   // separated. See crbug.com/448909
   render_text->SetText(UTF8ToUTF16("x\xF0\x9F\x98\x81y\xE2\x9C\xA8"));
   test_api()->EnsureLayout();
-  internal::TextRunList* run_list = GetHarfBuzzRunList();
-  // The second run is [1->2] since U+1F601 is represented as a surrogate pair
-  // in UTF-16.
-  EXPECT_EQ("[0][1->2][3][4]", RunListDebugString(*run_list));
+  EXPECT_EQ(ToString16Vec({"x", "😁", "y", "✨"}), GetRuns());
+  // U+1F601 is represented as a surrogate pair in UTF-16.
+  EXPECT_EQ("[0][1->2][3][4]", GetRunListDebugString());
 }
 
 TEST_P(RenderTextHarfBuzzTest, HarfBuzz_BreakRunsByAscii) {
@@ -3753,9 +3801,9 @@ TEST_P(RenderTextHarfBuzzTest, HarfBuzz_BreakRunsByAscii) {
   // run from the ASCII period character.
   render_text->SetText(UTF8ToUTF16("\xF0\x9F\x90\xB1."));
   test_api()->EnsureLayout();
-  internal::TextRunList* run_list = GetHarfBuzzRunList();
+  EXPECT_EQ(ToString16Vec({"🐱", "."}), GetRuns());
   // U+1F431 is represented as a surrogate pair in UTF-16.
-  EXPECT_EQ("[0->1][2]", RunListDebugString(*run_list));
+  EXPECT_EQ("[0->1][2]", GetRunListDebugString());
 }
 
 TEST_P(RenderTextHarfBuzzTest, GlyphBounds) {
