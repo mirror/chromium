@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cc7a89a_a75bcb02",
+        "filename": "ui/views/layout/grid_layout.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 642,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T23:56:43Z",
+      "side": 1,
+      "message": "Move position to match header.",
+      "range": {
+        "startLine": 642,
+        "startChar": 0,
+        "endLine": 642,
+        "endChar": 34
+      },
+      "revId": "8bbba200670194dbd2c1e5003a5031b3c3251d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
