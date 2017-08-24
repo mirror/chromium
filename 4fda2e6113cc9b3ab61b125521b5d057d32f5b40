@@ -81,6 +81,24 @@
       "revId": "4fda2e6113cc9b3ab61b125521b5d057d32f5b40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff6e45c_c3c2c3aa",
+        "filename": "ui/base/cocoa/hover_button.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-24T05:31:33Z",
+      "side": 1,
+      "message": "That is interesting! You\u0027re right that this doesn\u0027t do a modal event loop. It looks like the drag system attaches as a run loop observer, and at the end of every cycle, it updates the drag position and state. That\u0027d explain why even the delayed selector does not work. It looks like this drag implementation only is synchronous for legacy Carbon apps.\n\n(You can set the NSDragManagerLogLevel default to \u003e\u003d 10 to get some NSLogs. The interesting class is NSCoreDragManager, but a lot of functionality is in HIServices).\n\nIt\u0027s probably not worth worrying about the edge case here.",
+      "parentUuid": "f8e82d3b_b9a480be",
+      "revId": "4fda2e6113cc9b3ab61b125521b5d057d32f5b40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
