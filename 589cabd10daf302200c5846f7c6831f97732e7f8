@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14eda8c9_360438d4",
+        "filename": "chrome/browser/net/net_error_tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-24T14:49:20Z",
+      "side": 1,
+      "message": "I don\u0027t know what this means \"application\"?.  I\u0027m not sure the NetErrorTabHelper should know this, either.  Perhaps just pass the web_contents over to DownloadPageLaterHelper instead?\n\noffline_pages::OfflinePageUtils::ScheduleDownload already takes web_contents() anyways, so doesn\u0027t seem like this code needs to know about it at all?  Seems kinda weird to ask the offline page logic for a string that has some meaning we don\u0027t care about only to pass it back into the offline page logic, along with the object we derived the string from in the first place.  That also avoids this code having to know that the offline page code needs platform-specific magic.\n\nAlso, OfflinePageBridge methods themselves should really be commented, too.",
+      "range": {
+        "startLine": 234,
+        "startChar": 39,
+        "endLine": 234,
+        "endChar": 42
+      },
+      "revId": "589cabd10daf302200c5846f7c6831f97732e7f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
