@@ -27,6 +27,8 @@
 
 namespace views {
 
+constexpr gfx::Insets kFocusRingInsets = gfx::Insets(2);
+
 // View used to paint the focus ring around the Checkbox icon.
 // The icon is painted separately.
 class IconFocusRing : public View {
@@ -39,6 +41,7 @@ class IconFocusRing : public View {
   void Layout() override;
   void OnPaint(gfx::Canvas* canvas) override;
 
+  const gfx::Insets insets_;
   Checkbox* checkbox_;
 
   DISALLOW_COPY_AND_ASSIGN(IconFocusRing);
@@ -50,7 +53,7 @@ IconFocusRing::IconFocusRing(Checkbox* checkbox) : checkbox_(checkbox) {
 
 void IconFocusRing::Layout() {
   gfx::Rect focus_bounds = checkbox_->image()->bounds();
-  focus_bounds.Inset(gfx::Insets(-2.f));
+  focus_bounds.Inset(-kFocusRingInsets);
   SetBoundsRect(focus_bounds);
 }
 
@@ -70,8 +73,7 @@ void IconFocusRing::OnPaint(gfx::Canvas* canvas) {
 const char Checkbox::kViewClassName[] = "Checkbox";
 
 Checkbox::Checkbox(const base::string16& label)
-    : LabelButton(NULL, label),
-      checked_(false) {
+    : LabelButton(NULL, label), checked_(false) {
   SetHorizontalAlignment(gfx::ALIGN_LEFT);
   SetFocusForPlatform();
   SetFocusPainter(nullptr);
@@ -134,8 +136,7 @@ Checkbox::Checkbox(const base::string16& label)
   SetMinSize(gfx::Size(0, preferred_size.height() + 4));
 }
 
-Checkbox::~Checkbox() {
-}
+Checkbox::~Checkbox() {}
 
 void Checkbox::SetChecked(bool checked) {
   checked_ = checked;
@@ -248,7 +249,9 @@ void Checkbox::SetCustomImage(bool checked,
 void Checkbox::PaintFocusRing(View* view,
                               gfx::Canvas* canvas,
                               const cc::PaintFlags& flags) {
-  canvas->DrawRoundRect(view->GetLocalBounds(), 2.f, flags);
+  gfx::Rect bounds = view->GetLocalBounds();
+  bounds.Inset(kFocusRingInsets);
+  canvas->DrawRoundRect(bounds, 2.f, flags);
 }
 
 const gfx::VectorIcon& Checkbox::GetVectorIcon() const {
