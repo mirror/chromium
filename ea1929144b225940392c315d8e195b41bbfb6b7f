@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e807be4c_8060a0c7",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-24T12:47:05Z",
+      "side": 1,
+      "message": "Silly question: Would this make sense to rename the class if it has no tab notion anymore?\nSame question in method names.",
+      "range": {
+        "startLine": 73,
+        "startChar": 6,
+        "endLine": 73,
+        "endChar": 22
+      },
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e47cb5_48179cb6",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-24T12:47:05Z",
+      "side": 1,
+      "message": "nit: Initializes",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 16
+      },
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61984f9d_36bae59d",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-24T12:47:05Z",
+      "side": 1,
+      "message": "You rename all variables except ivars, which make the code hard to read. Would you consider renaming ivars too (As they change type)?",
+      "range": {
+        "startLine": 218,
+        "startChar": 17,
+        "endLine": 218,
+        "endChar": 29
+      },
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e49410_5d492678",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-24T12:47:05Z",
+      "side": 1,
+      "message": "that contains?",
+      "range": {
+        "startLine": 239,
+        "startChar": 30,
+        "endLine": 239,
+        "endChar": 39
+      },
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9f4180_a59dc7c7",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-24T12:47:05Z",
+      "side": 1,
+      "message": "new_web_state can be nullptr at that point (as WebStateActivatedAt can have a nullptr new_web_state) which will crash.",
+      "range": {
+        "startLine": 136,
+        "startChar": 6,
+        "endLine": 136,
+        "endChar": 21
+      },
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "047a6453_e49252b2",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-24T12:47:05Z",
+      "side": 1,
+      "message": "uncomment or remove",
+      "range": {
+        "startLine": 141,
+        "startChar": 22,
+        "endLine": 141,
+        "endChar": 36
+      },
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512a6fc9_0276b5c7",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-24T12:47:05Z",
+      "side": 1,
+      "message": "nit:\n#pragma mark -\n#pragma mark WebStateListObserver implementation.",
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "581d7053_4a62c0c3",
+        "filename": "ios/chrome/browser/tabs/tab_model.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-24T12:47:05Z",
+      "side": 1,
+      "message": "Not sure I understand correctly the variable, but should _tabUsageRecorder be added to _webStateListObservers?\nOr _tabUsageRecorder be cleaned in browserStateDestroyed?",
+      "range": {
+        "startLine": 262,
+        "startChar": 16,
+        "endLine": 262,
+        "endChar": 26
+      },
+      "revId": "ea1929144b225940392c315d8e195b41bbfb6b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
