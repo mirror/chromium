@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff89a537_8c7b0b88",
+        "filename": "extensions/browser/value_store/lazy_leveldb.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-24T01:07:53Z",
+      "side": 1,
+      "message": "Nit: is this include still needed?",
+      "revId": "5d9e054f1f420c65478f95ce42189aa3b1d14e74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
