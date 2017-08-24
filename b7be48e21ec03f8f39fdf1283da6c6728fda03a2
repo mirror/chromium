@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "6fd1d4c4_586e780c",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-24T22:02:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f95cb77c_918b36ca",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17e66b68_c0d9ed60",
         "filename": "chrome/browser/vr/databinding/one_way_binding.h",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "e7d3d036_9e547ec1",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-24T22:02:40Z",
+      "side": 1,
+      "message": "You might have this for input elements, say. Not sure we\u0027ll ever add this functionality, though. We might rename Binding -\u003e BindingBase, and OneWayBinding -\u003e Binding (or something else). I\u0027ve updated the class level comment for this class and that may better motivate its current name, but I\u0027m definitely not attached to it. If you\u0027d prefer another name, I\u0027m happy to switch it up.",
+      "parentUuid": "17e66b68_c0d9ed60",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cfcdf67_f1c73d8d",
         "filename": "chrome/browser/vr/databinding/one_way_binding.h",
         "patchSetId": 1
@@ -64,6 +100,24 @@
       "writtenOn": "2017-08-24T17:13:28Z",
       "side": 1,
       "message": "Sanity check.  Keeping a copy of the data here means the types have to be copyable.  Is that part of the reason for the (future) vector specialization?  What if, instead, we relied on the target object to offer both a setter and getter?  The binding could ask both sides for their values and compare them, calling the setter if needed.\n\nThen, vectors wouldn\u0027t be a special case.  We could typedef a vector of some type, define a comparison operator, and have the custom setter propagate changes as it sees fit.\n\nI am likely missing something though.",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fcf2f4b_7e3a68e9",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-24T22:02:40Z",
+      "side": 1,
+      "message": "It does mean that, yeah. I should note here what we\u0027d discussed offline about the vector binding. The reason I\u0027d made the vector binding in my demo CL was for a different reason. I wanted to trigger the instantiation and destruction of per-element views when elements were added to the vector.",
+      "parentUuid": "4cfcdf67_f1c73d8d",
       "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "271c24f1_c4b49257",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-24T22:02:40Z",
+      "side": 1,
+      "message": "I\u0027ve added a comment with some examples. The \"Get\" and \"Set\" macro parameters here are certainly odd, but they were the simplest way I could think of to quickly set up these simple lambda/closures.\n\nI\u0027ve added two other macros for binding to a field or a function that are, at least, a bit easier to read.",
+      "parentUuid": "a8f1aaa6_a237da49",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6015fda8_0c514919",
         "filename": "chrome/browser/vr/databinding/one_way_binding.h",
         "patchSetId": 1
@@ -174,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "d21f5aba_ac5aace9",
+        "filename": "chrome/browser/vr/databinding/one_way_binding_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-24T22:02:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a520732b_66a6f800",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "555a6274_85a57b78",
         "filename": "chrome/browser/vr/databinding/one_way_binding_unittest.cc",
         "patchSetId": 1
@@ -185,6 +275,30 @@
       "writtenOn": "2017-08-24T17:13:28Z",
       "side": 1,
       "message": "I think you\u0027d need a special license for this. :)",
+      "range": {
+        "startLine": 34,
+        "startChar": 58,
+        "endLine": 34,
+        "endChar": 71
+      },
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb9f21d3_d188ab12",
+        "filename": "chrome/browser/vr/databinding/one_way_binding_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-24T22:02:40Z",
+      "side": 1,
+      "message": "Yeah, this is pretty weird looking. I\u0027ve switched this to VR_BIND_FIELD in the latest patch.",
+      "parentUuid": "555a6274_85a57b78",
       "range": {
         "startLine": 34,
         "startChar": 58,
@@ -214,6 +328,24 @@
     },
     {
       "key": {
+        "uuid": "118242de_928a4691",
+        "filename": "chrome/browser/vr/databinding/one_way_binding_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-24T22:02:40Z",
+      "side": 1,
+      "message": "Yep, just making sure that binding construction doesn\u0027t get up to any funny business.",
+      "parentUuid": "f0b5657b_c3290957",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc1943bb_3832549f",
         "filename": "chrome/browser/vr/databinding/one_way_binding_unittest.cc",
         "patchSetId": 1
@@ -231,6 +363,24 @@
     },
     {
       "key": {
+        "uuid": "7f004df7_48718c57",
+        "filename": "chrome/browser/vr/databinding/one_way_binding_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-24T22:02:40Z",
+      "side": 1,
+      "message": "In that case, I\u0027d need another callback on the binding to pull the current value from the view. Since I\u0027d expected the types to be simple (like SkColors), I thought this would be simplest. I have a mild preference for this approach, but if you\u0027d prefer it the other way, I\u0027d can certainly change it.",
+      "parentUuid": "dc1943bb_3832549f",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4aac5f1f_09b93803",
         "filename": "chrome/browser/vr/databinding/one_way_binding_unittest.cc",
         "patchSetId": 1
@@ -242,6 +392,24 @@
       "writtenOn": "2017-08-24T17:13:28Z",
       "side": 1,
       "message": "This should also test that b is true, as per your comment, no?",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5c7af46_a7cc56b6",
+        "filename": "chrome/browser/vr/databinding/one_way_binding_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-24T22:02:40Z",
+      "side": 1,
+      "message": "Yeah, I should test that for sure. Fixed. (I think I was just checking that my one way binding wasn\u0027t accidentally two way).",
+      "parentUuid": "4aac5f1f_09b93803",
       "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -268,6 +436,30 @@
       "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a4d40e3_05f4fb11",
+        "filename": "chrome/browser/vr/databinding/one_way_binding_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-24T22:02:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c12b4483_1fbdae5a",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 14
+      },
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
