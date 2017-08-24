@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f833bbf4_b0d3f348",
+        "filename": "media/base/pipeline_status.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-24T23:02:29Z",
+      "side": 1,
+      "message": "It does already. This value comes from the duration deltas coming from VideoRendererAlgorithm which are calculated based on the computed start and end times for frames.",
+      "revId": "155972d980a2eb101fe40c1eaa5603a6bc468f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc6e36d_14a18517",
+        "filename": "media/blink/video_decode_stats_reporter.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-24T23:02:29Z",
+      "side": 1,
+      "message": "pass by value for new code; use std::move where applicable.",
+      "revId": "155972d980a2eb101fe40c1eaa5603a6bc468f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf70a11_a21bfe07",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-24T23:02:29Z",
+      "side": 1,
+      "message": "Drop? DLOG, or MEDIA_LOG?",
+      "revId": "155972d980a2eb101fe40c1eaa5603a6bc468f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
