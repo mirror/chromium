@@ -387,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "6fb573b4_5f8fa94f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-24T19:19:19Z",
+      "side": 1,
+      "message": "Didn\u0027t check to see how many callsites there are for this, but it does add to code size if there\u0027s more than a few.",
+      "parentUuid": "ba02c16e_bca30bec",
+      "revId": "153de4a71ca1e21e79a8d2f055575fde9fe077cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0d4e6c8_d5e31006",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessorInfo.h",
         "patchSetId": 3
