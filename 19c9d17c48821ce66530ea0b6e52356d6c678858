@@ -46,6 +46,30 @@
       "revId": "19c9d17c48821ce66530ea0b6e52356d6c678858",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a442bbf_65f08214",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-08-24T09:56:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96bb80b9_f81152ae",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 56
+      },
+      "revId": "19c9d17c48821ce66530ea0b6e52356d6c678858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
