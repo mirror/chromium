@@ -51,6 +51,9 @@
 #include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/core/shadow_types.h"
 
+#include "ui/gfx/color_analysis.h"
+#include "ui/gfx/color_utils.h"
+
 using wallpaper::ColorProfileType;
 
 namespace app_list {
@@ -148,8 +151,10 @@ SkColor GetBackgroundShieldColor(const std::vector<SkColor>& prominent_colors) {
       prominent_colors[static_cast<int>(ColorProfileType::DARK_MUTED)];
   if (SK_ColorTRANSPARENT == dark_muted)
     return app_list::AppListView::kDefaultBackgroundColor;
-  return color_utils::AlphaBlend(SK_ColorBLACK, dark_muted,
-                                 app_list::AppListView::kDarkMutedBlendAlpha);
+  SkColor target_color = color_utils::GetResultingPaintColor(
+      SkColorSetA(SK_ColorBLACK, 128), dark_muted);
+  return target_color;  // color_utils::AlphaBlend(SK_ColorBLACK, dark_muted,
+                        //          app_list::AppListView::kDarkMutedBlendAlpha);
 }
 
 DEFINE_UI_CLASS_PROPERTY_KEY(bool, kExcludeWindowFromEventHandling, false);
