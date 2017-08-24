@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f695d83b_41022d5f",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3407,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-24T19:57:31Z",
+      "side": 1,
+      "message": "IMHO, it\u0027s a bit vague to name this \"sound content setting\" everywhere. How about \"enable-site-muting\"?",
+      "range": {
+        "startLine": 3407,
+        "startChar": 6,
+        "endLine": 3407,
+        "endChar": 27
+      },
+      "revId": "2270aea765b5c63c870cbe3048c2472771594c0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe7b30c_742599ee",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-24T19:57:31Z",
+      "side": 1,
+      "message": "IMHO, this should be something more like:\n\n  \"Enable site-wide muting in content settings and tab strip context menu.\"",
+      "range": {
+        "startLine": 1174,
+        "startChar": 5,
+        "endLine": 1174,
+        "endChar": 62
+      },
+      "revId": "2270aea765b5c63c870cbe3048c2472771594c0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
