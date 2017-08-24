@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a02c8363_2d0e0d96",
+        "filename": "chrome/common/extensions/api/file_manager_private.idl",
+        "patchSetId": 19
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-08-24T09:08:27Z",
+      "side": 1,
+      "message": "Well, I don\u0027t have strong feelings here as alternative names are ambiguous too. lgtm for this naming.",
+      "range": {
+        "startLine": 371,
+        "startChar": 13,
+        "endLine": 371,
+        "endChar": 31
+      },
+      "revId": "68b7ace1398d8a58e6ba32cacc9082395722e0a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
