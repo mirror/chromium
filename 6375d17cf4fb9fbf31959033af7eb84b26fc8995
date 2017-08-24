@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "047d7533_9bc04e03",
+        "filename": "chrome/browser/ui/views/touch_events_interactive_uitest_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T23:29:22Z",
+      "side": 1,
+      "message": "Please document what this does.",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "6375d17cf4fb9fbf31959033af7eb84b26fc8995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddbbc8d8_6dc218bb",
+        "filename": "chrome/browser/ui/views/touch_events_interactive_uitest_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T23:29:22Z",
+      "side": 1,
+      "message": "Document what this is. Also, it only aplies to forcing recursion how about moving it there?",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 22
+      },
+      "revId": "6375d17cf4fb9fbf31959033af7eb84b26fc8995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4047b9b2_273aaa55",
+        "filename": "chrome/browser/ui/views/touch_events_interactive_uitest_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-24T23:29:22Z",
+      "side": 1,
+      "message": "Does this really need to be static? Wouldn\u0027t it make more sense as a member variable?",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 30
+      },
+      "revId": "6375d17cf4fb9fbf31959033af7eb84b26fc8995",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
