@@ -19,6 +19,70 @@
     },
     {
       "key": {
+        "uuid": "83479c23_08eeb612",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T07:20:38Z",
+      "side": 1,
+      "message": "base::TimeDelta is a single-word POD, same as int, so it\u0027s typically not passed by const-ref.",
+      "parentUuid": "78908ff4_a5b24f93",
+      "revId": "a859759c657b7a6ca22ed39c98220eff959de7db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2006c71_017d25b1",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T07:20:38Z",
+      "side": 1,
+      "message": "nit: 0 is not a valid minimum value for a histogram -- that slot is always reserved for the underflow bucket.  Please specify the minimal non-zero value that this histogram measures.\n\n(Incidentally, I believe that there\u0027s a DCHECK that warns about passing 0 as the minimum to an UMA_HISTOGRAM_* macro.  Please double-check that you\u0027re building with DCHECKs enabled.)",
+      "range": {
+        "startLine": 34,
+        "startChar": 61,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "a859759c657b7a6ca22ed39c98220eff959de7db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fce7eef_e72dfd16",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T07:20:38Z",
+      "side": 1,
+      "message": "nit: This function name is currently quite generic.  Perhaps something like \"RecordAppLaunchDelay\"?",
+      "range": {
+        "startLine": 36,
+        "startChar": 1,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "a859759c657b7a6ca22ed39c98220eff959de7db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d62d24cc_d5068d6c",
         "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.h",
         "patchSetId": 4
@@ -47,6 +111,29 @@
       "writtenOn": "2017-08-24T01:53:19Z",
       "side": 1,
       "message": "nit: Maybe, Reset() is enough meaningful?",
+      "revId": "a859759c657b7a6ca22ed39c98220eff959de7db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dbfdd11_a6a49e54",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T07:20:38Z",
+      "side": 1,
+      "message": "Optional nit: Perhaps s/The time/How long?",
+      "range": {
+        "startLine": 2037,
+        "startChar": 4,
+        "endLine": 2037,
+        "endChar": 12
+      },
       "revId": "a859759c657b7a6ca22ed39c98220eff959de7db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
