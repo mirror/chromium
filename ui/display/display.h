@@ -45,6 +45,15 @@ class DISPLAY_EXPORT Display final {
     ROTATE_270,
   };
 
+  // ANIMATION_ASYNC screen rotation animation is smoother but asynchronous.
+  // |DisplayConfigurationController::SetDisplayRotation()| will not actual
+  // rotate the screen until a screenshot is taken. Adding a ANIMATION_SYNC mode
+  // so that we can use a synchronous call but slower. http://crbug.com/757851.
+  enum RotationAnimation {
+    ANIMATION_SYNC = 0,
+    ANIMATION_ASYNC,
+  };
+
   // The display rotation can have multiple causes for change. A user can set a
   // preference. On devices with accelerometers, they can change the rotation.
   // RotationSource allows for the tracking of a Rotation per source of the

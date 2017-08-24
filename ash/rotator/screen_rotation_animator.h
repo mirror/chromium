@@ -46,7 +46,8 @@ class ASH_EXPORT ScreenRotationAnimator {
   // the target position, followed by a new |Rotate()| call with the pending
   // rotation request.
   void Rotate(display::Display::Rotation new_rotation,
-              display::Display::RotationSource source);
+              display::Display::RotationSource source,
+              display::Display::RotationAnimation mode);
 
   void AddScreenRotationAnimatorObserver(
       ScreenRotationAnimatorObserver* observer);
@@ -72,16 +73,19 @@ class ASH_EXPORT ScreenRotationAnimator {
     ScreenRotationRequest(int64_t id,
                           int64_t display_id,
                           display::Display::Rotation to_rotation,
-                          display::Display::RotationSource from_source)
+                          display::Display::RotationSource from_source,
+                          display::Display::RotationAnimation mode)
         : id(id),
           display_id(display_id),
           new_rotation(to_rotation),
-          source(from_source) {}
+          source(from_source),
+          mode(mode) {}
     int64_t id;
     int64_t display_id;
     display::Display::Rotation old_rotation;
     display::Display::Rotation new_rotation;
     display::Display::RotationSource source;
+    display::Display::RotationAnimation mode;
   };
 
   // This function can be overridden in unit test to test removing external

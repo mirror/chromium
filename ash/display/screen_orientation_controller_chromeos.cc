@@ -212,7 +212,8 @@ void ScreenOrientationController::UnlockAll() {
   SetRotationLockedInternal(false);
   if (user_rotation_ != current_rotation_) {
     SetDisplayRotation(user_rotation_,
-                       display::Display::ROTATION_SOURCE_ACCELEROMETER);
+                       display::Display::ROTATION_SOURCE_ACCELEROMETER,
+                       display::Display::ANIMATION_SYNC);
   }
 }
 
@@ -343,9 +344,11 @@ void ScreenOrientationController::OnTabletModeEnding() {
   Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
   if (!display::Display::HasInternalDisplay())
     return;
+
   if (current_rotation_ != user_rotation_) {
     SetDisplayRotation(user_rotation_,
-                       display::Display::ROTATION_SOURCE_ACCELEROMETER);
+                       display::Display::ROTATION_SOURCE_ACCELEROMETER,
+                       display::Display::ANIMATION_SYNC);
   }
   for (auto& observer : observers_)
     observer.OnUserRotationLockChanged();
@@ -353,7 +356,8 @@ void ScreenOrientationController::OnTabletModeEnding() {
 
 void ScreenOrientationController::SetDisplayRotation(
     display::Display::Rotation rotation,
-    display::Display::RotationSource source) {
+    display::Display::RotationSource source,
+    display::Display::RotationAnimation mode) {
   if (!display::Display::HasInternalDisplay())
     return;
   current_rotation_ = rotation;
@@ -361,7 +365,7 @@ void ScreenOrientationController::SetDisplayRotation(
       &ignore_display_configuration_updates_, true);
 
   Shell::Get()->display_configuration_controller()->SetDisplayRotation(
-      display::Display::InternalDisplayId(), rotation, source);
+      display::Display::InternalDisplayId(), rotation, source, mode);
 }
 
 void ScreenOrientationController::SetRotationLockedInternal(

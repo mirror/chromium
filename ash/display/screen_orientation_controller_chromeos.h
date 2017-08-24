@@ -142,7 +142,9 @@ class ASH_EXPORT ScreenOrientationController
   // also become active. Display changed notifications are suppressed for this
   // change.
   void SetDisplayRotation(display::Display::Rotation rotation,
-                          display::Display::RotationSource source);
+                          display::Display::RotationSource source,
+                          display::Display::RotationAnimation mode =
+                              display::Display::ANIMATION_ASYNC);
 
   void SetRotationLockedInternal(bool rotation_locked);
 

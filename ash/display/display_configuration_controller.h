@@ -48,7 +48,9 @@ class ASH_EXPORT DisplayConfigurationController
   // Sets the display's rotation with animation if available.
   void SetDisplayRotation(int64_t display_id,
                           display::Display::Rotation rotation,
-                          display::Display::RotationSource source);
+                          display::Display::RotationSource source,
+                          display::Display::RotationAnimation mode =
+                              display::Display::ANIMATION_ASYNC);
 
   // Returns the rotation of the display given by |display_id|. This returns
   // the target rotation when the display is being rotated.
