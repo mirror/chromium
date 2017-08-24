@@ -16,8 +16,7 @@ class TestNavigationManagerDelegate : public NavigationManagerDelegate {
   void ClearTransientContent() override;
   void RecordPageStateInNavigationItem() override;
   void UpdateHtml5HistoryState() override;
-  void WillLoadCurrentItemWithParams(const NavigationManager::WebLoadParams&,
-                                     bool is_initial_navigation) override;
+  void WillLoadCurrentItemWithUrl(const GURL&) override;
   void WillChangeUserAgentType() override;
   void LoadCurrentItem() override;
   void LoadIfNecessary() override;

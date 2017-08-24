@@ -51,9 +51,7 @@ class GURL;
 // less, then remove any delegate method that becomes unnecessary as a result.
 
 // Called when a page is loaded using loadWithParams.
-- (void)webDidUpdateSessionForLoadWithParams:
-            (const web::NavigationManager::WebLoadParams&)params
-                        wasInitialNavigation:(BOOL)initialNavigation;
+- (void)webDidUpdateSessionForLoadWithURL:(const GURL&)url;
 
 @optional
 

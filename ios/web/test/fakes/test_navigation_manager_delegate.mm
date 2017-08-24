@@ -14,9 +14,7 @@ namespace web {
 void TestNavigationManagerDelegate::ClearTransientContent() {}
 void TestNavigationManagerDelegate::RecordPageStateInNavigationItem() {}
 void TestNavigationManagerDelegate::UpdateHtml5HistoryState() {}
-void TestNavigationManagerDelegate::WillLoadCurrentItemWithParams(
-    const NavigationManager::WebLoadParams&,
-    bool is_initial_navigation) {}
+void TestNavigationManagerDelegate::WillLoadCurrentItemWithUrl(const GURL&) {}
 void TestNavigationManagerDelegate::WillChangeUserAgentType() {}
 void TestNavigationManagerDelegate::LoadCurrentItem() {}
 void TestNavigationManagerDelegate::LoadIfNecessary() {}
