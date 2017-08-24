@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7db00ebd_952e8891",
+        "filename": "components/offline_pages/core/prefetch/metrics_finalization_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-08-24T17:09:10Z",
+      "side": 0,
+      "message": "Note: Reverting to the usual pattern of relying on copy aliasing to optimize this return by value of a vector.",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 15
+      },
+      "revId": "e60a338df3e9c62db9695e4566ca038ceb8f06d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
