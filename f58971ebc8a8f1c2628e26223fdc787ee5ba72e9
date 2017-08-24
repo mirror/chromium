@@ -104,6 +104,30 @@
       "revId": "f58971ebc8a8f1c2628e26223fdc787ee5ba72e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc61b80a_dda0dc31",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 96594,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-24T14:39:23Z",
+      "side": 1,
+      "message": "Your assumption is correct. But I added a comment and a TODO nonetheless:\nWe can show obsolete histograms in the \"Finch\" and \"Histograms\" section by ticking a checkbox.\nThe \"Timeline\" tab doesn\u0027t have that checkbox and I definitely need timelines until the new histograms hit Stable.",
+      "parentUuid": "46c1fd44_adc7835c",
+      "range": {
+        "startLine": 96594,
+        "startChar": 15,
+        "endLine": 96594,
+        "endChar": 0
+      },
+      "revId": "f58971ebc8a8f1c2628e26223fdc787ee5ba72e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
