@@ -16,6 +16,24 @@
       "revId": "43289ec7215d59626c69b0c3c13917aab3223985",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53b3545_1fcd52e6",
+        "filename": "third_party/WebKit/LayoutTests/fast/rootscroller/remove-rootscroller-crash.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-24T18:51:14Z",
+      "side": 1,
+      "message": "Crash doesn\u0027t occur with it. I\u0027ve added a comment to clarify that it\u0027s omitted intentionally.",
+      "parentUuid": "629f211f_39087f50",
+      "revId": "43289ec7215d59626c69b0c3c13917aab3223985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
