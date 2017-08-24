@@ -1141,7 +1141,7 @@ id<GREYMatcher> ActionSheet(Action action) {
   }];
   // Check that promo is visible.
   [BookmarksTestCase verifyPromoAlreadySeen:NO];
-  [[EarlGrey selectElementWithMatcher:PrimarySignInButton()]
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(kSigninPromoViewId)]
       assertWithMatcher:grey_sufficientlyVisible()];
 
   // Tap the dismiss button.
@@ -1157,9 +1157,43 @@ id<GREYMatcher> ActionSheet(Action action) {
   [BookmarksTestCase verifyPromoAlreadySeen:YES];
 }
 
-// Tests that tapping Sign in on the promo make the Sign in sheet appear and
-// the promo still appears after dismissing the Sign in sheet.
-- (void)testUIPromoSignIn {
+// Tests the tapping on the primary button of sign-in promo view in a cold
+// state makes the sign-in sheet appear, and the promo still appears after
+// dismissing the sheet.
+- (void)testSignInPromoWithColdStateUsingPrimaryButton {
+  [[self class] openBookmarks];
+
+  // Check that sign-in promo and only the primary button are visible.
+  [BookmarksTestCase verifyPromoAlreadySeen:NO];
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(kSigninPromoViewId)]
+      assertWithMatcher:grey_sufficientlyVisible()];
+  [[EarlGrey selectElementWithMatcher:PrimarySignInButton()]
+      assertWithMatcher:grey_sufficientlyVisible()];
+  [[EarlGrey selectElementWithMatcher:SecondarySignInButton()]
+      assertWithMatcher:grey_notVisible()];
+
+  // Tap the primary button.
+  [[EarlGrey
+      selectElementWithMatcher:grey_allOf(PrimarySignInButton(),
+                                          grey_sufficientlyVisible(), nil)]
+      performAction:grey_tap()];
+  [[EarlGrey selectElementWithMatcher:grey_buttonTitle(@"Cancel")]
+      performAction:grey_tap()];
+
+  // Check that the bookmarks UI reappeared and the cell is still here.
+  [[EarlGrey
+      selectElementWithMatcher:grey_allOf(
+                                   grey_accessibilityID(kSigninPromoViewId),
+                                   grey_sufficientlyVisible(), nil)]
+      assertWithMatcher:grey_notNil()];
+
+  [BookmarksTestCase verifyPromoAlreadySeen:NO];
+}
+
+// Tests the tapping on the secondary button of sign-in promo view in a warm
+// state makes the sign-in sheet appear, and the promo still appears after
+// dismissing the sheet.
+- (void)testSignInPromoWithWarmStateUsingSecondaryButton {
   if (experimental_flags::IsBookmarkReorderingEnabled()) {
     EARL_GREY_TEST_SKIPPED(@"Only enabled with old UI.");
   }
@@ -1173,17 +1207,29 @@ id<GREYMatcher> ActionSheet(Action action) {
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
       identity);
 
-  // Check that promo is visible.
+  // Check that the sign-in promo, the primary and secondary button are visible.
+  // Since the bookmark collection has been reloaded (while adding the fake
+  // identity), the previous cell might still be part of the UICollectionView.
+  // So 2 sign-in promo views can be available. Only the visible ones should be
+  // matched.
   [BookmarksTestCase verifyPromoAlreadySeen:NO];
+  [[EarlGrey
+      selectElementWithMatcher:grey_allOf(
+                                   grey_accessibilityID(kSigninPromoViewId),
+                                   grey_sufficientlyVisible(), nil)]
+      assertWithMatcher:grey_notNil()];
+  [[EarlGrey
+      selectElementWithMatcher:grey_allOf(PrimarySignInButton(),
+                                          grey_sufficientlyVisible(), nil)]
+      assertWithMatcher:grey_notNil()];
   [[EarlGrey
       selectElementWithMatcher:grey_allOf(SecondarySignInButton(),
                                           grey_sufficientlyVisible(), nil)]
       assertWithMatcher:grey_notNil()];
 
-  // Tap the Sign in button.
+  // Tap the secondary button.
   [[EarlGrey
-      selectElementWithMatcher:grey_allOf(grey_accessibilityID(
-                                              kSigninPromoSecondaryButtonId),
+      selectElementWithMatcher:grey_allOf(SecondarySignInButton(),
                                           grey_sufficientlyVisible(), nil)]
       performAction:grey_tap()];
 
@@ -1195,11 +1241,41 @@ id<GREYMatcher> ActionSheet(Action action) {
 
   // Check that the bookmarks UI reappeared and the cell is still here.
   [[EarlGrey
-      selectElementWithMatcher:grey_allOf(SecondarySignInButton(),
-                                          grey_sufficientlyVisible(), nil)]
+      selectElementWithMatcher:grey_allOf(
+                                   grey_accessibilityID(kSigninPromoViewId),
+                                   grey_sufficientlyVisible(), nil)]
       assertWithMatcher:grey_notNil()];
 
   [BookmarksTestCase verifyPromoAlreadySeen:NO];
+}
+
+// Tests that the sign-in promo should not be shown after been shown 19 times.
+- (void)testAutomaticSigninPromoDismiss {
+  ios::ChromeBrowserState* browser_state =
+      chrome_test_util::GetOriginalBrowserState();
+  PrefService* prefs = browser_state->GetPrefs();
+  prefs->SetInteger(prefs::kIosBookmarkSigninPromoDisplayedCount, 19);
+  [[self class] openBookmarks];
+  // Check that the sign-in promo is visible.
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(kSigninPromoViewId)]
+      assertWithMatcher:grey_sufficientlyVisible()];
+  [[self class] verifyPromoAlreadySeen:YES];
+  GREYAssertEqual(
+      20, prefs->GetInteger(prefs::kIosBookmarkSigninPromoDisplayedCount),
+      @"Should have incremented the display count");
+  // Close the bookmark view and open it again.
+  if (IsCompact()) {
+    [[EarlGrey selectElementWithMatcher:BookmarksDoneButton()]
+        performAction:grey_tap()];
+    [[self class] openBookmarks];
+  } else {
+    [[self class] closeAllTabs];
+    chrome_test_util::OpenNewTab();
+  }
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+  // Check that the sign-in promo is not visible anymore.
+  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(kSigninPromoViewId)]
+      assertWithMatcher:grey_nil()];
 }
 
 // Tests that all elements on the bookmarks landing page are accessible.
