@@ -1,6 +1,6 @@
 {
   "name": "software rendering list",
-  "version": "13.12",
+  "version": "13.13",
   "entries": [
     {
       "id": 1,
@@ -1529,6 +1529,21 @@
         "type": "android"
       },
       "gl_renderer": ".*VideoCore V.*",
+      "features": [
+        "gpu_rasterization"
+      ]
+    },
+    {
+      "id": 149,
+      "description": "Intel HD2500 supports PS5, but has rendering issuesi with GPU Rasterization",
+      "cr_bugs": [740452],
+      "os" : {
+        "type": "win"
+      },
+      "vendor_id": "0x8086",
+      "device_id": [
+        "0x0152"
+      ],
       "features": [
         "gpu_rasterization"
       ]
