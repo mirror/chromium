@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72809d4c_ed3fa505",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T18:04:47Z",
+      "side": 1,
+      "message": "This function no longer seems necessary.\n\nCould you remove it and make the callers call |IsSpellCheckingEnabledAt()| directly?",
+      "revId": "545c4cc873cfde5eccfcb125edb80f4dba67bc76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bca2bf4_89c61e22",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T18:04:47Z",
+      "side": 1,
+      "message": "nit: s/Start/Base/",
+      "range": {
+        "startLine": 388,
+        "startChar": 55,
+        "endLine": 388,
+        "endChar": 60
+      },
+      "revId": "545c4cc873cfde5eccfcb125edb80f4dba67bc76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
