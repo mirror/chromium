@@ -1,0 +1,42 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+source_set("blob") {
+  visibility = [ "//third_party/WebKit/Source/*" ]
+
+  sources = [
+    "BlobData.cpp",
+    "BlobData.h",
+    "BlobRegistry.cpp",
+    "BlobRegistry.h",
+    "BlobURL.cpp",
+    "BlobURL.h",
+  ]
+
+  deps = [
+    "//base",
+  ]
+
+  public_deps = [
+    "//storage/public/interfaces",
+    "//storage/public/interfaces:interfaces_blink",
+  ]
+}
+
+source_set("unit_tests") {
+  visibility = [ "//third_party/WebKit/Source/platform:*" ]
+  testonly = true
+
+  sources = [
+    "BlobBytesProviderTest.cpp",
+    "BlobDataTest.cpp",
+  ]
+
+  deps = [
+    "//base/test:test_support",
+    "//mojo/public/cpp/bindings",
+    "//testing/gmock",
+    "//testing/gtest",
+  ]
+}
