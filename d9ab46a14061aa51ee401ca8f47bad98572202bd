@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf5aea1a_d8d5c4e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-24T16:35:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2b5f316_b82c8220",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 3
+      },
+      "revId": "d9ab46a14061aa51ee401ca8f47bad98572202bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d976887c_99c16f0b",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-24T07:47:59Z",
       "side": 1,
       "message": "What\u0027s the motivation for measuring this histogram?  Are you concerned about a potentially high or low rate of emptyness?",
+      "range": {
+        "startLine": 11474,
+        "startChar": 11,
+        "endLine": 11476,
+        "endChar": 46
+      },
+      "revId": "d9ab46a14061aa51ee401ca8f47bad98572202bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d949dc_5ef66c8f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 11476,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-24T16:35:06Z",
+      "side": 1,
+      "message": "High rate of emptiness.",
+      "parentUuid": "d976887c_99c16f0b",
       "range": {
         "startLine": 11474,
         "startChar": 11,
