@@ -396,9 +396,6 @@ class TabManager : public TabStripModelObserver,
                      content::WebContents* contents,
                      int index,
                      bool foreground) override;
-  void TabClosingAt(TabStripModel* tab_strip_model,
-                    content::WebContents* contents,
-                    int index) override;
 
   // BrowserListObserver overrides.
   void OnBrowserSetLastActive(Browser* browser) override;
@@ -574,9 +571,6 @@ class TabManager : public TabStripModelObserver,
   // The number of loading slots that TabManager can use to load background tabs
   // in parallel.
   size_t loading_slots_;
-
-  // GRC tab signal observer, receives tab scoped signal from GRC.
-  std::unique_ptr<GRCTabSignalObserver> grc_tab_signal_observer_;
 
   // Records UMAs for tab and system-related events and properties during
   // session restore.
