@@ -46,6 +46,30 @@
       "revId": "839058c3cefaff2cf03d81a64089bece357e61c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c251bb_8f7226ff",
+        "filename": "net/url_request/url_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-24T19:21:09Z",
+      "side": 1,
+      "message": "Great.  Tell me once you\u0027ll do it, and I\u0027ll sign off (And I was wrong about about the 3/4 thing.  Missed the kMaxRedirects + 1.  Oops).",
+      "parentUuid": "97181408_468316eb",
+      "range": {
+        "startLine": 985,
+        "startChar": 25,
+        "endLine": 985,
+        "endChar": 26
+      },
+      "revId": "839058c3cefaff2cf03d81a64089bece357e61c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
