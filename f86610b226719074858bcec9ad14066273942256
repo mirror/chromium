@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d18d66a_397c5cbe",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/HTTPSTabsOpenedFromExternalAppTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-08-24T20:57:31Z",
+      "side": 1,
+      "message": "IMO, it would make sense to put this in set-up, so future tests can reuse.",
+      "range": {
+        "startLine": 58,
+        "startChar": 16,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "f86610b226719074858bcec9ad14066273942256",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1435dc8a_25cc244b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/HTTPSTabsOpenedFromExternalAppTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-08-24T20:57:31Z",
+      "side": 1,
+      "message": ".. and teardown?",
+      "range": {
+        "startLine": 64,
+        "startChar": 37,
+        "endLine": 64,
+        "endChar": 48
+      },
+      "revId": "f86610b226719074858bcec9ad14066273942256",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
