@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08a6ebf6_95ca0c8b",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-24T17:41:45Z",
+      "side": 1,
+      "message": "I think we should always increase |worker_capacity_|. We should just make sure that we don\u0027t create more workers than std::min(kMaxWorkerCapacity, worker_capacity_) in MaintainAtLeastOneIdleWorkerLockRequired(). Otherwise, we don\u0027t end up with the correct number of workers at the end of this scenario:\n\nInitial: worker_capacity_ \u003d 255\nThread 1: BlockingScopedEntered() worker_capacity_ \u003d 256\nThread 2: BlockingScopedEntered() worker_capacity_ \u003d 256 (didn\u0027t change)\nThread 1: BlockingScopedExited() worker_capacity_ \u003d 255 (expected 256)",
+      "range": {
+        "startLine": 494,
+        "startChar": 2,
+        "endLine": 495,
+        "endChar": 11
+      },
+      "revId": "4da1205d60e6f000ba318bf188b5604f1dbb192f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
