@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ec0deeb_5f7d118a",
+        "filename": "chrome/browser/vr/databinding/binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-24T16:58:25Z",
+      "side": 1,
+      "message": "Nit: As per group discussion some time ago, we should have comments for all classes.",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f95cb77c_918b36ca",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-24T16:58:25Z",
+      "side": 1,
+      "message": "Nit: Here too, as per group discussion some time ago, we should have comments for all classes.",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "307d633a_431a3557",
+        "filename": "chrome/browser/vr/databinding/one_way_binding.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-08-24T16:58:25Z",
+      "side": 1,
+      "message": "Nit: Comment for this as well? Maybe with example?",
+      "revId": "b7be48e21ec03f8f39fdf1283da6c6728fda03a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
