@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a422ba06_1a8965b6",
+        "filename": "base/feature_list.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T18:29:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff605e7a_0709ac7f",
+      "range": {
+        "startLine": 283,
+        "startChar": 59,
+        "endLine": 283,
+        "endChar": 71
+      },
+      "revId": "d5c2fdabf1d59b9588121068c7a5443ad6444349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e218114a_e8f5d551",
         "filename": "base/feature_list.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "d5c2fdabf1d59b9588121068c7a5443ad6444349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3cca08_f34f75e2",
+        "filename": "base/feature_list.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T18:29:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e218114a_e8f5d551",
+      "range": {
+        "startLine": 285,
+        "startChar": 9,
+        "endLine": 285,
+        "endChar": 14
+      },
+      "revId": "d5c2fdabf1d59b9588121068c7a5443ad6444349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "059a59c4_6d444a7c",
+        "filename": "base/logging.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T18:29:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53d8774c_2ab179b6",
+      "range": {
+        "startLine": 355,
+        "startChar": 13,
+        "endLine": 355,
+        "endChar": 19
+      },
+      "revId": "d5c2fdabf1d59b9588121068c7a5443ad6444349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3a1539a_e089f978",
         "filename": "base/logging.h",
         "patchSetId": 11
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "630a0162_c9e52a33",
+        "filename": "base/logging.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T18:29:32Z",
+      "side": 1,
+      "message": "clang-format does it, it seems.\n\nRather than leave things inconsistent, or just bypassing clang-format, I\u0027ve let it do its thing on the whole lot of these.",
+      "parentUuid": "a3a1539a_e089f978",
+      "revId": "d5c2fdabf1d59b9588121068c7a5443ad6444349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9a0047b_601c0804",
         "filename": "base/logging_unittest.cc",
         "patchSetId": 11
@@ -102,6 +192,24 @@
       "revId": "d5c2fdabf1d59b9588121068c7a5443ad6444349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc489d75_9177ceea",
+        "filename": "base/logging_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T18:29:32Z",
+      "side": 1,
+      "message": "I\u0027ve added a simple test for the Feature, on the assumption that FeatureList itself has tests to verify correct propagation to child processes, etc.",
+      "parentUuid": "d9a0047b_601c0804",
+      "revId": "d5c2fdabf1d59b9588121068c7a5443ad6444349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
