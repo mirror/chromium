@@ -81,6 +81,7 @@
 #import "ios/chrome/browser/tabs/tab_snapshotting_delegate.h"
 #include "ios/chrome/browser/translate/chrome_ios_translate_client.h"
 #import "ios/chrome/browser/u2f/u2f_controller.h"
+#import "ios/chrome/browser/ui/alert_coordinator/repost_form_coordinator.h"
 #import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
@@ -95,6 +96,7 @@
 #import "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.h"
 #import "ios/chrome/browser/ui/prerender_delegate.h"
 #include "ios/chrome/browser/ui/ui_util.h"
+#import "ios/chrome/browser/ui/util/top_view_controller.h"
 #import "ios/chrome/browser/web/auto_reload_bridge.h"
 #import "ios/chrome/browser/web/external_app_launcher.h"
 #import "ios/chrome/browser/web/navigation_manager_util.h"
@@ -279,6 +281,9 @@ class TabHistoryContext : public history::Context {
 
   // View displayed upon PagePlaceholderTabHelperDelegate request.
   UIImageView* _pagePlaceholder;
+
+  // Coordinates repost form dialog presentation.
+  RepostFormCoordinator* _repostFormCoordinator;
 }
 
 // Handles caching and retrieving of snapshots.
@@ -1765,6 +1770,29 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
       completion:^(BOOL finished) {
         [weakPagePlaceholder removeFromSuperview];
       }];
+}
+
+#pragma mark - RepostFormTabHelperDelegate
+
+- (void)repostFormTabHelper:(RepostFormTabHelper*)helper
+    presentRepostFromDialogAtPoint:(CGPoint)location
+                 completionHandler:(void (^)(BOOL))completion {
+  // TODO(crbug.com/754642): Stop using TopPresentedViewControllerFrom().
+  UIViewController* topController =
+      top_view_controller::TopPresentedViewControllerFrom(
+          [UIApplication sharedApplication].keyWindow.rootViewController);
+
+  _repostFormCoordinator =
+      [[RepostFormCoordinator alloc] initWithBaseViewController:topController
+                                                 dialogLocation:location
+                                                       webState:self.webState
+                                              completionHandler:completion];
+  [_repostFormCoordinator start];
+}
+
+- (void)repostFormTabHelperDismissRepostFormDialog:
+    (RepostFormTabHelper*)helper {
+  _repostFormCoordinator = nil;
 }
 
 @end

@@ -12,6 +12,7 @@
 
 #import "components/signin/ios/browser/manage_accounts_delegate.h"
 #import "ios/chrome/browser/web/page_placeholder_tab_helper_delegate.h"
+#import "ios/chrome/browser/web/repost_form_tab_helper_delegate.h"
 #include "ios/net/request_tracker.h"
 #include "ios/web/public/user_agent.h"
 #import "ios/web/public/web_state/ui/crw_web_delegate.h"
@@ -90,7 +91,8 @@ extern NSString* const kProxyPassthroughHeaderValue;
 // loaded.
 @interface Tab : NSObject<CRWWebDelegate,
                           ManageAccountsDelegate,
-                          PagePlaceholderTabHelperDelegate>
+                          PagePlaceholderTabHelperDelegate,
+                          RepostFormTabHelperDelegate>
 
 // Browser state associated with this Tab.
 @property(nonatomic, readonly) ios::ChromeBrowserState* browserState;
