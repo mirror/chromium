@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a150682_209827d1",
+        "filename": "cc/output/direct_renderer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-24T05:41:24Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s clear for everyone reading this code how |has_damage_from_contributing_content| affects reuse of textures. Can you explain here that has_damage_from_contributing_content is used to determine if previous contents can be reused when caching RPs and as a result needs to be be true when a new resource is created to ensure that it is updated and not assumed to already contain correct contents?",
+      "range": {
+        "startLine": 223,
+        "startChar": 9,
+        "endLine": 225,
+        "endChar": 14
+      },
+      "revId": "5fd3655d07891188d03b5b47b47ba29c0883f839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
