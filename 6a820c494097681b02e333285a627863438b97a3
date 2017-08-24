@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ec8bd77_9d821cb5",
+        "filename": "chrome/browser/android/ntp/android_content_suggestions_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-24T16:10:46Z",
+      "side": 1,
+      "message": "\u003e Do you need either of these includes for the header?\n\nI don\u0027t need \u003cjni.h\u003e; removed.\n\u003cstring\u003e is necessary because it\u0027s not easy (or possible?) to forward-declare std::string.",
+      "parentUuid": "910407d8_f02052fb",
+      "revId": "6a820c494097681b02e333285a627863438b97a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b276cec_834f4b29",
         "filename": "chrome/browser/android/ntp/content_suggestions_notifier.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "6a820c494097681b02e333285a627863438b97a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "315cf5f5_db717b9f",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-24T16:10:46Z",
+      "side": 1,
+      "message": "\u003e Can these not go in the header? Or maybe the style guide says they should be in a cc file.\n\nStyle guide, yep.\n\nIf they\u0027re in the header, the code is generated multiple times, because headers are used in many compilations. Each cc file is only compiled once.",
+      "parentUuid": "8b276cec_834f4b29",
+      "range": {
+        "startLine": 9,
+        "startChar": 28,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "6a820c494097681b02e333285a627863438b97a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "5f29e1d2_55d63080",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-24T16:10:46Z",
+      "side": 1,
+      "message": "Definitely not jni.h, yep.",
+      "parentUuid": "e3189ff3_3b74b77c",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "6a820c494097681b02e333285a627863438b97a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0aa4537_953ace04",
         "filename": "chrome/browser/android/ntp/content_suggestions_notifier.h",
         "patchSetId": 3
@@ -79,6 +145,24 @@
       "revId": "6a820c494097681b02e333285a627863438b97a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a44efa2_76a7e34c",
+        "filename": "chrome/browser/android/ntp/content_suggestions_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-24T16:10:46Z",
+      "side": 1,
+      "message": "\u003e Maybe make the comment a bit more platform agnostic - I\u0027m assuming it\u0027s only the AndroidContentSuggestionsNotifier that moves Java metrics into native histograms?\n\nHmm. There\u0027s no intention to have a Desktop implementation of this class; it\u0027s only becoming an interface so that it can be mocked out, and the version used under test should match the behavior of the Android version. I\u0027m inclined to keep it as-is.",
+      "parentUuid": "b0aa4537_953ace04",
+      "revId": "6a820c494097681b02e333285a627863438b97a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
