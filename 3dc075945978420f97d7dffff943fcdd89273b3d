@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45bba672_933f23c1",
+        "filename": "content/common/database.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-24T01:37:23Z",
+      "side": 1,
+      "message": "nit: child -\u003e renderer",
+      "revId": "3dc075945978420f97d7dffff943fcdd89273b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3372f342_5b89b3d6",
+        "filename": "content/common/database.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-24T01:37:23Z",
+      "side": 1,
+      "message": "nit: immediately -\u003e immediately.",
+      "revId": "3dc075945978420f97d7dffff943fcdd89273b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
