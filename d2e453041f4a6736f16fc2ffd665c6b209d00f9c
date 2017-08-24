@@ -34,6 +34,42 @@
       "revId": "d2e453041f4a6736f16fc2ffd665c6b209d00f9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362fc26c_88532a5c",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-24T21:05:23Z",
+      "side": 1,
+      "message": "I see. Makes sense.\n\nHowever, on further thought, since element ids are not recycled,\nI think we can still delete the code here. Right?",
+      "parentUuid": "f8ce5a92_eb468b21",
+      "revId": "d2e453041f4a6736f16fc2ffd665c6b209d00f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d51873_12f5331d",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-24T21:05:23Z",
+      "side": 1,
+      "message": "Also, we don\u0027t have to worry about the situation in which a layer is deleted and a new\none is created with the same element id, because element ids should be unique to the renderer\nprocess. (We should comment to that effect, as I think it\u0027s a useful invariant for these\nkind of reasons.)",
+      "parentUuid": "078eae32_101c88b0",
+      "revId": "d2e453041f4a6736f16fc2ffd665c6b209d00f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
