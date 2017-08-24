@@ -965,7 +965,9 @@
     ],
 
     'asan_lsan_chromeos_release_trybot': [
-      'asan', 'lsan', 'chromeos', 'release_trybot',
+      # TODO(kylechar): There is an ODR violation from wayland protocol code
+      # being included in both exo and Ozone wayland.
+      'asan', 'lsan', 'chromeos', 'release_trybot', 'disable_ozone_wayland',
     ],
 
     'asan_lsan_edge_debug_bot': [
@@ -1718,6 +1720,10 @@
 
     'disable_nacl': {
       'gn_args': 'enable_nacl=false',
+    },
+
+    'disable_ozone_wayland': {
+      'gn_args': 'ozone_platform_wayland=false',
     },
 
     'edge': {
