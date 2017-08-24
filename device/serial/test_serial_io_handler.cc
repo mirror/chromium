@@ -37,8 +37,11 @@ void TestSerialIoHandler::Open(const std::string& port,
 void TestSerialIoHandler::ReadImpl() {
   if (!pending_read_buffer())
     return;
-  if (buffer_.empty())
+
+  if (buffer_.empty()) {
+    ReadCompleted(0, mojom::SerialReceiveError::TIMEOUT);
     return;
+  }
 
   size_t num_bytes =
       std::min(buffer_.size(), static_cast<size_t>(pending_read_buffer_len()));

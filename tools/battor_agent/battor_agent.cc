@@ -386,6 +386,11 @@ void BattOrAgent::OnMessageRead(bool success,
   }
 }
 
+void BattOrAgent::OnSlowFlushComplete(bool success) {
+  // TODO(charliea): Wire up the BattOrAgent so that it calls SlowFlush() when a
+  // read fails and before retrying the command.
+}
+
 void BattOrAgent::PerformAction(Action action) {
   DCHECK(thread_checker_.CalledOnValidThread());
 

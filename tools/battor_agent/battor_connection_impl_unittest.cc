@@ -35,6 +35,11 @@ class TestableBattOrConnection : public BattOrConnectionImpl {
 
   device::TestSerialIoHandler* GetIoHandler() {
     return reinterpret_cast<device::TestSerialIoHandler*>(io_handler_.get());
+
+    base::TimeDelta GetSlowFlushQuietPeriodDuration() override {
+      // Setting the current quiet period duration to base::TimeDelta::Max()
+      // effectively completes the flush with the first timed out read.
+      return base::TimeDelta::Max();
   }
 };
 
@@ -57,6 +62,10 @@ class BattOrConnectionImplTest : public testing::Test,
     read_type_ = type;
     read_bytes_ = std::move(bytes);
   }
+  void OnSlowFlushComplete(bool success) override {
+    is_slow_flush_complete_ = true;
+    slow_flush_success_ = success;
+  }
 
  protected:
   void SetUp() override {
@@ -72,6 +81,12 @@ class BattOrConnectionImplTest : public testing::Test,
   void ReadMessage(BattOrMessageType type) {
     is_read_complete_ = false;
     connection_->ReadMessage(type);
+    task_runner_->RunUntilIdle();
+  }
+
+  void SlowFlush() {
+    is_slow_flush_complete_ = false;
+    connection_->SlowFlush();
     task_runner_->RunUntilIdle();
   }
 
@@ -116,6 +131,8 @@ class BattOrConnectionImplTest : public testing::Test,
   bool GetReadSuccess() { return read_success_; }
   BattOrMessageType GetReadType() { return read_type_; }
   std::vector<char>* GetReadMessage() { return read_bytes_.get(); }
+  bool IsSlowFlushComplete() { return is_slow_flush_complete_; }
+  bool GetSlowFlushSuccess() { return slow_flush_success_; }
 
  private:
   std::unique_ptr<TestableBattOrConnection> connection_;
@@ -132,6 +149,9 @@ class BattOrConnectionImplTest : public testing::Test,
   bool read_success_;
   BattOrMessageType read_type_;
   std::unique_ptr<std::vector<char>> read_bytes_;
+  // Results from the last slow flush command.
+  bool is_slow_flush_complete_;
+  bool slow_flush_success_;
 };
 
 TEST_F(BattOrConnectionImplTest, InitSendsCorrectBytes) {
@@ -412,6 +432,56 @@ TEST_F(BattOrConnectionImplTest, ReadMessageControlTypePrintFails) {
 
   ASSERT_TRUE(IsReadComplete());
   ASSERT_FALSE(GetReadSuccess());
+}
+
+TEST_F(BattOrConnectionImplTest, SlowFlushClearsLeftoverBytesFromPastReads) {
+  OpenConnection();
+  ASSERT_TRUE(GetOpenSuccess());
+
+  SendControlMessage(BATTOR_CONTROL_MESSAGE_TYPE_RESET, 4, 7);
+  SendControlMessage(BATTOR_CONTROL_MESSAGE_TYPE_RESET, 4, 7);
+
+  ReadMessage(BATTOR_MESSAGE_TYPE_CONTROL);
+
+  ASSERT_TRUE(IsReadComplete());
+  ASSERT_TRUE(GetReadSuccess());
+
+  SlowFlush();
+
+  ASSERT_TRUE(IsSlowFlushComplete());
+  ASSERT_TRUE(GetSlowFlushSuccess());
+
+  ReadMessage(BATTOR_MESSAGE_TYPE_CONTROL);
+
+  // The read should fail due to no data being on the wire - the second control
+  // message was cleared by the slow flush.
+  ASSERT_TRUE(IsReadComplete());
+  ASSERT_FALSE(GetReadSuccess());
+}
+
+TEST_F(BattOrConnectionImplTest, SlowFlushClearsMultipleReadsOfData) {
+  OpenConnection();
+  ASSERT_TRUE(GetOpenSuccess());
+
+  char data[10000];
+  for (size_t i = 0; i < 10000; i++)
+    data[i] = '0';
+  for (int i = 0; i < 50; i++)
+    SendBytesRaw(data, 10000);
+
+  SlowFlush();
+
+  ASSERT_TRUE(IsSlowFlushComplete());
+  ASSERT_TRUE(GetSlowFlushSuccess());
+
+  SendControlMessage(BATTOR_CONTROL_MESSAGE_TYPE_RESET, 4, 7);
+  ReadMessage(BATTOR_MESSAGE_TYPE_CONTROL);
+
+  // Even though 500kB of garbage data was sent before the valid control message
+  // on the serial connection, the slow flush should have cleared it all,
+  // resulting in a successful read.
+  ASSERT_TRUE(IsReadComplete());
+  ASSERT_TRUE(GetReadSuccess());
 }
 
 }  // namespace battor
