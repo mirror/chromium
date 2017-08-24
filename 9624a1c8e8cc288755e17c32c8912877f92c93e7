@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c60efd5d_33a341ee",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1576,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-24T21:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b919e4f_99779ed5",
+      "range": {
+        "startLine": 1576,
+        "startChar": 92,
+        "endLine": 1576,
+        "endChar": 94
+      },
+      "revId": "9624a1c8e8cc288755e17c32c8912877f92c93e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ab4c4a6_a478052b",
         "filename": "ios/chrome/app/strings/ios_strings.grd",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-24T20:59:55Z",
       "side": 1,
       "message": "IDS_IOS_COMPOSE_EMAIL_SETTING uses \u0027Email\u0027, should this be \u0027Email\u0027 instead of \u0027mail\u0027?",
+      "revId": "9624a1c8e8cc288755e17c32c8912877f92c93e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca9366f_56478af2",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-24T21:16:59Z",
+      "side": 1,
+      "message": "I\u0027m using a prompt that is consistent with other products. However, I see your point about internal-consistency. I search around this strings file and it looks like it is almost exclusively \"email\" (not \"mail\"). Changed.",
+      "parentUuid": "4ab4c4a6_a478052b",
       "revId": "9624a1c8e8cc288755e17c32c8912877f92c93e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
