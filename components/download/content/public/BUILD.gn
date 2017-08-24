@@ -11,6 +11,8 @@ source_set("public") {
   sources = [
     "all_download_item_notifier.cc",
     "all_download_item_notifier.h",
+    "download_navigation_observer.cc",
+    "download_navigation_observer.h",
   ]
 
   public_deps = [
