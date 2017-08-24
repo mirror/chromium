@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b02bd5a0_5c76e8f8",
+        "filename": "base/values.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-24T12:41:46Z",
+      "side": 1,
+      "message": "I briefly considered implementing |Set| through |SetPath|. A sample implementation could look like this:\n\n\n  Value* Value::Set(StringPiece path, std::unique_ptr\u003cValue\u003e in_value) {\n    return SetPath(SplitStringPiece(path, \".\"), std::move(*in_value));\n  }\n\nHowever, since DictStorage currently still contains unique_ptrs, SetPath necessarily would need to call make_unique before inserting the value in the Storage. We can\u0027t make use of the fact that Set already has access to a unique_ptr and thus always need to do an extra memory allocation. Given the widespread usage of Set I decided this is not acceptable, even if delegating to SetPath would be much cleaner.",
+      "range": {
+        "startLine": 342,
+        "startChar": 9,
+        "endLine": 342,
+        "endChar": 12
+      },
+      "revId": "91f6cc612d8c33bd613b2ce7419b3b305f83006a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
