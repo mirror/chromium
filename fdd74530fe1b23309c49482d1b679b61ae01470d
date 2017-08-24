@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd5590df_8862c6f5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node_data.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T05:42:32Z",
+      "side": 1,
+      "message": "Don\u0027t know why but win dbg compiler keeps requiring more includes...",
+      "revId": "fdd74530fe1b23309c49482d1b679b61ae01470d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

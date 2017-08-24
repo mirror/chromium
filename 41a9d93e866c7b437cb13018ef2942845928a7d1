@@ -16,6 +16,24 @@
       "revId": "41a9d93e866c7b437cb13018ef2942845928a7d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea1ff5e_5eb41c24",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_item.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T05:42:32Z",
+      "side": 1,
+      "message": "The ctor/dtor of NGInlineItem needs full definition of RefPtr\u003cComputedStyle\u003e, so these two functions have to be moved to .cc.\n\nThe reason for introducing NGInlineNodeData.cc is similar. The ctor/dtor require full definition of NGOffsetMappingResult.\n\nWithout this patch, it seems that all clients using NGInlineItem are also including ComputedStyle, so they can compile.",
+      "parentUuid": "5dd35542_69e4de61",
+      "revId": "41a9d93e866c7b437cb13018ef2942845928a7d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
