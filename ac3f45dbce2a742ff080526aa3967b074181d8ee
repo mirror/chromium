@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7fb98e7_d7b9ca53",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-24T01:21:58Z",
+      "side": 1,
+      "message": "as a high-level comment unrelated to this change and not your fault: it\u0027d probably be clearer if this class were instead named something like PeripheralBatteryNotifier (since we pretty much only use \"Observer\" observer interfaces).",
+      "revId": "ac3f45dbce2a742ff080526aa3967b074181d8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbeea719_05bfb252",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-24T01:21:58Z",
+      "side": 1,
+      "message": "high-level question: what do we use the bluetooth address for? right now, i think (but could be wrong) that it\u0027s used for notification IDs and for doing a substring match against ui::TouchscreenDevice\u0027s path.\n\nif that\u0027s correct, would it be simpler to always just use the full, raw device path for notification IDs, and only extract/reverse the bluetooth address in IsStylusDevice()? that seems like it could make the code simpler -- we could have an e.g. ExtractBluetoothAddressFromBatteryPath() function that only gets called by IsStylusDevice().",
+      "revId": "ac3f45dbce2a742ff080526aa3967b074181d8ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
