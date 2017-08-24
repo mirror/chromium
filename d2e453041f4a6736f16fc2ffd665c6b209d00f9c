@@ -124,6 +124,24 @@
       "revId": "d2e453041f4a6736f16fc2ffd665c6b209d00f9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5292077_d3a6a97a",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-24T22:44:14Z",
+      "side": 1,
+      "message": "LayerTreeHostAnimationTestChangeAnimationPlayer fails with:\n\n../../cc/test/geometry_test_utils.cc:22: Failure\n      Expected: expected.matrix().get(row, col)\n      Which is: 0\nTo be equal to: actual.matrix().get(row, col)\n      Which is: 5\n\nSo I think it\u0027s that we should have applied a transform\nmutation, but the player was removed and re-added, which\nper below sounds like it affects the\nis_currently_animating field of the involved transform node.\n\nThis test was added by jaydasika@ in 2016 as part of \nhttp://crrev.com/2090793002 to fix http://crbug.com/620978.\nThat bug was introduced by the change\nhttp://crrev.com/2027073002.\n\nThe change in layer_tree_host.cc in http://crrev.com/2090793002\nlooks a lot like it\u0027s amidst some of the cc frame lifecycle\nrestructuring work that pdr@ did recently, hmm.\n\nI tested the bug\u0027s referenced web example:\n\nhttps://paulrhayes.com/experiments/cube-3d/\n\nwith the sync code deleted and it does sadly regress to\nexhibit the flickering noted.\n\nIf we move the logic to AnimationHost, we would need a bit of\nadditional logic to make sure we only track on the impl\nthread, which we get for free by having it live here.\n\nThe trigger we\u0027d still want to hook in at is essentially the\nAnimationPlayer Notify methods:\n\nhttps://cs.chromium.org/chromium/src/cc/animation/animation_player.cc?sq\u003dpackage:chromium\u0026dr\u0026l\u003d743\n\nThe Player has a reference to the Host, so it could inform the Host\nand have it track this info. But that starts to feel circuitous to\nme versus the way it\u0027s written currently.",
+      "parentUuid": "53eee80b_e37c2ec1",
+      "revId": "d2e453041f4a6736f16fc2ffd665c6b209d00f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
