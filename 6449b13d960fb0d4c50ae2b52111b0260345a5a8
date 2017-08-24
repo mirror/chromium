@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16ed9cd6_eb7eaaa6",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-24T09:08:57Z",
+      "side": 1,
+      "message": "use base::MakeUnique",
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c5ac314_506e2748",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-24T09:08:57Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57cb672_e0dc2daf",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-24T09:08:57Z",
+      "side": 1,
+      "message": "Is it possible to reach this code path without a native (content) stream?\nCan be handled on a follow-up CL, if necessary.",
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "413a9dab_b1cfc9fe",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-24T09:08:57Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 15
+      },
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c8d5151_1f3fc5c0",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-24T09:08:57Z",
+      "side": 1,
+      "message": "Can this type be made protected, like |adapter_refs_|?\nIt doesn\u0027t look like this type should be part of the public API.",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 21
+      },
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df810f3_d7b0a1a2",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-24T09:08:57Z",
+      "side": 1,
+      "message": "Should we use sequences instead of STTR?",
+      "range": {
+        "startLine": 74,
+        "startChar": 22,
+        "endLine": 74,
+        "endChar": 44
+      },
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddef06b3_be60b2b5",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-24T09:08:57Z",
+      "side": 1,
+      "message": "is_initialized -\u003e is_initialized()\nneeds -\u003e need",
+      "range": {
+        "startLine": 81,
+        "startChar": 39,
+        "endLine": 81,
+        "endChar": 44
+      },
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d45424_ffd31dad",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-24T09:08:57Z",
+      "side": 1,
+      "message": "Rephrase the comment without using first person.",
+      "range": {
+        "startLine": 216,
+        "startChar": 13,
+        "endLine": 216,
+        "endChar": 15
+      },
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92f0ca66_85ba0a44",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-24T09:08:57Z",
+      "side": 1,
+      "message": "sources -\u003e source.",
+      "range": {
+        "startLine": 217,
+        "startChar": 17,
+        "endLine": 217,
+        "endChar": 24
+      },
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02aa092d_282e90d0",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-24T09:08:57Z",
+      "side": 1,
+      "message": "In this test it should be better explained why it is actually without an audio source.",
+      "revId": "6449b13d960fb0d4c50ae2b52111b0260345a5a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
