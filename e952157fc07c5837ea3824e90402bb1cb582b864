@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e6120f2_a5b15e55",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-24T22:53:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2ae83a05_97bb8e29",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26eee4bd_d3dd60be",
         "filename": "media/blink/video_frame_compositor.h",
         "patchSetId": 28
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-22T03:00:13Z",
       "side": 1,
       "message": "In general it\u0027s best to describe what the |task_runner_| will be used for, and name it accordingly (e.g. \"the VideoFrameCompositor will work on this TaskRunner\").\n\nAlso, does it actually need to be a SingleThreadTaskRunner, or would a SequencedTaskRunner suffice?",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1344f1_9c4fb07d",
+        "filename": "media/blink/video_frame_compositor.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-24T22:53:10Z",
+      "side": 1,
+      "message": "Done.\n\nSingleThreadTaskRunner is a SequencedTaskRunner, which is an abstract class. Do you think a different SequencedTaskRunner should be used, or that the type should be left more general?",
+      "parentUuid": "26eee4bd_d3dd60be",
       "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "27e5c197_e1583527",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-24T22:53:10Z",
+      "side": 1,
+      "message": "Ack, Code deleted.",
+      "parentUuid": "a3421a90_2364135d",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f50aaa5d_d8cc2240",
         "filename": "media/blink/webmediaplayer_impl.h",
         "patchSetId": 28
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-22T03:00:13Z",
       "side": 1,
       "message": "Why does the submitter_ need to be publicly exposed? What calls it?",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e62ed25_e150d481",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-24T22:53:10Z",
+      "side": 1,
+      "message": "Ack, Code deleted.",
+      "parentUuid": "f50aaa5d_d8cc2240",
       "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "02376079_458c1cdc",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-24T22:53:10Z",
+      "side": 1,
+      "message": "VFC now owns VFS.",
+      "parentUuid": "b5b3aafc_dd2ccdf5",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "715dfcca_1a2de0b7",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 28
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-22T03:00:13Z",
       "side": 1,
       "message": "DCHECK_CALLED_ON_VALID_THREAD here, and in StartRendering, below.",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc02ac6_49931397",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-24T22:53:10Z",
+      "side": 1,
+      "message": "All DCHECK_CALLED_ON_VALID_THREAD were removed, since everything is now directly through VFC. Do you think we should have them still?",
+      "parentUuid": "715dfcca_1a2de0b7",
       "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "b35e0db8_d64ce051",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-24T22:53:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe63ed91_4aaaf01e",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d6f750b_01264e86",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
         "patchSetId": 28
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "c036aa1a_97eef788",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-24T22:53:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d6f750b_01264e86",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4827fbb3_7081c7b6",
         "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
         "patchSetId": 28
@@ -149,6 +293,24 @@
       "writtenOn": "2017-08-22T03:00:13Z",
       "side": 1,
       "message": "This doesn\u0027t seem to be an actual class, just a static Create() function - the class is never used, as far as I can tell - can we just remove this and make it a blink::CreateWebVideoFrameSubmitter() function or something?",
+      "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb7bbbc6_96baace0",
+        "filename": "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-24T22:53:10Z",
+      "side": 1,
+      "message": "These classes are how we expose WebKit stuff to media/blink. Also the code has been updated such that there is now another function.",
+      "parentUuid": "4827fbb3_7081c7b6",
       "revId": "e952157fc07c5837ea3824e90402bb1cb582b864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

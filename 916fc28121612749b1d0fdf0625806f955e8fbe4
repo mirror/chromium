@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3137cb96_23b942de",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 1425,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-08-24T22:53:10Z",
+      "side": 1,
+      "message": "Updated ownership such that we shouldnt have these threading issues anymore.",
+      "parentUuid": "b7abffda_766598bd",
+      "revId": "916fc28121612749b1d0fdf0625806f955e8fbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0286838f_b52a567c",
         "filename": "media/blink/webmediaplayer_impl_unittest.cc",
         "patchSetId": 27
