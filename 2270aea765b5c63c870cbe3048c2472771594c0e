@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c12b84e6_840e164c",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3407,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-24T22:34:27Z",
+      "side": 1,
+      "message": "Usually, feature flags don\u0027t contain \"enable\". I think this name is fine because it\u0027s link to a feature flag.",
+      "parentUuid": "f695d83b_41022d5f",
+      "range": {
+        "startLine": 3407,
+        "startChar": 6,
+        "endLine": 3407,
+        "endChar": 27
+      },
+      "revId": "2270aea765b5c63c870cbe3048c2472771594c0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebe7b30c_742599ee",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 2
