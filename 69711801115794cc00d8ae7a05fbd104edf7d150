@@ -22,6 +22,30 @@
       "revId": "69711801115794cc00d8ae7a05fbd104edf7d150",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ea015c_81ae0006",
+        "filename": "breakpad/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1194594
+      },
+      "writtenOn": "2017-08-24T04:22:26Z",
+      "side": 1,
+      "message": "\u003e Why do we need this -- is there a missing dependency?  What is the specific error you\u0027re trying to fix?\n\u003e \n\u003e Also, I would recommend only adding this when is_component_build\u003dtrue\n\nlinux_dumper_unittest_helper depends on \"libc++.so\" from the root build directory. The test moves the helper binary to a temp directory and cannot resolve the dependency:\n\n[ RUN      ] MinidumpWriterTest.DeletedBinary\n/tmp/breakpad.9j5mUV/linux-dumper-unittest-helper: error while loading shared libraries: libc++.so: cannot open shared object file: No such file or directory\n../../breakpad/src/client/linux/minidump_writer/minidump_writer_unittest.cc:550: Failure\nValue of: pfd.revents \u0026 POLLIN\n  Actual: false\nExpected: true\n[  FAILED  ] MinidumpWriterTest.DeletedBinary (1 ms)\n\nI added \"if(is_component_build)\" as you suggested.",
+      "parentUuid": "16d428c1_5dcc8b82",
+      "range": {
+        "startLine": 776,
+        "startChar": 4,
+        "endLine": 779,
+        "endChar": 5
+      },
+      "revId": "69711801115794cc00d8ae7a05fbd104edf7d150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
