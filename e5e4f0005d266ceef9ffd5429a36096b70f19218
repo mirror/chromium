@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "ff1af2ee_46d63301",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-24T04:46:09Z",
+      "side": 1,
+      "message": "For 1, I\u0027m still a bit confused on what the expected behavior is.  Are we saying it\u0027s okay if I call:\n\nsendIntent(CREATE);\ncancelBrowserActionsNotification()\n\nand have the notification still show?\n\nFor 2, I think this is okay?  The status will have been set and we\u0027ll just send the intent to handle it anyway?",
+      "parentUuid": "3e3351ae_b30a49d9",
+      "range": {
+        "startLine": 167,
+        "startChar": 12,
+        "endLine": 167,
+        "endChar": 45
+      },
+      "revId": "e5e4f0005d266ceef9ffd5429a36096b70f19218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52d8bc99_3e296feb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 2
