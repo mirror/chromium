@@ -97,7 +97,9 @@ MessageLoop::~MessageLoop() {
   // current one on this thread. Otherwise, this loop is being destructed before
   // it was bound to a thread, so a different message loop (or no loop at all)
   // may be current.
-  DCHECK((pump_ && current() == this) || (!pump_ && current() != this));
+
+  DCHECK((pump_ && (current() == this || !current())) ||
+         (!pump_ && current() != this));
 
   // iOS just attaches to the loop, it doesn't Run it.
   // TODO(stuartmorgan): Consider wiring up a Detach().
