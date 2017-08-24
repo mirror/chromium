@@ -90,13 +90,51 @@ TEST_F(CBORWriterTest, TestWriteString) {
   }
 }
 
+TEST_F(CBORWriterTest, TestWriteArray) {
+  static const uint8_t kArrayTestCaseCbor[] = {
+      0x98, 0x19, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
+      0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x10, 0x11, 0x12,
+      0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x18, 0x18, 0x19};
+
+  cbor_writer_ = new CBORWriter();
+  cbor_writer_->WriteArray(25);  // Number of elements in array.
+  cbor_writer_->WriteUint(1);
+  cbor_writer_->WriteUint(2);
+  cbor_writer_->WriteUint(3);
+  cbor_writer_->WriteUint(4);
+  cbor_writer_->WriteUint(5);
+  cbor_writer_->WriteUint(6);
+  cbor_writer_->WriteUint(7);
+  cbor_writer_->WriteUint(8);
+  cbor_writer_->WriteUint(9);
+  cbor_writer_->WriteUint(10);
+  cbor_writer_->WriteUint(11);
+  cbor_writer_->WriteUint(12);
+  cbor_writer_->WriteUint(13);
+  cbor_writer_->WriteUint(14);
+  cbor_writer_->WriteUint(15);
+  cbor_writer_->WriteUint(16);
+  cbor_writer_->WriteUint(17);
+  cbor_writer_->WriteUint(18);
+  cbor_writer_->WriteUint(19);
+  cbor_writer_->WriteUint(20);
+  cbor_writer_->WriteUint(21);
+  cbor_writer_->WriteUint(22);
+  cbor_writer_->WriteUint(23);
+  cbor_writer_->WriteUint(24);
+  cbor_writer_->WriteUint(25);
+  EXPECT_THAT(cbor_writer_->Serialize(),
+              testing::ElementsAreArray(kArrayTestCaseCbor,
+                                        arraysize(kArrayTestCaseCbor)));
+}
+
 TEST_F(CBORWriterTest, TestWriteMap) {
   static const uint8_t kMapTestCaseCbor[] = {
       0xa5, 0x61, 0x61, 0x61, 0x41, 0x61, 0x62, 0x61, 0x42, 0x61, 0x63,
       0x61, 0x43, 0x61, 0x64, 0x61, 0x44, 0x61, 0x65, 0x61, 0x45};
 
   cbor_writer_ = new CBORWriter();
-  cbor_writer_->WriteMap(5);
+  cbor_writer_->WriteMap(5);  // Number of pair values in map.
   cbor_writer_->WriteString("a");
   cbor_writer_->WriteString("A");
   cbor_writer_->WriteString("b");
@@ -110,6 +148,23 @@ TEST_F(CBORWriterTest, TestWriteMap) {
   EXPECT_THAT(
       cbor_writer_->Serialize(),
       testing::ElementsAreArray(kMapTestCaseCbor, arraysize(kMapTestCaseCbor)));
+}
+
+TEST_F(CBORWriterTest, TestWriteMapAndArray) {
+  static const uint8_t kMapArrayTestCaseCbor[] = {0xa2, 0x61, 0x61, 0x01, 0x61,
+                                                  0x62, 0x82, 0x02, 0x03};
+
+  cbor_writer_ = new CBORWriter();
+  cbor_writer_->WriteMap(2);  // Number of elements in map.
+  cbor_writer_->WriteString("a");
+  cbor_writer_->WriteUint(1);
+  cbor_writer_->WriteString("b");
+  cbor_writer_->WriteArray(2);  // Number of elements in array.
+  cbor_writer_->WriteUint(2);
+  cbor_writer_->WriteUint(3);
+  EXPECT_THAT(cbor_writer_->Serialize(),
+              testing::ElementsAreArray(kMapArrayTestCaseCbor,
+                                        arraysize(kMapArrayTestCaseCbor)));
 }
 
 TEST_F(CBORWriterTest, TestWriteMapNotEnoughPairs) {
