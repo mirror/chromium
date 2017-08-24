@@ -625,7 +625,12 @@
     "args": [],
   },
   "ios_web_view_inttests": {
-    "label": "//ios/web_view/test:ios_web_view_inttests",
+    "label": "//ios/web_view:ios_web_view_inttests",
+    "type": "raw",
+    "args": [],
+  },
+  "ios_web_view_unittests": {
+    "label": "//ios/web_view:ios_web_view_unittests",
     "type": "raw",
     "args": [],
   },
