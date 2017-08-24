@@ -53,6 +53,41 @@
     },
     {
       "key": {
+        "uuid": "30a992a1_259345ca",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 3389,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-24T23:25:44Z",
+      "side": 1,
+      "message": "You\u0027ll need to add\n\n   field_size: 2\n\nbelow this line as well, since the generator doesn\u0027t know how many bits is needed to store the enum.",
+      "parentUuid": "e32f85bc_b91cea20",
+      "revId": "72be88ca58ba3ad9060bced87feeb8edae0a25fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de56e3c7_07f3b487",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 4
+      },
+      "lineNbr": 3390,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-24T23:25:44Z",
+      "side": 1,
+      "message": "Try adding this on the next line:\n\n    default_generated_functions: [\"getter\", \"setter\"]",
+      "revId": "72be88ca58ba3ad9060bced87feeb8edae0a25fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c86d0dc2_6a6a7c4d",
         "filename": "third_party/WebKit/Source/core/css/CSSValueKeywords.json5",
         "patchSetId": 4
