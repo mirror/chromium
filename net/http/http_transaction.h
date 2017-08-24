@@ -22,6 +22,7 @@ namespace net {
 class AuthCredentials;
 class HttpRequestHeaders;
 struct HttpRequestInfo;
+class HttpResponseHeaders;
 class HttpResponseInfo;
 class IOBuffer;
 struct LoadTimingInfo;
@@ -193,7 +194,10 @@ class NET_EXPORT_PRIVATE HttpTransaction {
   virtual void SetBeforeHeadersSentCallback(
       const BeforeHeadersSentCallback& callback) = 0;
 
-  virtual void SetRequestHeadersCallback(RequestHeadersCallback) = 0;
+  virtual void SetRequestHeadersCallback(RequestHeadersCallback callback) = 0;
+  using ResponseHeadersCallback =
+      base::Callback<void(scoped_refptr<HttpResponseHeaders>)>;
+  virtual void SetResponseHeadersCallback(ResponseHeadersCallback callback) = 0;
 
   // Resumes the transaction after being deferred.
   virtual int ResumeNetworkStart() = 0;

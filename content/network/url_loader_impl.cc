@@ -253,8 +253,8 @@ void URLLoaderImpl::OnReceivedRedirect(net::URLRequest* url_request,
   scoped_refptr<ResourceResponse> response = new ResourceResponse();
   PopulateResourceResponse(url_request_.get(), response.get());
   if (report_raw_headers_) {
-    response->head.devtools_info =
-        BuildDevToolsInfo(*url_request_, raw_request_headers_);
+    response->head.devtools_info = BuildDevToolsInfo(
+        *url_request_, raw_request_headers_, raw_response_headers_.get());
   }
   url_loader_client_->OnReceiveRedirect(redirect_info, response->head);
 }
@@ -272,8 +272,8 @@ void URLLoaderImpl::OnResponseStarted(net::URLRequest* url_request,
   response_ = new ResourceResponse();
   PopulateResourceResponse(url_request_.get(), response_.get());
   if (report_raw_headers_) {
-    response_->head.devtools_info =
-        BuildDevToolsInfo(*url_request_, raw_request_headers_);
+    response_->head.devtools_info = BuildDevToolsInfo(
+        *url_request_, raw_request_headers_, raw_response_headers_.get());
   }
 
   mojo::DataPipe data_pipe(kDefaultAllocationSize);
@@ -479,6 +479,11 @@ void URLLoaderImpl::CompletePendingWrite() {
       pending_write_->Complete(pending_write_buffer_offset_);
   pending_write_ = nullptr;
   total_written_bytes_ += pending_write_buffer_offset_;
+}
+
+void URLLoaderImpl::SetRawResponseHeaders(
+    scoped_refptr<net::HttpResponseHeaders> headers) {
+  raw_response_headers_ = headers;
 }
 
 }  // namespace content

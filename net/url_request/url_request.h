@@ -673,6 +673,15 @@ class NET_EXPORT URLRequest : public base::SupportsUserData {
   // before the request is started.
   void SetRequestHeadersCallback(RequestHeadersCallback callback);
 
+  // Sets a callback that will be invoked each time the response is received
+  // from the remote party with the actual response headers recieved. Note this
+  // is different from response_headers() getter in that in case of revalidation
+  // request, the latter will return cached headers, while the callback will be
+  // called with a response from the server.
+  using ResponseHeadersCallback =
+      base::Callback<void(scoped_refptr<HttpResponseHeaders>)>;
+  void SetResponseHeadersCallback(ResponseHeadersCallback callback);
+
  protected:
   // Allow the URLRequestJob class to control the is_pending() flag.
   void set_is_pending(bool value) { is_pending_ = value; }
@@ -877,8 +886,9 @@ class NET_EXPORT URLRequest : public base::SupportsUserData {
 
   const NetworkTrafficAnnotationTag traffic_annotation_;
 
-  // See SetRequestHeadersCallback() above for details.
+  // See Set{Request|Response}HeadersCallback() above for details.
   RequestHeadersCallback request_headers_callback_;
+  ResponseHeadersCallback response_headers_callback_;
 
   THREAD_CHECKER(thread_checker_);
 
