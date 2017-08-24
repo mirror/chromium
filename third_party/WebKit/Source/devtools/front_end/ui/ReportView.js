@@ -71,6 +71,18 @@ UI.ReportView = class extends UI.VBox {
     return section;
   }
 
+  /**
+   * @param {!UI.ReportView.Section} existingSection
+   * @param {string} title
+   * @param {string=} className
+   * @return {!UI.ReportView.Section}
+   */
+  insertSectionBefore(existingSection, title, className) {
+    var section = new UI.ReportView.Section(title, className);
+    section.show(this._sectionList, existingSection.element);
+    return section;
+  }
+
   removeAllSection() {
     this._sectionList.removeChildren();
   }

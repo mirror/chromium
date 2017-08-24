@@ -18,6 +18,9 @@ Resources.ServiceWorkersView = class extends UI.VBox {
     /** @type {!Map<!SDK.ServiceWorkerRegistration, !Resources.ServiceWorkersView.Section>} */
     this._sections = new Map();
 
+    /** @type {!Array<!SDK.ServiceWorkerRegistration>} */
+    this._sortedRegistrations = [];
+
     this._toolbar.appendToolbarItem(MobileThrottling.throttlingManager().createOfflineToolbarCheckbox());
     var updateOnReloadSetting = Common.settings.createSetting('serviceWorkerUpdateOnReload', false);
     updateOnReloadSetting.setTitle(Common.UIString('Update on reload'));
@@ -38,6 +41,28 @@ Resources.ServiceWorkersView = class extends UI.VBox {
     /** @type {!Map<!SDK.ServiceWorkerManager, !Array<!Common.EventTarget.EventDescriptor>>}*/
     this._eventListeners = new Map();
     SDK.targetManager.observeModels(SDK.ServiceWorkerManager, this);
+  }
+
+  _sortRegistrations() {
+    var securityOrigins = new Set(this._securityOriginManager.securityOrigins());
+    function trimProtocolAndWWW(url) {
+      return url.trimURL().replace(/^www\./, '');
+    }
+    function compareRegistrations(registrationA, registrationB) {
+      // with current security origin will come first
+      var result =
+          securityOrigins.has(registrationB.securityOrigin) - securityOrigins.has(registrationA.securityOrigin);
+      if (result)
+        return result;
+      result = trimProtocolAndWWW(registrationA.scopeURL).compareTo(trimProtocolAndWWW(registrationB.scopeURL));
+      if (result)
+        return result;
+      result = registrationA.scopeURL.compareTo(registrationB.scopeURL);
+      if (result)
+        return result;
+      return registrationB.lastTimestamp() - registrationA.lastTimestamp();
+    }
+    this._sortedRegistrations.sort(compareRegistrations);
   }
 
   /**
@@ -61,9 +86,9 @@ Resources.ServiceWorkersView = class extends UI.VBox {
       this._manager.addEventListener(
           SDK.ServiceWorkerManager.Events.RegistrationErrorAdded, this._registrationErrorAdded, this),
       this._securityOriginManager.addEventListener(
-          SDK.SecurityOriginManager.Events.SecurityOriginAdded, this._updateSectionVisibility, this),
+          SDK.SecurityOriginManager.Events.SecurityOriginAdded, this._updateSectionsOrder, this),
       this._securityOriginManager.addEventListener(
-          SDK.SecurityOriginManager.Events.SecurityOriginRemoved, this._updateSectionVisibility, this),
+          SDK.SecurityOriginManager.Events.SecurityOriginRemoved, this._updateSectionsOrder, this),
     ]);
   }
 
@@ -79,6 +104,22 @@ Resources.ServiceWorkersView = class extends UI.VBox {
     this._eventListeners.delete(serviceWorkerManager);
     this._manager = null;
     this._securityOriginManager = null;
+  }
+
+  _updateSectionsOrder() {
+    var old = this._sortedRegistrations.slice();
+    this._sortRegistrations();
+    var i = 0;
+    for (var registration of this._sortedRegistrations.slice()) {
+      if (registration === old[i]) {
+        i++;
+        continue;
+      }
+      old.splice(old.indexOf(registration), 1);
+      this._removeRegistrationFromList(registration);
+      this._addRegistrationSection(registration);
+    }
+    this._updateSectionVisibility();
   }
 
   _updateSectionVisibility() {
@@ -133,16 +174,50 @@ Resources.ServiceWorkersView = class extends UI.VBox {
     section._addError(error);
   }
 
+  _removeRegistrationDuplicates() {
+    var uniqueRegistrations = [];
+    var scopeURL = null;
+    for (var registration of this._sortedRegistrations) {
+      if (registration.scopeURL === scopeURL) {
+        this._removeRegistrationFromList(registration);
+      } else {
+        scopeURL = registration.scopeURL;
+        uniqueRegistrations.push(registration);
+      }
+    }
+    this._sortedRegistrations = uniqueRegistrations;
+  }
+
+  /**
+   * @param {!SDK.ServiceWorkerRegistration} registration
+   * @return {?Resources.ServiceWorkersView.Section}
+   */
+  _addRegistrationSection(registration) {
+    var indexOf = this._sortedRegistrations.indexOf(registration);
+    if (indexOf < 0)
+      return null;
+    var nextRegistration = this._sortedRegistrations[indexOf + 1];
+    var nextSection = nextRegistration && this._sections.get(nextRegistration);
+    var reportSection = nextSection ? this._reportView.insertSectionBefore(nextSection._section, '') :
+                                      this._reportView.appendSection('');
+    var section = new Resources.ServiceWorkersView.Section(this._manager, reportSection, registration);
+    this._sections.set(registration, section);
+    return section;
+  }
+
   /**
    * @param {!SDK.ServiceWorkerRegistration} registration
    */
   _updateRegistration(registration) {
     var section = this._sections.get(registration);
     if (!section) {
-      section =
-          new Resources.ServiceWorkersView.Section(this._manager, this._reportView.appendSection(''), registration);
-      this._sections.set(registration, section);
+      this._sortedRegistrations.push(registration);
+      this._sortRegistrations();
+      this._removeRegistrationDuplicates();
+      section = this._addRegistrationSection(registration);
     }
+    if (!section)
+      return;
     this._updateSectionVisibility();
     section._scheduleUpdate();
   }
@@ -163,6 +238,9 @@ Resources.ServiceWorkersView = class extends UI.VBox {
     if (section)
       section._section.remove();
     this._sections.delete(registration);
+    var index = this._sortedRegistrations.indexOf(registration);
+    if (index >= 0)
+      this._sortedRegistrations.splice(index, 1);
   }
 };
 
