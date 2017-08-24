@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/files/file_util.h"
+#include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/string16.h"
@@ -42,6 +43,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "net/base/filename_util.h"
 #include "ui/base/accelerators/accelerator.h"
+#include "ui/display/display_switches.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 
 #if defined(OS_WIN)
@@ -66,11 +68,16 @@ const char kTooFewMatchesPage[] = "bug_1155639.html";
 const char kLongTextareaPage[] = "large_textarea.html";
 const char kPrematureEnd[] = "premature_end.html";
 const char kMoveIfOver[] = "move_if_obscuring.html";
+const char kMoveIfOverPrecise[] = "move_if_obscuring_precise.html";
 const char kBitstackCrash[] = "crash_14491.html";
 const char kSelectChangesOrdinal[] = "select_changes_ordinal.html";
 const char kStartAfterSelection[] = "start_after_selection.html";
 const char kSimple[] = "simple.html";
 const char kLinkPage[] = "link.html";
+
+const float kScaleFactors[] = {1.0, 1.25};
+
+const int kExpectedShift = 76;
 
 const bool kBack = false;
 const bool kFwd = true;
@@ -204,6 +211,8 @@ class FindInPageControllerTest : public InProcessBrowserTest {
             base::Bind(&base::RunLoop::QuitCurrentWhenIdleDeprecated));
     content::RunMessageLoop();
   }
+
+  DISALLOW_COPY_AND_ASSIGN(FindInPageControllerTest);
 };
 
 // This test loads a page with frames and starts FindInPage requests.
@@ -1568,3 +1577,17 @@ IN_PROC_BROWSER_TEST_F(FindInPageControllerTest, IncognitoFindNextShared) {
   EXPECT_EQ(ASCIIToUTF16("bar"),
             GetFindBarTextForBrowser(browser_incognito));
 }
+
+class FindInPageDPITest : public FindInPageControllerTest,
+                          public testing::WithParamInterface<float> {
+ public:
+  FindInPageDPITest() {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    FindInPageControllerTest::SetUpCommandLine(command_line);
+    command_line->AppendSwitchASCII(switches::kForceDeviceScaleFactor,
+                                    base::StringPrintf("%f", GetParam()));
+  }
+
+  DISALLOW_COPY_AND_ASSIGN(FindInPageDPITest);
+};
