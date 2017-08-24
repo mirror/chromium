@@ -16,6 +16,24 @@
       "revId": "96ab0d1a0eba27f64f00d69f9eaef74e822b0686",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be136d0_85fb1d77",
+        "filename": "tools/sublime/compile_current_file.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-24T22:00:24Z",
+      "side": 1,
+      "message": "Per offline, apparently not. I can\u0027t explain why tbh, but probably not worth agonizing over.\n\nOK, can you just change os.name to sys.platform.startswith(\u0027win\u0027) since that\u0027s what we use elsewhere and then lgtm.",
+      "parentUuid": "54f55a7a_a0156507",
+      "revId": "96ab0d1a0eba27f64f00d69f9eaef74e822b0686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
