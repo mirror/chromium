@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60057306_b3a7856b",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-24T21:39:04Z",
+      "side": 1,
+      "message": "Can/should this be private?",
+      "revId": "ef552b35ede69c382b25fafddd9274b10d5dd046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f44d45_a82f041c",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-24T21:39:04Z",
+      "side": 1,
+      "message": "Maybe comment that |blob| is unused, just keeps it alive until RegisterPublicBlobURL increments the refcount it via the uuid.",
+      "revId": "ef552b35ede69c382b25fafddd9274b10d5dd046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
