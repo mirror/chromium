@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1404781_12a855d7",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-24T20:59:46Z",
+      "side": 1,
+      "message": "nit: I would use stronger language here, basically replace \u0027should not ...\u0027 with \u0027must not destroy this instance within the callback\u0027.  This is part of a contract so you want to be explicit about what a caller can and cannot do.",
+      "range": {
+        "startLine": 53,
+        "startChar": 22,
+        "endLine": 53,
+        "endChar": 32
+      },
+      "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b6be18_47b570cd",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-24T20:59:46Z",
+      "side": 1,
+      "message": "nit: this state is not 100% accurate, you are about to create a file but haven\u0027t succeeded yet.  If it is useful, it might be better to add a \u0027CreatingFile\u0027 state and set kFileCreated in the callback.  Just something to consider, not too critical.",
+      "range": {
+        "startLine": 140,
+        "startChar": 3,
+        "endLine": 140,
+        "endChar": 25
+      },
+      "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5dcd677_9c80f24a",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-24T20:59:46Z",
+      "side": 1,
+      "message": "Maybe add a TODO as well (Update CompoundBuffer to allow transferring data w/o memcpy).",
+      "range": {
+        "startLine": 186,
+        "startChar": 2,
+        "endLine": 186,
+        "endChar": 3
+      },
+      "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd46a94e_a5530687",
+        "filename": "remoting/host/file_proxy_wrapper_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-24T20:59:46Z",
+      "side": 1,
+      "message": "I think you can remove this param.  |active_file_chunk_-\u003edata.size()| is still valid here IIUC so I think you can use it to verify the correct number of bytes were written.",
+      "range": {
+        "startLine": 217,
+        "startChar": 42,
+        "endLine": 217,
+        "endChar": 68
+      },
+      "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cecf9e6c_346844c7",
+        "filename": "remoting/host/file_proxy_wrapper_linux_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-24T20:59:46Z",
+      "side": 1,
+      "message": "MakeUnique\u003cCompoundBuffer\u003e() ?",
+      "range": {
+        "startLine": 106,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 45
+      },
+      "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80fe66a_75a3cdc7",
+        "filename": "remoting/host/file_proxy_wrapper_linux_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-24T20:59:46Z",
+      "side": 1,
+      "message": "You probably want to use ASSERT_BLAH instead of EXPECT_BLAH.  The difference is that EXPECT allows code to continue executing (this is useful if you want to validate all of the fields of a struct for instance) but ASSERT will stop execution at the first failure.  If error_ is true above, I assume you want to stop running the test.  This is probably true for all of the other EXPECT_ statements as well.",
+      "range": {
+        "startLine": 125,
+        "startChar": 1,
+        "endLine": 125,
+        "endChar": 13
+      },
+      "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6f60a2_040556df",
+        "filename": "remoting/host/file_proxy_wrapper_linux_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-24T20:59:46Z",
+      "side": 1,
+      "message": "nit: You can use ASSERT_STREQ() instead of EXPECT_TRUE(blah1, blah2)",
+      "range": {
+        "startLine": 178,
+        "startChar": 3,
+        "endLine": 178,
+        "endChar": 12
+      },
+      "revId": "b4ac27877359352aaaa836faa8627deaa580a467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
