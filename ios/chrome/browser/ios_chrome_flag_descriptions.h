@@ -57,6 +57,10 @@ extern const char kCaptivePortalDescription[];
 extern const char kInProductHelpDemoModeName[];
 extern const char kInProductHelpDemoModeDescription[];
 
+// Title and description for the flag to enable drag and drop.
+extern const char kDragAndDropName[];
+extern const char kDragAndDropDescription[];
+
 }  // namespace flag_descriptions
 
 #endif  // IOS_CHROME_BROWSER_IOS_CHROME_FLAG_DESCRIPTIONS_H_
