@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e989c7ef_b331d166",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-24T17:11:52Z",
+      "side": 1,
+      "message": "Once this feature launches and we remove the feature check, will this become dead code? Because we won\u0027t unconditionally create the SigninPromoController (we skip it if the promo is dismissed), but the item will never be visible, so nothing should try to create a ViewHolder. I guess what I want to say is, can we have a simple way to make sure we are going to find all the dead code later? If having a feature check everywhere is too expensive, we could cache that in a member. Then once we remove the old code, we can simply look for all places where the member is accessed.",
+      "range": {
+        "startLine": 135,
+        "startChar": 8,
+        "endLine": 135,
+        "endChar": 77
+      },
+      "revId": "256e2e66674563de2e3d44d9a836888fcf800d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "815732d1_934e37ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SignInPromo.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-24T17:11:52Z",
+      "side": 1,
+      "message": "Nit: It might be worth extracting this into a method maybeNotifyPersonalizedSigninPromoChanged() or something.",
+      "range": {
+        "startLine": 301,
+        "startChar": 12,
+        "endLine": 301,
+        "endChar": 95
+      },
+      "revId": "256e2e66674563de2e3d44d9a836888fcf800d5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
