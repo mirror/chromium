@@ -7,6 +7,7 @@
 #include <set>
 
 #include "base/memory/ptr_util.h"
+#include "base/test/histogram_tester.h"
 #include "components/offline_pages/core/prefetch/mock_prefetch_item_generator.h"
 #include "components/offline_pages/core/prefetch/prefetch_item.h"
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
@@ -115,6 +116,76 @@ TEST_F(MetricsFinalizationTaskTest, FinalizesMultipleItems) {
   std::set<PrefetchItem> items_in_new_request_state =
       FilterByState(all_items, PrefetchItemState::NEW_REQUEST);
   EXPECT_EQ(1U, items_in_new_request_state.count(unfinished_item));
+}
+
+TEST_F(MetricsFinalizationTaskTest, MetricsAreReported) {
+  PrefetchItem successful_item =
+      item_generator()->CreateItem(PrefetchItemState::FINISHED);
+  successful_item.generate_bundle_attempts = 1;
+  successful_item.get_operation_attempts = 1;
+  successful_item.download_initiation_attempts = 1;
+  ASSERT_TRUE(store_util()->InsertPrefetchItem(successful_item));
+
+  PrefetchItem failed_item =
+      item_generator()->CreateItem(PrefetchItemState::FINISHED);
+  failed_item.error_code = PrefetchItemErrorCode::DOWNLOAD_ERROR;
+  failed_item.archive_body_length = 1000;
+  failed_item.file_size = 999;
+  ASSERT_TRUE(store_util()->InsertPrefetchItem(failed_item));
+
+  PrefetchItem unfinished_item =
+      item_generator()->CreateItem(PrefetchItemState::NEW_REQUEST);
+  ASSERT_TRUE(store_util()->InsertPrefetchItem(unfinished_item));
+
+  // Execute the metrics task.
+  base::HistogramTester histogram_tester;
+  ExpectTaskCompletes(metrics_finalization_task_.get());
+  metrics_finalization_task_->Run();
+  RunUntilIdle();
+
+  std::set<PrefetchItem> all_items;
+  EXPECT_EQ(3U, store_util()->GetAllItems(&all_items));
+  EXPECT_EQ(2U, FilterByState(all_items, PrefetchItemState::ZOMBIE).size());
+  EXPECT_EQ(1U,
+            FilterByState(all_items, PrefetchItemState::NEW_REQUEST).size());
+
+  histogram_tester.ExpectUniqueSample(
+      "OfflinePages.Prefetching.ItemLifetime.Successful", 0, 1);
+  histogram_tester.ExpectUniqueSample(
+      "OfflinePages.Prefetching.ItemLifetime.Failed", 0, 1);
+
+  histogram_tester.ExpectTotalCount(
+      "OfflinePages.Prefetching.FinishedItemErrorCode", 2);
+  histogram_tester.ExpectBucketCount(
+      "OfflinePages.Prefetching.FinishedItemErrorCode",
+      static_cast<int>(PrefetchItemErrorCode::SUCCESS), 1);
+  histogram_tester.ExpectBucketCount(
+      "OfflinePages.Prefetching.FinishedItemErrorCode",
+      static_cast<int>(PrefetchItemErrorCode::DOWNLOAD_ERROR), 1);
+
+  histogram_tester.ExpectUniqueSample(
+      "OfflinePages.Prefetching.DownloadedArchiveSizeVsExpected", 99, 1);
+
+  histogram_tester.ExpectTotalCount(
+      "OfflinePages.Prefetching.ActionRetryAttempts.GeneratePageBundle", 2);
+  histogram_tester.ExpectBucketCount(
+      "OfflinePages.Prefetching.ActionRetryAttempts.GeneratePageBundle", 0, 1);
+  histogram_tester.ExpectBucketCount(
+      "OfflinePages.Prefetching.ActionRetryAttempts.GeneratePageBundle", 1, 1);
+
+  histogram_tester.ExpectTotalCount(
+      "OfflinePages.Prefetching.ActionRetryAttempts.GetOperation", 2);
+  histogram_tester.ExpectBucketCount(
+      "OfflinePages.Prefetching.ActionRetryAttempts.GetOperation", 0, 1);
+  histogram_tester.ExpectBucketCount(
+      "OfflinePages.Prefetching.ActionRetryAttempts.GetOperation", 1, 1);
+
+  histogram_tester.ExpectTotalCount(
+      "OfflinePages.Prefetching.ActionRetryAttempts.DownloadInitiation", 2);
+  histogram_tester.ExpectBucketCount(
+      "OfflinePages.Prefetching.ActionRetryAttempts.DownloadInitiation", 0, 1);
+  histogram_tester.ExpectBucketCount(
+      "OfflinePages.Prefetching.ActionRetryAttempts.DownloadInitiation", 1, 1);
 }
 
 }  // namespace offline_pages
