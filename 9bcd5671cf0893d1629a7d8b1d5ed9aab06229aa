@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5426f534_d4a832bb",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-08-24T15:04:26Z",
+      "side": 1,
+      "message": "Nit: Prefer early return. Also .empty() instead of size()\u003e0",
+      "range": {
+        "startLine": 452,
+        "startChar": 34,
+        "endLine": 452,
+        "endChar": 38
+      },
+      "revId": "9bcd5671cf0893d1629a7d8b1d5ed9aab06229aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
