@@ -242,9 +242,11 @@ template <typename T>
 T StyleBuilderConverter::ConvertFlags(StyleResolverState& state,
                                       const CSSValue& value) {
   T flags = static_cast<T>(0);
-  if (value.IsIdentifierValue() &&
-      ToCSSIdentifierValue(value).GetValueID() == CSSValueNone)
+  if (value.IsIdentifierValue()) {
+    if (ToCSSIdentifierValue(value).GetValueID() != CSSValueNone)
+      flags = ToCSSIdentifierValue(value).ConvertTo<T>();
     return flags;
+  }
   for (auto& flag_value : ToCSSValueList(value))
     flags |= ToCSSIdentifierValue(*flag_value).ConvertTo<T>();
   return flags;
