@@ -113,83 +113,13 @@ std::unique_ptr<ReferenceReader> DisassemblerWin32<Traits>::MakeReadRel32(
     offset_t upper) {
   ParseAndStoreRel32();
   return base::MakeUnique<Rel32ReaderX86>(image_, lower, upper,
-                                          &rel32_locations_, *this);
+                                          &rel32_locations_, trans_);
 }
 
 template <class Traits>
 std::unique_ptr<ReferenceWriter> DisassemblerWin32<Traits>::MakeWriteRel32(
     MutableBufferView image) {
-  return base::MakeUnique<Rel32WriterX86>(image, *this);
-}
-
-template <class Traits>
-std::unique_ptr<RVAToOffsetTranslator>
-DisassemblerWin32<Traits>::MakeRVAToOffsetTranslator() const {
-  // Use enclosed class to wrap RVAToSection(). Intermediate results |section_|
-  // and |adjust_| are cached, as optimization.
-  class RVAToOffset : public RVAToOffsetTranslator {
-   public:
-    explicit RVAToOffset(const DisassemblerWin32* self) : self_(self) {}
-
-    // RVAToOffsetTranslator:
-    offset_t Convert(rva_t rva) override {
-      if (section_ == nullptr || rva < section_->virtual_address ||
-          rva >=
-              section_->virtual_address + std::min(section_->size_of_raw_data,
-                                                   section_->virtual_size)) {
-        section_ = self_->RVAToSection(rva);
-        if (section_ != nullptr &&
-            rva < section_->virtual_address + section_->virtual_size) {
-          // |rva| is in |section_|, so |adjust_| can be computed normall.
-          adjust_ =
-              section_->file_offset_of_raw_data - section_->virtual_address;
-        } else {
-          // |rva| has no offset, so use |self_->fake_offset_adjust_|.
-          adjust_ = self_->fake_offset_adjust_;
-        }
-      }
-      return rva_t(rva + adjust_);
-    }
-
-   private:
-    const DisassemblerWin32* self_;
-    const pe::ImageSectionHeader* section_ = nullptr;
-    std::ptrdiff_t adjust_ = 0;
-  };
-  return base::MakeUnique<RVAToOffset>(this);
-}
-
-template <class Traits>
-std::unique_ptr<OffsetToRVATranslator>
-DisassemblerWin32<Traits>::MakeOffsetToRVATranslator() const {
-  // Use enclosed class to wrap SectionToRVA(). Intermediate results |section_|
-  // and |adjust_| are cached, as optimization.
-  class OffsetToRVA : public OffsetToRVATranslator {
-   public:
-    explicit OffsetToRVA(const DisassemblerWin32* self) : self_(self) {}
-
-    // OffsetToRVATranslator:
-    rva_t Convert(offset_t offset) override {
-      if (offset >= self_->fake_offset_adjust_) {
-        // |offset| is an untranslated RVA that was shifted outside the image.
-        return offset_t(offset - self_->fake_offset_adjust_);
-      }
-      if (section_ == nullptr || offset < section_->file_offset_of_raw_data ||
-          offset >=
-              section_->file_offset_of_raw_data + section_->size_of_raw_data) {
-        section_ = self_->OffsetToSection(offset);
-        DCHECK_NE(section_, nullptr);
-        adjust_ = section_->virtual_address - section_->file_offset_of_raw_data;
-      }
-      return offset_t(offset + adjust_);
-    }
-
-   private:
-    const DisassemblerWin32* self_;
-    const pe::ImageSectionHeader* section_ = nullptr;
-    std::ptrdiff_t adjust_ = 0;
-  };
-  return base::MakeUnique<OffsetToRVA>(this);
+  return base::MakeUnique<Rel32WriterX86>(image, trans_);
 }
 
 template <class Traits>
@@ -243,17 +173,19 @@ bool DisassemblerWin32<Traits>::ParseHeader() {
   offset_t offset_bound =
       base::checked_cast<offset_t>(source.begin() - image_.begin());
 
-  // Extract and validate all sections.
+  // Extract |sections_|. .
   size_t sections_count = coff_header->number_of_sections;
   auto* sections_array =
       source.GetArray<pe::ImageSectionHeader>(sections_count);
   if (!sections_array)
     return false;
   sections_.assign(sections_array, sections_array + sections_count);
-  section_rva_map_.resize(sections_count);
-  section_offset_map_.resize(sections_count);
+
+  // Visit each section, validate, and add data to |trans_builder|.
+  AddressTranslatorBuilder trans_builder;
   bool has_text_section = false;
   decltype(pe::ImageSectionHeader::virtual_address) prev_virtual_address = 0;
+
   for (size_t i = 0; i < sections_count; ++i) {
     const pe::ImageSectionHeader& section = sections_[i];
     // Apply strict checks on section bounds.
@@ -272,8 +204,14 @@ bool DisassemblerWin32<Traits>::ParseHeader() {
       LOG(WARNING) << "RVA anomaly found for Section " << i;
     prev_virtual_address = section.virtual_address;
 
-    section_rva_map_[i] = std::make_pair(section.virtual_address, i);
-    section_offset_map_[i] = std::make_pair(section.file_offset_of_raw_data, i);
+    // Add |section| data for offset-RVA translation.
+    if (trans_builder.AddUnit(section.file_offset_of_raw_data,
+                              section.size_of_raw_data, section.virtual_address,
+                              section.virtual_size) !=
+        AddressTranslatorBuilder::kSuccess) {
+      return false;
+    }
+
     offset_t end_offset =
         section.file_offset_of_raw_data + section.size_of_raw_data;
     offset_bound = std::max(end_offset, offset_bound);
@@ -285,15 +223,16 @@ bool DisassemblerWin32<Traits>::ParseHeader() {
   if (!has_text_section)
     return false;
 
+  // Initialize |trans_| for offset-RVA translations. Any inconsistency (e.g.,
+  // two offsets correspond to the same RVA) would invalidate the PE file.
+  if (trans_builder.Build(&trans_) != AddressTranslatorBuilder::kSuccess)
+    return false;
+
   // Resize |image_| to include only contents claimed by sections. Note that
   // this may miss digital signatures at end of PE files, but for patching this
   // is of minor concern.
   image_.shrink(offset_bound);
 
-  fake_offset_adjust_ = std::max(offset_bound, rva_bound_);
-
-  std::sort(section_rva_map_.begin(), section_rva_map_.end());
-  std::sort(section_offset_map_.begin(), section_offset_map_.end());
   return true;
 }
 
@@ -346,55 +285,6 @@ bool DisassemblerWin32<Traits>::ParseAndStoreRel32() {
   // So sort explicitly, to be sure.
   std::sort(rel32_locations_.begin(), rel32_locations_.end());
   return true;
-}
-
-template <class Traits>
-const pe::ImageSectionHeader* DisassemblerWin32<Traits>::RVAToSection(
-    rva_t rva) const {
-  auto it = std::upper_bound(
-      section_rva_map_.begin(), section_rva_map_.end(), rva,
-      [](rva_t a, const std::pair<rva_t, int>& b) { return a < b.first; });
-  if (it == section_rva_map_.begin())
-    return nullptr;
-  --it;
-  const pe::ImageSectionHeader* section = &sections_[it->second];
-  return rva - it->first < section->size_of_raw_data ? section : nullptr;
-}
-
-template <class Traits>
-const pe::ImageSectionHeader* DisassemblerWin32<Traits>::OffsetToSection(
-    offset_t offset) const {
-  auto it = std::upper_bound(section_offset_map_.begin(),
-                             section_offset_map_.end(), offset,
-                             [](offset_t a, const std::pair<offset_t, int>& b) {
-                               return a < b.first;
-                             });
-  if (it == section_offset_map_.begin())
-    return nullptr;
-  --it;
-  const pe::ImageSectionHeader* section = &sections_[it->second];
-  return offset - it->first < section->size_of_raw_data ? section : nullptr;
-}
-
-template <class Traits>
-offset_t DisassemblerWin32<Traits>::RVAToOffset(rva_t rva) const {
-  const pe::ImageSectionHeader* section = RVAToSection(rva);
-  if (section == nullptr ||
-      rva >= section->virtual_address + section->virtual_size) {
-    return rva + fake_offset_adjust_;
-  }
-  return offset_t(rva - section->virtual_address) +
-         section->file_offset_of_raw_data;
-}
-
-template <class Traits>
-rva_t DisassemblerWin32<Traits>::OffsetToRVA(offset_t offset) const {
-  if (offset >= fake_offset_adjust_)
-    return rva_t(offset - fake_offset_adjust_);
-  const pe::ImageSectionHeader* section = OffsetToSection(offset);
-  DCHECK_NE(section, nullptr);
-  return rva_t(offset - section->file_offset_of_raw_data) +
-         section->virtual_address;
 }
 
 template <class Traits>
