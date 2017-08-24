@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "4d133c0a_36426b02",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-08-24T01:42:07Z",
+      "side": 1,
+      "message": "We could, but I think that checking outside of WorkOnTask conveys some information that is useful when trying to reason about the code: it makes it clearer how tasks are added and removed from the queue.",
+      "parentUuid": "9329dad4_b63d00ec",
+      "revId": "c59a08b2703a9dca59c9e153b7aa35777461c0d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc185f6e_8e632d39",
         "filename": "chrome/browser/installable/installable_task_queue.h",
         "patchSetId": 1
