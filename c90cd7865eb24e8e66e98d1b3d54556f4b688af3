@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c60cf90f_4bee43d7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-08-24T23:09:05Z",
+      "side": 1,
+      "message": "nit: Chrome",
+      "range": {
+        "startLine": 9,
+        "startChar": 62,
+        "endLine": 9,
+        "endChar": 68
+      },
+      "revId": "c90cd7865eb24e8e66e98d1b3d54556f4b688af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
