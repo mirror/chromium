@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5f2f143_b5534282",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-24T18:45:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8adaca51_386dbcec",
+      "revId": "dd12f215318cb52805026efa914479461eeb0f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f77c92bd_98fedc00",
         "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "dd12f215318cb52805026efa914479461eeb0f4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b87b27_172734e0",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-24T18:45:47Z",
+      "side": 1,
+      "message": "I don\u0027t think the behavior is well defined.\n\nDone.",
+      "parentUuid": "f77c92bd_98fedc00",
+      "revId": "dd12f215318cb52805026efa914479461eeb0f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3859d41a_19549cfd",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-24T18:45:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a2954ff_f0182256",
+      "revId": "dd12f215318cb52805026efa914479461eeb0f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da49d698_fd3306b8",
         "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.h",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "dd12f215318cb52805026efa914479461eeb0f4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f522eb89_77ef9fd4",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-24T18:45:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da49d698_fd3306b8",
+      "revId": "dd12f215318cb52805026efa914479461eeb0f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
