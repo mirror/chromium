@@ -31,6 +31,7 @@
 #include "platform/geometry/FloatQuad.h"
 #include "platform/geometry/LayoutRect.h"
 #include "platform/graphics/Color.h"
+#include "platform/graphics/CompositorElementId.h"
 #include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollAnimatorBase.h"
 #include "platform/scroll/ScrollTypes.h"
@@ -38,7 +39,6 @@
 #include "platform/wtf/MathExtras.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/Vector.h"
-#include "public/platform/WebLayerScrollClient.h"
 
 namespace blink {
 
@@ -61,8 +61,7 @@ enum IncludeScrollbarsInRect {
   kIncludeScrollbars,
 };
 
-class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin,
-                                       public WebLayerScrollClient {
+class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin {
   WTF_MAKE_NONCOPYABLE(ScrollableArea);
 
  public:
@@ -379,7 +378,7 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin,
   virtual RefPtr<WebTaskRunner> GetTimerTaskRunner() const = 0;
 
   // Callback for compositor-side scrolling.
-  void DidScroll(const gfx::ScrollOffset&) override;
+  virtual void DidScroll(float x, float y);
 
   virtual void ScrollbarFrameRectChanged() {}
 

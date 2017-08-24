@@ -153,10 +153,10 @@ PaintLayerScrollableArea::~PaintLayerScrollableArea() {
   DCHECK(has_been_disposed_);
 }
 
-void PaintLayerScrollableArea::DidScroll(const gfx::ScrollOffset& offset) {
-  ScrollableArea::DidScroll(offset);
-  // Ensure that there is no DidScroll callback from the composited scrolling
-  // cc::Layer to this object.
+void PaintLayerScrollableArea::DidScroll(float x, float y) {
+  ScrollableArea::DidScroll(x, y);
+  // This scrollable area should be alive if it receives composited scroll
+  // callbacks.
   CHECK(!has_been_disposed_);
 }
 
