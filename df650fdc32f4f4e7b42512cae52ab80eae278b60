@@ -2,6 +2,86 @@
   "comments": [
     {
       "key": {
+        "uuid": "e70b6a47_dbb977a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-24T01:39:53Z",
+      "side": 1,
+      "message": "fallback to network",
+      "range": {
+        "startLine": 7,
+        "startChar": 70,
+        "endLine": 7,
+        "endChar": 78
+      },
+      "revId": "df650fdc32f4f4e7b42512cae52ab80eae278b60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce41919c_b93db1d2",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-24T01:39:53Z",
+      "side": 1,
+      "message": "Add blank line here.",
+      "revId": "df650fdc32f4f4e7b42512cae52ab80eae278b60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f81353_40bc0386",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-24T01:39:53Z",
+      "side": 1,
+      "message": "We could combine this sentence with the rest of the comment:\n\n\"Tells this helper to simulate \"early response\", where the respondWith() promise resolves before the waitUntil() promise. In this mode, the helper...\"",
+      "range": {
+        "startLine": 71,
+        "startChar": 41,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "revId": "df650fdc32f4f4e7b42512cae52ab80eae278b60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2203a5e7_1930d74b",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-24T01:39:53Z",
+      "side": 1,
+      "message": "Maybe add:\n// Now the caller must call FinishWaitUntil() to finish the event.",
+      "revId": "df650fdc32f4f4e7b42512cae52ab80eae278b60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c05eeec9_891c037f",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 4
@@ -19,6 +99,46 @@
         "endLine": 170,
         "endChar": 22
       },
+      "revId": "df650fdc32f4f4e7b42512cae52ab80eae278b60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e287054b_c787312b",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-24T01:39:53Z",
+      "side": 1,
+      "message": "We could expand this comment:\n\"Test when the respondWith() promise resolves before the waitUntil() promise resolves. The response should be received before the event finishes.\"",
+      "range": {
+        "startLine": 408,
+        "startChar": 32,
+        "endLine": 408,
+        "endChar": 47
+      },
+      "revId": "df650fdc32f4f4e7b42512cae52ab80eae278b60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a49c3f8_d21dcb10",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-24T01:39:53Z",
+      "side": 1,
+      "message": "// Although the response was already received, the event remains outstanding until waitUntil() resolves.",
       "revId": "df650fdc32f4f4e7b42512cae52ab80eae278b60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
