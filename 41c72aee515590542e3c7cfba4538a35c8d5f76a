@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d0a679a_5f52d2ee",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-08-24T04:39:00Z",
+      "side": 1,
+      "message": "Nit suggestion, You could use a base::Optional\u003cstd::string\u003e for this to indicate whether or not it\u0027s been pulled instead of two values?",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 49
+      },
+      "revId": "41c72aee515590542e3c7cfba4538a35c8d5f76a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
