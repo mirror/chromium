@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "377fff7a_716b5b9e",
+        "filename": "chrome/android/java/res/layout/suggestions_site_explore.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-24T15:49:02Z",
+      "side": 1,
+      "message": "does that work for real or is it as messed up as the height measurement?",
+      "range": {
+        "startLine": 10,
+        "startChar": 4,
+        "endLine": 10,
+        "endChar": 56
+      },
+      "revId": "b8a5346e56f69ce5312a0bf3b675f70fe4d99b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9436e31_2406c0c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SiteExploreViewPager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-08-24T15:49:02Z",
+      "side": 1,
+      "message": "meaning that when the bottom indicators are added, the index or the first page will be wrong? maybe loop over the children until you get the first non decor one?",
+      "range": {
+        "startLine": 38,
+        "startChar": 63,
+        "endLine": 39,
+        "endChar": 49
+      },
+      "revId": "b8a5346e56f69ce5312a0bf3b675f70fe4d99b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
