@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "b6806859_a0739a31",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-24T21:39:45Z",
+      "side": 0,
+      "message": "Since selection was not affected till this point and ReplaceFragment only uses it for creating fragment so I made this change with this patch. \nI will create a seperate patch for this if needed.",
+      "parentUuid": "3d82bb1d_5b9120df",
+      "range": {
+        "startLine": 1154,
+        "startChar": 13,
+        "endLine": 1154,
+        "endChar": 22
+      },
+      "revId": "5b4d98eb6cf64b6c5e17047703cfdc0417167a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7892762_b5293b49",
         "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
         "patchSetId": 5
