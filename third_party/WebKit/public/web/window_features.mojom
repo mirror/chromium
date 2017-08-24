@@ -22,3 +22,4 @@ struct WindowFeatures {
     bool tool_bar_visible = true;
     bool scrollbars_visible = true;
 };
+
