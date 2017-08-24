@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8448b95c_e104a1a5",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetcher.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-24T04:40:37Z",
+      "side": 1,
+      "message": "I would create a \"response\" class at this point, which replaces ModuleScriptCreationParams.\n\nclass ModuleScriptFetchResponse {\n public:\n  bool IsErrored() const; ...\n\n private:\n  const KURL response_url_;\n  const String source_text_;\n  const WebURLRequest::FetchCredentialsMode fetch_credentials_mode_;\n  const AccessControlStatus access_control_status_;\n  ConsoleMessage* error_message_;\n};\n\nstatic ModuleScript* CreateModuleScriptFromFetchResponse(const ModuleScriptFetchResponse\u0026);",
+      "revId": "ce06ff70ed279f8f4852fa135e1d4cae2cd6d9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ad675d_2412136d",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-24T04:40:37Z",
+      "side": 1,
+      "message": "final",
+      "revId": "ce06ff70ed279f8f4852fa135e1d4cae2cd6d9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102760ba_cb1b361b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-24T04:40:37Z",
+      "side": 1,
+      "message": "add kInitial",
+      "revId": "ce06ff70ed279f8f4852fa135e1d4cae2cd6d9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e873630_b9b5646c",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-24T04:40:37Z",
+      "side": 1,
+      "message": "We can omit fetch_params_ + fetcher_ if we make these args for Entry::Fetch()",
+      "range": {
+        "startLine": 29,
+        "startChar": 37,
+        "endLine": 29,
+        "endChar": 45
+      },
+      "revId": "ce06ff70ed279f8f4852fa135e1d4cae2cd6d9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba5b2e95_d58198d6",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-24T04:40:37Z",
+      "side": 1,
+      "message": "override",
+      "revId": "ce06ff70ed279f8f4852fa135e1d4cae2cd6d9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc8f324_f96dab37",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-24T04:40:37Z",
+      "side": 1,
+      "message": "and transfer to kFetching here.",
+      "range": {
+        "startLine": 33,
+        "startChar": 22,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "ce06ff70ed279f8f4852fa135e1d4cae2cd6d9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "157141b1_14919c77",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMap.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-24T04:40:37Z",
+      "side": 1,
+      "message": "I think we can avoid storing fetcher_ ref here.",
+      "revId": "ce06ff70ed279f8f4852fa135e1d4cae2cd6d9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
