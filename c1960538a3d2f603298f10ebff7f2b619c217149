@@ -210,6 +210,24 @@
       "revId": "c1960538a3d2f603298f10ebff7f2b619c217149",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3853f7_5d1ace64",
+        "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-08-24T13:08:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9811105_71604efb",
+      "revId": "c1960538a3d2f603298f10ebff7f2b619c217149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
