@@ -134,4 +134,58 @@ void MemlogConnectionManager::DumpProcess(
   gzclose(gz_file);
 }
 
+void MemlogConnectionManager::DumpProcessForTracing(
+    base::ProcessId pid,
+    mojom::Memlog::DumpProcessForTracingCallback callback,
+    const std::vector<memory_instrumentation::mojom::VmRegionPtr>& maps
+
+    ) {
+  base::AutoLock lock(connections_lock_);
+
+  // Lock all connections to prevent deallocations of atoms from
+  // BacktraceStorage. This only works if no new connections are made, which
+  // connections_lock_ guarantees.
+  std::vector<std::unique_ptr<base::AutoLock>> locks;
+  for (auto& it : connections_) {
+    Connection* connection = it.second.get();
+    locks.push_back(
+        base::MakeUnique<base::AutoLock>(*connection->parser->GetLock()));
+  }
+
+  auto it = connections_.find(pid);
+  if (it == connections_.end()) {
+    LOG(ERROR) << "No connections found for memory dump for pid:" << pid;
+    std::move(callback).Run(mojo::ScopedDataPipeConsumerHandle(), 0);
+    return;
+  }
+
+  Connection* connection = it->second.get();
+  std::ostringstream oss;
+  ExportMemoryMapsAndV2StackTraceToJSON(connection->tracker.live_allocs(), maps,
+                                        oss);
+  std::string reply = oss.str();
+
+  mojo::DataPipe data_pipe(reply.size());
+  void* buffer;
+  uint32_t buffer_num_bytes = reply.size();
+  MojoResult result = data_pipe.producer_handle->BeginWriteData(
+      &buffer, &buffer_num_bytes, MOJO_WRITE_DATA_FLAG_NONE);
+  if (result != MOJO_RESULT_OK || buffer_num_bytes < reply.size()) {
+    LOG(ERROR) << "Failed to write to data pipe. Error code : " << result
+               << ". Bytes written: " << buffer_num_bytes
+               << ". Bytes attempted to write: " << reply.size();
+    std::move(callback).Run(mojo::ScopedDataPipeConsumerHandle(), 0);
+    return;
+  }
+
+  memcpy(buffer, reply.c_str(), reply.size());
+  result = data_pipe.producer_handle->EndWriteData(reply.size());
+  if (result != MOJO_RESULT_OK) {
+    LOG(ERROR) << "Failed to write to data pipe.";
+    std::move(callback).Run(mojo::ScopedDataPipeConsumerHandle(), 0);
+    return;
+  }
+  std::move(callback).Run(std::move(data_pipe.consumer_handle), reply.size());
+}
+
 }  // namespace profiling
