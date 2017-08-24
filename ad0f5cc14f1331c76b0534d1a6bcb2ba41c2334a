@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c4859cf_c0102874",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-24T17:13:32Z",
+      "side": 1,
+      "message": "Let\u0027s use mUseModernDesign here and below.",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 61
+      },
+      "revId": "ad0f5cc14f1331c76b0534d1a6bcb2ba41c2334a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
