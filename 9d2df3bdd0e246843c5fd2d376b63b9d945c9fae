@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c489a7fb_ff21e4f7",
+        "filename": "components/cast_channel/cast_socket_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-24T09:16:54Z",
+      "side": 1,
+      "message": "Hmm, I would probably leave this out of this patch. Increased ping timeout across the board without fully understanding its impact might be a bit risky.",
+      "range": {
+        "startLine": 26,
+        "startChar": 10,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "9d2df3bdd0e246843c5fd2d376b63b9d945c9fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
