@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "510fc9c6_7deddc21",
+        "filename": "content/browser/accessibility/browser_accessibility_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-24T21:27:11Z",
+      "side": 1,
+      "message": "Both call sites of ShouldExposeValueAsName() check for !value.empty()\nShould we move that check to the ShouldExposeValueAsName() impl?",
+      "revId": "7dcc224c305389a52a3dfae14123a51cdd313e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe9407a_96f3c9db",
+        "filename": "content/browser/accessibility/browser_accessibility_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-24T21:27:11Z",
+      "side": 1,
+      "message": "Line above should be \n  return GetString16Attribute(ui::AX_ATTR_DESCRIPTION);\n\nAlthough, since both code paths get it, it probably makes sense to set the description variable above the if block.",
+      "revId": "7dcc224c305389a52a3dfae14123a51cdd313e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c631ada4_1e2e5bd3",
+        "filename": "content/browser/accessibility/browser_accessibility_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-24T21:27:11Z",
+      "side": 1,
+      "message": "Did the tests check something with a value, name and a description that are all different? Currently you\u0027ll get the name twice here.",
+      "revId": "7dcc224c305389a52a3dfae14123a51cdd313e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
