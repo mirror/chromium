@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e9a7a4b1_b23b82f6",
+        "filename": "chromecast/media/cma/base/decoder_config_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1108829
+      },
+      "writtenOn": "2017-08-24T22:14:02Z",
+      "side": 1,
+      "message": "SGTM. Will update.",
+      "parentUuid": "f7578a39_2da6718a",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "b29223ecac117f0b83d25d3ed5d77bd746973cc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b53cadc_55dfe41c",
         "filename": "chromecast/media/cma/pipeline/audio_decoder_software_wrapper.cc",
         "patchSetId": 3
