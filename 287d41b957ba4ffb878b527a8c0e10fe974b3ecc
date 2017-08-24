@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "49312f09_716bf1dd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-24T15:35:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16255660_1e9d8d53",
+      "range": {
+        "startLine": 40,
+        "startChar": 77,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "287d41b957ba4ffb878b527a8c0e10fe974b3ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a23c6ded_990fad94",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-24T15:35:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f62f78d9_93c7c793",
+      "range": {
+        "startLine": 40,
+        "startChar": 34,
+        "endLine": 40,
+        "endChar": 76
+      },
+      "revId": "287d41b957ba4ffb878b527a8c0e10fe974b3ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cd8e843_70b88cad",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
         "patchSetId": 2
@@ -92,6 +140,30 @@
       "revId": "287d41b957ba4ffb878b527a8c0e10fe974b3ecc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ac6fd26_df109c62",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-24T15:35:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e50bb51_7c020e3a",
+      "range": {
+        "startLine": 253,
+        "startChar": 58,
+        "endLine": 253,
+        "endChar": 86
+      },
+      "revId": "287d41b957ba4ffb878b527a8c0e10fe974b3ecc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
