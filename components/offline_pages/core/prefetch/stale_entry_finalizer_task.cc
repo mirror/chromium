@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "components/offline_pages/core/offline_time_utils.h"
+#include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store.h"
 #include "sql/connection.h"
@@ -15,6 +16,8 @@
 #include "sql/transaction.h"
 
 namespace offline_pages {
+
+using Result = StaleEntryFinalizerTask::Result;
 
 namespace {
 
@@ -72,14 +75,30 @@ bool FinalizeStaleItems(PrefetchItemState state,
   return statement.Run();
 }
 
-bool FinalizeStaleEntriesSync(StaleEntryFinalizerTask::NowGetter now_getter,
-                              sql::Connection* db) {
+bool MoreWorkInQueue(sql::Connection* db) {
+  static const char kSql[] =
+      "SELECT COUNT(*) FROM prefetch_items"
+      " WHERE state NOT IN (?, ?)";
+  sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql));
+  statement.BindInt(0, static_cast<int>(PrefetchItemState::ZOMBIE));
+  statement.BindInt(1, static_cast<int>(PrefetchItemState::AWAITING_GCM));
+
+  // In event of failure, assume more work exists.
+  if (!statement.Step())
+    return true;
+
+  DVLOG(1) << "Work count in queue: " << statement.ColumnInt(0);
+  return statement.ColumnInt(0) > 0;
+}
+
+Result FinalizeStaleEntriesSync(StaleEntryFinalizerTask::NowGetter now_getter,
+                                sql::Connection* db) {
   if (!db)
-    return false;
+    return Result::STORE_FAILURE;
 
   sql::Transaction transaction(db);
   if (!transaction.Begin())
-    return false;
+    return Result::STORE_FAILURE;
 
   const std::array<PrefetchItemState, 5> expirable_states = {{
       // Bucket 1.
@@ -93,17 +112,26 @@ bool FinalizeStaleEntriesSync(StaleEntryFinalizerTask::NowGetter now_getter,
   base::Time now = now_getter.Run();
   for (PrefetchItemState state : expirable_states) {
     if (!FinalizeStaleItems(state, now, db))
-      return false;
+      return Result::STORE_FAILURE;
   }
 
+  Result result = Result::SUCCESS;
+  if (!MoreWorkInQueue(db))
+    result = Result::SUCCESS_NO_WORK_IN_QUEUE;
+
+  DVLOG(1) << "Finalization result: ( " << static_cast<int>(result) << " )";
+
   // If all FinalizeStaleItems calls succeeded the transaction is committed.
-  return transaction.Commit();
+  return transaction.Commit() ? result : Result::STORE_FAILURE;
 }
 
 }  // namespace
 
-StaleEntryFinalizerTask::StaleEntryFinalizerTask(PrefetchStore* prefetch_store)
-    : prefetch_store_(prefetch_store),
+StaleEntryFinalizerTask::StaleEntryFinalizerTask(
+    PrefetchStore* prefetch_store,
+    PrefetchDispatcher* prefetch_dispatcher)
+    : prefetch_dispatcher_(prefetch_dispatcher),
+      prefetch_store_(prefetch_store),
       now_getter_(base::BindRepeating(&base::Time::Now)),
       weak_ptr_factory_(this) {
   DCHECK(prefetch_store_);
@@ -122,8 +150,11 @@ void StaleEntryFinalizerTask::SetNowGetterForTesting(NowGetter now_getter) {
   now_getter_ = now_getter;
 }
 
-void StaleEntryFinalizerTask::OnFinished(bool success) {
-  ran_successfully_ = success;
+void StaleEntryFinalizerTask::OnFinished(Result result) {
+  final_status_ = result;
+  if (final_status_ == Result::SUCCESS)
+    prefetch_dispatcher_->EnsureTaskScheduled();
+
   TaskComplete();
 }
 
