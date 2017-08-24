@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd8eff39_132082ec",
+        "filename": "chrome/browser/password_manager/password_manager_test_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-24T14:30:10Z",
+      "side": 1,
+      "message": "Let\u0027s get rid of this variable and make target_state_ base::Optional\u003cpassword_manager::ui::State\u003e.\n\nAlternatively we could turn it into int and init with max_int value. However, I like base::Optional more.",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 119,
+        "endChar": 22
+      },
+      "revId": "4b7b41fd1de3599f5c14e855ec4cebc600fa7de9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
