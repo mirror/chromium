@@ -16,6 +16,24 @@
       "revId": "3a1983ee0ba98e3cb8c95511e9e4ccf92d26a35f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6acffcf3_a677d87c",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2863,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-08-24T18:48:44Z",
+      "side": 0,
+      "message": "Updated PaintLayerTest.SubsequenceCachingStackingContexts to test both leaf and non-leaf cases.",
+      "parentUuid": "ab356a57_cd964f99",
+      "revId": "3a1983ee0ba98e3cb8c95511e9e4ccf92d26a35f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
