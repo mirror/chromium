@@ -16,6 +16,24 @@
       "revId": "5454d4dc0f68cff38504a64e78b4042182ceee81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1ddfa02_0964e7c0",
+        "filename": "ios/chrome/browser/ui/history/history_collection_view_controller.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-24T20:43:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "870e94cf_18e2c02c",
+      "revId": "5454d4dc0f68cff38504a64e78b4042182ceee81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
