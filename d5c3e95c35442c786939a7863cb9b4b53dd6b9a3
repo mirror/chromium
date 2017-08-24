@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ea89848_7b251e3e",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_notifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-24T17:51:11Z",
+      "side": 1,
+      "message": "hmm. how about instead having a single method like this?\n\n  // Extracts a Bluetooth address (e.g. \"AA:BB:CC:DD:EE:FF\") from |path|,\n  // a sysfs device path like\n  // \"/sys/class/power_supply/hid-AA:BB:CC:DD:EE:FF-battery\". Returns\n  // true on success and false if |path| didn\u0027t match the expected pattern.\n  bool ExtractBluetoothAddressFromBatteryPath(const base::FilePath\u0026 path,\n                                              std::string* address_out);\n\nthen PeripheralBatteryStatusReceived() can just do this:\n\n  // If this is a Bluetooth device, use its address as the notification\n  // ID so the notification can be dismissed later if\n  // device::BluetoothAdapter tells us that the device has been removed.\n  std::string notification_id;\n  if (!ExtractBluetoothAddressFromBatteryPath(path, \u0026notification_id))\n    notification_id \u003d path.value();\n\nthat feels cleaner to me, since all of the path-manipulation logic is in one place and we get rid of confusing concepts like \"trimmed paths\" or meaningless (?) addresses extracted from non-bluetooth devices.\n\nwhat do you think?",
+      "revId": "d5c3e95c35442c786939a7863cb9b4b53dd6b9a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
