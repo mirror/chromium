@@ -165,14 +165,22 @@ void HTMLFrameOwnerElement::DisposePluginSoon(PluginView* plugin) {
     plugin->Dispose();
 }
 
-void HTMLFrameOwnerElement::UpdateContainerPolicy() {
-  container_policy_ = ConstructContainerPolicy();
+void HTMLFrameOwnerElement::UpdateContainerPolicy(Vector<String>* messages) {
+  container_policy_ = messages ? ConstructContainerPolicy(messages)
+                               : ConstructContainerPolicy();
   // Don't notify about updates if ContentFrame() is null, for example when
   // the subframe hasn't been created yet.
   if (ContentFrame()) {
     GetDocument().GetFrame()->Client()->DidChangeFramePolicy(
         ContentFrame(), sandbox_flags_, container_policy_);
   }
+}
+
+Vector<WebParsedFeaturePolicyDeclaration>
+HTMLFrameOwnerElement::ConstructContainerPolicy(
+    Vector<String>* messages) const {
+  NOTREACHED();
+  return Vector<WebParsedFeaturePolicyDeclaration>();
 }
 
 void HTMLFrameOwnerElement::FrameOwnerPropertiesChanged() {

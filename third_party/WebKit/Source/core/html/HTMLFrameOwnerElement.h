@@ -133,10 +133,14 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   // attributes.
   virtual Vector<WebParsedFeaturePolicyDeclaration> ConstructContainerPolicy()
       const = 0;
+  // Returns a feature policy container policy for this frame (see above). This
+  // should only be called by HTMLIFrameElement.
+  virtual Vector<WebParsedFeaturePolicyDeclaration> ConstructContainerPolicy(
+      Vector<String>*) const;
 
   // Update the container policy and notify the frame loader client of any
   // changes.
-  void UpdateContainerPolicy();
+  void UpdateContainerPolicy(Vector<String>* messages = nullptr);
 
  private:
   // Intentionally private to prevent redundant checks when the type is
