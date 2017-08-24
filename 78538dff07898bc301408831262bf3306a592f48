@@ -112,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "dd25a731_9bfe4721",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-24T10:45:06Z",
+      "side": 1,
+      "message": "Oh, I think I misunderstood your request... Sorry.\n\nYes, use if (isPasswordSyncingUser()) and flip the if and the else clauses.",
+      "parentUuid": "61dfecf1_25e43da3",
+      "range": {
+        "startLine": 121,
+        "startChar": 25,
+        "endLine": 121,
+        "endChar": 46
+      },
+      "revId": "78538dff07898bc301408831262bf3306a592f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d66e90c_d9553459",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
         "patchSetId": 3
