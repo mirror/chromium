@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "386dfe11_2a137cea",
+        "filename": "chromeos/components/tether/ble_connection_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-24T00:04:26Z",
+      "side": 1,
+      "message": "Fair enough, done. I don\u0027t know of other sites where this usage would be wasteful.",
+      "parentUuid": "8ed99c6b_492a8119",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 237,
+        "endChar": 47
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a96dc0b_22c33150",
         "filename": "chromeos/components/tether/ble_connection_manager_unittest.cc",
         "patchSetId": 9
@@ -508,6 +532,30 @@
       "side": 1,
       "message": "Same thing - we\u0027re using extra memory for no good reason here.",
       "parentUuid": "20df730f_149385b3",
+      "range": {
+        "startLine": 114,
+        "startChar": 11,
+        "endLine": 114,
+        "endChar": 34
+      },
+      "revId": "b9cc3d1df5629e89da07464acf6bbb8368f894db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad1b0051_3980c6e0",
+        "filename": "chromeos/components/tether/host_scanner_operation.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-24T00:04:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8893929_6f258917",
       "range": {
         "startLine": 114,
         "startChar": 11,
