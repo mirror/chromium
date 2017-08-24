@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbbb08d9_762918ce",
+        "filename": "chrome/browser/chromeos/policy/device_policy_remover.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-24T13:38:33Z",
+      "side": 1,
+      "message": "nit: It\u0027s only needed for the implementation but not for the header - so move this to the Python script.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 20
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15849250_c5b38e76",
+        "filename": "chrome/browser/chromeos/policy/device_policy_remover.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-24T13:38:33Z",
+      "side": 1,
+      "message": "nit: This include is not needed here in .h.\nIs it needed for the implementation? Then move it to the Python script.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70f8d29_b5d0c0a9",
+        "filename": "chrome/browser/chromeos/policy/device_policy_remover.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-24T13:38:33Z",
+      "side": 1,
+      "message": "nit: It\u0027s not an output argument, therefore passing by pointer is not well suited here.\nBetter pass by const reference (and have an internal copy for sorting) or pass by value.",
+      "range": {
+        "startLine": 22,
+        "startChar": 20,
+        "endLine": 22,
+        "endChar": 45
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e41288_8ff388a4",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-24T13:38:33Z",
+      "side": 1,
+      "message": "nit: Swap this with the previous line.\nSee https://google.github.io/styleguide/pyguide.html?showone\u003dImports_formatting#Imports_formatting",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f295692_895c420f",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-24T13:38:33Z",
+      "side": 1,
+      "message": "nit: I believe, only google_protobuf_path has to be inserted into the beginning of the list? The other could be appended.\nAnd makes sense to introduce separate named variables for all arguments, so that one can understand the trickery by looking at the code here.",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 29
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d8294c_1344226f",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-24T13:38:33Z",
+      "side": 1,
+      "message": "nit: I think you don\u0027t even have to instantiate the proto object.\nThe same DESCRIPTOR attribute should be available from ChromeDeviceSettingsProto.",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 42
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f3694b8_fae01846",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-24T13:38:33Z",
+      "side": 1,
+      "message": "nit: The indentation is not perfectly correct.\nEither add ~15 spaces, or move the previous argument into a new line and use +4 spaces for all arguments.",
+      "range": {
+        "startLine": 41,
+        "startChar": 18,
+        "endLine": 41,
+        "endChar": 24
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
