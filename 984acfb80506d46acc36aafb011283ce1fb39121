@@ -22,6 +22,30 @@
       "revId": "984acfb80506d46acc36aafb011283ce1fb39121",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4127e75_9442c825",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1337,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-08-24T21:39:35Z",
+      "side": 1,
+      "message": "The viewer doesn\u0027t handle the event as there isn\u0027t a pepper event for the plugin to handle nor is there a javascript event for the extension to preventDefault, so the browser just naively scales the viewer. The effect happens in blink::WebViewImpl::HandleGestureEvent when we call AnimateDoubleTapZoom. Disabling here for Mac would disable smart zoom entirely.\n\nThe only locations in chrome/ or extensions/ that can see the event are WebContentsDelegate::PreHandleGestureEvent overrides. One of them being Browser::PreHandleGestureEvent. I\u0027d be nice if we could put this in MimeHandlerViewGuest::PreHandleGestureEvent instead, but event targeting wouldn\u0027t allow for this. For gesture events like scrolls, they would be targeted to the child RenderWidgetHostView for which MimeHandlerViewGuest is the delegate. But since page scale is a main frame concept, the double tap event is forwarded to the root RenderWidgetHostView where Browser is the delegate.\n\nAnd regarding the ifdef, I can make it Mac specific.",
+      "parentUuid": "2106303a_1921ffbd",
+      "range": {
+        "startLine": 1335,
+        "startChar": 0,
+        "endLine": 1337,
+        "endChar": 12
+      },
+      "revId": "984acfb80506d46acc36aafb011283ce1fb39121",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
