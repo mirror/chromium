@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0311c64_2966c6f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-24T09:51:09Z",
+      "side": 1,
+      "message": "Could you please rewrite this condition in the following way? I think that current one is a bit hard to understand.\n\n// Don\u0027t change promo type if we\u0027re already showing new promo.\nfinal boolean forceNew \u003d mSigninPromoController !\u003d null;\nif (forceNew || SigninPromoController.shouldShowPromo(SigninAccessPoint.SETTINGS)) {\n    setupNewPromo();\n} else {\n    setupOldPromo();\n}\n\nFeel free to rename/rephrase if it makes sense to you.",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 56
+      },
+      "revId": "19c9d17c48821ce66530ea0b6e52356d6c678858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
