@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2cddd7e_10926f36",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-24T23:09:35Z",
+      "side": 1,
+      "message": "\u0027is\u0027 is consistent with the other properties and tends to be more common usage to describe a state. (I\u0027d suggest that \u0027Maximize Mode\u0027 is a bad name for a state, but that ship has sailed).",
+      "parentUuid": "9f3c8ce3_6111b5a8",
+      "revId": "0f69f7d3642c170bbd2a6a45754d4c98508c68ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c194b942_3bb90a31",
         "filename": "extensions/common/api/system_display.idl",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-22T08:25:41Z",
       "side": 1,
       "message": "is this needed in settings, or would isMaximizeMode be enough?",
+      "range": {
+        "startLine": 174,
+        "startChar": 12,
+        "endLine": 174,
+        "endChar": 35
+      },
+      "revId": "0f69f7d3642c170bbd2a6a45754d4c98508c68ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c16222b_59e93beb",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-24T23:09:35Z",
+      "side": 1,
+      "message": "Strictly speaking we don\u0027t need it, but there is little harm in providing it (we may want to expose it in the UI at some point), and it simplifies the code in display_info_provider_chromeos.cc.",
+      "parentUuid": "c194b942_3bb90a31",
       "range": {
         "startLine": 174,
         "startChar": 12,
