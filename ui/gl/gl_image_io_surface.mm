@@ -14,6 +14,7 @@
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/process_memory_dump.h"
 #include "base/trace_event/trace_event.h"
+#include "ui/gfx/color_space.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
 #include "ui/gl/scoped_binders.h"
@@ -298,7 +299,12 @@ bool GLImageIOSurface::CopyTexImage(unsigned target) {
   GLContext* gl_context = GLContext::GetCurrent();
   DCHECK(gl_context);
 
-  YUVToRGBConverter* yuv_to_rgb_converter = gl_context->GetYUVToRGBConverter();
+  // TODO(ccameron): Use the color space of the IOSurface for YUV to RGB
+  // conversion, instead of hoping that the input is REC601.
+  // https://crbug.com/748076
+  gfx::ColorSpace color_space = gfx::ColorSpace::CreateREC601();
+  YUVToRGBConverter* yuv_to_rgb_converter =
+      gl_context->GetYUVToRGBConverter(color_space);
   DCHECK(yuv_to_rgb_converter);
 
   // Note that state restoration is done explicitly instead of scoped binders to
