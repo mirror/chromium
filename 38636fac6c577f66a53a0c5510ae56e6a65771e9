@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb4f1fb4_7d75bf45",
+        "filename": "third_party/WebKit/Source/core/exported/WebPagePopupImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-24T14:47:28Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 255,
+        "startChar": 11,
+        "endLine": 255,
+        "endChar": 12
+      },
+      "revId": "38636fac6c577f66a53a0c5510ae56e6a65771e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
