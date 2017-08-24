@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0dc9b5c0_47dec3b8",
+        "filename": "ui/display/mojo/display_snapshot.typemap",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-24T15:33:02Z",
+      "side": 1,
+      "message": "These are actually GN syntax files and there isn\u0027t a line length limit for GN. Also, gn format has decided this is the correct line format and just changes it back on me if modified.",
+      "parentUuid": "4bfa7935_d5287461",
+      "revId": "588bce3b16052cb16c329f4f4cdb44a6273d9953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7ccfe84_8fb58b76",
         "filename": "ui/ozone/platform/drm/gpu/drm_thread_message_proxy.cc",
         "patchSetId": 5
@@ -50,6 +68,24 @@
       "revId": "588bce3b16052cb16c329f4f4cdb44a6273d9953",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c58efb4_6d62a41c",
+        "filename": "ui/ozone/platform/drm/mus_thread_proxy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-24T15:33:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3b74627_94cec875",
+      "revId": "588bce3b16052cb16c329f4f4cdb44a6273d9953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
