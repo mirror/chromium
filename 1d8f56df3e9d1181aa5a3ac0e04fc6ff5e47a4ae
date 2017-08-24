@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "7986dd78_694f9ce6",
+        "filename": "components/autofill/content/renderer/devtools_page_analyser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-24T14:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "138c1411_30f481e6",
+      "range": {
+        "startLine": 94,
+        "startChar": 27,
+        "endLine": 94,
+        "endChar": 45
+      },
+      "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6da9025_ab34b593",
         "filename": "components/autofill/content/renderer/devtools_page_analyser.cc",
         "patchSetId": 10
@@ -258,6 +282,30 @@
       "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b7e7f3_aafc00a7",
+        "filename": "components/autofill/content/renderer/devtools_page_analyser.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-08-24T14:56:12Z",
+      "side": 1,
+      "message": "It has to be mutable to reassign within the loop. The return type of LastChild() restricts what we can do here.",
+      "parentUuid": "52c2eca9_cf5aace4",
+      "range": {
+        "startLine": 144,
+        "startChar": 11,
+        "endLine": 144,
+        "endChar": 25
+      },
+      "revId": "1d8f56df3e9d1181aa5a3ac0e04fc6ff5e47a4ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
