@@ -71,8 +71,6 @@ static_library("vr_common") {
     "elements/textured_element.h",
     "elements/transience_manager.cc",
     "elements/transience_manager.h",
-    "elements/transient_url_bar.cc",
-    "elements/transient_url_bar.h",
     "elements/ui_element.cc",
     "elements/ui_element.h",
     "elements/ui_element_debug_id.h",
@@ -86,6 +84,10 @@ static_library("vr_common") {
     "elements/url_bar_texture.h",
     "elements/viewport_aware_root.cc",
     "elements/viewport_aware_root.h",
+    "elements/webvr_url_toast.cc",
+    "elements/webvr_url_toast.h",
+    "elements/webvr_url_toast_texture.cc",
+    "elements/webvr_url_toast_texture.h",
     "exit_vr_prompt_choice.h",
     "font_fallback.cc",
     "font_fallback.h",
@@ -120,6 +122,8 @@ static_library("vr_common") {
     "vr_gl_util.h",
     "vr_shell_renderer.cc",
     "vr_shell_renderer.h",
+    "vr_url_util.cc",
+    "vr_url_util.h",
   ]
 
   deps = [
