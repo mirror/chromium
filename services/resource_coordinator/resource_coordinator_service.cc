@@ -53,13 +53,21 @@ void ResourceCoordinatorService::OnStart() {
       base::MakeUnique<MetricsCollector>());
 
   coordination_unit_manager_.OnStart(&registry_, ref_factory_.get());
+
+  memory_instrumentation_coordinator_ =
+      base::MakeUnique<memory_instrumentation::CoordinatorImpl>(
+          context()->connector());
+  registry_.AddInterface(base::BindRepeating(
+      &memory_instrumentation::CoordinatorImpl::BindCoordinatorRequest,
+      base::Unretained(memory_instrumentation_coordinator_.get())));
 }
 
 void ResourceCoordinatorService::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  registry_.BindInterface(interface_name, std::move(interface_pipe));
+  registry_.BindInterface(interface_name, std::move(interface_pipe),
+                          source_info);
 }
 
 void ResourceCoordinatorService::SetUkmRecorder(

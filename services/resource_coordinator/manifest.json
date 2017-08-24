@@ -4,6 +4,7 @@
   "interface_provider_specs": {
     "service_manager:connector": {
       "provides": {
+        "app": [ "memory_instrumentation::mojom::Coordinator" ],
         "coordination_unit_introspector": [
           "resource_coordinator::mojom::CoordinationUnitIntrospector"
         ],
@@ -13,7 +14,10 @@
         "tests": [ "*" ]
       },
       "requires": {
-        "service_manager": [ "service_manager:all_users" ]
+        "service_manager": [
+          "service_manager:all_users",
+          "service_manager:service_manager"
+        ]
       }
     }
   }
