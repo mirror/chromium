@@ -11,7 +11,7 @@
 
 namespace {
 // Construct GpuDriverBugWorkarounds from a set of enabled workaround IDs.
-void IntSetToWorkarounds(const std::vector<int>& enabled_workarounds,
+void IntSetToWorkarounds(const std::vector<int32_t>& enabled_workarounds,
                          gpu::GpuDriverBugWorkarounds* workarounds) {
   DCHECK(workarounds);
   for (auto ID : enabled_workarounds) {
@@ -46,7 +46,7 @@ void IntSetToWorkarounds(const std::vector<int>& enabled_workarounds,
 // the corresponding Workaround flags.
 void StringToWorkarounds(const std::string& types,
                          gpu::GpuDriverBugWorkarounds* workarounds) {
-  std::vector<int> IDs;
+  std::vector<int32_t> IDs;
   for (const auto& piece : base::SplitStringPiece(
            types, ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL)) {
     int number = 0;

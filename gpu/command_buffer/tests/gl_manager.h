@@ -21,10 +21,6 @@
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/gpu_memory_buffer.h"
 
-namespace base {
-class CommandLine;
-}
-
 namespace gl {
 
 class GLContext;
@@ -88,8 +84,8 @@ class GLManager : private GpuControl {
       gfx::BufferFormat format);
 
   void Initialize(const Options& options);
-  void InitializeWithCommandLine(const Options& options,
-                                 const base::CommandLine& command_line);
+  void InitializeWithWorkarounds(const Options& options,
+                                 const GpuDriverBugWorkarounds& workarounds);
   void Destroy();
 
   bool IsInitialized() const { return gles2_implementation() != nullptr; }

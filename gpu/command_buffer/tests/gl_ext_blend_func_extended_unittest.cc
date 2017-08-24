@@ -8,7 +8,6 @@
 #include <GLES3/gl3.h>
 #include <stdint.h>
 
-#include "base/command_line.h"
 #include "base/strings/string_number_conversions.h"
 #include "gpu/command_buffer/service/gpu_switches.h"
 #include "gpu/command_buffer/tests/gl_manager.h"
@@ -254,8 +253,7 @@ class EXTBlendFuncExtendedES3DrawTest : public EXTBlendFuncExtendedDrawTest {
     options.size = gfx::Size(kWidth, kHeight);
     options.context_type = gles2::CONTEXT_TYPE_OPENGLES3;
     options.force_shader_name_hashing = GetParam();
-    base::CommandLine command_line(*base::CommandLine::ForCurrentProcess());
-    gl_.InitializeWithCommandLine(options, command_line);
+    gl_.Initialize(options);
   }
   bool IsApplicable() const {
     return gl_.IsInitialized() && EXTBlendFuncExtendedDrawTest::IsApplicable();

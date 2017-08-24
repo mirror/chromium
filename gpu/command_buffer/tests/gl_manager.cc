@@ -242,13 +242,17 @@ std::unique_ptr<gfx::GpuMemoryBuffer> GLManager::CreateGpuMemoryBuffer(
 }
 
 void GLManager::Initialize(const GLManager::Options& options) {
-  InitializeWithCommandLine(options, *base::CommandLine::ForCurrentProcess());
+  GpuDriverBugWorkarounds workarounds;
+  InitializeWithWorkarounds(options, workarounds);
 }
 
-void GLManager::InitializeWithCommandLine(
+void GLManager::InitializeWithWorkarounds(
     const GLManager::Options& options,
-    const base::CommandLine& command_line) {
+    const GpuDriverBugWorkarounds& workarounds) {
   const SharedMemoryLimits limits;
+  const base::CommandLine& command_line =
+      *base::CommandLine::ForCurrentProcess();
+  DCHECK(!command_line.HasSwitch(switches::kDisableGpuDriverBugWorkarounds));
   InitializeGpuPreferencesForTestingFromCommandLine(command_line,
                                                     &gpu_preferences_);
 
@@ -303,9 +307,8 @@ void GLManager::InitializeWithCommandLine(
       base::MakeUnique<gles2::ShaderTranslatorCache>(gpu_preferences_);
 
   if (!context_group) {
-    GpuDriverBugWorkarounds gpu_driver_bug_workaround(&command_line);
     scoped_refptr<gles2::FeatureInfo> feature_info =
-        new gles2::FeatureInfo(command_line, gpu_driver_bug_workaround);
+        new gles2::FeatureInfo(command_line, workarounds);
     context_group = new gles2::ContextGroup(
         gpu_preferences_, mailbox_manager_, nullptr /* memory_tracker */,
         translator_cache_.get(), &completeness_cache_, feature_info,
