@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "712d6ac7_70a7cd1a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/extensions/ExtensionServer.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 742,
+      "author": {
+        "id": 1118132
+      },
+      "writtenOn": "2017-08-24T21:22:51Z",
+      "side": 1,
+      "message": "done",
+      "parentUuid": "c7ee99b8_8f3bed0a",
+      "revId": "270cded73e375709aacab19775a6d9d089cd2ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ffb72bd_5d393ac8",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/TabbedEditorContainer.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "270cded73e375709aacab19775a6d9d089cd2ea7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb2ced5_fb00d04f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/TabbedEditorContainer.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118132
+      },
+      "writtenOn": "2017-08-24T21:22:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ffb72bd_5d393ac8",
+      "revId": "270cded73e375709aacab19775a6d9d089cd2ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "0dfdd330_fcfa0ea5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/TabbedEditorContainer.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1118132
+      },
+      "writtenOn": "2017-08-24T21:22:51Z",
+      "side": 1,
+      "message": "unfortunately leaving it hear made the closure module system upset about cyclic dependencies so I\u0027ve moved it to the text_utils module.",
+      "parentUuid": "69068e77_448d7100",
+      "revId": "270cded73e375709aacab19775a6d9d089cd2ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bee23b4d_85b04b94",
         "filename": "third_party/WebKit/Source/devtools/front_end/sources/TabbedEditorContainer.js",
         "patchSetId": 1
@@ -85,6 +139,24 @@
       "revId": "270cded73e375709aacab19775a6d9d089cd2ea7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2343ab5b_2637f439",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sources/TabbedEditorContainer.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1118132
+      },
+      "writtenOn": "2017-08-24T21:22:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bee23b4d_85b04b94",
+      "revId": "270cded73e375709aacab19775a6d9d089cd2ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
