@@ -52,6 +52,24 @@
       "revId": "c2fca078dffd5381a7a9fdeae67cbb899cffa82b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0ebcfd8_7b65d38b",
+        "filename": "base/files/file_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T22:03:17Z",
+      "side": 1,
+      "message": "OK, that seems reasonable.  I\u0027d still question why it is that any call-sites are doing Write() of zero bytes in the first place, but given that they are, we can patch this up and not get blocked on fixing them...",
+      "parentUuid": "69775131_6a4d921d",
+      "revId": "c2fca078dffd5381a7a9fdeae67cbb899cffa82b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
