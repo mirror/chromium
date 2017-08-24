@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d2d91b8_c8ebafac",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1378,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-24T03:39:58Z",
+      "side": 0,
+      "message": "I think this TODO is still valid, because |[_parentTabModel tabUsageRecorder]-\u003eRecordPageLoadStart(self);| is still called in 2 places.",
+      "range": {
+        "startLine": 1378,
+        "startChar": 20,
+        "endLine": 1378,
+        "endChar": 26
+      },
+      "revId": "cc9f5730ee747c92fb8340818ee185d36bf8a89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
