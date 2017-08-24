@@ -54,7 +54,9 @@ enum SchemeType {
 
 // A pair for representing a standard scheme name and the SchemeType for it.
 struct URL_EXPORT SchemeWithType {
-  const char* scheme;
+  SchemeWithType(base::StringPiece scheme, SchemeType type);
+  SchemeWithType(const SchemeWithType& other);
+  base::StringPiece scheme;
   SchemeType type;
 };
 
