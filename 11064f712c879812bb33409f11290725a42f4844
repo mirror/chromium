@@ -52,6 +52,24 @@
       "revId": "11064f712c879812bb33409f11290725a42f4844",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d44831be_375489d5",
+        "filename": "content/shell/app/paths_mac.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-24T19:18:59Z",
+      "side": 1,
+      "message": "It\u0027s a little worse in that we have code that depends on this in two places, but I couldn\u0027t figure out a clean way to put this logic in base/.  It does know about the framework path, but only after content/ sets it.  It\u0027s a completely different path otherwise (Like in unit tests), so can\u0027t just use that.  :(",
+      "parentUuid": "aba9ea7a_b1032f53",
+      "revId": "11064f712c879812bb33409f11290725a42f4844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
