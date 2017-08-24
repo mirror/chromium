@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2d691de6_2f99ac7b",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-24T00:46:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f878470a_d1cb7725",
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "442acc20_00bc5143",
         "filename": "third_party/zlib/neon_adler32.c",
         "patchSetId": 5
@@ -47,6 +65,24 @@
       "writtenOn": "2017-08-23T14:27:25Z",
       "side": 1,
       "message": "Is |len| the length of |buf|?  I think not, it seems to be the number 16-byte blocks to process.  Can we name it better?",
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da2e6b0a_18ebeaa6",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-24T00:46:31Z",
+      "side": 1,
+      "message": "\u0027len\u0027 keeps it consistent with zlib adler32().",
+      "parentUuid": "442acc20_00bc5143",
       "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "8fdbba3c_f09010ab",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-24T00:46:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1437071c_de006b60",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 1
+      },
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f09972a_dc2d2140",
         "filename": "third_party/zlib/neon_adler32.c",
         "patchSetId": 5
@@ -87,6 +147,24 @@
       "writtenOn": "2017-08-23T14:27:25Z",
       "side": 1,
       "message": "while (len--) {\n\nAlso, how about we remove this function, and just move the code into NEON_adler32() ?",
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfc46909_b8c13d3c",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-24T00:46:31Z",
+      "side": 1,
+      "message": "Agreed, while() is a more idiomatic approach here.\n\nConcerning moving it to NEON_adler32(), it will be inlined by the compiler and again, it is more similar to zlib\u0027s adler32() where they use a macro called DO1().",
+      "parentUuid": "1f09972a_dc2d2140",
       "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +185,24 @@
       "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "794fe3f8_dd955405",
+        "filename": "third_party/zlib/neon_adler32.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-08-24T00:46:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "313b15b5_e9652f1e",
+      "revId": "3eb4fe6a5eacea0d0c9cf2eb5572277fe985a773",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
