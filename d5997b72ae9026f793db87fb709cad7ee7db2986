@@ -134,6 +134,24 @@
       "revId": "d5997b72ae9026f793db87fb709cad7ee7db2986",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37513cf3_4bb4e065",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 699,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-24T09:24:57Z",
+      "side": 1,
+      "message": "That is true but I think adding a separate policy would make the code a bit cumbersome because we always have to have checks like: \n\n```\nif (reporting_policy \u003d\u003d SecurityViolationReportingPolicy::kSuppressReporting \u0026\u0026\n    event_firing_policy \u003d\u003d SecurityViolationReportingPolicy::kSuppressReporting)\n```\nI know that the value does not make sense for other checks because they don\u0027t fire events but I still think it\u0027s better. The other checks just treat it the same as kReport.",
+      "parentUuid": "fecb8748_275ff97e",
+      "revId": "d5997b72ae9026f793db87fb709cad7ee7db2986",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
