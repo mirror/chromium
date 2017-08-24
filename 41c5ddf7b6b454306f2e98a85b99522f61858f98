@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cb13396_73ebb5a7",
+        "filename": "chrome/browser/extensions/api/bookmark_manager_private/bookmark_manager_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-24T15:15:52Z",
+      "side": 1,
+      "message": "Could we instead add a new error, like \"Could not find bookmark nodes with given ids\"?",
+      "revId": "41c5ddf7b6b454306f2e98a85b99522f61858f98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
