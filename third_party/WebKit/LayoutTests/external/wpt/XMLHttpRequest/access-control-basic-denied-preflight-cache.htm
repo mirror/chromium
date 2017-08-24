@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tests async XHR preflight cache denial</title>
+    <script src="/resources/testharness.js"></script>
+    <script src="/resources/testharnessreport.js"></script>
+    <script src="/common/get-host-info.sub.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+    async_test((test) => {
+      const xhr = new XMLHttpRequest;
+      xhr.onerror = test.unreached_func("Unexpected error.");
+      xhr.onreadystatechange = test.step_func(() => {
+        if (xhr.readyState == 1) {
+          assert_equals(xhr.status, 0);
+        } else if (xhr.readyState == 4) {
+          test.done();
+        }
+      });
+
+      xhr.open("FOO", get_host_info().HTTP_REMOTE_ORIGIN +
+          "/XMLHttpRequest/resources/access-control-basic-denied.py");
+      xhr.send();
+    }, "Preflighted async XHR request");
+    </script>
+  </body>
+</html>
