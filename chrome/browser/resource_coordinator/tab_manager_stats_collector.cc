@@ -19,6 +19,13 @@
 
 namespace resource_coordinator {
 
+void TabManagerStatsCollector::BackgroundTabCountStats::Reset() {
+  tab_count = 0u;
+  tabs_paused = 0u;
+  tabs_load_auto_started = 0u;
+  tabs_load_user_initiated = 0u;
+}
+
 class TabManagerStatsCollector::SwapMetricsDelegate
     : public content::SwapMetricsDriver::Delegate {
  public:
@@ -61,7 +68,9 @@ class TabManagerStatsCollector::SwapMetricsDelegate
 
 TabManagerStatsCollector::TabManagerStatsCollector()
     : is_session_restore_loading_tabs_(false),
-      is_in_background_tab_opening_session_(false) {
+      is_in_background_tab_opening_session_(false),
+      ignore_tab_count_in_overlapped_session_(false),
+      num_overlapped_sessions_(0u) {
   SessionRestore::AddObserver(this);
 }
 
@@ -129,6 +138,7 @@ void TabManagerStatsCollector::RecordExpectedTaskQueueingDuration(
 void TabManagerStatsCollector::OnSessionRestoreStartedLoadingTabs() {
   DCHECK(!is_session_restore_loading_tabs_);
 
+  num_overlapped_sessions_ = 0u;
   CreateAndInitSessionRestoreSwapMetricsDriverIfNeeded();
 
   is_session_restore_loading_tabs_ = true;
@@ -137,6 +147,11 @@ void TabManagerStatsCollector::OnSessionRestoreStartedLoadingTabs() {
 
 void TabManagerStatsCollector::OnSessionRestoreFinishedLoadingTabs() {
   DCHECK(is_session_restore_loading_tabs_);
+
+  UMA_HISTOGRAM_COUNTS_100(
+      "TabManager.Experimental.SessionRestore.OverlapWithBackgroundTabOpening",
+      num_overlapped_sessions_);
+
   if (session_restore_swap_metrics_driver_)
     session_restore_swap_metrics_driver_->UpdateMetrics();
   is_session_restore_loading_tabs_ = false;
@@ -144,7 +159,7 @@ void TabManagerStatsCollector::OnSessionRestoreFinishedLoadingTabs() {
 
 void TabManagerStatsCollector::OnBackgroundTabOpeningSessionStarted() {
   DCHECK(!is_in_background_tab_opening_session_);
-
+  background_tab_count_stats_.Reset();
   CreateAndInitBackgroundTabOpeningSwapMetricsDriverIfNeeded();
 
   is_in_background_tab_opening_session_ = true;
@@ -153,7 +168,22 @@ void TabManagerStatsCollector::OnBackgroundTabOpeningSessionStarted() {
 
 void TabManagerStatsCollector::OnBackgroundTabOpeningSessionEnded() {
   DCHECK(is_in_background_tab_opening_session_);
-  if (background_tab_opening_swap_metrics_driver_)
+
+  if (!ignore_tab_count_in_overlapped_session_) {
+    UMA_HISTOGRAM_COUNTS_100("TabManager.BackgroundTabOpening.TabCount",
+                             background_tab_count_stats_.tab_count);
+    UMA_HISTOGRAM_COUNTS_100("TabManager.BackgroundTabOpening.TabsPaused",
+                             background_tab_count_stats_.tabs_paused);
+    UMA_HISTOGRAM_COUNTS_100(
+        "TabManager.BackgroundTabOpening.TabsLoadAutoStarted",
+        background_tab_count_stats_.tabs_load_auto_started);
+    UMA_HISTOGRAM_COUNTS_100(
+        "TabManager.BackgroundTabOpening.TabsLoadUserInitiated",
+        background_tab_count_stats_.tabs_load_user_initiated);
+  }
+  ignore_tab_count_in_overlapped_session_ = false;
+
+  if (background_tab_opening_swap_metrics_driver_ && !IsInOverlappedSession())
     background_tab_opening_swap_metrics_driver_->UpdateMetrics();
   is_in_background_tab_opening_session_ = false;
 }
@@ -329,9 +359,13 @@ void TabManagerStatsCollector::ClearStatsWhenInOverlappedSession() {
   if (!IsInOverlappedSession())
     return;
 
+  num_overlapped_sessions_++;
+
   session_restore_swap_metrics_driver_ = nullptr;
   background_tab_opening_swap_metrics_driver_ = nullptr;
   foreground_contents_switched_to_times_.clear();
+  background_tab_count_stats_.Reset();
+  ignore_tab_count_in_overlapped_session_ = true;
 }
 
 // static
