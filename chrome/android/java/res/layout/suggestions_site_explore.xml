@@ -3,36 +3,26 @@
      Use of this source code is governed by a BSD-style license that can be
      found in the LICENSE file. -->
 
-<LinearLayout
+<org.chromium.chrome.browser.suggestions.SiteExploreViewPager
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:chrome="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/site_explore_view"
+    android:id="@+id/site_explore_pager"
+    android:maxWidth="@dimen/tile_grid_layout_max_width"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
     android:layout_marginStart="@dimen/tile_grid_layout_padding_start"
     android:layout_marginEnd="@dimen/tile_grid_layout_padding_end"
     android:layout_gravity="center_horizontal"
-    android:paddingTop="@dimen/tile_grid_layout_padding_top"
-    android:paddingBottom="4dp">
+    android:paddingBottom="20dp">
 
-    <org.chromium.chrome.browser.suggestions.SiteExploreViewPager
-        android:id="@+id/site_explore_pager"
-        android:maxWidth="@dimen/tile_grid_layout_max_width"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:clipToPadding="false"
-            chrome:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-            chrome:tabGravity="fill"
-            chrome:tabMode="scrollable"
-            />
-    </org.chromium.chrome.browser.suggestions.SiteExploreViewPager>
-
-
-</LinearLayout>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:clipToPadding="false"
+        chrome:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+        chrome:tabGravity="fill"
+        chrome:tabMode="scrollable"
+        />
+</org.chromium.chrome.browser.suggestions.SiteExploreViewPager>
