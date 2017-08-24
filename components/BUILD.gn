@@ -322,8 +322,10 @@ test("components_unittests") {
     deps += [ "//components/safe_browsing/db:unit_tests_mobile" ]
   }
 
+  # No components should depend on Chrome.
+  assert_no_deps = [ "//chrome/*" ]
   if (is_ios) {
-    assert_no_deps = ios_assert_no_deps
+    assert_no_deps += ios_assert_no_deps
   }
 }
 
@@ -491,6 +493,8 @@ if (!is_ios) {
       sources += [ "printing/test/print_render_frame_helper_browsertest.cc" ]
       deps += [ "//components/printing/test:test_support" ]
     }
+
+    assert_no_deps = [ "//chrome/*" ]
   }
 
   test("components_perftests") {
