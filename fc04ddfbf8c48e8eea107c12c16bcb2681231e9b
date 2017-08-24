@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b83418de_2e192d07",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-24T06:49:55Z",
+      "side": 1,
+      "message": "I realise protectedContent is camelCase instead of snake_case, like the other mock browser prefs, but there is a bug out for a larger general cleanup of the tests at https://crbug.com/742706, and I\u0027m trying to avoid too much churn and leaving this as-is for now.",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "fc04ddfbf8c48e8eea107c12c16bcb2681231e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
