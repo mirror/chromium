@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "143d40c7_f68a4c9e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:45:12Z",
+      "side": 1,
+      "message": "nit: Please briefly explain in the description why we want to do this, versus just using the mx_job_default().",
+      "revId": "06372182a240d89bfa3ad431e6804425b889bd4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4513de72_91771719",
+        "filename": "content/browser/browser_main_runner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:45:12Z",
+      "side": 1,
+      "message": "nit: We don\u0027t tend to include \"reason\" in failure messages; in fact in a load of the other Fuchsia code we\u0027ve just used e.g. \"mx_job_create: \" since it\u0027s usually clear from the function name, source filename \u0026 line, and error, what\u0027s going on.",
+      "revId": "06372182a240d89bfa3ad431e6804425b889bd4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
