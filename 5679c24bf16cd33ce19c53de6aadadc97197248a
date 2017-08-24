@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3d9bfa66_5524cb5b",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontCustomPlatformData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-24T18:29:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b4df00e1_58eeb58d",
+      "range": {
+        "startLine": 76,
+        "startChar": 49,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "5679c24bf16cd33ce19c53de6aadadc97197248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3d0c0fd_87c8fd09",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -84,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "540c7288_ffb7b9f8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 6029,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-24T18:29:05Z",
+      "side": 1,
+      "message": "Acknowledged.\n\nThanks for clarify the meaning of conventional; that makes everything clearer.",
+      "parentUuid": "fe7c6e0a_e69ef7a0",
+      "revId": "5679c24bf16cd33ce19c53de6aadadc97197248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "393671e2_80aca7d5",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -116,6 +158,24 @@
       "revId": "5679c24bf16cd33ce19c53de6aadadc97197248a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1c3020_7481578e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 6030,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-24T18:29:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4d458213_4733a049",
+      "revId": "5679c24bf16cd33ce19c53de6aadadc97197248a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
