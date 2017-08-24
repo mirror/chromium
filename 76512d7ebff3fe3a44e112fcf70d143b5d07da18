@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58a7e661_154caad4",
+        "filename": "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-24T16:42:18Z",
+      "side": 1,
+      "message": "Is this being used?",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 30
+      },
+      "revId": "76512d7ebff3fe3a44e112fcf70d143b5d07da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb361a3_c6cd11cb",
+        "filename": "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-24T16:42:18Z",
+      "side": 1,
+      "message": "I\u0027ve not seen this technique before. Can you elaborate on what is happening? Specific questions are: why is __block needed here?, why can\u0027t you just call [self.tabHPC dismiss..]?",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 80,
+        "endChar": 5
+      },
+      "revId": "76512d7ebff3fe3a44e112fcf70d143b5d07da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9962ea74_c2940570",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-24T16:42:18Z",
+      "side": 1,
+      "message": "appearance. highlightedImage.",
+      "range": {
+        "startLine": 27,
+        "startChar": 22,
+        "endLine": 27,
+        "endChar": 66
+      },
+      "revId": "76512d7ebff3fe3a44e112fcf70d143b5d07da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00d92dd4_82e33b72",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-24T16:42:18Z",
+      "side": 1,
+      "message": "Normally, you would set the normal, selected, and highlighted state images and simply control the button\u0027s properties: button.selected \u003d YES, button.highlighted \u003d YES. \nWould this work for your use case?",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 3
+      },
+      "revId": "76512d7ebff3fe3a44e112fcf70d143b5d07da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecba15af_5e262e07",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-24T16:42:18Z",
+      "side": 1,
+      "message": "Remove the extra \u0027s\u0027.",
+      "range": {
+        "startLine": 133,
+        "startChar": 15,
+        "endLine": 133,
+        "endChar": 36
+      },
+      "revId": "76512d7ebff3fe3a44e112fcf70d143b5d07da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d887164_5d8199ea",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-24T16:42:18Z",
+      "side": 1,
+      "message": "What is the codepath for when the user taps outside the popup? (Just checking where the coordinator is stopped).",
+      "revId": "76512d7ebff3fe3a44e112fcf70d143b5d07da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd69f391_dad436ff",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-24T16:42:18Z",
+      "side": 1,
+      "message": "appearance.",
+      "range": {
+        "startLine": 433,
+        "startChar": 23,
+        "endLine": 433,
+        "endChar": 34
+      },
+      "revId": "76512d7ebff3fe3a44e112fcf70d143b5d07da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99db1c23_45e9e841",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-24T16:42:18Z",
+      "side": 1,
+      "message": "Is -prepareForTabHistoryPresentation necessary? In the legacy code, it dismisses the keyboard and cancels the omnibox edit.",
+      "range": {
+        "startLine": 444,
+        "startChar": 15,
+        "endLine": 444,
+        "endChar": 37
+      },
+      "revId": "76512d7ebff3fe3a44e112fcf70d143b5d07da18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
