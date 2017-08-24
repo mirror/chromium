@@ -96,6 +96,121 @@
     },
     {
       "key": {
+        "uuid": "65e6953c_918298cd",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-24T11:42:44Z",
+      "side": 1,
+      "message": "nit: s/Miss/Skipping/",
+      "range": {
+        "startLine": 88,
+        "startChar": 23,
+        "endLine": 88,
+        "endChar": 27
+      },
+      "revId": "c4cfeadbe205d7114164539b2b84eeaa5133ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "072f6b7c_5b5d800f",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-24T11:42:44Z",
+      "side": 1,
+      "message": "nit: Or maybe:\n\n  return std::vector\u003cstd::string\u003e(container.ignored_policy().begin(),\n                                  container.ignored_policy().end());\n\n(It\u0027s not much shorter, but it looks a bit natural as all you want just copy from one container to another.)",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 26
+      },
+      "revId": "c4cfeadbe205d7114164539b2b84eeaa5133ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ef2bb67_52900a88",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-24T11:42:44Z",
+      "side": 1,
+      "message": "nit: Please drop a note on the format of this field (i.e. what does the number mean and is it 1-indexed).",
+      "range": {
+        "startLine": 24,
+        "startChar": 17,
+        "endLine": 24,
+        "endChar": 20
+      },
+      "revId": "c4cfeadbe205d7114164539b2b84eeaa5133ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a1c472_4b719400",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-24T11:42:44Z",
+      "side": 1,
+      "message": "nit: Please document the format - it\u0027s unclear that this is the number of milliseconds.",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 17
+      },
+      "revId": "c4cfeadbe205d7114164539b2b84eeaa5133ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770fe35a_b85cd25f",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-24T11:42:44Z",
+      "side": 1,
+      "message": "nit: It\u0027s a bit unclear from the name, what is actually converted. Maybe name it as something like \"ConvertPolicyProtoToValue\"?",
+      "range": {
+        "startLine": 26,
+        "startChar": 39,
+        "endLine": 26,
+        "endChar": 53
+      },
+      "revId": "c4cfeadbe205d7114164539b2b84eeaa5133ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "273b1851_d4d96eeb",
         "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
         "patchSetId": 15
@@ -140,6 +255,29 @@
       "revId": "c4cfeadbe205d7114164539b2b84eeaa5133ccec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8720d87_56016574",
+        "filename": "chromeos/settings/cros_settings_names.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-24T11:42:44Z",
+      "side": 1,
+      "message": "nit: The pref is actually not *used*, but *set* by the policy. Therefore I\u0027d suggest to change the comment to something like:\n\n  A dictionary pref containing time intervals and ignored policies. It\u0027s used to allow less restricted usage of Chrome OS during off-hours. This pref is set by an admin policy.",
+      "range": {
+        "startLine": 251,
+        "startChar": 66,
+        "endLine": 252,
+        "endChar": 27
+      },
+      "revId": "c4cfeadbe205d7114164539b2b84eeaa5133ccec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
