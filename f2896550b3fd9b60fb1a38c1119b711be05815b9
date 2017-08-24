@@ -46,6 +46,30 @@
       "revId": "f2896550b3fd9b60fb1a38c1119b711be05815b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f8b96754_5a7ae9a6",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-24T15:26:14Z",
+      "side": 1,
+      "message": "I would either add a MAX, or a DCHECK(width \u003e\u003d MostVisitedTileView.tileWidth).\nImagine that iPhone9 has a screen 10x, this may become a problem for older devices.\nAnd you are not considering any margin for the widget with this formula.\nIs this intended?",
+      "parentUuid": "a2fc1b39_d385c215",
+      "range": {
+        "startLine": 91,
+        "startChar": 30,
+        "endLine": 91,
+        "endChar": 34
+      },
+      "revId": "f2896550b3fd9b60fb1a38c1119b711be05815b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
