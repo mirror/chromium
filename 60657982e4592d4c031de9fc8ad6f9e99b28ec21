@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "473c5d12_5f8708b9",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-24T07:34:06Z",
+      "side": 1,
+      "message": "I kept using display::Display::Rotation in latest patch and having it be clockwise as I think it would be confusing if we used this differently in exo compared to rest of chrome.\n\nHowever, we should of course reverse the rotation here like we do for scale and not the other way around. Fixed in latest patch.",
+      "parentUuid": "17889eb3_529c45ba",
+      "revId": "60657982e4592d4c031de9fc8ad6f9e99b28ec21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79006ea7_94e5ebcb",
         "filename": "components/exo/wayland/clients/client_base.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-24T04:46:52Z",
       "side": 1,
       "message": "This is a slightly misleading name since if we have a TRANSFORM_180 rotated_ would be false.\nShould we keep around a rotated_buffer_size instead?",
+      "revId": "60657982e4592d4c031de9fc8ad6f9e99b28ec21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53171230_1dd788e6",
+        "filename": "components/exo/wayland/clients/client_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-24T07:34:06Z",
+      "side": 1,
+      "message": "Done. surface_size_ and it now also includes the scale.",
+      "parentUuid": "79006ea7_94e5ebcb",
       "revId": "60657982e4592d4c031de9fc8ad6f9e99b28ec21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "be113a87_1646e4e2",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-24T07:34:06Z",
+      "side": 1,
+      "message": "No, errors are only for real client errors. NOTIMPLEMENTED() is not a DCHECK. It will just log a warning. This is how we handle all unimplemented functions in wayland/exo today.",
+      "parentUuid": "cd261b34_370d35cb",
+      "revId": "60657982e4592d4c031de9fc8ad6f9e99b28ec21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1532ac33_b9f13440",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-24T04:46:52Z",
       "side": 1,
       "message": "Trigonometric functions are usually defined with a positive angle going counter-clockwise too.",
+      "revId": "60657982e4592d4c031de9fc8ad6f9e99b28ec21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b0d1d4_1a6f761f",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2359,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-24T07:34:06Z",
+      "side": 1,
+      "message": "Sure. I\u0027m not going to change all of chrome\u0027s usage of display::Display::Rotation in this patch so will keep doing this flip here.",
+      "parentUuid": "1532ac33_b9f13440",
       "revId": "60657982e4592d4c031de9fc8ad6f9e99b28ec21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
