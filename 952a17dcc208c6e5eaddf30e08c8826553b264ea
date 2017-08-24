@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a549211a_888a00c6",
+        "filename": "ios/chrome/browser/content_suggestions/ntp_home_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T07:08:36Z",
+      "side": 1,
+      "message": "nit: Perhaps ntp_home_metrics.h?  \"utils\" files are generally discouraged as too broad.",
+      "range": {
+        "startLine": 6,
+        "startChar": 64,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "952a17dcc208c6e5eaddf30e08c8826553b264ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "901767a6_8a7f9b77",
         "filename": "ios/chrome/browser/content_suggestions/ntp_home_utils.mm",
         "patchSetId": 2
@@ -13,6 +36,30 @@
       "writtenOn": "2017-08-23T14:11:04Z",
       "side": 1,
       "message": "the name seems not related to the enum.\nWhat about IOS.NTP.ContentType?",
+      "range": {
+        "startLine": 16,
+        "startChar": 37,
+        "endLine": 16,
+        "endChar": 47
+      },
+      "revId": "952a17dcc208c6e5eaddf30e08c8826553b264ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404dfdd7_f267865d",
+        "filename": "ios/chrome/browser/content_suggestions/ntp_home_utils.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-08-24T07:08:36Z",
+      "side": 1,
+      "message": "I\u0027m not quite following your reasoning, Olivier.  Is it not accurate that the enum measures NTP impressions, categorized into two different types?  IMO it makes sense for the metric name to refer to the triggering event rather than the axis along which that event is split.  (Though, I don\u0027t feel strongly about this, so if the content type is the more prominent feature in terms of analysis, I\u0027m fine with using that name.)",
+      "parentUuid": "901767a6_8a7f9b77",
       "range": {
         "startLine": 16,
         "startChar": 37,
