@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78c93ad2_271b9c17",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:58:35Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest a bullet for each of the changes we\u0027re making; firstly that we use GetDefaultJob() rather than mx_job_default(), secondly that we explicitly handle MX_HANDLE_INVALID, since otherwise launchpad will default to mx_job_default() itself, and finally that we, again, explicitly handle the job-cloning flag ourselves now.",
+      "revId": "240a65c9e84212f604a067fb2ff3ab5773225231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fd9528_7b30d21c",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:58:35Z",
+      "side": 1,
+      "message": "Thanks for filing this!\n\nIn general I think TODO(bug#) is sufficient, FWIW; crbug.com is usually implicit and we can explicitly prefix stuff like internal bugs.",
+      "range": {
+        "startLine": 20,
+        "startChar": 8,
+        "endLine": 20,
+        "endChar": 23
+      },
+      "revId": "240a65c9e84212f604a067fb2ff3ab5773225231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e8dc17a_d9573af0",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:58:35Z",
+      "side": 1,
+      "message": "nit: While you\u0027re here, can you init this to nullptr, plz? Thanks. :)",
+      "revId": "240a65c9e84212f604a067fb2ff3ab5773225231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe199c9_a054998d",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:58:35Z",
+      "side": 1,
+      "message": "It isn\u0027t possible for us to get MX_HANDLE_INVALID here, unless mx_job_default() is also MX_HANDLE_INVALID, so it\u0027s safe for us to pass the value to launchpad and let things fail at that level.\n\nSo I think we can just DCHECK_NE(...) here to early-trap this condition.",
+      "revId": "240a65c9e84212f604a067fb2ff3ab5773225231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476caedc_1973d82f",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:58:35Z",
+      "side": 1,
+      "message": "nit: \u003d MX_HANDLE_INVALID - I can\u0027t find the link now but I\u0027m pretty sure we\u0027re supposed to initialize everything at declaration.",
+      "revId": "240a65c9e84212f604a067fb2ff3ab5773225231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8a22921_2ce2e5a8",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:58:35Z",
+      "side": 1,
+      "message": "nit: Most of the other Magenta API call-sites log errors of the form \"mx_do_stuff: \" \u003c\u003c status_string(...) so how about \"mx_handle_duplicate(job): \" here?",
+      "revId": "240a65c9e84212f604a067fb2ff3ab5773225231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1be0516_3d975618",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-24T21:58:35Z",
+      "side": 1,
+      "message": "nit: Can you mention whichever header defines this (processargs.h?) so it\u0027s clear where to look this up, especially if/when it changes and we get broken?",
+      "revId": "240a65c9e84212f604a067fb2ff3ab5773225231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
