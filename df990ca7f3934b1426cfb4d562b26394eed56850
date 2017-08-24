@@ -120,6 +120,24 @@
     },
     {
       "key": {
+        "uuid": "ea6699e8_1cd5ff58",
+        "filename": "chrome/installer/zucchini/disassembler_win32.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-24T08:48:57Z",
+      "side": 1,
+      "message": "We\u0027re doing it because I think it\u0027s what the spec says you have to do. :-) Due to the \"one definition rule\", there must be a single definition of the static variable somewhere. I think most implementations are okay without having the external definition if the address of the member is never taken, but I have to say I find the language in the spec a little obtuse so it\u0027s best to be conservative. Feel free to check with a true C++ language lawyer to see what they say.",
+      "parentUuid": "85d5f2ff_4efee3fe",
+      "revId": "df990ca7f3934b1426cfb4d562b26394eed56850",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60e263eb_2d7d1665",
         "filename": "chrome/installer/zucchini/main_utils.cc",
         "patchSetId": 5
