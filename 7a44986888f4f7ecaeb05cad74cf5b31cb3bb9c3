@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac7e4438_2fa9cb39",
+        "filename": "chrome/browser/chromeos/policy/device_policy_remover.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-24T14:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbbb08d9_762918ce",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 20
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15849250_c5b38e76",
         "filename": "chrome/browser/chromeos/policy/device_policy_remover.h",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d69bbf88_f87e0619",
+        "filename": "chrome/browser/chromeos/policy/device_policy_remover.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-24T14:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15849250_c5b38e76",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c50246d3_8778adeb",
+        "filename": "chrome/browser/chromeos/policy/device_policy_remover.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-24T14:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a70f8d29_b5d0c0a9",
+      "range": {
+        "startLine": 22,
+        "startChar": 20,
+        "endLine": 22,
+        "endChar": 45
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3e41288_8ff388a4",
         "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
         "patchSetId": 15
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f090fefb_8892c466",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-24T14:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3e41288_8ff388a4",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f295692_895c420f",
         "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
         "patchSetId": 15
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-24T13:38:33Z",
       "side": 1,
       "message": "nit: I believe, only google_protobuf_path has to be inserted into the beginning of the list? The other could be appended.\nAnd makes sense to introduce separate named variables for all arguments, so that one can understand the trickery by looking at the code here.",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 29
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e139257b_446117f9",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-24T14:42:25Z",
+      "side": 1,
+      "message": "If I don\u0027t import symbol_database_path:\nfrom google.protobuf import symbol_database as _symbol_database\nImportError: cannot import name symbol_database\n\nIf I don\u0027t import descriptor_pool_path:\n_DEFAULT \u003d SymbolDatabase(pool\u003ddescriptor_pool.Default())\nAttributeError: \u0027module\u0027 object has no attribute \u0027Default\u0027",
+      "parentUuid": "5f295692_895c420f",
       "range": {
         "startLine": 19,
         "startChar": 2,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "6d1270a3_741d73b8",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-24T14:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6d8294c_1344226f",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 42
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f3694b8_fae01846",
         "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
         "patchSetId": 15
@@ -160,6 +304,30 @@
       "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f80627ce_ac210f84",
+        "filename": "chrome/browser/chromeos/policy/tools/generate_device_policy_remover.py",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-24T14:42:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f3694b8_fae01846",
+      "range": {
+        "startLine": 41,
+        "startChar": 18,
+        "endLine": 41,
+        "endChar": 24
+      },
+      "revId": "7a44986888f4f7ecaeb05cad74cf5b31cb3bb9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
