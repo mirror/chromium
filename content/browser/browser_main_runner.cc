@@ -8,6 +8,7 @@
 #include "base/command_line.h"
 #include "base/debug/debugger.h"
 #include "base/debug/leak_annotations.h"
+#include "base/fuchsia/child_job.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
@@ -43,12 +44,31 @@
 #include "ui/gfx/win/direct_write.h"
 #endif
 
+#if defined(OS_FUCHSIA)
+#include <magenta/process.h>
+#include <magenta/syscalls.h>
+#endif
+
 namespace content {
 
 namespace {
 
 base::LazyInstance<base::AtomicFlag>::Leaky g_exited_main_message_loop;
 const char kMainThreadName[] = "CrBrowserMain";
+
+#if defined(OS_FUCHSIA)
+
+// Create and register the job which will contain all child processes
+// of the browser process as well as their descendents.
+void InitDefaultJob() {
+  base::ScopedMxHandle handle;
+  mx_status_t result = mx_job_create(mx_job_default(), 0, handle.receive());
+  CHECK_EQ(MX_OK, result) << "Couldn't create child process job, reason: "
+                          << mx_status_get_string(result);
+  base::SetDefaultJob(std::move(handle));
+}
+
+#endif  // defined(OS_FUCHSIA)
 
 }  // namespace
 
@@ -104,6 +124,12 @@ class BrowserMainRunnerImpl : public BrowserMainRunner {
       // Enable DirectWrite font rendering if needed.
       gfx::win::MaybeInitializeDirectWrite();
 #endif  // OS_WIN
+
+#if defined(OS_FUCHSIA)
+      // Overriding the default job is not threadsafe, so this must come before
+      // any threads are started.
+      InitDefaultJob();
+#endif  // defined(OS_FUCHSIA)
 
       main_loop_.reset(new BrowserMainLoop(parameters));
 
