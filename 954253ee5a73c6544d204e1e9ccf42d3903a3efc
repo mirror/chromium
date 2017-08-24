@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cd343c89_3f0ef7f1",
+        "filename": "ash/shell.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-24T18:58:24Z",
+      "side": 1,
+      "message": "I agree. This change is likely to be hard to merge to m61 though. I promise to address this very soon after we are done with the merges (filed crbug.com/758650)",
+      "parentUuid": "d11cbb7f_6c20135c",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edb0da3c_2cb92cd1",
         "filename": "ash/shell_observer.h",
         "patchSetId": 4
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "05805fc2_556a9cdb",
+        "filename": "ash/shell_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-24T18:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edb0da3c_2cb92cd1",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eea25fc9_53d165b9",
         "filename": "ash/system/palette/tools/metalayer_mode.cc",
         "patchSetId": 4
@@ -65,6 +101,24 @@
       "writtenOn": "2017-08-24T17:00:11Z",
       "side": 1,
       "message": "This is confusing. I think better names would help",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1733352f_c03ece98",
+        "filename": "ash/system/palette/tools/metalayer_mode.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-24T18:58:24Z",
+      "side": 1,
+      "message": "renamed \"enabled_by_user\" to \"feature_enabled\". Renaming \"enabled\" seems too disruptive, I have split the if and added clarifying comment.",
+      "parentUuid": "eea25fc9_53d165b9",
       "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "b75ea34e_54565509",
+        "filename": "ash/system/palette/tools/metalayer_mode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-24T18:58:24Z",
+      "side": 1,
+      "message": "renamed to feature_enabled.\n|enabled| is coming from the base class and is in line with quite other methods in PaletteTool which have Enable/Disable in their names.",
+      "parentUuid": "c8ff3dde_79249245",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00cb0e88_f09a460f",
         "filename": "ash/system/palette/tools/metalayer_mode.h",
         "patchSetId": 4
@@ -102,6 +174,24 @@
       "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc14dd82_1645c8d9",
+        "filename": "ash/system/palette/tools/metalayer_mode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-24T18:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00cb0e88_f09a460f",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +218,30 @@
     },
     {
       "key": {
+        "uuid": "1b04ab06_235d7023",
+        "filename": "ash/system/palette/tools/metalayer_mode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-24T18:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d1d739a_2ca6cfdc",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 9
+      },
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85724271_b585ef64",
         "filename": "ash/system/palette/tools/metalayer_mode.h",
         "patchSetId": 4
@@ -145,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "651c190d_b9c3f1ec",
+        "filename": "ash/system/palette/tools/metalayer_mode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-24T18:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85724271_b585ef64",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d541408d_0d597fb8",
         "filename": "ash/system/palette/tools/metalayer_unittest.cc",
         "patchSetId": 4
@@ -156,6 +288,24 @@
       "writtenOn": "2017-08-24T17:00:11Z",
       "side": 1,
       "message": "non-plain-old-data statics are banned by the style guide. This will need to be a member variable, or just inline all the calls.",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b137e8bb_66e9fe54",
+        "filename": "ash/system/palette/tools/metalayer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-24T18:58:24Z",
+      "side": 1,
+      "message": "Moved to local",
+      "parentUuid": "d541408d_0d597fb8",
       "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -179,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "c874c359_9c059837",
+        "filename": "ash/system/palette/tools/metalayer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-24T18:58:24Z",
+      "side": 1,
+      "message": "\"for (const VoiceInteractionState\u0026 state : kStates)\" does work. Thanks!",
+      "parentUuid": "8e62c7c9_993164e5",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "197b3ec3_643109ff",
         "filename": "ash/system/palette/tools/metalayer_unittest.cc",
         "patchSetId": 4
@@ -193,6 +361,24 @@
       "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8718821b_e99a3c1e",
+        "filename": "ash/system/palette/tools/metalayer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-24T18:58:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "197b3ec3_643109ff",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -213,6 +399,24 @@
     },
     {
       "key": {
+        "uuid": "c2ab7bd4_e2f9cc63",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-24T18:58:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "44ed8545_3098bc6e",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e077740f_bc12a382",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 4
@@ -227,6 +431,24 @@
       "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8abbd67_6cdd6ffc",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-24T18:58:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e077740f_bc12a382",
+      "revId": "954253ee5a73c6544d204e1e9ccf42d3903a3efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

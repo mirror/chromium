@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af705dde_680f6fb0",
+        "filename": "ash/palette_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-24T18:58:24Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "07fb7569_8320ae4b",
+      "revId": "92de18119eef5d8046ee5ae88ce7d648ba984181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb5f4afd_e0694d4e",
         "filename": "ash/system/palette/tools/metalayer_mode.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "92de18119eef5d8046ee5ae88ce7d648ba984181",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835e2cf2_5f460609",
+        "filename": "ash/system/palette/tools/metalayer_mode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-24T18:58:24Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "fb5f4afd_e0694d4e",
+      "revId": "92de18119eef5d8046ee5ae88ce7d648ba984181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
