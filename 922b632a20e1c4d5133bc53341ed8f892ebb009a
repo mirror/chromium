@@ -16,6 +16,41 @@
       "revId": "922b632a20e1c4d5133bc53341ed8f892ebb009a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d366813_c3b0a39d",
+        "filename": "chrome/browser/resources/md_extensions/manager.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-24T15:09:11Z",
+      "side": 1,
+      "message": "That\u0027s...odd.  That sounds like a bug in polymer.  Can we file one?\n\nIn the meantime, this copy makes me a bit nervous.  Does databinding within the extension object still work?  If the extension changes state, we update the manager\u0027s object, but would that reach here correctly through polymer?  Would an alternative be to use the notifyPath API when listType changes?",
+      "parentUuid": "5f10974f_8b75fc5b",
+      "revId": "922b632a20e1c4d5133bc53341ed8f892ebb009a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793b66c7_3e21aea9",
+        "filename": "chrome/test/data/webui/extensions/extension_navigation_helper_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-24T15:09:11Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we use the enum?",
+      "revId": "922b632a20e1c4d5133bc53341ed8f892ebb009a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
