@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94e06402_0a1c557d",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-08-24T05:54:19Z",
+      "side": 1,
+      "message": "Yep, I realized this and uploaded patchset #3 shortly after this one.",
+      "parentUuid": "e3721056_56c5d430",
+      "revId": "9996105930570bdfe2387a6956fe502549ef9fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1246e06a_a6087867",
         "filename": "chrome/browser/banners/app_banner_manager.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-24T05:12:13Z",
       "side": 1,
       "message": "There was a DCHECK here before. Should it stay? I think you can have it by calling DCHECK(!status_reporter-\u003eWaiting()) or something.",
+      "revId": "9996105930570bdfe2387a6956fe502549ef9fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4264268b_01f78cf1",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-08-24T05:54:19Z",
+      "side": 1,
+      "message": "That wouldn\u0027t work because at this point, status_reporter_ should be a NullStatusReporter, which has NOTREACHED in its Waiting() implementation.  In any case, I think it\u0027s better to remove NullStatusReporter and replace it with a null pointer.  See new patch.\n\nAs for the DCHECK itself: I think it was incorrect to have it in the first place. It looks to me like it was already possible that the pipeline could be running in non-debug mode (with need_to_log_status_ \u003d\u003d true), and then be triggered again in debug mode, in which case this DCHECK would fail.",
+      "parentUuid": "1246e06a_a6087867",
       "revId": "9996105930570bdfe2387a6956fe502549ef9fb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

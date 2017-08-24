@@ -16,6 +16,24 @@
       "revId": "5f8dd3e8062b1861406e54899d59316cc0a06e30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df99f63_b2cca7cf",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-08-24T05:54:19Z",
+      "side": 1,
+      "message": "I think that that would require that StatusReporter be public. Is that preferable?",
+      "parentUuid": "c6271b73_5477ed55",
+      "revId": "5f8dd3e8062b1861406e54899d59316cc0a06e30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
