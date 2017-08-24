@@ -1,0 +1,7 @@
+include_rules = [
+  # For unit testing
+  "+ios/web/test",
+  "+ios/web/net",
+  "+ios/web/navigation",
+  "+ios/web/web_state",
+]
