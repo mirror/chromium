@@ -333,13 +333,31 @@ void BrowserNonClientFrameViewAsh::OnOverviewModeEnded() {
 
 void BrowserNonClientFrameViewAsh::OnTabletModeStarted() {
   caption_button_container_->UpdateSizeButtonVisibility();
+
+  // Enter immersive mode if the feature is enabled and the widget is not
+  // already in fullscreen mode.
+  if (ash::Shell::Get()->tablet_mode_controller()->ShouldAutoHideTitlebars() &&
+      !frame()->IsFullscreen() && !browser_view()->IsBrowserTypeNormal()) {
+    browser_view()->immersive_mode_controller()->SetEnabled(true);
+    return;
+  }
   InvalidateLayout();
   frame()->client_view()->InvalidateLayout();
   frame()->GetRootView()->Layout();
 }
 
 void BrowserNonClientFrameViewAsh::OnTabletModeEnded() {
-  OnTabletModeStarted();
+  caption_button_container_->UpdateSizeButtonVisibility();
+
+  // Exit immersive mode if the feature is enabled and the widget is not in
+  // fullscreen mode.
+  if (!frame()->IsFullscreen() && !browser_view()->IsBrowserTypeNormal()) {
+    browser_view()->immersive_mode_controller()->SetEnabled(false);
+    return;
+  }
+  InvalidateLayout();
+  frame()->client_view()->InvalidateLayout();
+  frame()->GetRootView()->Layout();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
