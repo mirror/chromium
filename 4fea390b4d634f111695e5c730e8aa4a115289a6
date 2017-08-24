@@ -22,6 +22,30 @@
       "revId": "4fea390b4d634f111695e5c730e8aa4a115289a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47bc7221_56668bea",
+        "filename": "chrome/installer/util/experiment_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1169359
+      },
+      "writtenOn": "2017-08-24T22:12:51Z",
+      "side": 1,
+      "message": "Done. Made it Aug 31",
+      "parentUuid": "2eed2c67_8ce90f07",
+      "range": {
+        "startLine": 107,
+        "startChar": 45,
+        "endLine": 107,
+        "endChar": 55
+      },
+      "revId": "4fea390b4d634f111695e5c730e8aa4a115289a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
