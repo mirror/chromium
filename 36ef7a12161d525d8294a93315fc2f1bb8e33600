@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "1dcd8672_dcadd3db",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3725,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-24T06:05:01Z",
+      "side": 1,
+      "message": "There\u0027s no harm in slightly redundant testing of run content and run structure. Leave both, but consider renaming your new function to GetRun[Structure|Layout|Info] or similar, to call attention to the similarity to GetRuns. (or rename GetRuns?)\n\nGetFontSpansForTesting has a RenderTextMac implementation, whereas GetHarfBuzzRunList is (obviously) exclusive to RenderTextHarfBuzz. Maybe your helper should support Mac, but that\u0027s being deprecated for HarfBuzz on Mac, and you\u0027re only using it HarfBuzz fixtures anyway, so it\u0027s not imperative.\n\nFYI, I forget the precise terminology, but UTF16OffsetToIndex and UTF16IndexToOffset are used to handle index conversions around multi-character glyphs, like surrogate pairs. I\u0027m not quite sure how that comes into play here, since runs seem to simply use logical character indices, disregarding code point positions.",
+      "parentUuid": "74100616_646a86a2",
+      "revId": "36ef7a12161d525d8294a93315fc2f1bb8e33600",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f78a1207_6cd2fcfe",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 3
