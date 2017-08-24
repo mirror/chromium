@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f2db668_ee3f6593",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-24T09:49:47Z",
+      "side": 1,
+      "message": "Maybe add\n\n#if defined(__IPHONE_11_0) \u0026\u0026 (__IPHONE_OS_VERSION_MAX_ALLOWED \u003e\u003d __IPHONE_11_0)\n\n?\n\nOtherwise the pref will show up in the UI but will have no effect whatsoever…",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 58
+      },
+      "revId": "9b14441ec86b08a4df9200353c3d0d1244e0268d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
