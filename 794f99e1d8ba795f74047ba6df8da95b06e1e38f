@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "616640cb_fdf11f7e",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T14:07:19Z",
+      "side": 1,
+      "message": "Can this block be moved into ParseAttribute, so that the messages only show up when the allow attribute is changed? I don\u0027t think we want to be repeating them if the allowfullscreen or allowpayment request attributes are toggled, for instance.",
+      "revId": "794f99e1d8ba795f74047ba6df8da95b06e1e38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b1d1a3_d751305d",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T14:07:19Z",
+      "side": 1,
+      "message": "Can you also add a deprecation message to messages in this case? (And I\u0027d like to have a use counter for it as well, but there should be a way to do that in Deprecation.cpp)",
+      "revId": "794f99e1d8ba795f74047ba6df8da95b06e1e38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4da5374_99c9134d",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T14:07:19Z",
+      "side": 1,
+      "message": "Could this all be made simpler if we just scan the whole policy string for A-Z, a-z, 0-9, -, and space? If any other character appears, return false, otherwise return true.\n\nfor (char c : policy) {\n  if (!IsValidFeatureNameCharacter(c) \u0026\u0026 c !\u003d \u0027 \u0027)\n    return false;\n}\nreturn true;",
+      "revId": "794f99e1d8ba795f74047ba6df8da95b06e1e38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb138da8_c4b5da65",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T14:07:19Z",
+      "side": 1,
+      "message": "This isn\u0027t an invalid policy, is it? It looks like the old syntax where \u0027badorigin\u0027 is an unrecognized feature.",
+      "revId": "794f99e1d8ba795f74047ba6df8da95b06e1e38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e6f818_63fbb6cf",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T14:07:19Z",
+      "side": 1,
+      "message": "I think it\u0027s okay to duplicate the string here -- that keeps the test independent of any changes to the list of sample policies (like someone adding or deleting one or reordering them)",
+      "revId": "794f99e1d8ba795f74047ba6df8da95b06e1e38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0acf628a_f74934b1",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T14:07:19Z",
+      "side": 1,
+      "message": "Same here",
+      "revId": "794f99e1d8ba795f74047ba6df8da95b06e1e38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

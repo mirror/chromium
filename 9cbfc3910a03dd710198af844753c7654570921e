@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1509f070_da843c18",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T14:07:19Z",
+      "side": 1,
+      "message": "Nit: \u0027requires\u0027 and \u0027adopt\u0027",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 53
+      },
+      "revId": "9cbfc3910a03dd710198af844753c7654570921e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39028c74_18ad5b63",
+        "filename": "content/test/data/feature-policy-main.html.mock-http-headers",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T14:07:19Z",
+      "side": 1,
+      "message": "Is the extra space here a part of the test?",
+      "range": {
+        "startLine": 2,
+        "startChar": 30,
+        "endLine": 2,
+        "endChar": 31
+      },
+      "revId": "9cbfc3910a03dd710198af844753c7654570921e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb4071f5_11a5cc6b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/feature-policy-experimental-features/vibrate-allowed-by-container-policy-relocate-and-no-reload-expected.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T14:07:19Z",
+      "side": 1,
+      "message": "Is there a way to avoid having two lines here? Maybe not necessary for this CL, but we should at least have a bug to avoid emitting duplicate lines to the console.",
+      "revId": "9cbfc3910a03dd710198af844753c7654570921e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488fa61e_5365b7cd",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T14:07:19Z",
+      "side": 1,
+      "message": "sp: allowpaymentrequest",
+      "range": {
+        "startLine": 228,
+        "startChar": 14,
+        "endLine": 228,
+        "endChar": 33
+      },
+      "revId": "9cbfc3910a03dd710198af844753c7654570921e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b63452_71350ee1",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T14:07:19Z",
+      "side": 1,
+      "message": "I\u0027m not very familiar with this class -- It seems like a reasonable choice, as long as it scales past 32 features eventually. Is it faster/better than just a wtf::HashSet\u003cWebFeaturePolicyFeature\u003e?",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 11
+      },
+      "revId": "9cbfc3910a03dd710198af844753c7654570921e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e52e8b65_7036244c",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T14:07:19Z",
+      "side": 1,
+      "message": "Since we\u0027re using the same functions to parse both the header and the attribute, maybe we should name the functions accordingly. How about\nParseFeaturePolicyHeader(string, origin, messages); // just for header\nParseFeaturePolicyAttribute(string, self_origin, src_origin, messages); // just for attribute, src_origin can\u0027t be null\nParseFeaturePolicy(string, self_origin, src_origin, messages); // common code called by both, src_origin could be null\n\nWDYT?\n\nI don\u0027t think that \u0027container policy\u0027 is an accurate term for either of them -- in the spec, the container policy is a combination of all of the attributes, like allowfullscreen, allowpaymentrequest, allow, and even sandbox.",
+      "revId": "9cbfc3910a03dd710198af844753c7654570921e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b0e23b_b013873e",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T14:07:19Z",
+      "side": 1,
+      "message": "Can you name these two parameters? It\u0027s not easily apparent which is which.",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 27
+      },
+      "revId": "9cbfc3910a03dd710198af844753c7654570921e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a3c30e_7e742d98",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T14:07:19Z",
+      "side": 1,
+      "message": "Same here",
+      "range": {
+        "startLine": 55,
+        "startChar": 1,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "revId": "9cbfc3910a03dd710198af844753c7654570921e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b090149_94316ccf",
+        "filename": "third_party/WebKit/Source/platform/feature_policy/FeaturePolicyTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-24T14:07:19Z",
+      "side": 1,
+      "message": "Can you make this \"example\" (just so it\u0027s obvious that the typo isn\u0027t the reason for the error :) )",
+      "range": {
+        "startLine": 43,
+        "startChar": 21,
+        "endLine": 43,
+        "endChar": 27
+      },
+      "revId": "9cbfc3910a03dd710198af844753c7654570921e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
