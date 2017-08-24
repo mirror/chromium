@@ -16,6 +16,24 @@
       "revId": "87c1be1180c045e15d77eeba8427299c39bbfff5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c580fe_7caade22",
+        "filename": "chrome/browser/ui/aura/accessibility/automation_manager_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-24T23:23:33Z",
+      "side": 1,
+      "message": "I did quick test and  ProfileManager::GetActiveUserProfile() returns different result on some stages compared with current implementation.\nBesides GetLastUsedProfile has special meaning:\n \"the Profile to which owns the most recently focused window\"\nSo I think changing this is not safe (as fix of crash). We also need consider that this might go to M61.",
+      "parentUuid": "8a463734_45deeb16",
+      "revId": "87c1be1180c045e15d77eeba8427299c39bbfff5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
