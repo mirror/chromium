@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "491d7d90_765f1b86",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-24T19:16:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5cc9bfd_5a6f014e",
+      "revId": "df023bdcb09ee1c1493a2c37cf59d48b74acb151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3097d813_85e7f5c0",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/permissions/QuotaTest.java",
         "patchSetId": 2
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Just in very general terms, if we can avoid using inheritance, that would be great! Particularly for rules, since part of the point there was re-use and not requiring particular inheritance, etc., so it\u0027s probably wise to use the same concept for everything related to rules as far as we can.",
       "parentUuid": "57f23855_85a83322",
+      "revId": "df023bdcb09ee1c1493a2c37cf59d48b74acb151",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f65a9e42_48c509cd",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/ChromeActivityTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-08-24T19:16:01Z",
+      "side": 1,
+      "message": "guilty as charged 🔔🔔🔔\nthis actually do not need inheritance, I just got confused when debugging this one.\nCurrently since a lot of test rules inherited the inheritance from test base classes (aha)\n\nthere are a couple of situations for this, where test rule Parent is parent of Child\n\nIf Child\u0027s setUp want to run before Parent\u0027s setUp, then we would \"package\" Parent\u0027s setUp into base statement, e.g.\n\nclass Child extends Parent{\n  Statement apply(Statement base) {\n    Statement ParentsetUpAndTestRun \u003d super.apply(base);\n    return new Statement(){ () -\u003e ChildSetUp(); ParentsetUpAndTestRun.evaluate();};\n  }\n}\n\nIf Child\u0027s setUp runs after parent\u0027s setup, then it\u0027s simply pass Child statement into super\n\nclass Child extends Parent{\n  Statement apply(Statement base) {\n    return super.apply(new Statement(){ () -\u003e ChildSetUp(); base.evaluate();});\n  }\n}\n\nIf child\u0027s setUp runs in between parent\u0027s setup, which test base classes sometimes do e.g.\n\npublic void setUp() {\n  childSetUp1();\n  super.setUp();\n  childSetUp2();\n}\n\nThis actually becomes rather unintuitive, e.g.\n\nclass Child extends Parent{\n  Statement apply(Statement base) {\n    Statement ParentsetUpAndTestRun \u003d super.apply(\n        new Statement(){() -\u003e ChildSetUp2(); base.evaluate()});\n    return new Statement(){ () -\u003e ChildSetUp1(); ParentsetUpAndTestRun.evaluate();};\n  }\n}\n\nOverall this is rather *annoying* to handle the parent, child test rule order. That\u0027s why during\nthe next refactoring stage, I would argue we look into a compound test rule\n(as discussed with John offline before) that controls rule running order, and also consider\nthe possibility of most if not all rules final.\n\nChanged.",
+      "parentUuid": "47fae9e7_d4f3611c",
       "revId": "df023bdcb09ee1c1493a2c37cf59d48b74acb151",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
