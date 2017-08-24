@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9c750d_77ea6f0c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T08:51:14Z",
+      "side": 1,
+      "message": "Can you also write out that EncodedFormData.h includes blob/BlobData.h, which includes storage/public/interfaces\u0027s generated headers and that are creating hidden dependency to storage/public/interfaces?",
+      "revId": "53a3b4bdf47c938b7eb25f186f2289eb4d020868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629f2b41_395841dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-24T08:51:14Z",
+      "side": 1,
+      "message": "Maybe you could add a little more words, as diffs between __generator and the direct target feels very subtle?\n\nMy understanding is (from gn desc): __generator is the target that generates generated files, e.g. .mojom{-blink,}.{cc,h}, which has little dependencies that are just necessary to generate these, while the loader target needs to depend on the dependencies needed to build the mojo target itself.",
+      "revId": "53a3b4bdf47c938b7eb25f186f2289eb4d020868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
