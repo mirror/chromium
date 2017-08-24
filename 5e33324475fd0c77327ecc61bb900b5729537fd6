@@ -16,6 +16,24 @@
       "revId": "5e33324475fd0c77327ecc61bb900b5729537fd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5485445_f20134f3",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDestination.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-24T14:55:41Z",
+      "side": 1,
+      "message": "My understanding is AudioDestination::Stop() calls the WebAudioDevice::Stop() before it sets the |worklet_backing_thread_| to null. This is a synchronous call, so theoretically AudioDestination::Render() will not get called after this by another thread and |worklet_backing_thread_| should be safe.",
+      "parentUuid": "972265eb_598d9a73",
+      "revId": "5e33324475fd0c77327ecc61bb900b5729537fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
