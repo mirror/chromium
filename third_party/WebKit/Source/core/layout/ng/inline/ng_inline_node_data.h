@@ -7,15 +7,18 @@
 
 #include "core/CoreExport.h"
 #include "core/layout/ng/inline/ng_inline_item.h"
-#include "core/layout/ng/inline/ng_offset_mapping_result.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
 
 class LayoutBox;
+class NGOffsetMappingResult;
 
 // Data which is required for inline nodes.
 struct CORE_EXPORT NGInlineNodeData {
+  NGInlineNodeData();
+  ~NGInlineNodeData();
+
  private:
   TextDirection BaseDirection() const {
     return static_cast<TextDirection>(base_direction_);
