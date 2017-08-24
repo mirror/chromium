@@ -16,6 +16,24 @@
       "revId": "f36afc7615e2fe3eebbd5ea51dee6c2999e17042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91cba25_6123f034",
+        "filename": "chrome/browser/extensions/tab_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-24T07:39:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "581dffef_082a601c",
+      "revId": "f36afc7615e2fe3eebbd5ea51dee6c2999e17042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
