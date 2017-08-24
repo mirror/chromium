@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b919e4f_99779ed5",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1576,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-24T20:59:55Z",
+      "side": 1,
+      "message": "nit: s/a/an? email + URL?",
+      "range": {
+        "startLine": 1576,
+        "startChar": 92,
+        "endLine": 1576,
+        "endChar": 94
+      },
+      "revId": "9624a1c8e8cc288755e17c32c8912877f92c93e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ab4c4a6_a478052b",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-24T20:59:55Z",
+      "side": 1,
+      "message": "IDS_IOS_COMPOSE_EMAIL_SETTING uses \u0027Email\u0027, should this be \u0027Email\u0027 instead of \u0027mail\u0027?",
+      "revId": "9624a1c8e8cc288755e17c32c8912877f92c93e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
