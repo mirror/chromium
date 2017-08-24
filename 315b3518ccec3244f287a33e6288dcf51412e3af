@@ -16,6 +16,24 @@
       "revId": "315b3518ccec3244f287a33e6288dcf51412e3af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f153f051_a0a062fb",
+        "filename": "content/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-24T17:18:52Z",
+      "side": 1,
+      "message": "Rules are applied recursively unless the child explicitly sets the \"noparent\" rule, which breaks inheritance.",
+      "parentUuid": "aea08439_c8c6a596",
+      "revId": "315b3518ccec3244f287a33e6288dcf51412e3af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
