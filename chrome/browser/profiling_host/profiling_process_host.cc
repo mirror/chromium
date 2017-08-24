@@ -9,6 +9,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/sys_info.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/trace_event/memory_dump_manager.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_content_client.h"
 #include "chrome/common/chrome_switches.h"
@@ -28,6 +29,21 @@
 #include "mojo/edk/embedder/platform_channel_pair.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "mojo/public/cpp/system/platform_handle.h"
+
+namespace {
+// A wrapper classes that allows a string to be exported as JSON in a trace
+// event.
+class StringWrapper : public base::trace_event::ConvertableToTraceFormat {
+ public:
+  explicit StringWrapper(std::string&& string) : json_(string) {}
+
+  void AppendAsTraceFormat(std::string* out) const override {
+    out->append(json_);
+  }
+
+  std::string json_;
+};
+}  // namespace
 
 namespace profiling {
 
@@ -99,6 +115,64 @@ void ProfilingProcessHost::Observe(
   base::ProcessId pid = base::GetProcId(host->GetHandle());
 
   SendPipeToProfilingService(std::move(memlog_client), pid);
+}
+
+bool ProfilingProcessHost::OnMemoryDump(
+    const base::trace_event::MemoryDumpArgs& args,
+    base::trace_event::ProcessMemoryDump* pmd) {
+  DCHECK_NE(GetCurrentMode(), Mode::kNone);
+  // TODO: Support dumping all processes for --memlog=all mode.
+  // https://crbug.com/758437.
+  memlog_->DumpProcessForTracing(
+      base::Process::Current().Pid(),
+      base::BindOnce(&ProfilingProcessHost::OnDumpProcessForTracingCallback,
+                     base::Unretained(this)));
+  return true;
+}
+
+void ProfilingProcessHost::OnDumpProcessForTracingCallback(
+    mojo::ScopedDataPipeConsumerHandle source,
+    uint32_t size) {
+  if (!source.is_valid()) {
+    LOG(ERROR) << "Failed to dump process for tracing";
+    return;
+  }
+
+  const void* buffer;
+  uint32_t buffer_num_bytes;
+  MojoResult result = source->BeginReadData(&buffer, &buffer_num_bytes,
+                                            MOJO_READ_DATA_FLAG_NONE);
+  if (result == MOJO_RESULT_SHOULD_WAIT ||
+      (result == MOJO_RESULT_OK && buffer_num_bytes < size)) {
+    base::PostDelayedTaskWithTraits(
+        FROM_HERE, {base::TaskPriority::USER_VISIBLE, base::MayBlock()},
+        base::BindOnce(&ProfilingProcessHost::OnDumpProcessForTracingCallback,
+                       base::Unretained(this), std::move(source), size),
+        base::TimeDelta::FromSeconds(1));
+    return;
+  }
+
+  if (result != MOJO_RESULT_OK) {
+    LOG(ERROR) << "Failed to read from data pipe";
+    return;
+  }
+
+  const char* char_buffer = static_cast<const char*>(buffer);
+  std::string json(char_buffer, char_buffer + size);
+
+  const int kTraceEventNumArgs = 1;
+  const char* const kTraceEventArgNames[] = {"dumps"};
+  const unsigned char kTraceEventArgTypes[] = {TRACE_VALUE_TYPE_CONVERTABLE};
+  std::unique_ptr<base::trace_event::ConvertableToTraceFormat> test2(
+      new StringWrapper(std::move(json)));
+
+  TRACE_EVENT_API_ADD_TRACE_EVENT(
+      TRACE_EVENT_PHASE_MEMORY_DUMP,
+      base::trace_event::TraceLog::GetCategoryGroupEnabled(
+          base::trace_event::MemoryDumpManager::kTraceCategory),
+      "periodic_interval", trace_event_internal::kGlobalScope, 0x0,
+      kTraceEventNumArgs, kTraceEventArgNames, kTraceEventArgTypes,
+      nullptr /* arg_values */, &test2, TRACE_EVENT_FLAG_HAS_ID);
 }
 
 void ProfilingProcessHost::SendPipeToProfilingService(
@@ -197,6 +271,12 @@ void ProfilingProcessHost::LaunchAsService() {
                                   base::Unretained(this)));
     return;
   }
+
+  // No need to unregister since ProfilingProcessHost is never destroyed.
+  base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
+      this, "OutOfProcessHeapProfilingDumpProvider",
+      content::BrowserThread::GetTaskRunnerForThread(
+          content::BrowserThread::IO));
 
   // Bind to the memlog service. This will start it if it hasn't started
   // already.
