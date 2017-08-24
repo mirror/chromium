@@ -18,9 +18,11 @@ class CompoundBuffer;
 // thread, and possibly a different process depending on the platform.
 class FileProxyWrapper {
  public:
-  typedef base::Callback<void(protocol::FileTransferResponse_ErrorCode)>
-      ErrorCallback;
-  typedef base::Callback<void()> SuccessCallback;
+  // If the unique_ptr is empty, the file was written to successfully. If
+  // present, the ErrorCode represents the error FileProxyWrapper encountered.
+  typedef base::OnceCallback<void(
+      std::unique_ptr<protocol::FileTransferResponse_ErrorCode>)>
+      StatusCallback;
 
   enum State {
     // Created, but Init() has not been called yet.
@@ -29,7 +31,8 @@ class FileProxyWrapper {
     // Init() has been called.
     kInitialized = 1,
 
-    // CreateFile() has been called. The file may or may not exist yet.
+    // CreateFile() has been called. The file may or may not exist yet, but
+    // this means that WriteChunk() can now be called.
     kFileCreated = 2,
 
     // Close() has been called. WriteChunk() can no longer be called, but not
@@ -50,19 +53,15 @@ class FileProxyWrapper {
   FileProxyWrapper();
   virtual ~FileProxyWrapper();
 
-  // |error_callback| must not immediately destroy this FileProxyWrapper.
-  virtual void Init(const ErrorCallback& error_callback) = 0;
-  // TODO(jarhar): Remove |success_callback| from CreateFile(), and instead
-  // allow WriteChunk() to be called immediately after CreateFile(). This also
-  // means that FileTransferMessageHandler will no longer send a
-  // FileTransferResponse with the "READY" state.
+  // |status_callback| is called either when FileProxyWrapper encounters an
+  // error or when Close() has been called and the file has been written
+  // successfully. |status_callback| must not immediately destroy this
+  // FileProxyWrapper.
+  virtual void Init(StatusCallback status_callback) = 0;
   virtual void CreateFile(const base::FilePath& directory,
-                          const std::string& filename,
-                          const SuccessCallback& success_callback) = 0;
+                          const std::string& filename) = 0;
   virtual void WriteChunk(std::unique_ptr<CompoundBuffer> buffer) = 0;
-  // TODO(jarhar): Remove |success_callback| from Close() and instead use the
-  // ErrorCallback sent to Init() to signify success after Close().
-  virtual void Close(const SuccessCallback& success_callback) = 0;
+  virtual void Close() = 0;
   virtual void Cancel() = 0;
   virtual State state() = 0;
 };
