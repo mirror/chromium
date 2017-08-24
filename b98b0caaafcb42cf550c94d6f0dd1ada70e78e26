@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08eb7eee_8d3acde2",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-24T22:17:47Z",
+      "side": 1,
+      "message": "So we never worry about iframes? Is that ok?",
+      "revId": "b98b0caaafcb42cf550c94d6f0dd1ada70e78e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd0f09c5_e559a910",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-24T22:17:47Z",
+      "side": 1,
+      "message": "- I think this might never happen for static pages like about:blank.\n- This also runs for tasks not related to local_root_. I think we should filter that out?",
+      "revId": "b98b0caaafcb42cf550c94d6f0dd1ada70e78e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
