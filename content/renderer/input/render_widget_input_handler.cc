@@ -168,6 +168,8 @@ void RenderWidgetInputHandler::HandleInputEvent(
   base::AutoReset<std::unique_ptr<DidOverscrollParams>*>
       handling_event_overscroll_resetter(&handling_event_overscroll_,
                                          &event_overscroll);
+  base::AutoReset<base::Optional<cc::TouchAction>>
+      handling_touch_action_resetter(&handling_touch_action_, base::nullopt);
 
 #if defined(OS_ANDROID)
   ImeEventGuard guard(widget_);
@@ -336,7 +338,8 @@ void RenderWidgetInputHandler::HandleInputEvent(
 
   if (callback) {
     std::move(callback).Run(ack_result, swap_latency_info,
-                            std::move(event_overscroll));
+                            std::move(event_overscroll),
+                            handling_touch_action_);
   } else {
     DCHECK(!event_overscroll) << "Unexpected overscroll for un-acked event";
   }
@@ -387,6 +390,17 @@ void RenderWidgetInputHandler::DidOverscrollFromBlink(
   }
 
   delegate_->OnDidOverscroll(*params);
+}
+
+bool RenderWidgetInputHandler::ProcessTouchAction(
+    cc::TouchAction touch_action) {
+  // Ignore setTouchAction calls that result from synthetic touch events (eg.
+  // when blink is emulating touch with mouse).
+  if (handling_event_type_ != WebInputEvent::kTouchStart)
+    return false;
+
+  handling_touch_action_ = touch_action;
+  return true;
 }
 
 }  // namespace content

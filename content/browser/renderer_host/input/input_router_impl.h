@@ -120,33 +120,36 @@ class CONTENT_EXPORT InputRouterImpl
       InputEventAckSource source,
       const ui::LatencyInfo& latency,
       InputEventAckState state,
-      const base::Optional<ui::DidOverscrollParams>& overscroll);
-
+      const base::Optional<ui::DidOverscrollParams>& overscroll,
+      const content::mojom::TouchActionOptionalPtr touch_action);
   void MouseEventHandled(
       const MouseEventWithLatencyInfo& event,
       InputEventAckSource source,
       const ui::LatencyInfo& latency,
       InputEventAckState state,
-      const base::Optional<ui::DidOverscrollParams>& overscroll);
-
+      const base::Optional<ui::DidOverscrollParams>& overscroll,
+      const content::mojom::TouchActionOptionalPtr touch_action);
   void TouchEventHandled(
       const TouchEventWithLatencyInfo& touch_event,
       InputEventAckSource source,
       const ui::LatencyInfo& latency,
       InputEventAckState state,
-      const base::Optional<ui::DidOverscrollParams>& overscroll);
+      const base::Optional<ui::DidOverscrollParams>& overscroll,
+      const content::mojom::TouchActionOptionalPtr touch_action);
   void GestureEventHandled(
       const GestureEventWithLatencyInfo& gesture_event,
       InputEventAckSource source,
       const ui::LatencyInfo& latency,
       InputEventAckState state,
-      const base::Optional<ui::DidOverscrollParams>& overscroll);
+      const base::Optional<ui::DidOverscrollParams>& overscroll,
+      const content::mojom::TouchActionOptionalPtr touch_action);
   void MouseWheelEventHandled(
       const MouseWheelEventWithLatencyInfo& event,
       InputEventAckSource source,
       const ui::LatencyInfo& latency,
       InputEventAckState state,
-      const base::Optional<ui::DidOverscrollParams>& overscroll);
+      const base::Optional<ui::DidOverscrollParams>& overscroll,
+      const content::mojom::TouchActionOptionalPtr touch_action);
 
   // IPC message handlers
   void OnDidOverscroll(const ui::DidOverscrollParams& params);
