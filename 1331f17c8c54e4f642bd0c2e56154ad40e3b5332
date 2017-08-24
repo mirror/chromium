@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f75bcbe6_22bc0915",
+        "filename": "net/base/net_string_util_icu_alternatives_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-24T14:33:43Z",
+      "side": 1,
+      "message": "java_result?",
+      "revId": "1331f17c8c54e4f642bd0c2e56154ad40e3b5332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
