@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0d16838_504c3bc9",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-24T20:10:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22840955_b3035593",
+      "range": {
+        "startLine": 145,
+        "startChar": 61,
+        "endLine": 145,
+        "endChar": 72
+      },
+      "revId": "a97747cc995f4ef2aec48481350d68caf55c3fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b6d531d_6a761bbf",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "a97747cc995f4ef2aec48481350d68caf55c3fc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c0c496f_966f9bd0",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-24T20:10:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b6d531d_6a761bbf",
+      "revId": "a97747cc995f4ef2aec48481350d68caf55c3fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
