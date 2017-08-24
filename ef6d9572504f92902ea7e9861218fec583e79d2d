@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "963a11e7_1fbd67ea",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-24T19:48:58Z",
+      "side": 1,
+      "message": "this is now too complicated, use if statements instead of ?:",
+      "range": {
+        "startLine": 360,
+        "startChar": 4,
+        "endLine": 360,
+        "endChar": 31
+      },
+      "revId": "ef6d9572504f92902ea7e9861218fec583e79d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "893ee7a0_036bde7f",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-24T19:48:58Z",
+      "side": 1,
+      "message": "use else, or even better: a switch",
+      "range": {
+        "startLine": 475,
+        "startChar": 2,
+        "endLine": 475,
+        "endChar": 4
+      },
+      "revId": "ef6d9572504f92902ea7e9861218fec583e79d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4454a3c_c4d39c30",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-24T19:48:58Z",
+      "side": 1,
+      "message": "I don\u0027t think this is entirely correct, shouldn\u0027t it be:\n\n65535.0f / ((1 \u003c\u003c bits_per_channel) - 1)\n\n?",
+      "range": {
+        "startLine": 478,
+        "startChar": 27,
+        "endLine": 478,
+        "endChar": 28
+      },
+      "revId": "ef6d9572504f92902ea7e9861218fec583e79d2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
