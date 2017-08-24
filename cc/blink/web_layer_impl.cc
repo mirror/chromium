@@ -454,7 +454,7 @@ void WebLayerImpl::SetScrollClient(blink::WebLayerScrollClient* scroll_client) {
                    base::Unretained(scroll_client)));
   } else {
     layer_->set_did_scroll_callback(
-        base::Callback<void(const gfx::ScrollOffset&)>());
+        base::Callback<void(const gfx::ScrollOffset&, const cc::ElementId&)>());
   }
 }
 

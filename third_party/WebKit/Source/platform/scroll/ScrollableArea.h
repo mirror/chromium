@@ -31,6 +31,7 @@
 #include "platform/geometry/FloatQuad.h"
 #include "platform/geometry/LayoutRect.h"
 #include "platform/graphics/Color.h"
+#include "platform/graphics/CompositorElementId.h"
 #include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollAnimatorBase.h"
 #include "platform/scroll/ScrollTypes.h"
@@ -379,7 +380,7 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin,
   virtual RefPtr<WebTaskRunner> GetTimerTaskRunner() const = 0;
 
   // Callback for compositor-side scrolling.
-  void DidScroll(const gfx::ScrollOffset&) override;
+  void DidScroll(const gfx::ScrollOffset&, const CompositorElementId&) override;
 
   virtual void ScrollbarFrameRectChanged() {}
 
