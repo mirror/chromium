@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09657b74_8004ee92",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 41963,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-24T20:36:31Z",
+      "side": 1,
+      "message": "Hrm...Is this really the right unit for this?  Seems like we\u0027re measuring redirects, not URLs...  Redirects can share URLs, and each redirect has a URL, but they also each have a wall clock time, too, and \"wallclocktimes\" seems like it would be an odd unit here.  :)",
+      "range": {
+        "startLine": 41963,
+        "startChar": 21,
+        "endLine": 41963,
+        "endChar": 40
+      },
+      "revId": "b6b2b58b7a7271ad1316e5063b5a64562157d672",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
