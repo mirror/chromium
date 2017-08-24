@@ -53,8 +53,7 @@ BackgroundTest.prototype = {
 
   linksAndHeadingsDoc: function() {/*!
     <p>start</p>
-    <a href='#a'>alpha</a>
-    <a href='#b'>beta</a>
+    <a href='#a'>alpha</a><a href='#b'>beta</a>
     <p>
       <h1>charlie</h1>
       <a href='foo'>delta</a>

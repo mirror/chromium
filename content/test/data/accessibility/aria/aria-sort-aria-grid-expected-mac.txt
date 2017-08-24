@@ -63,10 +63,14 @@ AXWebArea
 ++++AXRow
 ++++++AXCell AXTitle='Alphabet'
 ++++++++AXStaticText AXValue='Alphabet'
+++++++AXStaticText AXValue=' '
 ++++++AXCell AXTitle='A'
 ++++++++AXStaticText AXValue='A'
+++++++AXStaticText AXValue=' '
 ++++++AXCell AXTitle='B'
 ++++++++AXStaticText AXValue='B'
+++++AXColumn
+++++AXColumn
 ++++AXColumn
 ++++AXColumn
 ++++AXColumn
@@ -75,10 +79,14 @@ AXWebArea
 ++++AXRow
 ++++++AXCell AXTitle='Alphabet'
 ++++++++AXStaticText AXValue='Alphabet'
+++++++AXStaticText AXValue=' '
 ++++++AXCell AXTitle='A'
 ++++++++AXStaticText AXValue='A'
+++++++AXStaticText AXValue=' '
 ++++++AXCell AXTitle='B'
 ++++++++AXStaticText AXValue='B'
+++++AXColumn
+++++AXColumn
 ++++AXColumn
 ++++AXColumn
 ++++AXColumn
@@ -87,10 +95,14 @@ AXWebArea
 ++++AXRow
 ++++++AXCell AXTitle='Alphabet' AXSortDirection='AXAscendingSortDirection'
 ++++++++AXStaticText AXValue='Alphabet'
+++++++AXStaticText AXValue=' '
 ++++++AXCell AXTitle='A'
 ++++++++AXStaticText AXValue='A'
+++++++AXStaticText AXValue=' '
 ++++++AXCell AXTitle='B'
 ++++++++AXStaticText AXValue='B'
+++++AXColumn
+++++AXColumn
 ++++AXColumn
 ++++AXColumn
 ++++AXColumn
@@ -99,10 +111,14 @@ AXWebArea
 ++++AXRow
 ++++++AXCell AXTitle='Alphabet' AXSortDirection='AXDescendingSortDirection'
 ++++++++AXStaticText AXValue='Alphabet'
+++++++AXStaticText AXValue=' '
 ++++++AXCell AXTitle='B'
 ++++++++AXStaticText AXValue='B'
+++++++AXStaticText AXValue=' '
 ++++++AXCell AXTitle='A'
 ++++++++AXStaticText AXValue='A'
+++++AXColumn
+++++AXColumn
 ++++AXColumn
 ++++AXColumn
 ++++AXColumn
@@ -111,10 +127,14 @@ AXWebArea
 ++++AXRow
 ++++++AXCell AXTitle='Alphabet' AXSortDirection='AXUnknownSortDirection'
 ++++++++AXStaticText AXValue='Alphabet'
+++++++AXStaticText AXValue=' '
 ++++++AXCell AXTitle='A'
 ++++++++AXStaticText AXValue='A'
+++++++AXStaticText AXValue=' '
 ++++++AXCell AXTitle='A'
 ++++++++AXStaticText AXValue='A'
+++++AXColumn
+++++AXColumn
 ++++AXColumn
 ++++AXColumn
 ++++AXColumn
