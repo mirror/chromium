@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83eb1521_3d3789c3",
+        "filename": "WATCHLISTS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1040,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-24T10:33:07Z",
+      "side": 0,
+      "message": "Why did you drop openmax?",
+      "range": {
+        "startLine": 1040,
+        "startChar": 46,
+        "endLine": 1040,
+        "endChar": 53
+      },
+      "revId": "b980223652c00b6a9e43fa1d296119e000206a1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
