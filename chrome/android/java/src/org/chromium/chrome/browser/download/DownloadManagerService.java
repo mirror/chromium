@@ -193,7 +193,7 @@ public class DownloadManagerService
         Context appContext = ContextUtils.getApplicationContext();
         if (sDownloadManagerService == null) {
             sDownloadManagerService = new DownloadManagerService(appContext,
-                    new SystemDownloadNotifier(appContext), new Handler(), UPDATE_DELAY_MILLIS);
+                    new SystemDownloadNotifier2(appContext), new Handler(), UPDATE_DELAY_MILLIS);
         }
         return sDownloadManagerService;
     }

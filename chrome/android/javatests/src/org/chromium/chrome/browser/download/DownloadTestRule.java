@@ -232,7 +232,7 @@ public class DownloadTestRule extends ChromeActivityTestRule<ChromeActivity> {
 
         ThreadUtils.runOnUiThreadBlocking(() -> {
             mSavedDownloadManagerService = DownloadManagerService.setDownloadManagerService(
-                    new TestDownloadManagerService(context, new SystemDownloadNotifier(context),
+                    new TestDownloadManagerService(context, new SystemDownloadNotifier2(context),
                             new Handler(), UPDATE_DELAY_MILLIS));
             DownloadController.setDownloadNotificationService(
                     DownloadManagerService.getDownloadManagerService());
