@@ -246,6 +246,9 @@ AUAudioInputStream::AUAudioInputStream(
       largest_glitch_frames_(0),
       glitches_detected_(0),
       log_callback_(log_callback),
+      state_(kClosed),
+      volume_at_resume_(-1.0),
+      callback_at_resume_(nullptr),
       weak_factory_(this) {
   DCHECK(manager_);
   CHECK(!log_callback_.Equals(AudioManager::LogCallback()));
@@ -503,6 +506,13 @@ void AUAudioInputStream::Start(AudioInputCallback* callback) {
   if (IsRunning())
     return;
 
+  // Check if all operations should be deferred.
+  if (manager_->ShouldDeferAllStreamOperations()) {
+    callback_at_resume_ = callback;
+    state_ = kStarted;
+    return;
+  }
+
   // Check if we should defer Start() for http://crbug.com/160920.
   if (manager_->ShouldDeferStreamStart()) {
     LOG(WARNING) << "Start of input audio is deferred";
@@ -541,6 +551,8 @@ void AUAudioInputStream::Start(AudioInputCallback* callback) {
       base::TimeDelta::FromSeconds(kInputCallbackStartTimeoutInSeconds), this,
       &AUAudioInputStream::CheckInputStartupSuccess);
   DCHECK(input_callback_timer_->IsRunning());
+
+  state_ = kStarted;
 }
 
 void AUAudioInputStream::Stop() {
@@ -1130,6 +1142,23 @@ bool AUAudioInputStream::IsRunning() {
       << "AudioUnitGetProperty(kAudioOutputUnitProperty_IsRunning) failed";
   DVLOG(1) << "IsRunning: " << is_running;
   return (error == noErr && is_running);
+}
+
+void AUAudioInputStream::Suspend() {
+  // Stop and close here, except report stats and release stream as in Close().
+  // Also, report any new stats.
+}
+
+void AUAudioInputStream::Resume() {
+  if (state_ != kClosed)
+    Open();
+  if (state_ == kStarted)
+    Start(callback_at_resume_);
+  if (volume_at_resume_ >= 0.0) {
+    SetVolume(volume_at_resume_);
+    volume_at_resume_ = -1.0;
+  }
+  // TODO: report any new stats.
 }
 
 void AUAudioInputStream::HandleError(OSStatus err) {

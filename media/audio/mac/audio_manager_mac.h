@@ -88,6 +88,7 @@ class MEDIA_EXPORT AudioManagerMac : public AudioManagerBase {
   // a suitable delay value.
   enum { kStartDelayInSecsForPowerEvents = 5 };
   bool ShouldDeferStreamStart() const;
+  bool ShouldDeferAllStreamOperations() const;
 
   // True if the device is on battery power.
   bool IsOnBatteryPower() const;
@@ -111,6 +112,11 @@ class MEDIA_EXPORT AudioManagerMac : public AudioManagerBase {
                              size_t desired_buffer_size,
                              bool* size_was_changed,
                              size_t* io_buffer_frame_size);
+
+  // Called by AudioManagerMac::AudioPowerObserver when machine is suspending
+  // and resuming.
+  void OnSuspend();
+  void OnResume();
 
   // Number of constructed output and input streams.
   size_t output_streams() const { return output_streams_.size(); }
