@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ceabc534_b4a662e9",
+        "filename": "third_party/WebKit/Source/core/editing/SurroundingTextTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T01:49:15Z",
+      "side": 1,
+      "message": "Since the range is collapsed, the SurroundingText can be constructed easier:\n\nSurroundingText surrounding_text(Position(inner_editor, 0), 8);\n\nBesides, if we pass Position::FirstPositionInNode(*inner_editor) instead, does the crash reproduce?\n\nWe prefer Position::FirstPositionInNode(), because the (anchor_node, offset) constructor is supposed to be called on text nodes only as stated in Position.h, although it\u0027s violated at many places...",
+      "range": {
+        "startLine": 324,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 80
+      },
+      "revId": "ac0e575a2e66936159e5f48d5fdcb6eccb6496a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d35244ed_3ed83d47",
+        "filename": "third_party/WebKit/Source/core/editing/SurroundingTextTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-24T01:49:15Z",
+      "side": 1,
+      "message": "Could you add a note that, this only records the current behavior, but result is in fact wrong and the expected result should be nonempty (I believe so)?",
+      "revId": "ac0e575a2e66936159e5f48d5fdcb6eccb6496a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
