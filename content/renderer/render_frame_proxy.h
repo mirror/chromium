@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "content/common/content_export.h"
 #include "content/common/feature_policy/feature_policy.h"
 #include "ipc/ipc_listener.h"
@@ -199,6 +200,10 @@ class CONTENT_EXPORT RenderFrameProxy : public IPC::Listener,
 
   RenderViewImpl* render_view_;
   RenderWidget* render_widget_;
+
+  gfx::Rect frame_rect_;
+  viz::LocalSurfaceId local_surface_id_;
+  viz::LocalSurfaceIdAllocator local_surface_id_allocator_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderFrameProxy);
 };

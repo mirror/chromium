@@ -267,7 +267,9 @@ void CrossProcessFrameConnector::UnlockMouse() {
 }
 
 void CrossProcessFrameConnector::OnFrameRectChanged(
-    const gfx::Rect& frame_rect) {
+    const gfx::Rect& frame_rect,
+    const viz::LocalSurfaceId& local_surface_id) {
+  local_surface_id_ = local_surface_id;
   if (!frame_rect.size().IsEmpty())
     SetRect(frame_rect);
 }
