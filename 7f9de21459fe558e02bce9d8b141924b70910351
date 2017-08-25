@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "690ca88b_578217d0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/permissions/PermissionTestCaseBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-25T10:11:26Z",
+      "side": 1,
+      "message": "Move this to a constant (say in ChromeFeatureList), so you don\u0027t need to repeat it everywhere?",
+      "range": {
+        "startLine": 47,
+        "startChar": 47,
+        "endLine": 47,
+        "endChar": 71
+      },
+      "revId": "7f9de21459fe558e02bce9d8b141924b70910351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
