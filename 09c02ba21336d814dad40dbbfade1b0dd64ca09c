@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4081c3f1_32e1a1b5",
+        "filename": "services/ui/public/interfaces/window_tree.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T22:34:32Z",
+      "side": 1,
+      "message": "Yes to the later. Which would mean we don\u0027t have to block waiting for the client id during startup! Nice!",
+      "parentUuid": "9dbe96fa_742f1901",
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea65ea02_d631bca0",
         "filename": "services/ui/ws/ids.h",
         "patchSetId": 4
