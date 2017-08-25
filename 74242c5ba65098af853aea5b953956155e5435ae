@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7f37cb1_fd1354fa",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-25T22:14:51Z",
+      "side": 1,
+      "message": "!OS_IOS isn\u0027t necessary here as this isn\u0027t built on that platform. Also, on Android tablet UI, icons are shown next to suggestions. Might make sense to keep the exclude until and unless we\u0027re ready to add favicons to the Android UI, but keep it in mind.",
+      "revId": "74242c5ba65098af853aea5b953956155e5435ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6988cf_491b778f",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-25T22:14:51Z",
+      "side": 1,
+      "message": "I\u0027d prefer to have all of this code here guarded by the feature flag rather than have any code active in the case where it\u0027s not enabled. Unless there\u0027s some reason we need to do the callback? (See next comment.)",
+      "revId": "74242c5ba65098af853aea5b953956155e5435ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49254e9_20ed54a1",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-25T22:14:51Z",
+      "side": 1,
+      "message": "Why the callback with an empty image? The match is already displaying the default icon, can\u0027t it be left in that default state?",
+      "revId": "74242c5ba65098af853aea5b953956155e5435ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f119eca_1a33ad25",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-25T22:14:51Z",
+      "side": 1,
+      "message": "I think you can use !AutocompleteMatch::IsSearchType(type) here.\n\nThe only difference relative to your new function is that EXTENSION_APP and CONTACT_DEPRECTED would be included. But from their comments, it sounds like these have URLs associated with them, so even if they\u0027re not likely to have favicons it probably can\u0027t hurt to include them.\n\nIf these types are problematic, it would probably be better to put those exclusions directly here alongside !IsSearchType or as a new function in AutocompleteMatch (or move IsSearchType to AutocompleteMatchType, that does seem like the more sensible location). Or maybe CONTACT_DEPRECATED should be added to IsSearchType, based on the logic below in TypeToVectorIcon.",
+      "revId": "74242c5ba65098af853aea5b953956155e5435ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
