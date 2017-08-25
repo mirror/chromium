@@ -5,6 +5,7 @@
 #ifndef CONTENT_RENDERER_MOJO_CONTEXT_STATE_H_
 #define CONTENT_RENDERER_MOJO_CONTEXT_STATE_H_
 
+#include <map>
 #include <memory>
 #include <set>
 #include <string>
@@ -14,9 +15,10 @@
 #include "gin/modules/module_registry_observer.h"
 #include "v8/include/v8.h"
 
+class GURL;
+
 namespace blink {
 class WebLocalFrame;
-class WebURLResponse;
 }
 
 namespace content {
@@ -50,9 +52,10 @@ class MojoContextState : public gin::ModuleRegistryObserver {
   void FetchModule(const std::string& module);
 
   // Callback once a module has finished downloading. Passes data to |runner_|.
-  void OnFetchModuleComplete(ResourceFetcher* fetcher,
-                             const std::string& id,
-                             const blink::WebURLResponse& response,
+  void OnFetchModuleComplete(const std::string& id,
+                             bool success,
+                             int http_status_code,
+                             const GURL& final_url,
                              const std::string& data);
 
   // gin::ModuleRegistryObserver overrides:
@@ -70,7 +73,7 @@ class MojoContextState : public gin::ModuleRegistryObserver {
   std::unique_ptr<MojoMainRunner> runner_;
 
   // Set of fetchers we're waiting on to download script.
-  std::vector<std::unique_ptr<ResourceFetcher>> module_fetchers_;
+  std::map<std::string, std::unique_ptr<ResourceFetcher>> module_fetchers_;
 
   // Set of modules we've fetched script from.
   std::set<std::string> fetched_modules_;
