@@ -566,7 +566,8 @@ void WallpaperManagerBase::GetCustomWallpaperInternal(
     // path.
     // Note that account id is used instead of wallpaper_files_id here.
     LOG(ERROR) << "Failed to load custom wallpaper from its original fallback "
-                  "file path: " << valid_path.value();
+                  "file path: "
+               << valid_path.value() << ", for: " << account_id.Serialize();
     const std::string& old_path = account_id.GetUserEmail();  // Migrated
     valid_path = GetCustomWallpaperPath(kOriginalWallpaperSubDir,
                                         WallpaperFilesId::FromString(old_path),
@@ -575,12 +576,12 @@ void WallpaperManagerBase::GetCustomWallpaperInternal(
 
   if (!base::PathExists(valid_path)) {
     LOG(ERROR) << "Failed to load previously selected custom wallpaper. "
-               << "Fallback to default wallpaper. Expected wallpaper path: "
-               << wallpaper_path.value();
+               << "Fallback to default wallpaper. Expected wallpaper path for "
+               << account_id.Serialize() << " is: " << wallpaper_path.value();
     reply_task_runner->PostTask(
-        FROM_HERE,
-        base::Bind(&WallpaperManagerBase::DoSetDefaultWallpaper, weak_ptr,
-                   account_id, base::Passed(std::move(on_finish))));
+        FROM_HERE, base::Bind(&WallpaperManagerBase::DoSetDefaultWallpaper,
+                              weak_ptr, account_id, update_wallpaper,
+                              base::Passed(std::move(on_finish))));
   } else {
     reply_task_runner->PostTask(
         FROM_HERE, base::Bind(&WallpaperManagerBase::StartLoad, weak_ptr,
@@ -831,7 +832,7 @@ void WallpaperManagerBase::LoadWallpaper(
     // In unexpected cases, revert to default wallpaper to fail safely. See
     // crosbug.com/38429.
     LOG(ERROR) << "Wallpaper reverts to default unexpected.";
-    DoSetDefaultWallpaper(account_id, std::move(on_finish));
+    DoSetDefaultWallpaper(account_id, update_wallpaper, std::move(on_finish));
   }
 }
 
