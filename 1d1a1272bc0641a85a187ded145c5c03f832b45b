@@ -34,6 +34,24 @@
       "revId": "1d1a1272bc0641a85a187ded145c5c03f832b45b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e687987f_1207c330",
+        "filename": "chrome/browser/predictors/loading_stats_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-08-25T13:55:00Z",
+      "side": 1,
+      "message": "I was wrong, the reference will be still valid after we move the pointer.\nDone",
+      "parentUuid": "41d6cc19_a8e1e5ea",
+      "revId": "1d1a1272bc0641a85a187ded145c5c03f832b45b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
