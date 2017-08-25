@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ba36aa04_306d5d4a",
+        "filename": "tools/battor_agent/battor_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-25T16:04:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a16b1fad_9ffe0206",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04dd668d_12c2bbbc",
         "filename": "tools/battor_agent/battor_agent.h",
         "patchSetId": 4
@@ -69,6 +87,24 @@
       "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22841ba7_a57852e7",
+        "filename": "tools/battor_agent/battor_agent.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-25T16:04:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cbf6f2cb_b69775e5",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "e4afdde7_dc032684",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-25T16:04:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c4f0eb1d_32fa7cbb",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d84127c2_23bf8a33",
         "filename": "tools/battor_agent/battor_connection_impl.cc",
         "patchSetId": 4
@@ -136,6 +190,24 @@
       "side": 1,
       "message": "Done. My original (and only) concern with this is that zero byte reads are common on Mac due to the instantaneous timeout, especially when we\u0027re waiting for the BattOr to send back the EEPROM or start streaming back the saved trace. I worry that 50ms will be long enough for the serial buffer on the Mac to overflow when this happens. Can you confirm that the serial buffer overflowing on Mac won\u0027t crash the drivers, and will instead just drop bytes? (Because we don\u0027t care about these bytes anyhow, dropping them due to buffer overflows is fine.)",
       "parentUuid": "d84127c2_23bf8a33",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99de8111_ba7865e4",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-25T16:04:25Z",
+      "side": 1,
+      "message": "Originally the issue you found seemed to me to be a driver crash of the FTDI driver, but thanks to your reproducible crash binary, I have confirmed that it is in fact a problem with the BattOr firmware. So, I don\u0027t think we have to be too concerned about the FTDI driver on Mac crashing if there is an overflow.",
+      "parentUuid": "26a04407_dd66659b",
       "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -177,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "2fdf8919_c7e212f5",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-25T16:04:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5730eddc_bed8e905",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93efdd3e_76a3bbf6",
         "filename": "tools/battor_agent/battor_connection_impl.cc",
         "patchSetId": 4
@@ -212,6 +302,24 @@
     },
     {
       "key": {
+        "uuid": "a4d9411f_51ef4863",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-25T16:04:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8b222c81_5857d9dd",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "056252bb_650c0231",
         "filename": "tools/battor_agent/battor_connection_impl.cc",
         "patchSetId": 4
@@ -241,6 +349,24 @@
       "side": 1,
       "message": "Yep. However, I changed it so that, if a read times out or reads zero bytes, the next read will happen 50ms later. It seems like the worst that will happen is that 1) the serial buffer overflows (which is okay - we don\u0027t care about those bytes anyway) or 2) bytes will pile up, in which case we will burn through the stored up data really quickly because if any read is successful then we immediately retry it.",
       "parentUuid": "056252bb_650c0231",
+      "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d44e9e_c08772b2",
+        "filename": "tools/battor_agent/battor_connection_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1210374
+      },
+      "writtenOn": "2017-08-25T16:04:25Z",
+      "side": 1,
+      "message": "Ah ok, so in that case will the total quiet period be 100ms -- 50ms after the first 0 byte read and another 50ms after the buffered up chunk of bytes comes in?",
+      "parentUuid": "c50c7ccd_40eae837",
       "revId": "79308754b183d64b12b13d1fc5acc07eae88cae5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
