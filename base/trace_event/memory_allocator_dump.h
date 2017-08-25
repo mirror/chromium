@@ -15,6 +15,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/trace_event/memory_allocator_dump_guid.h"
+#include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
 
 namespace base {
@@ -31,6 +32,30 @@ class BASE_EXPORT MemoryAllocatorDump {
 
     // A dump marked weak will be discarded by TraceViewer.
     WEAK = 1 << 0,
+  };
+
+  struct Entry {
+    enum EntryType {
+      Integer,
+      Double,
+      String,
+    };
+
+    Entry(std::string name, std::string units, uint64_t value);
+    Entry(std::string name, std::string units, double value);
+    Entry(std::string name, std::string units, std::string value);
+    Entry(Entry&& other);
+    Entry(const Entry& other);
+    bool operator==(const Entry& rhs) const;
+
+    std::string name;
+    std::string units;
+
+    EntryType entry_type;
+
+    uint64_t value_uint;
+    double value_double;
+    std::string value_string;
   };
 
   // Returns the Guid of the dump for the given |absolute_name| for the
@@ -93,19 +118,20 @@ class BASE_EXPORT MemoryAllocatorDump {
   // expected to have the same guid.
   const MemoryAllocatorDumpGuid& guid() const { return guid_; }
 
-  TracedValue* attributes_for_testing() const { return attributes_.get(); }
+  std::vector<Entry> entries() const { return entries_; }
+
+  std::unique_ptr<TracedValue> attributes_for_testing() const;
 
  private:
   const std::string absolute_name_;
   ProcessMemoryDump* const process_memory_dump_;  // Not owned (PMD owns this).
-  std::unique_ptr<TracedValue> attributes_;
   MemoryAllocatorDumpGuid guid_;
   int flags_;  // See enum Flags.
   uint64_t size_;
 
-  // A local buffer for Sprintf conversion on fastpath. Avoids allocating
-  // temporary strings on each AddScalar() call.
-  std::string string_conversion_buffer_;
+  std::vector<Entry> entries_;
+
+  void DumpAttributes(TracedValue* value) const;
 
   DISALLOW_COPY_AND_ASSIGN(MemoryAllocatorDump);
 };
