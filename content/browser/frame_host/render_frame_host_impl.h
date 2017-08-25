@@ -107,6 +107,7 @@ class RenderWidgetHostDelegate;
 class RenderWidgetHostImpl;
 class RenderWidgetHostView;
 class RenderWidgetHostViewBase;
+class RequestsTrackerImplHolder;
 class ResourceRequestBody;
 class SensorProviderProxyImpl;
 class StreamHandle;
@@ -839,6 +840,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // mojom::FrameHost
   void CreateNewWindow(mojom::CreateNewWindowParamsPtr params,
                        CreateNewWindowCallback callback) override;
+  void IssueRequestsTracker(mojom::RequestsTrackerRequest request) override;
 
   void RunCreateWindowCompleteCallback(CreateNewWindowCallback callback,
                                        mojom::CreateNewWindowReplyPtr reply,
@@ -1304,6 +1306,8 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   mojom::FrameInputHandlerPtr frame_input_handler_;
   std::unique_ptr<LegacyIPCFrameInputHandler> legacy_frame_input_handler_;
+
+  std::unique_ptr<RequestsTrackerImplHolder> requests_tracker_impl_holder_;
 
   // NOTE: This must be the last member.
   base::WeakPtrFactory<RenderFrameHostImpl> weak_ptr_factory_;

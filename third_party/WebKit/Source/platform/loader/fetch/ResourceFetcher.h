@@ -283,12 +283,14 @@ class PLATFORM_EXPORT ResourceFetcher
   // Timeout timer for keepalive requests.
   TaskRunnerTimer<ResourceFetcher> keepalive_loaders_timer_;
   SelfKeepAlive<ResourceFetcher> self_keep_alive_;
+  std::unique_ptr<WebURLRequestsTracker> requests_tracker_;
 
-  // 28 bits left
+  // 27 bits left
   bool auto_load_images_ : 1;
   bool images_enabled_ : 1;
   bool allow_stale_resources_ : 1;
   bool image_fetched_ : 1;
+  bool context_cleared_ : 1;
 };
 
 class ResourceCacheValidationSuppressor {

@@ -369,6 +369,9 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
     return Platform::Current()->CreateURLLoader(
         wrapped, task_runner->ToSingleThreadTaskRunner());
   }
+  std::unique_ptr<WebURLRequestsTracker> IssueRequestsTracker() override {
+    return nullptr;
+  }
 
   void AnnotatedRegionsChanged() override {}
 
