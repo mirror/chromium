@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d522f1f9_db8edb29",
+        "filename": "media/base/pipeline_status.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-25T18:49:16Z",
+      "side": 1,
+      "message": "Agree. Just documenting for any future renderers. Its not obvious from just the name that playback rate would be reflected.",
+      "parentUuid": "f833bbf4_b0d3f348",
+      "revId": "155972d980a2eb101fe40c1eaa5603a6bc468f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcc6e36d_14a18517",
         "filename": "media/blink/video_decode_stats_reporter.h",
         "patchSetId": 18
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4d51a43b_02a47352",
+        "filename": "media/blink/video_decode_stats_reporter.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-25T18:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcc6e36d_14a18517",
+      "revId": "155972d980a2eb101fe40c1eaa5603a6bc468f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdf70a11_a21bfe07",
         "filename": "media/filters/chunk_demuxer.cc",
         "patchSetId": 18
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-24T23:02:29Z",
       "side": 1,
       "message": "Drop? DLOG, or MEDIA_LOG?",
+      "revId": "155972d980a2eb101fe40c1eaa5603a6bc468f9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c69e460b_ee5109c8",
+        "filename": "media/filters/chunk_demuxer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-25T18:49:16Z",
+      "side": 1,
+      "message": "Woops - removed entirely. Was debugging something unrelated.",
+      "parentUuid": "bdf70a11_a21bfe07",
       "revId": "155972d980a2eb101fe40c1eaa5603a6bc468f9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
