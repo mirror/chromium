@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf74ed00_2604bf06",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-25T19:50:45Z",
+      "side": 1,
+      "message": "My intention was to highlight the \"clean\" requirement, and to save the effort of chasing down one more function to know the return value as it is non-trivial (a tuple). But yeah, good point on the format of docstrings!",
+      "parentUuid": "e3a8ce50_2b57170d",
+      "revId": "b6d00f08e3b1b3672dd3436436256b4f59cd4c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d568f211_a02eefc9",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
         "patchSetId": 1
