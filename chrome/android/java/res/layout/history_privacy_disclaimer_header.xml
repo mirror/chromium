@@ -10,15 +10,7 @@
     android:paddingBottom="16dp" >
 
     <org.chromium.ui.widget.TextViewWithClickableSpans
-        android:id="@+id/signed_in_not_synced"
-        style="@style/PrivacyDisclaimerText" />
-
-    <org.chromium.ui.widget.TextViewWithClickableSpans
-        android:id="@+id/signed_in_synced"
-        style="@style/PrivacyDisclaimerText" />
-
-    <org.chromium.ui.widget.TextViewWithClickableSpans
-        android:id="@+id/other_forms_of_browsing_history"
+        android:id="@+id/privacy_disclaimer"
         style="@style/PrivacyDisclaimerText" />
 
     <LinearLayout
