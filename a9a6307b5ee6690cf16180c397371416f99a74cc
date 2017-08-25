@@ -16,6 +16,24 @@
       "revId": "a9a6307b5ee6690cf16180c397371416f99a74cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134db2d8_f0de87bd",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-25T19:14:59Z",
+      "side": 1,
+      "message": "Yes, but if BackgroundChangedSinceLastPaintInvalidation is true, the box is already marked for full paint invalidation (see DCHECK).  So this is a nop in that case.",
+      "parentUuid": "a79e33c9_2d67d06d",
+      "revId": "a9a6307b5ee6690cf16180c397371416f99a74cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
