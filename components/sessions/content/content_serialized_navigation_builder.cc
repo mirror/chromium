@@ -15,6 +15,7 @@
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/common/page_state.h"
 #include "content/public/common/referrer.h"
+#include "ui/base/window_open_disposition.h"
 
 namespace sessions {
 
@@ -75,7 +76,9 @@ ContentSerializedNavigationBuilder::ToNavigationEntry(
               content::Referrer(navigation->referrer_url_, policy)),
           // Use a transition type of reload so that we don't incorrectly
           // increase the typed count.
-          ui::PAGE_TRANSITION_RELOAD, false,
+          ui::PAGE_TRANSITION_RELOAD,
+          // TODO: pass disposition
+          WindowOpenDisposition::UNKNOWN, false,
           // The extra headers are not sync'ed across sessions.
           std::string(), browser_context));
 
