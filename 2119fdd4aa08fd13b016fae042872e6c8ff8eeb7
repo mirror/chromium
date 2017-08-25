@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d4f24bc_9eeda255",
+        "filename": "chrome/android/java/res/layout/bookmark_row_content.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T00:52:12Z",
+      "side": 1,
+      "message": "Does it make sense to change selectable_list_layout_row_padding? Or add a selectable_list_layout_row_start_padding and selectable_list_layout_row_end_padding?",
+      "range": {
+        "startLine": 24,
+        "startChar": 32,
+        "endLine": 24,
+        "endChar": 35
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53abc1a0_7281d656",
+        "filename": "chrome/android/java/res/values/dimens.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T00:52:12Z",
+      "side": 1,
+      "message": "These toolbar dimensions are for the main toolbar that contains the omnibox, app menu button, etc. This offset is being used on the SelectableListToolbar, so we should call it selectablie_list_toolbar_nav_button_start_offset and put it in the SelectableListLayout section.",
+      "range": {
+        "startLine": 248,
+        "startChar": 17,
+        "endLine": 248,
+        "endChar": 49
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1fedc7_8845eeae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T00:52:12Z",
+      "side": 1,
+      "message": "Let\u0027s cache this in a class variable so that we don\u0027t have to calculate it on each layout pass.",
+      "range": {
+        "startLine": 213,
+        "startChar": 12,
+        "endLine": 213,
+        "endChar": 25
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16cf96f8_a129a789",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T00:52:12Z",
+      "side": 1,
+      "message": "This should also be FeatureUtilities#isChromeHomeModernEnabled().",
+      "range": {
+        "startLine": 213,
+        "startChar": 28,
+        "endLine": 214,
+        "endChar": 60
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb415f2c_a61816b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T00:52:12Z",
+      "side": 1,
+      "message": "Since this is only used in modern, let\u0027s work modern into the dimension name somewhere.\n\nAs an aside, what is the \"refine view\"? Is it the arrow at the end of each suggestion?",
+      "range": {
+        "startLine": 216,
+        "startChar": 34,
+        "endLine": 216,
+        "endChar": 71
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84754632_69816039",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T00:52:12Z",
+      "side": 1,
+      "message": "You probably want ApiCompatibilityUtils#setPaddingRelative(...). In RTL the \"start\" of the view is on the right side instead of the left, so we almost always want to use start/end padding, margin, etc. rather than left/right.",
+      "range": {
+        "startLine": 735,
+        "startChar": 15,
+        "endLine": 735,
+        "endChar": 37
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3199ea06_da49ddea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T00:52:12Z",
+      "side": 1,
+      "message": "This should also have modern somewhere in the name.",
+      "range": {
+        "startLine": 736,
+        "startChar": 49,
+        "endLine": 736,
+        "endChar": 89
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f7230b_26cad4e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T00:52:12Z",
+      "side": 1,
+      "message": "We may need to do something with the answers view as well. If you type something like \"weather in mountain view\" we show an image of the current weather + the temperature, etc. We should test what that looks like with this patch.\n\nWhat happens if you add start padding (and possibly end padding instead of adjusting the \"refine view\") to the entire SuggestionView (I\u0027d try adding it in the constructor) rather than to each element individually?",
+      "range": {
+        "startLine": 743,
+        "startChar": 12,
+        "endLine": 748,
+        "endChar": 34
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cf2bad0_1afd73ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T00:52:12Z",
+      "side": 1,
+      "message": "nit: Let\u0027s call it something like mModernNavButtonStartOffsetPx for consistency with mModernSearchViewStartOffsetPx and store the value in a class variable instead of retrieving it each time. I think #initialize() is a good place to initialize these variables (will you please move mModernSearchViewStartOffsetPx initialization from #configureWideDisplayStyle()).",
+      "range": {
+        "startLine": 506,
+        "startChar": 12,
+        "endLine": 506,
+        "endChar": 34
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d69a3895_6ae4ae70",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/selection/SelectableListToolbar.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T00:52:12Z",
+      "side": 1,
+      "message": "We should check !\u003d NAVIGATION_BUTTON_NONE instead of checking for each button type. There aren\u0027t any uses of NAVIGATION_BUTTON_MENU currently, but if there are future uses of that nav button or other nav buttons are added, we want padding to be consistently applied to all of them.",
+      "range": {
+        "startLine": 508,
+        "startChar": 16,
+        "endLine": 509,
+        "endChar": 76
+      },
+      "revId": "2119fdd4aa08fd13b016fae042872e6c8ff8eeb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
