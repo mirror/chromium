@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a79e33c9_2d67d06d",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-25T15:17:42Z",
+      "side": 1,
+      "message": "This used to get called only if\nBackgroundChangedSinceLastPaintInvalidation() was false.",
+      "revId": "a9a6307b5ee6690cf16180c397371416f99a74cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
