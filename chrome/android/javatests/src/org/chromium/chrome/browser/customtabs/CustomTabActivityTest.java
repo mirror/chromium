@@ -2488,7 +2488,9 @@ public class CustomTabActivityTest {
      */
     @Test
     @SmallTest
-    @CommandLineFlags.Add({"enable-spdy-proxy-auth", "data-reduction-proxy-lo-fi=always-on"})
+    @CommandLineFlags.Add({"enable-spdy-proxy-auth",
+            "disable-features=DataReductionProxyDecidesTransform",
+            "data-reduction-proxy-lo-fi=always-on"})
     @RetryOnFailure
     public void testLaunchWebLiteURLNoPreviews() throws Exception {
         final String testUrl = WEBLITE_PREFIX + mTestPage;
@@ -2505,7 +2507,8 @@ public class CustomTabActivityTest {
      */
     @Test
     @SmallTest
-    @CommandLineFlags.Add({"enable-spdy-proxy-auth", "enable-data-reduction-proxy-lite-page"})
+    @CommandLineFlags.Add({"enable-spdy-proxy-auth",
+            "disable-features=DataReductionProxyDecidesTransform"})
     @RetryOnFailure
     public void testLaunchWebLiteURLNoLoFi() throws Exception {
         final String testUrl = WEBLITE_PREFIX + mTestPage;
