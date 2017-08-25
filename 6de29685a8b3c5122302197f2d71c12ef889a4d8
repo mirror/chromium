@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00364fa0_40898357",
+        "filename": "base/metrics/record_histogram_checker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-25T19:37:05Z",
+      "side": 1,
+      "message": "This is the wrong macro. I think \"git cl lint\" will catch this.",
+      "revId": "6de29685a8b3c5122302197f2d71c12ef889a4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "975ab93f_0714c6de",
+        "filename": "base/metrics/record_histogram_checker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-25T19:37:05Z",
+      "side": 1,
+      "message": "Not needed?",
+      "revId": "6de29685a8b3c5122302197f2d71c12ef889a4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2492857f_32cecaea",
+        "filename": "base/metrics/record_histogram_checker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-25T19:37:05Z",
+      "side": 1,
+      "message": "Please add a dtor: virtual ~RecordHistogramChecker() {}",
+      "revId": "6de29685a8b3c5122302197f2d71c12ef889a4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7591ac52_a7b21c3d",
+        "filename": "base/metrics/statistics_recorder.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-25T19:37:05Z",
+      "side": 1,
+      "message": "just: return record_checker_ \u0026\u0026 record_checker_-\u003eFoo(...);",
+      "revId": "6de29685a8b3c5122302197f2d71c12ef889a4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3997a5b_39337aad",
+        "filename": "base/metrics/statistics_recorder_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-25T19:37:05Z",
+      "side": 1,
+      "message": "Add a destructor.",
+      "revId": "6de29685a8b3c5122302197f2d71c12ef889a4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7454eb64_7f39e1e3",
+        "filename": "components/metrics/expired_histograms_checker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-25T19:37:05Z",
+      "side": 1,
+      "message": "Prefer initializer lists. Then you can make |array_| const uint64_t* const, for instance.",
+      "revId": "6de29685a8b3c5122302197f2d71c12ef889a4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "893aedc2_3625dc97",
+        "filename": "components/metrics/expired_histograms_checker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-25T19:37:05Z",
+      "side": 1,
+      "message": "Need an override keyword once the base class has a virtual destructor.",
+      "revId": "6de29685a8b3c5122302197f2d71c12ef889a4d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
