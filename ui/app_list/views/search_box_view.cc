@@ -330,7 +330,7 @@ bool SearchBoxView::MoveArrowFocus(const ui::KeyEvent& event) {
 
   switch (focused_view_) {
     case FOCUS_NONE:
-      focused_view_ = move_up ? FOCUS_CONTENTS_VIEW : FOCUS_SEARCH_BOX;
+      focused_view_ = move_up ? FOCUS_NONE : FOCUS_SEARCH_BOX;
       break;
     case FOCUS_BACK_BUTTON:
     case FOCUS_SEARCH_BOX:
@@ -338,7 +338,7 @@ bool SearchBoxView::MoveArrowFocus(const ui::KeyEvent& event) {
       focused_view_ = move_up ? FOCUS_NONE : FOCUS_CONTENTS_VIEW;
       break;
     case FOCUS_CONTENTS_VIEW:
-      focused_view_ = move_up ? FOCUS_SEARCH_BOX : FOCUS_NONE;
+      focused_view_ = move_up ? FOCUS_SEARCH_BOX : FOCUS_CONTENTS_VIEW;
       break;
     default:
       NOTREACHED();
@@ -366,7 +366,7 @@ bool SearchBoxView::MoveTabFocus(bool move_backwards) {
       case FOCUS_NONE:
         focused_view_ =
             move_backwards
-                ? FOCUS_CONTENTS_VIEW
+                ? FOCUS_NONE
                 : (back_button_ && back_button_->visible() ? FOCUS_BACK_BUTTON
                                                            : FOCUS_SEARCH_BOX);
         break;
@@ -394,7 +394,7 @@ bool SearchBoxView::MoveTabFocus(bool move_backwards) {
                             ? (close_button_ && close_button_->visible()
                                    ? FOCUS_CLOSE_BUTTON
                                    : FOCUS_SEARCH_BOX)
-                            : FOCUS_NONE;
+                            : FOCUS_CONTENTS_VIEW;
         break;
       default:
         NOTREACHED();
