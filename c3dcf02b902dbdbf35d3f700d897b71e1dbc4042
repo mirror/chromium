@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5ea65861_6c701c72",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintWorklet.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T02:06:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e619c4aa_ab74a83a",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "c3dcf02b902dbdbf35d3f700d897b71e1dbc4042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd1c8877_0d886ade",
         "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintWorklet.cpp",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "a0f0282d_c8b6f346",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintWorklet.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T02:06:36Z",
+      "side": 1,
+      "message": "Done. I annotated ToLocalDOMWindow() with CORE_EXPORT in order to call it here.",
+      "parentUuid": "bd1c8877_0d886ade",
+      "revId": "c3dcf02b902dbdbf35d3f700d897b71e1dbc4042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc90665b_7ac9bbef",
         "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintWorklet.cpp",
         "patchSetId": 5
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-24T16:22:11Z",
       "side": 1,
       "message": "Do we need this method?",
+      "revId": "c3dcf02b902dbdbf35d3f700d897b71e1dbc4042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca70715b_8ef118e8",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintWorklet.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T02:06:36Z",
+      "side": 1,
+      "message": "This is not necessary. Removed.",
+      "parentUuid": "fc90665b_7ac9bbef",
       "revId": "c3dcf02b902dbdbf35d3f700d897b71e1dbc4042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "60bb9d55_ccb32b7f",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintWorklet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T02:06:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef1a7090_65db4ec6",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "c3dcf02b902dbdbf35d3f700d897b71e1dbc4042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb2d805d_46a116a7",
         "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintWorklet.h",
         "patchSetId": 5
@@ -96,6 +180,24 @@
       "revId": "c3dcf02b902dbdbf35d3f700d897b71e1dbc4042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f93975b_0f0dde7e",
+        "filename": "third_party/WebKit/Source/modules/csspaint/CSSPaintWorklet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T02:06:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb2d805d_46a116a7",
+      "revId": "c3dcf02b902dbdbf35d3f700d897b71e1dbc4042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
