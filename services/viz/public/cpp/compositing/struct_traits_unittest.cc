@@ -382,6 +382,7 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
   const bool root_overflow_x_hidden = true;
   const bool root_overflow_y_hidden = true;
   const bool may_contain_video = true;
+  const bool is_mobile_optimized = true;
   const bool is_resourceless_software_draw_with_scroll_or_animation = true;
   const float top_bar_height(1234.5f);
   const float top_bar_shown_ratio(1.0f);
@@ -424,6 +425,7 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
   input.root_overflow_x_hidden = root_overflow_x_hidden;
   input.root_overflow_y_hidden = root_overflow_y_hidden;
   input.may_contain_video = may_contain_video;
+  input.is_mobile_optimized = is_mobile_optimized;
   input.is_resourceless_software_draw_with_scroll_or_animation =
       is_resourceless_software_draw_with_scroll_or_animation;
   input.top_controls_height = top_bar_height;
@@ -450,6 +452,7 @@ TEST_F(StructTraitsTest, CompositorFrameMetadata) {
   EXPECT_EQ(root_overflow_x_hidden, output.root_overflow_x_hidden);
   EXPECT_EQ(root_overflow_y_hidden, output.root_overflow_y_hidden);
   EXPECT_EQ(may_contain_video, output.may_contain_video);
+  EXPECT_EQ(is_mobile_optimized, output.is_mobile_optimized);
   EXPECT_EQ(is_resourceless_software_draw_with_scroll_or_animation,
             output.is_resourceless_software_draw_with_scroll_or_animation);
   EXPECT_EQ(top_bar_height, output.top_controls_height);

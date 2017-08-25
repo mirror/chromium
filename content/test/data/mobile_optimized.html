@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      function addMeta(content) {
+        var meta = document.createElement('meta');
+        meta.setAttribute('name', 'viewport');
+        meta.setAttribute('content', content);
+        document.head.appendChild(meta);
+      }
+
+      var url = new URL(document.URL);
+      var width;
+
+      var width = '20vw';
+      if (url.searchParams.get('type') === 'meta') {
+        addMeta('width=device-width');
+      } else if (url.searchParams.get('type') === 'metawide') {
+        addMeta('width=device-width');
+        width = '300vw';
+      } else if (url.searchParams.get('type') === 'fixedzoom') {
+        addMeta('minimum-scale=2, maximum-scale=2');
+      }
+
+      window.onload = () => {
+          document.getElementById('wide').style.width = width;
+      };
+    </script>
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+      }
+      #wide {
+        height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wide"></div>
+  </body>
+</html>
