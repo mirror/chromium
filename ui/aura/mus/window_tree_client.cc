@@ -1444,10 +1444,13 @@ void WindowTreeClient::OnPointerEventObserved(std::unique_ptr<ui::Event> event,
 
 void WindowTreeClient::OnWindowFocused(Id focused_window_id) {
   WindowMus* focused_window = GetWindowByServerId(focused_window_id);
+  // LOG(ERROR) << "MSW WindowTreeClient::OnWindowFocused A " << focused_window_id << " " << focused_window; 
   InFlightFocusChange new_change(this, focus_synchronizer_.get(),
                                  focused_window);
-  if (ApplyServerChangeToExistingInFlightChange(new_change))
+  if (ApplyServerChangeToExistingInFlightChange(new_change)) {
+    // LOG(ERROR) << "MSW WindowTreeClient::OnWindowFocused B "; 
     return;
+  }
 
   focus_synchronizer_->SetFocusFromServer(focused_window);
 }

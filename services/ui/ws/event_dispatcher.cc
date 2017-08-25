@@ -517,8 +517,10 @@ void EventDispatcher::ProcessPointerEventOnFoundTarget(
       if (is_mouse_event)
         SetMouseCursorSourceWindow(pointer_target.window);
       if (!any_pointers_down) {
-        if (pointer_target.window)
-          delegate_->SetFocusedWindowFromEventDispatcher(pointer_target.window);
+        if (pointer_target.window) {
+          // LOG(ERROR) << " MSW EventDispatcher::ProcessPointerEventOnFoundTarget A" ; 
+          // delegate_->SetFocusedWindowFromEventDispatcher(pointer_target.window); 
+        }
         ServerWindow* capture_window = pointer_target.window;
         if (!capture_window) {
           gfx::Point event_location =
@@ -562,7 +564,8 @@ void EventDispatcher::ProcessPointerEventOnFoundTarget(
       ServerWindow* toplevel = modal_window_controller_.GetToplevelWindow(
           found_location_target.deepest_window.window);
       DCHECK(toplevel);
-      delegate_->SetFocusedWindowFromEventDispatcher(toplevel);
+      // LOG(ERROR) << "MSW EventDispatcher::ProcessPointerEventOnFoundTarget B "; 
+      // delegate_->SetFocusedWindowFromEventDispatcher(toplevel); 
       delegate_->OnEventOccurredOutsideOfModalWindow(modal_transient);
     } else if (found_location_target.deepest_window.window->IsDrawn() &&
                modal_window_controller_.IsWindowBlocked(

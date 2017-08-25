@@ -39,7 +39,7 @@
 #include "ui/display/types/display_constants.h"
 #include "ui/platform_window/mojo/ime_type_converters.h"
 #include "ui/platform_window/text_input_state.h"
-
+#include "base/debug/stack_trace.h" 
 using mojo::InterfaceRequest;
 
 using EventProperties = std::unordered_map<std::string, std::vector<uint8_t>>;
@@ -1024,6 +1024,8 @@ void WindowTree::ProcessFocusChanged(const ServerWindow* old_focused_window,
       window_server_->IsOperationSource(id_)) {
     return;
   }
+  // LOG(ERROR) << "MSW WindowTree::ProcessFocusChanged "; 
+  // base::debug::StackTrace().Print(); 
   const ServerWindow* window =
       new_focused_window
           ? access_policy_->GetWindowForFocusChange(new_focused_window)

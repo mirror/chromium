@@ -113,6 +113,7 @@ void MenuHost::InitMenuHost(Widget* parent,
       Widget::InitParams::TRANSLUCENT_WINDOW :
       Widget::InitParams::OPAQUE_WINDOW;
   params.parent = parent ? parent->GetNativeView() : NULL;
+  LOG(ERROR) << "MSW MenuHost::InitMenuHost " << parent << " " << (parent ? parent->GetName() : "") << " " << params.parent << " " << (params.parent? params.parent->GetName() : "");
   params.bounds = bounds;
 #if defined(OS_WIN)
   // On Windows use the software compositor to ensure that we don't block

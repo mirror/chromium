@@ -35,6 +35,8 @@
 #include "ui/views/controls/progress_bar.h"
 #include "ui/views/drag_controller.h"
 
+#include "ui/aura/window.h"
+#include "ui/views/widget/widget.h"
 namespace app_list {
 
 namespace {
@@ -269,6 +271,7 @@ void AppListItemView::ShowContextMenuForView(views::View* source,
     apps_grid_view_->ClearAnySelectedView();
   context_menu_runner_.reset(
       new views::MenuRunner(menu_model, views::MenuRunner::HAS_MNEMONICS));
+  LOG(ERROR) << "MSW ShowContextMenuForView " << GetWidget() << " " << GetWidget()->GetName() << " / " << GetWidget()->GetNativeWindow() << " " << GetWidget()->GetNativeWindow()->GetName();
   context_menu_runner_->RunMenuAt(GetWidget(), NULL,
                                   gfx::Rect(point, gfx::Size()),
                                   views::MENU_ANCHOR_TOPLEFT, source_type);

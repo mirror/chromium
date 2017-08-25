@@ -39,7 +39,7 @@
 #include "ui/views/widget/widget_removals_observer.h"
 #include "ui/views/window/custom_frame_view.h"
 #include "ui/views/window/dialog_delegate.h"
-
+#include "base/debug/stack_trace.h" 
 namespace views {
 
 namespace {
@@ -572,6 +572,7 @@ void Widget::SetShape(std::unique_ptr<ShapeRects> shape) {
 }
 
 void Widget::Close() {
+  LOG(ERROR) << "MSW Widget::Close " << GetName(); 
   if (widget_closed_) {
     // It appears we can hit this code path if you close a modal dialog then
     // close the last browser before the destructor is hit, which triggers
@@ -660,6 +661,8 @@ void Widget::Activate() {
 }
 
 void Widget::Deactivate() {
+  LOG(ERROR) << "MSW Widget::Deactivate "; 
+  // base::debug::StackTrace().Print(); 
   native_widget_->Deactivate();
 }
 

@@ -11,7 +11,7 @@
 #include "ui/aura/mus/focus_synchronizer_delegate.h"
 #include "ui/aura/mus/window_mus.h"
 #include "ui/aura/window.h"
-
+#include "base/debug/stack_trace.h" 
 namespace aura {
 
 FocusSynchronizer::FocusSynchronizer(FocusSynchronizerDelegate* delegate,
@@ -33,6 +33,7 @@ void FocusSynchronizer::RemoveObserver(FocusSynchronizerObserver* observer) {
 }
 
 void FocusSynchronizer::SetFocusFromServer(WindowMus* window) {
+  // LOG(ERROR) << "MSW FocusSynchronizer::SetFocusFromServer A " << focused_window_ << " -> " << window; 
   if (focused_window_ == window)
     return;
 
@@ -125,6 +126,8 @@ void FocusSynchronizer::OnActiveFocusClientChanged(
 
 void FocusSynchronizer::OnWindowFocused(Window* gained_focus,
                                         Window* lost_focus) {
+  // LOG(ERROR) << "MSW FocusSynchronizer::OnWindowFocused A "; 
+  // base::debug::StackTrace().Print(); 
   WindowMus* gained_focus_mus = WindowMus::Get(gained_focus);
   if (setting_focus_ && gained_focus_mus == window_setting_focus_to_) {
     focused_window_ = gained_focus_mus;

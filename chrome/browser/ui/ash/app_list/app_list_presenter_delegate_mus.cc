@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/ash/app_list/app_list_presenter_delegate_mus.h"
 
+#include "ui/aura/window.h"
 #include "ui/app_list/presenter/app_list_presenter_impl.h"
 #include "ui/app_list/presenter/app_list_view_delegate_factory.h"
 #include "ui/app_list/views/app_list_view.h"
@@ -11,6 +12,9 @@
 #include "ui/display/screen.h"
 #include "ui/views/mus/mus_client.h"
 #include "ui/views/mus/pointer_watcher_event_router.h"
+#include "ui/wm/core/window_util.h"
+
+#include "base/strings/stringprintf.h"
 
 namespace {
 
@@ -111,15 +115,68 @@ base::TimeDelta AppListPresenterDelegateMus::GetVisibilityAnimationDuration(
                     : animation_duration();
 }
 
+void PrintWindowHierarchy(const aura::Window* active_window,
+                          aura::Window* window,
+                          int indent,
+                          std::ostringstream* out) {
+  std::string indent_str(indent, ' ');
+  std::string name(window->GetName());
+  if (name.empty())
+    name = "\"\"";
+  *out << indent_str << name << " (" << window << ")"
+       << " type=" << window->type()
+       << ((window == active_window) ? " [active] " : " ")
+       << (window->IsVisible() ? " visible " : " ")
+       << window->bounds().ToString()
+      //  << (window->GetProperty(kSnapChildrenToPixelBoundary) ? " [snapped] "
+      //                                                        : "")
+      //  << ", subpixel offset="
+      //  << window->layer()->subpixel_position_offset().ToString()
+       << '\n';
+
+  for (aura::Window* child : window->children())
+    PrintWindowHierarchy(active_window, child, indent + 3, out);
+}
+
 void AppListPresenterDelegateMus::OnPointerEventObserved(
     const ui::PointerEvent& event,
     const gfx::Point& location_in_screen,
     gfx::NativeView target) {
   views::Widget* target_widget =
       views::Widget::GetTopLevelWidgetForNativeView(target);
+  views::Widget* this_widget = view_ ? view_->GetWidget() : nullptr;
+  aura::Window* this_window = this_widget? this_widget->GetNativeWindow() : nullptr;
+  std::string parents;
+  for (aura::Window* i = target; i; i = wm::GetTransientParent(i)) parents += base::StringPrintf("%p %s, ", i, i->GetName().c_str());
+  LOG(ERROR) << "MSW target: " << parents;
+  parents = "";
+  for (aura::Window* i = target ? target->parent() : nullptr; i; i = wm::GetTransientParent(i)) parents += base::StringPrintf("%p %s, ", i, i->GetName().c_str());
+  LOG(ERROR) << "MSW target->parent(): " << parents;
+  parents = "";
+  for (aura::Window* i = this_window; i; i = i->parent()) parents += base::StringPrintf("%p %s, ", i, i->GetName().c_str());
+  LOG(ERROR) << "MSW this:   " << parents;
+  LOG(ERROR) << "MSW HasTransientAncestor: " << (this_window && target && wm::HasTransientAncestor(target, this_window)) << " event_target:" << event.target();
+  LOG(ERROR) << "MSW target_widget:" << target_widget << " " << (target_widget ? target_widget->GetName() : "") << " this:" << this_widget << " " << (this_widget ? this_widget->GetName() : "");
+  parents = "";
+  for (aura::Window* i = target; i; i = i->parent()) parents += base::StringPrintf("%p %s, ", i, i->GetName().c_str());
+  LOG(ERROR) << "MSW parents: " << parents;
+
+  // MSW target->parent(): 0x1a562b7c87a0 , 0x1a562c857920 AppListView, 
+  // MSW this:   0x1a562b36e320 DesktopNativeWidgetAura - content window, 0x1a562c857920 AppListView, 
+  
+  LOG(ERROR) << "MSW TRANSIENT: " << (this_window && this_window->parent() && target && target->parent() && wm::HasTransientAncestor(target->parent(), this_window->parent()));
+  
   // Dismiss app list on a mouse click or touch outside of the app list window.
   if ((event.type() == ui::ET_TOUCH_PRESSED ||
        event.type() == ui::ET_POINTER_DOWN) &&
-      (!target || (view_ && target_widget != view_->GetWidget())))
+      (!target || (view_ && target_widget != view_->GetWidget()))) {
+    std::ostringstream out_target, out_app_list;
+    PrintWindowHierarchy(nullptr, target->GetRootWindow(), 0, &out_target);
+    LOG(ERROR) << "MSW WINDOWs (target)\n" << out_target.str();
+
+    PrintWindowHierarchy(nullptr, this_window->GetRootWindow(), 0, &out_app_list);
+    LOG(ERROR) << "MSW WINDOWs (app list)\n" << out_app_list.str();
+
     presenter_->Dismiss();
+  }
 }
