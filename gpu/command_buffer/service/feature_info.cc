@@ -1331,6 +1331,8 @@ void FeatureInfo::InitializeFeatures() {
     validators_.texture_internal_format.AddValue(GL_RED_EXT);
     validators_.texture_unsized_internal_format.AddValue(GL_RED_EXT);
   }
+  UMA_HISTOGRAM_BOOLEAN("GPU.TextureR16_EXT",
+                        feature_flags_.ext_texture_norm16);
 
   bool has_opengl_dual_source_blending =
       gl_version_info_->IsAtLeastGL(3, 3) ||
@@ -1641,6 +1643,10 @@ void FeatureInfo::InitializeFloatAndHalfFloatFeatures(
           GL_LUMINANCE_ALPHA16F_EXT);
     }
   }
+
+  UMA_HISTOGRAM_BOOLEAN(
+      "GPU.TextureLUMINANCE_F16",
+      enable_texture_half_float && feature_flags_.ext_texture_storage);
 }
 
 bool FeatureInfo::IsES3Capable() const {
