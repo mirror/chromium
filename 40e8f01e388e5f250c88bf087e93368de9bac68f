@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2461b2af_92f5f0cb",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-25T00:53:07Z",
+      "side": 1,
+      "message": "Nit: I\u0027d call this |parent|.",
+      "revId": "40e8f01e388e5f250c88bf087e93368de9bac68f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b9f908_a9cb3605",
+        "filename": "chrome/browser/ui/views/frame/opaque_browser_frame_view_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-25T00:53:07Z",
+      "side": 1,
+      "message": "Nit: I\u0027d probably omit this.  It\u0027s not clear why a reader would question whether we\u0027d have a parent if it\u0027s known that we have a widget.",
+      "revId": "40e8f01e388e5f250c88bf087e93368de9bac68f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
