@@ -19,6 +19,10 @@ import org.chromium.chrome.browser.AppHooks;
  */
 public class DownloadForegroundService extends Service {
     private final IBinder mBinder = new LocalBinder();
+    private final DownloadSharedPreferenceHelper mDownloadSharedPreferenceHelper =
+            DownloadSharedPreferenceHelper.getInstance();
+    private final DownloadNotificationService mDownloadNotificationService =
+            DownloadNotificationService.getInstance();
 
     /**
      * Start the foreground service with this given context.
@@ -46,8 +50,26 @@ public class DownloadForegroundService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // This should restart service after Chrome gets killed (except for Android 4.4.2).
+        // In the case the service was restarted (intent is null), resume all downloads.
+        if (intent == null) {
+            mDownloadNotificationService.handleForegroundServiceRestarted();
+        }
+
+        // Should restart the service after Chrome gets killed. Doesn't work on Android 4.4.2.
         return START_STICKY;
+    }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
+        mDownloadNotificationService.handleForegroundServiceTaskRemoved();
+    }
+
+    @Override
+    public void onDestroy() {
+        // TODO(jming): Putting this here makes this class less generalized, consider another way.
+        mDownloadNotificationService.handleForegroundServiceDestroyed();
+        super.onDestroy();
     }
 
     @Nullable
