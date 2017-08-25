@@ -98,7 +98,7 @@ interface MyIFaceWrongRecordKeyType {
  *Interface(MyIFaceBig)
  *  Const(setString)
  *    StringType(DOMString)
- *    Value(NULL)
+ *    Value() = "NULL"
  */
 interface MyIFaceBig {
   const DOMString? setString = null;
@@ -113,7 +113,7 @@ interface MyIFaceBig {
  *          Sequence()
  *            Type()
  *              StringType(DOMString)
- *        Default()
+ *        Default() = "[]"
  *    Type()
  *      PrimitiveType(void)
  */
@@ -156,13 +156,13 @@ interface MyIfaceWithRecords {
  *Interface(MyIFaceBig2)
  *  Const(nullValue)
  *    StringType(DOMString)
- *    Value(NULL)
+ *    Value() = "NULL"
  *  Const(longValue)
  *    PrimitiveType(long)
- *    Value(123)
+ *    Value() = "123"
  *  Const(longValue2)
  *    PrimitiveType(long long)
- *    Value(123)
+ *    Value() = "123"
  *  Attribute(myString)
  *    Type()
  *      StringType(DOMString)
@@ -253,10 +253,10 @@ interface MyIFaceStringifiers {
  *      PrimitiveType(void)
  *    ExtAttributes()
  *      ExtAttribute(Attr)
- *      ExtAttribute(MethodIdentList)
+ *      ExtAttribute(MethodIdentList) = "['Foo', 'Bar']"
  *  ExtAttributes()
  *    ExtAttribute(MyExtendedAttribute)
- *    ExtAttribute(MyExtendedIdentListAttribute)
+ *    ExtAttribute(MyExtendedIdentListAttribute) = "['Foo', 'Bar', 'Baz']"
  */
 [MyExtendedAttribute,
  MyExtendedIdentListAttribute=(Foo, Bar, Baz)]
