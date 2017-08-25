@@ -32,6 +32,10 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/geometry/rect_f.h"
 
+#if defined(ANDROID)
+#include "base/android/build_info.h"
+#endif
+
 // The name of the username/password element in the form.
 const char kUsernameName[] = "username";
 const char kInvalidUsername[] = "no-username";
@@ -80,6 +84,15 @@ class MockAutofillClient : public autofill::TestAutofillClient {
   MOCK_METHOD0(HideAutofillPopup, void());
   MOCK_METHOD1(ExecuteCommand, void(int));
 };
+
+bool IsPreLollipopAndroid() {
+#if defined(ANDROID)
+  return (base::android::BuildInfo::GetInstance()->sdk_int() >=
+          base::android::SDK_VERSION_LOLLIPOP);
+#else
+  return false;
+#endif
+}
 
 }  // namespace
 
@@ -133,7 +146,8 @@ class PasswordAutofillManagerTest : public testing::Test {
 
   static bool IsManualFallbackForFillingEnabled() {
     return base::FeatureList::IsEnabled(
-        password_manager::features::kEnableManualFallbacksFilling);
+               password_manager::features::kEnableManualFallbacksFilling) &&
+           !IsPreLollipopAndroid();
   }
 
   std::unique_ptr<PasswordAutofillManager> password_autofill_manager_;
