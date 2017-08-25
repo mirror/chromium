@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9dbe96fa_742f1901",
+        "filename": "services/ui/public/interfaces/window_tree.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-25T22:23:46Z",
+      "side": 1,
+      "message": "We don\u0027t need the |connection_id| here anymore, right?\n\nWe should also remove WindowManager.OnConnect()?",
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea65ea02_d631bca0",
         "filename": "services/ui/ws/ids.h",
         "patchSetId": 4
@@ -152,6 +169,23 @@
         "endLine": 424,
         "endChar": 13
       },
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a798f76_15761c34",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-25T22:23:46Z",
+      "side": 1,
+      "message": "Update comment.",
       "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
