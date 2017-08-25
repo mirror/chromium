@@ -37,6 +37,9 @@ class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
   void MakeCredential(webauth::mojom::MakeCredentialOptionsPtr options,
                       MakeCredentialCallback callback) override;
 
+  bool HasValidAlgorithm(
+      std::vector<webauth::mojom::PublicKeyCredentialParametersPtr> parameters);
+
   base::Closure connection_error_handler_;
   base::CancelableClosure timeout_callback_;
   url::Origin caller_origin_;
