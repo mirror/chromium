@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e3930a8_4edec4d8",
+        "filename": "chrome/installer/setup/install.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-25T16:54:33Z",
+      "side": 1,
+      "message": "Worth DCHECKing that the Dark exists here? (I\u0027m thinking by Windows 10.17 we\u0027ll have forgotten about this and might only put Light ones in.)",
+      "revId": "1eca1358f0377b2a8e9cc74f78e3c94c5dbfb789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045896ce_b202bdb2",
+        "filename": "chrome/installer/setup/install_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-25T16:54:33Z",
+      "side": 1,
+      "message": "Why testing::Bool() instead of Values(false)?",
+      "range": {
+        "startLine": 236,
+        "startChar": 21,
+        "endLine": 236,
+        "endChar": 36
+      },
+      "revId": "1eca1358f0377b2a8e9cc74f78e3c94c5dbfb789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c08793_e8bf4b9e",
+        "filename": "chrome/installer/setup/install_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-25T16:54:33Z",
+      "side": 1,
+      "message": "Is an explicit delay needed between the two GetFileInfo()s to ensure this doesn\u0027t flake if UpdateVisualElementsManifest() is sufficiently fast?",
+      "range": {
+        "startLine": 526,
+        "startChar": 6,
+        "endLine": 526,
+        "endChar": 23
+      },
+      "revId": "1eca1358f0377b2a8e9cc74f78e3c94c5dbfb789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852c27b4_ba35da23",
+        "filename": "chrome/installer/setup/setup_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-25T16:54:33Z",
+      "side": 1,
+      "message": "So optimistic!",
+      "range": {
+        "startLine": 854,
+        "startChar": 25,
+        "endLine": 854,
+        "endChar": 27
+      },
+      "revId": "1eca1358f0377b2a8e9cc74f78e3c94c5dbfb789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
