@@ -67,8 +67,11 @@ class PDFIFrameNavigationThrottleTest : public ChromeRenderViewHostTestHarness {
         ->InitializeRenderFrameIfNeeded();
     subframe_ = content::RenderFrameHostTester::For(main_rfh())
                     ->AppendChild("subframe");
+
+    feature_list_.InitAndEnableFeature(features::kClickToOpenPDFPlaceholder);
   }
 
+  base::test::ScopedFeatureList feature_list_;
   content::RenderFrameHost* subframe_;
 };
 
