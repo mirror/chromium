@@ -480,7 +480,13 @@ def setter_expression(interface, attribute, context):
             not attribute.is_static):
         arguments.append('*impl')
     idl_type = attribute.idl_type
-    if idl_type.base_type == 'EventHandler':
+
+    is_compact_event_handler_setter = (idl_type.base_type == 'EventHandler' and
+                                       interface.name != 'Window' and
+                                       not (interface.name in ['Window', 'WorkerGlobalScope'] and attribute.name == 'onerror'))
+    if is_compact_event_handler_setter:
+        arguments.append('listener')
+    elif idl_type.base_type == 'EventHandler':
         getter_name = scoped_name(interface, attribute, cpp_name(attribute))
         context['event_handler_getter_expression'] = '%s(%s)' % (
             getter_name, ', '.join(arguments))
@@ -497,6 +503,7 @@ def setter_expression(interface, attribute, context):
                 'kListenerFindOrCreate)')
     else:
         arguments.append('cppValue')
+
     if idl_type.is_explicit_nullable:
         arguments.append('isNull')
     if context['is_setter_raises_exception']:

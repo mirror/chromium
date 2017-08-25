@@ -21,10 +21,23 @@ namespace blink {
 
 class ScriptState;
 class SerializedScriptValue;
+class V8EventListener;
 
 CORE_EXPORT void V8ConstructorAttributeGetter(
     v8::Local<v8::Name> property_name,
     const v8::PropertyCallbackInfo<v8::Value>&);
+
+using V8EventHandlerGetterImpl =
+    std::pair<EventListener*, ExecutionContext*> (*)(ScriptWrappable*);
+CORE_EXPORT void V8EventHandlerGetter(
+    const v8::FunctionCallbackInfo<v8::Value>&,
+    V8EventHandlerGetterImpl);
+
+using V8EventHandlerSetterImpl = void (*)(ScriptWrappable*, V8EventListener*);
+CORE_EXPORT void V8EventHandlerSetter(
+    v8::Local<v8::Value>,
+    const v8::FunctionCallbackInfo<v8::Value>&,
+    V8EventHandlerSetterImpl);
 
 CORE_EXPORT v8::Local<v8::Value> V8Deserialize(
     v8::Isolate*,

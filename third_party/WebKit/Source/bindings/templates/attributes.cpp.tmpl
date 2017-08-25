@@ -9,6 +9,14 @@ const v8::PropertyCallbackInfo<v8::Value>& info
 {%- else %}
 const v8::FunctionCallbackInfo<v8::Value>& info
 {%- endif %}) {
+  {% if attribute.idl_type == 'EventHandler' and interface_name != 'Window' and not ((interface_name == 'Window' or interface_name == 'WorkerGlobalScope') and attribute.name == 'onerror') %}
+  // TODO(jbroman): Finish this if it's worthwhile.
+  V8EventHandlerGetter(info, [](ScriptWrappable* wrappable) -> std::pair<EventListener*, ExecutionContext*> {
+    if (auto* impl = wrappable->ToImpl<{{cpp_class}}>())
+      return { {{attribute.cpp_value_original}}, impl->GetExecutionContext() };
+    return { nullptr, nullptr };
+  });
+  {% else %}
   {% filter format_remove_duplicates(['ExceptionState exceptionState']) %}
   {% set define_exception_state -%}
   ExceptionState exceptionState(info.GetIsolate(), ExceptionState::kGetterContext, "{{interface_name}}", "{{attribute.name}}");
@@ -177,6 +185,7 @@ const v8::FunctionCallbackInfo<v8::Value>& info
   privateSameObject.Set(holder, info.GetReturnValue().Get());
   {% endif %}
   {% endfilter %}{# format_remove_duplicates #}
+  {% endif %}{# attribute.idl_type == 'EventHandler' #}
 }
 {% endmacro %}
 
@@ -298,6 +307,13 @@ v8::Local<v8::Value> v8Value, const v8::PropertyCallbackInfo<void>& info
 {%- else %}
 v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info
 {%- endif %}) {
+{% if attribute.idl_type == 'EventHandler' and interface_name != 'Window' and not ((interface_name == 'Window' or interface_name == 'WorkerGlobalScope') and attribute.name == 'onerror') %}
+  // TODO(jbroman): This is currently a hack. Un-hackify it.
+  V8EventHandlerSetter(v8Value, info, [](ScriptWrappable* wrappable, V8EventListener* listener) {
+    auto* impl = wrappable->ToImpl<{{cpp_class}}>();
+    {{attribute.cpp_setter}};
+  });
+{% else %}
   {% filter format_remove_duplicates(['ExceptionState exceptionState']) %}
   v8::Isolate* isolate = info.GetIsolate();
   ALLOW_UNUSED_LOCAL(isolate);
@@ -437,8 +453,9 @@ v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info
       .DeleteProperty(holder, v8::Undefined(isolate));
   {% endif %}
   {% endif %}{# attribute.is_put_forwards #}
-}
 {% endfilter %}{# format_remove_duplicates #}
+{% endif %}{# attribute.idl_type == 'EventHandler' #}
+}
 {% endmacro %}
 
 
