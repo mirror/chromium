@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f8743f5_72c37673",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-25T04:27:43Z",
+      "side": 1,
+      "message": "Is this style need?",
+      "revId": "d1f060b57814239c401ce936baa35f69b045300f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93fed1fd_b5775df3",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 979,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-25T04:27:43Z",
+      "side": 1,
+      "message": "This case contains much redundant empty characters.\nCould you shrink this case as minimal as possible?",
+      "revId": "d1f060b57814239c401ce936baa35f69b045300f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
