@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a5becf1_f8ce0189",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_dice_header/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-25T16:14:05Z",
+      "side": 1,
+      "message": "single quotes in JS",
+      "revId": "cb72e81b136d55b3280294cfb3eeddf8b7d07125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f0376f_463619ee",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_dice_header/background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-25T16:14:05Z",
+      "side": 1,
+      "message": "missing space (also on line 15)",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 7
+      },
+      "revId": "cb72e81b136d55b3280294cfb3eeddf8b7d07125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc76b2d_a9c4b211",
+        "filename": "chrome/test/data/extensions/dice.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-25T16:14:05Z",
+      "side": 1,
+      "message": "extra newline",
+      "revId": "cb72e81b136d55b3280294cfb3eeddf8b7d07125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4e4731f_3df2a964",
+        "filename": "extensions/browser/api/declarative_webrequest/webrequest_action.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-25T16:14:05Z",
+      "side": 1,
+      "message": "Can we pull this into a common constant somewhere?",
+      "revId": "cb72e81b136d55b3280294cfb3eeddf8b7d07125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0e04e6b_db1f4073",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2346,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-25T16:14:05Z",
+      "side": 1,
+      "message": "else {\n  if (foo) {\n\n-\u003e\n\nelse if (foo) {",
+      "revId": "cb72e81b136d55b3280294cfb3eeddf8b7d07125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
