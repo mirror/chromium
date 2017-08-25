@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6391099e_e881ac6b",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-08-25T16:37:05Z",
+      "side": 1,
+      "message": "Added a check to make sure we are still on a file url.",
+      "parentUuid": "24f69337_9dbea7ff",
+      "revId": "1fbb40f12aa9d0279a07f51039a5d97e6207ee59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8d55c8e_64b7c4cd",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "1fbb40f12aa9d0279a07f51039a5d97e6207ee59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8e2b26_6df0953b",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-08-25T16:37:05Z",
+      "side": 1,
+      "message": "Done. Good call.",
+      "parentUuid": "f8d55c8e_64b7c4cd",
+      "revId": "1fbb40f12aa9d0279a07f51039a5d97e6207ee59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "24a91087_cf6bf6b5",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-08-25T16:37:05Z",
+      "side": 1,
+      "message": "Went with FullScreenFirstVideoElement",
+      "parentUuid": "fb2ae48a_9ea0542a",
+      "revId": "1fbb40f12aa9d0279a07f51039a5d97e6207ee59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99d750e8_02ab5c7c",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-24T20:20:46Z",
       "side": 1,
       "message": "Rather than a blanket opt-in for file:, I wonder if it would be better to add a flag to a specific FTN to permit Javascript execution.  I don\u0027t have the design context to know if that is the best solution however.",
+      "revId": "1fbb40f12aa9d0279a07f51039a5d97e6207ee59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a86b31a_c395e618",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3885,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-08-25T16:37:05Z",
+      "side": 1,
+      "message": "I also do not know. I would like to get feedback from somebody who does before making extensive changes.",
+      "parentUuid": "99d750e8_02ab5c7c",
       "revId": "1fbb40f12aa9d0279a07f51039a5d97e6207ee59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
