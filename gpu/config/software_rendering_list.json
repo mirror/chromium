@@ -1,6 +1,6 @@
 {
   "name": "software rendering list",
-  "version": "13.12",
+  "version": "13.13",
   "entries": [
     {
       "id": 1,
@@ -1531,6 +1531,20 @@
       "gl_renderer": ".*VideoCore V.*",
       "features": [
         "gpu_rasterization"
+      ]
+    },
+    {
+      "id": 149,
+      "description": "Apple Software Renderer used under VMWare renders WebGL incorrectly",
+      "cr_bugs": [732754],
+      "os": {
+        "type": "macosx"
+      },
+      "vendor_id": "0x15ad",
+      "multi_gpu_category": "any",
+      "features": [
+        "webgl",
+        "webgl2"
       ]
     }
   ],
