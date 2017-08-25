@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1547344c_f94cdae6",
+        "filename": "extensions/common/api/bluetooth_private.idl",
+        "patchSetId": 40
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-25T23:24:26Z",
+      "side": 1,
+      "message": "Given this is a private API, this seems like something we should be able to deprecate eventually.  Can we file a bug to that end?",
+      "revId": "0e7279cecaa07e31cc4cad755a0bbde413599cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
