@@ -25,6 +25,70 @@
     },
     {
       "key": {
+        "uuid": "0a751ba9_d823b9af",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-25T21:01:18Z",
+      "side": 1,
+      "message": "Not sure how to agree with that.\nhttps://cs.chromium.org/search/?q\u003d%5E%5Cs*using%5Cs.*%5Cs%3D%5Cs.*::.*;\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nI mean this works, and I am ok with typedefs, but the comment you made might be off.",
+      "parentUuid": "4328781f_61efa450",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 62
+      },
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c28159f_cef744b0",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-25T21:01:18Z",
+      "side": 1,
+      "message": "Run git cl format.",
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2e02b23_2f59abec",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-25T21:01:18Z",
+      "side": 1,
+      "message": "This looks unnecessarily complex. How about dropping const from for loop?\nand then:\nready_item.guid \u003d guid? or even base::GenerateGUID()",
+      "range": {
+        "startLine": 132,
+        "startChar": 23,
+        "endLine": 132,
+        "endChar": 27
+      },
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "628840ee_d612093b",
         "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
         "patchSetId": 2
@@ -45,6 +109,30 @@
       "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0821c9ce_95e371d1",
+        "filename": "components/offline_pages/core/prefetch/download_archives_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-25T21:01:18Z",
+      "side": 1,
+      "message": "Ack.\n\nI don\u0027t see a problem with that.\nI am wondering whether that was necessary. Were you not able to do the UMA reporting from within the task?",
+      "parentUuid": "628840ee_d612093b",
+      "range": {
+        "startLine": 28,
+        "startChar": 9,
+        "endLine": 28,
+        "endChar": 21
+      },
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "932eec56_11c3e416",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-25T21:01:18Z",
+      "side": 1,
+      "message": "Consider actually documenting the method, please.",
+      "parentUuid": "b55ec3eb_0555876f",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 22
+      },
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcdc6d9c_aa0eb2fa",
         "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
         "patchSetId": 2
@@ -82,6 +194,23 @@
       "writtenOn": "2017-08-25T20:51:31Z",
       "side": 1,
       "message": "Better to use KB and MB since KiB and MiB are not the one people get used to.",
+      "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b7145a_7f851e30",
+        "filename": "components/offline_pages/core/prefetch/download_completed_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-25T21:01:18Z",
+      "side": 1,
+      "message": "Consider: return statement.Run() \u0026\u0026 db-\u003eGetLastChangeCount() \u003e 0;",
       "revId": "31645604330e5b3cf30692cda1b7cc42a10c81e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
