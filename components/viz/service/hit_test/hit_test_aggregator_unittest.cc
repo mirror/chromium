@@ -239,9 +239,11 @@ class HitTestAggregatorTest : public testing::Test {
       auto hit_test_region = mojom::HitTestRegion::New();
       hit_test_region->rect.SetRect(100, 100, 100, 100);
 
+      hit_test_region->id = mojom::HitTestRegionId::NewSurfaceId(
+        MakeSurfaceId(kDisplayFrameSink, id));
+
       if (depth > 0) {
         hit_test_region->flags = mojom::kHitTestChildSurface;
-        hit_test_region->surface_id = MakeSurfaceId(kDisplayFrameSink, id);
         id = CreateAndSubmitHitTestRegionListWith8Children(id, depth - 1);
       } else {
         hit_test_region->flags = mojom::kHitTestMine;
@@ -349,12 +351,12 @@ TEST_F(HitTestAggregatorTest, OneEmbedderTwoRegions) {
   e_hit_test_region_list->bounds.SetRect(0, 0, 1024, 768);
 
   auto e_hit_test_region_r1 = mojom::HitTestRegion::New();
-  e_hit_test_region_r1->surface_id = e_surface_id;
+  e_hit_test_region_r1->id = mojom::HitTestRegionId::NewSurfaceId(e_surface_id);
   e_hit_test_region_r1->flags = mojom::kHitTestMine;
   e_hit_test_region_r1->rect.SetRect(100, 100, 200, 400);
 
   auto e_hit_test_region_r2 = mojom::HitTestRegion::New();
-  e_hit_test_region_r2->surface_id = e_surface_id;
+  e_hit_test_region_r2->id = mojom::HitTestRegionId::NewSurfaceId(e_surface_id);
   e_hit_test_region_r2->flags = mojom::kHitTestMine;
   e_hit_test_region_r2->rect.SetRect(400, 100, 300, 400);
 
@@ -432,12 +434,14 @@ TEST_F(HitTestAggregatorTest, OneEmbedderTwoChildren) {
 
   auto e_hit_test_region_c1 = mojom::HitTestRegion::New();
   e_hit_test_region_c1->flags = mojom::kHitTestChildSurface;
-  e_hit_test_region_c1->surface_id = c1_surface_id;
+  e_hit_test_region_c1->id =
+      mojom::HitTestRegionId::NewSurfaceId(c1_surface_id);
   e_hit_test_region_c1->rect.SetRect(100, 100, 200, 300);
 
   auto e_hit_test_region_c2 = mojom::HitTestRegion::New();
   e_hit_test_region_c2->flags = mojom::kHitTestChildSurface;
-  e_hit_test_region_c2->surface_id = c2_surface_id;
+  e_hit_test_region_c2->id =
+      mojom::HitTestRegionId::NewSurfaceId(c2_surface_id);
   e_hit_test_region_c2->rect.SetRect(400, 100, 400, 300);
 
   e_hit_test_region_list->regions.push_back(std::move(e_hit_test_region_c1));
@@ -536,12 +540,13 @@ TEST_F(HitTestAggregatorTest, OccludedChildFrame) {
 
   auto e_hit_test_region_div = mojom::HitTestRegion::New();
   e_hit_test_region_div->flags = mojom::kHitTestMine;
-  e_hit_test_region_div->surface_id = e_surface_id;
+  e_hit_test_region_div->id =
+      mojom::HitTestRegionId::NewSurfaceId(e_surface_id);
   e_hit_test_region_div->rect.SetRect(200, 200, 300, 200);
 
   auto e_hit_test_region_c = mojom::HitTestRegion::New();
   e_hit_test_region_c->flags = mojom::kHitTestChildSurface;
-  e_hit_test_region_c->surface_id = c_surface_id;
+  e_hit_test_region_c->id = mojom::HitTestRegionId::NewSurfaceId(c_surface_id);
   e_hit_test_region_c->rect.SetRect(100, 100, 200, 500);
 
   e_hit_test_region_list->regions.push_back(std::move(e_hit_test_region_div));
@@ -634,12 +639,13 @@ TEST_F(HitTestAggregatorTest, ForegroundChildFrame) {
 
   auto e_hit_test_region_div = mojom::HitTestRegion::New();
   e_hit_test_region_div->flags = mojom::kHitTestMine;
-  e_hit_test_region_div->surface_id = e_surface_id;
+  e_hit_test_region_div->id =
+      mojom::HitTestRegionId::NewSurfaceId(e_surface_id);
   e_hit_test_region_div->rect.SetRect(200, 200, 300, 200);
 
   auto e_hit_test_region_c = mojom::HitTestRegion::New();
   e_hit_test_region_c->flags = mojom::kHitTestChildSurface;
-  e_hit_test_region_c->surface_id = c_surface_id;
+  e_hit_test_region_c->id = mojom::HitTestRegionId::NewSurfaceId(c_surface_id);
   e_hit_test_region_c->rect.SetRect(100, 100, 200, 500);
 
   e_hit_test_region_list->regions.push_back(std::move(e_hit_test_region_c));
@@ -734,7 +740,7 @@ TEST_F(HitTestAggregatorTest, ClippedChildWithTabAndTransparentBackground) {
 
   auto e_hit_test_region_c = mojom::HitTestRegion::New();
   e_hit_test_region_c->flags = mojom::kHitTestChildSurface;
-  e_hit_test_region_c->surface_id = c_surface_id;
+  e_hit_test_region_c->id = mojom::HitTestRegionId::NewSurfaceId(c_surface_id);
   e_hit_test_region_c->rect.SetRect(300, 100, 1600, 800);
   e_hit_test_region_c->transform.Translate(200, 100);
 
@@ -746,12 +752,12 @@ TEST_F(HitTestAggregatorTest, ClippedChildWithTabAndTransparentBackground) {
 
   auto c_hit_test_region_a = mojom::HitTestRegion::New();
   c_hit_test_region_a->flags = mojom::kHitTestChildSurface;
-  c_hit_test_region_a->surface_id = a_surface_id;
+  c_hit_test_region_a->id = mojom::HitTestRegionId::NewSurfaceId(a_surface_id);
   c_hit_test_region_a->rect.SetRect(0, 0, 200, 100);
 
   auto c_hit_test_region_b = mojom::HitTestRegion::New();
   c_hit_test_region_b->flags = mojom::kHitTestChildSurface;
-  c_hit_test_region_b->surface_id = b_surface_id;
+  c_hit_test_region_b->id = mojom::HitTestRegionId::NewSurfaceId(b_surface_id);
   c_hit_test_region_b->rect.SetRect(0, 100, 800, 600);
 
   c_hit_test_region_list->regions.push_back(std::move(c_hit_test_region_a));
@@ -876,7 +882,8 @@ TEST_F(HitTestAggregatorTest, ThreeChildrenDeep) {
 
   auto e_hit_test_region_c1 = mojom::HitTestRegion::New();
   e_hit_test_region_c1->flags = mojom::kHitTestChildSurface;
-  e_hit_test_region_c1->surface_id = c1_surface_id;
+  e_hit_test_region_c1->id =
+      mojom::HitTestRegionId::NewSurfaceId(c1_surface_id);
   e_hit_test_region_c1->rect.SetRect(100, 100, 700, 700);
 
   e_hit_test_region_list->regions.push_back(std::move(e_hit_test_region_c1));
@@ -887,7 +894,8 @@ TEST_F(HitTestAggregatorTest, ThreeChildrenDeep) {
 
   auto c1_hit_test_region_c2 = mojom::HitTestRegion::New();
   c1_hit_test_region_c2->flags = mojom::kHitTestChildSurface;
-  c1_hit_test_region_c2->surface_id = c2_surface_id;
+  c1_hit_test_region_c2->id =
+      mojom::HitTestRegionId::NewSurfaceId(c2_surface_id);
   c1_hit_test_region_c2->rect.SetRect(100, 100, 500, 500);
 
   c1_hit_test_region_list->regions.push_back(std::move(c1_hit_test_region_c2));
@@ -898,7 +906,8 @@ TEST_F(HitTestAggregatorTest, ThreeChildrenDeep) {
 
   auto c2_hit_test_region_c3 = mojom::HitTestRegion::New();
   c2_hit_test_region_c3->flags = mojom::kHitTestChildSurface;
-  c2_hit_test_region_c3->surface_id = c3_surface_id;
+  c2_hit_test_region_c3->id =
+      mojom::HitTestRegionId::NewSurfaceId(c3_surface_id);
   c2_hit_test_region_c3->rect.SetRect(100, 100, 300, 300);
 
   c2_hit_test_region_list->regions.push_back(std::move(c2_hit_test_region_c3));
@@ -1009,12 +1018,13 @@ TEST_F(HitTestAggregatorTest, MissingChildFrame) {
 
   auto e_hit_test_region_div = mojom::HitTestRegion::New();
   e_hit_test_region_div->flags = mojom::kHitTestMine;
-  e_hit_test_region_div->surface_id = e_surface_id;
+  e_hit_test_region_div->id =
+      mojom::HitTestRegionId::NewSurfaceId(e_surface_id);
   e_hit_test_region_div->rect.SetRect(200, 200, 300, 200);
 
   auto e_hit_test_region_c = mojom::HitTestRegion::New();
   e_hit_test_region_c->flags = mojom::kHitTestChildSurface;
-  e_hit_test_region_c->surface_id = c_surface_id;
+  e_hit_test_region_c->id = mojom::HitTestRegionId::NewSurfaceId(c_surface_id);
   e_hit_test_region_c->rect.SetRect(100, 100, 200, 500);
 
   e_hit_test_region_list->regions.push_back(std::move(e_hit_test_region_c));
@@ -1156,12 +1166,13 @@ TEST_F(HitTestAggregatorTest, ActiveRegionCount) {
 
   auto e_hit_test_region_div = mojom::HitTestRegion::New();
   e_hit_test_region_div->flags = mojom::kHitTestMine;
-  e_hit_test_region_div->surface_id = e_surface_id;
+  e_hit_test_region_div->id =
+      mojom::HitTestRegionId::NewSurfaceId(e_surface_id);
   e_hit_test_region_div->rect.SetRect(200, 200, 300, 200);
 
   auto e_hit_test_region_c = mojom::HitTestRegion::New();
   e_hit_test_region_c->flags = mojom::kHitTestChildSurface;
-  e_hit_test_region_c->surface_id = c_surface_id;
+  e_hit_test_region_c->id = mojom::HitTestRegionId::NewSurfaceId(c_surface_id);
   e_hit_test_region_c->rect.SetRect(100, 100, 200, 500);
 
   e_hit_test_region_list->regions.push_back(std::move(e_hit_test_region_c));

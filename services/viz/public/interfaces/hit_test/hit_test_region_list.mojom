@@ -29,15 +29,18 @@ const uint32 kHitTestMouse = 0x10;
 // Hit-testing for touch events.
 const uint32 kHitTestTouch = 0x20;
 
+union HitTestRegionId {
+    cc.mojom.FrameSinkId frame_sink_id;
+
+    // SurfaceId is required when flags = kHitTestChildSurface.
+    cc.mojom.SurfaceId surface_id;
+};
+
 struct HitTestRegion {
   // Flags to indicate the type of HitTestRegion.
   uint32 flags;
 
-  // FrameSinkId is required when flags = kHitTestMine.
-  cc.mojom.FrameSinkId frame_sink_id;
-
-  // SurfaceId is required when flags = kHitTestChildSurface.
-  cc.mojom.SurfaceId surface_id;
+  HitTestRegionId id;
 
   // The rect of the region in the coordinate space of the embedder.
   gfx.mojom.Rect rect;
