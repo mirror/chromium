@@ -16,6 +16,24 @@
       "revId": "6c0e76236671f219294dcb5330590de58f79d396",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37af180f_03554ab5",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T10:22:34Z",
+      "side": 0,
+      "message": "It seems to be the case that WebContentsDestroyed is always preceded by RenderFrameDeleted. In which we don\u0027t need to override WebContentsDestroyed anymore. Hmm, maybe I can even remove RenderFrameDestroyed() and call Reset() from the dtor, now that there is a explicit ownership from RenderFrameHost to this class?",
+      "parentUuid": "65e42f15_e8600a9d",
+      "revId": "6c0e76236671f219294dcb5330590de58f79d396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

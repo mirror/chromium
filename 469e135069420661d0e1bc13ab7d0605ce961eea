@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2fd5e8cb_0384aebf",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T10:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe38d040_fd883332",
+      "range": {
+        "startLine": 100,
+        "startChar": 9,
+        "endLine": 100,
+        "endChar": 49
+      },
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "706bca6f_075b9d05",
         "filename": "content/browser/presentation/presentation_service_impl.cc",
         "patchSetId": 17
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-22T17:40:25Z",
       "side": 1,
       "message": "What do you expect this handler to do?",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b261e292_8eed79dd",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T10:22:34Z",
+      "side": 1,
+      "message": "I am not sure, as it doesn\u0027t seem like there is a meaningful way to recover unless initiated by the renderer. But I thought at least we could log something (unless Mojo does it already, or that connection errors shouldn\u0027t happen out of the blue) WDYT?",
+      "parentUuid": "706bca6f_075b9d05",
       "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "173e9322_1604046f",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T10:22:34Z",
+      "side": 1,
+      "message": "Done. SetReceiver should only be called once because I chose to tie the Mojo PresentationReceiver to the Blink PresentationReceiver (of which there is only one per frame).\n\nThings are a bit in flux right now because the Presentation API is only partially onion-souped as it is. But it will become a lot clearer once the effort is completed.",
+      "parentUuid": "31e96d7d_c5cb0767",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "754a1674_74511971",
         "filename": "content/renderer/presentation/presentation_dispatcher.cc",
         "patchSetId": 17
@@ -73,6 +133,24 @@
       "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f2cfc3_f6bc8fe4",
+        "filename": "content/renderer/presentation/presentation_dispatcher.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T10:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "754a1674_74511971",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "4dd54549_6a3a950e",
+        "filename": "content/renderer/presentation/presentation_dispatcher.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T10:22:34Z",
+      "side": 1,
+      "message": "After this patch, yes it is possible that a PresentationService does not have a PresentationServiceClient. PresentationServiceClient is used by a render frame that uses Presentation Controller APIs. A render frame that uses Presentation Receiver APIs exclusively will call SetReceiver with a receiver version of the client instead. In a future patch, we will separate PresentationServiceImpl into a controller / receiver parts, each with their own version of \"client\". For now things are a bit confusing because PresentationServiceImpl handles both controller and receiver clients as it is in flux.",
+      "parentUuid": "635e1d2b_85c88760",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d08d3d54_0ab86cb9",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
         "patchSetId": 17
@@ -104,6 +200,30 @@
       "writtenOn": "2017-08-22T17:40:25Z",
       "side": 1,
       "message": "As best as I can tell, this is never null, so please return pass a mutable ref.",
+      "range": {
+        "startLine": 158,
+        "startChar": 47,
+        "endLine": 158,
+        "endChar": 59
+      },
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d643010c_247fef05",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T10:22:34Z",
+      "side": 1,
+      "message": "Done. How can you tell? (say, if I am creating a ReceiverPresentationConnection, that receiver-\u003eGetFrame() returns non-null)",
+      "parentUuid": "d08d3d54_0ab86cb9",
       "range": {
         "startLine": 158,
         "startChar": 47,
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "bf7a3169_9502fef0",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T10:22:34Z",
+      "side": 1,
+      "message": "Done.\n\nYes, it is in presentation_struct_traits.",
+      "parentUuid": "be4c5b8f_85e8ce9b",
+      "range": {
+        "startLine": 432,
+        "startChar": 4,
+        "endLine": 432,
+        "endChar": 7
+      },
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dda84221_288b2b36",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.h",
         "patchSetId": 17
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "a3e3ffa4_98c546b3",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T10:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dda84221_288b2b36",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bef6f8ff_04cb33d7",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.h",
         "patchSetId": 17
@@ -167,6 +329,24 @@
       "writtenOn": "2017-08-22T17:40:25Z",
       "side": 1,
       "message": "Please add some comments about these subclasses (in particular, what spec concepts these would correspond to would be useful)",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42655e7f_c0970bb6",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T10:22:34Z",
+      "side": 1,
+      "message": "I added some comments for both classes.",
+      "parentUuid": "bef6f8ff_04cb33d7",
       "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "71988d89_d38d852c",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T10:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68fc201a_7963f830",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4225283_0fae6957",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
         "patchSetId": 17
@@ -201,6 +399,24 @@
       "writtenOn": "2017-08-22T17:40:25Z",
       "side": 1,
       "message": "It\u0027s difficult for me to tell: is it possible for this to be called for a frame that\u0027s detached but still using the presentation APIs?\n\n(Eagerly initializing in the ctor would avoid this problem)",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffbf1023_6df0f6b7",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationController.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T10:22:34Z",
+      "side": 1,
+      "message": "No idea, what\u0027s the definition of a frame that\u0027s detached? Is it ContextDestroyed?\n\nEager initialization would work here, but my concern is that PresentationController itself seem to be eagerly initialized, in ModulesInitializer.cpp.\n\nI can probably do the same (i.e. invalidate mojo bindings/ptrs during ContextDestroyed) for the other Presentation related objects in this patch. In terms of design, would you rather have each individual PresentationConnection inherit ContextLifecycleObserver, or only have PresentationController / PresentationReceiver inherit ContextLifecycleObserver and forward the signal to their PresentationConnection objects?",
+      "parentUuid": "d4225283_0fae6957",
       "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -230,6 +446,30 @@
     },
     {
       "key": {
+        "uuid": "dc8f8dd0_4d083213",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationReceiver.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T10:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7a12b1b_6a00cfbc",
+      "range": {
+        "startLine": 108,
+        "startChar": 5,
+        "endLine": 108,
+        "endChar": 6
+      },
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f86d26ed_511f084d",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationReceiver.h",
         "patchSetId": 17
@@ -241,6 +481,24 @@
       "writtenOn": "2017-08-17T02:10:01Z",
       "side": 1,
       "message": "dcheng@: See my below comment.",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c5b8e3_d8d384c4",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationReceiver.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T10:22:34Z",
+      "side": 1,
+      "message": "Marking this as resolved so we can continue discussion in the other comment.",
+      "parentUuid": "f86d26ed_511f084d",
       "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -317,6 +575,24 @@
     },
     {
       "key": {
+        "uuid": "dd33eba6_4008bc40",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/WebPresentationReceiver.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T10:22:34Z",
+      "side": 1,
+      "message": "Done. This class is still needed so that PresentationDispatcher can signal Blink\u0027s PresentationReceiver on certain events (such as frame finished loading / frame closing). It is expected this class will no longer be needed when PresentationReceiver can listen for these signals itself.",
+      "parentUuid": "4bb776aa_5c41bc8a",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "751c6be6_fc5a77ce",
         "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
         "patchSetId": 17
@@ -331,6 +607,24 @@
       "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5c7335_45f7bda9",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-25T10:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "751c6be6_fc5a77ce",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
