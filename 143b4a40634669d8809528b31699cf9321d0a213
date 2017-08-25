@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "592573d5_4c2b962a",
+        "filename": "ios/chrome/browser/passwords/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-25T12:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a74f150_4890aa80",
+      "range": {
+        "startLine": 58,
+        "startChar": 33,
+        "endLine": 58,
+        "endChar": 42
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d05f1e6c_efbfae4e",
         "filename": "ios/chrome/browser/passwords/DEPS",
         "patchSetId": 12
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-24T14:44:13Z",
       "side": 1,
       "message": "I will defer to ios/web OWNERS to validate this diff.",
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea781a7b_c38711cf",
+        "filename": "ios/chrome/browser/passwords/DEPS",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-25T12:13:28Z",
+      "side": 1,
+      "message": "eugenebut@ is an owner in ios/web, I added him to reviewers.\nUpdate: Deleted this file, it can be done without those dependencies.",
+      "parentUuid": "d05f1e6c_efbfae4e",
       "revId": "143b4a40634669d8809528b31699cf9321d0a213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "6e5e8d8a_e3c95bf1",
+        "filename": "ios/chrome/browser/passwords/DEPS",
+        "patchSetId": 12
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-25T12:13:28Z",
+      "side": 1,
+      "message": "Done, I don\u0027t use those anymore.",
+      "parentUuid": "37554b38_c110a3db",
+      "range": {
+        "startLine": 4,
+        "startChar": 12,
+        "endLine": 4,
+        "endChar": 21
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ac4a55b_797a3011",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 12
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "0e566b47_a49fb22b",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-25T12:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ac4a55b_797a3011",
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47e8f21a_d79c1a4f",
         "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
         "patchSetId": 12
@@ -93,6 +177,30 @@
       "writtenOn": "2017-08-24T16:35:22Z",
       "side": 1,
       "message": "This test heavily relies on private implementation details of ios/web, which will become a technical debt if this change lands.\n\nUnless I\u0027m missing something, IsContextSecure relies only on URL and SSLStatus. And these can be mocked with TestWebState and TestNavigationItem",
+      "range": {
+        "startLine": 23,
+        "startChar": 11,
+        "endLine": 23,
+        "endChar": 44
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "489e82e9_0452bb79",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-25T12:13:28Z",
+      "side": 1,
+      "message": "Done.\nRemoved the DEPS file too. I only use ios/web/public now.",
+      "parentUuid": "47e8f21a_d79c1a4f",
       "range": {
         "startLine": 23,
         "startChar": 11,
@@ -246,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "94fe96c2_c4a3bc92",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-25T12:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "322302fa_daff1718",
+      "range": {
+        "startLine": 86,
+        "startChar": 5,
+        "endLine": 86,
+        "endChar": 20
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d95a8b76_5e1b0adb",
         "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
         "patchSetId": 12
@@ -263,6 +395,24 @@
     },
     {
       "key": {
+        "uuid": "8fe24481_45582c12",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-25T12:13:28Z",
+      "side": 1,
+      "message": "Function name was misleading, renamed it to WebStateContentIsSecureHTML now, which is what we want to check before handling a command from JS, do you agree?",
+      "parentUuid": "d95a8b76_5e1b0adb",
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfb0f13e_a916669e",
         "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
         "patchSetId": 12
@@ -274,6 +424,24 @@
       "writtenOn": "2017-08-24T14:44:13Z",
       "side": 1,
       "message": "Not all cases seem covered by the unit tests. Could you add more tests to cover all the cases?",
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65439cd_fd155b99",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-25T12:13:28Z",
+      "side": 1,
+      "message": "Done.\nI think for each check I have a test now, please verify.",
+      "parentUuid": "dfb0f13e_a916669e",
       "revId": "143b4a40634669d8809528b31699cf9321d0a213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -303,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "ed381ac0_1c6c9edf",
+        "filename": "ios/chrome/browser/web/origin_security_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-25T12:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "212e426a_1e22b37b",
+      "range": {
+        "startLine": 5,
+        "startChar": 27,
+        "endLine": 5,
+        "endChar": 35
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0b461eb_356b0b2c",
         "filename": "ios/chrome/browser/web/origin_security_checker.h",
         "patchSetId": 12
@@ -323,6 +515,30 @@
       "revId": "143b4a40634669d8809528b31699cf9321d0a213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c8e3fe1_3e7f7a23",
+        "filename": "ios/chrome/browser/web/origin_security_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-25T12:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0b461eb_356b0b2c",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -373,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "a2686e7b_ac0ad230",
+        "filename": "ios/chrome/browser/web/origin_security_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-25T12:13:28Z",
+      "side": 1,
+      "message": "IsOriginSecure is used only by IsContextSecure here, so Vasilii advised me to inline checking if URL is valid there and delete definition of IsOriginSecure. mahmadi@, let me know if you are fine with this change as an author of this file.",
+      "parentUuid": "94868a81_89d03b92",
+      "range": {
+        "startLine": 21,
+        "startChar": 14,
+        "endLine": 21,
+        "endChar": 29
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26521055_d9913125",
         "filename": "ios/chrome/browser/web/origin_security_checker.h",
         "patchSetId": 12
@@ -384,6 +624,30 @@
       "writtenOn": "2017-08-24T16:35:22Z",
       "side": 1,
       "message": "How is this different from web::IsOriginSecure?",
+      "range": {
+        "startLine": 24,
+        "startChar": 14,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b62bc9_1aa4677c",
+        "filename": "ios/chrome/browser/web/origin_security_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-25T12:13:28Z",
+      "side": 1,
+      "message": "It also checks if url.is_valid(). For \"https://\" this will return false and web::IsOriginSecure will return true.\nAnyway, since this function is used only in IsContextSecure, I have inlined url.is_valid() check along with web::IsOriginSecure there.",
+      "parentUuid": "26521055_d9913125",
       "range": {
         "startLine": 24,
         "startChar": 14,
@@ -419,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "d41e96e2_6e330af1",
+        "filename": "ios/chrome/browser/web/origin_security_checker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-25T12:13:28Z",
+      "side": 1,
+      "message": "Moved to components/security_state/core/security_state.h but I will ask one of the OWNERS to comment on it too.",
+      "parentUuid": "fc1e585e_8fc12fc6",
+      "range": {
+        "startLine": 36,
+        "startChar": 14,
+        "endLine": 36,
+        "endChar": 35
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45072386_a8ccce3a",
         "filename": "ios/chrome/browser/web/origin_security_checker.mm",
         "patchSetId": 12
@@ -439,6 +727,30 @@
       "revId": "143b4a40634669d8809528b31699cf9321d0a213",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67f6823_37317d97",
+        "filename": "ios/chrome/browser/web/origin_security_checker.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-08-25T12:13:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45072386_a8ccce3a",
+      "range": {
+        "startLine": 49,
+        "startChar": 16,
+        "endLine": 49,
+        "endChar": 24
+      },
+      "revId": "143b4a40634669d8809528b31699cf9321d0a213",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
