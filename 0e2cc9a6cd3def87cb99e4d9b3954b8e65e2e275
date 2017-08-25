@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "ab24a589_12e62ae7",
+        "filename": "services/ui/ws/window_manager_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T14:27:42Z",
+      "side": 1,
+      "message": "Why doesn\u0027t the wm set the high bit on this window? Is it because this particular test doesn\u0027t wait for the id_?",
+      "parentUuid": "6cddc57c_cddfe229",
+      "range": {
+        "startLine": 392,
+        "startChar": 31,
+        "endLine": 392,
+        "endChar": 40
+      },
+      "revId": "0e2cc9a6cd3def87cb99e4d9b3954b8e65e2e275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d825b86_25f634fb",
         "filename": "services/ui/ws/window_tree.h",
         "patchSetId": 2
