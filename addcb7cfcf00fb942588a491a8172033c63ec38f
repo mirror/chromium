@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a158f148_e2f1e4bd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-25T21:03:12Z",
+      "side": 1,
+      "message": "On either the (new) bug or (updated) CL description, it would be useful to provide a high-level overview of the new compacter and how it varies from the existing compacter. This helps both review and document for those wanting to contextualize the change :)",
+      "revId": "addcb7cfcf00fb942588a491a8172033c63ec38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8081590_cf2f1f06",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-25T21:03:12Z",
+      "side": 1,
+      "message": "This is a closed bug. Did you mean to refer to something else?",
+      "revId": "addcb7cfcf00fb942588a491a8172033c63ec38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b8a357a_6a57615e",
+        "filename": "net/http/transport_security_state.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-25T21:03:12Z",
+      "side": 1,
+      "message": "Documentation here will help explain to the reader of the code what a \u0027simple entry\u0027 is.",
+      "revId": "addcb7cfcf00fb942588a491a8172033c63ec38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34f0740_cb13dc01",
+        "filename": "net/tools/transport_security_state_generator/trie/trie_writer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-08-25T21:03:12Z",
+      "side": 1,
+      "message": "This tends to err on the side of documenting \u0027why\u0027 / consumer details.\n\n// Returns true if the entry only configures HSTS with includeSubdomains.\n// Such entries, when written, can be represented more compactly, and thus\n// reduce the overall size of the trie.\n\n\n(Or something like that)\n\nThe main changes are:\n- Using the descriptive voice (what does the _function_ do), as per https://google.github.io/styleguide/cppguide.html#Function_Comments\n- Avoiding talking about how it\u0027s used (e.g. the preloaded list\u0027s contents), and instead focusing on how it can be used (e.g. why does this function exist)\n\nThat said, I believe this can be moved to the unnamed namespace in the .cc (around line 22), as it\u0027s an implementation detail :)",
+      "revId": "addcb7cfcf00fb942588a491a8172033c63ec38f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
