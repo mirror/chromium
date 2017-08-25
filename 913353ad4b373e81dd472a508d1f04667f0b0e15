@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "fb0d675c_aa9be1c2",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-25T08:04:41Z",
+      "side": 1,
+      "message": "It\u0027s OK to assume that this function is called in an appropriate context, but we should have a function comment, I think.",
+      "parentUuid": "d2dc5876_0939b1a7",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c8089ad_f77da6c0",
         "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.cpp",
         "patchSetId": 7
@@ -184,6 +202,29 @@
       "writtenOn": "2017-08-22T07:32:44Z",
       "side": 1,
       "message": "Does TreeClient need to be an inner class of DynamicModuleResolver? Can we move this to anon namespace in DynamicModuleResolver.cpp?",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ada1ba_a8299122",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolver.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-25T08:04:41Z",
+      "side": 1,
+      "message": "+explicit",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 23
+      },
       "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -337,6 +378,46 @@
       "writtenOn": "2017-08-22T18:11:18Z",
       "side": 1,
       "message": "+final",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c86275c_e35ad914",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-25T08:04:41Z",
+      "side": 1,
+      "message": "Can you put v8::MicrotasksScope::PerformCheckpoint(scope.GetIsolate()); before this line?",
+      "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfb1d37c_fc121048",
+        "filename": "third_party/WebKit/Source/core/dom/DynamicModuleResolverTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-25T08:04:41Z",
+      "side": 1,
+      "message": "Why do you need to call this twice?",
+      "range": {
+        "startLine": 288,
+        "startChar": 47,
+        "endLine": 288,
+        "endChar": 57
+      },
       "revId": "913353ad4b373e81dd472a508d1f04667f0b0e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
