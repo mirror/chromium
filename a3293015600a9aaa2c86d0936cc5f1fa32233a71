@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0039069d_4476df7c",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-25T15:57:21Z",
+      "side": 1,
+      "message": "Actually we might need to get rid of the condition because of the changing state of enabled_. Let\u0027s analyze the following scenario.\n\n1.Will(), enabled_ \u003d\u003d false\n2.Execute the following script:\n    new PerformanceObserver()\n3.Did(), enabled_ \u003d\u003d true\n\nIn this scenario, the start time is not measured because the monitor was disabled. Duration() ends up throwing an exception because start_time is not set.\n\nI have two ideas to it, the first being that we measure the start_time in whichever situation, the second being that we create a flag for each pair of Will/Did to indicate whether we have executed Will() before Did().\n\nThe other functions in PerformanceMonitor.cpp might have the same issue. Such situation is easily ignorant. We should at least warn new changers of this.",
+      "parentUuid": "3c3e0cfe_5f439d0b",
+      "revId": "a3293015600a9aaa2c86d0936cc5f1fa32233a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f82e0bcd_b4f8312c",
         "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
         "patchSetId": 5
