@@ -64,16 +64,17 @@ TEST_F(FileLocationsTest, TestFileNameLocaleWithExtension) {
 // Tests that locale/languages available on iOS are mapped to either a
 // translated Chrome Terms of Service or to English.
 TEST_F(FileLocationsTest, TestTermsOfServiceForSupportedLanguages) {
-  // List of available localized terms_*.html files. Note that this list is
-  // hardcoded and needs to be manually maintained as new locales are added
-  // to Chrome. See http://crbug/522638
-  NSSet* localizedTermsHtml =
-      [NSSet setWithObjects:@"ar", @"bg", @"ca", @"cs", @"da", @"de", @"el",
-                            @"en-GB", @"en", @"es-419", @"es", @"fa", @"fi",
-                            @"fr", @"he", @"hi", @"hr", @"hu", @"id", @"it",
-                            @"ja", @"ko", @"lt", @"nb", @"nl", @"pl", @"pt-BR",
-                            @"pt-PT", @"ro", @"ru", @"sk", @"sr", @"sv", @"th",
-                            @"tr", @"uk", @"vi", @"zh-CN", @"zh-TW", nil];
+  // TODO(crbug.com/522638): List of available localized terms_*.html files.
+  // Note that this list is manually maintained as new locales are added
+  // to components/resources/terms/.
+  NSSet* localizedTermsHtml = [NSSet
+      setWithObjects:@"am", @"ar", @"bg", @"bn", @"ca", @"cs", @"da", @"de",
+                     @"el", @"en-GB", @"en", @"es-419", @"es", @"et", @"fa",
+                     @"fi", @"fil", @"fr", @"gu", @"he", @"hi", @"hr", @"hu",
+                     @"id", @"it", @"ja", @"kn", @"ko", @"lt", @"lv", @"ml",
+                     @"mr", @"nb", @"nl", @"pl", @"pt-BR", @"pt-PT", @"ro",
+                     @"ru", @"sk", @"sl", @"sr", @"sv", @"sw", @"ta", @"te",
+                     @"th", @"tr", @"uk", @"vi", @"zh-CN", @"zh-TW", nil];
   for (NSString* locale in [NSLocale availableLocaleIdentifiers]) {
     NSString* normalizedLocale =
         [locale stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
