@@ -37,12 +37,12 @@
 #include "core/frame/FrameTestHelpers.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "platform/SerializedResource.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/Deque.h"
 #include "platform/wtf/Vector.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebThread.h"
 #include "public/platform/WebURL.h"
@@ -68,8 +68,8 @@ class FrameSerializerTest : public ::testing::Test,
   }
 
   void TearDown() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
@@ -100,7 +100,8 @@ class FrameSerializerTest : public ::testing::Test,
     response.SetMIMEType("text/html");
     response.SetHTTPStatusCode(status_code);
 
-    Platform::Current()->GetURLLoaderMockFactory()->RegisterErrorURL(
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
+    platform_->GetURLLoaderMockFactory()->RegisterErrorURL(
         KURL(base_url_, file), response, error);
   }
 

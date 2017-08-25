@@ -28,9 +28,9 @@
 #include "platform/graphics/CompositorElementId.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebCoalescedInputEvent.h"
 #include "public/platform/WebInputEvent.h"
@@ -99,8 +99,8 @@ class VisualViewportTest
   }
 
   ~VisualViewportTest() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
