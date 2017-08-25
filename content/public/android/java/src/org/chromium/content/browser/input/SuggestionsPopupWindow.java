@@ -11,6 +11,9 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.TextAppearanceSpan;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -37,6 +40,13 @@ import org.chromium.ui.UiUtils;
  */
 public class SuggestionsPopupWindow
         implements OnItemClickListener, OnDismissListener, View.OnClickListener {
+    /**
+     * Whether the menu is currently showing spell check suggestions or general text suggestions
+     * (e.g. from a SuggestionSpan).
+     */
+    private enum Mode { SPELL_CHECK, TEXT_SUGGESTION }
+    private Mode mMode = Mode.SPELL_CHECK;
+
     private static final String ACTION_USER_DICTIONARY_INSERT =
             "com.android.settings.USER_DICTIONARY_INSERT";
     private static final String USER_DICTIONARY_EXTRA_WORD = "word";
@@ -54,6 +64,8 @@ public class SuggestionsPopupWindow
     private SuggestionAdapter mSuggestionsAdapter;
     private String mHighlightedText;
     private String[] mSpellCheckSuggestions = new String[0];
+    private SuggestionInfo[] mSuggestionInfos = new SuggestionInfo[0];
+    private TextAppearanceSpan mHighlightSpan;
     private int mNumberOfSuggestionsToUse;
     private TextView mAddToDictionaryButton;
     private TextView mDeleteButton;
@@ -141,6 +153,8 @@ public class SuggestionsPopupWindow
         mSuggestionListView.setAdapter(mSuggestionsAdapter);
         mSuggestionListView.setOnItemClickListener(this);
 
+        mHighlightSpan = new TextAppearanceSpan(mContext, R.style.SuggestionHighlight);
+
         mDivider = mContentView.findViewById(R.id.divider);
 
         mAddToDictionaryButton = (TextView) mContentView.findViewById(R.id.addToDictionaryButton);
@@ -183,7 +197,11 @@ public class SuggestionsPopupWindow
 
         @Override
         public Object getItem(int position) {
-            return mSpellCheckSuggestions[position];
+            if (mMode == Mode.SPELL_CHECK) {
+                return mSpellCheckSuggestions[position];
+            } else {
+                return mSuggestionInfos[position];
+            }
         }
 
         @Override
@@ -199,8 +217,23 @@ public class SuggestionsPopupWindow
                 textView = (TextView) mInflater.inflate(
                         R.layout.text_edit_suggestion_item, parent, false);
             }
-            final String suggestion = mSpellCheckSuggestions[position];
-            textView.setText(suggestion);
+
+            if (mMode == Mode.SPELL_CHECK) {
+                SpannableString textToSet = new SpannableString(mSpellCheckSuggestions[position]);
+                textToSet.setSpan(
+                        mHighlightSpan, 0, textToSet.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                textView.setText(textToSet);
+            } else {
+                final SuggestionInfo suggestionInfo = mSuggestionInfos[position];
+                SpannableString textToSet = new SpannableString(suggestionInfo.getPrefix()
+                        + suggestionInfo.getSuggestion() + suggestionInfo.getSuffix());
+                textToSet.setSpan(mHighlightSpan, suggestionInfo.getPrefix().length(),
+                        suggestionInfo.getPrefix().length()
+                                + suggestionInfo.getSuggestion().length(),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                textView.setText(textToSet);
+            }
+
             return textView;
         }
     }
@@ -245,9 +278,31 @@ public class SuggestionsPopupWindow
     }
 
     /**
+     * Called by TextSuggestionHost to set the list of text suggestions to show in the suggestion
+     * menu.
+     */
+    public void setSuggestionInfos(SuggestionInfo[] suggestions) {
+        mSuggestionInfos = suggestions.clone();
+        mNumberOfSuggestionsToUse = mSuggestionInfos.length;
+    }
+
+    /**
+     * Shows the spell check menu at the specified coordinates (relative to the viewport).
+     */
+    public void showSpellCheckMenu(double caretX, double caretY) {
+        mMode = Mode.SPELL_CHECK;
+        show(caretX, caretY);
+    }
+
+    /**
      * Shows the text suggestion menu at the specified coordinates (relative to the viewport).
      */
-    public void show(double caretX, double caretY) {
+    public void showTextSuggestionMenu(double caretX, double caretY) {
+        mMode = Mode.TEXT_SUGGESTION;
+        show(caretX, caretY);
+    }
+
+    private void show(double caretX, double caretY) {
         mSuggestionsAdapter.notifyDataSetChanged();
 
         mActivity = mWindowAndroidProvider.getWindowAndroid().getActivity().get();
@@ -284,6 +339,20 @@ public class SuggestionsPopupWindow
             Rect rect = new Rect();
             mActivity.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
             statusBarHeight = rect.top;
+        }
+
+        // Android's Editor.java shows the "Add to dictonary" button if and only if there's a
+        // SuggestionSpan with FLAG_MISSPELLED set. However, some OEMs (e.g. Samsung) appear to
+        // change the behavior on their devices to never show this button, since their IMEs don't go
+        // through the normal spell-checking API and instead add SuggestionSpans directly. Since
+        // it's difficult to determine how the OEM has set up the native menu, we instead only show
+        // the "Add to dictionary" button for spelling markers added by Chrome from running the
+        // system spell checker. SuggestionSpans with FLAG_MISSPELLED set (i.e., a spelling
+        // underline added directly by the IME) do not show this button.
+        if (mMode == Mode.SPELL_CHECK) {
+            mAddToDictionaryButton.setVisibility(View.VISIBLE);
+        } else {
+            mAddToDictionaryButton.setVisibility(View.GONE);
         }
 
         // We determine the maximum number of suggestions we can show by taking the available
@@ -367,8 +436,13 @@ public class SuggestionsPopupWindow
             return;
         }
 
-        String suggestion = mSpellCheckSuggestions[position];
-        mTextSuggestionHost.applySpellCheckSuggestion(suggestion);
+        if (mMode == Mode.SPELL_CHECK) {
+            mTextSuggestionHost.applySpellCheckSuggestion(mSpellCheckSuggestions[position]);
+        } else {
+            SuggestionInfo info = mSuggestionInfos[position];
+            mTextSuggestionHost.applyTextSuggestion(info.getMarkerTag(), info.getSuggestionIndex());
+        }
+
         mDismissedByItemTap = true;
         mPopupWindow.dismiss();
     }

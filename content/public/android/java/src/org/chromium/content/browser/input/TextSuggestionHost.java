@@ -46,7 +46,23 @@ public class TextSuggestionHost {
         mSuggestionsPopupWindow.setSpellCheckSuggestions(suggestions);
 
         float density = mContentViewCore.getRenderCoordinates().getDeviceScaleFactor();
-        mSuggestionsPopupWindow.show(density * caretX,
+        mSuggestionsPopupWindow.showSpellCheckMenu(density * caretX,
+                density * caretY + mContentViewCore.getRenderCoordinates().getContentOffsetYPix());
+    }
+
+    @CalledByNative
+    private void showTextSuggestionMenu(
+            double caretX, double caretY, String markedText, SuggestionInfo[] suggestions) {
+        if (mSuggestionsPopupWindow == null) {
+            mSuggestionsPopupWindow = new SuggestionsPopupWindow(mContentViewCore.getContext(),
+                    this, mContentViewCore.getContainerView(), mContentViewCore);
+        }
+
+        mSuggestionsPopupWindow.setHighlightedText(markedText);
+        mSuggestionsPopupWindow.setSuggestionInfos(suggestions);
+
+        float density = mContentViewCore.getRenderCoordinates().getDeviceScaleFactor();
+        mSuggestionsPopupWindow.showTextSuggestionMenu(density * caretX,
                 density * caretY + mContentViewCore.getRenderCoordinates().getContentOffsetYPix());
     }
 
@@ -66,6 +82,14 @@ public class TextSuggestionHost {
      */
     public void applySpellCheckSuggestion(String suggestion) {
         nativeApplySpellCheckSuggestion(mNativeTextSuggestionHost, suggestion);
+    }
+
+    /**
+     * Tells Blink to replace the activve suggestion range with the specified suggestion on the
+     * specified marker.
+     */
+    public void applyTextSuggestion(int markerTag, int suggestionIndex) {
+        nativeApplyTextSuggestion(mNativeTextSuggestionHost, markerTag, suggestionIndex);
     }
 
     /**
@@ -109,6 +133,8 @@ public class TextSuggestionHost {
     private native long nativeInit(WebContents webContents);
     private native void nativeApplySpellCheckSuggestion(
             long nativeTextSuggestionHostAndroid, String suggestion);
+    private native void nativeApplyTextSuggestion(
+            long nativeTextSuggestionHostAndroid, int markerTag, int suggestionIndex);
     private native void nativeDeleteActiveSuggestionRange(long nativeTextSuggestionHostAndroid);
     private native void nativeNewWordAddedToDictionary(
             long nativeTextSuggestionHostAndroid, String word);
