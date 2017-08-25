@@ -140,7 +140,8 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
   // IndentOutdentCommand::outdentParagraph, both of which ensure clean layout.
   DCHECK(!GetDocument().NeedsLayoutTreeUpdate());
 
-  if (!EndingVisibleSelection().IsNonOrphanedCaretOrRange())
+  if (EndingVisibleSelection().IsNone() &&
+      !EndingVisibleSelection().IsValidFor(GetDocument()))
     return;
 
   if (!RootEditableElementOf(EndingSelection().Base()))
