@@ -1147,12 +1147,13 @@ id<GREYMatcher> ActionSheet(Action action) {
 
 // Tests that tapping No thanks on the promo make it disappear.
 - (void)testPromoNoThanksMakeItDisappear {
+  [BookmarksTestCase setupStandardBookmarks];
   if (base::FeatureList::IsEnabled(
           bookmark_new_generation::features::kBookmarkNewGeneration)) {
-    EARL_GREY_TEST_SKIPPED(@"Only enabled with old UI.");
+    [BookmarksTestCase openBookmarks];
+  } else {
+    [BookmarksTestCase openTopLevelBookmarksFolder];
   }
-  [BookmarksTestCase setupStandardBookmarks];
-  [BookmarksTestCase openTopLevelBookmarksFolder];
 
   // We are going to set the PromoAlreadySeen preference. Set a teardown handler
   // to reset it.
@@ -1180,12 +1181,14 @@ id<GREYMatcher> ActionSheet(Action action) {
 // Tests that tapping Sign in on the promo make the Sign in sheet appear and
 // the promo still appears after dismissing the Sign in sheet.
 - (void)testUIPromoSignIn {
+  [BookmarksTestCase setupStandardBookmarks];
   if (base::FeatureList::IsEnabled(
           bookmark_new_generation::features::kBookmarkNewGeneration)) {
-    EARL_GREY_TEST_SKIPPED(@"Only enabled with old UI.");
+    [BookmarksTestCase openBookmarks];
+  } else {
+    [BookmarksTestCase openTopLevelBookmarksFolder];
   }
-  [BookmarksTestCase setupStandardBookmarks];
-  [BookmarksTestCase openTopLevelBookmarksFolder];
+
   // Set up a fake identity.
   ChromeIdentity* identity =
       [FakeChromeIdentity identityWithEmail:@"fakefoo@egmail.com"

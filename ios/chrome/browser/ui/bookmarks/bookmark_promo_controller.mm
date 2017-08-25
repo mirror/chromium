@@ -174,6 +174,8 @@ class SignInObserver : public SigninManagerBase::Observer {
     self.promoState = !signinManager->IsAuthenticated();
     if (self.promoState)
       [self recordPromoDisplayed];
+  } else {
+    prefs->SetBoolean(prefs::kIosBookmarkPromoAlreadySeen, 0)
   }
 }
 

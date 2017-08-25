@@ -57,6 +57,10 @@ const CGFloat kBookmarkTableCellImagePadding = 16.0;
 
 #pragma mark - Public
 
++ (NSString*)reuseIdentifier {
+  return @"BookmarkTableCellIdentifier";
+}
+
 + (CGFloat)preferredImageSize {
   return kBookmarkTableCellDefaultImageSize;
 }
