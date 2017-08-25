@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94c31320_16b9f0b3",
+        "filename": "tools/chrome_proxy/webdriver/client_config.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1162726
+      },
+      "writtenOn": "2017-08-25T17:04:40Z",
+      "side": 1,
+      "message": "maybe use a local variable instead of repeated calls to json.dumps(i)?",
+      "revId": "c41983589686e6f9316133cef7707726565853db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc1edc85_bb44e206",
+        "filename": "tools/chrome_proxy/webdriver/client_config.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1162726
+      },
+      "writtenOn": "2017-08-25T17:04:40Z",
+      "side": 1,
+      "message": "should this be Equal? If variation_header_count \u003d\u003d 0, the success criteria for this test is no different than the one below",
+      "revId": "c41983589686e6f9316133cef7707726565853db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84325e06_11a1678c",
+        "filename": "tools/chrome_proxy/webdriver/client_config.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1162726
+      },
+      "writtenOn": "2017-08-25T17:04:40Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "c41983589686e6f9316133cef7707726565853db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
