@@ -29,6 +29,8 @@
 #include "url/gurl.h"
 #include "url/origin.h"
 
+enum class WindowOpenDisposition;
+
 namespace content {
 
 // PlzNavigate
@@ -64,6 +66,7 @@ struct CONTENT_EXPORT CommonNavigationParams {
   CommonNavigationParams(const GURL& url,
                          const Referrer& referrer,
                          ui::PageTransition transition,
+                         WindowOpenDisposition disposition,
                          FrameMsg_Navigate_Type::Value navigation_type,
                          bool allow_download,
                          bool should_replace_current_entry,
@@ -90,6 +93,8 @@ struct CONTENT_EXPORT CommonNavigationParams {
 
   // The type of transition.
   ui::PageTransition transition;
+
+  WindowOpenDisposition disposition;
 
   // Type of navigation.
   FrameMsg_Navigate_Type::Value navigation_type;

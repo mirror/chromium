@@ -12,6 +12,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/referrer.h"
 #include "ui/base/page_transition_types.h"
+#include "ui/base/window_open_disposition.h"
 
 using content::WebContents;
 
@@ -32,14 +33,13 @@ void ExternalProtocolHandler::RunExternalProtocolDialog(
     return;
 
   navigation_interception::NavigationParams navigation_params(
-      url,
-      content::Referrer(),
-      has_user_gesture,       // has_user_gesture
-      false,                  // is_post, doesn't matter here.
-      page_transition,
-      false,                  // is_redirect, doesn't matter here.
-      true,                   // is_external_protocol
-      false,                  // is_main_frame
-      GURL());                // base_url_for_data_url, not applicable.
+      url, content::Referrer(),
+      has_user_gesture,  // has_user_gesture
+      false,             // is_post, doesn't matter here.
+      page_transition, WindowOpenDisposition::UNKNOWN,
+      false,    // is_redirect, doesn't matter here.
+      true,     // is_external_protocol
+      false,    // is_main_frame
+      GURL());  // base_url_for_data_url, not applicable.
   delegate->ShouldIgnoreNavigation(navigation_params);
 }

@@ -163,7 +163,7 @@ TEST_F(SiteInstanceTest, SiteInstanceDestructor) {
 
   NavigationEntryImpl* e1 = new NavigationEntryImpl(
       instance, url, Referrer(), base::string16(), ui::PAGE_TRANSITION_LINK,
-      false);
+      WindowOpenDisposition::CURRENT_TAB, false);
 
   // Redundantly setting e1's SiteInstance shouldn't affect the ref count.
   e1->set_site_instance(instance);
@@ -173,7 +173,7 @@ TEST_F(SiteInstanceTest, SiteInstanceDestructor) {
   // Add a second reference
   NavigationEntryImpl* e2 = new NavigationEntryImpl(
       instance, url, Referrer(), base::string16(), ui::PAGE_TRANSITION_LINK,
-      false);
+      WindowOpenDisposition::CURRENT_TAB, false);
 
   instance = nullptr;
   EXPECT_EQ(0, browser_client()->GetAndClearSiteInstanceDeleteCount());
@@ -217,8 +217,8 @@ TEST_F(SiteInstanceTest, CloneNavigationEntry) {
 
   std::unique_ptr<NavigationEntryImpl> e1 =
       base::WrapUnique(new NavigationEntryImpl(
-          SiteInstanceImpl::Create(nullptr), url, Referrer(),
-          base::string16(), ui::PAGE_TRANSITION_LINK, false));
+          SiteInstanceImpl::Create(nullptr), url, Referrer(), base::string16(),
+          ui::PAGE_TRANSITION_LINK, WindowOpenDisposition::CURRENT_TAB, false));
 
   // Clone the entry.
   std::unique_ptr<NavigationEntryImpl> e2 = e1->Clone();

@@ -355,13 +355,10 @@ TEST_F(SearchTest, InstantNTPCustomNavigationEntry) {
     content::WebContents* contents =
         browser()->tab_strip_model()->GetWebContentsAt(0);
     content::NavigationController& controller = contents->GetController();
-    controller.SetTransientEntry(
-        controller.CreateNavigationEntry(GURL("chrome://blank"),
-                                         content::Referrer(),
-                                         ui::PAGE_TRANSITION_LINK,
-                                         false,
-                                         std::string(),
-                                         contents->GetBrowserContext()));
+    controller.SetTransientEntry(controller.CreateNavigationEntry(
+        GURL("chrome://blank"), content::Referrer(), ui::PAGE_TRANSITION_LINK,
+        WindowOpenDisposition::CURRENT_TAB, false, std::string(),
+        contents->GetBrowserContext()));
     // The active entry is chrome://blank and not an NTP.
     EXPECT_FALSE(IsInstantNTP(contents));
     EXPECT_EQ(test.expected_result,

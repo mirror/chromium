@@ -11,6 +11,7 @@
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/service_worker_modes.h"
 #include "content/public/common/url_constants.h"
+#include "ui/base/window_open_disposition.h"
 #include "url/gurl.h"
 #include "url/url_constants.h"
 #include "url/url_util.h"
@@ -56,6 +57,7 @@ SourceLocation::~SourceLocation() {}
 
 CommonNavigationParams::CommonNavigationParams()
     : transition(ui::PAGE_TRANSITION_LINK),
+      disposition(WindowOpenDisposition::UNKNOWN),
       navigation_type(FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT),
       allow_download(true),
       should_replace_current_entry(false),
@@ -69,6 +71,7 @@ CommonNavigationParams::CommonNavigationParams(
     const GURL& url,
     const Referrer& referrer,
     ui::PageTransition transition,
+    WindowOpenDisposition disposition,
     FrameMsg_Navigate_Type::Value navigation_type,
     bool allow_download,
     bool should_replace_current_entry,
@@ -85,6 +88,7 @@ CommonNavigationParams::CommonNavigationParams(
     : url(url),
       referrer(referrer),
       transition(transition),
+      disposition(disposition),
       navigation_type(navigation_type),
       allow_download(allow_download),
       should_replace_current_entry(should_replace_current_entry),

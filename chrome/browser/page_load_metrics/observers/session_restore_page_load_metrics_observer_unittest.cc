@@ -116,7 +116,8 @@ class SessionRestorePageLoadMetricsObserverTest
     std::unique_ptr<content::NavigationEntry> entry(
         content::NavigationController::CreateNavigationEntry(
             GetTestURL(), content::Referrer(), ui::PAGE_TRANSITION_RELOAD,
-            false, std::string(), browser_context()));
+            WindowOpenDisposition::CURRENT_TAB, false, std::string(),
+            browser_context()));
     entries.emplace_back(std::move(entry));
 
     content::NavigationController& controller = contents->GetController();
