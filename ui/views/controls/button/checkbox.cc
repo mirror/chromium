@@ -23,6 +23,7 @@
 #include "ui/views/painter.h"
 #include "ui/views/resources/grit/views_resources.h"
 #include "ui/views/style/platform_style.h"
+#include "ui/views/style/typography.h"
 #include "ui/views/vector_icons.h"
 
 namespace views {
@@ -211,12 +212,14 @@ SkColor Checkbox::GetInkDropBaseColor() const {
 
 gfx::ImageSkia Checkbox::GetImage(ButtonState for_state) const {
   if (UseMd()) {
+    const ui::NativeTheme* theme = GetNativeTheme();
     return gfx::CreateVectorIcon(
         GetVectorIcon(), 16,
         // When not checked, the icon color matches the button text color.
-        GetNativeTheme()->GetSystemColor(
-            checked_ ? ui::NativeTheme::kColorId_FocusedBorderColor
-                     : ui::NativeTheme::kColorId_LabelEnabledColor));
+        checked_ ? theme->GetSystemColor(
+                       ui::NativeTheme::kColorId_FocusedBorderColor)
+                 : views::style::GetColor(views::style::CONTEXT_BUTTON_MD,
+                                          views::style::STYLE_PRIMARY, theme));
   }
 
   const size_t checked_index = checked_ ? 1 : 0;

@@ -424,7 +424,7 @@ SkColor NativeThemeWin::GetSystemColor(ColorId color_id) const {
   // Dialogs:
   const SkColor kDialogBackgroundColor = SkColorSetRGB(251, 251, 251);
   // FocusableBorder:
-  const SkColor kFocusedBorderColor = SkColorSetRGB(0x4d, 0x90, 0xfe);
+  const SkColor kFocusedBorderColor = SkColorSetRGB(0x42, 0x85, 0xf4);
   const SkColor kUnfocusedBorderColor = SkColorSetRGB(0xd9, 0xd9, 0xd9);
   // Button:
   const SkColor kButtonHoverColor = SkColorSetRGB(6, 45, 117);
