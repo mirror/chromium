@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8e725a1_d82f2db6",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2DTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-25T11:18:52Z",
+      "side": 1,
+      "message": "Is my understanding correct that the tolerance needs to be 5 because it was 11 here and the error in the conversion can be high?",
+      "range": {
+        "startLine": 1339,
+        "startChar": 40,
+        "endLine": 1339,
+        "endChar": 42
+      },
+      "revId": "14f211a72ff62b76d90619a6ebf63fec9075f2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
