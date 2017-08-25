@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "faa85c64_873bfe62",
+        "filename": "content/child/blink_platform_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "Answered in GRD file",
+      "parentUuid": "c52299ed_007819d3",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06ff402a_3966a427",
         "filename": "third_party/WebKit/LayoutTests/TestExpectations",
         "patchSetId": 20
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "10bbd0cf_745f824e",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-with-state-fullscreen.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8a84f0f_ee70e69b",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a263cf2_a39c8cc7",
         "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-with-state-pause.html",
         "patchSetId": 20
@@ -67,6 +103,24 @@
       "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3252aeaa_6f874287",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-with-state-pause.html",
+        "patchSetId": 20
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a263cf2_a39c8cc7",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "f750f957_7d879611",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 1197,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83a2883e_40848b25",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11facfb8_a1a07832",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImplTest.cpp",
         "patchSetId": 20
@@ -101,6 +173,24 @@
       "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be37d80_0fc3c177",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImplTest.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "Reverted.",
+      "parentUuid": "11facfb8_a1a07832",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "1567eb70_6a1ced79",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72d23a67_4cfb0c9e",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa0cc6de_fd4dfd72",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.h",
         "patchSetId": 20
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "ff91dbd9_045e2520",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlInputElement.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa0cc6de_fd4dfd72",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e766826f_3f708181",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlSegmentedTrackElement.cpp",
         "patchSetId": 20
@@ -149,6 +275,24 @@
       "writtenOn": "2017-08-24T12:50:35Z",
       "side": 1,
       "message": "You could set the element\u0027s type to \u0027range\u0027 here as they have to be range elements.",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6db7356_658e7236",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlSegmentedTrackElement.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "There are two range types though kMediaSlider and kMediaVolumeSlider?",
+      "parentUuid": "e766826f_3f708181",
       "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "cea7d3bd_1806cb75",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlSegmentedTrackElement.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b64066ef_b97d6d34",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b341de8f_df3c411d",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlSegmentedTrackElement.h",
         "patchSetId": 20
@@ -186,6 +348,24 @@
       "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58308857_967189f9",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlSegmentedTrackElement.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b341de8f_df3c411d",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "c04780cc_530b906f",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12634f2d_a1aed0f3",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca73cad7_b3996369",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
         "patchSetId": 20
@@ -220,6 +418,24 @@
       "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dfe49b9_3da67c85",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca73cad7_b3996369",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "76729410_9ddff1ab",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3902ce9_147b6fbd",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21fd74ed_7fc3cf89",
         "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
         "patchSetId": 20
@@ -254,6 +488,24 @@
       "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6b46e7_5818ce7a",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlTimelineElement.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21fd74ed_7fc3cf89",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +526,24 @@
     },
     {
       "key": {
+        "uuid": "f689edda_ce57bcb4",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlVolumeSliderElement.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "The tests still pass so I have removed from both the sliders.",
+      "parentUuid": "23779638_16721387",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd6e65c8_9fbca3c2",
         "filename": "third_party/WebKit/Source/modules/media_controls/resources/mediaControls.css",
         "patchSetId": 20
@@ -291,6 +561,24 @@
     },
     {
       "key": {
+        "uuid": "cd9213ed_30cd420c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/mediaControls.css",
+        "patchSetId": 20
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "The source images are 128x128px so they need to be resized in CSS.",
+      "parentUuid": "fd6e65c8_9fbca3c2",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a6ea73b_25903b3c",
         "filename": "third_party/WebKit/Source/modules/media_controls/resources/media_controls_resources.grd",
         "patchSetId": 20
@@ -302,6 +590,24 @@
       "writtenOn": "2017-08-24T12:50:35Z",
       "side": 1,
       "message": "You can\u0027t gzip this?",
+      "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a48d798e_cafdca70",
+        "filename": "third_party/WebKit/Source/modules/media_controls/resources/media_controls_resources.grd",
+        "patchSetId": 20
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-08-25T15:08:33Z",
+      "side": 1,
+      "message": "Grit doesn\u0027t support gzipping \"structures\" (which it needs to be to use \"chrome_html\" to insert images). My plan is to come back and add this in a separate CL.",
+      "parentUuid": "0a6ea73b_25903b3c",
       "revId": "92597cf0198dd80069cbc66bca152226bd491f80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
