@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8a3cae3b_0a406fb6",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-25T03:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2a89d9b_1fa296da",
+      "range": {
+        "startLine": 242,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 13
+      },
+      "revId": "c39c57eff37c26868c0baddd2865b76cb91ad866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e9345b2_e737dabd",
         "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "c39c57eff37c26868c0baddd2865b76cb91ad866",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a9d0b46_17a296c8",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-25T03:33:08Z",
+      "side": 1,
+      "message": "Ctrl + click, click, context menu navs, etc. are all LINK navigations but have different parameters e.g. disposition, renderer_initiated, from_context_menu, etc. So we still need the other tests.",
+      "parentUuid": "0e9345b2_e737dabd",
+      "range": {
+        "startLine": 260,
+        "startChar": 4,
+        "endLine": 260,
+        "endChar": 31
+      },
+      "revId": "c39c57eff37c26868c0baddd2865b76cb91ad866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
