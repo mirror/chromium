@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90c9c142_76b702e7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-25T22:34:29Z",
+      "side": 1,
+      "message": "The meaning of this is fairly unclear.  Maybe give an example:\n\n\u003chistogram name\u003d\"MyHist\"\u003e\n\n\u003chistogram_suffixes name\u003d\"Suffix1\"\u003e\n  \u003csuffix name\u003d\"A\"/\u003e\n  \u003csuffix name\u003d\"B\"/\u003e\n  \u003caffected-histogram name\u003d\"MyHist\"/\u003e\n\u003c/histogram_suffixes\u003e\n\n\u003chistogram_suffixes name\u003d\"Suffix2\"\u003e\n  \u003csuffix name\u003d\"C\"/\u003e\n  \u003csuffix name\u003d\"D\"/\u003e\n  \u003caffected-histogram name\u003d\"MyHist\"/\u003e\n  \u003caffected-histogram name\u003d\"MyHist.A\"/\u003e\n\u003c/histogram_suffixes\u003e\n\nThe complete list of histograms will be:\nMyHist.A MyHist.B MyHist.C MyHist.D MyHist.A.C MyHist.A.D",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 42
+      },
+      "revId": "198855ad119fb8b7610f5f2af812864265837c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
