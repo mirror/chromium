@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "169f93ea_3f89f138",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 2105,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-25T15:49:46Z",
+      "side": 1,
+      "message": "Nit: navigate to -\u003e opens a?",
+      "revId": "d8e576d128e367936fb106201c45c9a1698b9e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce10ed1_28e56def",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-25T15:49:46Z",
+      "side": 1,
+      "message": "Nit: \"manage\" is probably better than \"management\" here and elsewhere in this file",
+      "revId": "d8e576d128e367936fb106201c45c9a1698b9e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d1ab342_bcfdac42",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-25T15:49:46Z",
+      "side": 1,
+      "message": "If the user hits esc with the dialog open, will it trigger the \"manage\" action?  We should make sure hitting esc does nothing.",
+      "revId": "d8e576d128e367936fb106201c45c9a1698b9e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "256af18b_a9f0d06f",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-25T15:49:46Z",
+      "side": 1,
+      "message": "Nit: No else after return.\n\nSince the second conditional here is effectively handling DCHECK failure, I\u0027d just rewrite as:\n\n  if (button \u003d\u003d ui::DIALOG_BUTTON_OK) {\n    return ...;\n  }\n\n  DCHECK_EQ(ui::DIALOG_BUTTON_CANCEL, button);\n  ... rest of the code from this conditional arm\n}",
+      "revId": "d8e576d128e367936fb106201c45c9a1698b9e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
