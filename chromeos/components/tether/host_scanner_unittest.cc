@@ -366,12 +366,12 @@ class HostScannerTest : public NetworkStateTest {
     scanned_device_infos_from_current_scan_.clear();
   }
 
-  void ConnectToWifiNetwork() {
+  void StartConnectingToWifiNetwork() {
     std::stringstream ss;
     ss << "{"
        << "  \"GUID\": \"wifiNetworkGuid\","
        << "  \"Type\": \"" << shill::kTypeWifi << "\","
-       << "  \"State\": \"" << shill::kStateOnline << "\""
+       << "  \"State\": \"" << shill::kStateConfiguration << "\""
        << "}";
 
     ConfigureService(ss.str());
@@ -413,8 +413,8 @@ class HostScannerTest : public NetworkStateTest {
   DISALLOW_COPY_AND_ASSIGN(HostScannerTest);
 };
 
-TEST_F(HostScannerTest, TestScan_ConnectedToExistingNetwork) {
-  ConnectToWifiNetwork();
+TEST_F(HostScannerTest, TestScan_ConnectingToExistingNetwork) {
+  StartConnectingToWifiNetwork();
   EXPECT_TRUE(network_state_handler()->DefaultNetwork());
 
   EXPECT_FALSE(host_scanner_->IsScanActive());

@@ -81,8 +81,17 @@ void HostScanner::OnTetherAvailabilityResponse(
     SetCacheEntry(scanned_device_info);
   }
 
-  if (!network_state_handler_->DefaultNetwork() &&
-      !scanned_device_list_so_far.empty()) {
+  // Note: If a network is active (i.e., connecting or connected), it will be
+  // returned at the front of the list, so using FirstNetworkByType() guarantees
+  // that we will find an active network if there is one.
+  const chromeos::NetworkState* possibly_active_network =
+      network_state_handler_->FirstNetworkByType(
+          chromeos::NetworkTypePattern::Default());
+  bool active_network_exists = possibly_active_network &&
+                               (possibly_active_network->IsConnectingState() ||
+                                possibly_active_network->IsConnectedState());
+
+  if (!active_network_exists && !scanned_device_list_so_far.empty()) {
     if (scanned_device_list_so_far.size() == 1u) {
       const cryptauth::RemoteDevice& remote_device =
           scanned_device_list_so_far.at(0).remote_device;

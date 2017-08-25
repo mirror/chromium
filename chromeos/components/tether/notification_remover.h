@@ -34,7 +34,7 @@ class NotificationRemover : public HostScanCache::Observer,
   void OnCacheBecameEmpty() override;
 
   // NetworkStateHandlerObserver:
-  void DefaultNetworkChanged(const NetworkState* network) override;
+  void NetworkConnectionStateChanged(const NetworkState* network) override;
 
   // ActiveHost::Observer:
   void OnActiveHostChanged(
