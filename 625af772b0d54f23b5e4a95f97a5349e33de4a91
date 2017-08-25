@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "538a2ec7_8ee8671d",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-25T22:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfe94120_ef221c4a",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e39eb73_d8ff966c",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1ec7f4ca_54018393",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 600,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-25T22:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e39eb73_d8ff966c",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae2afa6c_07f5df67",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-25T15:33:48Z",
       "side": 1,
       "message": "If \"value prop accepted\" means \"setup started\" why do we return \"active\" before the user has finished setup? Does \"active\" really mean that there\u0027s some kind of dialog open?\n\nIf this code is correct then the function needs a better name (and a better comment).",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f066744_918c5a46",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-25T22:33:53Z",
+      "side": 1,
+      "message": "This method returns whether the voice interaction is treated as active in app list button. If so, the button style will be two concentric rings instead of a single ring, and the button will show a burst bubble animation at long press.\n\nIf voice interaction value prop has not been accepted yet, we want to show the animation and then opens the value prop dialog for user at long press.",
+      "parentUuid": "ae2afa6c_07f5df67",
       "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -123,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "5de49251_41dd695e",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-25T22:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "901f1a59_8942ac7d",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03c9b452_7fbd7a03",
         "filename": "ash/shelf/app_list_button_unittest.cc",
         "patchSetId": 2
@@ -137,6 +209,24 @@
       "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e34489_07a882e1",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-25T22:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03c9b452_7fbd7a03",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "0ff01a7b_0eb67a42",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-25T22:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8267de46_f7d67c7f",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "571d9095_dafe347d",
         "filename": "ash/shelf/app_list_button_unittest.cc",
         "patchSetId": 2
@@ -171,6 +279,24 @@
       "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df12007_a577d3f1",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-25T22:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "571d9095_dafe347d",
+      "revId": "625af772b0d54f23b5e4a95f97a5349e33de4a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
