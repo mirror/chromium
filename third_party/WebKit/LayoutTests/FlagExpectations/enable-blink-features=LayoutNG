@@ -1,6 +1,17 @@
 # These tests currently fail when they run with --enable-blink-features=LayoutNG
 # See https://crbug.com/591099.
 
+# Need support for getBoundingClientRect() with LayoutNG.
+crbug.com/755750 accessibility/selection-affinity.html [ Failure ]
+
+# We currently write back whitespace-collapsed strings to LayoutText, causing
+# the following failures. Once we can paint inlines directly from fragment tree,
+# we can stop the writeback.
+crbug.com/714962 editing/pasteboard/19644-1.html [ Failure ]
+crbug.com/714962 editing/pasteboard/19644-2.html [ Failure ]
+crbug.com/714962 editing/text-iterator/findString-restarts-at-last-position.html [ Failure ]
+
+# New failures are appended to the last block.
 crbug.com/591099 accessibility/accessibility-hit-test-crash.html [ Failure ]
 crbug.com/591099 accessibility/accessibility-node-memory-management.html [ Failure ]
 crbug.com/591099 accessibility/accessibility-node-reparent.html [ Failure ]
@@ -17267,17 +17278,7 @@ crbug.com/591099 webmidi/requestmidiaccess.html [ Failure ]
 crbug.com/591099 webmidi/send-messages.html [ Failure ]
 crbug.com/591099 webmidi/send-system-messages.html [ Failure ]
 crbug.com/591099 xmlviewer/extensions-api.html [ Failure ]
-
-# Need support for getBoundingClientRect() with LayoutNG.
-crbug.com/755750 accessibility/selection-affinity.html [ Failure ]
-
-# We currently write back whitespace-collapsed strings to LayoutText, causing
-# the following failures. Once we can paint inlines directly from fragment tree,
-# we can stop the writeback.
 crbug.com/591099 editing/execCommand/list-wrapping-image-crash.html [ Failure ]
-crbug.com/714962 editing/pasteboard/19644-1.html [ Failure ]
-crbug.com/714962 editing/pasteboard/19644-2.html [ Failure ]
-crbug.com/714962 editing/text-iterator/findString-restarts-at-last-position.html [ Failure ]
 crbug.com/591099 external/wpt/css/CSS2/text/text-indent-percent-001.xht [ Failure ]
 crbug.com/591099 external/wpt/css/css-writing-modes-3/text-indent-vlr-007.xht [ Failure ]
 crbug.com/591099 external/wpt/css/css-writing-modes-3/text-indent-vlr-009.xht [ Failure ]
