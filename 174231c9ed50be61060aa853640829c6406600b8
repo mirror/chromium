@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa931fc9_10d5e03d",
+        "filename": "content/renderer/media_capture_from_element/html_video_element_capturer_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-25T01:28:41Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "174231c9ed50be61060aa853640829c6406600b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
