@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "639254fa_74d66d9c",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-25T15:55:42Z",
+      "side": 1,
+      "message": "Thanks for the explanation. I never thought of the detail about how callback is implemented in mojo.\n\nBut I agree with Hirokazu to take option 2. Taking 1) is really difficult given the current VDA design.",
+      "parentUuid": "06a7ff72_fe29a98e",
+      "revId": "34b3cede727357076fe584a8d9783e9ee29bd430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0ce35d8_4e811c4a",
         "filename": "components/arc/common/video_decode_accelerator.mojom",
         "patchSetId": 22
