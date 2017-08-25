@@ -22,6 +22,30 @@
       "revId": "da770a76268822e7de088adcf311ad91fcfcdfc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fca459e3_43eb5eb7",
+        "filename": "third_party/WebKit/public/web/WebFrame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T18:08:49Z",
+      "side": 0,
+      "message": "It\u0027s not that bad to implement in WebFrame though, is it? We can use WebFrame::ToCoreFrame to do this generically.\n\nThat being said, I don\u0027t feel strongly about this and if it\u0027s not used...",
+      "parentUuid": "5d031221_d0767c71",
+      "range": {
+        "startLine": 103,
+        "startChar": 20,
+        "endLine": 103,
+        "endChar": 34
+      },
+      "revId": "da770a76268822e7de088adcf311ad91fcfcdfc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
