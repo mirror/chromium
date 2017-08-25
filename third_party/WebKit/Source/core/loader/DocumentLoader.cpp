@@ -144,6 +144,7 @@ LocalFrameClient& DocumentLoader::GetLocalFrameClient() const {
 }
 
 DocumentLoader::~DocumentLoader() {
+  // LOG(ERROR) << "DocumentLoader::~DocumentLoader";
   DCHECK(!frame_);
   DCHECK(!main_resource_);
   DCHECK(!application_cache_host_);
@@ -759,6 +760,7 @@ void DocumentLoader::AppendRedirect(const KURL& url) {
 }
 
 void DocumentLoader::DetachFromFrame() {
+  LOG(ERROR) << "DocumentLoader::DetachFromFrame";
   DCHECK(frame_);
 
   // It never makes sense to have a document loader that is detached from its

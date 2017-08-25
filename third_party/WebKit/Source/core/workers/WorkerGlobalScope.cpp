@@ -93,17 +93,22 @@ void WorkerGlobalScope::EvaluateClassicScript(
     String source_code,
     std::unique_ptr<Vector<char>> cached_meta_data,
     V8CacheOptions v8_cache_options) {
+  LOG(ERROR) << "WorkerGlobalScope::EvaluateClassicScript";
   DCHECK(IsContextThread());
   CachedMetadataHandler* handler = CreateWorkerScriptCachedMetadataHandler(
       script_url, cached_meta_data.get());
   DCHECK(!source_code.IsNull());
+  LOG(ERROR) << "WorkerGlobalScope::WillEvaluateWorkerScript";
   GetThread()->GetWorkerReportingProxy().WillEvaluateWorkerScript(
       source_code.length(),
       cached_meta_data.get() ? cached_meta_data->size() : 0);
+  LOG(ERROR) << "ScriptController()->Evaluate";
   bool success = ScriptController()->Evaluate(
       ScriptSourceCode(source_code, script_url), nullptr /* error_event */,
       handler, v8_cache_options);
+  LOG(ERROR) << "DidEvaluateWorkerScript";
   GetThread()->GetWorkerReportingProxy().DidEvaluateWorkerScript(success);
+  LOG(ERROR) << "EvaluateClassicScript fin";
 }
 
 void WorkerGlobalScope::Dispose() {

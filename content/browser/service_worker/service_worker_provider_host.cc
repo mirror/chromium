@@ -224,14 +224,18 @@ ServiceWorkerProviderHost::ServiceWorkerProviderHost(
 ServiceWorkerProviderHost::~ServiceWorkerProviderHost() {
   // Temporary CHECK for debugging https://crbug.com/750267.
   CHECK(BrowserThread::CurrentlyOn(BrowserThread::IO));
+  LOG(ERROR) << "ServiceWorkerProviderHost::~ServiceWorkerProviderHost";
   if (context_)
     context_->UnregisterProviderHostByClientID(client_uuid_);
 
   // Clear docurl so the deferred activation of a waiting worker
   // won't associate the new version with a provider being destroyed.
   document_url_ = GURL();
-  if (controller_.get())
+  if (controller_.get()) {
+    LOG(ERROR) << "ServiceWorkerProviderHost::~ServiceWorkerProviderHost => "
+                  "RemoveControllee";
     controller_->RemoveControllee(this);
+  }
 
   RemoveAllMatchingRegistrations();
 

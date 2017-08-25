@@ -115,6 +115,7 @@ void HTMLFrameOwnerElement::ClearContentFrame() {
 }
 
 void HTMLFrameOwnerElement::DisconnectContentFrame() {
+  LOG(ERROR) << "HTMLFrameOwnerElement::DisconnectContentFrame";
   // FIXME: Currently we don't do this in removedFrom because this causes an
   // unload event in the subframe which could execute script that could then
   // reach up into this document and then attempt to look back down. We should
@@ -122,6 +123,7 @@ void HTMLFrameOwnerElement::DisconnectContentFrame() {
   if (Frame* frame = ContentFrame()) {
     frame->Detach(FrameDetachType::kRemove);
   }
+  LOG(ERROR) << "HTMLFrameOwnerElement::DisconnectContentFrame done";
 }
 
 HTMLFrameOwnerElement::~HTMLFrameOwnerElement() {
