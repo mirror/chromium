@@ -100,6 +100,8 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
     /** Button to clear the selection. **/
     public static final int NAVIGATION_BUTTON_SELECTION_BACK = 3;
 
+    private static final int CHROME_HOME_NAVIGATION_BUTTON_OFFSET_DP = 4;
+
     /** An observer list for this toolbar. */
     private final ObserverList<SelectableListToolbarObserver> mObservers = new ObserverList<>();
 
@@ -478,9 +480,6 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
         int padding =
                 SelectableListLayout.getPaddingForDisplayStyle(newDisplayStyle, getResources());
         int paddingStartOffset = 0;
-        boolean isModernSearchViewEnabled = mIsSearching && !mIsSelectionEnabled
-                && FeatureUtilities.isChromeHomeModernEnabled();
-        MarginLayoutParams params = (MarginLayoutParams) getLayoutParams();
 
         if (newDisplayStyle.horizontal == HorizontalDisplayStyle.WIDE
                 && !(mIsSearching || mIsSelectionEnabled
@@ -489,22 +488,18 @@ public class SelectableListToolbar<E> extends Toolbar implements SelectionObserv
             paddingStartOffset = mWideDisplayStartOffsetPx;
         }
 
-        // The margin instead of padding will be set to adjust the modern search view background
-        // in search mode.
-        if (newDisplayStyle.horizontal == HorizontalDisplayStyle.WIDE
-                && isModernSearchViewEnabled) {
-            params.setMargins(padding, params.topMargin, padding, params.bottomMargin);
-            padding = 0;
-        } else {
-            params.setMargins(0, params.topMargin, 0, params.bottomMargin);
+        int paddingForChromeHomePx = 0;
+        if (FeatureUtilities.isChromeHomeModernEnabled()) {
+            if (mNavigationButton == NAVIGATION_BUTTON_BACK
+                    || mNavigationButton == NAVIGATION_BUTTON_SELECTION_BACK) {
+                float density = getResources().getDisplayMetrics().density;
+                paddingForChromeHomePx = (int) (density * CHROME_HOME_NAVIGATION_BUTTON_OFFSET_DP);
+            }
         }
-        setLayoutParams(params);
 
-        // Navigation button should have more padding start in the modern search view.
-        if (isModernSearchViewEnabled) paddingStartOffset += mModernSearchViewStartOffsetPx;
-
-        ApiCompatibilityUtils.setPaddingRelative(this, padding + paddingStartOffset,
-                this.getPaddingTop(), padding, this.getPaddingBottom());
+        ApiCompatibilityUtils.setPaddingRelative(this,
+                padding + paddingStartOffset + paddingForChromeHomePx, this.getPaddingTop(),
+                padding, this.getPaddingBottom());
     }
 
     /**
