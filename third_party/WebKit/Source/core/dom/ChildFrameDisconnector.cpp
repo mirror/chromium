@@ -29,8 +29,9 @@ void ChildFrameDisconnector::Disconnect(DisconnectPolicy policy) {
     for (Node* child = Root().firstChild(); child; child = child->nextSibling())
       CollectFrameOwners(*child);
   }
-
+  LOG(ERROR) << "DisconnectCollectedFrameOwners";
   DisconnectCollectedFrameOwners();
+  LOG(ERROR) << "DisconnectCollectedFrameOwners done";
 }
 
 void ChildFrameDisconnector::CollectFrameOwners(Node& root) {

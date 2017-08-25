@@ -24,32 +24,63 @@ function test() {
   var scriptURL = 'http://127.0.0.1:8000/inspector/service-workers/resources/changing-worker.php';
   var scope = 'http://127.0.0.1:8000/inspector/service-workers/resources/service-worker-redundant-scope/';
   var step = 0;
+  var updateCount = 0;
   var firstVersionId = -1;
   var secondVersionId = -1;
   Resources.ServiceWorkersView._noThrottle = true;
+  function now()
+  {
+    var p = Math.floor(performance.now());
+    var d = new Date();
+
+    return "[" + ("0000" + p).slice(-5) + "] " +
+           ("0" + d.getHours()).slice(-2) + ":" +
+           ("0" + d.getMinutes()).slice(-2) + ":" +
+           ("0" + d.getSeconds()).slice(-2) + "." +
+           ("00" + d.getMilliseconds()).slice(-3) + ": ";
+  }
+  setTimeout(() => {
+    InspectorTest.addResult(now() + " TIMEOUT!!!!!!!!!!!");
+    InspectorTest.completeTest();
+  }, 15000);
 
   TestRunner.evaluateInPage('frontendReopeningCount', function(result) {
     if (result._description == '0') {
       TestRunner.addSniffer(Resources.ServiceWorkersView.prototype, '_updateRegistration', updateRegistration, true);
       function updateRegistration(registration) {
+        InspectorTest.addResult(now() + " updateRegistration: [" + registration.scopeURL + "]" );
         if (registration.scopeURL != scope)
           return;
+        ++updateCount;
+        {
+          InspectorTest.addResult(now() + " ==== updateRegistration ==== [" + updateCount + "]" );
+          InspectorTest.addResult(JSON.stringify(registration));
+          for (var version of registration.versions.values()) {
+            InspectorTest.addResult(JSON.stringify({
+              id: version.id,
+              runningStatus: version.runningStatus,
+              status: version.status,
+              targetId: version.targetId
+            }));
+          }
+          InspectorTest.addResult(now() + " ============================");
+        }
         for (var version of registration.versions.values()) {
           if (step == 0 && version.isRunning() && version.isActivated()) {
             ++step;
             firstVersionId = version.id;
-            TestRunner.addResult('The first ServiceWorker is activated.');
-            TestRunner.addResult('==== ServiceWorkersView ====');
+            TestRunner.addResult(now() + 'The first ServiceWorker is activated.');
+            TestRunner.addResult(now() + '==== ServiceWorkersView ====');
             TestRunner.addResult(ApplicationTestRunner.dumpServiceWorkersView([scope]));
-            TestRunner.addResult('============================');
+            TestRunner.addResult(now() + '============================');
             TestRunner.evaluateInPage('loadIframe("' + scope + '");');
           } else if (step == 1 && version.isRunning() && version.isInstalled()) {
             ++step;
             secondVersionId = version.id;
-            TestRunner.addResult('The second Serviceworker is installed.');
-            TestRunner.addResult('==== ServiceWorkersView ====');
+            TestRunner.addResult(now() + 'The second Serviceworker is installed.');
+            TestRunner.addResult(now() + '==== ServiceWorkersView ====');
             TestRunner.addResult(ApplicationTestRunner.dumpServiceWorkersView([scope]));
-            TestRunner.addResult('============================');
+            TestRunner.addResult(now() + '============================');
             TestRunner.evaluateInPage('unloadIframe();');
           }
         }
@@ -60,10 +91,10 @@ function test() {
         if ((!firstVersion || (firstVersion.isStopped() && firstVersion.isRedundant())) &&
             secondVersion.isActivated() && secondVersion.isRunning()) {
           ++step;
-          TestRunner.addResult('The first ServiceWorker worker became redundant and stopped.');
-          TestRunner.addResult('==== ServiceWorkersView ====');
+          TestRunner.addResult(now() + 'The first ServiceWorker worker became redundant and stopped.');
+          TestRunner.addResult(now() + '==== ServiceWorkersView ====');
           TestRunner.addResult(ApplicationTestRunner.dumpServiceWorkersView([scope]));
-          TestRunner.addResult('============================');
+          TestRunner.addResult(now() + '============================');
           TestRunner.flushResults();
           TestRunner.evaluateInPage('reopenFrontend()');
         }
@@ -71,11 +102,11 @@ function test() {
       UI.panels.resources._sidebar.serviceWorkersTreeElement.select();
       ApplicationTestRunner.registerServiceWorker(scriptURL, scope);
     } else {
-      TestRunner.addResult('DevTools frontend is reopened.');
+      TestRunner.addResult(now() + 'DevTools frontend is reopened.');
       UI.panels.resources._sidebar.serviceWorkersTreeElement.select();
-      TestRunner.addResult('==== ServiceWorkersView ====');
+      TestRunner.addResult(now() + '==== ServiceWorkersView ====');
       TestRunner.addResult(ApplicationTestRunner.dumpServiceWorkersView([scope]));
-      TestRunner.addResult('============================');
+      TestRunner.addResult(now() + '============================');
       ApplicationTestRunner.deleteServiceWorkerRegistration(scope);
       TestRunner.completeTest();
     }

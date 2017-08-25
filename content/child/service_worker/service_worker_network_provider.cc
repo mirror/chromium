@@ -5,6 +5,7 @@
 #include "content/child/service_worker/service_worker_network_provider.h"
 
 #include "base/atomic_sequence_num.h"
+#include "base/debug/stack_trace.h"
 #include "content/child/child_thread_impl.h"
 #include "content/child/child_url_loader_factory_getter.h"
 #include "content/child/request_extra_data.h"
@@ -56,6 +57,11 @@ class WebServiceWorkerNetworkProviderForFrame
   WebServiceWorkerNetworkProviderForFrame(
       std::unique_ptr<ServiceWorkerNetworkProvider> provider)
       : provider_(std::move(provider)) {}
+
+  ~WebServiceWorkerNetworkProviderForFrame() override {
+    LOG(ERROR) << "WebServiceWorkerNetworkProviderForFrame::~"
+                  "WebServiceWorkerNetworkProviderForFrame()";
+  }
 
   void WillSendRequest(blink::WebURLRequest& request) override {
     RequestExtraData* extra_data =
@@ -227,6 +233,7 @@ ServiceWorkerNetworkProvider::FromWebServiceWorkerNetworkProvider(
 }
 
 ServiceWorkerNetworkProvider::~ServiceWorkerNetworkProvider() {
+  LOG(ERROR) << "ServiceWorkerNetworkProvider::~ServiceWorkerNetworkProvider";
   if (context()) {
     context()->OnNetworkProviderDestroyed();
   }
