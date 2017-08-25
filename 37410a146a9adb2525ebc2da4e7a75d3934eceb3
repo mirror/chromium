@@ -34,6 +34,29 @@
       "revId": "37410a146a9adb2525ebc2da4e7a75d3934eceb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d094dc1c_7002475e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-08-25T15:17:12Z",
+      "side": 1,
+      "message": "nit: Line break above this line",
+      "range": {
+        "startLine": 136,
+        "startChar": 29,
+        "endLine": 136,
+        "endChar": 37
+      },
+      "revId": "37410a146a9adb2525ebc2da4e7a75d3934eceb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
