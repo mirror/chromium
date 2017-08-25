@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f85b277d_e05c74de",
+        "filename": "chrome/browser/ui/cocoa/phish_guard_dialog_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-25T19:23:12Z",
+      "side": 1,
+      "message": "You might want to declare the void safe_browsing::ShowPasswordReuseModalWarningDialog(..) for Mac builds here to instantiate the dialog. Similar to \nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/views/safe_browsing/password_reuse_modal_warning_dialog.cc?l\u003d25\u0026gs\u003dcpp%253Asafe_browsing%253A%253AShowPasswordReuseModalWarningDialog(content%253A%253AWebContents%2B*%252C%2Bbase%253A%253ACallback%253Cvoid%2B(safe_browsing%253A%253APasswordProtectionService%253A%253AWarningAction)%252C%2Bbase%253A%253Ainternal%253A%253ACopyMode%253A%253AMoveOnly%252C%2Bbase%253A%253Ainternal%253A%253ARepeatMode%253A%253AOnce%253E)%2540chromium%252F..%252F..%252Fchrome%252Fbrowser%252Fui%252Fviews%252Fsafe_browsing%252Fpassword_reuse_modal_warning_dialog.cc%257Cdef\u0026gsn\u003dShowPasswordReuseModalWarningDialog\u0026ct\u003dxref_usages",
+      "revId": "5a2cfd7cbd1322bc498c8728ab4438925b67272b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
