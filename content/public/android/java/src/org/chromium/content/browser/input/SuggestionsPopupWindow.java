@@ -7,6 +7,8 @@ package org.chromium.content.browser.input;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -37,6 +39,9 @@ import org.chromium.ui.UiUtils;
  */
 public class SuggestionsPopupWindow
         implements OnItemClickListener, OnDismissListener, View.OnClickListener {
+    private static final String SETTINGS_APP_PACKAGE_NAME = "com.android.settings";
+    private static final String ADD_TO_DICTIONARY_MAX_LENGTH_RESOURCE =
+            "maximum_user_dictionary_word_length";
     private static final String ACTION_USER_DICTIONARY_INSERT =
             "com.android.settings.USER_DICTIONARY_INSERT";
     private static final String USER_DICTIONARY_EXTRA_WORD = "word";
@@ -167,7 +172,34 @@ public class SuggestionsPopupWindow
 
     private void addToDictionary() {
         final Intent intent = new Intent(ACTION_USER_DICTIONARY_INSERT);
-        intent.putExtra(USER_DICTIONARY_EXTRA_WORD, mHighlightedText);
+
+        String wordToAdd = mHighlightedText;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            // There was a bug in Lollipop, fixed in the initial version of KitKat, that can cause a
+            // crash if the word we try to add is too long. The "add to dictionary" intent uses an
+            // EditText widget to show the word about to be added (and allow the user to edit it).
+            // It has a maximum length of 48 characters. If a word is longer than this, it will be
+            // truncated, but the intent will try to select the full length of the word, causing a
+            // crash.
+
+            // KitKit and later still truncate the word, but avoid the crash.
+            try {
+                Resources settingsAppResources =
+                        mContext.getPackageManager().getResourcesForApplication(
+                                SETTINGS_APP_PACKAGE_NAME);
+                int resourceId =
+                        settingsAppResources.getIdentifier(ADD_TO_DICTIONARY_MAX_LENGTH_RESOURCE,
+                                "integer", SETTINGS_APP_PACKAGE_NAME);
+                int maxLength = settingsAppResources.getInteger(resourceId);
+                if (wordToAdd.length() > maxLength) {
+                    wordToAdd = wordToAdd.substring(0, maxLength);
+                }
+            } catch (NameNotFoundException e) {
+                // This really shouldn't happen, but if it does, don't truncate the word.
+            }
+        }
+
+        intent.putExtra(USER_DICTIONARY_EXTRA_WORD, wordToAdd);
         intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NEW_TASK);
         mContext.startActivity(intent);
     }
