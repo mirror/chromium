@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cabcee9_898763e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-25T17:58:26Z",
+      "side": 1,
+      "message": "If this is true here. Does that mean mAutopresentWebVr would not be set to false after exitCct? And VrShellDelegate is shared between activities. It then make normal Chrome think that it can autopresenting or assert failure next time it enters VR?",
+      "range": {
+        "startLine": 1303,
+        "startChar": 13,
+        "endLine": 1303,
+        "endChar": 30
+      },
+      "revId": "da5dc5cd9c4d66f22d53b110842ccb2597ae1787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "461c3c8c_a90f3931",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-08-25T17:58:26Z",
+      "side": 1,
+      "message": "hmm. CTA could also means ChromeTabbedActivity, perhaps use full name.",
+      "range": {
+        "startLine": 1304,
+        "startChar": 35,
+        "endLine": 1304,
+        "endChar": 38
+      },
+      "revId": "da5dc5cd9c4d66f22d53b110842ccb2597ae1787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
