@@ -37,10 +37,10 @@
 
 using content::BrowserThread;
 using sync_pb::UserEventSpecifics;
-using SyncPasswordReuseEvent = UserEventSpecifics::SyncPasswordReuseEvent;
-using PasswordReuseLookup = SyncPasswordReuseEvent::PasswordReuseLookup;
+using GaiaPasswordReuse = UserEventSpecifics::GaiaPasswordReuse;
+using PasswordReuseLookup = GaiaPasswordReuse::PasswordReuseLookup;
 using SafeBrowsingStatus =
-    SyncPasswordReuseEvent::PasswordReuseDetected::SafeBrowsingStatus;
+    GaiaPasswordReuse::PasswordReuseDetected::SafeBrowsingStatus;
 
 namespace safe_browsing {
 
@@ -217,7 +217,7 @@ void ChromePasswordProtectionService::MaybeLogPasswordReuseDetectedEvent(
     content::WebContents* web_contents) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  if (!base::FeatureList::IsEnabled(safe_browsing::kSyncPasswordReuseEvent))
+  if (!base::FeatureList::IsEnabled(safe_browsing::kGaiaPasswordReuseReporting))
     return;
 
   syncer::UserEventService* user_event_service =
@@ -230,7 +230,7 @@ void ChromePasswordProtectionService::MaybeLogPasswordReuseDetectedEvent(
   if (!specifics)
     return;
 
-  auto* const status = specifics->mutable_sync_password_reuse_event()
+  auto* const status = specifics->mutable_gaia_password_reuse_event()
                            ->mutable_reuse_detected()
                            ->mutable_status();
   status->set_enabled(IsSafeBrowsingEnabled());
@@ -307,7 +307,7 @@ void ChromePasswordProtectionService::LogPasswordReuseLookupResult(
     return;
 
   auto* const reuse_lookup =
-      specifics->mutable_sync_password_reuse_event()->mutable_reuse_lookup();
+      specifics->mutable_gaia_password_reuse_event()->mutable_reuse_lookup();
   reuse_lookup->set_lookup_result(result);
   user_event_service->RecordUserEvent(std::move(specifics));
 }
@@ -330,7 +330,7 @@ void ChromePasswordProtectionService::LogPasswordReuseLookupResultWithVerdict(
     return;
 
   PasswordReuseLookup* const reuse_lookup =
-      specifics->mutable_sync_password_reuse_event()->mutable_reuse_lookup();
+      specifics->mutable_gaia_password_reuse_event()->mutable_reuse_lookup();
   reuse_lookup->set_lookup_result(result);
   reuse_lookup->set_verdict(verdict);
   reuse_lookup->set_verdict_token(verdict_token);
@@ -341,7 +341,7 @@ void ChromePasswordProtectionService::MaybeLogPasswordReuseLookupEvent(
     content::WebContents* web_contents,
     PasswordProtectionService::RequestOutcome outcome,
     const LoginReputationClientResponse* response) {
-  if (!base::FeatureList::IsEnabled(safe_browsing::kSyncPasswordReuseEvent))
+  if (!base::FeatureList::IsEnabled(safe_browsing::kGaiaPasswordReuseReporting))
     return;
 
   switch (outcome) {

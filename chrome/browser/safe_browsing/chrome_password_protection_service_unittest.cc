@@ -38,8 +38,8 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using sync_pb::UserEventSpecifics;
-using SyncPasswordReuseEvent = UserEventSpecifics::SyncPasswordReuseEvent;
-using PasswordReuseLookup = SyncPasswordReuseEvent::PasswordReuseLookup;
+using GaiaPasswordReuse = UserEventSpecifics::GaiaPasswordReuse;
+using PasswordReuseLookup = GaiaPasswordReuse::PasswordReuseLookup;
 
 namespace safe_browsing {
 
@@ -393,9 +393,9 @@ TEST_F(ChromePasswordProtectionServiceTest,
   profile()->GetPrefs()->SetBoolean(prefs::kSafeBrowsingEnabled, true);
   service_->MaybeLogPasswordReuseDetectedEvent(web_contents());
   ASSERT_EQ(1ul, GetUserEventService()->GetRecordedUserEvents().size());
-  SyncPasswordReuseEvent event = GetUserEventService()
-                                     ->GetRecordedUserEvents()[0]
-                                     .sync_password_reuse_event();
+  GaiaPasswordReuse event = GetUserEventService()
+                                ->GetRecordedUserEvents()[0]
+                                .gaia_password_reuse_event();
   EXPECT_TRUE(event.reuse_detected().status().enabled());
 
   // Case 2: safe_browsing_enabled = false
@@ -404,7 +404,7 @@ TEST_F(ChromePasswordProtectionServiceTest,
   ASSERT_EQ(2ul, GetUserEventService()->GetRecordedUserEvents().size());
   event = GetUserEventService()
               ->GetRecordedUserEvents()[1]
-              .sync_password_reuse_event();
+              .gaia_password_reuse_event();
   EXPECT_FALSE(event.reuse_detected().status().enabled());
 
   // Not checking for the extended_reporting_level since that requires setting
@@ -452,7 +452,7 @@ TEST_F(ChromePasswordProtectionServiceTest,
     ASSERT_EQ(t + 1, GetUserEventService()->GetRecordedUserEvents().size());
     PasswordReuseLookup reuse_lookup = GetUserEventService()
                                            ->GetRecordedUserEvents()[t]
-                                           .sync_password_reuse_event()
+                                           .gaia_password_reuse_event()
                                            .reuse_lookup();
     EXPECT_EQ(it.second, reuse_lookup.lookup_result());
     t++;
@@ -469,7 +469,7 @@ TEST_F(ChromePasswordProtectionServiceTest,
     ASSERT_EQ(t + 1, GetUserEventService()->GetRecordedUserEvents().size());
     PasswordReuseLookup reuse_lookup = GetUserEventService()
                                            ->GetRecordedUserEvents()[t]
-                                           .sync_password_reuse_event()
+                                           .gaia_password_reuse_event()
                                            .reuse_lookup();
     EXPECT_EQ(PasswordReuseLookup::CACHE_HIT, reuse_lookup.lookup_result());
     EXPECT_EQ(PasswordReuseLookup::LOW_REPUTATION, reuse_lookup.verdict());
@@ -487,7 +487,7 @@ TEST_F(ChromePasswordProtectionServiceTest,
     ASSERT_EQ(t + 1, GetUserEventService()->GetRecordedUserEvents().size());
     PasswordReuseLookup reuse_lookup = GetUserEventService()
                                            ->GetRecordedUserEvents()[t]
-                                           .sync_password_reuse_event()
+                                           .gaia_password_reuse_event()
                                            .reuse_lookup();
     EXPECT_EQ(PasswordReuseLookup::REQUEST_SUCCESS,
               reuse_lookup.lookup_result());
