@@ -222,7 +222,7 @@ public class HistoryManager implements OnMenuItemClickListener, SignInStateObser
                     .putBoolean(PREF_SHOW_HISTORY_INFO, mShouldShowInfoHeader)
                     .apply();
             mToolbar.updateInfoMenuItem(shouldShowInfoButton(), shouldShowInfoHeaderIfAvailable());
-            mHistoryAdapter.setPrivacyDisclaimerVisibility();
+            mHistoryAdapter.setPrivacyDisclaimer();
         }
         return false;
     }
