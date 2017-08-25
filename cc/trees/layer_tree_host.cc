@@ -1300,6 +1300,7 @@ void LayerTreeHost::PushLayerTreeHostPropertiesTo(
 
   host_impl->SetViewportSize(device_viewport_size_);
   host_impl->SetDebugState(debug_state_);
+  host_impl->SetIsMobileOptimized(is_mobile_optimized_);
 }
 
 Layer* LayerTreeHost::LayerByElementId(ElementId element_id) const {

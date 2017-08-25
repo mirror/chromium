@@ -64,6 +64,10 @@ struct StructTraits<viz::mojom::CompositorFrameMetadataDataView,
     return metadata.may_contain_video;
   }
 
+  static bool is_mobile_optimized(const cc::CompositorFrameMetadata& metadata) {
+    return metadata.is_mobile_optimized;
+  }
+
   static bool is_resourceless_software_draw_with_scroll_or_animation(
       const cc::CompositorFrameMetadata& metadata) {
     return metadata.is_resourceless_software_draw_with_scroll_or_animation;
