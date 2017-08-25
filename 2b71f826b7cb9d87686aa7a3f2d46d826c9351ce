@@ -46,6 +46,30 @@
       "revId": "2b71f826b7cb9d87686aa7a3f2d46d826c9351ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd846d1_5bd77235",
+        "filename": "ios/web/public/payments/payment_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-25T20:24:17Z",
+      "side": 1,
+      "message": "Ack. There is shared validation logic in components that can be used for iOS. I think i prefer the latter. I filed a bug a left a TODO to move everything to components.",
+      "parentUuid": "415d14a8_595fb201",
+      "range": {
+        "startLine": 15,
+        "startChar": 53,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "2b71f826b7cb9d87686aa7a3f2d46d826c9351ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
