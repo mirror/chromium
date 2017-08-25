@@ -22,6 +22,30 @@
       "revId": "1784105c3abe2d763c93f26177d42e95878170e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a2fd82_07fa7f35",
+        "filename": "components/content_settings/core/browser/website_settings_registry.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-08-25T17:51:08Z",
+      "side": 0,
+      "message": "This was added only to pass the tests. If the feature is disabled via finch, it\u0027s probably fine if the tests do not pass? I suggested this because it sounded less burden for content_settings/ (i wasn\u0027t happy adding the //media DEPS).",
+      "parentUuid": "c906ea73_9fcf24b1",
+      "range": {
+        "startLine": 182,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 72
+      },
+      "revId": "1784105c3abe2d763c93f26177d42e95878170e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
