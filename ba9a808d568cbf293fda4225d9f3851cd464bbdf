@@ -283,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "a630e46c_7597834d",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T17:27:58Z",
+      "side": 1,
+      "message": "Sorry I wasn\u0027t clear: usually most people just write for (auto\u0026 task : pending_bluetooth_tasks_) to allow moving out in the loop.",
+      "parentUuid": "5635baaa_80d2453d",
+      "revId": "ba9a808d568cbf293fda4225d9f3851cd464bbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "275b3ded_d65c4d44",
         "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.h",
         "patchSetId": 37
