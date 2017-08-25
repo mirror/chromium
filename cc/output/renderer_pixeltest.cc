@@ -1319,8 +1319,8 @@ TEST_P(VideoGLRendererPixelHiLoTest, SimpleYUVRect) {
 
   bool highbit = GetParam();
   CreateTestYUVVideoDrawQuad_Striped(
-      shared_state, media::PIXEL_FORMAT_YV12, media::COLOR_SPACE_SD_REC601, false, highbit,
-      gfx::RectF(0.0f, 0.0f, 1.0f, 1.0f), pass.get(),
+      shared_state, media::PIXEL_FORMAT_YV12, media::COLOR_SPACE_SD_REC601,
+      false, highbit, gfx::RectF(0.0f, 0.0f, 1.0f, 1.0f), pass.get(),
       video_resource_updater_.get(), rect, rect, resource_provider_.get());
 
   RenderPassList pass_list;
@@ -1345,8 +1345,8 @@ TEST_P(VideoGLRendererPixelHiLoTest, ClippedYUVRect) {
 
   bool highbit = GetParam();
   CreateTestYUVVideoDrawQuad_Striped(
-      shared_state, media::PIXEL_FORMAT_YV12, media::COLOR_SPACE_SD_REC601, false, highbit,
-      gfx::RectF(0.0f, 0.0f, 1.0f, 1.0f), pass.get(),
+      shared_state, media::PIXEL_FORMAT_YV12, media::COLOR_SPACE_SD_REC601,
+      false, highbit, gfx::RectF(0.0f, 0.0f, 1.0f, 1.0f), pass.get(),
       video_resource_updater_.get(), draw_rect, viewport,
       resource_provider_.get());
   RenderPassList pass_list;
@@ -1368,8 +1368,8 @@ TEST_F(VideoGLRendererPixelHiLoTest, OffsetYUVRect) {
 
   // Intentionally sets frame format to I420 for testing coverage.
   CreateTestYUVVideoDrawQuad_Striped(
-      shared_state, media::PIXEL_FORMAT_I420, media::COLOR_SPACE_SD_REC601, false, false,
-      gfx::RectF(0.125f, 0.25f, 0.75f, 0.5f), pass.get(),
+      shared_state, media::PIXEL_FORMAT_I420, media::COLOR_SPACE_SD_REC601,
+      false, false, gfx::RectF(0.125f, 0.25f, 0.75f, 0.5f), pass.get(),
       video_resource_updater_.get(), rect, rect, resource_provider_.get());
 
   RenderPassList pass_list;
@@ -1508,8 +1508,8 @@ TEST_F(VideoGLRendererPixelHiLoTest, SimpleYUVARect) {
       CreateTestSharedQuadState(gfx::Transform(), rect, pass.get());
 
   CreateTestYUVVideoDrawQuad_Striped(
-      shared_state, media::PIXEL_FORMAT_YV12A, media::COLOR_SPACE_SD_REC601, false, false,
-      gfx::RectF(0.0f, 0.0f, 1.0f, 1.0f), pass.get(),
+      shared_state, media::PIXEL_FORMAT_YV12A, media::COLOR_SPACE_SD_REC601,
+      false, false, gfx::RectF(0.0f, 0.0f, 1.0f, 1.0f), pass.get(),
       video_resource_updater_.get(), rect, rect, resource_provider_.get());
 
   SolidColorDrawQuad* color_quad =
@@ -1535,8 +1535,8 @@ TEST_F(VideoGLRendererPixelTest, FullyTransparentYUVARect) {
       CreateTestSharedQuadState(gfx::Transform(), rect, pass.get());
 
   CreateTestYUVVideoDrawQuad_Striped(
-      shared_state, media::PIXEL_FORMAT_YV12A, media::COLOR_SPACE_SD_REC601, true, false,
-      gfx::RectF(0.0f, 0.0f, 1.0f, 1.0f), pass.get(),
+      shared_state, media::PIXEL_FORMAT_YV12A, media::COLOR_SPACE_SD_REC601,
+      true, false, gfx::RectF(0.0f, 0.0f, 1.0f, 1.0f), pass.get(),
       video_resource_updater_.get(), rect, rect, resource_provider_.get());
 
   SolidColorDrawQuad* color_quad =

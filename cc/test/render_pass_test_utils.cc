@@ -240,7 +240,8 @@ void AddOneOfEveryQuadType(RenderPass* to_pass,
   for (int i = 0; i < 4; ++i) {
     plane_resources[i] = resource_provider->CreateResource(
         gfx::Size(20, 12), ResourceProvider::TEXTURE_HINT_IMMUTABLE,
-        resource_provider->best_texture_format(), gfx::ColorSpace::CreateREC601());
+        resource_provider->best_texture_format(),
+        gfx::ColorSpace::CreateREC601());
     resource_provider->AllocateForTesting(plane_resources[i]);
   }
   YUVVideoDrawQuad::ColorSpace color_space = YUVVideoDrawQuad::REC_601;
