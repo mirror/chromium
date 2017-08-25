@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edb7f999_1139f1a2",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T14:49:10Z",
+      "side": 1,
+      "message": "Style guide says no else after a return (just an if).",
+      "range": {
+        "startLine": 255,
+        "startChar": 2,
+        "endLine": 255,
+        "endChar": 10
+      },
+      "revId": "ddbcebb9565da7fac1cc7c55e30e9d224d5ab32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db02037_613d5152",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T14:49:10Z",
+      "side": 1,
+      "message": "Why is this test grouped with bookmarks? It doesn\u0027t seem specific to bookmarks.",
+      "range": {
+        "startLine": 266,
+        "startChar": 2,
+        "endLine": 266,
+        "endChar": 62
+      },
+      "revId": "ddbcebb9565da7fac1cc7c55e30e9d224d5ab32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "651346c6_710e3d82",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T14:49:10Z",
+      "side": 1,
+      "message": "Why do you need StringPrintf here?",
+      "range": {
+        "startLine": 284,
+        "startChar": 23,
+        "endLine": 284,
+        "endChar": 42
+      },
+      "revId": "ddbcebb9565da7fac1cc7c55e30e9d224d5ab32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f92b65_abcf0e73",
+        "filename": "ui/base/page_transition_types.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T14:49:10Z",
+      "side": 1,
+      "message": "\u003d PAGE_TRANSITION_FIRST",
+      "range": {
+        "startLine": 31,
+        "startChar": 25,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "ddbcebb9565da7fac1cc7c55e30e9d224d5ab32d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
