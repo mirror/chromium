@@ -15,6 +15,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread.h"
+#include "components/cronet/cronet_prefs_manager.h"
 #include "components/cronet/ios/version.h"
 #include "components/cronet/url_request_context_config.h"
 #include "net/cert/cert_verifier.h"
@@ -147,6 +148,8 @@ class CronetEnvironment {
 
   std::string getDefaultQuicUserAgentId() const;
 
+  void PrepareForDestroyOnNetworkThread();
+
   bool http2_enabled_;
   bool quic_enabled_;
   bool brotli_enabled_;
@@ -172,6 +175,7 @@ class CronetEnvironment {
   std::unique_ptr<net::NetLog> net_log_;
   std::unique_ptr<net::FileNetLogObserver> file_net_log_observer_;
   bool enable_pkp_bypass_for_local_trust_anchors_;
+  std::unique_ptr<CronetPrefsManager> cronet_prefs_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(CronetEnvironment);
 };
