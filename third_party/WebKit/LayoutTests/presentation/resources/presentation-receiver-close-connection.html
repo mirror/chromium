@@ -17,7 +17,7 @@ presentationServiceMock.then(mockService => {
   const url = 'http://example.com/a.html';
   const id = 'fakeSessionId';
 
-  mockService.onSetClient = () => {
+  mockService.onSetReceiver = () => {
     mockService.onReceiverConnectionAvailable(
         url, id, controllerConnectionPtr, receiverConnectionRequest);
   };
@@ -30,7 +30,7 @@ presentationServiceMock.then(mockService => {
       setTimeout(() => {
         assert_equals(list.connections.length, 0);
         opener.postMessage('receiver connection closed', '*');
-      } ,0);
+      }, 0);
     };
     opener.postMessage('receiver connection ready', '*');
     if (shouldCallClose) {

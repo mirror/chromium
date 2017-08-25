@@ -15,7 +15,7 @@ async_test(t => {
     const url = 'http://example.com/a.html';
     const id = 'fakePresentationId';
 
-    mockService.onSetClient = () => {
+    mockService.onSetReceiver = () => {
       mockService.onReceiverConnectionAvailable(url, id);
     };
 
