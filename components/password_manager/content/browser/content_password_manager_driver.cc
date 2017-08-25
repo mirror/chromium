@@ -172,6 +172,10 @@ bool ContentPasswordManagerDriver::IsMainFrame() const {
   return is_main_frame_;
 }
 
+void ContentPasswordManagerDriver::MatchingBlacklistedFormFound() {
+  GetPasswordAutofillAgent()->SetMatchingBlacklistedFormState();
+}
+
 PasswordGenerationManager*
 ContentPasswordManagerDriver::GetPasswordGenerationManager() {
   return &password_generation_manager_;
