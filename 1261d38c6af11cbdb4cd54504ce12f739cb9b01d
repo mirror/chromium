@@ -22,6 +22,30 @@
       "revId": "1261d38c6af11cbdb4cd54504ce12f739cb9b01d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812a15e4_ccd04ebc",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-25T07:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f4849b3_991c0350",
+      "range": {
+        "startLine": 21,
+        "startChar": 32,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "1261d38c6af11cbdb4cd54504ce12f739cb9b01d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
