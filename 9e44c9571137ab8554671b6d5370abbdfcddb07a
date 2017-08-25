@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f95a5e7e_db77e6b9",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-25T12:44:10Z",
+      "side": 1,
+      "message": "arraysize(kNonWildcardDomainNonPortSchemes) should work instead of the literal 2, similar in the other files.",
+      "range": {
+        "startLine": 605,
+        "startChar": 43,
+        "endLine": 605,
+        "endChar": 0
+      },
+      "revId": "9e44c9571137ab8554671b6d5370abbdfcddb07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d63a30b_5473a440",
         "filename": "components/content_settings/core/common/content_settings_pattern.cc",
         "patchSetId": 22
