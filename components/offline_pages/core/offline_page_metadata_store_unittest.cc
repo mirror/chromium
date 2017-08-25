@@ -443,8 +443,7 @@ class OfflinePageMetadataStoreTest : public testing::Test {
   void PumpLoop();
 
   void InitializeCallback(bool success);
-  void GetOfflinePagesCallback(
-      const std::vector<OfflinePageItem>& offline_pages);
+  void GetOfflinePagesCallback(std::vector<OfflinePageItem> offline_pages);
   void AddCallback(ItemActionStatus status);
   void UpdateCallback(CalledCallback called_callback,
                       std::unique_ptr<OfflinePagesUpdateResult> result);
@@ -491,9 +490,9 @@ void OfflinePageMetadataStoreTest::InitializeCallback(bool success) {
 }
 
 void OfflinePageMetadataStoreTest::GetOfflinePagesCallback(
-    const std::vector<OfflinePageItem>& offline_pages) {
+    std::vector<OfflinePageItem> offline_pages) {
   last_called_callback_ = LOAD;
-  offline_pages_.swap(const_cast<std::vector<OfflinePageItem>&>(offline_pages));
+  offline_pages_.swap(offline_pages);
 }
 
 void OfflinePageMetadataStoreTest::AddCallback(ItemActionStatus status) {
