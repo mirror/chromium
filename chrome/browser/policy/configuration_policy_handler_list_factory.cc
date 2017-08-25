@@ -586,6 +586,15 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kNativePrinters,
     prefs::kRecommendedNativePrinters,
     base::Value::Type::LIST },
+  { key::kNativePrintersBulkAccessMode,
+    prefs::kRecommendedNativePrintersAccessMode,
+    base::Value::Type::INTEGER },
+  { key::kNativePrintersBulkBlacklist,
+    prefs::kRecommendedNativePrintersBlacklist,
+    base::Value::Type::LIST },
+  { key::kNativePrintersBulkWhitelist,
+    prefs::kRecommendedNativePrintersWhitelist,
+    base::Value::Type::LIST },
 #endif  // defined(OS_CHROMEOS)
 
 // Metrics reporting is controlled by a platform specific policy for ChromeOS
@@ -1052,6 +1061,8 @@ std::unique_ptr<ConfigurationPolicyHandlerList> BuildHandlerList(
       base::MakeUnique<ExternalDataPolicyHandler>(key::kDeviceWallpaperImage));
   handlers->AddHandler(
       base::MakeUnique<ExternalDataPolicyHandler>(key::kWallpaperImage));
+  handlers->AddHandler(base::MakeUnique<ExternalDataPolicyHandler>(
+      key::kNativePrintersBulkConfiguration));
   handlers->AddHandler(base::WrapUnique(new SimpleSchemaValidatingPolicyHandler(
       key::kSessionLocales, NULL, chrome_schema, SCHEMA_STRICT,
       SimpleSchemaValidatingPolicyHandler::RECOMMENDED_ALLOWED,
