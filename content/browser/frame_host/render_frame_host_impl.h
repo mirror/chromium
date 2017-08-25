@@ -749,7 +749,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnVisualStateResponse(uint64_t id);
   void OnRunJavaScriptDialog(const base::string16& message,
                              const base::string16& default_prompt,
-                             const GURL& frame_url,
                              JavaScriptDialogType dialog_type,
                              IPC::Message* reply_msg);
   void OnRunBeforeUnloadConfirm(const GURL& frame_url,

@@ -1068,7 +1068,6 @@ class CONTENT_EXPORT RenderFrameImpl
   bool RunJavaScriptDialog(JavaScriptDialogType type,
                            const base::string16& message,
                            const base::string16& default_value,
-                           const GURL& frame_url,
                            base::string16* result);
 
   // Loads the appropriate error page for the specified failure into the frame.
