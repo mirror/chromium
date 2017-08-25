@@ -85,6 +85,9 @@ TEST_F(PathServiceTest, Get) {
 #elif defined(OS_IOS)
     if (key == DIR_USER_DESKTOP)
       continue;  // iOS doesn't implement DIR_USER_DESKTOP;
+#elif defined(OS_FUCHSIA)
+    if (key == DIR_USER_DESKTOP)
+      continue;
 #endif
     EXPECT_PRED1(ReturnsValidPath, key);
   }
