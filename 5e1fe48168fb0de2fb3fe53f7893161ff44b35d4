@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86e2f597_6d8fdb7c",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-25T13:31:56Z",
+      "side": 1,
+      "message": "Hardcoded schemes are not injected :) Rephrase pls:\n\n\"Assemble this array from hardcoded schemes and those injected via SetNonWildcardDomainNonPortSchemes()\".",
+      "range": {
+        "startLine": 27,
+        "startChar": 38,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "5e1fe48168fb0de2fb3fe53f7893161ff44b35d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
