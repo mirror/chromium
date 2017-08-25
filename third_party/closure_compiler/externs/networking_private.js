@@ -1001,6 +1001,7 @@ chrome.networkingPrivate.NetworkStateProperties;
  *   Scanning: (boolean|undefined),
  *   SimLockType: (string|undefined),
  *   SimPresent: (boolean|undefined),
+ *   SIMLockStatus: (!chrome.networkingPrivate.SIMLockStatus|undefined),
  *   State: !chrome.networkingPrivate.DeviceStateType,
  *   Type: !chrome.networkingPrivate.NetworkType
  * }}
