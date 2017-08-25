@@ -260,6 +260,7 @@ TestResult(CRASH) + TextExpectation(Failure) => [ Failure <b>Crash</b> ]</pre>
     <select id="report_format" onchange="Query.generateReport()">
       <option value="plain" selected>Plain text</option>
       <option value="expectation">TestExpectations</option>
+      <option value="crashsite">Crash site</option>
     </select>
 </div>
 
@@ -336,6 +337,7 @@ Traversal.prototype = {
     this.testCount = 0;
     this.filteredCount = 0;
     this.lastDir = "";
+    this.shouldReorderResults = false;
     this.html = [];
     this.resultCounts = {};
     return this;
@@ -403,6 +405,8 @@ let Report = {
     switch(document.querySelector("#report_format").value) {
       case "expectation":
         return Report.printExpectation;
+      case "crashsite":
+       return Report.printCrashSite;
       case "plain":
       default:
         return Report.printPlainTest;
@@ -467,6 +471,19 @@ let Report = {
     html += " [ " + status + " ]";
     html = "<div class='expect' tabindex='0' data-id='"+ test.expectId +"'><div class='details'></div>" + html + "</div>";
     traversal.html.push(html);
+  },
+
+  printCrashSite: (test, path, traversal) => {
+    let pathParser = new PathParser(path);
+    let key = test.crashSite;
+    let html = ""
+      + "<input type='checkbox' class='rebaseline-checkbox' style='display:none'>"
+      + pathParser.dir + "/"
+      + "<a target='test' tabindex='-1' href='" + pathParser.testHref + "'>"
+      + pathParser.file + "</a>";
+    html = "<div class='expect' tabindex='0' data-id='"+ test.expectId +"'><div class='details'></div>" + html + "</div>";
+    traversal.shouldReorderResults = true;
+    traversal.html.push({key: key, html: html});
   },
 
   getTestById: function(testId) {
@@ -645,6 +662,45 @@ let Query = {
       );
   },
 
+  showMoreResults: function(traversal, html) {
+    let report = document.querySelector("#report");
+
+    if (!traversal.shouldReorderResults || traversal.html.length == 0) {
+      let pre = document.createElement("div");
+      if (traversal.html.length == 0) {
+        pre.innerHTML = "<i>None</i>";
+      } else {
+        pre.innerHTML = html.join("\n");
+      }
+      report.appendChild(pre);
+      return;
+    }
+
+    html.forEach(result => {
+      let key = result.key || 'null';
+      let container = report.querySelector(`div[key="${key}"]`);
+      if (!container) {
+        container = document.createElement("div");
+        container.setAttribute("key", key);
+        container.innerHTML = ""
+          + "<br><b>"
+          + (key !== 'null' ? "### Crash site: " + key
+                            : "### Didn't crash or can't identify")
+          + "</b>";
+
+        // Ensure that the "didn't crash" container appears last.
+        if (report.lastChild && report.lastChild.getAttribute("key") == 'null')
+          report.insertBefore(container, report.lastChild);
+        else
+          report.appendChild(container);
+      }
+
+      let pre = document.createElement("div");
+      pre.innerHTML = result.html;
+      container.appendChild(pre);
+    });
+  },
+
   // generateReport is async, returns promise
   // promise if fullfilled when traversal completes. Display will continue async.
   generateReport: function(name, filter, report) {
@@ -666,13 +722,8 @@ let Query = {
     let index = 0;
     let callback = _ => {
       this.currentRAF = null;
-      let pre = document.createElement("div");
-      if (traversal.html.length == 0) {
-        pre.innerHTML = "<i>None</i>";
-      } else {
-        pre.innerHTML = traversal.html.slice(index, index + chunkSize).join("\n");
-      }
-      document.querySelector("#report").appendChild(pre);
+      this.showMoreResults(traversal,
+                           traversal.html.slice(index, index + chunkSize));
       index += chunkSize;
       if (index < traversal.html.length)
         this.currentRAF = window.requestAnimationFrame(callback);
@@ -781,6 +832,7 @@ let GUI = {
     // - test.actualMap, map of actual results
     // - test.actualFinal, last result
     // - test.expectedMap, maps of expected results
+    // - test.crashSite, the crash site if the test crashes
     let nextId = 1;
     t.traverse(
       test => true,
@@ -795,6 +847,10 @@ let GUI = {
         test.expectedMap = new Map();
         for (let result of test.expected.split(" ")) {
           test.expectedMap.set(result, true);
+        }
+        test.crashSite = null;
+        if (test.actualMap.has("CRASH")) {
+          createGetCrashSitePromise(test).then(site => test.crashSite = site).catch(() => console.log("Can't get crash site for " + test.expectedPath));
         }
       }
     );
@@ -984,6 +1040,12 @@ let GUI = {
   }
 }
 
+let getHref = function(path) {
+  let anchor = document.createElement("a");
+  anchor.href = path;
+  return anchor.href;
+}
+
 let RebaselineTool = {
   getCheckboxes: function() {
     return document.querySelectorAll(".rebaseline-checkbox");
@@ -1054,9 +1116,7 @@ let RebaselineTool = {
         RebaselineTool.ensureDir(lines, parser.dir);
         dir = parser.dir;
       }
-      let anchor = document.createElement('a');
-      anchor.href = file;
-      lines.push(`wget ${anchor.href}`);
+      lines.push(`wget ${getHref(file)}`);
       lines.push(`mv ${parser.file} ${parser.file.replace('-actual.', '-expected.')}`);
     });
     RebaselineTool.resetDir(lines, dir);
@@ -1071,6 +1131,35 @@ let RebaselineTool = {
     GUI.toggleVisibility('rebaseline');
     RebaselineTool.selectAll();
   }
+}
+
+let isCheckHitLine = function(line) {
+  return line.startsWith("STDERR") &&
+         line.indexOf("FATAL") !== -1 &
+         line.indexOf("Check failed") !== -1;
+}
+
+let getCrashSite = function(line) {
+  let startIndex = line.indexOf("FATAL") + 6;
+  let endIndex = line.indexOf("]", startIndex);
+  return line.substring(startIndex, endIndex);
+}
+
+let createGetCrashSitePromise = function(test) {
+  return new Promise((resolve, reject) => {
+    let parser = new PathParser(test.expectPath);
+    let crashLog = parser.resultLink("-crash-log.txt");
+    fetch(crashLog)
+      .then(response => response.text()
+          .then(text => {
+            let lines = text.split("\n").filter(isCheckHitLine);
+            if (!lines.length)
+              reject();
+            resolve(getCrashSite(lines[0]));
+          })
+          .catch(reject))
+      .catch(reject);
+  });
 }
 
 // jsonp callback
