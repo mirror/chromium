@@ -37,7 +37,8 @@ class MODULES_EXPORT CompositorWorkerProxyClientImpl final
   DECLARE_TRACE();
 
   // CompositorAnimator:
-  bool Mutate(double monotonic_time_now) override;
+  void Mutate(double monotonic_time_now,
+              const CompositorAnimatorsInputState& /* state */) override;
 
   // CompositorWorkerProxyClient:
   void Dispose() override;

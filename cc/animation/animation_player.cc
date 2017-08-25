@@ -6,6 +6,8 @@
 
 #include <inttypes.h>
 #include <algorithm>
+#include <memory>
+#include <utility>
 
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
@@ -19,11 +21,32 @@
 
 namespace cc {
 
+namespace {
+
+// A timing model that simply return the input time as ouptut i.e., the
+// timeline current time will be used to update animation.
+class InertTimingModel : public AnimationPlayer::TimingModel {
+  base::TimeTicks GetValue(base::TimeTicks monotonic_time,
+                           const Animation& animation) const override {
+    return monotonic_time;
+  }
+
+  std::unique_ptr<TimingModel> Clone() const override {
+    return std::make_unique<InertTimingModel>(*this);
+  }
+};
+
+}  // namespace
+
 scoped_refptr<AnimationPlayer> AnimationPlayer::Create(int id) {
   return make_scoped_refptr(new AnimationPlayer(id));
 }
 
 AnimationPlayer::AnimationPlayer(int id)
+    : AnimationPlayer(id, std::make_unique<InertTimingModel>()) {}
+
+AnimationPlayer::AnimationPlayer(int id,
+                                 std::unique_ptr<TimingModel> timing_model)
     : animation_host_(),
       animation_timeline_(),
       element_animations_(),
@@ -32,7 +55,8 @@ AnimationPlayer::AnimationPlayer(int id)
       needs_push_properties_(false),
       needs_to_start_animations_(false),
       is_ticking_(false),
-      scroll_offset_animation_was_interrupted_(false) {
+      scroll_offset_animation_was_interrupted_(false),
+      timing_model_(std::move(timing_model)) {
   DCHECK(id_);
 }
 
@@ -42,7 +66,8 @@ AnimationPlayer::~AnimationPlayer() {
 }
 
 scoped_refptr<AnimationPlayer> AnimationPlayer::CreateImplInstance() const {
-  scoped_refptr<AnimationPlayer> player = AnimationPlayer::Create(id());
+  scoped_refptr<AnimationPlayer> player =
+      new AnimationPlayer(id(), timing_model_->Clone());
   return player;
 }
 
@@ -152,6 +177,9 @@ void AnimationPlayer::PauseAnimation(int animation_id, double time_offset) {
 
   for (size_t i = 0; i < animations_.size(); ++i) {
     if (animations_[i]->id() == animation_id) {
+      // TODO(majidvp): Hmmm, shouln't this do a minus time_offset? given that
+      // monotonic_time = active_time + start_time - time_offset
+      // see |Animation::ConvertToActiveTime()|
       animations_[i]->SetRunState(Animation::PAUSED,
                                   time_delta + animations_[i]->start_time() +
                                       animations_[i]->time_offset());
@@ -724,9 +752,9 @@ void AnimationPlayer::MarkAnimationsForDeletion(base::TimeTicks monotonic_time,
     SetNeedsPushProperties();
 }
 
-void AnimationPlayer::TickAnimation(base::TimeTicks monotonic_time,
-                                    Animation* animation,
-                                    AnimationTarget* target) {
+static void TickAnimation(base::TimeTicks monotonic_time,
+                          Animation* animation,
+                          AnimationTarget* target) {
   if ((animation->run_state() != Animation::STARTING &&
        animation->run_state() != Animation::RUNNING &&
        animation->run_state() != Animation::PAUSED) ||
@@ -779,8 +807,14 @@ void AnimationPlayer::TickAnimation(base::TimeTicks monotonic_time,
 
 void AnimationPlayer::TickAnimations(base::TimeTicks monotonic_time) {
   DCHECK(element_animations_);
-  for (auto& animation : animations_)
-    TickAnimation(monotonic_time, animation.get(), element_animations_.get());
+  DCHECK(timing_model_);
+
+  for (auto& animation : animations_) {
+    base::TimeTicks local_time =
+        timing_model_->GetValue(monotonic_time, *animation);
+    TickAnimation(local_time, animation.get(), element_animations_.get());
+  }
+
   last_tick_time_ = monotonic_time;
 }
 
@@ -1218,6 +1252,10 @@ std::string AnimationPlayer::AnimationsToString() const {
     str.append(animations_[i]->ToString());
   }
   return str;
+}
+
+bool AnimationPlayer::IsWorkletAnimationPlayer() const {
+  return false;
 }
 
 }  // namespace cc

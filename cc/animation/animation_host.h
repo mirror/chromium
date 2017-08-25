@@ -43,7 +43,9 @@ enum class ThreadInstance { MAIN, IMPL };
 // (PushPropertiesTo).
 // An AnimationHost talks to its correspondent LayerTreeHost via
 // MutatorHostClient interface.
-class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost {
+
+class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost,
+                                          public LayerTreeMutatorClient {
  public:
   using ElementToAnimationsMap =
       std::unordered_map<ElementId,
@@ -91,6 +93,9 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost {
 
   void SetMutatorHostClient(MutatorHostClient* client) override;
 
+  void SetLayerTreeMutator(std::unique_ptr<LayerTreeMutator> mutator) override;
+  // LayerTreeMutator* mutator() { return mutator_.get(); }
+
   void PushPropertiesTo(MutatorHost* host_impl) override;
 
   void SetSupportsScrollAnimations(bool supports_scroll_animations) override;
@@ -98,8 +103,11 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost {
 
   bool ActivateAnimations() override;
   bool TickAnimations(base::TimeTicks monotonic_time) override;
+  void TickScrollAnimations(base::TimeTicks monotonic_time) override;
   bool UpdateAnimationState(bool start_ready_animations,
                             MutatorEvents* events) override;
+
+  base::Closure TakeMutations() override;
 
   std::unique_ptr<MutatorEvents> CreateEvents() override;
   void SetAnimationEvents(std::unique_ptr<MutatorEvents> events) override;
@@ -183,6 +191,11 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost {
   const PlayersList& ticking_players_for_testing() const;
   const ElementToAnimationsMap& element_animations_for_testing() const;
 
+  // LayerTreeMutatorClient.
+  void SetMutationUpdate(
+      bool needs_mutate,
+      std::unique_ptr<AnimatorsOutputState> output_state) override;
+
  private:
   explicit AnimationHost(ThreadInstance thread_instance);
 
@@ -191,6 +204,13 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost {
   void PushPropertiesToImplThread(AnimationHost* host_impl);
 
   void EraseTimeline(scoped_refptr<AnimationTimeline> timeline);
+
+  bool NeedsTickAnimationPlayers() const;
+  bool NeedsTickMutator() const;
+
+  // Return the animator state representing all ticking worklet animations.
+  std::unique_ptr<AnimatorsInputState> CollectAnimatorsState(
+      base::TimeTicks timeline_time);
 
   ElementToAnimationsMap element_to_animations_map_;
   PlayersList ticking_players_;
@@ -209,6 +229,9 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost {
 
   bool supports_scroll_animations_;
   bool needs_push_properties_;
+  bool mutator_needs_mutate_;
+
+  std::unique_ptr<LayerTreeMutator> mutator_;
 
   DISALLOW_COPY_AND_ASSIGN(AnimationHost);
 };

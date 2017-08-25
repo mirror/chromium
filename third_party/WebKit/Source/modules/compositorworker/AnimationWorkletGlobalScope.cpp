@@ -58,7 +58,7 @@ DEFINE_TRACE(AnimationWorkletGlobalScope) {
 
 DEFINE_TRACE_WRAPPERS(AnimationWorkletGlobalScope) {
   for (auto animator : animators_)
-    visitor->TraceWrappers(animator);
+    visitor->TraceWrappers(animator.value);
 
   for (auto definition : animator_definitions_)
     visitor->TraceWrappers(definition.value);
@@ -74,15 +74,46 @@ void AnimationWorkletGlobalScope::Dispose() {
   ThreadedWorkletGlobalScope::Dispose();
 }
 
-void AnimationWorkletGlobalScope::Mutate() {
+void AnimationWorkletGlobalScope::Mutate(
+    const CompositorAnimatorsInputState& state) {
   DCHECK(IsContextThread());
 
   ScriptState* script_state = ScriptController()->GetScriptState();
   ScriptState::Scope scope(script_state);
 
-  for (Animator* animator : animators_) {
-    animator->Animate(script_state);
+  SyncInputState(state);
+
+  for (auto& entry : animators_) {
+    entry.value->Animate(script_state);
   }
+}
+
+// Add/Remove/Update animators to match the input state.
+void AnimationWorkletGlobalScope::SyncInputState(
+    const CompositorAnimatorsInputState& state) {
+  AnimatorMap animators;
+  for (const CompositorAnimatorInputState& animatorState : state) {
+    int id = animatorState.animation_player_id_;
+    String name =
+        String::FromUTF8(animatorState.name.data(), animatorState.name.size());
+    Animator* animator = FindAnimatorByPlayerId(id);
+    // This is a new player so create an animator for it
+    if (!animator) {
+      animator = CreateInstance(name);
+    }
+
+    if (!animator) {
+      // TODO(majidvp): This means there is an animatorName for which definition
+      // was registered. We should handle this case gracefully.
+      continue;
+    }
+
+    animators.Set(id, animator);
+  }
+
+  // TODO(majidvp): replace this with  swapping two pointers here and avoid
+  // allocating a new map every time.
+  animators_ = std::move(animators);
 }
 
 void AnimationWorkletGlobalScope::registerAnimator(
@@ -151,11 +182,14 @@ void AnimationWorkletGlobalScope::registerAnimator(
       new AnimatorDefinition(isolate, constructor, animate);
 
   animator_definitions_.Set(name, definition);
+}
 
+void AnimationWorkletGlobalScope::createAnimatorForTest(int player_id,
+                                                        const String& name) {
   // Immediately instantiate an animator for the registered definition.
   // TODO(majidvp): Remove this once you add alternative way to instantiate
   if (Animator* animator = CreateInstance(name))
-    animators_.push_back(animator);
+    animators_.Set(player_id, animator);
 }
 
 Animator* AnimationWorkletGlobalScope::CreateInstance(const String& name) {
@@ -179,6 +213,12 @@ Animator* AnimationWorkletGlobalScope::CreateInstance(const String& name) {
 AnimatorDefinition* AnimationWorkletGlobalScope::FindDefinitionForTest(
     const String& name) {
   return animator_definitions_.at(name);
+}
+
+Animator* AnimationWorkletGlobalScope::FindAnimatorByPlayerId(
+    int player_id) const {
+  // TODO(majidvp) animator list should be a map id->animator
+  return animators_.at(player_id);
 }
 
 }  // namespace blink

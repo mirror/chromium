@@ -32,21 +32,18 @@ CompositorMutatorClient::~CompositorMutatorClient() {
                "CompositorMutatorClient::~CompositorMutatorClient");
 }
 
-bool CompositorMutatorClient::Mutate(base::TimeTicks monotonic_time,
-                                     cc::LayerTreeImpl* tree_impl) {
-  // TODO(majidvp): At the moment we do not ever use the |tree_impl| or produce
-  // any mutations. However we expect to use the tree and produce mutations for
-  // AnimationWorklets. Remove these if that plan changes.
+void CompositorMutatorClient::Mutate(
+    base::TimeTicks monotonic_time,
+    std::unique_ptr<cc::AnimatorsInputState> state) {
   TRACE_EVENT0("compositor-worker", "CompositorMutatorClient::Mutate");
   double monotonic_time_now = (monotonic_time - base::TimeTicks()).InSecondsF();
-  bool should_reinvoke = mutator_->Mutate(monotonic_time_now);
-  return should_reinvoke;
+  mutator_->Mutate(monotonic_time_now, std::move(state));
 }
 
 void CompositorMutatorClient::SetClient(cc::LayerTreeMutatorClient* client) {
   TRACE_EVENT0("compositor-worker", "CompositorMutatorClient::SetClient");
   client_ = client;
-  SetNeedsMutate();
+  SetMutationUpdate(true, nullptr);
 }
 
 base::Closure CompositorMutatorClient::TakeMutations() {
@@ -60,9 +57,11 @@ base::Closure CompositorMutatorClient::TakeMutations() {
                     base::Owned(mutations_.release()));
 }
 
-void CompositorMutatorClient::SetNeedsMutate() {
+void CompositorMutatorClient::SetMutationUpdate(
+    bool needs_mutate,
+    std::unique_ptr<cc::AnimatorsOutputState> output_state) {
   TRACE_EVENT0("compositor-worker", "CompositorMutatorClient::setNeedsMutate");
-  client_->SetNeedsMutate();
+  client_->SetMutationUpdate(needs_mutate, std::move(output_state));
 }
 
 void CompositorMutatorClient::SetMutationsForTesting(
