@@ -50147,6 +50147,23 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Size of the saved copy of an offline page.</summary>
 </histogram>
 
+<histogram name="OfflinePages.Prefetching.DownloadFinishedActualFileSize"
+    units="KiB">
+  <owner>carlosk@chromium.org</owner>
+  <summary>
+    File sizes of archives successfully downloaded by offline page prefetching.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.Prefetching.DownloadStartedExpectedFileSize"
+    units="KiB">
+  <owner>carlosk@chromium.org</owner>
+  <summary>
+    Expected archive sizes for which downloading has been requested by offline
+    page prefetching.
+  </summary>
+</histogram>
+
 <histogram name="OfflinePages.RedirectResult" enum="OfflinePagesRedirectResult">
   <obsolete>
     Deprecated 8/2016. Use OfflinePages.RequestResult instead.
