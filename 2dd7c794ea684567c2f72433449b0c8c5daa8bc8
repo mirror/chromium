@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "367945b3_c9f9bb0f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 81176,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-08-25T18:36:57Z",
+      "side": 1,
+      "message": "nit: TabLoadAutoStartedCount",
+      "range": {
+        "startLine": 81176,
+        "startChar": 49,
+        "endLine": 81176,
+        "endChar": 68
+      },
+      "revId": "2dd7c794ea684567c2f72433449b0c8c5daa8bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
