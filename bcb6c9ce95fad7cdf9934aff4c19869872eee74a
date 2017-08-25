@@ -22,6 +22,30 @@
       "revId": "bcb6c9ce95fad7cdf9934aff4c19869872eee74a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de6cc8b8_2d54f9aa",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-25T15:52:19Z",
+      "side": 1,
+      "message": "Did you see a compiler error message like this?\n\n  \"error: declaration requires a global destructor\" \n\nThis object has the static storage duration and it requires the global destructor that\u0027s called after main() exits. In Chromium, such the destructor is disabled by the compiler flag:\nhttps://chromium.googlesource.com/chromium/src/+/ddd335bf17b019cf09a3af74bcc0ba73b90de57a/third_party/WebKit/Source/BUILD.gn#165\n\nMaybe we should make this a raw ptr and manually release it in ClearSharedBackingThread() to avoid non-POD class on the global scope.",
+      "parentUuid": "59b7349c_efab9e64",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 65
+      },
+      "revId": "bcb6c9ce95fad7cdf9934aff4c19869872eee74a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
