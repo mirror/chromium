@@ -16,6 +16,24 @@
       "revId": "04bb7bc467bb7acb9fcf3de966fb207acdc1f3a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ca5e3ec_7adfa032",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-25T21:19:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0796fe42_548f4369",
+      "revId": "04bb7bc467bb7acb9fcf3de966fb207acdc1f3a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
