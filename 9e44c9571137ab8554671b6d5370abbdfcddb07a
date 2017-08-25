@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d63a30b_5473a440",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-25T11:00:50Z",
+      "side": 1,
+      "message": "Layering violation. Any embedder can inject any scheme via SetNonWildcardDomainNonPortSchemes(). Let\u0027s be more generic.\n\n(For the record, kSchemeNames[] above is also a layering violation, it should be assembled from hardcoded schemes and those injected, but that\u0027s not your fault :) Can you please add a TODO there though?)",
+      "range": {
+        "startLine": 264,
+        "startChar": 29,
+        "endLine": 264,
+        "endChar": 39
+      },
+      "revId": "9e44c9571137ab8554671b6d5370abbdfcddb07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951de660_cf1524c4",
+        "filename": "components/content_settings/core/common/content_settings_pattern.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-25T11:00:50Z",
+      "side": 1,
+      "message": "nit: DCHECK_EQ, here and below.\n\nAlso, this method doesn\u0027t allow resizing the array once it\u0027s set. That should be documented, or at least DCHECK() \u003c\u003c \"Mentioned in the output of the DCHECK\".",
+      "range": {
+        "startLine": 459,
+        "startChar": 4,
+        "endLine": 459,
+        "endChar": 10
+      },
+      "revId": "9e44c9571137ab8554671b6d5370abbdfcddb07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a05d306_7a26e463",
+        "filename": "components/content_settings/core/common/content_settings_pattern.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-25T11:00:50Z",
+      "side": 1,
+      "message": "nit: This change is arguable, since it\u0027s sometimes pronounced as a single word [u\u0027:ma], as opposed to [ju: em ej].",
+      "range": {
+        "startLine": 62,
+        "startChar": 31,
+        "endLine": 62,
+        "endChar": 33
+      },
+      "revId": "9e44c9571137ab8554671b6d5370abbdfcddb07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ffb2be9_6b5552dc",
+        "filename": "components/content_settings/core/common/content_settings_pattern_parser_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-25T11:00:50Z",
+      "side": 1,
+      "message": "Optional: Can you test a random scheme that is *not* added registered by SetNonWildcardDomainNonPortSchemes() in components_test_suite.cc to confirm that it behaves differently?",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 1
+      },
+      "revId": "9e44c9571137ab8554671b6d5370abbdfcddb07a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
