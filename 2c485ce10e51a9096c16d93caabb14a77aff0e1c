@@ -1,0 +1,406 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe5d8a7c_919bdf25",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/blob-build-all-then-read-parallel.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "I\u0027d suggest changing this to just be an object rather than a string, and using JSON.stringify() inside the test function if needed.\n\nAnd if you do that, you can dispense with the size and numBlobs variables since they aren\u0027t re-used. And you could even get rid of runnerParams and move it all inline into the initialization of test.",
+      "range": {
+        "startLine": 8,
+        "startChar": 19,
+        "endLine": 8,
+        "endChar": 71
+      },
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc916f7_ee39f8c1",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/blob-build-all-then-read-parallel.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "Prefer let/const to var.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 3
+      },
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4c5d23_cad7e621",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/blob-build-all-then-read-parallel.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "Try to wrap to 80 columns.",
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7f8f9e_125ad6b5",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-build-all-then-read-parallel-runner.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "This is function looks like it\u0027s same across all the tests. How about moving it into shared.js?",
+      "range": {
+        "startLine": 7,
+        "startChar": 11,
+        "endLine": 7,
+        "endChar": 26
+      },
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c96f244c_a43d9360",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-build-all-then-read-parallel-runner.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "This isn\u0027t XHTML so you don\u0027t need the / in self-closing tags. In other words, just use: \u003cbr\u003e\n\nSame thing applies to \u003cinput\u003e",
+      "range": {
+        "startLine": 12,
+        "startChar": 55,
+        "endLine": 12,
+        "endChar": 56
+      },
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1680f5_73f8095e",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-build-all-then-read-parallel-runner.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "Are these temporary variables necessary? What\u0027s wrong with just using params.size and params.numBlobs in the logging?",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 12
+      },
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f10e54_b12d0e55",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-build-all-then-read-parallel-runner.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "Might be more readable to use a template string here rather than concatenation, i.e.:\n\n`Starting benchmark: ${numBlobs} blobs of size ${size}`",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 82
+      },
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7785840_c4e0298a",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-build-all-then-read-parallel-runner.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "The first part of this function is the same across all of the tests, and the second half looks similar to start(). Can this be refactored to look up the values from the form and create a params object which is passed into start() as an argument?",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a59797b_d49554c1",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-build-all-then-read-parallel-runner.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "This can just be: start \u003d Date.now()",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 36
+      },
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2741b3a0_caf943a7",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-shared.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "Do you mean error.textContent ?",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6fcdf9_422f7b4a",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-shared.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "Probably more readable to use an arrow function here, i.e.:  e \u003d\u003e { ... }",
+      "range": {
+        "startLine": 19,
+        "startChar": 23,
+        "endLine": 19,
+        "endChar": 34
+      },
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74fd815_8f0fa388",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-shared.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "Since garbage collecton has such a special meaning in script, maybe this should be called \"cleanUpResources\" or something?",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8317027_fd89ed3a",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-shared.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "Interesting... since we haven\u0027t shipped this and (I think) we\u0027re planning to remove it, should we bother? How important is this to the test?\n\nIt seems like either we shouldn\u0027t have this or it needs a comment explaining the benefit (e.g. for local testing with the console open?)",
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70664787_872f98e0",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-shared.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "Since this pattern (adapt FileReader to work with Promises) occurs in multiple places, maybe factor out a helper? And then the outer function could be async, e.g.\n\nfunction readBlob(blob) {\n  const reader \u003d new FileReader();\n  return new Promise(resolve \u003d\u003e { \n    reader.onloadend \u003d e \u003d\u003e { resolve(reader); };\n    reader.readAsArrayBuffer(blob);\n  });\n}\n\nAnd then use it like this in an async function:\n\n...\nconst reader \u003d await readBlob(blob);\nif (reader.error) { ... } else { ... }\n...\n\nI don\u0027t know if this would be more readable, though.",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 35
+      },
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70aefd52_6546da41",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-shared.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "This part confuses me... this FileReader has already been used, and the loadend handler will resolve a promise that will already be resolved at this point.",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 63,
+        "endChar": 32
+      },
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b87b4332_494af231",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-shared.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "Is byteLength ever not already a number?",
+      "range": {
+        "startLine": 92,
+        "startChar": 25,
+        "endLine": 92,
+        "endChar": 31
+      },
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845f5f65_1c0d3108",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/blob-shared.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "I don\u0027t see currentBlob being incremented here? Is this working?\n\nCan you explain what the genReader helper function is doing here? Since this is all happening inside the map() call it doesn\u0027t seem like that indirection to process each entry one by one would be necessary, but I may be missing something.",
+      "range": {
+        "startLine": 101,
+        "startChar": 14,
+        "endLine": 101,
+        "endChar": 25
+      },
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd920cc3_b2a0794a",
+        "filename": "third_party/WebKit/PerformanceTests/OWPStorage/resources/shared.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-08-25T20:59:19Z",
+      "side": 1,
+      "message": "If params is an object instead of a string, this could be:\n\nJSON.stringify(test.params)\n\nBut I think you can also just do:\n\niframe.contentWindow.params \u003d test.params;",
+      "range": {
+        "startLine": 128,
+        "startChar": 65,
+        "endLine": 128,
+        "endChar": 76
+      },
+      "revId": "2c485ce10e51a9096c16d93caabb14a77aff0e1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
