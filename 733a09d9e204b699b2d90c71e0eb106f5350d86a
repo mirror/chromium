@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d942191c_c3a2bc2c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-25T20:35:15Z",
+      "side": 1,
+      "message": "Nit: mWebappInfo -\u003e {@link info}",
+      "revId": "733a09d9e204b699b2d90c71e0eb106f5350d86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab640250_91b72260",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-08-25T20:35:15Z",
+      "side": 1,
+      "message": "Can we do:\n\nif (info \u003d\u003d null) {\n  info \u003d createWebappInfo(intent);\n}\n\nif (info \u003d\u003d null) {\n  ApiCompatibilityUtils.finishAndRemoveTask(this);\n  return;\n}\n\nif (info.shouldForceNavigation()) {\n  ...\n}",
+      "revId": "733a09d9e204b699b2d90c71e0eb106f5350d86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
