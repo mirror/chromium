@@ -6,6 +6,9 @@
 
 #include <algorithm>
 #include <memory>
+#include <string>
+#include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/guid.h"
@@ -1487,6 +1490,34 @@ TEST_F(DownloadServiceControllerImplTest, ThrottlingConfigMaxConcurrent) {
   EXPECT_EQ(Entry::State::ACTIVE, model_->Get(entry1.guid)->state);
   EXPECT_EQ(Entry::State::AVAILABLE, model_->Get(entry2.guid)->state);
   EXPECT_EQ(Entry::State::PAUSED, model_->Get(entry3.guid)->state);
+}
+
+TEST_F(DownloadServiceControllerImplTest, GetOrigin) {
+  Entry entry1 = test::BuildBasicEntry(Entry::State::ACTIVE);
+  Entry entry2 = test::BuildBasicEntry(Entry::State::ACTIVE);
+  Entry entry3 = test::BuildBasicEntry(Entry::State::ACTIVE);
+
+  entry1.request_params.url = GURL("https://www.example.com/index.html");
+  entry1.request_params.request_headers.AddHeaderFromString(
+      "Origin: https://www2.example.com");
+
+  entry2.request_params.url = GURL("https://www.example.com:786/index.html");
+  entry2.request_params.request_headers.AddHeaderFromString(
+      "Origin: https://www.example.com:786");
+
+  entry3.request_params.url = GURL("https://www.example.com/index.html");
+
+  std::vector<Entry> entries = {entry1, entry2, entry3};
+
+  InitializeController();
+  store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
+
+  EXPECT_EQ("https://www2.example.com",
+            controller_->GetOrigin(entry1.guid).Serialize());
+  EXPECT_EQ("https://www.example.com:786",
+            controller_->GetOrigin(entry2.guid).Serialize());
+  EXPECT_EQ("https://www.example.com",
+            controller_->GetOrigin(entry3.guid).Serialize());
 }
 
 }  // namespace download

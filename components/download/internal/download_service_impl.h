@@ -40,6 +40,7 @@ class DownloadServiceImpl : public DownloadService {
   void CancelDownload(const std::string& guid) override;
   void ChangeDownloadCriteria(const std::string& guid,
                               const SchedulingParams& params) override;
+  url::Origin GetOrigin(const std::string& guid) override;
 
  private:
   void OnControllerInitialized();
