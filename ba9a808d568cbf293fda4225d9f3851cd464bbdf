@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5a4e5b8_ba6f1d7b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 37
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:57:13Z",
+      "side": 1,
+      "message": "I think it\u0027s confusing that we refer to whether or not the adapter is enabled as \"power setting\" in some places and \"enabled\" in others. Doesn\u0027t have to be this CL, but I would strongly recommend using a consistent naming scheme to identify what this code does (right now, it could be ambiguously read as other things, such as \u0027power saving mode\u0027 or something else)",
+      "range": {
+        "startLine": 7,
+        "startChar": 37,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "ba9a808d568cbf293fda4225d9f3851cd464bbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12d080a_d39d3ffd",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:57:13Z",
+      "side": 1,
+      "message": "Nit: base::nullopt",
+      "range": {
+        "startLine": 183,
+        "startChar": 11,
+        "endLine": 183,
+        "endChar": 51
+      },
+      "revId": "ba9a808d568cbf293fda4225d9f3851cd464bbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6cf9e7_8b3bfc8c",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:57:13Z",
+      "side": 1,
+      "message": "Nit: base::make_optional",
+      "range": {
+        "startLine": 185,
+        "startChar": 9,
+        "endLine": 185,
+        "endChar": 47
+      },
+      "revId": "ba9a808d568cbf293fda4225d9f3851cd464bbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf7d6e0_8ad2543b",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:57:13Z",
+      "side": 1,
+      "message": "DLOG please",
+      "revId": "ba9a808d568cbf293fda4225d9f3851cd464bbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af40135c_02038f03",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:57:13Z",
+      "side": 1,
+      "message": "Nit: std::move() if passing by value.",
+      "revId": "ba9a808d568cbf293fda4225d9f3851cd464bbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d37b8db_9d618386",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:57:13Z",
+      "side": 1,
+      "message": "std::move() does nothing here since |task| is passed by const ref.\n\nIf you\u0027d like to use std::move(), I\u0027d recommend consistently using base::BindOnce and base::OnceCallback consistently through this code instead.",
+      "revId": "ba9a808d568cbf293fda4225d9f3851cd464bbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1bbcfb_59bf4de6",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:57:13Z",
+      "side": 1,
+      "message": "The use of const auto\u0026 here also prevents std::move() from doing anything.",
+      "revId": "ba9a808d568cbf293fda4225d9f3851cd464bbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275b3ded_d65c4d44",
+        "filename": "chrome/browser/chromeos/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T06:57:13Z",
+      "side": 1,
+      "message": "Nit: convenience",
+      "range": {
+        "startLine": 441,
+        "startChar": 5,
+        "endLine": 441,
+        "endChar": 15
+      },
+      "revId": "ba9a808d568cbf293fda4225d9f3851cd464bbdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
