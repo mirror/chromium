@@ -48,13 +48,12 @@ void MediaRouterDialogControllerAndroid::OnSinkSelected(
     const JavaParamRef<jobject>& obj,
     const JavaParamRef<jstring>& jsource_id,
     const JavaParamRef<jstring>& jsink_id) {
-  std::unique_ptr<CreatePresentationConnectionRequest>
-      create_connection_request = TakeCreateConnectionRequest();
-  if (!create_connection_request)
+  auto start_presentation_context = TakeStartPresentationContext();
+  if (!start_presentation_context)
     return;
 
   const auto& presentation_request =
-      create_connection_request->presentation_request();
+      start_presentation_context->presentation_request();
 
   const MediaSource::Id source_id = ConvertJavaStringToUTF8(env, jsource_id);
 
@@ -75,8 +74,9 @@ void MediaRouterDialogControllerAndroid::OnSinkSelected(
 
   std::vector<MediaRouteResponseCallback> route_response_callbacks;
   route_response_callbacks.push_back(
-      base::Bind(&CreatePresentationConnectionRequest::HandleRouteResponse,
-                 base::Passed(&create_connection_request)));
+      base::Bind(&MediaRouterDialogController::StartPresentationContext::
+                     HandleRouteResponse,
+                 base::Passed(&start_presentation_context)));
 
   content::BrowserContext* browser_context = initiator()->GetBrowserContext();
   MediaRouter* router = MediaRouterFactory::GetApiForBrowserContext(
@@ -110,8 +110,7 @@ void MediaRouterDialogControllerAndroid::OnDialogCancelled(
 void MediaRouterDialogControllerAndroid::OnMediaSourceNotSupported(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj) {
-  std::unique_ptr<CreatePresentationConnectionRequest> request =
-      TakeCreateConnectionRequest();
+  auto request = TakeStartPresentationContext();
   if (!request)
     return;
 
@@ -120,8 +119,7 @@ void MediaRouterDialogControllerAndroid::OnMediaSourceNotSupported(
 }
 
 void MediaRouterDialogControllerAndroid::CancelPresentationRequest() {
-  std::unique_ptr<CreatePresentationConnectionRequest> request =
-      TakeCreateConnectionRequest();
+  auto request = TakeStartPresentationContext();
   if (!request)
     return;
 
@@ -151,7 +149,7 @@ void MediaRouterDialogControllerAndroid::CreateMediaRouterDialog() {
   JNIEnv* env = base::android::AttachCurrentThread();
 
   auto sources = MediaSourcesForPresentationUrls(
-      create_connection_request()->presentation_request().presentation_urls);
+      start_presentation_context()->presentation_request().presentation_urls);
 
   // If it's a single route with the same source, show the controller dialog
   // instead of the device picker.
