@@ -16,6 +16,24 @@
       "revId": "0e7279cecaa07e31cc4cad755a0bbde413599cce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012d6683_3b302aa3",
+        "filename": "extensions/common/api/bluetooth_private.idl",
+        "patchSetId": 40
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-08-25T23:30:44Z",
+      "side": 1,
+      "message": "Yes, we should deprecate this. Filed at http://crbug.com/759239",
+      "parentUuid": "1547344c_f94cdae6",
+      "revId": "0e7279cecaa07e31cc4cad755a0bbde413599cce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
