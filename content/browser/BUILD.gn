@@ -78,6 +78,7 @@ source_set("browser") {
     "//device/geolocation",
     "//device/geolocation/public/interfaces",
     "//device/screen_orientation/public/interfaces",
+    "//device/u2f",
     "//device/vr",
     "//device/vr:mojo_bindings",
     "//device/vr/features",

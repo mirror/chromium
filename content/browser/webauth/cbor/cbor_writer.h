@@ -15,8 +15,8 @@
  *  * Major types:
  *     * 0: Unsigned integers, up to 64-bit.
  *     * 2 & 3: Byte and UTF-8 strings.
+ *     * 4: Arrays, with the number of elements known at the start.
  *     * 5: Maps, with the number of elements known at the start
- *              of the container.
  * Unsupported:
  *  * Negative integers
  *  * Floating-point numbers
@@ -29,7 +29,7 @@ enum class CborMajorType {
   kNegative = 1,    // Negative integer. Unsupported by this implementation.
   kByteString = 2,  // Byte string.
   kString = 3,      // String.
-  kArray = 4,       // Array. Unsupported by this implementation.
+  kArray = 4,       // Array.
   kMap = 5,         // Map.
 };
 
@@ -59,6 +59,10 @@ class CONTENT_EXPORT CBORWriter {
 
   // Encodes a UTF-8|string| (major type 3).
   void WriteString(const std::string& string);
+
+  // Declare an array (major type 4).
+  // This expects to be followed by |len| number of values.
+  void WriteArray(size_t len);
 
   // Declare a map (major type 5).
   // This expects to be followed by |len| number of key/value pairs.

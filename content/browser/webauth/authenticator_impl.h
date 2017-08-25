@@ -10,6 +10,8 @@
 #include "base/cancelable_callback.h"
 #include "base/macros.h"
 #include "content/common/content_export.h"
+#include "device/u2f/u2f_request.h"
+#include "device/u2f/u2f_return_code.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom.h"
@@ -37,9 +39,51 @@ class CONTENT_EXPORT AuthenticatorImpl : public webauth::mojom::Authenticator {
   void MakeCredential(webauth::mojom::MakeCredentialOptionsPtr options,
                       MakeCredentialCallback callback) override;
 
+  // Callback to handle the async response from a U2fDevice.
+  void OnRegister(MakeCredentialCallback callback,
+                  const std::string& client_data_json,
+                  device::U2fReturnCode status_code,
+                  const std::vector<uint8_t>& data);
+
+  webauth::mojom::PublicKeyCredentialInfoPtr ConstructPublicKeyCredentialInfo(
+      const std::string& clientDataJSON,
+      const std::vector<uint8_t>& data);
+
+  webauth::mojom::AuthenticatorResponsePtr
+  ConstructAuthenticatorAttestationResponse(
+      const std::string& relying_party_id,
+      const std::vector<uint8_t>& data,
+      std::vector<uint8_t>& credential_id);
+
+  std::string BuildClientData(const std::string& relying_party_id,
+                              const std::vector<uint8_t>& challenge);
+
+  void ParseU2fRegisterResponse(const std::vector<uint8_t>& u2f_data,
+                                std::vector<uint8_t>& attestation_data,
+                                std::vector<uint8_t>& attestation_statement,
+                                std::vector<uint8_t>& credential_id);
+
+  std::vector<uint8_t> BuildU2FAttestationStatement(
+      const std::vector<uint8_t>& u2f_data,
+      int begin);
+
+  std::vector<uint8_t> SerializeAttestationObject(
+      std::string attestation_format,
+      std::vector<uint8_t> authenticator_data,
+      std::vector<uint8_t> attestation_statement);
+
+  void OnTimeout(MakeCredentialCallback callback);
+
+  // As a result of a browser-side error or renderer-initiated mojo channel
+  // closure (e.g. there was an error on the renderer side, or payment was
+  // successful), this method is called. It is responsible for cleaning up.
+  void OnConnectionTerminated();
+
+  std::unique_ptr<device::U2fRequest> u2fRequest_;
   base::Closure connection_error_handler_;
   base::CancelableClosure timeout_callback_;
   url::Origin caller_origin_;
+  base::WeakPtrFactory<AuthenticatorImpl> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(AuthenticatorImpl);
 };
 
