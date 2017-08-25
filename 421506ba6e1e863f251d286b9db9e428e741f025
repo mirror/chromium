@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a20b9145_5220ada7",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-25T14:00:41Z",
+      "side": 1,
+      "message": "nit: I think it would be slightly more understandable to check \"block_type\" here. The point is that we do not recognize the block, not that we couldn\u0027t generate the end marker.",
+      "range": {
+        "startLine": 187,
+        "startChar": 8,
+        "endLine": 187,
+        "endChar": 18
+      },
+      "revId": "421506ba6e1e863f251d286b9db9e428e741f025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586f796f_0b3d2caf",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-25T14:00:41Z",
+      "side": 1,
+      "message": "Please add {} after a two-line condition.",
+      "range": {
+        "startLine": 249,
+        "startChar": 10,
+        "endLine": 249,
+        "endChar": 36
+      },
+      "revId": "421506ba6e1e863f251d286b9db9e428e741f025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
