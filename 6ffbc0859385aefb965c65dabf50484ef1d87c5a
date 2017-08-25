@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9396cfe_45d0017e",
+        "filename": "third_party/libpng/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-25T19:22:00Z",
+      "side": 1,
+      "message": "Hopefully you won\u0027t be the lone ranger for long.",
+      "revId": "6ffbc0859385aefb965c65dabf50484ef1d87c5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
