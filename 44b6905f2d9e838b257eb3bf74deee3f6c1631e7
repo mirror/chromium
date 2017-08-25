@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "bf1fb827_309c9256",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-25T00:10:31Z",
+      "side": 1,
+      "message": "I realized now i need browser_view_, so I didn\u0027t make a static function, but I did move this section to the call site.",
+      "parentUuid": "ca08d2a5_943a9d91",
+      "range": {
+        "startLine": 124,
+        "startChar": 5,
+        "endLine": 124,
+        "endChar": 43
+      },
+      "revId": "44b6905f2d9e838b257eb3bf74deee3f6c1631e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c18b201_9dd7b2e3",
         "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash.cc",
         "patchSetId": 6
