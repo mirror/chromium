@@ -398,6 +398,11 @@ void RenderFrameProxy::OnDidUpdateOrigin(
   web_frame_->SetReplicatedOrigin(origin);
   web_frame_->SetReplicatedPotentiallyTrustworthyUniqueOrigin(
       is_potentially_trustworthy_unique_origin);
+
+  // Reset |frame_rect_| in order to allocate a new viz::LocalSurfaceId.
+  gfx::Rect rect = frame_rect_;
+  frame_rect_ = gfx::Rect();
+  FrameRectsChanged(rect);
 }
 
 void RenderFrameProxy::OnSetPageFocus(bool is_focused) {
@@ -503,11 +508,17 @@ void RenderFrameProxy::Navigate(const blink::WebURLRequest& request,
 
 void RenderFrameProxy::FrameRectsChanged(const blink::WebRect& frame_rect) {
   gfx::Rect rect = frame_rect;
+  if (frame_rect_.size() != rect.size() || !local_surface_id_.is_valid())
+    local_surface_id_ = local_surface_id_allocator_.GenerateId();
+
+  frame_rect_ = rect;
+
   if (IsUseZoomForDSFEnabled()) {
     rect = gfx::ScaleToEnclosingRect(
         rect, 1.f / render_widget_->GetOriginalDeviceScaleFactor());
   }
-  Send(new FrameHostMsg_FrameRectChanged(routing_id_, rect));
+
+  Send(new FrameHostMsg_FrameRectChanged(routing_id_, rect, local_surface_id_));
 }
 
 void RenderFrameProxy::UpdateRemoteViewportIntersection(
