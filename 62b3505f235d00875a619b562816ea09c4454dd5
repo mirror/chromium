@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fbb71fb2_7198dfdb",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:18:18Z",
+      "side": 1,
+      "message": "I responded on the other comment.",
+      "parentUuid": "25753973_1dbd9944",
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8bd2ade_27b6c988",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-11T17:35:50Z",
       "side": 1,
       "message": "This should be an ok change to do. However, it will be good to grep through the codebase to ensure no perf analysis tool is using the name of the event, which this change will cause it to break.",
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31280c79_539168a3",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:18:18Z",
+      "side": 1,
+      "message": "There are no more references to OnDCPL in my checkout -- do you know what repos I should be be looking at?",
+      "parentUuid": "f8bd2ade_27b6c988",
       "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ff41378a_56ea5f71",
+        "filename": "content/common/frame_messages_forward.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:18:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c53b3d60_a7ba089a",
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd30db55_da02c56f",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 7
@@ -73,6 +127,30 @@
       "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "156b9b52_160500da",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 4930,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:18:18Z",
+      "side": 1,
+      "message": "I\u0027d prefer spelling out the type: same amount of lines as with `auto`, but it looks better after clang-format.",
+      "parentUuid": "dd30db55_da02c56f",
+      "range": {
+        "startLine": 4930,
+        "startChar": 2,
+        "endLine": 4930,
+        "endChar": 63
+      },
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "1addce1c_bbd71b1e",
+        "filename": "content/renderer/render_frame_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:18:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b180d77_267b2758",
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89befd0e_2ad9d305",
         "filename": "content/test/did_commit_provisional_load_interceptor.h",
         "patchSetId": 7
@@ -146,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "cbd37901_35786735",
+        "filename": "content/test/did_commit_provisional_load_interceptor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:18:18Z",
+      "side": 1,
+      "message": "We only have test APIs for the InterfaceProvider side, not for\nBinderRegistry / AssociatedInterfaceRegistry. Of course, we could implement a test API for the latter side too, or simply use the production RemoveInterface/AddInterface methods.\n\nAnother disadvantage of hijacking the InterfaceRequest binding is that you can no longer intercept calls to pre-existing RFH\u0027s.\n\nIn addition, Ken prefers a solution where no manual update is needed to test helpers whenever a new method is added to mojom::FrameHost.\n\nTherefore I\u0027d use this solution for now, and then land a follow-up CL once Nasko\u0027s InterceptorForTesting lands to use that. WDYT?",
+      "parentUuid": "56dc6b45_41f6ffed",
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9646f387_b3564741",
         "filename": "content/test/test_render_frame.cc",
         "patchSetId": 7
@@ -157,6 +271,24 @@
       "writtenOn": "2017-08-09T09:29:31Z",
       "side": 1,
       "message": "I think I\u0027m missing something; why did this change? The typical pattern is the receiver side implements the version that returns a result via the callback, while the sender/caller side uses the sync call signature (via the proxy object in the generated mojom)\n\nWe should be able to get this behavior by just binding the interface. This is pretty easy to do in tests with something like https://cs.chromium.org/chromium/src/url/mojo/url_gurl_struct_traits_unittest.cc?rcl\u003dcdb881164c3cbea2b9b810d25027f1742f5988c9\u0026l\u003d40",
+      "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac81db8_2147ad81",
+        "filename": "content/test/test_render_frame.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-25T16:18:18Z",
+      "side": 1,
+      "message": "After changing it back, I am now seeing deadlocks whenever somebody calls this. I suppose we are not dispatching the call to the implementation from the sync-message-response-waiting loop the caller is pumping?\n\nKen, am I missing any obvious solutions here?",
+      "parentUuid": "9646f387_b3564741",
       "revId": "62b3505f235d00875a619b562816ea09c4454dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
