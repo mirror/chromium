@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46b420e2_180a956b",
+        "filename": "chrome/android/java/res/layout/download_manager_ui_space_widget.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-08-25T00:41:24Z",
+      "side": 1,
+      "message": "These are using the opaque material design colors because the colors will overlap each other if using their counterpart colors with alpha.",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "c3f8c690e86c0dd7a4e882166ddc6988c91e3f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
