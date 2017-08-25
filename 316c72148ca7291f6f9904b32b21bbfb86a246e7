@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db32e8cf_3b942c2f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/extensions/extensions-events-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-25T22:12:38Z",
+      "side": 1,
+      "message": "Let\u0027s make sure non-empty selection is covered as well. Or perhaps just report a URL?",
+      "revId": "316c72148ca7291f6f9904b32b21bbfb86a246e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
