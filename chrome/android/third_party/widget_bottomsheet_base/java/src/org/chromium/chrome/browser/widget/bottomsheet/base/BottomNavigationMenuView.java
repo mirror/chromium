@@ -21,7 +21,6 @@ import static android.support.annotation.RestrictTo.Scope.GROUP_ID;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.annotation.RestrictTo;
 import android.support.design.R;
