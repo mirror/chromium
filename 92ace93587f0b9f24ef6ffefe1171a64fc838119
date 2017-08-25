@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc0ce35e_30d534a9",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-25T21:38:07Z",
+      "side": 1,
+      "message": "I checked histograms.xml and the \"enum\" is actually being interpreted as a boolean. I checked the uma web tool and I only see enabled and disabled being recorded. Under the hood they are both a LinearHistogram, so I think it\u0027s OK to change the macro.",
+      "revId": "92ace93587f0b9f24ef6ffefe1171a64fc838119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06af5f23_1a7d4752",
+        "filename": "chrome/browser/chromeos/policy/configuration_policy_handler_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-25T21:38:07Z",
+      "side": 1,
+      "message": "This is only interesting reference to the pref itself. I could try deleting the pref entirely, but I\u0027m not too familiar with how that would interact with policy. Ditto for extensions that might try to set the pref. OTOH, I think the pref is only written, not read, and eliminating it would remove more code. WDYT?",
+      "revId": "92ace93587f0b9f24ef6ffefe1171a64fc838119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
