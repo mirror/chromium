@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7795ae71_8cbd2d35",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-25T08:44:38Z",
+      "side": 1,
+      "message": "This is not the way this API should be used, sorry I missed this doing review. YOu should remove this if clause everywhere in the test files and instead make sure the feature is enabled in SetUp using scoped_feature_list.",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 231,
+        "endChar": 71
+      },
+      "revId": "87d31d7a849542b88904c506371eb4dfd5c1788c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
