@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12e70263_7103f900",
+        "filename": "chrome/browser/resources/chromeos/login/screen_error_message.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-08-25T23:45:26Z",
+      "side": 1,
+      "message": "drop \u0027\u0027",
+      "range": {
+        "startLine": 485,
+        "startChar": 52,
+        "endLine": 485,
+        "endChar": 56
+      },
+      "revId": "f1cdc2372706dbe8cfdd8b22b0f1f731f93f3df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
