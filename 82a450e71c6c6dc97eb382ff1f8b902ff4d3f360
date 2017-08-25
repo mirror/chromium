@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "699348c2_e2360935",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce29434a_682ddfba",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "952aeda1_f4973aa8",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f9d86cfa_25aa3d25",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Code removed.",
+      "parentUuid": "952aeda1_f4973aa8",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a0bf1e0_b34adf9a",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-17T17:17:18Z",
       "side": 1,
       "message": "This comment doesn\u0027t make sense to me, how can we reopen something that is already open?\n\nIs this about the socket previously existing or not?",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dbf4768_ff8908ee",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Code removed. OnError() will be invoked when we are opening the socket, but failed (socket not opened); or when the socket is opened, but ping timeout.",
+      "parentUuid": "0a0bf1e0_b34adf9a",
       "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "1cec30c3_32d172b0",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a882bef_31ff044c",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 15
+      },
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e08fa2a_c48262af",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -87,6 +165,24 @@
       "writtenOn": "2017-08-18T22:04:28Z",
       "side": 1,
       "message": "Having a single map would simplify this code (you don\u0027t have to look up in two different maps).",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4f9ac70_7a9e9867",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Will do it in a seperate patch.",
+      "parentUuid": "1e08fa2a_c48262af",
       "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "f258b37b_969336e6",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a89bf2cc_d5269e6a",
+      "range": {
+        "startLine": 205,
+        "startChar": 43,
+        "endLine": 205,
+        "endChar": 60
+      },
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "623c6d5f_f0628910",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -127,6 +247,24 @@
       "writtenOn": "2017-08-18T22:04:28Z",
       "side": 1,
       "message": "Where do you prevent multiple simultaneous OpenChannel() calls to the same sink?",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9c34a8_87c25387",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Added a |pending_for_open_ip_endpoints_| to check this. CastSocketService::OpenSocket() also has a check preventing creating multiple sockets for the same ip endpoint.",
+      "parentUuid": "623c6d5f_f0628910",
       "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -168,6 +306,24 @@
     },
     {
       "key": {
+        "uuid": "54d146df_248df345",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bae2909_47449825",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbf10b22_5f718a12",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -185,6 +341,24 @@
     },
     {
       "key": {
+        "uuid": "7c7eb59e_41312912",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbf10b22_5f718a12",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3142529_3b1a2c87",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -196,6 +370,24 @@
       "writtenOn": "2017-08-17T17:17:18Z",
       "side": 1,
       "message": "I think it would be useful to have a metric of what attempt the channel open was successful at.\n\nDo we have any plans for that, or some other way of getting data for checking/adjusting our timeouts and retries?",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091db4ea_8046af0e",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Will do it in a seperate patch. Exposing some flags to adjust timeout/retry parameters and do experiments on that.",
+      "parentUuid": "d3142529_3b1a2c87",
       "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -219,6 +411,24 @@
     },
     {
       "key": {
+        "uuid": "a941fd74_f1cf7e1e",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "It calls both. OnError() then OnChannelOpened().",
+      "parentUuid": "4e7a6fcb_d12eb837",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99ebcbfc_115eb9ec",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -230,6 +440,24 @@
       "writtenOn": "2017-08-18T04:43:19Z",
       "side": 1,
       "message": "ShouldRetry?",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38bdf5f9_4d3c470c",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Code removed.",
+      "parentUuid": "99ebcbfc_115eb9ec",
       "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -253,6 +481,24 @@
     },
     {
       "key": {
+        "uuid": "88dc18f7_2441d4fb",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Code removed. Changed to base::TimeDelta.",
+      "parentUuid": "696b2457_e70fb0f4",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ca346f6_9fc50a1e",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -264,6 +510,30 @@
       "writtenOn": "2017-08-18T04:43:19Z",
       "side": 1,
       "message": "ditto on time here.",
+      "range": {
+        "startLine": 262,
+        "startChar": 55,
+        "endLine": 262,
+        "endChar": 0
+      },
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454233e4_369fe668",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Code removed.",
+      "parentUuid": "6ca346f6_9fc50a1e",
       "range": {
         "startLine": 262,
         "startChar": 55,
@@ -299,6 +569,30 @@
     },
     {
       "key": {
+        "uuid": "b6b333bc_2766a875",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Code removed.",
+      "parentUuid": "c48f380e_02e93df9",
+      "range": {
+        "startLine": 284,
+        "startChar": 37,
+        "endLine": 284,
+        "endChar": 0
+      },
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3291356d_0279df33",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -310,6 +604,30 @@
       "writtenOn": "2017-08-18T04:43:19Z",
       "side": 1,
       "message": "would it make sense to expose a non-const getter for cast_data() so that we don\u0027t have to create updated_sink?",
+      "range": {
+        "startLine": 293,
+        "startChar": 66,
+        "endLine": 293,
+        "endChar": 67
+      },
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2c00f5_4511b97a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Call set_cast_data() to avoid creating |updated_sink|.",
+      "parentUuid": "3291356d_0279df33",
       "range": {
         "startLine": 293,
         "startChar": 66,
@@ -339,6 +657,24 @@
     },
     {
       "key": {
+        "uuid": "c26e5836_4bd860e8",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Code removed. Originally it was the current attempt#.",
+      "parentUuid": "d421d428_25776b6a",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05a9205c_75411a94",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
         "patchSetId": 1
@@ -350,6 +686,30 @@
       "writtenOn": "2017-08-18T04:43:19Z",
       "side": 1,
       "message": "nit: |num_attempts| sounds a bit contradictory in this case. I would suggest naming it num_retries instead. Alternatively, we could make num_attempts count the initial attempt and not just the retries.",
+      "range": {
+        "startLine": 104,
+        "startChar": 34,
+        "endLine": 104,
+        "endChar": 46
+      },
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd7cfbf1_66a00ec4",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Code removed.",
+      "parentUuid": "05a9205c_75411a94",
       "range": {
         "startLine": 104,
         "startChar": 34,
@@ -396,6 +756,24 @@
     },
     {
       "key": {
+        "uuid": "7fca401c_62fae988",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Code removed. Changed |current_service_ip_endpoints_| to |pending_for_open_ip_endpoints_|, which tracks pending for open ip endpoints.\n\nWill combine |current_sinks_by_mdns_| |current_sinks_by_dial_| in a seperate patch.",
+      "parentUuid": "d1655224_d8b8991c",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f73b0bc6_b9d9c608",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
         "patchSetId": 1
@@ -407,6 +785,24 @@
       "writtenOn": "2017-08-18T04:43:19Z",
       "side": 1,
       "message": "Prefer base::Optional\u003cRetryStrategy\u003e to represent optionality.",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d65260a_e5886b3a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Code removed.",
+      "parentUuid": "f73b0bc6_b9d9c608",
       "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -430,6 +826,24 @@
     },
     {
       "key": {
+        "uuid": "4b35193c_e6e51089",
+        "filename": "chrome/browser/media/router/discovery/mdns/retry_strategy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Code removed.",
+      "parentUuid": "38f8cf84_b80e0d8e",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31d4cc19_629e4520",
         "filename": "chrome/browser/media/router/discovery/mdns/retry_strategy.h",
         "patchSetId": 1
@@ -447,6 +861,24 @@
     },
     {
       "key": {
+        "uuid": "ce56d5ac_258f0fef",
+        "filename": "chrome/browser/media/router/discovery/mdns/retry_strategy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31d4cc19_629e4520",
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49b7a9b8_8fe3fc52",
         "filename": "chrome/browser/media/router/discovery/mdns/retry_strategy.h",
         "patchSetId": 1
@@ -458,6 +890,30 @@
       "writtenOn": "2017-08-17T17:17:18Z",
       "side": 1,
       "message": "nit, I think \u0027base_delay_xxx\u0027, or maybe \u0027default_delay_xxx\u0027 make more sense here, but it\u0027s not a major concern.",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 29
+      },
+      "revId": "82a450e71c6c6dc97eb382ff1f8b902ff4d3f360",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e901cad_53af5b5f",
+        "filename": "chrome/browser/media/router/discovery/mdns/retry_strategy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-25T05:31:14Z",
+      "side": 1,
+      "message": "Code removed.",
+      "parentUuid": "49b7a9b8_8fe3fc52",
       "range": {
         "startLine": 52,
         "startChar": 6,
