@@ -107,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "25dcfc83_86c640c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/SpaceDisplay.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-08-25T16:59:15Z",
+      "side": 1,
+      "message": "Could we change this to:\n\nint percentageUsedByDownloads \u003d computePercentage(fudgedBytesUsedByDownloads, fileSystemBytes);\n...\nmSpaceBar.setSecondaryProgress(percentageUsedByDownloads);",
+      "parentUuid": "f730ab74_12fd6034",
+      "range": {
+        "startLine": 217,
+        "startChar": 39,
+        "endLine": 217,
+        "endChar": 81
+      },
+      "revId": "c3f8c690e86c0dd7a4e882166ddc6988c91e3f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc323d69_60d86ba6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
         "patchSetId": 1
