@@ -29,6 +29,12 @@ namespace chromeos {
 
 namespace {
 
+// Enumeration values for NativePrintersBulkAccessMode.
+constexpr int kBlacklistAccess = 0;
+// TODO(skau): Parse the access policy.
+// constexpr int kWhitelistAccess = 1;
+// constexpr int kAllAccess = 2;
+
 // Adds |printer| with |id| to prefs.  Returns true if the printer is new,
 // false for an update.
 bool UpdatePrinterPref(PrintersSyncBridge* sync_bridge,
@@ -263,6 +269,11 @@ void SyncedPrintersManager::RegisterProfilePrefs(
   registry->RegisterListPref(prefs::kPrintingDevices,
                              user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterListPref(prefs::kRecommendedNativePrinters);
+  // Default value is blacklist.
+  registry->RegisterIntegerPref(prefs::kRecommendedNativePrintersAccessMode,
+                                kBlacklistAccess);
+  registry->RegisterListPref(prefs::kRecommendedNativePrintersBlacklist);
+  registry->RegisterListPref(prefs::kRecommendedNativePrintersWhitelist);
 }
 
 // static
