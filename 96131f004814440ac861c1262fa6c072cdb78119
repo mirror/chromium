@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "15931340_a44fa7ac",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T04:08:37Z",
+      "side": 1,
+      "message": "I probably wouldn\u0027t zero-init.",
+      "range": {
+        "startLine": 24,
+        "startChar": 32,
+        "endLine": 24,
+        "endChar": 37
+      },
+      "revId": "96131f004814440ac861c1262fa6c072cdb78119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f9e43ef_12c1bee1",
         "filename": "base/path_service_unittest.cc",
         "patchSetId": 4
@@ -66,6 +89,24 @@
       "side": 1,
       "message": "This is required for the PathService test to pass, because we don\u0027t have this directory on Fuchsia; the test is just calling through to PathProvider and verifying the returned paths, essentially.",
       "parentUuid": "5f9e43ef_12c1bee1",
+      "revId": "96131f004814440ac861c1262fa6c072cdb78119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d00c14e_6a888299",
+        "filename": "base/path_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T04:08:37Z",
+      "side": 1,
+      "message": "Does it make sense to have a TODO to implement this at some point?",
+      "parentUuid": "caa76081_cb2953b9",
       "revId": "96131f004814440ac861c1262fa6c072cdb78119",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
