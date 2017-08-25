@@ -793,10 +793,13 @@ WebInputEventResult MouseEventManager::HandleMouseDraggedEvent(
   if (!mouse_pressed_)
     return WebInputEventResult::kNotHandled;
 
-  // We disable the drag and drop actions on pen input.
-  if (!is_pen && HandleDrag(event, DragInitiator::kMouse)) {
+// We disable the drag and drop actions on pen input on windows.
+#if defined(OS_WIN)
+  if (!is_pen && HandleDrag(event, DragInitiator::kMouse))
+#else
+  if (HandleDrag(event, DragInitiator::kMouse))
+#endif
     return WebInputEventResult::kHandledSystem;
-  }
 
   Node* target_node = event.InnerNode();
   if (!target_node)
