@@ -22,6 +22,30 @@
       "revId": "6adfc837986f6c9f0949b65e4453a97b8ca362ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e4b6c0b_133d9207",
+        "filename": "components/safe_browsing/features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1173097
+      },
+      "writtenOn": "2017-08-25T14:45:23Z",
+      "side": 1,
+      "message": "We actually need both - this is the feature bit, the param is declared in trigger_throttler.h",
+      "parentUuid": "d205292a_dd1f9098",
+      "range": {
+        "startLine": 45,
+        "startChar": 54,
+        "endLine": 45,
+        "endChar": 61
+      },
+      "revId": "6adfc837986f6c9f0949b65e4453a97b8ca362ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
