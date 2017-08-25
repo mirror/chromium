@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "752ce960_fa402239",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-25T20:45:22Z",
+      "side": 1,
+      "message": "8 ?",
+      "range": {
+        "startLine": 34,
+        "startChar": 24,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "3330992bdc4ba7affcc3d5bc0f8d30017e1219ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
