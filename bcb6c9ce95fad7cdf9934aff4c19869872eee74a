@@ -46,6 +46,30 @@
       "revId": "bcb6c9ce95fad7cdf9934aff4c19869872eee74a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835daa89_4ef951d8",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletThread.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-25T21:37:04Z",
+      "side": 1,
+      "message": "Done. Not sure if this is really safe thing to do considering all the interaction between this class and other Worklet infra.\n\nCan WorkletThreadHolder have a std::unique_ptr\u003cWebThread\u003e there?",
+      "parentUuid": "de6cc8b8_2d54f9aa",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 65
+      },
+      "revId": "bcb6c9ce95fad7cdf9934aff4c19869872eee74a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
