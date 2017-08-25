@@ -22,6 +22,30 @@
       "revId": "6d126090513a9a15455df44796285985e1710f9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b7b0ff_bd9f49bb",
+        "filename": "remoting/client/audio/audio_frame_supplier.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-25T19:23:08Z",
+      "side": 1,
+      "message": "The incoming stream can change this value so the caller of this class should not expect that the value is const. I am not sure what value const provides.",
+      "parentUuid": "bc7306e5_a9c73211",
+      "range": {
+        "startLine": 26,
+        "startChar": 36,
+        "endLine": 26,
+        "endChar": 58
+      },
+      "revId": "6d126090513a9a15455df44796285985e1710f9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
