@@ -16,6 +16,24 @@
       "revId": "3be660686877500a4edf7b63b2d3dc56a23c6d67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d42c870_38c161d6",
+        "filename": "media/formats/mp4/box_definitions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-25T18:38:36Z",
+      "side": 1,
+      "message": "Media log error, or media log error + parse error? IOW, should this fail early too?)\n\nservolk@: similar question applies to usage of ProfileIDCToVideoCodecProfile in formats/mp2t/es_parser_h264.cc: should it fail there (return false) too?",
+      "parentUuid": "56dcf14c_119ca2c4",
+      "revId": "3be660686877500a4edf7b63b2d3dc56a23c6d67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
