@@ -112,6 +112,12 @@ class GPU_EXPORT MemoryChunk {
     return allocator_.bytes_in_use();
   }
 
+  // Used for testing
+  FencedAllocator::State GetPointerStatus(void* pointer,
+                                          int32_t* token_if_pending) {
+    return allocator_.GetPointerStatus(pointer, token_if_pending);
+  }
+
  private:
   int32_t shm_id_;
   scoped_refptr<gpu::Buffer> shm_;
@@ -199,6 +205,10 @@ class GPU_EXPORT MappedMemoryManager {
   size_t allocated_memory() const {
     return allocated_memory_;
   }
+
+  // Used for testing
+  FencedAllocator::State GetPointerStatus(void* pointer,
+                                          int32_t* token_if_pending);
 
  private:
   typedef std::vector<std::unique_ptr<MemoryChunk>> MemoryChunkVector;
