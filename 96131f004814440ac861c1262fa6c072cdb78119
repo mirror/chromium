@@ -170,6 +170,24 @@
       "revId": "96131f004814440ac861c1262fa6c072cdb78119",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "475b1bd8_38136510",
+        "filename": "base/path_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T17:29:06Z",
+      "side": 1,
+      "message": "OK, I would probably add a comment to that effect then ;-)",
+      "parentUuid": "25dfc784_4d24b57c",
+      "revId": "96131f004814440ac861c1262fa6c072cdb78119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
