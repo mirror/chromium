@@ -4,6 +4,8 @@
 
 static_library("webui") {
   sources = [
+    "pollux_webui_handler.cc",
+    "pollux_webui_handler.h",
     "proximity_auth_ui.cc",
     "proximity_auth_ui.h",
     "proximity_auth_webui_handler.cc",
@@ -21,6 +23,7 @@ static_library("webui") {
     "//components/prefs",
     "//components/proximity_auth",
     "//components/proximity_auth/logging",
+    "//components/proximity_auth/pollux",
     "//components/resources",
     "//content/public/browser",
     "//device/bluetooth",
