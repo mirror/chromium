@@ -16,6 +16,52 @@
       "revId": "f37e37ff48faa3401ad02946f043f67f8a3f06d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5648ff55_179f96f7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-25T20:15:05Z",
+      "side": 1,
+      "message": "Makes sense. Can anything be assert that\u0027d fail if this stops being true?",
+      "range": {
+        "startLine": 178,
+        "startChar": 16,
+        "endLine": 178,
+        "endChar": 19
+      },
+      "revId": "f37e37ff48faa3401ad02946f043f67f8a3f06d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cca85c4_85b7bebd",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-25T20:15:05Z",
+      "side": 1,
+      "message": "Nice test!",
+      "range": {
+        "startLine": 128,
+        "startChar": 22,
+        "endLine": 128,
+        "endChar": 23
+      },
+      "revId": "f37e37ff48faa3401ad02946f043f67f8a3f06d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
