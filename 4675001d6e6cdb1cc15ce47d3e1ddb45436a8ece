@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "e4af5ffe_4ccc1c92",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-25T22:20:37Z",
+      "side": 1,
+      "message": "Should we just change the comparator to put these special properties first, and then handle them in the next for loop? I feel that would be easier to understand, WDYT?",
+      "revId": "4675001d6e6cdb1cc15ce47d3e1ddb45436a8ece",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6cb375f5_3975b0bc",
         "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/RemoteObjectPreviewFormatter.js",
         "patchSetId": 13
