@@ -60,6 +60,48 @@
     },
     {
       "key": {
+        "uuid": "5af3c893_b2880b4e",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-25T17:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15931340_a44fa7ac",
+      "range": {
+        "startLine": 24,
+        "startChar": 32,
+        "endLine": 24,
+        "endChar": 37
+      },
+      "revId": "96131f004814440ac861c1262fa6c072cdb78119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc321f9b_eefb1eaf",
+        "filename": "base/base_paths_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-25T17:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "772b24da_e32cc626",
+      "revId": "96131f004814440ac861c1262fa6c072cdb78119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f9e43ef_12c1bee1",
         "filename": "base/path_service_unittest.cc",
         "patchSetId": 4
@@ -107,6 +149,24 @@
       "side": 1,
       "message": "Does it make sense to have a TODO to implement this at some point?",
       "parentUuid": "caa76081_cb2953b9",
+      "revId": "96131f004814440ac861c1262fa6c072cdb78119",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25dfc784_4d24b57c",
+        "filename": "base/path_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-25T17:27:03Z",
+      "side": 1,
+      "message": "Probably not. Fuchsia doesn\u0027t have the concept of user directories, or even users at all.\n\n(asked scottmg)",
+      "parentUuid": "8d00c14e_6a888299",
       "revId": "96131f004814440ac861c1262fa6c072cdb78119",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
