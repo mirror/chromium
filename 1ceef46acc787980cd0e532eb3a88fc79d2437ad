@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6935b42_f9dc006a",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-25T05:59:17Z",
+      "side": 1,
+      "message": "should be listed in unix sort order?",
+      "range": {
+        "startLine": 168,
+        "startChar": 5,
+        "endLine": 168,
+        "endChar": 6
+      },
+      "revId": "1ceef46acc787980cd0e532eb3a88fc79d2437ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d431bb01_01b7ef33",
+        "filename": "third_party/WebKit/Source/platform/network/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-25T05:59:17Z",
+      "side": 1,
+      "message": "should this depend on :http_names or :make_generated ?\nGN fails to run due to an error about this.",
+      "revId": "1ceef46acc787980cd0e532eb3a88fc79d2437ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
