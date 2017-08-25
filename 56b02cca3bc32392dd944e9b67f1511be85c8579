@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2addc47e_ce82655c",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-25T23:29:36Z",
+      "side": 1,
+      "message": "Done. \"maximize mode\" (now \"tablet mode\") is set if IsTabletModeWindowManagerEnabled() for any displays that have accelerometer support.",
+      "parentUuid": "7cffa9c4_ab12a5c6",
+      "revId": "56b02cca3bc32392dd944e9b67f1511be85c8579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f32ce054_47f65577",
         "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0244b55c_8a5f374f",
+        "filename": "chrome/browser/extensions/display_info_provider_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-25T23:29:36Z",
+      "side": 1,
+      "message": "No, thanks, this was left over when we were going to tie this to the primary display as a hack.",
+      "parentUuid": "f32ce054_47f65577",
+      "revId": "56b02cca3bc32392dd944e9b67f1511be85c8579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07c1e769_d06c871b",
         "filename": "extensions/common/api/system_display.idl",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-25T20:46:59Z",
       "side": 1,
       "message": "What is maximize mode?",
+      "revId": "56b02cca3bc32392dd944e9b67f1511be85c8579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d22703_4f88b80b",
+        "filename": "extensions/common/api/system_display.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-25T23:29:36Z",
+      "side": 1,
+      "message": "It is \"enabled for touch devices with auto rotation\" :) Its should really be \"can be enabled\" because the state may change (e.g. when a display is detached). Will fix that in the comment.\n\nIt is also now called \"tablet mode\" which is hopefully less confusing.",
+      "parentUuid": "07c1e769_d06c871b",
       "revId": "56b02cca3bc32392dd944e9b67f1511be85c8579",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
