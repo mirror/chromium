@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0dbdf72c_03298171",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-25T21:11:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6714d19d_ff155dd5",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebd8e4d9_fb5eb29d",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-17T18:51:34Z",
       "side": 1,
       "message": "Why do we need to do this?",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eec1a1f_9757b326",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1216,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-25T21:11:21Z",
+      "side": 1,
+      "message": "This is an attempt to prevent the menu blinking which happens if we show the menu (calling invalidate()) and then SELECTION_HANDLES_MOVES arrives and we call invalidateContentRect().",
+      "parentUuid": "ebd8e4d9_fb5eb29d",
       "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7000711c_6a0d2f3f",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-25T21:11:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bd37a46_0377c5e1",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78b37738_da0b8ed1",
         "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "08f9aab3_aff7f724",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-25T21:11:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78b37738_da0b8ed1",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cca588b_d9749c85",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-17T18:51:34Z",
       "side": 1,
       "message": "Is there a reason why this was renamed?",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edede231_6aae65e5",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-25T21:11:21Z",
+      "side": 1,
+      "message": "I could not \"git cl upload\"",
+      "parentUuid": "2cca588b_d9749c85",
       "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f78493a7_f2c1f7db",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-25T21:11:21Z",
+      "side": 1,
+      "message": "With Pedro\u0027s comments the block became smaller. I put this and the next if() in a separate method HandleTapInsideSelection().",
+      "parentUuid": "712a4308_6d693f03",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a9ae345_e3793245",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 3
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "fa1f5626_dba56205",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-25T21:11:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9ae345_e3793245",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd64d0b3_847ec5ca",
         "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2017-08-17T18:51:34Z",
       "side": 1,
       "message": "Could you use the return from the above call to |SelectClosestWordFromHitTestResult| instead?",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd656b9_4ca72ed0",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-25T21:11:21Z",
+      "side": 1,
+      "message": "The |true| return value from SelectClosestWordFromHitTestResult() does not seem to guarantee that selection actually changed. The method UpdateSelectionForMouseDownDispatchingSelectStart() now returns true if in calls SetNonDirectionalSelectionIfNeeded(), but the latter might not change selection.\n\nI wanted to launch a menu only after the selection size really changed, but your suggestion is simpler and it seems in most cases it will be correct and in a small number of cases maybe we get an extra menu refresh. So, Done.",
+      "parentUuid": "dd64d0b3_847ec5ca",
       "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "2ad5a9bf_74495177",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-25T21:11:21Z",
+      "side": 1,
+      "message": "I changed the value inside FrameSelection from ClickInsideBehavior to |bool| and renamed corresponding methods (GetClickInsideBehavior -\u003e ShouldTapSelectWord). The |bool| eliminated the need for this conversion function and the usage inside FrameSelection seems more consistent with other properties.",
+      "parentUuid": "86570467_d6c5e1cf",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11590a0a_b614a519",
         "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
         "patchSetId": 3
@@ -169,6 +331,24 @@
       "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25d72f56_dd3c974f",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-08-25T21:11:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11590a0a_b614a519",
+      "revId": "3d4e19c8fbc87355a7155c27b492a9556600882f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
