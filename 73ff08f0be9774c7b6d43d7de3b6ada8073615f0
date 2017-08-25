@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fee2a46_69f98a36",
+        "filename": "components/policy/core/common/cloud/cloud_policy_refresh_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-25T12:44:14Z",
+      "side": 1,
+      "message": "The comment for |last_refresh_| says that it\u0027s basically determined by the state of the client registration:\n\n  // [...] Is null in case the client is\n  // not registered.\n\nEither the comment is wrong - then it\u0027s quite likely that some other assumptions that use |last_refresh_| are broken too.\nOr the DCHECK problem is caused by something else.",
+      "range": {
+        "startLine": 193,
+        "startChar": 29,
+        "endLine": 193,
+        "endChar": 58
+      },
+      "revId": "73ff08f0be9774c7b6d43d7de3b6ada8073615f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
