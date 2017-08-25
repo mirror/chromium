@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ecf41e2b_2a6d6db2",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-25T14:42:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60057306_b3a7856b",
+      "revId": "ef552b35ede69c382b25fafddd9274b10d5dd046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59f44d45_a82f041c",
         "filename": "storage/browser/blob/blob_registry_impl.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "ef552b35ede69c382b25fafddd9274b10d5dd046",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ac8136_400a091e",
+        "filename": "storage/browser/blob/blob_registry_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-25T14:42:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59f44d45_a82f041c",
+      "revId": "ef552b35ede69c382b25fafddd9274b10d5dd046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
