@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea65ea02_d631bca0",
+        "filename": "services/ui/ws/ids.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T22:11:56Z",
+      "side": 1,
+      "message": "use delegating constructor here",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 44
+      },
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89495c97_27f0e42a",
+        "filename": "services/ui/ws/window_manager_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T22:11:56Z",
+      "side": 1,
+      "message": "I tend to think the important thing in all these tests is that the lo-bits match, and that in some cases, such as here, the high bit is non-0. That is, I think the following is a better assertion:\nEXPECT_EQ(LoWord(server_id(window)), LoWord(server_id(embed_root));\nEXPECT_NE(0, server_id(embed_root) \u003e\u003e 16);\n\nThis better insulates the code from changes to ids we make. WDYT?",
+      "range": {
+        "startLine": 391,
+        "startChar": 2,
+        "endLine": 391,
+        "endChar": 68
+      },
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71dbd556_fee82919",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T22:11:56Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/636445 adds DebugWindowId, please use it.",
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8afc77_654e2d3c",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T22:11:56Z",
+      "side": 1,
+      "message": "I don\u0027t think you need the LoWord(value) part here, just value (because you know nothing is set in the high-word because of the conditional).",
+      "range": {
+        "startLine": 1469,
+        "startChar": 41,
+        "endLine": 1469,
+        "endChar": 48
+      },
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5b7b40_f831f01c",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1481,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T22:11:56Z",
+      "side": 1,
+      "message": "No need for the reassginment, just return. In fact I would do:\n\nif (HiWord(client_window_id.id) \u003d\u003d id_)\n  return LoWord(client_window_id.id);\nreturn id;\n\nOr use a ternary.",
+      "range": {
+        "startLine": 1481,
+        "startChar": 4,
+        "endLine": 1481,
+        "endChar": 20
+      },
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6214144_ef1c3a5e",
+        "filename": "services/ui/ws/window_tree.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-25T22:11:56Z",
+      "side": 1,
+      "message": "This comment is confusing. I think you want, returns the ClientId from a transport id or WindowId. These functions do a straight mapping, there may not be a window with the returned id.",
+      "range": {
+        "startLine": 423,
+        "startChar": 5,
+        "endLine": 424,
+        "endChar": 13
+      },
+      "revId": "09c02ba21336d814dad40dbbfade1b0dd64ca09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
