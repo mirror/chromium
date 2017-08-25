@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7235d86e_f22826e9",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-25T19:50:54Z",
+      "side": 1,
+      "message": "I can\u0027t use 0 as a FileTransferResponse_ErrorCode, it gives me a compile error. I would have to either add a new ErrorCode to say that nothing went wrong or use an actual error code. Should I use an Optional instead?",
+      "parentUuid": "bf8ef016_349fe8ed",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "b4b119fa30b1cfb80bd44f0f759468269026b3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e937e8ba_dc12858d",
         "filename": "remoting/host/file_proxy_wrapper.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8b76e4a2_c1761b5c",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-25T19:50:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e937e8ba_dc12858d",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 18
+      },
+      "revId": "b4b119fa30b1cfb80bd44f0f759468269026b3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63c711c1_d964b77f",
         "filename": "remoting/host/file_proxy_wrapper.h",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "b4b119fa30b1cfb80bd44f0f759468269026b3c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b7f7257_99265703",
+        "filename": "remoting/host/file_proxy_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-25T19:50:54Z",
+      "side": 1,
+      "message": "Using std::move() on a constref of this gave me this compile error. Are you sure it should work?\n\n../../remoting/host/file_proxy_wrapper_linux.cc:115:18: error: object of type \u0027base::Callback\u003cvoid (remoting::protocol::FileTransferResponse_ErrorCode), base::internal::CopyMode::MoveOnly, base::internal::RepeatMode::Once\u003e\u0027 cannot be assigned because its copy assignment operator is implicitly deleted\n  done_callback_ \u003d std::move(done_callback);\n                 ^\n../../base/callback.h:38:7: note: copy assignment operator of \u0027Callback\u003cvoid (remoting::protocol::FileTransferResponse_ErrorCode), base::internal::CopyMode::MoveOnly, base::internal::RepeatMode::Once\u003e\u0027 is implicitly deleted because base class \u0027internal::CallbackBase\u003c(CopyMode)0\u003e\u0027 has a deleted copy assignment operator\n    : public internal::CallbackBase\u003ccopy_mode\u003e {\n      ^\n../../base/callback_internal.h:96:3: note: copy assignment operator is implicitly deleted because \u0027CallbackBase\u003cbase::internal::CopyMode::MoveOnly\u003e\u0027 has a user-declared move constructor\n  CallbackBase(CallbackBase\u0026\u0026 c);\n  ^",
+      "parentUuid": "63c711c1_d964b77f",
+      "range": {
+        "startLine": 59,
+        "startChar": 20,
+        "endLine": 59,
+        "endChar": 32
+      },
+      "revId": "b4b119fa30b1cfb80bd44f0f759468269026b3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
