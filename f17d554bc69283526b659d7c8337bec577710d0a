@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b422167_3514a577",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-25T21:00:35Z",
+      "side": 1,
+      "message": "I could use 2 properties, but thought that having 3 would make the tests more readable.",
+      "range": {
+        "startLine": 26,
+        "startChar": 34,
+        "endLine": 26,
+        "endChar": 53
+      },
+      "revId": "f17d554bc69283526b659d7c8337bec577710d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
