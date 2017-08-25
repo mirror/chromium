@@ -61,22 +61,31 @@ Console.ConsoleSidebar = class extends UI.VBox {
       return;
     var level = message.level;
     var context = message.context;
-    this._addGroupItem(level, Console.ConsoleSidebar.GroupType.All, this._allGroup().name);
+    var isViolation = message.source === ConsoleModel.ConsoleMessage.MessageSource.Violation;
+    var executionContext =
+        message.runtimeModel() && message.runtimeModel().executionContext(message.executionContextId);
+    this._addGroupItem(level, Console.ConsoleSidebar.GroupType.All, this._allGroup().value, this._allGroup().name);
     if (context)
-      this._addGroupItem(level, Console.ConsoleSidebar.GroupType.Context, context);
-    if (message.source === ConsoleModel.ConsoleMessage.MessageSource.Violation)
-      this._addGroupItem(level, Console.ConsoleSidebar.GroupType.Violation, message.source);
+      this._addGroupItem(level, Console.ConsoleSidebar.GroupType.Context, context, context);
+    if (isViolation) {
+      this._addGroupItem(
+          level, Console.ConsoleSidebar.GroupType.Violation, message.source, Common.UIString('Violations'));
+    } else if (executionContext) {
+      this._addGroupItem(
+          level, Console.ConsoleSidebar.GroupType.ExecutionContext, executionContext, executionContext.displayTitle());
+    }
   }
 
   /**
    * @param {?ConsoleModel.ConsoleMessage.MessageLevel} level
    * @param {!Console.ConsoleSidebar.GroupType} type
-   * @param {string} value
+   * @param {string|!SDK.ExecutionContext} value
+   * @param {string} name
    */
-  _addGroupItem(level, type, value) {
+  _addGroupItem(level, type, value, name) {
     var item = this._valueToItemMaps[type].get(value);
     if (!item) {
-      item = {type: type, name: value, value: value, info: 0, warning: 0, error: 0};
+      item = {type: type, name: name, value: value, info: 0, warning: 0, error: 0};
       this._valueToItemMaps[type].set(value, item);
       this._pendingItemsToAdd.add(item);
     } else {
@@ -100,13 +109,15 @@ Console.ConsoleSidebar = class extends UI.VBox {
   }
 
   /**
-   * @return {!Object<!Console.ConsoleSidebar.GroupType, !Map<string, !Console.ConsoleSidebar.GroupItem>>}
+   * @return {!Object<!Console.ConsoleSidebar.GroupType, !Map<(string|!SDK.ExecutionContext), !Console.ConsoleSidebar.GroupItem>>}
    */
   _createValueToItemMaps() {
-    /** @type {!Object<!Console.ConsoleSidebar.GroupType, !Map<string, !Console.ConsoleSidebar.GroupItem>>} */
+    /** @type {!Object<!Console.ConsoleSidebar.GroupType, !Map<(string|!SDK.ExecutionContext), !Console.ConsoleSidebar.GroupItem>>} */
     var valueToItemMaps = {};
-    for (var type of Object.values(Console.ConsoleSidebar.GroupType))
-      valueToItemMaps[type] = /** @type {!Map<string, !Console.ConsoleSidebar.GroupItem>} */ (new Map());
+    for (var type of Object.values(Console.ConsoleSidebar.GroupType)) {
+      valueToItemMaps[type] =
+          /** @type {!Map<(string|!SDK.ExecutionContext), !Console.ConsoleSidebar.GroupItem>} */ (new Map());
+    }
     valueToItemMaps[Console.ConsoleSidebar.GroupType.All].set(this._allGroup().name, this._allGroup());
     return valueToItemMaps;
   }
@@ -144,7 +155,7 @@ Console.ConsoleSidebar = class extends UI.VBox {
    */
   createElementForItem(item) {
     var element = createElementWithClass('div', 'context-item');
-    element.createChild('div', 'name').textContent = item.name;
+    element.createChild('div', 'name').textContent = item.name.trimMiddle(30);
     element.title = item.name;
     var counters = element.createChild('div', 'counters');
     if (item.error)
@@ -196,6 +207,7 @@ Console.ConsoleSidebar = class extends UI.VBox {
 Console.ConsoleSidebar.GroupType = {
   All: Symbol('All'),
   Context: Symbol('Context'),
+  ExecutionContext: Symbol('ExecutionContext'),
   Violation: Symbol('Violation')
 };
 
@@ -207,7 +219,7 @@ Console.ConsoleSidebar.Events = {
 /** @typedef {{
         type: symbol,
         name: string,
-        value: string,
+        value: (string|!SDK.ExecutionContext),
         info: number,
         warning: number,
         error: number

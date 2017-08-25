@@ -1211,13 +1211,19 @@ Console.ConsoleViewFilter = class {
       return false;
 
     if (this._sidebarItem) {
+      var isViolation = message.source === ConsoleModel.ConsoleMessage.MessageSource.Violation;
       switch (this._sidebarItem.type) {
         case Console.ConsoleSidebar.GroupType.Context:
           if (message.context !== this._sidebarItem.value)
             return false;
           break;
         case Console.ConsoleSidebar.GroupType.Violation:
-          if (message.source !== ConsoleModel.ConsoleMessage.MessageSource.Violation)
+          if (!isViolation)
+            return false;
+          break;
+        case Console.ConsoleSidebar.GroupType.ExecutionContext:
+          if (isViolation || !message.runtimeModel() ||
+              message.runtimeModel().executionContext(message.executionContextId) !== this._sidebarItem.value)
             return false;
           break;
       }
