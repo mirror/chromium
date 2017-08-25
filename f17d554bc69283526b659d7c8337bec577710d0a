@@ -22,6 +22,30 @@
       "revId": "f17d554bc69283526b659d7c8337bec577710d0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7407b60_eb3bd2ba",
+        "filename": "ios/chrome/browser/web/sad_tab_tab_helper_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-25T21:18:53Z",
+      "side": 1,
+      "message": "SadTabTabHelper does not know anything about \"feedback\" or \"reload\" concepts anymore. Those concepts were moved to UI layer and this test should not make any assumptions about the code in a different layer.\n\n|repeatedFailure| with explanation comments would work better here. |repeatedFailure| does not have to be BOOL, it could be NSNumber (nil, @YES, @NO).",
+      "parentUuid": "5b422167_3514a577",
+      "range": {
+        "startLine": 26,
+        "startChar": 34,
+        "endLine": 26,
+        "endChar": 53
+      },
+      "revId": "f17d554bc69283526b659d7c8337bec577710d0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
