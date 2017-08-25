@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "101d6d1c_85b6e602",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-25T18:37:15Z",
+      "side": 1,
+      "message": "\u003e I think physical size change can do what it was doing plus what needs to be done for view size change. This will make the callsites simpler - AwContents and Chrome\u0027s OverlayPanel are now doing these calls always together. Let me know if this is what you meant.\n\nYeah that sounds good.",
+      "parentUuid": "839ae8c4_975f82d3",
+      "revId": "6bf063f34f470dc36d5381dda99e6dc6db41ed22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ffb37d0_a7cc93f4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 11
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I found that browser controls info is being referenced in RenderWidgetHostImpl::GetResizeParams(). Besides that, this CL moved all the browser control stuff out of content/ (except those for testing only) to ui/. I think it can be looked into in a separate patch, together with how content can be done without it.",
       "parentUuid": "4ffb37d0_a7cc93f4",
+      "revId": "6bf063f34f470dc36d5381dda99e6dc6db41ed22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61ed78b6_f905a8cf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-25T18:37:15Z",
+      "side": 1,
+      "message": "\u003e I found that browser controls info is being referenced in RenderWidgetHostImpl::GetResizeParams(). Besides that, this CL moved all the browser control stuff out of content/ (except those for testing only) to ui/. I think it can be looked into in a separate patch, together with how content can be done without it.\n\nok",
+      "parentUuid": "a6aef146_1f067df3",
       "revId": "6bf063f34f470dc36d5381dda99e6dc6db41ed22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
