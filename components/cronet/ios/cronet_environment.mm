@@ -13,7 +13,6 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/files/scoped_file.h"
-#include "base/json/json_writer.h"
 #include "base/mac/bind_objc_block.h"
 #include "base/mac/foundation_util.h"
 #include "base/macros.h"
@@ -22,9 +21,9 @@
 #include "base/path_service.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
+#include "components/cronet/cronet_prefs_manager.h"
 #include "components/cronet/histogram_manager.h"
 #include "components/cronet/ios/version.h"
-#include "components/prefs/json_pref_store.h"
 #include "components/prefs/pref_filter.h"
 #include "ios/net/cookies/cookie_store_ios.h"
 #include "ios/web/public/global_state/ios_global_state.h"
@@ -256,7 +255,7 @@ void CronetEnvironment::Start() {
                                  base::Unretained(this)));
 }
 
-CronetEnvironment::~CronetEnvironment() {
+void CronetEnvironment::PrepareForDestroyOnNetworkThread() {
   // TODO(lilyhoughton) make unregistering of this work.
   // net::HTTPProtocolHandlerDelegate::SetInstance(nullptr);
 
@@ -266,12 +265,29 @@ CronetEnvironment::~CronetEnvironment() {
   // if (ts)
   //  ts->Shutdown();
 
+  if (cronet_prefs_manager_) {
+    cronet_prefs_manager_->PrepareForShutdown();
+  }
+
+  // cronet_prefs_manager_ should be deleted on the network thread.
+  cronet_prefs_manager_.reset(nullptr);
+
+  delete network_cache_thread_.release();
+
   // TODO(lilyhoughton) this should be smarter about making sure there are no
   // pending requests, etc.
+  main_context_.reset(nullptr);
+}
 
+CronetEnvironment::~CronetEnvironment() {
+  PostToNetworkThread(
+      FROM_HERE,
+      base::Bind(&CronetEnvironment::PrepareForDestroyOnNetworkThread,
+                 base::Unretained(this)));
   if (network_io_thread_) {
-    network_io_thread_->task_runner().get()->DeleteSoon(
-        FROM_HERE, main_context_.release());
+    // Deleting a thread blocks the current thread and waits until all pending
+    // tasks are completed.
+    delete network_io_thread_.release();
   }
 }
 
@@ -327,6 +343,13 @@ void CronetEnvironment::InitializeOnNetworkThread() {
       new net::MappedHostResolver(
           net::HostResolver::CreateDefaultResolver(nullptr)));
 
+  if (!config->storage_path.empty()) {
+    cronet_prefs_manager_ = std::make_unique<CronetPrefsManager>(
+        cache_path.AsUTF8Unsafe(), GetNetworkThreadTaskRunner(),
+        network_cache_thread_->task_runner(), false /* nqe */,
+        false /* host_cache */, net_log_.get(), &context_builder);
+  }
+
   context_builder.set_host_resolver(std::move(mapped_host_resolver));
 
   // TODO(690969): This behavior matches previous behavior of CookieStoreIOS in
@@ -339,8 +362,8 @@ void CronetEnvironment::InitializeOnNetworkThread() {
           [NSHTTPCookieStorage sharedHTTPCookieStorage]);
   context_builder.SetCookieAndChannelIdStores(std::move(cookie_store), nullptr);
 
-  std::unique_ptr<net::HttpServerProperties> http_server_properties(
-      new net::HttpServerPropertiesImpl());
+  context_builder.set_enable_brotli(brotli_enabled_);
+  main_context_ = context_builder.Build();
 
   for (const auto& quic_hint : quic_hints_) {
     url::CanonHostInfo host_info;
@@ -356,15 +379,10 @@ void CronetEnvironment::InitializeOnNetworkThread() {
 
     url::SchemeHostPort quic_hint_server("https", quic_hint.host(),
                                          quic_hint.port());
-    http_server_properties->SetQuicAlternativeService(
+    main_context_->http_server_properties()->SetQuicAlternativeService(
         quic_hint_server, alternative_service, base::Time::Max(),
         net::QuicVersionVector());
   }
-
-  context_builder.SetHttpServerProperties(std::move(http_server_properties));
-
-  context_builder.set_enable_brotli(brotli_enabled_);
-  main_context_ = context_builder.Build();
 
   main_context_->transport_security_state()
       ->SetEnablePublicKeyPinningBypassForLocalTrustAnchors(
