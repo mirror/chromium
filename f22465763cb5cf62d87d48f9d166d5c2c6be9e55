@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce76ecd7_9d92b101",
+        "filename": "build/android/gyp/write_build_config.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-25T01:47:18Z",
+      "side": 1,
+      "message": "This is so that we don\u0027t put unstripped .so files inside of our .apks. (added a comment)",
+      "parentUuid": "3faa7440_dbcdf908",
+      "revId": "f22465763cb5cf62d87d48f9d166d5c2c6be9e55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42331c77_8aa1449d",
         "filename": "build/toolchain/gcc_toolchain.gni",
         "patchSetId": 1
