@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "796a7a2e_ca3a5a1b",
+        "filename": "chrome/browser/predictors/loading_stats_collector.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-08-25T13:35:44Z",
+      "side": 1,
+      "message": "Why not const GURL\u0026?\n\nThat would avoid a copy, and stats is not destroyed before you reach the end of the function.",
+      "revId": "1d1a1272bc0641a85a187ded145c5c03f832b45b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
