@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16785cf2_4d006025",
+        "filename": "ui/gl/gl_context.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-25T17:53:23Z",
+      "side": 1,
+      "message": "I think it would be useful to hava destination color space here, as we may otherwise get 8-bit rec601 RGB back, which we will then have to convert again later when we display it. Not only would it be quicker to do the conversion once instead of twice, but it would also reduce the amount of error we get.",
+      "range": {
+        "startLine": 191,
+        "startChar": 34,
+        "endLine": 191,
+        "endChar": 37
+      },
+      "revId": "62f97e9eb4f6fb0c08070eda87aa1729d09403fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7432dec1_ece699dc",
+        "filename": "ui/gl/gl_image_io_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-25T17:53:23Z",
+      "side": 1,
+      "message": "but it\u0027s not what we actually do in the rest of the video code.\nWe are trying to move everything to default to bt709, since that\u0027s far more common these days.",
+      "range": {
+        "startLine": 105,
+        "startChar": 47,
+        "endLine": 105,
+        "endChar": 57
+      },
+      "revId": "62f97e9eb4f6fb0c08070eda87aa1729d09403fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
