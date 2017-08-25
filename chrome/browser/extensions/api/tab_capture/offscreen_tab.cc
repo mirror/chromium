@@ -5,8 +5,10 @@
 #include "chrome/browser/extensions/api/tab_capture/offscreen_tab.h"
 
 #include <algorithm>
+#include <vector>
 
 #include "base/bind.h"
+#include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/extensions/api/tab_capture/tab_capture_registry.h"
@@ -37,6 +39,10 @@ const int kMaxOffscreenTabsPerExtension = 4;
 const int kMaxSecondsToWaitForCapture = 60;
 const int kPollIntervalInSeconds = 1;
 
+typedef std::vector<content::BrowserContext*> BrowserContextList;
+static base::LazyInstance<BrowserContextList>::DestructorAtExit
+    g_offscreen_profiles = LAZY_INSTANCE_INITIALIZER;
+
 }  // namespace
 
 namespace extensions {
@@ -54,6 +60,13 @@ OffscreenTabsOwner* OffscreenTabsOwner::Get(
   // CreateForWebContents() really means "create if not exists."
   CreateForWebContents(extension_web_contents);
   return FromWebContents(extension_web_contents);
+}
+
+// static
+bool OffscreenTabsOwner::IsOffscreenProfile(const Profile* profile) {
+  const BrowserContextList& offscreen_profiles = g_offscreen_profiles.Get();
+  return std::find(offscreen_profiles.begin(), offscreen_profiles.end(),
+                   profile) != offscreen_profiles.end();
 }
 
 OffscreenTab* OffscreenTabsOwner::OpenNewTab(
@@ -120,9 +133,12 @@ OffscreenTab::OffscreenTab(OffscreenTabsOwner* owner)
       content_capture_was_detected_(false),
       navigation_policy_(new NavigationPolicy) {
   DCHECK(profile_);
+  g_offscreen_profiles.Get().push_back(profile_.get());
 }
 
 OffscreenTab::~OffscreenTab() {
+  std::remove(g_offscreen_profiles.Get().begin(),
+              g_offscreen_profiles.Get().end(), profile_.get());
   DVLOG(1) << "Destroying OffscreenTab for start_url=" << start_url_.spec();
 }
 
