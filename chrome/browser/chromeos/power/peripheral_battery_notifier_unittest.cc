@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/chromeos/power/peripheral_battery_observer.h"
+#include "chrome/browser/chromeos/power/peripheral_battery_notifier.h"
 
 #include "ash/test/ash_test_base.h"
 #include "base/macros.h"
@@ -15,22 +15,23 @@
 
 namespace {
 
-const char kTestBatteryPath[] = "/sys/class/power_supply/hid-AA:BB:CC-battery";
-const char kTestBatteryAddress[] = "cc:bb:aa";
+const char kTestBatteryPath[] =
+    "/sys/class/power_supply/hid-AA:BB:CC:DD:EE:FF-battery";
+const char kTestBatteryAddress[] = "ff:ee:dd:cc:bb:aa";
 const char kTestDeviceName[] = "test device";
 
 }  // namespace
 
 namespace chromeos {
 
-class PeripheralBatteryObserverTest : public ash::AshTestBase {
+class PeripheralBatteryNotifierTest : public ash::AshTestBase {
  public:
-  PeripheralBatteryObserverTest() {}
-  ~PeripheralBatteryObserverTest() override {}
+  PeripheralBatteryNotifierTest() {}
+  ~PeripheralBatteryNotifierTest() override {}
 
   void SetUp() override {
     ash::AshTestBase::SetUp();
-    observer_ = base::MakeUnique<PeripheralBatteryObserver>();
+    observer_ = base::MakeUnique<PeripheralBatteryNotifier>();
   }
 
   void TearDown() override {
@@ -39,13 +40,13 @@ class PeripheralBatteryObserverTest : public ash::AshTestBase {
   }
 
  protected:
-  std::unique_ptr<PeripheralBatteryObserver> observer_;
+  std::unique_ptr<PeripheralBatteryNotifier> observer_;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(PeripheralBatteryObserverTest);
+  DISALLOW_COPY_AND_ASSIGN(PeripheralBatteryNotifierTest);
 };
 
-TEST_F(PeripheralBatteryObserverTest, Basic) {
+TEST_F(PeripheralBatteryNotifierTest, Basic) {
   base::SimpleTestTickClock clock;
   observer_->set_testing_clock(&clock);
 
@@ -58,7 +59,7 @@ TEST_F(PeripheralBatteryObserverTest, Basic) {
                                              50);
   EXPECT_EQ(1u, observer_->batteries_.count(kTestBatteryAddress));
 
-  const PeripheralBatteryObserver::BatteryInfo& info =
+  const PeripheralBatteryNotifier::BatteryInfo& info =
       observer_->batteries_[kTestBatteryAddress];
 
   EXPECT_EQ(kTestDeviceName, info.name);
@@ -78,7 +79,7 @@ TEST_F(PeripheralBatteryObserverTest, Basic) {
 
   // Verify that the low-battery notification for stylus does not show up.
   EXPECT_FALSE(message_center->FindVisibleNotificationById(
-                   PeripheralBatteryObserver::kStylusNotificationId) !=
+                   PeripheralBatteryNotifier::kStylusNotificationId) !=
                nullptr);
 
   // Level -1 at time 115, cancel previous notification
@@ -112,7 +113,7 @@ TEST_F(PeripheralBatteryObserverTest, Basic) {
                   kTestBatteryAddress) == nullptr);
 }
 
-TEST_F(PeripheralBatteryObserverTest, InvalidBatteryInfo) {
+TEST_F(PeripheralBatteryNotifierTest, InvalidBatteryInfo) {
   observer_->PeripheralBatteryStatusReceived("invalid-path", kTestDeviceName,
                                              10);
   EXPECT_TRUE(observer_->batteries_.empty());
@@ -134,7 +135,7 @@ TEST_F(PeripheralBatteryObserverTest, InvalidBatteryInfo) {
   EXPECT_TRUE(observer_->batteries_.empty());
 }
 
-TEST_F(PeripheralBatteryObserverTest, DeviceRemove) {
+TEST_F(PeripheralBatteryNotifierTest, DeviceRemove) {
   message_center::MessageCenter* message_center =
       message_center::MessageCenter::Get();
 
@@ -144,19 +145,21 @@ TEST_F(PeripheralBatteryObserverTest, DeviceRemove) {
   EXPECT_TRUE(message_center->FindVisibleNotificationById(
                   kTestBatteryAddress) != nullptr);
 
-  observer_->RemoveBattery(kTestBatteryAddress);
+  observer_->RemoveBluetoothBattery(kTestBatteryAddress);
   EXPECT_TRUE(message_center->FindVisibleNotificationById(
                   kTestBatteryAddress) == nullptr);
 }
 
-TEST_F(PeripheralBatteryObserverTest, StylusNotification) {
+TEST_F(PeripheralBatteryNotifierTest, StylusNotification) {
+  const std::string kTestStylusBatteryPath =
+      "/sys/class/power_supply/hid-AAAA:BBBB:CCCC.DDDD-battery";
   const std::string kTestStylusName = "test_stylus";
 
   // Add an external stylus to our test device manager.
   ui::TouchscreenDevice stylus(0 /* id */, ui::INPUT_DEVICE_EXTERNAL,
                                kTestStylusName, gfx::Size(),
                                1 /* touch_points */);
-  stylus.sys_path = base::FilePath(kTestBatteryPath);
+  stylus.sys_path = base::FilePath(kTestStylusBatteryPath);
   stylus.is_stylus = true;
 
   ui::test::DeviceDataManagerTestAPI test_api;
@@ -167,27 +170,27 @@ TEST_F(PeripheralBatteryObserverTest, StylusNotification) {
 
   // Verify that when the battery level is 50, no stylus low battery
   // notification is shown.
-  observer_->PeripheralBatteryStatusReceived(kTestBatteryPath, kTestStylusName,
-                                             50);
+  observer_->PeripheralBatteryStatusReceived(kTestStylusBatteryPath,
+                                             kTestStylusName, 50);
   EXPECT_TRUE(message_center->FindVisibleNotificationById(
-                  PeripheralBatteryObserver::kStylusNotificationId) == nullptr);
+                  PeripheralBatteryNotifier::kStylusNotificationId) == nullptr);
 
   // Verify that when the battery level is 5, a stylus low battery notification
   // is shown. Also check that a non stylus device low battery notification will
   // not show up.
-  observer_->PeripheralBatteryStatusReceived(kTestBatteryPath, kTestStylusName,
-                                             5);
+  observer_->PeripheralBatteryStatusReceived(kTestStylusBatteryPath,
+                                             kTestStylusName, 5);
   EXPECT_TRUE(message_center->FindVisibleNotificationById(
-                  PeripheralBatteryObserver::kStylusNotificationId) != nullptr);
+                  PeripheralBatteryNotifier::kStylusNotificationId) != nullptr);
   EXPECT_TRUE(message_center->FindVisibleNotificationById(
                   kTestBatteryAddress) == nullptr);
 
   // Verify that when the battery level is -1, the previous stylus low battery
   // notification is cancelled.
-  observer_->PeripheralBatteryStatusReceived(kTestBatteryPath, kTestStylusName,
-                                             -1);
+  observer_->PeripheralBatteryStatusReceived(kTestStylusBatteryPath,
+                                             kTestStylusName, -1);
   EXPECT_TRUE(message_center->FindVisibleNotificationById(
-                  PeripheralBatteryObserver::kStylusNotificationId) == nullptr);
+                  PeripheralBatteryNotifier::kStylusNotificationId) == nullptr);
 }
 
 }  // namespace chromeos
