@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9ddf2ed_310721a6",
+        "filename": "chrome/installer/linux/debian/update-dist-package-versions.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-25T22:48:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2752c24e_a2d85575",
+      "revId": "5e1685744bd879cb8236dcd4baea261833646cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82afb525_60a84dd3",
         "filename": "chrome/installer/linux/debian/update-dist-package-versions.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-25T21:47:12Z",
       "side": 1,
       "message": "How do you feel about generating these URLs instead of listing them out explicitly?",
+      "revId": "5e1685744bd879cb8236dcd4baea261833646cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aec878b_6f0da6c0",
+        "filename": "chrome/installer/linux/debian/update-dist-package-versions.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-25T22:48:34Z",
+      "side": 1,
+      "message": "good idea! done",
+      "parentUuid": "82afb525_60a84dd3",
       "revId": "5e1685744bd879cb8236dcd4baea261833646cc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "253daae1_b5d29639",
+        "filename": "chrome/installer/linux/debian/update-dist-package-versions.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-25T22:48:34Z",
+      "side": 1,
+      "message": "This list should only get updated when a dependency on a new package is added -- when a new dependency is added, I think it\u0027s best to be explicit about it.\n\nI don\u0027t think extracting this into a separate file would provide any benefit because this will be the only file that uses it.",
+      "parentUuid": "1678d571_585f9b5f",
+      "revId": "5e1685744bd879cb8236dcd4baea261833646cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d02eb0f_faf1b7e9",
         "filename": "chrome/installer/linux/debian/update-dist-package-versions.py",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "53ef0cd2_8c77a9b8",
+        "filename": "chrome/installer/linux/debian/update-dist-package-versions.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-25T22:48:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d02eb0f_faf1b7e9",
+      "revId": "5e1685744bd879cb8236dcd4baea261833646cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aad399f_d1dea526",
         "filename": "chrome/installer/linux/debian/update-dist-package-versions.py",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "5e1685744bd879cb8236dcd4baea261833646cc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68321ee_3b731cf5",
+        "filename": "chrome/installer/linux/debian/update-dist-package-versions.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-25T22:48:34Z",
+      "side": 1,
+      "message": "that would make the order semi-random since the order is dependent on the hash of the string",
+      "parentUuid": "7aad399f_d1dea526",
+      "revId": "5e1685744bd879cb8236dcd4baea261833646cc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
