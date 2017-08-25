@@ -278,6 +278,24 @@
     },
     {
       "key": {
+        "uuid": "e6971ce6_57de2e96",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1831,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-25T22:37:55Z",
+      "side": 0,
+      "message": "thakis@ reminded me of https://groups.google.com/a/chromium.org/forum/#!topic/cxx/Hpkfudv5bac and https://bugs.chromium.org/p/chromium/issues/detail?id\u003d711332#c1: given that this style delta already doesn\u0027t exist (and existing things will be converted at \"some point\"), so I went ahead and removed EnumState as well (which I missed in my original CL).\n\nAre you OK with that? I\u0027d prefer not to block trimming down the size of this script (easy) with gitiles hyperblame integration (harder) or the mass renaming (which should block on hyperblame at this point, IMO).",
+      "parentUuid": "27931cc7_37ad13b2",
+      "revId": "aee19604c92edaee401c6edd57c546973a20a446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5594167_ade560cd",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/style/checkers/cpp.py",
         "patchSetId": 2
