@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d196f57_11c46bec",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-25T23:24:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7f37cb1_fd1354fa",
+      "revId": "74242c5ba65098af853aea5b953956155e5435ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af6988cf_491b778f",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "74242c5ba65098af853aea5b953956155e5435ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d2b607_9a5bfbc1",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-25T23:24:04Z",
+      "side": 1,
+      "message": "Done. If we never ever call match_icon_fetched, that\u0027s totally cool as well.",
+      "parentUuid": "af6988cf_491b778f",
+      "revId": "74242c5ba65098af853aea5b953956155e5435ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a8e880ba_5363a39b",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-25T23:24:04Z",
+      "side": 1,
+      "message": "Displaying the favicon without flicker as user types is tricky. The way I accomplished this was: Once a favicon is displayed in a slot... keep displaying it until it\u0027s cleared (either because the favicon changes or because the suggestion now displays a different match).\n\nThis callback is a signal to \"clear\" any previously displayed favicon and revert to the normal set of vector icons.\n\nIf we just always clear the favicon when we get a new set of results and then rely on re-fetching the favicon, we keep getting it flicking in and out when user types \"g\" \"o\" \"o\" \"g\" \"l\" ...\n\nOpen to a different suggestion of course... to make it not flicker",
+      "parentUuid": "f49254e9_20ed54a1",
+      "revId": "74242c5ba65098af853aea5b953956155e5435ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f119eca_1a33ad25",
         "filename": "components/omnibox/browser/autocomplete_match.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "74242c5ba65098af853aea5b953956155e5435ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f65ab7_68f8e4d9",
+        "filename": "components/omnibox/browser/autocomplete_match.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-25T23:24:04Z",
+      "side": 1,
+      "message": "Done. Thanks! It works just using IsSearchType.",
+      "parentUuid": "4f119eca_1a33ad25",
+      "revId": "74242c5ba65098af853aea5b953956155e5435ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
