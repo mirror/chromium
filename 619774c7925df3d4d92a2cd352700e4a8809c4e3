@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45e5f9bb_c7e9ac08",
+        "filename": "gpu/command_buffer/client/fenced_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-25T03:21:50Z",
+      "side": 0,
+      "message": "Why remove this? It still looks true to me, unless I misunderstood?",
+      "range": {
+        "startLine": 245,
+        "startChar": 35,
+        "endLine": 245,
+        "endChar": 36
+      },
+      "revId": "619774c7925df3d4d92a2cd352700e4a8809c4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

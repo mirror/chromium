@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eab4464_33227954",
+        "filename": "gpu/command_buffer/client/fenced_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-25T03:21:50Z",
+      "side": 1,
+      "message": "Should you only write to this if the state is PENDING? That\u0027s what people will expect (the token_if_pending untouched if not PENDING).",
+      "range": {
+        "startLine": 180,
+        "startChar": 3,
+        "endLine": 180,
+        "endChar": 19
+      },
+      "revId": "46ef4d7fc7f1e37e35c8971917d3f69dc2c1b274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f8ae47_32e9c83c",
+        "filename": "gpu/command_buffer/client/fenced_allocator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-25T03:21:50Z",
+      "side": 1,
+      "message": "nit: you can just name it GetPointerStatusForTesting? Then no need for the comment.",
+      "range": {
+        "startLine": 261,
+        "startChar": 25,
+        "endLine": 261,
+        "endChar": 41
+      },
+      "revId": "46ef4d7fc7f1e37e35c8971917d3f69dc2c1b274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fb969a_de74f0d8",
+        "filename": "gpu/command_buffer/client/mapped_memory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-25T03:21:50Z",
+      "side": 1,
+      "message": "Should this be a NOTREACHED() case?",
+      "range": {
+        "startLine": 216,
+        "startChar": 9,
+        "endLine": 216,
+        "endChar": 24
+      },
+      "revId": "46ef4d7fc7f1e37e35c8971917d3f69dc2c1b274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c12a89_d1ec8936",
+        "filename": "gpu/command_buffer/client/mapped_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-25T03:21:50Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 116,
+        "startChar": 25,
+        "endLine": 116,
+        "endChar": 41
+      },
+      "revId": "46ef4d7fc7f1e37e35c8971917d3f69dc2c1b274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d905815a_f7977ffa",
+        "filename": "gpu/command_buffer/client/mapped_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-08-25T03:21:50Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 210,
+        "startChar": 25,
+        "endLine": 210,
+        "endChar": 41
+      },
+      "revId": "46ef4d7fc7f1e37e35c8971917d3f69dc2c1b274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
