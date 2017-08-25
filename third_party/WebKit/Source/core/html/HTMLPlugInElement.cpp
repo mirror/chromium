@@ -269,7 +269,8 @@ bool HTMLPlugInElement::ShouldAccelerate() const {
 }
 
 Vector<WebParsedFeaturePolicyDeclaration>
-HTMLPlugInElement::ConstructContainerPolicy() const {
+HTMLPlugInElement::ConstructContainerPolicy(Vector<String>* messages) const {
+  (void)messages;
   // Plugin elements (<object> and <embed>) are not allowed to enable the
   // fullscreen feature. Add an empty whitelist for the fullscreen feature so
   // that the nested browsing context is unable to use the API, regardless of

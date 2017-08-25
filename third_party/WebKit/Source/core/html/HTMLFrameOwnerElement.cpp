@@ -165,8 +165,8 @@ void HTMLFrameOwnerElement::DisposePluginSoon(PluginView* plugin) {
     plugin->Dispose();
 }
 
-void HTMLFrameOwnerElement::UpdateContainerPolicy() {
-  container_policy_ = ConstructContainerPolicy();
+void HTMLFrameOwnerElement::UpdateContainerPolicy(Vector<String>* messages) {
+  container_policy_ = ConstructContainerPolicy(messages);
   // Don't notify about updates if ContentFrame() is null, for example when
   // the subframe hasn't been created yet.
   if (ContentFrame()) {
