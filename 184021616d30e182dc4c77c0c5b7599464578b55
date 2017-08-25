@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b256b344_00ab8a97",
+        "filename": "content/common/input/input_handler.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-25T14:23:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15aaaf51_132f21e3",
+      "revId": "184021616d30e182dc4c77c0c5b7599464578b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "412298b3_abb7fc76",
         "filename": "content/renderer/input/render_widget_input_handler.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "dcba2c2c_f3e6a692",
+        "filename": "content/renderer/input/render_widget_input_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-25T14:23:45Z",
+      "side": 1,
+      "message": "Ya this is really of ugly cause the callback isn\u0027t passed into the call site but is handled at the end of this function. So we trap callbacks and then store the values to be used at the end when we call the callback.\n\nYou can\u0027t destroy the current RenderWidgetInputHandler while processing an event because that object is on the current callstack.",
+      "parentUuid": "412298b3_abb7fc76",
+      "revId": "184021616d30e182dc4c77c0c5b7599464578b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a474bc68_1d8e9d4b",
         "filename": "content/renderer/input/widget_input_handler_manager.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-25T06:36:43Z",
       "side": 1,
       "message": "Can we just typemap this as well? It\u0027s kind of unfortunate to typemap such a simple struct, but it\u0027s mostly about providing a good precedent for other code that does more complex conversions.",
+      "revId": "184021616d30e182dc4c77c0c5b7599464578b55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea4220b3_62cc458d",
+        "filename": "content/renderer/input/widget_input_handler_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-25T14:23:45Z",
+      "side": 1,
+      "message": "Ya I was put into this place because enums can\u0027t be optional. But typemapping it as base::Optional\u003ccc::TouchAction\u003e should work.\n\nDone.",
+      "parentUuid": "a474bc68_1d8e9d4b",
       "revId": "184021616d30e182dc4c77c0c5b7599464578b55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
