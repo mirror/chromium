@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<svg width="1" height="1" visibility="hidden">
+</svg>
+<script>
+var svgElement = document.querySelector("svg");
+var EPSILON = Math.pow(2, -8);
+
+test(function() {
+    svgElement.setAttribute("width", "96px");
+    assert_approx_equals(svgElement.width.baseVal.value, 96, EPSILON);
+    assert_approx_equals(svgElement.width.baseVal.valueInSpecifiedUnits, 96, EPSILON);
+    svgElement.width.baseVal.valueInSpecifiedUnits = 192;
+    assert_approx_equals(svgElement.width.baseVal.value, 192, EPSILON);
+    assert_equals(svgElement.width.baseVal.unitType, SVGLength.SVG_LENGTHTYPE_PX);
+}, "Tests px unit");
+
+test(function() {
+    svgElement.setAttribute("width", "2.54cm");
+    assert_approx_equals(svgElement.width.baseVal.value, 96, EPSILON);
+    assert_approx_equals(svgElement.width.baseVal.valueInSpecifiedUnits, 2.54, EPSILON);
+    svgElement.width.baseVal.valueInSpecifiedUnits = 5.08;
+    assert_approx_equals(svgElement.width.baseVal.value, 192, EPSILON);
+    assert_equals(svgElement.width.baseVal.unitType, SVGLength.SVG_LENGTHTYPE_CM);
+}, "Tests cm unit");
+
+test(function() {
+    svgElement.setAttribute("width", "25.4mm");
+    assert_approx_equals(svgElement.width.baseVal.value, 96, EPSILON);
+    assert_approx_equals(svgElement.width.baseVal.valueInSpecifiedUnits, 25.4, EPSILON);
+    svgElement.width.baseVal.valueInSpecifiedUnits = 50.8;
+    assert_approx_equals(svgElement.width.baseVal.value, 192, EPSILON);
+    assert_equals(svgElement.width.baseVal.unitType, SVGLength.SVG_LENGTHTYPE_MM);
+}, "Tests mm unit");
+
+test(function() {
+    svgElement.setAttribute("width", "1in");
+    assert_approx_equals(svgElement.width.baseVal.value, 96, EPSILON);
+    assert_approx_equals(svgElement.width.baseVal.valueInSpecifiedUnits, 1, EPSILON);
+    svgElement.width.baseVal.valueInSpecifiedUnits = 2;
+    assert_approx_equals(svgElement.width.baseVal.value, 192, EPSILON);
+    assert_equals(svgElement.width.baseVal.unitType, SVGLength.SVG_LENGTHTYPE_IN);
+}, "Tests in unit");
+
+test(function() {
+    svgElement.setAttribute("width", "72pt");
+    assert_approx_equals(svgElement.width.baseVal.value, 96, EPSILON);
+    assert_approx_equals(svgElement.width.baseVal.valueInSpecifiedUnits, 72, EPSILON);
+    svgElement.width.baseVal.valueInSpecifiedUnits = 144;
+    assert_approx_equals(svgElement.width.baseVal.value, 192, EPSILON);
+    assert_equals(svgElement.width.baseVal.unitType, SVGLength.SVG_LENGTHTYPE_PT);
+}, "Tests pt unit");
+
+test(function() {
+    svgElement.setAttribute("width", "6pc");
+    assert_approx_equals(svgElement.width.baseVal.value, 96, EPSILON);
+    assert_approx_equals(svgElement.width.baseVal.valueInSpecifiedUnits, 6, EPSILON);
+    svgElement.width.baseVal.valueInSpecifiedUnits = 12;
+    assert_approx_equals(svgElement.width.baseVal.value, 192, EPSILON);
+    assert_equals(svgElement.width.baseVal.unitType, SVGLength.SVG_LENGTHTYPE_PC);
+}, "Tests pc unit");
+
+test(function() {
+    svgElement.setAttribute("width", "101.6q");
+    assert_approx_equals(svgElement.width.baseVal.value, 96, EPSILON);
+    assert_approx_equals(svgElement.width.baseVal.valueInSpecifiedUnits, 101.6, EPSILON);
+    svgElement.width.baseVal.valueInSpecifiedUnits = 203.2;
+    assert_approx_equals(svgElement.width.baseVal.value, 192, EPSILON);
+    assert_equals(svgElement.width.baseVal.unitType, SVGLength.SVG_LENGTHTYPE_UNKNOWN);
+}, "Tests q unit");
+
+</script>

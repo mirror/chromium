@@ -285,6 +285,9 @@ float SVGLengthContext::ConvertValueToUserUnits(
     case CSSPrimitiveValue::UnitType::kMillimeters:
       user_units = value * kCssPixelsPerMillimeter;
       break;
+    case CSSPrimitiveValue::UnitType::kQuarterMillimeters:
+      user_units = value * kCssPixelsPerQuarterMillimeter;
+      break;
     case CSSPrimitiveValue::UnitType::kInches:
       user_units = value * kCssPixelsPerInch;
       break;
