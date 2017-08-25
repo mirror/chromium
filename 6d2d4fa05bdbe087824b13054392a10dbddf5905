@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "632edf2d_db99ced8",
+        "filename": "chrome/installer/zucchini/address_translator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-25T10:27:01Z",
+      "side": 1,
+      "message": "|units_in| is already an rvalue reference -- std::move shouldn\u0027t be needed here. that said, do you even need the |units| local var? can this function not operate directly on |units_in|?",
+      "range": {
+        "startLine": 66,
+        "startChar": 26,
+        "endLine": 66,
+        "endChar": 35
+      },
+      "revId": "6d2d4fa05bdbe087824b13054392a10dbddf5905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc5f615_7fcb1d6a",
+        "filename": "chrome/installer/zucchini/rel32_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-25T10:27:01Z",
+      "side": 1,
+      "message": "please update comment -- especially the lifetime requirements of |translator|.",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 13
+      },
+      "revId": "6d2d4fa05bdbe087824b13054392a10dbddf5905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
