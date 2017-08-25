@@ -22,6 +22,30 @@
       "revId": "73ff08f0be9774c7b6d43d7de3b6ada8073615f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f320af8_ac02cd30",
+        "filename": "components/policy/core/common/cloud/cloud_policy_refresh_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1144419
+      },
+      "writtenOn": "2017-08-25T12:55:33Z",
+      "side": 1,
+      "message": "Thank you for observation. The comment seems to be wrong, looking at two places in the code:\n\nhttps://cs.chromium.org/chromium/src/components/policy/core/common/cloud/cloud_policy_client.cc?l\u003d600\n\nThe dm_token (which determines if the client is registered) remains empty in case of an error.\nAnd\nhttps://cs.chromium.org/chromium/src/components/policy/core/common/cloud/cloud_policy_refresh_scheduler.cc?sq\u003dpackage:chromium\u0026dr\u0026l\u003d152\nWhere the last_refresh is set.\n\nWill check if it\u0027s reasonable to change the code so that the comment remains correct.",
+      "parentUuid": "7fee2a46_69f98a36",
+      "range": {
+        "startLine": 193,
+        "startChar": 29,
+        "endLine": 193,
+        "endChar": 58
+      },
+      "revId": "73ff08f0be9774c7b6d43d7de3b6ada8073615f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
