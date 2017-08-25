@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab08dc2d_625c3785",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-25T13:20:00Z",
+      "side": 1,
+      "message": "i can\u0027t figure out the name here (Cached?). how about OffsetToRvaCache, which to me sounds like it\u0027s a cache for OffsetToRva. (same comment below)",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 14
+      },
+      "revId": "ad5edc9e00750d77003753e2eaac9317865e31fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
