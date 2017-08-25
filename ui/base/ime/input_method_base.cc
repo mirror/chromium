@@ -132,6 +132,7 @@ void InputMethodBase::OnInputMethodChanged() const {
 ui::EventDispatchDetails InputMethodBase::DispatchKeyEventPostIME(
     ui::KeyEvent* event) const {
   ui::EventDispatchDetails details;
+  LOG(ERROR) << __PRETTY_FUNCTION__;
   if (delegate_)
     details = delegate_->DispatchKeyEventPostIME(event);
   return details;
