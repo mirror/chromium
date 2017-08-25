@@ -46,6 +46,30 @@
       "revId": "73ff08f0be9774c7b6d43d7de3b6ada8073615f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03563fa1_6792fcd1",
+        "filename": "components/policy/core/common/cloud/cloud_policy_refresh_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-25T13:10:59Z",
+      "side": 1,
+      "message": "OK. Didn\u0027t look into the code too much, but to me it feels like the comment and the initialization of |last_refresh_| should be kept as is. Because it makes sense to make a correctly delayed retry in case of error.\nBut, after changing the documentation of |last_refresh_|, you\u0027d have to check whether some other code (since, including, http://crrev.com/5d10b590e88508313c9e68d004cabc11bf6f55ce) used this as a wrong assumption...",
+      "parentUuid": "0f320af8_ac02cd30",
+      "range": {
+        "startLine": 193,
+        "startChar": 29,
+        "endLine": 193,
+        "endChar": 58
+      },
+      "revId": "73ff08f0be9774c7b6d43d7de3b6ada8073615f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
