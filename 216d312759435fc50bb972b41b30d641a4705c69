@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05a6487f_f3d82087",
+        "filename": "build/config/android/config.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-08-25T16:49:22Z",
+      "side": 1,
+      "message": "I think the idea is to set this on a per-target basis, not as a global flag.",
+      "revId": "216d312759435fc50bb972b41b30d641a4705c69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
