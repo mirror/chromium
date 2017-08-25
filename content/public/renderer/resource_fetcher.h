@@ -5,24 +5,22 @@
 #ifndef CONTENT_PUBLIC_RENDERER_RESOURCE_FETCHER_H_
 #define CONTENT_PUBLIC_RENDERER_RESOURCE_FETCHER_H_
 
+#include <memory>
 #include <string>
 
 #include "base/callback.h"
 #include "content/common/content_export.h"
-#include "third_party/WebKit/public/platform/WebURLRequest.h"
 
 class GURL;
 
 namespace base {
+class SingleThreadTaskRunner;
 class TimeDelta;
 }
 
-namespace blink {
-class WebLocalFrame;
-class WebURLResponse;
-}
-
 namespace content {
+
+struct ResourceRequest;
 
 // Interface to download resources asynchronously.
 class CONTENT_EXPORT ResourceFetcher {
@@ -30,30 +28,23 @@ class CONTENT_EXPORT ResourceFetcher {
   virtual ~ResourceFetcher() {}
 
   // This will be called asynchronously after the URL has been fetched,
-  // successfully or not.  If there is a failure, response and data will both be
-  // empty.  |response| and |data| are both valid until the URLFetcher instance
-  // is destroyed.
-  typedef base::Callback<void(const blink::WebURLResponse& response,
-                              const std::string& data)> Callback;
+  // successfully or not.  If there is a failure, |success| will be false, an
+  // |http_status_code| and |final_url| may not be reliable.
+  // |final_url| and |data| are both valid until the URLFetcher instance is
+  // destroyed.
+  typedef base::OnceCallback<void(bool success,
+                                  int http_status_code,
+                                  const GURL& final_url,
+                                  const std::string& data)>
+      Callback;
 
-  // Creates a ResourceFetcher for the specified resource.  Caller takes
-  // ownership of the returned object.  Deleting the ResourceFetcher will cancel
-  // the request, and the callback will never be run.
-  static ResourceFetcher* Create(const GURL& url);
-
-  // Set the corresponding parameters of the request.  Must be called before
-  // Start.  By default, requests are GETs with no body and respect the default
-  // cache policy.
-  virtual void SetMethod(const std::string& method) = 0;
-  virtual void SetBody(const std::string& body) = 0;
-  virtual void SetHeader(const std::string& header,
-                         const std::string& value) = 0;
-
-  // Starts the request using the specified frame.  Calls |callback| when
-  // done.
-  virtual void Start(blink::WebLocalFrame* frame,
-                     blink::WebURLRequest::RequestContext request_context,
-                     const Callback& callback) = 0;
+  // Creates a ResourceFetcher for the specific resource, and starts a request.
+  // Deleting the ResourceFetcher will cancel the request, and |callback| will
+  // never be run.
+  static std::unique_ptr<ResourceFetcher> CreateAndStart(
+      const ResourceRequest& request,
+      base::SingleThreadTaskRunner* task_runner,
+      Callback callback);
 
   // Sets how long to wait for the server to reply.  By default, there is no
   // timeout.  Must be called after a request is started.

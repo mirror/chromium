@@ -17,6 +17,7 @@
 #include "base/stl_util.h"
 #include "content/grit/content_resources.h"
 #include "content/public/common/content_client.h"
+#include "content/public/common/resource_request.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/resource_fetcher.h"
 #include "content/renderer/mojo_bindings_controller.h"
@@ -31,6 +32,7 @@
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebScriptSource.h"
+#include "url/gurl.h"
 
 using v8::Context;
 using v8::HandleScope;
@@ -191,32 +193,31 @@ void MojoContextState::FetchModule(const std::string& id) {
   DCHECK(url.is_valid() && !url.is_empty());
   DCHECK(fetched_modules_.find(id) == fetched_modules_.end());
   fetched_modules_.insert(id);
-  ResourceFetcher* fetcher = ResourceFetcher::Create(url);
-  module_fetchers_.push_back(base::WrapUnique(fetcher));
-  fetcher->Start(frame_, blink::WebURLRequest::kRequestContextScript,
-                 base::Bind(&MojoContextState::OnFetchModuleComplete,
-                            base::Unretained(this), fetcher, id));
+
+  ResourceRequest request;
+  request.url = url;
+  request.resource_type = RESOURCE_TYPE_SCRIPT;
+  std::unique_ptr<ResourceFetcher> fetcher = ResourceFetcher::CreateAndStart(
+      request, frame_->LoadingTaskRunner(),
+      base::BindOnce(&MojoContextState::OnFetchModuleComplete,
+                     base::Unretained(this), id));
+  module_fetchers_[id] = std::move(fetcher);
 }
 
-void MojoContextState::OnFetchModuleComplete(
-    ResourceFetcher* fetcher,
-    const std::string& id,
-    const blink::WebURLResponse& response,
-    const std::string& data) {
-  if (response.IsNull()) {
+void MojoContextState::OnFetchModuleComplete(const std::string& id,
+                                             bool success,
+                                             int http_status_code,
+                                             const GURL& final_url,
+                                             const std::string& data) {
+  if (!success) {
     LOG(ERROR) << "Failed to fetch source for module \"" << id << "\"";
     return;
   }
-  DCHECK_EQ(module_prefix_ + id, response.Url().GetString().Utf8());
+  DCHECK_EQ(module_prefix_ + id, final_url.spec());
   // We can't delete fetch right now as the arguments to this function come from
   // it and are used below. Instead use a scope_ptr to cleanup.
-  auto iter =
-      std::find_if(module_fetchers_.begin(), module_fetchers_.end(),
-                   [fetcher](const std::unique_ptr<ResourceFetcher>& item) {
-                     return item.get() == fetcher;
-                   });
-  std::unique_ptr<ResourceFetcher> deleter = std::move(*iter);
-  module_fetchers_.erase(iter);
+  std::unique_ptr<ResourceFetcher> deleter = std::move(module_fetchers_[id]);
+  module_fetchers_.erase(id);
 
   if (data.empty()) {
     LOG(ERROR) << "Fetched empty source for module \"" << id << "\"";

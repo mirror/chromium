@@ -23,10 +23,6 @@
 
 class GURL;
 
-namespace blink {
-class WebURLResponse;
-}
-
 namespace content {
 class ResourceFetcher;
 }
@@ -119,10 +115,14 @@ class NetErrorHelper
                                      const std::string& api_key,
                                      const GURL& search_url);
 
-  void OnNavigationCorrectionsFetched(const blink::WebURLResponse& response,
+  void OnNavigationCorrectionsFetched(bool success,
+                                      int http_status_code,
+                                      const GURL& final_url,
                                       const std::string& data);
 
-  void OnTrackingRequestComplete(const blink::WebURLResponse& response,
+  void OnTrackingRequestComplete(bool success,
+                                 int http_status_code,
+                                 const GURL& final_url,
                                  const std::string& data);
 
   void OnNetworkDiagnosticsClientRequest(
