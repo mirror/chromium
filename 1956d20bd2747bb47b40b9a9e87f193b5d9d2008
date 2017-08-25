@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ea0b421_16b79d16",
+        "filename": "ios/chrome/browser/passwords/credential_manager_unittest.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-25T14:11:15Z",
+      "side": 1,
+      "message": "What is now confusing is that none of the tests instantiates CredentialManager. I\u0027d create a test fixture WebStateContentIsSecureHTMLTest derived from CredentialManagerTest and use it here.\nLater when you add some tests for CredentialManager you may figure out an appropriate class hierarchy for CredentialManagerTest and WebStateContentIsSecureHTMLTest. Maybe they should have the same parent.",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 99,
+        "endChar": 28
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b40c93_b843752d",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-25T14:11:15Z",
+      "side": 1,
+      "message": "Move to the anonymous namespace",
+      "range": {
+        "startLine": 165,
+        "startChar": 30,
+        "endLine": 165,
+        "endChar": 57
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd23d06c_fe47324f",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-25T14:11:15Z",
+      "side": 1,
+      "message": "Can it be null? I\u0027m pretty sure that \u0027yes\u0027 while IOSSecurityStateTabHelper is attached in WebStateList::InsertWebState. web::WebState can be create without that list.\nI\u0027d handle the NULL pointer.",
+      "range": {
+        "startLine": 170,
+        "startChar": 8,
+        "endLine": 170,
+        "endChar": 14
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5409e48_08146910",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-25T14:11:15Z",
+      "side": 1,
+      "message": "Move down to where it\u0027s used.",
+      "range": {
+        "startLine": 186,
+        "startChar": 32,
+        "endLine": 186,
+        "endChar": 46
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "076d65c4_62ee588a",
+        "filename": "ios/chrome/browser/passwords/credential_manager_util.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-25T14:11:15Z",
+      "side": 1,
+      "message": "This comment is difficult to correlate with the following line because it doesn\u0027t check anything about localhost. How about \n\nif (!security_state::IsSchemeCryptographic(last_committed_url))\n  return security_state::IsOriginLocalhostOrFile(last_committed_url);",
+      "range": {
+        "startLine": 200,
+        "startChar": 5,
+        "endLine": 200,
+        "endChar": 73
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096d4947_843c3137",
+        "filename": "ios/chrome/browser/web/origin_security_checker.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-25T14:11:15Z",
+      "side": 1,
+      "message": "What is this strange code doing beyond \"url.scheme() !\u003d url::kDataScheme\"?",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "1956d20bd2747bb47b40b9a9e87f193b5d9d2008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
