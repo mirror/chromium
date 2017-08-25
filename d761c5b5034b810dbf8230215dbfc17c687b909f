@@ -16,6 +16,24 @@
       "revId": "d761c5b5034b810dbf8230215dbfc17c687b909f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400e89eb_2b3b583f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-25T19:31:57Z",
+      "side": 1,
+      "message": "I\u0027m not too worried about that.  I mainly just wanted to avoid passing it twice in the case of --additional-driver-flag but no rwt.flag.",
+      "parentUuid": "6ffbd09e_5f114c47",
+      "revId": "d761c5b5034b810dbf8230215dbfc17c687b909f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
