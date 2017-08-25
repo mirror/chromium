@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1130b661_e5aaf1e5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-25T19:02:38Z",
+      "side": 1,
+      "message": "No need for this. We already draw at each frame.",
+      "revId": "52a7eb4c8a07164fa1dc49dada2a2a9858598cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1ad118_33cfabc5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-25T19:02:38Z",
+      "side": 1,
+      "message": "s/1e3/1000/",
+      "revId": "52a7eb4c8a07164fa1dc49dada2a2a9858598cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dcd2662_1bd5ad71",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-25T19:02:38Z",
+      "side": 1,
+      "message": "omit true",
+      "revId": "52a7eb4c8a07164fa1dc49dada2a2a9858598cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd40274a_8bd9dae2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-25T19:02:38Z",
+      "side": 1,
+      "message": "1000",
+      "revId": "52a7eb4c8a07164fa1dc49dada2a2a9858598cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55efb5d_e26538fa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-25T19:02:38Z",
+      "side": 1,
+      "message": "180?",
+      "revId": "52a7eb4c8a07164fa1dc49dada2a2a9858598cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31425137_5f2ddbc9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-25T19:02:38Z",
+      "side": 1,
+      "message": "var textTop \u003d i * intervalPx + topPadding + 12?",
+      "revId": "52a7eb4c8a07164fa1dc49dada2a2a9858598cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5eb866e_49bf4e99",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-25T19:02:38Z",
+      "side": 1,
+      "message": "130?",
+      "revId": "52a7eb4c8a07164fa1dc49dada2a2a9858598cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b0d42d_3f25ce48",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-25T19:02:38Z",
+      "side": 1,
+      "message": "unused.",
+      "revId": "52a7eb4c8a07164fa1dc49dada2a2a9858598cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb0c617_1d9f303a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/PerformanceMonitor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-25T19:02:38Z",
+      "side": 1,
+      "message": "should this also have currentMin/currentMax?",
+      "revId": "52a7eb4c8a07164fa1dc49dada2a2a9858598cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
