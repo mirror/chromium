@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24f69563_7358f620",
+        "filename": "cc/blink/web_layer_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-25T17:51:25Z",
+      "side": 1,
+      "message": "Done. I put this comment on the base class, WebLayer, which is where most of the comments seem to be.",
+      "parentUuid": "7095c3b3_952dc6df",
+      "revId": "b8108b4257c6b8d00f410a579f0b834da51e0cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77b51791_43e1f750",
         "filename": "third_party/WebKit/Source/core/paint/PaintInvalidationCapableScrollableArea.cpp",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-25T16:40:10Z",
       "side": 1,
       "message": "Why this change? Just cleaner code?",
+      "revId": "b8108b4257c6b8d00f410a579f0b834da51e0cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d08710c4_e9fa99e2",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidationCapableScrollableArea.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-25T17:51:25Z",
+      "side": 1,
+      "message": "This is now called from LocalFrameView::ScrollableAreaWithElementId when the document lifecycle is at kLayoutClean which is before property trees have been built.",
+      "parentUuid": "77b51791_43e1f750",
       "revId": "b8108b4257c6b8d00f410a579f0b834da51e0cf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c0ee672b_1163d9c8",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ScrollPaintPropertyNode.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-25T17:51:25Z",
+      "side": 1,
+      "message": "Yeah.",
+      "parentUuid": "f0b6814d_3c14913c",
+      "revId": "b8108b4257c6b8d00f410a579f0b834da51e0cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bb461e3_c7ffffcf",
         "filename": "ui/views/controls/scroll_view.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-25T16:40:10Z",
       "side": 1,
       "message": "Every ui layer has element_id() set on it. You can get it off the layer.",
+      "revId": "b8108b4257c6b8d00f410a579f0b834da51e0cf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c148af42_e892b26f",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 766,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-25T17:51:25Z",
+      "side": 1,
+      "message": "Done: I added ui layer element_id and now call it here.",
+      "parentUuid": "4bb461e3_c7ffffcf",
       "revId": "b8108b4257c6b8d00f410a579f0b834da51e0cf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
